@@ -28,6 +28,9 @@
    POSSIBILITY OF SUCH DAMAGE. */
 
 #include "common.h"
+
+#include <string.h>
+
 #include "dataClassify.h"
 
 static const size_t	nickname_len_max  = 16;
