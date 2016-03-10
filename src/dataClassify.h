@@ -27,6 +27,7 @@ isEmpty(const char *data)
 
 #include <ctype.h>
 #include <limits.h>
+#include <stdio.h>		/* EOF */
 
 static SW_INLINE int
 sw_isalnum(int c)
