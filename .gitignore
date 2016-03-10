@@ -1,0 +1,3 @@
+*.o
+swirc
+unix_def.mk
