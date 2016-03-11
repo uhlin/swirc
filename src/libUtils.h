@@ -1,0 +1,44 @@
+#ifndef LIBRARY_UTILITIES_H
+#define LIBRARY_UTILITIES_H
+
+#include <stdio.h> /* FILE */
+
+/*lint -printf(2, write_to_stream) */
+/*lint -printf(1, say) */
+
+FILE		*fopen_handle_error    (const char *path, const char *mode);
+const char	*current_time          (const char *fmt);
+int		 int_diff              (const int, const int);
+int		 int_sum               (const int, const int);
+size_t		 size_product          (const size_t elt_count, const size_t elt_size);
+void		 fclose_ensure_success (FILE *);
+void		 realloc_strcat        (char **dest, const char *src);
+void		 say                   (const char *fmt, ...);
+void		 write_to_stream       (FILE *, const char *fmt, ...);
+void		*xcalloc               (size_t elt_count, size_t elt_size);
+void		*xmalloc               (size_t);
+void		*xrealloc              (void *ptr, size_t newSize);
+
+/* Inline function definitions
+   =========================== */
+
+static SW_INLINE void
+free_not_null(void *ptr)
+{
+    if (ptr != NULL) {
+	free(ptr);
+    }
+}
+
+static SW_INLINE void
+free_and_null(char **ptr)
+{
+    if (*ptr == NULL) {
+	return;
+    }
+
+    free(*ptr);
+    *ptr = NULL;
+}
+
+#endif
