@@ -110,7 +110,7 @@ Strdup_vprintf(const char *fmt, va_list ap)
     }
 #elif defined(WIN32)
     if ((n_print = vsnprintf_s(buffer, size, size - 1, fmt, ap)) < 0) {
-	err_dump("vsnprintf_s() returned %d", n_print);
+	err_sys("vsnprintf_s() returned %d", n_print);
     }
 #endif
 
