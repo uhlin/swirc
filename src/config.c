@@ -325,14 +325,14 @@ void
 config_create(const char *path, const char *mode)
 {
     FILE			*fp    = fopen_handle_error(path, mode);
-    struct tagConfDefValues	*tdv_p = NULL;
+    struct tagConfDefValues	*cdv_p = NULL;
     const size_t		 ar_sz = ARRAY_SIZE(ConfDefValues);
 
     write_to_stream(fp, "# -*- mode: conf; -*-\n#\n# Swirc %s  --  default config\n", g_swircVersion);
     write_to_stream(fp, "# Automatically generated at %s\n\n", current_time("%c"));
 
-    for (tdv_p = &ConfDefValues[0]; tdv_p < &ConfDefValues[ar_sz]; tdv_p++)
-	WRITE_ITEM(tdv_p->setting_name, tdv_p->value);
+    for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++)
+	WRITE_ITEM(cdv_p->setting_name, cdv_p->value);
 
     fclose_ensure_success(fp);
 }
@@ -341,14 +341,14 @@ void
 config_do_save(const char *path, const char *mode)
 {
     FILE			*fp    = fopen_handle_error(path, mode);
-    struct tagConfDefValues	*tdv_p = NULL;
+    struct tagConfDefValues	*cdv_p = NULL;
     const size_t		 ar_sz = ARRAY_SIZE(ConfDefValues);
 
     write_to_stream(fp, "# -*- mode: conf; -*-\n#\n# Swirc %s  --  default config\n", g_swircVersion);
     write_to_stream(fp, "# Automatically generated at %s\n\n", current_time("%c"));
 
-    for (tdv_p = &ConfDefValues[0]; tdv_p < &ConfDefValues[ar_sz]; tdv_p++)
-	WRITE_ITEM(tdv_p->setting_name, Config(tdv_p->setting_name));
+    for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++)
+	WRITE_ITEM(cdv_p->setting_name, Config(cdv_p->setting_name));
 
     fclose_ensure_success(fp);
 }
@@ -395,15 +395,15 @@ config_readit(const char *path, const char *mode)
 static bool
 is_recognized_setting(const char *setting_name)
 {
-    struct tagConfDefValues *tdv_p;
+    struct tagConfDefValues *cdv_p;
     const size_t ar_sz = ARRAY_SIZE(ConfDefValues);
 
     if (!setting_name || *setting_name == '\0') {
 	return (false);
     }
 
-    for (tdv_p = &ConfDefValues[0]; tdv_p < &ConfDefValues[ar_sz]; tdv_p++) {
-	if (Strings_match(setting_name, tdv_p->setting_name))
+    for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++) {
+	if (Strings_match(setting_name, cdv_p->setting_name))
 	    return (true);
     }
 
@@ -413,11 +413,11 @@ is_recognized_setting(const char *setting_name)
 static void
 init_missing_to_defs(void)
 {
-    struct tagConfDefValues *tdv_p;
+    struct tagConfDefValues *cdv_p;
     const size_t ar_sz = ARRAY_SIZE(ConfDefValues);
 
-    for (tdv_p = &ConfDefValues[0]; tdv_p < &ConfDefValues[ar_sz]; tdv_p++) {
-	if (get_hash_table_entry(tdv_p->setting_name) == NULL)
-	    hInstall(tdv_p->setting_name, tdv_p->value);
+    for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++) {
+	if (get_hash_table_entry(cdv_p->setting_name) == NULL)
+	    hInstall(cdv_p->setting_name, cdv_p->value);
     }
 }
