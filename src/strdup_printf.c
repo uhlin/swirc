@@ -99,10 +99,11 @@ Strdup_vprintf(const char *fmt, va_list ap)
     mutex_lock(&mutex);
     if ((size = get_size(fmt, ap)) < 0)
 	err_exit(ENOSYS, "In Strdup_vprintf: get_size error");
+    else
+	size += 1;
     if ((buffer = malloc(size)) == NULL)
 	err_exit(ENOMEM, "malloc fatal (allocating %d bytes)", size);
 
-    size += 1;
     errno = 0;
 #if defined(UNIX)
     if ((n_print = vsnprintf(buffer, size, fmt, ap)) < 0 || n_print >= size) {
