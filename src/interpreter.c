@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2015 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2012-2016 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -77,6 +77,7 @@ Interpreter(const struct Interpreter_in *in)
     adv_while_isspace(&ccp);
     if (*ccp && *ccp != '#') {
 	interpreter_message("Implicit data after line terminator");
+	goto die;
     } else if ( !(in->validator_func(id)) ) { /* Unrecognized identifier. */
 #if IGNORE_UNRECOGNIZED_IDENTIFIERS
 	;
