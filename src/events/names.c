@@ -108,7 +108,8 @@ event_names_deinit(void)
      @ for secret channels
      * for private channels
      = for public channels */
-void event_names(struct irc_message_compo *compo)
+void
+event_names(struct irc_message_compo *compo)
 {
     char *state1, *state2;
     char *chan_type, *channel, *names;
