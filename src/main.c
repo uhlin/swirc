@@ -289,7 +289,6 @@ cmdline_options_destroy(void)
     free_and_null(&g_cmdline_opts->config_file);
 }
 
-
 /* -c <server[:port]> */
 static void
 case_connect(void)
