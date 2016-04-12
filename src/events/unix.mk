@@ -4,14 +4,9 @@ ROOT=../..
 
 include $(ROOT)/unix_def.mk
 
-ifeq ($(CC), gcc)
-include_dirs=-iquote../include
-else
-include_dirs=-I../include
-endif
-
-library_dirs=
 extra_flags=
+include_dirs=-I../include
+library_dirs=
 
 OBJS=channel.o error.o misc.o motd.o names.o
 OBJS+=noop.o notice.o ping.o welcome-unix.o welcome.o

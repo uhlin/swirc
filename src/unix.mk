@@ -4,14 +4,9 @@ ROOT=..
 
 include $(ROOT)/unix_def.mk
 
-ifeq ($(CC), gcc)
-include_dirs=-iquoteinclude
-else
-include_dirs=-Iinclude
-endif
-
-library_dirs=
 extra_flags=
+include_dirs=-Iinclude
+library_dirs=
 
 OBJS=assertAPI.o config.o curses-funcs.o cursesInit.o dataClassify.o
 OBJS+=errHand.o filePred.o interpreter.o io-loop.o irc.o
