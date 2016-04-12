@@ -44,6 +44,7 @@ PDCurses portable platform definitions list:
 /*----------------------------------------------------------------------*/
 
 #include <stdarg.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>             /* Required by X/Open usage below */
 
@@ -54,7 +55,9 @@ PDCurses portable platform definitions list:
 #if defined(__cplusplus) || defined(__cplusplus__) || defined(__CPLUSPLUS)
 extern "C"
 {
+#if 0
 # define bool _bool
+#endif
 #endif
 
 /*----------------------------------------------------------------------
@@ -85,7 +88,9 @@ extern "C"
  *
  */
 
+#if 0
 typedef unsigned char bool;    /* PDCurses Boolean type */
+#endif
 
 #ifdef CHTYPE_LONG
 # if _LP64
