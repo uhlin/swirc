@@ -248,7 +248,7 @@ readline(const char *prompt)
 static struct readline_session_context *
 new_session(const char *prompt)
 {
-    struct readline_session_context *ctx = xmalloc(sizeof *ctx);
+    struct readline_session_context *ctx = xcalloc(sizeof *ctx, 1);
 
     ctx->buffer       = xcalloc(readline_buffersize + 1, sizeof (wchar_t));
     ctx->bufpos       = 0;

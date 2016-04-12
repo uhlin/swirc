@@ -137,7 +137,7 @@ hInstall(const char *name, const char *value)
     const bool has_no_value = (value == NULL || *value == '\0');
     unsigned int hashval;
 
-    item	= xmalloc(sizeof (PCONF_HTBL_ENTRY));
+    item	= xcalloc(sizeof *item, 1);
     item->name	= sw_strdup(name);
     item->value	= sw_strdup(has_no_value ? "" : value);
 

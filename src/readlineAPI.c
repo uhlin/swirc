@@ -69,7 +69,7 @@ convert_wc(wchar_t wc)
     size_t bytes_written;
 #endif
     const size_t size = MB_LEN_MAX + 1;
-    char *mbs = xmalloc(size);
+    char *mbs = xcalloc(size, 1);
 
     BZERO(&ps, sizeof (mbstate_t));
 #ifdef HAVE_BCI

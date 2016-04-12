@@ -214,7 +214,7 @@ get_processed_out_message(const char *unproc_msg,
 			  bool include_ts)
 {
 #define STRLEN_SQUEEZE(string) ((int) strlen(squeeze_text_deco(string)))
-    struct message_components *pout = xmalloc(sizeof *pout);
+    struct message_components *pout = xcalloc(sizeof *pout, 1);
     char *tmp = NULL;
 
     pout->text = NULL;

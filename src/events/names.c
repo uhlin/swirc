@@ -205,7 +205,7 @@ hInstall(const struct hInstall_context *ctx)
     PNAMES		names_entry;
     const unsigned int	hashval      = hash(ctx->nick);
 
-    names_entry		   = xmalloc(sizeof *names_entry);
+    names_entry		   = xcalloc(sizeof *names_entry, 1);
     names_entry->nick	   = sw_strdup(ctx->nick);
     names_entry->is_op	   = ctx->is_op;
     names_entry->is_halfop = ctx->is_halfop;
@@ -473,7 +473,7 @@ event_names_print_all(const char *channel)
 static struct names_chunk *
 next_names(PIRC_WINDOW window, int *counter)
 {
-    struct names_chunk	*names	 = xmalloc(sizeof *names);
+    struct names_chunk	*names	 = xcalloc(sizeof *names, 1);
     PNAMES		*entry_p = & (window->names_hash[*counter]);
 
     names->nick1 = names->nick2 = names->nick3 = names->nick4 = names->nick5 = NULL;

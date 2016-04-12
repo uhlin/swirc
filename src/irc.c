@@ -235,7 +235,7 @@ get_last_token(const char *buffer)
 static struct irc_message_compo *
 SortMsgCompo(char *protocol_message, bool message_has_prefix)
 {
-    struct irc_message_compo *compo = xmalloc(sizeof *compo);
+    struct irc_message_compo *compo = xcalloc(sizeof *compo, 1);
     short int loop_run;
     char *cp, *savp = "";
 

@@ -10,7 +10,7 @@
 PTEXTBUF
 textBuf_new(void)
 {
-    PTEXTBUF buf = xmalloc(sizeof *buf);
+    PTEXTBUF buf = xcalloc(sizeof *buf, 1);
 
     buf->size = 0;
     buf->head = NULL;
@@ -41,7 +41,7 @@ textBuf_ins_next(PTEXTBUF buf, PTEXTBUF_ELMT element,
 	return EINVAL;
     }
 
-    new_element         = xmalloc(sizeof *new_element);
+    new_element         = xcalloc(sizeof *new_element, 1);
     new_element->text   = sw_strdup(text);
     new_element->indent = indent;
 
@@ -76,7 +76,7 @@ textBuf_ins_prev(PTEXTBUF buf, PTEXTBUF_ELMT element,
 	return EINVAL;
     }
 
-    new_element         = xmalloc(sizeof *new_element);
+    new_element         = xcalloc(sizeof *new_element, 1);
     new_element->text   = sw_strdup(text);
     new_element->indent = indent;
 

@@ -181,7 +181,7 @@ hInstall(const struct hInstall_context *ctx)
     PNAMES		*n_ent;
     unsigned int	 hashval;
 
-    entry	  = xmalloc(sizeof *entry);
+    entry	  = xcalloc(sizeof *entry, 1);
     entry->label  = sw_strdup(ctx->label);
     entry->title  =
 	(isNull(ctx->title) || isEmpty(ctx->title) ? NULL : sw_strdup(ctx->title));

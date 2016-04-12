@@ -54,7 +54,7 @@ get_time_idle(long int sec_idle, long int signon_time)
 {
     time_t elapsed = signon_time;
     struct tm res;
-    struct time_idle *ti = xmalloc(sizeof *ti);
+    struct time_idle *ti = xcalloc(sizeof *ti, 1);
     const char fmt[] = "%c";
 
 #if defined(UNIX)
