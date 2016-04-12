@@ -32,7 +32,7 @@ int sw_wcscat(wchar_t *dest, const wchar_t *src, size_t size)
 	while (*dest) {
 	    dest++;
 	}
-	while (*dest++ = *src++) {
+	while ((*dest++ = *src++)) {
 	    ;
 	}
     }

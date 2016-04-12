@@ -32,7 +32,7 @@ int sw_strcat(char *dest, const char *src, size_t size)
 	while (*dest) {
 	    dest++;
 	}
-	while (*dest++ = *src++) {
+	while ((*dest++ = *src++)) {
 	    ;
 	}
     }

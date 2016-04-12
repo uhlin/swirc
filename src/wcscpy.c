@@ -27,7 +27,7 @@ int sw_wcscpy(wchar_t *dest, const wchar_t *src, size_t size)
     } else if (wcslen(src) >= size) {
 	return (ERANGE);
     } else {
-	while (*dest++ = *src++) {
+	while ((*dest++ = *src++)) {
 	    ;
 	}
     }

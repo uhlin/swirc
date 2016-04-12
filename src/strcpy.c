@@ -27,7 +27,7 @@ int sw_strcpy(char *dest, const char *src, size_t size)
     } else if (strlen(src) >= size) {
 	return (ERANGE);
     } else {
-	while (*dest++ = *src++) {
+	while ((*dest++ = *src++)) {
 	    ;
 	}
     }
