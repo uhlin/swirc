@@ -4,16 +4,6 @@
 
 #include <signal.h>
 
-#if OS_X || BSD
-#include <curses.h>
-#elif LINUX
-#include <ncursesw/curses.h>
-#elif WIN32
-#include "pdcurses/curses.h"
-#else
-#error "Cannot determine curses header file!"
-#endif
-
 #include "errHand.h"
 #include "readline.h" /* MY_KEY_RESIZE */
 #include "sig.h"

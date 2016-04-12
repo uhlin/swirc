@@ -29,16 +29,6 @@
 
 #include "common.h"
 
-#if OS_X || BSD
-#include <panel.h>
-#elif LINUX
-#include <ncursesw/panel.h>
-#elif WIN32
-#include "pdcurses/panel.h"
-#else
-#error "Cannot determine panel header file!"
-#endif
-
 #include "errHand.h"
 #include "main.h"
 #include "readline.h"

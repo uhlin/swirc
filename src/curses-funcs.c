@@ -28,17 +28,6 @@
    POSSIBILITY OF SUCH DAMAGE. */
 
 #include "common.h"
-
-#if OS_X || BSD
-#include <curses.h>
-#elif LINUX
-#include <ncursesw/curses.h>
-#elif WIN32
-#include "pdcurses/curses.h"
-#else
-#error "Cannot determine curses header file!"
-#endif
-
 #include "curses-funcs.h"
 
 bool            g_cursesMode  = false;

@@ -1,6 +1,16 @@
 #ifndef READLINE_API_H
 #define READLINE_API_H
 
+#if OS_X || BSD
+#include <curses.h>
+#elif LINUX
+#include <ncursesw/curses.h>
+#elif WIN32
+#include "pdcurses/curses.h"
+#else
+#error "Cannot determine curses header file!"
+#endif
+
 /*lint -sem(readline_error, r_no) doesn't return because of longjmp() */
 
 SW_NORET void readline_error(int error, const char *msg);

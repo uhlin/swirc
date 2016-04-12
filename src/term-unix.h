@@ -17,13 +17,13 @@ void		term_set_title(const char *fmt, ...);
    =========================== */
 
 #if OS_X || BSD
-#include <curses.h>
+#include <panel.h>
 #elif LINUX
-#include <ncursesw/curses.h>
+#include <ncursesw/panel.h>
 #elif WIN32
-#include "pdcurses/curses.h"
+#include "pdcurses/panel.h"
 #else
-#error "Cannot determine curses header file!"
+#error "Cannot determine panel header file!"
 #endif
 
 static SW_INLINE void
