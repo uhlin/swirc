@@ -41,7 +41,7 @@
 #include "theme.h"
 
 static PANEL      *statusbar_pan       = NULL;
-static const char  irc_client_slogan[] = "\0039The universal IRC client\017";
+static const char  irc_client_slogan[] = "\0039,1The universal IRC client\017";
 
 static void
 apply_statusbar_options(WINDOW *win)
