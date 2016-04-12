@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <wctype.h>
+
 #include "assertAPI.h"
 #include "config.h"
 #if defined(WIN32) && defined(PDC_EXP_EXTRAS)

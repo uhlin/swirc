@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include <limits.h>
+#include <wctype.h>
 
 #include "assertAPI.h"
 #include "config.h"
