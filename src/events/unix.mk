@@ -1,0 +1,44 @@
+# src/events/unix.mk
+
+ROOT=../..
+
+include $(ROOT)/unix_def.mk
+
+ifeq ($(CC), gcc)
+include_dirs=-iquote../include
+else
+include_dirs=-I../include
+endif
+
+library_dirs=
+extra_flags=
+
+OBJS=channel.o error.o misc.o motd.o names.o
+OBJS+=noop.o notice.o ping.o welcome-unix.o welcome.o
+OBJS+=whois.o
+
+.PHONY: all clean
+
+.c.o:
+	$(E) "  CC      " $@
+	$(Q) $(CC) $(include_dirs) $(CFLAGS) $(extra_flags) -c $*.c
+
+all: $(OBJS)
+
+channel.o:
+error.o:
+misc.o:
+motd.o:
+names.o:
+noop.o:
+notice.o:
+ping.o:
+welcome-unix.o:
+welcome.o:
+whois.o:
+
+clean:
+	$(E) "  CLEAN"
+	$(RM) $(TEMPFILES)
+
+# EOF
