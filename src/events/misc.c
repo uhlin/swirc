@@ -238,7 +238,7 @@ event_channel_forward(struct irc_message_compo *compo)
     msg		 = strtok_r(NULL, "\n", &state);
 
     if (my_nick == NULL || from_channel == NULL || to_channel == NULL || msg == NULL ||
-	Strings_match_ignore_case(my_nick, g_my_nickname)) {
+	!Strings_match_ignore_case(my_nick, g_my_nickname)) {
 	goto bad;
     }
 
