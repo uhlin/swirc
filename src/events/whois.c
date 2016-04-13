@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include <limits.h>
+#include <time.h>
 
 #include "../irc.h"
 #include "../libUtils.h"
