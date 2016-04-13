@@ -1,6 +1,9 @@
 #ifndef NETWORK_UNIX_H
 #define NETWORK_UNIX_H
 
+#include <sys/time.h>
+#include <sys/types.h>
+
 struct network_recv_context {
     int         sock;
     int         flags;
