@@ -77,6 +77,8 @@ static struct tagThemeDefValues {
     { "gfx_success",               TYPE_STRING,  "[\0039*\017]" },
     { "gfx_warning",               TYPE_STRING,  "[\0038*\017]" },
     { "left_bracket",              TYPE_STRING,  "\00314[\017" },
+    { "nick_s1",                   TYPE_STRING,  "\00314:\017" },
+    { "nick_s2",                   TYPE_STRING,  "\00314:\017" },
     { "notice_color1",             TYPE_STRING,  "\00313" },
     { "notice_color2",             TYPE_STRING,  "\0036" },
     { "notice_inner_b1",           TYPE_STRING,  "\00314(\017" },
