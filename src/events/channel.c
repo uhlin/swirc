@@ -154,6 +154,8 @@ event_part(struct irc_message_compo *compo)
     if (Strings_match_ignore_case(nick, g_my_nickname)) {
 	if (destroy_chat_window(channel) != 0)
 	    goto bad;
+	else
+	    return;
     } else {
 	if (event_names_htbl_remove(nick, channel) != OK)
 	    goto bad;
