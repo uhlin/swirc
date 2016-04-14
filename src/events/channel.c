@@ -120,3 +120,63 @@ event_join(struct irc_message_compo *compo)
     err_msg("On issuing event %s: A fatal error occured", compo->command);
     abort();
 }
+
+/* event_part
+
+   Examples:
+     :<nick>!<user>@<host> PART <channel>
+     :<nick>!<user>@<host> PART <channel> :<message> */
+void
+event_part(struct irc_message_compo *compo)
+{
+    char *channel;
+    char *host;
+    char *message;
+    char *nick;
+    char *prefix = &compo->prefix[1];
+    char *state1, *state2;
+    char *user;
+    const bool has_message = Strfeed(compo->params, 1) == 1;
+    struct printtext_context ctx;
+
+    state1 = state2 = "";
+
+    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL
+	|| (user = strtok_r(NULL, "!@", &state1)) == NULL
+	|| (host = strtok_r(NULL, "!@", &state1)) == NULL) {
+	return;
+    }
+
+    if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL)
+	goto bad;
+    message = strtok_r(NULL, "\n", &state2);
+
+    if (Strings_match_ignore_case(nick, g_my_nickname)) {
+	if (destroy_chat_window(channel) != 0)
+	    goto bad;
+    } else {
+	if (event_names_htbl_remove(nick, channel) != OK)
+	    goto bad;
+    }
+
+    if ((ctx.window = window_by_label(channel)) == NULL) {
+	goto bad;
+    }
+
+    ctx.spec_type  = TYPE_SPEC1_SPEC2;
+    ctx.include_ts = true;
+
+    if (!has_message)
+	message = "";
+    if (has_message && *message == ':')
+	message++;
+    printtext(&ctx, "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s",
+	      COLOR2, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
+	      COLOR2, channel, NORMAL,
+	      LEFT_BRKT, message, RIGHT_BRKT);
+    return;
+
+  bad:
+    err_msg("On issuing event %s: A fatal error occured", compo->command);
+    abort();
+}
