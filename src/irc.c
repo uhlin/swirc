@@ -46,6 +46,7 @@
 #include "events/noop.h"
 #include "events/notice.h"
 #include "events/ping.h"
+#include "events/privmsg.h"
 #include "events/welcome.h"
 #include "events/whois.h"
 
@@ -72,7 +73,7 @@ static struct normal_events_tag {
     { "TOPIC",   event_noop    },
     { "INVITE",  event_noop    },
     { "KICK",    event_noop    },
-    { "PRIVMSG", event_noop    },
+    { "PRIVMSG", event_privmsg },
     { "NOTICE",  event_notice  },
     { "PING",    event_ping    },
     { "ERROR",   event_error   },
