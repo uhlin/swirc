@@ -385,7 +385,7 @@ reassign_window_refnums(void)
 
     foreach_hash_table_entry(entry_p) {
 	for (window = *entry_p; window != NULL; window = window->next) {
-	    if (Strings_match_ignore_case(window->label, g_status_window_label))
+	    if (!Strings_match_ignore_case(window->label, g_status_window_label))
 		window->refnum = ++ref_count; /* skip status window and assign new num */
 	}
     }
