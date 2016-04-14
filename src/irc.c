@@ -167,10 +167,16 @@ irc_handle_interpret_events(char *recvbuffer,
 	;
     }
 
-    terminated_recvchunk =
-	((recvbuffer[strlen(recvbuffer)-1] == '\r' || recvbuffer[strlen(recvbuffer)-1] == '\n')
-	 ? true
-	 : false);
+    switch (recvbuffer[strlen(recvbuffer) - 1]) {
+    case '\r':
+    case '\n':
+	terminated_recvchunk = true;
+	break;
+    default:
+	terminated_recvchunk = false;
+	break;
+    }
+
     if (!terminated_recvchunk) {
 	last_token = get_last_token(recvbuffer); /* Must be freed */
     }
