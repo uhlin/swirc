@@ -205,6 +205,8 @@ handle_test_cmds(const char *line)
 	    NET_SEND("JOIN #help");
 	} else if (Strings_match(&line[1], "join #anonops")) {
 	    NET_SEND("JOIN #anonops");
+	} else if (Strings_match(&line[1], "part #test")) {
+	    NET_SEND("PART #test");
 	} else {
 	    ;
 	}
