@@ -15,11 +15,28 @@ it's still under heavy development.
 The name Swirc is an assembly of the word swift (or at your option
 Swedish) and IRC.
 
-## Extensions ##
+### Extensions ###
 
 I have no plans to add support for writing extensions in a scripting
 language. Extensions are added to the repository written in C, if they
 can make it there.
+
+## Program options ##
+
+### Common ###
+
+    -c <server[:port]>    Auto-connect to given server
+    -n <nickname>         Online nickname
+    -u <username>         User identity
+    -r <rl name>          Specifies the real name
+    -p <password>         Password (for private networks)
+    -h <hostname>         Use this hostname on connect
+    -x <config>           Explicit config file
+
+### Extras ###
+
+    -v, -version          View the current client ver
+    -?, -help             Print the usage
 
 ## Cloning ##
 
