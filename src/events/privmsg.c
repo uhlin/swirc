@@ -4,6 +4,7 @@
 #include "../irc.h"
 #include "../printtext.h"
 #include "../strHand.h"
+#include "../theme.h"
 
 #include "privmsg.h"
 
@@ -58,7 +59,7 @@ event_privmsg(struct irc_message_compo *compo)
 	handle_special_msg();
 	return;
     } else {
-	printtext(&ctx, "<%s> %s", nick, msg);
+	printtext(&ctx, "%s%s%s %s", Theme("nick_s1"), nick, Theme("nick_s2"), msg);
     }
 
     return;

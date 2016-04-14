@@ -261,7 +261,7 @@ enter_io_loop(void)
 		    if (net_send(g_socket, 0, "PRIVMSG %s :%s", g_active_window->label, line) < 0)
 			g_on_air = false;
 		    else
-			printtext(&ptext_ctx, "<%s> %s", g_my_nickname, line);
+			printtext(&ptext_ctx, "%s%s%s %s", Theme("nick_s1"), g_my_nickname, Theme("nick_s2"), line);
 		}
 	    }
 	}
