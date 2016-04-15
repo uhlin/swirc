@@ -191,12 +191,10 @@ event_part(struct irc_message_compo *compo)
 void
 event_quit(struct irc_message_compo *compo)
 {
-    char	*host;
     char	*message = *(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
-    char	*nick;
+    char	*nick, *user, *host;
     char	*prefix	 = &compo->prefix[1];
     char	*state	 = "";
-    char	*user;
     struct printtext_context ctx = {
 	.window	    = NULL,
 	.spec_type  = TYPE_SPEC1_SPEC2,
