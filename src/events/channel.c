@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include "../dataClassify.h"
 #include "../errHand.h"
 #include "../irc.h"
 #include "../printtext.h"
@@ -181,4 +182,42 @@ event_part(struct irc_message_compo *compo)
   bad:
     err_msg("On issuing event %s: A fatal error occured", compo->command);
     abort();
+}
+
+/* event_quit
+
+   Example:
+     :<nick>!<user>@<host> QUIT :<message> */
+void
+event_quit(struct irc_message_compo *compo)
+{
+    char	*host;
+    char	*message = *(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
+    char	*nick;
+    char	*prefix	 = &compo->prefix[1];
+    char	*state	 = "";
+    char	*user;
+    struct printtext_context ctx = {
+	.window	    = NULL,
+	.spec_type  = TYPE_SPEC1_SPEC2,
+	.include_ts = true,
+    };
+
+    if ((nick = strtok_r(prefix, "!@", &state)) == NULL
+	|| (user = strtok_r(NULL, "!@", &state)) == NULL
+	|| (host = strtok_r(NULL, "!@", &state)) == NULL) {
+	return;
+    }
+
+    for (int i = 1; i <= g_ntotal_windows; i++) {
+	PIRC_WINDOW window = window_by_refnum(i);
+
+	if (window && is_irc_channel(window->label) &&
+	    event_names_htbl_remove(nick, window->label) == OK) {
+	    ctx.window = window;
+	    printtext(&ctx, "%s %s%s@%s%s has quit %s%s%s",
+		      nick, LEFT_BRKT, user, host, RIGHT_BRKT,
+		      LEFT_BRKT, message, RIGHT_BRKT);
+	}
+    }
 }
