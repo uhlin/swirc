@@ -72,7 +72,7 @@ static struct normal_events_tag {
     { "MODE",    event_noop    },
     { "TOPIC",   event_noop    },
     { "INVITE",  event_noop    },
-    { "KICK",    event_noop    },
+    { "KICK",    event_kick    },
     { "PRIVMSG", event_privmsg },
     { "NOTICE",  event_notice  },
     { "PING",    event_ping    },

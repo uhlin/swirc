@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
 #include "../irc.h"
@@ -257,4 +258,59 @@ event_nick(struct irc_message_compo *compo)
 
     if (Strings_match(nick, g_my_nickname))
 	irc_set_my_nickname(new_nick);
+}
+
+/* event_kick
+
+   Examples:
+     :<nick>!<user>@<host> KICK <channel> <victim> :<reason> */
+void
+event_kick(struct irc_message_compo *compo)
+{
+    char	*channel;
+    char	*nick, *user, *host;
+    char	*prefix = &compo->prefix[1];
+    char	*reason;
+    char	*state1, *state2;
+    char	*victim;
+    struct printtext_context ctx = {
+	.window	    = NULL,
+	.spec_type  = TYPE_SPEC1_SPEC2,
+	.include_ts = true,
+    };
+
+    state1 = state2 = "";
+
+    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL
+	|| (user = strtok_r(NULL, "!@", &state1)) == NULL
+	|| (host = strtok_r(NULL, "!@", &state1)) == NULL) {
+	return;
+    }
+
+    if (Strfeed(compo->params, 2) != 2)
+	return;
+
+    if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL
+	|| (victim = strtok_r(NULL, "\n", &state2)) == NULL
+	|| (reason = strtok_r(NULL, "\n", &state2)) == NULL)
+	return;
+
+    if (*reason == ':')
+	reason++;
+
+    if (Strings_match_ignore_case(victim, g_my_nickname)) {
+	if (config_bool_unparse("kick_close_window", true))
+	    destroy_chat_window(channel);
+	else
+	    event_names_htbl_remove_all(window_by_label(channel));
+    } else {
+	event_names_htbl_remove(victim, channel);
+    }
+
+    if ((ctx.window = window_by_label(channel)) == NULL)
+	ctx.window = g_active_window;
+
+    printtext(&ctx, "%s was kicked from %s%s%c by %s%s%c %s%s%s",
+	      victim, COLOR2, channel, NORMAL, COLOR2, nick, NORMAL,
+	      LEFT_BRKT, reason, RIGHT_BRKT);
 }
