@@ -64,7 +64,7 @@ static struct normal_events_tag {
     char		*normal_event;
     event_handler_fn	 event_handler;
 } normal_events[] = {
-    { "NICK",    event_noop    },
+    { "NICK",    event_nick    },
     { "QUIT",    event_quit    },
     { "SQUIT",   event_noop    },
     { "JOIN",    event_join    },

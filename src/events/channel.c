@@ -221,3 +221,42 @@ event_quit(struct irc_message_compo *compo)
 	}
     }
 }
+
+/* event_nick
+
+   Example:
+     :<nick>!<user>@<host> NICK :<new nick> */
+void
+event_nick(struct irc_message_compo *compo)
+{
+    char	*new_nick = *(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
+    char	*nick, *user, *host;
+    char	*prefix	  = &compo->prefix[1];
+    char	*state	  = "";
+    struct printtext_context ctx = {
+	.window	    = NULL,
+	.spec_type  = TYPE_SPEC1_SPEC2,
+	.include_ts = true,
+    };
+
+    if ((nick = strtok_r(prefix, "!@", &state)) == NULL
+	|| (user = strtok_r(NULL, "!@", &state)) == NULL
+	|| (host = strtok_r(NULL, "!@", &state)) == NULL) {
+	return;
+    }
+
+    for (int i = 1; i <= g_ntotal_windows; i++) {
+	PIRC_WINDOW window = window_by_refnum(i);
+
+	if (window && is_irc_channel(window->label)
+	    && event_names_htbl_remove(nick, window->label) == OK
+	    && event_names_htbl_insert(new_nick, window->label) == OK) {
+	    ctx.window = window;
+	    printtext(&ctx, "%s%s%c is now known as %s %s%s%c",
+		      COLOR2, nick, NORMAL, THE_SPEC2, COLOR1, new_nick, NORMAL);
+	}
+    }
+
+    if (Strings_match(nick, g_my_nickname))
+	irc_set_my_nickname(new_nick);
+}
