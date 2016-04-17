@@ -49,10 +49,15 @@ event_privmsg(struct irc_message_compo *compo)
 	return;
     if (*msg == ':')
 	msg++;
-    if (window_by_label(dest) == NULL && spawn_chat_window(dest, "") != 0)
-	goto fail;
+    if (Strings_match(dest, g_my_nickname)) {
+	if (window_by_label(nick) == NULL && spawn_chat_window(nick, "") != 0)
+	    return;
+    } else {
+	if (window_by_label(dest) == NULL && spawn_chat_window(dest, "") != 0)
+	    return;
+    }
 
-    ctx.window = window_by_label(dest);
+    ctx.window = window_by_label(Strings_match(dest, g_my_nickname) ? nick : dest);
     sw_assert(ctx.window != NULL);
 
     if (*msg == '\001') {
@@ -61,12 +66,4 @@ event_privmsg(struct irc_message_compo *compo)
     } else {
 	printtext(&ctx, "%s%s%s %s", Theme("nick_s1"), nick, Theme("nick_s2"), msg);
     }
-
-    return;
-
-  fail:
-    ctx.window	   = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_FAILURE;
-    ctx.include_ts = true;
-    printtext(&ctx, "On issuing event %s: An error occured", compo->command);
 }
