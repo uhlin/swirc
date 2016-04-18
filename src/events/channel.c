@@ -155,6 +155,7 @@ event_mode(struct irc_message_compo *compo)
 	(s = strtok_r(NULL, "\n", &state2)) != NULL) {
 	s_copy = sw_strdup(s);
 	squeeze(s_copy, ":");
+	trim(s_copy);
 
 	if (Strings_match(nick, channel)) { /* user mode */
 	    ctx.window = g_status_window;
