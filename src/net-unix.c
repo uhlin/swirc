@@ -53,8 +53,8 @@ listenThread_fn(void *arg)
 {
     struct network_recv_context ctx;
     ssize_t       bytes_received;
-    const size_t  recvbuf_size   = 8192;
-    char         *recvbuf        = xmalloc(recvbuf_size + 1);
+    const size_t  recvbuf_size   = 2048;
+    char         *recvbuf        = xcalloc(recvbuf_size, 1);
     char         *message_concat = NULL;
     enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
     struct printtext_context ptext_ctx;
