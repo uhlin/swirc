@@ -137,7 +137,40 @@ event_topic_creator(struct irc_message_compo *compo)
 void
 event_mode(struct irc_message_compo *compo)
 {
-    (void) compo;
+    char *channel, *s, *s_copy;
+    char *nick;
+    char *prefix = &compo->prefix[1];
+    char *state1 = "", *state2 = "";
+    struct printtext_context ctx = {
+	.window	    = NULL,
+	.spec_type  = TYPE_SPEC1,
+	.include_ts = true,
+    };
+
+    if (Strfeed(compo->params, 1) != 1)
+	return;
+    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
+	return;
+    if ((channel = strtok_r(compo->params, "\n", &state2)) != NULL &&
+	(s = strtok_r(NULL, "\n", &state2)) != NULL) {
+	s_copy = sw_strdup(s);
+	squeeze(s_copy, ":");
+
+	if (Strings_match(nick, channel)) { /* user mode */
+	    ctx.window = g_status_window;
+	    printtext(&ctx, "Mode change %s%s%s for user %c%s%c",
+		      LEFT_BRKT, s_copy, RIGHT_BRKT, BOLD, nick, BOLD);
+	} else if (is_irc_channel(channel) && (ctx.window = window_by_label(channel)) != NULL) {
+	    printtext(&ctx, "mode/%s%s%s%c%s %s%s%s by %s%s%c",
+		      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+		      LEFT_BRKT, s_copy, RIGHT_BRKT,
+		      COLOR2, nick, NORMAL);
+	} else {
+	    /* do nothing */;
+	}
+
+	free(s_copy);
+    }
 }
 
 /* event_join

@@ -69,7 +69,7 @@ static struct normal_events_tag {
     { "SQUIT",   event_noop    },
     { "JOIN",    event_join    },
     { "PART",    event_part    },
-    { "MODE",    event_noop    },
+    { "MODE",    event_mode    },
     { "TOPIC",   event_noop    },
     { "INVITE",  event_noop    },
     { "KICK",    event_kick    },
