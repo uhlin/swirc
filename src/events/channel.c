@@ -219,6 +219,8 @@ event_part(struct irc_message_compo *compo)
 
     if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL)
 	goto bad;
+    if (*channel == ':')
+	channel++;
     message = strtok_r(NULL, "\n", &state2);
 
     if (Strings_match_ignore_case(nick, g_my_nickname)) {
