@@ -70,7 +70,7 @@ listenThread_fn(void *arg)
 
     do {
 	BZERO(recvbuf, recvbuf_size);
-	if ((bytes_received = net_recv(&ctx, recvbuf, recvbuf_size)) == -1) {
+	if ((bytes_received = net_recv(&ctx, recvbuf, recvbuf_size - 1)) == -1) {
 	    goto out;
 	} else if (bytes_received > 0) {
 	    irc_handle_interpret_events(recvbuf, &message_concat, &state);
