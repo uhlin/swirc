@@ -125,9 +125,15 @@ static void case_config   (void);
 int
 main(int argc, char *argv[])
 {
+#if __OpenBSD__
+    extern char *malloc_options;
+#endif
     int opt;
     const char optstring[] = "c:n:u:r:p:h:x:";
 
+#if __OpenBSD__
+    malloc_options = "S";
+#endif
     (void) setlocale(LC_ALL, "");
     if (!sigHand_init()) {
 	err_msg("FATAL: Failed to initialize signal handling");
