@@ -47,7 +47,28 @@
 void
 event_topic(struct irc_message_compo *compo)
 {
-    (void) compo;
+    char *channel, *topic;
+    char *state = "";
+    struct printtext_context ctx = {
+	.window	    = NULL,
+	.spec_type  = TYPE_SPEC1,
+	.include_ts = true,
+    };
+
+    if (Strfeed(compo->params, 2) != 2)
+	return;
+    (void) strtok_r(compo->params, "\n", &state);
+    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
+	(topic = strtok_r(NULL, "\n", &state)) == NULL)
+	return;
+    if (*topic == ':')
+	topic++;
+    if ((ctx.window = window_by_label(channel)) == NULL)
+	return;
+    printtext(&ctx, "Topic for %s%s%s%c%s: %s",
+	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+	      topic);
+    new_window_title(channel, topic);
 }
 
 /* event_topic_creator: 333
