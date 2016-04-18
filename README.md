@@ -52,6 +52,11 @@ Swirc currently depends on:
 
 * [Ncurses](https://www.gnu.org/software/ncurses/ncurses.html) with wide character support
 
+Which means that on for example a Debian GNU/Linux system you need to
+install a package with name libncursesw5-dev:
+
+    # aptitude install libncursesw5-dev
+
 ### Building for the UNIX environment ###
 
     $ ./configure
