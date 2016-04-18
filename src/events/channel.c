@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <time.h>
+
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
@@ -79,7 +81,52 @@ event_topic(struct irc_message_compo *compo)
 void
 event_topic_creator(struct irc_message_compo *compo)
 {
-    (void) compo;
+    char *channel, *s, *s_copy, *set_when;
+    char *set_by, *user, *host;
+    char *state1, *state2;
+    struct printtext_context ctx = {
+	.window	    = NULL,
+	.spec_type  = TYPE_SPEC1,
+	.include_ts = true,
+    };
+
+    set_by = user = host = NULL;
+    state1 = state2 = "";
+
+    if (Strfeed(compo->params, 3) != 3)
+	return;
+
+    (void) strtok_r(compo->params, "\n", &state1);
+
+    if ((channel = strtok_r(NULL, "\n", &state1)) == NULL
+	|| (s = strtok_r(NULL, "\n", &state1)) == NULL
+	|| (set_when = strtok_r(NULL, "\n", &state1)) == NULL)
+	return;
+
+    if ((ctx.window = window_by_label(channel)) == NULL || !is_numeric(set_when))
+	return;
+
+    const time_t clock = (time_t) strtol(set_when, NULL, 10);
+
+    s_copy = sw_strdup(s);
+    set_by = strtok_r(s_copy, "!@", &state2);
+    user   = strtok_r(NULL, "!@", &state2);
+    host   = strtok_r(NULL, "!@", &state2);
+
+    if (set_by && user && host) {
+	printtext(&ctx, "Topic set by %c%s%c %s%s@%s%s %s%s%s",
+		  BOLD, set_by, BOLD,
+		  LEFT_BRKT, user, host, RIGHT_BRKT,
+		  LEFT_BRKT, trim(ctime(&clock)), RIGHT_BRKT);
+    } else if (set_by) {
+	printtext(&ctx, "Topic set by %c%s%c %s%s%s",
+		  BOLD, set_by, BOLD,
+		  LEFT_BRKT, trim(ctime(&clock)), RIGHT_BRKT);
+    } else {
+	/* do nothing */;
+    }
+
+    free(s_copy);
 }
 
 /* event_mode
