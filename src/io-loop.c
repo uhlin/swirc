@@ -60,6 +60,7 @@ static struct cmds_tag {
     { "/join",           cmd_join            },
     { "/part",           cmd_part            },
     { "/quit",           cmd_quit            },
+    { "/whois",          cmd_whois           },
 };
 
 static void
