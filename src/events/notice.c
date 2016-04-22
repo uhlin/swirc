@@ -71,7 +71,7 @@ handle_notice_from_my_server(const struct notice_context *ctx)
 	.include_ts = true,
     };
 
-    if (g_my_nickname && Strings_match(ctx->dest, g_my_nickname))
+    if (g_my_nickname && Strings_match_ignore_case(ctx->dest, g_my_nickname))
 	printtext(&ptext_ctx, "%s!%s%c %s", Theme("color3"), ctx->srv_name, NORMAL, ctx->msg);
 }
 
@@ -109,7 +109,7 @@ event_notice(struct irc_message_compo *compo)
 	    msg++;
     }
 
-    if (Strings_match(prefix, g_server_hostname)) {
+    if (Strings_match_ignore_case(prefix, g_server_hostname)) {
 	struct notice_context ctx = {
 	    .srv_name = prefix,
 	    .dest     = dest,
