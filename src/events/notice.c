@@ -135,7 +135,7 @@ event_notice(struct irc_message_compo *compo)
 	if (Strings_match_ignore_case(dest, g_my_nickname))
 	    ptext_ctx.window = window_by_label(nick) ? window_by_label(nick) : g_status_window;
 	else
-	    window_by_label(dest) ? window_by_label(dest) : g_status_window;
+	    ptext_ctx.window = window_by_label(dest) ? window_by_label(dest) : g_status_window;
 
 	ptext_ctx.spec_type  = TYPE_SPEC_NONE;
 	ptext_ctx.include_ts = true;
