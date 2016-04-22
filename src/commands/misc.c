@@ -48,3 +48,21 @@ cmd_whois(const char *data)
 	net_send(g_socket, 0, "WHOIS %s %s", data, data);
     }
 }
+
+/* usage: /query [nick] */
+void
+cmd_query(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (Strings_match(data, "")) {
+	if (is_valid_nickname(g_active_window->label))
+	    destroy_chat_window(g_active_window->label);
+	else
+	    printtext(&ptext_ctx, "/query: missing arguments");
+    } else if (!is_valid_nickname(data)) {
+	printtext(&ptext_ctx, "/query: bogus nickname");
+    } else {
+	spawn_chat_window(data, "");
+    }
+}
