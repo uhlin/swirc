@@ -22,6 +22,8 @@ OUT=swirc
 	$(Q) $(CC) $(include_dirs) $(CFLAGS) $(extra_flags) -c $*.c 1>>$(log_file)
 
 $(OUT).exe: $(OBJS)
+	cd commands && $(MAKE) -f w32.mk
+	cd $(MAKEDIR)
 	cd events && $(MAKE) -f w32.mk
 	cd $(MAKEDIR)
 	$(E) ^ ^ FETCH^ ^ ^ pdcurses-3.4.cab
@@ -31,7 +33,7 @@ $(OUT).exe: $(OBJS)
 	$(E) ^ ^ EXPAND^ ^ pdcurses-3.4.cab
 	$(Q) expand pdcurses-3.4.cab "-F:*" pdcurses-3.4 1>>$(log_file)
 	$(E) ^ ^ LINK^ ^ ^ ^ $@
-	$(Q) $(CC) -Fe$(OUT) *.obj events/*.obj -link $(LDFLAGS) $(library_dirs) $(LDLIBS) 1>>$(log_file)
+	$(Q) $(CC) -Fe$(OUT) *.obj commands/*.obj events/*.obj -link $(LDFLAGS) $(library_dirs) $(LDLIBS) 1>>$(log_file)
 	$(E) ^ ^ MOVE^ ^ ^ ^ pdcurses.dll
 	$(Q) move "pdcurses-3.4\pdcurses.dll" . 1>>$(log_file)
 
@@ -72,6 +74,8 @@ wcscpy.obj:
 window.obj:
 
 clean:
+	cd commands && $(MAKE) -f w32.mk clean
+	cd $(MAKEDIR)
 	cd events && $(MAKE) -f w32.mk clean
 	cd $(MAKEDIR)
 	$(E) ^ ^ CLEAN

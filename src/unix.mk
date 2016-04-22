@@ -25,10 +25,12 @@ OUT=swirc
 	$(Q) $(CC) $(include_dirs) $(CFLAGS) $(extra_flags) -c $*.c
 
 $(OUT): $(OBJS)
+	$(Q) cd commands && $(MAKE) -f unix.mk
+	$(Q) cd ..
 	$(Q) cd events && $(MAKE) -f unix.mk
 	$(Q) cd ..
 	$(E) "  LINK    " $@
-	$(Q) $(CC) $(library_dirs) $(LDFLAGS) -o $(OUT) *.o events/*.o $(LDLIBS)
+	$(Q) $(CC) $(library_dirs) $(LDFLAGS) -o $(OUT) *.o commands/*.o events/*.o $(LDLIBS)
 
 assertAPI.o:
 config.o:
@@ -66,6 +68,8 @@ wcscpy.o:
 window.o:
 
 clean:
+	$(Q) cd commands && $(MAKE) -f unix.mk clean
+	$(Q) cd ..
 	$(Q) cd events && $(MAKE) -f unix.mk clean
 	$(Q) cd ..
 	$(E) "  CLEAN"

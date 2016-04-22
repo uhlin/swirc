@@ -45,9 +45,22 @@
 #include "terminal.h"
 #include "theme.h"
 
-#define TEST_MODE 1
+#include "commands/connect.h"
+#include "commands/jp.h"
+#include "commands/misc.h"
 
 bool g_io_loop = true;
+
+static struct cmds_tag {
+    char		*cmd;
+    CMD_HANDLER_FN	 fn;
+} cmds[] = {
+    { "/connect",        cmd_connect         },
+    { "/disconnect",     cmd_disconnect      },
+    { "/join",           cmd_join            },
+    { "/part",           cmd_part            },
+    { "/quit",           cmd_quit            },
+};
 
 static void
 swirc_greeting()
@@ -179,39 +192,26 @@ get_prompt()
 }
 
 static void
-handle_test_cmds(const char *line)
+handle_cmds(const char *data)
 {
-#define NET_SEND(data) ((void) net_send(g_socket, 0, "%s", data))
-    if (Strings_match(&line[1], "quit")) {
-	if (g_on_air) {
-	    NET_SEND("QUIT");
-	    g_on_air = false;
-	    net_listenThread_join();
-	}
+    struct cmds_tag *sp;
+    const size_t ar_sz = ARRAY_SIZE(cmds);
+    char *cp;
 
-	g_io_loop = false;
-    } else if (g_on_air) {
-	if (Strings_match(&line[1], "disconnect")) {
-	    NET_SEND("QUIT");
-	    g_on_air = false;
-	    net_listenThread_join();
-	} else if (Strings_match(&line[1], "whoami")) {
-	    net_send(g_socket, 0, "WHOIS %s %s", g_my_nickname, g_my_nickname);
-	} else if (Strings_match(&line[1], "join #swirc")) {
-	    NET_SEND("JOIN #swirc");
-	} else if (Strings_match(&line[1], "join #test")) {
-	    NET_SEND("JOIN #test");
-	} else if (Strings_match(&line[1], "join #help")) {
-	    NET_SEND("JOIN #help");
-	} else if (Strings_match(&line[1], "join #anonops")) {
-	    NET_SEND("JOIN #anonops");
-	} else if (Strings_match(&line[1], "part #test")) {
-	    NET_SEND("PART #test");
+    for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
+	cp = Strdup_printf("%s ", sp->cmd);
+
+	if (Strings_match(data, sp->cmd)) {
+	    sp->fn("");
+	    free(cp);
+	    break;
+	} else if (!strncmp( data, cp, strlen(cp) )) {
+	    sp->fn(&data[strlen(cp)]);
+	    free(cp);
+	    break;
 	} else {
-	    ;
+	    free(cp);
 	}
-    } else {
-	;
     }
 }
 
@@ -243,9 +243,7 @@ enter_io_loop(void)
 
 	    continue;
 	} else if (*line == cmd_char) {
-#if TEST_MODE
-	    handle_test_cmds(line);
-#endif /* TEST_MODE */
+	    handle_cmds(line);
 	} else {
 	    if (g_on_air && !Strings_match(g_active_window->label, g_status_window_label)) {
 		struct printtext_context ptext_ctx = {
