@@ -250,11 +250,13 @@ hUndef(PIRC_WINDOW entry)
 static unsigned int
 hash(const char *label)
 {
-    char c;
-    unsigned int hashval = 0;
-    unsigned int tmp;
+    char		 c;
+    char		*label_copy = str_tolower(sw_strdup(label));
+    char		*label_p    = label_copy;
+    unsigned int	 hashval    = 0;
+    unsigned int	 tmp;
 
-    while ((c = *label++) != '\0') {
+    while ((c = *label_p++) != '\0') {
 	hashval = (hashval << 4) + c;
 	tmp = hashval & 0xf0000000;
 
@@ -264,6 +266,7 @@ hash(const char *label)
 	}
     }
 
+    free(label_copy);
     return (hashval % ARRAY_SIZE(hash_table));
 }
 
