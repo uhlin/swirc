@@ -306,11 +306,13 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
 static unsigned int
 hash(const char *nick)
 {
-    char		c;
-    unsigned int	hashval = 0;
-    unsigned int	tmp;
+    char		 c;
+    char		*nick_copy = str_tolower(sw_strdup(nick));
+    char		*nick_p	   = nick_copy;
+    unsigned int	 hashval   = 0;
+    unsigned int	 tmp;
 
-    while ((c = *nick++) != '\0') {
+    while ((c = *nick_p++) != '\0') {
 	hashval = (hashval << 4) + c;
 	tmp = hashval & 0xf0000000;
 
@@ -320,6 +322,7 @@ hash(const char *nick)
 	}
     }
 
+    free(nick_copy);
     return (hashval % NAMES_HASH_TABLE_SIZE);
 }
 
