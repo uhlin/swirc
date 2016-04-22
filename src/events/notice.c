@@ -132,9 +132,14 @@ event_notice(struct irc_message_compo *compo)
 		  Theme("notice_lb"), Theme("notice_color1"), nick, NORMAL, Theme("notice_sep"),
 		  Theme("notice_color2"), dest, NORMAL, Theme("notice_rb"), msg);
     } else {
-	ptext_ctx.window     = window_by_label(dest) ? window_by_label(dest) : g_status_window;
+	if (Strings_match_ignore_case(dest, g_my_nickname))
+	    ptext_ctx.window = window_by_label(nick) ? window_by_label(nick) : g_status_window;
+	else
+	    window_by_label(dest) ? window_by_label(dest) : g_status_window;
+
 	ptext_ctx.spec_type  = TYPE_SPEC_NONE;
 	ptext_ctx.include_ts = true;
+
 	printtext(&ptext_ctx, "%s%s%s%c%s%s%s@%s%c%s%s %s",
 		  Theme("notice_lb"), Theme("notice_color1"), nick, NORMAL,
 		  Theme("notice_inner_b1"), Theme("notice_color2"), user, host,
