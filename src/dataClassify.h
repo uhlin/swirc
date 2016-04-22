@@ -9,6 +9,7 @@ bool	is_valid_uMode     (const char *modes);
 bool	is_valid_nickname  (const char *nickname);
 bool	is_valid_username  (const char *username);
 bool	is_valid_real_name (const char *real_name);
+bool	is_valid_hostname  (const char *hostname);
 
 /* Inline function definitions
    =========================== */

@@ -36,6 +36,7 @@
 static const size_t	nickname_len_max  = 16;
 static const size_t	username_len_max  = 9;
 static const size_t	real_name_len_max = 45;
+static const size_t	hostname_len_max  = 253;
 
 bool
 is_alphabetic(const char *string)
@@ -172,6 +173,26 @@ is_valid_real_name(const char *real_name)
 
     for (ccp = &real_name[0]; *ccp != '\0'; ccp++) {
 	if (!sw_isprint(*ccp)) {
+	    return false;
+	}
+    }
+
+    return true;
+}
+
+bool
+is_valid_hostname(const char *hostname)
+{
+    const char *ccp;
+    const char host_chars[] =
+	"abcdefghijklmnopqrstuvwxyz.0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    if (hostname == NULL || *hostname == '\0' || strlen(hostname) > hostname_len_max) {
+	return false;
+    }
+
+    for (ccp = &hostname[0]; *ccp != '\0'; ccp++) {
+	if (strchr(host_chars, *ccp) == NULL) {
 	    return false;
 	}
     }
