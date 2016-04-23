@@ -232,7 +232,7 @@ event_names_htbl_modify(const char *nick, const char *channel,
     }
 
     for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
-	if (Strings_match(nick, names->nick)) {
+	if (Strings_match_ignore_case(nick, names->nick)) {
 	    names->is_op     = is_op;
 	    names->is_halfop = is_halfop;
 	    names->is_voice  = is_voice;
@@ -254,7 +254,7 @@ event_names_htbl_remove(const char *nick, const char *channel)
     }
 
     for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
-	if (Strings_match(nick, names->nick)) {
+	if (Strings_match_ignore_case(nick, names->nick)) {
 	    hUndef(window, names);
 	    return OK;
 	}

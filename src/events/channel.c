@@ -157,7 +157,7 @@ event_mode(struct irc_message_compo *compo)
 	squeeze(s_copy, ":");
 	trim(s_copy);
 
-	if (Strings_match(nick, channel)) { /* user mode */
+	if (Strings_match_ignore_case(nick, channel)) { /* user mode */
 	    ctx.window = g_status_window;
 	    printtext(&ctx, "Mode change %s%s%s for user %c%s%c",
 		      LEFT_BRKT, s_copy, RIGHT_BRKT, BOLD, nick, BOLD);
@@ -360,7 +360,7 @@ event_nick(struct irc_message_compo *compo)
 	}
     }
 
-    if (Strings_match(nick, g_my_nickname))
+    if (Strings_match_ignore_case(nick, g_my_nickname))
 	irc_set_my_nickname(new_nick);
 }
 
