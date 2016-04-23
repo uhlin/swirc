@@ -49,6 +49,10 @@ event_privmsg(struct irc_message_compo *compo)
 	return;
     if (*msg == ':')
 	msg++;
+    if (*msg == '\001') {
+	handle_special_msg();
+	return;
+    }
     if (Strings_match_ignore_case(dest, g_my_nickname)) {
 	if (window_by_label(nick) == NULL && spawn_chat_window(nick, "") != 0)
 	    return;
@@ -59,11 +63,5 @@ event_privmsg(struct irc_message_compo *compo)
 
     ctx.window = window_by_label(Strings_match_ignore_case(dest, g_my_nickname) ? nick : dest);
     sw_assert(ctx.window != NULL);
-
-    if (*msg == '\001') {
-	handle_special_msg();
-	return;
-    } else {
-	printtext(&ctx, "%s%s%s %s", Theme("nick_s1"), nick, Theme("nick_s2"), msg);
-    }
+    printtext(&ctx, "%s%s%s %s", Theme("nick_s1"), nick, Theme("nick_s2"), msg);
 }
