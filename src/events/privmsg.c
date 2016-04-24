@@ -2,15 +2,56 @@
 
 #include "../assertAPI.h"
 #include "../irc.h"
+#include "../main.h"
+#include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
 #include "../theme.h"
 
 #include "privmsg.h"
 
+struct special_msg_context {
+    char *nick;
+    char *user;
+    char *host;
+    char *dest;
+    char *msg;
+};
+
 static void
-handle_special_msg()
+handle_special_msg(const struct special_msg_context *ctx)
 {
+    char *msg = sw_strdup(ctx->msg);
+    struct printtext_context pt_ctx;
+
+    squeeze(msg, "\001");
+    trim(msg);
+
+    if (Strings_match_ignore_case(ctx->dest, g_my_nickname)) {
+	pt_ctx.window = window_by_label(ctx->nick);
+    } else {
+	pt_ctx.window = window_by_label(ctx->dest);
+    }
+
+    if (! (pt_ctx.window))
+	pt_ctx.window = g_active_window;
+    pt_ctx.spec_type  = TYPE_SPEC_NONE;
+    pt_ctx.include_ts = true;
+
+    if (!strncmp(msg, "ACTION ", 7)) {
+	printtext(&pt_ctx, " - %s %s", ctx->nick, &msg[7]);
+    } else if (!strncmp(msg, "VERSION", 8)) {
+	net_send(g_socket, 0, "PRIVMSG %s :\001VERSION Swirc %s by %s\001",
+		 ctx->nick, g_swircVersion, g_swircAuthor);
+	pt_ctx.spec_type = TYPE_SPEC3;
+	printtext(&pt_ctx, "%c%s%c %s%s@%s%s requested CTCP VERSION form %c%s%c",
+		  BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
+		  BOLD, ctx->dest, BOLD);
+    } else {
+	/* do nothing */;
+    }
+
+    free(msg);
 }
 
 /* event_privmsg
@@ -50,7 +91,15 @@ event_privmsg(struct irc_message_compo *compo)
     if (*msg == ':')
 	msg++;
     if (*msg == '\001') {
-	handle_special_msg();
+	struct special_msg_context msg_ctx = {
+	    .nick = nick,
+	    .user = user,
+	    .host = host,
+	    .dest = dest,
+	    .msg  = msg,
+	};
+
+	handle_special_msg(&msg_ctx);
 	return;
     }
     if (Strings_match_ignore_case(dest, g_my_nickname)) {
