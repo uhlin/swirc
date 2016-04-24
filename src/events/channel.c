@@ -418,3 +418,33 @@ event_kick(struct irc_message_compo *compo)
 	      victim, COLOR2, channel, NORMAL, COLOR2, nick, NORMAL,
 	      LEFT_BRKT, reason, RIGHT_BRKT);
 }
+
+/* event_chan_hp: 328
+
+   Example:
+     :irc.server.com 328 <recipient> <channel> :www.channel.homepage.com */
+void
+event_chan_hp(struct irc_message_compo *compo)
+{
+    char *channel, *homepage;
+    char *state = "";
+    struct printtext_context ctx = {
+	.window	    = NULL,
+	.spec_type  = TYPE_SPEC1,
+	.include_ts = true,
+    };
+
+    if (Strfeed(compo->params, 2) != 2)
+	return;
+    (void) strtok_r(compo->params, "\n", &state);
+    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
+	(homepage = strtok_r(NULL, "\n", &state)) == NULL)
+	return;
+    if (*homepage == ':')
+	homepage++;
+    if ((ctx.window = window_by_label(channel)) == NULL)
+	return;
+    printtext(&ctx, "Homepage for %s%s%s%c%s: %s",
+	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+	      homepage);
+}

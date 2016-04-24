@@ -115,6 +115,7 @@ static struct numeric_events_tag {
     { "317", "RPL_WHOISIDLE",           NO_WINDOW,      0, event_whois_idle },
     { "318", "RPL_ENDOFWHOIS",          ACTIVE_WINDOW,  2, NULL },
     { "319", "RPL_WHOISCHANNELS",       NO_WINDOW,      0, event_whois_channels },
+    { "328", "",                        NO_WINDOW,      0, event_chan_hp },
     { "330", "",                        NO_WINDOW,      0, event_whois_acc },
     { "332", "RPL_TOPIC",               NO_WINDOW,      0, event_topic },
     { "333", "",                        NO_WINDOW,      0, event_topic_creator },

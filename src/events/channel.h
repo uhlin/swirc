@@ -9,5 +9,6 @@ void event_part          (struct irc_message_compo *);
 void event_quit          (struct irc_message_compo *);
 void event_nick          (struct irc_message_compo *);
 void event_kick          (struct irc_message_compo *);
+void event_chan_hp       (struct irc_message_compo *);
 
 #endif
