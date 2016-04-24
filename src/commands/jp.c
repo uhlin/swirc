@@ -65,7 +65,7 @@ cmd_join(const char *data)
 	printtext(&ptext_ctx, "/join: implicit trailing data");
 	free(dcopy);
 	return;
-    } else if (!is_irc_channel(channel) || strpbrk(channel + 1, ",&#+!") != NULL) {
+    } else if (!is_irc_channel(channel) || strpbrk(channel + 1, ",") != NULL) {
 	printtext(&ptext_ctx, "/join: bogus irc channel");
 	free(dcopy);
 	return;
@@ -107,7 +107,7 @@ cmd_part(const char *data)
 	printtext(&ptext_ctx, "/part: implicit trailing data");
 	free(dcopy);
 	return;
-    } else if (!is_irc_channel(channel) || strpbrk(channel + 1, ",&#+!") != NULL) {
+    } else if (!is_irc_channel(channel) || strpbrk(channel + 1, ",") != NULL) {
 	printtext(&ptext_ctx, "/part: bogus irc channel");
 	free(dcopy);
 	return;
