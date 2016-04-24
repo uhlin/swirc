@@ -22,12 +22,18 @@
 #endif
 
 #if defined(UNIX) && defined(__GNUC__)
-#define SW_INLINE	inline
-#define SW_NORET	__attribute__((noreturn))
+#define PRINTFLIKE(arg_no)	__attribute__((format(printf, arg_no, arg_no + 1)))
+#define PTR_ARGS_NONNULL	__attribute__((nonnull))
+#define SW_INLINE		inline
+#define SW_NORET		__attribute__((noreturn))
 #elif defined(WIN32)
-#define SW_INLINE	__inline
-#define SW_NORET	__declspec(noreturn)
+#define PRINTFLIKE(arg_no)
+#define PTR_ARGS_NONNULL
+#define SW_INLINE		__inline
+#define SW_NORET		__declspec(noreturn)
 #else
+#define PRINTFLIKE(arg_no)
+#define PTR_ARGS_NONNULL
 #define SW_INLINE
 #define SW_NORET
 #endif
