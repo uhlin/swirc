@@ -318,8 +318,8 @@ event_quit(struct irc_message_compo *compo)
 	if (window && is_irc_channel(window->label) &&
 	    event_names_htbl_remove(nick, window->label) == OK) {
 	    ctx.window = window;
-	    printtext(&ctx, "%s %s%s@%s%s has quit %s%s%s",
-		      nick, LEFT_BRKT, user, host, RIGHT_BRKT,
+	    printtext(&ctx, "%s%s%c %s%s@%s%s has quit %s%s%s",
+		      COLOR2, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
 		      LEFT_BRKT, message, RIGHT_BRKT);
 	}
     }
