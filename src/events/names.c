@@ -465,8 +465,8 @@ event_names_print_all(const char *channel)
     free(names_array);
 
     ptext_ctx.spec_type = TYPE_SPEC1;
-    printtext(&ptext_ctx, "%c%s%c: Total of %c%d%c nicks %s%c%d%c ops, %c%d%c halfops, %c%d%c voices, %c%d%c normal%s",
-	      BOLD, channel, BOLD, BOLD, window->num_total, BOLD,
+    printtext(&ptext_ctx, "%s%s%s%c%s: Total of %c%d%c nicks %s%c%d%c ops, %c%d%c halfops, %c%d%c voices, %c%d%c normal%s",
+	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT, BOLD, window->num_total, BOLD,
 	      LEFT_BRKT, BOLD, window->num_ops, BOLD, BOLD, window->num_halfops, BOLD,
 	      BOLD, window->num_voices, BOLD, BOLD, window->num_normal, BOLD, RIGHT_BRKT);
 
