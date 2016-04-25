@@ -48,6 +48,7 @@
 #include "commands/connect.h"
 #include "commands/jp.h"
 #include "commands/misc.h"
+#include "commands/msg.h"
 
 bool g_io_loop = true;
 
@@ -58,6 +59,7 @@ static struct cmds_tag {
     { "/connect",        cmd_connect         },
     { "/disconnect",     cmd_disconnect      },
     { "/join",           cmd_join            },
+    { "/msg",            cmd_msg             },
     { "/part",           cmd_part            },
     { "/query",          cmd_query           },
     { "/quit",           cmd_quit            },
