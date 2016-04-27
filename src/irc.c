@@ -129,6 +129,7 @@ static struct numeric_events_tag {
     { "378", "",                        NO_WINDOW,      0, event_whois_conn },
     { "379", "",                        NO_WINDOW,      0, event_whois_modes },
     { "396", "",                        NO_WINDOW,      0, event_allaround_extract_remove_colon },
+    { "401", "ERR_NOSUCHNICK",          ACTIVE_WINDOW,  2, NULL },
     { "402", "ERR_NOSUCHSERVER",        ACTIVE_WINDOW,  2, NULL },
     { "404", "ERR_CANNOTSENDTOCHAN",    ACTIVE_WINDOW,  2, NULL },
     { "422", "ERR_NOMOTD",              STATUS_WINDOW,  1, NULL },
