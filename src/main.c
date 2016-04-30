@@ -39,6 +39,7 @@
 #include "libUtils.h"
 #include "main.h"
 #include "nestHome.h"
+#include "network.h"
 #include "options.h"
 #include "readline.h"
 #include "sig.h"
@@ -200,9 +201,11 @@ main(int argc, char *argv[])
     statusbar_init();
     windowSystem_init();
     readline_init();
+    net_ssl_init();
     enter_io_loop();
 
     /* XXX: Reverse order... */
+    net_ssl_deinit();
     readline_deinit();
     windowSystem_deinit();
     statusbar_deinit();

@@ -42,6 +42,7 @@
 #include "network.h"
 #include "printtext.h"
 
+#include "commands/connect.h"
 #include "events/welcome.h"
 
 NET_SEND_FN net_send = net_send_plain;
@@ -57,7 +58,7 @@ net_addr_resolve(const char *host, const char *port)
     struct addrinfo *res;
 
     hints.ai_flags     = AI_CANONNAME;
-    hints.ai_family    = AF_UNSPEC;
+    hints.ai_family    = AF_INET;
     hints.ai_socktype  = SOCK_STREAM;
     hints.ai_protocol  = 0;
     hints.ai_addrlen   = 0;
@@ -131,8 +132,16 @@ net_connect(const struct network_connect_context *ctx)
 	}
     }
 
+    if (is_ssl_enabled()) {
+	net_send = net_ssl_send;
+	net_recv = net_ssl_recv;
+    } else {
+	net_send = net_send_plain;
+	net_recv = net_recv_plain;
+    }
+
     freeaddrinfo(res);
-    if (!g_on_air) {
+    if (!g_on_air || (is_ssl_enabled() && net_ssl_start() == -1)) {
 	ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ptext_ctx, "Failed to establish a connection");
 #ifdef WIN32

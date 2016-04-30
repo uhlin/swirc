@@ -23,7 +23,7 @@ os_BSD () {
 CC=gcc
 CFLAGS=-DBSD=1 -DUNIX=1 -D_XOPEN_SOURCE_EXTENDED=1 -Wall -std=c99
 LDFLAGS=
-LDLIBS=-lncursesw -lpanelw -lpthread
+LDLIBS=-lcrypto -lncursesw -lpanelw -lpthread -lssl
 EOF
 }
 
@@ -33,7 +33,7 @@ CC=gcc
 CFLAGS=-DLINUX=1 -DUNIX=1 -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=500 -D_XOPEN_SOURCE_EXTENDED=1
 CFLAGS+=-Wall -std=c99
 LDFLAGS=
-LDLIBS=-lncursesw -lpanelw -lpthread
+LDLIBS=-lcrypto -lncursesw -lpanelw -lpthread -lssl
 EOF
 }
 

@@ -14,7 +14,7 @@ OBJS+=libUtils.o main.o nestHome.o net-unix.o network.o
 OBJS+=options.o printtext.o pthrMutex.o readline.o readlineAPI.o
 OBJS+=sig-unix.o statusbar.o strHand.o strcat.o strcpy.o
 OBJS+=strdup_printf.o term-unix.o terminal.o textBuffer.o theme.o
-OBJS+=titlebar.o wcscat.o wcscpy.o window.o
+OBJS+=titlebar.o wcscat.o wcscpy.o window.o network-openssl.o
 
 OUT=swirc
 
@@ -66,6 +66,7 @@ titlebar.o:
 wcscat.o:
 wcscpy.o:
 window.o:
+network-openssl.o:
 
 clean:
 	$(Q) cd commands && $(MAKE) -f unix.mk clean

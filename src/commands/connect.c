@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include "../assertAPI.h"
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../main.h"
@@ -37,6 +38,8 @@
 #include "../strHand.h"
 
 #include "connect.h"
+
+static bool secure_connection = false;
 
 static struct printtext_context ptext_ctx = {
     .window	= NULL,
@@ -99,24 +102,62 @@ do_connect(char *server, char *port)
     }
 }
 
-/* usage: /connect <server[:port]> */
+void
+set_ssl_on()
+{
+    secure_connection = true;
+}
+
+void
+set_ssl_off()
+{
+    secure_connection = false;
+}
+
+bool
+is_ssl_enabled()
+{
+    return secure_connection;
+}
+
+/* usage: /connect [-ssl] <server[:port]> */
 void
 cmd_connect(const char *data)
 {
     char *dcopy = sw_strdup(data);
     char *server, *port;
     char *state = "";
+    int feeds_written = 0;
 
+    set_ssl_off();
     ptext_ctx.window = g_active_window;
 
-    if (Strings_match(dcopy, "") || (server = strtok_r(dcopy, ":", &state)) == NULL) {
+    if (Strings_match(dcopy, "") || is_whiteSpace(dcopy)) {
 	printtext(&ptext_ctx, "/connect: missing arguments");
 	free(dcopy);
 	return;
-    }
+    } else if ((feeds_written = Strfeed(dcopy, 1)) == 1) {
+	char *token;
 
-    if ((port = strtok_r(NULL, ":", &state)) == NULL)
-	port = "6667";
+	token = strtok_r(dcopy, "\n:", &state);
+	sw_assert(token != NULL);
+	if (Strings_match(token, "-ssl"))
+	    set_ssl_on();
+
+	server = strtok_r(NULL, "\n:", &state);
+	sw_assert(server != NULL);
+
+	if ((port = strtok_r(NULL, "\n:", &state)) == NULL)
+	    port = "6697";
+    } else if (feeds_written == 0) {
+	server = strtok_r(dcopy, "\n:", &state);
+	sw_assert(server != NULL);
+
+	if ((port = strtok_r(NULL, "\n:", &state)) == NULL)
+	    port = "6667";
+    } else {
+	sw_assert_not_reached();
+    }
 
     if (g_connection_in_progress) {
 	printtext(&ptext_ctx, "/connect: connection in progress");
@@ -126,7 +167,7 @@ cmd_connect(const char *data)
 	printtext(&ptext_ctx, "/connect: already connected!");
 	free(dcopy);
 	return;
-    } else if (strtok_r(NULL, ":", &state) != NULL) {
+    } else if (strtok_r(NULL, "\n:", &state) != NULL) {
 	printtext(&ptext_ctx, "/connect: implicit trailing data");
 	free(dcopy);
 	return;
