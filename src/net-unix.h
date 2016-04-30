@@ -13,11 +13,9 @@ struct network_recv_context {
 
 extern int g_socket;
 
-/*lint -printf(3, net_send) */
-
-ssize_t net_send               (int sock, int flags, const char *fmt, ...);
-ssize_t net_recv               (struct network_recv_context *, char *recvbuf, size_t recvbuf_size);
-void    net_spawn_listenThread (void);
-void    net_listenThread_join  (void);
+int	net_send_plain(const char *fmt, ...);
+int	net_recv_plain(struct network_recv_context *, char *recvbuf, int recvbuf_size);
+void	net_spawn_listenThread(void);
+void	net_listenThread_join(void);
 
 #endif

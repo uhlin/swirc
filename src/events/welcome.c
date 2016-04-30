@@ -87,6 +87,6 @@ event_welcome(struct irc_message_compo *compo)
 
   bad:
     event_welcome_signalit();
-    (void) net_send(g_socket, 0, "QUIT");
+    net_send("QUIT");
     g_on_air = false;
 }

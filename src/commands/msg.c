@@ -41,7 +41,7 @@ cmd_msg(const char *data)
 	} else {
 	    ctx.window	  = window_by_label(recipient);
 	    ctx.spec_type = TYPE_SPEC_NONE;
-	    if (net_send(g_socket, 0, "PRIVMSG %s :%s", recipient, message) < 0)
+	    if (net_send("PRIVMSG %s :%s", recipient, message) < 0)
 		g_on_air = false;
 	    else
 		printtext(&ctx, "%s%s%s %s", Theme("nick_s1"), g_my_nickname, Theme("nick_s2"), message);

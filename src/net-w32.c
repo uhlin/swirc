@@ -107,7 +107,7 @@ winsock_deinit(void)
 }
 
 int
-net_send(SOCKET sock, int flags, const char *fmt, ...)
+net_send_plain(const char *fmt, ...)
 {
     va_list ap;
     char *buffer;
@@ -125,7 +125,7 @@ net_send(SOCKET sock, int flags, const char *fmt, ...)
 
 	realloc_strcat(&buffer, message_terminate);
 
-	if ((n_sent = send(sock, buffer, strlen(buffer), flags)) == SOCKET_ERROR) {
+	if ((n_sent = send(g_socket, buffer, strlen(buffer), 0)) == SOCKET_ERROR) {
 	    free_and_null(&buffer);
 	    return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
 	}
@@ -140,7 +140,7 @@ net_send(SOCKET sock, int flags, const char *fmt, ...)
 }
 
 int
-net_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
+net_recv_plain(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 {
     fd_set readset;
     struct timeval tv;

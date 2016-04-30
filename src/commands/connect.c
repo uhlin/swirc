@@ -152,9 +152,9 @@ cmd_disconnect(const char *data)
 
     if (g_on_air) {
 	if (has_message)
-	    net_send(g_socket, 0, "QUIT :%s", data);
+	    net_send("QUIT :%s", data);
 	else
-	    net_send(g_socket, 0, "QUIT :%s", Config("quit_message"));
+	    net_send("QUIT :%s", Config("quit_message"));
 	g_on_air = false;
 	net_listenThread_join();
     }

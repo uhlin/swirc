@@ -260,7 +260,7 @@ enter_io_loop(void)
 		    ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 		    printtext(&ptext_ctx, "Can't recode user input before transmit (yet unsupported)");
 		} else { /* don't recode... */
-		    if (net_send(g_socket, 0, "PRIVMSG %s :%s", g_active_window->label, line) < 0)
+		    if (net_send("PRIVMSG %s :%s", g_active_window->label, line) < 0)
 			g_on_air = false;
 		    else
 			printtext(&ptext_ctx, "%s%s%s %s", Theme("nick_s1"), g_my_nickname, Theme("nick_s2"), line);

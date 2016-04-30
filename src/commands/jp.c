@@ -75,9 +75,9 @@ cmd_join(const char *data)
 	return;
     } else {
 	if (has_key)
-	    net_send(g_socket, 0, "JOIN %s %s", str_tolower(channel), key);
+	    net_send("JOIN %s %s", str_tolower(channel), key);
 	else
-	    net_send(g_socket, 0, "JOIN %s", str_tolower(channel));
+	    net_send("JOIN %s", str_tolower(channel));
 	free(dcopy);
     }
 }
@@ -94,7 +94,7 @@ cmd_part(const char *data)
 
     if (Strings_match(dcopy, "") || (channel = strtok_r(dcopy, " ", &state)) == NULL) {
 	if (is_irc_channel(g_active_window->label))
-	    net_send(g_socket, 0, "PART %s :%s", g_active_window->label, Config("part_message"));
+	    net_send("PART %s :%s", g_active_window->label, Config("part_message"));
 	else
 	    printtext(&ptext_ctx, "/part: missing arguments");
 	free(dcopy);
@@ -113,9 +113,9 @@ cmd_part(const char *data)
 	return;
     } else {
 	if (has_message)
-	    net_send(g_socket, 0, "PART %s :%s", str_tolower(channel), message);
+	    net_send("PART %s :%s", str_tolower(channel), message);
 	else
-	    net_send(g_socket, 0, "PART %s", str_tolower(channel));
+	    net_send("PART %s", str_tolower(channel));
 	free(dcopy);
     }
 }

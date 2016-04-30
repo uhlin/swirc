@@ -24,9 +24,9 @@ cmd_quit(const char *data)
 
     if (g_on_air) {
 	if (has_message)
-	    net_send(g_socket, 0, "QUIT :%s", data);
+	    net_send("QUIT :%s", data);
 	else
-	    net_send(g_socket, 0, "QUIT :%s", Config("quit_message"));
+	    net_send("QUIT :%s", Config("quit_message"));
 	g_on_air = false;
 	net_listenThread_join();
     }
@@ -45,7 +45,7 @@ cmd_whois(const char *data)
     } else if (!is_valid_nickname(data)) {
 	printtext(&ptext_ctx, "/whois: bogus nickname");
     } else {
-	net_send(g_socket, 0, "WHOIS %s %s", data, data);
+	net_send("WHOIS %s %s", data, data);
     }
 }
 

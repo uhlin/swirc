@@ -14,11 +14,7 @@ void
 event_ping(struct irc_message_compo *compo)
 {
     char *cp = &compo->params[0];
-#if defined(UNIX)
-    ssize_t n_sent;
-#elif defined(WIN32)
     int n_sent;
-#endif
 
     if (*cp == ':') {
 	cp++;
@@ -26,7 +22,7 @@ event_ping(struct irc_message_compo *compo)
 
     if (Strings_match(cp, "")) {
 	return;
-    } else if ((n_sent = net_send(g_socket, 0, "PONG %s", cp)) == -1) {
+    } else if ((n_sent = net_send("PONG %s", cp)) == -1) {
 	g_on_air = false;
     } else if (n_sent > 0 && config_bool_unparse("show_ping_pong", true)) {
 	struct printtext_context ctx = {

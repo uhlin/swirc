@@ -455,6 +455,6 @@ irc_set_my_nickname(const char *nick)
 void
 irc_unsuccessful_event_cleanup(void)
 {
-    (void) net_send(g_socket, 0, "QUIT");
+    (void) net_send("QUIT");
     g_on_air = false;
 }

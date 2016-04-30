@@ -200,7 +200,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
 	    irc_unsuccessful_event_cleanup();
 	} else if (!g_alt_nick_tested && *Config("alt_nick")) {
 	    printtext(&ctx, "Testing alt_nick (%s) instead...", Config("alt_nick"));
-	    (void) net_send(g_socket, 0, "NICK %s", Config("alt_nick"));
+	    net_send("NICK %s", Config("alt_nick"));
 	    g_alt_nick_tested = true;
 	} else {
 	    printtext(&ctx, "Disconnecting...");

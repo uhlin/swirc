@@ -16,6 +16,12 @@ struct network_connect_context {
     char *nickname;
 };
 
+typedef int (*NET_SEND_FN)(const char *, ...);
+typedef int (*NET_RECV_FN)(struct network_recv_context *, char *, int);
+
+extern NET_SEND_FN net_send;
+extern NET_RECV_FN net_recv;
+
 extern bool g_connection_in_progress;
 extern volatile bool g_on_air;
 

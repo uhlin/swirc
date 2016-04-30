@@ -44,6 +44,9 @@
 
 #include "events/welcome.h"
 
+NET_SEND_FN net_send = net_send_plain;
+NET_RECV_FN net_recv = net_recv_plain;
+
 bool g_connection_in_progress = false;
 volatile bool g_on_air = false;
 
@@ -142,11 +145,11 @@ net_connect(const struct network_connect_context *ctx)
     net_spawn_listenThread();
 
     if (ctx->password) {
-	(void) net_send(g_socket, 0, "PASS %s", ctx->password);
+	(void) net_send("PASS %s", ctx->password);
     }
 
-    (void) net_send(g_socket, 0, "NICK %s", ctx->nickname);
-    (void) net_send(g_socket, 0, "USER %s 8 * :%s", ctx->username, ctx->rl_name);
+    (void) net_send("NICK %s", ctx->nickname);
+    (void) net_send("USER %s 8 * :%s", ctx->username, ctx->rl_name);
 
     if (!event_welcome_is_signaled()) {
 	event_welcome_cond_destroy();

@@ -41,7 +41,7 @@ handle_special_msg(const struct special_msg_context *ctx)
     if (!strncmp(msg, "ACTION ", 7)) {
 	printtext(&pt_ctx, " - %s %s", ctx->nick, &msg[7]);
     } else if (!strncmp(msg, "VERSION", 8)) {
-	net_send(g_socket, 0, "PRIVMSG %s :\001VERSION Swirc %s by %s\001",
+	net_send("PRIVMSG %s :\001VERSION Swirc %s by %s\001",
 		 ctx->nick, g_swircVersion, g_swircAuthor);
 	pt_ctx.spec_type = TYPE_SPEC3;
 	printtext(&pt_ctx, "%c%s%c %s%s@%s%s requested CTCP VERSION form %c%s%c",

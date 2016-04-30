@@ -95,13 +95,13 @@ listenThread_fn(void *arg)
     return (0);
 }
 
-ssize_t
-net_send(int sock, int flags, const char *fmt, ...)
+int
+net_send_plain(const char *fmt, ...)
 {
     va_list     ap;
     char       *buffer;
     const char  message_terminate[] = "\r\n";
-    ssize_t     n_sent;
+    int         n_sent;
 
     if (!fmt) {
 	err_exit(EINVAL, "net_send error");
@@ -115,7 +115,7 @@ net_send(int sock, int flags, const char *fmt, ...)
 	realloc_strcat(&buffer, message_terminate);
 
 	errno = 0;
-	if ((n_sent = send(sock, buffer, strlen(buffer), flags)) == -1) {
+	if ((n_sent = send(g_socket, buffer, strlen(buffer), 0)) == -1) {
 	    free_and_null(&buffer);
 	    return (errno == EAGAIN || errno == EWOULDBLOCK ? 0 : -1);
 	}
@@ -129,13 +129,13 @@ net_send(int sock, int flags, const char *fmt, ...)
     return (-1);
 }
 
-ssize_t
-net_recv(struct network_recv_context *ctx, char *recvbuf, size_t recvbuf_size)
+int
+net_recv_plain(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 {
     fd_set         readset;
     struct timeval tv;
     const int      maxfdp1 = ctx->sock + 1;
-    ssize_t        bytes_received;
+    int            bytes_received;
 
     FD_ZERO(&readset);
     FD_SET(ctx->sock, &readset);
