@@ -67,6 +67,7 @@ static struct tagConfDefValues {
     { "recode",                    TYPE_BOOLEAN, "no" },
     { "show_ping_pong",            TYPE_BOOLEAN, "yes" },
     { "skip_motd",                 TYPE_BOOLEAN, "no" },
+    { "ssl_verify_peer",           TYPE_BOOLEAN, "yes" },
     { "startup_greeting",          TYPE_BOOLEAN, "yes" },
     { "textbuffer_size_absolute",  TYPE_INTEGER, "1000" },
     { "theme",                     TYPE_STRING,  "default" },

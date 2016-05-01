@@ -27,6 +27,7 @@
 #include <openssl/x509_vfy.h>
 
 #include "assertAPI.h"
+#include "config.h"
 #include "errHand.h"
 #include "libUtils.h"
 #include "network.h"
@@ -98,11 +99,11 @@ net_ssl_init()
     }
 #endif
 
-    if (SSL_CTX_set_default_verify_paths(ssl_ctx)) {
+    if (config_bool_unparse("ssl_verify_peer", true) && SSL_CTX_set_default_verify_paths(ssl_ctx)) {
 	SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, verify_callback);
 	SSL_CTX_set_verify_depth(ssl_ctx, 4);
     } else {
-	printtext(&ptext_ctx, "net_ssl_init: Certificate verification is disabled: %s", strerror(ENOSYS));
+	printtext(&ptext_ctx, "net_ssl_init: Certificate verification is disabled: Option set to NO?");
     }
 
     if (!SSL_CTX_set_cipher_list(ssl_ctx, cipher_list))
