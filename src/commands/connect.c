@@ -41,15 +41,27 @@
 
 static bool secure_connection = false;
 
-static struct printtext_context ptext_ctx = {
-    .window	= NULL,
-    .spec_type	= TYPE_SPEC1_FAILURE,
-    .include_ts = true,
-};
+static void
+PrintAndFree(const char *msg, char *cp)
+{
+    struct printtext_context ptext_ctx = {
+	.window	    = g_status_window,
+	.spec_type  = TYPE_SPEC1_FAILURE,
+	.include_ts = true,
+    };
+
+    printtext(&ptext_ctx, "%s", msg);
+    if (cp) free(cp);
+}
 
 static void
 do_connect(char *server, char *port)
 {
+    struct printtext_context ptext_ctx = {
+	.window	    = g_status_window,
+	.spec_type  = TYPE_SPEC1_FAILURE,
+	.include_ts = true,
+    };
     struct network_connect_context conn_ctx = {
 	.server   = server,
 	.port     = port,
@@ -58,8 +70,6 @@ do_connect(char *server, char *port)
 	.rl_name  = "",
 	.nickname = "",
     };
-
-    ptext_ctx.window = g_active_window;
 
     if (g_cmdline_opts->username) {
 	conn_ctx.username = g_cmdline_opts->username;
@@ -130,11 +140,9 @@ cmd_connect(const char *data)
     int feeds_written = 0;
 
     set_ssl_off();
-    ptext_ctx.window = g_active_window;
 
     if (Strings_match(dcopy, "") || is_whiteSpace(dcopy)) {
-	printtext(&ptext_ctx, "/connect: missing arguments");
-	free(dcopy);
+	PrintAndFree("/connect: missing arguments", dcopy);
 	return;
     } else if ((feeds_written = Strfeed(dcopy, 1)) == 1) {
 	char *token;
@@ -160,24 +168,19 @@ cmd_connect(const char *data)
     }
 
     if (g_connection_in_progress) {
-	printtext(&ptext_ctx, "/connect: connection in progress");
-	free(dcopy);
+	PrintAndFree("/connect: connection in progress", dcopy);
 	return;
     } else if (g_on_air) {
-	printtext(&ptext_ctx, "/connect: already connected!");
-	free(dcopy);
+	PrintAndFree("/connect: already connected!", dcopy);
 	return;
     } else if (strtok_r(NULL, "\n:", &state) != NULL) {
-	printtext(&ptext_ctx, "/connect: implicit trailing data");
-	free(dcopy);
+	PrintAndFree("/connect: implicit trailing data", dcopy);
 	return;
     } else if (!is_valid_hostname(server)) {
-	printtext(&ptext_ctx, "/connect: bogus server name");
-	free(dcopy);
+	PrintAndFree("/connect: bogus server name", dcopy);
 	return;
     } else if (!is_numeric(port)) {
-	printtext(&ptext_ctx, "/connect: bogus port number");
-	free(dcopy);
+	PrintAndFree("/connect: bogus port number", dcopy);
 	return;
     } else {
 	do_connect(server, port);
