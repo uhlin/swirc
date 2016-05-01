@@ -153,6 +153,36 @@ FreeMsgCompo(struct irc_message_compo *);
 static struct irc_message_compo *
 SortMsgCompo(char *protocol_message, bool message_has_prefix);
 
+static void
+ProcessProtoMsg(const char *token)
+{
+    int message_has_prefix, requested_feeds;
+    char *protocol_message;
+    struct irc_message_compo *compo;
+
+    message_has_prefix = *(protocol_message = sw_strdup(token)) == ':';
+    requested_feeds = message_has_prefix ? 2 : 1;
+
+    if (Strfeed(protocol_message, requested_feeds) != requested_feeds) {
+	struct printtext_context ptext_ctx = {
+	    .window     = g_status_window,
+	    .spec_type  = TYPE_SPEC1_FAILURE,
+	    .include_ts = true,
+	};
+
+	printtext(&ptext_ctx,
+		  "In irc_handle_interpret_events: Strfeed(..., %d) != %d",
+		  requested_feeds, requested_feeds);
+	free(protocol_message);
+	return;
+    }
+
+    compo = SortMsgCompo(protocol_message, message_has_prefix);
+    free(protocol_message);
+    irc_search_and_route_event(compo);
+    FreeMsgCompo(compo);
+}
+
 void
 irc_handle_interpret_events(char *recvbuffer,
 			    char **message_concat,
@@ -169,7 +199,13 @@ irc_handle_interpret_events(char *recvbuffer,
     } else if (Strings_match(recvbuffer, "") || strpbrk(recvbuffer, separators) == NULL) {
 	return;
     } else {
-	;
+	/*empty*/;
+    }
+
+    if (*state == CONCAT_BUFFER_CONTAIN_DATA && recvbuffer[0] == '\r' && recvbuffer[1] == '\n') {
+	ProcessProtoMsg(*message_concat);
+	free_and_null(&(*message_concat));
+	*state = CONCAT_BUFFER_IS_EMPTY;
     }
 
     switch (recvbuffer[strlen(recvbuffer) - 1]) {
@@ -188,9 +224,6 @@ irc_handle_interpret_events(char *recvbuffer,
 
     for (cp = &recvbuffer[0], loop_count = 0;; cp = NULL, loop_count++) {
 	char *token;
-	int message_has_prefix, requested_feeds;
-	char *protocol_message;
-	struct irc_message_compo *compo;
 
 	if ((token = strtok_r(cp, separators, &savp)) == NULL) {
 	    break; /* No more tokens  --  end loop... */
@@ -202,32 +235,14 @@ irc_handle_interpret_events(char *recvbuffer,
 	    *state = CONCAT_BUFFER_CONTAIN_DATA;	/* On the next call to this function the (incomplete) */
 	    return;					/* irc message will be concatenated */
 	} else if (loop_count == 0 && *state == CONCAT_BUFFER_CONTAIN_DATA) {
-            *state = CONCAT_BUFFER_IS_EMPTY;		/* Flag it as empty again (in practice it isn't) */
 	    realloc_strcat(&(*message_concat), token);
 	    token = *message_concat;			/* The special token can now be passed to the handler */
+	    *state = CONCAT_BUFFER_IS_EMPTY;		/* Flag it as empty again (in practice it isn't) */
 	} else {
-	    ;
+	    /*no action*/;
 	}
 
-	message_has_prefix = *(protocol_message = sw_strdup(token)) == ':';
-	requested_feeds = message_has_prefix ? 2 : 1;
-	if (Strfeed(protocol_message, requested_feeds) != requested_feeds) {
-	    struct printtext_context ptext_ctx = {
-		.window     = g_status_window,
-		.spec_type  = TYPE_SPEC1_FAILURE,
-		.include_ts = true,
-	    };
-
-	    printtext(&ptext_ctx,
-		      "In irc_handle_interpret_events: Strfeed(..., %d) != %d",
-		      requested_feeds, requested_feeds);
-	    free(protocol_message);
-	    continue;
-	}
-	compo = SortMsgCompo(protocol_message, message_has_prefix);
-	free(protocol_message);
-	irc_search_and_route_event(compo);
-	FreeMsgCompo(compo);
+	ProcessProtoMsg(token);
     }
 }
 
