@@ -22,13 +22,7 @@ OUT=swirc
 	$(E) ^ ^ CC^ ^ ^ ^ ^ ^ $@
 	$(Q) $(CC) $(include_dirs) $(CFLAGS) $(extra_flags) -c $*.c 1>>$(log_file)
 
-$(OUT).exe: $(OBJS)
-	$(E) ^ ^ FETCH
-	$(Q) cscript get_file.js 1>>$(log_file)
-	$(E) ^ ^ EXPAND^ ^ pdcurses-3.4.cab
-	$(Q) expand pdcurses-3.4.cab "-F:*" . 1>>$(log_file)
-	$(E) ^ ^ EXPAND^ ^ libressl-2.3.3-windows.cab
-	$(Q) expand libressl-2.3.3-windows.cab "-F:*" . 1>>$(log_file)
+$(OUT).exe: fetch_and_expand $(OBJS)
 	cd commands && $(MAKE) -f w32.mk
 	cd $(MAKEDIR)
 	cd events && $(MAKE) -f w32.mk
@@ -41,6 +35,14 @@ $(OUT).exe: $(OBJS)
 	$(Q) move "libressl-2.3.3-windows\x86\libssl-38.dll" . 1>>$(log_file)
 	$(E) ^ ^ MOVE^ ^ ^ ^ pdcurses.dll
 	$(Q) move "pdcurses-3.4\x86\pdcurses.dll" . 1>>$(log_file)
+
+fetch_and_expand:
+	$(E) ^ ^ FETCH
+	$(Q) cscript get_file.js 1>>$(log_file)
+	$(E) ^ ^ EXPAND^ ^ libressl-2.3.3-windows.cab
+	$(Q) expand libressl-2.3.3-windows.cab "-F:*" . 1>>$(log_file)
+	$(E) ^ ^ EXPAND^ ^ pdcurses-3.4.cab
+	$(Q) expand pdcurses-3.4.cab "-F:*" . 1>>$(log_file)
 
 assertAPI.obj:
 config.obj:
