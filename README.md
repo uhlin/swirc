@@ -51,11 +51,17 @@ To clone the repository use [Git](https://git-scm.com).
 Swirc currently depends on:
 
 * [Ncurses](https://www.gnu.org/software/ncurses/ncurses.html) with wide character support
+* [OpenSSL toolkit](https://www.openssl.org)
 
 Which means that on for example a Debian GNU/Linux system you need to
-install a package with name libncursesw5-dev:
+install two packages before building:
 
-    # aptitude install libncursesw5-dev
+    # aptitude install libncursesw5-dev libssl-dev
+
+And on Mac OS X, provided that [Homebrew](http://brew.sh/) is
+installed, issue:
+
+    $ brew install libressl
 
 ### Building for the UNIX environment ###
 
