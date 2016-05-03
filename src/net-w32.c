@@ -84,6 +84,7 @@ listenThread_fn(void *arg)
 	g_on_air = false;
     }
     printtext(&ptext_ctx, "Disconnected");
+    net_ssl_close();
     (void) closesocket(g_socket);
     (void) winsock_deinit();
     irc_deinit();
