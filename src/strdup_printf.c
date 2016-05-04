@@ -53,7 +53,7 @@ static int
 get_size(const char *fmt, va_list ap)
 {
     va_list	ap_copy;
-    int		size;
+    int		size = -1;
 
     va_copy(ap_copy, ap);
 #if defined(UNIX)
