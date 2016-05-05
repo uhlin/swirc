@@ -144,6 +144,7 @@ net_connect(const struct network_connect_context *ctx)
     if (!g_on_air || (is_ssl_enabled() && net_ssl_start() == -1)) {
 	ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ptext_ctx, "Failed to establish a connection");
+	g_on_air = false;
 #ifdef WIN32
 	(void) winsock_deinit();
 #endif
