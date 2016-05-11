@@ -269,6 +269,9 @@ event_names_htbl_remove_all(PIRC_WINDOW window)
     PNAMES *entry_p;
     PNAMES p, tmp;
 
+    if (window == NULL)
+	return;
+
     for (entry_p = &window->names_hash[0]; entry_p < &window->names_hash[NAMES_HASH_TABLE_SIZE]; entry_p++) {
 	for (p = *entry_p; p != NULL; p = tmp) {
 	    tmp = p->next;
