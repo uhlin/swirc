@@ -96,7 +96,7 @@ event_names_init(void)
 void
 event_names_deinit(void)
 {
-    ;
+    window_foreach_destroy_names();
 }
 
 /* event_names: 353

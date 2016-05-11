@@ -460,3 +460,17 @@ window_select_next(void)
 	(void) changeWindow_by_refnum(refnum_next);
     }
 }
+
+void
+window_foreach_destroy_names(void)
+{
+    PIRC_WINDOW *entry_p;
+    PIRC_WINDOW	 window;
+
+    foreach_hash_table_entry(entry_p) {
+	for (window = *entry_p; window != NULL; window = window->next) {
+	    if (is_irc_channel(window->label))
+		event_names_htbl_remove_all(window);
+	}
+    }
+}
