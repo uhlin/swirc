@@ -33,7 +33,7 @@
 
 #include "dataClassify.h"
 
-static const size_t	nickname_len_max  = 16;
+static const size_t	nickname_len_max  = 22;
 static const size_t	username_len_max  = 9;
 static const size_t	real_name_len_max = 45;
 static const size_t	hostname_len_max  = 253;
