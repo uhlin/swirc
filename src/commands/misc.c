@@ -2,10 +2,10 @@
 
 #include "../config.h"
 #include "../dataClassify.h"
+#include "../errHand.h"
 #include "../io-loop.h"
 #include "../network.h"
 #include "../printtext.h"
-#include "../strHand.h"
 #include "../strHand.h"
 
 #include "misc.h"
@@ -24,9 +24,9 @@ cmd_quit(const char *data)
 
     if (g_on_air) {
 	if (has_message)
-	    net_send("QUIT :%s", data);
+	    (void) net_send("QUIT :%s", data);
 	else
-	    net_send("QUIT :%s", Config("quit_message"));
+	    (void) net_send("QUIT :%s", Config("quit_message"));
 	g_on_air = false;
 	net_listenThread_join();
     }
@@ -45,7 +45,8 @@ cmd_whois(const char *data)
     } else if (!is_valid_nickname(data)) {
 	printtext(&ptext_ctx, "/whois: bogus nickname");
     } else {
-	net_send("WHOIS %s %s", data, data);
+	if (net_send("WHOIS %s %s", data, data) < 0)
+	    g_on_air = false;
     }
 }
 
@@ -56,13 +57,26 @@ cmd_query(const char *data)
     ptext_ctx.window = g_active_window;
 
     if (Strings_match(data, "")) {
-	if (is_valid_nickname(g_active_window->label))
-	    destroy_chat_window(g_active_window->label);
-	else
+	if (is_valid_nickname(g_active_window->label)) {
+	    switch (destroy_chat_window(g_active_window->label)) {
+	    case EINVAL:
+		err_exit(EINVAL, "destroy_chat_window");
+	    case ENOENT:
+		printtext(&ptext_ctx, "/query: cannot find window!");
+		break;
+	    }
+	} else {
 	    printtext(&ptext_ctx, "/query: missing arguments");
+	}
     } else if (!is_valid_nickname(data)) {
 	printtext(&ptext_ctx, "/query: bogus nickname");
     } else {
-	spawn_chat_window(data, "");
+	switch (spawn_chat_window(data, "")) {
+	case EINVAL:
+	    err_exit(EINVAL, "spawn_chat_window");
+	case ENOSPC:
+	    printtext(&ptext_ctx, "/query: too many windows open!");
+	    break;
+	}
     }
 }
