@@ -155,7 +155,7 @@ event_mode(struct irc_message_compo *compo)
 	(s = strtok_r(NULL, "\n", &state2)) != NULL) {
 	s_copy = sw_strdup(s);
 	squeeze(s_copy, ":");
-	trim(s_copy);
+	(void) trim(s_copy);
 
 	if (Strings_match_ignore_case(nick, channel)) { /* user mode */
 	    ctx.window = g_status_window;
@@ -348,6 +348,10 @@ event_nick(struct irc_message_compo *compo)
 	return;
     }
 
+    /* currently not used */
+    (void) user;
+    (void) host;
+
     for (int i = 1; i <= g_ntotal_windows; i++) {
 	PIRC_WINDOW window = window_by_refnum(i);
 
@@ -391,6 +395,10 @@ event_kick(struct irc_message_compo *compo)
 	return;
     }
 
+    /* currently not used */
+    (void) user;
+    (void) host;
+
     if (Strfeed(compo->params, 2) != 2)
 	return;
 
@@ -403,12 +411,21 @@ event_kick(struct irc_message_compo *compo)
 	reason++;
 
     if (Strings_match_ignore_case(victim, g_my_nickname)) {
-	if (config_bool_unparse("kick_close_window", true))
-	    destroy_chat_window(channel);
-	else
+	if (config_bool_unparse("kick_close_window", true)) {
+	    switch (destroy_chat_window(channel)) {
+	    case EINVAL:
+	    case ENOENT:
+		irc_unsuccessful_event_cleanup();
+		return;
+	    }
+	} else {
 	    event_names_htbl_remove_all(window_by_label(channel));
+	}
     } else {
-	event_names_htbl_remove(victim, channel);
+	if (event_names_htbl_remove(victim, channel) != OK) {
+	    irc_unsuccessful_event_cleanup();
+	    return;
+	}
     }
 
     if ((ctx.window = window_by_label(channel)) == NULL)
