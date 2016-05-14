@@ -106,7 +106,7 @@ event_topic_creator(struct irc_message_compo *compo)
     if ((ctx.window = window_by_label(channel)) == NULL || !is_numeric(set_when))
 	return;
 
-    const time_t clock = (time_t) strtol(set_when, NULL, 10);
+    const time_t timestamp = (time_t) strtol(set_when, NULL, 10);
 
     s_copy = sw_strdup(s);
     set_by = strtok_r(s_copy, "!@", &state2);
@@ -117,11 +117,11 @@ event_topic_creator(struct irc_message_compo *compo)
 	printtext(&ctx, "Topic set by %c%s%c %s%s@%s%s %s%s%s",
 		  BOLD, set_by, BOLD,
 		  LEFT_BRKT, user, host, RIGHT_BRKT,
-		  LEFT_BRKT, trim(ctime(&clock)), RIGHT_BRKT);
+		  LEFT_BRKT, trim(ctime(&timestamp)), RIGHT_BRKT);
     } else if (set_by) {
 	printtext(&ctx, "Topic set by %c%s%c %s%s%s",
 		  BOLD, set_by, BOLD,
-		  LEFT_BRKT, trim(ctime(&clock)), RIGHT_BRKT);
+		  LEFT_BRKT, trim(ctime(&timestamp)), RIGHT_BRKT);
     } else {
 	/* do nothing */;
     }
