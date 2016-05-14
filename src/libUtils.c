@@ -142,7 +142,7 @@ current_time(const char *fmt)
 {
     time_t		seconds;
     const time_t	unsuccessful = -1;
-    struct tm		items;
+    struct tm		items        = {};
     static char		buffer[200]  = "";
 
     if (isNull(fmt) || isEmpty(fmt) || time(&seconds) == unsuccessful) {
