@@ -1,5 +1,5 @@
 /* Readline API
-   Copyright (C) 2012-2014 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2014, 2016 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -161,18 +161,18 @@ readline_mvwaddch(WINDOW *win, int row, int col, wint_t wc)
     char *mbs = convert_wc(wc);
 
     if (wmove(win, row, col) == ERR) {
-	free(mbs);
+	free_and_null(&mbs);
 	readline_error(EPERM, "wmove");
     }
     if (!is_text_decoration(wc)) {
 	if (waddnstr(win, mbs, -1) == ERR) {
-	    free(mbs);
+	    free_and_null(&mbs);
 	    readline_error(EPERM, "waddnstr");
 	}
     } else {
 	add_complex_char(win, *mbs);
     }
-    free(mbs);
+    free_and_null(&mbs);
 }
 
 void
@@ -182,13 +182,13 @@ readline_waddch(WINDOW *win, wint_t wc)
 
     if (!is_text_decoration(wc)) {
 	if (waddnstr(win, mbs, -1) == ERR) {
-	    free(mbs);
+	    free_and_null(&mbs);
 	    readline_error(EPERM, "waddnstr");
 	}
     } else {
 	add_complex_char(win, *mbs);
     }
-    free(mbs);
+    free_and_null(&mbs);
 }
 
 void
@@ -201,7 +201,9 @@ readline_waddnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
     if (win == NULL || s == NULL) {
 	err_exit(EINVAL, "readline_waddnstr fatal!");
     }
+
     update_panels();
+
     for (ptr = &s[0]; ptr < &s[this_index]; ptr++) {
 	readline_waddch(win, *ptr);
     }
@@ -213,18 +215,18 @@ readline_mvwinsch(WINDOW *win, int row, int col, wint_t wc)
     char *mbs = convert_wc(wc);
 
     if (wmove(win, row, col) == ERR) {
-	free(mbs);
+	free_and_null(&mbs);
 	readline_error(EPERM, "wmove");
     }
     if (!is_text_decoration(wc)) {
 	if (winsnstr(win, mbs, -1) == ERR) {
-	    free(mbs);
+	    free_and_null(&mbs);
 	    readline_error(EPERM, "winsnstr");
 	}
     } else {
 	ins_complex_char(win, *mbs);
     }
-    free(mbs);
+    free_and_null(&mbs);
 }
 
 void
@@ -234,13 +236,13 @@ readline_winsch(WINDOW *win, wint_t wc)
 
     if (!is_text_decoration(wc)) {
 	if (winsnstr(win, mbs, -1) == ERR) {
-	    free(mbs);
+	    free_and_null(&mbs);
 	    readline_error(EPERM, "winsnstr");
 	}
     } else {
 	ins_complex_char(win, *mbs);
     }
-    free(mbs);
+    free_and_null(&mbs);
 }
 
 void
@@ -253,7 +255,9 @@ readline_winsnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
     if (win == NULL || s == NULL) {
 	err_exit(EINVAL, "readline_winsnstr fatal!");
     }
+
     update_panels();
+
     for (ptr = &s[this_index-1]; ptr >= &s[0]; ptr--) {
 	readline_winsch(win, *ptr);
     }
