@@ -140,6 +140,7 @@ static struct numeric_events_tag {
     { "615", "",                        NO_WINDOW,      0, event_whois_modes },
     { "616", "",                        NO_WINDOW,      0, event_whois_host },
     { "671", "",                        NO_WINDOW,      0, event_whois_ssl },
+    { "900", "",                        STATUS_WINDOW,  3, NULL },
 };
 
 /* Function declarations
