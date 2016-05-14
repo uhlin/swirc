@@ -200,8 +200,10 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
     tv.tv_sec  = ctx->sec;
     tv.tv_usec = ctx->microsec;
 
+    errno = 0;
+
     if (select(maxfdp1, &readset, NULL, NULL, &tv) == SOCKET_ERROR) {
-	return -1;
+	return errno == EINTR ? 0 : -1;
     } else if (!FD_ISSET(ctx->sock, &readset)) {
 	return 0;
     } else {
