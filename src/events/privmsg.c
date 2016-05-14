@@ -25,7 +25,7 @@ handle_special_msg(const struct special_msg_context *ctx)
     struct printtext_context pt_ctx;
 
     squeeze(msg, "\001");
-    trim(msg);
+    msg = trim(msg);
 
     if (Strings_match_ignore_case(ctx->dest, g_my_nickname)) {
 	pt_ctx.window = window_by_label(ctx->nick);
@@ -41,8 +41,9 @@ handle_special_msg(const struct special_msg_context *ctx)
     if (!strncmp(msg, "ACTION ", 7)) {
 	printtext(&pt_ctx, " - %s %s", ctx->nick, &msg[7]);
     } else if (!strncmp(msg, "VERSION", 8)) {
-	net_send("PRIVMSG %s :\001VERSION Swirc %s by %s\001",
-		 ctx->nick, g_swircVersion, g_swircAuthor);
+	if (net_send("PRIVMSG %s :\001VERSION Swirc %s by %s\001",
+		     ctx->nick, g_swircVersion, g_swircAuthor) < 0)
+	    g_on_air = false;
 	pt_ctx.spec_type = TYPE_SPEC3;
 	printtext(&pt_ctx, "%c%s%c %s%s@%s%s requested CTCP VERSION form %c%s%c",
 		  BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
