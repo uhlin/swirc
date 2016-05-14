@@ -59,7 +59,7 @@ cmd_join(const char *data)
 	return;
     }
 
-    const bool has_key = (key = strtok_r(NULL, " ", &state)) != NULL;
+    const bool has_channel_key = (key = strtok_r(NULL, " ", &state)) != NULL;
 
     if (strtok_r(NULL, " ", &state) != NULL) {
 	printtext(&ptext_ctx, "/join: implicit trailing data");
@@ -69,15 +69,18 @@ cmd_join(const char *data)
 	printtext(&ptext_ctx, "/join: bogus irc channel");
 	free(dcopy);
 	return;
-    } else if (has_key && strchr(key, ',') != NULL) {
+    } else if (has_channel_key && strchr(key, ',') != NULL) {
 	printtext(&ptext_ctx, "/join: commas aren't allowed in a key");
 	free(dcopy);
 	return;
     } else {
-	if (has_key)
-	    net_send("JOIN %s %s", str_tolower(channel), key);
-	else
-	    net_send("JOIN %s", str_tolower(channel));
+	if (has_channel_key) {
+	    if (net_send("JOIN %s %s", str_tolower(channel), key) < 0)
+		g_on_air = false;
+	} else {
+	    if (net_send("JOIN %s", str_tolower(channel)) < 0)
+		g_on_air = false;
+	}
 	free(dcopy);
     }
 }
@@ -93,10 +96,12 @@ cmd_part(const char *data)
     ptext_ctx.window = g_active_window;
 
     if (Strings_match(dcopy, "") || (channel = strtok_r(dcopy, " ", &state)) == NULL) {
-	if (is_irc_channel(g_active_window->label))
-	    net_send("PART %s :%s", g_active_window->label, Config("part_message"));
-	else
+	if (is_irc_channel(g_active_window->label)) {
+	    if (net_send("PART %s :%s", g_active_window->label, Config("part_message")) < 0)
+		g_on_air = false;
+	} else {
 	    printtext(&ptext_ctx, "/part: missing arguments");
+	}
 	free(dcopy);
 	return;
     }
@@ -112,10 +117,13 @@ cmd_part(const char *data)
 	free(dcopy);
 	return;
     } else {
-	if (has_message)
-	    net_send("PART %s :%s", str_tolower(channel), message);
-	else
-	    net_send("PART %s", str_tolower(channel));
+	if (has_message) {
+	    if (net_send("PART %s :%s", str_tolower(channel), message) < 0)
+		g_on_air = false;
+	} else {
+	    if (net_send("PART %s", str_tolower(channel)) < 0)
+		g_on_air = false;
+	}
 	free(dcopy);
     }
 }
