@@ -16,6 +16,7 @@ term_set_title(const char *fmt, ...)
     char *var_data;
     const char *known_brands[] = {
 	"xterm",
+	"xterm-256color",
 	"rxvt-unicode",
 	"rxvt-unicode-256color",
     };
