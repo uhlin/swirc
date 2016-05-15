@@ -101,6 +101,7 @@ static struct numeric_events_tag {
     { "253", "RPL_LUSERUNKNOWN",        NO_WINDOW,      0, event_allaround_extract_remove_colon },
     { "254", "RPL_LUSERCHANNELS",       NO_WINDOW,      0, event_allaround_extract_remove_colon },
     { "255", "RPL_LUSERME",             STATUS_WINDOW,  1, NULL },
+    { "263", "RPL_TRYAGAIN",            ACTIVE_WINDOW,  2, NULL },
     { "265", "",                        NO_WINDOW,      0, event_local_and_global_users },
     { "266", "",                        NO_WINDOW,      0, event_local_and_global_users },
     { "275", "",                        NO_WINDOW,      0, event_whois_ssl },
