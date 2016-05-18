@@ -469,8 +469,14 @@ window_foreach_destroy_names(void)
 
     foreach_hash_table_entry(entry_p) {
 	for (window = *entry_p; window != NULL; window = window->next) {
-	    if (is_irc_channel(window->label))
+	    if (is_irc_channel(window->label)) {
 		event_names_htbl_remove_all(window);
+		window->num_ops	    = 0;
+		window->num_halfops = 0;
+		window->num_voices  = 0;
+		window->num_normal  = 0;
+		window->num_total   = 0;
+	    }
 	}
     }
 }
