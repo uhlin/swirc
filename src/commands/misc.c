@@ -80,3 +80,24 @@ cmd_query(const char *data)
 	}
     }
 }
+
+/* usage: /n [channel] */
+void
+cmd_names(const char *data)
+{
+    extern int event_names_print_all(const char *channel);
+
+    ptext_ctx.window = g_active_window;
+
+    if (Strings_match(data, "")) {
+	if (is_irc_channel(g_active_window->label)) {
+	    event_names_print_all(g_active_window->label);
+	} else {
+	    printtext(&ptext_ctx, "/n: missing arguments");
+	}
+    } else if (!is_irc_channel(data)) {
+	printtext(&ptext_ctx, "/n: bogus irc channel");
+    } else {
+	event_names_print_all(data);
+    }
+}

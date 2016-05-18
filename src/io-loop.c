@@ -60,6 +60,7 @@ static struct cmds_tag {
     { "/disconnect",     cmd_disconnect      },
     { "/join",           cmd_join            },
     { "/msg",            cmd_msg             },
+    { "/n",              cmd_names           },
     { "/part",           cmd_part            },
     { "/query",          cmd_query           },
     { "/quit",           cmd_quit            },
