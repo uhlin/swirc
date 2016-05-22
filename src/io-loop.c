@@ -47,6 +47,7 @@
 
 #include "commands/connect.h"
 #include "commands/jp.h"
+#include "commands/me.h"
 #include "commands/misc.h"
 #include "commands/msg.h"
 #include "commands/nick.h"
@@ -62,6 +63,7 @@ static struct cmds_tag {
     { "/connect",        cmd_connect         },
     { "/disconnect",     cmd_disconnect      },
     { "/join",           cmd_join            },
+    { "/me",             cmd_me              },
     { "/msg",            cmd_msg             },
     { "/n",              cmd_names           },
     { "/nick",           cmd_nick            },

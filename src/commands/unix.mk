@@ -8,7 +8,7 @@ extra_flags=-g
 include_dirs=-I../include
 library_dirs=
 
-OBJS=connect.o jp.o misc.o msg.o say.o nick.o topic.o
+OBJS=connect.o jp.o misc.o msg.o say.o nick.o topic.o me.o
 
 .PHONY: all clean
 
@@ -25,6 +25,7 @@ msg.o:
 say.o:
 nick.o:
 topic.o:
+me.o:
 
 clean:
 	$(E) "  CLEAN"
