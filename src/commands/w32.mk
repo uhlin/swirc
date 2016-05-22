@@ -7,7 +7,7 @@ include_dirs=-I../include
 library_dirs=
 log_file=stdout.log
 
-OBJS=connect.obj jp.obj misc.obj msg.obj say.obj nick.obj
+OBJS=connect.obj jp.obj misc.obj msg.obj say.obj nick.obj topic.obj
 
 .c.obj:
 	$(E) ^ ^ CC^ ^ ^ ^ ^ ^ $@
@@ -21,6 +21,7 @@ misc.obj:
 msg.obj:
 say.obj:
 nick.obj:
+topic.obj:
 
 clean:
 	$(E) ^ ^ CLEAN

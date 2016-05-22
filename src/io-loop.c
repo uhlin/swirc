@@ -51,6 +51,7 @@
 #include "commands/msg.h"
 #include "commands/nick.h"
 #include "commands/say.h"
+#include "commands/topic.h"
 
 bool g_io_loop = true;
 
@@ -68,6 +69,7 @@ static struct cmds_tag {
     { "/query",          cmd_query           },
     { "/quit",           cmd_quit            },
     { "/say",            cmd_say             },
+    { "/topic",          cmd_topic           },
     { "/whois",          cmd_whois           },
 };
 
