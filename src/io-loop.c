@@ -49,6 +49,7 @@
 #include "commands/jp.h"
 #include "commands/misc.h"
 #include "commands/msg.h"
+#include "commands/say.h"
 
 bool g_io_loop = true;
 
@@ -64,6 +65,7 @@ static struct cmds_tag {
     { "/part",           cmd_part            },
     { "/query",          cmd_query           },
     { "/quit",           cmd_quit            },
+    { "/say",            cmd_say             },
     { "/whois",          cmd_whois           },
 };
 
