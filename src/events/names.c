@@ -358,12 +358,6 @@ event_eof_names(struct irc_message_compo *compo)
 	BZERO(names_channel, sizeof names_channel);
     }
 
-    if ((window = window_by_label(channel)) == NULL) {
-	goto bad;
-    } else {
-	;
-    }
-
     if (event_names_print_all(channel) != OK) {
 	goto bad;
     }
