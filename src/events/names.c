@@ -68,11 +68,13 @@ struct name_tag {
 
 static char names_channel[200] = "";
 
+#if 0
 static int	num_ops	    = 0;
 static int	num_halfops = 0;
 static int	num_voices  = 0;
 static int	num_normal  = 0;
 static int	num_total   = 0;
+#endif
 
 /* Function declarations
    ===================== */
@@ -90,7 +92,9 @@ void
 event_names_init(void)
 {
     BZERO(names_channel, sizeof names_channel);
+#if 0
     num_ops = num_halfops = num_voices = num_normal = num_total = 0;
+#endif
 }
 
 void
@@ -157,6 +161,7 @@ event_names(struct irc_message_compo *compo)
 
 	hInstall(&ctx);
 
+#if 0
 	if (ctx.is_op) {
 	    num_ops++;
 	} else if (ctx.is_halfop) {
@@ -168,6 +173,7 @@ event_names(struct irc_message_compo *compo)
 	}
 
 	num_total++;
+#endif
     }
 
     free(names_copy);
@@ -214,6 +220,17 @@ hInstall(const struct hInstall_context *ctx)
     if (window_entry) {
 	names_entry->next		  = window_entry->names_hash[hashval];
 	window_entry->names_hash[hashval] = names_entry;
+
+	if (ctx->is_op)
+	    window_entry->num_ops++;
+	else if (ctx->is_halfop)
+	    window_entry->num_halfops++;
+	else if (ctx->is_voice)
+	    window_entry->num_voices++;
+	else
+	    window_entry->num_normal++;
+
+	window_entry->num_total++;
     } else {
 	err_msg("FATAL: In events/names.c: Can't find a window with label %s", ctx->channel);
 	abort();
@@ -298,6 +315,17 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
 
     free_and_null(&entry->nick);
 
+    if (entry->is_op)
+	window->num_ops--;
+    else if (entry->is_halfop)
+	window->num_halfops--;
+    else if (entry->is_voice)
+	window->num_voices--;
+    else
+	window->num_normal--;
+
+    window->num_total--;
+
 #if 1
     entry->is_op = entry->is_halfop = entry->is_voice = 0;
 #endif
@@ -358,14 +386,18 @@ event_eof_names(struct irc_message_compo *compo)
     if ((window = window_by_label(channel)) == NULL) {
 	goto bad;
     } else {
+#if 0
 	window->num_ops	    = num_ops;
 	window->num_halfops = num_halfops;
 	window->num_voices  = num_voices;
 	window->num_normal  = num_normal;
 	window->num_total   = num_total;
+#endif
     }
 
+#if 0
     num_ops = num_halfops = num_voices = num_normal = num_total = 0;
+#endif
 
     if (event_names_print_all(channel) != OK) {
 	goto bad;
