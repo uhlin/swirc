@@ -212,31 +212,6 @@ hInstall(const struct hInstall_context *ctx)
     }
 }
 
-#if 0
-int
-event_names_htbl_modify(const char *nick, const char *channel,
-			bool is_op, bool is_halfop, bool is_voice)
-{
-    PIRC_WINDOW window;
-    PNAMES	names;
-
-    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
-	return ERR;
-    }
-
-    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
-	if (Strings_match_ignore_case(nick, names->nick)) {
-	    names->is_op     = is_op;
-	    names->is_halfop = is_halfop;
-	    names->is_voice  = is_voice;
-	    return OK;
-	}
-    }
-
-    return ERR;
-}
-#endif
-
 int
 event_names_htbl_modify_op(const char *nick, const char *channel, bool is_op)
 {
