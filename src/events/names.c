@@ -212,6 +212,7 @@ hInstall(const struct hInstall_context *ctx)
     }
 }
 
+#if 0
 int
 event_names_htbl_modify(const char *nick, const char *channel,
 			bool is_op, bool is_halfop, bool is_voice)
@@ -228,6 +229,108 @@ event_names_htbl_modify(const char *nick, const char *channel,
 	    names->is_op     = is_op;
 	    names->is_halfop = is_halfop;
 	    names->is_voice  = is_voice;
+	    return OK;
+	}
+    }
+
+    return ERR;
+}
+#endif
+
+int
+event_names_htbl_modify_op(const char *nick, const char *channel, bool is_op)
+{
+    PIRC_WINDOW window;
+    PNAMES	names;
+
+    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+	return ERR;
+    }
+
+    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+	if (Strings_match_ignore_case(nick, names->nick)) {
+	    if (! (names->is_op = is_op)) {
+		window->num_ops--;
+
+		if (names->is_halfop)
+		    window->num_halfops++;
+		else if (names->is_voice)
+		    window->num_voices++;
+		else
+		    window->num_normal++;
+	    } else { /* not op */
+		window->num_ops++;
+
+		if (names->is_halfop)
+		    window->num_halfops--;
+		else if (names->is_voice)
+		    window->num_voices--;
+		else
+		    window->num_normal--;
+	    }
+
+	    return OK;
+	}
+    }
+
+    return ERR;
+}
+
+int
+event_names_htbl_modify_halfop(const char *nick, const char *channel, bool is_halfop)
+{
+    PIRC_WINDOW window;
+    PNAMES	names;
+
+    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+	return ERR;
+    }
+
+    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+	if (Strings_match_ignore_case(nick, names->nick)) {
+	    if (! (names->is_halfop = is_halfop)) {
+		window->num_halfops--;
+
+		if (names->is_voice)
+		    window->num_voices++;
+		else
+		    window->num_normal++;
+	    } else { /* not halfop */
+		window->num_halfops++;
+
+		if (names->is_voice)
+		    window->num_voices--;
+		else
+		    window->num_normal--;
+	    }
+
+	    return OK;
+	}
+    }
+
+    return ERR;
+}
+
+int
+event_names_htbl_modify_voice(const char *nick, const char *channel, bool is_voice)
+{
+    PIRC_WINDOW window;
+    PNAMES	names;
+
+    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+	return ERR;
+    }
+
+    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+	if (Strings_match_ignore_case(nick, names->nick)) {
+	    if (! (names->is_voice = is_voice)) {
+		window->num_voices--;
+		window->num_normal++;
+	    } else { /* not voice */
+		window->num_voices++;
+		window->num_normal--;
+	    }
+
 	    return OK;
 	}
     }
@@ -339,7 +442,6 @@ hash(const char *nick)
 void
 event_eof_names(struct irc_message_compo *compo)
 {
-    PIRC_WINDOW window;
     char *channel;
     char *eof_msg;
     char *state = "";

@@ -31,16 +31,139 @@
 
 #include <time.h>
 
+#include "../assertAPI.h"
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
 #include "../irc.h"
+#include "../libUtils.h"
 #include "../printtext.h"
 #include "../strHand.h"
 #include "../theme.h"
 
 #include "channel.h"
 #include "names.h"
+
+static void
+chg_status_for_op(plus_minus_state_t pm_state,
+		  const char *nick,
+		  const char *channel)
+{
+    switch (pm_state) {
+    case STATE_PLUS:
+	event_names_htbl_modify_op(nick, channel, true);
+	break;
+    case STATE_MINUS:
+	event_names_htbl_modify_op(nick, channel, false);
+	break;
+    case STATE_NEITHER_PM:
+    default:
+	sw_assert_not_reached();
+    }
+}
+
+static void
+chg_status_for_halfop(plus_minus_state_t pm_state,
+		      const char *nick,
+		      const char *channel)
+{
+    switch (pm_state) {
+    case STATE_PLUS:
+	event_names_htbl_modify_halfop(nick, channel, true);
+	break;
+    case STATE_MINUS:
+	event_names_htbl_modify_halfop(nick, channel, false);
+	break;
+    case STATE_NEITHER_PM:
+    default:
+	sw_assert_not_reached();
+    }
+}
+
+static void
+chg_status_for_voice(plus_minus_state_t pm_state,
+		     const char *nick,
+		     const char *channel)
+{
+    switch (pm_state) {
+    case STATE_PLUS:
+	event_names_htbl_modify_voice(nick, channel, true);
+	break;
+    case STATE_MINUS:
+	event_names_htbl_modify_voice(nick, channel, false);
+	break;
+    case STATE_NEITHER_PM:
+    default:
+	sw_assert_not_reached();
+    }
+}
+
+/* Example input: +vvv nick1 nick2 nick3 */
+static void
+maintain_channel_stats(const char *channel, const char *input)
+{
+    char               **ar_p           = NULL;
+    char                *input_copy     = sw_strdup(input);
+    char                *modes          = "";
+    char                *nicks[15]      = {};
+    char                *state          = "";
+    const size_t         ar_sz          = ARRAY_SIZE(nicks);
+    plus_minus_state_t   pm_state       = STATE_NEITHER_PM;
+    size_t               ar_i           = 0;
+    size_t               nicks_assigned = 0;
+
+    /* initialize the array */
+    for (ar_p = &nicks[0]; ar_p < &nicks[ar_sz]; ar_p++)
+	*ar_p = NULL;
+
+    if ((modes = strtok_r(input_copy, " ", &state)) == NULL)
+	goto bad;
+
+    for (nicks_assigned = 0;; nicks_assigned++) {
+	char *token = strtok_r(NULL, " ", &state);
+
+	if (token && nicks_assigned < ar_sz)
+	    nicks[nicks_assigned] = sw_strdup(token);
+	else
+	    break;
+    }
+
+    for (char *cp = modes; *cp && ar_i < nicks_assigned; cp++) {
+	switch (*cp) {
+	case '+':
+	    pm_state = STATE_PLUS;
+	    break;
+	case '-':
+	    pm_state = STATE_MINUS;
+	    break;
+	case 'q':
+	case 'a':
+	case 'o':
+	    chg_status_for_op(pm_state, nicks[ar_i++], channel);
+	    break;
+	case 'h':
+	    chg_status_for_halfop(pm_state, nicks[ar_i++], channel);
+	    break;
+	case 'v':
+	    chg_status_for_voice(pm_state, nicks[ar_i++], channel);
+	    break;
+	}
+    }
+
+    free(input_copy);
+
+    /* destroy the array */
+    for (ar_p = &nicks[0]; ar_p < &nicks[ar_sz]; ar_p++) {
+	free_not_null(*ar_p);
+	*ar_p = NULL;
+    }
+
+    return;
+
+  bad:
+    err_msg("maintain_channel_stats() fatal error");
+    abort();
+}
 
 /* event_topic: 332
 
@@ -166,6 +289,7 @@ event_mode(struct irc_message_compo *compo)
 		      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 		      LEFT_BRKT, s_copy, RIGHT_BRKT,
 		      COLOR2, nick, NORMAL);
+	    maintain_channel_stats(channel, s_copy);
 	} else {
 	    /* do nothing */;
 	}

@@ -471,11 +471,13 @@ window_foreach_destroy_names(void)
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (is_irc_channel(window->label)) {
 		event_names_htbl_remove_all(window);
+#if 0
 		window->num_ops	    = 0;
 		window->num_halfops = 0;
 		window->num_voices  = 0;
 		window->num_normal  = 0;
 		window->num_total   = 0;
+#endif
 	    }
 	}
     }

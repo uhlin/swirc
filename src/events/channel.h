@@ -1,6 +1,12 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
+typedef enum {
+    STATE_PLUS,
+    STATE_MINUS,
+    STATE_NEITHER_PM
+} plus_minus_state_t;
+
 void event_topic         (struct irc_message_compo *);
 void event_topic_creator (struct irc_message_compo *);
 void event_mode          (struct irc_message_compo *);
