@@ -236,7 +236,12 @@ event_names_htbl_modify_owner(const char *nick, const char *channel, bool is_own
 
     for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
 	if (Strings_match_ignore_case(nick, names->nick)) {
-	    if (! (names->is_owner = is_owner)) {
+	    if (names->is_owner && is_owner)
+		return OK;
+	    else
+		names->is_owner = is_owner;
+
+	    if (! (names->is_owner)) {
 		window->num_owners--;
 
 		if (names->is_superop)     window->num_superops++;
@@ -273,7 +278,14 @@ event_names_htbl_modify_superop(const char *nick, const char *channel, bool is_s
 
     for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
 	if (Strings_match_ignore_case(nick, names->nick)) {
-	    if (! (names->is_superop = is_superop)) {
+	    if (names->is_superop && is_superop)
+		return OK;
+	    else
+		names->is_superop = is_superop;
+
+	    if (names->is_owner)
+		return OK;
+	    else if (! (names->is_superop)) {
 		window->num_superops--;
 
 		if (names->is_op)          window->num_ops++;
@@ -308,7 +320,14 @@ event_names_htbl_modify_op(const char *nick, const char *channel, bool is_op)
 
     for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
 	if (Strings_match_ignore_case(nick, names->nick)) {
-	    if (! (names->is_op = is_op)) {
+	    if (names->is_op && is_op)
+		return OK;
+	    else
+		names->is_op = is_op;
+
+	    if (names->is_owner || names->is_superop)
+		return OK;
+	    else if (! (names->is_op)) {
 		window->num_ops--;
 
 		if (names->is_halfop)
@@ -347,7 +366,14 @@ event_names_htbl_modify_halfop(const char *nick, const char *channel, bool is_ha
 
     for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
 	if (Strings_match_ignore_case(nick, names->nick)) {
-	    if (! (names->is_halfop = is_halfop)) {
+	    if (names->is_halfop && is_halfop)
+		return OK;
+	    else
+		names->is_halfop = is_halfop;
+
+	    if (names->is_owner || names->is_superop || names->is_op)
+		return OK;
+	    else if (! (names->is_halfop)) {
 		window->num_halfops--;
 
 		if (names->is_voice)
@@ -382,7 +408,14 @@ event_names_htbl_modify_voice(const char *nick, const char *channel, bool is_voi
 
     for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
 	if (Strings_match_ignore_case(nick, names->nick)) {
-	    if (! (names->is_voice = is_voice)) {
+	    if (names->is_voice && is_voice)
+		return OK;
+	    else
+		names->is_voice = is_voice;
+
+	    if (names->is_owner || names->is_superop || names->is_op || names->is_halfop)
+		return OK;
+	    else if (! (names->is_voice)) {
 		window->num_voices--;
 		window->num_normal++;
 	    } else { /* not voice */
