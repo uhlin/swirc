@@ -46,6 +46,8 @@
 struct hInstall_context {
     char	*channel;
     char	*nick;
+    bool	 is_owner;
+    bool	 is_superop;
     bool	 is_op;
     bool	 is_halfop;
     bool	 is_voice;
@@ -139,14 +141,16 @@ event_names(struct irc_message_compo *compo)
 	    break;
 	}
 
-	ctx.channel   = channel;
-	ctx.nick      =
+	ctx.channel    = channel;
+	ctx.nick       =
 	    ((*token == '~' || *token == '&' || *token == '@' || *token == '%' || *token == '+')
 	     ? &token[1]
 	     : &token[0]);
-	ctx.is_op     = (*token == '~' || *token == '&' || *token == '@');
-	ctx.is_halfop = (*token == '%');
-	ctx.is_voice  = (*token == '+');
+	ctx.is_owner   = (*token == '~');
+	ctx.is_superop = (*token == '&');
+	ctx.is_op      = (*token == '@');
+	ctx.is_halfop  = (*token == '%');
+	ctx.is_voice   = (*token == '+');
 
 	hInstall(&ctx);
     }
@@ -168,11 +172,13 @@ event_names_htbl_insert(const char *nick, const char *channel)
 	return ERR;
     }
 
-    ctx.channel	  = (char *) channel;
-    ctx.nick	  = (char *) nick;
-    ctx.is_op	  = false;
-    ctx.is_halfop = false;
-    ctx.is_voice  = false;
+    ctx.channel	   = (char *) channel;
+    ctx.nick	   = (char *) nick;
+    ctx.is_owner   = false;
+    ctx.is_superop = false;
+    ctx.is_op	   = false;
+    ctx.is_halfop  = false;
+    ctx.is_voice   = false;
 
     hInstall(&ctx);
 
@@ -186,17 +192,23 @@ hInstall(const struct hInstall_context *ctx)
     PNAMES		names_entry;
     const unsigned int	hashval      = hash(ctx->nick);
 
-    names_entry		   = xcalloc(sizeof *names_entry, 1);
-    names_entry->nick	   = sw_strdup(ctx->nick);
-    names_entry->is_op	   = ctx->is_op;
-    names_entry->is_halfop = ctx->is_halfop;
-    names_entry->is_voice  = ctx->is_voice;
+    names_entry		    = xcalloc(sizeof *names_entry, 1);
+    names_entry->nick	    = sw_strdup(ctx->nick);
+    names_entry->is_owner   = ctx->is_owner;
+    names_entry->is_superop = ctx->is_superop;
+    names_entry->is_op	    = ctx->is_op;
+    names_entry->is_halfop  = ctx->is_halfop;
+    names_entry->is_voice   = ctx->is_voice;
 
     if (window_entry) {
 	names_entry->next		  = window_entry->names_hash[hashval];
 	window_entry->names_hash[hashval] = names_entry;
 
-	if (ctx->is_op)
+	if (ctx->is_owner)
+	    window_entry->num_owners++;
+	else if (ctx->is_superop)
+	    window_entry->num_superops++;
+	else if (ctx->is_op)
 	    window_entry->num_ops++;
 	else if (ctx->is_halfop)
 	    window_entry->num_halfops++;
@@ -210,6 +222,78 @@ hInstall(const struct hInstall_context *ctx)
 	err_msg("FATAL: In events/names.c: Can't find a window with label %s", ctx->channel);
 	abort();
     }
+}
+
+int
+event_names_htbl_modify_owner(const char *nick, const char *channel, bool is_owner)
+{
+    PIRC_WINDOW window;
+    PNAMES	names;
+
+    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+	return ERR;
+    }
+
+    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+	if (Strings_match_ignore_case(nick, names->nick)) {
+	    if (! (names->is_owner = is_owner)) {
+		window->num_owners--;
+
+		if (names->is_superop)     window->num_superops++;
+		else if (names->is_op)     window->num_ops++;
+		else if (names->is_halfop) window->num_halfops++;
+		else if (names->is_voice)  window->num_voices++;
+		else window->num_normal++;
+	    } else { /* not owner */
+		window->num_owners++;
+
+		if (names->is_superop)     window->num_superops--;
+		else if (names->is_op)     window->num_ops--;
+		else if (names->is_halfop) window->num_halfops--;
+		else if (names->is_voice)  window->num_voices--;
+		else window->num_normal--;
+	    }
+
+	    return OK;
+	}
+    }
+
+    return ERR;
+}
+
+int
+event_names_htbl_modify_superop(const char *nick, const char *channel, bool is_superop)
+{
+    PIRC_WINDOW window;
+    PNAMES	names;
+
+    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+	return ERR;
+    }
+
+    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+	if (Strings_match_ignore_case(nick, names->nick)) {
+	    if (! (names->is_superop = is_superop)) {
+		window->num_superops--;
+
+		if (names->is_op)          window->num_ops++;
+		else if (names->is_halfop) window->num_halfops++;
+		else if (names->is_voice)  window->num_voices++;
+		else window->num_normal++;
+	    } else { /* not superop */
+		window->num_superops++;
+
+		if (names->is_op)          window->num_ops--;
+		else if (names->is_halfop) window->num_halfops--;
+		else if (names->is_voice)  window->num_voices--;
+		else window->num_normal--;
+	    }
+
+	    return OK;
+	}
+    }
+
+    return ERR;
 }
 
 int
@@ -368,7 +452,11 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
 
     free_and_null(&entry->nick);
 
-    if (entry->is_op)
+    if (entry->is_owner)
+	window->num_owners--;
+    else if (entry->is_superop)
+	window->num_superops--;
+    else if (entry->is_op)
 	window->num_ops--;
     else if (entry->is_halfop)
 	window->num_halfops--;
@@ -378,10 +466,6 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
 	window->num_normal--;
 
     window->num_total--;
-
-#if 1
-    entry->is_op = entry->is_halfop = entry->is_voice = 0;
-#endif
 
     free_not_null(entry);
     entry = NULL;
@@ -540,6 +624,10 @@ event_names_print_all(const char *channel)
 	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT, BOLD, window->num_total, BOLD,
 	      LEFT_BRKT, BOLD, window->num_ops, BOLD, BOLD, window->num_halfops, BOLD,
 	      BOLD, window->num_voices, BOLD, BOLD, window->num_normal, BOLD, RIGHT_BRKT);
+    if (window->num_owners)
+	printtext(&ptext_ctx, "-- Additionally: %c%d%c channel owner(s)", BOLD, window->num_owners, BOLD);
+    if (window->num_superops)
+	printtext(&ptext_ctx, "-- Additionally: %c%d%c superops", BOLD, window->num_superops, BOLD);
 
     return OK;
 }
@@ -555,7 +643,11 @@ next_names(PIRC_WINDOW window, int *counter)
     for (PNAMES p = *entry_p; p != NULL; p = p->next) {
 	char c;
 
-	if (p->is_op) {
+	if (p->is_owner) {
+	    c = '~';
+	} else if (p->is_superop) {
+	    c = '&';
+	} else if (p->is_op) {
 	    c = '@';
 	} else if (p->is_halfop) {
 	    c = '%';
@@ -617,26 +709,48 @@ names_cmp_fn(const void *obj1, const void *obj2)
 	    nick2++;
 	}
 
-	if (*nick1 == '@' && (*nick2 == '%' || *nick2 == '+')) {
-	    nick2++;
-	} else if (*nick2 == '@' && (*nick1 == '%' || *nick1 == '+')) {
-	    nick1++;
-	} else if (*nick1 == '%' && *nick2 == '@') {
-	    nick1++;
-	} else if (*nick2 == '%' && *nick1 == '@') {
-	    nick2++;
-	} else if (*nick1 == '%' && *nick2 == '+') {
-	    nick2++;
-	} else if (*nick2 == '%' && *nick1 == '+') {
-	    nick1++;
-	} else if (*nick1 == '+' && (*nick2 == '@' || *nick2 == '%')) {
-	    nick1++;
-	} else if (*nick2 == '+' && (*nick1 == '@' || *nick1 == '%')) {
-	    nick2++;
-	} else {
-	    ;
+	switch (*nick1) {
+	case '~':
+	    if (*nick2 == '&' || *nick2 == '@' || *nick2 == '%' || *nick2 == '+' || *nick2 != '~')
+		return (-1);
+	    break;
+	case '&':
+	    if (*nick2 == '@' || *nick2 == '%' || *nick2 == '+')
+		return (-1);
+	    break;
+	case '@':
+	    if (*nick2 == '%' || *nick2 == '+')
+		return (-1);
+	    break;
+	case '%':
+	    if (*nick2 == '+')
+		return (-1);
+	    break;
+	case '+':
+	    break;
+	}
+
+	switch (*nick2) {
+	case '~':
+	    if (*nick1 == '&' || *nick1 == '@' || *nick1 == '%' || *nick1 == '+' || *nick1 != '~')
+		return (1);
+	    break;
+	case '&':
+	    if (*nick1 == '@' || *nick1 == '%' || *nick1 == '+')
+		return (1);
+	    break;
+	case '@':
+	    if (*nick1 == '%' || *nick1 == '+')
+		return (1);
+	    break;
+	case '%':
+	    if (*nick1 == '+')
+		return (1);
+	    break;
+	case '+':
+	    break;
 	}
     }
 
-    return (strcmp(nick1, nick2));
+    return (strcasecmp(nick1, nick2));
 }

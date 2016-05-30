@@ -45,6 +45,42 @@
 #include "names.h"
 
 static void
+chg_status_for_owner(plus_minus_state_t pm_state,
+		     const char *nick,
+		     const char *channel)
+{
+    switch (pm_state) {
+    case STATE_PLUS:
+	event_names_htbl_modify_owner(nick, channel, true);
+	break;
+    case STATE_MINUS:
+	event_names_htbl_modify_owner(nick, channel, false);
+	break;
+    case STATE_NEITHER_PM:
+    default:
+	sw_assert_not_reached();
+    }
+}
+
+static void
+chg_status_for_superop(plus_minus_state_t pm_state,
+		       const char *nick,
+		       const char *channel)
+{
+    switch (pm_state) {
+    case STATE_PLUS:
+	event_names_htbl_modify_superop(nick, channel, true);
+	break;
+    case STATE_MINUS:
+	event_names_htbl_modify_superop(nick, channel, false);
+	break;
+    case STATE_NEITHER_PM:
+    default:
+	sw_assert_not_reached();
+    }
+}
+
+static void
 chg_status_for_op(plus_minus_state_t pm_state,
 		  const char *nick,
 		  const char *channel)
@@ -137,7 +173,11 @@ maintain_channel_stats(const char *channel, const char *input)
 	    pm_state = STATE_MINUS;
 	    break;
 	case 'q':
+	    chg_status_for_owner(pm_state, nicks[ar_i++], channel);
+	    break;
 	case 'a':
+	    chg_status_for_superop(pm_state, nicks[ar_i++], channel);
+	    break;
 	case 'o':
 	    chg_status_for_op(pm_state, nicks[ar_i++], channel);
 	    break;

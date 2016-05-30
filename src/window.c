@@ -193,11 +193,13 @@ hInstall(const struct hInstall_context *ctx)
 	*n_ent = NULL;
     }
 
-    entry->num_ops     = 0;
-    entry->num_halfops = 0;
-    entry->num_voices  = 0;
-    entry->num_normal  = 0;
-    entry->num_total   = 0;
+    entry->num_owners	= 0;
+    entry->num_superops = 0;
+    entry->num_ops	= 0;
+    entry->num_halfops	= 0;
+    entry->num_voices	= 0;
+    entry->num_normal	= 0;
+    entry->num_total	= 0;
 
     hashval             = hash(ctx->label);
     entry->next         = hash_table[hashval];
@@ -235,11 +237,13 @@ hUndef(PIRC_WINDOW entry)
     textBuf_destroy(entry->buf);
     event_names_htbl_remove_all(entry);
 
-    entry->num_ops     = 0;
-    entry->num_halfops = 0;
-    entry->num_voices  = 0;
-    entry->num_normal  = 0;
-    entry->num_total   = 0;
+    entry->num_owners	= 0;
+    entry->num_superops = 0;
+    entry->num_ops	= 0;
+    entry->num_halfops	= 0;
+    entry->num_voices	= 0;
+    entry->num_normal	= 0;
+    entry->num_total	= 0;
 
     free_not_null(entry);
     entry = NULL;
@@ -472,11 +476,13 @@ window_foreach_destroy_names(void)
 	    if (is_irc_channel(window->label)) {
 		event_names_htbl_remove_all(window);
 #if 0
-		window->num_ops	    = 0;
-		window->num_halfops = 0;
-		window->num_voices  = 0;
-		window->num_normal  = 0;
-		window->num_total   = 0;
+		window->num_owners   = 0;
+		window->num_superops = 0;
+		window->num_ops	     = 0;
+		window->num_halfops  = 0;
+		window->num_voices   = 0;
+		window->num_normal   = 0;
+		window->num_total    = 0;
 #endif
 	    }
 	}

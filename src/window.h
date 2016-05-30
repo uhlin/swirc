@@ -17,6 +17,8 @@
 
 typedef struct tagNAMES {
     char	*nick;
+    bool	 is_owner;
+    bool	 is_superop;
     bool	 is_op;
     bool	 is_halfop;
     bool	 is_voice;
@@ -30,6 +32,8 @@ typedef struct tagIRC_WINDOW {
     int		 refnum;
     PTEXTBUF	 buf;
     PNAMES	 names_hash[NAMES_HASH_TABLE_SIZE];
+    int		 num_owners;
+    int		 num_superops;
     int		 num_ops;
     int		 num_halfops;
     int		 num_voices;
