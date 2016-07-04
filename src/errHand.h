@@ -13,6 +13,7 @@ SW_NORET void	err_dump (const char *fmt, ...);
 SW_NORET void	err_exit (int error, const char *fmt, ...);
 SW_NORET void	err_quit (const char *fmt, ...);
 SW_NORET void	err_sys  (const char *fmt, ...);
+void		err_log  (int error, const char *fmt, ...);
 void		err_msg  (const char *fmt, ...);
 void		err_ret  (const char *fmt, ...);
 

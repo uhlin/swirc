@@ -31,13 +31,63 @@
 
 #include <stdio.h>
 #include <string.h>		/* strerror_r() */
+#include <time.h>
 
 #include "curses-funcs.h"
 #include "errHand.h"
+#include "nestHome.h"
 #include "strHand.h"
 
+static const char *
+get_timestamp()
+{
+    time_t       seconds;
+    const time_t unsuccessful = -1;
+    struct tm    items        = {0};
+    static char  buffer[200]  = "";
+
+    if (time(&seconds) == unsuccessful) {
+	return "";
+    }
+
+#if defined(UNIX)
+    if (localtime_r(&seconds, &items) == NULL) {
+	return "";
+    }
+#elif defined(WIN32)
+    if (localtime_s(&items, &seconds) != 0) {
+	return "";
+    }
+#endif
+
+    return (strftime(buffer, sizeof buffer, "%c", &items) > 0 ? &buffer[0] : "");
+}
+
 static void
-err_doit(bool errnoflag, int error, const char *fmt, va_list ap)
+write_to_error_log(const char *msg)
+{
+    char  path[1300] = "";
+    FILE *fp         = NULL;
+
+    if (!msg || !g_tmp_dir || sw_strcpy(path, g_tmp_dir, sizeof path) != 0)
+	return;
+
+#if defined(UNIX)
+    if (sw_strcat(path, "/error.log", sizeof path) != 0)
+	return;
+#elif defined(WIN32)
+    if (sw_strcat(path, "\\error.log", sizeof path) != 0)
+	return;
+#endif
+
+    if ((fp = fopen(path, "a")) != NULL) {
+	(void) fprintf(fp, "%s %s\n", get_timestamp(), msg);
+	(void) fclose(fp);
+    }
+}
+
+static void
+err_doit(bool output_to_stderr, int error, const char *fmt, va_list ap)
 {
     char out[1300] = "";
 
@@ -47,14 +97,18 @@ err_doit(bool errnoflag, int error, const char *fmt, va_list ap)
     vsnprintf_s(out, sizeof out, _TRUNCATE, fmt, ap);
 #endif
 
-    if (errnoflag) {
+    if (error) {
 	sw_strcat(out, ": ", sizeof out);
 	sw_strcat(out, errdesc_by_num(error), sizeof out);
     }
 
-    escape_curses();
-    fputs(out, stderr);
-    fputc('\n', stderr);
+    write_to_error_log(out);
+
+    if (output_to_stderr) {
+	escape_curses();
+	fputs(out, stderr);
+	fputc('\n', stderr);
+    }
 }
 
 SW_NORET void
@@ -87,7 +141,7 @@ err_quit(const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    err_doit(false, 0, fmt, ap);
+    err_doit(true, 0, fmt, ap);
     va_end(ap);
 
     exit(EXIT_FAILURE);
@@ -106,12 +160,22 @@ err_sys(const char *fmt, ...)
 }
 
 void
+err_log(int error, const char *fmt, ...)
+{
+    va_list ap;
+
+    va_start(ap, fmt);
+    err_doit(false, error, fmt, ap);
+    va_end(ap);
+}
+
+void
 err_msg(const char *fmt, ...)
 {
     va_list ap;
 
     va_start(ap, fmt);
-    err_doit(false, 0, fmt, ap);
+    err_doit(true, 0, fmt, ap);
     va_end(ap);
 }
 
