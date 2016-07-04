@@ -65,7 +65,7 @@ static struct tagConfDefValues {
     { "quit_message",              TYPE_STRING,  "leaving" },
     { "real_name",                 TYPE_STRING,  "pinball" },
     { "recode",                    TYPE_BOOLEAN, "no" },
-    { "show_ping_pong",            TYPE_BOOLEAN, "yes" },
+    { "show_ping_pong",            TYPE_BOOLEAN, "no" },
     { "skip_motd",                 TYPE_BOOLEAN, "no" },
     { "ssl_verify_peer",           TYPE_BOOLEAN, "yes" },
     { "startup_greeting",          TYPE_BOOLEAN, "yes" },
