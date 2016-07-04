@@ -141,7 +141,7 @@ maintain_channel_stats(const char *channel, const char *input)
     char               **ar_p           = NULL;
     char                *input_copy     = sw_strdup(input);
     char                *modes          = "";
-    char                *nicks[15]      = {0};
+    char                *nicks[15]      = { NULL };
     char                *state          = "";
     const size_t         ar_sz          = ARRAY_SIZE(nicks);
     plus_minus_state_t   pm_state       = STATE_NEITHER_PM;
