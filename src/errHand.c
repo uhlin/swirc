@@ -69,7 +69,7 @@ write_to_error_log(const char *msg)
     char  path[1300] = "";
     FILE *fp         = NULL;
 
-    if (!msg || !g_tmp_dir || sw_strcpy(path, g_tmp_dir, sizeof path) != 0)
+    if (!msg || !g_log_dir || sw_strcpy(path, g_log_dir, sizeof path) != 0)
 	return;
 
 #if defined(UNIX)
