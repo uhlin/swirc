@@ -51,10 +51,12 @@ chg_status_for_owner(plus_minus_state_t pm_state,
 {
     switch (pm_state) {
     case STATE_PLUS:
-	event_names_htbl_modify_owner(nick, channel, true);
+	if (event_names_htbl_modify_owner(nick, channel, true) != OK)
+	    err_log(0, "In chg_status_for_owner: error: event_names_htbl_modify_owner");
 	break;
     case STATE_MINUS:
-	event_names_htbl_modify_owner(nick, channel, false);
+	if (event_names_htbl_modify_owner(nick, channel, false) != OK)
+	    err_log(0, "In chg_status_for_owner: error: event_names_htbl_modify_owner");
 	break;
     case STATE_NEITHER_PM:
     default:
@@ -69,10 +71,12 @@ chg_status_for_superop(plus_minus_state_t pm_state,
 {
     switch (pm_state) {
     case STATE_PLUS:
-	event_names_htbl_modify_superop(nick, channel, true);
+	if (event_names_htbl_modify_superop(nick, channel, true) != OK)
+	    err_log(0, "In chg_status_for_superop: error: event_names_htbl_modify_superop");
 	break;
     case STATE_MINUS:
-	event_names_htbl_modify_superop(nick, channel, false);
+	if (event_names_htbl_modify_superop(nick, channel, false) != OK)
+	    err_log(0, "In chg_status_for_superop: error: event_names_htbl_modify_superop");
 	break;
     case STATE_NEITHER_PM:
     default:
@@ -87,10 +91,12 @@ chg_status_for_op(plus_minus_state_t pm_state,
 {
     switch (pm_state) {
     case STATE_PLUS:
-	event_names_htbl_modify_op(nick, channel, true);
+	if (event_names_htbl_modify_op(nick, channel, true) != OK)
+	    err_log(0, "In chg_status_for_op: error: event_names_htbl_modify_op");
 	break;
     case STATE_MINUS:
-	event_names_htbl_modify_op(nick, channel, false);
+	if (event_names_htbl_modify_op(nick, channel, false) != OK)
+	    err_log(0, "In chg_status_for_op: error: event_names_htbl_modify_op");
 	break;
     case STATE_NEITHER_PM:
     default:
@@ -105,10 +111,12 @@ chg_status_for_halfop(plus_minus_state_t pm_state,
 {
     switch (pm_state) {
     case STATE_PLUS:
-	event_names_htbl_modify_halfop(nick, channel, true);
+	if (event_names_htbl_modify_halfop(nick, channel, true) != OK)
+	    err_log(0, "In chg_status_for_halfop: error: event_names_htbl_modify_halfop");
 	break;
     case STATE_MINUS:
-	event_names_htbl_modify_halfop(nick, channel, false);
+	if (event_names_htbl_modify_halfop(nick, channel, false) != OK)
+	    err_log(0, "In chg_status_for_halfop: error: event_names_htbl_modify_halfop");
 	break;
     case STATE_NEITHER_PM:
     default:
@@ -123,10 +131,12 @@ chg_status_for_voice(plus_minus_state_t pm_state,
 {
     switch (pm_state) {
     case STATE_PLUS:
-	event_names_htbl_modify_voice(nick, channel, true);
+	if (event_names_htbl_modify_voice(nick, channel, true) != OK)
+	    err_log(0, "In chg_status_for_voice: error: event_names_htbl_modify_voice");
 	break;
     case STATE_MINUS:
-	event_names_htbl_modify_voice(nick, channel, false);
+	if (event_names_htbl_modify_voice(nick, channel, false) != OK)
+	    err_log(0, "In chg_status_for_voice: error: event_names_htbl_modify_voice");
 	break;
     case STATE_NEITHER_PM:
     default:
