@@ -64,20 +64,20 @@ static struct normal_events_tag {
     char		*normal_event;
     event_handler_fn	 event_handler;
 } normal_events[] = {
-    { "NICK",    event_nick    },
-    { "QUIT",    event_quit    },
-    { "SQUIT",   event_noop    },
-    { "JOIN",    event_join    },
-    { "PART",    event_part    },
-    { "MODE",    event_mode    },
-    { "TOPIC",   event_noop    },
-    { "INVITE",  event_noop    },
-    { "KICK",    event_kick    },
-    { "PRIVMSG", event_privmsg },
-    { "NOTICE",  event_notice  },
-    { "PING",    event_ping    },
-    { "ERROR",   event_error   },
-    { "WALLOPS", event_noop    },
+    { "NICK",    event_nick      },
+    { "QUIT",    event_quit      },
+    { "SQUIT",   event_noop      },
+    { "JOIN",    event_join      },
+    { "PART",    event_part      },
+    { "MODE",    event_mode      },
+    { "TOPIC",   event_topic_chg },
+    { "INVITE",  event_noop      },
+    { "KICK",    event_kick      },
+    { "PRIVMSG", event_privmsg   },
+    { "NOTICE",  event_notice    },
+    { "PING",    event_ping      },
+    { "ERROR",   event_error     },
+    { "WALLOPS", event_noop      },
 };
 
 static struct numeric_events_tag {

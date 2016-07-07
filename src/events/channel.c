@@ -215,6 +215,54 @@ maintain_channel_stats(const char *channel, const char *input)
     abort();
 }
 
+/* event_topic_chg
+
+   Example:
+     :<nick>!<user>@<host> TOPIC <channel> :New topic */
+void
+event_topic_chg(struct irc_message_compo *compo)
+{
+    char	*channel, *new_topic;
+    char	*nick, *user, *host;
+    char	*prefix = &compo->prefix[1];
+    char	*state1, *state2;
+    struct printtext_context ctx = {
+	.window	    = NULL,
+	.spec_type  = TYPE_SPEC1,
+	.include_ts = true,
+    };
+
+    state1 = state2 = "";
+
+    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL
+	|| (user = strtok_r(NULL, "!@", &state1)) == NULL
+	|| (host = strtok_r(NULL, "!@", &state1)) == NULL) {
+	return;
+    }
+
+    /* currently not used */
+    (void) user;
+    (void) host;
+
+    if (Strfeed(compo->params, 1) != 1)
+	return;
+
+    if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL ||
+	(new_topic = strtok_r(NULL, "\n", &state2)) == NULL)
+	return;
+
+    if (*new_topic == ':')
+	new_topic++;
+
+    if ((ctx.window = window_by_label(channel)) == NULL)
+	return;
+
+    new_window_title(channel, new_topic);
+
+    printtext(&ctx, "%c%s%c changed the topic of %c%s%c to: %s",
+	      BOLD, nick, BOLD, BOLD, channel, BOLD, new_topic);
+}
+
 /* event_topic: 332
 
    Example:
