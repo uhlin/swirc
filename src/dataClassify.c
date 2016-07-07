@@ -33,10 +33,10 @@
 
 #include "dataClassify.h"
 
-static const size_t	nickname_len_max  = 22;
-static const size_t	username_len_max  = 9;
-static const size_t	real_name_len_max = 45;
-static const size_t	hostname_len_max  = 253;
+static const size_t	nickname_len_max  = 30;
+static const size_t	username_len_max  = 100;
+static const size_t	real_name_len_max = 60;
+static const size_t	hostname_len_max  = 255;
 
 bool
 is_alphabetic(const char *string)
@@ -127,7 +127,8 @@ is_valid_nickname(const char *nickname)
 {
     const char *ccp;
     const char legal_index[] =
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789[]\\`_^{|}-";
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	"-[\\]^_`{|}";
 
     if (nickname == NULL || *nickname == '\0' || strlen(nickname) > nickname_len_max) {
 	return false;
@@ -147,7 +148,8 @@ is_valid_username(const char *username)
 {
     const char *ccp;
     const char legal_index[] =
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	"$-./[\\]^_`{|}~";
 
     if (username == NULL || *username == '\0' || strlen(username) > username_len_max) {
 	return false;
@@ -185,7 +187,7 @@ is_valid_hostname(const char *hostname)
 {
     const char *ccp;
     const char host_chars[] =
-	"abcdefghijklmnopqrstuvwxyz.0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	"abcdefghijklmnopqrstuvwxyz.0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ:";
 
     if (hostname == NULL || *hostname == '\0' || strlen(hostname) > hostname_len_max) {
 	return false;
