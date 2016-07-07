@@ -2,7 +2,7 @@
 #define SW_ERROR_HANDLING_H
 
 /*lint -printf(1, err_dump, err_msg, err_quit, err_ret, err_sys) */
-/*lint -printf(2, err_exit) */
+/*lint -printf(2, err_exit, err_log) */
 
 /*lint -sem(err_dump, r_no) */
 /*lint -sem(err_exit, r_no) */
