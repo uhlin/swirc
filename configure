@@ -31,10 +31,26 @@ os_LINUX () {
     cat <<EOF >>$MAKE_DEF_FILE
 CC=gcc
 CFLAGS=-DLINUX=1 -DUNIX=1 -D_FORTIFY_SOURCE=2 -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=500 -D_XOPEN_SOURCE_EXTENDED=1
-CFLAGS+=-Wall -std=c99
+CFLAGS+=-O -Wall -pipe -std=c99
 LDFLAGS=
 LDLIBS=-lcrypto -lncursesw -lpanelw -lpthread -lssl
 EOF
+}
+
+fix_cflags () {
+    helper_scripts="ncursesw6-config ncursesw5-config"
+
+    for s in $helper_scripts; do
+	if test -x "$(which "$s")"; then
+	    cflags="$($s --cflags)"
+
+	    if test -n "$cflags"; then
+		echo "CFLAGS+=$cflags" >>$MAKE_DEF_FILE
+	    fi
+
+	    break
+	fi
+    done
 }
 
 case "$(uname -s)" in
@@ -46,6 +62,7 @@ case "$(uname -s)" in
     ;;
     "Linux")
 	os_LINUX
+	fix_cflags
     ;;
     *)
 	echo "OS not supported!"

@@ -1,10 +1,10 @@
 #ifndef READLINE_H
 #define READLINE_H
 
-#if OS_X || BSD
+#if defined(PANEL_HDR)
+#include PANEL_HDR
+#elif UNIX
 #include <panel.h>
-#elif LINUX
-#include <ncursesw/panel.h>
 #elif WIN32
 #include "pdcurses/panel.h"
 #else

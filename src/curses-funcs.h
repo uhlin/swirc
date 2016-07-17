@@ -1,10 +1,10 @@
 #ifndef CURSES_FUNCS_H
 #define CURSES_FUNCS_H
 
-#if OS_X || BSD
+#if defined(CURSES_HDR)
+#include CURSES_HDR
+#elif UNIX
 #include <curses.h>
-#elif LINUX
-#include <ncursesw/curses.h>
 #elif WIN32
 #include "pdcurses/curses.h"
 #else

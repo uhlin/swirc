@@ -4,7 +4,7 @@ ROOT=..
 
 include $(ROOT)/unix_def.mk
 
-extra_flags=-g
+extra_flags?=-g
 include_dirs=-Iinclude
 library_dirs=
 
