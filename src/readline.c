@@ -294,7 +294,7 @@ finalize_out_string(const wchar_t *buf)
 {
     mbstate_t		 ps;
     size_t		 bytes_convert;
-    const size_t	 size = (wcslen(buf) * MB_LEN_MAX) + 1;
+    const size_t	 size = size_product(wcslen(buf), MB_LEN_MAX) + 1;
     char		*out  = xmalloc(size);
 
     BZERO(&ps, sizeof (mbstate_t));
@@ -306,7 +306,7 @@ finalize_out_string(const wchar_t *buf)
 #else
     if ((bytes_convert = wcsrtombs(out, &buf, size - 1, &ps)) == ((size_t) -1)) {
 	err_sys("wcsrtombs");
-    } else if (bytes_convert == size - 1) {  // unlikely
+    } else if (bytes_convert == size - 1) { /* unlikely */
 	out[size - 1] = 0;
     } else {
 	;
