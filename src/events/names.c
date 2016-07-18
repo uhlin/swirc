@@ -450,6 +450,25 @@ event_names_htbl_remove(const char *nick, const char *channel)
     return ERR;
 }
 
+PNAMES
+event_names_htbl_lookup(const char *nick, const char *channel)
+{
+    PIRC_WINDOW window;
+    PNAMES	names;
+
+    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+	return NULL;
+    }
+
+    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+	if (Strings_match_ignore_case(nick, names->nick)) {
+	    return names;
+	}
+    }
+
+    return NULL;
+}
+
 void
 event_names_htbl_remove_all(PIRC_WINDOW window)
 {

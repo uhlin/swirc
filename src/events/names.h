@@ -1,6 +1,9 @@
 #ifndef NAMES_H
 #define NAMES_H
 
+/*lint -sem(event_names_htbl_lookup, r_null) */
+
+PNAMES	event_names_htbl_lookup         (const char *nick, const char *channel);
 int	event_names_htbl_insert         (const char *nick, const char *channel);
 int	event_names_htbl_modify_halfop  (const char *nick, const char *channel, bool is_halfop);
 int	event_names_htbl_modify_op      (const char *nick, const char *channel, bool is_op);
