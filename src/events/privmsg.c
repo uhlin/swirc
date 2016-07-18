@@ -29,7 +29,7 @@
 
 #include "common.h"
 
-#include "../assertAPI.h"
+#include "../errHand.h"
 #include "../irc.h"
 #include "../main.h"
 #include "../network.h"
@@ -37,6 +37,7 @@
 #include "../strHand.h"
 #include "../theme.h"
 
+#include "names.h"
 #include "privmsg.h"
 
 struct special_msg_context {
@@ -140,7 +141,30 @@ event_privmsg(struct irc_message_compo *compo)
 	    return;
     }
 
-    ctx.window = window_by_label(Strings_match_ignore_case(dest, g_my_nickname) ? nick : dest);
-    sw_assert(ctx.window != NULL);
-    printtext(&ctx, "%s%s%s %s", Theme("nick_s1"), nick, Theme("nick_s2"), msg);
+    if (Strings_match_ignore_case(dest, g_my_nickname)) {
+	if ((ctx.window = window_by_label(nick)) == NULL) {
+	    err_log(0, "In event_privmsg: can't find a window with label %s", nick);
+	    return;
+	}
+
+	printtext(&ctx, "%s%s%s %s", Theme("nick_s1"), nick, Theme("nick_s2"), msg);
+    } else {
+	PNAMES	n = NULL;
+	char	c = ' ';
+
+	if ((ctx.window = window_by_label(dest)) == NULL ||
+	    (n = event_names_htbl_lookup(nick, dest)) == NULL) {
+	    err_log(0, "In event_privmsg: bogus window label / hash table lookup error");
+	    return;
+	}
+
+	if (n->is_owner)        c = '~';
+	else if (n->is_superop) c = '&';
+	else if (n->is_op)      c = '@';
+	else if (n->is_halfop)  c = '%';
+	else if (n->is_voice)   c = '+';
+	else c = ' ';
+
+	printtext(&ctx, "%s%c%s%s %s", Theme("nick_s1"), c, nick, Theme("nick_s2"), msg);
+    }
 }
