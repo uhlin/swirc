@@ -33,6 +33,7 @@
 #include "config.h"
 #include "cursesInit.h"
 #include "dataClassify.h"
+#include "errHand.h"
 #include "io-loop.h"
 #include "irc.h"
 #include "main.h"
@@ -53,6 +54,8 @@
 #include "commands/nick.h"
 #include "commands/say.h"
 #include "commands/topic.h"
+
+#include "events/names.h"
 
 bool g_io_loop = true;
 
@@ -228,6 +231,42 @@ handle_cmds(const char *data)
     }
 }
 
+static void
+transmit_user_input(const char *input)
+{
+    struct printtext_context ctx = {
+	.window     = g_active_window,
+	.spec_type  = TYPE_SPEC_NONE,
+	.include_ts = true,
+    };
+
+    if (net_send("PRIVMSG %s :%s", g_active_window->label, input) < 0) {
+	g_on_air = false;
+	return;
+    }
+
+    if (!is_irc_channel(g_active_window->label))
+	printtext(&ctx, "%s%s%s %s", Theme("nick_s1"), g_my_nickname, Theme("nick_s2"), input);
+    else {
+	PNAMES	n = NULL;
+	char	c = ' ';
+
+	if ((n = event_names_htbl_lookup(g_my_nickname, g_active_window->label)) == NULL) {
+	    err_log(0, "In transmit_user_input: hash table lookup error");
+	    return;
+	}
+
+	if (n->is_owner)        c = '~';
+	else if (n->is_superop) c = '&';
+	else if (n->is_op)      c = '@';
+	else if (n->is_halfop)  c = '%';
+	else if (n->is_voice)   c = '+';
+	else c = ' ';
+
+	printtext(&ctx, "%s%c%s%s %s", Theme("nick_s1"), c, g_my_nickname, Theme("nick_s2"), input);
+    }
+}
+
 void
 enter_io_loop(void)
 {
@@ -269,10 +308,7 @@ enter_io_loop(void)
 		    ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 		    printtext(&ptext_ctx, "Can't recode user input before transmit (yet unsupported)");
 		} else { /* don't recode... */
-		    if (net_send("PRIVMSG %s :%s", g_active_window->label, line) < 0)
-			g_on_air = false;
-		    else
-			printtext(&ptext_ctx, "%s%s%s %s", Theme("nick_s1"), g_my_nickname, Theme("nick_s2"), line);
+		    transmit_user_input(line);
 		}
 	    }
 	}
