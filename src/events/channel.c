@@ -215,6 +215,37 @@ maintain_channel_stats(const char *channel, const char *input)
     abort();
 }
 
+static int
+RemoveAndInsertNick(const char *old_nick, const char *new_nick, const char *label)
+{
+    PNAMES p;
+    bool is_owner, is_superop, is_op, is_halfop, is_voice;
+
+    if ((p = event_names_htbl_lookup(old_nick, label)) == NULL)
+	return ERR; /* non-fatal: old_nick not found on channel */
+
+    is_owner   = p->is_owner;
+    is_superop = p->is_superop;
+    is_op      = p->is_op;
+    is_halfop  = p->is_halfop;
+    is_voice   = p->is_voice;
+
+    if (event_names_htbl_remove(old_nick, label) != OK ||
+	event_names_htbl_insert(new_nick, label) != OK) {
+	err_msg("RemoveAndInsertNick() fatal error");
+	abort();
+    }
+
+    /* XXX: Reverse order */
+    if (is_voice)   chg_status_for_voice(STATE_PLUS, new_nick, label);
+    if (is_halfop)  chg_status_for_halfop(STATE_PLUS, new_nick, label);
+    if (is_op)      chg_status_for_op(STATE_PLUS, new_nick, label);
+    if (is_superop) chg_status_for_superop(STATE_PLUS, new_nick, label);
+    if (is_owner)   chg_status_for_owner(STATE_PLUS, new_nick, label);
+
+    return OK;
+}
+
 /* event_topic_chg
 
    Example:
@@ -577,9 +608,8 @@ event_nick(struct irc_message_compo *compo)
     for (int i = 1; i <= g_ntotal_windows; i++) {
 	PIRC_WINDOW window = window_by_refnum(i);
 
-	if (window && is_irc_channel(window->label)
-	    && event_names_htbl_remove(nick, window->label) == OK
-	    && event_names_htbl_insert(new_nick, window->label) == OK) {
+	if (window && is_irc_channel(window->label) &&
+	    RemoveAndInsertNick(nick, new_nick, window->label) == OK) {
 	    ctx.window = window;
 	    printtext(&ctx, "%s%s%c is now known as %s %s%s%c",
 		      COLOR2, nick, NORMAL, THE_SPEC2, COLOR1, new_nick, NORMAL);
