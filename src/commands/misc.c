@@ -101,3 +101,17 @@ cmd_names(const char *data)
 	event_names_print_all(data);
     }
 }
+
+/* usage: /mode <modes> [...] */
+void
+cmd_mode(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (Strings_match(data, "")) {
+	printtext(&ptext_ctx, "/mode: missing arguments");
+    } else {
+	if (net_send("MODE %s", data) < 0)
+	    g_on_air = false;
+    }
+}
