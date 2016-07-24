@@ -148,6 +148,8 @@ static struct numeric_events_tag {
     { "470", "",                        NO_WINDOW,      0, event_channel_forward },
     { "475", "ERR_BADCHANNELKEY",       ACTIVE_WINDOW,  2, NULL },
     { "482", "ERR_CHANOPRIVSNEEDED",    ACTIVE_WINDOW,  2, NULL },
+    { "501", "ERR_UMODEUNKNOWNFLAG",    ACTIVE_WINDOW,  1, NULL },
+    { "502", "ERR_USERSDONTMATCH",      ACTIVE_WINDOW,  1, NULL },
     { "615", "",                        NO_WINDOW,      0, event_whois_modes },
     { "616", "",                        NO_WINDOW,      0, event_whois_host },
     { "671", "",                        NO_WINDOW,      0, event_whois_ssl },
