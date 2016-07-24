@@ -10,7 +10,7 @@ library_dirs=
 
 OBJS=channel.o error.o misc.o motd.o names.o
 OBJS+=noop.o notice.o ping.o welcome-unix.o welcome.o
-OBJS+=whois.o privmsg.o
+OBJS+=whois.o privmsg.o invite.o
 
 .PHONY: all clean
 
@@ -32,6 +32,7 @@ welcome-unix.o:
 welcome.o:
 whois.o:
 privmsg.o:
+invite.o:
 
 clean:
 	$(E) "  CLEAN"

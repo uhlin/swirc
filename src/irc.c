@@ -40,6 +40,7 @@
 
 #include "events/channel.h"
 #include "events/error.h"
+#include "events/invite.h"
 #include "events/misc.h"
 #include "events/motd.h"
 #include "events/names.h"
@@ -71,7 +72,7 @@ static struct normal_events_tag {
     { "PART",    event_part      },
     { "MODE",    event_mode      },
     { "TOPIC",   event_topic_chg },
-    { "INVITE",  event_noop      },
+    { "INVITE",  event_invite    },
     { "KICK",    event_kick      },
     { "PRIVMSG", event_privmsg   },
     { "NOTICE",  event_notice    },

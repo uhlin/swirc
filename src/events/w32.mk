@@ -9,7 +9,7 @@ log_file=stdout.log
 
 OBJS=channel.obj error.obj misc.obj motd.obj names.obj        \
      noop.obj notice.obj ping.obj welcome-w32.obj welcome.obj \
-     whois.obj privmsg.obj
+     whois.obj privmsg.obj invite.obj
 
 .c.obj:
 	$(E) ^ ^ CC^ ^ ^ ^ ^ ^ $@
@@ -29,6 +29,7 @@ welcome-w32.obj:
 welcome.obj:
 whois.obj:
 privmsg.obj:
+invite.obj:
 
 clean:
 	$(E) ^ ^ CLEAN
