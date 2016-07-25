@@ -36,6 +36,7 @@
 #include "libUtils.h"
 #include "network.h"
 #include "printtext.h"
+#include "statusbar.h"
 #include "strHand.h"
 
 #include "events/channel.h"
@@ -446,6 +447,8 @@ irc_deinit(void)
     free_and_null(&g_server_hostname);
     free_and_null(&g_my_nickname);
 
+    statusbar_update_display_beta();
+
     g_alt_nick_tested = false;
 
     event_names_deinit();
@@ -477,6 +480,7 @@ irc_set_my_nickname(const char *nick)
     }
 
     g_my_nickname = sw_strdup(nick);
+    statusbar_update_display_beta();
 }
 
 /* Function used to clean up within an event after a failure that is

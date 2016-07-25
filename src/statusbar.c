@@ -34,14 +34,16 @@
 #endif
 
 #include "cursesInit.h"
+#include "irc.h"
 #include "printtext.h"
 #include "statusbar.h"
+#include "strHand.h"
 #include "strdup_printf.h"
 #include "terminal.h"
 #include "theme.h"
 
 static PANEL      *statusbar_pan       = NULL;
-static const char  irc_client_slogan[] = "\0039,1The universal IRC client\017";
+static const char  irc_client_slogan[] = "\0033,1The universal IRC client\017";
 
 static void
 apply_statusbar_options(WINDOW *win)
@@ -80,6 +82,22 @@ statusbar_deinit(void)
     term_remove_panel(statusbar_pan);
 }
 
+static char *
+get_nick_and_server()
+{
+    static char buf[500];
+
+    BZERO(buf, sizeof buf);
+
+    if (g_my_nickname && g_server_hostname) {
+	(void) sw_strcpy(buf, g_my_nickname, sizeof buf);
+	(void) sw_strcat(buf, "@", sizeof buf);
+	(void) sw_strcat(buf, g_server_hostname, sizeof buf);
+    }
+
+    return (&buf[0]);
+}
+
 void
 statusbar_update_display_beta(void)
 {
@@ -91,7 +109,11 @@ statusbar_update_display_beta(void)
     const char *lb     = Theme("statusbar_leftBracket");
     const char *rb     = Theme("statusbar_rightBracket");
     char       *out_s  = Strdup_printf(
-	"%s %s%d%s %s", Theme("statusbar_spec"), lb, g_active_window->refnum, rb, irc_client_slogan);
+	"%s %s%d/%d%s %s%s%s %s",
+	Theme("statusbar_spec"),
+	lb, g_active_window->refnum, g_ntotal_windows, rb,
+	lb, get_nick_and_server(), rb,
+	irc_client_slogan);
 
     WERASE(win);
     WBKGD(win, blank | COLOR_PAIR(pair_n) | A_NORMAL);
