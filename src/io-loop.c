@@ -62,21 +62,24 @@ bool g_io_loop = true;
 static struct cmds_tag {
     char		*cmd;
     CMD_HANDLER_FN	 fn;
+    bool		 requires_connection;
+    char		*usage;
 } cmds[] = {
-    { "/connect",        cmd_connect         },
-    { "/disconnect",     cmd_disconnect      },
-    { "/join",           cmd_join            },
-    { "/me",             cmd_me              },
-    { "/mode",           cmd_mode            },
-    { "/msg",            cmd_msg             },
-    { "/n",              cmd_names           },
-    { "/nick",           cmd_nick            },
-    { "/part",           cmd_part            },
-    { "/query",          cmd_query           },
-    { "/quit",           cmd_quit            },
-    { "/say",            cmd_say             },
-    { "/topic",          cmd_topic           },
-    { "/whois",          cmd_whois           },
+    { "connect",    cmd_connect,    false, "/connect [-ssl] <server[:port]>" },
+    { "disconnect", cmd_disconnect, true,  "/disconnect [message]" },
+    { "help",       cmd_help,       false, "/help [command]" },
+    { "join",       cmd_join,       true,  "/join <channel> [key]" },
+    { "me",         cmd_me,         true,  "/me <message>" },
+    { "mode",       cmd_mode,       true,  "/mode <modes> [...]" },
+    { "msg",        cmd_msg,        true,  "/msg <recipient> <message>" },
+    { "n",          cmd_names,      true,  "/n [channel]" },
+    { "nick",       cmd_nick,       true,  "/nick <new nickname>" },
+    { "part",       cmd_part,       true,  "/part [channel] [message]" },
+    { "query",      cmd_query,      false, "/query [nick]" },
+    { "quit",       cmd_quit,       false, "/quit [message]" },
+    { "say",        cmd_say,        true,  "/say <message>" },
+    { "topic",      cmd_topic,      true,  "/topic [new topic]" },
+    { "whois",      cmd_whois,      true,  "/whois <nick>" },
 };
 
 static void
@@ -130,6 +133,7 @@ swirc_greeting()
     printtext(&ptext_ctx, "");
     printtext(&ptext_ctx, "Program settings are stored in %s%s%s", LEFT_BRKT, g_home_dir, RIGHT_BRKT);
     printtext(&ptext_ctx, "%c%hd%c color pairs have been initialized", BOLD, g_initialized_pairs, BOLD);
+    printtext(&ptext_ctx, "Type /help for a list of commands");
     printtext(&ptext_ctx, "");
 }
 
@@ -296,7 +300,7 @@ enter_io_loop(void)
 
 	    continue;
 	} else if (*line == cmd_char) {
-	    handle_cmds(line);
+	    handle_cmds(&line[1]);
 	} else {
 	    if (g_on_air && !Strings_match(g_active_window->label, g_status_window_label)) {
 		struct printtext_context ptext_ctx = {
@@ -316,4 +320,76 @@ enter_io_loop(void)
 
 	free(line);
     } while (g_io_loop);
+}
+
+static void
+output_help_for_command(const char *command)
+{
+    struct cmds_tag *sp;
+    const size_t ar_sz = ARRAY_SIZE(cmds);
+    struct printtext_context ctx = {
+	.window     = g_active_window,
+	.spec_type  = TYPE_SPEC2,
+	.include_ts = true,
+    };
+
+    for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
+	if (Strings_match(command, sp->cmd)) {
+	    printtext(&ctx, "usage: %s", sp->usage);
+	    return;
+	}
+    }
+
+    ctx.spec_type = TYPE_SPEC1_FAILURE;
+    printtext(&ctx, "no such command");
+}
+
+static void
+list_all_commands()
+{
+    struct printtext_context ctx = {
+	.window     = g_active_window,
+	.spec_type  = TYPE_SPEC_NONE,
+	.include_ts = true,
+    };
+    struct cmds_tag *sp;
+    const size_t ar_sz = ARRAY_SIZE(cmds);
+
+    printtext(&ctx, "--------------- Commands ---------------");
+
+    for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
+	const char *cmd1 = sp->cmd;
+	char *cmd2, *cmd3;
+
+	if ((sp + 1) < &cmds[ar_sz] && (sp + 2) < &cmds[ar_sz]) {
+	    sp++, cmd2 = sp->cmd;
+	    sp++, cmd3 = sp->cmd;
+	} else if ((sp + 1) < &cmds[ar_sz]) {
+	    sp++, cmd2 = sp->cmd;
+	    cmd3 = NULL;
+	} else {
+	    cmd2 = cmd3 = NULL;
+	}
+
+	if (cmd1 && cmd2 && cmd3)
+	    printtext(&ctx, "%-15s %-15s %s", cmd1, cmd2, cmd3);
+	else if (cmd1 && cmd2)
+	    printtext(&ctx, "%-15s %s", cmd1, cmd2);
+	else if (cmd1)
+	    printtext(&ctx, "%s", cmd1);
+	else
+	    sw_assert_not_reached();
+    }
+}
+
+/* usage: /help [command] */
+void
+cmd_help(const char *data)
+{
+    const bool has_command = !Strings_match(data, "");
+
+    if (has_command)
+	output_help_for_command(data);
+    else
+	list_all_commands();
 }

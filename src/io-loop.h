@@ -6,5 +6,6 @@ typedef void (*CMD_HANDLER_FN)(const char *);
 extern bool g_io_loop;
 
 void enter_io_loop(void);
+void cmd_help(const char *data);
 
 #endif
