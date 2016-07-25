@@ -163,6 +163,9 @@ net_ssl_send(const char *fmt, ...)
     char       *buffer;
     const char  message_terminate[] = "\r\n";
 
+    if (!ssl)
+	return -1;
+
     va_start(ap, fmt);
     buffer = Strdup_vprintf(fmt, ap);
     va_end(ap);
