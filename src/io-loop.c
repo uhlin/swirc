@@ -218,16 +218,27 @@ handle_cmds(const char *data)
     struct cmds_tag *sp;
     const size_t ar_sz = ARRAY_SIZE(cmds);
     char *cp;
+    struct printtext_context ctx = {
+	.window     = g_active_window,
+	.spec_type  = TYPE_SPEC1_FAILURE,
+	.include_ts = true,
+    };
 
     for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
 	cp = Strdup_printf("%s ", sp->cmd);
 
 	if (Strings_match(data, sp->cmd)) {
-	    sp->fn("");
+	    if (sp->requires_connection && !g_on_air)
+		printtext(&ctx, "command requires irc connection");
+	    else
+		sp->fn("");
 	    free(cp);
 	    break;
 	} else if (!strncmp( data, cp, strlen(cp) )) {
-	    sp->fn(&data[strlen(cp)]);
+	    if (sp->requires_connection && !g_on_air)
+		printtext(&ctx, "command requires irc connection");
+	    else
+		sp->fn(&data[strlen(cp)]);
 	    free(cp);
 	    break;
 	} else {
