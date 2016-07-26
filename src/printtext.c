@@ -608,14 +608,15 @@ perform_convert_buffer(const char **in_buf)
     return (out_buf);
 }
 
+/* XXX: Don't actually use A_BLINK because it's annoying. */
 static void
 case_blink(WINDOW *win, bool *is_blink)
 {
     if (!*is_blink) {
-	WATTR_ON(win, A_BLINK);
+	WATTR_ON(win, A_REVERSE);
 	*is_blink = true;
     } else {
-	WATTR_OFF(win, A_BLINK);
+	WATTR_OFF(win, A_REVERSE);
 	*is_blink = false;
     }
 }
