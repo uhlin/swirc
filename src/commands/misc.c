@@ -7,6 +7,7 @@
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
+#include "../terminal.h"
 
 #include "misc.h"
 
@@ -113,5 +114,18 @@ cmd_mode(const char *data)
     } else {
 	if (net_send("MODE %s", data) < 0)
 	    g_on_air = false;
+    }
+}
+
+/* usage: /resize */
+void
+cmd_resize(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (!Strings_match(data, "")) {
+	printtext(&ptext_ctx, "/resize: implicit trailing data");
+    } else {
+	term_resize_all();
     }
 }

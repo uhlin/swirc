@@ -77,6 +77,7 @@ static struct cmds_tag {
     { "part",       cmd_part,       true,  "/part [channel] [message]" },
     { "query",      cmd_query,      false, "/query [nick]" },
     { "quit",       cmd_quit,       false, "/quit [message]" },
+    { "resize",     cmd_resize,     false, "/resize" },
     { "say",        cmd_say,        true,  "/say <message>" },
     { "topic",      cmd_topic,      true,  "/topic [new topic]" },
     { "whois",      cmd_whois,      true,  "/whois <nick>" },
