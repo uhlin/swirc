@@ -65,6 +65,7 @@ static struct cmds_tag {
     bool		 requires_connection;
     char		*usage;
 } cmds[] = {
+    { "away",       cmd_away,       true,  "/away [reason]" },
     { "connect",    cmd_connect,    false, "/connect [-ssl] <server[:port]>" },
     { "disconnect", cmd_disconnect, true,  "/disconnect [message]" },
     { "help",       cmd_help,       false, "/help [command]" },

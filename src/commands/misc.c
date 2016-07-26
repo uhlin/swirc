@@ -129,3 +129,18 @@ cmd_resize(const char *data)
 	term_resize_all();
     }
 }
+
+/* usage: /away [reason] */
+void
+cmd_away(const char *data)
+{
+    const bool has_reason = !Strings_match(data, "");
+
+    if (has_reason) {
+	if (net_send("AWAY :%s", data) < 0)
+	    g_on_air = false;
+    } else {
+	if (net_send("AWAY") < 0)
+	    g_on_air = false;
+    }
+}
