@@ -109,6 +109,8 @@ static struct numeric_events_tag {
     { "275", "",                        NO_WINDOW,      0, event_whois_ssl },
     { "276", "",                        NO_WINDOW,      0, event_whois_cert },
     { "301", "RPL_AWAY",                NO_WINDOW,      0, event_whois_away },
+    { "305", "RPL_UNAWAY",              ACTIVE_WINDOW,  1, NULL },
+    { "306", "RPL_NOWAWAY",             ACTIVE_WINDOW,  1, NULL },
     { "307", "",                        NO_WINDOW,      0, event_whois_service },
     { "310", "",                        NO_WINDOW,      0, event_whois_modes },
     { "311", "RPL_WHOISUSER",           NO_WINDOW,      0, event_whois_user },
