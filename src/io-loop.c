@@ -48,6 +48,7 @@
 
 #include "commands/connect.h"
 #include "commands/jp.h"
+#include "commands/kick.h"
 #include "commands/me.h"
 #include "commands/misc.h"
 #include "commands/msg.h"
@@ -70,6 +71,7 @@ static struct cmds_tag {
     { "disconnect", cmd_disconnect, true,  "/disconnect [message]" },
     { "help",       cmd_help,       false, "/help [command]" },
     { "join",       cmd_join,       true,  "/join <channel> [key]" },
+    { "kick",       cmd_kick,       true,  "/kick <nick1[,nick2][,nick3][...]> [reason]" },
     { "me",         cmd_me,         true,  "/me <message>" },
     { "mode",       cmd_mode,       true,  "/mode <modes> [...]" },
     { "msg",        cmd_msg,        true,  "/msg <recipient> <message>" },
