@@ -12,5 +12,5 @@ event_motd(struct irc_message_compo *compo)
 	return;
     }
 
-    irc_extract_msg(compo, g_status_window, 1);
+    irc_extract_msg(compo, g_status_window, 1, false);
 }

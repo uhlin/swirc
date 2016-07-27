@@ -374,9 +374,9 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 		    sp->event_handler(compo);
 		} else {
 		    if (sp->window == STATUS_WINDOW)
-			irc_extract_msg(compo, g_status_window, sp->ext_bits);
+			irc_extract_msg(compo, g_status_window, sp->ext_bits, !strncmp(sp->official_name, "ERR_", 4));
 		    else if (sp->window == ACTIVE_WINDOW)
-			irc_extract_msg(compo, g_active_window, sp->ext_bits);
+			irc_extract_msg(compo, g_active_window, sp->ext_bits, !strncmp(sp->official_name, "ERR_", 4));
 		    else
 			sw_assert_not_reached();
 		}
@@ -396,7 +396,7 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 }
 
 void
-irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window, int ext_bits)
+irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window, int ext_bits, bool is_error)
 {
     int i;
     char *cp, *savp = "";
@@ -425,7 +425,7 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window, int ext_
 	    if (*token) {
 		struct printtext_context ptext_ctx = {
 		    .window     = to_window,
-		    .spec_type  = TYPE_SPEC1,
+		    .spec_type  = is_error ? TYPE_SPEC1_FAILURE : TYPE_SPEC1,
 		    .include_ts = true,
 		};
 
