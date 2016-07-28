@@ -35,6 +35,7 @@
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
+#include "../strdup_printf.h"
 #include "../theme.h"
 
 #include "names.h"
@@ -165,6 +166,19 @@ event_privmsg(struct irc_message_compo *compo)
 	else if (n->is_voice)   c = '+';
 	else c = ' ';
 
-	printtext(&ctx, "%s%c%s%s %s", Theme("nick_s1"), c, nick, Theme("nick_s2"), msg);
+	char *s1 = Strdup_printf("%s:", g_my_nickname);
+	char *s2 = Strdup_printf("%s,", g_my_nickname);
+
+	if (!strncasecmp(msg, s1, strlen(s1))
+	    || !strncasecmp(msg, s2, strlen(s2))
+	    || Strings_match_ignore_case(msg, g_my_nickname)) {
+	    printtext(&ctx, "%s%c%s%s%c%s %s",
+		      Theme("nick_s1"), c, Theme("color4"), nick, NORMAL, Theme("nick_s2"), msg);
+	} else {
+	    printtext(&ctx, "%s%c%s%s %s", Theme("nick_s1"), c, nick, Theme("nick_s2"), msg);
+	}
+
+	free(s1);
+	free(s2);
     }
 }
