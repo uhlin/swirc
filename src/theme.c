@@ -72,7 +72,7 @@ static struct tagThemeDefValues {
     { "term_use_default_colors",   TYPE_BOOLEAN, "no" },
 #endif
     { "color3",                    TYPE_STRING,  "\0033" },
-    { "color4",                    TYPE_STRING,  "" },
+    { "color4",                    TYPE_STRING,  "\0035" },
     { "gfx_failure",               TYPE_STRING,  "[\0034*\017]" },
     { "gfx_success",               TYPE_STRING,  "[\0039*\017]" },
     { "gfx_warning",               TYPE_STRING,  "[\0038*\017]" },
