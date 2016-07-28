@@ -1,0 +1,88 @@
+.\"
+.\" Public domain
+.\"
+.Dd July 28, 2016
+.Dt SWIRC 1
+.Os
+.Sh NAME
+.Nm swirc
+.Nd IRC client written with the Ncurses UI framework
+.Sh SYNOPSIS
+.Nm swirc
+.Bk -words
+.Op OPTION
+.Op ...
+.Ek
+.Sh DESCRIPTION
+.Nm
+is a text-mode IRC client whose goals are to be portable, and to
+provide a secure & user-friendly experience to its users.
+.Sh OPTIONS
+.Bl -tag -width Ds
+.It Fl c Ar server[:port]
+Auto-connect to given server
+.It Fl n Ar nickname
+Online nickname
+.It Fl u Ar username
+User identity
+.It Fl r Ar rl name
+Specifies the real name
+.It Fl p Ar password
+Password (for private networks)
+.It Fl h Ar hostname
+Use this hostname on connect (currently a no-op)
+.It Fl x Ar config
+Explicit config file
+.It Fl v , Fl version
+View the current client ver
+.It Fl \? , Fl help
+Print the usage
+.El
+.Sh KEY COMBOS
+.Bl -tag -width "          " -compact
+.It Ic CTRL+b
+Move cursor backward
+.It Ic CTRL+f
+Move cursor forward
+.It Ic CTRL+d
+Delete
+.It Ic CTRL+g
+Clear readline input
+.It Ic CTRL+n
+Next window
+.It Ic CTRL+p
+Previous window
+.El
+.Sh INSERTING TEXT-DECORATION
+.Bl -tag -width "          " -compact
+.It Ic F5
+Blink
+.It Ic F6
+Bold
+.It Ic F7
+Color
+.It Ic F8
+Normal
+.It Ic F9
+Reverse
+.It Ic F10
+Underline
+.El
+.Sh FILES
+.Bl -tag -width "                         " -compact
+.It Pa ~/.swirc/swirc.conf
+.Nm
+configuration file
+.It Pa ~/.swirc/default.the
+.Nm
+default theme
+.It Pa ~/.swirc/log/error.log
+.Nm
+error log
+.El
+.Sh AUTHORS
+.Nm
+was written by Markus Uhlin
+.Mt markus.uhlin@bredband.net
+.Sh BUGS
+.Lk https://github.com/uhlin/swirc/issues
