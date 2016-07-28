@@ -18,7 +18,13 @@ OBJS+=titlebar.o wcscat.o wcscpy.o window.o network-openssl.o
 
 OUT=swirc
 
-.PHONY: clean
+INSTALL=install -D
+PREFIX?=/usr/local
+BIN_DIR=$(PREFIX)/bin
+MAN_DIR=$(PREFIX)/man/man1
+MAN_FILE=swirc.1
+
+.PHONY: clean install
 
 .c.o:
 	$(E) "  CC      " $@
@@ -75,5 +81,9 @@ clean:
 	$(Q) cd ..
 	$(E) "  CLEAN"
 	$(RM) $(OUT) $(TEMPFILES)
+
+install: $(OUT) $(MAN_FILE)
+	$(INSTALL) -m 0755 $(OUT) $(BIN_DIR)/$(OUT)
+	$(INSTALL) -m 0444 $(MAN_FILE) $(MAN_DIR)/$(MAN_FILE)
 
 # EOF
