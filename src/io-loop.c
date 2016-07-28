@@ -266,7 +266,11 @@ transmit_user_input(const char *input)
     }
 
     if (!is_irc_channel(g_active_window->label))
-	printtext(&ctx, "%s%s%s %s", Theme("nick_s1"), g_my_nickname, Theme("nick_s2"), input);
+	printtext(&ctx, "%s%s%s%c%s %s",
+		  Theme("nick_s1"),
+		  COLOR1, g_my_nickname, NORMAL,
+		  Theme("nick_s2"),
+		  input);
     else {
 	PNAMES	n = NULL;
 	char	c = ' ';
@@ -283,7 +287,11 @@ transmit_user_input(const char *input)
 	else if (n->is_voice)   c = '+';
 	else c = ' ';
 
-	printtext(&ctx, "%s%c%s%s %s", Theme("nick_s1"), c, g_my_nickname, Theme("nick_s2"), input);
+	printtext(&ctx, "%s%c%s%s%c%s %s",
+		  Theme("nick_s1"),
+		  c, COLOR1, g_my_nickname, NORMAL,
+		  Theme("nick_s2"),
+		  input);
     }
 }
 

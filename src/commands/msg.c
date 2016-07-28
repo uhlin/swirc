@@ -73,7 +73,11 @@ cmd_msg(const char *data)
 	    if (net_send("PRIVMSG %s :%s", recipient, message) < 0)
 		g_on_air = false;
 	    else
-		printtext(&ctx, "%s%s%s %s", Theme("nick_s1"), g_my_nickname, Theme("nick_s2"), message);
+		printtext(&ctx, "%s%s%s%c%s %s",
+			  Theme("nick_s1"),
+			  COLOR1, g_my_nickname, NORMAL,
+			  Theme("nick_s2"),
+			  message);
 	    free(dcopy);
 	}
     }
