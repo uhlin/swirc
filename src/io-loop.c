@@ -252,20 +252,25 @@ handle_cmds(const char *data)
 }
 
 void
-transmit_user_input(const char *input)
+transmit_user_input(const char *win_label, const char *input)
 {
     struct printtext_context ctx = {
-	.window     = g_active_window,
+	.window     = window_by_label(win_label),
 	.spec_type  = TYPE_SPEC_NONE,
 	.include_ts = true,
     };
 
-    if (net_send("PRIVMSG %s :%s", g_active_window->label, input) < 0) {
+    if (ctx.window == NULL) {
+	err_log(0, "In transmit_user_input: window %s not found", win_label);
+	return;
+    }
+
+    if (net_send("PRIVMSG %s :%s", win_label, input) < 0) {
 	g_on_air = false;
 	return;
     }
 
-    if (!is_irc_channel(g_active_window->label))
+    if (!is_irc_channel(win_label))
 	printtext(&ctx, "%s%s%s%c%s %s",
 		  Theme("nick_s1"),
 		  COLOR1, g_my_nickname, NORMAL,
@@ -275,7 +280,7 @@ transmit_user_input(const char *input)
 	PNAMES	n = NULL;
 	char	c = ' ';
 
-	if ((n = event_names_htbl_lookup(g_my_nickname, g_active_window->label)) == NULL) {
+	if ((n = event_names_htbl_lookup(g_my_nickname, win_label)) == NULL) {
 	    err_log(0, "In transmit_user_input: hash table lookup error");
 	    return;
 	}
@@ -336,7 +341,7 @@ enter_io_loop(void)
 		    ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 		    printtext(&ptext_ctx, "Can't recode user input before transmit (yet unsupported)");
 		} else { /* don't recode... */
-		    transmit_user_input(line);
+		    transmit_user_input(g_active_window->label, line);
 		}
 	    }
 	}
