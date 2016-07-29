@@ -47,6 +47,7 @@
 #include "theme.h"
 
 #include "commands/connect.h"
+#include "commands/invite.h"
 #include "commands/jp.h"
 #include "commands/kick.h"
 #include "commands/me.h"
@@ -71,6 +72,7 @@ static struct cmds_tag {
     { "connect",    cmd_connect,    false, "/connect [-ssl] <server[:port]>" },
     { "disconnect", cmd_disconnect, true,  "/disconnect [message]" },
     { "help",       cmd_help,       false, "/help [command]" },
+    { "invite",     cmd_invite,     true,  "/invite <targ_nick> <channel>" },
     { "join",       cmd_join,       true,  "/join <channel> [key]" },
     { "kick",       cmd_kick,       true,  "/kick <nick1[,nick2][,nick3][...]> [reason]" },
     { "me",         cmd_me,         true,  "/me <message>" },

@@ -8,7 +8,7 @@ library_dirs=
 log_file=stdout.log
 
 OBJS=connect.obj jp.obj misc.obj msg.obj say.obj nick.obj topic.obj me.obj \
-     kick.obj notice.obj
+     kick.obj notice.obj invite.obj
 
 .c.obj:
 	$(E) ^ ^ CC^ ^ ^ ^ ^ ^ $@
@@ -26,6 +26,7 @@ topic.obj:
 me.obj:
 kick.obj:
 notice.obj:
+invite.obj:
 
 clean:
 	$(E) ^ ^ CLEAN
