@@ -73,6 +73,7 @@ cmd_msg(const char *data)
 	}
 
 	transmit_user_input(recipient, message);
+	free(dcopy);
     } else if (window_by_label(recipient) == NULL && is_irc_channel(recipient)) {
 	PrintAndFree("/msg: not on that channel", dcopy);
 	return;
