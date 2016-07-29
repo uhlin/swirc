@@ -1,3 +1,4 @@
 *.o
+*.obj
 swirc
 unix_def.mk
