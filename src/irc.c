@@ -147,6 +147,7 @@ static struct numeric_events_tag {
     { "432", "ERR_ERRONEUSNICKNAME",    ACTIVE_WINDOW,  2, NULL },
     { "433", "ERR_NICKNAMEINUSE",       NO_WINDOW,      0, event_nicknameInUse },
     { "439", "",                        STATUS_WINDOW,  1, NULL },
+    { "443", "ERR_USERONCHANNEL",       ACTIVE_WINDOW,  3, NULL },
     { "447", "",                        ACTIVE_WINDOW,  1, NULL },
     { "470", "",                        NO_WINDOW,      0, event_channel_forward },
     { "475", "ERR_BADCHANNELKEY",       ACTIVE_WINDOW,  2, NULL },
