@@ -69,6 +69,10 @@ installed, issue:
     $ cd src
     $ make -f unix.mk
 
+Installing it (under `/usr/local`):
+
+    $ sudo make -f unix.mk install
+
 ### Building for Windows ###
 
 To build Swirc for Windows you must have [Visual Studio](http://www.visualstudio.com/).
