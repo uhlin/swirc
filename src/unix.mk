@@ -18,7 +18,7 @@ OBJS+=titlebar.o wcscat.o wcscpy.o window.o network-openssl.o
 
 OUT=swirc
 
-INSTALL=install -D
+INSTALL=install
 PREFIX?=/usr/local
 BIN_DIR=$(PREFIX)/bin
 MAN_DIR=$(PREFIX)/man/man1
@@ -83,6 +83,8 @@ clean:
 	$(RM) $(OUT) $(TEMPFILES)
 
 install: $(OUT) $(MAN_FILE)
+	$(INSTALL) -d $(BIN_DIR)
+	$(INSTALL) -d $(MAN_DIR)
 	$(INSTALL) -m 0755 $(OUT) $(BIN_DIR)/$(OUT)
 	$(INSTALL) -m 0444 $(MAN_FILE) $(MAN_DIR)/$(MAN_FILE)
 
