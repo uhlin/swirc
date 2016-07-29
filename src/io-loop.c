@@ -251,7 +251,7 @@ handle_cmds(const char *data)
     }
 }
 
-static void
+void
 transmit_user_input(const char *input)
 {
     struct printtext_context ctx = {
