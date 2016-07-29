@@ -148,7 +148,8 @@ event_privmsg(struct irc_message_compo *compo)
 	    return;
 	}
 
-	printtext(&ctx, "%s%s%s %s", Theme("nick_s1"), nick, Theme("nick_s2"), msg);
+	printtext(&ctx, "%s%s%s%c%s %s",
+		  Theme("nick_s1"), COLOR2, nick, NORMAL, Theme("nick_s2"), msg);
     } else {
 	PNAMES	n = NULL;
 	char	c = ' ';
@@ -168,17 +169,21 @@ event_privmsg(struct irc_message_compo *compo)
 
 	char *s1 = Strdup_printf("%s:", g_my_nickname);
 	char *s2 = Strdup_printf("%s,", g_my_nickname);
+	char *s3 = Strdup_printf("%s ", g_my_nickname);
 
 	if (!strncasecmp(msg, s1, strlen(s1))
 	    || !strncasecmp(msg, s2, strlen(s2))
+	    || !strncasecmp(msg, s3, strlen(s3))
 	    || Strings_match_ignore_case(msg, g_my_nickname)) {
 	    printtext(&ctx, "%s%c%s%s%c%s %s",
 		      Theme("nick_s1"), c, Theme("color4"), nick, NORMAL, Theme("nick_s2"), msg);
 	} else {
-	    printtext(&ctx, "%s%c%s%s %s", Theme("nick_s1"), c, nick, Theme("nick_s2"), msg);
+	    printtext(&ctx, "%s%c%s%s%c%s %s",
+		      Theme("nick_s1"), c, COLOR2, nick, NORMAL, Theme("nick_s2"), msg);
 	}
 
 	free(s1);
 	free(s2);
+	free(s3);
     }
 }
