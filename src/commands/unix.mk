@@ -9,7 +9,7 @@ include_dirs=-I../include
 library_dirs=
 
 OBJS=connect.o jp.o misc.o msg.o say.o nick.o topic.o me.o
-OBJS+=kick.o
+OBJS+=kick.o notice.o
 
 .PHONY: all clean
 
@@ -28,6 +28,7 @@ nick.o:
 topic.o:
 me.o:
 kick.o:
+notice.o:
 
 clean:
 	$(E) "  CLEAN"

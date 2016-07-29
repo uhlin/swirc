@@ -53,6 +53,7 @@
 #include "commands/misc.h"
 #include "commands/msg.h"
 #include "commands/nick.h"
+#include "commands/notice.h"
 #include "commands/say.h"
 #include "commands/topic.h"
 
@@ -77,6 +78,7 @@ static struct cmds_tag {
     { "msg",        cmd_msg,        true,  "/msg <recipient> <message>" },
     { "n",          cmd_names,      true,  "/n [channel]" },
     { "nick",       cmd_nick,       true,  "/nick <new nickname>" },
+    { "notice",     cmd_notice,     true,  "/notice <recipient> <message>" },
     { "part",       cmd_part,       true,  "/part [channel] [message]" },
     { "query",      cmd_query,      false, "/query [nick]" },
     { "quit",       cmd_quit,       false, "/quit [message]" },
