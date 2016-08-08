@@ -661,44 +661,6 @@ perform_convert_buffer(const char **in_buf)
     return (out);
 }
 
-#if 0
-static wchar_t *
-perform_convert_buffer(const char **in_buf)
-{
-    mbstate_t		 ps;
-    size_t		 bytes_convert;
-    size_t		 size	 = strlen(*in_buf) + 1;
-    wchar_t		*out_buf = xcalloc(size, sizeof (wchar_t));
-    const wchar_t	*msg	 = L"** Printtext Internal Error **";
-
-    BZERO(&ps, sizeof (mbstate_t));
-
-#ifdef HAVE_BCI
-    if ((errno = mbsrtowcs_s(&bytes_convert, out_buf, size, in_buf, size - 1, &ps)) != 0) {
-	free(out_buf);
-	size = wcslen(msg) + 1;
-	out_buf = xcalloc(size, sizeof (wchar_t));
-	sw_wcscpy(out_buf, msg, size);
-	return (out_buf);
-    }
-#else
-    if ((bytes_convert = mbsrtowcs(out_buf, in_buf, size - 1, &ps)) == ((size_t) -1)) {
-	free(out_buf);
-	size = wcslen(msg) + 1;
-	out_buf = xcalloc(size, sizeof (wchar_t));
-	sw_wcscpy(out_buf, msg, size);
-	return (out_buf);
-    } else if (bytes_convert == size - 1) {
-	out_buf[size - 1] = 0;
-    } else {
-	return (out_buf);
-    }
-#endif
-
-    return (out_buf);
-}
-#endif
-
 /* XXX: Don't actually use A_BLINK because it's annoying. */
 static void
 case_blink(WINDOW *win, bool *is_blink)
