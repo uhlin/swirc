@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include <locale.h>
 #include <wctype.h>
 
 #include "assertAPI.h"
@@ -40,6 +41,7 @@
 #include "dataClassify.h"
 #include "errHand.h"
 #include "libUtils.h"
+#include "main.h"
 #include "printtext.h"
 #include "strHand.h"
 #include "strdup_printf.h"
@@ -145,6 +147,7 @@ static void		 printtext_set_color         (WINDOW *, bool *is_color, short int n
 static void		 puts_mutex_init             (void);
 static void		 text_decoration_bools_reset (struct text_decoration_bools *);
 static void		 vprinttext_mutex_init       (void);
+static wchar_t		*try_convert_buf_with_cs     (const char *buf, const char *codeset) PTR_ARGS_NONNULL;
 static wchar_t		*perform_convert_buffer      (const char **in_buf);
 
 void
@@ -573,6 +576,93 @@ text_decoration_bools_reset(struct text_decoration_bools *booleans)
 }
 
 static wchar_t *
+try_convert_buf_with_cs(const char *buf, const char *codeset)
+{
+    struct locale_info	*li		 = get_locale_info(LC_CTYPE);
+    char		*original_locale = NULL;
+    char		*tmp_locale	 = NULL;
+    const size_t	 sz		 = strlen(buf) + 1;
+    wchar_t		*out		 = NULL;
+    size_t		 bytes_convert	 = 0;
+    const size_t	 CONVERT_FAILED	 = (size_t) -1;
+
+    if (li->lang_and_territory == NULL || li->codeset == NULL)
+	goto err;
+
+    original_locale = Strdup_printf("%s.%s", li->lang_and_territory, li->codeset);
+    tmp_locale      = Strdup_printf("%s.%s", li->lang_and_territory, codeset);
+    out             = xcalloc(sz, sizeof (wchar_t));
+
+    if (setlocale(LC_CTYPE, tmp_locale) == NULL ||
+	(bytes_convert = mbstowcs(out, buf, sz - 1)) == CONVERT_FAILED) {
+	if (setlocale(LC_CTYPE, original_locale) == NULL)
+	    err_log(EPERM, "In try_convert_buf_with_cs: cannot restore original locale (%s)", original_locale);
+	goto err;
+    }
+
+    if (bytes_convert == sz - 1)
+	out[sz - 1] = 0;
+
+    if (setlocale(LC_CTYPE, original_locale) == NULL)
+	err_log(EPERM, "In try_convert_buf_with_cs: cannot restore original locale (%s)", original_locale);
+    free_locale_info(li);
+    free_not_null(original_locale);
+    free_not_null(tmp_locale);
+    return out;
+
+  err:
+    free_locale_info(li);
+    free_not_null(original_locale);
+    free_not_null(tmp_locale);
+    free_not_null(out);
+    return NULL;
+}
+
+static wchar_t *
+perform_convert_buffer(const char **in_buf)
+{
+    const char *ar[] = {
+#if defined(UNIX)
+	"UTF-8",       "utf8",
+	"ISO-8859-1",  "iso88591",
+	"ISO-8859-15", "iso885915",
+#elif defined(WIN32)
+	"65001", /* UTF-8 */
+	"28591", /* ISO 8859-1 Latin 1 */
+	"28605", /* ISO 8859-15 Latin 9 */
+#endif
+    };
+    const size_t	 ar_sz		= ARRAY_SIZE(ar);
+    wchar_t		*out		= NULL;
+    size_t		 sz		= 0;
+    mbstate_t		 ps		= { 0 };
+    const size_t	 CONVERT_FAILED = (size_t) -1;
+
+    for (const char **ar_p = &ar[0]; ar_p < &ar[ar_sz]; ar_p++) {
+	if ((out = try_convert_buf_with_cs(*in_buf, *ar_p)) != NULL) /* success */
+	    return (out);
+    }
+
+    /* fallback solution... */
+    sz  = strlen(*in_buf) + 1;
+    out = xcalloc(sz, sizeof (wchar_t));
+
+    BZERO(&ps, sizeof (mbstate_t));
+
+    while (errno = 0, true) {
+	if (mbsrtowcs(&out[wcslen(out)], in_buf, (sz - wcslen(out)) - 1, &ps) == CONVERT_FAILED && errno == EILSEQ) {
+	    err_log(EILSEQ, "In perform_convert_buffer: characters lost");
+	    (*in_buf)++;
+	} else
+	    break;
+    }
+
+    out[sz - 1] = 0;
+    return (out);
+}
+
+#if 0
+static wchar_t *
 perform_convert_buffer(const char **in_buf)
 {
     mbstate_t		 ps;
@@ -607,6 +697,7 @@ perform_convert_buffer(const char **in_buf)
 
     return (out_buf);
 }
+#endif
 
 /* XXX: Don't actually use A_BLINK because it's annoying. */
 static void
