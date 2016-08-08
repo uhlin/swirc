@@ -1,6 +1,11 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+struct locale_info {
+    char *lang_and_territory;
+    char *codeset;
+};
+
 struct cmdline_opt_values {
     char *server;
     char *port;
@@ -23,6 +28,8 @@ extern bool g_explicit_config_file;
 
 extern struct cmdline_opt_values *g_cmdline_opts;
 
-void cmdline_options_destroy(void);
+struct locale_info	*get_locale_info(int category);
+void			 free_locale_info(struct locale_info *);
+void			 cmdline_options_destroy(void);
 
 #endif

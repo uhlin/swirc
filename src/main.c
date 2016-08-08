@@ -219,6 +219,36 @@ main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
+struct locale_info *
+get_locale_info(int category)
+{
+    struct locale_info *li = xcalloc(sizeof *li, 1);
+    char  buf[200] = { 0 };
+    char *tok      = NULL;
+    char *savp     = "";
+
+    li->lang_and_territory = li->codeset = NULL;
+
+    if (sw_strcpy(buf, setlocale(category, NULL), sizeof buf) != 0)
+	return (li);
+
+    if ((tok = strtok_r(buf, ".", &savp)) != NULL)
+	li->lang_and_territory = sw_strdup(tok);
+    if ((tok = strtok_r(NULL, ".", &savp)) != NULL)
+	li->codeset = sw_strdup(tok);
+
+    return (li);
+}
+
+void
+free_locale_info(struct locale_info *li)
+{
+    free_not_null(li->lang_and_territory);
+    free_not_null(li->codeset);
+
+    free(li);
+}
+
 static void
 view_version(void)
 {
