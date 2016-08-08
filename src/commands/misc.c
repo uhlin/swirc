@@ -144,3 +144,18 @@ cmd_away(const char *data)
 	    g_on_air = false;
     }
 }
+
+/* usage: /list [chan1[,chan2][,chan3][...]] [target] */
+void
+cmd_list(const char *data)
+{
+    const bool has_params = !Strings_match(data, "");
+
+    if (has_params) {
+	if (net_send("LIST %s", data) < 0)
+	    g_on_air = false;
+    } else {
+	if (net_send("LIST") < 0)
+	    g_on_air = false;
+    }
+}

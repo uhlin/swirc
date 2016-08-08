@@ -8,5 +8,6 @@ void cmd_names(const char *data);
 void cmd_mode(const char *data);
 void cmd_resize(const char *data);
 void cmd_away(const char *data);
+void cmd_list(const char *data);
 
 #endif
