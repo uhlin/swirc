@@ -42,6 +42,7 @@
 #include "events/channel.h"
 #include "events/error.h"
 #include "events/invite.h"
+#include "events/list.h"
 #include "events/misc.h"
 #include "events/motd.h"
 #include "events/names.h"
@@ -120,6 +121,9 @@ static struct numeric_events_tag {
     { "317", "RPL_WHOISIDLE",           NO_WINDOW,      0, event_whois_idle },
     { "318", "RPL_ENDOFWHOIS",          ACTIVE_WINDOW,  2, NULL },
     { "319", "RPL_WHOISCHANNELS",       NO_WINDOW,      0, event_whois_channels },
+    { "321", "RPL_LISTSTART",           NO_WINDOW,      0, event_liststart },
+    { "322", "RPL_LIST",                NO_WINDOW,      0, event_list },
+    { "323", "RPL_LISTEND",             STATUS_WINDOW,  1, NULL },
     { "328", "",                        NO_WINDOW,      0, event_chan_hp },
     { "330", "",                        NO_WINDOW,      0, event_whois_acc },
     { "331", "RPL_NOTOPIC",             ACTIVE_WINDOW,  2, NULL },
