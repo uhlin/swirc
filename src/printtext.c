@@ -761,7 +761,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	}
 
 	mbs = convert_wc(**bufp);
-	if (STRLEN_CAST(mbs) != 1 || ( *mbs != ',' && !sw_isdigit(*mbs) )) {
+	if (STRLEN_CAST(mbs) != 1 || (*mbs != ',' && strlen(fg) == 2) || (!sw_isdigit(*mbs) && strlen(fg) == 1)) {
 	    (*bufp)--;
 	    free(mbs);
 	    goto out;
