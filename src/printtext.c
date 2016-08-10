@@ -690,14 +690,18 @@ static void
 case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 {
 #define STRLEN_CAST(string) strlen((char *) string)
-    unsigned char	*mbs;
-    char		 fg[10];
-    char		 bg[10];
-    short int		 num1, num2;
-    struct integer_unparse_context unparse_ctx;
-
-    BZERO(fg, sizeof fg);
-    BZERO(bg, sizeof bg);
+    bool           has_comma = false;
+    char           bg[10]    = { 0 };
+    char           fg[10]    = { 0 };
+    short int      num1      = -1;
+    short int      num2      = -1;
+    struct integer_unparse_context unparse_ctx = {
+	.setting_name	  = "term_background",
+	.fallback_default = 1,	/* black */
+	.lo_limit	  = 0,
+	.hi_limit	  = 15,
+    };
+    unsigned char *mbs = NULL;
 
     if (*is_color) {
 	WCOLOR_SET(win, 0);
@@ -745,6 +749,8 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 
 	if (sw_isdigit(*mbs)) {
 	    sw_sprintf(&fg[1], "%c", *mbs);
+	} else if (*mbs == ',') {
+	    has_comma = true;
 	}
 
 	free(mbs);
@@ -761,7 +767,8 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	}
 
 	mbs = convert_wc(**bufp);
-	if (STRLEN_CAST(mbs) != 1 || (*mbs != ',' && strlen(fg) == 2) || (!sw_isdigit(*mbs) && strlen(fg) == 1)) {
+	if (STRLEN_CAST(mbs) != 1 || (!sw_isdigit(*mbs) && *mbs != ',') ||
+	    (*mbs != ',' && fg[1]) || (has_comma && *mbs == ',')) {
 	    (*bufp)--;
 	    free(mbs);
 	    goto out;
@@ -769,6 +776,8 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 
 	if (sw_isdigit(*mbs)) {
 	    sw_sprintf(&bg[0], "%c", *mbs);
+	} else if (*mbs == ',') {
+	    has_comma = true;
 	}
 
 	free(mbs);
@@ -825,11 +834,6 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
     }
 
   out:
-    unparse_ctx.setting_name     = "term_background";
-    unparse_ctx.fallback_default = 1; /* black */
-    unparse_ctx.lo_limit         = 0;
-    unparse_ctx.hi_limit         = 15;
-
     num1 = (short int) atoi(fg);
     if (!isEmpty(bg)) {
 	num2 = (short int) atoi(bg);
@@ -840,6 +844,9 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
     }
 
     printtext_set_color(win, is_color, num1, num2);
+
+    if (has_comma && !(bg[0]))
+	(*bufp)--;
 }
 
 static void
