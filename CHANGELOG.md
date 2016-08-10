@@ -8,6 +8,15 @@ All notable changes to this project will be documented in this file.
 - Event 321-323 (numeric replies for /list).
 - Event 412 ERR_NOTEXTTOSEND
 
+### Changed ###
+- The default theme. Color codes that consisted of only one digit were
+  changed to use two digits in some cases. For example: ^C3 changed to
+  ^C03, ^C5 changed to ^C05, etc. Why? Consider a function call like
+  printtext(..., "%s<one or more digits>", Theme("primary_color")). If
+  the primary color, in this case, consists of only one digit and is
+  directly followed by <one or more digits> the result is: one digit
+  is lost and a random color will be displayed.
+
 ### Fixed ###
 - As a fallback, instead of printing out "Printtext Internal Error",
   continue to convert characters even if some are lost due to an
