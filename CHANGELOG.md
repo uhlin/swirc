@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Command /list
 - Event 321-323 (numeric replies for /list).
 - Event 412 ERR_NOTEXTTOSEND
+- Event 481 ERR_NOPRIVILEGES
 
 ### Changed ###
 - The default theme. Color codes that consisted of only one digit were
