@@ -135,6 +135,9 @@ handle_foo_situation(char **buffer, long int *i, long int *j, const char *reject
 static struct message_components *
 get_processed_out_message(const char *unproc_msg, enum message_specifier_type, bool include_ts);
 
+/*lint -sem(try_convert_buf_with_cs, r_null) */
+/*lint -sem(windows_convert_to_utf8, r_null) */
+
 static unsigned char	*convert_wc                  (wchar_t);
 static void		 case_blink                  (WINDOW *, bool *is_blink);
 static void		 case_bold                   (WINDOW *, bool *is_bold);
@@ -147,8 +150,11 @@ static void		 printtext_set_color         (WINDOW *, bool *is_color, short int n
 static void		 puts_mutex_init             (void);
 static void		 text_decoration_bools_reset (struct text_decoration_bools *);
 static void		 vprinttext_mutex_init       (void);
-static wchar_t		*try_convert_buf_with_cs     (const char *buf, const char *codeset) PTR_ARGS_NONNULL;
 static wchar_t		*perform_convert_buffer      (const char **in_buf);
+static wchar_t		*try_convert_buf_with_cs     (const char *buf, const char *codeset) PTR_ARGS_NONNULL;
+#if WIN32
+static wchar_t		*windows_convert_to_utf8     (const char *buf);
+#endif
 
 void
 vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
@@ -575,6 +581,20 @@ text_decoration_bools_reset(struct text_decoration_bools *booleans)
     booleans->is_underline = false;
 }
 
+#if WIN32
+static wchar_t *
+windows_convert_to_utf8(const char *buf)
+{
+    const int sz = (int) (strlen(buf) + 1);
+    wchar_t *out = xcalloc(sz, sizeof (wchar_t));
+
+    if (MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, buf, -1, out, sz) > 0)
+	return out;
+    free(out);
+    return NULL;
+}
+#endif
+
 static wchar_t *
 try_convert_buf_with_cs(const char *buf, const char *codeset)
 {
@@ -637,6 +657,11 @@ perform_convert_buffer(const char **in_buf)
     size_t		 sz		= 0;
     mbstate_t		 ps		= { 0 };
     const size_t	 CONVERT_FAILED = (size_t) -1;
+
+#if WIN32
+    if ((out = windows_convert_to_utf8(*in_buf)) != NULL)
+	return (out);
+#endif
 
     for (const char **ar_p = &ar[0]; ar_p < &ar[ar_sz]; ar_p++) {
 	if ((out = try_convert_buf_with_cs(*in_buf, *ar_p)) != NULL) /* success */
