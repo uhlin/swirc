@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
   restriction policy). ATM not documented in the RFC.
 - Event 334. Undocumented. At Undernet, it prints out usage describing
   parameters for the LIST command.
+- Event 467 `ERR_KEYSET`
+- Event 471-474
 
 ### Changed ###
 - The default theme. Color codes that consisted of only one digit were
