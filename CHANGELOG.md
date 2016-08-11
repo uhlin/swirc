@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 - Event 341 `RPL_INVITING`
 - Event 742 (MODE cannot be set due to channel having an active MLOCK
   restriction policy). ATM not documented in the RFC.
+- Event 334. Undocumented. At Undernet, it prints out usage describing
+  parameters for the LIST command.
 
 ### Changed ###
 - The default theme. Color codes that consisted of only one digit were
