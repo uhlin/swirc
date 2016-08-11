@@ -6,8 +6,9 @@ All notable changes to this project will be documented in this file.
 - Support for multiple encodings: UTF-8, ISO-8859-1 and ISO-8859-15.
 - Command /list
 - Event 321-323 (numeric replies for /list).
-- Event 412 ERR_NOTEXTTOSEND
-- Event 481 ERR_NOPRIVILEGES
+- Event 412 `ERR_NOTEXTTOSEND`
+- Event 481 `ERR_NOPRIVILEGES`
+- Event 341 `RPL_INVITING`
 
 ### Changed ###
 - The default theme. Color codes that consisted of only one digit were

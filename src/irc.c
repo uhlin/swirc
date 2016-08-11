@@ -130,6 +130,7 @@ static struct numeric_events_tag {
     { "332", "RPL_TOPIC",               NO_WINDOW,      0, event_topic },
     { "333", "",                        NO_WINDOW,      0, event_topic_creator },
     { "338", "",                        NO_WINDOW,      0, event_whois_host },
+    { "341", "RPL_INVITING",            NO_WINDOW,      0, event_inviting },
     { "353", "RPL_NAMREPLY",            NO_WINDOW,      0, event_names },
     { "366", "RPL_ENDOFNAMES",          NO_WINDOW,      0, event_eof_names },
     { "369", "RPL_ENDOFWHOWAS",         ACTIVE_WINDOW,  2, NULL },

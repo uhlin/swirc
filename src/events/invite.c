@@ -7,6 +7,24 @@
 
 #include "invite.h"
 
+/* event_inviting: 341 (RPL_INVITING)
+
+   Example:
+     :irc.server.com 341 <my nick> <targ_nick> <channel> */
+void
+event_inviting(struct irc_message_compo *compo)
+{
+    struct printtext_context ctx = {
+	.window	    = g_active_window,
+	.spec_type  = TYPE_SPEC1_SUCCESS,
+	.include_ts = true,
+    };
+
+    (void) compo;
+
+    printtext(&ctx, "Invitation passed onto the end client");
+}
+
 /* event_invite
 
    Example:
