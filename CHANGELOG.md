@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 - Event 412 `ERR_NOTEXTTOSEND`
 - Event 481 `ERR_NOPRIVILEGES`
 - Event 341 `RPL_INVITING`
+- Event 742 (MODE cannot be set due to channel having an active MLOCK
+  restriction policy). ATM not documented in the RFC.
 
 ### Changed ###
 - The default theme. Color codes that consisted of only one digit were
