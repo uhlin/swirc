@@ -644,8 +644,8 @@ perform_convert_buffer(const char **in_buf)
     const char *ar[] = {
 #if defined(UNIX)
 	"UTF-8",       "utf8",
-	"ISO-8859-1",  "iso88591",
-	"ISO-8859-15", "iso885915",
+	"ISO-8859-1",  "ISO8859-1",  "iso88591",
+	"ISO-8859-15", "ISO8859-15", "iso885915",
 #elif defined(WIN32)
 	"65001", /* UTF-8 */
 	"28591", /* ISO 8859-1 Latin 1 */
