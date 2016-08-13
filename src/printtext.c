@@ -655,7 +655,7 @@ perform_convert_buffer(const char **in_buf)
     const size_t	 ar_sz		= ARRAY_SIZE(ar);
     wchar_t		*out		= NULL;
     size_t		 sz		= 0;
-    mbstate_t		 ps		= { 0 };
+    mbstate_t		 ps;
     const size_t	 CONVERT_FAILED = (size_t) -1;
 
 #if WIN32
