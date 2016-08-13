@@ -57,7 +57,7 @@
 /* Things with external linkage
    ============================ */
 
-const char g_swircVersion[] = "v1.0b";
+const char g_swircVersion[] = "v1.0";
 const char g_swircYear[]    = "2012-2016";
 const char g_swircAuthor[]  = "Markus Uhlin";
 
