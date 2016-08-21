@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Window scrolling capabilities!
 
+### Fixed ###
+- An issue where the cursor was left at the statusbar (after updating
+  it).
+
 ## [1.0] - 2016-08-13 ##
 ### Added ###
 - Support for multiple encodings: UTF-8, ISO-8859-1 and ISO-8859-15.
