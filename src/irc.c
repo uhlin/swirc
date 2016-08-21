@@ -36,6 +36,7 @@
 #include "libUtils.h"
 #include "network.h"
 #include "printtext.h"
+#include "readline.h"		/* readline_top_panel() */
 #include "statusbar.h"
 #include "strHand.h"
 
@@ -467,6 +468,7 @@ irc_deinit(void)
     free_and_null(&g_my_nickname);
 
     statusbar_update_display_beta();
+    readline_top_panel();
 
     g_alt_nick_tested = false;
 
@@ -500,6 +502,7 @@ irc_set_my_nickname(const char *nick)
 
     g_my_nickname = sw_strdup(nick);
     statusbar_update_display_beta();
+    readline_top_panel();
 }
 
 /* Function used to clean up within an event after a failure that is
