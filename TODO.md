@@ -4,4 +4,3 @@
 * Command history
 * Create /commands
 * Tab completion
-* Window scrolling
