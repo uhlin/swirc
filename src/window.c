@@ -452,24 +452,6 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
     window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT, false);
 }
 
-#if 0
-static void
-window_redraw(PIRC_WINDOW window, int rows)
-{
-    PTEXTBUF_ELMT	 element;
-    WINDOW		*pwin = panel_window(window->pan);
-    int			 pos  = int_diff(textBuf_size(window->buf), rows);
-
-    if ((element = textBuf_get_element_by_pos(window->buf, pos < 0 ? 0 : pos)) == NULL) {
-	return; /* Nothing stored in the buffer */
-    }
-
-    for (; element != NULL; element = element->next) {
-	printtext_puts(pwin, element->text, element->indent, -1, NULL);
-    }
-}
-#endif
-
 static void
 window_redraw(PIRC_WINDOW window, const int rows, const int pos, bool limit_output)
 {
