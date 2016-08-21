@@ -202,8 +202,10 @@ readline(const char *prompt)
 	    case_key_dc(ctx);
 	    break;
 	case KEY_NPAGE:
+	    window_scroll_down(g_active_window);
 	    break;
 	case KEY_PPAGE:
+	    window_scroll_up(g_active_window);
 	    break;
 	case '\t':
 	    break;

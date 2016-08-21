@@ -51,6 +51,9 @@
 #define foreach_hash_table_entry(entry_p) \
 	for (entry_p = &hash_table[0]; entry_p < &hash_table[ARRAY_SIZE(hash_table)]; entry_p++)
 
+#define IS_AT_TOP	(window->saved_size > 0 && window->saved_size == window->scroll_count)
+#define SCROLL_OFFSET	6
+
 /* Structure definitions
    ===================== */
 
@@ -83,7 +86,7 @@ static void		apply_window_options    (WINDOW *);
 static void		hUndef                  (PIRC_WINDOW entry);
 static void		reassign_window_refnums (void);
 static void		window_recreate         (PIRC_WINDOW, int rows, int cols);
-static void		window_redraw           (PIRC_WINDOW, int rows);
+static void		window_redraw           (PIRC_WINDOW, const int rows, const int pos, bool limit_output);
 
 void
 windowSystem_init(void)
@@ -189,6 +192,10 @@ hInstall(const struct hInstall_context *ctx)
     entry->refnum = ctx->refnum;
     entry->buf    = textBuf_new();
 
+    entry->saved_size	= 0;
+    entry->scroll_count = 0;
+    entry->scroll_mode	= false;
+
     for (n_ent = &entry->names_hash[0]; n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE]; n_ent++) {
 	*n_ent = NULL;
     }
@@ -278,7 +285,7 @@ static void
 apply_window_options(WINDOW *win)
 {
     if (!is_scrollok(win)) {
-	(void) scrollok(win, TRUE);
+	(void) scrollok(win, true);
     }
 }
 
@@ -426,9 +433,26 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
 
     window->pan = term_resize_panel(window->pan, &newsize);
     apply_window_options(panel_window(window->pan));
-    window_redraw(window, rows);
+
+    const int HEIGHT = rows - 3;
+
+    if (window->scroll_mode) {
+	if (! (window->scroll_count > HEIGHT)) {
+	    window->saved_size   = 0;
+	    window->scroll_count = 0;
+	    window->scroll_mode  = false;
+	    window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT, false);
+	} else {
+	    window_redraw(window, HEIGHT, window->saved_size - window->scroll_count, true);
+	}
+
+	return;
+    }
+
+    window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT, false);
 }
 
+#if 0
 static void
 window_redraw(PIRC_WINDOW window, int rows)
 {
@@ -443,6 +467,99 @@ window_redraw(PIRC_WINDOW window, int rows)
     for (; element != NULL; element = element->next) {
 	printtext_puts(pwin, element->text, element->indent, -1, NULL);
     }
+}
+#endif
+
+static void
+window_redraw(PIRC_WINDOW window, const int rows, const int pos, bool limit_output)
+{
+    PTEXTBUF_ELMT	 element   = NULL;
+    WINDOW		*pwin	   = panel_window(window->pan);
+    int			 i	   = 0;
+    int			 rep_count = 0;
+
+    if ((element = textBuf_get_element_by_pos(window->buf, pos < 0 ? 0 : pos)) == NULL) {
+	return; /* Nothing stored in the buffer */
+    }
+
+#if 1
+    werase(pwin);
+    update_panels();
+#endif
+
+    if (limit_output) {
+	while (element != NULL && i < rows) {
+	    printtext_puts(pwin, element->text, element->indent, rows - i, &rep_count);
+	    element = element->next;
+	    i += rep_count;
+	}
+    } else {
+	while (element != NULL && i < rows) {
+	    printtext_puts(pwin, element->text, element->indent, -1, NULL);
+	    element = element->next;
+	    i++;
+	}
+    }
+
+    statusbar_update_display_beta();
+    readline_top_panel();
+}
+
+void
+window_scroll_up(PIRC_WINDOW window)
+{
+    const int MIN_SIZE = LINES - 3;
+
+    if (MIN_SIZE < 0 || !(textBuf_size(window->buf) > MIN_SIZE) || IS_AT_TOP) {
+	term_beep();
+	return;
+    }
+
+    if (! (window->scroll_mode)) {
+	window->saved_size  = textBuf_size(window->buf);
+	window->scroll_mode = true;
+    }
+
+    if (window->scroll_count > window->saved_size) /* past top */
+	window->scroll_count = window->saved_size;
+    else {
+	if (window->scroll_count == 0) /* first page up */
+	    window->scroll_count += MIN_SIZE;
+
+	window->scroll_count += SCROLL_OFFSET;
+
+	if (window->scroll_count > window->saved_size)
+	    window->scroll_count = window->saved_size;
+    }
+
+    if (IS_AT_TOP)
+	window_redraw(window, MIN_SIZE, 0, true);
+    else
+	window_redraw(window, MIN_SIZE, window->saved_size - window->scroll_count, true);
+}
+
+/* textBuf_size(window->buf) - window->saved_size */
+void
+window_scroll_down(PIRC_WINDOW window)
+{
+    const int HEIGHT = LINES - 3;
+
+    if (! (window->scroll_mode)) {
+	term_beep();
+	return;
+    }
+
+    window->scroll_count -= SCROLL_OFFSET;
+
+    if (! (window->scroll_count > HEIGHT)) {
+	window->saved_size   = 0;
+	window->scroll_count = 0;
+	window->scroll_mode  = false;
+	window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT, false);
+	return;
+    }
+
+    window_redraw(window, HEIGHT, window->saved_size - window->scroll_count, true);
 }
 
 void

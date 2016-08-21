@@ -204,7 +204,8 @@ vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
 	}
     }
 
-    printtext_puts(panel_window(ctx->window->pan), pout->text, pout->indent, -1, NULL);
+    if (! (ctx->window->scroll_mode))
+	printtext_puts(panel_window(ctx->window->pan), pout->text, pout->indent, -1, NULL);
 
     free_not_null(fmt_copy);
     free_not_null(pout->text);

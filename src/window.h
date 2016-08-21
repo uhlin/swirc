@@ -31,6 +31,9 @@ typedef struct tagIRC_WINDOW {
     PANEL	*pan;
     int		 refnum;
     PTEXTBUF	 buf;
+    int		 saved_size;
+    int		 scroll_count;
+    bool	 scroll_mode;
     PNAMES	 names_hash[NAMES_HASH_TABLE_SIZE];
     int		 num_owners;
     int		 num_superops;
@@ -60,6 +63,8 @@ void		new_window_title             (const char *label, const char *title);
 void		windowSystem_deinit          (void);
 void		windowSystem_init            (void);
 void		window_foreach_destroy_names (void);
+void		window_scroll_down           (PIRC_WINDOW);
+void		window_scroll_up             (PIRC_WINDOW);
 void		window_select_next           (void);
 void		window_select_prev           (void);
 void		windows_recreate_all         (int rows, int cols);

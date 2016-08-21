@@ -109,11 +109,12 @@ statusbar_update_display_beta(void)
     const char *lb     = Theme("statusbar_leftBracket");
     const char *rb     = Theme("statusbar_rightBracket");
     char       *out_s  = Strdup_printf(
-	"%s %s%d/%d%s %s%s%s %s",
+	"%s %s%d/%d%s %s%s%s %s %s",
 	Theme("statusbar_spec"),
 	lb, g_active_window->refnum, g_ntotal_windows, rb,
 	lb, get_nick_and_server(), rb,
-	irc_client_slogan);
+	irc_client_slogan,
+	g_active_window->scroll_mode ? "-- MORE --" : "");
 
     WERASE(win);
     WBKGD(win, blank | COLOR_PAIR(pair_n) | A_NORMAL);
