@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 - On OpenBSD: restrict system operations by using pledge() if it's
   available.
 
+### Changed ###
+- Usage for command /list was bogus.
+
 ### Fixed ###
 - An issue where the cursor was left at the statusbar (after updating
   it).
