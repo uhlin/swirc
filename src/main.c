@@ -29,7 +29,19 @@
 
 #include "common.h"
 
+#if __OpenBSD__
+#include <sys/param.h>
+#endif
+
 #include <locale.h>
+
+#ifndef RESTRICT_SYSOPS
+#define RESTRICT_SYSOPS 1
+#endif
+
+#if defined(OpenBSD) && OpenBSD >= 201605 && RESTRICT_SYSOPS
+#include <unistd.h> /* pledge() */
+#endif
 
 #include "assertAPI.h"
 #include "curses-funcs.h"
@@ -202,6 +214,14 @@ main(int argc, char *argv[])
     windowSystem_init();
     readline_init();
     net_ssl_init();
+
+#if defined(OpenBSD) && OpenBSD >= 201605 && RESTRICT_SYSOPS
+    if (pledge("stdio rpath wpath inet dns tty", NULL) == -1) {
+	err_ret("pledge");
+	return EXIT_FAILURE;
+    }
+#endif
+
     enter_io_loop();
 
     /* XXX: Reverse order... */
