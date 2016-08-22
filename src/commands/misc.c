@@ -145,7 +145,7 @@ cmd_away(const char *data)
     }
 }
 
-/* usage: /list [chan1[,chan2][,chan3][...]] [target] */
+/* usage: /list [<max_users[,>min_users][,pattern][...]] */
 void
 cmd_list(const char *data)
 {

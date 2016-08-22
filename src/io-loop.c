@@ -75,7 +75,7 @@ static struct cmds_tag {
     { "invite",     cmd_invite,     true,  "/invite <targ_nick> <channel>" },
     { "join",       cmd_join,       true,  "/join <channel> [key]" },
     { "kick",       cmd_kick,       true,  "/kick <nick1[,nick2][,nick3][...]> [reason]" },
-    { "list",       cmd_list,       true,  "/list [chan1[,chan2][,chan3][...]] [target]" },
+    { "list",       cmd_list,       true,  "/list [<max_users[,>min_users][,pattern][...]]" },
     { "me",         cmd_me,         true,  "/me <message>" },
     { "mode",       cmd_mode,       true,  "/mode <modes> [...]" },
     { "msg",        cmd_msg,        true,  "/msg <recipient> <message>" },
