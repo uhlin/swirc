@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Added ###
 - Window scrolling capabilities!
+- On OpenBSD: restrict system operations by using pledge() if it's
+  available.
 
 ### Fixed ###
 - An issue where the cursor was left at the statusbar (after updating
