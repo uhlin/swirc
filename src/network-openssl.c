@@ -172,10 +172,11 @@ net_ssl_send(const char *fmt, ...)
 
     realloc_strcat(&buffer, message_terminate);
 
+    const int buflen = (int) strlen(buffer);
     int total_written = 0;
     int ret = 0;
-    while (total_written < strlen(buffer)) {
-	if ((ret = SSL_write(ssl, &buffer[total_written], strlen(buffer) - total_written)) <= 0) {
+    while (total_written < buflen) {
+	if ((ret = SSL_write(ssl, &buffer[total_written], buflen - total_written)) <= 0) {
 	    free(buffer);
 	    return -1;
 	} else {
