@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 ### Changed ###
 - Usage for command /list was bogus.
 - Document keys pg up/down in the manual page.
+- Decorated output of /list a bit.
 
 ### Fixed ###
 - An issue where the cursor was left at the statusbar (after updating
