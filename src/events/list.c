@@ -32,6 +32,7 @@
 #include "../irc.h"
 #include "../printtext.h"
 #include "../strHand.h"
+#include "../theme.h"
 
 #include "list.h"
 
@@ -74,5 +75,8 @@ event_list(struct irc_message_compo *compo)
     if (*topic == ':')
 	topic++;
 
-    printtext(&ctx, "%s %s %s", channel, num_visible, topic);
+    printtext(&ctx, "%s%s%c%s%s%s: %s",
+	      COLOR1, channel, NORMAL,
+	      Theme("notice_inner_b1"), num_visible, Theme("notice_inner_b2"),
+	      topic);
 }
