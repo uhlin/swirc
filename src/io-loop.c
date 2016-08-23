@@ -69,6 +69,7 @@ static struct cmds_tag {
     char		*usage;
 } cmds[] = {
     { "away",       cmd_away,       true,  "/away [reason]" },
+    { "banlist",    cmd_banlist,    true,  "/banlist [channel]" },
     { "connect",    cmd_connect,    false, "/connect [-ssl] <server[:port]>" },
     { "disconnect", cmd_disconnect, true,  "/disconnect [message]" },
     { "help",       cmd_help,       false, "/help [command]" },

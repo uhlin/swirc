@@ -9,5 +9,6 @@ void cmd_mode(const char *data);
 void cmd_resize(const char *data);
 void cmd_away(const char *data);
 void cmd_list(const char *data);
+void cmd_banlist(const char *data);
 
 #endif

@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Window scrolling capabilities!
 - On OpenBSD: restrict system operations by using pledge() if it's
   available.
+- Command /banlist
 
 ### Changed ###
 - Usage for command /list was bogus.

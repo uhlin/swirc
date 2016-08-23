@@ -159,3 +159,24 @@ cmd_list(const char *data)
 	    g_on_air = false;
     }
 }
+
+/* usage: /banlist [channel] */
+void
+cmd_banlist(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (Strings_match(data, "")) {
+	if (is_irc_channel(g_active_window->label)) {
+	    if (net_send("MODE %s +b", g_active_window->label) < 0)
+		g_on_air = false;
+	} else {
+	    printtext(&ptext_ctx, "/banlist: missing arguments");
+	}
+    } else if (!is_irc_channel(data)) {
+	printtext(&ptext_ctx, "/banlist: bogus irc channel");
+    } else {
+	if (net_send("MODE %s +b", data) < 0)
+	    g_on_air = false;
+    }
+}
