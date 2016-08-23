@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed ###
 - An issue where the cursor was left at the statusbar (after updating
   it).
+- In `net_ssl_send`: signed-unsigned mix with relational.
 
 ## [1.0] - 2016-08-13 ##
 ### Added ###
