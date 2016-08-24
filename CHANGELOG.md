@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 - On OpenBSD: restrict system operations by using pledge() if it's
   available.
 - Command /banlist
+- Event 367 `RPL_BANLIST`
+- Event 368 `RPL_ENDOFBANLIST`
 
 ### Changed ###
 - Usage for command /list was bogus.

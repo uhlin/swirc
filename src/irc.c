@@ -40,6 +40,7 @@
 #include "statusbar.h"
 #include "strHand.h"
 
+#include "events/banlist.h"
 #include "events/channel.h"
 #include "events/error.h"
 #include "events/invite.h"
@@ -135,6 +136,8 @@ static struct numeric_events_tag {
     { "341", "RPL_INVITING",            NO_WINDOW,      0, event_inviting },
     { "353", "RPL_NAMREPLY",            NO_WINDOW,      0, event_names },
     { "366", "RPL_ENDOFNAMES",          NO_WINDOW,      0, event_eof_names },
+    { "367", "RPL_BANLIST",             NO_WINDOW,      0, event_banlist },
+    { "368", "RPL_ENDOFBANLIST",        NO_WINDOW,      0, event_eof_banlist },
     { "369", "RPL_ENDOFWHOWAS",         ACTIVE_WINDOW,  2, NULL },
     { "372", "RPL_MOTD",                NO_WINDOW,      0, event_motd },
     { "375", "RPL_MOTDSTART",           NO_WINDOW,      0, event_motd },
