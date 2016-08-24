@@ -474,7 +474,7 @@ event_join(struct irc_message_compo *compo)
     return;
 
   bad:
-    err_msg("On issuing event %s: A fatal error occured", compo->command);
+    err_msg("On issuing event %s: A fatal error occurred", compo->command);
     abort();
 }
 
@@ -538,7 +538,7 @@ event_part(struct irc_message_compo *compo)
     return;
 
   bad:
-    err_msg("On issuing event %s: A fatal error occured", compo->command);
+    err_msg("On issuing event %s: A fatal error occurred", compo->command);
     abort();
 }
 

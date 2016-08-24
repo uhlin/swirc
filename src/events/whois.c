@@ -432,7 +432,7 @@ event_whois_idle(struct irc_message_compo *compo)
     ctx.window     = g_status_window;
     ctx.spec_type  = TYPE_SPEC1_WARN;
     ctx.include_ts = true;
-    printtext(&ctx, "On issuing event %s: An error occured", compo->command);
+    printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
 }
 
 /* event_whois_channels: 319
@@ -554,7 +554,7 @@ event_whois_host(struct irc_message_compo *compo)
     ctx.window     = g_status_window;
     ctx.spec_type  = TYPE_SPEC1_WARN;
     ctx.include_ts = true;
-    printtext(&ctx, "On issuing event %s: An error occured", compo->command);
+    printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
 }
 
 /* event_whois_conn: 378
