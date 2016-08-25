@@ -19,6 +19,9 @@ All notable changes to this project will be documented in this file.
 - In the interpreter: handle string truncation when copying an
   identifier/argument.
 - `textbuffer_size_absolute` now defaults to 1500.
+- Only call `unget_wch(MY_KEY_RESIZE)` after sleeping for a requested
+  interval. This possibly prevents the program from crashing or the
+  terminal from being hangup due to a "resize attack".
 
 ### Fixed ###
 - An issue where the cursor was left at the statusbar (after updating

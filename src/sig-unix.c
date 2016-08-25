@@ -3,6 +3,7 @@
 #include "common.h"
 
 #include <signal.h>
+#include <time.h>
 
 #include "errHand.h"
 #include "readline.h" /* MY_KEY_RESIZE */
@@ -38,12 +39,17 @@ clean_up()
 static void
 signal_handler(int signum)
 {
+    struct timespec ts = {
+	.tv_sec  = 0,
+	.tv_nsec = 250000000,
+    };
     struct sig_message_tag	*ssp;
     const size_t		 ar_sz = ARRAY_SIZE(sig_message);
 
     switch (signum) {
     case SIGWINCH:
-	(void) unget_wch(MY_KEY_RESIZE);
+	if (nanosleep(&ts, NULL) == 0)
+	    (void) unget_wch(MY_KEY_RESIZE);
 	return;
     default:
 	clean_up();
