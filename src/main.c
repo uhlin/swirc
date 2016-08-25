@@ -216,7 +216,7 @@ main(int argc, char *argv[])
     net_ssl_init();
 
 #if defined(OpenBSD) && OpenBSD >= 201605 && RESTRICT_SYSOPS
-    if (pledge("stdio rpath wpath inet dns tty", NULL) == -1) {
+    if (pledge("stdio rpath wpath cpath inet dns tty", NULL) == -1) {
 	err_ret("pledge");
 	return EXIT_FAILURE;
     }
