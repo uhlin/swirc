@@ -182,6 +182,16 @@ maintain_channel_stats(const char *channel, const char *input)
 	case '-':
 	    pm_state = STATE_MINUS;
 	    break;
+	case 'I': /* set/remove an invitation mask */
+	case 'b': /* set/remove ban mask           */
+	case 'e': /* set/remove an exception mask  */
+	case 'k': /* set/remove the channel key    */
+	    ar_i++;
+	    break;
+	case 'l': /* set/remove the user limit to channel */
+	    if (pm_state == STATE_PLUS)
+		ar_i++;
+	    break;
 	case 'q':
 	    chg_status_for_owner(pm_state, nicks[ar_i++], channel);
 	    break;
