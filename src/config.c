@@ -69,7 +69,7 @@ static struct tagConfDefValues {
     { "skip_motd",                 TYPE_BOOLEAN, "no" },
     { "ssl_verify_peer",           TYPE_BOOLEAN, "yes" },
     { "startup_greeting",          TYPE_BOOLEAN, "yes" },
-    { "textbuffer_size_absolute",  TYPE_INTEGER, "500" },
+    { "textbuffer_size_absolute",  TYPE_INTEGER, "1500" },
     { "theme",                     TYPE_STRING,  "default" },
     { "username",                  TYPE_STRING,  "swift" },
 };

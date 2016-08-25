@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Decorated output of /list a bit.
 - In the interpreter: handle string truncation when copying an
   identifier/argument.
+- `textbuffer_size_absolute` now defaults to 1500.
 
 ### Fixed ###
 - An issue where the cursor was left at the statusbar (after updating
