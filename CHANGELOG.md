@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 - Command /banlist
 - Event 367 `RPL_BANLIST`
 - Event 368 `RPL_ENDOFBANLIST`
+- Event 324 `RPL_CHANNELMODEIS`
+- Event 329. Undocumented. Channel date of creation.
 
 ### Changed ###
 - Usage for command /list was bogus.

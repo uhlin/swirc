@@ -29,11 +29,15 @@
 
 #include "common.h"
 
+#include <time.h>
+
 #include "../config.h"
+#include "../dataClassify.h"
 #include "../irc.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
+#include "../theme.h"
 
 #include "misc.h"
 #include "welcome.h"
@@ -254,4 +258,75 @@ event_channel_forward(struct irc_message_compo *compo)
     ctx.spec_type  = TYPE_SPEC1_FAILURE;
     ctx.include_ts = true;
     printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
+}
+
+/* event_channelModeIs: 324 (RPL_CHANNELMODEIS)
+
+   Examples:
+     :irc.server.com 324 <my nickname> <channel> <mode> <mode params>
+     :irc.server.com 324 <my nickname> <channel> <mode> */
+void
+event_channelModeIs(struct irc_message_compo *compo)
+{
+    char	*state	 = "";
+    char	*channel = NULL;
+    char	*data	 = NULL;
+    struct printtext_context ctx = {
+	.window	    = g_active_window,
+	.spec_type  = TYPE_SPEC1,
+	.include_ts = true,
+    };
+
+    if (Strfeed(compo->params, 2) != 2)
+	return;
+
+    (void) strtok_r(compo->params, "\n", &state); /* my nickname */
+
+    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
+	(data = strtok_r(NULL, "\n", &state)) == NULL)
+	return;
+
+    if (window_by_label(channel))
+	ctx.window = window_by_label(channel);
+
+    printtext(&ctx, "mode/%s%s%s%c%s %s%s%s",
+	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+	      LEFT_BRKT, data, RIGHT_BRKT);
+}
+
+/* event_channelCreatedWhen: 329 (undocumented in the RFC)
+
+   Example:
+     :irc.server.com 329 <my nickname> <channel> <seconds> */
+void
+event_channelCreatedWhen(struct irc_message_compo *compo)
+{
+    char	*state	 = "";
+    char	*channel = NULL;
+    char	*seconds = NULL;
+    struct printtext_context ctx = {
+	.window	    = g_active_window,
+	.spec_type  = TYPE_SPEC1,
+	.include_ts = true,
+    };
+
+    if (Strfeed(compo->params, 2) != 2)
+	return;
+
+    (void) strtok_r(compo->params, "\n", &state); /* my nickname */
+
+    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
+	(seconds = strtok_r(NULL, "\n", &state)) == NULL ||
+	!is_irc_channel(channel) ||
+	!is_numeric(seconds))
+	return;
+
+    if (window_by_label(channel))
+	ctx.window = window_by_label(channel);
+
+    const time_t date_of_creation = (time_t) strtol(seconds, NULL, 10);
+
+    printtext(&ctx, "Channel %s%s%s%c%s created %s",
+	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+	      trim( ctime(&date_of_creation) ));
 }
