@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
 - Usage for command /list was bogus.
 - Document keys pg up/down in the manual page.
 - Decorated output of /list a bit.
+- In the interpreter: handle string truncation when copying an
+  identifier/argument.
 
 ### Fixed ###
 - An issue where the cursor was left at the statusbar (after updating

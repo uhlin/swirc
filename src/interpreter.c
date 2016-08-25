@@ -25,8 +25,8 @@
 static const size_t	identifier_maxSize = 50;
 static const size_t	argument_maxSize   = 480;
 
-static char *	copy_identifier (const char *);
-static char *	copy_argument   (const char *);
+static char	*copy_identifier(const char *);
+static char	*copy_argument(const char *);
 
 void
 Interpreter(const struct Interpreter_in *in)
@@ -120,6 +120,8 @@ copy_identifier(const char *id)
     }
 
     *dest = '\0';
+    if (count == 1)
+	err_quit("In copy_identifier: fatal: string was truncated!");
     return (dest_buf);
 }
 
@@ -147,6 +149,9 @@ copy_argument(const char *arg)
     }
 
     *dest = '\0';
+
+    if (inside_arg && count == 1)
+	err_quit("In copy_argument: fatal: string was truncated!");
 
     if (inside_arg) {
 	free(dest_buf);
