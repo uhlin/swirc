@@ -13,6 +13,9 @@ All notable changes to this project will be documented in this file.
 - Event 329. Undocumented. Channel date of creation.
 - Command /chanserv
 - Command /nickserv
+- Event 487. Undocumented in the RFC. Prints out an error saying that
+  /msg target ChanServ/NickServ is no longer supported (in favor of
+  /chanserv and /nickserv).
 
 ### Changed ###
 - Usage for command /list was bogus.

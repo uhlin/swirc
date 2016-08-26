@@ -172,6 +172,7 @@ static struct numeric_events_tag {
     { "475", "ERR_BADCHANNELKEY",       ACTIVE_WINDOW,  2, NULL },
     { "481", "ERR_NOPRIVILEGES",        ACTIVE_WINDOW,  1, NULL },
     { "482", "ERR_CHANOPRIVSNEEDED",    ACTIVE_WINDOW,  2, NULL },
+    { "487", "ERR_",                    ACTIVE_WINDOW,  1, NULL },
     { "501", "ERR_UMODEUNKNOWNFLAG",    ACTIVE_WINDOW,  1, NULL },
     { "502", "ERR_USERSDONTMATCH",      ACTIVE_WINDOW,  1, NULL },
     { "520", "",                        ACTIVE_WINDOW,  2, NULL },
