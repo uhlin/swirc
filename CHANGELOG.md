@@ -24,6 +24,8 @@ All notable changes to this project will be documented in this file.
 - Only call `unget_wch(MY_KEY_RESIZE)` after sleeping for a requested
   interval. This possibly prevents the program from crashing or the
   terminal from being hangup due to a "resize attack".
+- In command /msg: fail if recipient is ChanServ or NickServ. Use of
+  the commands /chanserv and /nickserv should be considered instead.
 
 ### Fixed ###
 - An issue where the cursor was left at the statusbar (after updating

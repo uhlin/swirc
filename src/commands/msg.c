@@ -66,6 +66,12 @@ cmd_msg(const char *data)
     } else if (!is_valid_nickname(recipient) && !is_irc_channel(recipient)) {
 	PrintAndFree("/msg: neither a nickname or irc channel", dcopy);
 	return;
+    } else if (Strings_match_ignore_case(recipient, "ChanServ")) {
+	PrintAndFree("/msg: for safety reasons: consider using command /chanserv", dcopy);
+	return;
+    } else if (Strings_match_ignore_case(recipient, "NickServ")) {
+	PrintAndFree("/msg: for safety reasons: consider using command /nickserv", dcopy);
+	return;
     } else if (window_by_label(recipient) == NULL && is_valid_nickname(recipient)) {
 	if (spawn_chat_window(recipient, "") != 0) {
 	    PrintAndFree("/msg: fatal: cannot spawn chat window!", dcopy);
