@@ -209,3 +209,45 @@ cmd_banlist(const char *data)
 	    g_on_air = false;
     }
 }
+
+/* usage: /exlist [channel] */
+void
+cmd_exlist(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (Strings_match(data, "")) {
+	if (is_irc_channel(g_active_window->label)) {
+	    if (net_send("MODE %s +e", g_active_window->label) < 0)
+		g_on_air = false;
+	} else {
+	    printtext(&ptext_ctx, "/exlist: missing arguments");
+	}
+    } else if (!is_irc_channel(data)) {
+	printtext(&ptext_ctx, "/exlist: bogus irc channel");
+    } else {
+	if (net_send("MODE %s +e", data) < 0)
+	    g_on_air = false;
+    }
+}
+
+/* usage: /ilist [channel] */
+void
+cmd_ilist(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (Strings_match(data, "")) {
+	if (is_irc_channel(g_active_window->label)) {
+	    if (net_send("MODE %s +I", g_active_window->label) < 0)
+		g_on_air = false;
+	} else {
+	    printtext(&ptext_ctx, "/ilist: missing arguments");
+	}
+    } else if (!is_irc_channel(data)) {
+	printtext(&ptext_ctx, "/ilist: bogus irc channel");
+    } else {
+	if (net_send("MODE %s +I", data) < 0)
+	    g_on_air = false;
+    }
+}

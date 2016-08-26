@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file.
 - Event 487. Undocumented in the RFC. Prints out an error saying that
   /msg target ChanServ/NickServ is no longer supported (in favor of
   /chanserv and /nickserv).
+- Command /exlist
+- Command /ilist
 
 ### Changed ###
 - Usage for command /list was bogus.
