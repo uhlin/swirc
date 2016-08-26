@@ -45,7 +45,11 @@
    Examples:
      :irc.server.com 367 <recipient> <channel> <mask> irc.server.com <time>
      :irc.server.com 367 <recipient> <channel> <mask> <nick>!<user>@<host> <time>
-     :irc.server.com 367 <recipient> <channel> <mask> */
+     :irc.server.com 367 <recipient> <channel> <mask>
+
+   Other events with the same semantics:
+     - 346 (RPL_INVITELIST)
+     - 348 (RPL_EXCEPTLIST) */
 void
 event_banlist(struct irc_message_compo *compo)
 {
@@ -113,7 +117,11 @@ event_banlist(struct irc_message_compo *compo)
 /* event_eof_banlist: 368
 
    Examples:
-     :irc.server.com 368 <recipient> <channel> :End of Channel Ban List */
+     :irc.server.com 368 <recipient> <channel> :End of Channel Ban List
+
+   Other events that uses this function:
+     :irc.server.com 347 <recipient> <channel> :End of Channel Invite List
+     :irc.server.com 349 <recipient> <channel> :End of Channel Exception List */
 void
 event_eof_banlist(struct irc_message_compo *compo)
 {

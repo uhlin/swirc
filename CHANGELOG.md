@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
   /chanserv and /nickserv).
 - Command /exlist
 - Command /ilist
+- Event 346-349 (numeric replies to /exlist and /ilist).
 
 ### Changed ###
 - Usage for command /list was bogus.
