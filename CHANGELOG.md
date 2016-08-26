@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 - Event 368 `RPL_ENDOFBANLIST`
 - Event 324 `RPL_CHANNELMODEIS`
 - Event 329. Undocumented. Channel date of creation.
+- Command /chanserv
+- Command /nickserv
 
 ### Changed ###
 - Usage for command /list was bogus.

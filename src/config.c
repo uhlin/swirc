@@ -54,6 +54,7 @@ static struct tagConfDefValues {
     char		*value;
 } ConfDefValues[] = {
     { "alt_nick",                  TYPE_STRING,  "warezkid_" },
+    { "chanserv_host",             TYPE_STRING,  "services." },
     { "cmd_hist_size",             TYPE_INTEGER, "50" },
     { "connection_timeout",        TYPE_INTEGER, "45" },
     { "disable_beeps",             TYPE_BOOLEAN, "no" },
@@ -61,6 +62,7 @@ static struct tagConfDefValues {
     { "kick_close_window",         TYPE_BOOLEAN, "yes" },
     { "max_chat_windows",          TYPE_INTEGER, "60" },
     { "nickname",                  TYPE_STRING,  "warezkid" },
+    { "nickserv_host",             TYPE_STRING,  "services." },
     { "part_message",              TYPE_STRING,  "" },
     { "quit_message",              TYPE_STRING,  "leaving" },
     { "real_name",                 TYPE_STRING,  "pinball" },

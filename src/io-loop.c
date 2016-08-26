@@ -56,6 +56,7 @@
 #include "commands/nick.h"
 #include "commands/notice.h"
 #include "commands/say.h"
+#include "commands/services.h"
 #include "commands/topic.h"
 
 #include "events/names.h"
@@ -70,6 +71,7 @@ static struct cmds_tag {
 } cmds[] = {
     { "away",       cmd_away,       true,  "/away [reason]" },
     { "banlist",    cmd_banlist,    true,  "/banlist [channel]" },
+    { "chanserv",   cmd_chanserv,   true,  "/chanserv <service hostname | --> <command> [...]" },
     { "connect",    cmd_connect,    false, "/connect [-ssl] <server[:port]>" },
     { "disconnect", cmd_disconnect, true,  "/disconnect [message]" },
     { "help",       cmd_help,       false, "/help [command]" },
@@ -82,6 +84,7 @@ static struct cmds_tag {
     { "msg",        cmd_msg,        true,  "/msg <recipient> <message>" },
     { "n",          cmd_names,      true,  "/n [channel]" },
     { "nick",       cmd_nick,       true,  "/nick <new nickname>" },
+    { "nickserv",   cmd_nickserv,   true,  "/nickserv <service hostname | --> <command> [...]" },
     { "notice",     cmd_notice,     true,  "/notice <recipient> <message>" },
     { "part",       cmd_part,       true,  "/part [channel] [message]" },
     { "query",      cmd_query,      false, "/query [nick]" },
