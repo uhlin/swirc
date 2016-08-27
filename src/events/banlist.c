@@ -110,7 +110,7 @@ event_banlist(struct irc_message_compo *compo)
 		  LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 		  Theme("color4"), mask, NORMAL);
     } else {
-	err_log(0, "In event_banlist: an error occurred");
+	err_log(0, "On issuing event %s: an error occurred", compo->command);
     }
 }
 
