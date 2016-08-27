@@ -1,6 +1,6 @@
 # README #
 
-![SW globe](http://hem.bredband.net/markuhli/swirc/sw-globe.png)
+![SW globe](https://dataswamp.org/~markus/swirc/gfx/sw-globe.png)
 
 ## What is Swirc? ##
 
