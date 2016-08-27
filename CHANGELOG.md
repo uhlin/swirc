@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [1.1] - 2016-08-27 ##
 ### Added ###
 - Window scrolling capabilities!
 - On OpenBSD: restrict system operations by using pledge() if it's
