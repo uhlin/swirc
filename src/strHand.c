@@ -172,23 +172,6 @@ sw_snprintf(char *dest, size_t sz, const char *fmt, ...)
     va_end(ap);
 }
 
-/* Unbounded */
-void
-sw_sprintf(char *dest, const char *fmt, ...)
-{
-    va_list	ap;
-    int		n_print;
-
-    if (dest == NULL || fmt == NULL) {
-	err_exit(EINVAL, "sw_sprintf error");
-    }
-
-    va_start(ap, fmt);
-    if ((n_print = vsprintf(dest, fmt, ap)) < 0)
-	err_sys("vsprintf returned %d", n_print);
-    va_end(ap);
-}
-
 char *
 sw_strdup(const char *string)
 {

@@ -2,7 +2,6 @@
 #define STRING_HANDLING_H
 
 /*lint -printf(3, sw_snprintf) */
-/*lint -printf(2, sw_sprintf) */
 
 char		*str_tolower (char *);
 char		*str_toupper (char *);
@@ -16,7 +15,6 @@ int		 sw_wcscat   (wchar_t *dest, const wchar_t *src, size_t);
 int		 sw_wcscpy   (wchar_t *dest, const wchar_t *src, size_t);
 void		 squeeze     (char *buffer, const char *rej);
 void		 sw_snprintf (char *dest, size_t, const char *fmt, ...);
-void		 sw_sprintf  (char *dest, const char *fmt, ...);
 
 /* Inline function definitions
    =========================== */
