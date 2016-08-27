@@ -751,7 +751,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	    return;
 	}
 
-	sw_sprintf(&fg[0], "%c", *mbs);
+	sw_snprintf(&fg[0], 2, "%c", *mbs);
 
 	free(mbs);
     }
@@ -774,7 +774,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	}
 
 	if (sw_isdigit(*mbs)) {
-	    sw_sprintf(&fg[1], "%c", *mbs);
+	    sw_snprintf(&fg[1], 2, "%c", *mbs);
 	} else if (*mbs == ',') {
 	    has_comma = true;
 	}
@@ -801,7 +801,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	}
 
 	if (sw_isdigit(*mbs)) {
-	    sw_sprintf(&bg[0], "%c", *mbs);
+	    sw_snprintf(&bg[0], 2, "%c", *mbs);
 	} else if (*mbs == ',') {
 	    has_comma = true;
 	}
@@ -827,12 +827,12 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	}
 
 	if (bg[0]) {
-	    sw_sprintf(&bg[1], "%c", *mbs);
+	    sw_snprintf(&bg[1], 2, "%c", *mbs);
 	    free(mbs);
 	    goto out;
 	}
 
-	sw_sprintf(&bg[0], "%c", *mbs);
+	sw_snprintf(&bg[0], 2, "%c", *mbs);
 
 	free(mbs);
     }
@@ -854,7 +854,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	    goto out;
 	}
 
-	sw_sprintf(&bg[1], "%c", *mbs);
+	sw_snprintf(&bg[1], 2, "%c", *mbs);
 
 	free(mbs);
     }

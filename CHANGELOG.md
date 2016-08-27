@@ -32,6 +32,8 @@ All notable changes to this project will be documented in this file.
   terminal from being hangup due to a "resize attack".
 - In command /msg: fail if recipient is ChanServ or NickServ. Use of
   the commands /chanserv and /nickserv should be considered instead.
+- In the printtext module: replace unbounded `sw_sprintf` calls with
+  `sw_snprintf`.
 
 ### Fixed ###
 - An issue where the cursor was left at the statusbar (after updating
