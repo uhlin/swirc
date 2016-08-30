@@ -136,7 +136,7 @@ swirc_greeting()
 	free(str);
     }
 
-    printtext(&ptext_ctx, "");
+    printtext(&ptext_ctx, " ");
 
     printtext(&ptext_ctx, "    Swirc %s by %s", g_swircVersion, g_swircAuthor);
     printtext(&ptext_ctx, "    Compiled on %s%s %s%s", LEFT_BRKT, __DATE__, __TIME__, RIGHT_BRKT);
@@ -145,11 +145,11 @@ swirc_greeting()
 	g_initialized_pairs = 0;
     }
 
-    printtext(&ptext_ctx, "");
+    printtext(&ptext_ctx, " ");
     printtext(&ptext_ctx, "Program settings are stored in %s%s%s", LEFT_BRKT, g_home_dir, RIGHT_BRKT);
     printtext(&ptext_ctx, "%c%hd%c color pairs have been initialized", BOLD, g_initialized_pairs, BOLD);
     printtext(&ptext_ctx, "Type /help for a list of commands");
-    printtext(&ptext_ctx, "");
+    printtext(&ptext_ctx, " ");
 }
 
 static void
