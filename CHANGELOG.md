@@ -11,6 +11,9 @@ All notable changes to this project will be documented in this file.
 - In the manual page: AUTHORS section without An macro.
 - In io-loop.c: get rid of zero-length printf format string
   warnings. They weren't harmful in the first place.
+- In readline.c in function session_destroy(): get rid of possibly
+  issued warning regarding: discards qualifiers from pointer target
+  type.
 
 ## [1.1] - 2016-08-27 ##
 ### Added ###

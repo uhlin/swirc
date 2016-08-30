@@ -273,7 +273,8 @@ session_destroy(volatile struct readline_session_context *ctx)
 {
     free_not_null(ctx->buffer);
     free_not_null(ctx->prompt);
-    free_not_null((struct readline_session_context *) ctx);
+    if (ctx)
+	free((struct readline_session_context *) ctx);
 }
 
 static void
