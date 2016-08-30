@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed ###
 - In `src/unix.mk`: provide a standard default target "all".
+- In the manual page: AUTHORS section without An macro.
 
 ## [1.1] - 2016-08-27 ##
 ### Added ###
