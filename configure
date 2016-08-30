@@ -21,8 +21,8 @@ EOF
 os_BSD () {
     cat <<EOF >>$MAKE_DEF_FILE
 CC=gcc
-CFLAGS=-DBSD=1 -DUNIX=1 -D_XOPEN_SOURCE_EXTENDED=1 -Wall -std=c99
-LDFLAGS=
+CFLAGS?=-DBSD=1 -DUNIX=1 -D_XOPEN_SOURCE_EXTENDED=1 -Wall -std=c99
+LDFLAGS?=
 LDLIBS=-lcrypto -lncursesw -lpanelw -lpthread -lssl
 EOF
 }

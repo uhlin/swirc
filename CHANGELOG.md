@@ -1,6 +1,11 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Changed ###
+- The configure script. For BSD: only set `CFLAGS` and `LDFLAGS` if
+  not already set.
+
 ## [1.1] - 2016-08-27 ##
 ### Added ###
 - Window scrolling capabilities!
