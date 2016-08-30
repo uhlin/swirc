@@ -30,6 +30,8 @@ MAN_FILE=swirc.1
 	$(E) "  CC      " $@
 	$(Q) $(CC) $(include_dirs) $(CFLAGS) $(extra_flags) -c $*.c
 
+all: $(OUT)
+
 $(OUT): $(OBJS)
 	$(Q) cd commands && $(MAKE) -f unix.mk
 	$(Q) cd ..

@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 - The configure script. For BSD: only set `CFLAGS` and `LDFLAGS` if
   not already set.
 
+### Fixed ###
+- In `src/unix.mk`: provide a standard default target "all".
+
 ## [1.1] - 2016-08-27 ##
 ### Added ###
 - Window scrolling capabilities!
