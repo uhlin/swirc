@@ -46,4 +46,7 @@ void		 printtext_puts    (WINDOW *, const char *buf, int indent, int max_lines, 
 void		 swirc_wprintw     (WINDOW *, const char *fmt, ...) PRINTFLIKE(2);
 void		 vprinttext        (struct printtext_context *, const char *fmt, va_list);
 
+#define print_and_free PrintAndFree
+void PrintAndFree(const char *msg, char *cp);
+
 #endif

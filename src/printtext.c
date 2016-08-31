@@ -1085,3 +1085,16 @@ swirc_wprintw(WINDOW *win, const char *fmt, ...)
     vwprintw(win, fmt, ap);
     va_end(ap);
 }
+
+void
+PrintAndFree(const char *msg, char *cp)
+{
+    struct printtext_context ptext_ctx = {
+	.window	    = g_status_window,
+	.spec_type  = TYPE_SPEC1_FAILURE,
+	.include_ts = true,
+    };
+
+    printtext(&ptext_ctx, "%s", msg);
+    if (cp) free(cp);
+}

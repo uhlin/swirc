@@ -152,64 +152,6 @@ swirc_greeting()
     printtext(&ptext_ctx, " ");
 }
 
-static void
-auto_connect()
-{
-    struct network_connect_context conn_ctx = {
-	.server   = g_cmdline_opts->server,
-	.port     = g_cmdline_opts->port,
-	.password = g_connection_password ? g_cmdline_opts->password : NULL,
-	.username = "",
-	.rl_name  = "",
-	.nickname = "",
-    };
-    struct printtext_context ptext_ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
-
-    if (g_cmdline_opts->username) {
-	conn_ctx.username = g_cmdline_opts->username;
-    } else if (Config_mod("username")) {
-	conn_ctx.username = Config_mod("username");
-    } else {
-	printtext(&ptext_ctx, "Unable to connect: No username");
-	return;
-    }
-
-    if (g_cmdline_opts->rl_name) {
-	conn_ctx.rl_name = g_cmdline_opts->rl_name;
-    } else if (Config_mod("real_name")) {
-	conn_ctx.rl_name = Config_mod("real_name");
-    } else {
-	printtext(&ptext_ctx, "Unable to connect: No real name");
-	return;
-    }
-
-    if (g_cmdline_opts->nickname) {
-	conn_ctx.nickname = g_cmdline_opts->nickname;
-    } else if (Config_mod("nickname")) {
-	conn_ctx.nickname = Config_mod("nickname");
-    } else {
-	printtext(&ptext_ctx, "Unable to connect: No nickname");
-	return;
-    }
-
-    if (!is_valid_username(conn_ctx.username)) {
-	printtext(&ptext_ctx, "Unable to connect: Invalid username: \"%s\"", conn_ctx.username);
-	return;
-    } else if (!is_valid_real_name(conn_ctx.rl_name)) {
-	printtext(&ptext_ctx, "Unable to connect: Invalid real name: \"%s\"", conn_ctx.rl_name);
-	return;
-    } else if (!is_valid_nickname(conn_ctx.nickname)) {
-	printtext(&ptext_ctx, "Unable to connect: Invalid nickname: \"%s\"", conn_ctx.nickname);
-	return;
-    } else {
-	net_connect(&conn_ctx);
-    }
-}
-
 /* must be freed */
 static char *
 get_prompt()
@@ -321,7 +263,7 @@ enter_io_loop(void)
     }
 
     if (g_auto_connect) {
-	auto_connect();
+	do_connect(g_cmdline_opts->server, g_cmdline_opts->port);
     }
 
     do {

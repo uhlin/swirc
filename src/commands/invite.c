@@ -37,19 +37,6 @@
 
 #include "invite.h"
 
-static void
-PrintAndFree(const char *msg, char *cp)
-{
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
-
-    printtext(&ctx, "%s", msg);
-    if (cp) free(cp);
-}
-
 /* usage: /invite <targ_nick> <channel> */
 void
 cmd_invite(const char *data)

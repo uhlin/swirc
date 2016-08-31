@@ -37,19 +37,6 @@
 
 #include "notice.h"
 
-static void
-PrintAndFree(const char *msg, char *cp)
-{
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
-
-    printtext(&ctx, "%s", msg);
-    if (cp) free(cp);
-}
-
 /* usage: /notice <recipient> <message> */
 void
 cmd_notice(const char *data)

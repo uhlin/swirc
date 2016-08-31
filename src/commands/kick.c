@@ -36,19 +36,6 @@
 
 #include "kick.h"
 
-static void
-PrintAndFree(const char *msg, char *cp)
-{
-    struct printtext_context ptext_ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
-
-    printtext(&ptext_ctx, "%s", msg);
-    if (cp) free(cp);
-}
-
 /* usage: /kick <nick1[,nick2][,nick3][...]> [reason] */
 void
 cmd_kick(const char *data)

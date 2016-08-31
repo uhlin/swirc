@@ -36,19 +36,6 @@
 
 #include "msg.h"
 
-static void
-PrintAndFree(const char *msg, char *cp)
-{
-    struct printtext_context ptext_ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
-
-    printtext(&ptext_ctx, "%s", msg);
-    if (cp) free(cp);
-}
-
 /* usage: /msg <recipient> <message> */
 void
 cmd_msg(const char *data)

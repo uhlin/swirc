@@ -1,6 +1,7 @@
 #ifndef CMD_CONNECT_H
 #define CMD_CONNECT_H
 
+void do_connect     (char *server, char *port);
 void set_ssl_on     ();
 void set_ssl_off    ();
 bool is_ssl_enabled ();

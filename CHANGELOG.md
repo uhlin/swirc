@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - In readline.c in function session_destroy(): get rid of possibly
   issued warning regarding: discards qualifiers from pointer target
   type.
+- Duplicated code.
 
 ## [1.1] - 2016-08-27 ##
 ### Added ###

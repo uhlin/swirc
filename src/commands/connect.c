@@ -41,20 +41,7 @@
 
 static bool secure_connection = false;
 
-static void
-PrintAndFree(const char *msg, char *cp)
-{
-    struct printtext_context ptext_ctx = {
-	.window	    = g_status_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
-
-    printtext(&ptext_ctx, "%s", msg);
-    if (cp) free(cp);
-}
-
-static void
+void
 do_connect(char *server, char *port)
 {
     struct printtext_context ptext_ctx = {
