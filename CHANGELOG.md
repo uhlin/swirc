@@ -3,8 +3,6 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Changed ###
-- The configure script. For BSD: only set `CFLAGS` and `LDFLAGS` if
-  not already set.
 - Increase `NAMES_HASH_TABLE_SIZE` to 6500.
 
 ### Fixed ###
