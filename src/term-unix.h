@@ -11,7 +11,7 @@
 
 struct winsize	term_get_size(void);
 void		term_restore_title(void);
-void		term_set_title(const char *fmt, ...);
+void		term_set_title(const char *fmt, ...) PRINTFLIKE(1);
 
 /* Inline function definitions
    =========================== */
