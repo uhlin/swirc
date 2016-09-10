@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 - The name of function `PrintAndFree` to `print_and_free`.
 - In `print_and_free`: print to the active window.
 
+### Fixed ###
+- Reduce cpu usage by turning off nodelay() behaviour.
+
 ## [1.1+] - 2016-08-31 ##
 ### Changed ###
 - Increase `NAMES_HASH_TABLE_SIZE` to 6500.
