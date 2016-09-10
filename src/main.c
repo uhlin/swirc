@@ -125,15 +125,16 @@ struct cmdline_opt_values *g_cmdline_opts = &opt_values_data; /* External */
 /* Function declarations
    ===================== */
 
-static void view_version  (void);
-static void print_help    (const char *exe);
-static void case_connect  (void);
-static void case_nickname (void);
-static void case_username (void);
-static void case_rl_name  (void);
-static void case_password (void);
-static void case_hostname (void);
-static void case_config   (void);
+static void view_version    (void);
+static void print_help      (const char *exe);
+static void process_options (int argc, char *argv[], const char *optstring);
+static void case_connect    (void);
+static void case_nickname   (void);
+static void case_username   (void);
+static void case_rl_name    (void);
+static void case_password   (void);
+static void case_hostname   (void);
+static void case_config     (void);
 
 int
 main(int argc, char *argv[])
@@ -141,8 +142,6 @@ main(int argc, char *argv[])
 #if __OpenBSD__
     extern char *malloc_options;
 #endif
-    int opt;
-    const char optstring[] = "c:n:u:r:p:h:x:";
 
 #if __OpenBSD__
     malloc_options = "S";
@@ -172,41 +171,7 @@ main(int argc, char *argv[])
     }
 #endif
 
-    while ((opt = options(argc, argv, optstring)) != EOF) {
-	switch (opt) {
-	case 'c':
-	    case_connect();
-	    break;
-	case 'n':
-	    case_nickname();
-	    break;
-	case 'u':
-	    case_username();
-	    break;
-	case 'r':
-	    case_rl_name();
-	    break;
-	case 'p':
-	    case_password();
-	    break;
-	case 'h':
-	    case_hostname();
-	    break;
-	case 'x':
-	    case_config();
-	    break;
-	case UNRECOGNIZED_OPTION:
-	    err_msg("%s: -%c: unrecognized option", argv[0], g_option_save);
-	    print_help(argv[0]);
-	    return EXIT_FAILURE;
-	case OPTION_ARG_MISSING:
-	    err_msg("%s: -%c: option argument missing", argv[0], g_option_save);
-            /*FALLTHROUGH*/
-	default:
-	    print_help(argv[0]);
-	    return EXIT_FAILURE;
-	}
-    }
+    process_options(argc, argv, "c:n:u:r:p:h:x:");
 
     term_init();
     nestHome_init();
@@ -329,6 +294,48 @@ print_help(const char *exe)
 
     for (ppcc = &OptionDesc[0]; ppcc < &OptionDesc[ar_sz]; ppcc++) {
 	PUTS(*ppcc);
+    }
+}
+
+static void
+process_options(int argc, char *argv[], const char *optstring)
+{
+    int opt = -1;
+
+    while ((opt = options(argc, argv, optstring)) != EOF) {
+	switch (opt) {
+	case 'c':
+	    case_connect();
+	    break;
+	case 'n':
+	    case_nickname();
+	    break;
+	case 'u':
+	    case_username();
+	    break;
+	case 'r':
+	    case_rl_name();
+	    break;
+	case 'p':
+	    case_password();
+	    break;
+	case 'h':
+	    case_hostname();
+	    break;
+	case 'x':
+	    case_config();
+	    break;
+	case UNRECOGNIZED_OPTION:
+	    err_msg("%s: -%c: unrecognized option", argv[0], g_option_save);
+	    print_help(argv[0]);
+	    exit(EXIT_FAILURE);
+	case OPTION_ARG_MISSING:
+	    err_msg("%s: -%c: option argument missing", argv[0], g_option_save);
+            /*FALLTHROUGH*/
+	default:
+	    print_help(argv[0]);
+	    exit(EXIT_FAILURE);
+	}
     }
 }
 
