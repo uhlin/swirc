@@ -129,7 +129,7 @@ cmd_connect(const char *data)
     set_ssl_off();
 
     if (Strings_match(dcopy, "") || is_whiteSpace(dcopy)) {
-	PrintAndFree("/connect: missing arguments", dcopy);
+	print_and_free("/connect: missing arguments", dcopy);
 	return;
     } else if ((feeds_written = Strfeed(dcopy, 1)) == 1) {
 	char *token;
@@ -155,19 +155,19 @@ cmd_connect(const char *data)
     }
 
     if (g_connection_in_progress) {
-	PrintAndFree("/connect: connection in progress", dcopy);
+	print_and_free("/connect: connection in progress", dcopy);
 	return;
     } else if (g_on_air) {
-	PrintAndFree("/connect: already connected!", dcopy);
+	print_and_free("/connect: already connected!", dcopy);
 	return;
     } else if (strtok_r(NULL, "\n:", &state) != NULL) {
-	PrintAndFree("/connect: implicit trailing data", dcopy);
+	print_and_free("/connect: implicit trailing data", dcopy);
 	return;
     } else if (!is_valid_hostname(server)) {
-	PrintAndFree("/connect: bogus server name", dcopy);
+	print_and_free("/connect: bogus server name", dcopy);
 	return;
     } else if (!is_numeric(port)) {
-	PrintAndFree("/connect: bogus port number", dcopy);
+	print_and_free("/connect: bogus port number", dcopy);
 	return;
     } else {
 	do_connect(server, port);

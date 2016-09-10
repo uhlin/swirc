@@ -48,27 +48,27 @@ cmd_msg(const char *data)
 	|| Strfeed(dcopy, 1) != 1
 	|| (recipient = strtok_r(dcopy, "\n", &state)) == NULL
 	|| (message = strtok_r(NULL, "\n", &state)) == NULL) {
-	PrintAndFree("/msg: missing arguments", dcopy);
+	print_and_free("/msg: missing arguments", dcopy);
 	return;
     } else if (!is_valid_nickname(recipient) && !is_irc_channel(recipient)) {
-	PrintAndFree("/msg: neither a nickname or irc channel", dcopy);
+	print_and_free("/msg: neither a nickname or irc channel", dcopy);
 	return;
     } else if (Strings_match_ignore_case(recipient, "ChanServ")) {
-	PrintAndFree("/msg: for safety reasons: consider using command /chanserv", dcopy);
+	print_and_free("/msg: for safety reasons: consider using command /chanserv", dcopy);
 	return;
     } else if (Strings_match_ignore_case(recipient, "NickServ")) {
-	PrintAndFree("/msg: for safety reasons: consider using command /nickserv", dcopy);
+	print_and_free("/msg: for safety reasons: consider using command /nickserv", dcopy);
 	return;
     } else if (window_by_label(recipient) == NULL && is_valid_nickname(recipient)) {
 	if (spawn_chat_window(recipient, "") != 0) {
-	    PrintAndFree("/msg: fatal: cannot spawn chat window!", dcopy);
+	    print_and_free("/msg: fatal: cannot spawn chat window!", dcopy);
 	    return;
 	}
 
 	transmit_user_input(recipient, message);
 	free(dcopy);
     } else if (window_by_label(recipient) == NULL && is_irc_channel(recipient)) {
-	PrintAndFree("/msg: not on that channel", dcopy);
+	print_and_free("/msg: not on that channel", dcopy);
 	return;
     } else {
 	transmit_user_input(recipient, message);

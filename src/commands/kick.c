@@ -45,14 +45,14 @@ cmd_kick(const char *data)
     char *state = "";
 
     if (Strings_match(dcopy, "") || (nicks = strtok_r(dcopy, " ", &state)) == NULL) {
-	PrintAndFree("/kick: missing arguments", dcopy);
+	print_and_free("/kick: missing arguments", dcopy);
 	return;
     }
 
     const bool has_reason = (reason = strtok_r(NULL, " ", &state)) != NULL;
 
     if (!is_irc_channel(g_active_window->label)) {
-	PrintAndFree("/kick: active window isn't an irc channel", dcopy);
+	print_and_free("/kick: active window isn't an irc channel", dcopy);
 	return;
     } else {
 	if (net_send("KICK %s %s :%s", g_active_window->label, nicks, has_reason ? reason : "") < 0)

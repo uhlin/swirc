@@ -49,13 +49,13 @@ cmd_notice(const char *data)
 	|| Strfeed(dcopy, 1) != 1
 	|| (recipient = strtok_r(dcopy, "\n", &state)) == NULL
 	|| (message = strtok_r(NULL, "\n", &state)) == NULL) {
-	PrintAndFree("/notice: missing arguments", dcopy);
+	print_and_free("/notice: missing arguments", dcopy);
 	return;
     } else if (!is_valid_nickname(recipient) && !is_irc_channel(recipient)) {
-	PrintAndFree("/notice: neither a nickname or irc channel", dcopy);
+	print_and_free("/notice: neither a nickname or irc channel", dcopy);
 	return;
     } else if (window_by_label(recipient) == NULL && is_irc_channel(recipient)) {
-	PrintAndFree("/notice: not on that channel", dcopy);
+	print_and_free("/notice: not on that channel", dcopy);
 	return;
     } else {
 	struct printtext_context ctx = {

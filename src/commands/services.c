@@ -49,13 +49,13 @@ cmd_chanserv(const char *data)
 	|| Strfeed(dcopy, 1) != 1
 	|| (srv_host = strtok_r(dcopy, "\n", &state)) == NULL
 	|| (cmd = strtok_r(NULL, "\n", &state)) == NULL) {
-	PrintAndFree("/chanserv: missing arguments", dcopy);
+	print_and_free("/chanserv: missing arguments", dcopy);
 	return;
     }
 
     if (Strings_match(srv_host, "--")) {
 	if (!is_valid_hostname( Config("chanserv_host") )) {
-	    PrintAndFree("/chanserv: in the config file: bogus chanserv_host", dcopy);
+	    print_and_free("/chanserv: in the config file: bogus chanserv_host", dcopy);
 	    return;
 	}
 
@@ -63,7 +63,7 @@ cmd_chanserv(const char *data)
 	    g_on_air = false;
     } else {
 	if (!is_valid_hostname(srv_host)) {
-	    PrintAndFree("/chanserv: bogus service hostname!", dcopy);
+	    print_and_free("/chanserv: bogus service hostname!", dcopy);
 	    return;
 	}
 
@@ -86,13 +86,13 @@ cmd_nickserv(const char *data)
 	|| Strfeed(dcopy, 1) != 1
 	|| (srv_host = strtok_r(dcopy, "\n", &state)) == NULL
 	|| (cmd = strtok_r(NULL, "\n", &state)) == NULL) {
-	PrintAndFree("/nickserv: missing arguments", dcopy);
+	print_and_free("/nickserv: missing arguments", dcopy);
 	return;
     }
 
     if (Strings_match(srv_host, "--")) {
 	if (!is_valid_hostname( Config("nickserv_host") )) {
-	    PrintAndFree("/nickserv: in the config file: bogus nickserv_host", dcopy);
+	    print_and_free("/nickserv: in the config file: bogus nickserv_host", dcopy);
 	    return;
 	}
 
@@ -100,7 +100,7 @@ cmd_nickserv(const char *data)
 	    g_on_air = false;
     } else {
 	if (!is_valid_hostname(srv_host)) {
-	    PrintAndFree("/nickserv: bogus service hostname!", dcopy);
+	    print_and_free("/nickserv: bogus service hostname!", dcopy);
 	    return;
 	}
 

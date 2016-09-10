@@ -49,13 +49,13 @@ cmd_invite(const char *data)
 	|| Strfeed(dcopy, 1) != 1
 	|| (targ_nick = strtok_r(dcopy, "\n", &state)) == NULL
 	|| (channel = strtok_r(NULL, "\n", &state)) == NULL) {
-	PrintAndFree("/invite: missing arguments", dcopy);
+	print_and_free("/invite: missing arguments", dcopy);
 	return;
     } else if (!is_valid_nickname(targ_nick) || !is_irc_channel(channel)) {
-	PrintAndFree("/invite: bogus nickname or channel", dcopy);
+	print_and_free("/invite: bogus nickname or channel", dcopy);
 	return;
     } else if (window_by_label(channel) == NULL) {
-	PrintAndFree("/invite: not on that channel", dcopy);
+	print_and_free("/invite: not on that channel", dcopy);
 	return;
     } else {
 	struct printtext_context ctx = {
