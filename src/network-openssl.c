@@ -69,7 +69,7 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
 }
 
 void
-net_ssl_init()
+net_ssl_init(void)
 {
     struct printtext_context ptext_ctx = {
 	.window	    = g_status_window,
@@ -111,7 +111,7 @@ net_ssl_init()
 }
 
 void
-net_ssl_deinit()
+net_ssl_deinit(void)
 {
     if (ssl) {
 	SSL_shutdown(ssl);
@@ -125,7 +125,7 @@ net_ssl_deinit()
 }
 
 void
-net_ssl_close()
+net_ssl_close(void)
 {
     if (ssl) {
 	SSL_shutdown(ssl);
@@ -135,7 +135,7 @@ net_ssl_close()
 }
 
 int
-net_ssl_start()
+net_ssl_start(void)
 {
     struct printtext_context ptext_ctx = {
 	.window	    = g_status_window,

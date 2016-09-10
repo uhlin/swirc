@@ -100,19 +100,19 @@ do_connect(char *server, char *port)
 }
 
 void
-set_ssl_on()
+set_ssl_on(void)
 {
     secure_connection = true;
 }
 
 void
-set_ssl_off()
+set_ssl_off(void)
 {
     secure_connection = false;
 }
 
 bool
-is_ssl_enabled()
+is_ssl_enabled(void)
 {
     return secure_connection;
 }
