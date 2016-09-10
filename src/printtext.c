@@ -1087,7 +1087,7 @@ swirc_wprintw(WINDOW *win, const char *fmt, ...)
 }
 
 void
-PrintAndFree(const char *msg, char *cp)
+print_and_free(const char *msg, char *cp)
 {
     struct printtext_context ptext_ctx = {
 	.window	    = g_status_window,
