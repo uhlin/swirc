@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - The name of function `PrintAndFree` to `print_and_free`.
 - In `print_and_free`: print to the active window.
 - Rewrote commands to use `print_and_free`.
+- For OS X and GNU/Linux: compile using optimization level 2.
 
 ### Fixed ###
 - Reduce cpu usage by turning off nodelay() behaviour.

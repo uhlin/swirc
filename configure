@@ -12,7 +12,8 @@ EOF
 os_MAC () {
     cat <<EOF >>$MAKE_DEF_FILE
 CC=clang
-CFLAGS=-DNCURSES_OPAQUE=0 -DOS_X=1 -DUNIX=1 -D_XOPEN_SOURCE_EXTENDED=1 -I/usr/local/opt/libressl/include -Wall -std=c99
+CFLAGS=-DNCURSES_OPAQUE=0 -DOS_X=1 -DUNIX=1 -D_XOPEN_SOURCE_EXTENDED=1 -I/usr/local/opt/libressl/include
+CFLAGS+=-O2 -Wall -pipe -std=c99
 LDFLAGS=-L/usr/local/opt/libressl/lib
 LDLIBS=-lcrypto -lncurses -lpanel -lpthread -lssl
 EOF
@@ -31,7 +32,7 @@ os_LINUX () {
     cat <<EOF >>$MAKE_DEF_FILE
 CC=gcc
 CFLAGS=-DLINUX=1 -DUNIX=1 -D_FORTIFY_SOURCE=2 -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=500 -D_XOPEN_SOURCE_EXTENDED=1
-CFLAGS+=-O -Wall -pipe -std=c99
+CFLAGS+=-O2 -Wall -pipe -std=c99
 LDFLAGS=
 LDLIBS=-lcrypto -lncursesw -lpanelw -lpthread -lssl
 EOF
