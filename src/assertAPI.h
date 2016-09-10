@@ -33,7 +33,7 @@ SW_NORET void SWAssertNotReachedFail (const char *file, long int line, const cha
 #ifdef NDEBUG
 #define sw_assert(expr)          ((void) 0)
 #define sw_assert_perror(errnum) ((void) 0)
-#define sw_assert_not_reached()  ((void) 0)
+#define sw_assert_not_reached()  SWAssertNotReachedFail(__FILE__, __LINE__, SW_ASSERT_FN)
 #endif
 
 #endif
