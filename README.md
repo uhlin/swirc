@@ -9,7 +9,7 @@ provide a secure & user-friendly experience to its users.  IRC stands
 for Internet Relay Chat, and is a protocol for text communication in
 real time over the Internet.
 
-The name Swirc is an assembly of the word swift (or at your option
+The name Swirc is an assembly of the word Swift (or at your option:
 Swedish) and IRC.
 
 ### Extensions ###
