@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Changed ###
 - The name of function `PrintAndFree` to `print_and_free`.
+- In `print_and_free`: print to the active window.
 
 ## [1.1+] - 2016-08-31 ##
 ### Changed ###

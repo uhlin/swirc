@@ -1090,7 +1090,7 @@ void
 print_and_free(const char *msg, char *cp)
 {
     struct printtext_context ptext_ctx = {
-	.window	    = g_status_window,
+	.window	    = g_active_window,
 	.spec_type  = TYPE_SPEC1_FAILURE,
 	.include_ts = true,
     };
