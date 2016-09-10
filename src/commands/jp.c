@@ -37,12 +37,6 @@
 
 #include "jp.h"
 
-static struct printtext_context ptext_ctx = {
-    .window	= NULL,
-    .spec_type	= TYPE_SPEC1_FAILURE,
-    .include_ts = true,
-};
-
 /* usage: /join <channel> [key] */
 void
 cmd_join(const char *data)
@@ -51,27 +45,21 @@ cmd_join(const char *data)
     char *dcopy = sw_strdup(data);
     char *state = "";
 
-    ptext_ctx.window = g_active_window;
-
     if (Strings_match(dcopy, "") || (channel = strtok_r(dcopy, " ", &state)) == NULL) {
-	printtext(&ptext_ctx, "/join: missing arguments");
-	free(dcopy);
+	print_and_free("/join: missing arguments", dcopy);
 	return;
     }
 
     const bool has_channel_key = (key = strtok_r(NULL, " ", &state)) != NULL;
 
     if (strtok_r(NULL, " ", &state) != NULL) {
-	printtext(&ptext_ctx, "/join: implicit trailing data");
-	free(dcopy);
+	print_and_free("/join: implicit trailing data", dcopy);
 	return;
     } else if (!is_irc_channel(channel) || strpbrk(channel + 1, ",") != NULL) {
-	printtext(&ptext_ctx, "/join: bogus irc channel");
-	free(dcopy);
+	print_and_free("/join: bogus irc channel", dcopy);
 	return;
     } else if (has_channel_key && strchr(key, ',') != NULL) {
-	printtext(&ptext_ctx, "/join: commas aren't allowed in a key");
-	free(dcopy);
+	print_and_free("/join: commas aren't allowed in a key", dcopy);
 	return;
     } else {
 	if (has_channel_key) {
@@ -93,14 +81,12 @@ cmd_part(const char *data)
     char *dcopy = sw_strdup(data);
     char *state = "";
 
-    ptext_ctx.window = g_active_window;
-
     if (Strings_match(dcopy, "") || (channel = strtok_r(dcopy, " ", &state)) == NULL) {
 	if (is_irc_channel(g_active_window->label)) {
 	    if (net_send("PART %s :%s", g_active_window->label, Config("part_message")) < 0)
 		g_on_air = false;
 	} else {
-	    printtext(&ptext_ctx, "/part: missing arguments");
+	    print_and_free("/part: missing arguments", NULL);
 	}
 	free(dcopy);
 	return;
@@ -109,12 +95,10 @@ cmd_part(const char *data)
     const bool has_message = (message = strtok_r(NULL, " ", &state)) != NULL;
 
     if (strtok_r(NULL, " ", &state) != NULL) {
-	printtext(&ptext_ctx, "/part: implicit trailing data");
-	free(dcopy);
+	print_and_free("/part: implicit trailing data", dcopy);
 	return;
     } else if (!is_irc_channel(channel) || strpbrk(channel + 1, ",") != NULL) {
-	printtext(&ptext_ctx, "/part: bogus irc channel");
-	free(dcopy);
+	print_and_free("/part: bogus irc channel", dcopy);
 	return;
     } else {
 	if (has_message) {
