@@ -39,8 +39,8 @@
 #define RESTRICT_SYSOPS 1
 #endif
 
-#if defined(OpenBSD) && OpenBSD >= 201605 && RESTRICT_SYSOPS
-#include <unistd.h> /* pledge() */
+#if UNIX
+#include <unistd.h> /* pledge(), geteuid() */
 #endif
 
 #include "assertAPI.h"
@@ -164,6 +164,13 @@ main(int argc, char *argv[])
 	    /* empty */;
 	}
     }
+
+#if UNIX
+    if (geteuid() == 0) {
+	err_msg("fatal: running the program with root privileges is prohibited");
+	return EXIT_FAILURE;
+    }
+#endif
 
     while ((opt = options(argc, argv, optstring)) != EOF) {
 	switch (opt) {

@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- Checks in order to prohibit the program from running with superuser
+  privileges (aka root).
+
 ### Changed ###
 - The name of function `PrintAndFree` to `print_and_free`.
 - In `print_and_free`: print to the active window.
