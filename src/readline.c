@@ -130,7 +130,7 @@ char *
 readline(const char *prompt)
 {
     volatile struct readline_session_context *ctx;
-    const int sleep_time_milliseconds = 62;
+    const int sleep_time_milliseconds = 90;
     char *out;
 
     ctx = new_session(prompt);
