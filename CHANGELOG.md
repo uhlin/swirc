@@ -13,9 +13,6 @@ All notable changes to this project will be documented in this file.
 - Rewrote commands to use `print_and_free`.
 - For OS X and GNU/Linux: compile using optimization level 2.
 
-### Fixed ###
-- Reduce cpu usage by turning off nodelay() behaviour.
-
 ## [1.1+] - 2016-08-31 ##
 ### Changed ###
 - Increase `NAMES_HASH_TABLE_SIZE` to 6500.
