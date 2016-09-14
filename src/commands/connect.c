@@ -29,9 +29,14 @@
 
 #include "common.h"
 
+#include <openssl/crypto.h> /* OPENSSL_cleanse() */
+
 #include "../assertAPI.h"
 #include "../config.h"
+#include "../curses-funcs.h"
 #include "../dataClassify.h"
+#include "../errHand.h"
+#include "../libUtils.h"
 #include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
@@ -40,6 +45,65 @@
 #include "connect.h"
 
 static bool secure_connection = false;
+
+/*lint -sem(get_password, r_null) */
+
+static char *
+get_password()
+{
+    char  answer[20] = "";
+    int   c          = EOF;
+    char *pass       = NULL;
+
+    escape_curses();
+
+    while (BZERO(answer, sizeof answer), true) {
+	printf("Connect using password? [Y/n]: ");
+	fflush(stdout);
+
+	if (fgets(answer, sizeof answer, stdin) == NULL) {
+	    err_quit("In get_password: fatal: fgets error");
+	} else if (strchr(answer, '\n') == NULL) {
+	    puts("input too big");
+	    while (c = getchar(), c != '\n' && c != EOF)
+		/* discard */;
+	} else if (Strings_match(trim(answer), "")
+		   || Strings_match(answer, "y")
+		   || Strings_match(answer, "Y")) {
+	    break;
+	} else if (Strings_match(answer, "n") || Strings_match(answer, "N")) {
+	    resume_curses();
+	    return NULL;
+	} else {
+	    continue;
+	}
+    }
+
+#define PASSWORD_SIZE 100
+    pass = xmalloc(PASSWORD_SIZE);
+
+    while (true) {
+	printf("Password (will echo): ");
+	fflush(stdout);
+
+	const bool fgets_error = fgets(pass, PASSWORD_SIZE, stdin) == NULL;
+
+	if (fgets_error) {
+	    err_quit("In get_password: fatal: fgets error");
+	} else if (strchr(pass, '\n') == NULL) {
+	    puts("input too big");
+	    while (c = getchar(), c != '\n' && c != EOF)
+		/* discard */;
+	} else if (Strings_match(trim(pass), "")) {
+	    continue;
+	} else {
+	    break;
+	}
+    }
+
+    resume_curses();
+    return (pass);
+}
 
 void
 do_connect(char *server, char *port)
@@ -52,7 +116,7 @@ do_connect(char *server, char *port)
     struct network_connect_context conn_ctx = {
 	.server   = server,
 	.port     = port,
-	.password = g_connection_password ? g_cmdline_opts->password : NULL,
+	.password = NULL,
 	.username = "",
 	.rl_name  = "",
 	.nickname = "",
@@ -95,7 +159,15 @@ do_connect(char *server, char *port)
 	printtext(&ptext_ctx, "Unable to connect: Invalid nickname: \"%s\"", conn_ctx.nickname);
 	return;
     } else {
+	conn_ctx.password = (g_connection_password ? get_password() : NULL);
+
 	net_connect(&conn_ctx);
+
+	if (conn_ctx.password) {
+	    OPENSSL_cleanse(conn_ctx.password, PASSWORD_SIZE);
+	    free(conn_ctx.password);
+	    conn_ctx.password = NULL;
+	}
     }
 }
 

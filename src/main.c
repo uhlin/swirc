@@ -101,7 +101,7 @@ static const char *OptionDesc[] = {
     "    -n <nickname>         Online nickname\n",
     "    -u <username>         User identity\n",
     "    -r <rl name>          Specifies the real name\n",
-    "    -p <password>         Password (for private networks)\n",
+    "    -p                    Upon connect: ask for a password\n",
     "    -h <hostname>         Use this hostname on connect\n",
     "    -x <config>           Explicit config file\n",
     "\nExtras\n",
@@ -115,7 +115,6 @@ static struct cmdline_opt_values opt_values_data = {
     .nickname	 = NULL,
     .username	 = NULL,
     .rl_name	 = NULL,
-    .password	 = NULL,
     .hostname	 = NULL,
     .config_file = NULL,
 };
@@ -171,7 +170,7 @@ main(int argc, char *argv[])
     }
 #endif
 
-    process_options(argc, argv, "c:n:u:r:p:h:x:");
+    process_options(argc, argv, "c:n:u:r:ph:x:");
 
     term_init();
     nestHome_init();
@@ -347,7 +346,6 @@ cmdline_options_destroy(void)
     free_and_null(&g_cmdline_opts->nickname);
     free_and_null(&g_cmdline_opts->username);
     free_and_null(&g_cmdline_opts->rl_name);
-    free_and_null(&g_cmdline_opts->password);
     free_and_null(&g_cmdline_opts->hostname);
     free_and_null(&g_cmdline_opts->config_file);
 }
@@ -422,7 +420,7 @@ case_rl_name(void)
     been_case = true;
 }
 
-/* -p <password> */
+/* -p */
 static void
 case_password(void)
 {
@@ -432,7 +430,6 @@ case_password(void)
 	DUP_OPTION_ERR('p');
     }
 
-    g_cmdline_opts->password = sw_strdup(g_option_arg);
     g_connection_password = been_case = true;
 }
 

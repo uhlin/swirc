@@ -12,7 +12,6 @@ struct cmdline_opt_values {
     char *nickname;
     char *username;
     char *rl_name;
-    char *password;
     char *hostname;
     char *config_file;
 };
