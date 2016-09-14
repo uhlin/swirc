@@ -12,6 +12,8 @@ All notable changes to this project will be documented in this file.
 - In `print_and_free`: print to the active window.
 - Rewrote commands to use `print_and_free`.
 - For OS X and GNU/Linux: compile using optimization level 2.
+- Option -p. Instead of taking an argument it will now ask for a
+  password upon connect if it's specified.
 
 ## [1.1+] - 2016-08-31 ##
 ### Changed ###
