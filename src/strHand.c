@@ -52,7 +52,7 @@
 char *
 trim(char *string)
 {
-    char *p;
+    char *p = NULL;
 
     if (isNull(string)) {
 	err_exit(EINVAL, "trim error");
@@ -92,8 +92,8 @@ squeeze(char *buffer, const char *rej)
 int
 Strfeed(char *string, int count)
 {
-    int		 feeds_written = 0;
-    char	*p;
+    int feeds_written = 0;
+    char *p = NULL;
 
     if (isNull(string) || isEmpty(string) || count <= 0) {
 	return feeds_written;
@@ -113,8 +113,8 @@ Strfeed(char *string, int count)
 char *
 str_toupper(char *s)
 {
-    size_t  len;
-    char   *p;
+    size_t  len = 0;
+    char   *p   = NULL;
 
     if (s == NULL) {
 	err_exit(EINVAL, "str_toupper error");
@@ -136,8 +136,8 @@ str_toupper(char *s)
 char *
 str_tolower(char *s)
 {
-    size_t  len;
-    char   *p;
+    size_t  len = 0;
+    char   *p   = NULL;
 
     if (s == NULL) {
 	err_exit(EINVAL, "str_tolower error");
@@ -175,8 +175,8 @@ sw_snprintf(char *dest, size_t sz, const char *fmt, ...)
 char *
 sw_strdup(const char *string)
 {
-    size_t	 size;
-    char	*dest;
+    size_t	 size = 0;
+    char	*dest = NULL;
 
     if (isNull(string)) {
 	err_exit(EINVAL, "sw_strdup error");
