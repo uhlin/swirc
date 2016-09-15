@@ -49,6 +49,13 @@ chg_status_for_owner(plus_minus_state_t pm_state,
 		     const char *nick,
 		     const char *channel)
 {
+    /* On ircd-seven +q means quiet and works like +b (ban user), but
+     * allows matching users to join the channel. However: on InspIRCd
+     * setting +q makes user channel owner. This should fix the
+     * problem. */
+    if (!is_valid_nickname(nick))
+	return;
+
     switch (pm_state) {
     case STATE_PLUS:
 	if (event_names_htbl_modify_owner(nick, channel, true) != OK)

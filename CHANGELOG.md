@@ -17,6 +17,10 @@ All notable changes to this project will be documented in this file.
 - In `event_names_print_all`: adjust the column-width with respect to
   the longest name in each column.
 
+### Fixed ###
+- A bug regarding that mode +q has different meanings on different
+  server software (ircds).
+
 ## [1.1+] - 2016-08-31 ##
 ### Changed ###
 - Increase `NAMES_HASH_TABLE_SIZE` to 6500.
