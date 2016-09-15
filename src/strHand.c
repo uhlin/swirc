@@ -49,6 +49,12 @@
 #define PRINT_SZ	"%Iu"
 #endif
 
+/**
+ * Remove trailing data determined by sw_isspace()
+ *
+ * @param string Target string
+ * @return The result
+ */
 char *
 trim(char *string)
 {
@@ -71,6 +77,13 @@ trim(char *string)
     return string;
 }
 
+/**
+ * Squeeze characters in a buffer.
+ *
+ * @param buffer Target buffer.
+ * @param rej    String with characters to squeeze.
+ * @return Void
+ */
 void
 squeeze(char *buffer, const char *rej)
 {
@@ -89,6 +102,13 @@ squeeze(char *buffer, const char *rej)
     buffer[j] = '\0';
 }
 
+/**
+ * Replace spaces in a string with newlines
+ *
+ * @param string Target string
+ * @param count  Attempt to replace this count of occurrences
+ * @return Number of newlines successfully written
+ */
 int
 Strfeed(char *string, int count)
 {
@@ -110,6 +130,12 @@ Strfeed(char *string, int count)
     return feeds_written;
 }
 
+/**
+ * Convert string to uppercase
+ *
+ * @param s String to convert
+ * @return The converted string
+ */
 char *
 str_toupper(char *s)
 {
@@ -133,6 +159,12 @@ str_toupper(char *s)
     return s;
 }
 
+/**
+ * Convert string to lowercase
+ *
+ * @param s String to convert
+ * @return The converted string
+ */
 char *
 str_tolower(char *s)
 {
@@ -156,6 +188,14 @@ str_tolower(char *s)
     return s;
 }
 
+/**
+ * Wrapper function for snprintf() that doesn't care about truncation.
+ *
+ * @param dest Destination to write to.
+ * @param sz   Destination size.
+ * @param fmt  Format control.
+ * @return Void
+ */
 void
 sw_snprintf(char *dest, size_t sz, const char *fmt, ...)
 {
@@ -172,6 +212,12 @@ sw_snprintf(char *dest, size_t sz, const char *fmt, ...)
     va_end(ap);
 }
 
+/**
+ * Duplicate a string
+ *
+ * @param string String to duplicate
+ * @return An exact copy of the input string whose storage is obtained with malloc()
+ */
 char *
 sw_strdup(const char *string)
 {
@@ -195,6 +241,12 @@ sw_strdup(const char *string)
     return (dest);
 }
 
+/**
+ * Get string describing color
+ *
+ * @param color Color number constant (defined by the Ncurses headers)
+ * @return String describing color
+ */
 const char *
 Strcolor(short int color)
 {

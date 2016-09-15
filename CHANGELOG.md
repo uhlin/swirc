@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Checks in order to prohibit the program from running with superuser
   privileges (aka root).
 - Checks for printf-like functions.
+- In strHand.c: documentation.
 
 ### Changed ###
 - The name of function `PrintAndFree` to `print_and_free`.
