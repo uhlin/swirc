@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
 - For OS X and GNU/Linux: compile using optimization level 2.
 - Option -p. Instead of taking an argument it will now ask for a
   password upon connect if it's specified.
+- In `event_names_print_all`: adjust the column-width with respect to
+  the longest name in each column.
 
 ## [1.1+] - 2016-08-31 ##
 ### Changed ###

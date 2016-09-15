@@ -634,6 +634,47 @@ event_names_print_all(const char *channel)
 
     qsort(&names_array[0], ntp1, sizeof (struct name_tag), names_cmp_fn);
 
+    int col_len1 = 0;
+    int col_len2 = 0;
+    int col_len3 = 0;
+
+    for (i = 0; i < ntp1; i++) {
+	const char *nick1 = names_array[i].s;
+	char *nick2, *nick3;
+
+	if ((i + 1) < ntp1 && (i + 2) < ntp1) {
+	    nick2 = names_array[++i].s;
+	    nick3 = names_array[++i].s;
+	} else if ((i + 1) < ntp1) {
+	    nick2 = names_array[++i].s;
+	    nick3 = NULL;
+	} else {
+	    nick2 = nick3 = NULL;
+	}
+
+	if (nick1 && strlen(nick1) > col_len1) col_len1 = (int) strlen(nick1);
+	if (nick2 && strlen(nick2) > col_len2) col_len2 = (int) strlen(nick2);
+	if (nick3 && strlen(nick3) > col_len3) col_len3 = (int) strlen(nick3);
+    }
+
+#define FMT_SZ 120
+    int ret = FMT_SZ;
+    char fmt1[FMT_SZ] = "";
+    char fmt2[FMT_SZ] = "";
+    char fmt3[FMT_SZ] = "";
+
+    if ((ret = snprintf(fmt1, sizeof fmt1, "%%s%%-%ds%%s %%s%%-%ds%%s %%s%%-%ds%%s",
+			col_len1, col_len2, col_len3)) == -1
+	|| ret >= sizeof fmt1)
+	return ERR;
+    if ((ret = snprintf(fmt2, sizeof fmt2, "%%s%%-%ds%%s %%s%%-%ds%%s",
+			col_len1, col_len2)) == -1
+	|| ret >= sizeof fmt2)
+	return ERR;
+    if ((ret = snprintf(fmt3, sizeof fmt3, "%%s%%-%ds%%s", col_len1)) == -1
+	|| ret >= sizeof fmt3)
+	return ERR;
+
     for (i = 0, ptext_ctx.spec_type = TYPE_SPEC3; i < ntp1; i++) {
 	const char *nick1 = names_array[i].s;
 	char *nick2, *nick3;
@@ -649,16 +690,16 @@ event_names_print_all(const char *channel)
 	}
 
 	if (nick1 && nick2 && nick3) {
-	    printtext(&ptext_ctx, "%s%-20s%s %s%-20s%s %s%-20s%s",
+	    printtext(&ptext_ctx, fmt1,
 		      LEFT_BRKT, nick1, RIGHT_BRKT,
 		      LEFT_BRKT, nick2, RIGHT_BRKT,
 		      LEFT_BRKT, nick3, RIGHT_BRKT);
 	} else if (nick1 && nick2) {
-	    printtext(&ptext_ctx, "%s%-20s%s %s%-20s%s",
+	    printtext(&ptext_ctx, fmt2,
 		      LEFT_BRKT, nick1, RIGHT_BRKT,
 		      LEFT_BRKT, nick2, RIGHT_BRKT);
 	} else if (nick1) {
-	    printtext(&ptext_ctx, "%s%-20s%s", LEFT_BRKT, nick1, RIGHT_BRKT);
+	    printtext(&ptext_ctx, fmt3, LEFT_BRKT, nick1, RIGHT_BRKT);
 	} else {
 	    ;
 	}
