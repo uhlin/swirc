@@ -195,6 +195,7 @@ maintain_channel_stats(const char *channel, const char *input)
 	case 'k': /* set/remove the channel key    */
 	    ar_i++;
 	    break;
+	case 'j': /* join throttle */
 	case 'l': /* set/remove the user limit to channel */
 	    if (pm_state == STATE_PLUS)
 		ar_i++;
