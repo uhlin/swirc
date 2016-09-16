@@ -156,6 +156,14 @@ static wchar_t		*try_convert_buf_with_cs     (const char *buf, const char *codes
 static wchar_t		*windows_convert_to_utf8     (const char *buf);
 #endif
 
+/**
+ * Variable argument list version of Swirc messenger
+ *
+ * @param ctx Context structure
+ * @param fmt Format
+ * @param ap  va_list object
+ * @return Void
+ */
 void
 vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
 {
@@ -214,12 +222,23 @@ vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
     mutex_unlock(&vprinttext_mutex);
 }
 
+/**
+ * Create mutex "vprinttext_mutex".
+ */
 static void
 vprinttext_mutex_init(void)
 {
     mutex_new(&vprinttext_mutex);
 }
 
+/**
+ * Get message components
+ *
+ * @param unproc_msg Unprocessed message
+ * @param spec_type  "Specifier"
+ * @param include_ts Include timestamp?
+ * @return Message components
+ */
 static struct message_components *
 get_processed_out_message(const char *unproc_msg,
 			  enum message_specifier_type spec_type,
@@ -335,6 +354,9 @@ get_processed_out_message(const char *unproc_msg,
     return (pout);
 }
 
+/**
+ * Helper function for squeeze_text_deco().
+ */
 static SW_INLINE void
 handle_foo_situation(char **buffer, long int *i, long int *j, const char *reject)
 {
@@ -349,6 +371,12 @@ handle_foo_situation(char **buffer, long int *i, long int *j, const char *reject
     }
 }
 
+/**
+ * Squeeze text-decoration from a buffer
+ *
+ * @param buffer Target buffer
+ * @return The result
+ */
 char *
 squeeze_text_deco(char *buffer)
 {
@@ -438,24 +466,20 @@ squeeze_text_deco(char *buffer)
     return (buffer);
 }
 
-/* Description of parameters for printtext_puts()
-   ==============================================
-
-   [in] pwin
-   Panel window where the output is to be displayed
-
-   [in] buf
-   A buffer that should contain the data to be written to 'pwin'
-
-   [in] indent
-   If >0 indent text with this number of blanks
-
-   [in] max_lines
-   If >0 write at most this number of lines
-
-   [out] rep_count
-   How many actual lines does this contribution represent in the output window?
-   (Passing NULL is ok) */
+/**
+ * Output data to window
+ *
+ * @param[in]  pwin      Panel window where the output is to be
+ *                       displayed.
+ * @param[in]  buf       A buffer that should contain the data to be
+ *                       written to 'pwin'.
+ * @param[in]  indent    If >0 indent text with this number of blanks.
+ * @param[in]  max_lines If >0 write at most this number of lines.
+ * @param[out] rep_count "Represent count". How many actual lines does
+ *                       this contribution represent in the output
+ *                       window? (Passing NULL is ok.)
+ * @return Void
+ */
 void
 printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines, int *rep_count)
 {
@@ -566,12 +590,21 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines, int *re
     mutex_unlock(&g_puts_mutex);
 }
 
+/**
+ * Create mutex "g_puts_mutex".
+ */
 static void
 puts_mutex_init(void)
 {
     mutex_new(&g_puts_mutex);
 }
 
+/**
+ * Reset text-decoration bools
+ *
+ * @param booleans Context structure
+ * @return Void
+ */
 static void
 text_decoration_bools_reset(struct text_decoration_bools *booleans)
 {
@@ -582,6 +615,14 @@ text_decoration_bools_reset(struct text_decoration_bools *booleans)
     booleans->is_underline = false;
 }
 
+/**
+ * WIN32 specific: attempt to convert multibyte character string to
+ * wide-character string by using UTF-8. The storage is obtained with
+ * xcalloc().
+ *
+ * @param buf Buffer to convert.
+ * @return A wide-character string, or NULL on error.
+ */
 #if WIN32
 static wchar_t *
 windows_convert_to_utf8(const char *buf)
@@ -596,6 +637,14 @@ windows_convert_to_utf8(const char *buf)
 }
 #endif
 
+/**
+ * Attempt convert multibyte character string to wide-character string
+ * by using a specific codeset. The storage is dynamically allocated.
+ *
+ * @param buf     Buffer to convert
+ * @param codeset Codeset to use
+ * @return A wide-character string, or NULL on error.
+ */
 static wchar_t *
 try_convert_buf_with_cs(const char *buf, const char *codeset)
 {
@@ -639,6 +688,13 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
     return NULL;
 }
 
+/**
+ * Convert multibyte character string to wide-character string, using
+ * different encodings. The storage is dynamically allocated.
+ *
+ * @param in_buf In buffer.
+ * @return A wide-character string.
+ */
 static wchar_t *
 perform_convert_buffer(const char **in_buf)
 {
@@ -687,7 +743,14 @@ perform_convert_buffer(const char **in_buf)
     return (out);
 }
 
-/* XXX: Don't actually use A_BLINK because it's annoying. */
+/**
+ * Toggle blink ON/OFF. Don't actually use A_BLINK because it's
+ * annoying.
+ *
+ * @param[in]     win      Target window.
+ * @param[in,out] is_blink Is blink state.
+ * @return Void
+ */
 static void
 case_blink(WINDOW *win, bool *is_blink)
 {
@@ -700,6 +763,13 @@ case_blink(WINDOW *win, bool *is_blink)
     }
 }
 
+/**
+ * Toggle bold ON/OFF
+ *
+ * @param[in]     win     Target window
+ * @param[in,out] is_bold Is bold state
+ * @return Void
+ */
 static void
 case_bold(WINDOW *win, bool *is_bold)
 {
@@ -712,6 +782,14 @@ case_bold(WINDOW *win, bool *is_bold)
     }
 }
 
+/**
+ * Handle and interpret color codes.
+ *
+ * @param win      Window
+ * @param is_color Is color state
+ * @param bufp     Buffer pointer
+ * @return Void
+ */
 static void
 case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 {
@@ -875,6 +953,13 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	(*bufp)--;
 }
 
+/**
+ * Toggle reverse ON/OFF
+ *
+ * @param[in]     win        Target window
+ * @param[in,out] is_reverse Is reverse state
+ * @return Void
+ */
 static void
 case_reverse(WINDOW *win, bool *is_reverse)
 {
@@ -887,6 +972,13 @@ case_reverse(WINDOW *win, bool *is_reverse)
     }
 }
 
+/**
+ * Toggle underline ON/OFF
+ *
+ * @param[in]     win          Target window
+ * @param[in,out] is_underline Is underline state
+ * @return Void
+ */
 static void
 case_underline(WINDOW *win, bool *is_underline)
 {
@@ -899,6 +991,15 @@ case_underline(WINDOW *win, bool *is_underline)
     }
 }
 
+/**
+ * Handles switch default in printtext_puts()
+ *
+ * @param[in]     ctx          Context structure
+ * @param[in,out] rep_count    "Represent" count
+ * @param[out]    line_count   Line count
+ * @param[out]    insert_count Insert count
+ * @return Void
+ */
 static void
 case_default(struct case_default_context *ctx,
 	     int *rep_count, int *line_count, int *insert_count)
@@ -993,6 +1094,14 @@ case_default(struct case_default_context *ctx,
     free(mbs);
 }
 
+/**
+ * Convert a wide-character to a multibyte sequence. The storage for
+ * the multibyte sequence is allocated on the heap and must be
+ * free()'d.
+ *
+ * @param wc Wide-character
+ * @return The result
+ */
 static unsigned char *
 convert_wc(wchar_t wc)
 {
@@ -1018,6 +1127,15 @@ convert_wc(wchar_t wc)
     return (mbs);
 }
 
+/**
+ * Set color for output in a window.
+ *
+ * @param[in]  win      Window
+ * @param[out] is_color Is color state
+ * @param[in]  num1     Number for foreground
+ * @param[in]  num2     Number for background
+ * @return Void
+ */
 static void
 printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 {
@@ -1046,6 +1164,13 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
     *is_color = true;
 }
 
+/**
+ * Search for a color pair with given foreground/background.
+ *
+ * @param fg Foreground
+ * @param bg Background
+ * @return A color pair number, or -1 if not found.
+ */
 short int
 color_pair_find(short int fg, short int bg)
 {
@@ -1066,6 +1191,13 @@ color_pair_find(short int fg, short int bg)
     return -1;
 }
 
+/**
+ * Swirc messenger
+ *
+ * @param ctx Context structure
+ * @param fmt Format control
+ * @return Void
+ */
 void
 printtext(struct printtext_context *ctx, const char *fmt, ...)
 {
@@ -1076,6 +1208,13 @@ printtext(struct printtext_context *ctx, const char *fmt, ...)
     va_end(ap);
 }
 
+/**
+ * Print formatted output in Curses windows
+ *
+ * @param win Window
+ * @param fmt Format control
+ * @return Void
+ */
 void
 swirc_wprintw(WINDOW *win, const char *fmt, ...)
 {
@@ -1086,6 +1225,14 @@ swirc_wprintw(WINDOW *win, const char *fmt, ...)
     va_end(ap);
 }
 
+/**
+ * Print an error message to the active window and free a
+ * char-pointer.
+ *
+ * @param msg Message
+ * @param cp  Char-pointer
+ * @return Void
+ */
 void
 print_and_free(const char *msg, char *cp)
 {
