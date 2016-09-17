@@ -22,6 +22,8 @@ All notable changes to this project will be documented in this file.
 ### Fixed ###
 - A bug regarding that mode +q has different meanings on different
   server software (ircds).
+- Possible crash due to resizing the terminal while connection is in
+  progress.
 
 ## [1.1+] - 2016-08-31 ##
 ### Changed ###

@@ -6,7 +6,8 @@
 #include <time.h>
 
 #include "errHand.h"
-#include "readline.h" /* MY_KEY_RESIZE */
+#include "network.h"		/* g_connection_in_progress */
+#include "readline.h"		/* MY_KEY_RESIZE */
 #include "sig.h"
 
 static struct sig_message_tag {
@@ -48,7 +49,7 @@ signal_handler(int signum)
 
     switch (signum) {
     case SIGWINCH:
-	if (nanosleep(&ts, NULL) == 0)
+	if (nanosleep(&ts, NULL) == 0 && !g_connection_in_progress)
 	    (void) unget_wch(MY_KEY_RESIZE);
 	return;
     default:
