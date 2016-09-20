@@ -1,5 +1,5 @@
 /* Read user input
-   Copyright (C) 2012-2015 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2016 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -59,6 +59,9 @@ enum readline_active_panel {
 jmp_buf g_readline_loc_info;
 bool    g_readline_loop;
 bool    g_resize_requested;
+
+bool g_hist_next = false;
+bool g_hist_prev = false;
 
 /* Objects with internal linkage
    ============================= */
@@ -142,6 +145,8 @@ readline(const char *prompt)
 
     g_readline_loop    = true;
     g_resize_requested = false;
+    g_hist_next = false;
+    g_hist_prev = false;
 
     mutex_lock(&g_puts_mutex);
     write_cmdprompt(ctx->act, ctx->prompt, ctx->prompt_size);
@@ -168,9 +173,15 @@ readline(const char *prompt)
 	    window_select_next();
 	    break; /* CTRL+N */
 	case KEY_DOWN:
-	    break;
+	    g_hist_next = true;
+	    session_destroy(ctx);
+	    mutex_unlock(&g_puts_mutex);
+	    return NULL;
 	case KEY_UP:
-	    break;
+	    g_hist_prev = true;
+	    session_destroy(ctx);
+	    mutex_unlock(&g_puts_mutex);
+	    return NULL;
 	case KEY_LEFT: case MY_KEY_STX:
 	    case_key_left(ctx);
 	    break;

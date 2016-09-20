@@ -5,6 +5,7 @@ typedef void (*CMD_HANDLER_FN)(const char *);
 
 extern bool g_io_loop;
 
+void unget_string        (const char *);
 void transmit_user_input (const char *win_label, const char *input);
 void enter_io_loop       (void);
 void cmd_help            (const char *data);

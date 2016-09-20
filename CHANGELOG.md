@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Checks for printf-like functions.
 - In strHand.c: documentation.
 - In printtext.c: documentation.
+- Command history!
 
 ### Changed ###
 - The name of function `PrintAndFree` to `print_and_free`.

@@ -63,6 +63,9 @@
 
 bool g_io_loop = true;
 
+static PTEXTBUF		history = NULL;
+static PTEXTBUF_ELMT	element = NULL;
+
 static struct cmds_tag {
     char		*cmd;
     CMD_HANDLER_FN	 fn;
@@ -169,6 +172,40 @@ get_prompt()
     return (sw_strdup(""));
 }
 
+void
+unget_string(const char *string)
+{
+    if (!string)
+	return;
+
+    for (const char *cp = &string[strlen(string) - 1]; cp >= &string[0]; cp--)
+	ungetch(*cp);
+}
+
+static void
+history_next()
+{
+    if (textBuf_size(history) == 0)
+	return;
+
+    if (element != textBuf_tail(history)) {
+	element = element->next;
+	unget_string(element->text);
+    }
+}
+
+static void
+history_prev()
+{
+    if (textBuf_size(history) == 0)
+	return;
+
+    unget_string(element->text);
+
+    if (element != textBuf_head(history))
+	element = element->prev;
+}
+
 static void
 handle_cmds(const char *data)
 {
@@ -253,6 +290,36 @@ transmit_user_input(const char *win_label, const char *input)
     }
 }
 
+static void
+add_to_history(const char *string)
+{
+    struct integer_unparse_context unparse_ctx = {
+	.setting_name     = "cmd_hist_size",
+	.fallback_default = 50,
+	.lo_limit         = 0,
+	.hi_limit         = 300,
+    };
+    const int tbszp1 = textBuf_size(history) + 1;
+
+    if (config_integer_unparse(&unparse_ctx) == 0 || !strncasecmp(string, "/nickserv ", 10))
+	return;
+
+    if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
+	/* Buffer full. Remove head... */
+
+	if ((errno = textBuf_remove( history, textBuf_head(history) )) != 0)
+	    err_sys("textBuf_remove");
+    }
+
+    if (textBuf_size(history) == 0) {
+	if ((errno = textBuf_ins_next(history, NULL, string, -1)) != 0)
+	    err_sys("textBuf_ins_next");
+    } else {
+	if ((errno = textBuf_ins_next(history, textBuf_tail(history), string, -1)) != 0)
+	    err_sys("textBuf_ins_next");
+    }
+}
+
 void
 enter_io_loop(void)
 {
@@ -266,6 +333,8 @@ enter_io_loop(void)
 	do_connect(g_cmdline_opts->server, g_cmdline_opts->port);
     }
 
+    history = textBuf_new();
+
     do {
 	char *prompt, *line;
 	const char cmd_char = '/';
@@ -277,6 +346,10 @@ enter_io_loop(void)
 	if (line == NULL) {
 	    if (g_resize_requested) {
 		term_resize_all();
+	    } else if (g_hist_next) {
+		history_next();
+	    } else if (g_hist_prev) {
+		history_prev();
 	    }
 
 	    continue;
@@ -299,8 +372,13 @@ enter_io_loop(void)
 	    }
 	}
 
+	add_to_history(line);
+	element = textBuf_tail(history);
+
 	free(line);
     } while (g_io_loop);
+
+    textBuf_destroy(history);
 }
 
 static void
