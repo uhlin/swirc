@@ -167,9 +167,8 @@ static wchar_t		*windows_convert_to_utf8     (const char *buf);
 void
 vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
 {
-    int error;
-    char *fmt_copy;
-    struct message_components *pout;
+    char *fmt_copy = NULL;
+    struct message_components *pout = NULL;
     struct integer_unparse_context unparse_ctx = {
 	.setting_name     = "textbuffer_size_absolute",
 	.fallback_default = 1000,
@@ -179,13 +178,11 @@ vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
     const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
 
 #if defined(UNIX)
-    if ((error = pthread_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0) {
-	err_exit(error, "pthread_once error");
-    }
+    if ((errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0)
+	err_sys("pthread_once");
 #elif defined(WIN32)
-    if ((error = init_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0) {
-	err_exit(error, "init_once error");
-    }
+    if ((errno = init_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0)
+	err_sys("init_once");
 #endif
 
     mutex_lock(&vprinttext_mutex);
@@ -196,20 +193,16 @@ vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
     if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
 	/* Buffer full. Remove head... */
 
-	if ((error = textBuf_remove( ctx->window->buf, textBuf_head(ctx->window->buf) )) != 0) {
-	    err_exit(error, "textBuf_remove error");
-	}
+	if ((errno = textBuf_remove( ctx->window->buf, textBuf_head(ctx->window->buf) )) != 0)
+	    err_sys("textBuf_remove");
     }
 
     if (textBuf_size(ctx->window->buf) == 0) {
-	if ((error = textBuf_ins_next(ctx->window->buf, NULL, pout->text, pout->indent)) != 0) {
-	    err_exit(error, "textBuf_ins_next error");
-	}
+	if ((errno = textBuf_ins_next(ctx->window->buf, NULL, pout->text, pout->indent)) != 0)
+	    err_sys("textBuf_ins_next");
     } else {
-	if ((error = textBuf_ins_next(
-		 ctx->window->buf, textBuf_tail(ctx->window->buf), pout->text, pout->indent)) != 0) {
-	    err_exit(error, "textBuf_ins_next error");
-	}
+	if ((errno = textBuf_ins_next(ctx->window->buf, textBuf_tail(ctx->window->buf), pout->text, pout->indent)) != 0)
+	    err_sys("textBuf_ins_next");
     }
 
     if (! (ctx->window->scroll_mode))
