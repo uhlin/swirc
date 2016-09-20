@@ -20,7 +20,7 @@ term_set_title(const char *fmt, ...)
 void
 term_restore_title(void)
 {
-    term_set_title("");
+    term_set_title("Windows Console");
 }
 
 struct winsize
