@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file.
 - In strHand.c: documentation.
 - In printtext.c: documentation.
 - Command history!
+- In a config or theme: log if a fallback value is chosen for a
+  certain setting. This means that the setting contains an invalid
+  value.
 
 ### Changed ###
 - The name of function `PrintAndFree` to `print_and_free`.

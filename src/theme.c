@@ -306,6 +306,7 @@ theme_color_unparse(const char *item_name, short int fallback_color)
 	}
     }
 
+    err_log(EINVAL, "warning: item %s (color): falling back to the default", item_name);
     return (fallback_color);
 }
 
@@ -333,6 +334,7 @@ theme_bool_unparse(const char *item_name, bool fallback_default)
 	}
     }
 
+    err_log(EINVAL, "warning: item %s (bool): falling back to the default", item_name);
     return (fallback_default);
 }
 
@@ -359,6 +361,8 @@ theme_integer_unparse(struct integer_unparse_context *ctx)
 	}
     }
 
+    err_log(ERANGE, "warning: item %s (%ld-%ld): fallback value is %ld",
+	    ctx->setting_name, ctx->lo_limit, ctx->hi_limit, ctx->fallback_default);
     return (ctx->fallback_default);
 }
 

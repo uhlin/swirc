@@ -295,6 +295,7 @@ config_bool_unparse(const char *setting_name, bool fallback_default)
 	}
     }
 
+    err_log(EINVAL, "warning: setting %s (bool): falling back to the default", setting_name);
     return (fallback_default);
 }
 
@@ -321,6 +322,8 @@ config_integer_unparse(struct integer_unparse_context *ctx)
 	}
     }
 
+    err_log(ERANGE, "warning: setting %s (%ld-%ld): fallback value is %ld",
+	    ctx->setting_name, ctx->lo_limit, ctx->hi_limit, ctx->fallback_default);
     return (ctx->fallback_default);
 }
 
