@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - In a config or theme: log if a fallback value is chosen for a
   certain setting. This means that the setting contains an invalid
   value.
+- Support for really large channels.
 
 ### Changed ###
 - The name of function `PrintAndFree` to `print_and_free`.

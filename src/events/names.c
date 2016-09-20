@@ -59,6 +59,11 @@ struct names_chunk {
     char *nick3;
     char *nick4;
     char *nick5;
+    char *nick6;
+    char *nick7;
+    char *nick8;
+    char *nick9;
+    char *nick10;
 };
 
 struct name_tag {
@@ -625,6 +630,13 @@ event_names_print_all(const char *channel)
 	    if (!isNull(names->nick5)) {
 		names_array[i++].s = sw_strdup(names->nick5);
 	    }
+
+	    /* 2016-09-20 markus: more slots added */
+	    if (!isNull(names->nick6))  names_array[i++].s = sw_strdup(names->nick6);
+	    if (!isNull(names->nick7))  names_array[i++].s = sw_strdup(names->nick7);
+	    if (!isNull(names->nick8))  names_array[i++].s = sw_strdup(names->nick8);
+	    if (!isNull(names->nick9))  names_array[i++].s = sw_strdup(names->nick9);
+	    if (!isNull(names->nick10)) names_array[i++].s = sw_strdup(names->nick10);
 	} else {
 	    return ERR;
 	}
@@ -732,6 +744,7 @@ next_names(PIRC_WINDOW window, int *counter)
     PNAMES		*entry_p = & (window->names_hash[*counter]);
 
     names->nick1 = names->nick2 = names->nick3 = names->nick4 = names->nick5 = NULL;
+    names->nick6 = names->nick7 = names->nick8 = names->nick9 = names->nick10 = NULL;
 
     for (PNAMES p = *entry_p; p != NULL; p = p->next) {
 	char c;
@@ -760,6 +773,16 @@ next_names(PIRC_WINDOW window, int *counter)
 	    names->nick4 = Strdup_printf("%c%s", c, p->nick);
 	} else if (isNull(names->nick5)) {
 	    names->nick5 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick6)) {
+	    names->nick6 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick7)) {
+	    names->nick7 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick8)) {
+	    names->nick8 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick9)) {
+	    names->nick9 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick10)) {
+	    names->nick10 = Strdup_printf("%c%s", c, p->nick);
 	} else { /* All busy. It's unlikely but it CAN happen. */
 	    free_names_chunk(names);
 	    return (NULL);
@@ -777,6 +800,11 @@ free_names_chunk(struct names_chunk *names)
     free_not_null(names->nick3);
     free_not_null(names->nick4);
     free_not_null(names->nick5);
+    free_not_null(names->nick6);
+    free_not_null(names->nick7);
+    free_not_null(names->nick8);
+    free_not_null(names->nick9);
+    free_not_null(names->nick10);
 
     free(names);
 }
