@@ -3,8 +3,8 @@
 !include ../w32_def.mk
 
 extra_flags=
-include_dirs=-Iinclude -Ilibressl-2.3.3-windows/include
-library_dirs=-LIBPATH:pdcurses-3.4/x86 -LIBPATH:libressl-2.3.3-windows/x86
+include_dirs=-Iinclude -Ilibressl-2.4.2-windows/include
+library_dirs=-LIBPATH:pdcurses-3.4/x86 -LIBPATH:libressl-2.4.2-windows/x86
 log_file=stdout.log
 
 OBJS=assertAPI.obj config.obj curses-funcs.obj cursesInit.obj dataClassify.obj \
@@ -29,10 +29,10 @@ $(OUT).exe: fetch_and_expand $(OBJS)
 	cd $(MAKEDIR)
 	$(E) ^ ^ LINK^ ^ ^ ^ $@
 	$(Q) $(CC) -Fe$(OUT) *.obj commands/*.obj events/*.obj -link $(LDFLAGS) $(library_dirs) $(LDLIBS) 1>>$(log_file)
-	$(E) ^ ^ MOVE^ ^ ^ ^ libcrypto-37.dll
-	$(Q) move "libressl-2.3.3-windows\x86\libcrypto-37.dll" . 1>>$(log_file)
-	$(E) ^ ^ MOVE^ ^ ^ ^ libssl-38.dll
-	$(Q) move "libressl-2.3.3-windows\x86\libssl-38.dll" . 1>>$(log_file)
+	$(E) ^ ^ MOVE^ ^ ^ ^ libcrypto-38.dll
+	$(Q) move "libressl-2.4.2-windows\x86\libcrypto-38.dll" . 1>>$(log_file)
+	$(E) ^ ^ MOVE^ ^ ^ ^ libssl-39.dll
+	$(Q) move "libressl-2.4.2-windows\x86\libssl-39.dll" . 1>>$(log_file)
 	$(E) ^ ^ MOVE^ ^ ^ ^ pdcurses.dll
 	$(Q) move "pdcurses-3.4\x86\pdcurses.dll" . 1>>$(log_file)
 
