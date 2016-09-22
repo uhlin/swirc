@@ -39,8 +39,8 @@ $(OUT).exe: fetch_and_expand $(OBJS)
 fetch_and_expand:
 	$(E) ^ ^ FETCH
 	$(Q) cscript get_file.js 1>>$(log_file)
-	$(E) ^ ^ EXPAND^ ^ libressl-2.3.3-windows.cab
-	$(Q) expand libressl-2.3.3-windows.cab "-F:*" . 1>>$(log_file)
+	$(E) ^ ^ EXPAND^ ^ libressl-2.4.2-windows.cab
+	$(Q) expand libressl-2.4.2-windows.cab "-F:*" . 1>>$(log_file)
 	$(E) ^ ^ EXPAND^ ^ pdcurses-3.4.cab
 	$(Q) expand pdcurses-3.4.cab "-F:*" . 1>>$(log_file)
 
