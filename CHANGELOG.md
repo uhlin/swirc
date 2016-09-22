@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [1.2] - 2016-09-22 ##
 ### Added ###
 - Checks in order to prohibit the program from running with superuser
   privileges (aka root).

@@ -69,7 +69,7 @@
 /* Things with external linkage
    ============================ */
 
-const char g_swircVersion[] = "v1.1+";
+const char g_swircVersion[] = "v1.2";
 const char g_swircYear[]    = "2012-2016";
 const char g_swircAuthor[]  = "Markus Uhlin";
 
@@ -140,12 +140,12 @@ main(int argc, char *argv[])
 {
 #if __OpenBSD__
     extern char *malloc_options;
-#endif
 
-#if __OpenBSD__
     malloc_options = "S";
 #endif
+
     (void) setlocale(LC_ALL, "");
+
     if (!sigHand_init()) {
 	err_msg("FATAL: Failed to initialize signal handling");
 	return EXIT_FAILURE;
