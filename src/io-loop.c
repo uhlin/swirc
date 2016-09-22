@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <sys/stat.h>
+
 #include "assertAPI.h"
 #include "config.h"
 #include "cursesInit.h"
@@ -100,6 +102,40 @@ static struct cmds_tag {
     { "whois",      cmd_whois,      true,  "/whois <nick>" },
 };
 
+#if WIN32
+#define stat _stat
+#endif
+
+static bool
+get_error_log_size(double *size)
+{
+    char path[1300] = "";
+    struct stat sb = { 0 };
+
+    if (!g_log_dir || sw_strcpy(path, g_log_dir, sizeof path) != 0) {
+	*size = 0;
+	return false;
+    }
+
+#if defined(UNIX)
+    if (sw_strcat(path, "/error.log", sizeof path) != 0)
+#elif defined(WIN32)
+    if (sw_strcat(path, "\\error.log", sizeof path) != 0)
+#endif
+	{
+	    *size = 0;
+	    return false;
+	}
+
+    if (stat(path, &sb) == -1) {
+	*size = 0;
+	return false;
+    }
+
+    *size = (double) sb.st_size / 1000;
+    return true;
+}
+
 static void
 swirc_greeting()
 {
@@ -126,6 +162,7 @@ swirc_greeting()
 #endif
     };
     const size_t logo_size = ARRAY_SIZE(logo);
+    double log_size_kb;
 
     ptext_ctx.window     = g_status_window;
     ptext_ctx.spec_type  = TYPE_SPEC1;
@@ -152,6 +189,8 @@ swirc_greeting()
     printtext(&ptext_ctx, "Program settings are stored in %s%s%s", LEFT_BRKT, g_home_dir, RIGHT_BRKT);
     printtext(&ptext_ctx, "%c%hd%c color pairs have been initialized", BOLD, g_initialized_pairs, BOLD);
     printtext(&ptext_ctx, "Type /help for a list of commands");
+    if (get_error_log_size(&log_size_kb))
+	printtext(&ptext_ctx, "Error log size %s%.1f KB%s", LEFT_BRKT, log_size_kb, RIGHT_BRKT);
     printtext(&ptext_ctx, " ");
 }
 

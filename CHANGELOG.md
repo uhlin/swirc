@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
   certain setting. This means that the setting contains an invalid
   value.
 - Support for really large channels.
+- Function to show error log size on startup.
 
 ### Changed ###
 - The name of function `PrintAndFree` to `print_and_free`.
