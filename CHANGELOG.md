@@ -30,6 +30,8 @@ All notable changes to this project will be documented in this file.
   server software (ircds).
 - Possible crash due to resizing the terminal while connection is in
   progress.
+- In the printtext module: a problem with converting a wide character
+  to a multibyte sequence due to EILSEQ.
 
 ## [1.1+] - 2016-08-31 ##
 ### Changed ###
