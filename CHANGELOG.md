@@ -1,6 +1,12 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Added ###
+- Event 435. Undocumented in the RFC. (Cannot change nickname while
+  banned on channel.)
+- Event 437 `ERR_UNAVAILRESOURCE`
+
 ## [1.2] - 2016-09-22 ##
 ### Added ###
 - Checks in order to prohibit the program from running with superuser
