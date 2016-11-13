@@ -26,7 +26,7 @@ can make it there.
     -n <nickname>         Online nickname
     -u <username>         User identity
     -r <rl name>          Specifies the real name
-    -p <password>         Password (for private networks)
+    -p                    Upon connect: ask for a password
     -h <hostname>         Use this hostname on connect
     -x <config>           Explicit config file
 
