@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed ###
 - On event join/part handle an empty user/host.
+- In `event_notice`: show prefix/params on error.
 
 ## [1.2] - 2016-09-22 ##
 ### Added ###

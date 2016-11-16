@@ -153,4 +153,6 @@ event_notice(struct irc_message_compo *compo)
     ptext_ctx.spec_type  = TYPE_SPEC1_FAILURE;
     ptext_ctx.include_ts = true;
     printtext(&ptext_ctx, "On issuing event %s: An error occurred", compo->command);
+    printtext(&ptext_ctx, "  params = %s", compo->params);
+    printtext(&ptext_ctx, "  prefix = %s", compo->prefix ? compo->prefix : "none");
 }
