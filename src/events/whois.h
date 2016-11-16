@@ -14,5 +14,6 @@ void event_whois_acc      (struct irc_message_compo *);
 void event_whois_host     (struct irc_message_compo *);
 void event_whois_conn     (struct irc_message_compo *);
 void event_whois_modes    (struct irc_message_compo *);
+void event_whoReply       (struct irc_message_compo *);
 
 #endif

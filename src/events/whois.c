@@ -636,3 +636,14 @@ event_whois_modes(struct irc_message_compo *compo)
 	printtext(&ctx, "%s %s", Theme("whois_modes"), msg);
     }
 }
+
+/* event_whoReply: 352 (RPL_WHOREPLY)
+
+   Example:
+     :irc.server.com 352 <my nick> <channel> <user> <host> <server> <nick>
+                         <"H" / "G"> :<hopcount> <real name> */
+void
+event_whoReply(struct irc_message_compo *compo)
+{
+    (void) compo;
+}
