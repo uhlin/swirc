@@ -251,3 +251,18 @@ cmd_ilist(const char *data)
 	    g_on_air = false;
     }
 }
+
+/* usage: /who [mask] */
+void
+cmd_who(const char *data)
+{
+    const bool has_mask = !Strings_match(data, "");
+
+    if (has_mask) {
+	if (net_send("WHO %s", data) < 0)
+	    g_on_air = false;
+    } else {
+	if (net_send("WHO") < 0)
+	    g_on_air = false;
+    }
+}

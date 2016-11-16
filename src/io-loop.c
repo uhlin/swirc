@@ -99,6 +99,7 @@ static struct cmds_tag {
     { "resize",     cmd_resize,     false, "/resize" },
     { "say",        cmd_say,        true,  "/say <message>" },
     { "topic",      cmd_topic,      true,  "/topic [new topic]" },
+    { "who",        cmd_who,        true,  "/who [mask]" },
     { "whois",      cmd_whois,      true,  "/whois <nick>" },
 };
 

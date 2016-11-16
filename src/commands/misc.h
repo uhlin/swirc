@@ -12,5 +12,6 @@ void cmd_list    (const char *);
 void cmd_banlist (const char *);
 void cmd_exlist  (const char *);
 void cmd_ilist   (const char *);
+void cmd_who     (const char *);
 
 #endif

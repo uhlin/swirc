@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Event 437 `ERR_UNAVAILRESOURCE`
 - Option -i for ICB mode (Internet Citizen's Band). Planning to
   support the protocol.
+- Command /who
 
 ### Changed ###
 - On event join/part handle an empty user/host.
