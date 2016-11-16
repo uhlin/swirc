@@ -74,6 +74,7 @@ const char g_swircYear[]    = "2012-2016";
 const char g_swircAuthor[]  = "Markus Uhlin";
 
 bool g_auto_connect         = false;
+bool g_icb_mode             = false;
 bool g_connection_password  = false;
 bool g_bind_hostname        = false;
 bool g_explicit_config_file = false;
@@ -101,6 +102,7 @@ static const char *OptionDesc[] = {
     "    -n <nickname>         Online nickname\n",
     "    -u <username>         User identity\n",
     "    -r <rl name>          Specifies the real name\n",
+    "    -i                    ICB mode\n",
     "    -p                    Upon connect: ask for a password\n",
     "    -h <hostname>         Use this hostname on connect\n",
     "    -x <config>           Explicit config file\n",
@@ -131,6 +133,7 @@ static void case_connect    (void);
 static void case_nickname   (void);
 static void case_username   (void);
 static void case_rl_name    (void);
+static void case_icb        (void);
 static void case_password   (void);
 static void case_hostname   (void);
 static void case_config     (void);
@@ -170,7 +173,7 @@ main(int argc, char *argv[])
     }
 #endif
 
-    process_options(argc, argv, "c:n:u:r:ph:x:");
+    process_options(argc, argv, "c:n:u:r:iph:x:");
 
     term_init();
     nestHome_init();
@@ -315,6 +318,9 @@ process_options(int argc, char *argv[], const char *optstring)
 	case 'r':
 	    case_rl_name();
 	    break;
+	case 'i':
+	    case_icb();
+	    break;
 	case 'p':
 	    case_password();
 	    break;
@@ -418,6 +424,19 @@ case_rl_name(void)
 
     g_cmdline_opts->rl_name = sw_strdup(g_option_arg);
     been_case = true;
+}
+
+/* -i */
+static void
+case_icb(void)
+{
+    static bool been_case = false;
+
+    if (been_case) {
+	DUP_OPTION_ERR('i');
+    }
+
+    g_icb_mode = been_case = true;
 }
 
 /* -p */

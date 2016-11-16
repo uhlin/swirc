@@ -26,6 +26,7 @@ can make it there.
     -n <nickname>         Online nickname
     -u <username>         User identity
     -r <rl name>          Specifies the real name
+    -i                    ICB mode
     -p                    Upon connect: ask for a password
     -h <hostname>         Use this hostname on connect
     -x <config>           Explicit config file
