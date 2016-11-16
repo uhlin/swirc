@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
   banned on channel.)
 - Event 437 `ERR_UNAVAILRESOURCE`
 
+### Changed ###
+- On event join/part handle an empty user/host.
+
 ## [1.2] - 2016-09-22 ##
 ### Added ###
 - Checks in order to prohibit the program from running with superuser

@@ -465,9 +465,14 @@ event_join(struct irc_message_compo *compo)
     user = strtok_r(NULL, "!@", &state);
     host = strtok_r(NULL, "!@", &state);
 
-    if (nick == NULL || user == NULL || host == NULL) {
+    if (nick == NULL) {
 	goto bad;
     }
+
+    if (user == NULL)
+	user = "<no user>";
+    if (host == NULL)
+	host = "<no host>";
 
     if (Strings_match_ignore_case(nick, g_my_nickname)) {
 	if (spawn_chat_window(channel, "No title.") != 0) {
@@ -516,11 +521,14 @@ event_part(struct irc_message_compo *compo)
 
     state1 = state2 = "";
 
-    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL
-	|| (user = strtok_r(NULL, "!@", &state1)) == NULL
-	|| (host = strtok_r(NULL, "!@", &state1)) == NULL) {
+    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL) {
 	return;
     }
+
+    if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
+	user = "<no user>";
+    if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
+	host = "<no host>";
 
     if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL)
 	goto bad;
