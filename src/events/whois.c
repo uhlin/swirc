@@ -98,7 +98,8 @@ event_whois_ssl(struct irc_message_compo *compo)
     ctx.include_ts = true;
 
     if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+		  compo->command);
 	return;
     }
 
@@ -107,7 +108,8 @@ event_whois_ssl(struct irc_message_compo *compo)
     msg   = strtok_r(NULL, "\n", &state);
 
     if (tnick == NULL || msg == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message", compo->command);
+	printtext(&ctx, "On issuing event %s: Unable to extract message",
+		  compo->command);
 	return;
     }
 
@@ -125,7 +127,8 @@ event_whois_ssl(struct irc_message_compo *compo)
 /* event_whois_cert: 276
 
    Example:
-     :irc.server.com 276 <issuer> <target> :has client certificate fingerprint <string> */
+     :irc.server.com 276 <issuer> <target> :has client certificate fingerprint
+                                            <string> */
 void
 event_whois_cert(struct irc_message_compo *compo)
 {
@@ -138,7 +141,8 @@ event_whois_cert(struct irc_message_compo *compo)
     ctx.include_ts = true;
 
     if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+		  compo->command);
 	return;
     }
 
@@ -147,7 +151,8 @@ event_whois_cert(struct irc_message_compo *compo)
     msg   = strtok_r(NULL, "\n", &state);
 
     if (tnick == NULL || msg == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message", compo->command);
+	printtext(&ctx, "On issuing event %s: Unable to extract message",
+		  compo->command);
 	return;
     }
 
@@ -178,7 +183,8 @@ event_whois_away(struct irc_message_compo *compo)
     ctx.include_ts = true;
 
     if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+		  compo->command);
 	return;
     }
 
@@ -186,7 +192,8 @@ event_whois_away(struct irc_message_compo *compo)
     (void) strtok_r(NULL, "\n", &state);
 
     if ((away_reason = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message", compo->command);
+	printtext(&ctx, "On issuing event %s: Unable to extract message",
+		  compo->command);
 	return;
     }
 
@@ -217,7 +224,8 @@ event_whois_service(struct irc_message_compo *compo)
     ctx.include_ts = true;
 
     if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+		  compo->command);
 	return;
     }
 
@@ -225,7 +233,8 @@ event_whois_service(struct irc_message_compo *compo)
     (void) strtok_r(NULL, "\n", &state);
 
     if ((msg = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message", compo->command);
+	printtext(&ctx, "On issuing event %s: Unable to extract message",
+		  compo->command);
 	return;
     }
 
@@ -243,7 +252,8 @@ event_whois_service(struct irc_message_compo *compo)
 /* event_whois_user: 311
 
    Example:
-     :irc.server.com 311 <issuer> <target> <username> <hostname> * :<real name> */
+     :irc.server.com 311 <issuer> <target> <username> <hostname> *
+                         :<real name> */
 void
 event_whois_user(struct irc_message_compo *compo)
 {
@@ -260,7 +270,8 @@ event_whois_user(struct irc_message_compo *compo)
 #endif
 
     if (Strfeed(compo->params, 5) != 5) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 5) != 5", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 5) != 5",
+		  compo->command);
 	return;
     }
 
@@ -272,13 +283,15 @@ event_whois_user(struct irc_message_compo *compo)
     rl_name = strtok_r(NULL, "\n", &state);
 
     if (nick == NULL || user == NULL || host == NULL || rl_name == NULL) {
-	printtext(&ctx, "On issuing event %s: Erroneous server params", compo->command);
+	printtext(&ctx, "On issuing event %s: Erroneous server params",
+		  compo->command);
 	return;
     }
 
     ctx.window    = g_active_window;
     ctx.spec_type = TYPE_SPEC1;
-    printtext(&ctx, "%c%s%c %s%s@%s%s", BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT);
+    printtext(&ctx, "%c%s%c %s%s@%s%s", BOLD, nick, BOLD,
+	      LEFT_BRKT, user, host, RIGHT_BRKT);
 
     if (*rl_name == ':') {
 	rl_name++;
@@ -305,7 +318,8 @@ event_whois_server(struct irc_message_compo *compo)
     ctx.include_ts = true;
 
     if (Strfeed(compo->params, 3) != 3) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 3) != 3", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 3) != 3",
+		  compo->command);
 	return;
     }
 
@@ -315,7 +329,8 @@ event_whois_server(struct irc_message_compo *compo)
     info = strtok_r(NULL, "\n", &state);
 
     if (srv == NULL || info == NULL) {
-	printtext(&ctx, "On issuing event %s: Erroneous server params", compo->command);
+	printtext(&ctx, "On issuing event %s: Erroneous server params",
+		  compo->command);
 	return;
     }
 
@@ -326,7 +341,8 @@ event_whois_server(struct irc_message_compo *compo)
     if (*info) {
 	ctx.window    = g_active_window;
 	ctx.spec_type = TYPE_SPEC1;
-	printtext(&ctx, "%s %s %s%s%s", Theme("whois_server"), srv, LEFT_BRKT, info, RIGHT_BRKT);
+	printtext(&ctx, "%s %s %s%s%s", Theme("whois_server"), srv,
+		  LEFT_BRKT, info, RIGHT_BRKT);
     }
 }
 
@@ -346,7 +362,8 @@ event_whois_ircOp(struct irc_message_compo *compo)
     ctx.include_ts = true;
 
     if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+		  compo->command);
 	return;
     }
 
@@ -354,7 +371,8 @@ event_whois_ircOp(struct irc_message_compo *compo)
     (void) strtok_r(NULL, "\n", &state);
 
     if ((msg = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message", compo->command);
+	printtext(&ctx, "On issuing event %s: Unable to extract message",
+		  compo->command);
 	return;
     }
 
@@ -372,7 +390,8 @@ event_whois_ircOp(struct irc_message_compo *compo)
 /* event_whois_idle: 317
 
    Example:
-     :irc.server.com 317 <issuer> <target> <sec idle> <signon time> :<comment> */
+     :irc.server.com 317 <issuer> <target> <sec idle> <signon time>
+                         :<comment> */
 void
 event_whois_idle(struct irc_message_compo *compo)
 {
@@ -400,7 +419,8 @@ event_whois_idle(struct irc_message_compo *compo)
     sec_idle = strtol(sec_idle_str, &ep1, 10);
     if (sec_idle_str[0] == '\0' || *ep1 != '\0') {
 	goto bad;
-    } else if (errno == ERANGE && (sec_idle == LONG_MAX || sec_idle == LONG_MIN)) {
+    } else if (errno == ERANGE &&
+	       (sec_idle == LONG_MAX || sec_idle == LONG_MIN)) {
 	goto bad;
     } else {
 	/* do nothing */;
@@ -410,7 +430,8 @@ event_whois_idle(struct irc_message_compo *compo)
     signon_time = strtol(signon_time_str, &ep2, 10);
     if (signon_time_str[0] == '\0' || *ep2 != '\0') {
 	goto bad;
-    } else if (errno == ERANGE && (signon_time == LONG_MAX || signon_time == LONG_MIN)) {
+    } else if (errno == ERANGE &&
+	       (signon_time == LONG_MAX || signon_time == LONG_MIN)) {
 	goto bad;
     } else {
 	/* do nothing */;
@@ -424,7 +445,8 @@ event_whois_idle(struct irc_message_compo *compo)
     ctx.spec_type  = TYPE_SPEC1;
     ctx.include_ts = true;
     printtext(&ctx, "%s %ld days %ld hours %ld mins %ld secs %ssignon: %s%s",
-	      Theme("whois_idle"), ti->days, ti->hours, ti->mins, ti->secs, LEFT_BRKT, ti->buf, RIGHT_BRKT);
+	      Theme("whois_idle"), ti->days, ti->hours, ti->mins, ti->secs,
+	      LEFT_BRKT, ti->buf, RIGHT_BRKT);
     free(ti);
     return;
 
@@ -451,7 +473,8 @@ event_whois_channels(struct irc_message_compo *compo)
     ctx.include_ts = true;
 
     if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+		  compo->command);
 	return;
     }
 
@@ -459,7 +482,8 @@ event_whois_channels(struct irc_message_compo *compo)
     (void) strtok_r(NULL, "\n", &state);
 
     if ((chan_list = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message", compo->command);
+	printtext(&ctx, "On issuing event %s: Unable to extract message",
+		  compo->command);
 	return;
     }
 
@@ -490,7 +514,8 @@ event_whois_acc(struct irc_message_compo *compo)
     ctx.include_ts = true;
 
     if (Strfeed(compo->params, 3) != 3) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 3) != 3", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 3) != 3",
+		  compo->command);
 	return;
     }
 
@@ -500,7 +525,8 @@ event_whois_acc(struct irc_message_compo *compo)
     comment      = strtok_r(NULL, "\n", &state);
 
     if (account_name == NULL || comment == NULL) {
-	printtext(&ctx, "On issuing event %s: Erroneous server params", compo->command);
+	printtext(&ctx, "On issuing event %s: Erroneous server params",
+		  compo->command);
 	return;
     }
 
@@ -560,7 +586,8 @@ event_whois_host(struct irc_message_compo *compo)
 /* event_whois_conn: 378
 
    Example:
-     :irc.server.com 378 <issuer> <target> :is connecting from <hostname> <IP> */
+     :irc.server.com 378 <issuer> <target> :is connecting from
+                                            <hostname> <IP> */
 void
 event_whois_conn(struct irc_message_compo *compo)
 {
@@ -573,7 +600,8 @@ event_whois_conn(struct irc_message_compo *compo)
     ctx.include_ts = true;
 
     if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+		  compo->command);
 	return;
     }
 
@@ -581,7 +609,8 @@ event_whois_conn(struct irc_message_compo *compo)
     (void) strtok_r(NULL, "\n", &state);
 
     if ((msg = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message", compo->command);
+	printtext(&ctx, "On issuing event %s: Unable to extract message",
+		  compo->command);
 	return;
     }
 
@@ -600,7 +629,8 @@ event_whois_conn(struct irc_message_compo *compo)
 
    Example:
      :irc.server.com 379 <issuer> <target> :is using modes <modes>
-     :irc.server.com 310 <issuer> <target> :is using modes <modes> authflags: [...]
+     :irc.server.com 310 <issuer> <target> :is using modes <modes> authflags:
+                                            [...]
      :irc.server.com 615 <issuer> <target> :is using modes ... */
 void
 event_whois_modes(struct irc_message_compo *compo)
@@ -614,7 +644,8 @@ event_whois_modes(struct irc_message_compo *compo)
     ctx.include_ts = true;
 
     if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+		  compo->command);
 	return;
     }
 
@@ -622,7 +653,8 @@ event_whois_modes(struct irc_message_compo *compo)
     (void) strtok_r(NULL, "\n", &state);
 
     if ((msg = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message", compo->command);
+	printtext(&ctx, "On issuing event %s: Unable to extract message",
+		  compo->command);
 	return;
     }
 
