@@ -80,12 +80,12 @@ static char names_channel[200] = "";
 
 /*lint -sem(next_names, r_null) */
 
-static int			 names_cmp_fn     (const void *obj1, const void *obj2);
-static struct names_chunk	*next_names       (PIRC_WINDOW, int *counter);
-static unsigned int		 hash             (const char *nick);
-static void			 free_names_chunk (struct names_chunk *);
-static void			 hInstall         (const struct hInstall_context *);
-static void			 hUndef           (PIRC_WINDOW, PNAMES);
+static int			 names_cmp_fn(const void *, const void *);
+static struct names_chunk	*next_names(PIRC_WINDOW, int *counter);
+static unsigned int		 hash(const char *nick);
+static void			 free_names_chunk(struct names_chunk *);
+static void			 hInstall(const struct hInstall_context *);
+static void			 hUndef(PIRC_WINDOW, PNAMES);
 
 void
 event_names_init(void)
@@ -102,7 +102,8 @@ event_names_deinit(void)
 /* event_names: 353
 
    Example:
-     :irc.server.com 353 <recipient> <chan type> <channel> :<nick 1> <nick 2> ...
+     :irc.server.com 353 <recipient> <chan type> <channel> :<nick 1> <nick 2>
+                                                            [...]
 
    <chan type> can be either:
      @ for secret channels
@@ -130,7 +131,8 @@ event_names(struct irc_message_compo *compo)
 	goto bad;
     }
 
-    if (isEmpty(names_channel) && sw_strcpy(names_channel, channel, sizeof names_channel) != 0) {
+    if (isEmpty(names_channel) && sw_strcpy(names_channel, channel,
+	sizeof names_channel) != 0) {
 	goto bad;
     } else if (!Strings_match_ignore_case(names_channel, channel)) {
 	/* Unable to parse names of two (or more) channels simultaneously */
@@ -148,7 +150,8 @@ event_names(struct irc_message_compo *compo)
 
 	ctx.channel    = channel;
 	ctx.nick       =
-	    ((*token == '~' || *token == '&' || *token == '@' || *token == '%' || *token == '+')
+	    ((*token == '~' || *token == '&' || *token == '@' ||
+	      *token == '%' || *token == '+')
 	     ? &token[1]
 	     : &token[0]);
 	ctx.is_owner   = (*token == '~');
@@ -224,22 +227,27 @@ hInstall(const struct hInstall_context *ctx)
 
 	window_entry->num_total++;
     } else {
-	err_msg("FATAL: In events/names.c: Can't find a window with label %s", ctx->channel);
+	err_msg("FATAL: In events/names.c: Can't find a window with label %s",
+		ctx->channel);
 	abort();
     }
 }
 
 int
-event_names_htbl_modify_owner(const char *nick, const char *channel, bool is_owner)
+event_names_htbl_modify_owner(const char *nick, const char *channel,
+			      bool is_owner)
 {
     PIRC_WINDOW window;
     PNAMES	names;
 
-    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+    if (isNull(nick) || isEmpty(nick) ||
+	(window = window_by_label(channel)) == NULL) {
 	return ERR;
     }
 
-    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+    for (names = window->names_hash[hash(nick)];
+	 names != NULL;
+	 names = names->next) {
 	if (Strings_match_ignore_case(nick, names->nick)) {
 	    if (names->is_owner && is_owner)
 		return OK;
@@ -272,16 +280,20 @@ event_names_htbl_modify_owner(const char *nick, const char *channel, bool is_own
 }
 
 int
-event_names_htbl_modify_superop(const char *nick, const char *channel, bool is_superop)
+event_names_htbl_modify_superop(const char *nick, const char *channel,
+				bool is_superop)
 {
     PIRC_WINDOW window;
     PNAMES	names;
 
-    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+    if (isNull(nick) || isEmpty(nick) ||
+	(window = window_by_label(channel)) == NULL) {
 	return ERR;
     }
 
-    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+    for (names = window->names_hash[hash(nick)];
+	 names != NULL;
+	 names = names->next) {
 	if (Strings_match_ignore_case(nick, names->nick)) {
 	    if (names->is_superop && is_superop)
 		return OK;
@@ -319,11 +331,14 @@ event_names_htbl_modify_op(const char *nick, const char *channel, bool is_op)
     PIRC_WINDOW window;
     PNAMES	names;
 
-    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+    if (isNull(nick) || isEmpty(nick) ||
+	(window = window_by_label(channel)) == NULL) {
 	return ERR;
     }
 
-    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+    for (names = window->names_hash[hash(nick)];
+	 names != NULL;
+	 names = names->next) {
 	if (Strings_match_ignore_case(nick, names->nick)) {
 	    if (names->is_op && is_op)
 		return OK;
@@ -360,16 +375,20 @@ event_names_htbl_modify_op(const char *nick, const char *channel, bool is_op)
 }
 
 int
-event_names_htbl_modify_halfop(const char *nick, const char *channel, bool is_halfop)
+event_names_htbl_modify_halfop(const char *nick, const char *channel,
+			       bool is_halfop)
 {
     PIRC_WINDOW window;
     PNAMES	names;
 
-    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+    if (isNull(nick) || isEmpty(nick) ||
+	(window = window_by_label(channel)) == NULL) {
 	return ERR;
     }
 
-    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+    for (names = window->names_hash[hash(nick)];
+	 names != NULL;
+	 names = names->next) {
 	if (Strings_match_ignore_case(nick, names->nick)) {
 	    if (names->is_halfop && is_halfop)
 		return OK;
@@ -402,23 +421,28 @@ event_names_htbl_modify_halfop(const char *nick, const char *channel, bool is_ha
 }
 
 int
-event_names_htbl_modify_voice(const char *nick, const char *channel, bool is_voice)
+event_names_htbl_modify_voice(const char *nick, const char *channel,
+			      bool is_voice)
 {
     PIRC_WINDOW window;
     PNAMES	names;
 
-    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+    if (isNull(nick) || isEmpty(nick) ||
+	(window = window_by_label(channel)) == NULL) {
 	return ERR;
     }
 
-    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+    for (names = window->names_hash[hash(nick)];
+	 names != NULL;
+	 names = names->next) {
 	if (Strings_match_ignore_case(nick, names->nick)) {
 	    if (names->is_voice && is_voice)
 		return OK;
 	    else
 		names->is_voice = is_voice;
 
-	    if (names->is_owner || names->is_superop || names->is_op || names->is_halfop)
+	    if (names->is_owner || names->is_superop || names->is_op ||
+		names->is_halfop)
 		return OK;
 	    else if (! (names->is_voice)) {
 		window->num_voices--;
@@ -441,11 +465,14 @@ event_names_htbl_remove(const char *nick, const char *channel)
     PIRC_WINDOW window;
     PNAMES	names;
 
-    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+    if (isNull(nick) || isEmpty(nick) ||
+	(window = window_by_label(channel)) == NULL) {
 	return ERR;
     }
 
-    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+    for (names = window->names_hash[hash(nick)];
+	 names != NULL;
+	 names = names->next) {
 	if (Strings_match_ignore_case(nick, names->nick)) {
 	    hUndef(window, names);
 	    return OK;
@@ -461,11 +488,14 @@ event_names_htbl_lookup(const char *nick, const char *channel)
     PIRC_WINDOW window;
     PNAMES	names;
 
-    if (isNull(nick) || isEmpty(nick) || (window = window_by_label(channel)) == NULL) {
+    if (isNull(nick) || isEmpty(nick) ||
+	(window = window_by_label(channel)) == NULL) {
 	return NULL;
     }
 
-    for (names = window->names_hash[hash(nick)]; names != NULL; names = names->next) {
+    for (names = window->names_hash[hash(nick)];
+	 names != NULL;
+	 names = names->next) {
 	if (Strings_match_ignore_case(nick, names->nick)) {
 	    return names;
 	}
@@ -483,7 +513,9 @@ event_names_htbl_remove_all(PIRC_WINDOW window)
     if (window == NULL)
 	return;
 
-    for (entry_p = &window->names_hash[0]; entry_p < &window->names_hash[NAMES_HASH_TABLE_SIZE]; entry_p++) {
+    for (entry_p = &window->names_hash[0];
+	 entry_p < &window->names_hash[NAMES_HASH_TABLE_SIZE];
+	 entry_p++) {
 	for (p = *entry_p; p != NULL; p = tmp) {
 	    tmp = p->next;
 	    hUndef(window, p);
@@ -570,7 +602,8 @@ event_eof_names(struct irc_message_compo *compo)
     channel = strtok_r(NULL, "\n", &state);
     eof_msg = strtok_r(NULL, "\n", &state);
 
-    if (channel == NULL || eof_msg == NULL || !Strings_match_ignore_case(channel, names_channel)) {
+    if (channel == NULL || eof_msg == NULL ||
+	!Strings_match_ignore_case(channel, names_channel)) {
 	goto bad;
     } else {
 	BZERO(names_channel, sizeof names_channel);
@@ -604,7 +637,8 @@ event_names_print_all(const char *channel)
     ptext_ctx.window     = window;
     ptext_ctx.spec_type  = TYPE_SPEC_NONE;
     ptext_ctx.include_ts = true;
-    printtext(&ptext_ctx, "%s%sUsers %s%c%s", LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT);
+    printtext(&ptext_ctx, "%s%sUsers %s%c%s",
+	LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT);
 
     ntp1	= window->num_total + 1;
     names_array = xcalloc(ntp1, sizeof (struct name_tag));
@@ -632,11 +666,16 @@ event_names_print_all(const char *channel)
 	    }
 
 	    /* 2016-09-20 markus: more slots added */
-	    if (!isNull(names->nick6))  names_array[i++].s = sw_strdup(names->nick6);
-	    if (!isNull(names->nick7))  names_array[i++].s = sw_strdup(names->nick7);
-	    if (!isNull(names->nick8))  names_array[i++].s = sw_strdup(names->nick8);
-	    if (!isNull(names->nick9))  names_array[i++].s = sw_strdup(names->nick9);
-	    if (!isNull(names->nick10)) names_array[i++].s = sw_strdup(names->nick10);
+	    if (!isNull(names->nick6))
+		names_array[i++].s = sw_strdup(names->nick6);
+	    if (!isNull(names->nick7))
+		names_array[i++].s = sw_strdup(names->nick7);
+	    if (!isNull(names->nick8))
+		names_array[i++].s = sw_strdup(names->nick8);
+	    if (!isNull(names->nick9))
+		names_array[i++].s = sw_strdup(names->nick9);
+	    if (!isNull(names->nick10))
+		names_array[i++].s = sw_strdup(names->nick10);
 	} else {
 	    return ERR;
 	}
@@ -675,16 +714,15 @@ event_names_print_all(const char *channel)
     char fmt2[FMT_SZ] = "";
     char fmt3[FMT_SZ] = "";
 
-    if ((ret = snprintf(fmt1, sizeof fmt1, "%%s%%-%ds%%s %%s%%-%ds%%s %%s%%-%ds%%s",
-			col_len1, col_len2, col_len3)) == -1
-	|| ret >= sizeof fmt1)
+    if ((ret = snprintf(fmt1, sizeof fmt1,
+	"%%s%%-%ds%%s %%s%%-%ds%%s %%s%%-%ds%%s",
+	col_len1, col_len2, col_len3)) == -1 || ret >= sizeof fmt1)
 	return ERR;
     if ((ret = snprintf(fmt2, sizeof fmt2, "%%s%%-%ds%%s %%s%%-%ds%%s",
-			col_len1, col_len2)) == -1
-	|| ret >= sizeof fmt2)
+	col_len1, col_len2)) == -1 || ret >= sizeof fmt2)
 	return ERR;
-    if ((ret = snprintf(fmt3, sizeof fmt3, "%%s%%-%ds%%s", col_len1)) == -1
-	|| ret >= sizeof fmt3)
+    if ((ret = snprintf(fmt3, sizeof fmt3, "%%s%%-%ds%%s", col_len1)) == -1 ||
+	ret >= sizeof fmt3)
 	return ERR;
 
     for (i = 0, ptext_ctx.spec_type = TYPE_SPEC3; i < ntp1; i++) {
@@ -725,14 +763,20 @@ event_names_print_all(const char *channel)
     free(names_array);
 
     ptext_ctx.spec_type = TYPE_SPEC1;
-    printtext(&ptext_ctx, "%s%s%s%c%s: Total of %c%d%c nicks %s%c%d%c ops, %c%d%c halfops, %c%d%c voices, %c%d%c normal%s",
-	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT, BOLD, window->num_total, BOLD,
-	      LEFT_BRKT, BOLD, window->num_ops, BOLD, BOLD, window->num_halfops, BOLD,
-	      BOLD, window->num_voices, BOLD, BOLD, window->num_normal, BOLD, RIGHT_BRKT);
+    printtext(&ptext_ctx, "%s%s%s%c%s: Total of %c%d%c nicks "
+	"%s%c%d%c ops, %c%d%c halfops, %c%d%c voices, %c%d%c normal%s",
+	LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+	BOLD, window->num_total, BOLD,
+	LEFT_BRKT,
+	BOLD, window->num_ops, BOLD, BOLD, window->num_halfops, BOLD,
+	BOLD, window->num_voices, BOLD, BOLD, window->num_normal, BOLD,
+	RIGHT_BRKT);
     if (window->num_owners)
-	printtext(&ptext_ctx, "-- Additionally: %c%d%c channel owner(s)", BOLD, window->num_owners, BOLD);
+	printtext(&ptext_ctx, "-- Additionally: %c%d%c channel owner(s)",
+	    BOLD, window->num_owners, BOLD);
     if (window->num_superops)
-	printtext(&ptext_ctx, "-- Additionally: %c%d%c superops", BOLD, window->num_superops, BOLD);
+	printtext(&ptext_ctx, "-- Additionally: %c%d%c superops",
+	    BOLD, window->num_superops, BOLD);
 
     return OK;
 }
@@ -743,8 +787,10 @@ next_names(PIRC_WINDOW window, int *counter)
     struct names_chunk	*names	 = xcalloc(sizeof *names, 1);
     PNAMES		*entry_p = & (window->names_hash[*counter]);
 
-    names->nick1 = names->nick2 = names->nick3 = names->nick4 = names->nick5 = NULL;
-    names->nick6 = names->nick7 = names->nick8 = names->nick9 = names->nick10 = NULL;
+    names->nick1 = names->nick2 = names->nick3 = names->nick4 = names->nick5 =
+	NULL;
+    names->nick6 = names->nick7 = names->nick8 = names->nick9 = names->nick10 =
+	NULL;
 
     for (PNAMES p = *entry_p; p != NULL; p = p->next) {
 	char c;
@@ -832,7 +878,8 @@ names_cmp_fn(const void *obj1, const void *obj2)
 
 	switch (*nick1) {
 	case '~':
-	    if (*nick2 == '&' || *nick2 == '@' || *nick2 == '%' || *nick2 == '+' || *nick2 != '~')
+	    if (*nick2 == '&' || *nick2 == '@' || *nick2 == '%' ||
+		*nick2 == '+' || *nick2 != '~')
 		return (-1);
 	    break;
 	case '&':
@@ -853,7 +900,8 @@ names_cmp_fn(const void *obj1, const void *obj2)
 
 	switch (*nick2) {
 	case '~':
-	    if (*nick1 == '&' || *nick1 == '@' || *nick1 == '%' || *nick1 == '+' || *nick1 != '~')
+	    if (*nick1 == '&' || *nick1 == '@' || *nick1 == '%' ||
+		*nick1 == '+' || *nick1 != '~')
 		return (1);
 	    break;
 	case '&':
