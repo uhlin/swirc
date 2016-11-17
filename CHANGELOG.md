@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 - Option -i for ICB mode (Internet Citizen's Band). Planning to
   support the protocol.
 - Command /who
+- Event 352 `RPL_WHOREPLY`
+- Event 315 `RPL_ENDOFWHO`
 
 ### Changed ###
 - On event join/part handle an empty user/host.

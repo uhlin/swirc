@@ -677,5 +677,43 @@ event_whois_modes(struct irc_message_compo *compo)
 void
 event_whoReply(struct irc_message_compo *compo)
 {
-    (void) compo;
+    char	*state	  = "";
+    char	*channel  = NULL;
+    char	*user	  = NULL;
+    char	*host	  = NULL;
+    char	*server	  = NULL;
+    char	*nick	  = NULL;
+    char	*symbol	  = NULL;
+    char	*hopcount = NULL;
+    char	*rl_name  = NULL;
+    struct printtext_context ctx = {
+	.window	    = g_status_window,
+	.spec_type  = TYPE_SPEC1,
+	.include_ts = true,
+    };
+
+    if (Strfeed(compo->params, 8) != 8)
+	goto err;
+    (void) strtok_r(compo->params, "\n", &state); /* my nick */
+    if ((channel     = strtok_r(NULL, "\n", &state)) == NULL
+	|| (user     = strtok_r(NULL, "\n", &state)) == NULL
+	|| (host     = strtok_r(NULL, "\n", &state)) == NULL
+	|| (server   = strtok_r(NULL, "\n", &state)) == NULL /* unused */
+	|| (nick     = strtok_r(NULL, "\n", &state)) == NULL
+	|| (symbol   = strtok_r(NULL, "\n", &state)) == NULL
+	|| (hopcount = strtok_r(NULL, "\n", &state)) == NULL
+	|| (rl_name  = strtok_r(NULL, "\n", &state)) == NULL)
+	goto err;
+    if (*hopcount == ':')
+	hopcount++;
+    printtext(&ctx, "%s%s%s%c%s: %s%s%c %s %s %s@%s %s%s%s%c%s",
+	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+	      COLOR2, nick, NORMAL,
+	      symbol, hopcount, user, host,
+	      LEFT_BRKT, COLOR2, rl_name, NORMAL, RIGHT_BRKT);
+    return;
+
+err:
+    ctx.spec_type = TYPE_SPEC1_FAILURE;
+    printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
 }
