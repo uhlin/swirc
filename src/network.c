@@ -111,11 +111,13 @@ net_connect(const struct network_connect_context *ctx)
 
     for (rp = res; rp; rp = rp->ai_next) {
 #if defined(UNIX)
-	if ((g_socket = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol)) == -1) {
+	if ((g_socket = socket(rp->ai_family, rp->ai_socktype,
+			       rp->ai_protocol)) == -1) {
 	    continue;
 	}
 #elif defined(WIN32)
-	if ((g_socket = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol)) == INVALID_SOCKET) {
+	if ((g_socket = socket(rp->ai_family, rp->ai_socktype,
+			       rp->ai_protocol)) == INVALID_SOCKET) {
 	    continue;
 	}
 #endif
@@ -165,8 +167,8 @@ net_connect(const struct network_connect_context *ctx)
 	event_welcome_cond_destroy();
 
 	ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
-	printtext(&ptext_ctx, "Event welcome not signaled! (connection_timeout=%s)",
-		  Config("connection_timeout"));
+	printtext(&ptext_ctx, "Event welcome not signaled! "
+	    "(connection_timeout=%s)", Config("connection_timeout"));
 	printtext(&ptext_ctx, "Disconnecting...");
 	g_on_air = false;
 	net_listenThread_join(); /* wait for thread termination */
