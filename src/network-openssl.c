@@ -81,33 +81,38 @@ net_ssl_init(void)
     SSL_library_init();
 
     if (RAND_load_file("/dev/urandom", 1024) <= 0) {
-	printtext(&ptext_ctx, "net_ssl_init: Error seeding the PRNG! LibreSSL?: %s", strerror(ENOSYS));
+	printtext(&ptext_ctx, "net_ssl_init: "
+	    "Error seeding the PRNG! LibreSSL?: %s", strerror(ENOSYS));
     }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
     if (( ssl_ctx = SSL_CTX_new(TLS_client_method()) ) == NULL) {
 	err_exit(ENOMEM, "net_ssl_init: Unable to create a new SSL_CTX object");
     } else {
-	SSL_CTX_set_options(ssl_ctx, SSL_OP_ALL | SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3 |
-			    SSL_OP_NO_TLSv1 | SSL_OP_NO_TLSv1_1);
+	SSL_CTX_set_options(ssl_ctx, SSL_OP_ALL | SSL_OP_NO_SSLv2 |
+	    SSL_OP_NO_SSLv3 | SSL_OP_NO_TLSv1 | SSL_OP_NO_TLSv1_1);
     }
 #else
     if (( ssl_ctx = SSL_CTX_new(SSLv23_client_method()) ) == NULL) {
 	err_exit(ENOMEM, "net_ssl_init: Unable to create a new SSL_CTX object");
     } else {
-	SSL_CTX_set_options(ssl_ctx, SSL_OP_ALL | SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3);
+	SSL_CTX_set_options(ssl_ctx,
+	    SSL_OP_ALL | SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3);
     }
 #endif
 
-    if (config_bool_unparse("ssl_verify_peer", true) && SSL_CTX_set_default_verify_paths(ssl_ctx)) {
+    if (config_bool_unparse("ssl_verify_peer", true) &&
+	SSL_CTX_set_default_verify_paths(ssl_ctx)) {
 	SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, verify_callback);
 	SSL_CTX_set_verify_depth(ssl_ctx, 4);
     } else {
-	printtext(&ptext_ctx, "net_ssl_init: Certificate verification is disabled: Option set to NO?");
+	printtext(&ptext_ctx, "net_ssl_init: "
+	    "Certificate verification is disabled: Option set to NO?");
     }
 
     if (!SSL_CTX_set_cipher_list(ssl_ctx, cipher_list))
-	printtext(&ptext_ctx, "net_ssl_init: Bogus cipher list: %s", strerror(EINVAL));
+	printtext(&ptext_ctx, "net_ssl_init: Bogus cipher list: %s",
+		  strerror(EINVAL));
 }
 
 void
@@ -147,7 +152,8 @@ net_ssl_start(void)
     if ((ssl = SSL_new(ssl_ctx)) == NULL)
 	err_exit(ENOMEM, "net_ssl_start: Unable to create a new SSL object");
     else if (!SSL_set_fd(ssl, g_socket))
-	printtext(&ptext_ctx, "net_ssl_start: Unable to associate the global socket fd with the SSL object");
+	printtext(&ptext_ctx, "net_ssl_start: "
+	    "Unable to associate the global socket fd with the SSL object");
     else if (SSL_connect(ssl) != VALUE_HANDSHAKE_OK)
 	printtext(&ptext_ctx, "net_ssl_start: Handshake NOT ok!");
     else
@@ -176,7 +182,8 @@ net_ssl_send(const char *fmt, ...)
     int total_written = 0;
     int ret = 0;
     while (total_written < buflen) {
-	if ((ret = SSL_write(ssl, &buffer[total_written], buflen - total_written)) <= 0) {
+	if ((ret = SSL_write(ssl, &buffer[total_written],
+			     buflen - total_written)) <= 0) {
 	    free(buffer);
 	    return -1;
 	} else {
