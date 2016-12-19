@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Command /who
 - Event 352 `RPL_WHOREPLY`
 - Event 315 `RPL_ENDOFWHO`
+- Event 477 `ERR_NOCHANMODES`
 
 ### Changed ###
 - On event join/part handle an empty user/host.
