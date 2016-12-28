@@ -76,9 +76,10 @@ handle_special_msg(const struct special_msg_context *ctx)
 		     ctx->nick, g_swircVersion, g_swircAuthor) < 0)
 	    g_on_air = false;
 	pt_ctx.spec_type = TYPE_SPEC3;
-	printtext(&pt_ctx, "%c%s%c %s%s@%s%s requested CTCP VERSION form %c%s%c",
-		  BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
-		  BOLD, ctx->dest, BOLD);
+	printtext(&pt_ctx, "%c%s%c %s%s@%s%s "
+	    "requested CTCP VERSION form %c%s%c",
+	    BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
+	    BOLD, ctx->dest, BOLD);
     } else {
 	/* do nothing */;
     }
@@ -144,19 +145,21 @@ event_privmsg(struct irc_message_compo *compo)
 
     if (Strings_match_ignore_case(dest, g_my_nickname)) {
 	if ((ctx.window = window_by_label(nick)) == NULL) {
-	    err_log(0, "In event_privmsg: can't find a window with label %s", nick);
+	    err_log(0, "In event_privmsg: can't find a window with label %s",
+		    nick);
 	    return;
 	}
 
 	printtext(&ctx, "%s%s%s%c%s %s",
-		  Theme("nick_s1"), COLOR2, nick, NORMAL, Theme("nick_s2"), msg);
+	    Theme("nick_s1"), COLOR2, nick, NORMAL, Theme("nick_s2"), msg);
     } else {
 	PNAMES	n = NULL;
 	char	c = ' ';
 
 	if ((ctx.window = window_by_label(dest)) == NULL ||
 	    (n = event_names_htbl_lookup(nick, dest)) == NULL) {
-	    err_log(0, "In event_privmsg: bogus window label / hash table lookup error");
+	    err_log(0, "In event_privmsg: "
+		"bogus window label / hash table lookup error");
 	    return;
 	}
 
@@ -176,10 +179,12 @@ event_privmsg(struct irc_message_compo *compo)
 	    || !strncasecmp(msg, s3, strlen(s3))
 	    || Strings_match_ignore_case(msg, g_my_nickname)) {
 	    printtext(&ctx, "%s%c%s%s%c%s %s",
-		      Theme("nick_s1"), c, Theme("color4"), nick, NORMAL, Theme("nick_s2"), msg);
+		Theme("nick_s1"), c, COLOR4, nick, NORMAL, Theme("nick_s2"),
+		msg);
 	} else {
 	    printtext(&ctx, "%s%c%s%s%c%s %s",
-		      Theme("nick_s1"), c, COLOR2, nick, NORMAL, Theme("nick_s2"), msg);
+		Theme("nick_s1"), c, COLOR2, nick, NORMAL, Theme("nick_s2"),
+		msg);
 	}
 
 	free(s1);
