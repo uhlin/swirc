@@ -113,10 +113,14 @@ event_privmsg(struct irc_message_compo *compo)
 	return;
     if (*prefix == ':')
 	prefix++;
-    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL
-	|| (user = strtok_r(NULL, "!@", &state1)) == NULL
-	|| (host = strtok_r(NULL, "!@", &state1)) == NULL)
+    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
 	return;
+    user = strtok_r(NULL, "!@", &state1);
+    host = strtok_r(NULL, "!@", &state1);
+    if (!user || !host) {
+	user = "<no user>";
+	host = "<no host>";
+    }
     if (Strfeed(params, 1) != 1
 	|| (dest = strtok_r(params, "\n", &state2)) == NULL
 	|| (msg = strtok_r(NULL, "\n", &state2)) == NULL)
