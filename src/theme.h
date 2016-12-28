@@ -26,6 +26,8 @@ void		 theme_readit          (const char *path, const char *mode);
 
 #define COLOR1		Theme("primary_color")
 #define COLOR2		Theme("secondary_color")
+#define COLOR3		Theme("color3")
+#define COLOR4		Theme("color4")
 #define GFX_FAILURE	Theme("gfx_failure")
 #define GFX_SUCCESS	Theme("gfx_success")
 #define GFX_WARN	Theme("gfx_warning")
