@@ -160,43 +160,47 @@ get_processed_out_message(const char *unproc_msg,
 
 	switch (spec_type) {
 	case TYPE_SPEC1:
-	    pout->text   = Strdup_printf("%s %s %s", ts, THE_SPEC1, unproc_msg);
-	    tmp          = Strdup_printf("%s %s ", ts, THE_SPEC1);
+	    pout->text	 = Strdup_printf("%s %s %s", ts, THE_SPEC1, unproc_msg);
+	    tmp		 = Strdup_printf("%s %s ", ts, THE_SPEC1);
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
 	case TYPE_SPEC2:
-	    pout->text   = Strdup_printf("%s %s %s", ts, THE_SPEC2, unproc_msg);
-	    tmp          = Strdup_printf("%s %s ", ts, THE_SPEC2);
+	    pout->text	 = Strdup_printf("%s %s %s", ts, THE_SPEC2, unproc_msg);
+	    tmp		 = Strdup_printf("%s %s ", ts, THE_SPEC2);
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
 	case TYPE_SPEC3:
-	    pout->text   = Strdup_printf("%s %s %s", ts, THE_SPEC3, unproc_msg);
-	    tmp          = Strdup_printf("%s %s ", ts, THE_SPEC3);
+	    pout->text	 = Strdup_printf("%s %s %s", ts, THE_SPEC3, unproc_msg);
+	    tmp		 = Strdup_printf("%s %s ", ts, THE_SPEC3);
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
 	case TYPE_SPEC1_SPEC2:
-	    pout->text   = Strdup_printf("%s %s %s %s", ts, THE_SPEC1, THE_SPEC2, unproc_msg);
-	    tmp          = Strdup_printf("%s %s %s ", ts, THE_SPEC1, THE_SPEC2);
+	    pout->text = Strdup_printf("%s %s %s %s", ts, THE_SPEC1,
+				       THE_SPEC2, unproc_msg);
+	    tmp = Strdup_printf("%s %s %s ", ts, THE_SPEC1, THE_SPEC2);
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
 	case TYPE_SPEC1_FAILURE:
-	    pout->text   = Strdup_printf("%s %s %s %s", ts, THE_SPEC1, GFX_FAILURE, unproc_msg);
-	    tmp          = Strdup_printf("%s %s %s ", ts, THE_SPEC1, GFX_FAILURE);
+	    pout->text = Strdup_printf("%s %s %s %s", ts, THE_SPEC1,
+				       GFX_FAILURE, unproc_msg);
+	    tmp = Strdup_printf("%s %s %s ", ts, THE_SPEC1, GFX_FAILURE);
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
 	case TYPE_SPEC1_SUCCESS:
-	    pout->text   = Strdup_printf("%s %s %s %s", ts, THE_SPEC1, GFX_SUCCESS, unproc_msg);
-	    tmp          = Strdup_printf("%s %s %s ", ts, THE_SPEC1, GFX_SUCCESS);
+	    pout->text = Strdup_printf("%s %s %s %s", ts, THE_SPEC1,
+				       GFX_SUCCESS, unproc_msg);
+	    tmp = Strdup_printf("%s %s %s ", ts, THE_SPEC1, GFX_SUCCESS);
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
 	case TYPE_SPEC1_WARN:
-	    pout->text   = Strdup_printf("%s %s %s %s", ts, THE_SPEC1, GFX_WARN, unproc_msg);
-	    tmp          = Strdup_printf("%s %s %s ", ts, THE_SPEC1, GFX_WARN);
+	    pout->text = Strdup_printf("%s %s %s %s", ts, THE_SPEC1,
+				       GFX_WARN, unproc_msg);
+	    tmp = Strdup_printf("%s %s %s ", ts, THE_SPEC1, GFX_WARN);
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
 	case TYPE_SPEC_NONE: default:
-	    pout->text   = Strdup_printf("%s %s", ts, unproc_msg);
-	    tmp          = Strdup_printf("%s ", ts);
+	    pout->text	 = Strdup_printf("%s %s", ts, unproc_msg);
+	    tmp		 = Strdup_printf("%s ", ts);
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
 	}
@@ -220,22 +224,26 @@ get_processed_out_message(const char *unproc_msg,
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
 	case TYPE_SPEC1_SPEC2:
-	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, THE_SPEC2, unproc_msg);
+	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, THE_SPEC2,
+					 unproc_msg);
 	    tmp          = Strdup_printf("%s %s ", THE_SPEC1, THE_SPEC2);
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
 	case TYPE_SPEC1_FAILURE:
-	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, GFX_FAILURE, unproc_msg);
+	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, GFX_FAILURE,
+					 unproc_msg);
 	    tmp          = Strdup_printf("%s %s ", THE_SPEC1, GFX_FAILURE);
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
 	case TYPE_SPEC1_SUCCESS:
-	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, GFX_SUCCESS, unproc_msg);
+	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, GFX_SUCCESS,
+					 unproc_msg);
 	    tmp          = Strdup_printf("%s %s ", THE_SPEC1, GFX_SUCCESS);
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
 	case TYPE_SPEC1_WARN:
-	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, GFX_WARN, unproc_msg);
+	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, GFX_WARN,
+					 unproc_msg);
 	    tmp          = Strdup_printf("%s %s ", THE_SPEC1, GFX_WARN);
 	    pout->indent = STRLEN_SQUEEZE(tmp);
 	    break;
@@ -270,45 +278,52 @@ void
 vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
 {
     char *fmt_copy = NULL;
-    struct message_components *pout = NULL;
+    const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
     struct integer_unparse_context unparse_ctx = {
 	.setting_name     = "textbuffer_size_absolute",
 	.fallback_default = 1000,
 	.lo_limit         = 350,
 	.hi_limit         = 4700,
     };
-    const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
+    struct message_components *pout = NULL;
 
 #if defined(UNIX)
-    if ((errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0)
+    errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init);
+    if (errno)
 	err_sys("pthread_once");
 #elif defined(WIN32)
-    if ((errno = init_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0)
+    errno = init_once(&vprinttext_init_done, vprinttext_mutex_init);
+    if (errno)
 	err_sys("init_once");
 #endif
 
     mutex_lock(&vprinttext_mutex);
 
     fmt_copy = Strdup_vprintf(fmt, ap);
-    pout     = get_processed_out_message(fmt_copy, ctx->spec_type, ctx->include_ts);
+    pout     = get_processed_out_message(fmt_copy, ctx->spec_type,
+					 ctx->include_ts);
 
     if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
 	/* Buffer full. Remove head... */
 
-	if ((errno = textBuf_remove( ctx->window->buf, textBuf_head(ctx->window->buf) )) != 0)
+	if ((errno = textBuf_remove(ctx->window->buf,
+	    textBuf_head(ctx->window->buf))) != 0)
 	    err_sys("textBuf_remove");
     }
 
     if (textBuf_size(ctx->window->buf) == 0) {
-	if ((errno = textBuf_ins_next(ctx->window->buf, NULL, pout->text, pout->indent)) != 0)
+	if ((errno = textBuf_ins_next(ctx->window->buf, NULL, pout->text,
+	    pout->indent)) != 0)
 	    err_sys("textBuf_ins_next");
     } else {
-	if ((errno = textBuf_ins_next(ctx->window->buf, textBuf_tail(ctx->window->buf), pout->text, pout->indent)) != 0)
+	if ((errno = textBuf_ins_next(ctx->window->buf,
+	    textBuf_tail(ctx->window->buf), pout->text, pout->indent)) != 0)
 	    err_sys("textBuf_ins_next");
     }
 
     if (! (ctx->window->scroll_mode))
-	printtext_puts(panel_window(ctx->window->pan), pout->text, pout->indent, -1, NULL);
+	printtext_puts(panel_window(ctx->window->pan), pout->text, pout->indent,
+		       -1, NULL);
 
     free_not_null(fmt_copy);
     free_not_null(pout->text);
@@ -321,7 +336,8 @@ vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
  * Helper function for squeeze_text_deco().
  */
 static SW_INLINE void
-handle_foo_situation(char **buffer, long int *i, long int *j, const char *reject)
+handle_foo_situation(char **buffer, long int *i, long int *j,
+		     const char *reject)
 {
     if (!(*buffer)[*i]) {
 	return;
@@ -469,7 +485,7 @@ windows_convert_to_utf8(const char *buf)
     const int sz = (int) (strlen(buf) + 1);
     wchar_t *out = xcalloc(sz, sizeof (wchar_t));
 
-    if (MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, buf, -1, out, sz) > 0)
+    if (MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,buf,-1,out,sz) > 0)
 	return out;
     free(out);
     return NULL;
@@ -487,25 +503,27 @@ windows_convert_to_utf8(const char *buf)
 static wchar_t *
 try_convert_buf_with_cs(const char *buf, const char *codeset)
 {
-    struct locale_info	*li		 = get_locale_info(LC_CTYPE);
     char		*original_locale = NULL;
     char		*tmp_locale	 = NULL;
-    const size_t	 sz		 = strlen(buf) + 1;
-    wchar_t		*out		 = NULL;
-    size_t		 bytes_convert	 = 0;
     const size_t	 CONVERT_FAILED	 = (size_t) -1;
+    const size_t	 sz		 = strlen(buf) + 1;
+    size_t		 bytes_convert	 = 0;
+    struct locale_info	*li		 = get_locale_info(LC_CTYPE);
+    wchar_t		*out		 = NULL;
 
     if (li->lang_and_territory == NULL || li->codeset == NULL)
 	goto err;
 
-    original_locale = Strdup_printf("%s.%s", li->lang_and_territory, li->codeset);
+    original_locale = Strdup_printf("%s.%s",
+	li->lang_and_territory, li->codeset);
     tmp_locale      = Strdup_printf("%s.%s", li->lang_and_territory, codeset);
     out             = xcalloc(sz, sizeof (wchar_t));
 
     if (setlocale(LC_CTYPE, tmp_locale) == NULL ||
 	(bytes_convert = mbstowcs(out, buf, sz - 1)) == CONVERT_FAILED) {
 	if (setlocale(LC_CTYPE, original_locale) == NULL)
-	    err_log(EPERM, "In try_convert_buf_with_cs: cannot restore original locale (%s)", original_locale);
+	    err_log(EPERM, "In try_convert_buf_with_cs: "
+		"cannot restore original locale (%s)", original_locale);
 	goto err;
     }
 
@@ -513,7 +531,8 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 	out[sz - 1] = 0;
 
     if (setlocale(LC_CTYPE, original_locale) == NULL)
-	err_log(EPERM, "In try_convert_buf_with_cs: cannot restore original locale (%s)", original_locale);
+	err_log(EPERM, "In try_convert_buf_with_cs: "
+	    "cannot restore original locale (%s)", original_locale);
     free_locale_info(li);
     free_not_null(original_locale);
     free_not_null(tmp_locale);
@@ -548,11 +567,11 @@ perform_convert_buffer(const char **in_buf)
 	"28605", /* ISO 8859-15 Latin 9 */
 #endif
     };
-    const size_t	 ar_sz		= ARRAY_SIZE(ar);
-    wchar_t		*out		= NULL;
-    size_t		 sz		= 0;
-    mbstate_t		 ps;
     const size_t	 CONVERT_FAILED = (size_t) -1;
+    const size_t	 ar_sz		= ARRAY_SIZE(ar);
+    mbstate_t		 ps;
+    size_t		 sz		= 0;
+    wchar_t		*out		= NULL;
 
 #if WIN32
     if ((out = windows_convert_to_utf8(*in_buf)) != NULL)
@@ -560,7 +579,7 @@ perform_convert_buffer(const char **in_buf)
 #endif
 
     for (const char **ar_p = &ar[0]; ar_p < &ar[ar_sz]; ar_p++) {
-	if ((out = try_convert_buf_with_cs(*in_buf, *ar_p)) != NULL) /* success */
+	if ((out = try_convert_buf_with_cs(*in_buf, *ar_p)) != NULL) /*success*/
 	    return (out);
     }
 
@@ -571,7 +590,8 @@ perform_convert_buffer(const char **in_buf)
     BZERO(&ps, sizeof (mbstate_t));
 
     while (errno = 0, true) {
-	if (mbsrtowcs(&out[wcslen(out)], in_buf, (sz - wcslen(out)) - 1, &ps) == CONVERT_FAILED && errno == EILSEQ) {
+	if (mbsrtowcs(&out[wcslen(out)], in_buf, (sz - wcslen(out)) - 1, &ps) ==
+	    CONVERT_FAILED && errno == EILSEQ) {
 	    err_log(EILSEQ, "In perform_convert_buffer: characters lost");
 	    (*in_buf)++;
 	} else
@@ -669,7 +689,8 @@ convert_wc(wchar_t wc)
 static void
 printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 {
-    const short int num_colorMap_entries = (short int) ARRAY_SIZE(ptext_colorMap);
+    const short int num_colorMap_entries =
+	(short int) ARRAY_SIZE(ptext_colorMap);
     short int fg, bg, resolved_pair;
 #if defined(UNIX)
     attr_t attr;
@@ -677,7 +698,8 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
     chtype attr;
 #endif
 
-    sw_assert(num1 >= 0); /* num1 shouldn't under any circumstances appear negative */
+    /* num1 shouldn't under any circumstances appear negative */
+    sw_assert(num1 >= 0);
 
     fg = ptext_colorMap[num1 % num_colorMap_entries].color;
     bg = (num2 < 0 ? -1 : ptext_colorMap[num2 % num_colorMap_entries].color);
@@ -688,7 +710,7 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 	return;
     }
 
-    attr = ptext_colorMap[num1 % num_colorMap_entries].at; /* attributes of fg */
+    attr = ptext_colorMap[num1 % num_colorMap_entries].at; /*attributes of fg*/
     attr |= COLOR_PAIR(resolved_pair);
     term_set_attr(win, attr);
     *is_color = true;
@@ -853,7 +875,8 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
     num1 = (short int) atoi(fg);
     if (!isEmpty(bg)) {
 	num2 = (short int) atoi(bg);
-    } else if (isEmpty(bg) && theme_bool_unparse("term_use_default_colors", true)) {
+    } else if (isEmpty(bg) &&
+	       theme_bool_unparse("term_use_default_colors", true)) {
 	num2 = -1;
     } else {
 	num2 = (short int) theme_integer_unparse(&unparse_ctx);
@@ -1021,7 +1044,8 @@ case_default(struct case_default_context *ctx,
  * @return Void
  */
 void
-printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines, int *rep_count)
+printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
+	       int *rep_count)
 {
     struct text_decoration_bools booleans;
     wchar_t	*wc_buf, *wc_bufp;
@@ -1057,7 +1081,8 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines, int *re
     wc_buf = perform_convert_buffer(&buf);
 
     if (pwin_scrollable) {
-	const size_t newsize = size_product(wcslen(wc_buf) + sizeof "\n", sizeof (wchar_t));
+	const size_t newsize = size_product(wcslen(wc_buf) + sizeof "\n",
+					    sizeof (wchar_t));
 
 	wc_buf = xrealloc(wc_buf, newsize);
 
@@ -1074,7 +1099,9 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines, int *re
 	}
     }
 
-    for (wc_bufp = &wc_buf[0], max_lines_flagged = 0; *wc_bufp && !max_lines_flagged; wc_bufp++) {
+    for (wc_bufp = &wc_buf[0], max_lines_flagged = 0;
+	 *wc_bufp && !max_lines_flagged;
+	 wc_bufp++) {
 	wchar_t wc = *wc_bufp;
 
 	switch (wc) {
