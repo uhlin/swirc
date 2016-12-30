@@ -126,95 +126,6 @@ static struct ptext_colorMap_tag {
     { COLOR_WHITE,   A_DIM  },
 };
 
-/* Static function declarations
-   ============================ */
-
-static SW_INLINE void
-handle_foo_situation(char **buffer, long int *i, long int *j, const char *reject);
-
-static struct message_components *
-get_processed_out_message(const char *unproc_msg, enum message_specifier_type, bool include_ts);
-
-/*lint -sem(try_convert_buf_with_cs, r_null) */
-/*lint -sem(windows_convert_to_utf8, r_null) */
-
-static unsigned char	*convert_wc                  (wchar_t);
-static void		 case_blink                  (WINDOW *, bool *is_blink);
-static void		 case_bold                   (WINDOW *, bool *is_bold);
-static void		 case_color                  (WINDOW *, bool *is_color, wchar_t **bufp);
-static void		 case_default                (struct case_default_context *,
-						      int *rep_count, int *line_count, int *insert_count);
-static void		 case_reverse                (WINDOW *, bool *is_reverse);
-static void		 case_underline              (WINDOW *, bool *is_underline);
-static void		 printtext_set_color         (WINDOW *, bool *is_color, short int num1, short int num2);
-static void		 puts_mutex_init             (void);
-static void		 text_decoration_bools_reset (struct text_decoration_bools *);
-static void		 vprinttext_mutex_init       (void);
-static wchar_t		*perform_convert_buffer      (const char **in_buf);
-static wchar_t		*try_convert_buf_with_cs     (const char *buf, const char *codeset) PTR_ARGS_NONNULL;
-#if WIN32
-static wchar_t		*windows_convert_to_utf8     (const char *buf);
-#endif
-
-/**
- * Variable argument list version of Swirc messenger
- *
- * @param ctx Context structure
- * @param fmt Format
- * @param ap  va_list object
- * @return Void
- */
-void
-vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
-{
-    char *fmt_copy = NULL;
-    struct message_components *pout = NULL;
-    struct integer_unparse_context unparse_ctx = {
-	.setting_name     = "textbuffer_size_absolute",
-	.fallback_default = 1000,
-	.lo_limit         = 350,
-	.hi_limit         = 4700,
-    };
-    const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
-
-#if defined(UNIX)
-    if ((errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0)
-	err_sys("pthread_once");
-#elif defined(WIN32)
-    if ((errno = init_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0)
-	err_sys("init_once");
-#endif
-
-    mutex_lock(&vprinttext_mutex);
-
-    fmt_copy = Strdup_vprintf(fmt, ap);
-    pout     = get_processed_out_message(fmt_copy, ctx->spec_type, ctx->include_ts);
-
-    if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
-	/* Buffer full. Remove head... */
-
-	if ((errno = textBuf_remove( ctx->window->buf, textBuf_head(ctx->window->buf) )) != 0)
-	    err_sys("textBuf_remove");
-    }
-
-    if (textBuf_size(ctx->window->buf) == 0) {
-	if ((errno = textBuf_ins_next(ctx->window->buf, NULL, pout->text, pout->indent)) != 0)
-	    err_sys("textBuf_ins_next");
-    } else {
-	if ((errno = textBuf_ins_next(ctx->window->buf, textBuf_tail(ctx->window->buf), pout->text, pout->indent)) != 0)
-	    err_sys("textBuf_ins_next");
-    }
-
-    if (! (ctx->window->scroll_mode))
-	printtext_puts(panel_window(ctx->window->pan), pout->text, pout->indent, -1, NULL);
-
-    free_not_null(fmt_copy);
-    free_not_null(pout->text);
-    free_not_null(pout);
-
-    mutex_unlock(&vprinttext_mutex);
-}
-
 /**
  * Create mutex "vprinttext_mutex".
  */
@@ -348,6 +259,65 @@ get_processed_out_message(const char *unproc_msg,
 }
 
 /**
+ * Variable argument list version of Swirc messenger
+ *
+ * @param ctx Context structure
+ * @param fmt Format
+ * @param ap  va_list object
+ * @return Void
+ */
+void
+vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
+{
+    char *fmt_copy = NULL;
+    struct message_components *pout = NULL;
+    struct integer_unparse_context unparse_ctx = {
+	.setting_name     = "textbuffer_size_absolute",
+	.fallback_default = 1000,
+	.lo_limit         = 350,
+	.hi_limit         = 4700,
+    };
+    const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
+
+#if defined(UNIX)
+    if ((errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0)
+	err_sys("pthread_once");
+#elif defined(WIN32)
+    if ((errno = init_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0)
+	err_sys("init_once");
+#endif
+
+    mutex_lock(&vprinttext_mutex);
+
+    fmt_copy = Strdup_vprintf(fmt, ap);
+    pout     = get_processed_out_message(fmt_copy, ctx->spec_type, ctx->include_ts);
+
+    if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
+	/* Buffer full. Remove head... */
+
+	if ((errno = textBuf_remove( ctx->window->buf, textBuf_head(ctx->window->buf) )) != 0)
+	    err_sys("textBuf_remove");
+    }
+
+    if (textBuf_size(ctx->window->buf) == 0) {
+	if ((errno = textBuf_ins_next(ctx->window->buf, NULL, pout->text, pout->indent)) != 0)
+	    err_sys("textBuf_ins_next");
+    } else {
+	if ((errno = textBuf_ins_next(ctx->window->buf, textBuf_tail(ctx->window->buf), pout->text, pout->indent)) != 0)
+	    err_sys("textBuf_ins_next");
+    }
+
+    if (! (ctx->window->scroll_mode))
+	printtext_puts(panel_window(ctx->window->pan), pout->text, pout->indent, -1, NULL);
+
+    free_not_null(fmt_copy);
+    free_not_null(pout->text);
+    free_not_null(pout);
+
+    mutex_unlock(&vprinttext_mutex);
+}
+
+/**
  * Helper function for squeeze_text_deco().
  */
 static SW_INLINE void
@@ -457,130 +427,6 @@ squeeze_text_deco(char *buffer)
 #endif
 
     return (buffer);
-}
-
-/**
- * Output data to window
- *
- * @param[in]  pwin      Panel window where the output is to be
- *                       displayed.
- * @param[in]  buf       A buffer that should contain the data to be
- *                       written to 'pwin'.
- * @param[in]  indent    If >0 indent text with this number of blanks.
- * @param[in]  max_lines If >0 write at most this number of lines.
- * @param[out] rep_count "Represent count". How many actual lines does
- *                       this contribution represent in the output
- *                       window? (Passing NULL is ok.)
- * @return Void
- */
-void
-printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines, int *rep_count)
-{
-    struct text_decoration_bools booleans;
-    wchar_t	*wc_buf, *wc_bufp;
-    const bool	 pwin_scrollable = is_scrollok(pwin);
-    int		 max_lines_flagged;
-    int		 line_count	 = 0;
-    int		 insert_count	 = 0;
-
-#if defined(UNIX)
-    if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0) {
-	err_sys("pthread_once error");
-    }
-#elif defined(WIN32)
-    if ((errno = init_once(&puts_init_done, puts_mutex_init)) != 0) {
-	err_sys("init_once error");
-    }
-#endif
-
-    if (rep_count) {
-	*rep_count = 0;
-    }
-
-    if (!buf) {
-	err_exit(EINVAL, "printtext_puts error");
-    } else if (*buf == '\0') {
-	return;
-    } else {
-	;
-    }
-
-    mutex_lock(&g_puts_mutex);
-    text_decoration_bools_reset(&booleans);
-    wc_buf = perform_convert_buffer(&buf);
-
-    if (pwin_scrollable) {
-	const size_t newsize = size_product(wcslen(wc_buf) + sizeof "\n", sizeof (wchar_t));
-
-	wc_buf = xrealloc(wc_buf, newsize);
-
-	if ((errno = sw_wcscat(wc_buf, L"\n", newsize)) != 0)
-	    err_sys("printtext_puts error");
-    }
-
-    {
-	wchar_t       *wcp;
-	const wchar_t  set[] = L"\f\t\v";
-
-	while (wcp = wcspbrk(wc_buf, set), wcp != NULL) {
-	    *wcp = btowc(' ');
-	}
-    }
-
-    for (wc_bufp = &wc_buf[0], max_lines_flagged = 0; *wc_bufp && !max_lines_flagged; wc_bufp++) {
-	wchar_t wc = *wc_bufp;
-
-	switch (wc) {
-	case BLINK:
-	    case_blink(pwin, &booleans.is_blink);
-	    break;
-	case BOLD:
-	    case_bold(pwin, &booleans.is_bold);
-	    break;
-	case COLOR:
-	    case_color(pwin, &booleans.is_color, &wc_bufp);
-	    break;
-	case NORMAL:
-	    text_decoration_bools_reset(&booleans);
-	    term_set_attr(pwin, A_NORMAL);
-	    break;
-	case REVERSE:
-	    case_reverse(pwin, &booleans.is_reverse);
-	    break;
-	case UNDERLINE:
-	    case_underline(pwin, &booleans.is_underline);
-	    break;
-	default:
-	{
-	    wchar_t   *wcp;
-	    ptrdiff_t  diff = 0;
-	    struct case_default_context def_ctx;
-
-	    if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) != NULL) {
-		diff = wcp - wc_bufp;
-	    }
-
-	    def_ctx.win            = pwin;
-	    def_ctx.wc             = wc;
-	    def_ctx.nextchar_empty = !wcscmp(wc_bufp + 1, L"");
-	    def_ctx.indent         = indent;
-	    def_ctx.max_lines      = max_lines;
-	    def_ctx.diff           = diff;
-
-	    case_default(&def_ctx, rep_count, &line_count, &insert_count);
-	    break;
-	} /* case default */
-	} /* switch block */
-	if (pwin_scrollable && max_lines > 0) {
-	    max_lines_flagged = line_count >= max_lines;
-	}
-    }
-
-    free(wc_buf);
-    term_set_attr(pwin, A_NORMAL);
-    update_panels();
-    doupdate();
-    mutex_unlock(&g_puts_mutex);
 }
 
 /**
@@ -773,6 +619,79 @@ case_bold(WINDOW *win, bool *is_bold)
 	WATTR_OFF(win, A_BOLD);
 	*is_bold = false;
     }
+}
+
+/**
+ * Convert a wide-character to a multibyte sequence. The storage for
+ * the multibyte sequence is allocated on the heap and must be
+ * free()'d.
+ *
+ * @param wc Wide-character
+ * @return The result
+ */
+static unsigned char *
+convert_wc(wchar_t wc)
+{
+    mbstate_t ps;
+#ifdef HAVE_BCI
+    size_t bytes_written; /* not used */
+#endif
+    const size_t size = MB_LEN_MAX + 1;
+    unsigned char *mbs = xcalloc(size, 1);
+
+    BZERO(&ps, sizeof (mbstate_t));
+
+#ifdef HAVE_BCI
+    if ((errno = wcrtomb_s(&bytes_written, (char *) mbs, size, wc, &ps)) != 0) {
+	/* temporary error handling */
+	err_log(errno, "In convert_wc: wcrtomb_s");
+	return (mbs);
+    }
+#else
+    if (wcrtomb((char *) mbs, wc, &ps) == ((size_t) -1)) {
+	err_log(EILSEQ, "In convert_wc: wcrtomb");
+	return (mbs);
+    }
+#endif
+
+    return (mbs);
+}
+
+/**
+ * Set color for output in a window.
+ *
+ * @param[in]  win      Window
+ * @param[out] is_color Is color state
+ * @param[in]  num1     Number for foreground
+ * @param[in]  num2     Number for background
+ * @return Void
+ */
+static void
+printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
+{
+    const short int num_colorMap_entries = (short int) ARRAY_SIZE(ptext_colorMap);
+    short int fg, bg, resolved_pair;
+#if defined(UNIX)
+    attr_t attr;
+#elif defined(WIN32)
+    chtype attr;
+#endif
+
+    sw_assert(num1 >= 0); /* num1 shouldn't under any circumstances appear negative */
+
+    fg = ptext_colorMap[num1 % num_colorMap_entries].color;
+    bg = (num2 < 0 ? -1 : ptext_colorMap[num2 % num_colorMap_entries].color);
+
+    if ((resolved_pair = color_pair_find(fg, bg)) == -1) {
+	WCOLOR_SET(win, 0);
+	*is_color = false;
+	return;
+    }
+
+    attr = ptext_colorMap[num1 % num_colorMap_entries].at; /* attributes of fg */
+    attr |= COLOR_PAIR(resolved_pair);
+    term_set_attr(win, attr);
+    *is_color = true;
 }
 
 /**
@@ -1088,76 +1007,127 @@ case_default(struct case_default_context *ctx,
 }
 
 /**
- * Convert a wide-character to a multibyte sequence. The storage for
- * the multibyte sequence is allocated on the heap and must be
- * free()'d.
+ * Output data to window
  *
- * @param wc Wide-character
- * @return The result
- */
-static unsigned char *
-convert_wc(wchar_t wc)
-{
-    mbstate_t ps;
-#ifdef HAVE_BCI
-    size_t bytes_written; /* not used */
-#endif
-    const size_t size = MB_LEN_MAX + 1;
-    unsigned char *mbs = xcalloc(size, 1);
-
-    BZERO(&ps, sizeof (mbstate_t));
-
-#ifdef HAVE_BCI
-    if ((errno = wcrtomb_s(&bytes_written, (char *) mbs, size, wc, &ps)) != 0) {
-	/* temporary error handling */
-	err_log(errno, "In convert_wc: wcrtomb_s");
-	return (mbs);
-    }
-#else
-    if (wcrtomb((char *) mbs, wc, &ps) == ((size_t) -1)) {
-	err_log(EILSEQ, "In convert_wc: wcrtomb");
-	return (mbs);
-    }
-#endif
-
-    return (mbs);
-}
-
-/**
- * Set color for output in a window.
- *
- * @param[in]  win      Window
- * @param[out] is_color Is color state
- * @param[in]  num1     Number for foreground
- * @param[in]  num2     Number for background
+ * @param[in]  pwin      Panel window where the output is to be
+ *                       displayed.
+ * @param[in]  buf       A buffer that should contain the data to be
+ *                       written to 'pwin'.
+ * @param[in]  indent    If >0 indent text with this number of blanks.
+ * @param[in]  max_lines If >0 write at most this number of lines.
+ * @param[out] rep_count "Represent count". How many actual lines does
+ *                       this contribution represent in the output
+ *                       window? (Passing NULL is ok.)
  * @return Void
  */
-static void
-printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
+void
+printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines, int *rep_count)
 {
-    const short int num_colorMap_entries = (short int) ARRAY_SIZE(ptext_colorMap);
-    short int fg, bg, resolved_pair;
+    struct text_decoration_bools booleans;
+    wchar_t	*wc_buf, *wc_bufp;
+    const bool	 pwin_scrollable = is_scrollok(pwin);
+    int		 max_lines_flagged;
+    int		 line_count	 = 0;
+    int		 insert_count	 = 0;
+
 #if defined(UNIX)
-    attr_t attr;
+    if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0) {
+	err_sys("pthread_once error");
+    }
 #elif defined(WIN32)
-    chtype attr;
+    if ((errno = init_once(&puts_init_done, puts_mutex_init)) != 0) {
+	err_sys("init_once error");
+    }
 #endif
 
-    sw_assert(num1 >= 0); /* num1 shouldn't under any circumstances appear negative */
-
-    fg = ptext_colorMap[num1 % num_colorMap_entries].color;
-    bg = (num2 < 0 ? -1 : ptext_colorMap[num2 % num_colorMap_entries].color);
-
-    if ((resolved_pair = color_pair_find(fg, bg)) == -1) {
-	WCOLOR_SET(win, 0);
-	*is_color = false;
-	return;
+    if (rep_count) {
+	*rep_count = 0;
     }
 
-    attr = ptext_colorMap[num1 % num_colorMap_entries].at; /* attributes of fg */
-    attr |= COLOR_PAIR(resolved_pair);
-    term_set_attr(win, attr);
-    *is_color = true;
+    if (!buf) {
+	err_exit(EINVAL, "printtext_puts error");
+    } else if (*buf == '\0') {
+	return;
+    } else {
+	;
+    }
+
+    mutex_lock(&g_puts_mutex);
+    text_decoration_bools_reset(&booleans);
+    wc_buf = perform_convert_buffer(&buf);
+
+    if (pwin_scrollable) {
+	const size_t newsize = size_product(wcslen(wc_buf) + sizeof "\n", sizeof (wchar_t));
+
+	wc_buf = xrealloc(wc_buf, newsize);
+
+	if ((errno = sw_wcscat(wc_buf, L"\n", newsize)) != 0)
+	    err_sys("printtext_puts error");
+    }
+
+    {
+	wchar_t       *wcp;
+	const wchar_t  set[] = L"\f\t\v";
+
+	while (wcp = wcspbrk(wc_buf, set), wcp != NULL) {
+	    *wcp = btowc(' ');
+	}
+    }
+
+    for (wc_bufp = &wc_buf[0], max_lines_flagged = 0; *wc_bufp && !max_lines_flagged; wc_bufp++) {
+	wchar_t wc = *wc_bufp;
+
+	switch (wc) {
+	case BLINK:
+	    case_blink(pwin, &booleans.is_blink);
+	    break;
+	case BOLD:
+	    case_bold(pwin, &booleans.is_bold);
+	    break;
+	case COLOR:
+	    case_color(pwin, &booleans.is_color, &wc_bufp);
+	    break;
+	case NORMAL:
+	    text_decoration_bools_reset(&booleans);
+	    term_set_attr(pwin, A_NORMAL);
+	    break;
+	case REVERSE:
+	    case_reverse(pwin, &booleans.is_reverse);
+	    break;
+	case UNDERLINE:
+	    case_underline(pwin, &booleans.is_underline);
+	    break;
+	default:
+	{
+	    wchar_t   *wcp;
+	    ptrdiff_t  diff = 0;
+	    struct case_default_context def_ctx;
+
+	    if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) != NULL) {
+		diff = wcp - wc_bufp;
+	    }
+
+	    def_ctx.win            = pwin;
+	    def_ctx.wc             = wc;
+	    def_ctx.nextchar_empty = !wcscmp(wc_bufp + 1, L"");
+	    def_ctx.indent         = indent;
+	    def_ctx.max_lines      = max_lines;
+	    def_ctx.diff           = diff;
+
+	    case_default(&def_ctx, rep_count, &line_count, &insert_count);
+	    break;
+	} /* case default */
+	} /* switch block */
+	if (pwin_scrollable && max_lines > 0) {
+	    max_lines_flagged = line_count >= max_lines;
+	}
+    }
+
+    free(wc_buf);
+    term_set_attr(pwin, A_NORMAL);
+    update_panels();
+    doupdate();
+    mutex_unlock(&g_puts_mutex);
 }
 
 /**
