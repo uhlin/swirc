@@ -1047,12 +1047,18 @@ void
 printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	       int *rep_count)
 {
-    struct text_decoration_bools booleans;
-    wchar_t	*wc_buf, *wc_bufp;
-    const bool	 pwin_scrollable = is_scrollok(pwin);
-    int		 max_lines_flagged;
-    int		 line_count	 = 0;
-    int		 insert_count	 = 0;
+    const bool pwin_scrollable = is_scrollok(pwin);
+    int insert_count = 0;
+    int line_count = 0;
+    int max_lines_flagged = 0;
+    struct text_decoration_bools booleans = {
+	.is_blink     = false,
+	.is_bold      = false,
+	.is_color     = false,
+	.is_reverse   = false,
+	.is_underline = false,
+    };
+    wchar_t *wc_buf = NULL, *wc_bufp = NULL;
 
 #if defined(UNIX)
     if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0) {
@@ -1077,7 +1083,6 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
     }
 
     mutex_lock(&g_puts_mutex);
-    text_decoration_bools_reset(&booleans);
     wc_buf = perform_convert_buffer(&buf);
 
     if (pwin_scrollable) {
@@ -1091,8 +1096,8 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
     }
 
     {
-	wchar_t       *wcp;
-	const wchar_t  set[] = L"\f\t\v";
+	const wchar_t set[] = L"\f\t\v";
+	wchar_t *wcp = NULL;
 
 	while (wcp = wcspbrk(wc_buf, set), wcp != NULL) {
 	    *wcp = btowc(' ');
@@ -1126,20 +1131,21 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	    break;
 	default:
 	{
-	    wchar_t   *wcp;
-	    ptrdiff_t  diff = 0;
-	    struct case_default_context def_ctx;
+	    ptrdiff_t diff = 0;
+	    wchar_t *wcp = NULL;
 
 	    if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) != NULL) {
 		diff = wcp - wc_bufp;
 	    }
 
-	    def_ctx.win            = pwin;
-	    def_ctx.wc             = wc;
-	    def_ctx.nextchar_empty = !wcscmp(wc_bufp + 1, L"");
-	    def_ctx.indent         = indent;
-	    def_ctx.max_lines      = max_lines;
-	    def_ctx.diff           = diff;
+	    struct case_default_context def_ctx = {
+		.win		= pwin,
+		.wc		= wc,
+		.nextchar_empty = !wcscmp(wc_bufp + 1, L""),
+		.indent		= indent,
+		.max_lines	= max_lines,
+		.diff		= diff,
+	    };
 
 	    case_default(&def_ctx, rep_count, &line_count, &insert_count);
 	    break;
