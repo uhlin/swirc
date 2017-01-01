@@ -129,7 +129,8 @@ write_cmdprompt(WINDOW *win, char *prompt, int size)
 }
 
 static void
-compute_new_window_entry(volatile struct readline_session_context *ctx, bool fwd)
+compute_new_window_entry(volatile struct readline_session_context *ctx,
+			 bool fwd)
 {
     int		 diff, buf_index;
     wchar_t	*str1, *str2;
@@ -268,7 +269,8 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 	ctx->buffer[--ctx->n_insert] = 0;
 	yx = term_get_pos(ctx->act);
 
-	if (wmove(ctx->act, yx.cury, yx.curx - 1) == ERR || wdelch(ctx->act) == ERR || wclrtoeol(ctx->act) == ERR) {
+	if (wmove(ctx->act, yx.cury, yx.curx - 1) == ERR ||
+	    wdelch(ctx->act) == ERR || wclrtoeol(ctx->act) == ERR) {
 	    readline_error(EPERM, "wmove, wdelch or wclrtoeol");
 	}
 
@@ -278,7 +280,8 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 	ctx->n_insert--;
 	yx = term_get_pos(ctx->act);
 
-	if (wmove(ctx->act, yx.cury, yx.curx - 1) == ERR || wdelch(ctx->act) == ERR) {
+	if (wmove(ctx->act, yx.cury, yx.curx - 1) == ERR ||
+	    wdelch(ctx->act) == ERR) {
 	    readline_error(EPERM, "wmove or wdelch");
 	}
     }
@@ -364,11 +367,11 @@ finalize_out_string(const wchar_t *buf)
     BZERO(&ps, sizeof (mbstate_t));
 
 #ifdef HAVE_BCI
-    if ((errno = wcsrtombs_s(&bytes_convert, out, size, &buf, size - 1, &ps)) != 0) {
+    if (errno = wcsrtombs_s(&bytes_convert, out, size, &buf, size - 1, &ps))
 	err_sys("wcsrtombs_s");
-    }
 #else
-    if ((bytes_convert = wcsrtombs(out, &buf, size - 1, &ps)) == ((size_t) -1)) {
+    if ((bytes_convert = wcsrtombs(out, &buf, size - 1, &ps)) ==
+	((size_t) -1)) {
 	err_sys("wcsrtombs");
     } else if (bytes_convert == size - 1) { /* unlikely */
 	out[size - 1] = 0;
