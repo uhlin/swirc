@@ -72,6 +72,9 @@ static bool				 disable_beeps       = false;
 static const int			 readline_buffersize = 2700;
 static enum readline_active_panel	 panel_state	     = PANEL1_ACTIVE;
 
+/**
+ * Initiate a new readline session
+ */
 static struct readline_session_context *
 new_session(const char *prompt)
 {
@@ -92,6 +95,9 @@ new_session(const char *prompt)
     return ctx;
 }
 
+/**
+ * Destroy readline session
+ */
 static void
 session_destroy(volatile struct readline_session_context *ctx)
 {
@@ -101,18 +107,27 @@ session_destroy(volatile struct readline_session_context *ctx)
 	free((struct readline_session_context *) ctx);
 }
 
+/**
+ * Check if low limit is set
+ */
 static SW_INLINE bool
 loLim_isset(WINDOW *win, int prompt_size)
 {
     return (term_get_pos(win).curx <= prompt_size);
 }
 
+/**
+ * Check if high limit is set
+ */
 static SW_INLINE bool
 hiLim_isset(WINDOW *win)
 {
     return (term_get_pos(win).curx >= COLS - 1);
 }
 
+/**
+ * Write the command-prompt.
+ */
 static void
 write_cmdprompt(WINDOW *win, char *prompt, int size)
 {
@@ -128,6 +143,9 @@ write_cmdprompt(WINDOW *win, char *prompt, int size)
     (void) doupdate();
 }
 
+/**
+ * When swapping between panels: computes the new window entry.
+ */
 static void
 compute_new_window_entry(volatile struct readline_session_context *ctx,
 			 bool fwd)
@@ -170,6 +188,10 @@ compute_new_window_entry(volatile struct readline_session_context *ctx,
     (void) doupdate();
 }
 
+/**
+ * Swaps between the 2 panels depending on whether the low or high
+ * limit is set.
+ */
 static void
 magic_swap_panels(volatile struct readline_session_context *ctx, bool fwd)
 {
@@ -189,6 +211,9 @@ magic_swap_panels(volatile struct readline_session_context *ctx, bool fwd)
     compute_new_window_entry(ctx, fwd);
 }
 
+/**
+ * Key left
+ */
 static void
 case_key_left(volatile struct readline_session_context *ctx)
 {
@@ -217,6 +242,9 @@ case_key_left(volatile struct readline_session_context *ctx)
     (void) doupdate();
 }
 
+/**
+ * Key right
+ */
 static void
 case_key_right(volatile struct readline_session_context *ctx)
 {
@@ -245,6 +273,9 @@ case_key_right(volatile struct readline_session_context *ctx)
     (void) doupdate();
 }
 
+/**
+ * Key backspace.
+ */
 static void
 case_key_backspace(volatile struct readline_session_context *ctx)
 {
@@ -290,6 +321,9 @@ case_key_backspace(volatile struct readline_session_context *ctx)
     (void) doupdate();
 }
 
+/**
+ * Handles what happens if the delete key is pressed.
+ */
 static void
 case_key_dc(volatile struct readline_session_context *ctx)
 {
@@ -318,6 +352,9 @@ case_key_dc(volatile struct readline_session_context *ctx)
     (void) doupdate();
 }
 
+/**
+ * Regular handling of a key-press.
+ */
 static void
 handle_key(volatile struct readline_session_context *ctx, wint_t wc)
 {
@@ -356,6 +393,12 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc)
     (void) doupdate();
 }
 
+/**
+ * Convert a wide-character-string to a multibyte-character-string.
+ *
+ * @param buf In data
+ * @return The converted part (dynamically allocated)
+ */
 static char *
 finalize_out_string(const wchar_t *buf)
 {
@@ -383,6 +426,12 @@ finalize_out_string(const wchar_t *buf)
     return (out);
 }
 
+/**
+ * Apply window-options to the readline panels.
+ *
+ * @param win Window
+ * @return Void
+ */
 static void
 apply_readline_options(WINDOW *win)
 {
@@ -400,6 +449,9 @@ apply_readline_options(WINDOW *win)
     }
 }
 
+/**
+ * Initialize readline (done before usage)
+ */
 void
 readline_init(void)
 {
@@ -412,6 +464,9 @@ readline_init(void)
     disable_beeps = config_bool_unparse("disable_beeps", false);
 }
 
+/**
+ * De-initialize readline
+ */
 void
 readline_deinit(void)
 {
@@ -419,6 +474,12 @@ readline_deinit(void)
     term_remove_panel(readline_pan2);
 }
 
+/**
+ * Read user input.
+ *
+ * @param prompt Prompt
+ * @return The read line (dynamically allocated) or NULL
+ */
 char *
 readline(const char *prompt)
 {
@@ -549,6 +610,13 @@ readline(const char *prompt)
     return out;
 }
 
+/**
+ * Recreate the 2 readline panels with respect to the screen size.
+ *
+ * @param rows Size of the screen in rows
+ * @param cols Size of the screen in cols
+ * @return Void
+ */
 void
 readline_recreate(int rows, int cols)
 {
@@ -566,6 +634,10 @@ readline_recreate(int rows, int cols)
     apply_readline_options(panel_window(readline_pan2));
 }
 
+/**
+ * Puts the currently active readline panel on the top of all panels
+ * in the stack.
+ */
 void
 readline_top_panel(void)
 {
