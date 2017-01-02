@@ -1,5 +1,5 @@
 /* Readline API
-   Copyright (C) 2012-2014, 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2014, 2016-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -41,25 +41,6 @@
 
 #define WATTR_ON(win, attrs)  ((void) wattr_on(win, attrs, 0))
 #define WATTR_OFF(win, attrs) ((void) wattr_off(win, attrs, 0))
-
-static bool	 is_text_decoration (wint_t wc);
-static char	*convert_wc         (wchar_t);
-static void	 add_complex_char   (WINDOW *, int c);
-static void	 ins_complex_char   (WINDOW *, int c);
-
-SW_NORET void
-readline_error(int error, const char *msg)
-{
-    struct printtext_context ptext_ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
-
-    printtext(&ptext_ctx, "non-fatal: %s: %s", msg, errdesc_by_num(error));
-    g_readline_loop = false;
-    longjmp(g_readline_loc_info, 1);
-}
 
 static char *
 convert_wc(wchar_t wc)
@@ -153,6 +134,20 @@ ins_complex_char(WINDOW *win, int c)
     }
 
     WATTR_OFF(win, A_REVERSE);
+}
+
+SW_NORET void
+readline_error(int error, const char *msg)
+{
+    struct printtext_context ptext_ctx = {
+	.window     = g_status_window,
+	.spec_type  = TYPE_SPEC1_FAILURE,
+	.include_ts = true,
+    };
+
+    printtext(&ptext_ctx, "non-fatal: %s: %s", msg, errdesc_by_num(error));
+    g_readline_loop = false;
+    longjmp(g_readline_loc_info, 1);
 }
 
 void
