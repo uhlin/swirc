@@ -30,10 +30,12 @@
 #include "common.h"
 
 #include "assertAPI.h"
+#include "config.h"
 #include "dataClassify.h"
 #include "errHand.h"
 #include "irc.h"
 #include "libUtils.h"
+#include "main.h"
 #include "network.h"
 #include "printtext.h"
 #include "readline.h"		/* readline_top_panel() */
@@ -473,6 +475,12 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window, int ext_
 void
 irc_init(void)
 {
+    if (g_cmdline_opts->nickname)
+	irc_set_my_nickname(g_cmdline_opts->nickname);
+    else if (Config_mod("nickname"))
+	irc_set_my_nickname(Config_mod("nickname"));
+    else
+	err_quit("fatal: in irc_init: no nickname");
     event_names_init();
 }
 

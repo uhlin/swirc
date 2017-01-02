@@ -19,6 +19,9 @@ All notable changes to this project will be documented in this file.
 - The prompt for the status window to nothing.
 - In event_privmsg(): handle an empty user/host.
 
+### Fixed ###
+- Signal 11 when connecting to Slack.
+
 ## [1.2] - 2016-09-22 ##
 ### Added ###
 - Checks in order to prohibit the program from running with superuser
