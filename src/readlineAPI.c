@@ -42,6 +42,9 @@
 #define WATTR_ON(win, attrs)  ((void) wattr_on(win, attrs, 0))
 #define WATTR_OFF(win, attrs) ((void) wattr_off(win, attrs, 0))
 
+/**
+ * Convert a wide-character to a multibyte sequence
+ */
 static char *
 convert_wc(wchar_t wc)
 {
@@ -65,6 +68,9 @@ convert_wc(wchar_t wc)
     return (mbs);
 }
 
+/**
+ * Check for text-decoration
+ */
 static bool
 is_text_decoration(wint_t wc)
 {
@@ -72,6 +78,9 @@ is_text_decoration(wint_t wc)
 	    wc==btowc(NORMAL) || wc==btowc(REVERSE) || wc==btowc(UNDERLINE));
 }
 
+/**
+ * Add a complex character
+ */
 static void
 add_complex_char(WINDOW *win, int c)
 {
@@ -104,6 +113,9 @@ add_complex_char(WINDOW *win, int c)
     WATTR_OFF(win, A_REVERSE);
 }
 
+/**
+ * Insert a complex character
+ */
 static void
 ins_complex_char(WINDOW *win, int c)
 {
@@ -136,6 +148,9 @@ ins_complex_char(WINDOW *win, int c)
     WATTR_OFF(win, A_REVERSE);
 }
 
+/**
+ * Readline error handling
+ */
 SW_NORET void
 readline_error(int error, const char *msg)
 {
@@ -150,6 +165,15 @@ readline_error(int error, const char *msg)
     longjmp(g_readline_loc_info, 1);
 }
 
+/**
+ * Add a character at given position
+ *
+ * @param win Window
+ * @param row Row
+ * @param col Col
+ * @param wc Wide-character
+ * @return Void
+ */
 void
 readline_mvwaddch(WINDOW *win, int row, int col, wint_t wc)
 {
@@ -170,6 +194,13 @@ readline_mvwaddch(WINDOW *win, int row, int col, wint_t wc)
     free_and_null(&mbs);
 }
 
+/**
+ * Add a character
+ *
+ * @param win Window
+ * @param wc Wide-character
+ * @return Void
+ */
 void
 readline_waddch(WINDOW *win, wint_t wc)
 {
@@ -186,6 +217,14 @@ readline_waddch(WINDOW *win, wint_t wc)
     free_and_null(&mbs);
 }
 
+/**
+ * Add a string of characters
+ *
+ * @param win Window
+ * @param s String
+ * @param n Number of wide-characters
+ * @return Void
+ */
 void
 readline_waddnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
 {
@@ -193,17 +232,24 @@ readline_waddnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
     const ptrdiff_t  len_of_s   = (ptrdiff_t) wcslen(s ? s : L"");
     const ptrdiff_t  this_index = ((n <= 0 || n > len_of_s) ? len_of_s : n);
 
-    if (win == NULL || s == NULL) {
+    if (win == NULL || s == NULL)
 	err_exit(EINVAL, "readline_waddnstr fatal!");
-    }
 
     update_panels();
 
-    for (ptr = &s[0]; ptr < &s[this_index]; ptr++) {
+    for (ptr = &s[0]; ptr < &s[this_index]; ptr++)
 	readline_waddch(win, *ptr);
-    }
 }
 
+/**
+ * Insert character at given row/col
+ *
+ * @param win Window
+ * @param row Row
+ * @param col Col
+ * @param wc Wide-character
+ * @return Void
+ */
 void
 readline_mvwinsch(WINDOW *win, int row, int col, wint_t wc)
 {
@@ -224,6 +270,13 @@ readline_mvwinsch(WINDOW *win, int row, int col, wint_t wc)
     free_and_null(&mbs);
 }
 
+/**
+ * Insert character before cursor
+ *
+ * @param win Window
+ * @param wc Wide-character
+ * @return Void
+ */
 void
 readline_winsch(WINDOW *win, wint_t wc)
 {
@@ -240,6 +293,14 @@ readline_winsch(WINDOW *win, wint_t wc)
     free_and_null(&mbs);
 }
 
+/**
+ * Insert string before cursor
+ *
+ * @param win Window
+ * @param s String
+ * @param n Number of wide-characters
+ * @return Void
+ */
 void
 readline_winsnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
 {
@@ -247,13 +308,11 @@ readline_winsnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
     const ptrdiff_t  len_of_s   = (ptrdiff_t) wcslen(s ? s : L"");
     const ptrdiff_t  this_index = ((n <= 0 || n > len_of_s) ? len_of_s : n);
 
-    if (win == NULL || s == NULL) {
+    if (win == NULL || s == NULL)
 	err_exit(EINVAL, "readline_winsnstr fatal!");
-    }
 
     update_panels();
 
-    for (ptr = &s[this_index-1]; ptr >= &s[0]; ptr--) {
+    for (ptr = &s[this_index - 1]; ptr >= &s[0]; ptr--)
 	readline_winsch(win, *ptr);
-    }
 }
