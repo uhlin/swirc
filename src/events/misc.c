@@ -1,5 +1,5 @@
 /* Miscellaneous events
-   Copyright (C) 2014-2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -73,12 +73,14 @@ event_bounce(struct irc_message_compo *compo)
     if (*msg) {
 	msg_copy = sw_strdup(msg);
 
-	while (cp = strstr(msg_copy, ":are supported by this server"), cp != NULL) {
+	while (cp = strstr(msg_copy, ":are supported by this server"),
+	       cp != NULL) {
 	    cp++;
 	    (void) memmove(cp - 1, cp, strlen(cp) + 1); /* Delete the colon */
 	}
 
-	while (cp = strstr(msg_copy, ":are available on this server"), cp != NULL) {
+	while (cp = strstr(msg_copy, ":are available on this server"),
+	       cp != NULL) {
 	    cp++;
 	    (void) memmove(cp - 1, cp, strlen(cp) + 1); /* Delete the colon */
 	}
@@ -116,14 +118,16 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
     };
 
     if (Strfeed(compo->params, 1) != 1) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 1) != 1", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 1) != 1",
+		  compo->command);
 	return;
     }
 
     (void) strtok_r(compo->params, "\n", &state);
 
     if ((msg = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message", compo->command);
+	printtext(&ctx, "On issuing event %s: Unable to extract message",
+		  compo->command);
 	return;
     }
 
@@ -148,8 +152,10 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
    upon successful registration.
 
    Examples:
-     :irc.server.com 265 <nickname> <#> <#> :Current local users <#>, max <#>
-     :irc.server.com 266 <nickname> <#> <#> :Current global users <#>, max <#> */
+     :irc.server.com 265 <nickname> <#> <#>
+                         :Current local users <#>, max <#>
+     :irc.server.com 266 <nickname> <#> <#>
+                         :Current global users <#>, max <#> */
 void
 event_local_and_global_users(struct irc_message_compo *compo)
 {
@@ -183,14 +189,16 @@ event_nicknameInUse(struct irc_message_compo *compo)
     };
 
     if (Strfeed(params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2", compo->command);
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+		  compo->command);
 	return;
     }
 
     (void) strtok_r(params, "\n", &state);
 
     if ((nick = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
+	printtext(&ctx, "On issuing event %s: An error occurred",
+		  compo->command);
 	return;
     }
 
@@ -199,11 +207,13 @@ event_nicknameInUse(struct irc_message_compo *compo)
 
     if (g_connection_in_progress) {
 	if (g_alt_nick_tested) {
-	    printtext(&ctx, "The alt_nick has already been tested. Disconnecting...");
+	    printtext(&ctx, "The alt_nick has already been tested. "
+		"Disconnecting...");
 	    event_welcome_signalit();
 	    irc_unsuccessful_event_cleanup();
 	} else if (!g_alt_nick_tested && *Config("alt_nick")) {
-	    printtext(&ctx, "Testing alt_nick (%s) instead...", Config("alt_nick"));
+	    printtext(&ctx, "Testing alt_nick (%s) instead...",
+		      Config("alt_nick"));
 	    net_send("NICK %s", Config("alt_nick"));
 	    g_alt_nick_tested = true;
 	} else {
@@ -217,7 +227,8 @@ event_nicknameInUse(struct irc_message_compo *compo)
 /* event_channel_forward: 470 (undocumented)
 
    Example:
-     :irc.server.com 470 <my nickname> <from channel> <to channel> :Forwarding to another channel
+     :irc.server.com 470 <my nickname> <from channel> <to channel>
+                         :Forwarding to another channel
 
    Notes:
      The JOIN event is sent AFTER event 470 */
@@ -241,8 +252,8 @@ event_channel_forward(struct irc_message_compo *compo)
     to_channel	 = strtok_r(NULL, "\n", &state);
     msg		 = strtok_r(NULL, "\n", &state);
 
-    if (my_nick == NULL || from_channel == NULL || to_channel == NULL || msg == NULL ||
-	!Strings_match_ignore_case(my_nick, g_my_nickname)) {
+    if (my_nick == NULL || from_channel == NULL || to_channel == NULL ||
+	msg == NULL || !Strings_match_ignore_case(my_nick, g_my_nickname)) {
 	goto bad;
     }
 
