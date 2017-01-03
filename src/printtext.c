@@ -556,6 +556,7 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 static wchar_t *
 perform_convert_buffer(const char **in_buf)
 {
+    bool chars_lost = false;
     const char *ar[] = {
 #if defined(UNIX)
 	"UTF-8",       "utf8",
@@ -592,13 +593,15 @@ perform_convert_buffer(const char **in_buf)
     while (errno = 0, true) {
 	if (mbsrtowcs(&out[wcslen(out)], in_buf, (sz - wcslen(out)) - 1, &ps) ==
 	    CONVERT_FAILED && errno == EILSEQ) {
-	    err_log(EILSEQ, "In perform_convert_buffer: characters lost");
+	    chars_lost = true;
 	    (*in_buf)++;
 	} else
 	    break;
     }
 
     out[sz - 1] = 0;
+    if (chars_lost)
+	err_log(EILSEQ, "In perform_convert_buffer: characters lost");
     return (out);
 }
 
