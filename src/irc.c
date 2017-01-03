@@ -164,6 +164,7 @@ static struct numeric_events_tag {
     { "407", "ERR_TOOMANYTARGETS",      ACTIVE_WINDOW,  2, NULL },
     { "408", "ERR_NOSUCHSERVICE",       ACTIVE_WINDOW,  2, NULL },
     { "412", "ERR_NOTEXTTOSEND",        ACTIVE_WINDOW,  1, NULL },
+    { "421", "ERR_UNKNOWNCOMMAND",      ACTIVE_WINDOW,  2, NULL },
     { "422", "ERR_NOMOTD",              STATUS_WINDOW,  1, NULL },
     { "432", "ERR_ERRONEUSNICKNAME",    ACTIVE_WINDOW,  2, NULL },
     { "433", "ERR_NICKNAMEINUSE",       NO_WINDOW,      0, event_nicknameInUse },

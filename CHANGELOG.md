@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Event 352 `RPL_WHOREPLY`
 - Event 315 `RPL_ENDOFWHO`
 - Event 477 `ERR_NOCHANMODES`
+- Event 421 `ERR_UNKNOWNCOMMAND`
 
 ### Changed ###
 - On event join/part handle an empty user/host.
@@ -20,7 +21,7 @@ All notable changes to this project will be documented in this file.
 - In event_privmsg(): handle an empty user/host.
 
 ### Fixed ###
-- Signal 11 when connecting to Slack.
+- Signal 11 when connecting to [Slack](https://slack.com/).
 
 ## [1.2] - 2016-09-22 ##
 ### Added ###
