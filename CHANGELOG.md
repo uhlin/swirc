@@ -21,6 +21,8 @@ All notable changes to this project will be documented in this file.
 - The prompt for the status window to nothing.
 - In event_privmsg(): handle an empty user/host.
 - Connection timeout to 15 seconds.
+- Don't verify peer per default on WIN32 on SSL connections due to
+  unable to get local issuer certificate.
 
 ### Fixed ###
 - Signal 11 when connecting to [Slack](https://slack.com/).
