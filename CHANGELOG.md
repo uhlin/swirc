@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - In `event_notice`: show prefix/params on error.
 - The prompt for the status window to nothing.
 - In event_privmsg(): handle an empty user/host.
+- Connection timeout to 15 seconds.
 
 ### Fixed ###
 - Signal 11 when connecting to [Slack](https://slack.com/).

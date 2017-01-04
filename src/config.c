@@ -56,7 +56,7 @@ static struct tagConfDefValues {
     { "alt_nick",                  TYPE_STRING,  "warezkid_" },
     { "chanserv_host",             TYPE_STRING,  "services." },
     { "cmd_hist_size",             TYPE_INTEGER, "50" },
-    { "connection_timeout",        TYPE_INTEGER, "45" },
+    { "connection_timeout",        TYPE_INTEGER, "15" },
     { "disable_beeps",             TYPE_BOOLEAN, "no" },
     { "encoding",                  TYPE_STRING,  "iso-8859-1" },
     { "kick_close_window",         TYPE_BOOLEAN, "yes" },
