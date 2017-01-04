@@ -173,6 +173,7 @@ static struct numeric_events_tag {
     { "439", "",                        STATUS_WINDOW,  1, NULL },
     { "441", "ERR_USERNOTINCHANNEL",    ACTIVE_WINDOW,  3, NULL },
     { "443", "ERR_USERONCHANNEL",       ACTIVE_WINDOW,  3, NULL },
+    { "444", "ERR_NOLOGIN",             NO_WINDOW,      0, event_allaround_extract_find_colon },
     { "447", "",                        ACTIVE_WINDOW,  1, NULL },
     { "467", "ERR_KEYSET",              ACTIVE_WINDOW,  2, NULL },
     { "470", "",                        NO_WINDOW,      0, event_channel_forward },

@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Event 315 `RPL_ENDOFWHO`
 - Event 477 `ERR_NOCHANMODES`
 - Event 421 `ERR_UNKNOWNCOMMAND`
+- Event 444 `ERR_NOLOGIN`
 
 ### Changed ###
 - On event join/part handle an empty user/host.

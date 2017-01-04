@@ -146,6 +146,27 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
     free(msg_copy);
 }
 
+/* Not written for a specific event */
+void
+event_allaround_extract_find_colon(struct irc_message_compo *compo)
+{
+    char *cp = NULL;
+    struct printtext_context ctx = {
+	.window     = g_status_window,
+	.spec_type  = TYPE_SPEC1_FAILURE,
+	.include_ts = true,
+    };
+
+    if ((cp = strchr(compo->params, ':')) == NULL) {
+	printtext(&ctx, "on issuing event %s: no colon found", compo->command);
+	return;
+    }
+
+    if (!Strings_match(compo->command, "444"))
+	ctx.spec_type = TYPE_SPEC1;
+    printtext(&ctx, "%s", ++cp);
+}
+
 /* event_local_and_global_users: 265, 266
 
    These aren't documented at the time of writing this. They're sent
