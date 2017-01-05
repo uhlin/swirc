@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 - Connection timeout to 15 seconds.
 - Don't verify peer per default on WIN32 on SSL connections due to
   unable to get local issuer certificate.
+- Decrease `NAMES_HASH_TABLE_SIZE` to 4500.
 
 ### Fixed ###
 - Signal 11 when connecting to [Slack](https://slack.com/).

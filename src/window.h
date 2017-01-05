@@ -13,7 +13,7 @@
 
 #include "textBuffer.h"
 
-#define NAMES_HASH_TABLE_SIZE 6500
+#define NAMES_HASH_TABLE_SIZE 4500
 
 typedef struct tagNAMES {
     char	*nick;
