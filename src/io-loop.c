@@ -1,5 +1,5 @@
 /* Input output loop
-   Copyright (C) 2014-2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -373,6 +373,7 @@ enter_io_loop(void)
 	do_connect(g_cmdline_opts->server, g_cmdline_opts->port);
     }
 
+    (void) unget_wch(MY_KEY_RESIZE);
     history = textBuf_new();
 
     do {
