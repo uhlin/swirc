@@ -1,5 +1,5 @@
 /* Handle event names (353) and event EOF names (366)
-   Copyright (C) 2015, 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -75,18 +75,6 @@ struct name_tag {
 
 static char names_channel[200] = "";
 
-/* Function declarations
-   ===================== */
-
-/*lint -sem(next_names, r_null) */
-
-static int			 names_cmp_fn(const void *, const void *);
-static struct names_chunk	*next_names(PIRC_WINDOW, int *counter);
-static unsigned int		 hash(const char *nick);
-static void			 free_names_chunk(struct names_chunk *);
-static void			 hInstall(const struct hInstall_context *);
-static void			 hUndef(PIRC_WINDOW, PNAMES);
-
 void
 event_names_init(void)
 {
@@ -97,6 +85,69 @@ void
 event_names_deinit(void)
 {
     window_foreach_destroy_names();
+}
+
+static unsigned int
+hash(const char *nick)
+{
+    char		 c;
+    char		*nick_copy = str_tolower(sw_strdup(nick));
+    char		*nick_p	   = nick_copy;
+    unsigned int	 hashval   = 0;
+    unsigned int	 tmp;
+
+    while ((c = *nick_p++) != '\0') {
+	hashval = (hashval << 4) + c;
+	tmp = hashval & 0xf0000000;
+
+	if (tmp) {
+	    hashval ^= (tmp >> 24);
+	    hashval ^= tmp;
+	}
+    }
+
+    free(nick_copy);
+    return (hashval % NAMES_HASH_TABLE_SIZE);
+}
+
+static void
+hInstall(const struct hInstall_context *ctx)
+{
+    PIRC_WINDOW		window_entry = window_by_label(ctx->channel);
+    PNAMES		names_entry;
+    const unsigned int	hashval      = hash(ctx->nick);
+
+    names_entry		    = xcalloc(sizeof *names_entry, 1);
+    names_entry->nick	    = sw_strdup(ctx->nick);
+    names_entry->is_owner   = ctx->is_owner;
+    names_entry->is_superop = ctx->is_superop;
+    names_entry->is_op	    = ctx->is_op;
+    names_entry->is_halfop  = ctx->is_halfop;
+    names_entry->is_voice   = ctx->is_voice;
+
+    if (window_entry) {
+	names_entry->next		  = window_entry->names_hash[hashval];
+	window_entry->names_hash[hashval] = names_entry;
+
+	if (ctx->is_owner)
+	    window_entry->num_owners++;
+	else if (ctx->is_superop)
+	    window_entry->num_superops++;
+	else if (ctx->is_op)
+	    window_entry->num_ops++;
+	else if (ctx->is_halfop)
+	    window_entry->num_halfops++;
+	else if (ctx->is_voice)
+	    window_entry->num_voices++;
+	else
+	    window_entry->num_normal++;
+
+	window_entry->num_total++;
+    } else {
+	err_msg("FATAL: In events/names.c: Can't find a window with label %s",
+		ctx->channel);
+	abort();
+    }
 }
 
 /* event_names: 353
@@ -191,46 +242,6 @@ event_names_htbl_insert(const char *nick, const char *channel)
     hInstall(&ctx);
 
     return OK;
-}
-
-static void
-hInstall(const struct hInstall_context *ctx)
-{
-    PIRC_WINDOW		window_entry = window_by_label(ctx->channel);
-    PNAMES		names_entry;
-    const unsigned int	hashval      = hash(ctx->nick);
-
-    names_entry		    = xcalloc(sizeof *names_entry, 1);
-    names_entry->nick	    = sw_strdup(ctx->nick);
-    names_entry->is_owner   = ctx->is_owner;
-    names_entry->is_superop = ctx->is_superop;
-    names_entry->is_op	    = ctx->is_op;
-    names_entry->is_halfop  = ctx->is_halfop;
-    names_entry->is_voice   = ctx->is_voice;
-
-    if (window_entry) {
-	names_entry->next		  = window_entry->names_hash[hashval];
-	window_entry->names_hash[hashval] = names_entry;
-
-	if (ctx->is_owner)
-	    window_entry->num_owners++;
-	else if (ctx->is_superop)
-	    window_entry->num_superops++;
-	else if (ctx->is_op)
-	    window_entry->num_ops++;
-	else if (ctx->is_halfop)
-	    window_entry->num_halfops++;
-	else if (ctx->is_voice)
-	    window_entry->num_voices++;
-	else
-	    window_entry->num_normal++;
-
-	window_entry->num_total++;
-    } else {
-	err_msg("FATAL: In events/names.c: Can't find a window with label %s",
-		ctx->channel);
-	abort();
-    }
 }
 
 int
@@ -459,6 +470,43 @@ event_names_htbl_modify_voice(const char *nick, const char *channel,
     return ERR;
 }
 
+static void
+hUndef(PIRC_WINDOW window, PNAMES entry)
+{
+    PNAMES tmp;
+    const unsigned int hashval = hash(entry->nick);
+
+    if ((tmp = window->names_hash[hashval]) == entry) {
+	window->names_hash[hashval] = entry->next;
+    } else {
+	while (tmp->next != entry) {
+	    tmp = tmp->next;
+	}
+
+	tmp->next = entry->next;
+    }
+
+    free_and_null(&entry->nick);
+
+    if (entry->is_owner)
+	window->num_owners--;
+    else if (entry->is_superop)
+	window->num_superops--;
+    else if (entry->is_op)
+	window->num_ops--;
+    else if (entry->is_halfop)
+	window->num_halfops--;
+    else if (entry->is_voice)
+	window->num_voices--;
+    else
+	window->num_normal--;
+
+    window->num_total--;
+
+    free_not_null(entry);
+    entry = NULL;
+}
+
 int
 event_names_htbl_remove(const char *nick, const char *channel)
 {
@@ -523,66 +571,6 @@ event_names_htbl_remove_all(PIRC_WINDOW window)
     }
 }
 
-static void
-hUndef(PIRC_WINDOW window, PNAMES entry)
-{
-    PNAMES tmp;
-    const unsigned int hashval = hash(entry->nick);
-
-    if ((tmp = window->names_hash[hashval]) == entry) {
-	window->names_hash[hashval] = entry->next;
-    } else {
-	while (tmp->next != entry) {
-	    tmp = tmp->next;
-	}
-
-	tmp->next = entry->next;
-    }
-
-    free_and_null(&entry->nick);
-
-    if (entry->is_owner)
-	window->num_owners--;
-    else if (entry->is_superop)
-	window->num_superops--;
-    else if (entry->is_op)
-	window->num_ops--;
-    else if (entry->is_halfop)
-	window->num_halfops--;
-    else if (entry->is_voice)
-	window->num_voices--;
-    else
-	window->num_normal--;
-
-    window->num_total--;
-
-    free_not_null(entry);
-    entry = NULL;
-}
-
-static unsigned int
-hash(const char *nick)
-{
-    char		 c;
-    char		*nick_copy = str_tolower(sw_strdup(nick));
-    char		*nick_p	   = nick_copy;
-    unsigned int	 hashval   = 0;
-    unsigned int	 tmp;
-
-    while ((c = *nick_p++) != '\0') {
-	hashval = (hashval << 4) + c;
-	tmp = hashval & 0xf0000000;
-
-	if (tmp) {
-	    hashval ^= (tmp >> 24);
-	    hashval ^= tmp;
-	}
-    }
-
-    free(nick_copy);
-    return (hashval % NAMES_HASH_TABLE_SIZE);
-}
-
 /* event_eof_names: 366
 
    Example:
@@ -618,6 +606,150 @@ event_eof_names(struct irc_message_compo *compo)
   bad:
     err_msg("In event_eof_names: FATAL ERROR. Aborting...");
     abort();
+}
+
+static void
+free_names_chunk(struct names_chunk *names)
+{
+    free_not_null(names->nick1);
+    free_not_null(names->nick2);
+    free_not_null(names->nick3);
+    free_not_null(names->nick4);
+    free_not_null(names->nick5);
+    free_not_null(names->nick6);
+    free_not_null(names->nick7);
+    free_not_null(names->nick8);
+    free_not_null(names->nick9);
+    free_not_null(names->nick10);
+
+    free(names);
+}
+
+/*lint -sem(next_names, r_null) */
+static struct names_chunk *
+next_names(PIRC_WINDOW window, int *counter)
+{
+    struct names_chunk	*names	 = xcalloc(sizeof *names, 1);
+    PNAMES		*entry_p = & (window->names_hash[*counter]);
+
+    names->nick1 = names->nick2 = names->nick3 = names->nick4 = names->nick5 =
+	NULL;
+    names->nick6 = names->nick7 = names->nick8 = names->nick9 = names->nick10 =
+	NULL;
+
+    for (PNAMES p = *entry_p; p != NULL; p = p->next) {
+	char c;
+
+	if (p->is_owner) {
+	    c = '~';
+	} else if (p->is_superop) {
+	    c = '&';
+	} else if (p->is_op) {
+	    c = '@';
+	} else if (p->is_halfop) {
+	    c = '%';
+	} else if (p->is_voice) {
+	    c = '+';
+	} else {
+	    c = ' ';
+	}
+
+	if (isNull(names->nick1)) {
+	    names->nick1 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick2)) {
+	    names->nick2 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick3)) {
+	    names->nick3 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick4)) {
+	    names->nick4 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick5)) {
+	    names->nick5 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick6)) {
+	    names->nick6 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick7)) {
+	    names->nick7 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick8)) {
+	    names->nick8 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick9)) {
+	    names->nick9 = Strdup_printf("%c%s", c, p->nick);
+	} else if (isNull(names->nick10)) {
+	    names->nick10 = Strdup_printf("%c%s", c, p->nick);
+	} else { /* All busy. It's unlikely but it CAN happen. */
+	    free_names_chunk(names);
+	    return (NULL);
+	}
+    }
+
+    return (names);
+}
+
+static int
+names_cmp_fn(const void *obj1, const void *obj2)
+{
+    const struct name_tag	*p1    = obj1;
+    const struct name_tag	*p2    = obj2;
+    const char			*nick1 = p1 && p1->s ? p1->s : NULL;
+    const char			*nick2 = p2 && p2->s ? p2->s : NULL;
+
+    if (nick1 == NULL) {
+	return (1);
+    } else if (nick2 == NULL) {
+	return (-1);
+    } else {
+	if (*nick1 == ' ') {
+	    nick1++;
+	}
+
+	if (*nick2 == ' ') {
+	    nick2++;
+	}
+
+	switch (*nick1) {
+	case '~':
+	    if (*nick2 == '&' || *nick2 == '@' || *nick2 == '%' ||
+		*nick2 == '+' || *nick2 != '~')
+		return (-1);
+	    break;
+	case '&':
+	    if (*nick2 == '@' || *nick2 == '%' || *nick2 == '+')
+		return (-1);
+	    break;
+	case '@':
+	    if (*nick2 == '%' || *nick2 == '+')
+		return (-1);
+	    break;
+	case '%':
+	    if (*nick2 == '+')
+		return (-1);
+	    break;
+	case '+':
+	    break;
+	}
+
+	switch (*nick2) {
+	case '~':
+	    if (*nick1 == '&' || *nick1 == '@' || *nick1 == '%' ||
+		*nick1 == '+' || *nick1 != '~')
+		return (1);
+	    break;
+	case '&':
+	    if (*nick1 == '@' || *nick1 == '%' || *nick1 == '+')
+		return (1);
+	    break;
+	case '@':
+	    if (*nick1 == '%' || *nick1 == '+')
+		return (1);
+	    break;
+	case '%':
+	    if (*nick1 == '+')
+		return (1);
+	    break;
+	case '+':
+	    break;
+	}
+    }
+
+    return (strcasecmp(nick1, nick2));
 }
 
 int
@@ -779,147 +911,4 @@ event_names_print_all(const char *channel)
 	    BOLD, window->num_superops, BOLD);
 
     return OK;
-}
-
-static struct names_chunk *
-next_names(PIRC_WINDOW window, int *counter)
-{
-    struct names_chunk	*names	 = xcalloc(sizeof *names, 1);
-    PNAMES		*entry_p = & (window->names_hash[*counter]);
-
-    names->nick1 = names->nick2 = names->nick3 = names->nick4 = names->nick5 =
-	NULL;
-    names->nick6 = names->nick7 = names->nick8 = names->nick9 = names->nick10 =
-	NULL;
-
-    for (PNAMES p = *entry_p; p != NULL; p = p->next) {
-	char c;
-
-	if (p->is_owner) {
-	    c = '~';
-	} else if (p->is_superop) {
-	    c = '&';
-	} else if (p->is_op) {
-	    c = '@';
-	} else if (p->is_halfop) {
-	    c = '%';
-	} else if (p->is_voice) {
-	    c = '+';
-	} else {
-	    c = ' ';
-	}
-
-	if (isNull(names->nick1)) {
-	    names->nick1 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick2)) {
-	    names->nick2 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick3)) {
-	    names->nick3 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick4)) {
-	    names->nick4 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick5)) {
-	    names->nick5 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick6)) {
-	    names->nick6 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick7)) {
-	    names->nick7 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick8)) {
-	    names->nick8 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick9)) {
-	    names->nick9 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick10)) {
-	    names->nick10 = Strdup_printf("%c%s", c, p->nick);
-	} else { /* All busy. It's unlikely but it CAN happen. */
-	    free_names_chunk(names);
-	    return (NULL);
-	}
-    }
-
-    return (names);
-}
-
-static void
-free_names_chunk(struct names_chunk *names)
-{
-    free_not_null(names->nick1);
-    free_not_null(names->nick2);
-    free_not_null(names->nick3);
-    free_not_null(names->nick4);
-    free_not_null(names->nick5);
-    free_not_null(names->nick6);
-    free_not_null(names->nick7);
-    free_not_null(names->nick8);
-    free_not_null(names->nick9);
-    free_not_null(names->nick10);
-
-    free(names);
-}
-
-static int
-names_cmp_fn(const void *obj1, const void *obj2)
-{
-    const struct name_tag	*p1    = obj1;
-    const struct name_tag	*p2    = obj2;
-    const char			*nick1 = p1 && p1->s ? p1->s : NULL;
-    const char			*nick2 = p2 && p2->s ? p2->s : NULL;
-
-    if (nick1 == NULL) {
-	return (1);
-    } else if (nick2 == NULL) {
-	return (-1);
-    } else {
-	if (*nick1 == ' ') {
-	    nick1++;
-	}
-
-	if (*nick2 == ' ') {
-	    nick2++;
-	}
-
-	switch (*nick1) {
-	case '~':
-	    if (*nick2 == '&' || *nick2 == '@' || *nick2 == '%' ||
-		*nick2 == '+' || *nick2 != '~')
-		return (-1);
-	    break;
-	case '&':
-	    if (*nick2 == '@' || *nick2 == '%' || *nick2 == '+')
-		return (-1);
-	    break;
-	case '@':
-	    if (*nick2 == '%' || *nick2 == '+')
-		return (-1);
-	    break;
-	case '%':
-	    if (*nick2 == '+')
-		return (-1);
-	    break;
-	case '+':
-	    break;
-	}
-
-	switch (*nick2) {
-	case '~':
-	    if (*nick1 == '&' || *nick1 == '@' || *nick1 == '%' ||
-		*nick1 == '+' || *nick1 != '~')
-		return (1);
-	    break;
-	case '&':
-	    if (*nick1 == '@' || *nick1 == '%' || *nick1 == '+')
-		return (1);
-	    break;
-	case '@':
-	    if (*nick1 == '%' || *nick1 == '+')
-		return (1);
-	    break;
-	case '%':
-	    if (*nick1 == '+')
-		return (1);
-	    break;
-	case '+':
-	    break;
-	}
-    }
-
-    return (strcasecmp(nick1, nick2));
 }
