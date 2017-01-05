@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed ###
 - Signal 11 when connecting to [Slack](https://slack.com/).
+- Instead of using slots for chunks of names, use a linked list.
 
 ## [1.2] - 2016-09-22 ##
 ### Added ###

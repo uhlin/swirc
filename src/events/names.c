@@ -53,18 +53,10 @@ struct hInstall_context {
     bool	 is_voice;
 };
 
-struct names_chunk {
-    char *nick1;
-    char *nick2;
-    char *nick3;
-    char *nick4;
-    char *nick5;
-    char *nick6;
-    char *nick7;
-    char *nick8;
-    char *nick9;
-    char *nick10;
-};
+typedef struct tagCHUNK {
+    char *nick;
+    struct tagCHUNK *next;
+} CHUNK, *PCHUNK;
 
 struct name_tag {
     char *s;
@@ -609,33 +601,25 @@ event_eof_names(struct irc_message_compo *compo)
 }
 
 static void
-free_names_chunk(struct names_chunk *names)
+free_names_chunk(PCHUNK head)
 {
-    free_not_null(names->nick1);
-    free_not_null(names->nick2);
-    free_not_null(names->nick3);
-    free_not_null(names->nick4);
-    free_not_null(names->nick5);
-    free_not_null(names->nick6);
-    free_not_null(names->nick7);
-    free_not_null(names->nick8);
-    free_not_null(names->nick9);
-    free_not_null(names->nick10);
+    PCHUNK p, tmp;
 
-    free(names);
+    for (p = head; p; p = tmp) {
+	tmp = p->next;
+	free(p->nick);
+	free(p);
+    }
 }
 
 /*lint -sem(next_names, r_null) */
-static struct names_chunk *
+static PCHUNK
 next_names(PIRC_WINDOW window, int *counter)
 {
-    struct names_chunk	*names	 = xcalloc(sizeof *names, 1);
-    PNAMES		*entry_p = & (window->names_hash[*counter]);
-
-    names->nick1 = names->nick2 = names->nick3 = names->nick4 = names->nick5 =
-	NULL;
-    names->nick6 = names->nick7 = names->nick8 = names->nick9 = names->nick10 =
-	NULL;
+    PCHUNK  head        = NULL;
+    PCHUNK  new_element = NULL;
+    PCHUNK  temp        = NULL;
+    PNAMES *entry_p     = & (window->names_hash[*counter]);
 
     for (PNAMES p = *entry_p; p != NULL; p = p->next) {
 	char c;
@@ -654,33 +638,24 @@ next_names(PIRC_WINDOW window, int *counter)
 	    c = ' ';
 	}
 
-	if (isNull(names->nick1)) {
-	    names->nick1 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick2)) {
-	    names->nick2 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick3)) {
-	    names->nick3 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick4)) {
-	    names->nick4 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick5)) {
-	    names->nick5 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick6)) {
-	    names->nick6 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick7)) {
-	    names->nick7 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick8)) {
-	    names->nick8 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick9)) {
-	    names->nick9 = Strdup_printf("%c%s", c, p->nick);
-	} else if (isNull(names->nick10)) {
-	    names->nick10 = Strdup_printf("%c%s", c, p->nick);
-	} else { /* All busy. It's unlikely but it CAN happen. */
-	    free_names_chunk(names);
-	    return (NULL);
+	if (!head) {
+	    head = xmalloc(sizeof (CHUNK));
+	    head->nick = Strdup_printf("%c%s", c, p->nick);
+	    head->next = NULL;
+	    continue;
 	}
+
+	new_element = xmalloc(sizeof (CHUNK));
+	new_element->nick = Strdup_printf("%c%s", c, p->nick);
+	new_element->next = NULL;
+
+	temp = head;
+	while (temp->next)
+	    temp = temp->next;
+	temp->next = new_element;
     }
 
-    return (names);
+    return (head);
 }
 
 static int
@@ -759,7 +734,6 @@ event_names_print_all(const char *channel)
     int				 counter, i;
     int				 ntp1;
     struct name_tag		*names_array;
-    struct names_chunk		*names;
     struct printtext_context	 ptext_ctx;
 
     if ((window = window_by_label(channel)) == NULL) {
@@ -776,43 +750,15 @@ event_names_print_all(const char *channel)
     names_array = xcalloc(ntp1, sizeof (struct name_tag));
 
     for (counter = i = 0; counter < NAMES_HASH_TABLE_SIZE; counter++) {
-	if ((names = next_names(window, &counter)) != NULL) {
-	    if (!isNull(names->nick1)) {
-		names_array[i++].s = sw_strdup(names->nick1);
-	    }
+	PCHUNK head, element;
 
-	    if (!isNull(names->nick2)) {
-		names_array[i++].s = sw_strdup(names->nick2);
-	    }
+	if ((head = next_names(window, &counter)) == NULL)
+	    continue;
 
-	    if (!isNull(names->nick3)) {
-		names_array[i++].s = sw_strdup(names->nick3);
-	    }
+	for (element = head; element; element = element->next)
+	    names_array[i++].s = sw_strdup(element->nick);
 
-	    if (!isNull(names->nick4)) {
-		names_array[i++].s = sw_strdup(names->nick4);
-	    }
-
-	    if (!isNull(names->nick5)) {
-		names_array[i++].s = sw_strdup(names->nick5);
-	    }
-
-	    /* 2016-09-20 markus: more slots added */
-	    if (!isNull(names->nick6))
-		names_array[i++].s = sw_strdup(names->nick6);
-	    if (!isNull(names->nick7))
-		names_array[i++].s = sw_strdup(names->nick7);
-	    if (!isNull(names->nick8))
-		names_array[i++].s = sw_strdup(names->nick8);
-	    if (!isNull(names->nick9))
-		names_array[i++].s = sw_strdup(names->nick9);
-	    if (!isNull(names->nick10))
-		names_array[i++].s = sw_strdup(names->nick10);
-	} else {
-	    return ERR;
-	}
-
-	free_names_chunk(names);
+	free_names_chunk(head);
     }
 
     qsort(&names_array[0], ntp1, sizeof (struct name_tag), names_cmp_fn);
