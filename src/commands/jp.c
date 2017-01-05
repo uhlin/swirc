@@ -1,5 +1,5 @@
 /* join and part commands
-   Copyright (C) 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -45,7 +45,8 @@ cmd_join(const char *data)
     char *dcopy = sw_strdup(data);
     char *state = "";
 
-    if (Strings_match(dcopy, "") || (channel = strtok_r(dcopy, " ", &state)) == NULL) {
+    if (Strings_match(dcopy, "") ||
+	(channel = strtok_r(dcopy, " ", &state)) == NULL) {
 	print_and_free("/join: missing arguments", dcopy);
 	return;
     }
@@ -81,9 +82,11 @@ cmd_part(const char *data)
     char *dcopy = sw_strdup(data);
     char *state = "";
 
-    if (Strings_match(dcopy, "") || (channel = strtok_r(dcopy, " ", &state)) == NULL) {
+    if (Strings_match(dcopy, "") ||
+	(channel = strtok_r(dcopy, " ", &state)) == NULL) {
 	if (is_irc_channel(g_active_window->label)) {
-	    if (net_send("PART %s :%s", g_active_window->label, Config("part_message")) < 0)
+	    if (net_send("PART %s :%s", g_active_window->label,
+			 Config("part_message")) < 0)
 		g_on_air = false;
 	} else {
 	    print_and_free("/part: missing arguments", NULL);
