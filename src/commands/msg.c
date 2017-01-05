@@ -1,5 +1,5 @@
 /* command /msg
-   Copyright (C) 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -54,12 +54,15 @@ cmd_msg(const char *data)
 	print_and_free("/msg: neither a nickname or irc channel", dcopy);
 	return;
     } else if (Strings_match_ignore_case(recipient, "ChanServ")) {
-	print_and_free("/msg: for safety reasons: consider using command /chanserv", dcopy);
+	print_and_free("/msg: for safety reasons: "
+	    "consider using command /chanserv", dcopy);
 	return;
     } else if (Strings_match_ignore_case(recipient, "NickServ")) {
-	print_and_free("/msg: for safety reasons: consider using command /nickserv", dcopy);
+	print_and_free("/msg: for safety reasons: "
+	    "consider using command /nickserv", dcopy);
 	return;
-    } else if (window_by_label(recipient) == NULL && is_valid_nickname(recipient)) {
+    } else if (window_by_label(recipient) == NULL &&
+	       is_valid_nickname(recipient)) {
 	if (spawn_chat_window(recipient, "") != 0) {
 	    print_and_free("/msg: fatal: cannot spawn chat window!", dcopy);
 	    return;
@@ -67,7 +70,8 @@ cmd_msg(const char *data)
 
 	transmit_user_input(recipient, message);
 	free(dcopy);
-    } else if (window_by_label(recipient) == NULL && is_irc_channel(recipient)) {
+    } else if (window_by_label(recipient) == NULL &&
+	       is_irc_channel(recipient)) {
 	print_and_free("/msg: not on that channel", dcopy);
 	return;
     } else {
