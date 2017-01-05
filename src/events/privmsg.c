@@ -1,5 +1,5 @@
 /* Handles event PRIVMSG
-   Copyright (C) 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -87,6 +87,20 @@ handle_special_msg(const struct special_msg_context *ctx)
     free(msg);
 }
 
+static void
+broadcast_window_activity(PIRC_WINDOW src)
+{
+    struct printtext_context ctx = {
+	.window	    = g_active_window,
+	.spec_type  = TYPE_SPEC1_WARN,
+	.include_ts = true,
+    };
+
+    if (src)
+	printtext(&ctx, "activity at window %c%s%c (refnum: %d)",
+		  BOLD, src->label, BOLD, src->refnum);
+}
+
 /* event_privmsg
 
    Examples:
@@ -156,6 +170,9 @@ event_privmsg(struct irc_message_compo *compo)
 
 	printtext(&ctx, "%s%s%s%c%s %s",
 	    Theme("nick_s1"), COLOR2, nick, NORMAL, Theme("nick_s2"), msg);
+
+	if (ctx.window != g_active_window)
+	    broadcast_window_activity(ctx.window);
     } else {
 	PNAMES	n = NULL;
 	char	c = ' ';
