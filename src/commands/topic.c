@@ -20,10 +20,12 @@ cmd_topic(const char *data)
     if (Strings_match(data, "") && is_irc_channel(g_active_window->label)) {
 	if (net_send("TOPIC %s", g_active_window->label) < 0)
 	    g_on_air = false;
-    } else if (!Strings_match(data, "") && is_irc_channel(g_active_window->label)) {
+    } else if (!Strings_match(data, "") &&
+	       is_irc_channel(g_active_window->label)) {
 	if (net_send("TOPIC %s :%s", g_active_window->label, data) < 0)
 	    g_on_air = false;
     } else {
-	printtext(&ctx, "/topic: switch to a channel in order to set a new topic for it");
+	printtext(&ctx, "/topic: "
+	    "switch to a channel in order to set a new topic for it");
     }
 }
