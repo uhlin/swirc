@@ -76,7 +76,8 @@ static struct cmds_tag {
 } cmds[] = {
     { "away",       cmd_away,       true,  "/away [reason]" },
     { "banlist",    cmd_banlist,    true,  "/banlist [channel]" },
-    { "chanserv",   cmd_chanserv,   true,  "/chanserv <service hostname | --> <command> [...]" },
+    { "chanserv",   cmd_chanserv,   true,  "/chanserv "
+      "<service hostname | --> <command> [...]" },
     { "connect",    cmd_connect,    false, "/connect [-ssl] <server[:port]>" },
     { "disconnect", cmd_disconnect, true,  "/disconnect [message]" },
     { "exlist",     cmd_exlist,     true,  "/exlist [channel]" },
@@ -84,14 +85,17 @@ static struct cmds_tag {
     { "ilist",      cmd_ilist,      true,  "/ilist [channel]" },
     { "invite",     cmd_invite,     true,  "/invite <targ_nick> <channel>" },
     { "join",       cmd_join,       true,  "/join <channel> [key]" },
-    { "kick",       cmd_kick,       true,  "/kick <nick1[,nick2][,nick3][...]> [reason]" },
-    { "list",       cmd_list,       true,  "/list [<max_users[,>min_users][,pattern][...]]" },
+    { "kick",       cmd_kick,       true,  "/kick "
+      "<nick1[,nick2][,nick3][...]> [reason]" },
+    { "list",       cmd_list,       true,  "/list "
+      "[<max_users[,>min_users][,pattern][...]]" },
     { "me",         cmd_me,         true,  "/me <message>" },
     { "mode",       cmd_mode,       true,  "/mode <modes> [...]" },
     { "msg",        cmd_msg,        true,  "/msg <recipient> <message>" },
     { "n",          cmd_names,      true,  "/n [channel]" },
     { "nick",       cmd_nick,       true,  "/nick <new nickname>" },
-    { "nickserv",   cmd_nickserv,   true,  "/nickserv <service hostname | --> <command> [...]" },
+    { "nickserv",   cmd_nickserv,   true,  "/nickserv "
+      "<service hostname | --> <command> [...]" },
     { "notice",     cmd_notice,     true,  "/notice <recipient> <message>" },
     { "part",       cmd_part,       true,  "/part [channel] [message]" },
     { "query",      cmd_query,      false, "/query [nick]" },
@@ -180,18 +184,22 @@ swirc_greeting()
     printtext(&ptext_ctx, " ");
 
     printtext(&ptext_ctx, "    Swirc %s by %s", g_swircVersion, g_swircAuthor);
-    printtext(&ptext_ctx, "    Compiled on %s%s %s%s", LEFT_BRKT, __DATE__, __TIME__, RIGHT_BRKT);
+    printtext(&ptext_ctx, "    Compiled on %s%s %s%s",
+	      LEFT_BRKT, __DATE__, __TIME__, RIGHT_BRKT);
 
     if (g_initialized_pairs < 0) {
 	g_initialized_pairs = 0;
     }
 
     printtext(&ptext_ctx, " ");
-    printtext(&ptext_ctx, "Program settings are stored in %s%s%s", LEFT_BRKT, g_home_dir, RIGHT_BRKT);
-    printtext(&ptext_ctx, "%c%hd%c color pairs have been initialized", BOLD, g_initialized_pairs, BOLD);
+    printtext(&ptext_ctx, "Program settings are stored in %s%s%s",
+	      LEFT_BRKT, g_home_dir, RIGHT_BRKT);
+    printtext(&ptext_ctx, "%c%hd%c color pairs have been initialized",
+	      BOLD, g_initialized_pairs, BOLD);
     printtext(&ptext_ctx, "Type /help for a list of commands");
     if (get_error_log_size(&log_size_kb))
-	printtext(&ptext_ctx, "Error log size %s%.1f KB%s", LEFT_BRKT, log_size_kb, RIGHT_BRKT);
+	printtext(&ptext_ctx, "Error log size %s%.1f KB%s",
+		  LEFT_BRKT, log_size_kb, RIGHT_BRKT);
     printtext(&ptext_ctx, " ");
 }
 
@@ -199,7 +207,8 @@ swirc_greeting()
 static char *
 get_prompt()
 {
-    if (Strings_match_ignore_case(g_active_window->label, g_status_window_label)) {
+    if (Strings_match_ignore_case(g_active_window->label,
+				  g_status_window_label)) {
 	return (sw_strdup(""));
     } else if (is_irc_channel(g_active_window->label)) {
 	return (Strdup_printf("%s: ", g_active_window->label));
@@ -341,7 +350,8 @@ add_to_history(const char *string)
     };
     const int tbszp1 = textBuf_size(history) + 1;
 
-    if (config_integer_unparse(&unparse_ctx) == 0 || !strncasecmp(string, "/nickserv ", 10))
+    if (config_integer_unparse(&unparse_ctx) == 0 ||
+	!strncasecmp(string, "/nickserv ", 10))
 	return;
 
     if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
@@ -355,7 +365,8 @@ add_to_history(const char *string)
 	if ((errno = textBuf_ins_next(history, NULL, string, -1)) != 0)
 	    err_sys("textBuf_ins_next");
     } else {
-	if ((errno = textBuf_ins_next(history, textBuf_tail(history), string, -1)) != 0)
+	if ((errno = textBuf_ins_next(history, textBuf_tail(history), string,
+				      -1)) != 0)
 	    err_sys("textBuf_ins_next");
     }
 }
@@ -397,7 +408,8 @@ enter_io_loop(void)
 	} else if (*line == cmd_char) {
 	    handle_cmds(&line[1]);
 	} else {
-	    if (g_on_air && !Strings_match(g_active_window->label, g_status_window_label)) {
+	    if (g_on_air && !Strings_match(g_active_window->label,
+					   g_status_window_label)) {
 		struct printtext_context ptext_ctx = {
 		    .window     = g_active_window,
 		    .spec_type  = TYPE_SPEC_NONE,
@@ -406,7 +418,8 @@ enter_io_loop(void)
 
 		if (config_bool_unparse("recode", true)) {
 		    ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
-		    printtext(&ptext_ctx, "Can't recode user input before transmit (yet unsupported)");
+		    printtext(&ptext_ctx, "Can't recode user input "
+			"before transmit (yet unsupported)");
 		} else { /* don't recode... */
 		    transmit_user_input(g_active_window->label, line);
 		}
