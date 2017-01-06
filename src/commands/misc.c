@@ -266,3 +266,17 @@ cmd_who(const char *data)
 	    g_on_air = false;
     }
 }
+
+/* usage: /rules */
+void
+cmd_rules(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (!Strings_match(data, "")) {
+	printtext(&ptext_ctx, "/rules: implicit trailing data");
+    } else {
+	if (net_send("RULES") < 0)
+	    g_on_air = false;
+    }
+}

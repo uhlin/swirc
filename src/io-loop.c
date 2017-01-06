@@ -101,6 +101,7 @@ static struct cmds_tag {
     { "query",      cmd_query,      false, "/query [nick]" },
     { "quit",       cmd_quit,       false, "/quit [message]" },
     { "resize",     cmd_resize,     false, "/resize" },
+    { "rules",      cmd_rules,      true,  "/rules" },
     { "say",        cmd_say,        true,  "/say <message>" },
     { "topic",      cmd_topic,      true,  "/topic [new topic]" },
     { "who",        cmd_who,        true,  "/who [mask]" },
