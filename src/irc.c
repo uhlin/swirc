@@ -1,5 +1,5 @@
 /* Handle and interpret IRC events
-   Copyright (C) 2014-2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -102,6 +102,7 @@ static struct numeric_events_tag {
     { "020", "",                        STATUS_WINDOW,  1, NULL },
     { "042", "",                        NO_WINDOW,      0, event_allaround_extract_remove_colon },
     { "221", "RPL_UMODEIS",             STATUS_WINDOW,  1, NULL },
+    { "232", "",                        ACTIVE_WINDOW,  1, NULL },
     { "250", "",                        STATUS_WINDOW,  1, NULL },
     { "251", "RPL_LUSERCLIENT",         STATUS_WINDOW,  1, NULL },
     { "252", "RPL_LUSEROP",             NO_WINDOW,      0, event_allaround_extract_remove_colon },
@@ -117,6 +118,8 @@ static struct numeric_events_tag {
     { "305", "RPL_UNAWAY",              ACTIVE_WINDOW,  1, NULL },
     { "306", "RPL_NOWAWAY",             ACTIVE_WINDOW,  1, NULL },
     { "307", "",                        NO_WINDOW,      0, event_whois_service },
+    { "308", "",                        ACTIVE_WINDOW,  1, NULL },
+    { "309", "",                        ACTIVE_WINDOW,  1, NULL },
     { "310", "",                        NO_WINDOW,      0, event_whois_modes },
     { "311", "RPL_WHOISUSER",           NO_WINDOW,      0, event_whois_user },
     { "312", "RPL_WHOISSERVER",         NO_WINDOW,      0, event_whois_server },

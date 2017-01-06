@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file.
 - Event 444 `ERR_NOLOGIN`
 - Broadcast window activity for private messages
 - Command /rules
+- Event 232, 308 and 309 (numeric replies for /rules -- undocumented
+  in the RFC)
 
 ### Changed ###
 - On event join/part handle an empty user/host.
