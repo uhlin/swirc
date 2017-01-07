@@ -1,5 +1,5 @@
 /* Window functions
-   Copyright (C) 2012-2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -77,17 +77,6 @@ int		g_ntotal_windows        = 0;
 
 static PIRC_WINDOW hash_table[200];
 
-/* Function declarations
-   ===================== */
-
-static PIRC_WINDOW	hInstall                (const struct hInstall_context *);
-static unsigned int	hash                    (const char *label);
-static void		apply_window_options    (WINDOW *);
-static void		hUndef                  (PIRC_WINDOW entry);
-static void		reassign_window_refnums (void);
-static void		window_recreate         (PIRC_WINDOW, int rows, int cols);
-static void		window_redraw           (PIRC_WINDOW, const int rows, const int pos, bool limit_output);
-
 void
 windowSystem_init(void)
 {
@@ -109,112 +98,27 @@ windowSystem_init(void)
     }
 }
 
-void
-windowSystem_deinit(void)
+static unsigned int
+hash(const char *label)
 {
-    PIRC_WINDOW *entry_p;
-    PIRC_WINDOW p, tmp;
+    char		 c;
+    char		*label_copy = str_tolower(sw_strdup(label));
+    char		*label_p    = label_copy;
+    unsigned int	 hashval    = 0;
+    unsigned int	 tmp;
 
-    foreach_hash_table_entry(entry_p) {
-	for (p = *entry_p; p != NULL; p = tmp) {
-	    tmp = p->next;
-	    hUndef(p);
+    while ((c = *label_p++) != '\0') {
+	hashval = (hashval << 4) + c;
+	tmp = hashval & 0xf0000000;
+
+	if (tmp) {
+	    hashval ^= (tmp >> 24);
+	    hashval ^= tmp;
 	}
     }
-}
 
-int
-spawn_chat_window(const char *label, const char *title)
-{
-    const int ntotalp1 = g_ntotal_windows + 1;
-    struct integer_unparse_context unparse_ctx = {
-	.setting_name	  = "max_chat_windows",
-	.fallback_default = 60,
-	.lo_limit	  = 10,
-	.hi_limit	  = 200,
-    };
-
-    if (isNull(label) || isEmpty(label)) {
-	return (EINVAL);	/* a label is required */
-    } else if (window_by_label(label) != NULL) {
-	return (0);		/* window already exists  --  reuse it */
-    } else if (ntotalp1 > config_integer_unparse(&unparse_ctx)) {
-	return (ENOSPC);
-    } else {
-	struct hInstall_context inst_ctx = {
-	    .label  = (char *) label,
-	    .title  = (char *) title,
-	    .pan    = term_new_panel(LINES - 2, 0, 1, 0),
-	    .refnum = g_ntotal_windows + 1,
-	};
-	PIRC_WINDOW entry = hInstall(&inst_ctx);
-
-	apply_window_options(panel_window(entry->pan));
-	errno = changeWindow_by_label(entry->label);
-	sw_assert_perror(errno);
-    }
-
-    return (0);
-}
-
-int
-destroy_chat_window(const char *label)
-{
-    PIRC_WINDOW window;
-
-    if (isNull(label) || isEmpty(label) ||
-	Strings_match_ignore_case(label, g_status_window_label)) {
-	return (EINVAL);
-    } else if ((window = window_by_label(label)) == NULL) {
-	return (ENOENT);
-    } else {
-	hUndef(window);
-	reassign_window_refnums();
-	errno = changeWindow_by_refnum(g_ntotal_windows);
-	sw_assert_perror(errno);
-    }
-
-    return (0);
-}
-
-static PIRC_WINDOW
-hInstall(const struct hInstall_context *ctx)
-{
-    PIRC_WINDOW		 entry;
-    PNAMES		*n_ent;
-    unsigned int	 hashval;
-
-    entry	  = xcalloc(sizeof *entry, 1);
-    entry->label  = sw_strdup(ctx->label);
-    entry->title  =
-	(isNull(ctx->title) || isEmpty(ctx->title) ? NULL : sw_strdup(ctx->title));
-    entry->pan    = ctx->pan;
-    entry->refnum = ctx->refnum;
-    entry->buf    = textBuf_new();
-
-    entry->saved_size	= 0;
-    entry->scroll_count = 0;
-    entry->scroll_mode	= false;
-
-    for (n_ent = &entry->names_hash[0]; n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE]; n_ent++) {
-	*n_ent = NULL;
-    }
-
-    entry->num_owners	= 0;
-    entry->num_superops = 0;
-    entry->num_ops	= 0;
-    entry->num_halfops	= 0;
-    entry->num_voices	= 0;
-    entry->num_normal	= 0;
-    entry->num_total	= 0;
-
-    hashval             = hash(ctx->label);
-    entry->next         = hash_table[hashval];
-    hash_table[hashval] = entry;
-
-    g_ntotal_windows++;
-
-    return entry;
+    free(label_copy);
+    return (hashval % ARRAY_SIZE(hash_table));
 }
 
 static void
@@ -258,27 +162,18 @@ hUndef(PIRC_WINDOW entry)
     g_ntotal_windows--;
 }
 
-static unsigned int
-hash(const char *label)
+void
+windowSystem_deinit(void)
 {
-    char		 c;
-    char		*label_copy = str_tolower(sw_strdup(label));
-    char		*label_p    = label_copy;
-    unsigned int	 hashval    = 0;
-    unsigned int	 tmp;
+    PIRC_WINDOW *entry_p;
+    PIRC_WINDOW p, tmp;
 
-    while ((c = *label_p++) != '\0') {
-	hashval = (hashval << 4) + c;
-	tmp = hashval & 0xf0000000;
-
-	if (tmp) {
-	    hashval ^= (tmp >> 24);
-	    hashval ^= tmp;
+    foreach_hash_table_entry(entry_p) {
+	for (p = *entry_p; p != NULL; p = tmp) {
+	    tmp = p->next;
+	    hUndef(p);
 	}
     }
-
-    free(label_copy);
-    return (hashval % ARRAY_SIZE(hash_table));
 }
 
 static void
@@ -287,6 +182,118 @@ apply_window_options(WINDOW *win)
     if (!is_scrollok(win)) {
 	(void) scrollok(win, true);
     }
+}
+
+static PIRC_WINDOW
+hInstall(const struct hInstall_context *ctx)
+{
+    PIRC_WINDOW		 entry;
+    PNAMES		*n_ent;
+    unsigned int	 hashval;
+
+    entry	  = xcalloc(sizeof *entry, 1);
+    entry->label  = sw_strdup(ctx->label);
+    entry->title  =
+	(isNull(ctx->title) || isEmpty(ctx->title) ? NULL : sw_strdup(ctx->title));
+    entry->pan    = ctx->pan;
+    entry->refnum = ctx->refnum;
+    entry->buf    = textBuf_new();
+
+    entry->saved_size	= 0;
+    entry->scroll_count = 0;
+    entry->scroll_mode	= false;
+
+    for (n_ent = &entry->names_hash[0]; n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE]; n_ent++) {
+	*n_ent = NULL;
+    }
+
+    entry->num_owners	= 0;
+    entry->num_superops = 0;
+    entry->num_ops	= 0;
+    entry->num_halfops	= 0;
+    entry->num_voices	= 0;
+    entry->num_normal	= 0;
+    entry->num_total	= 0;
+
+    hashval             = hash(ctx->label);
+    entry->next         = hash_table[hashval];
+    hash_table[hashval] = entry;
+
+    g_ntotal_windows++;
+
+    return entry;
+}
+
+int
+spawn_chat_window(const char *label, const char *title)
+{
+    const int ntotalp1 = g_ntotal_windows + 1;
+    struct integer_unparse_context unparse_ctx = {
+	.setting_name	  = "max_chat_windows",
+	.fallback_default = 60,
+	.lo_limit	  = 10,
+	.hi_limit	  = 200,
+    };
+
+    if (isNull(label) || isEmpty(label)) {
+	return (EINVAL);	/* a label is required */
+    } else if (window_by_label(label) != NULL) {
+	return (0);		/* window already exists  --  reuse it */
+    } else if (ntotalp1 > config_integer_unparse(&unparse_ctx)) {
+	return (ENOSPC);
+    } else {
+	struct hInstall_context inst_ctx = {
+	    .label  = (char *) label,
+	    .title  = (char *) title,
+	    .pan    = term_new_panel(LINES - 2, 0, 1, 0),
+	    .refnum = g_ntotal_windows + 1,
+	};
+	PIRC_WINDOW entry = hInstall(&inst_ctx);
+
+	apply_window_options(panel_window(entry->pan));
+	errno = changeWindow_by_label(entry->label);
+	sw_assert_perror(errno);
+    }
+
+    return (0);
+}
+
+static void
+reassign_window_refnums(void)
+{
+    PIRC_WINDOW *entry_p;
+    PIRC_WINDOW	 window;
+    int		 ref_count = 1;
+
+    foreach_hash_table_entry(entry_p) {
+	for (window = *entry_p; window != NULL; window = window->next) {
+	    if (!Strings_match_ignore_case(window->label, g_status_window_label))
+		window->refnum = ++ref_count; /* skip status window and assign new num */
+	}
+    }
+
+    sw_assert(g_status_window->refnum == 1);
+    sw_assert(ref_count == g_ntotal_windows);
+}
+
+int
+destroy_chat_window(const char *label)
+{
+    PIRC_WINDOW window;
+
+    if (isNull(label) || isEmpty(label) ||
+	Strings_match_ignore_case(label, g_status_window_label)) {
+	return (EINVAL);
+    } else if ((window = window_by_label(label)) == NULL) {
+	return (ENOENT);
+    } else {
+	hUndef(window);
+	reassign_window_refnums();
+	errno = changeWindow_by_refnum(g_ntotal_windows);
+	sw_assert_perror(errno);
+    }
+
+    return (0);
 }
 
 PIRC_WINDOW
@@ -391,34 +398,38 @@ new_window_title(const char *label, const char *title)
 }
 
 static void
-reassign_window_refnums(void)
+window_redraw(PIRC_WINDOW window, const int rows, const int pos, bool limit_output)
 {
-    PIRC_WINDOW *entry_p;
-    PIRC_WINDOW	 window;
-    int		 ref_count = 1;
+    PTEXTBUF_ELMT	 element   = NULL;
+    WINDOW		*pwin	   = panel_window(window->pan);
+    int			 i	   = 0;
+    int			 rep_count = 0;
 
-    foreach_hash_table_entry(entry_p) {
-	for (window = *entry_p; window != NULL; window = window->next) {
-	    if (!Strings_match_ignore_case(window->label, g_status_window_label))
-		window->refnum = ++ref_count; /* skip status window and assign new num */
+    if ((element = textBuf_get_element_by_pos(window->buf, pos < 0 ? 0 : pos)) == NULL) {
+	return; /* Nothing stored in the buffer */
+    }
+
+#if 1
+    werase(pwin);
+    update_panels();
+#endif
+
+    if (limit_output) {
+	while (element != NULL && i < rows) {
+	    printtext_puts(pwin, element->text, element->indent, rows - i, &rep_count);
+	    element = element->next;
+	    i += rep_count;
+	}
+    } else {
+	while (element != NULL && i < rows) {
+	    printtext_puts(pwin, element->text, element->indent, -1, NULL);
+	    element = element->next;
+	    i++;
 	}
     }
 
-    sw_assert(g_status_window->refnum == 1);
-    sw_assert(ref_count == g_ntotal_windows);
-}
-
-void
-windows_recreate_all(int rows, int cols)
-{
-    PIRC_WINDOW *entry_p;
-    PIRC_WINDOW	 window;
-
-    foreach_hash_table_entry(entry_p) {
-	for (window = *entry_p; window != NULL; window = window->next) {
-	    window_recreate(window, rows, cols);
-	}
-    }
+    statusbar_update_display_beta();
+    readline_top_panel();
 }
 
 static void
@@ -452,39 +463,17 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
     window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT, false);
 }
 
-static void
-window_redraw(PIRC_WINDOW window, const int rows, const int pos, bool limit_output)
+void
+windows_recreate_all(int rows, int cols)
 {
-    PTEXTBUF_ELMT	 element   = NULL;
-    WINDOW		*pwin	   = panel_window(window->pan);
-    int			 i	   = 0;
-    int			 rep_count = 0;
+    PIRC_WINDOW *entry_p;
+    PIRC_WINDOW	 window;
 
-    if ((element = textBuf_get_element_by_pos(window->buf, pos < 0 ? 0 : pos)) == NULL) {
-	return; /* Nothing stored in the buffer */
-    }
-
-#if 1
-    werase(pwin);
-    update_panels();
-#endif
-
-    if (limit_output) {
-	while (element != NULL && i < rows) {
-	    printtext_puts(pwin, element->text, element->indent, rows - i, &rep_count);
-	    element = element->next;
-	    i += rep_count;
-	}
-    } else {
-	while (element != NULL && i < rows) {
-	    printtext_puts(pwin, element->text, element->indent, -1, NULL);
-	    element = element->next;
-	    i++;
+    foreach_hash_table_entry(entry_p) {
+	for (window = *entry_p; window != NULL; window = window->next) {
+	    window_recreate(window, rows, cols);
 	}
     }
-
-    statusbar_update_display_beta();
-    readline_top_panel();
 }
 
 void
