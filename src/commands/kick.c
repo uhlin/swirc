@@ -1,5 +1,5 @@
 /* command /kick
-   Copyright (C) 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -44,7 +44,8 @@ cmd_kick(const char *data)
     char *nicks, *reason;
     char *state = "";
 
-    if (Strings_match(dcopy, "") || (nicks = strtok_r(dcopy, " ", &state)) == NULL) {
+    if (Strings_match(dcopy, "") ||
+	(nicks = strtok_r(dcopy, " ", &state)) == NULL) {
 	print_and_free("/kick: missing arguments", dcopy);
 	return;
     }
@@ -55,7 +56,8 @@ cmd_kick(const char *data)
 	print_and_free("/kick: active window isn't an irc channel", dcopy);
 	return;
     } else {
-	if (net_send("KICK %s %s :%s", g_active_window->label, nicks, has_reason ? reason : "") < 0)
+	if (net_send("KICK %s %s :%s",
+	    g_active_window->label, nicks, has_reason ? reason : "") < 0)
 	    g_on_air = false;
 	free(dcopy);
     }
