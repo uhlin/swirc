@@ -614,12 +614,12 @@ free_names_chunk(PCHUNK head)
 
 /*lint -sem(next_names, r_null) */
 static PCHUNK
-next_names(PIRC_WINDOW window, int *counter)
+next_names(PIRC_WINDOW window, int *idx)
 {
     PCHUNK  head        = NULL;
     PCHUNK  new_element = NULL;
     PCHUNK  temp        = NULL;
-    PNAMES *entry_p     = & (window->names_hash[*counter]);
+    PNAMES *entry_p     = & (window->names_hash[*idx]);
 
     for (PNAMES p = *entry_p; p != NULL; p = p->next) {
 	char c;
@@ -730,33 +730,34 @@ names_cmp_fn(const void *obj1, const void *obj2)
 int
 event_names_print_all(const char *channel)
 {
-    PIRC_WINDOW			 window;
-    int				 counter, i;
-    int				 ntp1;
-    struct name_tag		*names_array;
-    struct printtext_context	 ptext_ctx;
+    PIRC_WINDOW window = NULL;
+    int i = 0, j = 0;
+    struct name_tag *names_array = NULL;
 
     if ((window = window_by_label(channel)) == NULL) {
 	return ERR;
     }
 
-    ptext_ctx.window     = window;
-    ptext_ctx.spec_type  = TYPE_SPEC_NONE;
-    ptext_ctx.include_ts = true;
+    struct printtext_context ptext_ctx = {
+	.window	    = window,
+	.spec_type  = TYPE_SPEC_NONE,
+	.include_ts = true,
+    };
+
     printtext(&ptext_ctx, "%s%sUsers %s%c%s",
 	LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT);
 
-    ntp1	= window->num_total + 1;
+    const int ntp1 = window->num_total + 1;
     names_array = xcalloc(ntp1, sizeof (struct name_tag));
 
-    for (counter = i = 0; counter < NAMES_HASH_TABLE_SIZE; counter++) {
+    for (i = j = 0; i < NAMES_HASH_TABLE_SIZE; i++) {
 	PCHUNK head, element;
 
-	if ((head = next_names(window, &counter)) == NULL)
+	if ((head = next_names(window, &i)) == NULL)
 	    continue;
 
 	for (element = head; element; element = element->next)
-	    names_array[i++].s = sw_strdup(element->nick);
+	    names_array[j++].s = sw_strdup(element->nick);
 
 	free_names_chunk(head);
     }
