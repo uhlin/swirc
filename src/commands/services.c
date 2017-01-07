@@ -1,5 +1,5 @@
 /* commands/services.c
-   Copyright (C) 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -55,11 +55,13 @@ cmd_chanserv(const char *data)
 
     if (Strings_match(srv_host, "--")) {
 	if (!is_valid_hostname( Config("chanserv_host") )) {
-	    print_and_free("/chanserv: in the config file: bogus chanserv_host", dcopy);
+	    print_and_free("/chanserv: in the config file: "
+		"bogus chanserv_host", dcopy);
 	    return;
 	}
 
-	if (net_send("PRIVMSG ChanServ@%s :%s", Config("chanserv_host"), cmd) < 0)
+	if (net_send("PRIVMSG ChanServ@%s :%s",
+		     Config("chanserv_host"), cmd) < 0)
 	    g_on_air = false;
     } else {
 	if (!is_valid_hostname(srv_host)) {
@@ -92,11 +94,13 @@ cmd_nickserv(const char *data)
 
     if (Strings_match(srv_host, "--")) {
 	if (!is_valid_hostname( Config("nickserv_host") )) {
-	    print_and_free("/nickserv: in the config file: bogus nickserv_host", dcopy);
+	    print_and_free("/nickserv: in the config file: "
+		"bogus nickserv_host", dcopy);
 	    return;
 	}
 
-	if (net_send("PRIVMSG NickServ@%s :%s", Config("nickserv_host"), cmd) < 0)
+	if (net_send("PRIVMSG NickServ@%s :%s",
+		     Config("nickserv_host"), cmd) < 0)
 	    g_on_air = false;
     } else {
 	if (!is_valid_hostname(srv_host)) {
