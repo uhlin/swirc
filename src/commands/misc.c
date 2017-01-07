@@ -280,3 +280,25 @@ cmd_rules(const char *data)
 	    g_on_air = false;
     }
 }
+
+/* usage: /cycle [channel] */
+void
+cmd_cycle(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (Strings_match(data, "")) {
+	if (is_irc_channel(g_active_window->label)) {
+	    if (net_send("PART %s", g_active_window->label) < 0 ||
+		net_send("JOIN %s", g_active_window->label) < 0)
+		g_on_air = false;
+	} else {
+	    printtext(&ptext_ctx, "/cycle: missing arguments");
+	}
+    } else if (!is_irc_channel(data)) {
+	printtext(&ptext_ctx, "/cycle: bogus irc channel");
+    } else {
+	if (net_send("PART %s", data) < 0 || net_send("JOIN %s", data) < 0)
+	    g_on_air = false;
+    }
+}

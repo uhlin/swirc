@@ -14,5 +14,6 @@ void cmd_exlist  (const char *);
 void cmd_ilist   (const char *);
 void cmd_who     (const char *);
 void cmd_rules   (const char *);
+void cmd_cycle   (const char *);
 
 #endif

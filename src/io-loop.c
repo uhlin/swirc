@@ -79,6 +79,7 @@ static struct cmds_tag {
     { "chanserv",   cmd_chanserv,   true,  "/chanserv "
       "<service hostname | --> <command> [...]" },
     { "connect",    cmd_connect,    false, "/connect [-ssl] <server[:port]>" },
+    { "cycle",      cmd_cycle,      true,  "/cycle [channel]" },
     { "disconnect", cmd_disconnect, true,  "/disconnect [message]" },
     { "exlist",     cmd_exlist,     true,  "/exlist [channel]" },
     { "help",       cmd_help,       false, "/help [command]" },
