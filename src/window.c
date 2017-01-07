@@ -266,7 +266,7 @@ spawn_chat_window(const char *label, const char *title)
 }
 
 static void
-reassign_window_refnums(void)
+reassign_window_refnums()
 {
     PIRC_WINDOW *entry_p;
     PIRC_WINDOW	 window;
