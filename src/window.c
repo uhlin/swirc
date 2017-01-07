@@ -49,10 +49,13 @@
 #include "titlebar.h"
 
 #define foreach_hash_table_entry(entry_p) \
-	for (entry_p = &hash_table[0]; entry_p < &hash_table[ARRAY_SIZE(hash_table)]; entry_p++)
+	for (entry_p = &hash_table[0]; \
+	     entry_p < &hash_table[ARRAY_SIZE(hash_table)]; \
+	     entry_p++)
 
-#define IS_AT_TOP	(window->saved_size > 0 && window->saved_size == window->scroll_count)
-#define SCROLL_OFFSET	6
+#define IS_AT_TOP (window->saved_size > 0 && \
+		   window->saved_size == window->scroll_count)
+#define SCROLL_OFFSET 6
 
 /* Structure definitions
    ===================== */
@@ -194,7 +197,9 @@ hInstall(const struct hInstall_context *ctx)
     entry	  = xcalloc(sizeof *entry, 1);
     entry->label  = sw_strdup(ctx->label);
     entry->title  =
-	(isNull(ctx->title) || isEmpty(ctx->title) ? NULL : sw_strdup(ctx->title));
+	((isNull(ctx->title) || isEmpty(ctx->title))
+	 ? NULL
+	 : sw_strdup(ctx->title));
     entry->pan    = ctx->pan;
     entry->refnum = ctx->refnum;
     entry->buf    = textBuf_new();
@@ -203,7 +208,9 @@ hInstall(const struct hInstall_context *ctx)
     entry->scroll_count = 0;
     entry->scroll_mode	= false;
 
-    for (n_ent = &entry->names_hash[0]; n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE]; n_ent++) {
+    for (n_ent = &entry->names_hash[0];
+	 n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE];
+	 n_ent++) {
 	*n_ent = NULL;
     }
 
@@ -267,8 +274,11 @@ reassign_window_refnums(void)
 
     foreach_hash_table_entry(entry_p) {
 	for (window = *entry_p; window != NULL; window = window->next) {
-	    if (!Strings_match_ignore_case(window->label, g_status_window_label))
-		window->refnum = ++ref_count; /* skip status window and assign new num */
+	    if (!Strings_match_ignore_case(window->label,
+					   g_status_window_label)) {
+		/* skip status window and assign new num */
+		window->refnum = ++ref_count;
+	    }
 	}
     }
 
@@ -305,7 +315,9 @@ window_by_label(const char *label)
 	return (NULL);
     }
 
-    for (window = hash_table[hash(label)]; window != NULL; window = window->next) {
+    for (window = hash_table[hash(label)];
+	 window != NULL;
+	 window = window->next) {
 	if (Strings_match_ignore_case(label, window->label))
 	    return (window);
     }
@@ -398,14 +410,16 @@ new_window_title(const char *label, const char *title)
 }
 
 static void
-window_redraw(PIRC_WINDOW window, const int rows, const int pos, bool limit_output)
+window_redraw(PIRC_WINDOW window, const int rows, const int pos,
+	      bool limit_output)
 {
     PTEXTBUF_ELMT	 element   = NULL;
     WINDOW		*pwin	   = panel_window(window->pan);
     int			 i	   = 0;
     int			 rep_count = 0;
 
-    if ((element = textBuf_get_element_by_pos(window->buf, pos < 0 ? 0 : pos)) == NULL) {
+    if (element = textBuf_get_element_by_pos(window->buf, pos < 0 ? 0 : pos),
+	!element) {
 	return; /* Nothing stored in the buffer */
     }
 
@@ -416,7 +430,8 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos, bool limit_outp
 
     if (limit_output) {
 	while (element != NULL && i < rows) {
-	    printtext_puts(pwin, element->text, element->indent, rows - i, &rep_count);
+	    printtext_puts(pwin, element->text, element->indent, rows - i,
+			   &rep_count);
 	    element = element->next;
 	    i += rep_count;
 	}
@@ -452,9 +467,11 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
 	    window->saved_size   = 0;
 	    window->scroll_count = 0;
 	    window->scroll_mode  = false;
-	    window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT, false);
+	    window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT,
+			  false);
 	} else {
-	    window_redraw(window, HEIGHT, window->saved_size - window->scroll_count, true);
+	    window_redraw(window, HEIGHT,
+		window->saved_size - window->scroll_count, true);
 	}
 
 	return;
@@ -507,7 +524,8 @@ window_scroll_up(PIRC_WINDOW window)
     if (IS_AT_TOP)
 	window_redraw(window, MIN_SIZE, 0, true);
     else
-	window_redraw(window, MIN_SIZE, window->saved_size - window->scroll_count, true);
+	window_redraw(window, MIN_SIZE,
+	    window->saved_size - window->scroll_count, true);
 }
 
 /* textBuf_size(window->buf) - window->saved_size */
@@ -528,11 +546,13 @@ window_scroll_down(PIRC_WINDOW window)
 	window->saved_size   = 0;
 	window->scroll_count = 0;
 	window->scroll_mode  = false;
-	window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT, false);
+	window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT,
+		      false);
 	return;
     }
 
-    window_redraw(window, HEIGHT, window->saved_size - window->scroll_count, true);
+    window_redraw(window, HEIGHT, window->saved_size - window->scroll_count,
+		  true);
 }
 
 void
