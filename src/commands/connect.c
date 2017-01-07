@@ -1,5 +1,5 @@
 /* connect and disconnect commands
-   Copyright (C) 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -150,13 +150,16 @@ do_connect(char *server, char *port)
     }
 
     if (!is_valid_username(conn_ctx.username)) {
-	printtext(&ptext_ctx, "Unable to connect: Invalid username: \"%s\"", conn_ctx.username);
+	printtext(&ptext_ctx, "Unable to connect: Invalid username: \"%s\"",
+		  conn_ctx.username);
 	return;
     } else if (!is_valid_real_name(conn_ctx.rl_name)) {
-	printtext(&ptext_ctx, "Unable to connect: Invalid real name: \"%s\"", conn_ctx.rl_name);
+	printtext(&ptext_ctx, "Unable to connect: Invalid real name: \"%s\"",
+		  conn_ctx.rl_name);
 	return;
     } else if (!is_valid_nickname(conn_ctx.nickname)) {
-	printtext(&ptext_ctx, "Unable to connect: Invalid nickname: \"%s\"", conn_ctx.nickname);
+	printtext(&ptext_ctx, "Unable to connect: Invalid nickname: \"%s\"",
+		  conn_ctx.nickname);
 	return;
     } else {
 	conn_ctx.password = (g_connection_password ? get_password() : NULL);
