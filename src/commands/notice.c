@@ -1,5 +1,5 @@
 /* command /notice
-   Copyright (C) 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -37,6 +37,9 @@
 
 #include "notice.h"
 
+#define B1 Theme("notice_inner_b1")
+#define B2 Theme("notice_inner_b2")
+
 /* usage: /notice <recipient> <message> */
 void
 cmd_notice(const char *data)
@@ -54,7 +57,8 @@ cmd_notice(const char *data)
     } else if (!is_valid_nickname(recipient) && !is_irc_channel(recipient)) {
 	print_and_free("/notice: neither a nickname or irc channel", dcopy);
 	return;
-    } else if (window_by_label(recipient) == NULL && is_irc_channel(recipient)) {
+    } else if (window_by_label(recipient) == NULL &&
+	       is_irc_channel(recipient)) {
 	print_and_free("/notice: not on that channel", dcopy);
 	return;
     } else {
@@ -66,11 +70,10 @@ cmd_notice(const char *data)
 
 	if (net_send("NOTICE %s :%s", recipient, message) > 0)
 	    printtext(&ctx, "%s%s%s%c%s%s%s%c%s%s %s",
-		      LEFT_BRKT,
-		      COLOR1, "notice", NORMAL,
-		      Theme("notice_inner_b1"), COLOR2, recipient, NORMAL, Theme("notice_inner_b2"),
-		      RIGHT_BRKT,
-		      message);
+		LEFT_BRKT,
+		COLOR1, "notice", NORMAL, B1, COLOR2, recipient, NORMAL, B2,
+		RIGHT_BRKT,
+		message);
 
 	free(dcopy);
     }
