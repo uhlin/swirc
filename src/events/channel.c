@@ -604,10 +604,15 @@ event_quit(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if ((nick = strtok_r(prefix, "!@", &state)) == NULL
-	|| (user = strtok_r(NULL, "!@", &state)) == NULL
-	|| (host = strtok_r(NULL, "!@", &state)) == NULL) {
+    if ((nick = strtok_r(prefix, "!@", &state)) == NULL)
 	return;
+
+    user = strtok_r(NULL, "!@", &state);
+    host = strtok_r(NULL, "!@", &state);
+
+    if (!user || !host) {
+	user = "<no user>";
+	host = "<no host>";
     }
 
     for (int i = 1; i <= g_ntotal_windows; i++) {

@@ -32,6 +32,7 @@ All notable changes to this project will be documented in this file.
 - Decrease `NAMES_HASH_TABLE_SIZE` to 4500.
 - In `event_topic_chg`: handle an empty user/host.
 - In `event_kick`: handle an empty user/host.
+- In `event_quit`: handle an empty user/host.
 
 ### Fixed ###
 - Signal 11 when connecting to [Slack](https://slack.com/).
