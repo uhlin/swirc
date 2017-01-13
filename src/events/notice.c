@@ -64,7 +64,7 @@ handle_notice_while_connecting(struct irc_message_compo *compo)
 	return;
     }
 
-    printtext(&ctx, "%s!%s%c %s", Theme("color3"), srv_host, NORMAL, msg);
+    printtext(&ctx, "%s!%s%c %s", COLOR3, srv_host, NORMAL, msg);
 }
 
 static void
