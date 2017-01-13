@@ -294,10 +294,15 @@ event_topic_chg(struct irc_message_compo *compo)
 
     state1 = state2 = "";
 
-    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL
-	|| (user = strtok_r(NULL, "!@", &state1)) == NULL
-	|| (host = strtok_r(NULL, "!@", &state1)) == NULL) {
+    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
 	return;
+
+    user = strtok_r(NULL, "!@", &state1);
+    host = strtok_r(NULL, "!@", &state1);
+
+    if (!user || !host) {
+	user = "<no user>";
+	host = "<no host>";
     }
 
     /* currently not used */

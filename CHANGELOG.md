@@ -30,6 +30,7 @@ All notable changes to this project will be documented in this file.
 - Don't verify peer per default on WIN32 on SSL connections due to
   unable to get local issuer certificate.
 - Decrease `NAMES_HASH_TABLE_SIZE` to 4500.
+- In `event_topic_chg`: handle an empty user/host.
 
 ### Fixed ###
 - Signal 11 when connecting to [Slack](https://slack.com/).
