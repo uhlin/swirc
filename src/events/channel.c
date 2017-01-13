@@ -1,5 +1,5 @@
 /* Channel related events
-   Copyright (C) 2015, 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -59,11 +59,13 @@ chg_status_for_owner(plus_minus_state_t pm_state,
     switch (pm_state) {
     case STATE_PLUS:
 	if (event_names_htbl_modify_owner(nick, channel, true) != OK)
-	    err_log(0, "In chg_status_for_owner: error: event_names_htbl_modify_owner");
+	    err_log(0, "In chg_status_for_owner: "
+		"error: event_names_htbl_modify_owner");
 	break;
     case STATE_MINUS:
 	if (event_names_htbl_modify_owner(nick, channel, false) != OK)
-	    err_log(0, "In chg_status_for_owner: error: event_names_htbl_modify_owner");
+	    err_log(0, "In chg_status_for_owner: "
+		"error: event_names_htbl_modify_owner");
 	break;
     case STATE_NEITHER_PM:
     default:
@@ -79,11 +81,13 @@ chg_status_for_superop(plus_minus_state_t pm_state,
     switch (pm_state) {
     case STATE_PLUS:
 	if (event_names_htbl_modify_superop(nick, channel, true) != OK)
-	    err_log(0, "In chg_status_for_superop: error: event_names_htbl_modify_superop");
+	    err_log(0, "In chg_status_for_superop: "
+		"error: event_names_htbl_modify_superop");
 	break;
     case STATE_MINUS:
 	if (event_names_htbl_modify_superop(nick, channel, false) != OK)
-	    err_log(0, "In chg_status_for_superop: error: event_names_htbl_modify_superop");
+	    err_log(0, "In chg_status_for_superop: "
+		"error: event_names_htbl_modify_superop");
 	break;
     case STATE_NEITHER_PM:
     default:
@@ -99,11 +103,13 @@ chg_status_for_op(plus_minus_state_t pm_state,
     switch (pm_state) {
     case STATE_PLUS:
 	if (event_names_htbl_modify_op(nick, channel, true) != OK)
-	    err_log(0, "In chg_status_for_op: error: event_names_htbl_modify_op");
+	    err_log(0, "In chg_status_for_op: "
+		"error: event_names_htbl_modify_op");
 	break;
     case STATE_MINUS:
 	if (event_names_htbl_modify_op(nick, channel, false) != OK)
-	    err_log(0, "In chg_status_for_op: error: event_names_htbl_modify_op");
+	    err_log(0, "In chg_status_for_op: "
+		"error: event_names_htbl_modify_op");
 	break;
     case STATE_NEITHER_PM:
     default:
@@ -119,11 +125,13 @@ chg_status_for_halfop(plus_minus_state_t pm_state,
     switch (pm_state) {
     case STATE_PLUS:
 	if (event_names_htbl_modify_halfop(nick, channel, true) != OK)
-	    err_log(0, "In chg_status_for_halfop: error: event_names_htbl_modify_halfop");
+	    err_log(0, "In chg_status_for_halfop: "
+		"error: event_names_htbl_modify_halfop");
 	break;
     case STATE_MINUS:
 	if (event_names_htbl_modify_halfop(nick, channel, false) != OK)
-	    err_log(0, "In chg_status_for_halfop: error: event_names_htbl_modify_halfop");
+	    err_log(0, "In chg_status_for_halfop: "
+		"error: event_names_htbl_modify_halfop");
 	break;
     case STATE_NEITHER_PM:
     default:
@@ -139,11 +147,13 @@ chg_status_for_voice(plus_minus_state_t pm_state,
     switch (pm_state) {
     case STATE_PLUS:
 	if (event_names_htbl_modify_voice(nick, channel, true) != OK)
-	    err_log(0, "In chg_status_for_voice: error: event_names_htbl_modify_voice");
+	    err_log(0, "In chg_status_for_voice: "
+		"error: event_names_htbl_modify_voice");
 	break;
     case STATE_MINUS:
 	if (event_names_htbl_modify_voice(nick, channel, false) != OK)
-	    err_log(0, "In chg_status_for_voice: error: event_names_htbl_modify_voice");
+	    err_log(0, "In chg_status_for_voice: "
+		"error: event_names_htbl_modify_voice");
 	break;
     case STATE_NEITHER_PM:
     default:
@@ -234,7 +244,8 @@ maintain_channel_stats(const char *channel, const char *input)
 }
 
 static int
-RemoveAndInsertNick(const char *old_nick, const char *new_nick, const char *label)
+RemoveAndInsertNick(const char *old_nick, const char *new_nick,
+		    const char *label)
 {
     PNAMES p;
     bool is_owner, is_superop, is_op, is_halfop, is_voice;
@@ -373,7 +384,8 @@ event_topic_creator(struct irc_message_compo *compo)
 	|| (set_when = strtok_r(NULL, "\n", &state1)) == NULL)
 	return;
 
-    if ((ctx.window = window_by_label(channel)) == NULL || !is_numeric(set_when))
+    if ((ctx.window = window_by_label(channel)) == NULL ||
+	!is_numeric(set_when))
 	return;
 
     const time_t timestamp = (time_t) strtol(set_when, NULL, 10);
@@ -431,7 +443,8 @@ event_mode(struct irc_message_compo *compo)
 	    ctx.window = g_status_window;
 	    printtext(&ctx, "Mode change %s%s%s for user %c%s%c",
 		      LEFT_BRKT, s_copy, RIGHT_BRKT, BOLD, nick, BOLD);
-	} else if (is_irc_channel(channel) && (ctx.window = window_by_label(channel)) != NULL) {
+	} else if (is_irc_channel(channel) &&
+		   (ctx.window = window_by_label(channel)) != NULL) {
 	    printtext(&ctx, "mode/%s%s%s%c%s %s%s%s by %s%s%c",
 		      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 		      LEFT_BRKT, s_copy, RIGHT_BRKT,
@@ -575,10 +588,11 @@ event_part(struct irc_message_compo *compo)
 void
 event_quit(struct irc_message_compo *compo)
 {
-    char	*message = *(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
-    char	*nick, *user, *host;
-    char	*prefix	 = &compo->prefix[1];
-    char	*state	 = "";
+    char *message =
+	*(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
+    char *nick, *user, *host;
+    char *prefix = &compo->prefix[1];
+    char *state = "";
     struct printtext_context ctx = {
 	.window	    = NULL,
 	.spec_type  = TYPE_SPEC1_SPEC2,
@@ -611,10 +625,11 @@ event_quit(struct irc_message_compo *compo)
 void
 event_nick(struct irc_message_compo *compo)
 {
-    char	*new_nick = *(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
-    char	*nick, *user, *host;
-    char	*prefix	  = &compo->prefix[1];
-    char	*state	  = "";
+    char *new_nick =
+	*(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
+    char *nick, *user, *host;
+    char *prefix = &compo->prefix[1];
+    char *state = "";
     struct printtext_context ctx = {
 	.window	    = NULL,
 	.spec_type  = TYPE_SPEC1_SPEC2,
@@ -638,7 +653,7 @@ event_nick(struct irc_message_compo *compo)
 	    RemoveAndInsertNick(nick, new_nick, window->label) == OK) {
 	    ctx.window = window;
 	    printtext(&ctx, "%s%s%c is now known as %s %s%s%c",
-		      COLOR2, nick, NORMAL, THE_SPEC2, COLOR1, new_nick, NORMAL);
+		COLOR2, nick, NORMAL, THE_SPEC2, COLOR1, new_nick, NORMAL);
 	}
     }
 
