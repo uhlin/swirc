@@ -1,5 +1,5 @@
 /* Handles event NOTICE
-   Copyright (C) 2014, 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014, 2016-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -38,6 +38,11 @@
 
 #include "notice.h"
 
+#define INNER_B1	Theme("notice_inner_b1")
+#define INNER_B2	Theme("notice_inner_b2")
+#define NCOLOR1		Theme("notice_color1")
+#define NCOLOR2		Theme("notice_color2")
+
 struct notice_context {
     char *srv_name;
     char *dest;
@@ -72,7 +77,8 @@ handle_notice_from_my_server(const struct notice_context *ctx)
     };
 
     if (g_my_nickname && Strings_match_ignore_case(ctx->dest, g_my_nickname))
-	printtext(&ptext_ctx, "%s!%s%c %s", Theme("color3"), ctx->srv_name, NORMAL, ctx->msg);
+	printtext(&ptext_ctx, "%s!%s%c %s",
+	    COLOR3, ctx->srv_name, NORMAL, ctx->msg);
 }
 
 /* event_notice
@@ -95,7 +101,8 @@ event_notice(struct irc_message_compo *compo)
     if (g_connection_in_progress || g_server_hostname == NULL) {
 	handle_notice_while_connecting(compo);
 	return;
-    } else if (!prefix) { /* if this happens it's either the server or a bug (or both) */
+    } else if (!prefix) {
+	/* if this happens it's either the server or a bug (or both) */
 	goto bad;
     } else if (Strfeed(params, 1) != 1) {
 	goto bad;
@@ -129,21 +136,27 @@ event_notice(struct irc_message_compo *compo)
 	ptext_ctx.spec_type  = TYPE_SPEC_NONE;
 	ptext_ctx.include_ts = true;
 	printtext(&ptext_ctx, "%s%s%s%c%s%s%s%c%s %s",
-		  Theme("notice_lb"), Theme("notice_color1"), nick, NORMAL, Theme("notice_sep"),
-		  Theme("notice_color2"), dest, NORMAL, Theme("notice_rb"), msg);
+	    Theme("notice_lb"),
+	    NCOLOR1, nick, NORMAL, Theme("notice_sep"), NCOLOR2, dest, NORMAL,
+	    Theme("notice_rb"),
+	    msg);
     } else {
 	if (Strings_match_ignore_case(dest, g_my_nickname))
-	    ptext_ctx.window = window_by_label(nick) ? window_by_label(nick) : g_status_window;
+	    ptext_ctx.window =
+		window_by_label(nick) ? window_by_label(nick) : g_status_window;
 	else
-	    ptext_ctx.window = window_by_label(dest) ? window_by_label(dest) : g_status_window;
+	    ptext_ctx.window =
+		window_by_label(dest) ? window_by_label(dest) : g_status_window;
 
 	ptext_ctx.spec_type  = TYPE_SPEC_NONE;
 	ptext_ctx.include_ts = true;
 
 	printtext(&ptext_ctx, "%s%s%s%c%s%s%s@%s%c%s%s %s",
-		  Theme("notice_lb"), Theme("notice_color1"), nick, NORMAL,
-		  Theme("notice_inner_b1"), Theme("notice_color2"), user, host,
-		  NORMAL, Theme("notice_inner_b2"), Theme("notice_rb"), msg);
+		  Theme("notice_lb"),
+		  NCOLOR1, nick, NORMAL,
+		  INNER_B1, NCOLOR2, user, host, NORMAL, INNER_B2,
+		  Theme("notice_rb"),
+		  msg);
     }
 
     return;
@@ -152,7 +165,9 @@ event_notice(struct irc_message_compo *compo)
     ptext_ctx.window     = g_status_window;
     ptext_ctx.spec_type  = TYPE_SPEC1_FAILURE;
     ptext_ctx.include_ts = true;
-    printtext(&ptext_ctx, "On issuing event %s: An error occurred", compo->command);
+    printtext(&ptext_ctx, "On issuing event %s: An error occurred",
+	      compo->command);
     printtext(&ptext_ctx, "  params = %s", compo->params);
-    printtext(&ptext_ctx, "  prefix = %s", compo->prefix ? compo->prefix : "none");
+    printtext(&ptext_ctx, "  prefix = %s",
+	      compo->prefix ? compo->prefix : "none");
 }
