@@ -152,7 +152,7 @@ event_allaround_extract_find_colon(struct irc_message_compo *compo)
 {
     char *cp = NULL;
     struct printtext_context ctx = {
-	.window     = g_status_window,
+	.window     = g_active_window,
 	.spec_type  = TYPE_SPEC1_FAILURE,
 	.include_ts = true,
     };
@@ -162,8 +162,11 @@ event_allaround_extract_find_colon(struct irc_message_compo *compo)
 	return;
     }
 
-    if (!Strings_match(compo->command, "444"))
+#if 0
+    if (!Strings_match(compo->command, "444") &&
+	!Strings_match(compo->command, "484"))
 	ctx.spec_type = TYPE_SPEC1;
+#endif
     printtext(&ctx, "%s", ++cp);
 }
 

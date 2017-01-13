@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - Event 232, 308 and 309 (numeric replies for /rules -- undocumented
   in the RFC)
 - Command /cycle
+- Event 484 `ERR_RESTRICTED`
 
 ### Changed ###
 - On event join/part handle an empty user/host.

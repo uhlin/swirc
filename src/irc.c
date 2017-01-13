@@ -188,6 +188,7 @@ static struct numeric_events_tag {
     { "477", "ERR_NOCHANMODES",         ACTIVE_WINDOW,  2, NULL },
     { "481", "ERR_NOPRIVILEGES",        ACTIVE_WINDOW,  1, NULL },
     { "482", "ERR_CHANOPRIVSNEEDED",    ACTIVE_WINDOW,  2, NULL },
+    { "484", "ERR_RESTRICTED",          NO_WINDOW,      0, event_allaround_extract_find_colon },
     { "487", "ERR_",                    ACTIVE_WINDOW,  1, NULL },
     { "501", "ERR_UMODEUNKNOWNFLAG",    ACTIVE_WINDOW,  1, NULL },
     { "502", "ERR_USERSDONTMATCH",      ACTIVE_WINDOW,  1, NULL },
