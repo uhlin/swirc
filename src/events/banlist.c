@@ -93,7 +93,7 @@ event_banlist(struct irc_message_compo *compo)
 
 	printtext(&ctx, "%s%s%s%c%s: %s%s%c issued by %s%s%c %s%s%s %s%s%s",
 		  LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-		  Theme("color4"), mask, NORMAL,
+		  COLOR4, mask, NORMAL,
 		  COLOR2, issuer_name, NORMAL,
 		  LEFT_BRKT, issuer_userhost ? issuer_userhost : "", RIGHT_BRKT,
 		  LEFT_BRKT, trim(ctime(&date_of_issue)), RIGHT_BRKT);
@@ -109,7 +109,7 @@ event_banlist(struct irc_message_compo *compo)
 
 	printtext(&ctx, "%s%s%s%c%s: %s%s%c",
 		  LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-		  Theme("color4"), mask, NORMAL);
+		  COLOR4, mask, NORMAL);
     } else {
 	err_log(0, "On issuing event %s: an error occurred", compo->command);
     }
