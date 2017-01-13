@@ -1,5 +1,5 @@
 /* Event 367 (RPL_BANLIST) and 368 (RPL_ENDOFBANLIST)
-   Copyright (C) 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -44,7 +44,8 @@
 
    Examples:
      :irc.server.com 367 <recipient> <channel> <mask> irc.server.com <time>
-     :irc.server.com 367 <recipient> <channel> <mask> <nick>!<user>@<host> <time>
+     :irc.server.com 367 <recipient> <channel> <mask> <nick>!<user>@<host>
+                         <time>
      :irc.server.com 367 <recipient> <channel> <mask>
 
    Other events with the same semantics:
