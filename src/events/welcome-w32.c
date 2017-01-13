@@ -21,7 +21,8 @@ event_welcome_is_signaled(void)
 	.fallback_default = 45,
     };
 
-    return WaitForSingleObject(welcome_cond, config_integer_unparse(&unparse_ctx) * 1000) == WAIT_OBJECT_0;
+    return WaitForSingleObject(welcome_cond,
+	config_integer_unparse(&unparse_ctx) * 1000) == WAIT_OBJECT_0;
 }
 
 void
