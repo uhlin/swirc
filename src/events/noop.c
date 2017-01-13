@@ -14,7 +14,8 @@ event_noop(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    printtext(&ctx, "Got event %s. Currently a noop (aka no operation)", compo->command);
+    printtext(&ctx, "Got event %s. Currently a noop (aka no operation)",
+	      compo->command);
     printtext(&ctx, "params = %s", compo->params);
     printtext(&ctx, "prefix = %s", compo->prefix ? compo->prefix : "none");
 }
