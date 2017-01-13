@@ -1,5 +1,5 @@
 /* Prints and handles text
-   Copyright (C) 2012-2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -942,8 +942,13 @@ static void
 case_default(struct case_default_context *ctx,
 	     int *rep_count, int *line_count, int *insert_count)
 {
-    unsigned char *mbs, *p;
+#if defined(UNIX)
+    attr_t attrs;
+#elif defined(WIN32)
+    chtype attrs;
+#endif
     chtype c;
+    unsigned char *mbs, *p;
 
     if (!iswprint(ctx->wc) && ctx->wc != L'\n') {
 	return;
@@ -974,10 +979,17 @@ case_default(struct case_default_context *ctx,
 		int    counter = 0;
 		chtype blank   = ' ';
 
+		/* turn off all attributes during indentation */
+		attrs = ctx->win->_attrs;
+		term_set_attr(ctx->win, A_NORMAL);
+
 		while (counter++ != ctx->indent) {
 		    WADDCH(ctx->win, blank);
 		    (*insert_count)++;
 		}
+
+		/* restore attributes after indenting */
+		term_set_attr(ctx->win, attrs);
 	    }
 	} else if ((*insert_count) + ctx->diff + 1 < COLS - 1) {
 	    while ((c = *p++) != '\0') {
@@ -1004,10 +1016,17 @@ case_default(struct case_default_context *ctx,
 		int    counter = 0;
 		chtype blank   = ' ';
 
+		/* turn off all attributes during indentation */
+		attrs = ctx->win->_attrs;
+		term_set_attr(ctx->win, A_NORMAL);
+
 		while (counter++ != ctx->indent) {
 		    WADDCH(ctx->win, blank);
 		    (*insert_count)++;
 		}
+
+		/* restore attributes after indenting */
+		term_set_attr(ctx->win, attrs);
 	    }
 
 #if 1
