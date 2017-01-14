@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [1.3] - 2017-01-14 ##
 ### Added ###
 - Event 435. Undocumented in the RFC. (Cannot change nickname while
   banned on channel.)
