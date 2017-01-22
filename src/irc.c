@@ -221,6 +221,9 @@ static struct numeric_events_tag {
     { "900", "",                        STATUS_WINDOW,  3, NULL },
 };
 
+/**
+ * Search and route event
+ */
 static void
 irc_search_and_route_event(struct irc_message_compo *compo)
 {
@@ -281,6 +284,9 @@ irc_search_and_route_event(struct irc_message_compo *compo)
     }
 }
 
+/**
+ * Sort message components - into prefix, command and params.
+ */
 static struct irc_message_compo *
 SortMsgCompo(char *protocol_message, bool message_has_prefix)
 {
@@ -330,6 +336,9 @@ SortMsgCompo(char *protocol_message, bool message_has_prefix)
     return (compo);
 }
 
+/**
+ * Free message components
+ */
 static void
 FreeMsgCompo(struct irc_message_compo *compo)
 {
@@ -340,6 +349,9 @@ FreeMsgCompo(struct irc_message_compo *compo)
     free(compo);
 }
 
+/**
+ * Process protocol message
+ */
 static void
 ProcessProtoMsg(const char *token)
 {
@@ -369,6 +381,11 @@ ProcessProtoMsg(const char *token)
     FreeMsgCompo(compo);
 }
 
+/**
+ * If a received chunk of data aren't terminated with carriage return
+ * plus line feed - this function gets the last message - so it can be
+ * concatenated in a later stage.
+ */
 static char *
 get_last_token(const char *buffer)
 {
@@ -382,6 +399,9 @@ get_last_token(const char *buffer)
     return (sw_strdup(++last_token));
 }
 
+/**
+ * Handle and interpret irc events
+ */
 void
 irc_handle_interpret_events(char *recvbuffer,
 			    char **message_concat,
@@ -455,6 +475,9 @@ irc_handle_interpret_events(char *recvbuffer,
     }
 }
 
+/**
+ * Extract a message with help of given parameters
+ */
 void
 irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
 		int ext_bits, bool is_error)
@@ -500,6 +523,9 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
     }
 }
 
+/**
+ * Initialize irc module
+ */
 void
 irc_init(void)
 {
@@ -512,6 +538,9 @@ irc_init(void)
     event_names_init();
 }
 
+/**
+ * Deinitialize irc module
+ */
 void
 irc_deinit(void)
 {
@@ -526,6 +555,9 @@ irc_deinit(void)
     event_names_deinit();
 }
 
+/**
+ * Set server hostname
+ */
 void
 irc_set_server_hostname(const char *srv_host)
 {
@@ -540,6 +572,9 @@ irc_set_server_hostname(const char *srv_host)
     g_server_hostname = sw_strdup(srv_host);
 }
 
+/**
+ * Set user nickname
+ */
 void
 irc_set_my_nickname(const char *nick)
 {
@@ -556,8 +591,10 @@ irc_set_my_nickname(const char *nick)
     readline_top_panel();
 }
 
-/* Function used to clean up within an event after a failure that is
- * fatal enough to prefer IRC shutdown */
+/**
+ * Function used to clean up within an event after a failure that is
+ * fatal enough to prefer IRC shutdown
+ */
 void
 irc_unsuccessful_event_cleanup(void)
 {
