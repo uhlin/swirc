@@ -221,16 +221,124 @@ static struct numeric_events_tag {
     { "900", "",                        STATUS_WINDOW,  3, NULL },
 };
 
-/* Function declarations
-   ===================== */
+static void
+irc_search_and_route_event(struct irc_message_compo *compo)
+{
+    struct printtext_context ptext_ctx = {
+	.window     = g_status_window,
+	.spec_type  = TYPE_SPEC1_WARN,
+	.include_ts = true,
+    };
 
-static char	*get_last_token(const char *buffer);
-static void	 irc_search_and_route_event(struct irc_message_compo *);
+    if (is_alphabetic(compo->command)) {
+	struct normal_events_tag *sp;
+	const size_t size = ARRAY_SIZE(normal_events);
+
+	for (sp = &normal_events[0]; sp < &normal_events[size]; sp++) {
+	    if (Strings_match(sp->normal_event, compo->command)) {
+		sp->event_handler(compo);
+		return;
+	    }
+	}
+
+	printtext(&ptext_ctx, "Unknown normal event: %s", compo->command);
+#if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
+	printtext(&ptext_ctx, "params = %s", compo->params);
+	printtext(&ptext_ctx, "prefix = %s",
+		  compo->prefix ? compo->prefix : "none");
+#endif
+    } else if (is_numeric(compo->command) && strlen(compo->command) == 3) {
+	struct numeric_events_tag *sp;
+	const size_t size = ARRAY_SIZE(numeric_events);
+
+	for (sp = &numeric_events[0]; sp < &numeric_events[size]; sp++) {
+	    if (Strings_match(sp->numeric_event, compo->command)) {
+		if (sp->event_handler != NULL) {
+		    sp->event_handler(compo);
+		} else {
+		    if (sp->window == STATUS_WINDOW)
+			irc_extract_msg(compo, g_status_window, sp->ext_bits,
+			    !strncmp(sp->official_name, "ERR_", 4));
+		    else if (sp->window == ACTIVE_WINDOW)
+			irc_extract_msg(compo, g_active_window, sp->ext_bits,
+			    !strncmp(sp->official_name, "ERR_", 4));
+		    else
+			sw_assert_not_reached();
+		}
+
+		return;
+	    }
+	}
+
+	printtext(&ptext_ctx, "Unknown numeric event: %s", compo->command);
+#if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
+	printtext(&ptext_ctx, "params = %s", compo->params);
+	printtext(&ptext_ctx, "prefix = %s",
+		  compo->prefix ? compo->prefix : "none");
+#endif
+    } else {
+	printtext(&ptext_ctx, "Erroneous event: %s", compo->command);
+    }
+}
+
+static struct irc_message_compo *
+SortMsgCompo(char *protocol_message, bool message_has_prefix)
+{
+    struct irc_message_compo *compo = xcalloc(sizeof *compo, 1);
+    short int loop_run;
+    char *cp, *savp = "";
+
+    compo->prefix  = NULL;
+    compo->command = NULL;
+    compo->params  = NULL;
+
+    for (loop_run = 0, cp = &protocol_message[0];; loop_run++, cp = NULL) {
+	char *token;
+
+	if ((token = strtok_r(cp, "\n", &savp)) == NULL) {
+	    break;
+	}
+
+	switch (loop_run) {
+	case 0:
+	    if (message_has_prefix) {
+		compo->prefix = sw_strdup(token);
+	    } else {
+		compo->command = sw_strdup(token);
+	    }
+	    break; /* loop_run 0 */
+	case 1:
+	    if (message_has_prefix) {
+		compo->command = sw_strdup(token);
+	    } else {
+		compo->params = sw_strdup(token);
+	    }
+	    break; /* loop_run 1 */
+	case 2:
+	    compo->params = sw_strdup(token);
+	    break; /* loop_run 2 */
+	default:
+	    sw_assert_not_reached();
+	}
+
+	if (compo->command != NULL && compo->params != NULL) {
+	    break;
+	}
+    }
+
+    sw_assert(compo->command != NULL && compo->params != NULL);
+    return (compo);
+}
 
 static void
-FreeMsgCompo(struct irc_message_compo *);
-static struct irc_message_compo *
-SortMsgCompo(char *protocol_message, bool message_has_prefix);
+FreeMsgCompo(struct irc_message_compo *compo)
+{
+    free_not_null(compo->prefix);
+    free_not_null(compo->command);
+    free_not_null(compo->params);
+
+    free(compo);
+}
 
 static void
 ProcessProtoMsg(const char *token)
@@ -259,6 +367,19 @@ ProcessProtoMsg(const char *token)
     free(protocol_message);
     irc_search_and_route_event(compo);
     FreeMsgCompo(compo);
+}
+
+static char *
+get_last_token(const char *buffer)
+{
+    const char *last_token = strrchr(buffer, '\n');
+
+    if (last_token == NULL) {
+	err_msg("get_last_token error. (this is a bug and shouldn't happen!)");
+	abort();
+    }
+
+    return (sw_strdup(++last_token));
 }
 
 void
@@ -331,138 +452,6 @@ irc_handle_interpret_events(char *recvbuffer,
 	}
 
 	ProcessProtoMsg(token);
-    }
-}
-
-static char *
-get_last_token(const char *buffer)
-{
-    const char *last_token = strrchr(buffer, '\n');
-
-    if (last_token == NULL) {
-	err_msg("get_last_token error. (this is a bug and shouldn't happen!)");
-	abort();
-    }
-
-    return (sw_strdup(++last_token));
-}
-
-static struct irc_message_compo *
-SortMsgCompo(char *protocol_message, bool message_has_prefix)
-{
-    struct irc_message_compo *compo = xcalloc(sizeof *compo, 1);
-    short int loop_run;
-    char *cp, *savp = "";
-
-    compo->prefix  = NULL;
-    compo->command = NULL;
-    compo->params  = NULL;
-
-    for (loop_run = 0, cp = &protocol_message[0];; loop_run++, cp = NULL) {
-	char *token;
-
-	if ((token = strtok_r(cp, "\n", &savp)) == NULL) {
-	    break;
-	}
-
-	switch (loop_run) {
-	case 0:
-	    if (message_has_prefix) {
-		compo->prefix = sw_strdup(token);
-	    } else {
-		compo->command = sw_strdup(token);
-	    }
-	    break; /* loop_run 0 */
-	case 1:
-	    if (message_has_prefix) {
-		compo->command = sw_strdup(token);
-	    } else {
-		compo->params = sw_strdup(token);
-	    }
-	    break; /* loop_run 1 */
-	case 2:
-	    compo->params = sw_strdup(token);
-	    break; /* loop_run 2 */
-	default:
-	    sw_assert_not_reached();
-	}
-
-	if (compo->command != NULL && compo->params != NULL) {
-	    break;
-	}
-    }
-
-    sw_assert(compo->command != NULL && compo->params != NULL);
-    return (compo);
-}
-
-static void
-FreeMsgCompo(struct irc_message_compo *compo)
-{
-    free_not_null(compo->prefix);
-    free_not_null(compo->command);
-    free_not_null(compo->params);
-
-    free(compo);
-}
-
-static void
-irc_search_and_route_event(struct irc_message_compo *compo)
-{
-    struct printtext_context ptext_ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC1_WARN,
-	.include_ts = true,
-    };
-
-    if (is_alphabetic(compo->command)) {
-	struct normal_events_tag *sp;
-	const size_t size = ARRAY_SIZE(normal_events);
-
-	for (sp = &normal_events[0]; sp < &normal_events[size]; sp++) {
-	    if (Strings_match(sp->normal_event, compo->command)) {
-		sp->event_handler(compo);
-		return;
-	    }
-	}
-
-	printtext(&ptext_ctx, "Unknown normal event: %s", compo->command);
-#if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
-	printtext(&ptext_ctx, "params = %s", compo->params);
-	printtext(&ptext_ctx, "prefix = %s",
-		  compo->prefix ? compo->prefix : "none");
-#endif
-    } else if (is_numeric(compo->command) && strlen(compo->command) == 3) {
-	struct numeric_events_tag *sp;
-	const size_t size = ARRAY_SIZE(numeric_events);
-
-	for (sp = &numeric_events[0]; sp < &numeric_events[size]; sp++) {
-	    if (Strings_match(sp->numeric_event, compo->command)) {
-		if (sp->event_handler != NULL) {
-		    sp->event_handler(compo);
-		} else {
-		    if (sp->window == STATUS_WINDOW)
-			irc_extract_msg(compo, g_status_window, sp->ext_bits,
-			    !strncmp(sp->official_name, "ERR_", 4));
-		    else if (sp->window == ACTIVE_WINDOW)
-			irc_extract_msg(compo, g_active_window, sp->ext_bits,
-			    !strncmp(sp->official_name, "ERR_", 4));
-		    else
-			sw_assert_not_reached();
-		}
-
-		return;
-	    }
-	}
-
-	printtext(&ptext_ctx, "Unknown numeric event: %s", compo->command);
-#if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
-	printtext(&ptext_ctx, "params = %s", compo->params);
-	printtext(&ptext_ctx, "prefix = %s",
-		  compo->prefix ? compo->prefix : "none");
-#endif
-    } else {
-	printtext(&ptext_ctx, "Erroneous event: %s", compo->command);
     }
 }
 
