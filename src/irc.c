@@ -249,8 +249,7 @@ ProcessProtoMsg(const char *token)
 	    .include_ts = true,
 	};
 
-	printtext(&ptext_ctx,
-		  "In irc_handle_interpret_events: Strfeed(..., %d) != %d",
+	printtext(&ptext_ctx, "In ProcessProtoMsg: Strfeed(..., %d) != %d",
 		  requested_feeds, requested_feeds);
 	free(protocol_message);
 	return;
