@@ -100,24 +100,31 @@ static struct numeric_events_tag {
     { "004", "RPL_MYINFO",              STATUS_WINDOW,  1, NULL },
     { "005", "RPL_BOUNCE",              NO_WINDOW,      0, event_bounce },
     { "020", "",                        STATUS_WINDOW,  1, NULL },
-    { "042", "",                        NO_WINDOW,      0, event_allaround_extract_remove_colon },
+    { "042", "",                        NO_WINDOW,      0,
+      event_allaround_extract_remove_colon },
     { "221", "RPL_UMODEIS",             STATUS_WINDOW,  1, NULL },
     { "232", "",                        ACTIVE_WINDOW,  1, NULL },
     { "250", "",                        STATUS_WINDOW,  1, NULL },
     { "251", "RPL_LUSERCLIENT",         STATUS_WINDOW,  1, NULL },
-    { "252", "RPL_LUSEROP",             NO_WINDOW,      0, event_allaround_extract_remove_colon },
-    { "253", "RPL_LUSERUNKNOWN",        NO_WINDOW,      0, event_allaround_extract_remove_colon },
-    { "254", "RPL_LUSERCHANNELS",       NO_WINDOW,      0, event_allaround_extract_remove_colon },
+    { "252", "RPL_LUSEROP",             NO_WINDOW,      0,
+      event_allaround_extract_remove_colon },
+    { "253", "RPL_LUSERUNKNOWN",        NO_WINDOW,      0,
+      event_allaround_extract_remove_colon },
+    { "254", "RPL_LUSERCHANNELS",       NO_WINDOW,      0,
+      event_allaround_extract_remove_colon },
     { "255", "RPL_LUSERME",             STATUS_WINDOW,  1, NULL },
     { "263", "RPL_TRYAGAIN",            ACTIVE_WINDOW,  2, NULL },
-    { "265", "",                        NO_WINDOW,      0, event_local_and_global_users },
-    { "266", "",                        NO_WINDOW,      0, event_local_and_global_users },
+    { "265", "",                        NO_WINDOW,      0,
+      event_local_and_global_users },
+    { "266", "",                        NO_WINDOW,      0,
+      event_local_and_global_users },
     { "275", "",                        NO_WINDOW,      0, event_whois_ssl },
     { "276", "",                        NO_WINDOW,      0, event_whois_cert },
     { "301", "RPL_AWAY",                NO_WINDOW,      0, event_whois_away },
     { "305", "RPL_UNAWAY",              ACTIVE_WINDOW,  1, NULL },
     { "306", "RPL_NOWAWAY",             ACTIVE_WINDOW,  1, NULL },
-    { "307", "",                        NO_WINDOW,      0, event_whois_service },
+    { "307", "",                        NO_WINDOW,      0,
+      event_whois_service },
     { "308", "",                        ACTIVE_WINDOW,  1, NULL },
     { "309", "",                        ACTIVE_WINDOW,  1, NULL },
     { "310", "",                        NO_WINDOW,      0, event_whois_modes },
@@ -128,24 +135,30 @@ static struct numeric_events_tag {
     { "315", "RPL_ENDOFWHO",            STATUS_WINDOW,  2, NULL },
     { "317", "RPL_WHOISIDLE",           NO_WINDOW,      0, event_whois_idle },
     { "318", "RPL_ENDOFWHOIS",          ACTIVE_WINDOW,  2, NULL },
-    { "319", "RPL_WHOISCHANNELS",       NO_WINDOW,      0, event_whois_channels },
+    { "319", "RPL_WHOISCHANNELS",       NO_WINDOW,      0,
+      event_whois_channels },
     { "321", "RPL_LISTSTART",           NO_WINDOW,      0, event_liststart },
     { "322", "RPL_LIST",                NO_WINDOW,      0, event_list },
     { "323", "RPL_LISTEND",             STATUS_WINDOW,  1, NULL },
-    { "324", "RPL_CHANNELMODEIS",       NO_WINDOW,      0, event_channelModeIs },
+    { "324", "RPL_CHANNELMODEIS",       NO_WINDOW,      0,
+      event_channelModeIs },
     { "328", "",                        NO_WINDOW,      0, event_chan_hp },
-    { "329", "",                        NO_WINDOW,      0, event_channelCreatedWhen },
+    { "329", "",                        NO_WINDOW,      0,
+      event_channelCreatedWhen },
     { "330", "",                        NO_WINDOW,      0, event_whois_acc },
     { "331", "RPL_NOTOPIC",             ACTIVE_WINDOW,  2, NULL },
     { "332", "RPL_TOPIC",               NO_WINDOW,      0, event_topic },
-    { "333", "",                        NO_WINDOW,      0, event_topic_creator },
+    { "333", "",                        NO_WINDOW,      0,
+      event_topic_creator },
     { "334", "",                        STATUS_WINDOW,  1, NULL },
     { "338", "",                        NO_WINDOW,      0, event_whois_host },
     { "341", "RPL_INVITING",            NO_WINDOW,      0, event_inviting },
     { "346", "RPL_INVITELIST",          NO_WINDOW,      0, event_inviteList },
-    { "347", "RPL_ENDOFINVITELIST",     NO_WINDOW,      0, event_eof_inviteList },
+    { "347", "RPL_ENDOFINVITELIST",     NO_WINDOW,      0,
+      event_eof_inviteList },
     { "348", "RPL_EXCEPTLIST",          NO_WINDOW,      0, event_exceptList },
-    { "349", "RPL_ENDOFEXCEPTLIST",     NO_WINDOW,      0, event_eof_exceptList },
+    { "349", "RPL_ENDOFEXCEPTLIST",     NO_WINDOW,      0,
+      event_eof_exceptList },
     { "352", "RPL_WHOREPLY",            NO_WINDOW,      0, event_whoReply },
     { "353", "RPL_NAMREPLY",            NO_WINDOW,      0, event_names },
     { "366", "RPL_ENDOFNAMES",          NO_WINDOW,      0, event_eof_names },
@@ -157,7 +170,8 @@ static struct numeric_events_tag {
     { "376", "RPL_ENDOFMOTD",           NO_WINDOW,      0, event_motd },
     { "378", "",                        NO_WINDOW,      0, event_whois_conn },
     { "379", "",                        NO_WINDOW,      0, event_whois_modes },
-    { "396", "",                        NO_WINDOW,      0, event_allaround_extract_remove_colon },
+    { "396", "",                        NO_WINDOW,      0,
+      event_allaround_extract_remove_colon },
     { "401", "ERR_NOSUCHNICK",          ACTIVE_WINDOW,  2, NULL },
     { "402", "ERR_NOSUCHSERVER",        ACTIVE_WINDOW,  2, NULL },
     { "403", "ERR_NOSUCHCHANNEL",       ACTIVE_WINDOW,  2, NULL },
@@ -170,16 +184,19 @@ static struct numeric_events_tag {
     { "421", "ERR_UNKNOWNCOMMAND",      ACTIVE_WINDOW,  2, NULL },
     { "422", "ERR_NOMOTD",              STATUS_WINDOW,  1, NULL },
     { "432", "ERR_ERRONEUSNICKNAME",    ACTIVE_WINDOW,  2, NULL },
-    { "433", "ERR_NICKNAMEINUSE",       NO_WINDOW,      0, event_nicknameInUse },
+    { "433", "ERR_NICKNAMEINUSE",       NO_WINDOW,      0,
+      event_nicknameInUse },
     { "435", "ERR_",                    ACTIVE_WINDOW,  3, NULL },
     { "437", "ERR_UNAVAILRESOURCE",     ACTIVE_WINDOW,  2, NULL },
     { "439", "",                        STATUS_WINDOW,  1, NULL },
     { "441", "ERR_USERNOTINCHANNEL",    ACTIVE_WINDOW,  3, NULL },
     { "443", "ERR_USERONCHANNEL",       ACTIVE_WINDOW,  3, NULL },
-    { "444", "ERR_NOLOGIN",             NO_WINDOW,      0, event_allaround_extract_find_colon },
+    { "444", "ERR_NOLOGIN",             NO_WINDOW,      0,
+      event_allaround_extract_find_colon },
     { "447", "",                        ACTIVE_WINDOW,  1, NULL },
     { "467", "ERR_KEYSET",              ACTIVE_WINDOW,  2, NULL },
-    { "470", "",                        NO_WINDOW,      0, event_channel_forward },
+    { "470", "",                        NO_WINDOW,      0,
+      event_channel_forward },
     { "471", "ERR_CHANNELISFULL",       ACTIVE_WINDOW,  2, NULL },
     { "472", "ERR_UNKNOWNMODE",         ACTIVE_WINDOW,  2, NULL },
     { "473", "ERR_INVITEONLYCHAN",      ACTIVE_WINDOW,  2, NULL },
@@ -188,7 +205,8 @@ static struct numeric_events_tag {
     { "477", "ERR_NOCHANMODES",         ACTIVE_WINDOW,  2, NULL },
     { "481", "ERR_NOPRIVILEGES",        ACTIVE_WINDOW,  1, NULL },
     { "482", "ERR_CHANOPRIVSNEEDED",    ACTIVE_WINDOW,  2, NULL },
-    { "484", "ERR_RESTRICTED",          NO_WINDOW,      0, event_allaround_extract_find_colon },
+    { "484", "ERR_RESTRICTED",          NO_WINDOW,      0,
+      event_allaround_extract_find_colon },
     { "487", "ERR_",                    ACTIVE_WINDOW,  1, NULL },
     { "501", "ERR_UMODEUNKNOWNFLAG",    ACTIVE_WINDOW,  1, NULL },
     { "502", "ERR_USERSDONTMATCH",      ACTIVE_WINDOW,  1, NULL },
@@ -252,15 +270,18 @@ irc_handle_interpret_events(char *recvbuffer,
     char       *cp, *savp = "";
     long int    loop_count;
 
-    if (recvbuffer == NULL || (*state != CONCAT_BUFFER_IS_EMPTY && *state != CONCAT_BUFFER_CONTAIN_DATA)) {
+    if (recvbuffer == NULL || (*state != CONCAT_BUFFER_IS_EMPTY &&
+			       *state != CONCAT_BUFFER_CONTAIN_DATA)) {
 	err_exit(EINVAL, "irc_handle_interpret_events error");
-    } else if (Strings_match(recvbuffer, "") || strpbrk(recvbuffer, separators) == NULL) {
+    } else if (Strings_match(recvbuffer, "") ||
+	       strpbrk(recvbuffer, separators) == NULL) {
 	return;
     } else {
 	/*empty*/;
     }
 
-    if (*state == CONCAT_BUFFER_CONTAIN_DATA && recvbuffer[0] == '\r' && recvbuffer[1] == '\n') {
+    if (*state == CONCAT_BUFFER_CONTAIN_DATA &&
+	recvbuffer[0] == '\r' && recvbuffer[1] == '\n') {
 	ProcessProtoMsg(*message_concat);
 	free_and_null(&(*message_concat));
 	*state = CONCAT_BUFFER_IS_EMPTY;
@@ -290,12 +311,19 @@ irc_handle_interpret_events(char *recvbuffer,
 	    free_and_null(&(*message_concat));
 	    *message_concat = sw_strdup(last_token);
 	    free(last_token);
-	    *state = CONCAT_BUFFER_CONTAIN_DATA;	/* On the next call to this function the (incomplete) */
-	    return;					/* irc message will be concatenated */
+	    *state = CONCAT_BUFFER_CONTAIN_DATA;
+	    /*
+	     * On the next call to this function the (incomplete) irc
+	     * message will be concatenated
+	     */
+	    return;
 	} else if (loop_count == 0 && *state == CONCAT_BUFFER_CONTAIN_DATA) {
 	    realloc_strcat(&(*message_concat), token);
-	    token = *message_concat;			/* The special token can now be passed to the handler */
-	    *state = CONCAT_BUFFER_IS_EMPTY;		/* Flag it as empty again (in practice it isn't) */
+	    token = *message_concat;
+	    *state = CONCAT_BUFFER_IS_EMPTY;
+	    /*
+	     * The special token can now be passed to the handler
+	     */
 	} else {
 	    /*no action*/;
 	}
@@ -402,7 +430,8 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 	printtext(&ptext_ctx, "Unknown normal event: %s", compo->command);
 #if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
 	printtext(&ptext_ctx, "params = %s", compo->params);
-	printtext(&ptext_ctx, "prefix = %s", compo->prefix ? compo->prefix : "none");
+	printtext(&ptext_ctx, "prefix = %s",
+		  compo->prefix ? compo->prefix : "none");
 #endif
     } else if (is_numeric(compo->command) && strlen(compo->command) == 3) {
 	struct numeric_events_tag *sp;
@@ -414,9 +443,11 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 		    sp->event_handler(compo);
 		} else {
 		    if (sp->window == STATUS_WINDOW)
-			irc_extract_msg(compo, g_status_window, sp->ext_bits, !strncmp(sp->official_name, "ERR_", 4));
+			irc_extract_msg(compo, g_status_window, sp->ext_bits,
+			    !strncmp(sp->official_name, "ERR_", 4));
 		    else if (sp->window == ACTIVE_WINDOW)
-			irc_extract_msg(compo, g_active_window, sp->ext_bits, !strncmp(sp->official_name, "ERR_", 4));
+			irc_extract_msg(compo, g_active_window, sp->ext_bits,
+			    !strncmp(sp->official_name, "ERR_", 4));
 		    else
 			sw_assert_not_reached();
 		}
@@ -428,7 +459,8 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 	printtext(&ptext_ctx, "Unknown numeric event: %s", compo->command);
 #if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
 	printtext(&ptext_ctx, "params = %s", compo->params);
-	printtext(&ptext_ctx, "prefix = %s", compo->prefix ? compo->prefix : "none");
+	printtext(&ptext_ctx, "prefix = %s",
+		  compo->prefix ? compo->prefix : "none");
 #endif
     } else {
 	printtext(&ptext_ctx, "Erroneous event: %s", compo->command);
@@ -436,7 +468,8 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 }
 
 void
-irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window, int ext_bits, bool is_error)
+irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
+		int ext_bits, bool is_error)
 {
     int i;
     char *cp, *savp = "";
@@ -448,7 +481,8 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window, int ext_
 	    .include_ts = true,
 	};
 
-	printtext(&ptext_ctx, "In irc_extract_msg: Strfeed(..., %d) != %d", ext_bits, ext_bits);
+	printtext(&ptext_ctx, "In irc_extract_msg: Strfeed(..., %d) != %d",
+		  ext_bits, ext_bits);
 	return;
     }
 
