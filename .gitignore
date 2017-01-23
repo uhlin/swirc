@@ -1,4 +1,6 @@
+*.ico
 *.o
 *.obj
 swirc
+swirc.res
 unix_def.mk
