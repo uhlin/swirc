@@ -15,3 +15,4 @@ function get_file(url, name)
 
 get_file("http://hem.bredband.net/markuhli/swirc/libressl-2.4.2-windows.cab", "libressl-2.4.2-windows.cab");
 get_file("http://hem.bredband.net/markuhli/swirc/pdcurses-3.4.cab", "pdcurses-3.4.cab");
+get_file("https://dataswamp.org/~markus/swirc/gfx/blue-globe.ico", "blue-globe.ico");

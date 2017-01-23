@@ -27,8 +27,9 @@ $(OUT).exe: fetch_and_expand $(OBJS)
 	cd $(MAKEDIR)
 	cd events && $(MAKE) -f w32.mk
 	cd $(MAKEDIR)
+	rc -foswirc.res -v swirc.rc
 	$(E) ^ ^ LINK^ ^ ^ ^ $@
-	$(Q) $(CC) -Fe$(OUT) *.obj commands/*.obj events/*.obj -link $(LDFLAGS) $(library_dirs) $(LDLIBS) 1>>$(log_file)
+	$(Q) $(CC) -Fe$(OUT) *.obj commands/*.obj events/*.obj swirc.res -link $(LDFLAGS) $(library_dirs) $(LDLIBS) 1>>$(log_file)
 	$(E) ^ ^ MOVE^ ^ ^ ^ libcrypto-38.dll
 	$(Q) move "libressl-2.4.2-windows\x86\libcrypto-38.dll" . 1>>$(log_file)
 	$(E) ^ ^ MOVE^ ^ ^ ^ libssl-39.dll
