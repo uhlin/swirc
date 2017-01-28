@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 - WIN32 specific: added a resource script
 - Broadcast channel activity if our nickname is highlighted
 
+### Changed ###
+- If target port is 6697: set SSL on
+
 ### Fixed ###
 - Reduced code duplication
 

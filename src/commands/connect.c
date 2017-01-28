@@ -44,6 +44,8 @@
 
 #include "connect.h"
 
+#define SSL_PORT "6697"
+
 static bool secure_connection = false;
 
 /*lint -sem(get_password, r_null) */
@@ -164,6 +166,9 @@ do_connect(char *server, char *port)
     } else {
 	conn_ctx.password = (g_connection_password ? get_password() : NULL);
 
+	if (!is_ssl_enabled() && Strings_match(conn_ctx.port, SSL_PORT))
+	    set_ssl_on();
+
 	net_connect(&conn_ctx);
 
 	if (conn_ctx.password) {
@@ -218,7 +223,7 @@ cmd_connect(const char *data)
 	sw_assert(server != NULL);
 
 	if ((port = strtok_r(NULL, "\n:", &state)) == NULL)
-	    port = "6697";
+	    port = SSL_PORT;
     } else if (feeds_written == 0) {
 	server = strtok_r(dcopy, "\n:", &state);
 	sw_assert(server != NULL);
