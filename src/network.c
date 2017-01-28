@@ -78,6 +78,29 @@ net_addr_resolve(const char *host, const char *port)
     return (res);
 }
 
+static void
+select_send_and_recv_funcs()
+{
+    if (is_ssl_enabled()) {
+	net_send = net_ssl_send;
+	net_recv = net_ssl_recv;
+    } else {
+	net_send = net_send_plain;
+	net_recv = net_recv_plain;
+    }
+}
+
+static void
+send_reg_cmds(const struct network_connect_context *ctx)
+{
+    if (ctx->password) {
+	(void) net_send("PASS %s", ctx->password);
+    }
+
+    (void) net_send("NICK %s", ctx->nickname);
+    (void) net_send("USER %s 8 * :%s", ctx->username, ctx->rl_name);
+}
+
 void
 net_connect(const struct network_connect_context *ctx)
 {
@@ -139,15 +162,9 @@ net_connect(const struct network_connect_context *ctx)
 	}
     }
 
-    if (is_ssl_enabled()) {
-	net_send = net_ssl_send;
-	net_recv = net_ssl_recv;
-    } else {
-	net_send = net_send_plain;
-	net_recv = net_recv_plain;
-    }
-
     freeaddrinfo(res);
+    select_send_and_recv_funcs();
+
     if (!g_on_air || (is_ssl_enabled() && net_ssl_start() == -1)) {
 	ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ptext_ctx, "Failed to establish a connection");
@@ -160,13 +177,7 @@ net_connect(const struct network_connect_context *ctx)
 
     event_welcome_cond_init();
     net_spawn_listenThread();
-
-    if (ctx->password) {
-	(void) net_send("PASS %s", ctx->password);
-    }
-
-    (void) net_send("NICK %s", ctx->nickname);
-    (void) net_send("USER %s 8 * :%s", ctx->username, ctx->rl_name);
+    send_reg_cmds(ctx);
 
     if (!event_welcome_is_signaled()) {
 	event_welcome_cond_destroy();
