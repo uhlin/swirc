@@ -49,6 +49,14 @@ struct notice_context {
     char *msg;
 };
 
+struct special_msg_context {
+    char *nick;
+    char *user;
+    char *host;
+    char *dest;
+    char *msg;
+};
+
 static void
 handle_notice_while_connecting(struct irc_message_compo *compo)
 {
@@ -79,6 +87,28 @@ handle_notice_from_my_server(const struct notice_context *ctx)
     if (g_my_nickname && Strings_match_ignore_case(ctx->dest, g_my_nickname))
 	printtext(&ptext_ctx, "%s!%s%c %s",
 	    COLOR3, ctx->srv_name, NORMAL, ctx->msg);
+}
+
+static void
+handle_special_msg(const struct special_msg_context *ctx)
+{
+    char *msg = sw_strdup(ctx->msg);
+    struct printtext_context pt_ctx = {
+	.window	    = g_active_window,
+	.spec_type  = TYPE_SPEC2,
+	.include_ts = true,
+    };
+
+    squeeze(msg, "\001");
+    msg = trim(msg);
+
+    if (!strncmp(msg, "VERSION ", 8)) {
+	printtext(&pt_ctx, "CTCP VERSION reply from %c%s%c %s%s@%s%s: %s",
+	    BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
+	    &msg[8]);
+    }
+
+    free(msg);
 }
 
 /* event_notice
@@ -125,12 +155,29 @@ event_notice(struct irc_message_compo *compo)
 
 	handle_notice_from_my_server(&ctx);
 	return;
-    } else if (strchr(prefix, '!') == NULL || strchr(prefix, '@') == NULL) {
+    } else if ((nick = strtok_r(prefix, "!@", &state2)) == NULL) {
 	goto bad;
-    } else if ((nick = strtok_r(prefix, "!@", &state2)) == NULL
-	       || (user = strtok_r(NULL, "!@", &state2)) == NULL
-	       || (host = strtok_r(NULL, "!@", &state2)) == NULL) {
-	goto bad;
+    }
+
+    user = strtok_r(NULL, "!@", &state2);
+    host = strtok_r(NULL, "!@", &state2);
+
+    if (!user || !host) {
+	user = "<no user>";
+	host = "<no host>";
+    }
+
+    if (*msg == '\001') {
+	struct special_msg_context msg_ctx = {
+	    .nick = nick,
+	    .user = user,
+	    .host = host,
+	    .dest = dest,
+	    .msg  = msg,
+	};
+
+	handle_special_msg(&msg_ctx);
+	return;
     } else if (window_by_label(dest) != NULL && is_irc_channel(dest)) {
 	ptext_ctx.window     = window_by_label(dest);
 	ptext_ctx.spec_type  = TYPE_SPEC_NONE;

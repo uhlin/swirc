@@ -6,9 +6,11 @@ All notable changes to this project will be documented in this file.
 - WIN32 specific: added a resource script
 - Broadcast channel activity if our nickname is highlighted
 - Command /version (CTCP)
+- Support for reading a CTCP VERSION reply requested by /version
 
 ### Changed ###
 - If target port is 6697: set SSL on
+- In `event_notice`: handle an empty user/host
 
 ### Fixed ###
 - Reduced code duplication
