@@ -47,7 +47,7 @@ static void
 apply_titlebar_options(WINDOW *win)
 {
     if (is_scrollok(win)) {
-	(void) scrollok(win, FALSE);
+	(void) scrollok(win, false);
     }
 }
 

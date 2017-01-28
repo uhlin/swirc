@@ -21,11 +21,11 @@ event_error(struct irc_message_compo *compo)
 	struct printtext_context ctx = {
 	    .window     = g_active_window,
 	    .spec_type  = TYPE_SPEC1,
-	    .include_ts = TRUE,
+	    .include_ts = true,
 	};
 
 	printtext(&ctx, "%s", cp);
     }
 
-    g_on_air = FALSE;
+    g_on_air = false;
 }
