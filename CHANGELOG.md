@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Added ###
 - WIN32 specific: added a resource script
+- Broadcast channel activity if our nickname is highlighted
 
 ### Fixed ###
 - Reduced code duplication
