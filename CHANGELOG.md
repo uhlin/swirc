@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed ###
 - Reduced code duplication
 - A bogus behaviour in command /connect
+- CTCP VERSION reply bug
 
 ## [1.3] - 2017-01-14 ##
 ### Added ###

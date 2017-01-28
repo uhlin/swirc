@@ -72,7 +72,7 @@ handle_special_msg(const struct special_msg_context *ctx)
     if (!strncmp(msg, "ACTION ", 7)) {
 	printtext(&pt_ctx, " - %s %s", ctx->nick, &msg[7]);
     } else if (!strncmp(msg, "VERSION", 8)) {
-	if (net_send("PRIVMSG %s :\001VERSION Swirc %s by %s\001",
+	if (net_send("NOTICE %s :\001VERSION Swirc %s by %s\001",
 		     ctx->nick, g_swircVersion, g_swircAuthor) < 0)
 	    g_on_air = false;
 	pt_ctx.spec_type = TYPE_SPEC3;
