@@ -105,6 +105,7 @@ static struct cmds_tag {
     { "rules",      cmd_rules,      true,  "/rules" },
     { "say",        cmd_say,        true,  "/say <message>" },
     { "topic",      cmd_topic,      true,  "/topic [new topic]" },
+    { "version",    cmd_version,    true,  "/version <target>" },
     { "who",        cmd_who,        true,  "/who [mask]" },
     { "whois",      cmd_whois,      true,  "/whois <nick>" },
 };

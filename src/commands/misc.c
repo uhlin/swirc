@@ -1,5 +1,5 @@
 /* misc.c
-   Copyright (C) 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -300,5 +300,34 @@ cmd_cycle(const char *data)
     } else {
 	if (net_send("PART %s", data) < 0 || net_send("JOIN %s", data) < 0)
 	    g_on_air = false;
+    }
+}
+
+static void
+confirm_version_sent(const char *target)
+{
+    struct printtext_context ctx = {
+	.window	    = g_active_window,
+	.spec_type  = TYPE_SPEC1_SUCCESS,
+	.include_ts = true,
+    };
+
+    printtext(&ctx, "CTCP VERSION request sent to %c%s%c",
+	      BOLD, target, BOLD);
+}
+
+/* usage: /version <target> */
+void
+cmd_version(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (Strings_match(data, "")) {
+	printtext(&ptext_ctx, "/version: missing arguments");
+    } else if (!is_valid_nickname(data) && !is_irc_channel(data)) {
+	printtext(&ptext_ctx, "/version: neither a nickname or irc channel");
+    } else {
+	if (net_send("PRIVMSG %s :\001VERSION\001", data) > 0)
+	    confirm_version_sent(data);
     }
 }

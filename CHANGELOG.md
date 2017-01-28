@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - WIN32 specific: added a resource script
 - Broadcast channel activity if our nickname is highlighted
+- Command /version (CTCP)
 
 ### Changed ###
 - If target port is 6697: set SSL on
