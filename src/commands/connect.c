@@ -223,7 +223,7 @@ cmd_connect(const char *data)
 	sw_assert(server != NULL);
 
 	if ((port = strtok_r(NULL, "\n:", &state)) == NULL)
-	    port = SSL_PORT;
+	    port = is_ssl_enabled() ? SSL_PORT : "6667";
     } else if (feeds_written == 0) {
 	server = strtok_r(dcopy, "\n:", &state);
 	sw_assert(server != NULL);

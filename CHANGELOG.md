@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed ###
 - Reduced code duplication
+- A bogus behaviour in command /connect
 
 ## [1.3] - 2017-01-14 ##
 ### Added ###
