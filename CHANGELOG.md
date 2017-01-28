@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - WIN32 specific: added a resource script
 
+### Fixed ###
+- Reduced code duplication
+
 ## [1.3] - 2017-01-14 ##
 ### Added ###
 - Event 435. Undocumented in the RFC. (Cannot change nickname while

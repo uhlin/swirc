@@ -1,5 +1,5 @@
 /* Platform independent networking routines
-   Copyright (C) 2014, 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -37,8 +37,11 @@
 #include <unistd.h> /* close() */
 #endif
 
+#include <string.h>
+
 #include "config.h"
 #include "irc.h"
+#include "libUtils.h"
 #include "network.h"
 #include "printtext.h"
 
@@ -50,6 +53,8 @@ NET_RECV_FN net_recv = net_recv_plain;
 
 volatile bool g_connection_in_progress = false;
 volatile bool g_on_air = false;
+
+static const int RECVBUF_SIZE = 2048;
 
 struct addrinfo *
 net_addr_resolve(const char *host, const char *port)
@@ -179,4 +184,54 @@ net_connect(const struct network_connect_context *ctx)
 
   out:
     g_connection_in_progress = false;
+}
+
+void
+net_irc_listen(void)
+{
+    char *message_concat = NULL;
+    char *recvbuf = xcalloc(RECVBUF_SIZE, 1);
+    enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
+    int bytes_received = -1;
+    struct network_recv_context ctx = {
+	.sock	  = g_socket,
+	.flags	  = 0,
+	.sec	  = 5,
+	.microsec = 0,
+    };
+    struct printtext_context ptext_ctx = {
+	.window	    = g_active_window,
+	.spec_type  = TYPE_SPEC1_WARN,
+	.include_ts = true,
+    };
+
+    irc_init();
+
+    do {
+	BZERO(recvbuf, RECVBUF_SIZE);
+	if ((bytes_received = net_recv(&ctx, recvbuf, RECVBUF_SIZE-1)) == -1) {
+	    goto out;
+	} else if (bytes_received > 0) {
+	    irc_handle_interpret_events(recvbuf, &message_concat, &state);
+	} else {
+	    /*empty*/;
+	}
+    } while (g_on_air);
+
+  out:
+    if (g_on_air) {
+	printtext(&ptext_ctx, "Connection to IRC server lost");
+	g_on_air = false;
+    }
+    printtext(&ptext_ctx, "Disconnected");
+    net_ssl_close();
+#if defined(UNIX)
+    close(g_socket);
+#elif defined(WIN32)
+    closesocket(g_socket);
+    winsock_deinit();
+#endif
+    irc_deinit();
+    free_not_null(recvbuf);
+    free_not_null(message_concat);
 }

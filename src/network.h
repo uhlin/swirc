@@ -29,6 +29,7 @@ extern volatile bool g_on_air;
 
 struct addrinfo *net_addr_resolve(const char *host, const char *port);
 void		 net_connect(const struct network_connect_context *);
+void		 net_irc_listen(void);
 
 void	net_ssl_init(void);
 void	net_ssl_deinit(void);

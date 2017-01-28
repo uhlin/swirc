@@ -1,5 +1,5 @@
 /* Networking for WIN32
-   Copyright (C) 2014, 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -34,10 +34,8 @@
 
 #include "assertAPI.h"
 #include "errHand.h"
-#include "irc.h"
 #include "libUtils.h"
 #include "network.h"
-#include "printtext.h"
 #include "strdup_printf.h"
 
 SOCKET g_socket = INVALID_SOCKET;
@@ -47,49 +45,8 @@ static uintptr_t listenThread_id;
 static void __cdecl
 listenThread_fn(void *arg)
 {
-    struct network_recv_context ctx;
-    int        bytes_received;
-    const int  recvbuf_size   = 2048;
-    char      *recvbuf        = xcalloc(recvbuf_size, 1);
-    char      *message_concat = NULL;
-    enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
-    struct printtext_context ptext_ctx;
-
     (void) arg;
-
-    ctx.sock     = g_socket;
-    ctx.flags    = 0;
-    ctx.sec      = 5;
-    ctx.microsec = 0;
-
-    irc_init();
-
-    do {
-	BZERO(recvbuf, recvbuf_size);
-	if ((bytes_received = net_recv(&ctx, recvbuf, recvbuf_size - 1)) == -1) {
-	    goto out;
-	} else if (bytes_received > 0) {
-	    irc_handle_interpret_events(recvbuf, &message_concat, &state);
-	} else {
-	    /*empty*/;
-	}
-    } while (g_on_air);
-
-  out:
-    ptext_ctx.window     = g_active_window;
-    ptext_ctx.spec_type  = TYPE_SPEC1;
-    ptext_ctx.include_ts = true;
-    if (g_on_air) {
-	printtext(&ptext_ctx, "Connection to IRC server lost");
-	g_on_air = false;
-    }
-    printtext(&ptext_ctx, "Disconnected");
-    net_ssl_close();
-    (void) closesocket(g_socket);
-    (void) winsock_deinit();
-    irc_deinit();
-    free_not_null(recvbuf);
-    free_not_null(message_concat);
+    net_irc_listen();
 }
 
 bool
