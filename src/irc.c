@@ -234,7 +234,7 @@ irc_search_and_route_event(struct irc_message_compo *compo)
     };
 
     if (is_alphabetic(compo->command)) {
-	struct normal_events_tag *sp;
+	struct normal_events_tag *sp = NULL;
 	const size_t size = ARRAY_SIZE(normal_events);
 
 	for (sp = &normal_events[0]; sp < &normal_events[size]; sp++) {
@@ -251,7 +251,7 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 		  compo->prefix ? compo->prefix : "none");
 #endif
     } else if (is_numeric(compo->command) && strlen(compo->command) == 3) {
-	struct numeric_events_tag *sp;
+	struct numeric_events_tag *sp = NULL;
 	const size_t size = ARRAY_SIZE(numeric_events);
 
 	for (sp = &numeric_events[0]; sp < &numeric_events[size]; sp++) {
@@ -290,16 +290,16 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 static struct irc_message_compo *
 SortMsgCompo(char *protocol_message, bool message_has_prefix)
 {
+    char *cp = NULL, *savp = "";
+    short int loop_run = 0;
     struct irc_message_compo *compo = xcalloc(sizeof *compo, 1);
-    short int loop_run;
-    char *cp, *savp = "";
 
     compo->prefix  = NULL;
     compo->command = NULL;
     compo->params  = NULL;
 
     for (loop_run = 0, cp = &protocol_message[0];; loop_run++, cp = NULL) {
-	char *token;
+	char *token = NULL;
 
 	if ((token = strtok_r(cp, "\n", &savp)) == NULL) {
 	    break;
@@ -355,9 +355,9 @@ FreeMsgCompo(struct irc_message_compo *compo)
 static void
 ProcessProtoMsg(const char *token)
 {
-    int message_has_prefix, requested_feeds;
-    char *protocol_message;
-    struct irc_message_compo *compo;
+    char *protocol_message = NULL;
+    int message_has_prefix = 0, requested_feeds = -1;
+    struct irc_message_compo *compo = NULL;
 
     message_has_prefix = *(protocol_message = sw_strdup(token)) == ':';
     requested_feeds = message_has_prefix ? 2 : 1;
@@ -407,11 +407,11 @@ irc_handle_interpret_events(char *recvbuffer,
 			    char **message_concat,
 			    enum message_concat_state *state)
 {
-    const char  separators[] = "\r\n";
-    bool        terminated_recvchunk;
-    char       *last_token = NULL;
-    char       *cp, *savp = "";
-    long int    loop_count;
+    bool terminated_recvchunk = false;
+    char *cp = NULL, *savp = "";
+    char *last_token = NULL;
+    const char separators[] = "\r\n";
+    long int loop_count = 0;
 
     if (recvbuffer == NULL || (*state != CONCAT_BUFFER_IS_EMPTY &&
 			       *state != CONCAT_BUFFER_CONTAIN_DATA)) {
@@ -445,7 +445,7 @@ irc_handle_interpret_events(char *recvbuffer,
     }
 
     for (cp = &recvbuffer[0], loop_count = 0;; cp = NULL, loop_count++) {
-	char *token;
+	char *token = NULL;
 
 	if ((token = strtok_r(cp, separators, &savp)) == NULL) {
 	    break; /* No more tokens  --  end loop... */
@@ -482,8 +482,8 @@ void
 irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
 		int ext_bits, bool is_error)
 {
-    int i;
-    char *cp, *savp = "";
+    int i = 0;
+    char *cp = NULL, *savp = "";
 
     if (Strfeed(compo->params, ext_bits) != ext_bits) {
 	struct printtext_context ptext_ctx = {
@@ -498,7 +498,7 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
     }
 
     for (i = 0, cp = &compo->params[0];; i++, cp = NULL) {
-	char *token;
+	char *token = NULL;
 
 	if ((token = strtok_r(cp, "\n", &savp)) == NULL) {
 	    break;
