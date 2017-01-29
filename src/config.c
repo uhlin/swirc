@@ -1,5 +1,5 @@
 /* User configuration
-   Copyright (C) 2012-2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -213,7 +213,7 @@ Config(const char *setting_name)
     if (!setting_name)
 	return ("");
 
-    for (item = hash_table[hash(setting_name)]; item != NULL; item = item->next) {
+    for (item = hash_table[hash(setting_name)]; item; item = item->next) {
 	if (Strings_match(setting_name, item->name))
 	    return (item->value);
     }
@@ -229,7 +229,7 @@ Config_mod(const char *setting_name)
     if (!setting_name)
 	return (NULL);
 
-    for (item = hash_table[hash(setting_name)]; item != NULL; item = item->next) {
+    for (item = hash_table[hash(setting_name)]; item; item = item->next) {
 	if (Strings_match(setting_name, item->name))
 	    return (item->value);
     }
@@ -245,7 +245,7 @@ config_bool_unparse(const char *setting_name, bool fallback_default)
     if (!setting_name)
 	err_exit(EINVAL, "config_bool_unparse");
 
-    for (item = hash_table[hash(setting_name)]; item != NULL; item = item->next) {
+    for (item = hash_table[hash(setting_name)]; item; item = item->next) {
 	if (Strings_match(setting_name, item->name)) {
 	    if (Strings_match_ignore_case(item->value, "on") ||
 		Strings_match_ignore_case(item->value, "true") ||
@@ -261,7 +261,8 @@ config_bool_unparse(const char *setting_name, bool fallback_default)
 	}
     }
 
-    err_log(EINVAL, "warning: setting %s (bool): falling back to the default", setting_name);
+    err_log(EINVAL, "warning: setting %s (bool): falling back to the default",
+	    setting_name);
     return (fallback_default);
 }
 
@@ -274,7 +275,7 @@ config_integer_unparse(struct integer_unparse_context *ctx)
     if (!ctx)
 	err_exit(EINVAL, "config_integer_unparse");
 
-    for (item = hash_table[hash(ctx->setting_name)]; item != NULL; item = item->next) {
+    for (item = hash_table[hash(ctx->setting_name)]; item; item = item->next) {
 	if (Strings_match(ctx->setting_name, item->name)) {
 	    if (!is_numeric(item->value))
 		break;
@@ -282,14 +283,16 @@ config_integer_unparse(struct integer_unparse_context *ctx)
 		errno = 0;
 		val   = strtol(item->value, NULL, 10);
 
-		if (errno != 0 || (val < ctx->lo_limit || val > ctx->hi_limit)) break;
-		else return (val);
+		if (errno != 0 || (val < ctx->lo_limit || val > ctx->hi_limit))
+		    break;
+		else
+		    return (val);
 	    }
 	}
     }
 
     err_log(ERANGE, "warning: setting %s (%ld-%ld): fallback value is %ld",
-	    ctx->setting_name, ctx->lo_limit, ctx->hi_limit, ctx->fallback_default);
+	ctx->setting_name, ctx->lo_limit, ctx->hi_limit, ctx->fallback_default);
     return (ctx->fallback_default);
 }
 
@@ -300,8 +303,10 @@ config_create(const char *path, const char *mode)
     struct tagConfDefValues	*cdv_p = NULL;
     const size_t		 ar_sz = ARRAY_SIZE(ConfDefValues);
 
-    write_to_stream(fp, "# -*- mode: conf; -*-\n#\n# Swirc %s  --  default config\n", g_swircVersion);
-    write_to_stream(fp, "# Automatically generated at %s\n\n", current_time("%c"));
+    write_to_stream(fp, "# -*- mode: conf; -*-\n#\n"
+	"# Swirc %s  --  default config\n", g_swircVersion);
+    write_to_stream(fp, "# Automatically generated at %s\n\n",
+		    current_time("%c"));
 
     for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++)
 	WRITE_ITEM(cdv_p->setting_name, cdv_p->value);
@@ -316,8 +321,10 @@ config_do_save(const char *path, const char *mode)
     struct tagConfDefValues	*cdv_p = NULL;
     const size_t		 ar_sz = ARRAY_SIZE(ConfDefValues);
 
-    write_to_stream(fp, "# -*- mode: conf; -*-\n#\n# Swirc %s  --  default config\n", g_swircVersion);
-    write_to_stream(fp, "# Automatically generated at %s\n\n", current_time("%c"));
+    write_to_stream(fp, "# -*- mode: conf; -*-\n#\n"
+	"# Swirc %s  --  default config\n", g_swircVersion);
+    write_to_stream(fp, "# Automatically generated at %s\n\n",
+		    current_time("%c"));
 
     for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++)
 	WRITE_ITEM(cdv_p->setting_name, Config(cdv_p->setting_name));
