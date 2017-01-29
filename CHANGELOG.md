@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file.
 - Reduced code duplication
 - A bogus behaviour in command /connect
 - CTCP VERSION reply bug
+- Save nickname, username and real name automatically to the config if
+  customized by the command-line.
 
 ## [1.3] - 2017-01-14 ##
 ### Added ###

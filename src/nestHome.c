@@ -1,5 +1,5 @@
 /* Create the home directory and read its configuration files
-   Copyright (C) 2012-2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -75,6 +75,26 @@ make_requested_dir(const char *path)
     }
 }
 
+static void
+modify_setting(const char *setting_name, const char *new_value)
+{
+    config_item_undef(setting_name);
+    config_item_install(setting_name, new_value);
+}
+
+static void
+save_cmdline_opts(const char *path)
+{
+    if (g_cmdline_opts->nickname)
+	modify_setting("nickname", g_cmdline_opts->nickname);
+    if (g_cmdline_opts->username)
+	modify_setting("username", g_cmdline_opts->username);
+    if (g_cmdline_opts->rl_name)
+	modify_setting("real_name", g_cmdline_opts->rl_name);
+
+    config_do_save(path, "w");
+}
+
 void
 nestHome_init(void)
 {
@@ -123,6 +143,9 @@ nestHome_init(void)
 	} else {
 	    config_readit(config_file, "r");
 	}
+
+	if (g_cmdline_opts->nickname || g_cmdline_opts->username || g_cmdline_opts->rl_name)
+	    save_cmdline_opts(config_file);
     } else {
 	sw_assert_not_reached();
     }
