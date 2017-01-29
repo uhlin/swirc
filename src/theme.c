@@ -98,7 +98,8 @@ static struct tagThemeDefValues {
     { "statusbar_rightBracket",    TYPE_STRING,  "\00312,1]\017" },
     { "statusbar_spec",            TYPE_STRING,  "[-]" },
     { "sw_ascLogotype_color",      TYPE_STRING,  "\00302" },
-    { "time_format",               TYPE_STRING,  "\00314[\017%H:%M\00314]\017" },
+    { "time_format",               TYPE_STRING,
+      "\00314[\017%H:%M\00314]\017" },
     { "titlebar_bg",               TYPE_STRING,  "white" },
     { "titlebar_fg",               TYPE_STRING,  "black" },
     { "whois_acc",                 TYPE_STRING,  "\00314=\017> account  :" },
@@ -283,19 +284,28 @@ theme_color_unparse(const char *item_name, short int fallback_color)
 
     for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
 	if (Strings_match(item_name, item->name)) {
-	    if (Strings_match_ignore_case(item->value, "black"))        return (COLOR_BLACK);
-	    else if (Strings_match_ignore_case(item->value, "red"))     return (COLOR_RED);
-	    else if (Strings_match_ignore_case(item->value, "green"))   return (COLOR_GREEN);
-	    else if (Strings_match_ignore_case(item->value, "yellow"))  return (COLOR_YELLOW);
-	    else if (Strings_match_ignore_case(item->value, "blue"))    return (COLOR_BLUE);
-	    else if (Strings_match_ignore_case(item->value, "magenta")) return (COLOR_MAGENTA);
-	    else if (Strings_match_ignore_case(item->value, "cyan"))    return (COLOR_CYAN);
-	    else if (Strings_match_ignore_case(item->value, "white"))   return (COLOR_WHITE);
+	    if (Strings_match_ignore_case(item->value, "black"))
+		return COLOR_BLACK;
+	    else if (Strings_match_ignore_case(item->value, "red"))
+		return COLOR_RED;
+	    else if (Strings_match_ignore_case(item->value, "green"))
+		return COLOR_GREEN;
+	    else if (Strings_match_ignore_case(item->value, "yellow"))
+		return COLOR_YELLOW;
+	    else if (Strings_match_ignore_case(item->value, "blue"))
+		return COLOR_BLUE;
+	    else if (Strings_match_ignore_case(item->value, "magenta"))
+		return COLOR_MAGENTA;
+	    else if (Strings_match_ignore_case(item->value, "cyan"))
+		return COLOR_CYAN;
+	    else if (Strings_match_ignore_case(item->value, "white"))
+		return COLOR_WHITE;
 	    else break;
 	}
     }
 
-    err_log(EINVAL, "warning: item %s (color): falling back to the default", item_name);
+    err_log(EINVAL, "warning: item %s (color): falling back to the default",
+	    item_name);
     return (fallback_color);
 }
 
@@ -323,7 +333,8 @@ theme_bool_unparse(const char *item_name, bool fallback_default)
 	}
     }
 
-    err_log(EINVAL, "warning: item %s (bool): falling back to the default", item_name);
+    err_log(EINVAL, "warning: item %s (bool): falling back to the default",
+	    item_name);
     return (fallback_default);
 }
 
@@ -336,7 +347,7 @@ theme_integer_unparse(struct integer_unparse_context *ctx)
     if (!ctx)
 	err_exit(EINVAL, "theme_integer_unparse");
 
-    for (item = hash_table[hash(ctx->setting_name)]; item != NULL; item = item->next) {
+    for (item = hash_table[hash(ctx->setting_name)]; item; item = item->next) {
 	if (Strings_match(ctx->setting_name, item->name)) {
 	    if (!is_numeric(item->value))
 		break;
@@ -344,14 +355,16 @@ theme_integer_unparse(struct integer_unparse_context *ctx)
 		errno = 0;
 		val   = strtol(item->value, NULL, 10);
 
-		if (errno != 0 || (val < ctx->lo_limit || val > ctx->hi_limit)) break;
-		else return (val);
+		if (errno != 0 || (val < ctx->lo_limit || val > ctx->hi_limit))
+		    break;
+		else
+		    return (val);
 	    }
 	}
     }
 
     err_log(ERANGE, "warning: item %s (%ld-%ld): fallback value is %ld",
-	    ctx->setting_name, ctx->lo_limit, ctx->hi_limit, ctx->fallback_default);
+	ctx->setting_name, ctx->lo_limit, ctx->hi_limit, ctx->fallback_default);
     return (ctx->fallback_default);
 }
 
@@ -362,8 +375,10 @@ theme_create(const char *path, const char *mode)
     struct tagThemeDefValues	*tdv_p = NULL;
     const size_t		 ar_sz = ARRAY_SIZE(ThemeDefValues);
 
-    write_to_stream(fp, "# -*- mode: conf; -*-\n#\n# Swirc %s  --  default theme\n", g_swircVersion);
-    write_to_stream(fp, "# Automatically generated at %s\n\n", current_time("%c"));
+    write_to_stream(fp, "# -*- mode: conf; -*-\n#\n"
+	"# Swirc %s  --  default theme\n", g_swircVersion);
+    write_to_stream(fp, "# Automatically generated at %s\n\n",
+		    current_time("%c"));
 
     for (tdv_p = &ThemeDefValues[0]; tdv_p < &ThemeDefValues[ar_sz]; tdv_p++)
 	WRITE_ITEM(tdv_p->item_name, tdv_p->value);
@@ -378,8 +393,10 @@ theme_do_save(const char *path, const char *mode)
     struct tagThemeDefValues	*tdv_p = NULL;
     const size_t		 ar_sz = ARRAY_SIZE(ThemeDefValues);
 
-    write_to_stream(fp, "# -*- mode: conf; -*-\n#\n# Swirc %s  --  default theme\n", g_swircVersion);
-    write_to_stream(fp, "# Automatically generated at %s\n\n", current_time("%c"));
+    write_to_stream(fp, "# -*- mode: conf; -*-\n#\n"
+	"# Swirc %s  --  default theme\n", g_swircVersion);
+    write_to_stream(fp, "# Automatically generated at %s\n\n",
+		    current_time("%c"));
 
     for (tdv_p = &ThemeDefValues[0]; tdv_p < &ThemeDefValues[ar_sz]; tdv_p++)
 	WRITE_ITEM(tdv_p->item_name, Theme(tdv_p->item_name));
