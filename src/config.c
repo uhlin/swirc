@@ -248,33 +248,6 @@ Config_mod(const char *setting_name)
     return (NULL);
 }
 
-#if 0
-short int
-config_color_unparse(const char *setting_name, short int fallback_color)
-{
-    PCONF_HTBL_ENTRY item;
-
-    if (!setting_name)
-	err_exit(EINVAL, "config_color_unparse");
-
-    for (item = hash_table[hash(setting_name)]; item != NULL; item = item->next) {
-	if (Strings_match(setting_name, item->name)) {
-	    if (Strings_match_ignore_case(item->value, "black"))        return (COLOR_BLACK);
-	    else if (Strings_match_ignore_case(item->value, "red"))     return (COLOR_RED);
-	    else if (Strings_match_ignore_case(item->value, "green"))   return (COLOR_GREEN);
-	    else if (Strings_match_ignore_case(item->value, "yellow"))  return (COLOR_YELLOW);
-	    else if (Strings_match_ignore_case(item->value, "blue"))    return (COLOR_BLUE);
-	    else if (Strings_match_ignore_case(item->value, "magenta")) return (COLOR_MAGENTA);
-	    else if (Strings_match_ignore_case(item->value, "cyan"))    return (COLOR_CYAN);
-	    else if (Strings_match_ignore_case(item->value, "white"))   return (COLOR_WHITE);
-	    else break;
-	}
-    }
-
-    return (fallback_color);
-}
-#endif
-
 bool
 config_bool_unparse(const char *setting_name, bool fallback_default)
 {

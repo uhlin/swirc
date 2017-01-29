@@ -17,9 +17,6 @@ const char	*Config                 (const char *setting_name);
 int		 config_item_install    (const char *name, const char *value);
 int		 config_item_undef      (const char *name);
 long int	 config_integer_unparse (struct integer_unparse_context *);
-#if 0
-short int	 config_color_unparse   (const char *setting_name, short int fallback_color);
-#endif
 void		 config_create          (const char *path, const char *mode);
 void		 config_deinit          (void);
 void		 config_do_save         (const char *path, const char *mode);
