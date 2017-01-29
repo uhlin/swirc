@@ -304,7 +304,7 @@ cmd_cycle(const char *data)
 }
 
 static void
-confirm_version_sent(const char *target)
+confirm_ctcp_sent(const char *cmd, const char *target)
 {
     struct printtext_context ctx = {
 	.window	    = g_active_window,
@@ -312,8 +312,8 @@ confirm_version_sent(const char *target)
 	.include_ts = true,
     };
 
-    printtext(&ctx, "CTCP VERSION request sent to %c%s%c",
-	      BOLD, target, BOLD);
+    printtext(&ctx, "CTCP %c%s%c request sent to %c%s%c",
+	      BOLD, cmd, BOLD, BOLD, target, BOLD);
 }
 
 /* usage: /version <target> */
@@ -328,6 +328,22 @@ cmd_version(const char *data)
 	printtext(&ptext_ctx, "/version: neither a nickname or irc channel");
     } else {
 	if (net_send("PRIVMSG %s :\001VERSION\001", data) > 0)
-	    confirm_version_sent(data);
+	    confirm_ctcp_sent("VERSION", data);
+    }
+}
+
+/* usage: /time <target> */
+void
+cmd_time(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (Strings_match(data, "")) {
+	printtext(&ptext_ctx, "/time: missing arguments");
+    } else if (!is_valid_nickname(data) && !is_irc_channel(data)) {
+	printtext(&ptext_ctx, "/time: neither a nickname or irc channel");
+    } else {
+	if (net_send("PRIVMSG %s :\001TIME\001", data) > 0)
+	    confirm_ctcp_sent("TIME", data);
     }
 }

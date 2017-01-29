@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Broadcast channel activity if our nickname is highlighted
 - Command /version (CTCP)
 - Support for reading a CTCP VERSION reply requested by /version
+- Command /time (CTCP)
 
 ### Changed ###
 - If target port is 6697: set SSL on

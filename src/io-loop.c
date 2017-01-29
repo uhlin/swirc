@@ -104,6 +104,7 @@ static struct cmds_tag {
     { "resize",     cmd_resize,     false, "/resize" },
     { "rules",      cmd_rules,      true,  "/rules" },
     { "say",        cmd_say,        true,  "/say <message>" },
+    { "time",       cmd_time,       true,  "/time <target>" },
     { "topic",      cmd_topic,      true,  "/topic [new topic]" },
     { "version",    cmd_version,    true,  "/version <target>" },
     { "who",        cmd_who,        true,  "/who [mask]" },
