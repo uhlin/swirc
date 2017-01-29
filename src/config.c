@@ -80,18 +80,6 @@ static struct tagConfDefValues {
     { "username",                  TYPE_STRING,  "swift" },
 };
 
-/* Static function declarations
-   ============================ */
-
-/*lint -sem(get_hash_table_entry, r_null) */
-
-static PCONF_HTBL_ENTRY	get_hash_table_entry (const char *name);
-static bool		is_recognized_setting(const char *setting_name);
-static unsigned int	hash                 (const char *setting_name);
-static void		hInstall             (const char *name, const char *value);
-static void		hUndef               (PCONF_HTBL_ENTRY);
-static void		init_missing_to_defs (void);
-
 void
 config_init(void)
 {
@@ -100,57 +88,6 @@ config_init(void)
     ENTRY_FOREACH(entry_p) {
 	*entry_p = NULL;
     }
-}
-
-void
-config_deinit(void)
-{
-    PCONF_HTBL_ENTRY *entry_p;
-    PCONF_HTBL_ENTRY p, tmp;
-
-    ENTRY_FOREACH(entry_p) {
-	for (p = *entry_p; p != NULL; p = tmp) {
-	    tmp = p->next;
-	    hUndef(p);
-	}
-    }
-}
-
-static void
-hUndef(PCONF_HTBL_ENTRY entry)
-{
-    PCONF_HTBL_ENTRY tmp;
-    unsigned int hashval = hash(entry->name);
-
-    if ((tmp = hash_table[hashval]) == entry) {
-	hash_table[hashval] = entry->next;
-    } else {
-	while (tmp->next != entry) {
-	    tmp = tmp->next;
-	}
-
-	tmp->next = entry->next;
-    }
-
-    free_not_null(entry->name);
-    free_not_null(entry->value);
-    free_not_null(entry);
-}
-
-static void
-hInstall(const char *name, const char *value)
-{
-    PCONF_HTBL_ENTRY item;
-    const bool has_no_value = (value == NULL || *value == '\0');
-    unsigned int hashval;
-
-    item	= xcalloc(sizeof *item, 1);
-    item->name	= sw_strdup(name);
-    item->value	= sw_strdup(has_no_value ? "" : value);
-
-    hashval             = hash(name);
-    item->next          = hash_table[hashval];
-    hash_table[hashval] = item;
 }
 
 /* hash pjw */
@@ -174,32 +111,42 @@ hash(const char *setting_name)
     return (hashval % ARRAY_SIZE(hash_table));
 }
 
-int
-config_item_undef(const char *name)
+static void
+hUndef(PCONF_HTBL_ENTRY entry)
 {
-    PCONF_HTBL_ENTRY entry;
+    PCONF_HTBL_ENTRY tmp;
+    unsigned int hashval = hash(entry->name);
 
-    if ((entry = get_hash_table_entry(name)) == NULL)
-	return (ENOENT);
-
-    hUndef(entry);
-    return (0);
-}
-
-int
-config_item_install(const char *name, const char *value)
-{
-    if (!name || !value) {
-	return (EINVAL);
-    } else if (get_hash_table_entry(name)) {
-	return (EBUSY);
+    if ((tmp = hash_table[hashval]) == entry) {
+	hash_table[hashval] = entry->next;
     } else {
-	hInstall(name, value);
+	while (tmp->next != entry) {
+	    tmp = tmp->next;
+	}
+
+	tmp->next = entry->next;
     }
 
-    return (0);
+    free_not_null(entry->name);
+    free_not_null(entry->value);
+    free_not_null(entry);
 }
 
+void
+config_deinit(void)
+{
+    PCONF_HTBL_ENTRY *entry_p;
+    PCONF_HTBL_ENTRY p, tmp;
+
+    ENTRY_FOREACH(entry_p) {
+	for (p = *entry_p; p != NULL; p = tmp) {
+	    tmp = p->next;
+	    hUndef(p);
+	}
+    }
+}
+
+/*lint -sem(get_hash_table_entry, r_null) */
 static PCONF_HTBL_ENTRY
 get_hash_table_entry(const char *name)
 {
@@ -214,6 +161,48 @@ get_hash_table_entry(const char *name)
     }
 
     return (NULL);
+}
+
+int
+config_item_undef(const char *name)
+{
+    PCONF_HTBL_ENTRY entry;
+
+    if ((entry = get_hash_table_entry(name)) == NULL)
+	return (ENOENT);
+
+    hUndef(entry);
+    return (0);
+}
+
+static void
+hInstall(const char *name, const char *value)
+{
+    PCONF_HTBL_ENTRY item;
+    const bool has_no_value = (value == NULL || *value == '\0');
+    unsigned int hashval;
+
+    item	= xcalloc(sizeof *item, 1);
+    item->name	= sw_strdup(name);
+    item->value	= sw_strdup(has_no_value ? "" : value);
+
+    hashval             = hash(name);
+    item->next          = hash_table[hashval];
+    hash_table[hashval] = item;
+}
+
+int
+config_item_install(const char *name, const char *value)
+{
+    if (!name || !value) {
+	return (EINVAL);
+    } else if (get_hash_table_entry(name)) {
+	return (EBUSY);
+    } else {
+	hInstall(name, value);
+    }
+
+    return (0);
 }
 
 const char *
@@ -336,6 +325,36 @@ config_do_save(const char *path, const char *mode)
     fclose_ensure_success(fp);
 }
 
+static void
+init_missing_to_defs(void)
+{
+    struct tagConfDefValues *cdv_p;
+    const size_t ar_sz = ARRAY_SIZE(ConfDefValues);
+
+    for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++) {
+	if (get_hash_table_entry(cdv_p->setting_name) == NULL)
+	    hInstall(cdv_p->setting_name, cdv_p->value);
+    }
+}
+
+static bool
+is_recognized_setting(const char *setting_name)
+{
+    struct tagConfDefValues *cdv_p;
+    const size_t ar_sz = ARRAY_SIZE(ConfDefValues);
+
+    if (!setting_name || *setting_name == '\0') {
+	return (false);
+    }
+
+    for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++) {
+	if (Strings_match(setting_name, cdv_p->setting_name))
+	    return (true);
+    }
+
+    return (false);
+}
+
 void
 config_readit(const char *path, const char *mode)
 {
@@ -372,35 +391,5 @@ config_readit(const char *path, const char *mode)
     } else {
 	err_msg("fgets returned NULL for an unknown reason (bug!)");
 	abort();
-    }
-}
-
-static bool
-is_recognized_setting(const char *setting_name)
-{
-    struct tagConfDefValues *cdv_p;
-    const size_t ar_sz = ARRAY_SIZE(ConfDefValues);
-
-    if (!setting_name || *setting_name == '\0') {
-	return (false);
-    }
-
-    for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++) {
-	if (Strings_match(setting_name, cdv_p->setting_name))
-	    return (true);
-    }
-
-    return (false);
-}
-
-static void
-init_missing_to_defs(void)
-{
-    struct tagConfDefValues *cdv_p;
-    const size_t ar_sz = ARRAY_SIZE(ConfDefValues);
-
-    for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++) {
-	if (get_hash_table_entry(cdv_p->setting_name) == NULL)
-	    hInstall(cdv_p->setting_name, cdv_p->value);
     }
 }
