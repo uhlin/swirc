@@ -90,22 +90,38 @@ handle_notice_from_my_server(const struct notice_context *ctx)
 }
 
 static void
-handle_special_msg(const struct special_msg_context *ctx)
+output_ctcp_reply(const char *cmd, const struct special_msg_context *ctx,
+		  const char *msg)
 {
-    char *msg = sw_strdup(ctx->msg);
     struct printtext_context pt_ctx = {
 	.window	    = g_active_window,
 	.spec_type  = TYPE_SPEC2,
 	.include_ts = true,
     };
 
+    if (*msg == ':')
+	msg++;
+
+    printtext(&pt_ctx, "CTCP %c%s%c reply from %c%s%c %s%s@%s%s: %s",
+	BOLD, cmd, BOLD, BOLD, ctx->nick, BOLD,
+	LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
+	msg);
+}
+
+static void
+handle_special_msg(const struct special_msg_context *ctx)
+{
+    char *msg = sw_strdup(ctx->msg);
+
     squeeze(msg, "\001");
     msg = trim(msg);
 
     if (!strncmp(msg, "VERSION ", 8)) {
-	printtext(&pt_ctx, "CTCP VERSION reply from %c%s%c %s%s@%s%s: %s",
-	    BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
-	    &msg[8]);
+	output_ctcp_reply("VERSION", ctx, &msg[8]);
+    } else if (!strncmp(msg, "TIME ", 5)) {
+	output_ctcp_reply("TIME", ctx, &msg[5]);
+    } else {
+	/* do nothing */;
     }
 
     free(msg);

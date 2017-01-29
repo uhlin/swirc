@@ -31,6 +31,7 @@
 
 #include "../errHand.h"
 #include "../irc.h"
+#include "../libUtils.h"
 #include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
@@ -48,6 +49,20 @@ struct special_msg_context {
     char *dest;
     char *msg;
 };
+
+static void
+acknowledge_ctcp_request(const char *cmd, const struct special_msg_context *ctx)
+{
+    struct printtext_context pt_ctx = {
+	.window	    = g_active_window,
+	.spec_type  = TYPE_SPEC3,
+	.include_ts = true,
+    };
+
+    printtext(&pt_ctx, "%c%s%c %s%s@%s%s requested CTCP %c%s%c form %c%s%c",
+	BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
+	BOLD, cmd, BOLD, BOLD, ctx->dest, BOLD);
+}
 
 static void
 handle_special_msg(const struct special_msg_context *ctx)
@@ -75,11 +90,12 @@ handle_special_msg(const struct special_msg_context *ctx)
 	if (net_send("NOTICE %s :\001VERSION Swirc %s by %s\001",
 		     ctx->nick, g_swircVersion, g_swircAuthor) < 0)
 	    g_on_air = false;
-	pt_ctx.spec_type = TYPE_SPEC3;
-	printtext(&pt_ctx, "%c%s%c %s%s@%s%s "
-	    "requested CTCP VERSION form %c%s%c",
-	    BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
-	    BOLD, ctx->dest, BOLD);
+	acknowledge_ctcp_request("VERSION", ctx);
+    } else if (!strncmp(msg, "TIME", 5)) {
+	if (net_send("NOTICE %s :\001TIME %s\001",
+		     ctx->nick, current_time("%c")) < 0)
+	    g_on_air = false;
+	acknowledge_ctcp_request("TIME", ctx);
     } else {
 	/* do nothing */;
     }

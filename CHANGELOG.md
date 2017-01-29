@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Command /version (CTCP)
 - Support for reading a CTCP VERSION reply requested by /version
 - Command /time (CTCP)
+- Support for reading a CTCP TIME reply requested by /time
 
 ### Changed ###
 - If target port is 6697: set SSL on
