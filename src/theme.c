@@ -1,5 +1,5 @@
 /* Support for themes
-   Copyright (C) 2012-2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -116,18 +116,6 @@ static struct tagThemeDefValues {
     { "whois_ssl",                 TYPE_STRING,  "\00314=\017> SSL      :" },
 };
 
-/* Static function declarations
-   ============================ */
-
-/*lint -sem(get_hash_table_entry, r_null) */
-
-static PTHEME_HTBL_ENTRY	get_hash_table_entry (const char *name);
-static bool			is_recognized_item   (const char *item_name);
-static unsigned int		hash                 (const char *item_name);
-static void			hInstall             (const char *name, const char *value);
-static void			hUndef               (PTHEME_HTBL_ENTRY);
-static void			init_missing_to_defs (void);
-
 void
 theme_init(void)
 {
@@ -136,57 +124,6 @@ theme_init(void)
     ENTRY_FOREACH(entry_p) {
 	*entry_p = NULL;
     }
-}
-
-void
-theme_deinit(void)
-{
-    PTHEME_HTBL_ENTRY *entry_p;
-    PTHEME_HTBL_ENTRY p, tmp;
-
-    ENTRY_FOREACH(entry_p) {
-	for (p = *entry_p; p != NULL; p = tmp) {
-	    tmp = p->next;
-	    hUndef(p);
-	}
-    }
-}
-
-static void
-hUndef(PTHEME_HTBL_ENTRY entry)
-{
-    PTHEME_HTBL_ENTRY tmp;
-    unsigned int hashval = hash(entry->name);
-
-    if ((tmp = hash_table[hashval]) == entry) {
-	hash_table[hashval] = entry->next;
-    } else {
-	while (tmp->next != entry) {
-	    tmp = tmp->next;
-	}
-
-	tmp->next = entry->next;
-    }
-
-    free_not_null(entry->name);
-    free_not_null(entry->value);
-    free_not_null(entry);
-}
-
-static void
-hInstall(const char *name, const char *value)
-{
-    PTHEME_HTBL_ENTRY item;
-    const bool has_no_value = (value == NULL || *value == '\0');
-    unsigned int hashval;
-
-    item	= xcalloc(sizeof *item, 1);
-    item->name	= sw_strdup(name);
-    item->value	= sw_strdup(has_no_value ? "" : value);
-
-    hashval             = hash(name);
-    item->next          = hash_table[hashval];
-    hash_table[hashval] = item;
 }
 
 /* hash pjw */
@@ -210,32 +147,42 @@ hash(const char *item_name)
     return (hashval % ARRAY_SIZE(hash_table));
 }
 
-int
-theme_item_undef(const char *name)
+static void
+hUndef(PTHEME_HTBL_ENTRY entry)
 {
-    PTHEME_HTBL_ENTRY entry;
+    PTHEME_HTBL_ENTRY tmp;
+    unsigned int hashval = hash(entry->name);
 
-    if ((entry = get_hash_table_entry(name)) == NULL)
-	return (ENOENT);
-
-    hUndef(entry);
-    return (0);
-}
-
-int
-theme_item_install(const char *name, const char *value)
-{
-    if (!name || !value) {
-	return (EINVAL);
-    } else if (get_hash_table_entry(name)) {
-	return (EBUSY);
+    if ((tmp = hash_table[hashval]) == entry) {
+	hash_table[hashval] = entry->next;
     } else {
-	hInstall(name, value);
+	while (tmp->next != entry) {
+	    tmp = tmp->next;
+	}
+
+	tmp->next = entry->next;
     }
 
-    return (0);
+    free_not_null(entry->name);
+    free_not_null(entry->value);
+    free_not_null(entry);
 }
 
+void
+theme_deinit(void)
+{
+    PTHEME_HTBL_ENTRY *entry_p;
+    PTHEME_HTBL_ENTRY p, tmp;
+
+    ENTRY_FOREACH(entry_p) {
+	for (p = *entry_p; p != NULL; p = tmp) {
+	    tmp = p->next;
+	    hUndef(p);
+	}
+    }
+}
+
+/*lint -sem(get_hash_table_entry, r_null) */
 static PTHEME_HTBL_ENTRY
 get_hash_table_entry(const char *name)
 {
@@ -250,6 +197,48 @@ get_hash_table_entry(const char *name)
     }
 
     return (NULL);
+}
+
+int
+theme_item_undef(const char *name)
+{
+    PTHEME_HTBL_ENTRY entry;
+
+    if ((entry = get_hash_table_entry(name)) == NULL)
+	return (ENOENT);
+
+    hUndef(entry);
+    return (0);
+}
+
+static void
+hInstall(const char *name, const char *value)
+{
+    PTHEME_HTBL_ENTRY item;
+    const bool has_no_value = (value == NULL || *value == '\0');
+    unsigned int hashval;
+
+    item	= xcalloc(sizeof *item, 1);
+    item->name	= sw_strdup(name);
+    item->value	= sw_strdup(has_no_value ? "" : value);
+
+    hashval             = hash(name);
+    item->next          = hash_table[hashval];
+    hash_table[hashval] = item;
+}
+
+int
+theme_item_install(const char *name, const char *value)
+{
+    if (!name || !value) {
+	return (EINVAL);
+    } else if (get_hash_table_entry(name)) {
+	return (EBUSY);
+    } else {
+	hInstall(name, value);
+    }
+
+    return (0);
 }
 
 const char *
@@ -398,6 +387,36 @@ theme_do_save(const char *path, const char *mode)
     fclose_ensure_success(fp);
 }
 
+static bool
+is_recognized_item(const char *item_name)
+{
+    struct tagThemeDefValues *tdv_p;
+    const size_t ar_sz = ARRAY_SIZE(ThemeDefValues);
+
+    if (!item_name || *item_name == '\0') {
+	return (false);
+    }
+
+    for (tdv_p = &ThemeDefValues[0]; tdv_p < &ThemeDefValues[ar_sz]; tdv_p++) {
+	if (Strings_match(item_name, tdv_p->item_name))
+	    return (true);
+    }
+
+    return (false);
+}
+
+static void
+init_missing_to_defs(void)
+{
+    struct tagThemeDefValues *tdv_p;
+    const size_t ar_sz = ARRAY_SIZE(ThemeDefValues);
+
+    for (tdv_p = &ThemeDefValues[0]; tdv_p < &ThemeDefValues[ar_sz]; tdv_p++) {
+	if (get_hash_table_entry(tdv_p->item_name) == NULL)
+	    hInstall(tdv_p->item_name, tdv_p->value);
+    }
+}
+
 void
 theme_readit(const char *path, const char *mode)
 {
@@ -434,35 +453,5 @@ theme_readit(const char *path, const char *mode)
     } else {
 	err_msg("fgets returned NULL for an unknown reason (bug!)");
 	abort();
-    }
-}
-
-static bool
-is_recognized_item(const char *item_name)
-{
-    struct tagThemeDefValues *tdv_p;
-    const size_t ar_sz = ARRAY_SIZE(ThemeDefValues);
-
-    if (!item_name || *item_name == '\0') {
-	return (false);
-    }
-
-    for (tdv_p = &ThemeDefValues[0]; tdv_p < &ThemeDefValues[ar_sz]; tdv_p++) {
-	if (Strings_match(item_name, tdv_p->item_name))
-	    return (true);
-    }
-
-    return (false);
-}
-
-static void
-init_missing_to_defs(void)
-{
-    struct tagThemeDefValues *tdv_p;
-    const size_t ar_sz = ARRAY_SIZE(ThemeDefValues);
-
-    for (tdv_p = &ThemeDefValues[0]; tdv_p < &ThemeDefValues[ar_sz]; tdv_p++) {
-	if (get_hash_table_entry(tdv_p->item_name) == NULL)
-	    hInstall(tdv_p->item_name, tdv_p->value);
     }
 }
