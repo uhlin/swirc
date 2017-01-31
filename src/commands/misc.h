@@ -17,5 +17,6 @@ void cmd_rules   (const char *);
 void cmd_cycle   (const char *);
 void cmd_version (const char *);
 void cmd_time    (const char *);
+void cmd_close   (const char *);
 
 #endif

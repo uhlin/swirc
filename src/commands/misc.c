@@ -347,3 +347,20 @@ cmd_time(const char *data)
 	    confirm_ctcp_sent("TIME", data);
     }
 }
+
+/* usage: /close */
+void
+cmd_close(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (!Strings_match(data, "")) {
+	printtext(&ptext_ctx, "/close: implicit trailing data");
+    } else if (g_active_window == g_status_window) {
+	printtext(&ptext_ctx, "/close: cannot close status window");
+    } else if (is_irc_channel(g_active_window->label) && g_on_air) {
+	printtext(&ptext_ctx, "/close: cannot close window (connected)");
+    } else {
+	destroy_chat_window(g_active_window->label);
+    }
+}

@@ -78,6 +78,7 @@ static struct cmds_tag {
     { "banlist",    cmd_banlist,    true,  "/banlist [channel]" },
     { "chanserv",   cmd_chanserv,   true,  "/chanserv "
       "<service hostname | --> <command> [...]" },
+    { "close",      cmd_close,      false, "/close" },
     { "connect",    cmd_connect,    false, "/connect [-ssl] <server[:port]>" },
     { "cycle",      cmd_cycle,      true,  "/cycle [channel]" },
     { "disconnect", cmd_disconnect, true,  "/disconnect [message]" },
