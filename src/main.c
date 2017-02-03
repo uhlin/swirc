@@ -123,126 +123,6 @@ static struct cmdline_opt_values opt_values_data = {
 
 struct cmdline_opt_values *g_cmdline_opts = &opt_values_data; /* External */
 
-/* Function declarations
-   ===================== */
-
-static void view_version    (void);
-static void print_help      (const char *exe);
-static void process_options (int argc, char *argv[], const char *optstring);
-static void case_connect    (void);
-static void case_nickname   (void);
-static void case_username   (void);
-static void case_rl_name    (void);
-static void case_icb        (void);
-static void case_password   (void);
-static void case_hostname   (void);
-static void case_config     (void);
-
-int
-main(int argc, char *argv[])
-{
-#if __OpenBSD__
-    extern char *malloc_options;
-
-    malloc_options = "S";
-#endif
-
-    (void) setlocale(LC_ALL, "");
-
-    if (!sigHand_init()) {
-	err_msg("FATAL: Failed to initialize signal handling");
-	return EXIT_FAILURE;
-    }
-
-    if (argc == 2) {
-	if (strncmp(argv[1], "-v", 3) == 0 || strncmp(argv[1], "-version", 9) == 0) {
-	    view_version();
-	    return EXIT_SUCCESS;
-	} else if (strncmp(argv[1], "-?", 3) == 0 || strncmp(argv[1], "-help", 6) == 0) {
-	    print_help(argv[0]);
-	    return EXIT_SUCCESS;
-	} else {
-	    /* empty */;
-	}
-    }
-
-#if UNIX
-    if (geteuid() == 0) {
-	err_msg("fatal: running the program with root privileges is prohibited");
-	return EXIT_FAILURE;
-    }
-#endif
-
-    process_options(argc, argv, "c:n:u:r:iph:x:");
-
-    term_init();
-    nestHome_init();
-
-    if (curses_init() != OK) {
-	err_msg("Initialization of the Curses library not possible");
-	return EXIT_FAILURE;
-    }
-
-    titlebar_init();
-    statusbar_init();
-    windowSystem_init();
-    readline_init();
-    net_ssl_init();
-
-#if defined(OpenBSD) && OpenBSD >= 201605 && RESTRICT_SYSOPS
-    if (pledge("stdio rpath wpath cpath inet dns tty", NULL) == -1) {
-	err_ret("pledge");
-	return EXIT_FAILURE;
-    }
-#endif
-
-    enter_io_loop();
-
-    /* XXX: Reverse order... */
-    net_ssl_deinit();
-    readline_deinit();
-    windowSystem_deinit();
-    statusbar_deinit();
-    titlebar_deinit();
-    escape_curses();
-    nestHome_deinit();
-    term_deinit();
-
-    cmdline_options_destroy();
-    say("- Exit Success! -\n");
-    return EXIT_SUCCESS;
-}
-
-struct locale_info *
-get_locale_info(int category)
-{
-    struct locale_info *li = xcalloc(sizeof *li, 1);
-    char  buf[200] = { 0 };
-    char *tok      = NULL;
-    char *savp     = "";
-
-    li->lang_and_territory = li->codeset = NULL;
-
-    if (sw_strcpy(buf, setlocale(category, NULL), sizeof buf) != 0)
-	return (li);
-
-    if ((tok = strtok_r(buf, ".", &savp)) != NULL)
-	li->lang_and_territory = sw_strdup(tok);
-    if ((tok = strtok_r(NULL, ".", &savp)) != NULL)
-	li->codeset = sw_strdup(tok);
-
-    return (li);
-}
-
-void
-free_locale_info(struct locale_info *li)
-{
-    free_not_null(li->lang_and_territory);
-    free_not_null(li->codeset);
-
-    free(li);
-}
-
 static void
 view_version(void)
 {
@@ -297,63 +177,6 @@ print_help(const char *exe)
     for (ppcc = &OptionDesc[0]; ppcc < &OptionDesc[ar_sz]; ppcc++) {
 	PUTS(*ppcc);
     }
-}
-
-static void
-process_options(int argc, char *argv[], const char *optstring)
-{
-    int opt = -1;
-
-    while ((opt = options(argc, argv, optstring)) != EOF) {
-	switch (opt) {
-	case 'c':
-	    case_connect();
-	    break;
-	case 'n':
-	    case_nickname();
-	    break;
-	case 'u':
-	    case_username();
-	    break;
-	case 'r':
-	    case_rl_name();
-	    break;
-	case 'i':
-	    case_icb();
-	    break;
-	case 'p':
-	    case_password();
-	    break;
-	case 'h':
-	    case_hostname();
-	    break;
-	case 'x':
-	    case_config();
-	    break;
-	case UNRECOGNIZED_OPTION:
-	    err_msg("%s: -%c: unrecognized option", argv[0], g_option_save);
-	    print_help(argv[0]);
-	    exit(EXIT_FAILURE);
-	case OPTION_ARG_MISSING:
-	    err_msg("%s: -%c: option argument missing", argv[0], g_option_save);
-            /*FALLTHROUGH*/
-	default:
-	    print_help(argv[0]);
-	    exit(EXIT_FAILURE);
-	}
-    }
-}
-
-void
-cmdline_options_destroy(void)
-{
-    free_and_null(&g_cmdline_opts->server);
-    free_and_null(&g_cmdline_opts->port);
-    free_and_null(&g_cmdline_opts->nickname);
-    free_and_null(&g_cmdline_opts->username);
-    free_and_null(&g_cmdline_opts->rl_name);
-    free_and_null(&g_cmdline_opts->hostname);
-    free_and_null(&g_cmdline_opts->config_file);
 }
 
 /* -c <server[:port]> */
@@ -478,4 +301,166 @@ case_config(void)
 
     g_cmdline_opts->config_file = sw_strdup(g_option_arg);
     g_explicit_config_file = been_case = true;
+}
+
+static void
+process_options(int argc, char *argv[], const char *optstring)
+{
+    int opt = -1;
+
+    while ((opt = options(argc, argv, optstring)) != EOF) {
+	switch (opt) {
+	case 'c':
+	    case_connect();
+	    break;
+	case 'n':
+	    case_nickname();
+	    break;
+	case 'u':
+	    case_username();
+	    break;
+	case 'r':
+	    case_rl_name();
+	    break;
+	case 'i':
+	    case_icb();
+	    break;
+	case 'p':
+	    case_password();
+	    break;
+	case 'h':
+	    case_hostname();
+	    break;
+	case 'x':
+	    case_config();
+	    break;
+	case UNRECOGNIZED_OPTION:
+	    err_msg("%s: -%c: unrecognized option", argv[0], g_option_save);
+	    print_help(argv[0]);
+	    exit(EXIT_FAILURE);
+	case OPTION_ARG_MISSING:
+	    err_msg("%s: -%c: option argument missing", argv[0], g_option_save);
+            /*FALLTHROUGH*/
+	default:
+	    print_help(argv[0]);
+	    exit(EXIT_FAILURE);
+	}
+    }
+}
+
+int
+main(int argc, char *argv[])
+{
+#if __OpenBSD__
+    extern char *malloc_options;
+
+    malloc_options = "S";
+#endif
+
+    (void) setlocale(LC_ALL, "");
+
+    if (!sigHand_init()) {
+	err_msg("FATAL: Failed to initialize signal handling");
+	return EXIT_FAILURE;
+    }
+
+    if (argc == 2) {
+	if (strncmp(argv[1], "-v", 3) == 0 || strncmp(argv[1], "-version", 9) == 0) {
+	    view_version();
+	    return EXIT_SUCCESS;
+	} else if (strncmp(argv[1], "-?", 3) == 0 || strncmp(argv[1], "-help", 6) == 0) {
+	    print_help(argv[0]);
+	    return EXIT_SUCCESS;
+	} else {
+	    /* empty */;
+	}
+    }
+
+#if UNIX
+    if (geteuid() == 0) {
+	err_msg("fatal: running the program with root privileges is prohibited");
+	return EXIT_FAILURE;
+    }
+#endif
+
+    process_options(argc, argv, "c:n:u:r:iph:x:");
+
+    term_init();
+    nestHome_init();
+
+    if (curses_init() != OK) {
+	err_msg("Initialization of the Curses library not possible");
+	return EXIT_FAILURE;
+    }
+
+    titlebar_init();
+    statusbar_init();
+    windowSystem_init();
+    readline_init();
+    net_ssl_init();
+
+#if defined(OpenBSD) && OpenBSD >= 201605 && RESTRICT_SYSOPS
+    if (pledge("stdio rpath wpath cpath inet dns tty", NULL) == -1) {
+	err_ret("pledge");
+	return EXIT_FAILURE;
+    }
+#endif
+
+    enter_io_loop();
+
+    /* XXX: Reverse order... */
+    net_ssl_deinit();
+    readline_deinit();
+    windowSystem_deinit();
+    statusbar_deinit();
+    titlebar_deinit();
+    escape_curses();
+    nestHome_deinit();
+    term_deinit();
+
+    cmdline_options_destroy();
+    say("- Exit Success! -\n");
+    return EXIT_SUCCESS;
+}
+
+struct locale_info *
+get_locale_info(int category)
+{
+    struct locale_info *li = xcalloc(sizeof *li, 1);
+    char  buf[200] = { 0 };
+    char *tok      = NULL;
+    char *savp     = "";
+
+    li->lang_and_territory = li->codeset = NULL;
+
+    if (sw_strcpy(buf, setlocale(category, NULL), sizeof buf) != 0)
+	return (li);
+
+    if ((tok = strtok_r(buf, ".", &savp)) != NULL)
+	li->lang_and_territory = sw_strdup(tok);
+    if ((tok = strtok_r(NULL, ".", &savp)) != NULL)
+	li->codeset = sw_strdup(tok);
+
+    return (li);
+}
+
+void
+free_locale_info(struct locale_info *li)
+{
+    free_not_null(li->lang_and_territory);
+    free_not_null(li->codeset);
+
+    free(li);
+}
+
+void
+cmdline_options_destroy(void)
+{
+    free_and_null(&g_cmdline_opts->server);
+    free_and_null(&g_cmdline_opts->port);
+    free_and_null(&g_cmdline_opts->nickname);
+    free_and_null(&g_cmdline_opts->username);
+    free_and_null(&g_cmdline_opts->rl_name);
+    free_and_null(&g_cmdline_opts->hostname);
+    free_and_null(&g_cmdline_opts->config_file);
 }
