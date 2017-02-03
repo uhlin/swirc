@@ -83,17 +83,18 @@ bool g_explicit_config_file = false;
    ============================ */
 
 static const char *SoftwareDisclaimer[] = {
-    "THIS SOFTWARE IS PROVIDED THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\n",
-    "AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\n",
-    "IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE\n",
-    "ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n",
-    "BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR\n",
-    "CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF\n",
-    "SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS\n",
-    "INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN\n",
-    "CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\n",
-    "ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\n",
-    "POSSIBILITY OF SUCH DAMAGE.\n",
+    "THIS SOFTWARE IS PROVIDED THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS\n",
+    "IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED\n",
+    "TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A\n",
+    "PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT\n",
+    "HOLDERS AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,\n",
+    "INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,\n",
+    "BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS\n",
+    "OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND\n",
+    "ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR\n",
+    "TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE\n",
+    "USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH\n",
+    "DAMAGE.\n",
 };
 
 static const char *OptionDesc[] = {
@@ -127,7 +128,7 @@ static void
 view_version(void)
 {
     char *MessageVersion = Strdup_printf("Swirc %s\nCopyright (C) %s %s\n",
-					 g_swircVersion, g_swircYear, g_swircAuthor);
+	g_swircVersion, g_swircYear, g_swircAuthor);
 
     PUTS(MessageVersion);
     free(MessageVersion);
@@ -139,6 +140,7 @@ view_version(void)
 	(void) fflush(stdout);
 
 	BZERO(answer, sizeof answer);
+
 	if (fgets(answer, sizeof answer - 1, stdin) == NULL) {
 	    break;
 	}
@@ -148,7 +150,10 @@ view_version(void)
 	    const size_t	  ar_sz = ARRAY_SIZE(SoftwareDisclaimer);
 
 	    PUTCHAR('\n');
-	    for (ppcc = &SoftwareDisclaimer[0]; ppcc < &SoftwareDisclaimer[ar_sz]; ppcc++) {
+
+	    for (ppcc = &SoftwareDisclaimer[0];
+		 ppcc < &SoftwareDisclaimer[ar_sz];
+		 ppcc++) {
 		PUTS(*ppcc);
 	    }
 
@@ -167,9 +172,9 @@ view_version(void)
 static void
 print_help(const char *exe)
 {
-    char		 *MessageUsage = Strdup_printf("Usage: %s [OPTION] ...\n", exe);
-    const char		**ppcc;
-    const size_t	  ar_sz	       = ARRAY_SIZE(OptionDesc);
+    char *MessageUsage = Strdup_printf("Usage: %s [OPTION] ...\n", exe);
+    const char **ppcc;
+    const size_t ar_sz = ARRAY_SIZE(OptionDesc);
 
     PUTS(MessageUsage);
     free(MessageUsage);
@@ -365,10 +370,12 @@ main(int argc, char *argv[])
     }
 
     if (argc == 2) {
-	if (strncmp(argv[1], "-v", 3) == 0 || strncmp(argv[1], "-version", 9) == 0) {
+	if (strncmp(argv[1], "-v", 3) == 0 ||
+	    strncmp(argv[1], "-version", 9) == 0) {
 	    view_version();
 	    return EXIT_SUCCESS;
-	} else if (strncmp(argv[1], "-?", 3) == 0 || strncmp(argv[1], "-help", 6) == 0) {
+	} else if (strncmp(argv[1], "-?", 3) == 0 ||
+		   strncmp(argv[1], "-help", 6) == 0) {
 	    print_help(argv[0]);
 	    return EXIT_SUCCESS;
 	} else {
@@ -378,7 +385,8 @@ main(int argc, char *argv[])
 
 #if UNIX
     if (geteuid() == 0) {
-	err_msg("fatal: running the program with root privileges is prohibited");
+	err_msg("fatal: "
+	    "running the program with root privileges is prohibited");
 	return EXIT_FAILURE;
     }
 #endif
