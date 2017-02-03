@@ -124,6 +124,9 @@ static struct cmdline_opt_values opt_values_data = {
 
 struct cmdline_opt_values *g_cmdline_opts = &opt_values_data; /* External */
 
+/**
+ * View Swirc version
+ */
 static void
 view_version(void)
 {
@@ -169,6 +172,9 @@ view_version(void)
     }
 }
 
+/**
+ * Print help
+ */
 static void
 print_help(const char *exe)
 {
@@ -184,7 +190,9 @@ print_help(const char *exe)
     }
 }
 
-/* -c <server[:port]> */
+/**
+ * -c <server[:port]>
+ */
 static void
 case_connect(void)
 {
@@ -212,7 +220,9 @@ case_connect(void)
     g_auto_connect = been_case = true;
 }
 
-/* -n <nickname> */
+/**
+ * -n <nickname>
+ */
 static void
 case_nickname(void)
 {
@@ -226,7 +236,9 @@ case_nickname(void)
     been_case = true;
 }
 
-/* -u <username> */
+/**
+ * -u <username>
+ */
 static void
 case_username(void)
 {
@@ -240,7 +252,9 @@ case_username(void)
     been_case = true;
 }
 
-/* -r <rl name> */
+/**
+ * -r <rl name>
+ */
 static void
 case_rl_name(void)
 {
@@ -254,7 +268,9 @@ case_rl_name(void)
     been_case = true;
 }
 
-/* -i */
+/**
+ * Option -i
+ */
 static void
 case_icb(void)
 {
@@ -267,7 +283,9 @@ case_icb(void)
     g_icb_mode = been_case = true;
 }
 
-/* -p */
+/**
+ * Option -p
+ */
 static void
 case_password(void)
 {
@@ -280,7 +298,9 @@ case_password(void)
     g_connection_password = been_case = true;
 }
 
-/* -h <hostname> */
+/**
+ * -h <hostname>
+ */
 static void
 case_hostname(void)
 {
@@ -294,7 +314,9 @@ case_hostname(void)
     g_bind_hostname = been_case = true;
 }
 
-/* -x <config> */
+/**
+ * -x <config>
+ */
 static void
 case_config(void)
 {
@@ -308,6 +330,9 @@ case_config(void)
     g_explicit_config_file = been_case = true;
 }
 
+/**
+ * Process options
+ */
 static void
 process_options(int argc, char *argv[], const char *optstring)
 {
@@ -353,6 +378,9 @@ process_options(int argc, char *argv[], const char *optstring)
     }
 }
 
+/**
+ * Starts execution
+ */
 int
 main(int argc, char *argv[])
 {
@@ -431,6 +459,9 @@ main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
+/**
+ * Get locale info
+ */
 struct locale_info *
 get_locale_info(int category)
 {
@@ -452,6 +483,9 @@ get_locale_info(int category)
     return (li);
 }
 
+/**
+ * Free locale info
+ */
 void
 free_locale_info(struct locale_info *li)
 {
@@ -461,6 +495,9 @@ free_locale_info(struct locale_info *li)
     free(li);
 }
 
+/**
+ * Command-line options destroy
+ */
 void
 cmdline_options_destroy(void)
 {
