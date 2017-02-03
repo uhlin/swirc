@@ -10,6 +10,10 @@ All notable changes to this project will be documented in this file.
 - Command /time (CTCP)
 - Support for reading a CTCP TIME reply requested by /time
 - Command /close
+- Event 492. Official name: `ERR_NOSERVICEHOST`. On InspIRCd: User
+  does not accept CTCPs
+- Event 500. Undocumented in the RFC. (Only a server may modify the +r
+  user mode)
 
 ### Changed ###
 - If target port is 6697: set SSL on

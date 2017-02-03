@@ -211,6 +211,8 @@ static struct numeric_events_tag {
     { "484", "ERR_RESTRICTED",          NO_WINDOW,      0,
       event_allaround_extract_find_colon },
     { "487", "ERR_",                    ACTIVE_WINDOW,  1, NULL },
+    { "492", "ERR_NOSERVICEHOST",       ACTIVE_WINDOW,  2, NULL },
+    { "500", "ERR_",                    ACTIVE_WINDOW,  1, NULL },
     { "501", "ERR_UMODEUNKNOWNFLAG",    ACTIVE_WINDOW,  1, NULL },
     { "502", "ERR_USERSDONTMATCH",      ACTIVE_WINDOW,  1, NULL },
     { "520", "",                        ACTIVE_WINDOW,  2, NULL },
