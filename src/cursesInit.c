@@ -1,5 +1,5 @@
 /* Initialization of the Ncurses library
-   Copyright (C) 2012-2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -90,7 +90,8 @@ init_color_pairs(void)
 		    char *fg_name = sw_strdup(Strcolor(*fg));
 		    char *bg_name = sw_strdup(Strcolor(*bg));
 
-		    err_msg("Could not initialize pair %hd (%s, %s)", pair_n, fg_name, bg_name);
+		    err_msg("Could not initialize pair %hd (%s, %s)",
+			    pair_n, fg_name, bg_name);
 
 		    free(fg_name);
 		    free(bg_name);
@@ -112,12 +113,14 @@ curses_init(void)
     g_endwin_fn   = endwin;
     g_doupdate_fn = doupdate;
 
-    if (!theme_bool_unparse("term_enable_colors", true) || !has_colors() || start_color() == ERR) {
+    if (!theme_bool_unparse("term_enable_colors", true) || !has_colors() ||
+	start_color() == ERR) {
 	g_no_colors = true;
     } else {
-	if (theme_bool_unparse("term_use_default_colors", true) && use_default_colors() != OK) {
+	if (theme_bool_unparse("term_use_default_colors", true) &&
+	    use_default_colors() != OK) {
 	    err_msg("use_default_colors() ran unsuccessful!\n"
-		    "Troubleshooting: set option term_use_default_colors to NO.");
+		"Troubleshooting: set option term_use_default_colors to NO.");
 	    return ERR;
 	}
     }
