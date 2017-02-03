@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2016 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2012-2017 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -25,8 +25,64 @@
 static const size_t	identifier_maxSize = 50;
 static const size_t	argument_maxSize   = 480;
 
-static char	*copy_identifier(const char *);
-static char	*copy_argument(const char *);
+static char *
+copy_identifier(const char *id)
+{
+    size_t	 count    = identifier_maxSize;
+    char	*dest_buf = malloc(count + 1);
+    char	*dest;
+
+    if (!dest_buf)
+	err_exit(ENOMEM, "copy_identifier");
+    else {
+	dest = &dest_buf[0];
+    }
+
+    while ((sw_isalnum(*id) || *id == '_') && count > 1) {
+	*dest++ = *id++, count--;
+    }
+
+    *dest = '\0';
+    if (count == 1)
+	err_quit("In copy_identifier: fatal: string was truncated!");
+    return (dest_buf);
+}
+
+static char *
+copy_argument(const char *arg)
+{
+    bool	 inside_arg = true;
+    size_t	 count      = argument_maxSize;
+    char	*dest_buf   = malloc(count + 1);
+    char	*dest;
+
+    if (!dest_buf)
+	err_exit(ENOMEM, "copy_argument");
+    else {
+	dest = &dest_buf[0];
+    }
+
+    while (*arg && count > 1) {
+	if (*arg == '\"') {
+	    inside_arg = false;
+	    break;
+	}
+
+	*dest++ = *arg++, count--;
+    }
+
+    *dest = '\0';
+
+    if (inside_arg && count == 1)
+	err_quit("In copy_argument: fatal: string was truncated!");
+
+    if (inside_arg) {
+	free(dest_buf);
+	return (NULL);
+    }
+
+    return (dest_buf);
+}
 
 void
 Interpreter(const struct Interpreter_in *in)
@@ -100,63 +156,4 @@ Interpreter(const struct Interpreter_in *in)
     free_not_null(id);
     free_not_null(arg);
     abort();
-}
-
-static char *
-copy_identifier(const char *id)
-{
-    size_t	 count    = identifier_maxSize;
-    char	*dest_buf = malloc(count + 1);
-    char	*dest;
-
-    if (!dest_buf)
-	err_exit(ENOMEM, "copy_identifier");
-    else {
-	dest = &dest_buf[0];
-    }
-
-    while ((sw_isalnum(*id) || *id == '_') && count > 1) {
-	*dest++ = *id++, count--;
-    }
-
-    *dest = '\0';
-    if (count == 1)
-	err_quit("In copy_identifier: fatal: string was truncated!");
-    return (dest_buf);
-}
-
-static char *
-copy_argument(const char *arg)
-{
-    bool	 inside_arg = true;
-    size_t	 count      = argument_maxSize;
-    char	*dest_buf   = malloc(count + 1);
-    char	*dest;
-
-    if (!dest_buf)
-	err_exit(ENOMEM, "copy_argument");
-    else {
-	dest = &dest_buf[0];
-    }
-
-    while (*arg && count > 1) {
-	if (*arg == '\"') {
-	    inside_arg = false;
-	    break;
-	}
-
-	*dest++ = *arg++, count--;
-    }
-
-    *dest = '\0';
-
-    if (inside_arg && count == 1)
-	err_quit("In copy_argument: fatal: string was truncated!");
-
-    if (inside_arg) {
-	free(dest_buf);
-	return (NULL);
-    }
-
-    return (dest_buf);
 }
