@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 - CTCP VERSION reply bug
 - Save nickname, username and real name automatically to the config if
   customized by the command-line.
+- Better performance
 
 ## [1.3] - 2017-01-14 ##
 ### Added ###
