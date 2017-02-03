@@ -142,7 +142,8 @@ Interpreter(const struct Interpreter_in *in)
 	goto die;
 #endif
     } else if ((errno = in->install_func(id, arg)) != 0) {
-	err_ret("%s:%ld: install_func returned %d", in->path, in->line_num, errno);
+	err_ret("%s:%ld: install_func returned %d",
+		in->path, in->line_num, errno);
 	goto die;
     } else {
 	;
