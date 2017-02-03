@@ -25,6 +25,9 @@
 static const size_t	identifier_maxSize = 50;
 static const size_t	argument_maxSize   = 480;
 
+/**
+ * Copy identifier
+ */
 static char *
 copy_identifier(const char *id)
 {
@@ -48,6 +51,9 @@ copy_identifier(const char *id)
     return (dest_buf);
 }
 
+/**
+ * Copy argument
+ */
 static char *
 copy_argument(const char *arg)
 {
@@ -84,6 +90,9 @@ copy_argument(const char *arg)
     return (dest_buf);
 }
 
+/**
+ * Interpreter
+ */
 void
 Interpreter(const struct Interpreter_in *in)
 {
