@@ -45,7 +45,7 @@ short int	g_initialized_pairs = -1;
  * it returns a negative value.
  */
 static short int
-init_color_pairs(void)
+init_color_pairs()
 {
     short int pair_n = 0;
     short int colors[] = {
