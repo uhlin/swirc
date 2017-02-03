@@ -38,10 +38,12 @@
 bool		g_no_colors         = false;
 short int	g_initialized_pairs = -1;
 
-/* init_color_pairs()  --  initialize color pairs by calling init_pair()
-
-   Returns the no. of pairs that have been initialized. And on error
-   it returns a negative value. */
+/**
+ * Initialize color pairs by calling init_pair()
+ *
+ * @return The no. of pairs that have been initialized. And on error
+ * it returns a negative value.
+ */
 static short int
 init_color_pairs(void)
 {
@@ -104,6 +106,9 @@ init_color_pairs(void)
     return pair_n;
 }
 
+/**
+ * Initialization of the Ncurses library (done before usage)
+ */
 int
 curses_init(void)
 {
