@@ -128,7 +128,7 @@ struct cmdline_opt_values *g_cmdline_opts = &opt_values_data; /* External */
  * View Swirc version
  */
 static void
-view_version(void)
+view_version()
 {
     char *MessageVersion = Strdup_printf("Swirc %s\nCopyright (C) %s %s\n",
 	g_swircVersion, g_swircYear, g_swircAuthor);
@@ -194,7 +194,7 @@ print_help(const char *exe)
  * -c <server[:port]>
  */
 static void
-case_connect(void)
+case_connect()
 {
     static bool	 been_case = false;
     char	*token1, *token2;
@@ -224,7 +224,7 @@ case_connect(void)
  * -n <nickname>
  */
 static void
-case_nickname(void)
+case_nickname()
 {
     static bool been_case = false;
 
@@ -240,7 +240,7 @@ case_nickname(void)
  * -u <username>
  */
 static void
-case_username(void)
+case_username()
 {
     static bool been_case = false;
 
@@ -256,7 +256,7 @@ case_username(void)
  * -r <rl name>
  */
 static void
-case_rl_name(void)
+case_rl_name()
 {
     static bool been_case = false;
 
@@ -272,7 +272,7 @@ case_rl_name(void)
  * Option -i
  */
 static void
-case_icb(void)
+case_icb()
 {
     static bool been_case = false;
 
@@ -287,7 +287,7 @@ case_icb(void)
  * Option -p
  */
 static void
-case_password(void)
+case_password()
 {
     static bool been_case = false;
 
@@ -302,7 +302,7 @@ case_password(void)
  * -h <hostname>
  */
 static void
-case_hostname(void)
+case_hostname()
 {
     static bool been_case = false;
 
@@ -318,7 +318,7 @@ case_hostname(void)
  * -x <config>
  */
 static void
-case_config(void)
+case_config()
 {
     static bool been_case = false;
 
