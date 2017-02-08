@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Added ###
+- Event 461 `ERR_NEEDMOREPARAMS`
+
 ## [1.4] - 2017-02-03 ##
 ### Added ###
 - WIN32 specific: added a resource script
