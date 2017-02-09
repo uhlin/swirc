@@ -252,7 +252,7 @@ cmd_ilist(const char *data)
     }
 }
 
-/* usage: /who [mask] */
+/* usage: /who <mask> */
 void
 cmd_who(const char *data)
 {
