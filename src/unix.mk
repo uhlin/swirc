@@ -15,6 +15,7 @@ OBJS+=options.o printtext.o pthrMutex.o readline.o readlineAPI.o
 OBJS+=sig-unix.o statusbar.o strHand.o strcat.o strcpy.o
 OBJS+=strdup_printf.o term-unix.o terminal.o textBuffer.o theme.o
 OBJS+=titlebar.o wcscat.o wcscpy.o window.o network-openssl.o
+OBJS+=x509_check_host.o
 
 OUT=swirc
 
@@ -75,6 +76,7 @@ wcscat.o:
 wcscpy.o:
 window.o:
 network-openssl.o:
+x509_check_host.o:
 
 clean:
 	$(Q) cd commands && $(MAKE) -f unix.mk clean

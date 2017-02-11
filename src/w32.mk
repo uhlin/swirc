@@ -14,7 +14,7 @@ OBJS=assertAPI.obj config.obj curses-funcs.obj cursesInit.obj dataClassify.obj \
      sig-w32.obj statusbar.obj strHand.obj strcat.obj strcpy.obj               \
      strdup_printf.obj term-w32.obj terminal.obj textBuffer.obj theme.obj      \
      titlebar.obj vcMutex.obj wcscat.obj wcscpy.obj window.obj                 \
-     network-openssl.obj
+     network-openssl.obj x509_check_host.obj
 
 OUT=swirc
 
@@ -81,6 +81,7 @@ wcscat.obj:
 wcscpy.obj:
 window.obj:
 network-openssl.obj:
+x509_check_host.obj:
 
 clean:
 	cd commands && $(MAKE) -f w32.mk clean

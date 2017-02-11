@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Added ###
 - Event 461 `ERR_NEEDMOREPARAMS`
+- Function `X509_check_host` for implementations that lacks support
+  for it.
 
 ### Fixed ###
 - Usage for command /who was bogus. Parameter mask is mandatory.
