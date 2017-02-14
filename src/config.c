@@ -55,6 +55,7 @@ static struct tagConfDefValues {
 } ConfDefValues[] = {
     { "alt_nick",                  TYPE_STRING,  "warezkid_" },
     { "chanserv_host",             TYPE_STRING,  "services." },
+    { "cipher_suite",              TYPE_STRING,  "compat" },
     { "cmd_hist_size",             TYPE_INTEGER, "50" },
     { "connection_timeout",        TYPE_INTEGER, "15" },
     { "disable_beeps",             TYPE_BOOLEAN, "no" },

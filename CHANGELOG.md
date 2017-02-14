@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 - Event 461 `ERR_NEEDMOREPARAMS`
 - Function `X509_check_host` for implementations that lacks support
   for it.
+- Config option `cipher_suite`. Valid values are secure, compat,
+  legacy and insecure.
 
 ### Fixed ###
 - Usage for command /who was bogus. Parameter mask is mandatory.
