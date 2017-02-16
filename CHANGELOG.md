@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
   for it.
 - Config option `cipher_suite`. Valid values are secure, compat,
   legacy and insecure.
+- Improved TLS/SSL security
 
 ### Fixed ###
 - Usage for command /who was bogus. Parameter mask is mandatory.

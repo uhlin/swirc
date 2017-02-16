@@ -267,3 +267,14 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
     sw_assert_not_reached();
     return -1;
 }
+
+int
+net_ssl_check_hostname(const char *host, unsigned int flags)
+{
+    X509 *cert = NULL;
+
+    if (ssl == NULL || (cert = SSL_get_peer_certificate(ssl)) == NULL ||
+	host == NULL)
+	return ERR;
+    return (X509_check_host(cert, host, 0, flags, NULL) > 0 ? OK : ERR);
+}
