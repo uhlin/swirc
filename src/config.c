@@ -57,7 +57,7 @@ static struct tagConfDefValues {
     { "chanserv_host",             TYPE_STRING,  "services." },
     { "cipher_suite",              TYPE_STRING,  "compat" },
     { "cmd_hist_size",             TYPE_INTEGER, "50" },
-    { "connection_timeout",        TYPE_INTEGER, "15" },
+    { "connection_timeout",        TYPE_INTEGER, "30" },
     { "disable_beeps",             TYPE_BOOLEAN, "no" },
     { "encoding",                  TYPE_STRING,  "iso-8859-1" },
     { "kick_close_window",         TYPE_BOOLEAN, "yes" },

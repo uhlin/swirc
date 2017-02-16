@@ -10,6 +10,9 @@ All notable changes to this project will be documented in this file.
   legacy and insecure.
 - Improved TLS/SSL security
 
+### Changed ###
+- Connection timeout to 30 seconds
+
 ### Fixed ###
 - Usage for command /who was bogus. Parameter mask is mandatory.
 
