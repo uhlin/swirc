@@ -1,4 +1,4 @@
-/* Copyright (c) 2016 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2016, 2017 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -32,12 +32,16 @@
 #include "libUtils.h"
 #include "network.h"
 #include "printtext.h"
+#include "strHand.h"
 #include "strdup_printf.h"
 
 static SSL_CTX	*ssl_ctx = NULL;
 static SSL	*ssl	 = NULL;
 
-static const char cipher_list[] = "HIGH:@STRENGTH";
+static const char *suite_secure = "TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
+static const char *suite_compat = "HIGH:!aNULL";
+static const char *suite_legacy = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
+static const char *suite_insecure = "ALL:!aNULL:!eNULL";
 
 static int
 verify_callback(int ok, X509_STORE_CTX *ctx)
@@ -66,6 +70,20 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
     }
 
     return (ok);
+}
+
+static void
+set_ciphers(const char *list)
+{
+    struct printtext_context ptext_ctx = {
+	.window	    = g_status_window,
+	.spec_type  = TYPE_SPEC1_WARN,
+	.include_ts = true,
+    };
+
+    if (list && !SSL_CTX_set_cipher_list(ssl_ctx, list))
+	printtext(&ptext_ctx, "warning: set_ciphers: bogus cipher list: %s",
+		  strerror(EINVAL));
 }
 
 void
@@ -110,9 +128,18 @@ net_ssl_init(void)
 	    "Certificate verification is disabled: Option set to NO?");
     }
 
-    if (!SSL_CTX_set_cipher_list(ssl_ctx, cipher_list))
-	printtext(&ptext_ctx, "net_ssl_init: Bogus cipher list: %s",
-		  strerror(EINVAL));
+    const char *cs = Config("cipher_suite");
+
+    if (Strings_match(cs, "secure") || Strings_match(cs, "SECURE"))
+	set_ciphers(suite_secure);
+    else if (Strings_match(cs, "compat") || Strings_match(cs, "COMPAT"))
+	set_ciphers(suite_compat);
+    else if (Strings_match(cs, "legacy") || Strings_match(cs, "LEGACY"))
+	set_ciphers(suite_legacy);
+    else if (Strings_match(cs, "insecure") || Strings_match(cs, "INSECURE"))
+	set_ciphers(suite_insecure);
+    else
+	set_ciphers(suite_compat);
 }
 
 void
