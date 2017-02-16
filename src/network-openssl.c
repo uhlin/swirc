@@ -81,7 +81,7 @@ set_ciphers(const char *list)
 	.include_ts = true,
     };
 
-    if (list && !SSL_CTX_set_cipher_list(ssl_ctx, list))
+    if (ssl_ctx && list && !SSL_CTX_set_cipher_list(ssl_ctx, list))
 	printtext(&ptext_ctx, "warning: set_ciphers: bogus cipher list: %s",
 		  strerror(EINVAL));
 }
