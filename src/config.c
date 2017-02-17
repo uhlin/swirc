@@ -70,11 +70,7 @@ static struct tagConfDefValues {
     { "recode",                    TYPE_BOOLEAN, "no" },
     { "show_ping_pong",            TYPE_BOOLEAN, "no" },
     { "skip_motd",                 TYPE_BOOLEAN, "no" },
-#if defined(UNIX)
-    { "ssl_verify_peer",           TYPE_BOOLEAN, "yes" },
-#elif defined(WIN32)
-    { "ssl_verify_peer",           TYPE_BOOLEAN, "no" },
-#endif
+    { "ssl_verify_peer",           TYPE_BOOLEAN, "YES" },
     { "startup_greeting",          TYPE_BOOLEAN, "yes" },
     { "textbuffer_size_absolute",  TYPE_INTEGER, "1500" },
     { "theme",                     TYPE_STRING,  "default" },

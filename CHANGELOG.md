@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed ###
 - Connection timeout to 30 seconds
+- Set `ssl_verify_peer` to YES even on WIN32
 
 ### Fixed ###
 - Usage for command /who was bogus. Parameter mask is mandatory.
