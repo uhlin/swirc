@@ -59,17 +59,17 @@ static const int RECVBUF_SIZE = 2048;
 struct addrinfo *
 net_addr_resolve(const char *host, const char *port)
 {
-    struct addrinfo hints;
-    struct addrinfo *res;
-
-    hints.ai_flags     = AI_CANONNAME;
-    hints.ai_family    = AF_INET;
-    hints.ai_socktype  = SOCK_STREAM;
-    hints.ai_protocol  = 0;
-    hints.ai_addrlen   = 0;
-    hints.ai_addr      = NULL;
-    hints.ai_canonname = NULL;
-    hints.ai_next      = NULL;
+    struct addrinfo hints = {
+	.ai_flags     = AI_CANONNAME,
+	.ai_family    = AF_INET,
+	.ai_socktype  = SOCK_STREAM,
+	.ai_protocol  = 0,
+	.ai_addrlen   = 0,
+	.ai_addr      = NULL,
+	.ai_canonname = NULL,
+	.ai_next      = NULL,
+    };
+    struct addrinfo *res = NULL;
 
     if (getaddrinfo(host, port, &hints, &res) != 0) {
 	return (NULL);
@@ -109,7 +109,7 @@ net_connect(const struct network_connect_context *ctx)
 	.spec_type  = TYPE_SPEC1,
 	.include_ts = true,
     };
-    struct addrinfo *res, *rp;
+    struct addrinfo *res = NULL, *rp = NULL;
 
     g_connection_in_progress = true;
 
@@ -188,7 +188,6 @@ net_connect(const struct network_connect_context *ctx)
 
     if (!event_welcome_is_signaled()) {
 	event_welcome_cond_destroy();
-
 	ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ptext_ctx, "Event welcome not signaled! "
 	    "(connection_timeout=%s)", Config("connection_timeout"));
