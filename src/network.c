@@ -138,18 +138,13 @@ net_connect(const struct network_connect_context *ctx)
     }
 
     for (rp = res; rp; rp = rp->ai_next) {
-#if defined(UNIX)
-	if ((g_socket = socket(rp->ai_family, rp->ai_socktype,
-			       rp->ai_protocol)) == -1) {
-	    continue;
-	}
-#elif defined(WIN32)
-	if ((g_socket = socket(rp->ai_family, rp->ai_socktype,
-			       rp->ai_protocol)) == INVALID_SOCKET) {
-	    continue;
-	}
+#ifdef UNIX
+#define INVALID_SOCKET -1
 #endif
-	else if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) == 0) {
+	if ((g_socket = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol))
+	    == INVALID_SOCKET) {
+	    continue;
+	} else if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) == 0) {
 	    printtext(&ptext_ctx, "Connected!");
 	    g_on_air = true;
 	    break;
