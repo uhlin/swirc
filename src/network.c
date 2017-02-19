@@ -40,6 +40,7 @@
 #include <string.h>
 
 #include "config.h"
+#include "errHand.h"
 #include "irc.h"
 #include "libUtils.h"
 #include "network.h"
@@ -71,7 +72,7 @@ net_addr_resolve(const char *host, const char *port)
     };
     struct addrinfo *res = NULL;
 
-    if (getaddrinfo(host, port, &hints, &res) != 0) {
+    if (!host || !port || getaddrinfo(host, port, &hints, &res) != 0) {
 	return (NULL);
     }
 
@@ -111,8 +112,9 @@ net_connect(const struct network_connect_context *ctx)
     };
     struct addrinfo *res = NULL, *rp = NULL;
 
+    if (ctx == NULL)
+	err_exit(EINVAL, "net_connect");
     g_connection_in_progress = true;
-
     printtext(&ptext_ctx, "Connecting to %s (%s)", ctx->server, ctx->port);
     ptext_ctx.spec_type  = TYPE_SPEC1_SUCCESS;
 
