@@ -172,16 +172,18 @@ net_connect(const struct network_connect_context *ctx)
 	goto out;
     }
 
-    if (is_ssl_enabled() && net_ssl_check_hostname(ctx->server, 0) != OK) {
-	ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
-	printtext(&ptext_ctx, "Hostname checking failed!");
-	g_on_air = false;
+    if (is_ssl_enabled() && config_bool_unparse("hostname_checking", true)) {
+	if (net_ssl_check_hostname(ctx->server, 0) != OK) {
+	    ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
+	    printtext(&ptext_ctx, "Hostname checking failed!");
+	    g_on_air = false;
 #ifdef WIN32
-	(void) winsock_deinit();
+	    (void) winsock_deinit();
 #endif
-	goto out;
-    } else {
-	printtext(&ptext_ctx, "Hostname checking OK!");
+	    goto out;
+	} else {
+	    printtext(&ptext_ctx, "Hostname checking OK!");
+	}
     }
 
     event_welcome_cond_init();

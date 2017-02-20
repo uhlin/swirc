@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Via command /connect it's now possible to connect, only by
   specifying a particular irc network, that is: "efnet", "freenode",
   "ircnet", "quakenet" or "undernet".
+- Config option `hostname_checking`
 
 ### Changed ###
 - Connection timeout to 30 seconds
