@@ -48,8 +48,52 @@
 
 static bool secure_connection = false;
 
-/*lint -sem(get_password, r_null) */
+static const char *efnet_servers[] = {
+    "efnet.port80.se",
+    "efnet.portlane.se",
+    "irc.choopa.net",
+    "irc.efnet.nl",
+    "irc.efnet.org",
+    "irc.inet.tele.dk",
+    "irc.mzima.net",
+    "irc.servercentral.net",
+    "irc.underworld.no",
+};
 
+static const char *freenode_servers[] = {
+    "card.freenode.net",
+    "chat.freenode.net",
+    "cherryh.freenode.net",
+    "hobana.freenode.net",
+    "leguin.acc.umu.se",
+    "orwell.freenode.net",
+    "verne.freenode.net",
+    "weber.freenode.net",
+};
+
+static const char *ircnet_servers[] = {
+    "eris.us.ircnet.net",
+    "irc.atw-inter.net",
+    "irc.nlnog.net",
+    "irc.portlane.se",
+    "open.ircnet.net",
+};
+
+static const char *quakenet_servers[] = {
+    "ServerCentral.IL.US.Quakenet.Org",
+    "irc.quakenet.org",
+    "portlane.se.quakenet.org",
+    "underworld1.no.quakenet.org",
+    "underworld2.no.quakenet.org",
+};
+
+static const char *undernet_servers[] = {
+    "Ashburn.Va.Us.UnderNet.org",
+    "irc.undernet.org",
+    "undernet.rethemhosting.net",
+};
+
+/*lint -sem(get_password, r_null) */
 static char *
 get_password()
 {
@@ -108,7 +152,7 @@ get_password()
 }
 
 void
-do_connect(char *server, char *port)
+do_connect(const char *server, const char *port)
 {
     struct printtext_context ptext_ctx = {
 	.window	    = g_status_window,
@@ -116,8 +160,8 @@ do_connect(char *server, char *port)
 	.include_ts = true,
     };
     struct network_connect_context conn_ctx = {
-	.server   = server,
-	.port     = port,
+	.server   = (char *) server,
+	.port     = (char *) port,
 	.password = NULL,
 	.username = "",
 	.rl_name  = "",
@@ -197,6 +241,47 @@ is_ssl_enabled(void)
     return secure_connection;
 }
 
+static const char *
+get_server(const char *ar[], const size_t ar_sz, const char *msg)
+{
+    char ans[20] = "";
+    const char **ppcc = &ar[0];
+    int c = EOF;
+    int i = 0;
+    int srvno = 0;
+
+    escape_curses();
+    puts(msg);
+
+    while (ppcc < &ar[ar_sz]) {
+	printf("    (%d) %s\n", i, *ppcc);
+	ppcc++, i++;
+    }
+
+    if (i > 0)
+	i--;
+
+    while (BZERO(ans, sizeof ans), true) {
+	printf("Your choice (0-%d): ", i);
+	fflush(stdout);
+
+	if (fgets(ans, sizeof ans, stdin) == NULL) {
+	    err_quit("In get_server: fatal: fgets error");
+	} else if (strchr(ans, '\n') == NULL) {
+	    puts("input too big");
+	    while (c = getchar(), c != '\n' && c != EOF)
+		/* discard */;
+	} else if (sscanf(ans, "%d", &srvno) != 1 || srvno < 0 || srvno > i) {
+	    ;
+	} else {
+	    break;
+	}
+    }
+
+    resume_curses();
+    return (ar[srvno]);
+}
+
 /* usage: /connect [-ssl] <server[:port]> */
 void
 cmd_connect(const char *data)
@@ -250,7 +335,23 @@ cmd_connect(const char *data)
 	print_and_free("/connect: bogus port number", dcopy);
 	return;
     } else {
-	do_connect(server, port);
+	if (Strings_match_ignore_case(server, "efnet"))
+	    do_connect(get_server(efnet_servers,
+		ARRAY_SIZE(efnet_servers), "EFnet servers"), port);
+	else if (Strings_match_ignore_case(server, "freenode"))
+	    do_connect(get_server(freenode_servers,
+		ARRAY_SIZE(freenode_servers), "freenode servers"), port);
+	else if (Strings_match_ignore_case(server, "ircnet"))
+	    do_connect(get_server(ircnet_servers,
+		ARRAY_SIZE(ircnet_servers), "IRCnet servers"), port);
+	else if (Strings_match_ignore_case(server, "quakenet"))
+	    do_connect(get_server(quakenet_servers,
+		ARRAY_SIZE(quakenet_servers), "QuakeNet servers"), port);
+	else if (Strings_match_ignore_case(server, "undernet"))
+	    do_connect(get_server(undernet_servers,
+		ARRAY_SIZE(undernet_servers), "undernet servers"), port);
+	else
+	    do_connect(server, port);
 	free(dcopy);
     }
 }

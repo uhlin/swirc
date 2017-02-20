@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file.
 - Config option `cipher_suite`. Valid values are secure, compat,
   legacy and insecure.
 - Improved TLS/SSL security
+- Via command /connect it's now possible to connect, only by
+  specifying a particular irc network, that is: "efnet", "freenode",
+  "ircnet", "quakenet" or "undernet".
 
 ### Changed ###
 - Connection timeout to 30 seconds
