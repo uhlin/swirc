@@ -24,6 +24,8 @@ enum { /* custom, additional keys */
     MY_KEY_RESIZE = '\033'
 };
 
+#define WINDOWS_KEY_ENTER 459
+
 struct readline_session_context {
     wchar_t *buffer;
     int      bufpos;

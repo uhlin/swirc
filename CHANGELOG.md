@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed ###
 - Usage for command /who was bogus. Parameter mask is mandatory.
+- Key enter for Windows
 
 ## [1.4] - 2017-02-03 ##
 ### Added ###

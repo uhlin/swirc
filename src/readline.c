@@ -571,7 +571,7 @@ readline(const char *prompt)
 	    break;
 	case '\t':
 	    break;
-	case KEY_ENTER: case '\n':
+	case '\n': case KEY_ENTER: case WINDOWS_KEY_ENTER:
 	    g_readline_loop = false;
 	    break;
 	case KEY_RESIZE:
