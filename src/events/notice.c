@@ -206,7 +206,7 @@ event_notice(struct irc_message_compo *compo)
     } else {
 	if (Strings_match_ignore_case(dest, g_my_nickname))
 	    ptext_ctx.window =
-		window_by_label(nick) ? window_by_label(nick) : g_status_window;
+		window_by_label(nick) ? window_by_label(nick) : g_active_window;
 	else
 	    ptext_ctx.window =
 		window_by_label(dest) ? window_by_label(dest) : g_status_window;
