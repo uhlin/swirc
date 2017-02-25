@@ -228,12 +228,15 @@ get_prompt()
 }
 
 void
-unget_string(const char *string)
+unget_string(char *string)
 {
+    char *cp = NULL;
+
     if (!string)
 	return;
-
-    for (const char *cp = &string[strlen(string) - 1]; cp >= &string[0]; cp--)
+    while ((cp = strchr(string, BOLD)) != NULL)
+	*cp = BOLD_ALIAS;
+    for (cp = &string[strlen(string) - 1]; cp >= &string[0]; cp--)
 	ungetch(*cp);
 }
 

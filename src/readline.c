@@ -38,6 +38,7 @@
 #include "curses-funcs.h" /* is_scrollok() etc */
 #endif
 #include "errHand.h"
+#include "io-loop.h"
 #include "libUtils.h"
 #include "printtext.h"
 #include "readline.h"
@@ -542,22 +543,22 @@ readline(const char *prompt)
 	case KEY_BACKSPACE: case MY_KEY_BS:
 	    case_key_backspace(ctx);
 	    break;
-	case KEY_F(5):
+	case KEY_F(5): case BLINK:
 	    handle_key(ctx, btowc(BLINK));
 	    break;
-	case KEY_F(6):
+	case KEY_F(6): case BOLD_ALIAS:
 	    handle_key(ctx, btowc(BOLD));
 	    break;
-	case KEY_F(7):
+	case KEY_F(7): case COLOR:
 	    handle_key(ctx, btowc(COLOR));
 	    break;
-	case KEY_F(8):
+	case KEY_F(8): case NORMAL:
 	    handle_key(ctx, btowc(NORMAL));
 	    break;
-	case KEY_F(9):
+	case KEY_F(9): case REVERSE:
 	    handle_key(ctx, btowc(REVERSE));
 	    break;
-	case KEY_F(10):
+	case KEY_F(10): case UNDERLINE:
 	    handle_key(ctx, btowc(UNDERLINE));
 	    break;
 	case KEY_DC: case MY_KEY_EOT:
