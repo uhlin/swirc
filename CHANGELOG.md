@@ -15,7 +15,7 @@ All notable changes to this project will be documented in this file.
 - Config option `hostname_checking`
 
 ### Changed ###
-- Connection timeout to 30 seconds
+- Connection timeout to 45 seconds
 - Set `ssl_verify_peer` to YES even on WIN32
 
 ### Fixed ###
