@@ -390,7 +390,6 @@ enter_io_loop(void)
 	do_connect(g_cmdline_opts->server, g_cmdline_opts->port);
     }
 
-    (void) unget_wch(MY_KEY_RESIZE);
     history = textBuf_new();
 
     do {

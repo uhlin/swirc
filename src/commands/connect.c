@@ -40,6 +40,7 @@
 #include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
+#include "../readline.h"
 #include "../strHand.h"
 
 #include "connect.h"
@@ -221,6 +222,8 @@ do_connect(const char *server, const char *port)
 	    conn_ctx.password = NULL;
 	}
     }
+
+    (void) unget_wch(MY_KEY_RESIZE);
 }
 
 void
