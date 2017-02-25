@@ -114,7 +114,7 @@ static struct tagThemeDefValues {
     { "whois_modes",               TYPE_STRING,  "\00314=\017> modes    :" },
     { "whois_server",              TYPE_STRING,  "\00314=\017> server   :" },
     { "whois_service",             TYPE_STRING,  "\00314=\017> service  :" },
-    { "whois_ssl",                 TYPE_STRING,  "\00314=\017> SSL      :" },
+    { "whois_ssl",                 TYPE_STRING,  "\00314=\017> TLS/SSL  :" },
 };
 
 void
