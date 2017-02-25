@@ -201,7 +201,8 @@ swirc_greeting()
 	      LEFT_BRKT, g_home_dir, RIGHT_BRKT);
     printtext(&ptext_ctx, "%c%hd%c color pairs have been initialized",
 	      BOLD, g_initialized_pairs, BOLD);
-    printtext(&ptext_ctx, "Type /help for a list of commands");
+    printtext(&ptext_ctx, "Type /help for a list of commands; or /help "
+	"<command>\n(for a brief usage of that command)");
     if (get_error_log_size(&log_size_kb))
 	printtext(&ptext_ctx, "Error log size %s%.1f KB%s",
 		  LEFT_BRKT, log_size_kb, RIGHT_BRKT);
