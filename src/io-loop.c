@@ -149,7 +149,7 @@ get_error_log_size(double *size)
 static void
 swirc_greeting()
 {
-#define USE_LARRY3D_LOGO 0
+#define USE_LARRY3D_LOGO 1
     struct printtext_context ptext_ctx;
     const char **ppcc;
     const char *logo[] = {
