@@ -19,6 +19,7 @@ struct cmdline_opt_values {
 extern const char g_swircVersion[];
 extern const char g_swircYear[];
 extern const char g_swircAuthor[];
+extern const char g_swircWebAddr[];
 
 extern bool g_auto_connect;
 extern bool g_icb_mode;
