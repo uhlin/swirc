@@ -108,7 +108,7 @@ broadcast_window_activity(PIRC_WINDOW src)
 {
     struct printtext_context ctx = {
 	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_WARN,
+	.spec_type  = TYPE_SPEC1_SUCCESS,
 	.include_ts = true,
     };
 
