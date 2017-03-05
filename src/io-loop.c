@@ -424,7 +424,7 @@ enter_io_loop(void)
 		    .include_ts = true,
 		};
 
-		if (config_bool_unparse("recode", true)) {
+		if (config_bool_unparse("recode", false)) {
 		    ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 		    printtext(&ptext_ctx, "Can't recode user input "
 			"before transmit (yet unsupported)");
