@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Connection timeout to 45 seconds
 - Set `ssl_verify_peer` to YES even on WIN32
 - ASCII logo
+- Title for status window (to Swirc homepage)
 
 ### Fixed ###
 - Usage for command /who was bogus. Parameter mask is mandatory.
