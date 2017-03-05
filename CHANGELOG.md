@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [1.5] - 2017-03-05 ##
 ### Added ###
 - Event 461 `ERR_NEEDMOREPARAMS`
 - Function `X509_check_host` for implementations that lacks support
