@@ -105,7 +105,7 @@ static struct numeric_events_tag {
     { "020", "",                        STATUS_WINDOW,  1, NULL },
     { "042", "",                        NO_WINDOW,      0,
       event_allaround_extract_remove_colon },
-    { "221", "RPL_UMODEIS",             STATUS_WINDOW,  1, NULL },
+    { "221", "RPL_UMODEIS",             NO_WINDOW,      0, event_userModeIs },
     { "232", "",                        ACTIVE_WINDOW,  1, NULL },
     { "250", "",                        STATUS_WINDOW,  1, NULL },
     { "251", "RPL_LUSERCLIENT",         STATUS_WINDOW,  1, NULL },
@@ -549,6 +549,7 @@ irc_deinit(void)
 {
     free_and_null(&g_server_hostname);
     free_and_null(&g_my_nickname);
+    BZERO(g_user_modes, sizeof g_user_modes);
 
     statusbar_update_display_beta();
     readline_top_panel();

@@ -36,6 +36,8 @@
 #include "../irc.h"
 #include "../network.h"
 #include "../printtext.h"
+#include "../readline.h"
+#include "../statusbar.h"
 #include "../strHand.h"
 #include "../theme.h"
 
@@ -364,4 +366,28 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
     printtext(&ctx, "Channel %s%s%s%c%s created %s",
 	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 	      trim( ctime(&date_of_creation) ));
+}
+
+/* event_userModeIs: 221 (RPL_UMODEIS)
+
+   Example:
+     :irc.server.com 221 <my nickname> <modes> */
+void
+event_userModeIs(struct irc_message_compo *compo)
+{
+    char *modes = NULL;
+    char *state = "";
+
+    if (Strfeed(compo->params, 1) != 1)
+	return;
+
+    (void) strtok_r(compo->params, "\n", &state); /* my nickname */
+
+    if ((modes = strtok_r(NULL, "\n", &state)) == NULL ||
+	Strings_match(modes, g_user_modes) ||
+	sw_strcpy(g_user_modes, modes, sizeof g_user_modes) != 0)
+	return;
+
+    statusbar_update_display_beta();
+    readline_top_panel();
 }

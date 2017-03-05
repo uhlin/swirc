@@ -37,6 +37,7 @@
 #include "../errHand.h"
 #include "../irc.h"
 #include "../libUtils.h"
+#include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
 #include "../theme.h"
@@ -448,6 +449,7 @@ event_mode(struct irc_message_compo *compo)
 	    ctx.window = g_status_window;
 	    printtext(&ctx, "Mode change %s%s%s for user %c%s%c",
 		      LEFT_BRKT, s_copy, RIGHT_BRKT, BOLD, nick, BOLD);
+	    net_send("MODE %s", nick);
 	} else if (is_irc_channel(channel) &&
 		   (ctx.window = window_by_label(channel)) != NULL) {
 	    printtext(&ctx, "mode/%s%s%s%c%s %s%s%s by %s%s%c",

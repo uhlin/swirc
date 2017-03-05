@@ -42,6 +42,8 @@
 #include "terminal.h"
 #include "theme.h"
 
+char g_user_modes[100] = "";
+
 static PANEL      *statusbar_pan       = NULL;
 static const char  irc_client_slogan[] = "\0033,1The universal IRC client\017";
 
@@ -91,6 +93,9 @@ get_nick_and_server()
 
     if (g_my_nickname && g_server_hostname) {
 	(void) sw_strcpy(buf, g_my_nickname, sizeof buf);
+	(void) sw_strcat(buf, "(", sizeof buf);
+	(void) sw_strcat(buf, g_user_modes, sizeof buf);
+	(void) sw_strcat(buf, ")", sizeof buf);
 	(void) sw_strcat(buf, "@", sizeof buf);
 	(void) sw_strcat(buf, g_server_hostname, sizeof buf);
     }

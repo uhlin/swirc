@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - Set `ssl_verify_peer` to YES even on WIN32
 - ASCII logo
 - Title for status window (to Swirc homepage)
+- Statusbar to display user modes
 
 ### Fixed ###
 - Usage for command /who was bogus. Parameter mask is mandatory.
