@@ -24,8 +24,8 @@ All notable changes to this project will be documented in this file.
 ### Fixed ###
 - Usage for command /who was bogus. Parameter mask is mandatory.
 - Key enter for Windows
-- Unget `MY_KEY_RESIZE` right after connection to a server. May or may
-  not fix junk characters from sometimes appearing at the prompt.
+- Unget `\n` right after connection to a server. May or may not fix
+  junk characters from sometimes appearing at the prompt.
 - Command history bug fix
 
 ## [1.4] - 2017-02-03 ##

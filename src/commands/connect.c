@@ -40,7 +40,6 @@
 #include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
-#include "../readline.h"
 #include "../strHand.h"
 
 #include "connect.h"
@@ -223,7 +222,7 @@ do_connect(const char *server, const char *port)
 	}
     }
 
-    (void) unget_wch(MY_KEY_RESIZE);
+    (void) unget_wch('\n');
 }
 
 void
