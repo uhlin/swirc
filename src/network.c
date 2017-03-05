@@ -203,6 +203,9 @@ net_connect(const struct network_connect_context *ctx)
 
     event_welcome_cond_destroy();
 
+    if (g_my_nickname)
+	net_send("MODE %s", g_my_nickname);
+
   out:
     g_connection_in_progress = false;
 }
