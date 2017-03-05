@@ -30,10 +30,10 @@ $(OUT).exe: fetch_and_expand $(OBJS)
 	rc -foswirc.res -v swirc.rc
 	$(E) ^ ^ LINK^ ^ ^ ^ $@
 	$(Q) $(CC) -Fe$(OUT) *.obj commands/*.obj events/*.obj swirc.res -link $(LDFLAGS) $(library_dirs) $(LDLIBS) 1>>$(log_file)
-	$(E) ^ ^ MOVE^ ^ ^ ^ libcrypto-38.dll
-	$(Q) move "libressl-$(LIBRESSL_VERSION)-windows\x86\libcrypto-38.dll" . 1>>$(log_file)
-	$(E) ^ ^ MOVE^ ^ ^ ^ libssl-39.dll
-	$(Q) move "libressl-$(LIBRESSL_VERSION)-windows\x86\libssl-39.dll" . 1>>$(log_file)
+	$(E) ^ ^ MOVE^ ^ ^ ^ $(NAME_libcrypto).dll
+	$(Q) move "libressl-$(LIBRESSL_VERSION)-windows\x86\$(NAME_libcrypto).dll" . 1>>$(log_file)
+	$(E) ^ ^ MOVE^ ^ ^ ^ $(NAME_libssl).dll
+	$(Q) move "libressl-$(LIBRESSL_VERSION)-windows\x86\$(NAME_libssl).dll" . 1>>$(log_file)
 	$(E) ^ ^ MOVE^ ^ ^ ^ pdcurses.dll
 	$(Q) move "pdcurses-3.4\x86\pdcurses.dll" . 1>>$(log_file)
 
