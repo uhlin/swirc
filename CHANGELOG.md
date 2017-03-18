@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Added ###
+- Event 479. Illegal channel name.
+
 ## [1.5] - 2017-03-05 ##
 ### Added ###
 - Event 461 `ERR_NEEDMOREPARAMS`
