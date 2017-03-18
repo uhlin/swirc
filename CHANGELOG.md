@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 - Event 479. Illegal channel name.
 - Event 716, 717. Error responses for CTCP requests.
 
+### Fixed ###
+- Using plain integer as NULL pointer
+
 ## [1.5] - 2017-03-05 ##
 ### Added ###
 - Event 461 `ERR_NEEDMOREPARAMS`

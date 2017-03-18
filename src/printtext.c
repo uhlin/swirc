@@ -49,9 +49,9 @@
 #include "theme.h"
 
 #define WADDCH(win, c)        ((void) waddch(win, c))
-#define WATTR_OFF(win, attrs) ((void) wattr_off(win, attrs, 0))
-#define WATTR_ON(win, attrs)  ((void) wattr_on(win, attrs, 0))
-#define WCOLOR_SET(win, cpn)  ((void) wcolor_set(win, cpn, 0))
+#define WATTR_OFF(win, attrs) ((void) wattr_off(win, attrs, NULL))
+#define WATTR_ON(win, attrs)  ((void) wattr_on(win, attrs, NULL))
+#define WCOLOR_SET(win, cpn)  ((void) wcolor_set(win, cpn, NULL))
 
 /* Structure definitions
    ===================== */

@@ -50,7 +50,7 @@ listenThread_fn(void *arg)
 {
     (void) arg;
     net_irc_listen();
-    return (0);
+    return (NULL);
 }
 
 int

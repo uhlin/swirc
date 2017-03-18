@@ -39,8 +39,8 @@
 #include "readline.h"
 #include "readlineAPI.h"
 
-#define WATTR_ON(win, attrs)  ((void) wattr_on(win, attrs, 0))
-#define WATTR_OFF(win, attrs) ((void) wattr_off(win, attrs, 0))
+#define WATTR_ON(win, attrs)  ((void) wattr_on(win, attrs, NULL))
+#define WATTR_OFF(win, attrs) ((void) wattr_off(win, attrs, NULL))
 
 /**
  * Convert a wide-character to a multibyte sequence
