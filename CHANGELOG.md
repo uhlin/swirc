@@ -10,13 +10,13 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Event 461 `ERR_NEEDMOREPARAMS`
 - Function `X509_check_host` for implementations that lacks support
-  for it.
+  for it
 - Config option `cipher_suite`. Valid values are secure, compat,
-  legacy and insecure.
+  legacy and insecure
 - Improved TLS/SSL security
 - Via command /connect it's now possible to connect, only by
   specifying a particular irc network, that is: "efnet", "freenode",
-  "ircnet", "quakenet" or "undernet".
+  "ircnet", "quakenet" or "undernet"
 - Config option `hostname_checking`
 
 ### Changed ###
@@ -28,10 +28,10 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed ###
 - Usage for command /who was bogus. Parameter mask is mandatory.
-- Key enter for Windows
+- Key enter for Windows.
 - Unget `\n` right after connection to a server. May or may not fix
   junk characters from sometimes appearing at the prompt.
-- Command history bug fix
+- Command history bug fix.
 
 ## [1.4] - 2017-02-03 ##
 ### Added ###
@@ -56,16 +56,16 @@ All notable changes to this project will be documented in this file.
 - A bogus behaviour in command /connect
 - CTCP VERSION reply bug
 - Save nickname, username and real name automatically to the config if
-  customized by the command-line.
+  customized by the command-line
 - Better performance
 
 ## [1.3] - 2017-01-14 ##
 ### Added ###
 - Event 435. Undocumented in the RFC. (Cannot change nickname while
-  banned on channel.)
+  banned on channel)
 - Event 437 `ERR_UNAVAILRESOURCE`
 - Option -i for ICB mode (Internet Citizen's Band). Planning to
-  support the protocol.
+  support the protocol
 - Command /who
 - Event 352 `RPL_WHOREPLY`
 - Event 315 `RPL_ENDOFWHO`
@@ -80,17 +80,17 @@ All notable changes to this project will be documented in this file.
 - Event 484 `ERR_RESTRICTED`
 
 ### Changed ###
-- On event join/part handle an empty user/host.
-- In `event_notice`: show prefix/params on error.
-- The prompt for the status window to nothing.
-- In event_privmsg(): handle an empty user/host.
-- Connection timeout to 15 seconds.
+- On event join/part handle an empty user/host
+- In `event_notice`: show prefix/params on error
+- The prompt for the status window to nothing
+- In `event_privmsg`: handle an empty user/host
+- Connection timeout to 15 seconds
 - Don't verify peer per default on WIN32 on SSL connections due to
-  unable to get local issuer certificate.
-- Decrease `NAMES_HASH_TABLE_SIZE` to 4500.
-- In `event_topic_chg`: handle an empty user/host.
-- In `event_kick`: handle an empty user/host.
-- In `event_quit`: handle an empty user/host.
+  unable to get local issuer certificate
+- Decrease `NAMES_HASH_TABLE_SIZE` to 4500
+- In `event_topic_chg`: handle an empty user/host
+- In `event_kick`: handle an empty user/host
+- In `event_quit`: handle an empty user/host
 
 ### Fixed ###
 - Signal 11 when connecting to [Slack](https://slack.com/).
@@ -139,7 +139,7 @@ All notable changes to this project will be documented in this file.
 - In the manual page: AUTHORS section without An macro.
 - In io-loop.c: get rid of zero-length printf format string
   warnings. They weren't harmful in the first place.
-- In readline.c in function session_destroy(): get rid of possibly
+- In readline.c in function `session_destroy`: get rid of possibly
   issued warning regarding: discards qualifiers from pointer target
   type.
 - Duplicated code.
@@ -148,35 +148,35 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Window scrolling capabilities!
 - On OpenBSD: restrict system operations by using pledge() if it's
-  available.
+  available
 - Command /banlist
 - Event 367 `RPL_BANLIST`
 - Event 368 `RPL_ENDOFBANLIST`
 - Event 324 `RPL_CHANNELMODEIS`
-- Event 329. Undocumented. Channel date of creation.
+- Event 329. Undocumented. Channel date of creation
 - Command /chanserv
 - Command /nickserv
 - Event 487. Undocumented in the RFC. Prints out an error saying that
   /msg target ChanServ/NickServ is no longer supported (in favor of
-  /chanserv and /nickserv).
+  /chanserv and /nickserv)
 - Command /exlist
 - Command /ilist
-- Event 346-349 (numeric replies to /exlist and /ilist).
+- Event 346-349 (numeric replies to /exlist and /ilist)
 
 ### Changed ###
-- Usage for command /list was bogus.
-- Document keys pg up/down in the manual page.
-- Decorated output of /list a bit.
+- Usage for command /list was bogus
+- Document keys pg up/down in the manual page
+- Decorated output of /list a bit
 - In the interpreter: handle string truncation when copying an
-  identifier/argument.
-- `textbuffer_size_absolute` now defaults to 1500.
+  identifier/argument
+- `textbuffer_size_absolute` now defaults to 1500
 - Only call `unget_wch(MY_KEY_RESIZE)` after sleeping for a requested
   interval. This possibly prevents the program from crashing or the
-  terminal from being hangup due to a "resize attack".
+  terminal from being hangup due to a "resize attack"
 - In command /msg: fail if recipient is ChanServ or NickServ. Use of
-  the commands /chanserv and /nickserv should be considered instead.
+  the commands /chanserv and /nickserv should be considered instead
 - In the printtext module: replace unbounded `sw_sprintf` calls with
-  `sw_snprintf`.
+  `sw_snprintf`
 
 ### Fixed ###
 - An issue where the cursor was left at the statusbar (after updating
@@ -186,16 +186,16 @@ All notable changes to this project will be documented in this file.
 
 ## [1.0] - 2016-08-13 ##
 ### Added ###
-- Support for multiple encodings: UTF-8, ISO-8859-1 and ISO-8859-15.
+- Support for multiple encodings: UTF-8, ISO-8859-1 and ISO-8859-15
 - Command /list
-- Event 321-323 (numeric replies for /list).
+- Event 321-323 (numeric replies for /list)
 - Event 412 `ERR_NOTEXTTOSEND`
 - Event 481 `ERR_NOPRIVILEGES`
 - Event 341 `RPL_INVITING`
 - Event 742 (MODE cannot be set due to channel having an active MLOCK
-  restriction policy). ATM not documented in the RFC.
+  restriction policy). ATM not documented in the RFC
 - Event 334. Undocumented. At Undernet, it prints out usage describing
-  parameters for the LIST command.
+  parameters for the LIST command
 - Event 467 `ERR_KEYSET`
 - Event 471-474
 
@@ -203,7 +203,7 @@ All notable changes to this project will be documented in this file.
 - The default theme. Color codes that consisted of only one digit were
   changed to use two digits in some cases. For example: ^C3 changed to
   ^C03, ^C5 changed to ^C05, etc. Why? Consider a function call like
-  printtext(..., "%s`one or more digits`", Theme("primary_color")). If
+  printtext(..., "%s`one or more digits`", Theme(`primary_color`)). If
   the primary color, in this case, consists of only one digit and is
   directly followed by `one or more digits` the result is: one digit
   is lost and a random color will be displayed.
