@@ -1,0 +1,85 @@
+#!/bin/bash
+#
+# SSG (Static Site Generator) for Swirc homepage.
+# Copyright (C) 2017 Markus Uhlin. All rights reserved.
+
+SECTIONS="bottom.html head_common_tags.html menu.html top.html"
+PAGES="about.html cmds.html doc.html index.html pr.html"
+DIRS="gfx screenshots"
+OTHER_FILES="mu160221.asc mu170225.asc style.css"
+
+for s in $SECTIONS; do
+    printf "  - Checking for %s..." "$s"
+    test -r "$s" || { printf "error\n"; exit 1; }
+    printf "ok\n"
+done
+
+for pg in $PAGES; do
+    printf "  - Checking for %s..." "templates/${pg}"
+    test -r "templates/${pg}" || { printf "error\n"; exit 1; }
+    printf "ok\n"
+done
+
+for dir in $DIRS; do
+    printf "  - Checking for %s..." "$dir"
+    test -d "$dir" || { printf "error\n"; exit 1; }
+    printf "ok\n"
+done
+
+for file in $OTHER_FILES; do
+    printf "  - Checking for %s..." "$file"
+    test -f "$file" || { printf "error\n"; exit 1; }
+    printf "ok\n"
+done
+
+TEMP_DIR=$(mktemp -d)
+
+for pg in $PAGES; do
+    printf "  - Generating %s..." "${TEMP_DIR}/${pg}"
+    sed -e "/-----HEAD COMMON TAGS-----/r head_common_tags.html" -e "/-----HEAD COMMON TAGS-----/d" \
+	-e "/-----TOP-----/r top.html" -e "/-----TOP-----/d" \
+	-e "/-----MENU-----/r menu.html" -e "/-----MENU-----/d" \
+	-e "/-----BOTTOM-----/r bottom.html" -e "/-----BOTTOM-----/d" \
+	"templates/${pg}" > "${TEMP_DIR}/${pg}"
+    test -f "${TEMP_DIR}/${pg}" || { printf "error\n"; exit 1; }
+    printf "ok\n"
+done
+
+transfer_site () {
+    local dest=markus@dataswamp.org:public_html/swirc
+
+    for pg in $PAGES; do
+	printf "  - Transfering %s..." "${TEMP_DIR}/${pg}"
+	scp "${TEMP_DIR}/${pg}" "${dest}/${pg}" || { printf "error\n"; exit 1; }
+	printf "ok\n"
+    done
+
+    for dir in $DIRS; do
+	printf "  - Transfering %s..." "$dir"
+	scp -r "$dir" "${dest}/" || { printf "error\n"; exit 1; }
+	printf "ok\n"
+    done
+
+    for file in $OTHER_FILES; do
+	printf "  - Transfering %s..." "$file"
+	scp "$file" "${dest}/${file}" || { printf "error\n"; exit 1; }
+	printf "ok\n"
+    done
+}
+
+while true; do
+    read -p "Transfer the statically generated site? [Y/n]: " -r choice
+
+    if test -z "$choice" \
+	    -o "$choice" = y -o "$choice" = Y; then
+	transfer_site
+	break
+    elif test "$choice" = n -o "$choice" = N; then
+	break
+    else
+	continue
+    fi
+done
+
+echo "Done"
+exit 0
