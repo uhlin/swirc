@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<title>Swirc IRC client&nbsp;&nbsp;--&nbsp;&nbsp;Documentation</title>
+
+-----HEAD COMMON TAGS-----
+
+<style>
+.po {
+	width: 700px;
+}
+</style>
+</head>
+
+<body>
+-----TOP-----
+
+-----MENU-----
+
+<div id="mid">
+<h2>Documentation</h2>
+<p><small><em>Updated: 2017-01-28</em></small></p>
+<h3>Program options</h3>
+<h4>Common</h4>
+<table class="po">
+  <tr>
+    <td>-c &lt;server[:port]&gt;</td>
+    <td>
+Auto-connect to given server. If the port is omitted port 6667 will be
+chosen. And if the port is 6697 the program attempts to initiate a SSL
+connection.
+    </td>
+  </tr>
+  <tr>
+    <td>-n &lt;nickname&gt;</td>
+    <td>Online nickname</td>
+  </tr>
+  <tr>
+    <td>-u &lt;username&gt;</td>
+    <td>User identity</td>
+  </tr>
+  <tr>
+    <td>-r &lt;rl name&gt;</td>
+    <td>Specifies the real name</td>
+  </tr>
+  <tr>
+    <td>-i</td>
+    <td>ICB mode (not implemented)</td>
+  </tr>
+  <tr>
+    <td>-p</td>
+    <td>Upon connect: ask for a password</td>
+  </tr>
+  <tr>
+    <td>-h &lt;hostname&gt;</td>
+    <td>Use this hostname on connect (currently a NOOP)</td>
+  </tr>
+  <tr>
+    <td>-x &lt;config&gt;</td>
+    <td>Explicit config file</td>
+  </tr>
+</table>
+<h4>Extras</h4>
+<table class="po">
+  <tr><td>-v, -version</td><td>View the current client ver</td></tr>
+  <tr><td>-?, -help</td><td>Print the usage</td></tr>
+</table>
+<h3>Key combos</h3>
+<table>
+  <tr><td><kbd>CTRL+b</kbd></td><td>Move cursor backward</td></tr>
+  <tr><td><kbd>CTRL+f</kbd></td><td>Move cursor forward</td></tr>
+  <tr><td><kbd>CTRL+d</kbd></td><td>Delete</td></tr>
+  <tr><td><kbd>CTRL+g</kbd></td><td>Clear readline input</td></tr>
+  <tr><td><kbd>CTRL+n</kbd></td><td>Next window</td></tr>
+  <tr><td><kbd>CTRL+p</kbd></td><td>Previous window</td></tr>
+</table>
+<h3>Inserting text-decoration</h3>
+<table>
+  <tr><td><kbd>F5</kbd></td><td>Blink</td></tr>
+  <tr><td><kbd>F6</kbd></td><td>Bold</td></tr>
+  <tr><td><kbd>F7</kbd></td><td>Color</td></tr>
+  <tr><td><kbd>F8</kbd></td><td>Normal</td></tr>
+  <tr><td><kbd>F9</kbd></td><td>Reverse</td></tr>
+  <tr><td><kbd>F10</kbd></td><td>Underline</td></tr>
+</table>
+<h3>Cloning</h3>
+<p>
+To clone the repository use
+<a href="https://git-scm.com">Git</a>.
+</p>
+<kbd>$ git clone https://github.com/uhlin/swirc.git</kbd>
+<h3>Building</h3>
+<h4>Framework</h4>
+<p>Swirc currently depends on:</p>
+<ul>
+  <li><a href="https://www.gnu.org/software/ncurses/ncurses.html">Ncurses</a></li>
+  <li><a href="https://www.openssl.org">OpenSSL toolkit</a></li>
+</ul>
+<p>
+Which means that on for example a Debian GNU/Linux system you need to
+install two packages before building:
+</p>
+<kbd># aptitude install libncursesw5-dev libssl-dev</kbd>
+<p>
+And on Mac OS X, provided that
+<a href="http://brew.sh/">Homebrew</a>
+is installed, issue:
+</p>
+<kbd>$ brew install libressl</kbd>
+<h4>Building for the UNIX environment</h4>
+<kbd>$ ./configure</kbd><br>
+<kbd>$ cd src</kbd><br>
+<kbd>$ make -f unix.mk</kbd>
+<p>Installing it:</p>
+<kbd>$ sudo make -f unix.mk install</kbd>
+<h4>Building for Windows</h4>
+<p>
+To build Swirc for Windows you must have
+<a href="http://www.visualstudio.com/">Visual Studio</a>.
+</p>
+<p>
+So, fire up the command prompt for
+<a href="http://www.visualstudio.com/">Visual Studio</a>
+where the needed tools (the compiler, etc.) are loaded into the
+environment. The regular command prompt won't work. Then:
+</p>
+<kbd>&gt; cd c:\path\to\swirc\src</kbd><br>
+<kbd>&gt; nmake -f w32.mk</kbd>
+<p>Done! The executable will be put in the <cite>src</cite> directory.</p>
+<h3>Cleaning</h3>
+<p>Examples:</p>
+<p>
+<kbd>$ make -f unix.mk clean</kbd><br>
+<kbd>$ nmake -f w32.mk clean</kbd>
+</p>
+</div> <!--mid-->
+
+-----BOTTOM-----
+</body>
+
+</html>
