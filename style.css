@@ -51,11 +51,11 @@
     width: 576px;
 }
 a {
-    color: rgb(0, 64, 128);
+    color: darkgoldenrod;
     text-decoration: none;
 }
 a:hover {
-    color: rgb(0, 64, 128);
+    color: darkgoldenrod;
     text-decoration: underline;
 }
 a.img, a:hover.img { border: none; }
