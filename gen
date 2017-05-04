@@ -49,19 +49,19 @@ transfer_site () {
     local dest=markus@dataswamp.org:public_html/swirc
 
     for pg in $PAGES; do
-	printf "  - Transfering %s..." "${TEMP_DIR}/${pg}"
+	printf "  - Transferring %s..." "${TEMP_DIR}/${pg}"
 	scp "${TEMP_DIR}/${pg}" "${dest}/${pg}" || { printf "error\n"; exit 1; }
 	printf "ok\n"
     done
 
     for dir in $DIRS; do
-	printf "  - Transfering %s..." "$dir"
+	printf "  - Transferring %s..." "$dir"
 	scp -r "$dir" "${dest}/" || { printf "error\n"; exit 1; }
 	printf "ok\n"
     done
 
     for file in $OTHER_FILES; do
-	printf "  - Transfering %s..." "$file"
+	printf "  - Transferring %s..." "$file"
 	scp "$file" "${dest}/${file}" || { printf "error\n"; exit 1; }
 	printf "ok\n"
     done
