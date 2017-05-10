@@ -284,7 +284,7 @@ get_server(const char *ar[], const size_t ar_sz, const char *msg)
     return (ar[srvno]);
 }
 
-/* usage: /connect [-ssl] <server[:port]> */
+/* usage: /connect [-tls] <server[:port]> */
 void
 cmd_connect(const char *data)
 {
@@ -303,7 +303,7 @@ cmd_connect(const char *data)
 
 	token = strtok_r(dcopy, "\n:", &state);
 	sw_assert(token != NULL);
-	if (Strings_match(token, "-ssl"))
+	if (Strings_match(token, "-tls") || Strings_match(token, "-ssl"))
 	    set_ssl_on();
 
 	server = strtok_r(NULL, "\n:", &state);
