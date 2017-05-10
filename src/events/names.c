@@ -469,7 +469,10 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
     PNAMES tmp;
     const unsigned int hashval = hash(entry->nick);
 
-    if ((tmp = window->names_hash[hashval]) == entry) {
+    if ((tmp = window->names_hash[hashval]) == NULL) {
+	err_msg("fatal: null pointer stored to tmp: assertion failed");
+	abort();
+    } else if (tmp == entry) {
 	window->names_hash[hashval] = entry->next;
     } else {
 	while (tmp->next != entry) {
