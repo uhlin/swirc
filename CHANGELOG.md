@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed ###
 - Using plain integer as NULL pointer
 - Possible dereference of NULL pointer
+- A couple of small errors
 
 ## [1.5] - 2017-03-05 ##
 ### Added ###
