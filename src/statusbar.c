@@ -74,7 +74,7 @@ get_pair_num()
 void
 statusbar_init(void)
 {
-    statusbar_pan = term_new_panel(1, 0, LINES-2, 0);
+    statusbar_pan = term_new_panel(1, 0, LINES - 2, 0);
     apply_statusbar_options(panel_window(statusbar_pan));
 }
 
@@ -94,7 +94,9 @@ get_nick_and_server()
     if (g_my_nickname && g_server_hostname) {
 	(void) sw_strcpy(buf, g_my_nickname, sizeof buf);
 	(void) sw_strcat(buf, "(", sizeof buf);
-	(void) sw_strcat(buf, g_user_modes[0] == ':' ? &g_user_modes[1] : &g_user_modes[0], sizeof buf);
+	(void) sw_strcat(buf,
+	    g_user_modes[0] == ':' ? &g_user_modes[1] : &g_user_modes[0],
+	    sizeof buf);
 	(void) sw_strcat(buf, ")", sizeof buf);
 	(void) sw_strcat(buf, "@", sizeof buf);
 	(void) sw_strcat(buf, g_server_hostname, sizeof buf);
@@ -124,7 +126,8 @@ statusbar_update_display_beta(void)
     WERASE(win);
     WBKGD(win, blank | COLOR_PAIR(pair_n) | A_NORMAL);
 
-    printtext_puts(win, g_no_colors ? squeeze_text_deco(out_s) : out_s, -1, -1, NULL);
+    printtext_puts(win, g_no_colors ? squeeze_text_deco(out_s) : out_s, -1, -1,
+		   NULL);
     free(out_s);
     statusbar_show();
 }
