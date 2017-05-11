@@ -328,7 +328,7 @@ event_channelModeIs(struct irc_message_compo *compo)
 
     printtext(&ctx, "mode/%s%s%s%c%s %s%s%s",
 	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-	      LEFT_BRKT, data, RIGHT_BRKT);
+	      LEFT_BRKT, trim(data), RIGHT_BRKT);
 }
 
 /* event_channelCreatedWhen: 329 (undocumented in the RFC)
