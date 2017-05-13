@@ -588,7 +588,7 @@ window_foreach_destroy_names(void)
 	    if (is_irc_channel(window->label)) {
 		event_names_htbl_remove_all(window);
 		window->received_names = false;
-#if 0
+#if 1
 		window->num_owners   = 0;
 		window->num_superops = 0;
 		window->num_ops	     = 0;
