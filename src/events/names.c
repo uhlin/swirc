@@ -180,7 +180,8 @@ event_names(struct irc_message_compo *compo)
 	sizeof names_channel) != 0) {
 	goto bad;
     } else if (!Strings_match_ignore_case(names_channel, channel)) {
-	/* Unable to parse names of two (or more) channels simultaneously */
+	err_log(0, "Unable to parse names of two (or more) channels "
+	    "simultaneously");
 	goto bad;
     } else if ((win = window_by_label(channel)) == NULL) {
 	goto bad;
