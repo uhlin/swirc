@@ -156,9 +156,10 @@ hInstall(const struct hInstall_context *ctx)
 void
 event_names(struct irc_message_compo *compo)
 {
-    char *state1, *state2;
+    PIRC_WINDOW win;
     char *chan_type, *channel, *names;
     char *names_copy, *cp, *token;
+    char *state1, *state2;
 
     state1 = state2 = "";
 
@@ -181,6 +182,12 @@ event_names(struct irc_message_compo *compo)
     } else if (!Strings_match_ignore_case(names_channel, channel)) {
 	/* Unable to parse names of two (or more) channels simultaneously */
 	goto bad;
+    } else if ((win = window_by_label(channel)) == NULL) {
+	goto bad;
+    } else if (win->received_names) {
+	err_log(0, "warning: server sent event 353 (RPL_NAMREPLY): "
+	    "already received names for channel %s", channel);
+	return;
     } else {
 	names_copy = sw_strdup(*names == ':' ? &names[1] : &names[0]);
     }
@@ -574,6 +581,7 @@ event_names_htbl_remove_all(PIRC_WINDOW window)
 void
 event_eof_names(struct irc_message_compo *compo)
 {
+    PIRC_WINDOW win;
     char *channel;
     char *eof_msg;
     char *state = "";
@@ -591,6 +599,16 @@ event_eof_names(struct irc_message_compo *compo)
 	goto bad;
     } else {
 	BZERO(names_channel, sizeof names_channel);
+    }
+
+    if ((win = window_by_label(channel)) == NULL) {
+	goto bad;
+    } else if (win->received_names) {
+	err_log(0, "warning: server sent event 366 (RPL_ENDOFNAMES): "
+	    "already received names for channel %s", channel);
+	return;
+    } else {
+	win->received_names = true;
     }
 
     if (event_names_print_all(channel) != OK) {

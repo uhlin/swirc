@@ -214,6 +214,8 @@ hInstall(const struct hInstall_context *ctx)
 	*n_ent = NULL;
     }
 
+    entry->received_names = false;
+
     entry->num_owners	= 0;
     entry->num_superops = 0;
     entry->num_ops	= 0;
@@ -585,6 +587,7 @@ window_foreach_destroy_names(void)
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (is_irc_channel(window->label)) {
 		event_names_htbl_remove_all(window);
+		window->received_names = false;
 #if 0
 		window->num_owners   = 0;
 		window->num_superops = 0;

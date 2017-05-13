@@ -35,6 +35,7 @@ typedef struct tagIRC_WINDOW {
     int		 scroll_count;
     bool	 scroll_mode;
     PNAMES	 names_hash[NAMES_HASH_TABLE_SIZE];
+    bool	 received_names;
     int		 num_owners;
     int		 num_superops;
     int		 num_ops;

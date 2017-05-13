@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 - Using plain integer as NULL pointer
 - Possible dereference of NULL pointer
 - A couple of small errors
+- Handle if server sends names for a particular channel twice or
+  more. See this as a vulnerability fix.
 
 ## [1.5] - 2017-03-05 ##
 ### Added ###
