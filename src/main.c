@@ -139,21 +139,24 @@ view_version()
 
     while (true) {
 	char answer[100];
+	int c;
 
-	PUTS("Do you also want to read the disclaimer? (yes or no): ");
+	PUTS("Do you also want to read the disclaimer? [y/N]: ");
 	(void) fflush(stdout);
 
 	BZERO(answer, sizeof answer);
 
 	if (fgets(answer, sizeof answer - 1, stdin) == NULL) {
-	    break;
-	}
-
-	if (Strings_match(trim(str_tolower(answer)), "yes")) {
-	    const char		**ppcc;
-	    const size_t	  ar_sz = ARRAY_SIZE(SoftwareDisclaimer);
-
 	    PUTCHAR('\n');
+	    continue;
+	} else if (strchr(answer, '\n') == NULL) {
+	    /* input too big */
+	    while (c = getchar(), c != '\n' && c != EOF)
+		/* discard */;
+	} else if (Strings_match(trim(answer), "y") ||
+		   Strings_match(answer, "Y")) {
+	    const char **ppcc = NULL;
+	    const size_t ar_sz = ARRAY_SIZE(SoftwareDisclaimer);
 
 	    for (ppcc = &SoftwareDisclaimer[0];
 		 ppcc < &SoftwareDisclaimer[ar_sz];
@@ -162,13 +165,11 @@ view_version()
 	    }
 
 	    break;
-	} else if (Strings_match(answer, "no")) {
-	    break;
-	} else if (answer[90]) {
-	    PUTS("*** Aborting.\n");
+	} else if (Strings_match(answer, "") ||
+		   Strings_match(answer, "n") || Strings_match(answer, "N")) {
 	    break;
 	} else {
-	    ;
+	    continue;
 	}
     }
 }
