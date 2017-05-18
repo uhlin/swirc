@@ -554,12 +554,12 @@ irc_deinit(void)
     free_and_null(&g_my_nickname);
     BZERO(g_user_modes, sizeof g_user_modes);
 
-    statusbar_update_display_beta();
-    readline_top_panel();
-
     g_alt_nick_tested = false;
 
     event_names_deinit();
+
+    statusbar_update_display_beta();
+    readline_top_panel();
 }
 
 /**
