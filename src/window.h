@@ -43,6 +43,9 @@ typedef struct tagIRC_WINDOW {
     int		 num_voices;
     int		 num_normal;
     int		 num_total;
+    char chanmodes[100];
+    bool received_chanmodes;
+    bool received_chancreated;
     struct tagIRC_WINDOW *next;
 } IRC_WINDOW, *PIRC_WINDOW;
 

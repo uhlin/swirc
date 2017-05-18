@@ -34,6 +34,7 @@
 #endif
 
 #include "cursesInit.h"
+#include "dataClassify.h"
 #include "irc.h"
 #include "printtext.h"
 #include "statusbar.h"
@@ -105,6 +106,30 @@ get_nick_and_server()
     return (&buf[0]);
 }
 
+static char *
+get_chanmodes()
+{
+    PIRC_WINDOW win;
+    static char buf[500];
+
+    BZERO(buf, sizeof buf);
+
+    if ((win = g_active_window) != NULL) {
+	if (Strings_match_ignore_case(win->label, g_status_window_label)) {
+	    sw_strcpy(buf, irc_client_slogan, sizeof buf);
+	} else if (is_irc_channel(win->label)) {
+	    (void) sw_strcpy(buf, win->label, sizeof buf);
+	    (void) sw_strcat(buf, "(", sizeof buf);
+	    (void) sw_strcat(buf, win->chanmodes, sizeof buf);
+	    (void) sw_strcat(buf, ")", sizeof buf);
+	} else {
+	    sw_strcpy(buf, win->label, sizeof buf);
+	}
+    }
+
+    return (&buf[0]);
+}
+
 void
 statusbar_update_display_beta(void)
 {
@@ -116,11 +141,11 @@ statusbar_update_display_beta(void)
     const char *lb     = Theme("statusbar_leftBracket");
     const char *rb     = Theme("statusbar_rightBracket");
     char       *out_s  = Strdup_printf(
-	"%s %s%d/%d%s %s%s%s %s %s",
+	"%s %s%d/%d%s %s%s%s %s%s%s %s",
 	Theme("statusbar_spec"),
 	lb, g_active_window->refnum, g_ntotal_windows, rb,
 	lb, get_nick_and_server(), rb,
-	irc_client_slogan,
+	lb, get_chanmodes(), rb,
 	g_active_window->scroll_mode ? "-- MORE --" : "");
 
     WERASE(win);

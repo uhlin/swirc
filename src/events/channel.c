@@ -229,6 +229,9 @@ maintain_channel_stats(const char *channel, const char *input)
 	}
     }
 
+    if (strspn(modes, "+-Ibeqaohv") != strlen(modes))
+	net_send("MODE %s", channel);
+
     free(input_copy);
 
     /* destroy the array */

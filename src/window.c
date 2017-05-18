@@ -224,6 +224,10 @@ hInstall(const struct hInstall_context *ctx)
     entry->num_normal	= 0;
     entry->num_total	= 0;
 
+    BZERO(entry->chanmodes, sizeof entry->chanmodes);
+    entry->received_chanmodes = false;
+    entry->received_chancreated = false;
+
     hashval             = hash(ctx->label);
     entry->next         = hash_table[hashval];
     hash_table[hashval] = entry;
@@ -597,6 +601,9 @@ window_foreach_destroy_names(void)
 		window->num_normal   = 0;
 		window->num_total    = 0;
 #endif
+		BZERO(window->chanmodes, sizeof window->chanmodes);
+		window->received_chanmodes = false;
+		window->received_chancreated = false;
 	    }
 	}
     }

@@ -33,6 +33,7 @@
 
 #include "../config.h"
 #include "../dataClassify.h"
+#include "../errHand.h"
 #include "../irc.h"
 #include "../network.h"
 #include "../printtext.h"
@@ -320,15 +321,25 @@ event_channelModeIs(struct irc_message_compo *compo)
     (void) strtok_r(compo->params, "\n", &state); /* my nickname */
 
     if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
-	(data = strtok_r(NULL, "\n", &state)) == NULL)
+	(data = strtok_r(NULL, "\n", &state)) == NULL ||
+	(ctx.window = window_by_label(channel)) == NULL)
 	return;
 
-    if (window_by_label(channel))
-	ctx.window = window_by_label(channel);
+    if ((errno = sw_strcpy(ctx.window->chanmodes, trim(data),
+			   sizeof ctx.window->chanmodes)) != 0) {
+	err_log(errno, "In event_channelModeIs: sw_strcpy");
+	return;
+    }
 
-    printtext(&ctx, "mode/%s%s%s%c%s %s%s%s",
-	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-	      LEFT_BRKT, trim(data), RIGHT_BRKT);
+    if (! (ctx.window->received_chanmodes)) {
+	printtext(&ctx, "mode/%s%s%s%c%s %s%s%s",
+		  LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+		  LEFT_BRKT, data, RIGHT_BRKT);
+	ctx.window->received_chanmodes = true;
+    }
+
+    statusbar_update_display_beta();
+    readline_top_panel();
 }
 
 /* event_channelCreatedWhen: 329 (undocumented in the RFC)
@@ -355,17 +366,18 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
     if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
 	(seconds = strtok_r(NULL, "\n", &state)) == NULL ||
 	!is_irc_channel(channel) ||
-	!is_numeric(seconds))
+	!is_numeric(seconds) ||
+	(ctx.window = window_by_label(channel)) == NULL ||
+	ctx.window->received_chancreated)
 	return;
-
-    if (window_by_label(channel))
-	ctx.window = window_by_label(channel);
 
     const time_t date_of_creation = (time_t) strtol(seconds, NULL, 10);
 
     printtext(&ctx, "Channel %s%s%s%c%s created %s",
 	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 	      trim( ctime(&date_of_creation) ));
+
+    ctx.window->received_chancreated = true;
 }
 
 /* event_userModeIs: 221 (RPL_UMODEIS)
