@@ -108,7 +108,8 @@ get_password()
 	fflush(stdout);
 
 	if (fgets(answer, sizeof answer, stdin) == NULL) {
-	    err_quit("In get_password: fatal: fgets error");
+	    putchar('\n');
+	    continue;
 	} else if (strchr(answer, '\n') == NULL) {
 	    puts("input too big");
 	    while (c = getchar(), c != '\n' && c != EOF)
@@ -135,7 +136,8 @@ get_password()
 	const bool fgets_error = fgets(pass, PASSWORD_SIZE, stdin) == NULL;
 
 	if (fgets_error) {
-	    err_quit("In get_password: fatal: fgets error");
+	    putchar('\n');
+	    continue;
 	} else if (strchr(pass, '\n') == NULL) {
 	    puts("input too big");
 	    while (c = getchar(), c != '\n' && c != EOF)
