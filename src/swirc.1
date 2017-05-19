@@ -1,7 +1,7 @@
 .\"
 .\" Public domain
 .\"
-.Dd January 28, 2017
+.Dd May 19, 2017
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -21,8 +21,8 @@ provide a secure & user-friendly experience to its users.
 .Bl -tag -width Ds
 .It Fl c Ar server[:port]
 Auto-connect to given server. If the port is omitted port 6667 will be
-chosen. And if the port is 6697 the program attempts to initiate a SSL
-connection.
+chosen. And if the port is 6697 the program attempts to initiate a
+TLS/SSL connection.
 .It Fl n Ar nickname
 Online nickname
 .It Fl u Ar username
@@ -38,7 +38,7 @@ Use this hostname on connect (currently a no-op)
 .It Fl x Ar config
 Explicit config file
 .It Fl version
-View the current client ver
+View the current client version
 .It Fl help
 Print the usage
 .El
