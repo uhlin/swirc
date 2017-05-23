@@ -15,6 +15,9 @@ All notable changes to this project will be documented in this file.
 - A couple of small errors
 - Handle if server sends names for a particular channel twice or
   more. See this as a vulnerability fix.
+- A memory leak in `net_ssl_check_hostname`. The leak occurred each
+  time a new TLS/SSL connection was established if config option
+  `hostname_checking` was set to YES (the default).
 
 ## [1.5] - 2017-03-05 ##
 ### Added ###
