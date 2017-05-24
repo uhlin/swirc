@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [1.6] - 2017-05-24 ##
 ### Added ###
 - Event 479. Illegal channel name.
 - Event 716, 717. Error responses for CTCP requests.
