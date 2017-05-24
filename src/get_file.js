@@ -14,6 +14,6 @@ function get_file(url, name)
 }
 
 // get_file("http://nifty-networks.net/swirc/blue-globe.ico", "blue-globe.ico");
-get_file("http://nifty-networks.net/swirc/libressl-2.5.1-windows.cab", "libressl-2.5.1-windows.cab");
+get_file("http://nifty-networks.net/swirc/libressl-2.5.4-windows.cab", "libressl-2.5.4-windows.cab");
 get_file("http://nifty-networks.net/swirc/pdcurses-3.4.cab", "pdcurses-3.4.cab");
 get_file("http://nifty-networks.net/swirc/swirc-royal.ico", "swirc-royal.ico");
