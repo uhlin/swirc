@@ -1,7 +1,5 @@
 # README #
 
-![SW globe](https://dataswamp.org/~markus/swirc/gfx/sw-globe.png)
-
 ## What is Swirc? ##
 
 Swirc is a text-mode IRC client whose goals are to be portable, and to
