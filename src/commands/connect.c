@@ -270,7 +270,8 @@ get_server(const char *ar[], const size_t ar_sz, const char *msg)
 	fflush(stdout);
 
 	if (fgets(ans, sizeof ans, stdin) == NULL) {
-	    err_quit("In get_server: fatal: fgets error");
+	    putchar('\n');
+	    continue;
 	} else if (strchr(ans, '\n') == NULL) {
 	    puts("input too big");
 	    while (c = getchar(), c != '\n' && c != EOF)
