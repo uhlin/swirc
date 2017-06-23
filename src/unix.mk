@@ -41,6 +41,8 @@ $(OUT): $(OBJS)
 	$(E) "  LINK    " $@
 	$(Q) $(CC) $(library_dirs) $(LDFLAGS) -o $(OUT) *.o commands/*.o events/*.o $(LDLIBS)
 
+objects: $(OBJS)
+
 assertAPI.o:
 config.o:
 curses-funcs.o:
