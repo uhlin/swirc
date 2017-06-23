@@ -442,24 +442,6 @@ squeeze_text_deco(char *buffer)
     free(reject);
     buffer[j] = '\0';
 
-#ifndef NDEBUG
-    {
-	char *cp;
-
-	reject = Strdup_printf(
-	    "%c%c%c%c%c%c", BLINK, BOLD, COLOR, NORMAL, REVERSE, UNDERLINE);
-
-	for (cp = &reject[0]; *cp != '\0'; cp++) {
-	    if (strchr(buffer, *cp) != NULL) {
-		err_quit("squeeze_text_deco debug error\n"
-			 "still decoration in buf!");
-	    }
-	}
-
-	free(reject);
-    }
-#endif
-
     return (buffer);
 }
 
