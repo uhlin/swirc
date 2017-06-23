@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Fixed ###
+- Buggy behaviour of `squeeze_text_deco`
+
 ## [1.6] - 2017-05-24 ##
 ### Added ###
 - Event 479. Illegal channel name.
