@@ -11,4 +11,5 @@ swirc.analyze
 swirc.exe
 swirc.res
 swirc.static.html
+tests/*.run
 unix_def.mk
