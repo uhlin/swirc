@@ -378,13 +378,17 @@ squeeze_text_deco(char *buffer)
 	switch (buffer[i]) {
 	case COLOR:
 	{
-	    /* check for ^CN */
+	    /*
+	     * check for ^CN
+	     */
 	    if (!sw_isdigit(buffer[++i])) {
 		handle_foo_situation(&buffer, &i, &j, reject);
 		break;
 	    }
 
-	    /* check for ^CNN or ^CN, */
+	    /*
+	     * check for ^CNN or ^CN,
+	     */
 	    if (!sw_isdigit(buffer[++i]) && buffer[i] != ',') {
 		handle_foo_situation(&buffer, &i, &j, reject);
 		break;
@@ -392,7 +396,9 @@ squeeze_text_deco(char *buffer)
 
 	    has_comma = buffer[i++] == ',';
 
-	    /* check for ^CNN, or ^CN,N */
+	    /*
+	     * check for ^CNN, or ^CN,N
+	     */
 	    if (!has_comma && buffer[i] == ',') {
 		has_comma = true;
 	    } else if (has_comma && sw_isdigit(buffer[i])) {
@@ -408,7 +414,9 @@ squeeze_text_deco(char *buffer)
 
 	    sw_assert(has_comma);
 
-	    /* check for ^CNN,N or ^CN,NN */
+	    /*
+	     * check for ^CNN,N or ^CN,NN
+	     */
 	    if (buffer[i] == ',') { /* ^CNN, */
 		if (!sw_isdigit(buffer[++i])) {
 		    i--;
@@ -423,7 +431,9 @@ squeeze_text_deco(char *buffer)
 		break;
 	    }
 
-	    /* check for ^CNN,NN */
+	    /*
+	     * check for ^CNN,NN
+	     */
 	    if (!sw_isdigit(buffer[++i])) {
 		handle_foo_situation(&buffer, &i, &j, reject);
 		break;
