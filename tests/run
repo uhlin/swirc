@@ -1,0 +1,10 @@
+#!/bin/bash
+
+TESTS="
+test_printtext
+test_strdup_printf
+"
+
+for test in $TESTS; do
+    test -x "${test}.run" && "./${test}.run"
+done
