@@ -2,9 +2,9 @@
 #define COMMON_H
 
 #if !defined(UNIX) && !defined(WIN32)
-#error "Platform unsupported."
+#error PLATFORM UNSUPPORTED
 #elif defined(UNIX) && defined(WIN32)
-#error "Incompatible build targets."
+#error INCOMPATIBLE BUILD TARGETS
 #else
 #
 #endif
