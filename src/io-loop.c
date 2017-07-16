@@ -286,7 +286,7 @@ handle_cmds(const char *data)
 		sp->fn("");
 	    free(cp);
 	    break;
-	} else if (!strncmp( data, cp, strlen(cp) )) {
+	} else if (!strncmp(data, cp, strlen(cp))) {
 	    if (sp->requires_connection && !g_on_air)
 		printtext(&ctx, "command requires irc connection");
 	    else
@@ -366,7 +366,7 @@ add_to_history(const char *string)
     if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
 	/* Buffer full. Remove head... */
 
-	if ((errno = textBuf_remove( history, textBuf_head(history) )) != 0)
+	if ((errno = textBuf_remove(history, textBuf_head(history))) != 0)
 	    err_sys("textBuf_remove");
     }
 

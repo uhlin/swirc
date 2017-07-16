@@ -375,7 +375,7 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 
     printtext(&ctx, "Channel %s%s%s%c%s created %s",
 	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-	      trim( ctime(&date_of_creation) ));
+	      trim(ctime(&date_of_creation)));
 
     ctx.window->received_chancreated = true;
 }

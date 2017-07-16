@@ -161,7 +161,7 @@ nestHome_init(void)
 	hp, Config("theme"), g_theme_filesuffix);
 #endif
 
-    if (isEmpty( Config("theme") )) {
+    if (isEmpty(Config("theme"))) {
 	err_quit("Item theme in user config file holds no data. Error.");
     } else if (file_exists(theme_file) && !is_regular_file(theme_file)) {
 	err_quit("%s exists  --  but isn't a regular file.", theme_file);

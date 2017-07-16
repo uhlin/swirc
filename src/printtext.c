@@ -158,7 +158,7 @@ get_processed_out_message(const char *unproc_msg,
     pout->indent = 0;
 
     if (include_ts) {
-	char *ts = sw_strdup( current_time(Theme("time_format")) );
+	char *ts = sw_strdup(current_time(Theme("time_format")));
 
 	switch (spec_type) {
 	case TYPE_SPEC1:

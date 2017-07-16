@@ -54,7 +54,7 @@ cmd_chanserv(const char *data)
     }
 
     if (Strings_match(srv_host, "--")) {
-	if (!is_valid_hostname( Config("chanserv_host") )) {
+	if (!is_valid_hostname(Config("chanserv_host"))) {
 	    print_and_free("/chanserv: in the config file: "
 		"bogus chanserv_host", dcopy);
 	    return;
@@ -93,7 +93,7 @@ cmd_nickserv(const char *data)
     }
 
     if (Strings_match(srv_host, "--")) {
-	if (!is_valid_hostname( Config("nickserv_host") )) {
+	if (!is_valid_hostname(Config("nickserv_host"))) {
 	    print_and_free("/nickserv: in the config file: "
 		"bogus nickserv_host", dcopy);
 	    return;
