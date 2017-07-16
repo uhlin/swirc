@@ -401,9 +401,9 @@ new_window_title(const char *label, const char *title)
 {
     PIRC_WINDOW window;
 
-    if ((window = window_by_label(label)) == NULL
-	|| title == NULL
-	|| *title == '\0') {
+    if ((window = window_by_label(label)) == NULL ||
+	title == NULL ||
+	*title == '\0') {
 	return;
     }
 

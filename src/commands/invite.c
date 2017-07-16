@@ -45,10 +45,10 @@ cmd_invite(const char *data)
     char *targ_nick, *channel;
     char *state = "";
 
-    if (Strings_match(dcopy, "")
-	|| Strfeed(dcopy, 1) != 1
-	|| (targ_nick = strtok_r(dcopy, "\n", &state)) == NULL
-	|| (channel = strtok_r(NULL, "\n", &state)) == NULL) {
+    if (Strings_match(dcopy, "") ||
+	Strfeed(dcopy, 1) != 1 ||
+	(targ_nick = strtok_r(dcopy, "\n", &state)) == NULL ||
+	(channel = strtok_r(NULL, "\n", &state)) == NULL) {
 	print_and_free("/invite: missing arguments", dcopy);
 	return;
     } else if (!is_valid_nickname(targ_nick) || !is_irc_channel(channel)) {

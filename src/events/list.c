@@ -67,9 +67,9 @@ event_list(struct irc_message_compo *compo)
 	return;
 
     (void) strtok_r(compo->params, "\n", &state); /* my nick (not used) */
-    if ((channel = strtok_r(NULL, "\n", &state)) == NULL
-	|| (num_visible = strtok_r(NULL, "\n", &state)) == NULL
-	|| (topic = strtok_r(NULL, "\n", &state)) == NULL)
+    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
+	(num_visible = strtok_r(NULL, "\n", &state)) == NULL ||
+	(topic = strtok_r(NULL, "\n", &state)) == NULL)
 	return;
 
     if (*topic == ':')

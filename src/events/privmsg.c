@@ -151,9 +151,9 @@ event_privmsg(struct irc_message_compo *compo)
 	user = "<no user>";
 	host = "<no host>";
     }
-    if (Strfeed(params, 1) != 1
-	|| (dest = strtok_r(params, "\n", &state2)) == NULL
-	|| (msg = strtok_r(NULL, "\n", &state2)) == NULL)
+    if (Strfeed(params, 1) != 1 ||
+	(dest = strtok_r(params, "\n", &state2)) == NULL ||
+	(msg = strtok_r(NULL, "\n", &state2)) == NULL)
 	return;
     if (*msg == ':')
 	msg++;
@@ -211,10 +211,10 @@ event_privmsg(struct irc_message_compo *compo)
 	char *s2 = Strdup_printf("%s,", g_my_nickname);
 	char *s3 = Strdup_printf("%s ", g_my_nickname);
 
-	if (!strncasecmp(msg, s1, strlen(s1))
-	    || !strncasecmp(msg, s2, strlen(s2))
-	    || !strncasecmp(msg, s3, strlen(s3))
-	    || Strings_match_ignore_case(msg, g_my_nickname)) {
+	if (!strncasecmp(msg, s1, strlen(s1)) ||
+	    !strncasecmp(msg, s2, strlen(s2)) ||
+	    !strncasecmp(msg, s3, strlen(s3)) ||
+	    Strings_match_ignore_case(msg, g_my_nickname)) {
 	    printtext(&ctx, "%s%c%s%s%c%s %s",
 		Theme("nick_s1"), c, COLOR4, nick, NORMAL, Theme("nick_s2"),
 		msg);

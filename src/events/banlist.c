@@ -74,12 +74,12 @@ event_banlist(struct irc_message_compo *compo)
 
 	(void) strtok_r(compo->params, "\n", &state1); /* recipient */
 
-	if ((channel = strtok_r(NULL, "\n", &state1)) == NULL
-	    || (mask = strtok_r(NULL, "\n", &state1)) == NULL
-	    || (issuer = strtok_r(NULL, "\n", &state1)) == NULL
-	    || (seconds = strtok_r(NULL, "\n", &state1)) == NULL
-	    || sw_strcpy(buf, issuer, sizeof buf) != 0
-	    || !is_numeric(seconds))
+	if ((channel = strtok_r(NULL, "\n", &state1)) == NULL ||
+	    (mask = strtok_r(NULL, "\n", &state1)) == NULL ||
+	    (issuer = strtok_r(NULL, "\n", &state1)) == NULL ||
+	    (seconds = strtok_r(NULL, "\n", &state1)) == NULL ||
+	    sw_strcpy(buf, issuer, sizeof buf) != 0 ||
+	    !is_numeric(seconds))
 	    return;
 
 	if (window_by_label(channel))
@@ -100,8 +100,8 @@ event_banlist(struct irc_message_compo *compo)
     } else if (feeds_written == 2) {
 	(void) strtok_r(compo->params, "\n", &state1); /* recipient */
 
-	if ((channel = strtok_r(NULL, "\n", &state1)) == NULL
-	    || (mask = strtok_r(NULL, "\n", &state1)) == NULL)
+	if ((channel = strtok_r(NULL, "\n", &state1)) == NULL ||
+	    (mask = strtok_r(NULL, "\n", &state1)) == NULL)
 	    return;
 
 	if (window_by_label(channel))

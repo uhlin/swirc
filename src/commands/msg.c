@@ -44,10 +44,10 @@ cmd_msg(const char *data)
     char *recipient, *message;
     char *state = "";
 
-    if (Strings_match(dcopy, "")
-	|| Strfeed(dcopy, 1) != 1
-	|| (recipient = strtok_r(dcopy, "\n", &state)) == NULL
-	|| (message = strtok_r(NULL, "\n", &state)) == NULL) {
+    if (Strings_match(dcopy, "") ||
+	Strfeed(dcopy, 1) != 1 ||
+	(recipient = strtok_r(dcopy, "\n", &state)) == NULL ||
+	(message = strtok_r(NULL, "\n", &state)) == NULL) {
 	print_and_free("/msg: missing arguments", dcopy);
 	return;
     } else if (!is_valid_nickname(recipient) && !is_irc_channel(recipient)) {

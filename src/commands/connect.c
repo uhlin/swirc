@@ -114,9 +114,9 @@ get_password()
 	    puts("input too big");
 	    while (c = getchar(), c != '\n' && c != EOF)
 		/* discard */;
-	} else if (Strings_match(trim(answer), "")
-		   || Strings_match(answer, "y")
-		   || Strings_match(answer, "Y")) {
+	} else if (Strings_match(trim(answer), "") ||
+		   Strings_match(answer, "y") ||
+		   Strings_match(answer, "Y")) {
 	    break;
 	} else if (Strings_match(answer, "n") || Strings_match(answer, "N")) {
 	    resume_curses();

@@ -388,9 +388,9 @@ event_topic_creator(struct irc_message_compo *compo)
 
     (void) strtok_r(compo->params, "\n", &state1);
 
-    if ((channel = strtok_r(NULL, "\n", &state1)) == NULL
-	|| (s = strtok_r(NULL, "\n", &state1)) == NULL
-	|| (set_when = strtok_r(NULL, "\n", &state1)) == NULL)
+    if ((channel = strtok_r(NULL, "\n", &state1)) == NULL ||
+	(s = strtok_r(NULL, "\n", &state1)) == NULL ||
+	(set_when = strtok_r(NULL, "\n", &state1)) == NULL)
 	return;
 
     if ((ctx.window = window_by_label(channel)) == NULL ||
@@ -651,9 +651,9 @@ event_nick(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if ((nick = strtok_r(prefix, "!@", &state)) == NULL
-	|| (user = strtok_r(NULL, "!@", &state)) == NULL
-	|| (host = strtok_r(NULL, "!@", &state)) == NULL) {
+    if ((nick = strtok_r(prefix, "!@", &state)) == NULL ||
+	(user = strtok_r(NULL, "!@", &state)) == NULL ||
+	(host = strtok_r(NULL, "!@", &state)) == NULL) {
 	return;
     }
 
@@ -715,9 +715,9 @@ event_kick(struct irc_message_compo *compo)
     if (Strfeed(compo->params, 2) != 2)
 	return;
 
-    if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL
-	|| (victim = strtok_r(NULL, "\n", &state2)) == NULL
-	|| (reason = strtok_r(NULL, "\n", &state2)) == NULL)
+    if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL ||
+	(victim = strtok_r(NULL, "\n", &state2)) == NULL ||
+	(reason = strtok_r(NULL, "\n", &state2)) == NULL)
 	return;
 
     if (*reason == ':')
