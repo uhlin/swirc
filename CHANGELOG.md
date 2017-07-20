@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Enhancements to the printtext module
 
+### Changed ###
+- Theme item `sw_ascLogotype_color` to `logo_color`
+
 ### Fixed ###
 - Buggy behaviour of `squeeze_text_deco`
 

@@ -179,7 +179,7 @@ swirc_greeting()
     ptext_ctx.include_ts = true;
 
     for (ppcc = &logo[0]; ppcc < &logo[logo_size]; ppcc++) {
-	const char *color = Theme("sw_ascLogotype_color");
+	const char *color = Theme("logo_color");
 	char       *str   = sw_strdup(*ppcc);
 
 	printtext(&ptext_ctx, "%s%s", color, trim(str));
