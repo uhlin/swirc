@@ -1024,6 +1024,42 @@ case_underline(WINDOW *win, bool *is_underline)
 }
 
 /**
+ * Do indent
+ */
+static void
+do_indent(WINDOW *win, const int indent, int *insert_count)
+{
+#if defined(UNIX)
+    attr_t attrs;
+#elif defined(WIN32)
+    chtype attrs;
+#endif
+    const chtype blank = ' ';
+    int counter = 0;
+
+    /* turn off all attributes during indentation */
+    attrs = win->_attrs;
+    term_set_attr(win, A_NORMAL);
+
+    while (counter++ != indent) {
+	WADDCH(win, blank);
+	(*insert_count)++;
+    }
+
+    /* restore attributes after indenting */
+    term_set_attr(win, attrs);
+}
+
+/**
+ * Start on a new row?
+ */
+static bool
+start_on_a_new_row(const long int sum)
+{
+    return (sum < (COLS - 1) ? false : true);
+}
+
+/**
  * Handles switch default in printtext_puts()
  *
  * @param[in]     ctx          Context structure
@@ -1036,11 +1072,6 @@ static void
 case_default(struct case_default_context *ctx,
 	     int *rep_count, int *line_count, int *insert_count)
 {
-#if defined(UNIX)
-    attr_t attrs;
-#elif defined(WIN32)
-    chtype attrs;
-#endif
     chtype c;
     unsigned char *mbs, *p;
 
@@ -1052,7 +1083,7 @@ case_default(struct case_default_context *ctx,
     p = &mbs[0];
 
     if (is_scrollok(ctx->win)) {
-	chtype new_line = '\n';
+	const chtype new_line = '\n';
 
 	if (ctx->wc == L'\n') {
 	    WADDCH(ctx->win, new_line);
@@ -1070,22 +1101,9 @@ case_default(struct case_default_context *ctx,
 	    }
 
 	    if (!ctx->nextchar_empty && ctx->indent > 0) {
-		int    counter = 0;
-		chtype blank   = ' ';
-
-		/* turn off all attributes during indentation */
-		attrs = ctx->win->_attrs;
-		term_set_attr(ctx->win, A_NORMAL);
-
-		while (counter++ != ctx->indent) {
-		    WADDCH(ctx->win, blank);
-		    (*insert_count)++;
-		}
-
-		/* restore attributes after indenting */
-		term_set_attr(ctx->win, attrs);
+		do_indent(ctx->win, ctx->indent, insert_count);
 	    }
-	} else if ((*insert_count) + ctx->diff + 1 < COLS - 1) {
+	} else if (!start_on_a_new_row((*insert_count) + ctx->diff + 1)) {
 	    while ((c = *p++) != '\0') {
 		WADDCH(ctx->win, c);
 	    }
@@ -1107,20 +1125,7 @@ case_default(struct case_default_context *ctx,
 	    }
 
 	    if (ctx->indent > 0) {
-		int    counter = 0;
-		chtype blank   = ' ';
-
-		/* turn off all attributes during indentation */
-		attrs = ctx->win->_attrs;
-		term_set_attr(ctx->win, A_NORMAL);
-
-		while (counter++ != ctx->indent) {
-		    WADDCH(ctx->win, blank);
-		    (*insert_count)++;
-		}
-
-		/* restore attributes after indenting */
-		term_set_attr(ctx->win, attrs);
+		do_indent(ctx->win, ctx->indent, insert_count);
 	    }
 
 #if 1

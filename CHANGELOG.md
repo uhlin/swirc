@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- Enhancements to the printtext module
+
 ### Fixed ###
 - Buggy behaviour of `squeeze_text_deco`
 
