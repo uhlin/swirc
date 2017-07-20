@@ -45,8 +45,7 @@
 
 char g_user_modes[100] = "";
 
-static PANEL      *statusbar_pan       = NULL;
-static const char  irc_client_slogan[] = "\0033,1The universal IRC client\017";
+static PANEL *statusbar_pan = NULL;
 
 static void
 apply_statusbar_options(WINDOW *win)
@@ -116,7 +115,7 @@ get_chanmodes()
 
     if ((win = g_active_window) != NULL) {
 	if (Strings_match_ignore_case(win->label, g_status_window_label)) {
-	    sw_strcpy(buf, irc_client_slogan, sizeof buf);
+	    sw_strcpy(buf, Theme("slogan"), sizeof buf);
 	} else if (is_irc_channel(win->label)) {
 	    (void) sw_strcpy(buf, win->label, sizeof buf);
 	    (void) sw_strcat(buf, "(", sizeof buf);
