@@ -90,6 +90,8 @@ static struct tagThemeDefValues {
     { "primary_color",             TYPE_STRING,  "\00312" },
     { "right_bracket",             TYPE_STRING,  "\00314]\017" },
     { "secondary_color",           TYPE_STRING,  "\00300" },
+    { "slogan",                    TYPE_STRING,
+      "\0033,1The universal IRC client\017" },
     { "specifier1",                TYPE_STRING,  "\00314[\0030-\00314]\017" },
     { "specifier2",                TYPE_STRING,  "\00314[\0030:\00314]\017" },
     { "specifier3",                TYPE_STRING,  "\00314[\0030x\00314]\017" },
