@@ -138,6 +138,33 @@ vprinttext_mutex_init(void)
 }
 
 /**
+ * Get multibyte string length
+ */
+static size_t
+get_mb_strlen(const char *s)
+{
+    const size_t ERR_CASE1 = (size_t) -1;
+    const size_t ERR_CASE2 = (size_t) -2;
+    size_t idx = 0;
+    size_t len = 0;
+
+    while (true) {
+	const size_t ret = mbrlen(&s[idx], MB_CUR_MAX, NULL);
+
+	if (ret == ERR_CASE1 || ret == ERR_CASE2) {
+	    return (strlen(s));
+	} else if (ret == 0) {
+	    break;
+	} else {
+	    idx += ret;
+	    len += 1;
+	}
+    }
+
+    return (len);
+}
+
+/**
  * Get message components
  *
  * @param unproc_msg Unprocessed message
@@ -150,7 +177,7 @@ get_processed_out_message(const char *unproc_msg,
 			  enum message_specifier_type spec_type,
 			  bool include_ts)
 {
-#define STRLEN_SQUEEZE(string) ((int) strlen(squeeze_text_deco(string)))
+#define STRLEN_SQUEEZE(string) ((int) get_mb_strlen(squeeze_text_deco(string)))
     struct message_components *pout = xcalloc(sizeof *pout, 1);
     char *tmp = NULL;
 
