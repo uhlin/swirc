@@ -1,7 +1,7 @@
 # -*- mode: conf; -*-
 
 #
-# BitchX style theme. Written by myself.
+# BitchX style theme
 #
 
 term_background         = "1";
