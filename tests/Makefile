@@ -5,12 +5,13 @@ SRC=$(ROOT)/src
 
 include $(ROOT)/unix_def.mk
 
+CFLAGS+=-I/usr/local/include
 # LDFLAGS+=
 LDLIBS+=-lcmocka
 
 extra_flags?=
 include_dirs=-I$(SRC) -I$(SRC)/include
-library_dirs=
+library_dirs=-L/usr/local/lib
 
 TESTS=test_strdup_printf.run
 TESTS+=test_printtext.run
