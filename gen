@@ -5,7 +5,7 @@
 
 SECTIONS="bottom.html head_common_tags.html menu.html top.html"
 PAGES="about.html cmds.html doc.html index.html pr.html"
-DIRS="gfx screenshots"
+DIRS="gfx screenshots themes"
 OTHER_FILES="mu160221.asc mu170225.asc style.css"
 
 for s in $SECTIONS; do
