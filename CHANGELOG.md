@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Enhancements to the printtext module
 - Theme item `slogan`
+- Command /theme for management of themes on-the-fly
 
 ### Changed ###
 - Theme item `sw_ascLogotype_color` to `logo_color`

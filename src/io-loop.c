@@ -59,6 +59,7 @@
 #include "commands/notice.h"
 #include "commands/say.h"
 #include "commands/services.h"
+#include "commands/theme.h"
 #include "commands/topic.h"
 
 #include "events/names.h"
@@ -105,6 +106,8 @@ static struct cmds_tag {
     { "resize",     cmd_resize,     false, "/resize" },
     { "rules",      cmd_rules,      true,  "/rules" },
     { "say",        cmd_say,        true,  "/say <message>" },
+    { "theme",      cmd_theme,      false, "/theme "
+      "[install | list-remote | set] [name]" },
     { "time",       cmd_time,       true,  "/time <target>" },
     { "topic",      cmd_topic,      true,  "/topic [new topic]" },
     { "version",    cmd_version,    true,  "/version <target>" },
