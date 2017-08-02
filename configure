@@ -23,7 +23,8 @@ os_BSD () {
     cat <<EOF >>$MAKE_DEF_FILE
 CC=gcc
 CFLAGS=-DBSD=1 -DUNIX=1 -D_XOPEN_SOURCE_EXTENDED=1 -Wall -std=c99
-LDFLAGS=
+CFLAGS+=-I/usr/local/include
+LDFLAGS=-L/usr/local/lib
 LDLIBS=-lcrypto -lcurl -lncursesw -lpanelw -lpthread -lssl
 EOF
 }
