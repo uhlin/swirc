@@ -3,7 +3,7 @@
 !include ../../w32_def.mk
 
 extra_flags=
-include_dirs=-I../include -I../libressl-$(LIBRESSL_VERSION)-windows/include
+include_dirs=-I../include -I../curl-$(CURL_VERSION)/include -I../libressl-$(LIBRESSL_VERSION)-windows/include
 library_dirs=
 log_file=stdout.log
 

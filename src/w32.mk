@@ -3,8 +3,10 @@
 !include ../w32_def.mk
 
 extra_flags=
-include_dirs=-Iinclude -Ilibressl-$(LIBRESSL_VERSION)-windows/include
-library_dirs=-LIBPATH:pdcurses-3.4/x86 -LIBPATH:libressl-$(LIBRESSL_VERSION)-windows/x86
+include_dirs=-Iinclude -Icurl-$(CURL_VERSION)/include -Ilibressl-$(LIBRESSL_VERSION)-windows/include
+library_dirs=-LIBPATH:curl-$(CURL_VERSION)/x86 \
+             -LIBPATH:libressl-$(LIBRESSL_VERSION)-windows/x86 \
+             -LIBPATH:pdcurses-3.4/x86
 log_file=stdout.log
 
 OBJS=assertAPI.obj config.obj curses-funcs.obj cursesInit.obj dataClassify.obj \
@@ -30,6 +32,8 @@ $(OUT).exe: fetch_and_expand $(OBJS)
 	rc -foswirc.res -v swirc.rc
 	$(E) ^ ^ LINK^ ^ ^ ^ $@
 	$(Q) $(CC) -Fe$(OUT) *.obj commands/*.obj events/*.obj swirc.res -link $(LDFLAGS) $(library_dirs) $(LDLIBS) 1>>$(log_file)
+	$(E) ^ ^ MOVE^ ^ ^ ^ libcurl.dll
+	$(Q) move "curl-$(CURL_VERSION)\x86\libcurl.dll" . 1>>$(log_file)
 	$(E) ^ ^ MOVE^ ^ ^ ^ $(NAME_libcrypto).dll
 	$(Q) move "libressl-$(LIBRESSL_VERSION)-windows\x86\$(NAME_libcrypto).dll" . 1>>$(log_file)
 	$(E) ^ ^ MOVE^ ^ ^ ^ $(NAME_libssl).dll
@@ -40,6 +44,8 @@ $(OUT).exe: fetch_and_expand $(OBJS)
 fetch_and_expand:
 	$(E) ^ ^ FETCH
 	$(Q) cscript get_file.js 1>>$(log_file)
+	$(E) ^ ^ EXPAND^ ^ curl-$(CURL_VERSION).cab
+	$(Q) expand curl-$(CURL_VERSION).cab "-F:*" . 1>>$(log_file)
 	$(E) ^ ^ EXPAND^ ^ libressl-$(LIBRESSL_VERSION)-windows.cab
 	$(Q) expand libressl-$(LIBRESSL_VERSION)-windows.cab "-F:*" . 1>>$(log_file)
 	$(E) ^ ^ EXPAND^ ^ pdcurses-3.4.cab
@@ -89,6 +95,7 @@ clean:
 	cd events && $(MAKE) -f w32.mk clean
 	cd $(MAKEDIR)
 	$(E) ^ ^ CLEAN
+	$(Q) rmdir /s /q curl-$(CURL_VERSION)
 	$(Q) rmdir /s /q libressl-$(LIBRESSL_VERSION)-windows
 	$(Q) rmdir /s /q pdcurses-3.4
 	$(RM) $(OUT).exe $(TEMPFILES) $(log_file)
