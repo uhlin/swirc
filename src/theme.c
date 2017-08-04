@@ -237,7 +237,13 @@ theme_item_install(const char *name, const char *value)
 	return (EINVAL);
     } else if (get_hash_table_entry(name)) {
 	return (EBUSY);
-    } else {
+    }
+#if WIN32
+    else if (Strings_match(name, "term_use_default_colors")) {
+	hInstall(name, "NO");
+    }
+#endif
+    else {
 	hInstall(name, value);
     }
 
