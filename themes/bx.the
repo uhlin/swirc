@@ -37,7 +37,7 @@ secondary_color = "10";
 
 slogan = "15,02The universal IRC client";
 
-specifier1 = "04ù00í04ù";
+specifier1 = "04-00!04-";
 specifier2 = "14[00:14]";
 specifier3 = "14[00x14]";
 
