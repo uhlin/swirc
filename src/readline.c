@@ -442,8 +442,8 @@ apply_readline_options(WINDOW *win)
     if (!is_keypad(win)) {
 	KEYPAD(win, 1);
     }
-    if (!is_nodelay(win)) {
-	NODELAY(win, 1);
+    if (is_nodelay(win)) {
+	NODELAY(win, 0);
     }
     if (is_scrollok(win)) {
 	SCROLLOK(win, 0);
