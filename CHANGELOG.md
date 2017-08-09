@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 ### Changed ###
 - Theme item `sw_ascLogotype_color` to `logo_color`
 - WIN32: theme item `term_use_default_colors` will always be set to NO
+- Turned `nodelay()` OFF which reduces CPU usage
 
 ### Fixed ###
 - Buggy behaviour of `squeeze_text_deco`
