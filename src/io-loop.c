@@ -213,8 +213,8 @@ swirc_greeting()
 }
 
 /* must be freed */
-static char *
-get_prompt()
+char *
+get_prompt(void)
 {
     if (Strings_match_ignore_case(g_active_window->label,
 				  g_status_window_label)) {
