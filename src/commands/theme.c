@@ -345,7 +345,7 @@ set_theme(const char *name)
     char buf[2300] = "";
     struct printtext_context ctx = {
 	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_SUCCESS,
+	.spec_type  = TYPE_SPEC1_FAILURE,
 	.include_ts = true,
     };
 
@@ -353,6 +353,10 @@ set_theme(const char *name)
     (void) sw_strcat(buf, SLASH,      sizeof buf);
     (void) sw_strcat(buf, name,       sizeof buf);
     (void) sw_strcat(buf, g_theme_filesuffix, sizeof buf);
+    if (!is_regular_file(buf)) {
+	printtext(&ctx, "non-existent");
+	return;
+    }
     theme_deinit();
     theme_init();
     theme_readit(buf, "r");
@@ -366,6 +370,7 @@ set_theme(const char *name)
     config_do_save(buf, "w");
     titlebar(" %s ", g_active_window->title ? g_active_window->title : "");
     statusbar_update_display_beta();
+    ctx.spec_type = TYPE_SPEC1_SUCCESS;
     printtext(&ctx, "theme activated");
 }
 
@@ -428,7 +433,7 @@ cmd_theme(const char *data)
     } else if (Strings_match(instruction, "list-remote")) {
 	list_remote();
     } else if (Strings_match(instruction, "set")) {
-	if (theme_is_in_db(name))
+	if (Strings_match(name, "default") || theme_is_in_db(name))
 	    set_theme(name);
     } else {
 	sw_assert_not_reached();
