@@ -643,9 +643,11 @@ void
 readline_top_panel(void)
 {
     if (panel_state == PANEL1_ACTIVE) {
-	(void) top_panel(readline_pan1);
+	if (readline_pan1)
+	    (void) top_panel(readline_pan1);
     } else if (panel_state == PANEL2_ACTIVE) {
-	(void) top_panel(readline_pan2);
+	if (readline_pan2)
+	    (void) top_panel(readline_pan2);
     } else {
 	sw_assert_not_reached();
     }
