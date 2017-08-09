@@ -40,6 +40,7 @@
 #endif
 #include "dataClassify.h"
 #include "errHand.h"
+#include "io-loop.h"		/* get_prompt() */
 #include "libUtils.h"
 #include "printtext.h"		/* includes window.h */
 #include "readline.h"		/* readline_top_panel() */
@@ -364,9 +365,18 @@ changeWindow_by_label(const char *label)
     } else if (top_panel(window->pan) == ERR) {
 	return (EPERM);		/* top_panel() error */
     } else {
+	WINDOW *pwin = readline_get_active_pwin();
+	char *prompt = NULL;
+
 	g_active_window = window;
 	titlebar(" %s ", (window->title != NULL) ? window->title : "");
 	statusbar_update_display_beta();
+	if (pwin) {
+	    werase(pwin);
+	    prompt = get_prompt();
+	    waddnstr(pwin, prompt, -1);
+	    free(prompt);
+	}
 	readline_top_panel();
 	(void) ungetch('\a');
     }
@@ -386,9 +396,18 @@ changeWindow_by_refnum(int refnum)
     } else if (top_panel(window->pan) == ERR) {
 	return (EPERM);
     } else {
+	WINDOW *pwin = readline_get_active_pwin();
+	char *prompt = NULL;
+
 	g_active_window = window;
 	titlebar(" %s ", (window->title != NULL) ? window->title : "");
 	statusbar_update_display_beta();
+	if (pwin) {
+	    werase(pwin);
+	    prompt = get_prompt();
+	    waddnstr(pwin, prompt, -1);
+	    free(prompt);
+	}
 	readline_top_panel();
 	(void) ungetch('\a');
     }
