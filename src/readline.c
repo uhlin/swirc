@@ -653,3 +653,14 @@ readline_top_panel(void)
     update_panels();
     (void) doupdate();
 }
+
+WINDOW *
+readline_get_active_pwin(void)
+{
+    if (readline_pan1 == NULL || readline_pan2 == NULL)
+	return NULL;
+
+    return ((panel_state == PANEL1_ACTIVE)
+	    ? panel_window(readline_pan1)
+	    : panel_window(readline_pan2));
+}
