@@ -576,7 +576,6 @@ readline(const char *prompt)
 	    g_readline_loop = false;
 	    break;
 	case KEY_RESIZE:
-	    break;
 	case MY_KEY_RESIZE:
 	    g_resize_requested = true;
 	    /*FALLTHROUGH*/
