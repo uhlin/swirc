@@ -74,6 +74,9 @@ handle_special_msg(const struct special_msg_context *ctx)
     msg = trim(msg);
 
     if (Strings_match_ignore_case(ctx->dest, g_my_nickname)) {
+	if (!strncmp(msg, "ACTION ", 7) &&
+	    (pt_ctx.window = window_by_label(ctx->nick)) == NULL)
+	    spawn_chat_window(ctx->nick, "");
 	pt_ctx.window = window_by_label(ctx->nick);
     } else {
 	pt_ctx.window = window_by_label(ctx->dest);
