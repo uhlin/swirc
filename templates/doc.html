@@ -21,7 +21,7 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2017-01-28</em></small></p>
+<p><small><em>Updated: 2017-08-11</em></small></p>
 <h3>Program options</h3>
 <h4>Common</h4>
 <table class="po">
@@ -29,8 +29,8 @@
     <td>-c &lt;server[:port]&gt;</td>
     <td>
 Auto-connect to given server. If the port is omitted port 6667 will be
-chosen. And if the port is 6697 the program attempts to initiate a SSL
-connection.
+chosen. And if the port is 6697 the program attempts to initiate a
+TLS/SSL connection.
     </td>
   </tr>
   <tr>
@@ -64,7 +64,7 @@ connection.
 </table>
 <h4>Extras</h4>
 <table class="po">
-  <tr><td>-v, -version</td><td>View the current client ver</td></tr>
+  <tr><td>-v, -version</td><td>View the current client version</td></tr>
   <tr><td>-?, -help</td><td>Print the usage</td></tr>
 </table>
 <h3>Key combos</h3>
@@ -95,14 +95,15 @@ To clone the repository use
 <h4>Framework</h4>
 <p>Swirc currently depends on:</p>
 <ul>
+  <li><a href="https://curl.haxx.se/libcurl/">Curl</a></li>
   <li><a href="https://www.gnu.org/software/ncurses/ncurses.html">Ncurses</a></li>
-  <li><a href="https://www.openssl.org">OpenSSL toolkit</a></li>
+  <li><a href="https://www.openssl.org/">OpenSSL toolkit</a></li>
 </ul>
 <p>
 Which means that on for example a Debian GNU/Linux system you need to
-install two packages before building:
+install 3 packages before building:
 </p>
-<kbd># aptitude install libncursesw5-dev libssl-dev</kbd>
+<kbd># aptitude install libcurl4-gnutls-dev:amd64 libncursesw5-dev libssl-dev</kbd>
 <p>
 And on Mac OS X, provided that
 <a href="http://brew.sh/">Homebrew</a>
