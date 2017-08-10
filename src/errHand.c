@@ -1,5 +1,5 @@
 /* errHand.c  --  Error handling routines
-   Copyright (C) 2012-2014, 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -32,6 +32,9 @@
 #include <stdio.h>
 #include <string.h>		/* strerror_r() */
 #include <time.h>
+#ifdef WIN32
+#include <windows.h>		/* MessageBox() */
+#endif
 
 #include "curses-funcs.h"
 #include "errHand.h"
@@ -108,6 +111,9 @@ err_doit(bool output_to_stderr, int error, const char *fmt, va_list ap)
 	escape_curses();
 	fputs(out, stderr);
 	fputc('\n', stderr);
+#ifdef WIN32
+	MessageBox(NULL, out, "Fatal", MB_OK | MB_ICONSTOP | MB_DEFBUTTON1);
+#endif
     }
 }
 
