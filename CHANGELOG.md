@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Theme item `slogan`
 - Command /theme for management of themes on-the-fly
 - WIN32: use of function `MessageBox()` in the errHand module
+- Event 442 `ERR_NOTONCHANNEL`
 
 ### Changed ###
 - Theme item `sw_ascLogotype_color` to `logo_color`
