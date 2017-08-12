@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [1.7] - 2017-08-12 ##
 ### Added ###
 - Enhancements to the printtext module
 - Theme item `slogan`
