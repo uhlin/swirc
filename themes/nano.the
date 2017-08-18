@@ -1,0 +1,68 @@
+# -*- mode: conf; -*-
+
+#
+# GNU nano colors
+# Version: 1.0
+#
+
+term_background         = "1";
+term_enable_colors      = "yes";
+term_use_default_colors = "yes";
+
+color3 = "12";
+color4 = "03";
+
+gfx_failure = "04:05:15:";
+gfx_success = "09:03:15:";
+gfx_warning = "08:07:15:";
+
+left_bracket  = "14[";
+right_bracket = "14]";
+
+logo_color = "12";
+
+nick_s1 = "04<";
+nick_s2 = "04>";
+
+notice_color1   = "13";
+notice_color2   = "06";
+notice_inner_b1 = "14(";
+notice_inner_b2 = "14)";
+notice_lb       = "14-";
+notice_rb       = "14-";
+notice_sep      = "14:";
+
+primary_color   = "11";
+secondary_color = "10";
+
+slogan = "";
+
+specifier1 = "08***";
+specifier2 = "14[00:14]";
+specifier3 = "14[00x14]";
+
+statusbar_bg           = "blue";
+statusbar_fg           = "white";
+statusbar_leftBracket  = "10,02[";
+statusbar_rightBracket = "10,02]";
+statusbar_spec         = "";
+
+time_format = "03[%H14:%M14:%S03]";
+
+titlebar_bg = "black";
+titlebar_fg = "magenta";
+
+whois_acc      = "14=> 03account  :";
+whois_away     = "14=> 03away     :";
+whois_cert     = "14=> 03cert     :";
+whois_channels = "14=> 03channels :";
+whois_conn     = "14=> 03conn     :";
+whois_host     = "14=> 03host     :";
+whois_idle     = "14=> 03idle     :";
+whois_ircName  = "14=> 03ircname  :";
+whois_ircOp    = "14=> 03IRC op   :";
+whois_modes    = "14=> 03modes    :";
+whois_server   = "14=> 03server   :";
+whois_service  = "14=> 03service  :";
+whois_ssl      = "14=> 03TLS/SSL  :";
+# EOF
