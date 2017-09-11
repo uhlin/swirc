@@ -69,7 +69,7 @@
 /* Things with external linkage
    ============================ */
 
-const char g_swircVersion[] = "v1.7";
+const char g_swircVersion[] = "v1.8-dev";
 const char g_swircYear[]    = "2012-2017";
 const char g_swircAuthor[]  = "Markus Uhlin";
 const char g_swircWebAddr[] = "https://dataswamp.org/~markus/swirc/";
