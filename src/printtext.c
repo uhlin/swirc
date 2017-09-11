@@ -567,7 +567,7 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
     }
 
     if (bytes_convert == sz - 1)
-	out[sz - 1] = 0;
+	out[sz - 1] = 0L;
 
     if (setlocale(LC_CTYPE, original_locale) == NULL)
 	err_log(EPERM, "In try_convert_buf_with_cs: "
@@ -638,7 +638,7 @@ perform_convert_buffer(const char **in_buf)
 	    break;
     }
 
-    out[sz - 1] = 0;
+    out[sz - 1] = 0L;
     if (chars_lost)
 	err_log(EILSEQ, "In perform_convert_buffer: characters lost");
     return (out);
