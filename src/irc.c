@@ -213,6 +213,7 @@ static struct numeric_events_tag {
     { "482", "ERR_CHANOPRIVSNEEDED",    ACTIVE_WINDOW,  2, NULL },
     { "484", "ERR_RESTRICTED",          NO_WINDOW,      0,
       event_allaround_extract_find_colon },
+    { "486", "ERR_",                    ACTIVE_WINDOW,  2, NULL },
     { "487", "ERR_",                    ACTIVE_WINDOW,  1, NULL },
     { "492", "ERR_NOSERVICEHOST",       ACTIVE_WINDOW,  2, NULL },
     { "500", "ERR_",                    ACTIVE_WINDOW,  1, NULL },
