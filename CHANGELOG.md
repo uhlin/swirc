@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Event 486 (You must log in with services to message this user)
 
+### Fixed ###
+- Browsing the command history caused the program to freeze if the
+  next/prev command exceeded a certain count
+
 ## [1.7] - 2017-08-12 ##
 ### Added ###
 - Enhancements to the printtext module
