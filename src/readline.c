@@ -484,9 +484,10 @@ readline_deinit(void)
 char *
 readline(const char *prompt)
 {
-    volatile struct readline_session_context *ctx;
-    const int sleep_time_milliseconds = 90;
     char *out;
+    const int sleep_time_milliseconds = 90;
+    volatile struct readline_session_context *ctx;
+    wchar_t *buf_p = &g_push_back_buf[0];
 
     ctx = new_session(prompt);
     if (setjmp(g_readline_loc_info) != 0) {
@@ -510,7 +511,9 @@ readline(const char *prompt)
 	ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
 	ctx->no_bufspc	 = (ctx->n_insert + 1 >= readline_buffersize);
 
-	if (wget_wch(ctx->act, &wc) == ERR) {
+	if (*buf_p) {
+	    wc = *buf_p++;
+	} else if (wget_wch(ctx->act, &wc) == ERR) {
 	    (void) napms(sleep_time_milliseconds);
 	    continue;
 	}

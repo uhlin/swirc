@@ -64,10 +64,15 @@
 
 #include "events/names.h"
 
+wchar_t g_push_back_buf[2705] = { 0L };
 bool g_io_loop = true;
 
 static PTEXTBUF		history = NULL;
 static PTEXTBUF_ELMT	element = NULL;
+
+static size_t bytes_convert = 0;
+static const size_t ARSZ = ARRAY_SIZE(g_push_back_buf);
+static const size_t CONVERT_FAILED = (size_t) -1;
 
 static struct cmds_tag {
     char		*cmd;
@@ -230,6 +235,7 @@ get_prompt(void)
     return (sw_strdup(""));
 }
 
+#if 0
 void
 unget_string(char *string)
 {
@@ -242,6 +248,18 @@ unget_string(char *string)
     for (cp = &string[strlen(string) - 1]; cp >= &string[0]; cp--)
 	ungetch(*cp);
 }
+#endif
+
+static void
+bold_fix(char *string)
+{
+    char *cp = NULL;
+
+    if (!string)
+	return;
+    while ((cp = strchr(string, BOLD)) != NULL)
+	*cp = BOLD_ALIAS;
+}
 
 static void
 history_next()
@@ -251,7 +269,12 @@ history_next()
 
     if (element != textBuf_tail(history)) {
 	element = element->next;
-	unget_string(element->text);
+	bold_fix(element->text);
+	bytes_convert = mbstowcs(g_push_back_buf, element->text, ARSZ - 1);
+	if (bytes_convert == CONVERT_FAILED)
+	    wmemset(g_push_back_buf, 0L, ARSZ);
+	else if (bytes_convert == ARSZ - 1)
+	    g_push_back_buf[ARSZ - 1] = 0L;
     }
 }
 
@@ -261,7 +284,12 @@ history_prev()
     if (textBuf_size(history) == 0)
 	return;
 
-    unget_string(element->text);
+    bold_fix(element->text);
+    bytes_convert = mbstowcs(g_push_back_buf, element->text, ARSZ - 1);
+    if (bytes_convert == CONVERT_FAILED)
+	wmemset(g_push_back_buf, 0L, ARSZ);
+    else if (bytes_convert == ARSZ - 1)
+	g_push_back_buf[ARSZ - 1] = 0L;
 
     if (element != textBuf_head(history))
 	element = element->prev;
@@ -405,6 +433,7 @@ enter_io_loop(void)
 	prompt = get_prompt();
 	line   = readline(prompt);
 	free(prompt);
+	wmemset(g_push_back_buf, 0L, ARSZ);
 
 	if (line == NULL) {
 	    if (g_resize_requested) {
