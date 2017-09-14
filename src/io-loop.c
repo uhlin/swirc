@@ -235,21 +235,6 @@ get_prompt(void)
     return (sw_strdup(""));
 }
 
-#if 0
-void
-unget_string(char *string)
-{
-    char *cp = NULL;
-
-    if (!string)
-	return;
-    while ((cp = strchr(string, BOLD)) != NULL)
-	*cp = BOLD_ALIAS;
-    for (cp = &string[strlen(string) - 1]; cp >= &string[0]; cp--)
-	ungetch(*cp);
-}
-#endif
-
 static void
 bold_fix(char *string)
 {
