@@ -66,7 +66,7 @@ static struct tagConfDefValues {
     { "nickname",                  TYPE_STRING,  "warezkid" },
     { "nickserv_host",             TYPE_STRING,  "services." },
     { "part_message",              TYPE_STRING,  "" },
-    { "quit_message",              TYPE_STRING,  "leaving" },
+    { "quit_message",              TYPE_STRING,  "Swirc IRC client" },
     { "real_name",                 TYPE_STRING,  "pinball" },
     { "recode",                    TYPE_BOOLEAN, "no" },
     { "sasl",                      TYPE_BOOLEAN, "no" },
