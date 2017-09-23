@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Added ###
 - Event 486 (You must log in with services to message this user)
+- Option `sasl`
+- Option `sasl_mechanism`
+- Option `sasl_password`
+- Option `sasl_username`
 
 ### Fixed ###
 - Browsing the command history caused the program to freeze if the
