@@ -74,19 +74,19 @@ static struct normal_events_tag {
     char		*normal_event;
     event_handler_fn	 event_handler;
 } normal_events[] = {
+    { "ERROR",   event_error     },
+    { "INVITE",  event_invite    },
+    { "JOIN",    event_join      },
+    { "KICK",    event_kick      },
+    { "MODE",    event_mode      },
     { "NICK",    event_nick      },
+    { "NOTICE",  event_notice    },
+    { "PART",    event_part      },
+    { "PING",    event_ping      },
+    { "PRIVMSG", event_privmsg   },
     { "QUIT",    event_quit      },
     { "SQUIT",   event_noop      },
-    { "JOIN",    event_join      },
-    { "PART",    event_part      },
-    { "MODE",    event_mode      },
     { "TOPIC",   event_topic_chg },
-    { "INVITE",  event_invite    },
-    { "KICK",    event_kick      },
-    { "PRIVMSG", event_privmsg   },
-    { "NOTICE",  event_notice    },
-    { "PING",    event_ping      },
-    { "ERROR",   event_error     },
     { "WALLOPS", event_noop      },
 };
 
