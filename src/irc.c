@@ -42,7 +42,9 @@
 #include "statusbar.h"
 #include "strHand.h"
 
+#include "events/auth.h"
 #include "events/banlist.h"
+#include "events/cap.h"
 #include "events/channel.h"
 #include "events/error.h"
 #include "events/invite.h"
@@ -74,20 +76,22 @@ static struct normal_events_tag {
     char		*normal_event;
     event_handler_fn	 event_handler;
 } normal_events[] = {
-    { "ERROR",   event_error     },
-    { "INVITE",  event_invite    },
-    { "JOIN",    event_join      },
-    { "KICK",    event_kick      },
-    { "MODE",    event_mode      },
-    { "NICK",    event_nick      },
-    { "NOTICE",  event_notice    },
-    { "PART",    event_part      },
-    { "PING",    event_ping      },
-    { "PRIVMSG", event_privmsg   },
-    { "QUIT",    event_quit      },
-    { "SQUIT",   event_noop      },
-    { "TOPIC",   event_topic_chg },
-    { "WALLOPS", event_noop      },
+    { "AUTHENTICATE", event_authenticate },
+    { "CAP",          event_cap          },
+    { "ERROR",        event_error        },
+    { "INVITE",       event_invite       },
+    { "JOIN",         event_join         },
+    { "KICK",         event_kick         },
+    { "MODE",         event_mode         },
+    { "NICK",         event_nick         },
+    { "NOTICE",       event_notice       },
+    { "PART",         event_part         },
+    { "PING",         event_ping         },
+    { "PRIVMSG",      event_privmsg      },
+    { "QUIT",         event_quit         },
+    { "SQUIT",        event_noop         },
+    { "TOPIC",        event_topic_chg    },
+    { "WALLOPS",      event_noop         },
 };
 
 static struct numeric_events_tag {
