@@ -57,6 +57,12 @@ volatile bool g_on_air = false;
 
 static const int RECVBUF_SIZE = 2048;
 
+bool
+is_sasl_enabled(void)
+{
+    return config_bool_unparse("sasl", false);
+}
+
 struct addrinfo *
 net_addr_resolve(const char *host, const char *port)
 {
