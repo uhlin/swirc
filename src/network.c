@@ -100,6 +100,10 @@ select_send_and_recv_funcs()
 static void
 send_reg_cmds(const struct network_connect_context *ctx)
 {
+    if (is_sasl_enabled()) {
+	(void) net_send("CAP REQ :sasl");
+    }
+
     if (ctx->password) {
 	(void) net_send("PASS %s", ctx->password);
     }
