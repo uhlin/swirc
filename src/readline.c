@@ -102,10 +102,11 @@ new_session(const char *prompt)
 static void
 session_destroy(volatile struct readline_session_context *ctx)
 {
-    free_not_null(ctx->buffer);
-    free_not_null(ctx->prompt);
-    if (ctx)
+    if (ctx) {
+	free(ctx->buffer);
+	free(ctx->prompt);
 	free((struct readline_session_context *) ctx);
+    }
 }
 
 /**
