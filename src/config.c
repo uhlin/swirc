@@ -70,7 +70,7 @@ static struct tagConfDefValues {
     { "real_name",                 TYPE_STRING,  "pinball" },
     { "recode",                    TYPE_BOOLEAN, "no" },
     { "sasl",                      TYPE_BOOLEAN, "no" },
-    { "sasl_mechanism",            TYPE_STRING,  "plain" },
+    { "sasl_mechanism",            TYPE_STRING,  "PLAIN" },
     { "sasl_password",             TYPE_STRING,  "" },
     { "sasl_username",             TYPE_STRING,  "" },
     { "show_ping_pong",            TYPE_BOOLEAN, "no" },
