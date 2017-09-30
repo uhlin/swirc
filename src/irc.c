@@ -230,7 +230,7 @@ static struct numeric_events_tag {
     { "716", "ERR_",                    ACTIVE_WINDOW,  2, NULL },
     { "717", "ERR_",                    ACTIVE_WINDOW,  2, NULL },
     { "742", "ERR_",                    ACTIVE_WINDOW,  4, NULL },
-    { "900", "",                        STATUS_WINDOW,  3, NULL },
+    { "900", "RPL_LOGGEDIN",            STATUS_WINDOW,  3, NULL },
 };
 
 /**
