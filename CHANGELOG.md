@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 - Option `sasl_password`
 - Option `sasl_username`
 - Event 901 `RPL_LOGGEDOUT`
+- Event 902 `ERR_NICKLOCKED`
+- Event 904 `ERR_SASLFAIL`
+- Event 905 `ERR_SASLTOOLONG`
+- Event 907 `ERR_SASLALREADY`
 
 ### Fixed ###
 - Browsing the command history caused the program to freeze if the
