@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Event 903 `RPL_SASLSUCCESS`
 - Event 904 `ERR_SASLFAIL`
 - Event 905 `ERR_SASLTOOLONG`
+- Event 906 `ERR_SASLABORTED`
 - Event 907 `ERR_SASLALREADY`
 
 ### Fixed ###
