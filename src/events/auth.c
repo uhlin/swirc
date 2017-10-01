@@ -71,3 +71,22 @@ handle_sasl_auth_fail(struct irc_message_compo *compo)
     irc_extract_msg(compo, g_status_window, 1, true);
     abort_authentication();
 }
+
+/* sasl_auth_success: 903 (RPL_SASLSUCCESS)
+
+   Example:
+     :server 903 <nick> :SASL authentication successful */
+void
+sasl_auth_success(struct irc_message_compo *compo)
+{
+    struct printtext_context ctx = {
+	.window	    = g_status_window,
+	.spec_type  = TYPE_SPEC1_SUCCESS,
+	.include_ts = true,
+    };
+
+    (void) compo;
+
+    printtext(&ctx, "SASL authentication successful");
+    net_send("CAP END");
+}

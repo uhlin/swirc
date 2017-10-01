@@ -233,6 +233,7 @@ static struct numeric_events_tag {
     { "900", "RPL_LOGGEDIN",            STATUS_WINDOW,  3, NULL },
     { "901", "RPL_LOGGEDOUT",           STATUS_WINDOW,  2, NULL },
     { "902", "ERR_NICKLOCKED",          NO_WINDOW,      0, handle_sasl_auth_fail },
+    { "903", "RPL_SASLSUCCESS",         NO_WINDOW,      0, sasl_auth_success },
     { "904", "ERR_SASLFAIL",            NO_WINDOW,      0, handle_sasl_auth_fail },
     { "905", "ERR_SASLTOOLONG",         NO_WINDOW,      0, handle_sasl_auth_fail },
     { "907", "ERR_SASLALREADY",         NO_WINDOW,      0, handle_sasl_auth_fail },
