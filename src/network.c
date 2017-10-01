@@ -99,7 +99,7 @@ select_send_and_recv_funcs()
     }
 }
 
-static void
+static PTR_ARGS_NONNULL void
 send_reg_cmds(const struct network_connect_context *ctx)
 {
     if (is_sasl_enabled()) {
