@@ -5,6 +5,7 @@
 #include "../irc.h"
 #include "../libUtils.h"
 #include "../network.h"
+#include "../printtext.h"
 #include "../strHand.h"
 #include "../strdup_printf.h"
 
