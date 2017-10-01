@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Option `sasl_mechanism`
 - Option `sasl_password`
 - Option `sasl_username`
+- Event 462 `ERR_ALREADYREGISTRED`
 - Event 901 `RPL_LOGGEDOUT`
 - Event 902 `ERR_NICKLOCKED`
 - Event 903 `RPL_SASLSUCCESS`
