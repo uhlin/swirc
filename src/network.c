@@ -45,8 +45,10 @@
 #include "libUtils.h"
 #include "network.h"
 #include "printtext.h"
+#include "strHand.h"
 
 #include "commands/connect.h"
+#include "events/cap.h"
 #include "events/welcome.h"
 
 NET_SEND_FN net_send = net_send_plain;
@@ -101,7 +103,20 @@ static void
 send_reg_cmds(const struct network_connect_context *ctx)
 {
     if (is_sasl_enabled()) {
-	(void) net_send("CAP REQ :sasl");
+	struct printtext_context ptext_ctx = {
+	    .window	= g_status_window,
+	    .spec_type	= TYPE_SPEC1_SUCCESS,
+	    .include_ts	= true,
+	};
+
+	if (Strings_match(get_sasl_mechanism(), "PLAIN") && !is_ssl_enabled()) {
+	    ptext_ctx.spec_type = TYPE_SPEC1_WARN;
+	    printtext(&ptext_ctx, "SASL mechanism matches PLAIN and TLS/SSL "
+		"is not enabled. Not requesting SASL authentication.");
+	} else {
+	    if (net_send("CAP REQ :sasl") > 0)
+		printtext(&ptext_ctx, "Requesting SASL authentication");
+	}
     }
 
     if (ctx->password) {
