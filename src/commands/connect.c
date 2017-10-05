@@ -64,6 +64,7 @@ static const char *freenode_servers[] = {
     "card.freenode.net",
     "chat.freenode.net",
     "cherryh.freenode.net",
+    "freenodeok2gncmy.onion",
     "hobana.freenode.net",
     "leguin.acc.umu.se",
     "orwell.freenode.net",
