@@ -1390,5 +1390,5 @@ print_and_free(const char *msg, char *cp)
     };
 
     printtext(&ptext_ctx, "%s", msg);
-    if (cp) free(cp);
+    free(cp);
 }
