@@ -1,5 +1,6 @@
 #include "common.h"
 
+#include "../assertAPI.h"
 #include "../config.h"
 #include "../irc.h"
 #include "../network.h"
@@ -11,7 +12,17 @@
 bool
 is_sasl_mechanism_supported(const char *mechanism)
 {
-    return (mechanism && Strings_match(mechanism, "PLAIN"));
+    if (!mechanism)
+	return false;
+    else if (Strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE"))
+	return true;
+    else if (Strings_match(mechanism, "PLAIN"))
+	return true;
+    else
+	return false;
+
+    /*NOTREACHED*/ sw_assert_not_reached();
+    /*NOTREACHED*/ return false;
 }
 
 const char *
