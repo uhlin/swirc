@@ -1,5 +1,5 @@
 /* libUtils.c  --  Library Utilities
-   Copyright (C) 2012-2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -171,6 +171,10 @@ FILE *
 fopen_handle_error(const char *path, const char *mode)
 {
     FILE *fp;
+
+    if (path == NULL || mode == NULL) {
+	err_exit(EINVAL, "fopen_handle_error");
+    }
 
 #ifdef HAVE_BCI
     if ((errno = fopen_s(&fp, path, mode)) != 0) {
