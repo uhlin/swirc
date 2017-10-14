@@ -57,6 +57,7 @@
 #include "commands/msg.h"
 #include "commands/nick.h"
 #include "commands/notice.h"
+#include "commands/sasl.h"
 #include "commands/say.h"
 #include "commands/services.h"
 #include "commands/theme.h"
@@ -110,6 +111,13 @@ static struct cmds_tag {
     { "quit",       cmd_quit,       false, "/quit [message]" },
     { "resize",     cmd_resize,     false, "/resize" },
     { "rules",      cmd_rules,      true,  "/rules" },
+    { "sasl",       cmd_sasl,       false, "/sasl <operation> [...]"
+      "\nkeygen [--force]"
+      "\npubkey"
+      "\nmechanism [ecdsa-nist256p-challenge | plain]"
+      "\nusername <name>"
+      "\npassword <pass>"
+      "\nset [on | off]" },
     { "say",        cmd_say,        true,  "/say <message>" },
     { "theme",      cmd_theme,      false, "/theme "
       "[install | list-remote | set] [name]" },
