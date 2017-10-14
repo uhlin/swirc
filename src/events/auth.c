@@ -2,6 +2,7 @@
 #include "common.h"
 
 #include "../config.h"
+#include "../errHand.h"
 #include "../irc.h"
 #include "../libUtils.h"
 #include "../network.h"
@@ -10,6 +11,7 @@
 #include "../strdup_printf.h"
 
 #include "auth.h"
+#include "cap.h" /* get_sasl_mechanism() */
 
 /*lint -sem(get_b64_encoded_username, r_null) */
 static char *
@@ -67,16 +69,34 @@ abort_authentication()
 void
 event_authenticate(struct irc_message_compo *compo)
 {
-    if (Strings_match(compo->params, "+")) {
-	char *msg = NULL;
+    const char *mechanism = get_sasl_mechanism();
 
-	if (!build_auth_message(&msg)) {
+    if (Strings_match(compo->params, "+")) {
+	if (Strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE")) {
+	    char *encoded_username = get_b64_encoded_username();
+
+	    if (!encoded_username) {
+		abort_authentication();
+		return;
+	    }
+
+	    net_send("AUTHENTICATE %s", encoded_username);
+	    free(encoded_username);
+	} else if (Strings_match(mechanism, "PLAIN")) {
+	    char *msg = NULL;
+
+	    if (!build_auth_message(&msg)) {
+		abort_authentication();
+		return;
+	    }
+
+	    net_send("AUTHENTICATE %s", msg);
+	    free(msg);
+	} else {
+	    err_log(0, "SASL mechanism unknown  --  aborting authentication!");
 	    abort_authentication();
 	    return;
 	}
-
-	net_send("AUTHENTICATE %s", msg);
-	free(msg);
     }
 }
 
