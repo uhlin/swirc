@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file.
 - Event 906 `ERR_SASLABORTED`
 - Event 907 `ERR_SASLALREADY`
 - Tor hidden service to freenode servers
+- Command /sasl
+- Support for SASL authentication during registration process
 
 ### Fixed ###
 - Browsing the command history caused the program to freeze if the
