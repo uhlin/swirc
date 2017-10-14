@@ -89,6 +89,12 @@ build_auth_message(char **msg)
 }
 
 static void
+handle_ecdsa_nist256p_challenge(const char *challenge)
+{
+    (void) challenge;
+}
+
+static void
 abort_authentication()
 {
     net_send("AUTHENTICATE *");
@@ -126,6 +132,9 @@ event_authenticate(struct irc_message_compo *compo)
 	    abort_authentication();
 	    return;
 	}
+    } else { /*=== not 'AUTHENTICATE +' ===*/
+	if (Strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE"))
+	    handle_ecdsa_nist256p_challenge(compo->params);
     }
 }
 
