@@ -11,6 +11,26 @@
 
 #include "auth.h"
 
+/*lint -sem(get_b64_encoded_username, r_null) */
+static char *
+get_b64_encoded_username()
+{
+    const char *username = Config("sasl_username");
+
+    if (Strings_match(username, ""))
+	return NULL;
+
+    char *encoded_username = xmalloc(500);
+
+    if (b64_encode((uint8_t *) username, strlen(username),
+		   encoded_username, 500) == -1) {
+	free(encoded_username);
+	return NULL;
+    }
+
+    return encoded_username;
+}
+
 static bool
 build_auth_message(char **msg)
 {
@@ -21,7 +41,6 @@ build_auth_message(char **msg)
 	*msg = NULL;
 	return false;
     }
-
     char *msg_unencoded = Strdup_printf("%s%c%s%c%s",
 	username, '\0', username, '\0', password);
     size_t len = strlen(username) * 2;
