@@ -45,6 +45,13 @@
 #include "auth.h"
 #include "cap.h" /* get_sasl_mechanism() */
 
+static void
+abort_authentication()
+{
+    net_send("AUTHENTICATE *");
+    net_send("CAP END");
+}
+
 /*lint -sem(get_b64_encoded_username, r_null) */
 static char *
 get_b64_encoded_username()
@@ -106,13 +113,6 @@ handle_ecdsa_nist256p_challenge(const char *challenge)
 
     (void) net_send("AUTHENTICATE %s", solution);
     free(solution);
-}
-
-static void
-abort_authentication()
-{
-    net_send("AUTHENTICATE *");
-    net_send("CAP END");
 }
 
 void
