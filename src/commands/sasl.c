@@ -324,3 +324,88 @@ cmd_sasl(const char *data)
     else
 	output_message(true, "bogus operation");
 }
+
+static bool
+sign_decoded_data(EC_KEY *key, const uint8_t *data, int datalen, uint8_t **sig,
+		  unsigned int *siglen)
+{
+    unsigned int len = 0;
+
+    if (!key || (len = (unsigned int) ECDSA_size(key)) == 0) {
+	*sig = NULL;
+	*siglen = 0;
+	return false;
+    }
+
+    *sig = xmalloc(len);
+
+    if (!ECDSA_sign(0, data, datalen, *sig, &len, key)) {
+	free(*sig);
+	*sig = NULL;
+	*siglen = 0;
+	return false;
+    }
+
+    *siglen = len;
+    return true;
+}
+
+char *
+solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
+{
+    EC_KEY       *key       = NULL;
+    FILE         *fp        = NULL;
+    char         *path      = get_filepath(false);
+    int           datalen   = -1;
+    uint8_t      *sig       = NULL;
+    uint8_t       buf[2000] = { '\0' };
+    unsigned int  siglen    = 0;
+
+    if ((key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1)) == NULL) {
+	*err_reason = "EC_KEY_new_by_curve_name failed";
+	return NULL;
+    } else {
+	EC_KEY_set_conv_form(key, POINT_CONVERSION_COMPRESSED);
+    }
+
+    if (!path) {
+	*err_reason = "unable to get file path";
+	goto err;
+    } else if (!file_exists(path)) {
+	*err_reason = "unable to locate private key";
+	goto err;
+    } else if ((fp = fopen(path, "r")) == NULL) {
+	*err_reason = "fopen failed";
+	goto err;
+    } else if (PEM_read_ECPrivateKey(fp, &key, NULL, NULL) == NULL) {
+	*err_reason = "PEM_read_ECPrivateKey failed";
+	goto err;
+    } else if (!EC_KEY_check_key(key)) {
+	*err_reason = "EC_KEY_check_key failed";
+	goto err;
+    } else if ((datalen = b64_decode(challenge, buf, sizeof buf)) == -1) {
+	*err_reason = "b64_decode failed";
+	goto err;
+    } else if (!sign_decoded_data(key, buf, datalen, &sig, &siglen)) {
+	*err_reason = "sign_decoded_data failed";
+	goto err;
+    } else if (BZERO(buf, sizeof buf),
+	       b64_encode(sig, siglen, (char *) buf, sizeof buf) == -1) {
+	*err_reason = "b64_encode failed";
+	goto err;
+    }
+
+    EC_KEY_free(key);
+    fclose(fp);
+    free(sig);
+    return (sw_strdup((char *) buf));
+
+  err:
+    if (key)
+	EC_KEY_free(key);
+    if (fp)
+	fclose(fp);
+    if (sig)
+	free(sig);
+    return NULL;
+}
