@@ -39,6 +39,9 @@
 #include "../strHand.h"
 #include "../strdup_printf.h"
 
+/* solve_ecdsa_nist256p_challenge() */
+#include "../commands/sasl.h"
+
 #include "auth.h"
 #include "cap.h" /* get_sasl_mechanism() */
 
@@ -91,7 +94,18 @@ build_auth_message(char **msg)
 static void
 handle_ecdsa_nist256p_challenge(const char *challenge)
 {
-    (void) challenge;
+    char *err_reason = "";
+    char *solution = solve_ecdsa_nist256p_challenge(challenge, &err_reason);
+
+    if (solution == NULL) {
+	err_log(0, "solve_ecdsa_nist256p_challenge failed: %s", err_reason);
+	(void) net_send("AUTHENTICATE *");
+	(void) net_send("CAP END");
+	return;
+    }
+
+    (void) net_send("AUTHENTICATE %s", solution);
+    free(solution);
 }
 
 static void
