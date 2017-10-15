@@ -106,8 +106,7 @@ handle_ecdsa_nist256p_challenge(const char *challenge)
 
     if (solution == NULL) {
 	err_log(0, "solve_ecdsa_nist256p_challenge failed: %s", err_reason);
-	(void) net_send("AUTHENTICATE *");
-	(void) net_send("CAP END");
+	abort_authentication();
 	return;
     }
 
