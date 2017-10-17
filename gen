@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # SSG (Static Site Generator) for Swirc homepage.
 # Copyright (C) 2017 Markus Uhlin. All rights reserved.
