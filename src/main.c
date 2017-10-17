@@ -72,7 +72,7 @@
 const char g_swircVersion[] = "v1.8-dev";
 const char g_swircYear[]    = "2012-2017";
 const char g_swircAuthor[]  = "Markus Uhlin";
-const char g_swircWebAddr[] = "https://dataswamp.org/~markus/swirc/";
+const char g_swircWebAddr[] = "http://www.nifty-networks.net/swirc/";
 
 bool g_auto_connect         = false;
 bool g_icb_mode             = false;
