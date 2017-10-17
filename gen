@@ -46,7 +46,7 @@ for pg in $PAGES; do
 done
 
 transfer_site () {
-    local dest=markus@dataswamp.org:public_html/swirc
+    local dest=maxxe@nifty-networks.net:www-swirc
 
     for pg in $PAGES; do
 	printf "  - Transferring %s..." "${TEMP_DIR}/${pg}"
