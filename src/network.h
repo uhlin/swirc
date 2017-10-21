@@ -39,7 +39,7 @@ void	net_ssl_deinit(void);
 void	net_ssl_close(void);
 int	net_ssl_start(void);
 int	net_ssl_send(const char *fmt, ...);
-int	net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size);
+int	net_ssl_recv(struct network_recv_context *, char *, int) PTR_ARGS_NONNULL;
 int	net_ssl_check_hostname(const char *, unsigned int);
 
 #endif
