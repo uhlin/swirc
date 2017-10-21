@@ -20,11 +20,14 @@
 #include <sys/select.h>
 #endif
 
+#include <openssl/err.h> /* ERR_clear_error() */
 #include <openssl/opensslv.h>
 #include <openssl/rand.h>
 #include <openssl/ssl.h>
 #include <openssl/x509.h>
 #include <openssl/x509_vfy.h>
+
+#include <limits.h>
 
 #include "assertAPI.h"
 #include "config.h"
@@ -197,34 +200,46 @@ net_ssl_start(void)
 int
 net_ssl_send(const char *fmt, ...)
 {
-    va_list     ap;
-    char       *buffer;
-    const char  message_terminate[] = "\r\n";
+    char	*buf	= NULL;
+    int		 buflen = 0;
+    int		 n_sent = 0;
+    va_list	 ap;
 
     if (!ssl)
 	return -1;
 
     va_start(ap, fmt);
-    buffer = Strdup_vprintf(fmt, ap);
+    buf = Strdup_vprintf(fmt, ap);
     va_end(ap);
 
-    realloc_strcat(&buffer, message_terminate);
+    /* message terminate */
+    realloc_strcat(&buf, "\r\n");
 
-    const int buflen = (int) strlen(buffer);
-    int total_written = 0;
-    int ret = 0;
-    while (total_written < buflen) {
-	if ((ret = SSL_write(ssl, &buffer[total_written],
-			     buflen - total_written)) <= 0) {
-	    free(buffer);
-	    return -1;
-	} else {
-	    total_written += ret;
-	}
+    if (strlen(buf) > INT_MAX) {
+	free(buf);
+	return -1;
     }
 
-    free(buffer);
-    return total_written;
+    buflen = (int) strlen(buf);
+    ERR_clear_error();
+
+    if ((n_sent = SSL_write(ssl, buf, buflen)) > 0) {
+	free(buf);
+	return n_sent;
+    }
+
+    free(buf);
+
+    switch (SSL_get_error(ssl, n_sent)) {
+    case SSL_ERROR_NONE:
+	return 0;
+    case SSL_ERROR_WANT_READ:
+    case SSL_ERROR_WANT_WRITE:
+	err_log(0, "net_ssl_send: operation did not complete");
+	return 0;
+    }
+
+    return -1;
 }
 
 int
