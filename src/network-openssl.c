@@ -248,15 +248,15 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 #ifdef UNIX
 #define SOCKET_ERROR -1
 #endif
-    fd_set		readset;
-    struct timeval	tv;
-    const int		maxfdp1 = ctx->sock + 1;
+    const int maxfdp1 = ctx->sock + 1;
+    fd_set readset;
+    struct timeval tv = {
+	.tv_sec  = ctx->sec,
+	.tv_usec = ctx->microsec,
+    };
 
     FD_ZERO(&readset);
     FD_SET(ctx->sock, &readset);
-
-    tv.tv_sec  = ctx->sec;
-    tv.tv_usec = ctx->microsec;
 
     errno = 0;
 
@@ -265,27 +265,24 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
     } else if (!FD_ISSET(ctx->sock, &readset)) {
 	return 0;
     } else {
-	int ret = 0;
-	int total_read = 0;
+	int bytes_received = 0;
 
-	ret = SSL_read(ssl, recvbuf, recvbuf_size);
-	switch (SSL_get_error(ssl, ret)) {
+	ERR_clear_error();
+	if ((bytes_received = SSL_read(ssl, recvbuf, recvbuf_size)) > 0)
+	    return bytes_received;
+	switch (SSL_get_error(ssl, bytes_received)) {
 	case SSL_ERROR_NONE:
-	    total_read = ret;
-	    break;
+	    return 0;
 	case SSL_ERROR_WANT_READ:
 	case SSL_ERROR_WANT_WRITE:
-	    break;
-	default:
-	    return -1;
+	    err_log(0, "net_ssl_recv: want read / want write");
+	    return 0;
 	}
-
-	return total_read;
+	return -1;
     }
 
-    /* NOTREACHED */
-    sw_assert_not_reached();
-    return -1;
+    /*NOTREACHED*/ sw_assert_not_reached();
+    /*NOTREACHED*/ return -1;
 }
 
 int
