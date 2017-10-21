@@ -46,6 +46,8 @@
 #include "strHand.h"
 #include "terminal.h"
 
+#include "commands/misc.h"
+
 /* Enum definitions
    ================ */
 
@@ -564,6 +566,9 @@ readline(const char *prompt)
 	    break;
 	case KEY_F(10): case UNDERLINE:
 	    handle_key(ctx, btowc(UNDERLINE));
+	    break;
+	case KEY_F(11):
+	    cmd_close("");
 	    break;
 	case KEY_DC: case MY_KEY_EOT:
 	    case_key_dc(ctx);
