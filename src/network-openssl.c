@@ -255,6 +255,9 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 	.tv_usec = ctx->microsec,
     };
 
+    if (!ssl)
+	return -1;
+
     FD_ZERO(&readset);
     FD_SET(ctx->sock, &readset);
 
