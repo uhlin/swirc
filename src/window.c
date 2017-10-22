@@ -627,3 +627,18 @@ window_foreach_destroy_names(void)
 	}
     }
 }
+
+void
+window_close_all_priv_conv(void)
+{
+    PIRC_WINDOW *entry_p = NULL;
+    PIRC_WINDOW  window  = NULL;
+
+    foreach_hash_table_entry(entry_p) {
+	for (window = *entry_p; window != NULL; window = window->next) {
+	    if (window == g_status_window || is_irc_channel(window->label))
+		continue;
+	    destroy_chat_window(window->label);
+	}
+    }
+}
