@@ -224,8 +224,6 @@ do_connect(const char *server, const char *port)
 	    conn_ctx.password = NULL;
 	}
     }
-
-    (void) unget_wch('\n');
 }
 
 void
