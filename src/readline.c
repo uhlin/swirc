@@ -570,6 +570,9 @@ readline(const char *prompt)
 	case KEY_F(11):
 	    cmd_close("");
 	    break;
+	case KEY_F(12):
+	    window_close_all_priv_conv();
+	    break;
 	case KEY_DC: case MY_KEY_EOT:
 	    case_key_dc(ctx);
 	    break;
