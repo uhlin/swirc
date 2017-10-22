@@ -452,7 +452,7 @@ window_close_all_priv_conv(void)
 	}
     }
     if (pc_assigned == 0) {
-	napms(250);
+	napms(50);
 	return;
     }
     for (ar_p = &priv_conv[0]; ar_p < &priv_conv[pc_assigned]; ar_p++) {
