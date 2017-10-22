@@ -218,6 +218,18 @@ static void
 save_to_config()
 {
     char path[2300] = { '\0' };
+    size_t len = 0;
+
+    if (g_home_dir == NULL)
+	return;
+
+    len += strlen(g_home_dir);
+    len += strlen(SLASH);
+    len += strlen("swirc");
+    len += strlen(g_config_filesuffix);
+
+    if (len >= sizeof path)
+	return;
 
     (void) sw_strcpy(path, g_home_dir, sizeof path);
     (void) sw_strcat(path, SLASH,      sizeof path);
