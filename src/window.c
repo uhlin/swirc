@@ -437,15 +437,27 @@ windowSystem_init(void)
 void
 window_close_all_priv_conv(void)
 {
-    PIRC_WINDOW *entry_p = NULL;
-    PIRC_WINDOW  window  = NULL;
+    PIRC_WINDOW   window         = NULL;
+    PIRC_WINDOW  *entry_p        = NULL;
+    char         *priv_conv[200] = { NULL };
+    char        **ar_p           = NULL;
+    size_t        pc_assigned    = 0;
 
     foreach_hash_table_entry(entry_p) {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (window == g_status_window || is_irc_channel(window->label))
 		continue;
-	    destroy_chat_window(window->label);
+	    if (window->label)
+		priv_conv[pc_assigned++] = sw_strdup(window->label);
 	}
+    }
+    if (pc_assigned == 0) {
+	napms(250);
+	return;
+    }
+    for (ar_p = &priv_conv[0]; ar_p < &priv_conv[pc_assigned]; ar_p++) {
+	destroy_chat_window(*ar_p);
+	free(*ar_p);
     }
 }
 
