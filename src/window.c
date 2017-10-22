@@ -81,27 +81,6 @@ int		g_ntotal_windows        = 0;
 
 static PIRC_WINDOW hash_table[200];
 
-void
-windowSystem_init(void)
-{
-    PIRC_WINDOW *entry_p;
-
-    foreach_hash_table_entry(entry_p) {
-	*entry_p = NULL;
-    }
-
-    g_status_window = g_active_window = NULL;
-    g_ntotal_windows = 0;
-
-    if ((errno = spawn_chat_window(g_status_window_label, "")) != 0) {
-	err_sys("spawn_chat_window error");
-    }
-
-    if ((g_status_window = window_by_label(g_status_window_label)) == NULL) {
-	err_quit("Unable to locate the status window\nShouldn't happen.");
-    }
-}
-
 static unsigned int
 hash(const char *label)
 {
@@ -123,194 +102,6 @@ hash(const char *label)
 
     free(label_copy);
     return (hashval % ARRAY_SIZE(hash_table));
-}
-
-static void
-hUndef(PIRC_WINDOW entry)
-{
-    PIRC_WINDOW tmp;
-    unsigned int hashval = hash(entry->label);
-
-    if ((tmp = hash_table[hashval]) == entry) {
-	hash_table[hashval] = entry->next;
-    } else {
-	while (tmp->next != entry) {
-	    tmp = tmp->next;
-	}
-
-	tmp->next = entry->next;
-    }
-
-    free_and_null(& (entry->label));
-    free_and_null(& (entry->title));
-
-    term_remove_panel(entry->pan);
-
-    entry->pan	  = NULL;
-    entry->refnum = -1;
-
-    textBuf_destroy(entry->buf);
-    event_names_htbl_remove_all(entry);
-
-    entry->num_owners	= 0;
-    entry->num_superops = 0;
-    entry->num_ops	= 0;
-    entry->num_halfops	= 0;
-    entry->num_voices	= 0;
-    entry->num_normal	= 0;
-    entry->num_total	= 0;
-
-    free_not_null(entry);
-    entry = NULL;
-
-    g_ntotal_windows--;
-}
-
-void
-windowSystem_deinit(void)
-{
-    PIRC_WINDOW *entry_p;
-    PIRC_WINDOW p, tmp;
-
-    foreach_hash_table_entry(entry_p) {
-	for (p = *entry_p; p != NULL; p = tmp) {
-	    tmp = p->next;
-	    hUndef(p);
-	}
-    }
-}
-
-static void
-apply_window_options(WINDOW *win)
-{
-    if (!is_scrollok(win)) {
-	(void) scrollok(win, true);
-    }
-}
-
-static PIRC_WINDOW
-hInstall(const struct hInstall_context *ctx)
-{
-    PIRC_WINDOW		 entry;
-    PNAMES		*n_ent;
-    unsigned int	 hashval;
-
-    entry	  = xcalloc(sizeof *entry, 1);
-    entry->label  = sw_strdup(ctx->label);
-    entry->title  =
-	((isNull(ctx->title) || isEmpty(ctx->title))
-	 ? NULL
-	 : sw_strdup(ctx->title));
-    entry->pan    = ctx->pan;
-    entry->refnum = ctx->refnum;
-    entry->buf    = textBuf_new();
-
-    entry->saved_size	= 0;
-    entry->scroll_count = 0;
-    entry->scroll_mode	= false;
-
-    for (n_ent = &entry->names_hash[0];
-	 n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE];
-	 n_ent++) {
-	*n_ent = NULL;
-    }
-
-    entry->received_names = false;
-
-    entry->num_owners	= 0;
-    entry->num_superops = 0;
-    entry->num_ops	= 0;
-    entry->num_halfops	= 0;
-    entry->num_voices	= 0;
-    entry->num_normal	= 0;
-    entry->num_total	= 0;
-
-    BZERO(entry->chanmodes, sizeof entry->chanmodes);
-    entry->received_chanmodes = false;
-    entry->received_chancreated = false;
-
-    hashval             = hash(ctx->label);
-    entry->next         = hash_table[hashval];
-    hash_table[hashval] = entry;
-
-    g_ntotal_windows++;
-
-    return entry;
-}
-
-int
-spawn_chat_window(const char *label, const char *title)
-{
-    const int ntotalp1 = g_ntotal_windows + 1;
-    struct integer_unparse_context unparse_ctx = {
-	.setting_name	  = "max_chat_windows",
-	.fallback_default = 60,
-	.lo_limit	  = 10,
-	.hi_limit	  = 200,
-    };
-
-    if (isNull(label) || isEmpty(label)) {
-	return (EINVAL);	/* a label is required */
-    } else if (window_by_label(label) != NULL) {
-	return (0);		/* window already exists  --  reuse it */
-    } else if (ntotalp1 > config_integer_unparse(&unparse_ctx)) {
-	return (ENOSPC);
-    } else {
-	struct hInstall_context inst_ctx = {
-	    .label  = (char *) label,
-	    .title  = (char *) title,
-	    .pan    = term_new_panel(LINES - 2, 0, 1, 0),
-	    .refnum = g_ntotal_windows + 1,
-	};
-	PIRC_WINDOW entry = hInstall(&inst_ctx);
-
-	apply_window_options(panel_window(entry->pan));
-	errno = changeWindow_by_label(entry->label);
-	sw_assert_perror(errno);
-    }
-
-    return (0);
-}
-
-static void
-reassign_window_refnums()
-{
-    PIRC_WINDOW *entry_p;
-    PIRC_WINDOW	 window;
-    int		 ref_count = 1;
-
-    foreach_hash_table_entry(entry_p) {
-	for (window = *entry_p; window != NULL; window = window->next) {
-	    if (!Strings_match_ignore_case(window->label,
-					   g_status_window_label)) {
-		/* skip status window and assign new num */
-		window->refnum = ++ref_count;
-	    }
-	}
-    }
-
-    sw_assert(g_status_window->refnum == 1);
-    sw_assert(ref_count == g_ntotal_windows);
-}
-
-int
-destroy_chat_window(const char *label)
-{
-    PIRC_WINDOW window;
-
-    if (isNull(label) || isEmpty(label) ||
-	Strings_match_ignore_case(label, g_status_window_label)) {
-	return (EINVAL);
-    } else if ((window = window_by_label(label)) == NULL) {
-	return (ENOENT);
-    } else {
-	hUndef(window);
-	reassign_window_refnums();
-	errno = changeWindow_by_refnum(g_ntotal_windows);
-	sw_assert_perror(errno);
-    }
-
-    return (0);
 }
 
 PIRC_WINDOW
@@ -415,6 +206,180 @@ changeWindow_by_refnum(int refnum)
     return (0);
 }
 
+static void
+hUndef(PIRC_WINDOW entry)
+{
+    PIRC_WINDOW tmp;
+    unsigned int hashval = hash(entry->label);
+
+    if ((tmp = hash_table[hashval]) == entry) {
+	hash_table[hashval] = entry->next;
+    } else {
+	while (tmp->next != entry) {
+	    tmp = tmp->next;
+	}
+
+	tmp->next = entry->next;
+    }
+
+    free_and_null(& (entry->label));
+    free_and_null(& (entry->title));
+
+    term_remove_panel(entry->pan);
+
+    entry->pan	  = NULL;
+    entry->refnum = -1;
+
+    textBuf_destroy(entry->buf);
+    event_names_htbl_remove_all(entry);
+
+    entry->num_owners	= 0;
+    entry->num_superops = 0;
+    entry->num_ops	= 0;
+    entry->num_halfops	= 0;
+    entry->num_voices	= 0;
+    entry->num_normal	= 0;
+    entry->num_total	= 0;
+
+    free_not_null(entry);
+    entry = NULL;
+
+    g_ntotal_windows--;
+}
+
+static void
+reassign_window_refnums()
+{
+    PIRC_WINDOW *entry_p;
+    PIRC_WINDOW	 window;
+    int		 ref_count = 1;
+
+    foreach_hash_table_entry(entry_p) {
+	for (window = *entry_p; window != NULL; window = window->next) {
+	    if (!Strings_match_ignore_case(window->label,
+					   g_status_window_label)) {
+		/* skip status window and assign new num */
+		window->refnum = ++ref_count;
+	    }
+	}
+    }
+
+    sw_assert(g_status_window->refnum == 1);
+    sw_assert(ref_count == g_ntotal_windows);
+}
+
+int
+destroy_chat_window(const char *label)
+{
+    PIRC_WINDOW window;
+
+    if (isNull(label) || isEmpty(label) ||
+	Strings_match_ignore_case(label, g_status_window_label)) {
+	return (EINVAL);
+    } else if ((window = window_by_label(label)) == NULL) {
+	return (ENOENT);
+    } else {
+	hUndef(window);
+	reassign_window_refnums();
+	errno = changeWindow_by_refnum(g_ntotal_windows);
+	sw_assert_perror(errno);
+    }
+
+    return (0);
+}
+
+static PIRC_WINDOW
+hInstall(const struct hInstall_context *ctx)
+{
+    PIRC_WINDOW		 entry;
+    PNAMES		*n_ent;
+    unsigned int	 hashval;
+
+    entry	  = xcalloc(sizeof *entry, 1);
+    entry->label  = sw_strdup(ctx->label);
+    entry->title  =
+	((isNull(ctx->title) || isEmpty(ctx->title))
+	 ? NULL
+	 : sw_strdup(ctx->title));
+    entry->pan    = ctx->pan;
+    entry->refnum = ctx->refnum;
+    entry->buf    = textBuf_new();
+
+    entry->saved_size	= 0;
+    entry->scroll_count = 0;
+    entry->scroll_mode	= false;
+
+    for (n_ent = &entry->names_hash[0];
+	 n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE];
+	 n_ent++) {
+	*n_ent = NULL;
+    }
+
+    entry->received_names = false;
+
+    entry->num_owners	= 0;
+    entry->num_superops = 0;
+    entry->num_ops	= 0;
+    entry->num_halfops	= 0;
+    entry->num_voices	= 0;
+    entry->num_normal	= 0;
+    entry->num_total	= 0;
+
+    BZERO(entry->chanmodes, sizeof entry->chanmodes);
+    entry->received_chanmodes = false;
+    entry->received_chancreated = false;
+
+    hashval             = hash(ctx->label);
+    entry->next         = hash_table[hashval];
+    hash_table[hashval] = entry;
+
+    g_ntotal_windows++;
+
+    return entry;
+}
+
+static void
+apply_window_options(WINDOW *win)
+{
+    if (!is_scrollok(win)) {
+	(void) scrollok(win, true);
+    }
+}
+
+int
+spawn_chat_window(const char *label, const char *title)
+{
+    const int ntotalp1 = g_ntotal_windows + 1;
+    struct integer_unparse_context unparse_ctx = {
+	.setting_name	  = "max_chat_windows",
+	.fallback_default = 60,
+	.lo_limit	  = 10,
+	.hi_limit	  = 200,
+    };
+
+    if (isNull(label) || isEmpty(label)) {
+	return (EINVAL);	/* a label is required */
+    } else if (window_by_label(label) != NULL) {
+	return (0);		/* window already exists  --  reuse it */
+    } else if (ntotalp1 > config_integer_unparse(&unparse_ctx)) {
+	return (ENOSPC);
+    } else {
+	struct hInstall_context inst_ctx = {
+	    .label  = (char *) label,
+	    .title  = (char *) title,
+	    .pan    = term_new_panel(LINES - 2, 0, 1, 0),
+	    .refnum = g_ntotal_windows + 1,
+	};
+	PIRC_WINDOW entry = hInstall(&inst_ctx);
+
+	apply_window_options(panel_window(entry->pan));
+	errno = changeWindow_by_label(entry->label);
+	sw_assert_perror(errno);
+    }
+
+    return (0);
+}
+
 void
 new_window_title(const char *label, const char *title)
 {
@@ -431,6 +396,84 @@ new_window_title(const char *label, const char *title)
 
     if (window == g_active_window) {
 	titlebar(" %s ", title);
+    }
+}
+
+void
+windowSystem_deinit(void)
+{
+    PIRC_WINDOW *entry_p;
+    PIRC_WINDOW p, tmp;
+
+    foreach_hash_table_entry(entry_p) {
+	for (p = *entry_p; p != NULL; p = tmp) {
+	    tmp = p->next;
+	    hUndef(p);
+	}
+    }
+}
+
+void
+windowSystem_init(void)
+{
+    PIRC_WINDOW *entry_p;
+
+    foreach_hash_table_entry(entry_p) {
+	*entry_p = NULL;
+    }
+
+    g_status_window = g_active_window = NULL;
+    g_ntotal_windows = 0;
+
+    if ((errno = spawn_chat_window(g_status_window_label, "")) != 0) {
+	err_sys("spawn_chat_window error");
+    }
+
+    if ((g_status_window = window_by_label(g_status_window_label)) == NULL) {
+	err_quit("Unable to locate the status window\nShouldn't happen.");
+    }
+}
+
+void
+window_close_all_priv_conv(void)
+{
+    PIRC_WINDOW *entry_p = NULL;
+    PIRC_WINDOW  window  = NULL;
+
+    foreach_hash_table_entry(entry_p) {
+	for (window = *entry_p; window != NULL; window = window->next) {
+	    if (window == g_status_window || is_irc_channel(window->label))
+		continue;
+	    destroy_chat_window(window->label);
+	}
+    }
+}
+
+void
+window_foreach_destroy_names(void)
+{
+    PIRC_WINDOW *entry_p;
+    PIRC_WINDOW	 window;
+
+    foreach_hash_table_entry(entry_p) {
+	for (window = *entry_p; window != NULL; window = window->next) {
+	    if (is_irc_channel(window->label)) {
+		event_names_htbl_remove_all(window);
+		window->received_names = false;
+#if 1
+		window->num_owners   = 0;
+		window->num_superops = 0;
+		window->num_ops	     = 0;
+		window->num_halfops  = 0;
+		window->num_voices   = 0;
+		window->num_normal   = 0;
+		window->num_total    = 0;
+#endif
+		BZERO(window->chanmodes, sizeof window->chanmodes);
+		window->received_chanmodes = false;
+		window->received_chancreated = false;
+	    }
+	}
     }
 }
 
@@ -470,6 +513,88 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 
     statusbar_update_display_beta();
     readline_top_panel();
+}
+
+/* textBuf_size(window->buf) - window->saved_size */
+void
+window_scroll_down(PIRC_WINDOW window)
+{
+    const int HEIGHT = LINES - 3;
+
+    if (! (window->scroll_mode)) {
+	if (!config_bool_unparse("disable_beeps", false))
+	    term_beep();
+	return;
+    }
+
+    window->scroll_count -= SCROLL_OFFSET;
+
+    if (! (window->scroll_count > HEIGHT)) {
+	window->saved_size   = 0;
+	window->scroll_count = 0;
+	window->scroll_mode  = false;
+	window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT,
+		      false);
+	return;
+    }
+
+    window_redraw(window, HEIGHT, window->saved_size - window->scroll_count,
+		  true);
+}
+
+void
+window_scroll_up(PIRC_WINDOW window)
+{
+    const int MIN_SIZE = LINES - 3;
+
+    if (MIN_SIZE < 0 || !(textBuf_size(window->buf) > MIN_SIZE) || IS_AT_TOP) {
+	if (!config_bool_unparse("disable_beeps", false))
+	    term_beep();
+	return;
+    }
+
+    if (! (window->scroll_mode)) {
+	window->saved_size  = textBuf_size(window->buf);
+	window->scroll_mode = true;
+    }
+
+    if (window->scroll_count > window->saved_size) /* past top */
+	window->scroll_count = window->saved_size;
+    else {
+	if (window->scroll_count == 0) /* first page up */
+	    window->scroll_count += MIN_SIZE;
+
+	window->scroll_count += SCROLL_OFFSET;
+
+	if (window->scroll_count > window->saved_size)
+	    window->scroll_count = window->saved_size;
+    }
+
+    if (IS_AT_TOP)
+	window_redraw(window, MIN_SIZE, 0, true);
+    else
+	window_redraw(window, MIN_SIZE,
+	    window->saved_size - window->scroll_count, true);
+}
+
+void
+window_select_next(void)
+{
+    const int refnum_next = g_active_window->refnum + 1;
+
+    if (window_by_refnum(refnum_next) != NULL) {
+	(void) changeWindow_by_refnum(refnum_next);
+    }
+}
+
+void
+window_select_prev(void)
+{
+    const int refnum_prev = g_active_window->refnum - 1;
+
+    if (window_by_refnum(refnum_prev) != NULL) {
+	(void) changeWindow_by_refnum(refnum_prev);
+    }
 }
 
 static void
@@ -514,131 +639,6 @@ windows_recreate_all(int rows, int cols)
     foreach_hash_table_entry(entry_p) {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    window_recreate(window, rows, cols);
-	}
-    }
-}
-
-void
-window_scroll_up(PIRC_WINDOW window)
-{
-    const int MIN_SIZE = LINES - 3;
-
-    if (MIN_SIZE < 0 || !(textBuf_size(window->buf) > MIN_SIZE) || IS_AT_TOP) {
-	if (!config_bool_unparse("disable_beeps", false))
-	    term_beep();
-	return;
-    }
-
-    if (! (window->scroll_mode)) {
-	window->saved_size  = textBuf_size(window->buf);
-	window->scroll_mode = true;
-    }
-
-    if (window->scroll_count > window->saved_size) /* past top */
-	window->scroll_count = window->saved_size;
-    else {
-	if (window->scroll_count == 0) /* first page up */
-	    window->scroll_count += MIN_SIZE;
-
-	window->scroll_count += SCROLL_OFFSET;
-
-	if (window->scroll_count > window->saved_size)
-	    window->scroll_count = window->saved_size;
-    }
-
-    if (IS_AT_TOP)
-	window_redraw(window, MIN_SIZE, 0, true);
-    else
-	window_redraw(window, MIN_SIZE,
-	    window->saved_size - window->scroll_count, true);
-}
-
-/* textBuf_size(window->buf) - window->saved_size */
-void
-window_scroll_down(PIRC_WINDOW window)
-{
-    const int HEIGHT = LINES - 3;
-
-    if (! (window->scroll_mode)) {
-	if (!config_bool_unparse("disable_beeps", false))
-	    term_beep();
-	return;
-    }
-
-    window->scroll_count -= SCROLL_OFFSET;
-
-    if (! (window->scroll_count > HEIGHT)) {
-	window->saved_size   = 0;
-	window->scroll_count = 0;
-	window->scroll_mode  = false;
-	window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT,
-		      false);
-	return;
-    }
-
-    window_redraw(window, HEIGHT, window->saved_size - window->scroll_count,
-		  true);
-}
-
-void
-window_select_prev(void)
-{
-    const int refnum_prev = g_active_window->refnum - 1;
-
-    if (window_by_refnum(refnum_prev) != NULL) {
-	(void) changeWindow_by_refnum(refnum_prev);
-    }
-}
-
-void
-window_select_next(void)
-{
-    const int refnum_next = g_active_window->refnum + 1;
-
-    if (window_by_refnum(refnum_next) != NULL) {
-	(void) changeWindow_by_refnum(refnum_next);
-    }
-}
-
-void
-window_foreach_destroy_names(void)
-{
-    PIRC_WINDOW *entry_p;
-    PIRC_WINDOW	 window;
-
-    foreach_hash_table_entry(entry_p) {
-	for (window = *entry_p; window != NULL; window = window->next) {
-	    if (is_irc_channel(window->label)) {
-		event_names_htbl_remove_all(window);
-		window->received_names = false;
-#if 1
-		window->num_owners   = 0;
-		window->num_superops = 0;
-		window->num_ops	     = 0;
-		window->num_halfops  = 0;
-		window->num_voices   = 0;
-		window->num_normal   = 0;
-		window->num_total    = 0;
-#endif
-		BZERO(window->chanmodes, sizeof window->chanmodes);
-		window->received_chanmodes = false;
-		window->received_chancreated = false;
-	    }
-	}
-    }
-}
-
-void
-window_close_all_priv_conv(void)
-{
-    PIRC_WINDOW *entry_p = NULL;
-    PIRC_WINDOW  window  = NULL;
-
-    foreach_hash_table_entry(entry_p) {
-	for (window = *entry_p; window != NULL; window = window->next) {
-	    if (window == g_status_window || is_irc_channel(window->label))
-		continue;
-	    destroy_chat_window(window->label);
 	}
     }
 }
