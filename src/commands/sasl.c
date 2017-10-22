@@ -395,6 +395,7 @@ solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
 	goto err;
     }
 
+    *err_reason = "";
     EC_KEY_free(key);
     fclose(fp);
     free(sig);
