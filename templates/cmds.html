@@ -88,7 +88,12 @@ window is an IRC channel, it'll output the banlist for that channel.
 <h3 id="chanserv">CHANSERV</h3>
 <p><kbd>usage: /chanserv &lt;service hostname | --&gt; &lt;command&gt; [...]</kbd></p>
 <p>
-Communicate with channel services.
+Communicate with channel services. If the first argument is
+<kbd>--</kbd>
+then the value of configuration option
+<kbd>chanserv_host</kbd>
+is used as service hostname.
+See also <strong>NICKSERV</strong>.
 </p>
 
 <h3 id="close">CLOSE</h3>
