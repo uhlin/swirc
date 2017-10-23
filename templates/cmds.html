@@ -219,8 +219,27 @@ channel.
 
 <h3 id="nickserv">NICKSERV</h3>
 <p><kbd>usage: /nickserv &lt;service hostname | --&gt; &lt;command&gt; [...]</kbd></p>
+<p>Communicate with nickname services.</p>
+<p>If the first argument is <kbd>--</kbd> then the:</p>
+<ul>
+<li>
+Value of configuration option <kbd>nickserv_host</kbd> is used as
+service hostname
+</li>
+<li>
+Command call won't be added to the command history provided that the
+second argument is <kbd>identify</kbd>
+</li>
+</ul>
 <p>
-Communicate with nickname services.
+The correct "service hostname" is not always the same as the visible
+hostname of NickServ. FYI at the
+<a href="https://www.anonops.com/">AnonOps IRC network</a>
+the visible hostname of NickServ is <strong>anonops.in</strong>
+(at the time of writing this)
+but <strong>services.anonops.com</strong> is urged to be used.
+As a fallback: use <kbd>/query NickServ</kbd>
+in order to communicate with the service.
 </p>
 
 <h3 id="notice">NOTICE</h3>
