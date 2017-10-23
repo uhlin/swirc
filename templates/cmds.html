@@ -22,7 +22,7 @@
 <div id="mid">
 <h2>Commands</h2>
 
-<p><small><em>Updated: 2017-10-22</em></small></p>
+<p><small><em>Updated: 2017-10-23</em></small></p>
 
 <table id="cmds">
   <tr>
@@ -100,12 +100,26 @@ that case instead use <kbd>/part</kbd>.
 </p>
 
 <h3 id="connect">CONNECT</h3>
-<p><kbd>usage: /connect [-ssl] &lt;server[:port]&gt;</kbd></p>
+<p><kbd>usage: /connect [-tls] &lt;server[:port]&gt;</kbd></p>
 <p>
 Connect to given server. If the port is omitted port 6667 will be
-chosen. And if the port is 6697 nor <kbd>-ssl</kbd> is present, the
-program attempts to initiate a SSL connection.
+chosen. And if the port is 6697 nor <kbd>-tls</kbd> is present, the
+program attempts to initiate a TLS/SSL connection.
 </p>
+<p>
+It is possible to connect to a certain IRC network by only entering
+the network name. For example:
+<kbd>/connect -tls freenode</kbd>, will connect to
+<a href="https://freenode.net/">freenode</a>
+using an encrypted connection. Preconfigured network names are:
+</p>
+<ul>
+<li><a href="http://www.efnet.org/?">efnet</a></li>
+<li><a href="https://freenode.net/">freenode</a></li>
+<li><a href="http://www.ircnet.org/">ircnet</a></li>
+<li><a href="https://www.quakenet.org/">quakenet</a></li>
+<li><a href="http://www.undernet.org/">undernet</a></li>
+</ul>
 
 <h3 id="cycle">CYCLE</h3>
 <p><kbd>usage: /cycle [channel]</kbd></p>
