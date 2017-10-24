@@ -52,7 +52,7 @@ transfer_site () {
     test -x "$(which rsync)" || { printf "error\n"; exit 1; }
     printf "ok\n"
 
-    rsync -rv --progress ${TEMP_DIR}/ ${dest}/
+    rsync -rv --progress "${TEMP_DIR}/" "${dest}/"
 }
 
 while true; do
