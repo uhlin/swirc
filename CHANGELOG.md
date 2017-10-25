@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - Support for SASL authentication during registration process
 - Key F11 (close window)
 - Key F12 (close all private conversations)
+- Many small improvements
 
 ### Fixed ###
 - Browsing the command history caused the program to freeze if the
