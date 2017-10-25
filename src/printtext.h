@@ -41,11 +41,10 @@ extern HANDLE g_puts_mutex;
 
 char		*squeeze_text_deco (char *buffer);
 short int	 color_pair_find   (short int fg, short int bg);
+void		 print_and_free    (const char *msg, char *cp);
 void		 printtext         (struct printtext_context *, const char *fmt, ...) PRINTFLIKE(2);
 void		 printtext_puts    (WINDOW *, const char *buf, int indent, int max_lines, int *rep_count);
 void		 swirc_wprintw     (WINDOW *, const char *fmt, ...) PRINTFLIKE(2);
 void		 vprinttext        (struct printtext_context *, const char *fmt, va_list);
-
-void print_and_free(const char *msg, char *cp);
 
 #endif
