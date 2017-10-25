@@ -551,7 +551,7 @@ window_scroll_down(PIRC_WINDOW window)
     }
 
     window_redraw(window, HEIGHT, window->saved_size - window->scroll_count,
-		  true);
+		  false);
 }
 
 void
