@@ -71,6 +71,14 @@ installed, issue:
 
 ### Building for the UNIX environment ###
 
+On the BSDs and GNU/Linux the configure script will per default
+generate make definitions that expects that the C compiler
+[GCC](https://gcc.gnu.org/) is installed on your system.
+A make utility must also be present. Regarding Mac OS X I suggest that
+you install [Xcode](https://developer.apple.com/xcode/).
+Due to certain circumstances I no longer can confirm that building for
+OS X works.
+
     $ ./configure
     $ cd src
     $ make -f unix.mk
