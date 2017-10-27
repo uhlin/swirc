@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [1.8] - 2017-10-27 ##
 ### Added ###
 - Event 486 (You must log in with services to message this user)
 - Option `sasl`
