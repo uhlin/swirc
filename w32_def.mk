@@ -8,5 +8,5 @@ LDFLAGS=
 NAME_libcrypto=libcrypto-41
 NAME_libssl=libssl-43
 LDLIBS=$(NAME_libcrypto).lib $(NAME_libssl).lib libcurl.lib pdcurses.lib user32.lib ws2_32.lib
-CURL_VERSION=7.54.1
-LIBRESSL_VERSION=2.5.4
+CURL_VERSION=7.56.1
+LIBRESSL_VERSION=2.5.5
