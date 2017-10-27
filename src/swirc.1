@@ -84,6 +84,12 @@ Reverse
 .It Ic F10
 Underline
 .El
+.Sh MITIGATIONS
+On OpenBSD
+.Xr pledge 2
+is used per default in order to force
+.Nm
+into a restricted-service operating mode. This since version 1.1.
 .Sh FILES
 .Bl -tag -width "                         " -compact
 .It Pa ~/.swirc/swirc.conf
