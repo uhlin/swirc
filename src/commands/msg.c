@@ -63,7 +63,7 @@ cmd_msg(const char *data)
 	return;
     } else if (window_by_label(recipient) == NULL &&
 	       is_valid_nickname(recipient)) {
-	if (spawn_chat_window(recipient, "") != 0) {
+	if (spawn_chat_window(recipient, recipient) != 0) {
 	    print_and_free("/msg: fatal: cannot spawn chat window!", dcopy);
 	    return;
 	}

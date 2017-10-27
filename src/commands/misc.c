@@ -101,7 +101,7 @@ cmd_query(const char *data)
     } else if (!is_valid_nickname(data)) {
 	printtext(&ptext_ctx, "/query: bogus nickname");
     } else {
-	switch (spawn_chat_window(data, "")) {
+	switch (spawn_chat_window(data, data)) {
 	case EINVAL:
 	    err_exit(EINVAL, "spawn_chat_window");
 	case ENOSPC:

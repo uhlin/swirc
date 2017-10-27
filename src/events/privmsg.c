@@ -76,7 +76,7 @@ handle_special_msg(const struct special_msg_context *ctx)
     if (Strings_match_ignore_case(ctx->dest, g_my_nickname)) {
 	if (!strncmp(msg, "ACTION ", 7) &&
 	    (pt_ctx.window = window_by_label(ctx->nick)) == NULL)
-	    spawn_chat_window(ctx->nick, "");
+	    spawn_chat_window(ctx->nick, ctx->nick);
 	pt_ctx.window = window_by_label(ctx->nick);
     } else {
 	pt_ctx.window = window_by_label(ctx->dest);
@@ -173,10 +173,12 @@ event_privmsg(struct irc_message_compo *compo)
 	return;
     }
     if (Strings_match_ignore_case(dest, g_my_nickname)) {
-	if (window_by_label(nick) == NULL && spawn_chat_window(nick, "") != 0)
+	if (window_by_label(nick) == NULL &&
+	    spawn_chat_window(nick, nick) != 0)
 	    return;
     } else {
-	if (window_by_label(dest) == NULL && spawn_chat_window(dest, "") != 0)
+	if (window_by_label(dest) == NULL &&
+	    spawn_chat_window(dest, "No title.") != 0)
 	    return;
     }
 
