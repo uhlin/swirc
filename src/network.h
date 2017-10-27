@@ -18,8 +18,8 @@ struct network_connect_context {
     char *nickname;
 };
 
-typedef int (*NET_SEND_FN)(const char *, ...);
-typedef int (*NET_RECV_FN)(struct network_recv_context *, char *, int);
+typedef PTR_ARGS_NONNULL int (*NET_SEND_FN)(const char *, ...);
+typedef PTR_ARGS_NONNULL int (*NET_RECV_FN)(struct network_recv_context *, char *, int);
 
 extern NET_SEND_FN net_send;
 extern NET_RECV_FN net_recv;
@@ -39,7 +39,7 @@ void	net_ssl_deinit(void);
 void	net_ssl_close(void);
 int	net_ssl_start(void);
 int	net_ssl_send(const char *fmt, ...);
-int	net_ssl_recv(struct network_recv_context *, char *, int) PTR_ARGS_NONNULL;
+int	net_ssl_recv(struct network_recv_context *, char *, int);
 int	net_ssl_check_hostname(const char *, unsigned int);
 
 #endif
