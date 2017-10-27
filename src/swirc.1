@@ -109,3 +109,24 @@ was written by
 .Aq Mt markus.uhlin@bredband.net
 .Sh BUGS
 .Lk https://github.com/uhlin/swirc/issues
+.Pp
+If many errors regarding
+"In perform_convert_buffer: characters lost: Illegal byte sequence"
+are present in the error log, then additional encodings for your
+locale should be installed. See
+.Xr locale 1
+for supported character encodings.
+.Nm
+can handle and are looking for:
+.Pp
+.Bl -dash -compact
+.It
+UTF-8
+.It
+ISO-8859-1
+.It
+ISO-8859-15
+.El
+.Pp
+Unfortunately some operating systems have decided to only support the
+UTF-8 character encoding.
