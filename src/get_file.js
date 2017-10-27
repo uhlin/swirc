@@ -13,7 +13,7 @@ function get_file(url, name)
     stream.SaveToFile(name);
 }
 
-get_file("http://nifty-networks.net/swirc/curl-7.54.1.cab", "curl-7.54.1.cab");
-get_file("http://nifty-networks.net/swirc/libressl-2.5.4-windows.cab", "libressl-2.5.4-windows.cab");
+get_file("http://nifty-networks.net/swirc/curl-7.56.1.cab", "curl-7.56.1.cab");
+get_file("http://nifty-networks.net/swirc/libressl-2.5.5-windows.cab", "libressl-2.5.5-windows.cab");
 get_file("http://nifty-networks.net/swirc/pdcurses-3.4.cab", "pdcurses-3.4.cab");
 get_file("http://nifty-networks.net/swirc/swirc-royal.ico", "swirc-royal.ico");
