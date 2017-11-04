@@ -1,6 +1,11 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Changed ###
+- Windows-specific: machine type from x86 to x64 which means that a
+  64-bit executable will be built next time
+
 ## [1.8] - 2017-10-27 ##
 ### Added ###
 - Event 486 (You must log in with services to message this user)
