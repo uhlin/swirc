@@ -4,9 +4,9 @@
 
 extra_flags=
 include_dirs=-Iinclude -Icurl-$(CURL_VERSION)/include -Ilibressl-$(LIBRESSL_VERSION)-windows/include
-library_dirs=-LIBPATH:curl-$(CURL_VERSION)/x64 \
-             -LIBPATH:libressl-$(LIBRESSL_VERSION)-windows/x64 \
-             -LIBPATH:pdcurses-3.4/x64
+library_dirs=-LIBPATH:curl-$(CURL_VERSION)/$(MACHINE) \
+             -LIBPATH:libressl-$(LIBRESSL_VERSION)-windows/$(MACHINE) \
+             -LIBPATH:pdcurses-3.4/$(MACHINE)
 log_file=stdout.log
 
 OBJS=assertAPI.obj config.obj curses-funcs.obj cursesInit.obj dataClassify.obj \
@@ -33,13 +33,13 @@ $(OUT).exe: fetch_and_expand $(OBJS)
 	$(E) ^ ^ LINK^ ^ ^ ^ $@
 	$(Q) $(CC) -Fe$(OUT) *.obj commands/*.obj events/*.obj swirc.res -link $(LDFLAGS) $(library_dirs) $(LDLIBS) 1>>$(log_file)
 	$(E) ^ ^ MOVE^ ^ ^ ^ libcurl.dll
-	$(Q) move "curl-$(CURL_VERSION)\x64\libcurl.dll" . 1>>$(log_file)
+	$(Q) move "curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll" . 1>>$(log_file)
 	$(E) ^ ^ MOVE^ ^ ^ ^ $(NAME_libcrypto).dll
-	$(Q) move "libressl-$(LIBRESSL_VERSION)-windows\x64\$(NAME_libcrypto).dll" . 1>>$(log_file)
+	$(Q) move "libressl-$(LIBRESSL_VERSION)-windows\$(MACHINE)\$(NAME_libcrypto).dll" . 1>>$(log_file)
 	$(E) ^ ^ MOVE^ ^ ^ ^ $(NAME_libssl).dll
-	$(Q) move "libressl-$(LIBRESSL_VERSION)-windows\x64\$(NAME_libssl).dll" . 1>>$(log_file)
+	$(Q) move "libressl-$(LIBRESSL_VERSION)-windows\$(MACHINE)\$(NAME_libssl).dll" . 1>>$(log_file)
 	$(E) ^ ^ MOVE^ ^ ^ ^ pdcurses.dll
-	$(Q) move "pdcurses-3.4\x64\pdcurses.dll" . 1>>$(log_file)
+	$(Q) move "pdcurses-3.4\$(MACHINE)\pdcurses.dll" . 1>>$(log_file)
 
 fetch_and_expand:
 	$(E) ^ ^ FETCH
