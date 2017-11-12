@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- Key CTRL+a (move to beginning of line)
+- Key CTRL+e (move to end of line)
+
 ### Changed ###
 - Windows-specific: machine type from x86 to x64 which means that a
   64-bit executable will be built next time
