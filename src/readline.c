@@ -524,6 +524,18 @@ readline(const char *prompt)
 	mutex_lock(&g_puts_mutex);
 
 	switch (wc) {
+	case CTRL_A:
+	    while (ctx->bufpos != 0) {
+		case_key_left(ctx);
+		ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
+	    }
+	    break;
+	case CTRL_E:
+	    while (ctx->insert_mode) {
+		case_key_right(ctx);
+		ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
+	    }
+	    break;
 	case MY_KEY_DLE:
 	    window_select_prev();
 	    break; /* CTRL+P */

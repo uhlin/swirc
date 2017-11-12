@@ -21,7 +21,9 @@ enum { /* custom, additional keys */
     MY_KEY_STX	  = '\002',	/* ^B */
     MY_KEY_SO	  = '\016',	/* ^N */
     MY_KEY_DLE	  = '\020',	/* ^P */
-    MY_KEY_RESIZE = '\033'
+    MY_KEY_RESIZE = '\033',
+    CTRL_A = '\001',
+    CTRL_E = '\005'
 };
 
 #define WINDOWS_KEY_ENTER 459
