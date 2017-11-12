@@ -115,10 +115,21 @@ is installed, issue:
 </p>
 <kbd>$ brew install libressl</kbd>
 <h4>Building for the UNIX environment</h4>
+<p>
+On the BSDs and GNU/Linux the configure script will per default
+generate make definitions that expects that the C compiler
+<a href="https://gcc.gnu.org/">GCC</a>
+is installed on your system.
+A make utility must also be present. Regarding Mac OS X I suggest that
+you install
+<a href="https://developer.apple.com/xcode/">Xcode</a>.
+Due to certain circumstances I no longer can confirm that building for
+OS X works.
+</p>
 <kbd>$ ./configure</kbd><br>
 <kbd>$ cd src</kbd><br>
 <kbd>$ make -f unix.mk</kbd>
-<p>Installing it:</p>
+<p>Installing it (under <kbd>/usr/local</kbd>):</p>
 <kbd>$ sudo make -f unix.mk install</kbd>
 <h4>Building for Windows</h4>
 <p>
