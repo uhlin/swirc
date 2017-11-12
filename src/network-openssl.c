@@ -103,7 +103,7 @@ net_ssl_init(void)
 
     if (RAND_load_file("/dev/urandom", 1024) <= 0) {
 	printtext(&ptext_ctx, "net_ssl_init: "
-	    "Error seeding the PRNG! LibreSSL?: %s", strerror(ENOSYS));
+	    "Error seeding the PRNG! (%s)", strerror(ENOSYS));
     }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
