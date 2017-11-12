@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [1.9] - 2017-11-12 ##
 ### Added ###
 - Key CTRL+a (move to beginning of line)
 - Key CTRL+e (move to end of line)

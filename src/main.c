@@ -69,7 +69,7 @@
 /* Things with external linkage
    ============================ */
 
-const char g_swircVersion[] = "v1.9-dev";
+const char g_swircVersion[] = "v1.9";
 const char g_swircYear[]    = "2012-2017";
 const char g_swircAuthor[]  = "Markus Uhlin";
 const char g_swircWebAddr[] = "https://www.nifty-networks.net/swirc/";
