@@ -1,6 +1,11 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Added ###
+- Event 465 `ERR_YOUREBANNEDCREEP`
+- Event 466 `ERR_YOUWILLBEBANNED`
+
 ## [1.9] - 2017-11-12 ##
 ### Added ###
 - Key CTRL+a (move to beginning of line)

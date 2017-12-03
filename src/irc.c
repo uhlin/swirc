@@ -188,6 +188,8 @@ static struct numeric_events_tag {
     { "447", "",                        ACTIVE_WINDOW,  1, NULL },
     { "461", "ERR_NEEDMOREPARAMS",      ACTIVE_WINDOW,  2, NULL },
     { "462", "ERR_ALREADYREGISTRED",    ACTIVE_WINDOW,  1, NULL },
+    { "465", "ERR_YOUREBANNEDCREEP",    STATUS_WINDOW,  1, NULL },
+    { "466", "ERR_YOUWILLBEBANNED",     NO_WINDOW,      0, event_allaround_extract_find_colon },
     { "467", "ERR_KEYSET",              ACTIVE_WINDOW,  2, NULL },
     { "470", "",                        NO_WINDOW,      0, event_channel_forward },
     { "471", "ERR_CHANNELISFULL",       ACTIVE_WINDOW,  2, NULL },
