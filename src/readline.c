@@ -75,6 +75,9 @@ static bool				 disable_beeps       = false;
 static const int			 readline_buffersize = 2700;
 static enum readline_active_panel	 panel_state	     = PANEL1_ACTIVE;
 
+/**
+ * Get active panelwindow
+ */
 WINDOW *
 readline_get_active_pwin(void)
 {
