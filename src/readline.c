@@ -75,6 +75,17 @@ static bool				 disable_beeps       = false;
 static const int			 readline_buffersize = 2700;
 static enum readline_active_panel	 panel_state	     = PANEL1_ACTIVE;
 
+WINDOW *
+readline_get_active_pwin(void)
+{
+    if (readline_pan1 == NULL || readline_pan2 == NULL)
+	return NULL;
+
+    return ((panel_state == PANEL1_ACTIVE)
+	    ? panel_window(readline_pan1)
+	    : panel_window(readline_pan2));
+}
+
 /**
  * Initiate a new readline session
  */
@@ -454,31 +465,6 @@ apply_readline_options(WINDOW *win)
 }
 
 /**
- * Initialize readline (done before usage)
- */
-void
-readline_init(void)
-{
-    readline_pan1 = term_new_panel(1, 0, LINES - 1, 0);
-    readline_pan2 = term_new_panel(1, 0, LINES - 1, 0);
-
-    apply_readline_options(panel_window(readline_pan1));
-    apply_readline_options(panel_window(readline_pan2));
-
-    disable_beeps = config_bool_unparse("disable_beeps", false);
-}
-
-/**
- * De-initialize readline
- */
-void
-readline_deinit(void)
-{
-    term_remove_panel(readline_pan1);
-    term_remove_panel(readline_pan2);
-}
-
-/**
  * Read user input.
  *
  * @param prompt Prompt
@@ -635,6 +621,31 @@ readline(const char *prompt)
 }
 
 /**
+ * De-initialize readline
+ */
+void
+readline_deinit(void)
+{
+    term_remove_panel(readline_pan1);
+    term_remove_panel(readline_pan2);
+}
+
+/**
+ * Initialize readline (done before usage)
+ */
+void
+readline_init(void)
+{
+    readline_pan1 = term_new_panel(1, 0, LINES - 1, 0);
+    readline_pan2 = term_new_panel(1, 0, LINES - 1, 0);
+
+    apply_readline_options(panel_window(readline_pan1));
+    apply_readline_options(panel_window(readline_pan2));
+
+    disable_beeps = config_bool_unparse("disable_beeps", false);
+}
+
+/**
  * Recreate the 2 readline panels with respect to the screen size.
  *
  * @param rows Size of the screen in rows
@@ -677,15 +688,4 @@ readline_top_panel(void)
 
     update_panels();
     (void) doupdate();
-}
-
-WINDOW *
-readline_get_active_pwin(void)
-{
-    if (readline_pan1 == NULL || readline_pan2 == NULL)
-	return NULL;
-
-    return ((panel_state == PANEL1_ACTIVE)
-	    ? panel_window(readline_pan1)
-	    : panel_window(readline_pan2));
 }
