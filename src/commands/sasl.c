@@ -244,7 +244,7 @@ set_mechanism(char *mechanism)
 {
     extern bool is_sasl_mechanism_supported(const char *); /*from events/cap.c*/
 
-    (void) str_toupper(mechanism);
+    (void) strToUpper(mechanism);
 
     if (!is_sasl_mechanism_supported(mechanism)) {
 	output_message(true, "sasl mechanism unknown");
@@ -285,7 +285,7 @@ set_password(char *password)
 static void
 set_state(char *state)
 {
-    (void) str_tolower(state);
+    (void) strToLower(state);
 
     if (!Strings_match(state, "on") && !Strings_match(state, "off")) {
 	output_message(true, "what? on or off?");

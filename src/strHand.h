@@ -3,8 +3,8 @@
 
 /*lint -printf(3, sw_snprintf) */
 
-char		*str_tolower (char *);
-char		*str_toupper (char *);
+char		*strToLower  (char *);
+char		*strToUpper  (char *);
 char		*sw_strdup   (const char *string);
 char		*trim        (char *string);
 const char	*Strcolor    (short int color);

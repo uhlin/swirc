@@ -84,7 +84,7 @@ static unsigned int
 hash(const char *nick)
 {
     char		 c;
-    char		*nick_copy = str_tolower(sw_strdup(nick));
+    char		*nick_copy = strToLower(sw_strdup(nick));
     char		*nick_p	   = nick_copy;
     unsigned int	 hashval   = 0;
     unsigned int	 tmp;

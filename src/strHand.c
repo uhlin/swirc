@@ -56,14 +56,14 @@
  * @return The converted string
  */
 char *
-str_tolower(char *s)
+strToLower(char *s)
 {
     size_t  len = 0;
     char   *p   = NULL;
 
     if (s == NULL) {
-	err_exit(EINVAL, "str_tolower error");
-    } else if (!*s) {
+	err_exit(EINVAL, "strToLower");
+    } else if (! (*s)) {
 	return s;
     } else {
 	len = strlen(s);
@@ -85,14 +85,14 @@ str_tolower(char *s)
  * @return The converted string
  */
 char *
-str_toupper(char *s)
+strToUpper(char *s)
 {
     size_t  len = 0;
     char   *p   = NULL;
 
     if (s == NULL) {
-	err_exit(EINVAL, "str_toupper error");
-    } else if (!*s) {
+	err_exit(EINVAL, "strToUpper");
+    } else if (! (*s)) {
 	return s;
     } else {
 	len = strlen(s);

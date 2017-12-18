@@ -64,10 +64,10 @@ cmd_join(const char *data)
 	return;
     } else {
 	if (has_channel_key) {
-	    if (net_send("JOIN %s %s", str_tolower(channel), key) < 0)
+	    if (net_send("JOIN %s %s", strToLower(channel), key) < 0)
 		g_on_air = false;
 	} else {
-	    if (net_send("JOIN %s", str_tolower(channel)) < 0)
+	    if (net_send("JOIN %s", strToLower(channel)) < 0)
 		g_on_air = false;
 	}
 	free(dcopy);
@@ -105,10 +105,10 @@ cmd_part(const char *data)
 	return;
     } else {
 	if (has_message) {
-	    if (net_send("PART %s :%s", str_tolower(channel), message) < 0)
+	    if (net_send("PART %s :%s", strToLower(channel), message) < 0)
 		g_on_air = false;
 	} else {
-	    if (net_send("PART %s", str_tolower(channel)) < 0)
+	    if (net_send("PART %s", strToLower(channel)) < 0)
 		g_on_air = false;
 	}
 	free(dcopy);

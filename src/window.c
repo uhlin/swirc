@@ -85,7 +85,7 @@ static unsigned int
 hash(const char *label)
 {
     char		 c;
-    char		*label_copy = str_tolower(sw_strdup(label));
+    char		*label_copy = strToLower(sw_strdup(label));
     char		*label_p    = label_copy;
     unsigned int	 hashval    = 0;
     unsigned int	 tmp;
