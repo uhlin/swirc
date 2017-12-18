@@ -166,19 +166,14 @@ realloc_strcat(char **dest, const char *src)
 {
     size_t newsize = 0;
 
-    if (isNull(dest) || isNull(*dest) || isNull(src)) {
+    if (isNull(dest) || isNull(*dest) || isNull(src))
 	err_exit(EINVAL, "realloc_strcat");
-    } else {
+    else
 	newsize = strlen(*dest) + strlen(src) + 1;
-    }
-
-    if ((*dest = realloc(*dest, newsize)) == NULL) {
+    if ((*dest = realloc(*dest, newsize)) == NULL)
 	err_exit(ENOMEM, "realloc_strcat");
-    }
-
-    if ((errno = sw_strcat(*dest, src, newsize)) != 0) {
+    if ((errno = sw_strcat(*dest, src, newsize)) != 0)
 	err_sys("realloc_strcat");
-    }
 }
 
 void
