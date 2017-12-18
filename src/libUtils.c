@@ -45,6 +45,28 @@
 #define PRINT_SZ	"%Iu"
 #endif
 
+FILE *
+fopen_handle_error(const char *path, const char *mode)
+{
+    FILE *fp;
+
+    if (path == NULL || mode == NULL) {
+	err_exit(EINVAL, "fopen_handle_error");
+    }
+
+#ifdef HAVE_BCI
+    if ((errno = fopen_s(&fp, path, mode)) != 0) {
+	err_sys("fopen_s");
+    }
+#else
+    if ((fp = fopen(path, mode)) == NULL) {
+	err_sys("fopen");
+    }
+#endif
+
+    return (fp);
+}
+
 /* Check for vulnerabilities */
 static bool
 format_codes_are_ok(const char *fmt)
@@ -62,79 +84,6 @@ format_codes_are_ok(const char *fmt)
     }
 
     return true;
-}
-
-void *
-xmalloc(size_t size)
-{
-    void *vp;
-
-    if (size == 0) {
-	err_exit(EINVAL, "xmalloc: invalid argument -- zero size");
-    }
-
-    if ((vp = malloc(size)) == NULL) {
-	err_exit(ENOMEM, "xmalloc: error allocating " PRINT_SZ " bytes", size);
-    }
-
-    return (vp);
-}
-
-void *
-xcalloc(size_t elt_count, size_t elt_size)
-{
-    void *vp;
-
-    if (elt_count == 0) {
-	err_exit(EINVAL, "xcalloc: invalid argument: element count is zero");
-    } else if (elt_size == 0) {
-	err_exit(EINVAL, "xcalloc: invalid argument: element size is zero");
-    } else if (SIZE_MAX / elt_count < elt_size) {
-	err_quit("xcalloc: integer overflow");
-    } else {
-	if ((vp = calloc(elt_count, elt_size)) == NULL)
-	    err_exit(ENOMEM, "xcalloc: out of memory (allocating " PRINT_SZ " bytes)", (elt_count * elt_size));
-    }
-
-    return (vp);
-}
-
-void *
-xrealloc(void *ptr, size_t newSize)
-{
-    void *newPtr;
-
-    if (ptr == NULL) {
-	err_exit(EINVAL, "xrealloc: invalid argument: a null pointer was passed");
-    } else if (newSize == 0) {
-	err_exit(EINVAL, "xrealloc: invalid argument: zero size  --  use free");
-    } else {
-	if ((newPtr = realloc(ptr, newSize)) == NULL)
-	    err_exit(errno, "xrealloc: error changing memory block to " PRINT_SZ " bytes", newSize);
-    }
-
-    return (newPtr);
-}
-
-void
-realloc_strcat(char **dest, const char *src)
-{
-    const char msg[]   = "realloc_strcat error";
-    size_t     newsize = 0;
-
-    if (isNull(dest) || isNull(*dest) || isNull(src)) {
-	err_exit(EINVAL, "%s", msg);
-    } else {
-	newsize = strlen(*dest) + strlen(src) + 1;
-    }
-
-    if ((*dest = realloc(*dest, newsize)) == NULL) {
-	err_exit(ENOMEM, "%s", msg);
-    }
-
-    if ((errno = sw_strcat(*dest, src, newsize)) != 0) {
-	err_sys("%s", msg);
-    }
 }
 
 const char *
@@ -167,26 +116,41 @@ current_time(const char *fmt)
     return (strftime(buffer, sizeof buffer, fmt, &items) > 0 ? &buffer[0] : "");
 }
 
-FILE *
-fopen_handle_error(const char *path, const char *mode)
+/* Return the difference of 'a - b' */
+int
+int_diff(const int a, const int b)
 {
-    FILE *fp;
-
-    if (path == NULL || mode == NULL) {
-	err_exit(EINVAL, "fopen_handle_error");
+    if ((b > 0 && a < INT_MIN + b) || (b < 0 && a > INT_MAX + b)) {
+	err_msg("int_diff: Integer overflow: a=%d b=%d", a, b);
+	abort();
     }
 
-#ifdef HAVE_BCI
-    if ((errno = fopen_s(&fp, path, mode)) != 0) {
-	err_sys("fopen_s");
-    }
-#else
-    if ((fp = fopen(path, mode)) == NULL) {
-	err_sys("fopen");
-    }
-#endif
+    return (a - b);
+}
 
-    return (fp);
+/* Return the sum of 'a + b' */
+int
+int_sum(const int a, const int b)
+{
+    if ((b > 0 && a > INT_MAX - b) || (b < 0 && a < INT_MIN - b)) {
+	err_msg("int_sum: Integer overflow: a=%d b=%d", a, b);
+	abort();
+    }
+
+    return (a + b);
+}
+
+/* Return 'elt_count' elements of size 'elt_size' (elt_count * elt_size)
+   -- but check for overflow... */
+size_t
+size_product(const size_t elt_count, const size_t elt_size)
+{
+    if (elt_size && elt_count > SIZE_MAX / elt_size) {
+	err_msg("Integer overflow");
+	abort();
+    }
+
+    return (elt_count * elt_size);
 }
 
 void
@@ -195,6 +159,43 @@ fclose_ensure_success(FILE *fp)
     if (fp != NULL && fclose(fp) != 0) {
 	err_sys("fclose");
     }
+}
+
+void
+realloc_strcat(char **dest, const char *src)
+{
+    const char msg[]   = "realloc_strcat error";
+    size_t     newsize = 0;
+
+    if (isNull(dest) || isNull(*dest) || isNull(src)) {
+	err_exit(EINVAL, "%s", msg);
+    } else {
+	newsize = strlen(*dest) + strlen(src) + 1;
+    }
+
+    if ((*dest = realloc(*dest, newsize)) == NULL) {
+	err_exit(ENOMEM, "%s", msg);
+    }
+
+    if ((errno = sw_strcat(*dest, src, newsize)) != 0) {
+	err_sys("%s", msg);
+    }
+}
+
+void
+say(const char *fmt, ...)
+{
+    va_list ap;
+
+    escape_curses();
+    va_start(ap, fmt);
+#ifdef HAVE_BCI
+    vprintf_s(fmt, ap);
+#else
+    vprintf(fmt, ap);
+#endif
+    va_end(ap);
+    fflush(stdout);
 }
 
 void
@@ -229,55 +230,54 @@ write_to_stream(FILE *stream, const char *fmt, ...)
     }
 }
 
-void
-say(const char *fmt, ...)
+void *
+xcalloc(size_t elt_count, size_t elt_size)
 {
-    va_list ap;
+    void *vp;
 
-    escape_curses();
-    va_start(ap, fmt);
-#ifdef HAVE_BCI
-    vprintf_s(fmt, ap);
-#else
-    vprintf(fmt, ap);
-#endif
-    va_end(ap);
-    fflush(stdout);
-}
-
-/* Return 'elt_count' elements of size 'elt_size' (elt_count * elt_size)
-   -- but check for overflow... */
-size_t
-size_product(const size_t elt_count, const size_t elt_size)
-{
-    if (elt_size && elt_count > SIZE_MAX / elt_size) {
-	err_msg("Integer overflow");
-	abort();
+    if (elt_count == 0) {
+	err_exit(EINVAL, "xcalloc: invalid argument: element count is zero");
+    } else if (elt_size == 0) {
+	err_exit(EINVAL, "xcalloc: invalid argument: element size is zero");
+    } else if (SIZE_MAX / elt_count < elt_size) {
+	err_quit("xcalloc: integer overflow");
+    } else {
+	if ((vp = calloc(elt_count, elt_size)) == NULL)
+	    err_exit(ENOMEM, "xcalloc: out of memory (allocating " PRINT_SZ " bytes)", (elt_count * elt_size));
     }
 
-    return (elt_count * elt_size);
+    return (vp);
 }
 
-/* Return the sum of 'a + b' */
-int
-int_sum(const int a, const int b)
+void *
+xmalloc(size_t size)
 {
-    if ((b > 0 && a > INT_MAX - b) || (b < 0 && a < INT_MIN - b)) {
-	err_msg("int_sum: Integer overflow: a=%d b=%d", a, b);
-	abort();
+    void *vp;
+
+    if (size == 0) {
+	err_exit(EINVAL, "xmalloc: invalid argument -- zero size");
     }
 
-    return (a + b);
+    if ((vp = malloc(size)) == NULL) {
+	err_exit(ENOMEM, "xmalloc: error allocating " PRINT_SZ " bytes", size);
+    }
+
+    return (vp);
 }
 
-/* Return the difference of 'a - b' */
-int
-int_diff(const int a, const int b)
+void *
+xrealloc(void *ptr, size_t newSize)
 {
-    if ((b > 0 && a < INT_MIN + b) || (b < 0 && a > INT_MAX + b)) {
-	err_msg("int_diff: Integer overflow: a=%d b=%d", a, b);
-	abort();
+    void *newPtr;
+
+    if (ptr == NULL) {
+	err_exit(EINVAL, "xrealloc: invalid argument: a null pointer was passed");
+    } else if (newSize == 0) {
+	err_exit(EINVAL, "xrealloc: invalid argument: zero size  --  use free");
+    } else {
+	if ((newPtr = realloc(ptr, newSize)) == NULL)
+	    err_exit(errno, "xrealloc: error changing memory block to " PRINT_SZ " bytes", newSize);
     }
 
-    return (a - b);
+    return (newPtr);
 }
