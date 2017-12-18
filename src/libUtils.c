@@ -164,21 +164,20 @@ fclose_ensure_success(FILE *fp)
 void
 realloc_strcat(char **dest, const char *src)
 {
-    const char msg[]   = "realloc_strcat error";
-    size_t     newsize = 0;
+    size_t newsize = 0;
 
     if (isNull(dest) || isNull(*dest) || isNull(src)) {
-	err_exit(EINVAL, "%s", msg);
+	err_exit(EINVAL, "realloc_strcat");
     } else {
 	newsize = strlen(*dest) + strlen(src) + 1;
     }
 
     if ((*dest = realloc(*dest, newsize)) == NULL) {
-	err_exit(ENOMEM, "%s", msg);
+	err_exit(ENOMEM, "realloc_strcat");
     }
 
     if ((errno = sw_strcat(*dest, src, newsize)) != 0) {
-	err_sys("%s", msg);
+	err_sys("realloc_strcat");
     }
 }
 
