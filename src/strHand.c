@@ -1,5 +1,5 @@
 /* String handling functions
-   Copyright (C) 2012-2015 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -50,84 +50,32 @@
 #endif
 
 /**
- * Remove trailing data determined by sw_isspace()
+ * Convert string to lowercase
  *
- * @param string Target string
- * @return The result
+ * @param s String to convert
+ * @return The converted string
  */
 char *
-trim(char *string)
+str_tolower(char *s)
 {
-    char *p = NULL;
+    size_t  len = 0;
+    char   *p   = NULL;
 
-    if (isNull(string)) {
-	err_exit(EINVAL, "trim error");
-    } else if (isEmpty(string)) {
-	return string;
+    if (s == NULL) {
+	err_exit(EINVAL, "str_tolower error");
+    } else if (!*s) {
+	return s;
     } else {
-	for (p = &string[strlen(string) - 1]; p >= &string[0]; p--) {
-	    if (!sw_isspace(*p)) {
-		break;
-	    }
-	}
-
-	*(p + 1) = '\0';
+	len = strlen(s);
     }
 
-    return string;
-}
-
-/**
- * Squeeze characters in a buffer.
- *
- * @param buffer Target buffer.
- * @param rej    String with characters to squeeze.
- * @return Void
- */
-void
-squeeze(char *buffer, const char *rej)
-{
-    long int i, j;
-
-    if (isNull(buffer) || isEmpty(buffer)) {
-	return;
-    }
-
-    for (i = j = 0; buffer[i] != '\0'; i++) {
-	if (strchr(rej, buffer[i]) == NULL) {
-	    buffer[j++] = buffer[i];
+    for (p = &s[0]; p < &s[len]; p++) {
+	if (sw_isupper(*p)) {
+	    *p = tolower(*p);
 	}
     }
 
-    buffer[j] = '\0';
-}
-
-/**
- * Replace spaces in a string with newlines
- *
- * @param string Target string
- * @param count  Attempt to replace this count of occurrences
- * @return Number of newlines successfully written
- */
-int
-Strfeed(char *string, int count)
-{
-    int feeds_written = 0;
-    char *p = NULL;
-
-    if (isNull(string) || isEmpty(string) || count <= 0) {
-	return feeds_written;
-    }
-
-    while (feeds_written < count) {
-	if ((p = strchr(string, ' ')) == NULL) {
-	    break;
-	}
-
-	*p = '\n', feeds_written++;
-    }
-
-    return feeds_written;
+    return s;
 }
 
 /**
@@ -160,59 +108,6 @@ str_toupper(char *s)
 }
 
 /**
- * Convert string to lowercase
- *
- * @param s String to convert
- * @return The converted string
- */
-char *
-str_tolower(char *s)
-{
-    size_t  len = 0;
-    char   *p   = NULL;
-
-    if (s == NULL) {
-	err_exit(EINVAL, "str_tolower error");
-    } else if (!*s) {
-	return s;
-    } else {
-	len = strlen(s);
-    }
-
-    for (p = &s[0]; p < &s[len]; p++) {
-	if (sw_isupper(*p)) {
-	    *p = tolower(*p);
-	}
-    }
-
-    return s;
-}
-
-/**
- * Wrapper function for snprintf() that doesn't care about truncation.
- *
- * @param dest Destination to write to.
- * @param sz   Destination size.
- * @param fmt  Format control.
- * @return Void
- */
-void
-sw_snprintf(char *dest, size_t sz, const char *fmt, ...)
-{
-    va_list	ap;
-    int		n_print;
-
-    if (dest == NULL || sz == 0 || fmt == NULL) {
-	err_exit(EINVAL, "sw_snprintf error");
-    }
-
-    va_start(ap, fmt);
-    if ((n_print = vsnprintf(dest, sz, fmt, ap)) < 0)
-	err_sys("vsnprintf() returned %d", n_print);
-    va_end(ap);
-}
-
-/**
  * Duplicate a string
  *
  * @param string String to duplicate
@@ -239,6 +134,34 @@ sw_strdup(const char *string)
     }
 
     return (dest);
+}
+
+/**
+ * Remove trailing data determined by sw_isspace()
+ *
+ * @param string Target string
+ * @return The result
+ */
+char *
+trim(char *string)
+{
+    char *p = NULL;
+
+    if (isNull(string)) {
+	err_exit(EINVAL, "trim error");
+    } else if (isEmpty(string)) {
+	return string;
+    } else {
+	for (p = &string[strlen(string) - 1]; p >= &string[0]; p--) {
+	    if (!sw_isspace(*p)) {
+		break;
+	    }
+	}
+
+	*(p + 1) = '\0';
+    }
+
+    return string;
 }
 
 /**
@@ -270,4 +193,81 @@ Strcolor(short int color)
     }
 
     return ("Unknown Color!");
+}
+
+/**
+ * Replace spaces in a string with newlines
+ *
+ * @param string Target string
+ * @param count  Attempt to replace this count of occurrences
+ * @return Number of newlines successfully written
+ */
+int
+Strfeed(char *string, int count)
+{
+    int feeds_written = 0;
+    char *p = NULL;
+
+    if (isNull(string) || isEmpty(string) || count <= 0) {
+	return feeds_written;
+    }
+
+    while (feeds_written < count) {
+	if ((p = strchr(string, ' ')) == NULL) {
+	    break;
+	}
+
+	*p = '\n', feeds_written++;
+    }
+
+    return feeds_written;
+}
+
+/**
+ * Squeeze characters in a buffer.
+ *
+ * @param buffer Target buffer.
+ * @param rej    String with characters to squeeze.
+ * @return Void
+ */
+void
+squeeze(char *buffer, const char *rej)
+{
+    long int i, j;
+
+    if (isNull(buffer) || isEmpty(buffer)) {
+	return;
+    }
+
+    for (i = j = 0; buffer[i] != '\0'; i++) {
+	if (strchr(rej, buffer[i]) == NULL) {
+	    buffer[j++] = buffer[i];
+	}
+    }
+
+    buffer[j] = '\0';
+}
+
+/**
+ * Wrapper function for snprintf() that doesn't care about truncation.
+ *
+ * @param dest Destination to write to.
+ * @param sz   Destination size.
+ * @param fmt  Format control.
+ * @return Void
+ */
+void
+sw_snprintf(char *dest, size_t sz, const char *fmt, ...)
+{
+    va_list	ap;
+    int		n_print;
+
+    if (dest == NULL || sz == 0 || fmt == NULL) {
+	err_exit(EINVAL, "sw_snprintf error");
+    }
+
+    va_start(ap, fmt);
+    if ((n_print = vsnprintf(dest, sz, fmt, ap)) < 0)
+	err_sys("vsnprintf() returned %d", n_print);
+    va_end(ap);
 }
