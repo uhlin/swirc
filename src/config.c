@@ -301,7 +301,7 @@ config_integer_unparse(struct integer_unparse_context *ctx)
 void
 config_create(const char *path, const char *mode)
 {
-    FILE			*fp    = fopen_handle_error(path, mode);
+    FILE			*fp    = fopen_exit_on_error(path, mode);
     struct tagConfDefValues	*cdv_p = NULL;
     const size_t		 ar_sz = ARRAY_SIZE(ConfDefValues);
 
@@ -319,7 +319,7 @@ config_create(const char *path, const char *mode)
 void
 config_do_save(const char *path, const char *mode)
 {
-    FILE			*fp    = fopen_handle_error(path, mode);
+    FILE			*fp    = fopen_exit_on_error(path, mode);
     struct tagConfDefValues	*cdv_p = NULL;
     const size_t		 ar_sz = ARRAY_SIZE(ConfDefValues);
 
@@ -367,7 +367,7 @@ is_recognized_setting(const char *setting_name)
 void
 config_readit(const char *path, const char *mode)
 {
-    FILE     *fp        = fopen_handle_error(path, mode);
+    FILE     *fp        = fopen_exit_on_error(path, mode);
     char      buf[3200] = "";
     long int  line_num  = 0;
 

@@ -379,7 +379,7 @@ theme_integer_unparse(struct integer_unparse_context *ctx)
 void
 theme_create(const char *path, const char *mode)
 {
-    FILE			*fp    = fopen_handle_error(path, mode);
+    FILE			*fp    = fopen_exit_on_error(path, mode);
     struct tagThemeDefValues	*tdv_p = NULL;
     const size_t		 ar_sz = ARRAY_SIZE(ThemeDefValues);
 
@@ -397,7 +397,7 @@ theme_create(const char *path, const char *mode)
 void
 theme_do_save(const char *path, const char *mode)
 {
-    FILE			*fp    = fopen_handle_error(path, mode);
+    FILE			*fp    = fopen_exit_on_error(path, mode);
     struct tagThemeDefValues	*tdv_p = NULL;
     const size_t		 ar_sz = ARRAY_SIZE(ThemeDefValues);
 
@@ -445,7 +445,7 @@ init_missing_to_defs(void)
 void
 theme_readit(const char *path, const char *mode)
 {
-    FILE     *fp        = fopen_handle_error(path, mode);
+    FILE     *fp        = fopen_exit_on_error(path, mode);
     char      buf[3200] = "";
     long int  line_num  = 0;
 

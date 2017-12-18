@@ -46,12 +46,12 @@
 #endif
 
 FILE *
-fopen_handle_error(const char *path, const char *mode)
+fopen_exit_on_error(const char *path, const char *mode)
 {
     FILE *fp;
 
     if (path == NULL || mode == NULL) {
-	err_exit(EINVAL, "fopen_handle_error");
+	err_exit(EINVAL, "fopen_exit_on_error");
     }
 
 #ifdef HAVE_BCI
