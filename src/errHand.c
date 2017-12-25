@@ -38,6 +38,7 @@
 
 #include "curses-funcs.h"
 #include "errHand.h"
+#include "libUtils.h"
 #include "nestHome.h"
 #include "strHand.h"
 
@@ -83,7 +84,7 @@ write_to_error_log(const char *msg)
 	return;
 #endif
 
-    if ((fp = fopen(path, "a")) != NULL) {
+    if ((fp = xfopen(path, "a")) != NULL) {
 	(void) fprintf(fp, "%s %s\n", get_timestamp(), msg);
 	(void) fclose(fp);
     }
