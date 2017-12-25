@@ -7,6 +7,7 @@
 /*lint -printf(1, say) */
 
 FILE		*fopen_exit_on_error   (const char *path, const char *mode);
+FILE		*xfopen                (const char *path, const char *mode);
 const char	*current_time          (const char *fmt);
 int		 int_diff              (const int, const int);
 int		 int_sum               (const int, const int);
