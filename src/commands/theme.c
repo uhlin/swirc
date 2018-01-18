@@ -134,7 +134,7 @@ url_to_file(const char *url, const char *path)
     curl_easy_setopt(curl_handle, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, write_data);
 
-    if ((pagefile = fopen(path, "w")) != NULL) {
+    if ((pagefile = xfopen(path, "w")) != NULL) {
 	curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, pagefile);
 	curl_easy_perform(curl_handle);
 	fclose(pagefile);
@@ -228,7 +228,7 @@ read_db(const char *path, int *themes_read)
     char *line = NULL;
     read_result_t res = READ_INCOMPLETE;
 
-    if (!path || (fp = fopen(path, "r")) == NULL)
+    if (!path || (fp = xfopen(path, "r")) == NULL)
 	return FOPEN_FAILED;
 
     while (get_next_line_from_file(fp, &line)) {

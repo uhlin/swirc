@@ -104,8 +104,8 @@ sasl_keygen(const bool force)
     if (!EC_KEY_generate_key(key)) {
 	output_message(true, "EC_KEY_generate_key failed");
 	goto err;
-    } else if ((fp = fopen(path, "w")) == NULL) {
-	output_message(true, "fopen failed");
+    } else if ((fp = xfopen(path, "w")) == NULL) {
+	output_message(true, "xfopen failed");
 	goto err;
     } else if (!PEM_write_ECPrivateKey(fp, key, NULL, NULL, 0, NULL, NULL)) {
 	output_message(true, "PEM_write_ECPrivateKey failed");
@@ -172,8 +172,8 @@ sasl_pubkey()
 	output_message(true, "pubkey: unable to locate private key "
 	    "(doesn't exist  --  use keygen)");
 	goto err;
-    } else if ((fp = fopen(path, "r")) == NULL) {
-	output_message(true, "pubkey: fopen failed");
+    } else if ((fp = xfopen(path, "r")) == NULL) {
+	output_message(true, "pubkey: xfopen failed");
 	goto err;
     } else if (PEM_read_ECPrivateKey(fp, &key, NULL, NULL) == NULL) {
 	output_message(true, "pubkey: PEM_read_ECPrivateKey failed");
@@ -386,8 +386,8 @@ solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
     } else if (!file_exists(path)) {
 	*err_reason = "unable to locate private key";
 	goto err;
-    } else if ((fp = fopen(path, "r")) == NULL) {
-	*err_reason = "fopen failed";
+    } else if ((fp = xfopen(path, "r")) == NULL) {
+	*err_reason = "xfopen failed";
 	goto err;
     } else if (PEM_read_ECPrivateKey(fp, &key, NULL, NULL) == NULL) {
 	*err_reason = "PEM_read_ECPrivateKey failed";
