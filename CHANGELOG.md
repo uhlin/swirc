@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Event 465 `ERR_YOUREBANNEDCREEP`
 - Event 466 `ERR_YOUWILLBEBANNED`
+- Command alias /cs (chanserv)
+- Command alias /ns (nickserv)
 
 ## [1.9] - 2017-11-12 ##
 ### Added ###
