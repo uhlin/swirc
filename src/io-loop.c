@@ -87,6 +87,7 @@ static struct cmds_tag {
       "<service hostname | --> <command> [...]" },
     { "close",      cmd_close,      false, "/close" },
     { "connect",    cmd_connect,    false, "/connect [-tls] <server[:port]>" },
+    { "cs",         cmd_chanserv,   true,  "alias for /chanserv" },
     { "cycle",      cmd_cycle,      true,  "/cycle [channel]" },
     { "disconnect", cmd_disconnect, true,  "/disconnect [message]" },
     { "exlist",     cmd_exlist,     true,  "/exlist [channel]" },
@@ -106,6 +107,7 @@ static struct cmds_tag {
     { "nickserv",   cmd_nickserv,   true,  "/nickserv "
       "<service hostname | --> <command> [...]" },
     { "notice",     cmd_notice,     true,  "/notice <recipient> <message>" },
+    { "ns",         cmd_nickserv,   true,  "alias for /nickserv" },
     { "part",       cmd_part,       true,  "/part [channel] [message]" },
     { "query",      cmd_query,      false, "/query [nick]" },
     { "quit",       cmd_quit,       false, "/quit [message]" },
