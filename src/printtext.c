@@ -141,8 +141,6 @@ handle_foo_situation(char **buffer, long int *i, long int *j,
 	(*i)--;
     } else if (strchr(reject, (*buffer)[*i]) == NULL) {
 	(*buffer)[(*j)++] = (*buffer)[*i];
-    } else {
-	;
     }
 }
 
@@ -163,8 +161,6 @@ squeeze_text_deco(char *buffer)
 	err_exit(EINVAL, "squeeze_text_deco error");
     } else if (*buffer == '\0') {
 	return (buffer);
-    } else {
-	;
     }
 
     reject = Strdup_printf(
@@ -270,8 +266,6 @@ color_pair_find(short int fg, short int bg)
 	    return -1;
 	} else if (x == fg && y == bg) { /* found match */
 	    return pnum;
-	} else {
-	    ;
 	}
     }
 
@@ -1058,8 +1052,6 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	err_exit(EINVAL, "printtext_puts error");
     } else if (*buf == '\0') {
 	return;
-    } else {
-	;
     }
 
     mutex_lock(&g_puts_mutex);
