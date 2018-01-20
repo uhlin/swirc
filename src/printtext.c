@@ -1,5 +1,5 @@
 /* Prints and handles text
-   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -129,239 +129,6 @@ static struct ptext_colorMap_tag {
 };
 
 /**
- * Create mutex "vprinttext_mutex".
- */
-static void
-vprinttext_mutex_init(void)
-{
-    mutex_new(&vprinttext_mutex);
-}
-
-/**
- * Get multibyte string length
- */
-static size_t
-get_mb_strlen(const char *s)
-{
-    const size_t ERR_CASE1 = (size_t) -1;
-    const size_t ERR_CASE2 = (size_t) -2;
-    size_t idx = 0;
-    size_t len = 0;
-
-    while (true) {
-	const size_t ret = mbrlen(&s[idx], MB_CUR_MAX, NULL);
-
-	if (ret == ERR_CASE1 || ret == ERR_CASE2) {
-	    return (strlen(s));
-	} else if (ret == 0) {
-	    break;
-	} else {
-	    idx += ret;
-	    len += 1;
-	}
-    }
-
-    return (len);
-}
-
-/**
- * Get message components
- *
- * @param unproc_msg Unprocessed message
- * @param spec_type  "Specifier"
- * @param include_ts Include timestamp?
- * @return Message components
- */
-static struct message_components *
-get_processed_out_message(const char *unproc_msg,
-			  enum message_specifier_type spec_type,
-			  bool include_ts)
-{
-#define STRLEN_SQUEEZE(string) ((int) get_mb_strlen(squeeze_text_deco(string)))
-    struct message_components *pout = xcalloc(sizeof *pout, 1);
-    char *tmp = NULL;
-
-    pout->text = NULL;
-    pout->indent = 0;
-
-    if (include_ts) {
-	char *ts = sw_strdup(current_time(Theme("time_format")));
-
-	switch (spec_type) {
-	case TYPE_SPEC1:
-	    pout->text	 = Strdup_printf("%s %s %s", ts, THE_SPEC1, unproc_msg);
-	    tmp		 = Strdup_printf("%s %s ", ts, THE_SPEC1);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC2:
-	    pout->text	 = Strdup_printf("%s %s %s", ts, THE_SPEC2, unproc_msg);
-	    tmp		 = Strdup_printf("%s %s ", ts, THE_SPEC2);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC3:
-	    pout->text	 = Strdup_printf("%s %s %s", ts, THE_SPEC3, unproc_msg);
-	    tmp		 = Strdup_printf("%s %s ", ts, THE_SPEC3);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC1_SPEC2:
-	    pout->text = Strdup_printf("%s %s %s %s", ts, THE_SPEC1,
-				       THE_SPEC2, unproc_msg);
-	    tmp = Strdup_printf("%s %s %s ", ts, THE_SPEC1, THE_SPEC2);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC1_FAILURE:
-	    pout->text = Strdup_printf("%s %s %s %s", ts, THE_SPEC1,
-				       GFX_FAILURE, unproc_msg);
-	    tmp = Strdup_printf("%s %s %s ", ts, THE_SPEC1, GFX_FAILURE);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC1_SUCCESS:
-	    pout->text = Strdup_printf("%s %s %s %s", ts, THE_SPEC1,
-				       GFX_SUCCESS, unproc_msg);
-	    tmp = Strdup_printf("%s %s %s ", ts, THE_SPEC1, GFX_SUCCESS);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC1_WARN:
-	    pout->text = Strdup_printf("%s %s %s %s", ts, THE_SPEC1,
-				       GFX_WARN, unproc_msg);
-	    tmp = Strdup_printf("%s %s %s ", ts, THE_SPEC1, GFX_WARN);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC_NONE: default:
-	    pout->text	 = Strdup_printf("%s %s", ts, unproc_msg);
-	    tmp		 = Strdup_printf("%s ", ts);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	}
-
-	free(ts);
-    } else if (!include_ts) { /* the same but no timestamp */
-	switch (spec_type) {
-	case TYPE_SPEC1:
-	    pout->text   = Strdup_printf("%s %s", THE_SPEC1, unproc_msg);
-	    tmp          = Strdup_printf("%s ", THE_SPEC1);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC2:
-	    pout->text   = Strdup_printf("%s %s", THE_SPEC2, unproc_msg);
-	    tmp          = Strdup_printf("%s ", THE_SPEC2);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC3:
-	    pout->text   = Strdup_printf("%s %s", THE_SPEC3, unproc_msg);
-	    tmp          = Strdup_printf("%s ", THE_SPEC3);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC1_SPEC2:
-	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, THE_SPEC2,
-					 unproc_msg);
-	    tmp          = Strdup_printf("%s %s ", THE_SPEC1, THE_SPEC2);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC1_FAILURE:
-	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, GFX_FAILURE,
-					 unproc_msg);
-	    tmp          = Strdup_printf("%s %s ", THE_SPEC1, GFX_FAILURE);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC1_SUCCESS:
-	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, GFX_SUCCESS,
-					 unproc_msg);
-	    tmp          = Strdup_printf("%s %s ", THE_SPEC1, GFX_SUCCESS);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC1_WARN:
-	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, GFX_WARN,
-					 unproc_msg);
-	    tmp          = Strdup_printf("%s %s ", THE_SPEC1, GFX_WARN);
-	    pout->indent = STRLEN_SQUEEZE(tmp);
-	    break;
-	case TYPE_SPEC_NONE: default:
-	    pout->text   = sw_strdup(unproc_msg);
-	    pout->indent = 0;
-	    break;
-	}
-    } else {
-	sw_assert_not_reached();
-    }
-
-    free_not_null(tmp);
-    sw_assert(pout->text != NULL);
-
-    if (g_no_colors) {
-	pout->text = squeeze_text_deco(pout->text);
-    }
-
-    return (pout);
-}
-
-/**
- * Variable argument list version of Swirc messenger
- *
- * @param ctx Context structure
- * @param fmt Format
- * @param ap  va_list object
- * @return Void
- */
-void
-vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
-{
-    char *fmt_copy = NULL;
-    const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
-    struct integer_unparse_context unparse_ctx = {
-	.setting_name     = "textbuffer_size_absolute",
-	.fallback_default = 1000,
-	.lo_limit         = 350,
-	.hi_limit         = 4700,
-    };
-    struct message_components *pout = NULL;
-
-#if defined(UNIX)
-    errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init);
-    if (errno)
-	err_sys("pthread_once");
-#elif defined(WIN32)
-    errno = init_once(&vprinttext_init_done, vprinttext_mutex_init);
-    if (errno)
-	err_sys("init_once");
-#endif
-
-    mutex_lock(&vprinttext_mutex);
-
-    fmt_copy = Strdup_vprintf(fmt, ap);
-    pout     = get_processed_out_message(fmt_copy, ctx->spec_type,
-					 ctx->include_ts);
-
-    if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
-	/* Buffer full. Remove head... */
-
-	if ((errno = textBuf_remove(ctx->window->buf,
-	    textBuf_head(ctx->window->buf))) != 0)
-	    err_sys("textBuf_remove");
-    }
-
-    if (textBuf_size(ctx->window->buf) == 0) {
-	if ((errno = textBuf_ins_next(ctx->window->buf, NULL, pout->text,
-	    pout->indent)) != 0)
-	    err_sys("textBuf_ins_next");
-    } else {
-	if ((errno = textBuf_ins_next(ctx->window->buf,
-	    textBuf_tail(ctx->window->buf), pout->text, pout->indent)) != 0)
-	    err_sys("textBuf_ins_next");
-    }
-
-    if (! (ctx->window->scroll_mode))
-	printtext_puts(panel_window(ctx->window->pan), pout->text, pout->indent,
-		       -1, NULL);
-
-    free_not_null(fmt_copy);
-    free_not_null(pout->text);
-    free_not_null(pout);
-
-    mutex_unlock(&vprinttext_mutex);
-}
-
-/**
  * Helper function for squeeze_text_deco().
  */
 static SW_INLINE void
@@ -485,28 +252,77 @@ squeeze_text_deco(char *buffer)
 }
 
 /**
+ * Search for a color pair with given foreground/background.
+ *
+ * @param fg Foreground
+ * @param bg Background
+ * @return A color pair number, or -1 if not found.
+ */
+short int
+color_pair_find(short int fg, short int bg)
+{
+    const short int gipp1 = g_initialized_pairs + 1;
+    short int pnum; /* pair number */
+    short int x, y;
+
+    for (pnum = 1; pnum < gipp1; pnum++) {
+	if (pair_content(pnum, &x, &y) == ERR) {
+	    return -1;
+	} else if (x == fg && y == bg) { /* found match */
+	    return pnum;
+	} else {
+	    ;
+	}
+    }
+
+    return -1;
+}
+
+/**
+ * Print an error message to the active window and free a
+ * char-pointer.
+ *
+ * @param msg Message
+ * @param cp  Char-pointer
+ * @return Void
+ */
+void
+print_and_free(const char *msg, char *cp)
+{
+    struct printtext_context ptext_ctx = {
+	.window	    = g_active_window,
+	.spec_type  = TYPE_SPEC1_FAILURE,
+	.include_ts = true,
+    };
+
+    printtext(&ptext_ctx, "%s", msg);
+    free(cp);
+}
+
+/**
+ * Swirc messenger
+ *
+ * @param ctx Context structure
+ * @param fmt Format control
+ * @return Void
+ */
+void
+printtext(struct printtext_context *ctx, const char *fmt, ...)
+{
+    va_list ap;
+
+    va_start(ap, fmt);
+    vprinttext(ctx, fmt, ap);
+    va_end(ap);
+}
+
+/**
  * Create mutex "g_puts_mutex".
  */
 static void
 puts_mutex_init(void)
 {
     mutex_new(&g_puts_mutex);
-}
-
-/**
- * Reset text-decoration bools
- *
- * @param booleans Context structure
- * @return Void
- */
-static void
-text_decoration_bools_reset(struct text_decoration_bools *booleans)
-{
-    booleans->is_blink     = false;
-    booleans->is_bold      = false;
-    booleans->is_color     = false;
-    booleans->is_reverse   = false;
-    booleans->is_underline = false;
 }
 
 /**
@@ -719,45 +535,6 @@ convert_wc(wchar_t wc)
     return (mbs);
 }
 
-/**
- * Set color for output in a window.
- *
- * @param[in]  win      Window
- * @param[out] is_color Is color state
- * @param[in]  num1     Number for foreground
- * @param[in]  num2     Number for background
- * @return Void
- */
-static void
-printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
-{
-    const short int num_colorMap_entries =
-	(short int) ARRAY_SIZE(ptext_colorMap);
-    short int fg, bg, resolved_pair;
-#if defined(UNIX)
-    attr_t attr;
-#elif defined(WIN32)
-    chtype attr;
-#endif
-
-    /* num1 shouldn't under any circumstances appear negative */
-    sw_assert(num1 >= 0);
-
-    fg = ptext_colorMap[num1 % num_colorMap_entries].color;
-    bg = (num2 < 0 ? -1 : ptext_colorMap[num2 % num_colorMap_entries].color);
-
-    if ((resolved_pair = color_pair_find(fg, bg)) == -1) {
-	WCOLOR_SET(win, 0);
-	*is_color = false;
-	return;
-    }
-
-    attr = ptext_colorMap[num1 % num_colorMap_entries].at; /*attributes of fg*/
-    attr |= COLOR_PAIR(resolved_pair);
-    term_set_attr(win, attr);
-    *is_color = true;
-}
-
 typedef enum {
     BUF_EOF,
     GO_ON,
@@ -894,6 +671,45 @@ check_for_part5(wchar_t **bufp, char *bg)
 }
 
 /**
+ * Set color for output in a window.
+ *
+ * @param[in]  win      Window
+ * @param[out] is_color Is color state
+ * @param[in]  num1     Number for foreground
+ * @param[in]  num2     Number for background
+ * @return Void
+ */
+static void
+printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
+{
+    const short int num_colorMap_entries =
+	(short int) ARRAY_SIZE(ptext_colorMap);
+    short int fg, bg, resolved_pair;
+#if defined(UNIX)
+    attr_t attr;
+#elif defined(WIN32)
+    chtype attr;
+#endif
+
+    /* num1 shouldn't under any circumstances appear negative */
+    sw_assert(num1 >= 0);
+
+    fg = ptext_colorMap[num1 % num_colorMap_entries].color;
+    bg = (num2 < 0 ? -1 : ptext_colorMap[num2 % num_colorMap_entries].color);
+
+    if ((resolved_pair = color_pair_find(fg, bg)) == -1) {
+	WCOLOR_SET(win, 0);
+	*is_color = false;
+	return;
+    }
+
+    attr = ptext_colorMap[num1 % num_colorMap_entries].at; /*attributes of fg*/
+    attr |= COLOR_PAIR(resolved_pair);
+    term_set_attr(win, attr);
+    *is_color = true;
+}
+
+/**
  * Handle and interpret color codes.
  *
  * @param win      Window
@@ -1010,6 +826,22 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 
     if (has_comma && !(bg[0]))
 	(*bufp)--;
+}
+
+/**
+ * Reset text-decoration bools
+ *
+ * @param booleans Context structure
+ * @return Void
+ */
+static void
+text_decoration_bools_reset(struct text_decoration_bools *booleans)
+{
+    booleans->is_blink     = false;
+    booleans->is_bold      = false;
+    booleans->is_color     = false;
+    booleans->is_reverse   = false;
+    booleans->is_underline = false;
 }
 
 /**
@@ -1312,50 +1144,6 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 }
 
 /**
- * Search for a color pair with given foreground/background.
- *
- * @param fg Foreground
- * @param bg Background
- * @return A color pair number, or -1 if not found.
- */
-short int
-color_pair_find(short int fg, short int bg)
-{
-    const short int gipp1 = g_initialized_pairs + 1;
-    short int pnum; /* pair number */
-    short int x, y;
-
-    for (pnum = 1; pnum < gipp1; pnum++) {
-	if (pair_content(pnum, &x, &y) == ERR) {
-	    return -1;
-	} else if (x == fg && y == bg) { /* found match */
-	    return pnum;
-	} else {
-	    ;
-	}
-    }
-
-    return -1;
-}
-
-/**
- * Swirc messenger
- *
- * @param ctx Context structure
- * @param fmt Format control
- * @return Void
- */
-void
-printtext(struct printtext_context *ctx, const char *fmt, ...)
-{
-    va_list ap;
-
-    va_start(ap, fmt);
-    vprinttext(ctx, fmt, ap);
-    va_end(ap);
-}
-
-/**
  * Print formatted output in Curses windows
  *
  * @param win Window
@@ -1373,22 +1161,234 @@ swirc_wprintw(WINDOW *win, const char *fmt, ...)
 }
 
 /**
- * Print an error message to the active window and free a
- * char-pointer.
+ * Create mutex "vprinttext_mutex".
+ */
+static void
+vprinttext_mutex_init(void)
+{
+    mutex_new(&vprinttext_mutex);
+}
+
+/**
+ * Get multibyte string length
+ */
+static size_t
+get_mb_strlen(const char *s)
+{
+    const size_t ERR_CASE1 = (size_t) -1;
+    const size_t ERR_CASE2 = (size_t) -2;
+    size_t idx = 0;
+    size_t len = 0;
+
+    while (true) {
+	const size_t ret = mbrlen(&s[idx], MB_CUR_MAX, NULL);
+
+	if (ret == ERR_CASE1 || ret == ERR_CASE2) {
+	    return (strlen(s));
+	} else if (ret == 0) {
+	    break;
+	} else {
+	    idx += ret;
+	    len += 1;
+	}
+    }
+
+    return (len);
+}
+
+/**
+ * Get message components
  *
- * @param msg Message
- * @param cp  Char-pointer
+ * @param unproc_msg Unprocessed message
+ * @param spec_type  "Specifier"
+ * @param include_ts Include timestamp?
+ * @return Message components
+ */
+static struct message_components *
+get_processed_out_message(const char *unproc_msg,
+			  enum message_specifier_type spec_type,
+			  bool include_ts)
+{
+#define STRLEN_SQUEEZE(string) ((int) get_mb_strlen(squeeze_text_deco(string)))
+    struct message_components *pout = xcalloc(sizeof *pout, 1);
+    char *tmp = NULL;
+
+    pout->text = NULL;
+    pout->indent = 0;
+
+    if (include_ts) {
+	char *ts = sw_strdup(current_time(Theme("time_format")));
+
+	switch (spec_type) {
+	case TYPE_SPEC1:
+	    pout->text	 = Strdup_printf("%s %s %s", ts, THE_SPEC1, unproc_msg);
+	    tmp		 = Strdup_printf("%s %s ", ts, THE_SPEC1);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC2:
+	    pout->text	 = Strdup_printf("%s %s %s", ts, THE_SPEC2, unproc_msg);
+	    tmp		 = Strdup_printf("%s %s ", ts, THE_SPEC2);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC3:
+	    pout->text	 = Strdup_printf("%s %s %s", ts, THE_SPEC3, unproc_msg);
+	    tmp		 = Strdup_printf("%s %s ", ts, THE_SPEC3);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC1_SPEC2:
+	    pout->text = Strdup_printf("%s %s %s %s", ts, THE_SPEC1,
+				       THE_SPEC2, unproc_msg);
+	    tmp = Strdup_printf("%s %s %s ", ts, THE_SPEC1, THE_SPEC2);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC1_FAILURE:
+	    pout->text = Strdup_printf("%s %s %s %s", ts, THE_SPEC1,
+				       GFX_FAILURE, unproc_msg);
+	    tmp = Strdup_printf("%s %s %s ", ts, THE_SPEC1, GFX_FAILURE);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC1_SUCCESS:
+	    pout->text = Strdup_printf("%s %s %s %s", ts, THE_SPEC1,
+				       GFX_SUCCESS, unproc_msg);
+	    tmp = Strdup_printf("%s %s %s ", ts, THE_SPEC1, GFX_SUCCESS);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC1_WARN:
+	    pout->text = Strdup_printf("%s %s %s %s", ts, THE_SPEC1,
+				       GFX_WARN, unproc_msg);
+	    tmp = Strdup_printf("%s %s %s ", ts, THE_SPEC1, GFX_WARN);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC_NONE: default:
+	    pout->text	 = Strdup_printf("%s %s", ts, unproc_msg);
+	    tmp		 = Strdup_printf("%s ", ts);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	}
+
+	free(ts);
+    } else if (!include_ts) { /* the same but no timestamp */
+	switch (spec_type) {
+	case TYPE_SPEC1:
+	    pout->text   = Strdup_printf("%s %s", THE_SPEC1, unproc_msg);
+	    tmp          = Strdup_printf("%s ", THE_SPEC1);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC2:
+	    pout->text   = Strdup_printf("%s %s", THE_SPEC2, unproc_msg);
+	    tmp          = Strdup_printf("%s ", THE_SPEC2);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC3:
+	    pout->text   = Strdup_printf("%s %s", THE_SPEC3, unproc_msg);
+	    tmp          = Strdup_printf("%s ", THE_SPEC3);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC1_SPEC2:
+	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, THE_SPEC2,
+					 unproc_msg);
+	    tmp          = Strdup_printf("%s %s ", THE_SPEC1, THE_SPEC2);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC1_FAILURE:
+	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, GFX_FAILURE,
+					 unproc_msg);
+	    tmp          = Strdup_printf("%s %s ", THE_SPEC1, GFX_FAILURE);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC1_SUCCESS:
+	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, GFX_SUCCESS,
+					 unproc_msg);
+	    tmp          = Strdup_printf("%s %s ", THE_SPEC1, GFX_SUCCESS);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC1_WARN:
+	    pout->text   = Strdup_printf("%s %s %s", THE_SPEC1, GFX_WARN,
+					 unproc_msg);
+	    tmp          = Strdup_printf("%s %s ", THE_SPEC1, GFX_WARN);
+	    pout->indent = STRLEN_SQUEEZE(tmp);
+	    break;
+	case TYPE_SPEC_NONE: default:
+	    pout->text   = sw_strdup(unproc_msg);
+	    pout->indent = 0;
+	    break;
+	}
+    } else {
+	sw_assert_not_reached();
+    }
+
+    free_not_null(tmp);
+    sw_assert(pout->text != NULL);
+
+    if (g_no_colors) {
+	pout->text = squeeze_text_deco(pout->text);
+    }
+
+    return (pout);
+}
+
+/**
+ * Variable argument list version of Swirc messenger
+ *
+ * @param ctx Context structure
+ * @param fmt Format
+ * @param ap  va_list object
  * @return Void
  */
 void
-print_and_free(const char *msg, char *cp)
+vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
 {
-    struct printtext_context ptext_ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
+    char *fmt_copy = NULL;
+    const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
+    struct integer_unparse_context unparse_ctx = {
+	.setting_name     = "textbuffer_size_absolute",
+	.fallback_default = 1000,
+	.lo_limit         = 350,
+	.hi_limit         = 4700,
     };
+    struct message_components *pout = NULL;
 
-    printtext(&ptext_ctx, "%s", msg);
-    free(cp);
+#if defined(UNIX)
+    errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init);
+    if (errno)
+	err_sys("pthread_once");
+#elif defined(WIN32)
+    errno = init_once(&vprinttext_init_done, vprinttext_mutex_init);
+    if (errno)
+	err_sys("init_once");
+#endif
+
+    mutex_lock(&vprinttext_mutex);
+
+    fmt_copy = Strdup_vprintf(fmt, ap);
+    pout     = get_processed_out_message(fmt_copy, ctx->spec_type,
+					 ctx->include_ts);
+
+    if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
+	/* Buffer full. Remove head... */
+
+	if ((errno = textBuf_remove(ctx->window->buf,
+	    textBuf_head(ctx->window->buf))) != 0)
+	    err_sys("textBuf_remove");
+    }
+
+    if (textBuf_size(ctx->window->buf) == 0) {
+	if ((errno = textBuf_ins_next(ctx->window->buf, NULL, pout->text,
+	    pout->indent)) != 0)
+	    err_sys("textBuf_ins_next");
+    } else {
+	if ((errno = textBuf_ins_next(ctx->window->buf,
+	    textBuf_tail(ctx->window->buf), pout->text, pout->indent)) != 0)
+	    err_sys("textBuf_ins_next");
+    }
+
+    if (! (ctx->window->scroll_mode))
+	printtext_puts(panel_window(ctx->window->pan), pout->text, pout->indent,
+		       -1, NULL);
+
+    free_not_null(fmt_copy);
+    free_not_null(pout->text);
+    free_not_null(pout);
+
+    mutex_unlock(&vprinttext_mutex);
 }
