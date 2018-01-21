@@ -48,7 +48,7 @@ int
 main()
 {
     const struct CMUnitTest tests[] = {
-        cmocka_unit_test(handles_invalid_arguments),
+	cmocka_unit_test(handles_invalid_arguments),
 	cmocka_unit_test(does_bounds_checking),
 	cmocka_unit_test(can_copy),
     };
