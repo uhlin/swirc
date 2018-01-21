@@ -436,8 +436,6 @@ finalize_out_string(const wchar_t *buf)
 	err_sys("wcsrtombs");
     } else if (bytes_convert == size - 1) { /* unlikely */
 	out[size - 1] = 0;
-    } else {
-	;
     }
 #endif
 
