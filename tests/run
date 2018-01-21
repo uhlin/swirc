@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 TESTS="
+strcpy
 test_printtext
 test_strdup_printf
 "

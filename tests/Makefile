@@ -15,6 +15,7 @@ library_dirs=-L/usr/local/lib
 
 TESTS=test_strdup_printf.run
 TESTS+=test_printtext.run
+TESTS+=strcpy.run
 
 .PHONY: all objects clean clean_all
 .SUFFIXES: .c .o .run
@@ -39,6 +40,7 @@ objects:
 	$(Q) extra_flags="" $(MAKE) -C$(SRC)/commands -f unix.mk all
 	$(Q) extra_flags="" $(MAKE) -C$(SRC)/events -f unix.mk all
 
+strcpy.run: strcpy.o
 test_printtext.run: test_printtext.o
 test_strdup_printf.run: test_strdup_printf.o
 
