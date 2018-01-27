@@ -408,7 +408,8 @@ add_to_history(const char *string)
     const int tbszp1 = textBuf_size(history) + 1;
 
     if (config_integer_unparse(&unparse_ctx) == 0 ||
-	!strncasecmp(string, "/nickserv -- identify", 21))
+	!strncasecmp(string, "/nickserv -- identify", 21) ||
+	!strncasecmp(string, "/ns -- identify", 15))
 	return;
 
     if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
