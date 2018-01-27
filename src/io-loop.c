@@ -1,5 +1,5 @@
 /* Input output loop
-   Copyright (C) 2014-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -130,6 +130,95 @@ static struct cmds_tag {
     { "whois",      cmd_whois,      true,  "/whois <nick>" },
 };
 
+/* must be freed */
+char *
+get_prompt(void)
+{
+    if (Strings_match_ignore_case(g_active_window->label,
+				  g_status_window_label)) {
+	return (sw_strdup(""));
+    } else if (is_irc_channel(g_active_window->label)) {
+	return (Strdup_printf("%s: ", g_active_window->label));
+    } else {
+	return (Strdup_printf("%s> ", g_active_window->label)); /* a query */
+    }
+
+    /*NOTREACHED*/ sw_assert_not_reached();
+    /*NOTREACHED*/ return (sw_strdup(""));
+}
+
+static void
+output_help_for_command(const char *command)
+{
+    struct cmds_tag *sp;
+    const size_t ar_sz = ARRAY_SIZE(cmds);
+    struct printtext_context ctx = {
+	.window     = g_active_window,
+	.spec_type  = TYPE_SPEC2,
+	.include_ts = true,
+    };
+
+    for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
+	if (Strings_match(command, sp->cmd)) {
+	    printtext(&ctx, "usage: %s", sp->usage);
+	    return;
+	}
+    }
+
+    ctx.spec_type = TYPE_SPEC1_FAILURE;
+    printtext(&ctx, "no such command");
+}
+
+static void
+list_all_commands()
+{
+    struct printtext_context ctx = {
+	.window     = g_active_window,
+	.spec_type  = TYPE_SPEC_NONE,
+	.include_ts = true,
+    };
+    struct cmds_tag *sp;
+    const size_t ar_sz = ARRAY_SIZE(cmds);
+
+    printtext(&ctx, "--------------- Commands ---------------");
+
+    for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
+	const char *cmd1 = sp->cmd;
+	char *cmd2, *cmd3;
+
+	if ((sp + 1) < &cmds[ar_sz] && (sp + 2) < &cmds[ar_sz]) {
+	    sp++, cmd2 = sp->cmd;
+	    sp++, cmd3 = sp->cmd;
+	} else if ((sp + 1) < &cmds[ar_sz]) {
+	    sp++, cmd2 = sp->cmd;
+	    cmd3 = NULL;
+	} else {
+	    cmd2 = cmd3 = NULL;
+	}
+
+	if (cmd1 && cmd2 && cmd3)
+	    printtext(&ctx, "%-15s %-15s %s", cmd1, cmd2, cmd3);
+	else if (cmd1 && cmd2)
+	    printtext(&ctx, "%-15s %s", cmd1, cmd2);
+	else if (cmd1)
+	    printtext(&ctx, "%s", cmd1);
+	else
+	    sw_assert_not_reached();
+    }
+}
+
+/* usage: /help [command] */
+void
+cmd_help(const char *data)
+{
+    const bool has_command = !Strings_match(data, "");
+
+    if (has_command)
+	output_help_for_command(data);
+    else
+	list_all_commands();
+}
+
 #if WIN32
 #define stat _stat
 #endif
@@ -227,24 +316,6 @@ swirc_greeting()
     printtext(&ptext_ctx, " ");
 }
 
-/* must be freed */
-char *
-get_prompt(void)
-{
-    if (Strings_match_ignore_case(g_active_window->label,
-				  g_status_window_label)) {
-	return (sw_strdup(""));
-    } else if (is_irc_channel(g_active_window->label)) {
-	return (Strdup_printf("%s: ", g_active_window->label));
-    } else {
-	return (Strdup_printf("%s> ", g_active_window->label)); /* a query */
-    }
-
-    /*NOTREACHED*/
-    sw_assert_not_reached();
-    return (sw_strdup(""));
-}
-
 static void
 bold_fix(char *string)
 {
@@ -322,55 +393,6 @@ handle_cmds(const char *data)
 	} else {
 	    free(cp);
 	}
-    }
-}
-
-void
-transmit_user_input(const char *win_label, const char *input)
-{
-    struct printtext_context ctx = {
-	.window     = window_by_label(win_label),
-	.spec_type  = TYPE_SPEC_NONE,
-	.include_ts = true,
-    };
-
-    if (ctx.window == NULL) {
-	err_log(0, "In transmit_user_input: window %s not found", win_label);
-	return;
-    }
-
-    if (net_send("PRIVMSG %s :%s", win_label, input) < 0) {
-	g_on_air = false;
-	return;
-    }
-
-    if (!is_irc_channel(win_label))
-	printtext(&ctx, "%s%s%s%c%s %s",
-		  Theme("nick_s1"),
-		  COLOR1, g_my_nickname, NORMAL,
-		  Theme("nick_s2"),
-		  input);
-    else {
-	PNAMES	n = NULL;
-	char	c = ' ';
-
-	if ((n = event_names_htbl_lookup(g_my_nickname, win_label)) == NULL) {
-	    err_log(0, "In transmit_user_input: hash table lookup error");
-	    return;
-	}
-
-	if (n->is_owner)        c = '~';
-	else if (n->is_superop) c = '&';
-	else if (n->is_op)      c = '@';
-	else if (n->is_halfop)  c = '%';
-	else if (n->is_voice)   c = '+';
-	else c = ' ';
-
-	printtext(&ctx, "%s%c%s%s%c%s %s",
-		  Theme("nick_s1"),
-		  c, COLOR1, g_my_nickname, NORMAL,
-		  Theme("nick_s2"),
-		  input);
     }
 }
 
@@ -470,74 +492,51 @@ enter_io_loop(void)
     textBuf_destroy(history);
 }
 
-static void
-output_help_for_command(const char *command)
-{
-    struct cmds_tag *sp;
-    const size_t ar_sz = ARRAY_SIZE(cmds);
-    struct printtext_context ctx = {
-	.window     = g_active_window,
-	.spec_type  = TYPE_SPEC2,
-	.include_ts = true,
-    };
-
-    for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
-	if (Strings_match(command, sp->cmd)) {
-	    printtext(&ctx, "usage: %s", sp->usage);
-	    return;
-	}
-    }
-
-    ctx.spec_type = TYPE_SPEC1_FAILURE;
-    printtext(&ctx, "no such command");
-}
-
-static void
-list_all_commands()
+void
+transmit_user_input(const char *win_label, const char *input)
 {
     struct printtext_context ctx = {
-	.window     = g_active_window,
+	.window     = window_by_label(win_label),
 	.spec_type  = TYPE_SPEC_NONE,
 	.include_ts = true,
     };
-    struct cmds_tag *sp;
-    const size_t ar_sz = ARRAY_SIZE(cmds);
 
-    printtext(&ctx, "--------------- Commands ---------------");
+    if (ctx.window == NULL) {
+	err_log(0, "In transmit_user_input: window %s not found", win_label);
+	return;
+    }
 
-    for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
-	const char *cmd1 = sp->cmd;
-	char *cmd2, *cmd3;
+    if (net_send("PRIVMSG %s :%s", win_label, input) < 0) {
+	g_on_air = false;
+	return;
+    }
 
-	if ((sp + 1) < &cmds[ar_sz] && (sp + 2) < &cmds[ar_sz]) {
-	    sp++, cmd2 = sp->cmd;
-	    sp++, cmd3 = sp->cmd;
-	} else if ((sp + 1) < &cmds[ar_sz]) {
-	    sp++, cmd2 = sp->cmd;
-	    cmd3 = NULL;
-	} else {
-	    cmd2 = cmd3 = NULL;
+    if (!is_irc_channel(win_label))
+	printtext(&ctx, "%s%s%s%c%s %s",
+		  Theme("nick_s1"),
+		  COLOR1, g_my_nickname, NORMAL,
+		  Theme("nick_s2"),
+		  input);
+    else {
+	PNAMES	n = NULL;
+	char	c = ' ';
+
+	if ((n = event_names_htbl_lookup(g_my_nickname, win_label)) == NULL) {
+	    err_log(0, "In transmit_user_input: hash table lookup error");
+	    return;
 	}
 
-	if (cmd1 && cmd2 && cmd3)
-	    printtext(&ctx, "%-15s %-15s %s", cmd1, cmd2, cmd3);
-	else if (cmd1 && cmd2)
-	    printtext(&ctx, "%-15s %s", cmd1, cmd2);
-	else if (cmd1)
-	    printtext(&ctx, "%s", cmd1);
-	else
-	    sw_assert_not_reached();
+	if (n->is_owner)        c = '~';
+	else if (n->is_superop) c = '&';
+	else if (n->is_op)      c = '@';
+	else if (n->is_halfop)  c = '%';
+	else if (n->is_voice)   c = '+';
+	else c = ' ';
+
+	printtext(&ctx, "%s%c%s%s%c%s %s",
+		  Theme("nick_s1"),
+		  c, COLOR1, g_my_nickname, NORMAL,
+		  Theme("nick_s2"),
+		  input);
     }
-}
-
-/* usage: /help [command] */
-void
-cmd_help(const char *data)
-{
-    const bool has_command = !Strings_match(data, "");
-
-    if (has_command)
-	output_help_for_command(data);
-    else
-	list_all_commands();
 }
