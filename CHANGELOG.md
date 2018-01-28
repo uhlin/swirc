@@ -8,6 +8,9 @@ All notable changes to this project will be documented in this file.
 - Command alias /cs (chanserv)
 - Command alias /ns (nickserv)
 
+### Changed ###
+- Windows-specific: always produce UTF-8 output
+
 ## [1.9] - 2017-11-12 ##
 ### Added ###
 - Key CTRL+a (move to beginning of line)
