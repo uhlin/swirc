@@ -417,6 +417,45 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc)
  * @param buf In data
  * @return The converted part (dynamically allocated)
  */
+#if defined(UNIX)
+/**************/
+/**   UNIX   **/
+/**************/
+static char *
+finalize_out_string(const wchar_t *buf)
+{
+    const size_t CONVERT_FAILED = (size_t) -1;
+    const size_t SZ = size_product(wcslen(buf), MB_LEN_MAX) + 1;
+    char *out = xmalloc(SZ);
+    size_t bytes_convert = 0;
+
+    errno = 0;
+    if ((bytes_convert = wcstombs(out, buf, SZ - 1)) == CONVERT_FAILED) {
+	err_log(errno, "in finalize_out_string: wcstombs failed");
+	BZERO(out, SZ);
+	return out;
+    } else if (bytes_convert == SZ - 1)
+	out[SZ - 1] = '\0';
+    return out;
+}
+#elif defined(WIN32)
+/***************/
+/**   WIN32   **/
+/***************/
+static char *
+finalize_out_string(const wchar_t *buf)
+{
+    const int sz = (int) ((wcslen(buf) * MB_LEN_MAX) + 1);
+    char *out = xmalloc(sz);
+
+    errno = 0;
+    if (WideCharToMultiByte(CP_UTF8, 0, buf, -1, out, sz, NULL, NULL) > 0)
+	return out;
+    err_log(errno, "in finalize_out_string: WideCharToMultiByte failed");
+    BZERO(out, sz);
+    return out;
+}
+#endif
 #if 0
 static char *
 finalize_out_string(const wchar_t *buf)
