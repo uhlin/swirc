@@ -1,4 +1,4 @@
-/* Copyright (c) 2016, 2017 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2016-2018 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -78,6 +78,7 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
 static void
 set_ciphers(const char *list)
 {
+    char strerrbuf[MAXERROR];
     struct printtext_context ptext_ctx = {
 	.window	    = g_status_window,
 	.spec_type  = TYPE_SPEC1_WARN,
@@ -86,12 +87,13 @@ set_ciphers(const char *list)
 
     if (ssl_ctx && list && !SSL_CTX_set_cipher_list(ssl_ctx, list))
 	printtext(&ptext_ctx, "warning: set_ciphers: bogus cipher list: %s",
-		  strerror(EINVAL));
+		  xstrerror(EINVAL, strerrbuf, MAXERROR));
 }
 
 void
 net_ssl_init(void)
 {
+    char strerrbuf[MAXERROR];
     struct printtext_context ptext_ctx = {
 	.window	    = g_status_window,
 	.spec_type  = TYPE_SPEC1_WARN,
@@ -103,7 +105,8 @@ net_ssl_init(void)
 
     if (RAND_load_file("/dev/urandom", 1024) <= 0) {
 	printtext(&ptext_ctx, "net_ssl_init: "
-	    "Error seeding the PRNG! (%s)", strerror(ENOSYS));
+	    "Error seeding the PRNG! (%s)",
+	    xstrerror(ENOSYS, strerrbuf, MAXERROR));
     }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
