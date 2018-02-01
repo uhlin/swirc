@@ -96,6 +96,7 @@ static void
 err_doit(bool output_to_stderr, int error, const char *fmt, va_list ap)
 {
     char out[1300] = "";
+    char strerrbuf[MAXERROR] = "";
 
 #if defined(UNIX)
     vsnprintf(out, sizeof out, fmt, ap);
@@ -105,7 +106,7 @@ err_doit(bool output_to_stderr, int error, const char *fmt, va_list ap)
 
     if (error) {
 	sw_strcat(out, ": ", sizeof out);
-	sw_strcat(out, errdesc_by_num(error), sizeof out);
+	sw_strcat(out, xstrerror(error, strerrbuf, MAXERROR), sizeof out);
     }
 
     write_to_error_log(out);
