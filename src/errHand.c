@@ -1,5 +1,5 @@
 /* errHand.c  --  Error handling routines
-   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -213,4 +213,21 @@ errdesc_by_num(int num)
 	}
 
     return (trim(desc));
+}
+
+const char *
+xstrerror(int errnum, char *strerrbuf, size_t buflen)
+{
+    BZERO(strerrbuf, buflen);
+
+#ifdef HAVE_BCI
+    if (errnum == 0 || strerror_s(strerrbuf, buflen, errnum) != 0)
+#else
+    if (errnum == 0 || strerror_r(errnum, strerrbuf, buflen) != 0)
+#endif
+	{
+	    return ("Unknown error!");
+	}
+
+    return (trim(strerrbuf));
 }
