@@ -1,5 +1,5 @@
 /* Readline API
-   Copyright (C) 2012-2014, 2016-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -154,13 +154,15 @@ ins_complex_char(WINDOW *win, int c)
 SW_NORET void
 readline_error(int error, const char *msg)
 {
+    char strerrbuf[MAXERROR];
     struct printtext_context ptext_ctx = {
 	.window     = g_status_window,
 	.spec_type  = TYPE_SPEC1_FAILURE,
 	.include_ts = true,
     };
 
-    printtext(&ptext_ctx, "non-fatal: %s: %s", msg, errdesc_by_num(error));
+    printtext(&ptext_ctx, "non-fatal: %s: %s",
+	      msg, xstrerror(error, strerrbuf, MAXERROR));
     g_readline_loop = false;
     longjmp(g_readline_loc_info, 1);
 }
