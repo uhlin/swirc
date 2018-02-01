@@ -64,7 +64,9 @@ get_timestamp()
     }
 #endif
 
-    return (strftime(buffer, sizeof buffer, "%c", &items) > 0 ? &buffer[0] : "");
+    return ((strftime(buffer, sizeof buffer, "%c", &items) > 0)
+	    ? &buffer[0]
+	    : "");
 }
 
 static void
