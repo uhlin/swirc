@@ -62,7 +62,7 @@ Swirc currently depends on:
 Which means that on for example a Debian GNU/Linux system you need to
 install 3 packages before building:
 
-    # aptitude install libcurl4-gnutls-dev:amd64 libncursesw5-dev libssl-dev
+    # apt install libcurl4-openssl-dev libncursesw5-dev libssl-dev
 
 And on Mac OS X, provided that [Homebrew](http://brew.sh/) is
 installed, issue:
