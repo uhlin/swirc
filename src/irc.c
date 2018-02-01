@@ -1,5 +1,5 @@
 /* Handle and interpret IRC events
-   Copyright (C) 2014-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -226,65 +226,83 @@ static struct numeric_events_tag {
 };
 
 /**
- * Search and route event
+ * Initialize irc module
  */
-static void
-irc_search_and_route_event(struct irc_message_compo *compo)
+void
+irc_init(void)
 {
-    struct printtext_context ptext_ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC1_WARN,
-	.include_ts = true,
-    };
+    if (g_cmdline_opts->nickname)
+	irc_set_my_nickname(g_cmdline_opts->nickname);
+    else if (Config_mod("nickname"))
+	irc_set_my_nickname(Config_mod("nickname"));
+    else
+	err_quit("fatal: in irc_init: no nickname");
+    event_names_init();
+}
 
-    if (is_alphabetic(compo->command)) {
-	struct normal_events_tag *sp = NULL;
-	const size_t size = ARRAY_SIZE(normal_events);
+/**
+ * Deinitialize irc module
+ */
+void
+irc_deinit(void)
+{
+    free_and_null(&g_server_hostname);
+    free_and_null(&g_my_nickname);
+    BZERO(g_user_modes, sizeof g_user_modes);
 
-	for (sp = &normal_events[0]; sp < &normal_events[size]; sp++) {
-	    if (Strings_match(sp->normal_event, compo->command)) {
-		sp->event_handler(compo);
+    g_alt_nick_tested = false;
+
+    event_names_deinit();
+
+    statusbar_update_display_beta();
+    readline_top_panel();
+}
+
+/**
+ * Extract a message with help of given parameters
+ */
+void
+irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
+		int ext_bits, bool is_error)
+{
+    int i = 0;
+    char *cp = NULL, *savp = "";
+
+    if (Strfeed(compo->params, ext_bits) != ext_bits) {
+	struct printtext_context ptext_ctx = {
+	    .window     = g_status_window,
+	    .spec_type  = TYPE_SPEC1_FAILURE,
+	    .include_ts = true,
+	};
+
+	printtext(&ptext_ctx, "In irc_extract_msg: Strfeed(..., %d) != %d",
+		  ext_bits, ext_bits);
+	return;
+    }
+
+    for (i = 0, cp = &compo->params[0];; i++, cp = NULL) {
+	char *token = NULL;
+
+	if ((token = strtok_r(cp, "\n", &savp)) == NULL) {
+	    break;
+	} else if (i == ext_bits) {
+	    if (*token == ':') {
+		token++;
+	    }
+
+	    if (*token) {
+		struct printtext_context ptext_ctx = {
+		    .window     = to_window,
+		    .spec_type  = is_error ? TYPE_SPEC1_FAILURE : TYPE_SPEC1,
+		    .include_ts = true,
+		};
+
+		printtext(&ptext_ctx, "%s", token);
 		return;
 	    }
+	} else {
+	    ;
 	}
-
-	printtext(&ptext_ctx, "Unknown normal event: %s", compo->command);
-#if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
-	printtext(&ptext_ctx, "params = %s", compo->params);
-	printtext(&ptext_ctx, "prefix = %s",
-		  compo->prefix ? compo->prefix : "none");
-#endif
-    } else if (is_numeric(compo->command) && strlen(compo->command) == 3) {
-	struct numeric_events_tag *sp = NULL;
-	const size_t size = ARRAY_SIZE(numeric_events);
-
-	for (sp = &numeric_events[0]; sp < &numeric_events[size]; sp++) {
-	    if (Strings_match(sp->numeric_event, compo->command)) {
-		if (sp->event_handler != NULL) {
-		    sp->event_handler(compo);
-		} else {
-		    if (sp->window == STATUS_WINDOW)
-			irc_extract_msg(compo, g_status_window, sp->ext_bits,
-			    !strncmp(sp->official_name, "ERR_", 4));
-		    else if (sp->window == ACTIVE_WINDOW)
-			irc_extract_msg(compo, g_active_window, sp->ext_bits,
-			    !strncmp(sp->official_name, "ERR_", 4));
-		    else
-			sw_assert_not_reached();
-		}
-
-		return;
-	    }
-	}
-
-	printtext(&ptext_ctx, "Unknown numeric event: %s", compo->command);
-#if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
-	printtext(&ptext_ctx, "params = %s", compo->params);
-	printtext(&ptext_ctx, "prefix = %s",
-		  compo->prefix ? compo->prefix : "none");
-#endif
-    } else {
-	printtext(&ptext_ctx, "Erroneous event: %s", compo->command);
     }
 }
 
@@ -351,6 +369,69 @@ FreeMsgCompo(struct irc_message_compo *compo)
     free_not_null(compo->params);
 
     free(compo);
+}
+
+/**
+ * Search and route event
+ */
+static void
+irc_search_and_route_event(struct irc_message_compo *compo)
+{
+    struct printtext_context ptext_ctx = {
+	.window     = g_status_window,
+	.spec_type  = TYPE_SPEC1_WARN,
+	.include_ts = true,
+    };
+
+    if (is_alphabetic(compo->command)) {
+	struct normal_events_tag *sp = NULL;
+	const size_t size = ARRAY_SIZE(normal_events);
+
+	for (sp = &normal_events[0]; sp < &normal_events[size]; sp++) {
+	    if (Strings_match(sp->normal_event, compo->command)) {
+		sp->event_handler(compo);
+		return;
+	    }
+	}
+
+	printtext(&ptext_ctx, "Unknown normal event: %s", compo->command);
+#if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
+	printtext(&ptext_ctx, "params = %s", compo->params);
+	printtext(&ptext_ctx, "prefix = %s",
+		  compo->prefix ? compo->prefix : "none");
+#endif
+    } else if (is_numeric(compo->command) && strlen(compo->command) == 3) {
+	struct numeric_events_tag *sp = NULL;
+	const size_t size = ARRAY_SIZE(numeric_events);
+
+	for (sp = &numeric_events[0]; sp < &numeric_events[size]; sp++) {
+	    if (Strings_match(sp->numeric_event, compo->command)) {
+		if (sp->event_handler != NULL) {
+		    sp->event_handler(compo);
+		} else {
+		    if (sp->window == STATUS_WINDOW)
+			irc_extract_msg(compo, g_status_window, sp->ext_bits,
+			    !strncmp(sp->official_name, "ERR_", 4));
+		    else if (sp->window == ACTIVE_WINDOW)
+			irc_extract_msg(compo, g_active_window, sp->ext_bits,
+			    !strncmp(sp->official_name, "ERR_", 4));
+		    else
+			sw_assert_not_reached();
+		}
+
+		return;
+	    }
+	}
+
+	printtext(&ptext_ctx, "Unknown numeric event: %s", compo->command);
+#if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
+	printtext(&ptext_ctx, "params = %s", compo->params);
+	printtext(&ptext_ctx, "prefix = %s",
+		  compo->prefix ? compo->prefix : "none");
+#endif
+    } else {
+	printtext(&ptext_ctx, "Erroneous event: %s", compo->command);
+    }
 }
 
 /**
@@ -480,82 +561,20 @@ irc_handle_interpret_events(char *recvbuffer,
 }
 
 /**
- * Extract a message with help of given parameters
+ * Set user nickname
  */
 void
-irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
-		int ext_bits, bool is_error)
+irc_set_my_nickname(const char *nick)
 {
-    int i = 0;
-    char *cp = NULL, *savp = "";
-
-    if (Strfeed(compo->params, ext_bits) != ext_bits) {
-	struct printtext_context ptext_ctx = {
-	    .window     = g_status_window,
-	    .spec_type  = TYPE_SPEC1_FAILURE,
-	    .include_ts = true,
-	};
-
-	printtext(&ptext_ctx, "In irc_extract_msg: Strfeed(..., %d) != %d",
-		  ext_bits, ext_bits);
-	return;
+    if (nick == NULL || Strings_match(nick, "")) {
+	err_exit(EINVAL, "irc_set_my_nickname error");
     }
 
-    for (i = 0, cp = &compo->params[0];; i++, cp = NULL) {
-	char *token = NULL;
-
-	if ((token = strtok_r(cp, "\n", &savp)) == NULL) {
-	    break;
-	} else if (i == ext_bits) {
-	    if (*token == ':') {
-		token++;
-	    }
-
-	    if (*token) {
-		struct printtext_context ptext_ctx = {
-		    .window     = to_window,
-		    .spec_type  = is_error ? TYPE_SPEC1_FAILURE : TYPE_SPEC1,
-		    .include_ts = true,
-		};
-
-		printtext(&ptext_ctx, "%s", token);
-		return;
-	    }
-	} else {
-	    ;
-	}
+    if (g_my_nickname) {
+	free(g_my_nickname);
     }
-}
 
-/**
- * Initialize irc module
- */
-void
-irc_init(void)
-{
-    if (g_cmdline_opts->nickname)
-	irc_set_my_nickname(g_cmdline_opts->nickname);
-    else if (Config_mod("nickname"))
-	irc_set_my_nickname(Config_mod("nickname"));
-    else
-	err_quit("fatal: in irc_init: no nickname");
-    event_names_init();
-}
-
-/**
- * Deinitialize irc module
- */
-void
-irc_deinit(void)
-{
-    free_and_null(&g_server_hostname);
-    free_and_null(&g_my_nickname);
-    BZERO(g_user_modes, sizeof g_user_modes);
-
-    g_alt_nick_tested = false;
-
-    event_names_deinit();
-
+    g_my_nickname = sw_strdup(nick);
     statusbar_update_display_beta();
     readline_top_panel();
 }
@@ -575,25 +594,6 @@ irc_set_server_hostname(const char *srv_host)
     }
 
     g_server_hostname = sw_strdup(srv_host);
-}
-
-/**
- * Set user nickname
- */
-void
-irc_set_my_nickname(const char *nick)
-{
-    if (nick == NULL || Strings_match(nick, "")) {
-	err_exit(EINVAL, "irc_set_my_nickname error");
-    }
-
-    if (g_my_nickname) {
-	free(g_my_nickname);
-    }
-
-    g_my_nickname = sw_strdup(nick);
-    statusbar_update_display_beta();
-    readline_top_panel();
 }
 
 /**
