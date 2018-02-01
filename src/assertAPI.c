@@ -68,7 +68,8 @@ assert_doit(const char *fmt, ...)
 }
 
 SW_NORET void
-SWAssertFail(const char *file, long int line, const char *fn, const char *assertion)
+SWAssertFail(const char *file, long int line, const char *fn,
+	     const char *assertion)
 {
     if (!file || *file == '\0')
 	file = descriptions[DNOFILE];
@@ -89,7 +90,8 @@ SWAssertPerrorFail(const char *file, long int line, const char *fn, int errnum)
 	file = descriptions[DNOFILE];
     if (fn == NULL || *fn == '\0')
 	fn = descriptions[DNOFN];
-    assert_doit("%s:%ld: %s: Unexpected error: %s", file, line, fn, xstrerror(errnum, strerrbuf, MAXERROR));
+    assert_doit("%s:%ld: %s: Unexpected error: %s",
+		file, line, fn, xstrerror(errnum, strerrbuf, MAXERROR));
     abort();
 }
 
