@@ -1,5 +1,5 @@
 /* libUtils.c  --  Library Utilities
-   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -256,7 +256,9 @@ xcalloc(size_t elt_count, size_t elt_size)
 	err_quit("xcalloc: integer overflow");
     } else {
 	if ((vp = calloc(elt_count, elt_size)) == NULL)
-	    err_exit(ENOMEM, "xcalloc: out of memory (allocating " PRINT_SZ " bytes)", (elt_count * elt_size));
+	    err_exit(ENOMEM,
+		"xcalloc: out of memory (allocating " PRINT_SZ " bytes)",
+		(elt_count * elt_size));
     }
 
     return (vp);
@@ -284,12 +286,15 @@ xrealloc(void *ptr, size_t newSize)
     void *newPtr;
 
     if (ptr == NULL) {
-	err_exit(EINVAL, "xrealloc: invalid argument: a null pointer was passed");
+	err_exit(EINVAL, "xrealloc: invalid argument: "
+	    "a null pointer was passed");
     } else if (newSize == 0) {
 	err_exit(EINVAL, "xrealloc: invalid argument: zero size  --  use free");
     } else {
 	if ((newPtr = realloc(ptr, newSize)) == NULL)
-	    err_exit(errno, "xrealloc: error changing memory block to " PRINT_SZ " bytes", newSize);
+	    err_exit(errno,
+		"xrealloc: error changing memory block to " PRINT_SZ " bytes",
+		newSize);
     }
 
     return (newPtr);
