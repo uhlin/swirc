@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2017 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2012-2018 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -125,8 +125,6 @@ Interpreter(const struct Interpreter_in *in)
     } else if ((arg = copy_argument(ccp)) == NULL) {
 	interpreter_message("Lacks ending quote for the argument");
 	goto die;
-    } else {
-	;
     }
 
     while (*ccp++ != '\"') {
@@ -154,8 +152,6 @@ Interpreter(const struct Interpreter_in *in)
 	err_ret("%s:%ld: install_func returned %d",
 		in->path, in->line_num, errno);
 	goto die;
-    } else {
-	;
     }
 
     free_not_null(id);
