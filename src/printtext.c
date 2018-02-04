@@ -454,6 +454,27 @@ perform_convert_buffer(const char **in_buf)
     return (out);
 }
 
+static void
+append_newline(wchar_t **wc_buf)
+{
+    const size_t newsize = size_product(wcslen(*wc_buf) + sizeof "\n",
+					sizeof (wchar_t));
+
+    *wc_buf = xrealloc(*wc_buf, newsize);
+
+    if ((errno = sw_wcscat(*wc_buf, L"\n", newsize)) != 0)
+	err_sys("printtext: append_newline");
+}
+
+static void
+replace_characters_with_space(wchar_t *wc_buf, const wchar_t *set)
+{
+    wchar_t *wcp = NULL;
+
+    while ((wcp = wcspbrk(wc_buf, set)) != NULL)
+	*wcp = L' ';
+}
+
 /**
  * Toggle blink ON/OFF. Don't actually use A_BLINK because it's
  * annoying.
@@ -1055,25 +1076,9 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 
     mutex_lock(&g_puts_mutex);
     wc_buf = perform_convert_buffer(&buf);
-
-    if (pwin_scrollable) {
-	const size_t newsize = size_product(wcslen(wc_buf) + sizeof "\n",
-					    sizeof (wchar_t));
-
-	wc_buf = xrealloc(wc_buf, newsize);
-
-	if ((errno = sw_wcscat(wc_buf, L"\n", newsize)) != 0)
-	    err_sys("printtext_puts error");
-    }
-
-    {
-	const wchar_t set[] = L"\f\t\v";
-	wchar_t *wcp = NULL;
-
-	while (wcp = wcspbrk(wc_buf, set), wcp != NULL) {
-	    *wcp = btowc(' ');
-	}
-    }
+    if (pwin_scrollable)
+	append_newline(&wc_buf);
+    replace_characters_with_space(wc_buf, L"\f\t\v");
 
     for (wc_bufp = &wc_buf[0], max_lines_flagged = 0;
 	 *wc_bufp && !max_lines_flagged;
