@@ -1,5 +1,5 @@
 /* Handle event names (353) and event EOF names (366)
-   Copyright (C) 2015-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -103,6 +103,28 @@ hash(const char *nick)
     return (hashval % NAMES_HASH_TABLE_SIZE);
 }
 
+PNAMES
+event_names_htbl_lookup(const char *nick, const char *channel)
+{
+    PIRC_WINDOW window;
+    PNAMES	names;
+
+    if (isNull(nick) || isEmpty(nick) ||
+	(window = window_by_label(channel)) == NULL) {
+	return NULL;
+    }
+
+    for (names = window->names_hash[hash(nick)];
+	 names != NULL;
+	 names = names->next) {
+	if (Strings_match_ignore_case(nick, names->nick)) {
+	    return names;
+	}
+    }
+
+    return NULL;
+}
+
 static void
 hInstall(const struct hInstall_context *ctx)
 {
@@ -143,86 +165,6 @@ hInstall(const struct hInstall_context *ctx)
     }
 }
 
-/* event_names: 353
-
-   Example:
-     :irc.server.com 353 <recipient> <chan type> <channel> :<nick 1> <nick 2>
-                                                            [...]
-
-   <chan type> can be either:
-     @ for secret channels
-     * for private channels
-     = for public channels */
-void
-event_names(struct irc_message_compo *compo)
-{
-    PIRC_WINDOW win;
-    char *chan_type, *channel, *names;
-    char *names_copy, *cp, *token;
-    char *state1, *state2;
-
-    state1 = state2 = "";
-
-    if (Strfeed(compo->params, 3) != 3) {
-	goto bad;
-    }
-
-    (void) strtok_r(compo->params, "\n", &state1); /* recipient */
-    chan_type = strtok_r(NULL, "\n", &state1);
-    channel   = strtok_r(NULL, "\n", &state1);
-    names     = strtok_r(NULL, "\n", &state1);
-
-    if (chan_type == NULL || channel == NULL || names == NULL) {
-	goto bad;
-    }
-
-    if (isEmpty(names_channel) && sw_strcpy(names_channel, channel,
-	sizeof names_channel) != 0) {
-	goto bad;
-    } else if (!Strings_match_ignore_case(names_channel, channel)) {
-	err_log(0, "Unable to parse names of two (or more) channels "
-	    "simultaneously");
-	goto bad;
-    } else if ((win = window_by_label(channel)) == NULL) {
-	goto bad;
-    } else if (win->received_names) {
-	err_log(0, "warning: server sent event 353 (RPL_NAMREPLY): "
-	    "already received names for channel %s", channel);
-	return;
-    } else {
-	names_copy = sw_strdup(*names == ':' ? &names[1] : &names[0]);
-    }
-
-    for (cp = &names_copy[0];; cp = NULL) {
-	struct hInstall_context ctx;
-
-	if ((token = strtok_r(cp, " ", &state2)) == NULL) {
-	    break;
-	}
-
-	ctx.channel    = channel;
-	ctx.nick       =
-	    ((*token == '~' || *token == '&' || *token == '@' ||
-	      *token == '%' || *token == '+')
-	     ? &token[1]
-	     : &token[0]);
-	ctx.is_owner   = (*token == '~');
-	ctx.is_superop = (*token == '&');
-	ctx.is_op      = (*token == '@');
-	ctx.is_halfop  = (*token == '%');
-	ctx.is_voice   = (*token == '+');
-
-	hInstall(&ctx);
-    }
-
-    free(names_copy);
-    return;
-
-  bad:
-    err_msg("In event_names: FATAL ERROR. Aborting.");
-    abort();
-}
-
 int
 event_names_htbl_insert(const char *nick, const char *channel)
 {
@@ -243,6 +185,101 @@ event_names_htbl_insert(const char *nick, const char *channel)
     hInstall(&ctx);
 
     return OK;
+}
+
+int
+event_names_htbl_modify_halfop(const char *nick, const char *channel,
+			       bool is_halfop)
+{
+    PIRC_WINDOW window;
+    PNAMES	names;
+
+    if (isNull(nick) || isEmpty(nick) ||
+	(window = window_by_label(channel)) == NULL) {
+	return ERR;
+    }
+
+    for (names = window->names_hash[hash(nick)];
+	 names != NULL;
+	 names = names->next) {
+	if (Strings_match_ignore_case(nick, names->nick)) {
+	    if (names->is_halfop && is_halfop)
+		return OK;
+	    else
+		names->is_halfop = is_halfop;
+
+	    if (names->is_owner || names->is_superop || names->is_op)
+		return OK;
+	    else if (! (names->is_halfop)) {
+		window->num_halfops--;
+
+		if (names->is_voice)
+		    window->num_voices++;
+		else
+		    window->num_normal++;
+	    } else { /* not halfop */
+		window->num_halfops++;
+
+		if (names->is_voice)
+		    window->num_voices--;
+		else
+		    window->num_normal--;
+	    }
+
+	    return OK;
+	}
+    }
+
+    return ERR;
+}
+
+int
+event_names_htbl_modify_op(const char *nick, const char *channel, bool is_op)
+{
+    PIRC_WINDOW window;
+    PNAMES	names;
+
+    if (isNull(nick) || isEmpty(nick) ||
+	(window = window_by_label(channel)) == NULL) {
+	return ERR;
+    }
+
+    for (names = window->names_hash[hash(nick)];
+	 names != NULL;
+	 names = names->next) {
+	if (Strings_match_ignore_case(nick, names->nick)) {
+	    if (names->is_op && is_op)
+		return OK;
+	    else
+		names->is_op = is_op;
+
+	    if (names->is_owner || names->is_superop)
+		return OK;
+	    else if (! (names->is_op)) {
+		window->num_ops--;
+
+		if (names->is_halfop)
+		    window->num_halfops++;
+		else if (names->is_voice)
+		    window->num_voices++;
+		else
+		    window->num_normal++;
+	    } else { /* not op */
+		window->num_ops++;
+
+		if (names->is_halfop)
+		    window->num_halfops--;
+		else if (names->is_voice)
+		    window->num_voices--;
+		else
+		    window->num_normal--;
+	    }
+
+	    return OK;
+	}
+    }
+
+    return ERR;
 }
 
 int
@@ -328,101 +365,6 @@ event_names_htbl_modify_superop(const char *nick, const char *channel,
 		else if (names->is_halfop) window->num_halfops--;
 		else if (names->is_voice)  window->num_voices--;
 		else window->num_normal--;
-	    }
-
-	    return OK;
-	}
-    }
-
-    return ERR;
-}
-
-int
-event_names_htbl_modify_op(const char *nick, const char *channel, bool is_op)
-{
-    PIRC_WINDOW window;
-    PNAMES	names;
-
-    if (isNull(nick) || isEmpty(nick) ||
-	(window = window_by_label(channel)) == NULL) {
-	return ERR;
-    }
-
-    for (names = window->names_hash[hash(nick)];
-	 names != NULL;
-	 names = names->next) {
-	if (Strings_match_ignore_case(nick, names->nick)) {
-	    if (names->is_op && is_op)
-		return OK;
-	    else
-		names->is_op = is_op;
-
-	    if (names->is_owner || names->is_superop)
-		return OK;
-	    else if (! (names->is_op)) {
-		window->num_ops--;
-
-		if (names->is_halfop)
-		    window->num_halfops++;
-		else if (names->is_voice)
-		    window->num_voices++;
-		else
-		    window->num_normal++;
-	    } else { /* not op */
-		window->num_ops++;
-
-		if (names->is_halfop)
-		    window->num_halfops--;
-		else if (names->is_voice)
-		    window->num_voices--;
-		else
-		    window->num_normal--;
-	    }
-
-	    return OK;
-	}
-    }
-
-    return ERR;
-}
-
-int
-event_names_htbl_modify_halfop(const char *nick, const char *channel,
-			       bool is_halfop)
-{
-    PIRC_WINDOW window;
-    PNAMES	names;
-
-    if (isNull(nick) || isEmpty(nick) ||
-	(window = window_by_label(channel)) == NULL) {
-	return ERR;
-    }
-
-    for (names = window->names_hash[hash(nick)];
-	 names != NULL;
-	 names = names->next) {
-	if (Strings_match_ignore_case(nick, names->nick)) {
-	    if (names->is_halfop && is_halfop)
-		return OK;
-	    else
-		names->is_halfop = is_halfop;
-
-	    if (names->is_owner || names->is_superop || names->is_op)
-		return OK;
-	    else if (! (names->is_halfop)) {
-		window->num_halfops--;
-
-		if (names->is_voice)
-		    window->num_voices++;
-		else
-		    window->num_normal++;
-	    } else { /* not halfop */
-		window->num_halfops++;
-
-		if (names->is_voice)
-		    window->num_voices--;
-		else
-		    window->num_normal--;
 	    }
 
 	    return OK;
@@ -534,108 +476,6 @@ event_names_htbl_remove(const char *nick, const char *channel)
     return ERR;
 }
 
-PNAMES
-event_names_htbl_lookup(const char *nick, const char *channel)
-{
-    PIRC_WINDOW window;
-    PNAMES	names;
-
-    if (isNull(nick) || isEmpty(nick) ||
-	(window = window_by_label(channel)) == NULL) {
-	return NULL;
-    }
-
-    for (names = window->names_hash[hash(nick)];
-	 names != NULL;
-	 names = names->next) {
-	if (Strings_match_ignore_case(nick, names->nick)) {
-	    return names;
-	}
-    }
-
-    return NULL;
-}
-
-void
-event_names_htbl_remove_all(PIRC_WINDOW window)
-{
-    PNAMES *entry_p;
-    PNAMES p, tmp;
-
-    if (window == NULL)
-	return;
-
-    for (entry_p = &window->names_hash[0];
-	 entry_p < &window->names_hash[NAMES_HASH_TABLE_SIZE];
-	 entry_p++) {
-	for (p = *entry_p; p != NULL; p = tmp) {
-	    tmp = p->next;
-	    hUndef(window, p);
-	}
-    }
-}
-
-/* event_eof_names: 366
-
-   Example:
-     :irc.server.com 366 <recipient> <channel> :End of /NAMES list. */
-void
-event_eof_names(struct irc_message_compo *compo)
-{
-    PIRC_WINDOW win;
-    char *channel;
-    char *eof_msg;
-    char *state = "";
-
-    if (Strfeed(compo->params, 2) != 2) {
-	goto bad;
-    }
-
-    (void) strtok_r(compo->params, "\n", &state);
-    channel = strtok_r(NULL, "\n", &state);
-    eof_msg = strtok_r(NULL, "\n", &state);
-
-    if (channel == NULL || eof_msg == NULL ||
-	!Strings_match_ignore_case(channel, names_channel)) {
-	goto bad;
-    } else {
-	BZERO(names_channel, sizeof names_channel);
-    }
-
-    if ((win = window_by_label(channel)) == NULL) {
-	goto bad;
-    } else if (win->received_names) {
-	err_log(0, "warning: server sent event 366 (RPL_ENDOFNAMES): "
-	    "already received names for channel %s", channel);
-	return;
-    } else {
-	win->received_names = true;
-    }
-
-    if (event_names_print_all(channel) != OK) {
-	goto bad;
-    }
-
-    net_send("MODE %s", channel);
-    return;
-
-  bad:
-    err_msg("In event_eof_names: FATAL ERROR. Aborting...");
-    abort();
-}
-
-static void
-free_names_chunk(PCHUNK head)
-{
-    PCHUNK p, tmp;
-
-    for (p = head; p; p = tmp) {
-	tmp = p->next;
-	free(p->nick);
-	free(p);
-    }
-}
-
 /*lint -sem(next_names, r_null) */
 static PCHUNK
 next_names(PIRC_WINDOW window, int *idx)
@@ -680,6 +520,18 @@ next_names(PIRC_WINDOW window, int *idx)
     }
 
     return (head);
+}
+
+static void
+free_names_chunk(PCHUNK head)
+{
+    PCHUNK p, tmp;
+
+    for (p = head; p; p = tmp) {
+	tmp = p->next;
+	free(p->nick);
+	free(p);
+    }
 }
 
 static int
@@ -883,3 +735,152 @@ event_names_print_all(const char *channel)
 
     return OK;
 }
+
+/* event_eof_names: 366
+
+   Example:
+     :irc.server.com 366 <recipient> <channel> :End of /NAMES list. */
+void
+event_eof_names(struct irc_message_compo *compo)
+{
+    PIRC_WINDOW win;
+    char *channel;
+    char *eof_msg;
+    char *state = "";
+
+    if (Strfeed(compo->params, 2) != 2) {
+	goto bad;
+    }
+
+    (void) strtok_r(compo->params, "\n", &state);
+    channel = strtok_r(NULL, "\n", &state);
+    eof_msg = strtok_r(NULL, "\n", &state);
+
+    if (channel == NULL || eof_msg == NULL ||
+	!Strings_match_ignore_case(channel, names_channel)) {
+	goto bad;
+    } else {
+	BZERO(names_channel, sizeof names_channel);
+    }
+
+    if ((win = window_by_label(channel)) == NULL) {
+	goto bad;
+    } else if (win->received_names) {
+	err_log(0, "warning: server sent event 366 (RPL_ENDOFNAMES): "
+	    "already received names for channel %s", channel);
+	return;
+    } else {
+	win->received_names = true;
+    }
+
+    if (event_names_print_all(channel) != OK) {
+	goto bad;
+    }
+
+    net_send("MODE %s", channel);
+    return;
+
+  bad:
+    err_msg("In event_eof_names: FATAL ERROR. Aborting...");
+    abort();
+}
+
+/* event_names: 353
+
+   Example:
+     :irc.server.com 353 <recipient> <chan type> <channel> :<nick 1> <nick 2>
+                                                            [...]
+
+   <chan type> can be either:
+     @ for secret channels
+     * for private channels
+     = for public channels */
+void
+event_names(struct irc_message_compo *compo)
+{
+    PIRC_WINDOW win;
+    char *chan_type, *channel, *names;
+    char *names_copy, *cp, *token;
+    char *state1, *state2;
+
+    state1 = state2 = "";
+
+    if (Strfeed(compo->params, 3) != 3) {
+	goto bad;
+    }
+
+    (void) strtok_r(compo->params, "\n", &state1); /* recipient */
+    chan_type = strtok_r(NULL, "\n", &state1);
+    channel   = strtok_r(NULL, "\n", &state1);
+    names     = strtok_r(NULL, "\n", &state1);
+
+    if (chan_type == NULL || channel == NULL || names == NULL) {
+	goto bad;
+    }
+
+    if (isEmpty(names_channel) && sw_strcpy(names_channel, channel,
+	sizeof names_channel) != 0) {
+	goto bad;
+    } else if (!Strings_match_ignore_case(names_channel, channel)) {
+	err_log(0, "Unable to parse names of two (or more) channels "
+	    "simultaneously");
+	goto bad;
+    } else if ((win = window_by_label(channel)) == NULL) {
+	goto bad;
+    } else if (win->received_names) {
+	err_log(0, "warning: server sent event 353 (RPL_NAMREPLY): "
+	    "already received names for channel %s", channel);
+	return;
+    } else {
+	names_copy = sw_strdup(*names == ':' ? &names[1] : &names[0]);
+    }
+
+    for (cp = &names_copy[0];; cp = NULL) {
+	struct hInstall_context ctx;
+
+	if ((token = strtok_r(cp, " ", &state2)) == NULL) {
+	    break;
+	}
+
+	ctx.channel    = channel;
+	ctx.nick       =
+	    ((*token == '~' || *token == '&' || *token == '@' ||
+	      *token == '%' || *token == '+')
+	     ? &token[1]
+	     : &token[0]);
+	ctx.is_owner   = (*token == '~');
+	ctx.is_superop = (*token == '&');
+	ctx.is_op      = (*token == '@');
+	ctx.is_halfop  = (*token == '%');
+	ctx.is_voice   = (*token == '+');
+
+	hInstall(&ctx);
+    }
+
+    free(names_copy);
+    return;
+
+  bad:
+    err_msg("In event_names: FATAL ERROR. Aborting.");
+    abort();
+}
+
+void
+event_names_htbl_remove_all(PIRC_WINDOW window)
+{
+    PNAMES *entry_p;
+    PNAMES p, tmp;
+
+    if (window == NULL)
+	return;
+
+    for (entry_p = &window->names_hash[0];
+	 entry_p < &window->names_hash[NAMES_HASH_TABLE_SIZE];
+	 entry_p++) {
+	for (p = *entry_p; p != NULL; p = tmp) {
+	    tmp = p->next;
+	    hUndef(window, p);
+	}
+    }
+}
+/* EOF */
