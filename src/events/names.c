@@ -68,12 +68,18 @@ struct name_tag {
 
 static char names_channel[200] = "";
 
+/**
+ * Initialize the module
+ */
 void
 event_names_init(void)
 {
     BZERO(names_channel, sizeof names_channel);
 }
 
+/**
+ * Deinitialize the module
+ */
 void
 event_names_deinit(void)
 {
