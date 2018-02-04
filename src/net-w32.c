@@ -67,9 +67,9 @@ winsock_deinit(void)
 int
 net_send_plain(const char *fmt, ...)
 {
-    char	*buffer = NULL;
-    int		 n_sent = SOCKET_ERROR;
-    va_list	 ap	= { 0 };
+    char *buffer;
+    int n_sent;
+    va_list ap;
 
     if (!fmt) {
 	err_exit(EINVAL, "net_send error");
