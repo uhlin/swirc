@@ -445,7 +445,7 @@ finalize_out_string(const wchar_t *buf)
 static char *
 finalize_out_string(const wchar_t *buf)
 {
-    const int sz = (int) ((wcslen(buf) * MB_LEN_MAX) + 1);
+    const int sz = size_to_int(size_product(wcslen(buf), MB_LEN_MAX) + 1);
     char *out = xmalloc(sz);
 
     errno = 0;
