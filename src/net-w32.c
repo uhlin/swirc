@@ -67,34 +67,30 @@ winsock_deinit(void)
 int
 net_send_plain(const char *fmt, ...)
 {
-    va_list ap;
     char *buffer;
-    const char message_terminate[] = "\r\n";
     int n_sent;
+    va_list ap;
 
     if (!fmt) {
 	err_exit(EINVAL, "net_send error");
     } else if (*fmt == '\0') {
 	return (0); /* nothing sent */
-    } else {
-	va_start(ap, fmt);
-	buffer = Strdup_vprintf(fmt, ap);
-	va_end(ap);
-
-	realloc_strcat(&buffer, message_terminate);
-
-	if ((n_sent = send(g_socket, buffer, strlen(buffer), 0)) ==
-	    SOCKET_ERROR) {
-	    free_and_null(&buffer);
-	    return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
-	}
-
-	free_and_null(&buffer);
-	return (n_sent);
     }
 
-    /*NOTREACHED*/ sw_assert_not_reached();
-    /*NOTREACHED*/ return (-1);
+    va_start(ap, fmt);
+    buffer = Strdup_vprintf(fmt, ap);
+    va_end(ap);
+
+    realloc_strcat(&buffer, "\r\n");
+
+    if ((n_sent = send(g_socket, buffer, strlen(buffer), 0)) ==
+	SOCKET_ERROR) {
+	free_and_null(&buffer);
+	return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
+    }
+
+    free_and_null(&buffer);
+    return (n_sent);
 }
 
 int
