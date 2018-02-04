@@ -12,6 +12,7 @@ const char	*current_time          (const char *fmt);
 int		 int_diff              (const int, const int);
 int		 int_sum               (const int, const int);
 size_t		 size_product          (const size_t elt_count, const size_t elt_size);
+size_t		 xmbstowcs             (wchar_t *, const char *, size_t);
 void		 fclose_ensure_success (FILE *);
 void		 realloc_strcat        (char **dest, const char *src);
 void		 say                   (const char *fmt, ...) PRINTFLIKE(1);

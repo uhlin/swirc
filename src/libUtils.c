@@ -172,6 +172,26 @@ size_product(const size_t elt_count, const size_t elt_size)
     return (elt_count * elt_size);
 }
 
+size_t
+xmbstowcs(wchar_t *pwcs, const char *s, size_t n)
+{
+    size_t bytes_convert = 0;
+    static const size_t CONVERT_FAILED = (size_t) -1;
+
+    if (s == NULL) {
+	errno = EINVAL;
+	return (CONVERT_FAILED);
+    }
+#if defined(UNIX)
+    bytes_convert = mbstowcs(pwcs, s, n);
+    return (bytes_convert);
+#elif defined(WIN32)
+    if ((errno = mbstowcs_s(&bytes_convert, pwcs, n + 1, s, n)) != 0)
+	return (CONVERT_FAILED);
+    return (bytes_convert);
+#endif
+}
+
 void
 fclose_ensure_success(FILE *fp)
 {
