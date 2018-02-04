@@ -369,7 +369,7 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
     out             = xcalloc(sz, sizeof (wchar_t));
 
     if (setlocale(LC_CTYPE, tmp_locale) == NULL ||
-	(bytes_convert = mbstowcs(out, buf, sz - 1)) == CONVERT_FAILED) {
+	(bytes_convert = xmbstowcs(out, buf, sz - 1)) == CONVERT_FAILED) {
 	if (setlocale(LC_CTYPE, original_locale) == NULL)
 	    err_log(EPERM, "In try_convert_buf_with_cs: "
 		"cannot restore original locale (%s)", original_locale);
