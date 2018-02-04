@@ -1,5 +1,5 @@
 /* Networking for WIN32
-   Copyright (C) 2014-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -83,7 +83,8 @@ net_send_plain(const char *fmt, ...)
 
 	realloc_strcat(&buffer, message_terminate);
 
-	if ((n_sent = send(g_socket, buffer, strlen(buffer), 0)) == SOCKET_ERROR) {
+	if ((n_sent = send(g_socket, buffer, strlen(buffer), 0)) ==
+	    SOCKET_ERROR) {
 	    free_and_null(&buffer);
 	    return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
 	}
@@ -98,7 +99,8 @@ net_send_plain(const char *fmt, ...)
 }
 
 int
-net_recv_plain(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
+net_recv_plain(struct network_recv_context *ctx,
+	       char *recvbuf, int recvbuf_size)
 {
     fd_set readset;
     struct timeval tv;
@@ -114,7 +116,9 @@ net_recv_plain(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size
 	return (-1);
     } else if (!FD_ISSET(ctx->sock, &readset)) { /* No data to recv() */
 	return (0);
-    } else if ((bytes_received = recv(ctx->sock, recvbuf, recvbuf_size, ctx->flags)) == SOCKET_ERROR) {
+    } else if ((bytes_received =
+		recv(ctx->sock, recvbuf, recvbuf_size, ctx->flags)) ==
+	       SOCKET_ERROR) {
 	return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
     } else if (bytes_received == 0) { /* Connection gracefully closed */
 	return (-1);
@@ -132,7 +136,8 @@ net_spawn_listenThread(void)
 {
     const uintptr_t unsuccessful = (uintptr_t) -1L;
 
-    if ((listenThread_id = _beginthread(listenThread_fn, 0, NULL)) == unsuccessful)
+    if ((listenThread_id = _beginthread(listenThread_fn, 0, NULL)) ==
+	unsuccessful)
 	err_sys("_beginthread error");
 }
 
