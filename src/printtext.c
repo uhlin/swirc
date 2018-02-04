@@ -1006,15 +1006,14 @@ case_default(struct case_default_context *ctx,
 /**
  * Output data to window
  *
- * @param[in]  pwin      Panel window where the output is to be
- *                       displayed.
- * @param[in]  buf       A buffer that should contain the data to be
- *                       written to 'pwin'.
+ * @param[in]  pwin      Panel window where the output is to be displayed.
+ * @param[in]  buf       A buffer that should contain the data to be written to
+ *                       'pwin'.
  * @param[in]  indent    If >0 indent text with this number of blanks.
  * @param[in]  max_lines If >0 write at most this number of lines.
- * @param[out] rep_count "Represent count". How many actual lines does
- *                       this contribution represent in the output
- *                       window? (Passing NULL is ok.)
+ * @param[out] rep_count "Represent count". How many actual lines does this
+ *                       contribution represent in the output window?
+ *                       (Passing NULL is ok.)
  * @return Void
  */
 void
