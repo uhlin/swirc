@@ -126,9 +126,8 @@ net_recv_plain(struct network_recv_context *ctx,
 	return (bytes_received);
     }
 
-    /*NOTREACHED*/
-    sw_assert_not_reached();
-    return (-1);
+    /*NOTREACHED*/ sw_assert_not_reached();
+    /*NOTREACHED*/ return (-1);
 }
 
 void
