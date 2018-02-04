@@ -133,10 +133,10 @@ net_recv_plain(struct network_recv_context *ctx,
 void
 net_spawn_listenThread(void)
 {
-    const uintptr_t unsuccessful = (uintptr_t) -1L;
+    static const uintptr_t UNSUCCESSFUL = (uintptr_t) -1L;
 
     if ((listenThread_id = _beginthread(listenThread_fn, 0, NULL)) ==
-	unsuccessful)
+	UNSUCCESSFUL)
 	err_sys("_beginthread error");
 }
 
