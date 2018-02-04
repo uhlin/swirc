@@ -93,9 +93,8 @@ net_send_plain(const char *fmt, ...)
 	return (n_sent);
     }
 
-    /*NOTREACHED*/
-    sw_assert_not_reached();
-    return (-1);
+    /*NOTREACHED*/ sw_assert_not_reached();
+    /*NOTREACHED*/ return (-1);
 }
 
 int
