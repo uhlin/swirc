@@ -159,6 +159,17 @@ int_sum(const int a, const int b)
     return (a + b);
 }
 
+int
+size_to_int(const size_t value)
+{
+    if (value > INT_MAX) {
+	errno = ERANGE;
+	err_dump("fatal: size_to_int: loss of data");
+    }
+
+    return ((int) value);
+}
+
 /* Return 'elt_count' elements of size 'elt_size' (elt_count * elt_size)
    -- but check for overflow... */
 size_t
