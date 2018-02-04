@@ -38,6 +38,7 @@
 #include "errHand.h"
 #include "io-loop.h"
 #include "irc.h"
+#include "libUtils.h"
 #include "main.h"
 #include "nestHome.h"
 #include "network.h"
@@ -336,7 +337,7 @@ history_next()
     if (element != textBuf_tail(history)) {
 	element = element->next;
 	bold_fix(element->text);
-	bytes_convert = mbstowcs(g_push_back_buf, element->text, ARSZ - 1);
+	bytes_convert = xmbstowcs(g_push_back_buf, element->text, ARSZ - 1);
 	if (bytes_convert == CONVERT_FAILED)
 	    wmemset(g_push_back_buf, 0L, ARSZ);
 	else if (bytes_convert == ARSZ - 1)
@@ -351,7 +352,7 @@ history_prev()
 	return;
 
     bold_fix(element->text);
-    bytes_convert = mbstowcs(g_push_back_buf, element->text, ARSZ - 1);
+    bytes_convert = xmbstowcs(g_push_back_buf, element->text, ARSZ - 1);
     if (bytes_convert == CONVERT_FAILED)
 	wmemset(g_push_back_buf, 0L, ARSZ);
     else if (bytes_convert == ARSZ - 1)
