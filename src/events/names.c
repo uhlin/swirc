@@ -772,8 +772,6 @@ event_names_print_all(const char *channel)
 		      LEFT_BRKT, nick2, RIGHT_BRKT);
 	} else if (nick1) {
 	    printtext(&ptext_ctx, fmt3, LEFT_BRKT, nick1, RIGHT_BRKT);
-	} else {
-	    ;
 	}
     }
 
