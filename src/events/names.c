@@ -609,11 +609,117 @@ names_cmp_fn(const void *obj1, const void *obj2)
     return (strcasecmp(nick1, nick2));
 }
 
+/* -------------------------------------------------- */
+
+struct name_tag *
+get_names_array(const int ntp1, PIRC_WINDOW window)
+{
+    int i = 0, j = 0;
+    struct name_tag *names_array = xcalloc(ntp1, sizeof (struct name_tag));
+
+    for (i = j = 0; i < NAMES_HASH_TABLE_SIZE; i++) {
+	PCHUNK head, element;
+
+	if ((head = next_names(window, &i)) == NULL)
+	    continue;
+
+	for (element = head; element; element = element->next)
+	    names_array[j++].s = sw_strdup(element->nick);
+
+	free_names_chunk(head);
+    }
+
+    return names_array;
+}
+
+struct column_lengths {
+    int col1;
+    int col2;
+    int col3;
+};
+
+static struct column_lengths
+get_column_lengths(const int ntp1, struct name_tag *names_array)
+{
+    struct column_lengths cl = {
+	.col1 = 0,
+	.col2 = 0,
+	.col3 = 0,
+    };
+
+    for (int i = 0; i < ntp1; i++) {
+	const char *nick1 = names_array[i].s;
+	char *nick2, *nick3;
+
+	if ((i + 1) < ntp1 && (i + 2) < ntp1) {
+	    nick2 = names_array[++i].s;
+	    nick3 = names_array[++i].s;
+	} else if ((i + 1) < ntp1) {
+	    nick2 = names_array[++i].s;
+	    nick3 = NULL;
+	} else {
+	    nick2 = nick3 = NULL;
+	}
+
+	if (nick1 && strlen(nick1) > cl.col1)
+	    cl.col1 = (int) strlen(nick1);
+	if (nick2 && strlen(nick2) > cl.col2)
+	    cl.col2 = (int) strlen(nick2);
+	if (nick3 && strlen(nick3) > cl.col3)
+	    cl.col3 = (int) strlen(nick3);
+    }
+
+    return cl;
+}
+
+static bool
+set_format1(char *dest, size_t destsize, struct column_lengths cl)
+{
+    int ret = snprintf(dest, destsize, "%%s%%-%ds%%s %%s%%-%ds%%s %%s%%-%ds%%s",
+		       cl.col1, cl.col2, cl.col3);
+
+    return ((ret == -1 || ret >= destsize) ? false : true);
+}
+
+static bool
+set_format2(char *dest, size_t destsize, struct column_lengths cl)
+{
+    int ret = snprintf(dest, destsize, "%%s%%-%ds%%s %%s%%-%ds%%s",
+		       cl.col1, cl.col2);
+
+    return ((ret == -1 || ret >= destsize) ? false : true);
+}
+
+static bool
+set_format3(char *dest, size_t destsize, struct column_lengths cl)
+{
+    int ret = snprintf(dest, destsize, "%%s%%-%ds%%s",
+		       cl.col1);
+
+    return ((ret == -1 || ret >= destsize) ? false : true);
+}
+
+static void
+destroy_names_array(const int ntp1, struct name_tag *names_array)
+{
+    for (int i = 0; i < ntp1; i++) {
+	free_not_null(names_array[i].s);
+	names_array[i].s = NULL;
+    }
+
+    free(names_array);
+}
+
+#define FORMAT_SIZE 120
+
 int
 event_names_print_all(const char *channel)
 {
     PIRC_WINDOW window = NULL;
-    int i = 0, j = 0;
+    char fmt1[FORMAT_SIZE] = "";
+    char fmt2[FORMAT_SIZE] = "";
+    char fmt3[FORMAT_SIZE] = "";
+    int i = 0;
     struct name_tag *names_array = NULL;
 
     if ((window = window_by_label(channel)) == NULL) {
@@ -630,60 +736,15 @@ event_names_print_all(const char *channel)
 	LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT);
 
     const int ntp1 = window->num_total + 1;
-    names_array = xcalloc(ntp1, sizeof (struct name_tag));
-
-    for (i = j = 0; i < NAMES_HASH_TABLE_SIZE; i++) {
-	PCHUNK head, element;
-
-	if ((head = next_names(window, &i)) == NULL)
-	    continue;
-
-	for (element = head; element; element = element->next)
-	    names_array[j++].s = sw_strdup(element->nick);
-
-	free_names_chunk(head);
-    }
-
+    names_array = get_names_array(ntp1, window);
     qsort(&names_array[0], ntp1, sizeof (struct name_tag), names_cmp_fn);
+    struct column_lengths cl = get_column_lengths(ntp1, names_array);
 
-    int col_len1 = 0;
-    int col_len2 = 0;
-    int col_len3 = 0;
-
-    for (i = 0; i < ntp1; i++) {
-	const char *nick1 = names_array[i].s;
-	char *nick2, *nick3;
-
-	if ((i + 1) < ntp1 && (i + 2) < ntp1) {
-	    nick2 = names_array[++i].s;
-	    nick3 = names_array[++i].s;
-	} else if ((i + 1) < ntp1) {
-	    nick2 = names_array[++i].s;
-	    nick3 = NULL;
-	} else {
-	    nick2 = nick3 = NULL;
-	}
-
-	if (nick1 && strlen(nick1) > col_len1) col_len1 = (int) strlen(nick1);
-	if (nick2 && strlen(nick2) > col_len2) col_len2 = (int) strlen(nick2);
-	if (nick3 && strlen(nick3) > col_len3) col_len3 = (int) strlen(nick3);
-    }
-
-#define FMT_SZ 120
-    int ret = FMT_SZ;
-    char fmt1[FMT_SZ] = "";
-    char fmt2[FMT_SZ] = "";
-    char fmt3[FMT_SZ] = "";
-
-    if ((ret = snprintf(fmt1, sizeof fmt1,
-	"%%s%%-%ds%%s %%s%%-%ds%%s %%s%%-%ds%%s",
-	col_len1, col_len2, col_len3)) == -1 || ret >= sizeof fmt1)
+    if (!set_format1(fmt1, sizeof fmt1, cl))
 	return ERR;
-    if ((ret = snprintf(fmt2, sizeof fmt2, "%%s%%-%ds%%s %%s%%-%ds%%s",
-	col_len1, col_len2)) == -1 || ret >= sizeof fmt2)
+    if (!set_format2(fmt2, sizeof fmt2, cl))
 	return ERR;
-    if ((ret = snprintf(fmt3, sizeof fmt3, "%%s%%-%ds%%s", col_len1)) == -1 ||
-	ret >= sizeof fmt3)
+    if (!set_format3(fmt3, sizeof fmt3, cl))
 	return ERR;
 
     for (i = 0, ptext_ctx.spec_type = TYPE_SPEC3; i < ntp1; i++) {
@@ -716,12 +777,7 @@ event_names_print_all(const char *channel)
 	}
     }
 
-    for (i = 0; i < ntp1; i++) {
-	free_not_null(names_array[i].s);
-	names_array[i].s = NULL;
-    }
-
-    free(names_array);
+    destroy_names_array(ntp1, names_array);
 
     ptext_ctx.spec_type = TYPE_SPEC1;
     printtext(&ptext_ctx, "%s%s%s%c%s: Total of %c%d%c nicks "
