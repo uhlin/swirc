@@ -710,6 +710,27 @@ destroy_names_array(const int ntp1, struct name_tag *names_array)
     free(names_array);
 }
 
+static void
+output_statistics(struct printtext_context ctx, const char *channel,
+		  PIRC_WINDOW window)
+{
+    ctx.spec_type = TYPE_SPEC1;
+    printtext(&ctx, "%s%s%s%c%s: Total of %c%d%c nicks "
+	"%s%c%d%c ops, %c%d%c halfops, %c%d%c voices, %c%d%c normal%s",
+	LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+	BOLD, window->num_total, BOLD,
+	LEFT_BRKT,
+	BOLD, window->num_ops, BOLD, BOLD, window->num_halfops, BOLD,
+	BOLD, window->num_voices, BOLD, BOLD, window->num_normal, BOLD,
+	RIGHT_BRKT);
+    if (window->num_owners)
+	printtext(&ctx, "-- Additionally: %c%d%c channel owner(s)",
+	    BOLD, window->num_owners, BOLD);
+    if (window->num_superops)
+	printtext(&ctx, "-- Additionally: %c%d%c superops",
+	    BOLD, window->num_superops, BOLD);
+}
+
 #define FORMAT_SIZE 120
 
 int
@@ -776,23 +797,7 @@ event_names_print_all(const char *channel)
     }
 
     destroy_names_array(ntp1, names_array);
-
-    ptext_ctx.spec_type = TYPE_SPEC1;
-    printtext(&ptext_ctx, "%s%s%s%c%s: Total of %c%d%c nicks "
-	"%s%c%d%c ops, %c%d%c halfops, %c%d%c voices, %c%d%c normal%s",
-	LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-	BOLD, window->num_total, BOLD,
-	LEFT_BRKT,
-	BOLD, window->num_ops, BOLD, BOLD, window->num_halfops, BOLD,
-	BOLD, window->num_voices, BOLD, BOLD, window->num_normal, BOLD,
-	RIGHT_BRKT);
-    if (window->num_owners)
-	printtext(&ptext_ctx, "-- Additionally: %c%d%c channel owner(s)",
-	    BOLD, window->num_owners, BOLD);
-    if (window->num_superops)
-	printtext(&ptext_ctx, "-- Additionally: %c%d%c superops",
-	    BOLD, window->num_superops, BOLD);
-
+    output_statistics(ptext_ctx, channel, window);
     return OK;
 }
 
