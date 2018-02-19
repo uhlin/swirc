@@ -494,6 +494,9 @@ enter_io_loop(void)
     textBuf_destroy(history);
 }
 
+#define S1 Theme("nick_s1")
+#define S2 Theme("nick_s2")
+
 void
 transmit_user_input(const char *win_label, const char *input)
 {
@@ -515,10 +518,7 @@ transmit_user_input(const char *win_label, const char *input)
 
     if (!is_irc_channel(win_label))
 	printtext(&ctx, "%s%s%s%c%s %s",
-		  Theme("nick_s1"),
-		  COLOR1, g_my_nickname, NORMAL,
-		  Theme("nick_s2"),
-		  input);
+	    S1, COLOR1, g_my_nickname, NORMAL, S2, input);
     else {
 	PNAMES	n = NULL;
 	char	c = ' ';
@@ -536,9 +536,6 @@ transmit_user_input(const char *win_label, const char *input)
 	else c = ' ';
 
 	printtext(&ctx, "%s%c%s%s%c%s %s",
-		  Theme("nick_s1"),
-		  c, COLOR1, g_my_nickname, NORMAL,
-		  Theme("nick_s2"),
-		  input);
+	    S1, c, COLOR1, g_my_nickname, NORMAL, S2, input);
     }
 }
