@@ -83,7 +83,7 @@ net_send_plain(const char *fmt, ...)
 
     realloc_strcat(&buffer, "\r\n");
 
-    if ((n_sent = send(g_socket, buffer, strlen(buffer), 0)) ==
+    if ((n_sent = send(g_socket, buffer, size_to_int(strlen(buffer)), 0)) ==
 	SOCKET_ERROR) {
 	free_and_null(&buffer);
 	return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
