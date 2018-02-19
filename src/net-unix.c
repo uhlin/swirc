@@ -1,5 +1,5 @@
 /* Networking for UNIX
-   Copyright (C) 2014-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -82,9 +82,8 @@ net_send_plain(const char *fmt, ...)
 	return (n_sent);
     }
 
-    /*NOTREACHED*/
-    sw_assert_not_reached();
-    return (-1);
+    /*NOTREACHED*/ sw_assert_not_reached();
+    /*NOTREACHED*/ return (-1);
 }
 
 int
@@ -115,9 +114,8 @@ net_recv_plain(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size
 	return (bytes_received);
     }
 
-    /*NOTREACHED*/
-    sw_assert_not_reached();
-    return (-1);
+    /*NOTREACHED*/ sw_assert_not_reached();
+    /*NOTREACHED*/ return (-1);
 }
 
 void
