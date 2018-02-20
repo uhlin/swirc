@@ -87,7 +87,8 @@ net_send_plain(const char *fmt, ...)
 }
 
 int
-net_recv_plain(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
+net_recv_plain(struct network_recv_context *ctx,
+	       char *recvbuf, int recvbuf_size)
 {
     fd_set         readset;
     struct timeval tv;
@@ -106,8 +107,9 @@ net_recv_plain(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size
 	return (errno == EINTR ? 0 : -1);
     } else if (!FD_ISSET(ctx->sock, &readset)) { /* No data to recv() */
 	return (0);
-    } else if ((bytes_received = recv(ctx->sock, recvbuf, recvbuf_size, ctx->flags)) == -1) {
-	return (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR ? 0 : -1);
+    } else if (bytes_received = recv(ctx->sock,recvbuf,recvbuf_size,ctx->flags),
+	       bytes_received == -1) {
+	return (errno==EAGAIN || errno==EWOULDBLOCK || errno==EINTR ? 0 : -1);
     } else if (bytes_received == 0) { /* Disconnected! */
 	return (-1);
     } else {
@@ -121,15 +123,14 @@ net_recv_plain(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size
 void
 net_spawn_listenThread(void)
 {
-    if ((errno = pthread_create(&listenThread_id, NULL, listenThread_fn, NULL)) != 0) {
+    if (errno = pthread_create(&listenThread_id, NULL, listenThread_fn, NULL),
+	errno != 0)
 	err_sys("pthread_create error");
-    }
 }
 
 void
 net_listenThread_join(void)
 {
-    if ((errno = pthread_join(listenThread_id, NULL)) != 0) {
+    if ((errno = pthread_join(listenThread_id, NULL)) != 0)
 	err_sys("pthread_join error");
-    }
 }
