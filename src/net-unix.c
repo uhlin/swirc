@@ -56,9 +56,9 @@ listenThread_fn(void *arg)
 int
 net_send_plain(const char *fmt, ...)
 {
-    va_list     ap;
     char       *buffer;
     int         n_sent;
+    va_list     ap;
 
     if (!fmt) {
 	err_exit(EINVAL, "net_send");
@@ -86,10 +86,10 @@ int
 net_recv_plain(struct network_recv_context *ctx,
 	       char *recvbuf, int recvbuf_size)
 {
-    fd_set         readset;
-    struct timeval tv;
     const int      maxfdp1 = ctx->sock + 1;
+    fd_set         readset;
     int            bytes_received;
+    struct timeval tv;
 
     FD_ZERO(&readset);
     FD_SET(ctx->sock, &readset);
