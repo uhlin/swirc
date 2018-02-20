@@ -62,7 +62,7 @@ net_send_plain(const char *fmt, ...)
     int         n_sent;
 
     if (!fmt) {
-	err_exit(EINVAL, "net_send error");
+	err_exit(EINVAL, "net_send");
     } else if (*fmt == '\0') {
 	return (0); /* nothing sent */
     } else {
@@ -125,12 +125,12 @@ net_spawn_listenThread(void)
 {
     if (errno = pthread_create(&listenThread_id, NULL, listenThread_fn, NULL),
 	errno != 0)
-	err_sys("pthread_create error");
+	err_sys("pthread_create");
 }
 
 void
 net_listenThread_join(void)
 {
     if ((errno = pthread_join(listenThread_id, NULL)) != 0)
-	err_sys("pthread_join error");
+	err_sys("pthread_join");
 }
