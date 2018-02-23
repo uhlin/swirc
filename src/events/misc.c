@@ -1,5 +1,5 @@
 /* Miscellaneous events
-   Copyright (C) 2014-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -44,6 +44,80 @@
 
 #include "misc.h"
 #include "welcome.h"
+
+/* Not written for a specific event */
+void
+event_allaround_extract_find_colon(struct irc_message_compo *compo)
+{
+    char *cp = NULL;
+    struct printtext_context ctx = {
+	.window     = g_active_window,
+	.spec_type  = TYPE_SPEC1_FAILURE,
+	.include_ts = true,
+    };
+
+    if ((cp = strchr(compo->params, ':')) == NULL) {
+	printtext(&ctx, "on issuing event %s: no colon found", compo->command);
+	return;
+    }
+
+#if 0
+    if (!Strings_match(compo->command, "444") &&
+	!Strings_match(compo->command, "484"))
+	ctx.spec_type = TYPE_SPEC1;
+#endif
+    printtext(&ctx, "%s", ++cp);
+}
+
+/* This function isn't written for a specific event. It extracts the
+   message and removes the first colon in it.
+
+   Events that uses this function:
+     :irc.server.com 042 <nickname> XXXXXXXXX :your unique ID
+     :irc.server.com 252 <nickname> <integer> :operator(s) online
+     :irc.server.com 253 <nickname> <integer> :unknown connections
+     :irc.server.com 254 <nickname> <integer> :channels formed
+     :irc.server.com 396 <nickname> <hostname> :is now your displayed host */
+void
+event_allaround_extract_remove_colon(struct irc_message_compo *compo)
+{
+    char *cp;
+    char *msg, *msg_copy;
+    char *state = "";
+    struct printtext_context ctx = {
+	.window     = g_status_window,
+	.spec_type  = TYPE_SPEC1_WARN,
+	.include_ts = true,
+    };
+
+    if (Strfeed(compo->params, 1) != 1) {
+	printtext(&ctx, "On issuing event %s: Strfeed(..., 1) != 1",
+		  compo->command);
+	return;
+    }
+
+    (void) strtok_r(compo->params, "\n", &state);
+
+    if ((msg = strtok_r(NULL, "\n", &state)) == NULL) {
+	printtext(&ctx, "On issuing event %s: Unable to extract message",
+		  compo->command);
+	return;
+    }
+
+    msg_copy = sw_strdup(msg);
+
+    if ((cp = strchr(msg_copy, ':')) == NULL) {
+	printtext(&ctx, "On issuing event %s: No colon found", compo->command);
+	free(msg_copy);
+	return;
+    }
+
+    cp++;
+    (void) memmove(cp - 1, cp, strlen(cp) + 1);
+    ctx.spec_type = TYPE_SPEC1;
+    printtext(&ctx, "%s", msg_copy);
+    free(msg_copy);
+}
 
 void
 event_bounce(struct irc_message_compo *compo)
@@ -99,78 +173,133 @@ event_bounce(struct irc_message_compo *compo)
     irc_unsuccessful_event_cleanup();
 }
 
-/* This function isn't written for a specific event. It extracts the
-   message and removes the first colon in it.
+/* event_channelCreatedWhen: 329 (undocumented in the RFC)
 
-   Events that uses this function:
-     :irc.server.com 042 <nickname> XXXXXXXXX :your unique ID
-     :irc.server.com 252 <nickname> <integer> :operator(s) online
-     :irc.server.com 253 <nickname> <integer> :unknown connections
-     :irc.server.com 254 <nickname> <integer> :channels formed
-     :irc.server.com 396 <nickname> <hostname> :is now your displayed host */
+   Example:
+     :irc.server.com 329 <my nickname> <channel> <seconds> */
 void
-event_allaround_extract_remove_colon(struct irc_message_compo *compo)
+event_channelCreatedWhen(struct irc_message_compo *compo)
 {
-    char *cp;
-    char *msg, *msg_copy;
-    char *state = "";
+    char	*state	 = "";
+    char	*channel = NULL;
+    char	*seconds = NULL;
     struct printtext_context ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC1_WARN,
+	.window	    = g_active_window,
+	.spec_type  = TYPE_SPEC1,
 	.include_ts = true,
     };
 
-    if (Strfeed(compo->params, 1) != 1) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 1) != 1",
-		  compo->command);
+    if (Strfeed(compo->params, 2) != 2)
 	return;
-    }
 
-    (void) strtok_r(compo->params, "\n", &state);
+    (void) strtok_r(compo->params, "\n", &state); /* my nickname */
 
-    if ((msg = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message",
-		  compo->command);
+    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
+	(seconds = strtok_r(NULL, "\n", &state)) == NULL ||
+	!is_irc_channel(channel) ||
+	!is_numeric(seconds) ||
+	(ctx.window = window_by_label(channel)) == NULL ||
+	ctx.window->received_chancreated)
 	return;
-    }
 
-    msg_copy = sw_strdup(msg);
+    const time_t date_of_creation = (time_t) strtol(seconds, NULL, 10);
 
-    if ((cp = strchr(msg_copy, ':')) == NULL) {
-	printtext(&ctx, "On issuing event %s: No colon found", compo->command);
-	free(msg_copy);
-	return;
-    }
+    printtext(&ctx, "Channel %s%s%s%c%s created %s",
+	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+	      trim(ctime(&date_of_creation)));
 
-    cp++;
-    (void) memmove(cp - 1, cp, strlen(cp) + 1);
-    ctx.spec_type = TYPE_SPEC1;
-    printtext(&ctx, "%s", msg_copy);
-    free(msg_copy);
+    ctx.window->received_chancreated = true;
 }
 
-/* Not written for a specific event */
+/* event_channelModeIs: 324 (RPL_CHANNELMODEIS)
+
+   Examples:
+     :irc.server.com 324 <my nickname> <channel> <mode> <mode params>
+     :irc.server.com 324 <my nickname> <channel> <mode> */
 void
-event_allaround_extract_find_colon(struct irc_message_compo *compo)
+event_channelModeIs(struct irc_message_compo *compo)
 {
-    char *cp = NULL;
+    char	*state	 = "";
+    char	*channel = NULL;
+    char	*data	 = NULL;
     struct printtext_context ctx = {
-	.window     = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
+	.window	    = g_active_window,
+	.spec_type  = TYPE_SPEC1,
 	.include_ts = true,
     };
 
-    if ((cp = strchr(compo->params, ':')) == NULL) {
-	printtext(&ctx, "on issuing event %s: no colon found", compo->command);
+    if (Strfeed(compo->params, 2) != 2)
+	return;
+
+    (void) strtok_r(compo->params, "\n", &state); /* my nickname */
+
+    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
+	(data = strtok_r(NULL, "\n", &state)) == NULL ||
+	(ctx.window = window_by_label(channel)) == NULL)
+	return;
+
+    if ((errno = sw_strcpy(ctx.window->chanmodes, trim(data),
+			   sizeof ctx.window->chanmodes)) != 0) {
+	err_log(errno, "In event_channelModeIs: sw_strcpy");
 	return;
     }
 
-#if 0
-    if (!Strings_match(compo->command, "444") &&
-	!Strings_match(compo->command, "484"))
-	ctx.spec_type = TYPE_SPEC1;
-#endif
-    printtext(&ctx, "%s", ++cp);
+    if (! (ctx.window->received_chanmodes)) {
+	printtext(&ctx, "mode/%s%s%s%c%s %s%s%s",
+		  LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+		  LEFT_BRKT, data, RIGHT_BRKT);
+	ctx.window->received_chanmodes = true;
+    }
+
+    statusbar_update_display_beta();
+    readline_top_panel();
+}
+
+/* event_channel_forward: 470 (undocumented)
+
+   Example:
+     :irc.server.com 470 <my nickname> <from channel> <to channel>
+                         :Forwarding to another channel
+
+   Notes:
+     The JOIN event is sent AFTER event 470 */
+void
+event_channel_forward(struct irc_message_compo *compo)
+{
+    char	*from_channel;
+    char	*msg;
+    char	*my_nick;
+    char	*params = &compo->params[0];
+    char	*state	= "";
+    char	*to_channel;
+    struct printtext_context ctx;
+
+    if (Strfeed(params, 3) != 3) {
+	goto bad;
+    }
+
+    my_nick	 = strtok_r(params, "\n", &state);
+    from_channel = strtok_r(NULL, "\n", &state);
+    to_channel	 = strtok_r(NULL, "\n", &state);
+    msg		 = strtok_r(NULL, "\n", &state);
+
+    if (my_nick == NULL || from_channel == NULL || to_channel == NULL ||
+	msg == NULL || !Strings_match_ignore_case(my_nick, g_my_nickname)) {
+	goto bad;
+    }
+
+    ctx.window     = g_status_window;
+    ctx.spec_type  = TYPE_SPEC1;
+    ctx.include_ts = true;
+    printtext(&ctx, "Channel forwarding from %c%s%c to %c%s%c",
+	      BOLD, from_channel, BOLD, BOLD, to_channel, BOLD);
+    return;
+
+  bad:
+    ctx.window     = g_status_window;
+    ctx.spec_type  = TYPE_SPEC1_FAILURE;
+    ctx.include_ts = true;
+    printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
 }
 
 /* event_local_and_global_users: 265, 266
@@ -249,135 +378,6 @@ event_nicknameInUse(struct irc_message_compo *compo)
 	    irc_unsuccessful_event_cleanup();
 	}
     }
-}
-
-/* event_channel_forward: 470 (undocumented)
-
-   Example:
-     :irc.server.com 470 <my nickname> <from channel> <to channel>
-                         :Forwarding to another channel
-
-   Notes:
-     The JOIN event is sent AFTER event 470 */
-void
-event_channel_forward(struct irc_message_compo *compo)
-{
-    char	*from_channel;
-    char	*msg;
-    char	*my_nick;
-    char	*params = &compo->params[0];
-    char	*state	= "";
-    char	*to_channel;
-    struct printtext_context ctx;
-
-    if (Strfeed(params, 3) != 3) {
-	goto bad;
-    }
-
-    my_nick	 = strtok_r(params, "\n", &state);
-    from_channel = strtok_r(NULL, "\n", &state);
-    to_channel	 = strtok_r(NULL, "\n", &state);
-    msg		 = strtok_r(NULL, "\n", &state);
-
-    if (my_nick == NULL || from_channel == NULL || to_channel == NULL ||
-	msg == NULL || !Strings_match_ignore_case(my_nick, g_my_nickname)) {
-	goto bad;
-    }
-
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1;
-    ctx.include_ts = true;
-    printtext(&ctx, "Channel forwarding from %c%s%c to %c%s%c",
-	      BOLD, from_channel, BOLD, BOLD, to_channel, BOLD);
-    return;
-
-  bad:
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_FAILURE;
-    ctx.include_ts = true;
-    printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
-}
-
-/* event_channelModeIs: 324 (RPL_CHANNELMODEIS)
-
-   Examples:
-     :irc.server.com 324 <my nickname> <channel> <mode> <mode params>
-     :irc.server.com 324 <my nickname> <channel> <mode> */
-void
-event_channelModeIs(struct irc_message_compo *compo)
-{
-    char	*state	 = "";
-    char	*channel = NULL;
-    char	*data	 = NULL;
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
-
-    if (Strfeed(compo->params, 2) != 2)
-	return;
-
-    (void) strtok_r(compo->params, "\n", &state); /* my nickname */
-
-    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
-	(data = strtok_r(NULL, "\n", &state)) == NULL ||
-	(ctx.window = window_by_label(channel)) == NULL)
-	return;
-
-    if ((errno = sw_strcpy(ctx.window->chanmodes, trim(data),
-			   sizeof ctx.window->chanmodes)) != 0) {
-	err_log(errno, "In event_channelModeIs: sw_strcpy");
-	return;
-    }
-
-    if (! (ctx.window->received_chanmodes)) {
-	printtext(&ctx, "mode/%s%s%s%c%s %s%s%s",
-		  LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-		  LEFT_BRKT, data, RIGHT_BRKT);
-	ctx.window->received_chanmodes = true;
-    }
-
-    statusbar_update_display_beta();
-    readline_top_panel();
-}
-
-/* event_channelCreatedWhen: 329 (undocumented in the RFC)
-
-   Example:
-     :irc.server.com 329 <my nickname> <channel> <seconds> */
-void
-event_channelCreatedWhen(struct irc_message_compo *compo)
-{
-    char	*state	 = "";
-    char	*channel = NULL;
-    char	*seconds = NULL;
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
-
-    if (Strfeed(compo->params, 2) != 2)
-	return;
-
-    (void) strtok_r(compo->params, "\n", &state); /* my nickname */
-
-    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
-	(seconds = strtok_r(NULL, "\n", &state)) == NULL ||
-	!is_irc_channel(channel) ||
-	!is_numeric(seconds) ||
-	(ctx.window = window_by_label(channel)) == NULL ||
-	ctx.window->received_chancreated)
-	return;
-
-    const time_t date_of_creation = (time_t) strtol(seconds, NULL, 10);
-
-    printtext(&ctx, "Channel %s%s%s%c%s created %s",
-	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-	      trim(ctime(&date_of_creation)));
-
-    ctx.window->received_chancreated = true;
 }
 
 /* event_userModeIs: 221 (RPL_UMODEIS)
