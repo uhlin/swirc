@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [2.0] - 2018-02-24 ##
 ### Added ###
 - Event 465 `ERR_YOUREBANNEDCREEP`
 - Event 466 `ERR_YOUWILLBEBANNED`
