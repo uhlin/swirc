@@ -1,5 +1,5 @@
 /* Channel related events
-   Copyright (C) 2015-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -44,6 +44,165 @@
 
 #include "channel.h"
 #include "names.h"
+
+/* event_chan_hp: 328
+
+   Example:
+     :irc.server.com 328 <recipient> <channel> :www.channel.homepage.com */
+void
+event_chan_hp(struct irc_message_compo *compo)
+{
+    char *channel, *homepage;
+    char *state = "";
+    struct printtext_context ctx = {
+	.window	    = NULL,
+	.spec_type  = TYPE_SPEC1,
+	.include_ts = true,
+    };
+
+    if (Strfeed(compo->params, 2) != 2)
+	return;
+    (void) strtok_r(compo->params, "\n", &state);
+    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
+	(homepage = strtok_r(NULL, "\n", &state)) == NULL)
+	return;
+    if (*homepage == ':')
+	homepage++;
+    if ((ctx.window = window_by_label(channel)) == NULL)
+	return;
+    printtext(&ctx, "Homepage for %s%s%s%c%s: %s",
+	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+	      homepage);
+}
+
+/* event_join
+
+   Example:
+     :<nick>!<user>@<host> JOIN <channel> */
+void
+event_join(struct irc_message_compo *compo)
+{
+    char	*prefix	 = &compo->prefix[1];
+    char	*channel =
+	*(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
+    char	*state	 = "";
+    char	*nick;
+    char	*user;
+    char	*host;
+    struct printtext_context ctx;
+
+    nick = strtok_r(prefix, "!@", &state);
+    user = strtok_r(NULL, "!@", &state);
+    host = strtok_r(NULL, "!@", &state);
+
+    if (nick == NULL) {
+	goto bad;
+    }
+
+    if (user == NULL)
+	user = "<no user>";
+    if (host == NULL)
+	host = "<no host>";
+
+    if (Strings_match_ignore_case(nick, g_my_nickname)) {
+	if (spawn_chat_window(channel, "No title.") != 0) {
+	    goto bad;
+	}
+    } else {
+	if (event_names_htbl_insert(nick, channel) != OK) {
+	    goto bad;
+	}
+    }
+
+    if ((ctx.window = window_by_label(channel)) == NULL) {
+	goto bad;
+    }
+
+    ctx.spec_type  = TYPE_SPEC1_SPEC2;
+    ctx.include_ts = true;
+
+    printtext(&ctx, "%s%s%c %s%s@%s%s has joined %s%s%c",
+	      COLOR1, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
+	      COLOR2, channel, NORMAL);
+    return;
+
+  bad:
+    err_msg("On issuing event %s: A fatal error occurred", compo->command);
+    abort();
+}
+
+/* event_kick
+
+   Examples:
+     :<nick>!<user>@<host> KICK <channel> <victim> :<reason> */
+void
+event_kick(struct irc_message_compo *compo)
+{
+    char	*channel;
+    char	*nick, *user, *host;
+    char	*prefix = &compo->prefix[1];
+    char	*reason;
+    char	*state1, *state2;
+    char	*victim;
+    struct printtext_context ctx = {
+	.window	    = NULL,
+	.spec_type  = TYPE_SPEC1_SPEC2,
+	.include_ts = true,
+    };
+
+    state1 = state2 = "";
+
+    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
+	return;
+
+    user = strtok_r(NULL, "!@", &state1);
+    host = strtok_r(NULL, "!@", &state1);
+
+    if (!user || !host) {
+	user = "<no user>";
+	host = "<no host>";
+    }
+
+    /* currently not used */
+    (void) user;
+    (void) host;
+
+    if (Strfeed(compo->params, 2) != 2)
+	return;
+
+    if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL ||
+	(victim = strtok_r(NULL, "\n", &state2)) == NULL ||
+	(reason = strtok_r(NULL, "\n", &state2)) == NULL)
+	return;
+
+    if (*reason == ':')
+	reason++;
+
+    if (Strings_match_ignore_case(victim, g_my_nickname)) {
+	if (config_bool_unparse("kick_close_window", true)) {
+	    switch (destroy_chat_window(channel)) {
+	    case EINVAL:
+	    case ENOENT:
+		irc_unsuccessful_event_cleanup();
+		return;
+	    }
+	} else {
+	    event_names_htbl_remove_all(window_by_label(channel));
+	}
+    } else {
+	if (event_names_htbl_remove(victim, channel) != OK) {
+	    irc_unsuccessful_event_cleanup();
+	    return;
+	}
+    }
+
+    if ((ctx.window = window_by_label(channel)) == NULL)
+	ctx.window = g_active_window;
+
+    printtext(&ctx, "%s was kicked from %s%s%c by %s%s%c %s%s%s",
+	      victim, COLOR2, channel, NORMAL, COLOR2, nick, NORMAL,
+	      LEFT_BRKT, reason, RIGHT_BRKT);
+}
 
 static void
 chg_status_for_owner(plus_minus_state_t pm_state,
@@ -247,179 +406,6 @@ maintain_channel_stats(const char *channel, const char *input)
     abort();
 }
 
-static int
-RemoveAndInsertNick(const char *old_nick, const char *new_nick,
-		    const char *label)
-{
-    PNAMES p;
-    bool is_owner, is_superop, is_op, is_halfop, is_voice;
-
-    if ((p = event_names_htbl_lookup(old_nick, label)) == NULL)
-	return ERR; /* non-fatal: old_nick not found on channel */
-
-    is_owner   = p->is_owner;
-    is_superop = p->is_superop;
-    is_op      = p->is_op;
-    is_halfop  = p->is_halfop;
-    is_voice   = p->is_voice;
-
-    if (event_names_htbl_remove(old_nick, label) != OK ||
-	event_names_htbl_insert(new_nick, label) != OK) {
-	err_msg("RemoveAndInsertNick() fatal error");
-	abort();
-    }
-
-    /* XXX: Reverse order */
-    if (is_voice)   chg_status_for_voice(STATE_PLUS, new_nick, label);
-    if (is_halfop)  chg_status_for_halfop(STATE_PLUS, new_nick, label);
-    if (is_op)      chg_status_for_op(STATE_PLUS, new_nick, label);
-    if (is_superop) chg_status_for_superop(STATE_PLUS, new_nick, label);
-    if (is_owner)   chg_status_for_owner(STATE_PLUS, new_nick, label);
-
-    return OK;
-}
-
-/* event_topic_chg
-
-   Example:
-     :<nick>!<user>@<host> TOPIC <channel> :New topic */
-void
-event_topic_chg(struct irc_message_compo *compo)
-{
-    char	*channel, *new_topic;
-    char	*nick, *user, *host;
-    char	*prefix = &compo->prefix[1];
-    char	*state1, *state2;
-    struct printtext_context ctx = {
-	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
-
-    state1 = state2 = "";
-
-    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
-	return;
-
-    user = strtok_r(NULL, "!@", &state1);
-    host = strtok_r(NULL, "!@", &state1);
-
-    if (!user || !host) {
-	user = "<no user>";
-	host = "<no host>";
-    }
-
-    /* currently not used */
-    (void) user;
-    (void) host;
-
-    if (Strfeed(compo->params, 1) != 1)
-	return;
-
-    if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL ||
-	(new_topic = strtok_r(NULL, "\n", &state2)) == NULL)
-	return;
-
-    if (*new_topic == ':')
-	new_topic++;
-
-    if ((ctx.window = window_by_label(channel)) == NULL)
-	return;
-
-    new_window_title(channel, new_topic);
-
-    printtext(&ctx, "%c%s%c changed the topic of %c%s%c to: %s",
-	      BOLD, nick, BOLD, BOLD, channel, BOLD, new_topic);
-}
-
-/* event_topic: 332
-
-   Example:
-     :irc.server.com 332 <recipient> <channel> :This is the topic. */
-void
-event_topic(struct irc_message_compo *compo)
-{
-    char *channel, *topic;
-    char *state = "";
-    struct printtext_context ctx = {
-	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
-
-    if (Strfeed(compo->params, 2) != 2)
-	return;
-    (void) strtok_r(compo->params, "\n", &state);
-    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
-	(topic = strtok_r(NULL, "\n", &state)) == NULL)
-	return;
-    if (*topic == ':')
-	topic++;
-    if ((ctx.window = window_by_label(channel)) == NULL)
-	return;
-    printtext(&ctx, "Topic for %s%s%s%c%s: %s",
-	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-	      topic);
-    new_window_title(channel, topic);
-}
-
-/* event_topic_creator: 333
-
-   Examples:
-     :irc.server.com 333 <recipient> <channel> <nick>!<user>@<host> <time>
-     :irc.server.com 333 <recipient> <channel> <nick> <time> */
-void
-event_topic_creator(struct irc_message_compo *compo)
-{
-    char *channel, *s, *s_copy, *set_when;
-    char *set_by, *user, *host;
-    char *state1, *state2;
-    struct printtext_context ctx = {
-	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
-
-    set_by = user = host = NULL;
-    state1 = state2 = "";
-
-    if (Strfeed(compo->params, 3) != 3)
-	return;
-
-    (void) strtok_r(compo->params, "\n", &state1);
-
-    if ((channel = strtok_r(NULL, "\n", &state1)) == NULL ||
-	(s = strtok_r(NULL, "\n", &state1)) == NULL ||
-	(set_when = strtok_r(NULL, "\n", &state1)) == NULL)
-	return;
-
-    if ((ctx.window = window_by_label(channel)) == NULL ||
-	!is_numeric(set_when))
-	return;
-
-    const time_t timestamp = (time_t) strtol(set_when, NULL, 10);
-
-    s_copy = sw_strdup(s);
-    set_by = strtok_r(s_copy, "!@", &state2);
-    user   = strtok_r(NULL, "!@", &state2);
-    host   = strtok_r(NULL, "!@", &state2);
-
-    if (set_by && user && host) {
-	printtext(&ctx, "Topic set by %c%s%c %s%s@%s%s %s%s%s",
-		  BOLD, set_by, BOLD,
-		  LEFT_BRKT, user, host, RIGHT_BRKT,
-		  LEFT_BRKT, trim(ctime(&timestamp)), RIGHT_BRKT);
-    } else if (set_by) {
-	printtext(&ctx, "Topic set by %c%s%c %s%s%s",
-		  BOLD, set_by, BOLD,
-		  LEFT_BRKT, trim(ctime(&timestamp)), RIGHT_BRKT);
-    } else {
-	/* do nothing */;
-    }
-
-    free(s_copy);
-}
-
 /* event_mode
 
    Examples:
@@ -468,60 +454,79 @@ event_mode(struct irc_message_compo *compo)
     }
 }
 
-/* event_join
+static int
+RemoveAndInsertNick(const char *old_nick, const char *new_nick,
+		    const char *label)
+{
+    PNAMES p;
+    bool is_owner, is_superop, is_op, is_halfop, is_voice;
+
+    if ((p = event_names_htbl_lookup(old_nick, label)) == NULL)
+	return ERR; /* non-fatal: old_nick not found on channel */
+
+    is_owner   = p->is_owner;
+    is_superop = p->is_superop;
+    is_op      = p->is_op;
+    is_halfop  = p->is_halfop;
+    is_voice   = p->is_voice;
+
+    if (event_names_htbl_remove(old_nick, label) != OK ||
+	event_names_htbl_insert(new_nick, label) != OK) {
+	err_msg("RemoveAndInsertNick() fatal error");
+	abort();
+    }
+
+    /* XXX: Reverse order */
+    if (is_voice)   chg_status_for_voice(STATE_PLUS, new_nick, label);
+    if (is_halfop)  chg_status_for_halfop(STATE_PLUS, new_nick, label);
+    if (is_op)      chg_status_for_op(STATE_PLUS, new_nick, label);
+    if (is_superop) chg_status_for_superop(STATE_PLUS, new_nick, label);
+    if (is_owner)   chg_status_for_owner(STATE_PLUS, new_nick, label);
+
+    return OK;
+}
+
+/* event_nick
 
    Example:
-     :<nick>!<user>@<host> JOIN <channel> */
+     :<nick>!<user>@<host> NICK :<new nick> */
 void
-event_join(struct irc_message_compo *compo)
+event_nick(struct irc_message_compo *compo)
 {
-    char	*prefix	 = &compo->prefix[1];
-    char	*channel =
+    char *new_nick =
 	*(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
-    char	*state	 = "";
-    char	*nick;
-    char	*user;
-    char	*host;
-    struct printtext_context ctx;
+    char *nick, *user, *host;
+    char *prefix = &compo->prefix[1];
+    char *state = "";
+    struct printtext_context ctx = {
+	.window	    = NULL,
+	.spec_type  = TYPE_SPEC1_SPEC2,
+	.include_ts = true,
+    };
 
-    nick = strtok_r(prefix, "!@", &state);
-    user = strtok_r(NULL, "!@", &state);
-    host = strtok_r(NULL, "!@", &state);
-
-    if (nick == NULL) {
-	goto bad;
+    if ((nick = strtok_r(prefix, "!@", &state)) == NULL ||
+	(user = strtok_r(NULL, "!@", &state)) == NULL ||
+	(host = strtok_r(NULL, "!@", &state)) == NULL) {
+	return;
     }
 
-    if (user == NULL)
-	user = "<no user>";
-    if (host == NULL)
-	host = "<no host>";
+    /* currently not used */
+    (void) user;
+    (void) host;
 
-    if (Strings_match_ignore_case(nick, g_my_nickname)) {
-	if (spawn_chat_window(channel, "No title.") != 0) {
-	    goto bad;
+    for (int i = 1; i <= g_ntotal_windows; i++) {
+	PIRC_WINDOW window = window_by_refnum(i);
+
+	if (window && is_irc_channel(window->label) &&
+	    RemoveAndInsertNick(nick, new_nick, window->label) == OK) {
+	    ctx.window = window;
+	    printtext(&ctx, "%s%s%c is now known as %s %s%s%c",
+		COLOR2, nick, NORMAL, THE_SPEC2, COLOR1, new_nick, NORMAL);
 	}
-    } else {
-	if (event_names_htbl_insert(nick, channel) != OK) {
-	    goto bad;
-	}
     }
 
-    if ((ctx.window = window_by_label(channel)) == NULL) {
-	goto bad;
-    }
-
-    ctx.spec_type  = TYPE_SPEC1_SPEC2;
-    ctx.include_ts = true;
-
-    printtext(&ctx, "%s%s%c %s%s@%s%s has joined %s%s%c",
-	      COLOR1, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
-	      COLOR2, channel, NORMAL);
-    return;
-
-  bad:
-    err_msg("On issuing event %s: A fatal error occurred", compo->command);
-    abort();
+    if (Strings_match_ignore_case(nick, g_my_nickname))
+	irc_set_my_nickname(new_nick);
 }
 
 /* event_part
@@ -633,65 +638,51 @@ event_quit(struct irc_message_compo *compo)
     }
 }
 
-/* event_nick
+/* event_topic: 332
 
    Example:
-     :<nick>!<user>@<host> NICK :<new nick> */
+     :irc.server.com 332 <recipient> <channel> :This is the topic. */
 void
-event_nick(struct irc_message_compo *compo)
+event_topic(struct irc_message_compo *compo)
 {
-    char *new_nick =
-	*(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
-    char *nick, *user, *host;
-    char *prefix = &compo->prefix[1];
+    char *channel, *topic;
     char *state = "";
     struct printtext_context ctx = {
 	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1_SPEC2,
+	.spec_type  = TYPE_SPEC1,
 	.include_ts = true,
     };
 
-    if ((nick = strtok_r(prefix, "!@", &state)) == NULL ||
-	(user = strtok_r(NULL, "!@", &state)) == NULL ||
-	(host = strtok_r(NULL, "!@", &state)) == NULL) {
+    if (Strfeed(compo->params, 2) != 2)
 	return;
-    }
-
-    /* currently not used */
-    (void) user;
-    (void) host;
-
-    for (int i = 1; i <= g_ntotal_windows; i++) {
-	PIRC_WINDOW window = window_by_refnum(i);
-
-	if (window && is_irc_channel(window->label) &&
-	    RemoveAndInsertNick(nick, new_nick, window->label) == OK) {
-	    ctx.window = window;
-	    printtext(&ctx, "%s%s%c is now known as %s %s%s%c",
-		COLOR2, nick, NORMAL, THE_SPEC2, COLOR1, new_nick, NORMAL);
-	}
-    }
-
-    if (Strings_match_ignore_case(nick, g_my_nickname))
-	irc_set_my_nickname(new_nick);
+    (void) strtok_r(compo->params, "\n", &state);
+    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
+	(topic = strtok_r(NULL, "\n", &state)) == NULL)
+	return;
+    if (*topic == ':')
+	topic++;
+    if ((ctx.window = window_by_label(channel)) == NULL)
+	return;
+    printtext(&ctx, "Topic for %s%s%s%c%s: %s",
+	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+	      topic);
+    new_window_title(channel, topic);
 }
 
-/* event_kick
+/* event_topic_chg
 
-   Examples:
-     :<nick>!<user>@<host> KICK <channel> <victim> :<reason> */
+   Example:
+     :<nick>!<user>@<host> TOPIC <channel> :New topic */
 void
-event_kick(struct irc_message_compo *compo)
+event_topic_chg(struct irc_message_compo *compo)
 {
-    char	*channel;
+    char	*channel, *new_topic;
     char	*nick, *user, *host;
     char	*prefix = &compo->prefix[1];
-    char	*reason;
     char	*state1, *state2;
-    char	*victim;
     struct printtext_context ctx = {
 	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1_SPEC2,
+	.spec_type  = TYPE_SPEC1,
 	.include_ts = true,
     };
 
@@ -712,69 +703,79 @@ event_kick(struct irc_message_compo *compo)
     (void) user;
     (void) host;
 
-    if (Strfeed(compo->params, 2) != 2)
+    if (Strfeed(compo->params, 1) != 1)
 	return;
 
     if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL ||
-	(victim = strtok_r(NULL, "\n", &state2)) == NULL ||
-	(reason = strtok_r(NULL, "\n", &state2)) == NULL)
+	(new_topic = strtok_r(NULL, "\n", &state2)) == NULL)
 	return;
 
-    if (*reason == ':')
-	reason++;
-
-    if (Strings_match_ignore_case(victim, g_my_nickname)) {
-	if (config_bool_unparse("kick_close_window", true)) {
-	    switch (destroy_chat_window(channel)) {
-	    case EINVAL:
-	    case ENOENT:
-		irc_unsuccessful_event_cleanup();
-		return;
-	    }
-	} else {
-	    event_names_htbl_remove_all(window_by_label(channel));
-	}
-    } else {
-	if (event_names_htbl_remove(victim, channel) != OK) {
-	    irc_unsuccessful_event_cleanup();
-	    return;
-	}
-    }
+    if (*new_topic == ':')
+	new_topic++;
 
     if ((ctx.window = window_by_label(channel)) == NULL)
-	ctx.window = g_active_window;
+	return;
 
-    printtext(&ctx, "%s was kicked from %s%s%c by %s%s%c %s%s%s",
-	      victim, COLOR2, channel, NORMAL, COLOR2, nick, NORMAL,
-	      LEFT_BRKT, reason, RIGHT_BRKT);
+    new_window_title(channel, new_topic);
+
+    printtext(&ctx, "%c%s%c changed the topic of %c%s%c to: %s",
+	      BOLD, nick, BOLD, BOLD, channel, BOLD, new_topic);
 }
 
-/* event_chan_hp: 328
+/* event_topic_creator: 333
 
-   Example:
-     :irc.server.com 328 <recipient> <channel> :www.channel.homepage.com */
+   Examples:
+     :irc.server.com 333 <recipient> <channel> <nick>!<user>@<host> <time>
+     :irc.server.com 333 <recipient> <channel> <nick> <time> */
 void
-event_chan_hp(struct irc_message_compo *compo)
+event_topic_creator(struct irc_message_compo *compo)
 {
-    char *channel, *homepage;
-    char *state = "";
+    char *channel, *s, *s_copy, *set_when;
+    char *set_by, *user, *host;
+    char *state1, *state2;
     struct printtext_context ctx = {
 	.window	    = NULL,
 	.spec_type  = TYPE_SPEC1,
 	.include_ts = true,
     };
 
-    if (Strfeed(compo->params, 2) != 2)
+    set_by = user = host = NULL;
+    state1 = state2 = "";
+
+    if (Strfeed(compo->params, 3) != 3)
 	return;
-    (void) strtok_r(compo->params, "\n", &state);
-    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
-	(homepage = strtok_r(NULL, "\n", &state)) == NULL)
+
+    (void) strtok_r(compo->params, "\n", &state1);
+
+    if ((channel = strtok_r(NULL, "\n", &state1)) == NULL ||
+	(s = strtok_r(NULL, "\n", &state1)) == NULL ||
+	(set_when = strtok_r(NULL, "\n", &state1)) == NULL)
 	return;
-    if (*homepage == ':')
-	homepage++;
-    if ((ctx.window = window_by_label(channel)) == NULL)
+
+    if ((ctx.window = window_by_label(channel)) == NULL ||
+	!is_numeric(set_when))
 	return;
-    printtext(&ctx, "Homepage for %s%s%s%c%s: %s",
-	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-	      homepage);
+
+    const time_t timestamp = (time_t) strtol(set_when, NULL, 10);
+
+    s_copy = sw_strdup(s);
+    set_by = strtok_r(s_copy, "!@", &state2);
+    user   = strtok_r(NULL, "!@", &state2);
+    host   = strtok_r(NULL, "!@", &state2);
+
+    if (set_by && user && host) {
+	printtext(&ctx, "Topic set by %c%s%c %s%s@%s%s %s%s%s",
+		  BOLD, set_by, BOLD,
+		  LEFT_BRKT, user, host, RIGHT_BRKT,
+		  LEFT_BRKT, trim(ctime(&timestamp)), RIGHT_BRKT);
+    } else if (set_by) {
+	printtext(&ctx, "Topic set by %c%s%c %s%s%s",
+		  BOLD, set_by, BOLD,
+		  LEFT_BRKT, trim(ctime(&timestamp)), RIGHT_BRKT);
+    } else {
+	/* do nothing */;
+    }
+
+    free(s_copy);
 }
+/* EOF */
