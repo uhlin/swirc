@@ -21,7 +21,7 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2017-11-12</em></small></p>
+<p><small><em>Updated: 2018-02-25</em></small></p>
 <h3>Program options</h3>
 <h4>Common</h4>
 <table class="po">
@@ -100,14 +100,14 @@ To clone the repository use
 <p>Swirc currently depends on:</p>
 <ul>
   <li><a href="https://curl.haxx.se/libcurl/">Curl</a></li>
-  <li><a href="https://www.gnu.org/software/ncurses/ncurses.html">Ncurses</a></li>
+  <li><a href="https://www.gnu.org/software/ncurses/ncurses.html">Ncurses</a> (with wide character support)</li>
   <li><a href="https://www.openssl.org/">OpenSSL toolkit</a></li>
 </ul>
 <p>
 Which means that on for example a Debian GNU/Linux system you need to
 install 3 packages before building:
 </p>
-<kbd># aptitude install libcurl4-gnutls-dev:amd64 libncursesw5-dev libssl-dev</kbd>
+<kbd># apt install libcurl4-openssl-dev libncursesw5-dev libssl-dev</kbd>
 <p>
 And on Mac OS X, provided that
 <a href="http://brew.sh/">Homebrew</a>
