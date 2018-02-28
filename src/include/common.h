@@ -53,4 +53,8 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+#ifdef __NetBSD__
+#include <wchar.h>
+#endif
+
 #endif
