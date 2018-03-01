@@ -1,4 +1,4 @@
-include options.mk
+include unix_def.mk
 
 CFLAGS+=-Isrc/include
 
