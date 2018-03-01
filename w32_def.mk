@@ -15,6 +15,12 @@ LDFLAGS=
 MACHINE=x64
 NAME_libcrypto=crypto-42
 NAME_libssl=ssl-44
-LDLIBS=$(NAME_libcrypto).lib $(NAME_libssl).lib libcurl.lib pdcurses.lib user32.lib ws2_32.lib
+LDLIBS=\
+	$(NAME_libcrypto).lib\
+	$(NAME_libssl).lib\
+	libcurl.lib\
+	pdcurses.lib\
+	user32.lib\
+	ws2_32.lib
 CURL_VERSION=7.56.1
 LIBRESSL_VERSION=2.6.3
