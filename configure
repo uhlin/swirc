@@ -54,6 +54,31 @@ LDLIBS=\\
 EOF
 }
 
+os_NETBSD () {
+    cat <<EOF >>$MAKE_DEF_FILE
+CC=gcc
+CFLAGS=\\
+	-DBSD=1\\
+	-DUNIX=1\\
+	-D_XOPEN_SOURCE_EXTENDED=1\\
+	-I/usr/pkg/include/ncurses\\
+	-I/usr/pkg/include/ncursesw\\
+	-I/usr/pkg/include\\
+	-Wall\\
+	-std=c99
+LDFLAGS=\\
+	-L/usr/pkg/lib\\
+	-Wl,-rpath,/usr/pkg/lib
+LDLIBS=\\
+	-lcrypto\\
+	-lcurl\\
+	-lgnupanelw\\
+	-lncursesw\\
+	-lpthread\\
+	-lssl
+EOF
+}
+
 os_LINUX () {
     cat <<EOF >>$MAKE_DEF_FILE
 CC=gcc
@@ -127,8 +152,11 @@ case "$(uname -s)" in
     "Darwin")
 	os_MAC
     ;;
-    "FreeBSD" | "NetBSD" | "OpenBSD")
+    "FreeBSD" | "OpenBSD")
 	os_BSD
+    ;;
+    "NetBSD")
+	os_NETBSD
     ;;
     "Linux")
 	if test "$1" = "suncc"; then
