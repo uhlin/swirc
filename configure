@@ -174,10 +174,7 @@ esac
 
 if test -f "$MAKE_DEF_FILE"; then
     echo "  - $MAKE_DEF_FILE successfully created!"
-    echo "  - now run: 'cd src && make -f unix.mk'"
 else
     echo "fatal error"
     exit 1
 fi
-
-exit 0
