@@ -32,7 +32,7 @@ Strings_match(const char *s1, const char *s2)
 }
 
 static SW_INLINE bool
-Strings_match_ignore_case(const char *s1, const char *s2)
+strings_match_ignore_case(const char *s1, const char *s2)
 {
 #if defined(UNIX)
     return (strcasecmp(s1, s2) == 0);

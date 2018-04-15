@@ -1,6 +1,11 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Changed ###
+- Name of function
+  - `Strings_match_ignore_case` to `strings_match_ignore_case`
+
 ## [2.0] - 2018-02-24 ##
 ### Added ###
 - Event 465 `ERR_YOUREBANNEDCREEP`

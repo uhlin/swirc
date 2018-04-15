@@ -18,7 +18,7 @@ cmd_say(const char *data)
 
     if (Strings_match(data, "")) {
 	printtext(&ptext_ctx, "/say: missing arguments");
-    } else if (Strings_match_ignore_case(g_active_window->label,
+    } else if (strings_match_ignore_case(g_active_window->label,
 					 g_status_window_label)) {
 	printtext(&ptext_ctx, "/say: cannot say to status window");
     } else {

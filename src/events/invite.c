@@ -60,7 +60,7 @@ event_invite(struct irc_message_compo *compo)
     if (*channel == ':')
 	channel++;
 
-    if (Strings_match_ignore_case(target, g_my_nickname)) {
+    if (strings_match_ignore_case(target, g_my_nickname)) {
 	printtext(&ctx, "%c%s%c %s%s@%s%s invites you to %c%s%c",
 		  BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT,
 		  BOLD, channel, BOLD);

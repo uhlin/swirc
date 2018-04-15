@@ -104,7 +104,7 @@ event_join(struct irc_message_compo *compo)
     if (host == NULL)
 	host = "<no host>";
 
-    if (Strings_match_ignore_case(nick, g_my_nickname)) {
+    if (strings_match_ignore_case(nick, g_my_nickname)) {
 	if (spawn_chat_window(channel, "No title.") != 0) {
 	    goto bad;
 	}
@@ -178,7 +178,7 @@ event_kick(struct irc_message_compo *compo)
     if (*reason == ':')
 	reason++;
 
-    if (Strings_match_ignore_case(victim, g_my_nickname)) {
+    if (strings_match_ignore_case(victim, g_my_nickname)) {
 	if (config_bool_unparse("kick_close_window", true)) {
 	    switch (destroy_chat_window(channel)) {
 	    case EINVAL:
@@ -434,7 +434,7 @@ event_mode(struct irc_message_compo *compo)
 	squeeze(s_copy, ":");
 	(void) trim(s_copy);
 
-	if (Strings_match_ignore_case(nick, channel)) { /* user mode */
+	if (strings_match_ignore_case(nick, channel)) { /* user mode */
 	    ctx.window = g_status_window;
 	    printtext(&ctx, "Mode change %s%s%s for user %c%s%c",
 		      LEFT_BRKT, s_copy, RIGHT_BRKT, BOLD, nick, BOLD);
@@ -525,7 +525,7 @@ event_nick(struct irc_message_compo *compo)
 	}
     }
 
-    if (Strings_match_ignore_case(nick, g_my_nickname))
+    if (strings_match_ignore_case(nick, g_my_nickname))
 	irc_set_my_nickname(new_nick);
 }
 
@@ -564,7 +564,7 @@ event_part(struct irc_message_compo *compo)
 	channel++;
     message = strtok_r(NULL, "\n", &state2);
 
-    if (Strings_match_ignore_case(nick, g_my_nickname)) {
+    if (strings_match_ignore_case(nick, g_my_nickname)) {
 	if (destroy_chat_window(channel) != 0)
 	    goto bad;
 	else

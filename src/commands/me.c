@@ -19,7 +19,7 @@ cmd_me(const char *data)
 
     if (Strings_match(data, "")) {
 	printtext(&ctx, "/me: missing arguments");
-    } else if (Strings_match_ignore_case(g_active_window->label,
+    } else if (strings_match_ignore_case(g_active_window->label,
 					 g_status_window_label)) {
 	printtext(&ctx, "/me: cannot send to status window!");
     } else {

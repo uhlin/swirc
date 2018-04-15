@@ -292,21 +292,21 @@ theme_color_unparse(const char *item_name, short int fallback_color)
 
     for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
 	if (Strings_match(item_name, item->name)) {
-	    if (Strings_match_ignore_case(item->value, "black"))
+	    if (strings_match_ignore_case(item->value, "black"))
 		return COLOR_BLACK;
-	    else if (Strings_match_ignore_case(item->value, "red"))
+	    else if (strings_match_ignore_case(item->value, "red"))
 		return COLOR_RED;
-	    else if (Strings_match_ignore_case(item->value, "green"))
+	    else if (strings_match_ignore_case(item->value, "green"))
 		return COLOR_GREEN;
-	    else if (Strings_match_ignore_case(item->value, "yellow"))
+	    else if (strings_match_ignore_case(item->value, "yellow"))
 		return COLOR_YELLOW;
-	    else if (Strings_match_ignore_case(item->value, "blue"))
+	    else if (strings_match_ignore_case(item->value, "blue"))
 		return COLOR_BLUE;
-	    else if (Strings_match_ignore_case(item->value, "magenta"))
+	    else if (strings_match_ignore_case(item->value, "magenta"))
 		return COLOR_MAGENTA;
-	    else if (Strings_match_ignore_case(item->value, "cyan"))
+	    else if (strings_match_ignore_case(item->value, "cyan"))
 		return COLOR_CYAN;
-	    else if (Strings_match_ignore_case(item->value, "white"))
+	    else if (strings_match_ignore_case(item->value, "white"))
 		return COLOR_WHITE;
 	    else break;
 	}
@@ -327,13 +327,13 @@ theme_bool_unparse(const char *item_name, bool fallback_default)
 
     for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
 	if (Strings_match(item_name, item->name)) {
-	    if (Strings_match_ignore_case(item->value, "on") ||
-		Strings_match_ignore_case(item->value, "true") ||
-		Strings_match_ignore_case(item->value, "yes")) {
+	    if (strings_match_ignore_case(item->value, "on") ||
+		strings_match_ignore_case(item->value, "true") ||
+		strings_match_ignore_case(item->value, "yes")) {
 		return (true);
-	    } else if (Strings_match_ignore_case(item->value, "off") ||
-		       Strings_match_ignore_case(item->value, "false") ||
-		       Strings_match_ignore_case(item->value, "no")) {
+	    } else if (strings_match_ignore_case(item->value, "off") ||
+		       strings_match_ignore_case(item->value, "false") ||
+		       strings_match_ignore_case(item->value, "no")) {
 		return (false);
 	    } else {
 		break;

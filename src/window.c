@@ -116,7 +116,7 @@ window_by_label(const char *label)
     for (window = hash_table[hash(label)];
 	 window != NULL;
 	 window = window->next) {
-	if (Strings_match_ignore_case(label, window->label))
+	if (strings_match_ignore_case(label, window->label))
 	    return (window);
     }
 
@@ -256,7 +256,7 @@ reassign_window_refnums()
 
     foreach_hash_table_entry(entry_p) {
 	for (window = *entry_p; window != NULL; window = window->next) {
-	    if (!Strings_match_ignore_case(window->label,
+	    if (!strings_match_ignore_case(window->label,
 					   g_status_window_label)) {
 		/* skip status window and assign new num */
 		window->refnum = ++ref_count;
@@ -274,7 +274,7 @@ destroy_chat_window(const char *label)
     PIRC_WINDOW window;
 
     if (isNull(label) || isEmpty(label) ||
-	Strings_match_ignore_case(label, g_status_window_label)) {
+	strings_match_ignore_case(label, g_status_window_label)) {
 	return (EINVAL);
     } else if ((window = window_by_label(label)) == NULL) {
 	return (ENOENT);

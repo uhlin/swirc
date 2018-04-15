@@ -114,7 +114,7 @@ get_chanmodes()
     BZERO(buf, sizeof buf);
 
     if ((win = g_active_window) != NULL) {
-	if (Strings_match_ignore_case(win->label, g_status_window_label)) {
+	if (strings_match_ignore_case(win->label, g_status_window_label)) {
 	    sw_strcpy(buf, Theme("slogan"), sizeof buf);
 	} else if (is_irc_channel(win->label)) {
 	    (void) sw_strcpy(buf, win->label, sizeof buf);

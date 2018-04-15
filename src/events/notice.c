@@ -84,7 +84,7 @@ handle_notice_from_my_server(const struct notice_context *ctx)
 	.include_ts = true,
     };
 
-    if (g_my_nickname && Strings_match_ignore_case(ctx->dest, g_my_nickname))
+    if (g_my_nickname && strings_match_ignore_case(ctx->dest, g_my_nickname))
 	printtext(&ptext_ctx, "%s!%s%c %s",
 	    COLOR3, ctx->srv_name, NORMAL, ctx->msg);
 }
@@ -162,7 +162,7 @@ event_notice(struct irc_message_compo *compo)
 	    msg++;
     }
 
-    if (Strings_match_ignore_case(prefix, g_server_hostname)) {
+    if (strings_match_ignore_case(prefix, g_server_hostname)) {
 	struct notice_context ctx = {
 	    .srv_name = prefix,
 	    .dest     = dest,
@@ -204,7 +204,7 @@ event_notice(struct irc_message_compo *compo)
 	    Theme("notice_rb"),
 	    msg);
     } else {
-	if (Strings_match_ignore_case(dest, g_my_nickname))
+	if (strings_match_ignore_case(dest, g_my_nickname))
 	    ptext_ctx.window =
 		window_by_label(nick) ? window_by_label(nick) : g_active_window;
 	else

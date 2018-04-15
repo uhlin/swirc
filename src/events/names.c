@@ -123,7 +123,7 @@ event_names_htbl_lookup(const char *nick, const char *channel)
     for (names = window->names_hash[hash(nick)];
 	 names != NULL;
 	 names = names->next) {
-	if (Strings_match_ignore_case(nick, names->nick)) {
+	if (strings_match_ignore_case(nick, names->nick)) {
 	    return names;
 	}
     }
@@ -208,7 +208,7 @@ event_names_htbl_modify_halfop(const char *nick, const char *channel,
     for (names = window->names_hash[hash(nick)];
 	 names != NULL;
 	 names = names->next) {
-	if (Strings_match_ignore_case(nick, names->nick)) {
+	if (strings_match_ignore_case(nick, names->nick)) {
 	    if (names->is_halfop && is_halfop)
 		return OK;
 	    else
@@ -253,7 +253,7 @@ event_names_htbl_modify_op(const char *nick, const char *channel, bool is_op)
     for (names = window->names_hash[hash(nick)];
 	 names != NULL;
 	 names = names->next) {
-	if (Strings_match_ignore_case(nick, names->nick)) {
+	if (strings_match_ignore_case(nick, names->nick)) {
 	    if (names->is_op && is_op)
 		return OK;
 	    else
@@ -303,7 +303,7 @@ event_names_htbl_modify_owner(const char *nick, const char *channel,
     for (names = window->names_hash[hash(nick)];
 	 names != NULL;
 	 names = names->next) {
-	if (Strings_match_ignore_case(nick, names->nick)) {
+	if (strings_match_ignore_case(nick, names->nick)) {
 	    if (names->is_owner && is_owner)
 		return OK;
 	    else
@@ -349,7 +349,7 @@ event_names_htbl_modify_superop(const char *nick, const char *channel,
     for (names = window->names_hash[hash(nick)];
 	 names != NULL;
 	 names = names->next) {
-	if (Strings_match_ignore_case(nick, names->nick)) {
+	if (strings_match_ignore_case(nick, names->nick)) {
 	    if (names->is_superop && is_superop)
 		return OK;
 	    else
@@ -395,7 +395,7 @@ event_names_htbl_modify_voice(const char *nick, const char *channel,
     for (names = window->names_hash[hash(nick)];
 	 names != NULL;
 	 names = names->next) {
-	if (Strings_match_ignore_case(nick, names->nick)) {
+	if (strings_match_ignore_case(nick, names->nick)) {
 	    if (names->is_voice && is_voice)
 		return OK;
 	    else
@@ -473,7 +473,7 @@ event_names_htbl_remove(const char *nick, const char *channel)
     for (names = window->names_hash[hash(nick)];
 	 names != NULL;
 	 names = names->next) {
-	if (Strings_match_ignore_case(nick, names->nick)) {
+	if (strings_match_ignore_case(nick, names->nick)) {
 	    hUndef(window, names);
 	    return OK;
 	}
@@ -822,7 +822,7 @@ event_eof_names(struct irc_message_compo *compo)
     eof_msg = strtok_r(NULL, "\n", &state);
 
     if (channel == NULL || eof_msg == NULL ||
-	!Strings_match_ignore_case(channel, names_channel)) {
+	!strings_match_ignore_case(channel, names_channel)) {
 	goto bad;
     } else {
 	BZERO(names_channel, sizeof names_channel);
@@ -886,7 +886,7 @@ event_names(struct irc_message_compo *compo)
     if (isEmpty(names_channel) && sw_strcpy(names_channel, channel,
 	sizeof names_channel) != 0) {
 	goto bad;
-    } else if (!Strings_match_ignore_case(names_channel, channel)) {
+    } else if (!strings_match_ignore_case(names_channel, channel)) {
 	err_log(0, "Unable to parse names of two (or more) channels "
 	    "simultaneously");
 	goto bad;

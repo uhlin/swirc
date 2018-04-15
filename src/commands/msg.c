@@ -53,11 +53,11 @@ cmd_msg(const char *data)
     } else if (!is_valid_nickname(recipient) && !is_irc_channel(recipient)) {
 	print_and_free("/msg: neither a nickname or irc channel", dcopy);
 	return;
-    } else if (Strings_match_ignore_case(recipient, "ChanServ")) {
+    } else if (strings_match_ignore_case(recipient, "ChanServ")) {
 	print_and_free("/msg: for safety reasons: "
 	    "consider using command /chanserv", dcopy);
 	return;
-    } else if (Strings_match_ignore_case(recipient, "NickServ")) {
+    } else if (strings_match_ignore_case(recipient, "NickServ")) {
 	print_and_free("/msg: for safety reasons: "
 	    "consider using command /nickserv", dcopy);
 	return;

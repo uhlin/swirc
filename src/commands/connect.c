@@ -339,19 +339,19 @@ cmd_connect(const char *data)
 	print_and_free("/connect: bogus port number", dcopy);
 	return;
     } else {
-	if (Strings_match_ignore_case(server, "efnet"))
+	if (strings_match_ignore_case(server, "efnet"))
 	    do_connect(get_server(efnet_servers,
 		ARRAY_SIZE(efnet_servers), "EFnet servers"), port);
-	else if (Strings_match_ignore_case(server, "freenode"))
+	else if (strings_match_ignore_case(server, "freenode"))
 	    do_connect(get_server(freenode_servers,
 		ARRAY_SIZE(freenode_servers), "freenode servers"), port);
-	else if (Strings_match_ignore_case(server, "ircnet"))
+	else if (strings_match_ignore_case(server, "ircnet"))
 	    do_connect(get_server(ircnet_servers,
 		ARRAY_SIZE(ircnet_servers), "IRCnet servers"), port);
-	else if (Strings_match_ignore_case(server, "quakenet"))
+	else if (strings_match_ignore_case(server, "quakenet"))
 	    do_connect(get_server(quakenet_servers,
 		ARRAY_SIZE(quakenet_servers), "QuakeNet servers"), port);
-	else if (Strings_match_ignore_case(server, "undernet"))
+	else if (strings_match_ignore_case(server, "undernet"))
 	    do_connect(get_server(undernet_servers,
 		ARRAY_SIZE(undernet_servers), "undernet servers"), port);
 	else

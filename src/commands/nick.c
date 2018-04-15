@@ -22,7 +22,7 @@ cmd_nick(const char *data)
 	printtext(&ptext_ctx, "/nick: missing arguments");
     } else if (!is_valid_nickname(data)) {
 	printtext(&ptext_ctx, "/nick: bogus nickname");
-    } else if (Strings_match_ignore_case(g_my_nickname, data)) {
+    } else if (strings_match_ignore_case(g_my_nickname, data)) {
 	printtext(&ptext_ctx, "/nick: no change");
     } else {
 	if (net_send("NICK %s", data) < 0)

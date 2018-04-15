@@ -73,7 +73,7 @@ handle_special_msg(const struct special_msg_context *ctx)
     squeeze(msg, "\001");
     msg = trim(msg);
 
-    if (Strings_match_ignore_case(ctx->dest, g_my_nickname)) {
+    if (strings_match_ignore_case(ctx->dest, g_my_nickname)) {
 	if (!strncmp(msg, "ACTION ", 7) &&
 	    (pt_ctx.window = window_by_label(ctx->nick)) == NULL)
 	    spawn_chat_window(ctx->nick, ctx->nick);
@@ -172,7 +172,7 @@ event_privmsg(struct irc_message_compo *compo)
 	handle_special_msg(&msg_ctx);
 	return;
     }
-    if (Strings_match_ignore_case(dest, g_my_nickname)) {
+    if (strings_match_ignore_case(dest, g_my_nickname)) {
 	if (window_by_label(nick) == NULL &&
 	    spawn_chat_window(nick, nick) != 0)
 	    return;
@@ -182,7 +182,7 @@ event_privmsg(struct irc_message_compo *compo)
 	    return;
     }
 
-    if (Strings_match_ignore_case(dest, g_my_nickname)) {
+    if (strings_match_ignore_case(dest, g_my_nickname)) {
 	if ((ctx.window = window_by_label(nick)) == NULL) {
 	    err_log(0, "In event_privmsg: can't find a window with label %s",
 		    nick);
@@ -219,7 +219,7 @@ event_privmsg(struct irc_message_compo *compo)
 	if (!strncasecmp(msg, s1, strlen(s1)) ||
 	    !strncasecmp(msg, s2, strlen(s2)) ||
 	    !strncasecmp(msg, s3, strlen(s3)) ||
-	    Strings_match_ignore_case(msg, g_my_nickname)) {
+	    strings_match_ignore_case(msg, g_my_nickname)) {
 	    printtext(&ctx, "%s%c%s%s%c%s %s",
 		Theme("nick_s1"), c, COLOR4, nick, NORMAL, Theme("nick_s2"),
 		msg);

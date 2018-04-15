@@ -249,13 +249,13 @@ config_bool_unparse(const char *setting_name, bool fallback_default)
 
     for (item = hash_table[hash(setting_name)]; item; item = item->next) {
 	if (Strings_match(setting_name, item->name)) {
-	    if (Strings_match_ignore_case(item->value, "on") ||
-		Strings_match_ignore_case(item->value, "true") ||
-		Strings_match_ignore_case(item->value, "yes")) {
+	    if (strings_match_ignore_case(item->value, "on") ||
+		strings_match_ignore_case(item->value, "true") ||
+		strings_match_ignore_case(item->value, "yes")) {
 		return (true);
-	    } else if (Strings_match_ignore_case(item->value, "off") ||
-		       Strings_match_ignore_case(item->value, "false") ||
-		       Strings_match_ignore_case(item->value, "no")) {
+	    } else if (strings_match_ignore_case(item->value, "off") ||
+		       strings_match_ignore_case(item->value, "false") ||
+		       strings_match_ignore_case(item->value, "no")) {
 		return (false);
 	    } else {
 		break;
