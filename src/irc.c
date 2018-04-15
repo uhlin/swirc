@@ -268,14 +268,14 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
     int i = 0;
     char *cp = NULL, *savp = "";
 
-    if (Strfeed(compo->params, ext_bits) != ext_bits) {
+    if (strFeed(compo->params, ext_bits) != ext_bits) {
 	struct printtext_context ptext_ctx = {
 	    .window     = g_status_window,
 	    .spec_type  = TYPE_SPEC1_FAILURE,
 	    .include_ts = true,
 	};
 
-	printtext(&ptext_ctx, "In irc_extract_msg: Strfeed(..., %d) != %d",
+	printtext(&ptext_ctx, "In irc_extract_msg: strFeed(..., %d) != %d",
 		  ext_bits, ext_bits);
 	return;
     }
@@ -447,14 +447,14 @@ ProcessProtoMsg(const char *token)
     message_has_prefix = *(protocol_message = sw_strdup(token)) == ':';
     requested_feeds = message_has_prefix ? 2 : 1;
 
-    if (Strfeed(protocol_message, requested_feeds) != requested_feeds) {
+    if (strFeed(protocol_message, requested_feeds) != requested_feeds) {
 	struct printtext_context ptext_ctx = {
 	    .window     = g_status_window,
 	    .spec_type  = TYPE_SPEC1_FAILURE,
 	    .include_ts = true,
 	};
 
-	printtext(&ptext_ctx, "In ProcessProtoMsg: Strfeed(..., %d) != %d",
+	printtext(&ptext_ctx, "In ProcessProtoMsg: strFeed(..., %d) != %d",
 		  requested_feeds, requested_feeds);
 	free(protocol_message);
 	return;

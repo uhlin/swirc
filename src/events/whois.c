@@ -97,8 +97,8 @@ event_whois_ssl(struct irc_message_compo *compo)
     ctx.spec_type  = TYPE_SPEC1_WARN;
     ctx.include_ts = true;
 
-    if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+    if (strFeed(compo->params, 2) != 2) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
 		  compo->command);
 	return;
     }
@@ -140,8 +140,8 @@ event_whois_cert(struct irc_message_compo *compo)
     ctx.spec_type  = TYPE_SPEC1_WARN;
     ctx.include_ts = true;
 
-    if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+    if (strFeed(compo->params, 2) != 2) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
 		  compo->command);
 	return;
     }
@@ -182,8 +182,8 @@ event_whois_away(struct irc_message_compo *compo)
     ctx.spec_type  = TYPE_SPEC1_WARN;
     ctx.include_ts = true;
 
-    if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+    if (strFeed(compo->params, 2) != 2) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
 		  compo->command);
 	return;
     }
@@ -223,8 +223,8 @@ event_whois_service(struct irc_message_compo *compo)
     ctx.spec_type  = TYPE_SPEC1_WARN;
     ctx.include_ts = true;
 
-    if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+    if (strFeed(compo->params, 2) != 2) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
 		  compo->command);
 	return;
     }
@@ -269,8 +269,8 @@ event_whois_user(struct irc_message_compo *compo)
     nick = user = host = rl_name = NULL;
 #endif
 
-    if (Strfeed(compo->params, 5) != 5) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 5) != 5",
+    if (strFeed(compo->params, 5) != 5) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 5) != 5",
 		  compo->command);
 	return;
     }
@@ -317,8 +317,8 @@ event_whois_server(struct irc_message_compo *compo)
     ctx.spec_type  = TYPE_SPEC1_WARN;
     ctx.include_ts = true;
 
-    if (Strfeed(compo->params, 3) != 3) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 3) != 3",
+    if (strFeed(compo->params, 3) != 3) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 3) != 3",
 		  compo->command);
 	return;
     }
@@ -361,8 +361,8 @@ event_whois_ircOp(struct irc_message_compo *compo)
     ctx.spec_type  = TYPE_SPEC1_WARN;
     ctx.include_ts = true;
 
-    if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+    if (strFeed(compo->params, 2) != 2) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
 		  compo->command);
 	return;
     }
@@ -402,7 +402,7 @@ event_whois_idle(struct irc_message_compo *compo)
     struct printtext_context ctx;
     struct time_idle *ti;
 
-    if (Strfeed(compo->params, 4) != 4) {
+    if (strFeed(compo->params, 4) != 4) {
 	goto bad;
     }
 
@@ -472,8 +472,8 @@ event_whois_channels(struct irc_message_compo *compo)
     ctx.spec_type  = TYPE_SPEC1_WARN;
     ctx.include_ts = true;
 
-    if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+    if (strFeed(compo->params, 2) != 2) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
 		  compo->command);
 	return;
     }
@@ -513,8 +513,8 @@ event_whois_acc(struct irc_message_compo *compo)
     ctx.spec_type  = TYPE_SPEC1_WARN;
     ctx.include_ts = true;
 
-    if (Strfeed(compo->params, 3) != 3) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 3) != 3",
+    if (strFeed(compo->params, 3) != 3) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 3) != 3",
 		  compo->command);
 	return;
     }
@@ -554,7 +554,7 @@ event_whois_host(struct irc_message_compo *compo)
     char *str, *str_copy, *cp;
     struct printtext_context ctx;
 
-    if (Strfeed(compo->params, 2) != 2) {
+    if (strFeed(compo->params, 2) != 2) {
 	goto bad;
     }
 
@@ -599,8 +599,8 @@ event_whois_conn(struct irc_message_compo *compo)
     ctx.spec_type  = TYPE_SPEC1_WARN;
     ctx.include_ts = true;
 
-    if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+    if (strFeed(compo->params, 2) != 2) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
 		  compo->command);
 	return;
     }
@@ -643,8 +643,8 @@ event_whois_modes(struct irc_message_compo *compo)
     ctx.spec_type  = TYPE_SPEC1_WARN;
     ctx.include_ts = true;
 
-    if (Strfeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+    if (strFeed(compo->params, 2) != 2) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
 		  compo->command);
 	return;
     }
@@ -692,7 +692,7 @@ event_whoReply(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if (Strfeed(compo->params, 8) != 8)
+    if (strFeed(compo->params, 8) != 8)
 	goto err;
     (void) strtok_r(compo->params, "\n", &state); /* my nick */
     if ((channel     = strtok_r(NULL, "\n", &state)) == NULL

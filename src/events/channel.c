@@ -60,7 +60,7 @@ event_chan_hp(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if (Strfeed(compo->params, 2) != 2)
+    if (strFeed(compo->params, 2) != 2)
 	return;
     (void) strtok_r(compo->params, "\n", &state);
     if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
@@ -167,7 +167,7 @@ event_kick(struct irc_message_compo *compo)
     (void) user;
     (void) host;
 
-    if (Strfeed(compo->params, 2) != 2)
+    if (strFeed(compo->params, 2) != 2)
 	return;
 
     if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL ||
@@ -424,7 +424,7 @@ event_mode(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if (Strfeed(compo->params, 1) != 1)
+    if (strFeed(compo->params, 1) != 1)
 	return;
     if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
 	return;
@@ -544,7 +544,7 @@ event_part(struct irc_message_compo *compo)
     char *prefix = &compo->prefix[1];
     char *state1, *state2;
     char *user;
-    const bool has_message = Strfeed(compo->params, 1) == 1;
+    const bool has_message = strFeed(compo->params, 1) == 1;
     struct printtext_context ctx;
 
     state1 = state2 = "";
@@ -653,7 +653,7 @@ event_topic(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if (Strfeed(compo->params, 2) != 2)
+    if (strFeed(compo->params, 2) != 2)
 	return;
     (void) strtok_r(compo->params, "\n", &state);
     if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
@@ -703,7 +703,7 @@ event_topic_chg(struct irc_message_compo *compo)
     (void) user;
     (void) host;
 
-    if (Strfeed(compo->params, 1) != 1)
+    if (strFeed(compo->params, 1) != 1)
 	return;
 
     if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL ||
@@ -742,7 +742,7 @@ event_topic_creator(struct irc_message_compo *compo)
     set_by = user = host = NULL;
     state1 = state2 = "";
 
-    if (Strfeed(compo->params, 3) != 3)
+    if (strFeed(compo->params, 3) != 3)
 	return;
 
     (void) strtok_r(compo->params, "\n", &state1);

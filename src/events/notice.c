@@ -150,7 +150,7 @@ event_notice(struct irc_message_compo *compo)
     } else if (!prefix) {
 	/* if this happens it's either the server or a bug (or both) */
 	goto bad;
-    } else if (Strfeed(params, 1) != 1) {
+    } else if (strFeed(params, 1) != 1) {
 	goto bad;
     } else if ((dest = strtok_r(params, "\n", &state1)) == NULL ||
 	       (msg = strtok_r(NULL, "\n", &state1)) == NULL) {

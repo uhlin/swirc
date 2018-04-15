@@ -8,7 +8,7 @@ char		*strToUpper  (char *);
 char		*sw_strdup   (const char *string);
 char		*trim        (char *string);
 const char	*Strcolor    (short int color);
-int		 Strfeed     (char *string, int count);
+int		 strFeed     (char *string, int count);
 int		 sw_strcat   (char *dest, const char *src, size_t);
 int		 sw_strcpy   (char *dest, const char *src, size_t);
 int		 sw_wcscat   (wchar_t *dest, const wchar_t *src, size_t);

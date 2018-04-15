@@ -46,7 +46,7 @@ cmd_chanserv(const char *data)
     char *state = "";
 
     if (strings_match(dcopy, "") ||
-	Strfeed(dcopy, 1) != 1 ||
+	strFeed(dcopy, 1) != 1 ||
 	(srv_host = strtok_r(dcopy, "\n", &state)) == NULL ||
 	(cmd = strtok_r(NULL, "\n", &state)) == NULL) {
 	print_and_free("/chanserv: missing arguments", dcopy);
@@ -85,7 +85,7 @@ cmd_nickserv(const char *data)
     char *state = "";
 
     if (strings_match(dcopy, "") ||
-	Strfeed(dcopy, 1) != 1 ||
+	strFeed(dcopy, 1) != 1 ||
 	(srv_host = strtok_r(dcopy, "\n", &state)) == NULL ||
 	(cmd = strtok_r(NULL, "\n", &state)) == NULL) {
 	print_and_free("/nickserv: missing arguments", dcopy);

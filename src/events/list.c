@@ -63,7 +63,7 @@ event_list(struct irc_message_compo *compo)
 
     channel = num_visible = topic = NULL;
 
-    if (Strfeed(compo->params, 3) != 3)
+    if (strFeed(compo->params, 3) != 3)
 	return;
 
     (void) strtok_r(compo->params, "\n", &state); /* my nick (not used) */

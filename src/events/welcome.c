@@ -60,8 +60,8 @@ event_welcome(struct irc_message_compo *compo)
 	irc_set_server_hostname(srv_host);
     }
 
-    if (Strfeed(compo->params, 1) != 1) {
-	printtext(&ctx, "In event_welcome: Strfeed(..., 1) != 1");
+    if (strFeed(compo->params, 1) != 1) {
+	printtext(&ctx, "In event_welcome: strFeed(..., 1) != 1");
 	goto bad;
     }
 

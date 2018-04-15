@@ -45,7 +45,7 @@ cmd_msg(const char *data)
     char *state = "";
 
     if (strings_match(dcopy, "") ||
-	Strfeed(dcopy, 1) != 1 ||
+	strFeed(dcopy, 1) != 1 ||
 	(recipient = strtok_r(dcopy, "\n", &state)) == NULL ||
 	(message = strtok_r(NULL, "\n", &state)) == NULL) {
 	print_and_free("/msg: missing arguments", dcopy);

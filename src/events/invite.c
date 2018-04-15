@@ -50,7 +50,7 @@ event_invite(struct irc_message_compo *compo)
 	return;
     }
 
-    if (Strfeed(compo->params, 1) != 1)
+    if (strFeed(compo->params, 1) != 1)
 	return;
 
     if ((target = strtok_r(compo->params, "\n", &state2)) == NULL ||

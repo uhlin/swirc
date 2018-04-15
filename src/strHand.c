@@ -203,7 +203,7 @@ Strcolor(short int color)
  * @return Number of newlines successfully written
  */
 int
-Strfeed(char *string, int count)
+strFeed(char *string, int count)
 {
     int feeds_written = 0;
     char *p = NULL;

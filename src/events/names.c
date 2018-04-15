@@ -813,7 +813,7 @@ event_eof_names(struct irc_message_compo *compo)
     char *eof_msg;
     char *state = "";
 
-    if (Strfeed(compo->params, 2) != 2) {
+    if (strFeed(compo->params, 2) != 2) {
 	goto bad;
     }
 
@@ -870,7 +870,7 @@ event_names(struct irc_message_compo *compo)
 
     state1 = state2 = "";
 
-    if (Strfeed(compo->params, 3) != 3) {
+    if (strFeed(compo->params, 3) != 3) {
 	goto bad;
     }
 

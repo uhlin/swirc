@@ -154,7 +154,7 @@ event_privmsg(struct irc_message_compo *compo)
 	user = "<no user>";
 	host = "<no host>";
     }
-    if (Strfeed(params, 1) != 1 ||
+    if (strFeed(params, 1) != 1 ||
 	(dest = strtok_r(params, "\n", &state2)) == NULL ||
 	(msg = strtok_r(NULL, "\n", &state2)) == NULL)
 	return;

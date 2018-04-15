@@ -90,8 +90,8 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if (Strfeed(compo->params, 1) != 1) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 1) != 1",
+    if (strFeed(compo->params, 1) != 1) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 1) != 1",
 		  compo->command);
 	return;
     }
@@ -131,8 +131,8 @@ event_bounce(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if (Strfeed(compo->params, 1) != 1) {
-	printtext(&ctx, "In event_bounce: Strfeed(..., 1) != 1");
+    if (strFeed(compo->params, 1) != 1) {
+	printtext(&ctx, "In event_bounce: strFeed(..., 1) != 1");
 	goto failure;
     }
 
@@ -189,7 +189,7 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if (Strfeed(compo->params, 2) != 2)
+    if (strFeed(compo->params, 2) != 2)
 	return;
 
     (void) strtok_r(compo->params, "\n", &state); /* my nickname */
@@ -228,7 +228,7 @@ event_channelModeIs(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if (Strfeed(compo->params, 2) != 2)
+    if (strFeed(compo->params, 2) != 2)
 	return;
 
     (void) strtok_r(compo->params, "\n", &state); /* my nickname */
@@ -274,7 +274,7 @@ event_channel_forward(struct irc_message_compo *compo)
     char	*to_channel;
     struct printtext_context ctx;
 
-    if (Strfeed(params, 3) != 3) {
+    if (strFeed(params, 3) != 3) {
 	goto bad;
     }
 
@@ -344,8 +344,8 @@ event_nicknameInUse(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if (Strfeed(params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: Strfeed(..., 2) != 2",
+    if (strFeed(params, 2) != 2) {
+	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
 		  compo->command);
 	return;
     }
@@ -390,7 +390,7 @@ event_userModeIs(struct irc_message_compo *compo)
     char *modes = NULL;
     char *state = "";
 
-    if (Strfeed(compo->params, 1) != 1)
+    if (strFeed(compo->params, 1) != 1)
 	return;
 
     (void) strtok_r(compo->params, "\n", &state); /* my nickname */

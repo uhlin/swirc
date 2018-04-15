@@ -69,7 +69,7 @@ event_banlist(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if ((feeds_written = Strfeed(compo->params, 4)) == 4) {
+    if ((feeds_written = strFeed(compo->params, 4)) == 4) {
 	char buf[500] = { 0 };
 
 	(void) strtok_r(compo->params, "\n", &state1); /* recipient */
@@ -135,7 +135,7 @@ event_eof_banlist(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    if (Strfeed(compo->params, 2) != 2)
+    if (strFeed(compo->params, 2) != 2)
 	return;
 
     (void) strtok_r(compo->params, "\n", &state); /* recipient */

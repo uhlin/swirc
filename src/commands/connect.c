@@ -300,7 +300,7 @@ cmd_connect(const char *data)
     if (strings_match(dcopy, "") || is_whiteSpace(dcopy)) {
 	print_and_free("/connect: missing arguments", dcopy);
 	return;
-    } else if ((feeds_written = Strfeed(dcopy, 1)) == 1) {
+    } else if ((feeds_written = strFeed(dcopy, 1)) == 1) {
 	char *token;
 
 	token = strtok_r(dcopy, "\n:", &state);
