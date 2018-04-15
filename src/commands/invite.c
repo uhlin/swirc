@@ -45,7 +45,7 @@ cmd_invite(const char *data)
     char *targ_nick, *channel;
     char *state = "";
 
-    if (Strings_match(dcopy, "") ||
+    if (strings_match(dcopy, "") ||
 	Strfeed(dcopy, 1) != 1 ||
 	(targ_nick = strtok_r(dcopy, "\n", &state)) == NULL ||
 	(channel = strtok_r(NULL, "\n", &state)) == NULL) {

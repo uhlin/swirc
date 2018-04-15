@@ -153,8 +153,8 @@ view_version()
 	    /* input too big */
 	    while (c = getchar(), c != '\n' && c != EOF)
 		/* discard */;
-	} else if (Strings_match(trim(answer), "y") ||
-		   Strings_match(answer, "Y")) {
+	} else if (strings_match(trim(answer), "y") ||
+		   strings_match(answer, "Y")) {
 	    const char **ppcc = NULL;
 	    const size_t ar_sz = ARRAY_SIZE(SoftwareDisclaimer);
 
@@ -165,8 +165,8 @@ view_version()
 	    }
 
 	    break;
-	} else if (Strings_match(answer, "") ||
-		   Strings_match(answer, "n") || Strings_match(answer, "N")) {
+	} else if (strings_match(answer, "") ||
+		   strings_match(answer, "n") || strings_match(answer, "N")) {
 	    break;
 	} else {
 	    continue;

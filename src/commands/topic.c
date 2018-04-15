@@ -17,10 +17,10 @@ cmd_topic(const char *data)
 	.include_ts = true,
     };
 
-    if (Strings_match(data, "") && is_irc_channel(g_active_window->label)) {
+    if (strings_match(data, "") && is_irc_channel(g_active_window->label)) {
 	if (net_send("TOPIC %s", g_active_window->label) < 0)
 	    g_on_air = false;
-    } else if (!Strings_match(data, "") &&
+    } else if (!strings_match(data, "") &&
 	       is_irc_channel(g_active_window->label)) {
 	if (net_send("TOPIC %s :%s", g_active_window->label, data) < 0)
 	    g_on_air = false;

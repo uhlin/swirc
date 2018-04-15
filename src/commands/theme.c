@@ -65,11 +65,11 @@ is_instruction_ok(const char *instruction)
 {
     if (!instruction)
 	return false;
-    else if (Strings_match(instruction, "install"))
+    else if (strings_match(instruction, "install"))
 	return true;
-    else if (Strings_match(instruction, "list-remote"))
+    else if (strings_match(instruction, "list-remote"))
 	return true;
-    else if (Strings_match(instruction, "set"))
+    else if (strings_match(instruction, "set"))
 	return true;
     else
 	return false;
@@ -236,7 +236,7 @@ read_db(const char *path, int *themes_read)
 
 	adv_while_isspace(&cp);
 
-	if (Strings_match(cp, "") || *cp == '#')
+	if (strings_match(cp, "") || *cp == '#')
 	    continue;
 
 	if (!add_to_array(tokenize(cp))) {
@@ -283,7 +283,7 @@ theme_is_in_db(const char *name)
     };
 
     THEME_INFO_FOREACH(ar_p) {
-	if (ar_p->filename && name && Strings_match(ar_p->filename, name))
+	if (ar_p->filename && name && strings_match(ar_p->filename, name))
 	    return true;
     }
 
@@ -383,7 +383,7 @@ cmd_theme(const char *data)
     char *state = "";
     int themes_read = 0;
 
-    if (Strings_match(dcopy, "") ||
+    if (strings_match(dcopy, "") ||
 	(instruction = strtok_r(dcopy, " ", &state)) == NULL) {
 	print_and_free("/theme: missing arguments", dcopy);
 	return;
@@ -397,8 +397,8 @@ cmd_theme(const char *data)
     } else if (!is_instruction_ok(instruction)) {
 	print_and_free("/theme: bogus instruction!", dcopy);
 	return;
-    } else if (!has_second_arg && (Strings_match(instruction, "install") ||
-				   Strings_match(instruction, "set"))) {
+    } else if (!has_second_arg && (strings_match(instruction, "install") ||
+				   strings_match(instruction, "set"))) {
 	print_and_free("/theme: missing arguments", dcopy);
 	return;
     }
@@ -427,13 +427,13 @@ cmd_theme(const char *data)
 	break;
     }
 
-    if (Strings_match(instruction, "install")) {
+    if (strings_match(instruction, "install")) {
 	if (theme_is_in_db(name))
 	    install_theme(name);
-    } else if (Strings_match(instruction, "list-remote")) {
+    } else if (strings_match(instruction, "list-remote")) {
 	list_remote();
-    } else if (Strings_match(instruction, "set")) {
-	if (Strings_match(name, "default") || theme_is_in_db(name))
+    } else if (strings_match(instruction, "set")) {
+	if (strings_match(name, "default") || theme_is_in_db(name))
 	    set_theme(name);
     } else {
 	sw_assert_not_reached();

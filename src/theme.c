@@ -195,7 +195,7 @@ get_hash_table_entry(const char *name)
 	return (NULL);
 
     for (entry = hash_table[hash(name)]; entry != NULL; entry = entry->next) {
-	if (Strings_match(name, entry->name))
+	if (strings_match(name, entry->name))
 	    return (entry);
     }
 
@@ -239,7 +239,7 @@ theme_item_install(const char *name, const char *value)
 	return (EBUSY);
     }
 #if WIN32
-    else if (Strings_match(name, "term_use_default_colors")) {
+    else if (strings_match(name, "term_use_default_colors")) {
 	hInstall(name, "NO");
     }
 #endif
@@ -259,7 +259,7 @@ Theme(const char *item_name)
 	return ("");
 
     for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
-	if (Strings_match(item_name, item->name))
+	if (strings_match(item_name, item->name))
 	    return (item->value);
     }
 
@@ -275,7 +275,7 @@ Theme_mod(const char *item_name)
 	return (NULL);
 
     for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
-	if (Strings_match(item_name, item->name))
+	if (strings_match(item_name, item->name))
 	    return (item->value);
     }
 
@@ -291,7 +291,7 @@ theme_color_unparse(const char *item_name, short int fallback_color)
 	err_exit(EINVAL, "theme_color_unparse");
 
     for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
-	if (Strings_match(item_name, item->name)) {
+	if (strings_match(item_name, item->name)) {
 	    if (strings_match_ignore_case(item->value, "black"))
 		return COLOR_BLACK;
 	    else if (strings_match_ignore_case(item->value, "red"))
@@ -326,7 +326,7 @@ theme_bool_unparse(const char *item_name, bool fallback_default)
 	err_exit(EINVAL, "theme_bool_unparse");
 
     for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
-	if (Strings_match(item_name, item->name)) {
+	if (strings_match(item_name, item->name)) {
 	    if (strings_match_ignore_case(item->value, "on") ||
 		strings_match_ignore_case(item->value, "true") ||
 		strings_match_ignore_case(item->value, "yes")) {
@@ -356,7 +356,7 @@ theme_integer_unparse(struct integer_unparse_context *ctx)
 	err_exit(EINVAL, "theme_integer_unparse");
 
     for (item = hash_table[hash(ctx->setting_name)]; item; item = item->next) {
-	if (Strings_match(ctx->setting_name, item->name)) {
+	if (strings_match(ctx->setting_name, item->name)) {
 	    if (!is_numeric(item->value))
 		break;
 	    else {
@@ -423,7 +423,7 @@ is_recognized_item(const char *item_name)
     }
 
     for (tdv_p = &ThemeDefValues[0]; tdv_p < &ThemeDefValues[ar_sz]; tdv_p++) {
-	if (Strings_match(item_name, tdv_p->item_name))
+	if (strings_match(item_name, tdv_p->item_name))
 	    return (true);
     }
 
@@ -455,7 +455,7 @@ theme_readit(const char *path, const char *mode)
 	struct Interpreter_in	 in;
 
 	adv_while_isspace(&ccp);
-	if (Strings_match(ccp, "") || *ccp == '#') {
+	if (strings_match(ccp, "") || *ccp == '#') {
 	    line_num++;
 	    continue;
 	}

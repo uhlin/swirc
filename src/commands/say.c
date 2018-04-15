@@ -16,7 +16,7 @@ cmd_say(const char *data)
 	.include_ts = true,
     };
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	printtext(&ptext_ctx, "/say: missing arguments");
     } else if (strings_match_ignore_case(g_active_window->label,
 					 g_status_window_label)) {

@@ -68,7 +68,7 @@ handle_notice_while_connecting(struct irc_message_compo *compo)
     const char	*msg      = strchr(compo->params, ':');
     const char	*srv_host = compo->prefix ? &compo->prefix[1] : "auth";
 
-    if (msg == NULL || Strings_match(++msg, "")) {
+    if (msg == NULL || strings_match(++msg, "")) {
 	return;
     }
 

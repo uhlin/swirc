@@ -158,7 +158,7 @@ get_hash_table_entry(const char *name)
 	return (NULL);
 
     for (entry = hash_table[hash(name)]; entry != NULL; entry = entry->next) {
-	if (Strings_match(name, entry->name))
+	if (strings_match(name, entry->name))
 	    return (entry);
     }
 
@@ -216,7 +216,7 @@ Config(const char *setting_name)
 	return ("");
 
     for (item = hash_table[hash(setting_name)]; item; item = item->next) {
-	if (Strings_match(setting_name, item->name))
+	if (strings_match(setting_name, item->name))
 	    return (item->value);
     }
 
@@ -232,7 +232,7 @@ Config_mod(const char *setting_name)
 	return (NULL);
 
     for (item = hash_table[hash(setting_name)]; item; item = item->next) {
-	if (Strings_match(setting_name, item->name))
+	if (strings_match(setting_name, item->name))
 	    return (item->value);
     }
 
@@ -248,7 +248,7 @@ config_bool_unparse(const char *setting_name, bool fallback_default)
 	err_exit(EINVAL, "config_bool_unparse");
 
     for (item = hash_table[hash(setting_name)]; item; item = item->next) {
-	if (Strings_match(setting_name, item->name)) {
+	if (strings_match(setting_name, item->name)) {
 	    if (strings_match_ignore_case(item->value, "on") ||
 		strings_match_ignore_case(item->value, "true") ||
 		strings_match_ignore_case(item->value, "yes")) {
@@ -278,7 +278,7 @@ config_integer_unparse(struct integer_unparse_context *ctx)
 	err_exit(EINVAL, "config_integer_unparse");
 
     for (item = hash_table[hash(ctx->setting_name)]; item; item = item->next) {
-	if (Strings_match(ctx->setting_name, item->name)) {
+	if (strings_match(ctx->setting_name, item->name)) {
 	    if (!is_numeric(item->value))
 		break;
 	    else {
@@ -357,7 +357,7 @@ is_recognized_setting(const char *setting_name)
     }
 
     for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++) {
-	if (Strings_match(setting_name, cdv_p->setting_name))
+	if (strings_match(setting_name, cdv_p->setting_name))
 	    return (true);
     }
 
@@ -377,7 +377,7 @@ config_readit(const char *path, const char *mode)
 	struct Interpreter_in	 in;
 
 	adv_while_isspace(&ccp);
-	if (Strings_match(ccp, "") || *ccp == '#') {
+	if (strings_match(ccp, "") || *ccp == '#') {
 	    line_num++;
 	    continue;
 	}

@@ -62,8 +62,8 @@ event_allaround_extract_find_colon(struct irc_message_compo *compo)
     }
 
 #if 0
-    if (!Strings_match(compo->command, "444") &&
-	!Strings_match(compo->command, "484"))
+    if (!strings_match(compo->command, "444") &&
+	!strings_match(compo->command, "484"))
 	ctx.spec_type = TYPE_SPEC1;
 #endif
     printtext(&ctx, "%s", ++cp);
@@ -318,7 +318,7 @@ event_local_and_global_users(struct irc_message_compo *compo)
     const char *ccp = strchr(compo->params, ':');
     struct printtext_context ctx;
 
-    if (ccp == NULL || Strings_match(++ccp, "")) {
+    if (ccp == NULL || strings_match(++ccp, "")) {
 	return;
     }
 
@@ -396,7 +396,7 @@ event_userModeIs(struct irc_message_compo *compo)
     (void) strtok_r(compo->params, "\n", &state); /* my nickname */
 
     if ((modes = strtok_r(NULL, "\n", &state)) == NULL ||
-	Strings_match(modes, g_user_modes) ||
+	strings_match(modes, g_user_modes) ||
 	sw_strcpy(g_user_modes, modes, sizeof g_user_modes) != 0)
 	return;
 

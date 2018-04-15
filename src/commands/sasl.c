@@ -287,7 +287,7 @@ set_state(char *state)
 {
     (void) strToLower(state);
 
-    if (!Strings_match(state, "on") && !Strings_match(state, "off")) {
+    if (!strings_match(state, "on") && !strings_match(state, "off")) {
 	output_message(true, "what? on or off?");
 	return;
     } else if (!modify_setting("sasl", state)) {
@@ -295,7 +295,7 @@ set_state(char *state)
 	return;
     } else {
 	char *msg = Strdup_printf("SASL authentication is now %s",
-	    Strings_match(state, "on") ? "ON" : "OFF");
+	    strings_match(state, "on") ? "ON" : "OFF");
 	output_message(false, msg);
 	free(msg);
 	save_to_config();
@@ -318,12 +318,12 @@ cmd_sasl(const char *data)
     char password[301] = { '\0' };
     char state[11]     = { '\0' };
 
-    if (Strings_match(data, "keygen") || Strings_match(data, "KEYGEN"))
+    if (strings_match(data, "keygen") || strings_match(data, "KEYGEN"))
 	sasl_keygen(false);
-    else if (Strings_match(data, "keygen --force") ||
-	     Strings_match(data, "KEYGEN --force"))
+    else if (strings_match(data, "keygen --force") ||
+	     strings_match(data, "KEYGEN --force"))
 	sasl_keygen(true);
-    else if (Strings_match(data, "pubkey") || Strings_match(data, "PUBKEY"))
+    else if (strings_match(data, "pubkey") || strings_match(data, "PUBKEY"))
 	sasl_pubkey();
     else if (sscanf(data, "mechanism %30s", mechanism) == 1)
 	set_mechanism(mechanism);

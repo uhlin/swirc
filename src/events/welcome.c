@@ -53,7 +53,7 @@ event_welcome(struct irc_message_compo *compo)
 	srv_host++;
     }
 
-    if (Strings_match(srv_host, "")) {
+    if (strings_match(srv_host, "")) {
 	printtext(&ctx, "Couldn't update the server hostname (empty prefix)");
 	goto bad;
     } else {

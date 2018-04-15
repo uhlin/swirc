@@ -45,7 +45,7 @@ cmd_join(const char *data)
     char *dcopy = sw_strdup(data);
     char *state = "";
 
-    if (Strings_match(dcopy, "") ||
+    if (strings_match(dcopy, "") ||
 	(channel = strtok_r(dcopy, " ", &state)) == NULL) {
 	print_and_free("/join: missing arguments", dcopy);
 	return;
@@ -82,7 +82,7 @@ cmd_part(const char *data)
     char *dcopy = sw_strdup(data);
     char *state = "";
 
-    if (Strings_match(dcopy, "") ||
+    if (strings_match(dcopy, "") ||
 	(channel = strtok_r(dcopy, " ", &state)) == NULL) {
 	if (is_irc_channel(g_active_window->label)) {
 	    if (net_send("PART %s :%s", g_active_window->label,

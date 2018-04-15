@@ -58,7 +58,7 @@ get_b64_encoded_username()
 {
     const char *username = Config("sasl_username");
 
-    if (Strings_match(username, ""))
+    if (strings_match(username, ""))
 	return NULL;
 
     char *encoded_username = xmalloc(500);
@@ -78,7 +78,7 @@ build_auth_message(char **msg)
     const char *username = Config("sasl_username");
     const char *password = Config("sasl_password");
 
-    if (Strings_match(username, "") || Strings_match(password, "")) {
+    if (strings_match(username, "") || strings_match(password, "")) {
 	*msg = NULL;
 	return false;
     }
@@ -119,8 +119,8 @@ event_authenticate(struct irc_message_compo *compo)
 {
     const char *mechanism = get_sasl_mechanism();
 
-    if (Strings_match(compo->params, "+")) {
-	if (Strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE")) {
+    if (strings_match(compo->params, "+")) {
+	if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE")) {
 	    char *encoded_username = get_b64_encoded_username();
 
 	    if (!encoded_username) {
@@ -130,7 +130,7 @@ event_authenticate(struct irc_message_compo *compo)
 
 	    net_send("AUTHENTICATE %s", encoded_username);
 	    free(encoded_username);
-	} else if (Strings_match(mechanism, "PLAIN")) {
+	} else if (strings_match(mechanism, "PLAIN")) {
 	    char *msg = NULL;
 
 	    if (!build_auth_message(&msg)) {
@@ -146,7 +146,7 @@ event_authenticate(struct irc_message_compo *compo)
 	    return;
 	}
     } else { /*=== not 'AUTHENTICATE +' ===*/
-	if (Strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE"))
+	if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE"))
 	    handle_ecdsa_nist256p_challenge(compo->params);
     }
 }

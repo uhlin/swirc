@@ -109,7 +109,7 @@ send_reg_cmds(const struct network_connect_context *ctx)
 	    .include_ts	= true,
 	};
 
-	if (Strings_match(get_sasl_mechanism(), "PLAIN") && !is_ssl_enabled()) {
+	if (strings_match(get_sasl_mechanism(), "PLAIN") && !is_ssl_enabled()) {
 	    ptext_ctx.spec_type = TYPE_SPEC1_WARN;
 	    printtext(&ptext_ctx, "SASL mechanism matches PLAIN and TLS/SSL "
 		"is not enabled. Not requesting SASL authentication.");

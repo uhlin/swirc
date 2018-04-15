@@ -26,7 +26,7 @@ void		 sw_snprintf (char *dest, size_t, const char *fmt, ...) PRINTFLIKE(3);
 #endif
 
 static SW_INLINE bool
-Strings_match(const char *s1, const char *s2)
+strings_match(const char *s1, const char *s2)
 {
     return (strcmp(s1, s2) == 0);
 }

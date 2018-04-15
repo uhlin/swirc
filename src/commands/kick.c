@@ -44,7 +44,7 @@ cmd_kick(const char *data)
     char *nicks, *reason;
     char *state = "";
 
-    if (Strings_match(dcopy, "") ||
+    if (strings_match(dcopy, "") ||
 	(nicks = strtok_r(dcopy, " ", &state)) == NULL) {
 	print_and_free("/kick: missing arguments", dcopy);
 	return;

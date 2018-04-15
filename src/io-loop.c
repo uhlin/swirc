@@ -160,7 +160,7 @@ output_help_for_command(const char *command)
     };
 
     for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
-	if (Strings_match(command, sp->cmd)) {
+	if (strings_match(command, sp->cmd)) {
 	    printtext(&ctx, "usage: %s", sp->usage);
 	    return;
 	}
@@ -212,7 +212,7 @@ list_all_commands()
 void
 cmd_help(const char *data)
 {
-    const bool has_command = !Strings_match(data, "");
+    const bool has_command = !strings_match(data, "");
 
     if (has_command)
 	output_help_for_command(data);
@@ -377,7 +377,7 @@ handle_cmds(const char *data)
     for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
 	cp = Strdup_printf("%s ", sp->cmd);
 
-	if (Strings_match(data, sp->cmd)) {
+	if (strings_match(data, sp->cmd)) {
 	    if (sp->requires_connection && !g_on_air)
 		printtext(&ctx, "command requires irc connection");
 	    else
@@ -467,7 +467,7 @@ enter_io_loop(void)
 	} else if (*line == cmd_char) {
 	    handle_cmds(&line[1]);
 	} else {
-	    if (g_on_air && !Strings_match(g_active_window->label,
+	    if (g_on_air && !strings_match(g_active_window->label,
 					   g_status_window_label)) {
 		struct printtext_context ptext_ctx = {
 		    .window     = g_active_window,

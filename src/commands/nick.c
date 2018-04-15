@@ -18,7 +18,7 @@ cmd_nick(const char *data)
 	.include_ts = true,
     };
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	printtext(&ptext_ctx, "/nick: missing arguments");
     } else if (!is_valid_nickname(data)) {
 	printtext(&ptext_ctx, "/nick: bogus nickname");

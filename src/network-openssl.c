@@ -143,13 +143,13 @@ net_ssl_init(void)
 
     const char *cs = Config("cipher_suite");
 
-    if (Strings_match(cs, "secure") || Strings_match(cs, "SECURE"))
+    if (strings_match(cs, "secure") || strings_match(cs, "SECURE"))
 	set_ciphers(suite_secure);
-    else if (Strings_match(cs, "compat") || Strings_match(cs, "COMPAT"))
+    else if (strings_match(cs, "compat") || strings_match(cs, "COMPAT"))
 	set_ciphers(suite_compat);
-    else if (Strings_match(cs, "legacy") || Strings_match(cs, "LEGACY"))
+    else if (strings_match(cs, "legacy") || strings_match(cs, "LEGACY"))
 	set_ciphers(suite_legacy);
-    else if (Strings_match(cs, "insecure") || Strings_match(cs, "INSECURE"))
+    else if (strings_match(cs, "insecure") || strings_match(cs, "INSECURE"))
 	set_ciphers(suite_insecure);
     else
 	set_ciphers(suite_compat);

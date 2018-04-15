@@ -50,7 +50,7 @@ static struct printtext_context ptext_ctx = {
 void
 cmd_quit(const char *data)
 {
-    const bool has_message = !Strings_match(data, "");
+    const bool has_message = !strings_match(data, "");
 
     if (g_on_air) {
 	if (has_message)
@@ -70,7 +70,7 @@ cmd_whois(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	printtext(&ptext_ctx, "/whois: missing arguments");
     } else if (!is_valid_nickname(data)) {
 	printtext(&ptext_ctx, "/whois: bogus nickname");
@@ -86,7 +86,7 @@ cmd_query(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	if (is_valid_nickname(g_active_window->label)) {
 	    switch (destroy_chat_window(g_active_window->label)) {
 	    case EINVAL:
@@ -119,7 +119,7 @@ cmd_names(const char *data)
 
     ptext_ctx.window = g_active_window;
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	if (is_irc_channel(g_active_window->label)) {
 	    event_names_print_all(g_active_window->label);
 	} else {
@@ -138,7 +138,7 @@ cmd_mode(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	printtext(&ptext_ctx, "/mode: missing arguments");
     } else {
 	if (net_send("MODE %s", data) < 0)
@@ -152,7 +152,7 @@ cmd_resize(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (!Strings_match(data, "")) {
+    if (!strings_match(data, "")) {
 	printtext(&ptext_ctx, "/resize: implicit trailing data");
     } else {
 	term_resize_all();
@@ -163,7 +163,7 @@ cmd_resize(const char *data)
 void
 cmd_away(const char *data)
 {
-    const bool has_reason = !Strings_match(data, "");
+    const bool has_reason = !strings_match(data, "");
 
     if (has_reason) {
 	if (net_send("AWAY :%s", data) < 0)
@@ -178,7 +178,7 @@ cmd_away(const char *data)
 void
 cmd_list(const char *data)
 {
-    const bool has_params = !Strings_match(data, "");
+    const bool has_params = !strings_match(data, "");
 
     if (has_params) {
 	if (net_send("LIST %s", data) < 0)
@@ -195,7 +195,7 @@ cmd_banlist(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	if (is_irc_channel(g_active_window->label)) {
 	    if (net_send("MODE %s +b", g_active_window->label) < 0)
 		g_on_air = false;
@@ -216,7 +216,7 @@ cmd_exlist(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	if (is_irc_channel(g_active_window->label)) {
 	    if (net_send("MODE %s +e", g_active_window->label) < 0)
 		g_on_air = false;
@@ -237,7 +237,7 @@ cmd_ilist(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	if (is_irc_channel(g_active_window->label)) {
 	    if (net_send("MODE %s +I", g_active_window->label) < 0)
 		g_on_air = false;
@@ -256,7 +256,7 @@ cmd_ilist(const char *data)
 void
 cmd_who(const char *data)
 {
-    const bool has_mask = !Strings_match(data, "");
+    const bool has_mask = !strings_match(data, "");
 
     if (has_mask) {
 	if (net_send("WHO %s", data) < 0)
@@ -273,7 +273,7 @@ cmd_rules(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (!Strings_match(data, "")) {
+    if (!strings_match(data, "")) {
 	printtext(&ptext_ctx, "/rules: implicit trailing data");
     } else {
 	if (net_send("RULES") < 0)
@@ -287,7 +287,7 @@ cmd_cycle(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	if (is_irc_channel(g_active_window->label)) {
 	    if (net_send("PART %s", g_active_window->label) < 0 ||
 		net_send("JOIN %s", g_active_window->label) < 0)
@@ -322,7 +322,7 @@ cmd_version(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	printtext(&ptext_ctx, "/version: missing arguments");
     } else if (!is_valid_nickname(data) && !is_irc_channel(data)) {
 	printtext(&ptext_ctx, "/version: neither a nickname or irc channel");
@@ -338,7 +338,7 @@ cmd_time(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	printtext(&ptext_ctx, "/time: missing arguments");
     } else if (!is_valid_nickname(data) && !is_irc_channel(data)) {
 	printtext(&ptext_ctx, "/time: neither a nickname or irc channel");
@@ -354,7 +354,7 @@ cmd_close(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (!Strings_match(data, "")) {
+    if (!strings_match(data, "")) {
 	printtext(&ptext_ctx, "/close: implicit trailing data");
     } else if (g_active_window == g_status_window) {
 	printtext(&ptext_ctx, "/close: cannot close status window");

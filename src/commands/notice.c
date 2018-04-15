@@ -48,7 +48,7 @@ cmd_notice(const char *data)
     char *recipient, *message;
     char *state = "";
 
-    if (Strings_match(dcopy, "") ||
+    if (strings_match(dcopy, "") ||
 	Strfeed(dcopy, 1) != 1 ||
 	(recipient = strtok_r(dcopy, "\n", &state)) == NULL ||
 	(message = strtok_r(NULL, "\n", &state)) == NULL) {

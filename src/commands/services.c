@@ -45,7 +45,7 @@ cmd_chanserv(const char *data)
     char *srv_host = NULL, *cmd = NULL;
     char *state = "";
 
-    if (Strings_match(dcopy, "") ||
+    if (strings_match(dcopy, "") ||
 	Strfeed(dcopy, 1) != 1 ||
 	(srv_host = strtok_r(dcopy, "\n", &state)) == NULL ||
 	(cmd = strtok_r(NULL, "\n", &state)) == NULL) {
@@ -53,7 +53,7 @@ cmd_chanserv(const char *data)
 	return;
     }
 
-    if (Strings_match(srv_host, "--")) {
+    if (strings_match(srv_host, "--")) {
 	if (!is_valid_hostname(Config("chanserv_host"))) {
 	    print_and_free("/chanserv: in the config file: "
 		"bogus chanserv_host", dcopy);
@@ -84,7 +84,7 @@ cmd_nickserv(const char *data)
     char *srv_host = NULL, *cmd = NULL;
     char *state = "";
 
-    if (Strings_match(dcopy, "") ||
+    if (strings_match(dcopy, "") ||
 	Strfeed(dcopy, 1) != 1 ||
 	(srv_host = strtok_r(dcopy, "\n", &state)) == NULL ||
 	(cmd = strtok_r(NULL, "\n", &state)) == NULL) {
@@ -92,7 +92,7 @@ cmd_nickserv(const char *data)
 	return;
     }
 
-    if (Strings_match(srv_host, "--")) {
+    if (strings_match(srv_host, "--")) {
 	if (!is_valid_hostname(Config("nickserv_host"))) {
 	    print_and_free("/nickserv: in the config file: "
 		"bogus nickserv_host", dcopy);

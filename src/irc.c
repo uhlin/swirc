@@ -388,7 +388,7 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 	const size_t size = ARRAY_SIZE(normal_events);
 
 	for (sp = &normal_events[0]; sp < &normal_events[size]; sp++) {
-	    if (Strings_match(sp->normal_event, compo->command)) {
+	    if (strings_match(sp->normal_event, compo->command)) {
 		sp->event_handler(compo);
 		return;
 	    }
@@ -405,7 +405,7 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 	const size_t size = ARRAY_SIZE(numeric_events);
 
 	for (sp = &numeric_events[0]; sp < &numeric_events[size]; sp++) {
-	    if (Strings_match(sp->numeric_event, compo->command)) {
+	    if (strings_match(sp->numeric_event, compo->command)) {
 		if (sp->event_handler != NULL) {
 		    sp->event_handler(compo);
 		} else {
@@ -501,7 +501,7 @@ irc_handle_interpret_events(char *recvbuffer,
     if (recvbuffer == NULL || (*state != CONCAT_BUFFER_IS_EMPTY &&
 			       *state != CONCAT_BUFFER_CONTAIN_DATA)) {
 	err_exit(EINVAL, "irc_handle_interpret_events error");
-    } else if (Strings_match(recvbuffer, "") ||
+    } else if (strings_match(recvbuffer, "") ||
 	       strpbrk(recvbuffer, separators) == NULL) {
 	return;
     } else {
@@ -535,7 +535,7 @@ irc_handle_interpret_events(char *recvbuffer,
 	if ((token = strtok_r(cp, separators, &savp)) == NULL) {
 	    break; /* No more tokens  --  end loop... */
 	} else if (last_token != NULL && *state == CONCAT_BUFFER_IS_EMPTY &&
-		   Strings_match(token, last_token)) {
+		   strings_match(token, last_token)) {
 	    free_and_null(&(*message_concat));
 	    *message_concat = sw_strdup(last_token);
 	    free(last_token);
@@ -566,7 +566,7 @@ irc_handle_interpret_events(char *recvbuffer,
 void
 irc_set_my_nickname(const char *nick)
 {
-    if (nick == NULL || Strings_match(nick, "")) {
+    if (nick == NULL || strings_match(nick, "")) {
 	err_exit(EINVAL, "irc_set_my_nickname error");
     }
 
@@ -585,7 +585,7 @@ irc_set_my_nickname(const char *nick)
 void
 irc_set_server_hostname(const char *srv_host)
 {
-    if (srv_host == NULL || Strings_match(srv_host, "")) {
+    if (srv_host == NULL || strings_match(srv_host, "")) {
 	err_exit(EINVAL, "irc_set_server_hostname error");
     }
 

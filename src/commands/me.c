@@ -17,7 +17,7 @@ cmd_me(const char *data)
 	.include_ts = true,
     };
 
-    if (Strings_match(data, "")) {
+    if (strings_match(data, "")) {
 	printtext(&ctx, "/me: missing arguments");
     } else if (strings_match_ignore_case(g_active_window->label,
 					 g_status_window_label)) {

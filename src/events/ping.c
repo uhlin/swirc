@@ -20,7 +20,7 @@ event_ping(struct irc_message_compo *compo)
 	cp++;
     }
 
-    if (Strings_match(cp, "")) {
+    if (strings_match(cp, "")) {
 	return;
     } else if ((n_sent = net_send("PONG %s", cp)) == -1) {
 	g_on_air = false;

@@ -28,7 +28,7 @@ term_set_title(const char *fmt, ...)
 	sw_strcpy(term_brand, var_data, sizeof term_brand);
 
     for (const char **ppcc = &known_brands[0]; ppcc < &known_brands[ar_sz]; ppcc++) {
-	if (Strings_match(*ppcc, term_brand)) {
+	if (strings_match(*ppcc, term_brand)) {
 	    char os_cmd[1100];
 	    va_list ap;
 

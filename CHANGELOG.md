@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Changed ###
 - Name of function
   - `Strings_match_ignore_case` to `strings_match_ignore_case`
+  - `Strings_match` to `strings_match`
 
 ## [2.0] - 2018-02-24 ##
 ### Added ###

@@ -115,11 +115,11 @@ get_password()
 	    puts("input too big");
 	    while (c = getchar(), c != '\n' && c != EOF)
 		/* discard */;
-	} else if (Strings_match(trim(answer), "") ||
-		   Strings_match(answer, "y") ||
-		   Strings_match(answer, "Y")) {
+	} else if (strings_match(trim(answer), "") ||
+		   strings_match(answer, "y") ||
+		   strings_match(answer, "Y")) {
 	    break;
-	} else if (Strings_match(answer, "n") || Strings_match(answer, "N")) {
+	} else if (strings_match(answer, "n") || strings_match(answer, "N")) {
 	    resume_curses();
 	    return NULL;
 	} else {
@@ -143,7 +143,7 @@ get_password()
 	    puts("input too big");
 	    while (c = getchar(), c != '\n' && c != EOF)
 		/* discard */;
-	} else if (Strings_match(trim(pass), "")) {
+	} else if (strings_match(trim(pass), "")) {
 	    continue;
 	} else {
 	    break;
@@ -213,7 +213,7 @@ do_connect(const char *server, const char *port)
     } else {
 	conn_ctx.password = (g_connection_password ? get_password() : NULL);
 
-	if (!is_ssl_enabled() && Strings_match(conn_ctx.port, SSL_PORT))
+	if (!is_ssl_enabled() && strings_match(conn_ctx.port, SSL_PORT))
 	    set_ssl_on();
 
 	net_connect(&conn_ctx);
@@ -297,7 +297,7 @@ cmd_connect(const char *data)
 
     set_ssl_off();
 
-    if (Strings_match(dcopy, "") || is_whiteSpace(dcopy)) {
+    if (strings_match(dcopy, "") || is_whiteSpace(dcopy)) {
 	print_and_free("/connect: missing arguments", dcopy);
 	return;
     } else if ((feeds_written = Strfeed(dcopy, 1)) == 1) {
@@ -305,7 +305,7 @@ cmd_connect(const char *data)
 
 	token = strtok_r(dcopy, "\n:", &state);
 	sw_assert(token != NULL);
-	if (Strings_match(token, "-tls") || Strings_match(token, "-ssl"))
+	if (strings_match(token, "-tls") || strings_match(token, "-ssl"))
 	    set_ssl_on();
 
 	server = strtok_r(NULL, "\n:", &state);
@@ -364,7 +364,7 @@ cmd_connect(const char *data)
 void
 cmd_disconnect(const char *data)
 {
-    const bool has_message = !Strings_match(data, "");
+    const bool has_message = !strings_match(data, "");
 
     if (g_on_air) {
 	if (has_message)

@@ -43,9 +43,9 @@ is_sasl_mechanism_supported(const char *mechanism)
 {
     if (!mechanism)
 	return false;
-    else if (Strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE"))
+    else if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE"))
 	return true;
-    else if (Strings_match(mechanism, "PLAIN"))
+    else if (strings_match(mechanism, "PLAIN"))
 	return true;
     else
 	return false;
@@ -59,7 +59,7 @@ get_sasl_mechanism(void)
 {
     const char *mechanism = Config("sasl_mechanism");
 
-    return (Strings_match(mechanism, "") ? "PLAIN" : mechanism);
+    return (strings_match(mechanism, "") ? "PLAIN" : mechanism);
 }
 
 void
