@@ -67,7 +67,7 @@ net_send_plain(const char *fmt, ...)
     }
 
     va_start(ap, fmt);
-    buffer = Strdup_vprintf(fmt, ap);
+    buffer = strdup_vprintf(fmt, ap);
     va_end(ap);
 
     realloc_strcat(&buffer, "\r\n");

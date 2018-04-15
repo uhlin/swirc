@@ -214,7 +214,7 @@ net_ssl_send(const char *fmt, ...)
 	return -1;
 
     va_start(ap, fmt);
-    buf = Strdup_vprintf(fmt, ap);
+    buf = strdup_vprintf(fmt, ap);
     va_end(ap);
 
     /* message terminate */

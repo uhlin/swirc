@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Changed ###
 - Name of function
   - `Strdup_printf` to `strdup_printf`
+  - `Strdup_vprintf` to `strdup_vprintf`
   - `Strfeed` to `strFeed`
   - `Strings_match_ignore_case` to `strings_match_ignore_case`
   - `Strings_match` to `strings_match`

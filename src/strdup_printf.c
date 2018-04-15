@@ -73,14 +73,14 @@ strdup_printf(const char *fmt, ...)
     char	*buffer;
 
     va_start(ap, fmt);
-    buffer = Strdup_vprintf(fmt, ap);
+    buffer = strdup_vprintf(fmt, ap);
     va_end(ap);
 
     return (buffer);
 }
 
 char *
-Strdup_vprintf(const char *fmt, va_list ap)
+strdup_vprintf(const char *fmt, va_list ap)
 {
     char	*buffer	 = NULL;
     int		 size	 = -1;
@@ -98,7 +98,7 @@ Strdup_vprintf(const char *fmt, va_list ap)
 
     mutex_lock(&mutex);
     if ((size = get_size(fmt, ap)) < 0)
-	err_exit(ENOSYS, "In Strdup_vprintf: get_size error");
+	err_exit(ENOSYS, "In strdup_vprintf: get_size error");
     else
 	size += 1;
     if ((buffer = malloc(size)) == NULL)

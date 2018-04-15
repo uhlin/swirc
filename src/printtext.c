@@ -1356,7 +1356,7 @@ vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
 
     mutex_lock(&vprinttext_mutex);
 
-    fmt_copy = Strdup_vprintf(fmt, ap);
+    fmt_copy = strdup_vprintf(fmt, ap);
     pout     = get_processed_out_message(fmt_copy, ctx->spec_type,
 					 ctx->include_ts);
 

@@ -92,7 +92,7 @@ titlebar(const char *fmt, ...)
 	"%c%c%c%c%c%c", BLINK, BOLD, COLOR, NORMAL, REVERSE, UNDERLINE);
 
     va_start(ap, fmt);
-    fmt_copy = Strdup_vprintf(fmt, ap);
+    fmt_copy = strdup_vprintf(fmt, ap);
     va_end(ap);
 
     (void) werase(win);
