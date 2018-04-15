@@ -108,15 +108,15 @@ nestHome_init(void)
     }
 
 #if defined(UNIX)
-    g_home_dir  = Strdup_printf("%s/.swirc", hp);
-    g_tmp_dir   = Strdup_printf("%s/.swirc/tmp", hp);
-    g_log_dir   = Strdup_printf("%s/.swirc/log", hp);
-    config_file = Strdup_printf("%s/.swirc/swirc%s", hp, g_config_filesuffix);
+    g_home_dir  = strdup_printf("%s/.swirc", hp);
+    g_tmp_dir   = strdup_printf("%s/.swirc/tmp", hp);
+    g_log_dir   = strdup_printf("%s/.swirc/log", hp);
+    config_file = strdup_printf("%s/.swirc/swirc%s", hp, g_config_filesuffix);
 #elif defined(WIN32)
-    g_home_dir  = Strdup_printf("%s\\swirc", hp);
-    g_tmp_dir   = Strdup_printf("%s\\swirc\\tmp", hp);
-    g_log_dir   = Strdup_printf("%s\\swirc\\log", hp);
-    config_file = Strdup_printf("%s\\swirc\\swirc%s", hp, g_config_filesuffix);
+    g_home_dir  = strdup_printf("%s\\swirc", hp);
+    g_tmp_dir   = strdup_printf("%s\\swirc\\tmp", hp);
+    g_log_dir   = strdup_printf("%s\\swirc\\log", hp);
+    config_file = strdup_printf("%s\\swirc\\swirc%s", hp, g_config_filesuffix);
 #endif
 
     make_requested_dir(g_home_dir);
@@ -154,10 +154,10 @@ nestHome_init(void)
     }
 
 #if defined(UNIX)
-    theme_file = Strdup_printf("%s/.swirc/%s%s",
+    theme_file = strdup_printf("%s/.swirc/%s%s",
 	hp, Config("theme"), g_theme_filesuffix);
 #elif defined(WIN32)
-    theme_file = Strdup_printf("%s\\swirc\\%s%s",
+    theme_file = strdup_printf("%s\\swirc\\%s%s",
 	hp, Config("theme"), g_theme_filesuffix);
 #endif
 

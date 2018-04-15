@@ -192,7 +192,7 @@ sasl_pubkey()
 	goto err;
     }
 
-    char *msg = Strdup_printf("public key is: %s", buf);
+    char *msg = strdup_printf("public key is: %s", buf);
     output_message(false, msg);
     free(msg);
 
@@ -294,7 +294,7 @@ set_state(char *state)
 	output_message(true, "set sasl on/off failed");
 	return;
     } else {
-	char *msg = Strdup_printf("SASL authentication is now %s",
+	char *msg = strdup_printf("SASL authentication is now %s",
 	    strings_match(state, "on") ? "ON" : "OFF");
 	output_message(false, msg);
 	free(msg);

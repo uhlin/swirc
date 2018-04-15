@@ -88,7 +88,7 @@ titlebar(const char *fmt, ...)
     WINDOW    *win    = panel_window(titlebar_pan);
     chtype     blank  = ' ';
     short int  pair_n = get_pair_num();
-    char      *reject = Strdup_printf(
+    char      *reject = strdup_printf(
 	"%c%c%c%c%c%c", BLINK, BOLD, COLOR, NORMAL, REVERSE, UNDERLINE);
 
     va_start(ap, fmt);

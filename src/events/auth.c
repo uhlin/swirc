@@ -82,7 +82,7 @@ build_auth_message(char **msg)
 	*msg = NULL;
 	return false;
     }
-    char *msg_unencoded = Strdup_printf("%s%c%s%c%s",
+    char *msg_unencoded = strdup_printf("%s%c%s%c%s",
 	username, '\0', username, '\0', password);
     size_t len = strlen(username) * 2;
     len += 2;

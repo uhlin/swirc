@@ -139,7 +139,7 @@ statusbar_update_display_beta(void)
     short int   pair_n = get_pair_num();
     const char *lb     = Theme("statusbar_leftBracket");
     const char *rb     = Theme("statusbar_rightBracket");
-    char       *out_s  = Strdup_printf(
+    char       *out_s  = strdup_printf(
 	"%s %s%d/%d%s %s%s%s %s%s%s %s",
 	Theme("statusbar_spec"),
 	lb, g_active_window->refnum, g_ntotal_windows, rb,

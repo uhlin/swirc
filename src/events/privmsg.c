@@ -212,9 +212,9 @@ event_privmsg(struct irc_message_compo *compo)
 	else if (n->is_voice)   c = '+';
 	else c = ' ';
 
-	char *s1 = Strdup_printf("%s:", g_my_nickname);
-	char *s2 = Strdup_printf("%s,", g_my_nickname);
-	char *s3 = Strdup_printf("%s ", g_my_nickname);
+	char *s1 = strdup_printf("%s:", g_my_nickname);
+	char *s2 = strdup_printf("%s,", g_my_nickname);
+	char *s3 = strdup_printf("%s ", g_my_nickname);
 
 	if (!strncasecmp(msg, s1, strlen(s1)) ||
 	    !strncasecmp(msg, s2, strlen(s2)) ||

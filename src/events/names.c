@@ -510,13 +510,13 @@ next_names(PIRC_WINDOW window, int *idx)
 
 	if (!head) {
 	    head = xmalloc(sizeof (CHUNK));
-	    head->nick = Strdup_printf("%c%s", c, p->nick);
+	    head->nick = strdup_printf("%c%s", c, p->nick);
 	    head->next = NULL;
 	    continue;
 	}
 
 	new_element = xmalloc(sizeof (CHUNK));
-	new_element->nick = Strdup_printf("%c%s", c, p->nick);
+	new_element->nick = strdup_printf("%c%s", c, p->nick);
 	new_element->next = NULL;
 
 	temp = head;

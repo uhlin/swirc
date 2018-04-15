@@ -131,7 +131,7 @@ struct cmdline_opt_values *g_cmdline_opts = &opt_values_data; /* External */
 static void
 view_version()
 {
-    char *MessageVersion = Strdup_printf("Swirc %s\nCopyright (C) %s %s\n",
+    char *MessageVersion = strdup_printf("Swirc %s\nCopyright (C) %s %s\n",
 	g_swircVersion, g_swircYear, g_swircAuthor);
 
     PUTS(MessageVersion);
@@ -180,7 +180,7 @@ view_version()
 static void
 print_help(const char *exe)
 {
-    char *MessageUsage = Strdup_printf("Usage: %s [OPTION] ...\n", exe);
+    char *MessageUsage = strdup_printf("Usage: %s [OPTION] ...\n", exe);
     const char **ppcc;
     const size_t ar_sz = ARRAY_SIZE(OptionDesc);
 

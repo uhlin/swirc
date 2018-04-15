@@ -139,9 +139,9 @@ get_prompt(void)
 				  g_status_window_label)) {
 	return (sw_strdup(""));
     } else if (is_irc_channel(g_active_window->label)) {
-	return (Strdup_printf("%s: ", g_active_window->label));
+	return (strdup_printf("%s: ", g_active_window->label));
     } else {
-	return (Strdup_printf("%s> ", g_active_window->label)); /* a query */
+	return (strdup_printf("%s> ", g_active_window->label)); /* a query */
     }
 
     /*NOTREACHED*/ sw_assert_not_reached();
@@ -375,7 +375,7 @@ handle_cmds(const char *data)
     };
 
     for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
-	cp = Strdup_printf("%s ", sp->cmd);
+	cp = strdup_printf("%s ", sp->cmd);
 
 	if (strings_match(data, sp->cmd)) {
 	    if (sp->requires_connection && !g_on_air)

@@ -67,7 +67,7 @@ get_size(const char *fmt, va_list ap)
 }
 
 char *
-Strdup_printf(const char *fmt, ...)
+strdup_printf(const char *fmt, ...)
 {
     va_list	 ap;
     char	*buffer;

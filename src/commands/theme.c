@@ -294,9 +294,9 @@ theme_is_in_db(const char *name)
 static PTR_ARGS_NONNULL void
 install_theme(const char *name)
 {
-    char *url = Strdup_printf("%s%s%s%s",
+    char *url = strdup_printf("%s%s%s%s",
 	g_swircWebAddr, "themes/", name, g_theme_filesuffix);
-    char *dest = Strdup_printf("%s" SLASH "%s%s",
+    char *dest = strdup_printf("%s" SLASH "%s%s",
 	g_home_dir, name, g_theme_filesuffix);
     struct printtext_context ctx = {
 	.window	    = g_active_window,
@@ -403,8 +403,8 @@ cmd_theme(const char *data)
 	return;
     }
 
-    char *url     = Strdup_printf("%s%s", g_swircWebAddr, "themes/themes");
-    char *db_path = Strdup_printf("%s" SLASH "%s", g_tmp_dir, "themes");
+    char *url     = strdup_printf("%s%s", g_swircWebAddr, "themes/themes");
+    char *db_path = strdup_printf("%s" SLASH "%s", g_tmp_dir, "themes");
 
     theme_info_array_init();
     url_to_file(url, db_path);
