@@ -89,8 +89,8 @@ init_color_pairs()
 		     * error. */
 		    return 63;
 		} else {
-		    char *fg_name = sw_strdup(Strcolor(*fg));
-		    char *bg_name = sw_strdup(Strcolor(*bg));
+		    char *fg_name = sw_strdup(strColor(*fg));
+		    char *bg_name = sw_strdup(strColor(*bg));
 
 		    err_msg("Could not initialize pair %hd (%s, %s)",
 			    pair_n, fg_name, bg_name);

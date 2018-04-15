@@ -171,7 +171,7 @@ trim(char *string)
  * @return String describing color
  */
 const char *
-Strcolor(short int color)
+strColor(short int color)
 {
     switch (color) {
     case COLOR_BLACK:

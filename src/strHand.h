@@ -7,7 +7,7 @@ char		*strToLower  (char *);
 char		*strToUpper  (char *);
 char		*sw_strdup   (const char *string);
 char		*trim        (char *string);
-const char	*Strcolor    (short int color);
+const char	*strColor    (short int color);
 int		 strFeed     (char *string, int count);
 int		 sw_strcat   (char *dest, const char *src, size_t);
 int		 sw_strcpy   (char *dest, const char *src, size_t);

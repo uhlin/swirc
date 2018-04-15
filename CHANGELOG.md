@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Changed ###
 - Name of function
+  - `Strcolor` to `strColor`
   - `Strdup_printf` to `strdup_printf`
   - `Strdup_vprintf` to `strdup_vprintf`
   - `Strfeed` to `strFeed`
