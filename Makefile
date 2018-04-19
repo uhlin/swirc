@@ -14,6 +14,9 @@ main: $(TGTS)
 .c.o:
 	$(CC) $(CFLAGS) -c -o $@ $<
 
+# install target
+include install.mk
+
 clean:
 	$(RM) $(OBJS)
 	$(RM) $(TGTS)
