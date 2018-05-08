@@ -2,7 +2,6 @@ include unix_def.mk
 
 CFLAGS+=-Isrc/include
 
-# GNU make does not support .MAIN
 all: main
 
 include src/commands/build.mk
