@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- New build system for
+  - UNIX
+  - Windows
+
 ### Changed ###
 - Name of function
   - `Strcolor` to `strColor`
@@ -10,6 +15,9 @@ All notable changes to this project will be documented in this file.
   - `Strfeed` to `strFeed`
   - `Strings_match_ignore_case` to `strings_match_ignore_case`
   - `Strings_match` to `strings_match`
+
+### Fixed ###
+- Building for NetBSD
 
 ## [2.0] - 2018-02-24 ##
 ### Added ###
