@@ -49,8 +49,6 @@ init_once(init_once_t *once_control, PTR_TO_INIT_ROUTINE init_routine)
 	    ONCE_EXCHANGE_VALUE,
 	    ONCE_INITIALIZER) == ONCE_INITIALIZER) {
 	init_routine();
-    } else {
-	;
     }
     return 0;
 }
