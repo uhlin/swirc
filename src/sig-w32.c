@@ -32,7 +32,8 @@ signal_handler(int signum)
 
     for (ssp = &sigmsg[0]; ssp < &sigmsg[ar_sz]; ssp++) {
 	if (ssp->num == signum) {
-	    err_msg("[-] FATAL: Received signal %d (%s)\n    %s", ssp->num, ssp->num_str, ssp->msg);
+	    err_msg("[-] FATAL: Received signal %d (%s)\n    %s",
+		    ssp->num, ssp->num_str, ssp->msg);
 	    break;
 	}
     }
