@@ -1,5 +1,5 @@
 /* String handling functions
-   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -111,7 +111,8 @@ strToUpper(char *s)
  * Duplicate a string
  *
  * @param string String to duplicate
- * @return An exact copy of the input string whose storage is obtained with malloc()
+ * @return An exact copy of the input string whose storage is obtained with
+ *         malloc()
  */
 char *
 sw_strdup(const char *string)
@@ -126,7 +127,8 @@ sw_strdup(const char *string)
     }
 
     if ((dest = malloc(size)) == NULL) {
-	err_exit(ENOMEM, "sw_strdup error (allocating " PRINT_SZ " bytes)", size);
+	err_exit(ENOMEM, "sw_strdup error (allocating " PRINT_SZ " bytes)",
+		 size);
     }
 
     if ((errno = sw_strcpy(dest, string, size)) != 0) {
