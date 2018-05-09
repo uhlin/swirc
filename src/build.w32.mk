@@ -50,4 +50,4 @@ fetch_and_expand:
 	cscript $(SRC_DIR)get_file.js
 	expand curl-$(CURL_VERSION).cab "-F:*" .
 	expand libressl-$(LIBRESSL_VERSION)-windows.cab "-F:*" .
-	expand pdcurses-3.4.cab "-F:*" .
+	expand pdcurses-$(PDCURSES_VERSION).cab "-F:*" .
