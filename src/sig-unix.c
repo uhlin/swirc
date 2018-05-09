@@ -10,6 +10,8 @@
 #include "readline.h"		/* MY_KEY_RESIZE */
 #include "sig.h"
 
+#define USE_STRSIGNAL 0
+
 static struct sig_message_tag {
     int		 num;
     char	*num_str;
