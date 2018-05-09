@@ -33,9 +33,11 @@
 
 #include "init_once.h"
 
-/* A replacement for W32's InitOnceExecuteOnce() -- for implementations that
-   lacks support for it.  UNIX has pthread_once() for this purpose... */
-
+/**
+ * A replacement for Windows InitOnceExecuteOnce() -- for
+ * implementations that lacks support for it. UNIX has pthread_once()
+ * for this purpose.
+ */
 int
 init_once(init_once_t *once_control, PTR_TO_INIT_ROUTINE init_routine)
 {
