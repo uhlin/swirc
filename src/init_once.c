@@ -41,8 +41,11 @@ init_once(init_once_t *once_control, PTR_TO_INIT_ROUTINE init_routine)
 {
     if (once_control == NULL || init_routine == NULL) {
 	return EINVAL;
-    } else if (*once_control == ONCE_INITIALIZER && _InterlockedCompareExchange(
-		   once_control, ONCE_EXCHANGE_VALUE, ONCE_INITIALIZER) == ONCE_INITIALIZER) {
+    } else if (*once_control == ONCE_INITIALIZER &&
+	_InterlockedCompareExchange(
+	    once_control,
+	    ONCE_EXCHANGE_VALUE,
+	    ONCE_INITIALIZER) == ONCE_INITIALIZER) {
 	init_routine();
     } else {
 	;
