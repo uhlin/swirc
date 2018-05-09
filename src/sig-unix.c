@@ -59,9 +59,12 @@ signal_handler(int signum)
 	    if (ssp->num == signum) {
 #if USE_STRSIGNAL
 		err_msg("[-] FATAL: Received signal %d (%s)\n    %s",
-			ssp->num, ssp->num_str, strsignal(ssp->num) ? strsignal(ssp->num) : ssp->msg);
+		    ssp->num,
+		    ssp->num_str,
+		    strsignal(ssp->num) ? strsignal(ssp->num) : ssp->msg);
 #else
-		err_msg("[-] FATAL: Received signal %d (%s)\n    %s", ssp->num, ssp->num_str, ssp->msg);
+		err_msg("[-] FATAL: Received signal %d (%s)\n    %s",
+			ssp->num, ssp->num_str, ssp->msg);
 #endif
 
 		break;
@@ -89,7 +92,8 @@ sigHand_init(void)
     }
 
     (void) sigfillset(&act.sa_mask);
-    for (act.sa_flags = 0, ssp = &sig_message[0]; ssp < &sig_message[ar_sz]; ssp++) {
+    for (act.sa_flags = 0, ssp = &sig_message[0]; ssp < &sig_message[ar_sz];
+	 ssp++) {
 	if (ssp->ignore) {
 	    act.sa_handler = SIG_IGN;
 	} else {
@@ -97,7 +101,8 @@ sigHand_init(void)
 	}
 
 	if (sigaction(ssp->num, &act, NULL) != 0) {
-	    err_ret("sigaction failed on signal %d (%s)", ssp->num, ssp->num_str);
+	    err_ret("sigaction failed on signal %d (%s)",
+		    ssp->num, ssp->num_str);
 	    return (false);
 	}
     }
