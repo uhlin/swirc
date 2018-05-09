@@ -47,7 +47,8 @@ options(int argc, char *argv[], const char *optstring)
     int          opt;
     const char  *p;		/* 2013-06-21 markus: added const (hack?) */
 
-    if (g_option_index >= argc || (!*nextchar && *(nextchar = argv[g_option_index]) != '-')) {
+    if (g_option_index >= argc ||
+	(!*nextchar && *(nextchar = argv[g_option_index]) != '-')) {
 	nextchar = "";
 	return EOF;
     } else if (*nextchar == '-' && *++nextchar == '-') {
@@ -114,7 +115,8 @@ main(int argc, char *argv[])
 	    printf("%s: -%c: unrecognized option\n", argv[0], g_option_save);
 	    return EXIT_FAILURE;
 	case OPTION_ARG_MISSING:
-	    printf("%s: -%c: option argument missing\n", argv[0], g_option_save);
+	    printf("%s: -%c: option argument missing\n",
+		   argv[0], g_option_save);
 	    return EXIT_FAILURE;
 	}
     }
