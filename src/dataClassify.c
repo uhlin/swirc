@@ -130,7 +130,8 @@ is_valid_nickname(const char *nickname)
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 	"-[\\]^_`{|}";
 
-    if (nickname == NULL || *nickname == '\0' || strlen(nickname) > nickname_len_max) {
+    if (nickname == NULL || *nickname == '\0' ||
+	strlen(nickname) > nickname_len_max) {
 	return false;
     }
 
@@ -151,7 +152,8 @@ is_valid_username(const char *username)
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 	"$-./[\\]^_`{|}~";
 
-    if (username == NULL || *username == '\0' || strlen(username) > username_len_max) {
+    if (username == NULL || *username == '\0' ||
+	strlen(username) > username_len_max) {
 	return false;
     }
 
@@ -169,7 +171,8 @@ is_valid_real_name(const char *real_name)
 {
     const char *ccp;
 
-    if (real_name == NULL || *real_name == '\0' || strlen(real_name) > real_name_len_max) {
+    if (real_name == NULL || *real_name == '\0' ||
+	strlen(real_name) > real_name_len_max) {
 	return false;
     }
 
@@ -189,7 +192,8 @@ is_valid_hostname(const char *hostname)
     const char host_chars[] =
 	"abcdefghijklmnopqrstuvwxyz.0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ:";
 
-    if (hostname == NULL || *hostname == '\0' || strlen(hostname) > hostname_len_max) {
+    if (hostname == NULL || *hostname == '\0' ||
+	strlen(hostname) > hostname_len_max) {
 	return false;
     }
 
