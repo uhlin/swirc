@@ -35,7 +35,8 @@ void
 mutex_lock(HANDLE *mutex)
 {
     if (WaitForSingleObject(*mutex, INFINITE) != WAIT_OBJECT_0) {
-	err_quit("WaitForSingleObject error 0x%lx", (unsigned long int) GetLastError());
+	err_quit("WaitForSingleObject error 0x%lx",
+		 (unsigned long int) GetLastError());
     }
 }
 
@@ -43,7 +44,8 @@ void
 mutex_unlock(HANDLE *mutex)
 {
     if (!ReleaseMutex(*mutex)) {
-	err_quit("ReleaseMutex error 0x%lx", (unsigned long int) GetLastError());
+	err_quit("ReleaseMutex error 0x%lx",
+		 (unsigned long int) GetLastError());
     }
 }
 
