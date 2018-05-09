@@ -1,13 +1,9 @@
-/* Copyright (C) 2012-2014, 2016 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2012-2014, 2016, 2018 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 #include "errHand.h"
 #include "strHand.h"
 #include "term-unix.h"
-
-#define FFLUSH(stream)	((void) fflush(stream))
-#define PUTCHAR(c)	((void) fputc(c, stdout))
-#define PUTS(string)	((void) fputs(string, stdout))
 
 void
 term_set_title(const char *fmt, ...)
@@ -27,21 +23,20 @@ term_set_title(const char *fmt, ...)
     else
 	sw_strcpy(term_brand, var_data, sizeof term_brand);
 
-    for (const char **ppcc = &known_brands[0]; ppcc < &known_brands[ar_sz]; ppcc++) {
+    for (const char **ppcc = &known_brands[0]; ppcc < &known_brands[ar_sz];
+	 ppcc++) {
 	if (strings_match(*ppcc, term_brand)) {
 	    char os_cmd[1100];
 	    va_list ap;
 
 	    sw_strcpy(os_cmd, "\033]2;", sizeof os_cmd);
-
 	    va_start(ap, fmt);
-	    vsnprintf(&os_cmd[strlen(os_cmd)], sizeof os_cmd - strlen(os_cmd), fmt, ap);
+	    vsnprintf(&os_cmd[strlen(os_cmd)], sizeof os_cmd - strlen(os_cmd),
+		      fmt, ap);
 	    va_end(ap);
-
 	    sw_strcat(os_cmd, "\a", sizeof os_cmd);
-
-	    PUTS(os_cmd);
-	    FFLUSH(stdout);
+	    fputs(os_cmd, stdout);
+	    fflush(stdout);
 	    break;
 	}
     }
