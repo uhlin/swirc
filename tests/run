@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
 TESTS="
-strcat
-strcpy
-test_printtext
-test_strdup_printf
+squeeze_text_deco
+sw_strcat
+sw_strcpy
 "
 
 for test in $TESTS; do
