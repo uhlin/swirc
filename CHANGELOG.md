@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
   - `Strfeed` to `strFeed`
   - `Strings_match_ignore_case` to `strings_match_ignore_case`
   - `Strings_match` to `strings_match`
+- Linux-specific: fix cflags with pkg-config
 
 ### Fixed ###
 - Building for NetBSD
