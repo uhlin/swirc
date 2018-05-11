@@ -42,3 +42,4 @@ OBJS+=$(SRC_DIR)assertAPI.o\
 
 swirc: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS) $(LDLIBS)
+	strip $@
