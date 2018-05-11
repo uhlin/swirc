@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include "commands/misc.h"
+
 /* names.h wants this header before itself */
 #include "irc.h"
 #include "events/names.h"
@@ -42,6 +44,7 @@
 #include "errHand.h"
 #include "io-loop.h"		/* get_prompt() */
 #include "libUtils.h"
+#include "network.h"
 #include "printtext.h"		/* includes window.h */
 #include "readline.h"		/* readline_top_panel() */
 #include "statusbar.h"
@@ -414,6 +417,10 @@ spawn_chat_window(const char *label, const char *title)
 	apply_window_options(panel_window(entry->pan));
 	errno = changeWindow_by_label(entry->label);
 	sw_assert_perror(errno);
+
+	/* send whois */
+	if (g_on_air && !is_irc_channel(entry->label))
+	    cmd_whois(entry->label);
     }
 
     return (0);
