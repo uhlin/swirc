@@ -1,5 +1,5 @@
 /* Window functions
-   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -81,6 +81,29 @@ int		g_ntotal_windows        = 0;
 
 static PIRC_WINDOW hash_table[200];
 
+/* -------------------------------------------------- */
+
+void
+windowSystem_init(void)
+{
+    PIRC_WINDOW *entry_p;
+
+    foreach_hash_table_entry(entry_p) {
+	*entry_p = NULL;
+    }
+
+    g_status_window = g_active_window = NULL;
+    g_ntotal_windows = 0;
+
+    if ((errno = spawn_chat_window(g_status_window_label, "")) != 0) {
+	err_sys("spawn_chat_window error");
+    }
+
+    if ((g_status_window = window_by_label(g_status_window_label)) == NULL) {
+	err_quit("Unable to locate the status window\nShouldn't happen.");
+    }
+}
+
 static unsigned int
 hash(const char *label)
 {
@@ -103,6 +126,63 @@ hash(const char *label)
     free(label_copy);
     return (hashval % ARRAY_SIZE(hash_table));
 }
+
+static void
+hUndef(PIRC_WINDOW entry)
+{
+    PIRC_WINDOW tmp;
+    unsigned int hashval = hash(entry->label);
+
+    if ((tmp = hash_table[hashval]) == entry) {
+	hash_table[hashval] = entry->next;
+    } else {
+	while (tmp->next != entry) {
+	    tmp = tmp->next;
+	}
+
+	tmp->next = entry->next;
+    }
+
+    free_and_null(& (entry->label));
+    free_and_null(& (entry->title));
+
+    term_remove_panel(entry->pan);
+
+    entry->pan	  = NULL;
+    entry->refnum = -1;
+
+    textBuf_destroy(entry->buf);
+    event_names_htbl_remove_all(entry);
+
+    entry->num_owners	= 0;
+    entry->num_superops = 0;
+    entry->num_ops	= 0;
+    entry->num_halfops	= 0;
+    entry->num_voices	= 0;
+    entry->num_normal	= 0;
+    entry->num_total	= 0;
+
+    free_not_null(entry);
+    entry = NULL;
+
+    g_ntotal_windows--;
+}
+
+void
+windowSystem_deinit(void)
+{
+    PIRC_WINDOW *entry_p;
+    PIRC_WINDOW p, tmp;
+
+    foreach_hash_table_entry(entry_p) {
+	for (p = *entry_p; p != NULL; p = tmp) {
+	    tmp = p->next;
+	    hUndef(p);
+	}
+    }
+}
+
+/* -------------------------------------------------- */
 
 PIRC_WINDOW
 window_by_label(const char *label)
@@ -204,47 +284,6 @@ changeWindow_by_refnum(int refnum)
     }
 
     return (0);
-}
-
-static void
-hUndef(PIRC_WINDOW entry)
-{
-    PIRC_WINDOW tmp;
-    unsigned int hashval = hash(entry->label);
-
-    if ((tmp = hash_table[hashval]) == entry) {
-	hash_table[hashval] = entry->next;
-    } else {
-	while (tmp->next != entry) {
-	    tmp = tmp->next;
-	}
-
-	tmp->next = entry->next;
-    }
-
-    free_and_null(& (entry->label));
-    free_and_null(& (entry->title));
-
-    term_remove_panel(entry->pan);
-
-    entry->pan	  = NULL;
-    entry->refnum = -1;
-
-    textBuf_destroy(entry->buf);
-    event_names_htbl_remove_all(entry);
-
-    entry->num_owners	= 0;
-    entry->num_superops = 0;
-    entry->num_ops	= 0;
-    entry->num_halfops	= 0;
-    entry->num_voices	= 0;
-    entry->num_normal	= 0;
-    entry->num_total	= 0;
-
-    free_not_null(entry);
-    entry = NULL;
-
-    g_ntotal_windows--;
 }
 
 static void
@@ -396,41 +435,6 @@ new_window_title(const char *label, const char *title)
 
     if (window == g_active_window) {
 	titlebar(" %s ", title);
-    }
-}
-
-void
-windowSystem_deinit(void)
-{
-    PIRC_WINDOW *entry_p;
-    PIRC_WINDOW p, tmp;
-
-    foreach_hash_table_entry(entry_p) {
-	for (p = *entry_p; p != NULL; p = tmp) {
-	    tmp = p->next;
-	    hUndef(p);
-	}
-    }
-}
-
-void
-windowSystem_init(void)
-{
-    PIRC_WINDOW *entry_p;
-
-    foreach_hash_table_entry(entry_p) {
-	*entry_p = NULL;
-    }
-
-    g_status_window = g_active_window = NULL;
-    g_ntotal_windows = 0;
-
-    if ((errno = spawn_chat_window(g_status_window_label, "")) != 0) {
-	err_sys("spawn_chat_window error");
-    }
-
-    if ((g_status_window = window_by_label(g_status_window_label)) == NULL) {
-	err_quit("Unable to locate the status window\nShouldn't happen.");
     }
 }
 

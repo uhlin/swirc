@@ -54,6 +54,9 @@ extern PIRC_WINDOW	g_status_window;
 extern PIRC_WINDOW	g_active_window;
 extern int              g_ntotal_windows;
 
+void windowSystem_init(void);
+void windowSystem_deinit(void);
+
 /*lint -sem(window_by_label, r_null) */
 /*lint -sem(window_by_refnum, r_null) */
 
@@ -64,8 +67,6 @@ int		changeWindow_by_refnum       (int);
 int		destroy_chat_window          (const char *label);
 int		spawn_chat_window            (const char *label, const char *title);
 void		new_window_title             (const char *label, const char *title);
-void		windowSystem_deinit          (void);
-void		windowSystem_init            (void);
 void		window_close_all_priv_conv   (void);
 void		window_foreach_destroy_names (void);
 void		window_scroll_down           (PIRC_WINDOW);
