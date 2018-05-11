@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file.
   - `Strings_match_ignore_case` to `strings_match_ignore_case`
   - `Strings_match` to `strings_match`
 - Linux-specific: fix cflags with pkg-config
+- Send `/whois` on `spawn_chat_window()` when on air and the window
+  isn't an irc channel
 
 ### Fixed ###
 - Building for NetBSD
