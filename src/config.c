@@ -1,5 +1,5 @@
 /* User configuration
-   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -82,6 +82,8 @@ static struct tagConfDefValues {
     { "username",                  TYPE_STRING,  "swift" },
 };
 
+/* -------------------------------------------------- */
+
 void
 config_init(void)
 {
@@ -148,6 +150,69 @@ config_deinit(void)
     }
 }
 
+/* -------------------------------------------------- */
+
+bool
+config_bool_unparse(const char *setting_name, bool fallback_default)
+{
+    PCONF_HTBL_ENTRY item;
+
+    if (!setting_name)
+	err_exit(EINVAL, "config_bool_unparse");
+
+    for (item = hash_table[hash(setting_name)]; item; item = item->next) {
+	if (strings_match(setting_name, item->name)) {
+	    if (strings_match_ignore_case(item->value, "on") ||
+		strings_match_ignore_case(item->value, "true") ||
+		strings_match_ignore_case(item->value, "yes")) {
+		return (true);
+	    } else if (strings_match_ignore_case(item->value, "off") ||
+		       strings_match_ignore_case(item->value, "false") ||
+		       strings_match_ignore_case(item->value, "no")) {
+		return (false);
+	    } else {
+		break;
+	    }
+	}
+    }
+
+    err_log(EINVAL, "warning: setting %s (bool): falling back to the default",
+	    setting_name);
+    return (fallback_default);
+}
+
+char *
+Config_mod(const char *setting_name)
+{
+    PCONF_HTBL_ENTRY item;
+
+    if (!setting_name)
+	return (NULL);
+
+    for (item = hash_table[hash(setting_name)]; item; item = item->next) {
+	if (strings_match(setting_name, item->name))
+	    return (item->value);
+    }
+
+    return (NULL);
+}
+
+const char *
+Config(const char *setting_name)
+{
+    PCONF_HTBL_ENTRY item;
+
+    if (!setting_name)
+	return ("");
+
+    for (item = hash_table[hash(setting_name)]; item; item = item->next) {
+	if (strings_match(setting_name, item->name))
+	    return (item->value);
+    }
+
+    return ("");
+}
+
 /*lint -sem(get_hash_table_entry, r_null) */
 static PCONF_HTBL_ENTRY
 get_hash_table_entry(const char *name)
@@ -163,18 +228,6 @@ get_hash_table_entry(const char *name)
     }
 
     return (NULL);
-}
-
-int
-config_item_undef(const char *name)
-{
-    PCONF_HTBL_ENTRY entry;
-
-    if ((entry = get_hash_table_entry(name)) == NULL)
-	return (ENOENT);
-
-    hUndef(entry);
-    return (0);
 }
 
 static void
@@ -207,65 +260,16 @@ config_item_install(const char *name, const char *value)
     return (0);
 }
 
-const char *
-Config(const char *setting_name)
+int
+config_item_undef(const char *name)
 {
-    PCONF_HTBL_ENTRY item;
+    PCONF_HTBL_ENTRY entry;
 
-    if (!setting_name)
-	return ("");
+    if ((entry = get_hash_table_entry(name)) == NULL)
+	return (ENOENT);
 
-    for (item = hash_table[hash(setting_name)]; item; item = item->next) {
-	if (strings_match(setting_name, item->name))
-	    return (item->value);
-    }
-
-    return ("");
-}
-
-char *
-Config_mod(const char *setting_name)
-{
-    PCONF_HTBL_ENTRY item;
-
-    if (!setting_name)
-	return (NULL);
-
-    for (item = hash_table[hash(setting_name)]; item; item = item->next) {
-	if (strings_match(setting_name, item->name))
-	    return (item->value);
-    }
-
-    return (NULL);
-}
-
-bool
-config_bool_unparse(const char *setting_name, bool fallback_default)
-{
-    PCONF_HTBL_ENTRY item;
-
-    if (!setting_name)
-	err_exit(EINVAL, "config_bool_unparse");
-
-    for (item = hash_table[hash(setting_name)]; item; item = item->next) {
-	if (strings_match(setting_name, item->name)) {
-	    if (strings_match_ignore_case(item->value, "on") ||
-		strings_match_ignore_case(item->value, "true") ||
-		strings_match_ignore_case(item->value, "yes")) {
-		return (true);
-	    } else if (strings_match_ignore_case(item->value, "off") ||
-		       strings_match_ignore_case(item->value, "false") ||
-		       strings_match_ignore_case(item->value, "no")) {
-		return (false);
-	    } else {
-		break;
-	    }
-	}
-    }
-
-    err_log(EINVAL, "warning: setting %s (bool): falling back to the default",
-	    setting_name);
-    return (fallback_default);
+    hUndef(entry);
+    return (0);
 }
 
 long int
@@ -334,18 +338,6 @@ config_do_save(const char *path, const char *mode)
     fclose_ensure_success(fp);
 }
 
-static void
-init_missing_to_defs(void)
-{
-    struct tagConfDefValues *cdv_p;
-    const size_t ar_sz = ARRAY_SIZE(ConfDefValues);
-
-    for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++) {
-	if (get_hash_table_entry(cdv_p->setting_name) == NULL)
-	    hInstall(cdv_p->setting_name, cdv_p->value);
-    }
-}
-
 static bool
 is_recognized_setting(const char *setting_name)
 {
@@ -362,6 +354,18 @@ is_recognized_setting(const char *setting_name)
     }
 
     return (false);
+}
+
+static void
+init_missing_to_defs(void)
+{
+    struct tagConfDefValues *cdv_p;
+    const size_t ar_sz = ARRAY_SIZE(ConfDefValues);
+
+    for (cdv_p = &ConfDefValues[0]; cdv_p < &ConfDefValues[ar_sz]; cdv_p++) {
+	if (get_hash_table_entry(cdv_p->setting_name) == NULL)
+	    hInstall(cdv_p->setting_name, cdv_p->value);
+    }
 }
 
 void
