@@ -46,10 +46,10 @@
 #include "strHand.h"
 #include "theme.h"
 
-#define ENTRY_FOREACH(entry_p) \
-	for (entry_p = &hash_table[0]; \
-	     entry_p < &hash_table[ARRAY_SIZE(hash_table)]; \
-	     entry_p++)
+#define ENTRY_FOREACH(entry_p)\
+    for (entry_p = &hash_table[0];\
+	 entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
+	 entry_p++)
 
 #define WRITE_ITEM(name, value) \
 	write_to_stream(fp, "%s = \"%s\";\n", name, value)
@@ -383,16 +383,15 @@ theme_color_unparse(const char *item_name, short int fallback_color)
 void
 theme_create(const char *path, const char *mode)
 {
-    FILE			*fp    = fopen_exit_on_error(path, mode);
-    struct tagThemeDefValues	*tdv_p = NULL;
-    const size_t		 ar_sz = ARRAY_SIZE(ThemeDefValues);
+    FILE *fp = fopen_exit_on_error(path, mode);
 
     write_to_stream(fp, "# -*- mode: conf; -*-\n#\n"
 	"# Swirc %s  --  default theme\n", g_swircVersion);
     write_to_stream(fp, "# Automatically generated at %s\n\n",
 		    current_time("%c"));
 
-    for (tdv_p = &ThemeDefValues[0]; tdv_p < &ThemeDefValues[ar_sz]; tdv_p++)
+    for (struct tagThemeDefValues *tdv_p = &ThemeDefValues[0];
+	 tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)]; tdv_p++)
 	WRITE_ITEM(tdv_p->item_name, tdv_p->value);
 
     fclose_ensure_success(fp);
@@ -401,16 +400,15 @@ theme_create(const char *path, const char *mode)
 void
 theme_do_save(const char *path, const char *mode)
 {
-    FILE			*fp    = fopen_exit_on_error(path, mode);
-    struct tagThemeDefValues	*tdv_p = NULL;
-    const size_t		 ar_sz = ARRAY_SIZE(ThemeDefValues);
+    FILE *fp = fopen_exit_on_error(path, mode);
 
     write_to_stream(fp, "# -*- mode: conf; -*-\n#\n"
 	"# Swirc %s  --  default theme\n", g_swircVersion);
     write_to_stream(fp, "# Automatically generated at %s\n\n",
 		    current_time("%c"));
 
-    for (tdv_p = &ThemeDefValues[0]; tdv_p < &ThemeDefValues[ar_sz]; tdv_p++)
+    for (struct tagThemeDefValues *tdv_p = &ThemeDefValues[0];
+	 tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)]; tdv_p++)
 	WRITE_ITEM(tdv_p->item_name, Theme(tdv_p->item_name));
 
     fclose_ensure_success(fp);
@@ -419,14 +417,12 @@ theme_do_save(const char *path, const char *mode)
 static bool
 is_recognized_item(const char *item_name)
 {
-    struct tagThemeDefValues *tdv_p;
-    const size_t ar_sz = ARRAY_SIZE(ThemeDefValues);
-
     if (!item_name || *item_name == '\0') {
 	return (false);
     }
 
-    for (tdv_p = &ThemeDefValues[0]; tdv_p < &ThemeDefValues[ar_sz]; tdv_p++) {
+    for (struct tagThemeDefValues *tdv_p = &ThemeDefValues[0];
+	 tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)]; tdv_p++) {
 	if (strings_match(item_name, tdv_p->item_name))
 	    return (true);
     }
@@ -437,10 +433,8 @@ is_recognized_item(const char *item_name)
 static void
 init_missing_to_defs(void)
 {
-    struct tagThemeDefValues *tdv_p;
-    const size_t ar_sz = ARRAY_SIZE(ThemeDefValues);
-
-    for (tdv_p = &ThemeDefValues[0]; tdv_p < &ThemeDefValues[ar_sz]; tdv_p++) {
+    for (struct tagThemeDefValues *tdv_p = &ThemeDefValues[0];
+	 tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)]; tdv_p++) {
 	if (get_hash_table_entry(tdv_p->item_name) == NULL)
 	    hInstall(tdv_p->item_name, tdv_p->value);
     }
