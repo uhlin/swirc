@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 - New build system for
   - UNIX
   - Windows
+- Unit tests for
+  - `squeeze_text_deco()`
+  - `sw_strcat()`
+  - `sw_strcpy()`
 
 ### Changed ###
 - Name of function
