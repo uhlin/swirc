@@ -9,6 +9,9 @@ typedef struct tagTHEME_HTBL_ENTRY {
     struct tagTHEME_HTBL_ENTRY *next;
 } THEME_HTBL_ENTRY, *PTHEME_HTBL_ENTRY;
 
+void theme_init(void);
+void theme_deinit(void);
+
 /*lint -sem(Theme_mod, r_null) */
 
 bool		 theme_bool_unparse    (const char *item_name, bool fallback_default);
@@ -19,9 +22,7 @@ int		 theme_item_undef      (const char *name);
 long int	 theme_integer_unparse (struct integer_unparse_context *);
 short int	 theme_color_unparse   (const char *item_name, short int fallback_color);
 void		 theme_create          (const char *path, const char *mode);
-void		 theme_deinit          (void);
 void		 theme_do_save         (const char *path, const char *mode);
-void		 theme_init            (void);
 void		 theme_readit          (const char *path, const char *mode);
 
 #define COLOR1		Theme("primary_color")

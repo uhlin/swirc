@@ -1,5 +1,5 @@
 /* Support for themes
-   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -119,6 +119,8 @@ static struct tagThemeDefValues {
     { "whois_ssl",                 TYPE_STRING,  "\00314=\017> TLS/SSL  :" },
 };
 
+/* -------------------------------------------------- */
+
 void
 theme_init(void)
 {
@@ -185,6 +187,69 @@ theme_deinit(void)
     }
 }
 
+/* -------------------------------------------------- */
+
+bool
+theme_bool_unparse(const char *item_name, bool fallback_default)
+{
+    PTHEME_HTBL_ENTRY item;
+
+    if (!item_name)
+	err_exit(EINVAL, "theme_bool_unparse");
+
+    for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
+	if (strings_match(item_name, item->name)) {
+	    if (strings_match_ignore_case(item->value, "on") ||
+		strings_match_ignore_case(item->value, "true") ||
+		strings_match_ignore_case(item->value, "yes")) {
+		return (true);
+	    } else if (strings_match_ignore_case(item->value, "off") ||
+		       strings_match_ignore_case(item->value, "false") ||
+		       strings_match_ignore_case(item->value, "no")) {
+		return (false);
+	    } else {
+		break;
+	    }
+	}
+    }
+
+    err_log(EINVAL, "warning: item %s (bool): falling back to the default",
+	    item_name);
+    return (fallback_default);
+}
+
+char *
+Theme_mod(const char *item_name)
+{
+    PTHEME_HTBL_ENTRY item;
+
+    if (!item_name)
+	return (NULL);
+
+    for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
+	if (strings_match(item_name, item->name))
+	    return (item->value);
+    }
+
+    return (NULL);
+}
+
+const char *
+Theme(const char *item_name)
+{
+    PTHEME_HTBL_ENTRY item;
+
+    if (!item_name)
+	return ("");
+
+    for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
+	if (strings_match(item_name, item->name))
+	    return (item->value);
+    }
+
+    return ("");
+}
+
 /*lint -sem(get_hash_table_entry, r_null) */
 static PTHEME_HTBL_ENTRY
 get_hash_table_entry(const char *name)
@@ -200,18 +265,6 @@ get_hash_table_entry(const char *name)
     }
 
     return (NULL);
-}
-
-int
-theme_item_undef(const char *name)
-{
-    PTHEME_HTBL_ENTRY entry;
-
-    if ((entry = get_hash_table_entry(name)) == NULL)
-	return (ENOENT);
-
-    hUndef(entry);
-    return (0);
 }
 
 static void
@@ -250,36 +303,46 @@ theme_item_install(const char *name, const char *value)
     return (0);
 }
 
-const char *
-Theme(const char *item_name)
+int
+theme_item_undef(const char *name)
 {
-    PTHEME_HTBL_ENTRY item;
+    PTHEME_HTBL_ENTRY entry;
 
-    if (!item_name)
-	return ("");
+    if ((entry = get_hash_table_entry(name)) == NULL)
+	return (ENOENT);
 
-    for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
-	if (strings_match(item_name, item->name))
-	    return (item->value);
-    }
-
-    return ("");
+    hUndef(entry);
+    return (0);
 }
 
-char *
-Theme_mod(const char *item_name)
+long int
+theme_integer_unparse(struct integer_unparse_context *ctx)
 {
     PTHEME_HTBL_ENTRY item;
+    long int val;
 
-    if (!item_name)
-	return (NULL);
+    if (!ctx)
+	err_exit(EINVAL, "theme_integer_unparse");
 
-    for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
-	if (strings_match(item_name, item->name))
-	    return (item->value);
+    for (item = hash_table[hash(ctx->setting_name)]; item; item = item->next) {
+	if (strings_match(ctx->setting_name, item->name)) {
+	    if (!is_numeric(item->value))
+		break;
+	    else {
+		errno = 0;
+		val   = strtol(item->value, NULL, 10);
+
+		if (errno != 0 || (val < ctx->lo_limit || val > ctx->hi_limit))
+		    break;
+		else
+		    return (val);
+	    }
+	}
     }
 
-    return (NULL);
+    err_log(ERANGE, "warning: item %s (%ld-%ld): fallback value is %ld",
+	ctx->setting_name, ctx->lo_limit, ctx->hi_limit, ctx->fallback_default);
+    return (ctx->fallback_default);
 }
 
 short int
@@ -315,65 +378,6 @@ theme_color_unparse(const char *item_name, short int fallback_color)
     err_log(EINVAL, "warning: item %s (color): falling back to the default",
 	    item_name);
     return (fallback_color);
-}
-
-bool
-theme_bool_unparse(const char *item_name, bool fallback_default)
-{
-    PTHEME_HTBL_ENTRY item;
-
-    if (!item_name)
-	err_exit(EINVAL, "theme_bool_unparse");
-
-    for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
-	if (strings_match(item_name, item->name)) {
-	    if (strings_match_ignore_case(item->value, "on") ||
-		strings_match_ignore_case(item->value, "true") ||
-		strings_match_ignore_case(item->value, "yes")) {
-		return (true);
-	    } else if (strings_match_ignore_case(item->value, "off") ||
-		       strings_match_ignore_case(item->value, "false") ||
-		       strings_match_ignore_case(item->value, "no")) {
-		return (false);
-	    } else {
-		break;
-	    }
-	}
-    }
-
-    err_log(EINVAL, "warning: item %s (bool): falling back to the default",
-	    item_name);
-    return (fallback_default);
-}
-
-long int
-theme_integer_unparse(struct integer_unparse_context *ctx)
-{
-    PTHEME_HTBL_ENTRY item;
-    long int val;
-
-    if (!ctx)
-	err_exit(EINVAL, "theme_integer_unparse");
-
-    for (item = hash_table[hash(ctx->setting_name)]; item; item = item->next) {
-	if (strings_match(ctx->setting_name, item->name)) {
-	    if (!is_numeric(item->value))
-		break;
-	    else {
-		errno = 0;
-		val   = strtol(item->value, NULL, 10);
-
-		if (errno != 0 || (val < ctx->lo_limit || val > ctx->hi_limit))
-		    break;
-		else
-		    return (val);
-	    }
-	}
-    }
-
-    err_log(ERANGE, "warning: item %s (%ld-%ld): fallback value is %ld",
-	ctx->setting_name, ctx->lo_limit, ctx->hi_limit, ctx->fallback_default);
-    return (ctx->fallback_default);
 }
 
 void
