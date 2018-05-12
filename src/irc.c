@@ -225,6 +225,8 @@ static struct numeric_events_tag {
     { "907", "ERR_SASLALREADY",         NO_WINDOW,      0, handle_sasl_auth_fail },
 };
 
+/* -------------------------------------------------- */
+
 /**
  * Initialize irc module
  */
@@ -257,6 +259,8 @@ irc_deinit(void)
     statusbar_update_display_beta();
     readline_top_panel();
 }
+
+/* -------------------------------------------------- */
 
 /**
  * Extract a message with help of given parameters
