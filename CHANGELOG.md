@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Unit tests for
   - `int_diff`
   - `int_sum`
+  - `size_product`
   - `squeeze_text_deco()`
   - `sw_strcat()`
   - `sw_strcpy()`
