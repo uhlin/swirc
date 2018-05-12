@@ -418,9 +418,9 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc)
  * @return The converted part (dynamically allocated)
  */
 #if defined(UNIX)
-/**************/
-/**   UNIX   **/
-/**************/
+/* ---- */
+/* UNIX */
+/* ---- */
 static char *
 finalize_out_string(const wchar_t *buf)
 {
@@ -439,9 +439,9 @@ finalize_out_string(const wchar_t *buf)
     return out;
 }
 #elif defined(WIN32)
-/***************/
-/**   WIN32   **/
-/***************/
+/* ----- */
+/* WIN32 */
+/* ----- */
 static char *
 finalize_out_string(const wchar_t *buf)
 {
