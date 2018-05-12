@@ -61,11 +61,11 @@ bool g_hist_prev = false;
 /* Objects with internal linkage
    ============================= */
 
-static PANEL				*readline_pan1       = NULL;
-static PANEL				*readline_pan2       = NULL;
-static bool				 disable_beeps       = false;
-static const int			 readline_buffersize = 2700;
-static enum readline_active_panel	 panel_state	     = PANEL1_ACTIVE;
+static PANEL			*readline_pan1	     = NULL;
+static PANEL			*readline_pan2	     = NULL;
+static bool			 disable_beeps	     = false;
+static const int		 readline_buffersize = 2700;
+static rl_active_panel_t	 panel_state	     = PANEL1_ACTIVE;
 
 /**
  * Get active panelwindow
