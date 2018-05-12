@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
   - `squeeze_text_deco()`
   - `sw_strcat()`
   - `sw_strcpy()`
+- Use of `size_product` in multiple places
 
 ### Changed ###
 - Name of function
