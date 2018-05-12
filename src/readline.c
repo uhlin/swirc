@@ -67,6 +67,58 @@ static bool			 disable_beeps	     = false;
 static const int		 readline_buffersize = 2700;
 static rl_active_panel_t	 panel_state	     = PANEL1_ACTIVE;
 
+/* -------------------------------------------------- */
+
+/**
+ * Apply window-options to the readline panels.
+ *
+ * @param win Window
+ * @return Void
+ */
+static void
+apply_readline_options(WINDOW *win)
+{
+#define KEYPAD(win, b)   ((void) keypad(win, b))
+#define NODELAY(win, b)  ((void) nodelay(win, b))
+#define SCROLLOK(win, b) ((void) scrollok(win, b))
+    if (!is_keypad(win)) {
+	KEYPAD(win, 1);
+    }
+    if (is_nodelay(win)) {
+	NODELAY(win, 0);
+    }
+    if (is_scrollok(win)) {
+	SCROLLOK(win, 0);
+    }
+}
+
+/**
+ * Initialize readline (done before usage)
+ */
+void
+readline_init(void)
+{
+    readline_pan1 = term_new_panel(1, 0, LINES - 1, 0);
+    readline_pan2 = term_new_panel(1, 0, LINES - 1, 0);
+
+    apply_readline_options(panel_window(readline_pan1));
+    apply_readline_options(panel_window(readline_pan2));
+
+    disable_beeps = config_bool_unparse("disable_beeps", false);
+}
+
+/**
+ * De-initialize readline
+ */
+void
+readline_deinit(void)
+{
+    term_remove_panel(readline_pan1);
+    term_remove_panel(readline_pan2);
+}
+
+/* -------------------------------------------------- */
+
 /**
  * Get active panelwindow
  */
@@ -450,29 +502,6 @@ finalize_out_string(const wchar_t *buf)
 #endif
 
 /**
- * Apply window-options to the readline panels.
- *
- * @param win Window
- * @return Void
- */
-static void
-apply_readline_options(WINDOW *win)
-{
-#define KEYPAD(win, b)   ((void) keypad(win, b))
-#define NODELAY(win, b)  ((void) nodelay(win, b))
-#define SCROLLOK(win, b) ((void) scrollok(win, b))
-    if (!is_keypad(win)) {
-	KEYPAD(win, 1);
-    }
-    if (is_nodelay(win)) {
-	NODELAY(win, 0);
-    }
-    if (is_scrollok(win)) {
-	SCROLLOK(win, 0);
-    }
-}
-
-/**
  * Read user input.
  *
  * @param prompt Prompt
@@ -626,31 +655,6 @@ readline(const char *prompt)
     session_destroy(ctx);
 
     return out;
-}
-
-/**
- * De-initialize readline
- */
-void
-readline_deinit(void)
-{
-    term_remove_panel(readline_pan1);
-    term_remove_panel(readline_pan2);
-}
-
-/**
- * Initialize readline (done before usage)
- */
-void
-readline_init(void)
-{
-    readline_pan1 = term_new_panel(1, 0, LINES - 1, 0);
-    readline_pan2 = term_new_panel(1, 0, LINES - 1, 0);
-
-    apply_readline_options(panel_window(readline_pan1));
-    apply_readline_options(panel_window(readline_pan2));
-
-    disable_beeps = config_bool_unparse("disable_beeps", false);
 }
 
 /**
