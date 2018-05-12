@@ -6,6 +6,7 @@
 
 #include "../config.h"
 #include "../errHand.h"
+#include "../libUtils.h"
 
 #include "welcome-w32.h"
 
