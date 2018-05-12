@@ -9,6 +9,7 @@ LDFLAGS+=-lcmocka
 
 TESTS=\
 	int_diff.run\
+	int_sum.run\
 	squeeze_text_deco.run\
 	sw_strcat.run\
 	sw_strcpy.run

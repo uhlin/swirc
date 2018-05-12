@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
   - Windows
 - Unit tests for
   - `int_diff`
+  - `int_sum`
   - `squeeze_text_deco()`
   - `sw_strcat()`
   - `sw_strcpy()`

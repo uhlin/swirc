@@ -2,6 +2,7 @@
 
 TESTS="
 int_diff
+int_sum
 squeeze_text_deco
 sw_strcat
 sw_strcpy
