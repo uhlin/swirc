@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 TESTS="
+int_diff
 squeeze_text_deco
 sw_strcat
 sw_strcpy

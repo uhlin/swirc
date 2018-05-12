@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
   - UNIX
   - Windows
 - Unit tests for
+  - `int_diff`
   - `squeeze_text_deco()`
   - `sw_strcat()`
   - `sw_strcpy()`

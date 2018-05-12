@@ -8,6 +8,7 @@ CFLAGS+=-I$(SRC) -I$(SRC)/include -I/usr/local/include
 LDFLAGS+=-lcmocka
 
 TESTS=\
+	int_diff.run\
 	squeeze_text_deco.run\
 	sw_strcat.run\
 	sw_strcpy.run
