@@ -1,5 +1,5 @@
 /* events/auth.c
-   Copyright (C) 2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -84,7 +84,7 @@ build_auth_message(char **msg)
     }
     char *msg_unencoded = strdup_printf("%s%c%s%c%s",
 	username, '\0', username, '\0', password);
-    size_t len = strlen(username) * 2;
+    size_t len = size_product(strlen(username), 2);
     len += 2;
     len += strlen(password);
     *msg = xmalloc(1000);

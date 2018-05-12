@@ -1,4 +1,4 @@
-/* Copyright (C) 2014, 2016 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2014-2018 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -22,7 +22,8 @@ event_welcome_is_signaled(void)
     };
 
     return WaitForSingleObject(welcome_cond,
-	config_integer_unparse(&unparse_ctx) * 1000) == WAIT_OBJECT_0;
+	size_product(config_integer_unparse(&unparse_ctx), 1000)) ==
+	WAIT_OBJECT_0;
 }
 
 void
