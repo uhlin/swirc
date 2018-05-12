@@ -48,14 +48,6 @@
 
 #include "commands/misc.h"
 
-/* Enum definitions
-   ================ */
-
-enum readline_active_panel {
-    PANEL1_ACTIVE,
-    PANEL2_ACTIVE
-};
-
 /* Objects with external linkage
    ============================= */
 

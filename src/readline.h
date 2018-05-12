@@ -13,6 +13,14 @@
 
 #include <setjmp.h> /* want type jmp_buf */
 
+/* Enum definitions
+   ================ */
+
+enum readline_active_panel {
+    PANEL1_ACTIVE,
+    PANEL2_ACTIVE
+};
+
 enum { /* custom, additional keys */
     MY_KEY_BS	  = '\010',	/* ^H */
     MY_KEY_DEL	  = '\177',	/* ^? */
