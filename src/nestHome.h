@@ -8,6 +8,9 @@ extern char *g_log_dir;
 extern const char g_config_filesuffix[];
 extern const char g_theme_filesuffix[];
 
+extern char *g_config_file;
+extern char *g_theme_file;
+
 void nestHome_init   (void);
 void nestHome_deinit (void);
 

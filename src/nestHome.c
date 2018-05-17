@@ -1,5 +1,5 @@
 /* Create the home directory and read its configuration files
-   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -55,6 +55,9 @@ char	*g_log_dir  = NULL;
 const char g_config_filesuffix[] = ".conf";
 const char g_theme_filesuffix[]  = ".the";
 
+char *g_config_file = NULL;
+char *g_theme_file  = NULL;
+
 static void
 make_requested_dir(const char *path)
 {
@@ -100,8 +103,6 @@ nestHome_init(void)
 {
 #define EXPLICIT_CONFIG g_cmdline_opts->config_file
     char *hp = path_to_home() ? sw_strdup(path_to_home()) : NULL;
-    char *config_file = NULL;
-    char *theme_file = NULL;
 
     if (isNull(hp)) {
 	err_quit("Can't resolve homepath!");
@@ -111,12 +112,14 @@ nestHome_init(void)
     g_home_dir  = strdup_printf("%s/.swirc", hp);
     g_tmp_dir   = strdup_printf("%s/.swirc/tmp", hp);
     g_log_dir   = strdup_printf("%s/.swirc/log", hp);
-    config_file = strdup_printf("%s/.swirc/swirc%s", hp, g_config_filesuffix);
+    g_config_file =
+	strdup_printf("%s/.swirc/swirc%s", hp, g_config_filesuffix);
 #elif defined(WIN32)
     g_home_dir  = strdup_printf("%s\\swirc", hp);
     g_tmp_dir   = strdup_printf("%s\\swirc\\tmp", hp);
     g_log_dir   = strdup_printf("%s\\swirc\\log", hp);
-    config_file = strdup_printf("%s\\swirc\\swirc%s", hp, g_config_filesuffix);
+    g_config_file =
+	strdup_printf("%s\\swirc\\swirc%s", hp, g_config_filesuffix);
 #endif
 
     make_requested_dir(g_home_dir);
@@ -137,48 +140,46 @@ nestHome_init(void)
 	    config_readit(EXPLICIT_CONFIG, "r");
 	}
     } else if (!g_explicit_config_file) {
-	if (file_exists(config_file) && !is_regular_file(config_file)) {
-	    err_quit("%s exists  --  but isn't a regular file.", config_file);
-	} else if (!file_exists(config_file)) {
-	    config_create(config_file, "w+");
-	    config_readit(config_file, "r");
+	if (file_exists(g_config_file) && !is_regular_file(g_config_file)) {
+	    err_quit("%s exists  --  but isn't a regular file.", g_config_file);
+	} else if (!file_exists(g_config_file)) {
+	    config_create(g_config_file, "w+");
+	    config_readit(g_config_file, "r");
 	} else {
-	    config_readit(config_file, "r");
+	    config_readit(g_config_file, "r");
 	}
 
 	if (g_cmdline_opts->nickname || g_cmdline_opts->username ||
 	    g_cmdline_opts->rl_name)
-	    save_cmdline_opts(config_file);
+	    save_cmdline_opts(g_config_file);
     } else {
 	sw_assert_not_reached();
     }
 
 #if defined(UNIX)
-    theme_file = strdup_printf("%s/.swirc/%s%s",
+    g_theme_file = strdup_printf("%s/.swirc/%s%s",
 	hp, Config("theme"), g_theme_filesuffix);
 #elif defined(WIN32)
-    theme_file = strdup_printf("%s\\swirc\\%s%s",
+    g_theme_file = strdup_printf("%s\\swirc\\%s%s",
 	hp, Config("theme"), g_theme_filesuffix);
 #endif
 
     if (isEmpty(Config("theme"))) {
 	err_quit("Item theme in user config file holds no data. Error.");
-    } else if (file_exists(theme_file) && !is_regular_file(theme_file)) {
-	err_quit("%s exists  --  but isn't a regular file.", theme_file);
-    } else if (!file_exists(theme_file) &&
+    } else if (file_exists(g_theme_file) && !is_regular_file(g_theme_file)) {
+	err_quit("%s exists  --  but isn't a regular file.", g_theme_file);
+    } else if (!file_exists(g_theme_file) &&
 	       strncmp(Config("theme"), "default", 8) == 0) {
-	theme_create(theme_file, "w+");
-	theme_readit(theme_file, "r");
-    } else if (!file_exists(theme_file) &&
+	theme_create(g_theme_file, "w+");
+	theme_readit(g_theme_file, "r");
+    } else if (!file_exists(g_theme_file) &&
 	       strncmp(Config("theme"), "default", 8) != 0) {
-	err_quit("%s no such file or directory. Exiting...", theme_file);
+	err_quit("%s no such file or directory. Exiting...", g_theme_file);
     } else {
-	theme_readit(theme_file, "r");
+	theme_readit(g_theme_file, "r");
     }
 
     free_not_null(hp);
-    free_not_null(config_file);
-    free_not_null(theme_file);
 }
 
 void
@@ -187,6 +188,9 @@ nestHome_deinit(void)
     free_and_null(&g_home_dir);
     free_and_null(&g_tmp_dir);
     free_and_null(&g_log_dir);
+
+    free_and_null(&g_config_file);
+    free_and_null(&g_theme_file);
 
     config_deinit();
     theme_deinit();
