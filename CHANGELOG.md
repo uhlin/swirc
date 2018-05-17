@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
   - `sw_strcat()`
   - `sw_strcpy()`
 - Use of `size_product` in multiple places
+- Command /set
 
 ### Changed ###
 - Name of function
