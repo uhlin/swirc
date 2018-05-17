@@ -110,22 +110,22 @@ static struct ptext_colorMap_tag {
     chtype at;
 #endif
 } ptext_colorMap[] = {
-    { COLOR_WHITE,   A_BOLD },
-    { COLOR_BLACK,   A_DIM  },
-    { COLOR_BLUE,    A_DIM  },
-    { COLOR_GREEN,   A_DIM  },
-    { COLOR_RED,     A_BOLD },
-    { COLOR_RED,     A_DIM  },
-    { COLOR_MAGENTA, A_DIM  },
-    { COLOR_YELLOW,  A_DIM  },
-    { COLOR_YELLOW,  A_BOLD },
-    { COLOR_GREEN,   A_BOLD },
-    { COLOR_CYAN,    A_DIM  },
-    { COLOR_CYAN,    A_BOLD },
-    { COLOR_BLUE,    A_BOLD },
-    { COLOR_MAGENTA, A_BOLD },
-    { COLOR_BLACK,   A_BOLD },
-    { COLOR_WHITE,   A_DIM  },
+    { COLOR_WHITE,   A_BOLD   },
+    { COLOR_BLACK,   A_NORMAL },
+    { COLOR_BLUE,    A_NORMAL },
+    { COLOR_GREEN,   A_NORMAL },
+    { COLOR_RED,     A_BOLD   },
+    { COLOR_RED,     A_NORMAL },
+    { COLOR_MAGENTA, A_NORMAL },
+    { COLOR_YELLOW,  A_NORMAL },
+    { COLOR_YELLOW,  A_BOLD   },
+    { COLOR_GREEN,   A_BOLD   },
+    { COLOR_CYAN,    A_NORMAL },
+    { COLOR_CYAN,    A_BOLD   },
+    { COLOR_BLUE,    A_BOLD   },
+    { COLOR_MAGENTA, A_BOLD   },
+    { COLOR_BLACK,   A_BOLD   },
+    { COLOR_WHITE,   A_NORMAL },
 };
 
 /**
