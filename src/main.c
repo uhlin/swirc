@@ -141,7 +141,7 @@ view_version()
 	char answer[100];
 	int c;
 
-	PUTS("Do you also want to read the disclaimer? [y/N]: ");
+	PUTS("Output disclaimer? [y/N]: ");
 	(void) fflush(stdout);
 
 	BZERO(answer, sizeof answer);
