@@ -122,6 +122,7 @@ static struct cmds_tag {
       "\npassword <pass>"
       "\nset [on | off]" },
     { "say",        cmd_say,        true,  "/say <message>" },
+    { "set",        cmd_set,        false, "/set [[setting] [value]]" },
     { "theme",      cmd_theme,      false, "/theme "
       "[install | list-remote | set] [name]" },
     { "time",       cmd_time,       true,  "/time <target>" },

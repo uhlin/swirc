@@ -24,4 +24,6 @@ void		 config_create          (const char *path, const char *mode);
 void		 config_do_save         (const char *path, const char *mode);
 void		 config_readit          (const char *path, const char *mode);
 
+void cmd_set(const char *);
+
 #endif

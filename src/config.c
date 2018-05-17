@@ -33,7 +33,10 @@
 #include "interpreter.h"
 #include "libUtils.h"
 #include "main.h"
+#include "nestHome.h"
+#include "printtext.h"
 #include "strHand.h"
+#include "theme.h"
 
 #define ENTRY_FOREACH(entry_p)\
     for (entry_p = &hash_table[0];\
@@ -399,4 +402,153 @@ config_readit(const char *path, const char *mode)
 	err_msg("fgets returned NULL for an unknown reason (bug!)");
 	abort();
     }
+}
+
+/* -------------------------------------------------- */
+
+const char *
+get_setting_type(const struct tagConfDefValues *cdv)
+{
+    if (cdv->type == TYPE_BOOLEAN)
+	return "bool";
+    else if (cdv->type == TYPE_INTEGER)
+	return "int";
+    else if (cdv->type == TYPE_STRING)
+	return "string";
+    return "unknown";
+}
+
+#define B1 Theme("notice_inner_b1")
+#define B2 Theme("notice_inner_b2")
+
+static void
+output_values_for_all_settings()
+{
+    struct printtext_context ctx = {
+	.window = g_active_window,
+	.spec_type = TYPE_SPEC3,
+	.include_ts = true,
+    };
+
+    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
+	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
+	printtext(&ctx, "%s%s%s%s %s %s",
+	    cdv_p->setting_name,
+	    B1, get_setting_type(cdv_p), B2,
+	    Theme("notice_sep"),
+	    Config(cdv_p->setting_name));
+    }
+}
+
+static void
+output_value_for_specific_setting(const char *setting)
+{
+    struct printtext_context ctx = {
+	.window = g_active_window,
+	.spec_type = TYPE_SPEC3,
+	.include_ts = true,
+    };
+
+    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
+	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
+	if (strings_match(setting, cdv_p->setting_name)) {
+	    printtext(&ctx, "%s%s%s%s %s %s",
+		cdv_p->setting_name,
+		B1, get_setting_type(cdv_p), B2,
+		Theme("notice_sep"),
+		Config(cdv_p->setting_name));
+	    return;
+	}
+    }
+
+    print_and_free("/set: no such setting", NULL);
+}
+
+static bool
+set_value_for_setting(const char *setting, const char *value, char **err_reason)
+{
+    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
+	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
+	if (strings_match(setting, cdv_p->setting_name)) {
+	    if (cdv_p->type == TYPE_BOOLEAN &&
+		!strings_match_ignore_case(value, "on")    &&
+		!strings_match_ignore_case(value, "true")  &&
+		!strings_match_ignore_case(value, "yes")   &&
+		!strings_match_ignore_case(value, "off")   &&
+		!strings_match_ignore_case(value, "false") &&
+		!strings_match_ignore_case(value, "no")) {
+		*err_reason =
+		    "booleans must be on, true, yes, off, false or no";
+		return false;
+	    } else if (cdv_p->type == TYPE_INTEGER &&
+		       !is_numeric(value)) {
+		*err_reason = "integer not all numeric";
+		return false;
+	    } else if (config_item_undef(setting) != 0) {
+		*err_reason = "config_item_undef";
+		return false;
+	    } else if (config_item_install(setting, value) != 0) {
+		*err_reason = "config_item_install";
+		return false;
+	    }
+
+	    config_do_save(g_config_file, "w");
+	    return true;
+	}
+    }
+
+    *err_reason = "no such setting";
+    return false;
+}
+
+static void
+try_to_set_value_for_setting(const char *setting, const char *value)
+{
+    char *err_reason = "no error";
+    struct printtext_context ctx = {
+	.window = g_active_window,
+	.spec_type = TYPE_SPEC1_SUCCESS,
+	.include_ts = true,
+    };
+
+    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
+	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
+	if (strings_match(setting, cdv_p->setting_name)) {
+	    if (!set_value_for_setting(setting, value, &err_reason))
+		print_and_free(err_reason, NULL);
+	    else
+		printtext(&ctx, "ok");
+	    return;
+	}
+    }
+
+    print_and_free("/set: no such setting", NULL);
+}
+
+/* usage: /set [[setting] [value]] */
+void
+cmd_set(const char *data)
+{
+    char *dcopy = sw_strdup(data);
+    char *setting = NULL, *value = NULL;
+    char *state = "";
+
+    if (strings_match(dcopy, "")) {
+	output_values_for_all_settings();
+	free(dcopy);
+	return;
+    }
+    strFeed(dcopy, 1);
+    setting = strtok_r(dcopy, "\n", &state);
+    value = strtok_r(NULL, "\n", &state);;
+    if (setting == NULL) {
+	print_and_free("/set: fatal error (shouldn't happen)", dcopy);
+	return;
+    } else if (value == NULL) {
+	output_value_for_specific_setting(setting);
+	free(dcopy);
+	return;
+    }
+    try_to_set_value_for_setting(setting, value);
+    free(dcopy);
 }
