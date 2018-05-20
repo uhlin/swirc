@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [2.1] - 2018-05-21 ##
 ### Added ###
 - New build system for
   - UNIX
