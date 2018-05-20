@@ -32,6 +32,12 @@ All notable changes to this project will be documented in this file.
 ### Fixed ###
 - Building for NetBSD
 
+### News ###
+- Windows-specific:
+  - Curl 7.60.0
+  - LibreSSL 2.7.3
+  - PDCurses 3.6
+
 ## [2.0] - 2018-02-24 ##
 ### Added ###
 - Event 465 `ERR_YOUREBANNEDCREEP`
