@@ -25,16 +25,14 @@ main: $(TGTS)
 
 DIST_DEPS=swirc.exe\
 	"curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll"\
-	"libressl-$(LIBRESSL_VERSION)-windows\$(MACHINE)\$(NAME_libcrypto).dll"\
-	"libressl-$(LIBRESSL_VERSION)-windows\$(MACHINE)\$(NAME_libssl).dll"\
 	"pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll"\
 	"src\trusted_roots.pem"
 
 dist: $(DIST_DEPS)
 	mkdir $(DEST)
 	copy "curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll" $(DEST)
-	copy "libressl-$(LIBRESSL_VERSION)-windows\$(MACHINE)\$(NAME_libcrypto).dll" $(DEST)
-	copy "libressl-$(LIBRESSL_VERSION)-windows\$(MACHINE)\$(NAME_libssl).dll" $(DEST)
+#	copy "libressl-$(LIBRESSL_VERSION)-windows\$(MACHINE)\$(NAME_libcrypto).dll" $(DEST)
+#	copy "libressl-$(LIBRESSL_VERSION)-windows\$(MACHINE)\$(NAME_libssl).dll" $(DEST)
 	copy "pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll" $(DEST)
 	copy "src\trusted_roots.pem" $(DEST)
 	copy "swirc.exe" $(DEST)
