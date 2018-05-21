@@ -6,7 +6,7 @@
 SECTIONS="bottom.html head_common_tags.html menu.html top.html"
 PAGES="about.html cmds.html doc.html index.html pr.html"
 DIRS="gfx screenshots themes"
-OTHER_FILES="mu160221.asc mu170225.asc style.css"
+OTHER_FILES="mu170225.asc mu180520.asc style.css"
 
 for s in $SECTIONS; do
     printf "  - Checking for %s..." "$s"
