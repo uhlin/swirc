@@ -45,6 +45,13 @@ for pg in $PAGES; do
     printf "ok\n"
 done
 
+for file in $OTHER_FILES; do
+    printf "  - Adding %s..." "${TEMP_DIR}/${file}"
+    cp "$file" "${TEMP_DIR}/${file}"
+    test -f "${TEMP_DIR}/${file}" || { printf "error\n"; exit 1; }
+    printf "ok\n"
+done
+
 transfer_site () {
     local dest=maxxe@nifty-networks.net:www-swirc
 
