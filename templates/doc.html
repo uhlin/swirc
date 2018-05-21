@@ -21,7 +21,7 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2018-02-25</em></small></p>
+<p><small><em>Updated: 2018-05-21</em></small></p>
 <h3>Program options</h3>
 <h4>Common</h4>
 <table class="po">
@@ -126,11 +126,11 @@ you install
 Due to certain circumstances I no longer can confirm that building for
 OS X works.
 </p>
+<kbd>$ cd /path/to/swirc</kbd><br>
 <kbd>$ ./configure</kbd><br>
-<kbd>$ cd src</kbd><br>
-<kbd>$ make -f unix.mk</kbd>
+<kbd>$ make</kbd>
 <p>Installing it (under <kbd>/usr/local</kbd>):</p>
-<kbd>$ sudo make -f unix.mk install</kbd>
+<kbd>$ sudo make install</kbd>
 <h4>Building for Windows</h4>
 <p>
 To build Swirc for Windows you must have
@@ -142,14 +142,16 @@ So, fire up the command prompt for
 where the needed tools (the compiler, etc.) are loaded into the
 environment. The regular command prompt won't work. Then:
 </p>
-<kbd>&gt; cd c:\path\to\swirc\src</kbd><br>
-<kbd>&gt; nmake -f w32.mk</kbd>
-<p>Done! The executable will be put in the <cite>src</cite> directory.</p>
+<kbd>&gt; cd c:\path\to\swirc</kbd><br>
+<kbd>&gt; nmake -f Makefile.vc</kbd>
+<p><em>Done!</em></p>
+<p>To make a distribution of Swirc use:</p>
+<kbd>&gt; nmake -f Makefile.vc dist</kbd>
 <h3>Cleaning</h3>
 <p>Examples:</p>
 <p>
-<kbd>$ make -f unix.mk clean</kbd><br>
-<kbd>$ nmake -f w32.mk clean</kbd>
+<kbd>$ make clean</kbd><br>
+<kbd>$ nmake -f Makefile.vc clean</kbd>
 </p>
 </div> <!--mid-->
 
