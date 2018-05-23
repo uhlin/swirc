@@ -1,0 +1,68 @@
+# -*- mode: conf; -*-
+
+#
+# Superkod
+# Version: 1.0
+#
+
+term_background         = "1";
+term_enable_colors      = "yes";
+term_use_default_colors = "yes";
+
+color3 = "12";
+color4 = "13";
+
+gfx_failure = "04:05:15:";
+gfx_success = "09:03:15:";
+gfx_warning = "08:07:15:";
+
+left_bracket  = "14[";
+right_bracket = "14]";
+
+logo_color = "13";
+
+nick_s1 = "04<";
+nick_s2 = "04>";
+
+notice_color1   = "13";
+notice_color2   = "06";
+notice_inner_b1 = "14(";
+notice_inner_b2 = "14)";
+notice_lb       = "14-";
+notice_rb       = "14-";
+notice_sep      = "14:";
+
+primary_color   = "12";
+secondary_color = "08";
+
+slogan = "cool curses irc client";
+
+specifier1 = "09***";
+specifier2 = "14[00:14]";
+specifier3 = "14[00x14]";
+
+statusbar_bg           = "black";
+statusbar_fg           = "white";
+statusbar_leftBracket  = "05,01[";
+statusbar_rightBracket = "05,01]";
+statusbar_spec         = "";
+
+time_format = "%H07:%M07:%S";
+
+titlebar_bg = "black";
+titlebar_fg = "green";
+
+whois_acc      = "14=> 12account  04:";
+whois_away     = "14=> 12away     04:";
+whois_cert     = "14=> 12cert     04:";
+whois_channels = "14=> 12channels 04:";
+whois_conn     = "14=> 12conn     04:";
+whois_host     = "14=> 12host     04:";
+whois_idle     = "14=> 12idle     04:";
+whois_ircName  = "14=> 12ircname  04:";
+whois_ircOp    = "14=> 12IRC op   04:";
+whois_modes    = "14=> 12modes    04:";
+whois_server   = "14=> 12server   04:";
+whois_service  = "14=> 12service  04:";
+whois_ssl      = "14=> 12TLS/SSL  04:";
+# EOF
