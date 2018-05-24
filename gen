@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 #
 # SSG (Static Site Generator) for Swirc homepage.
-# Copyright (C) 2017 Markus Uhlin. All rights reserved.
+# Copyright (C) 2017, 2018 Markus Uhlin. All rights reserved.
 
 SECTIONS="bottom.html head_common_tags.html menu.html top.html"
 PAGES="about.html cmds.html doc.html index.html pr.html"
 DIRS="gfx screenshots themes"
+THEMES="
+bx.the
+nano.the
+superkod.the
+themes
+"
 OTHER_FILES="mu170225.asc mu180520.asc style.css"
 
 for s in $SECTIONS; do
@@ -26,6 +32,12 @@ for dir in $DIRS; do
     printf "ok\n"
 done
 
+for theme in $THEMES; do
+    printf "  - Checking for %s..." "themes/${theme}"
+    test -f "themes/${theme}" || { printf "error\n"; exit 1; }
+    printf "ok\n"
+done
+
 for file in $OTHER_FILES; do
     printf "  - Checking for %s..." "$file"
     test -f "$file" || { printf "error\n"; exit 1; }
@@ -33,6 +45,16 @@ for file in $OTHER_FILES; do
 done
 
 TEMP_DIR=$(mktemp -d)
+
+for dir in $DIRS; do
+    printf "  - Creating %s..." "${TEMP_DIR}/${dir}"
+    if test -d "${TEMP_DIR}/${dir}"; then
+	printf "already existent\n"
+    else
+	mkdir -p "${TEMP_DIR}/${dir}" || { printf "error\n"; exit 1; }
+	printf "ok\n"
+    fi
+done
 
 for pg in $PAGES; do
     printf "  - Generating %s..." "${TEMP_DIR}/${pg}"
@@ -42,6 +64,13 @@ for pg in $PAGES; do
 	-e "/-----BOTTOM-----/r bottom.html" -e "/-----BOTTOM-----/d" \
 	"templates/${pg}" > "${TEMP_DIR}/${pg}"
     test -f "${TEMP_DIR}/${pg}" || { printf "error\n"; exit 1; }
+    printf "ok\n"
+done
+
+for theme in $THEMES; do
+    printf "  - Adding %s..." "${TEMP_DIR}/themes/${theme}"
+    cp "themes/${theme}" "${TEMP_DIR}/themes/${theme}"
+    test -f "${TEMP_DIR}/themes/${theme}" || { printf "error\n"; exit 1; }
     printf "ok\n"
 done
 
