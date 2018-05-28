@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Fixed ###
+- Some functions that should be static, but weren't...
+
 ## [2.1] - 2018-05-21 ##
 ### Added ###
 - New build system for

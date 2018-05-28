@@ -611,7 +611,7 @@ names_cmp_fn(const void *obj1, const void *obj2)
 
 /* -------------------------------------------------- */
 
-struct name_tag *
+static struct name_tag *
 get_names_array(const int ntp1, PIRC_WINDOW window)
 {
     int i = 0, j = 0;

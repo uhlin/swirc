@@ -406,7 +406,7 @@ config_readit(const char *path, const char *mode)
 
 /* -------------------------------------------------- */
 
-const char *
+static const char *
 get_setting_type(const struct tagConfDefValues *cdv)
 {
     if (cdv->type == TYPE_BOOLEAN)
