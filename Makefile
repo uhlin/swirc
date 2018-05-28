@@ -11,11 +11,13 @@ include src/build.mk
 main: $(TGTS)
 
 .c.o:
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(E) "  CC      " $@
+	$(Q) $(CC) $(CFLAGS) -c -o $@ $<
 
 # install target
 include install.mk
 
 clean:
+	$(E) "  CLEAN"
 	$(RM) $(OBJS)
 	$(RM) $(TGTS)

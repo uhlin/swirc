@@ -41,5 +41,6 @@ OBJS+=$(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)x509_check_host.o
 
 swirc: $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS) $(LDLIBS)
-	strip $@
+	$(E) "  LINK    " $@
+	$(Q) $(CC) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS) $(LDLIBS)
+	$(Q) strip $@

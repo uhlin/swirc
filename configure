@@ -5,8 +5,7 @@ MAKE_DEF_FILE=unix_def.mk
 cat <<EOF >$MAKE_DEF_FILE
 E=@echo
 Q=@
-RM=@rm -f
-TEMPFILES=*.o
+RM?=@rm -f
 EOF
 
 os_MAC () {
