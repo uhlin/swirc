@@ -64,6 +64,7 @@ static struct tagConfDefValues {
     { "disable_beeps",             TYPE_BOOLEAN, "no" },
     { "encoding",                  TYPE_STRING,  "iso-8859-1" },
     { "hostname_checking",         TYPE_BOOLEAN, "yes" },
+    { "ircv3_server_time",         TYPE_BOOLEAN, "no" },
     { "kick_close_window",         TYPE_BOOLEAN, "yes" },
     { "max_chat_windows",          TYPE_INTEGER, "60" },
     { "nickname",                  TYPE_STRING,  "warezkid" },

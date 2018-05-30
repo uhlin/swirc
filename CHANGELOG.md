@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- Option `ircv3_server_time`
+
 ### Fixed ###
 - Some functions that should be static, but weren't...
 
