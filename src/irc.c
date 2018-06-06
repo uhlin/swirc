@@ -338,8 +338,8 @@ SortMsgCompo(const char *protocol_message)
 	substring = xcalloc(bytes, 1);
 	snprintf(substring, bytes, "%s", protocol_message);
 
-	if (!strncmp(substring, "@time=", 6) &&
-	    sscanf(substring, "@time=%d-%d-%dT%d:%d:%d.%dZ",
+	if (!strncmp(substring, "@time=", 6)) {
+	    if (sscanf(substring, "@time=%d-%d-%dT%d:%d:%d.%dZ",
 		& (compo->year),
 		& (compo->month),
 		& (compo->day),
@@ -347,16 +347,19 @@ SortMsgCompo(const char *protocol_message)
 		& (compo->minute),
 		& (compo->second),
 		& (compo->precision)) != 7) {
-	    free(compo);
-	    print_and_free("In SortMsgCompo: IRCv3: server time error",
-			   substring);
-	    return NULL;
+		free(compo);
+		print_and_free("In SortMsgCompo: IRCv3: server time error",
+			       substring);
+		return NULL;
+	    }
 	} else {
 	    free(compo);
 	    print_and_free("In SortMsgCompo: IRCv3: unsupported extension",
 			   substring);
 	    return NULL;
 	}
+
+	free(substring);
     } /* ===== EOF IRCv3 extensions ===== */
 
     const char *ccp = &protocol_message[bytes];
