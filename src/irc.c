@@ -606,14 +606,9 @@ irc_handle_interpret_events(char *recvbuffer,
 void
 irc_set_my_nickname(const char *nick)
 {
-    if (nick == NULL || strings_match(nick, "")) {
+    if (nick == NULL || strings_match(nick, ""))
 	err_exit(EINVAL, "irc_set_my_nickname");
-    }
-
-    if (g_my_nickname) {
-	free(g_my_nickname);
-    }
-
+    free(g_my_nickname);
     g_my_nickname = sw_strdup(nick);
     statusbar_update_display_beta();
     readline_top_panel();
@@ -625,14 +620,9 @@ irc_set_my_nickname(const char *nick)
 void
 irc_set_server_hostname(const char *srv_host)
 {
-    if (srv_host == NULL || strings_match(srv_host, "")) {
+    if (srv_host == NULL || strings_match(srv_host, ""))
 	err_exit(EINVAL, "irc_set_server_hostname");
-    }
-
-    if (g_server_hostname) {
-	free(g_server_hostname);
-    }
-
+    free(g_server_hostname);
     g_server_hostname = sw_strdup(srv_host);
 }
 
