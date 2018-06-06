@@ -262,6 +262,22 @@ irc_deinit(void)
 
 /* -------------------------------------------------- */
 
+bool
+has_server_time(const struct irc_message_compo *compo)
+{
+    if (compo == NULL)
+	return false;
+
+    return
+	compo->year      != -1 &&
+	compo->month     != -1 &&
+	compo->day       != -1 &&
+	compo->hour      != -1 &&
+	compo->minute    != -1 &&
+	compo->second    != -1 &&
+	compo->precision != -1;
+}
+
 /**
  * Extract a message with help of given parameters
  */
