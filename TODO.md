@@ -1,5 +1,4 @@
 # TODO #
 
-* Add more IRC events
-* Create /commands
+* Full IRCv3 support
 * Tab completion
