@@ -4,8 +4,8 @@
 *.log
 *.o
 *.obj
-libressl-2.4.2-windows
-pdcurses-3.4
+libressl-*-windows
+pdcurses-*
 swirc
 swirc.analyze
 swirc.exe
