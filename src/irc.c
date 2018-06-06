@@ -313,18 +313,68 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
 /**
  * Sort message components - into prefix, command and params.
  */
+/*lint -sem(SortMsgCompo, r_null) */
 static struct irc_message_compo *
-SortMsgCompo(char *protocol_message, bool message_has_prefix)
+SortMsgCompo(const char *protocol_message)
 {
     char *cp = NULL, *savp = "";
+    char *remaining_data = NULL;
+    int message_has_prefix = 0, requested_feeds = -1;
     short int loop_run = 0;
+    size_t bytes = 0;
     struct irc_message_compo *compo = xcalloc(sizeof *compo, 1);
+
+    compo->year = compo->month = compo->day = -1;
+    compo->hour = compo->minute = compo->second = compo->precision = -1;
 
     compo->prefix  = NULL;
     compo->command = NULL;
     compo->params  = NULL;
 
-    for (loop_run = 0, cp = &protocol_message[0];; loop_run++, cp = NULL) {
+    if (*protocol_message == '@') {
+	char *substring = NULL;
+
+	bytes = strcspn(protocol_message, " ");
+	substring = xcalloc(bytes, 1);
+	snprintf(substring, bytes, "%s", protocol_message);
+
+	if (!strncmp(substring, "@time=", 6) &&
+	    sscanf(substring, "@time=%d-%d-%dT%d:%d:%d.%dZ",
+		& (compo->year),
+		& (compo->month),
+		& (compo->day),
+		& (compo->hour),
+		& (compo->minute),
+		& (compo->second),
+		& (compo->precision)) != 7) {
+	    free(compo);
+	    print_and_free("In SortMsgCompo: IRCv3: server time error",
+			   substring);
+	    return NULL;
+	} else {
+	    free(compo);
+	    print_and_free("In SortMsgCompo: IRCv3: unsupported extension",
+			   substring);
+	    return NULL;
+	}
+    } /* ===== EOF IRCv3 extensions ===== */
+
+    const char *ccp = &protocol_message[bytes];
+    while (*ccp == ' ')
+	ccp++;
+    message_has_prefix = (*ccp == ':');
+    requested_feeds = message_has_prefix ? 2 : 1;
+    remaining_data = sw_strdup(ccp);
+
+    if (strFeed(remaining_data, requested_feeds) != requested_feeds) {
+	free(compo);
+	print_and_free("In SortMsgCompo: strFeed: "
+	    "requested feeds mismatch feeds written",
+	    remaining_data);
+	return NULL;
+    }
+
+    for (loop_run = 0, cp = &remaining_data[0];; loop_run++, cp = NULL) {
 	char *token = NULL;
 
 	if ((token = strtok_r(cp, "\n", &savp)) == NULL) {
@@ -358,8 +408,9 @@ SortMsgCompo(char *protocol_message, bool message_has_prefix)
 	}
     }
 
+    free(remaining_data);
     sw_assert(compo->command != NULL && compo->params != NULL);
-    return (compo);
+    return compo;
 }
 
 /**
@@ -444,28 +495,10 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 static void
 ProcessProtoMsg(const char *token)
 {
-    char *protocol_message = NULL;
-    int message_has_prefix = 0, requested_feeds = -1;
     struct irc_message_compo *compo = NULL;
 
-    message_has_prefix = *(protocol_message = sw_strdup(token)) == ':';
-    requested_feeds = message_has_prefix ? 2 : 1;
-
-    if (strFeed(protocol_message, requested_feeds) != requested_feeds) {
-	struct printtext_context ptext_ctx = {
-	    .window     = g_status_window,
-	    .spec_type  = TYPE_SPEC1_FAILURE,
-	    .include_ts = true,
-	};
-
-	printtext(&ptext_ctx, "In ProcessProtoMsg: strFeed(..., %d) != %d",
-		  requested_feeds, requested_feeds);
-	free(protocol_message);
+    if ((compo = SortMsgCompo(token)) == NULL)
 	return;
-    }
-
-    compo = SortMsgCompo(protocol_message, message_has_prefix);
-    free(protocol_message);
     irc_search_and_route_event(compo);
     FreeMsgCompo(compo);
 }

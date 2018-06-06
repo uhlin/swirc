@@ -4,6 +4,15 @@
 #include "window.h"
 
 struct irc_message_compo {
+    int year;
+    int month;
+    int day;
+
+    int hour;
+    int minute;
+    int second;
+    int precision;
+
     char *prefix;
     char *command;
     char *params;
