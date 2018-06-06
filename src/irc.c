@@ -537,7 +537,7 @@ irc_handle_interpret_events(char *recvbuffer,
 
     if (recvbuffer == NULL || (*state != CONCAT_BUFFER_IS_EMPTY &&
 			       *state != CONCAT_BUFFER_CONTAIN_DATA)) {
-	err_exit(EINVAL, "irc_handle_interpret_events error");
+	err_exit(EINVAL, "irc_handle_interpret_events");
     } else if (strings_match(recvbuffer, "") ||
 	       strpbrk(recvbuffer, separators) == NULL) {
 	return;
@@ -604,7 +604,7 @@ void
 irc_set_my_nickname(const char *nick)
 {
     if (nick == NULL || strings_match(nick, "")) {
-	err_exit(EINVAL, "irc_set_my_nickname error");
+	err_exit(EINVAL, "irc_set_my_nickname");
     }
 
     if (g_my_nickname) {
@@ -623,7 +623,7 @@ void
 irc_set_server_hostname(const char *srv_host)
 {
     if (srv_host == NULL || strings_match(srv_host, "")) {
-	err_exit(EINVAL, "irc_set_server_hostname error");
+	err_exit(EINVAL, "irc_set_server_hostname");
     }
 
     if (g_server_hostname) {
