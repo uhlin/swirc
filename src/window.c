@@ -130,11 +130,11 @@ hash(const char *label)
     return (hashval % ARRAY_SIZE(hash_table));
 }
 
-static void
+static PTR_ARGS_NONNULL void
 hUndef(PIRC_WINDOW entry)
 {
     PIRC_WINDOW tmp;
-    unsigned int hashval = hash(entry->label);
+    const unsigned int hashval = hash(entry->label);
 
     if ((tmp = hash_table[hashval]) == entry) {
 	hash_table[hashval] = entry->next;
@@ -146,28 +146,12 @@ hUndef(PIRC_WINDOW entry)
 	tmp->next = entry->next;
     }
 
-    free_and_null(& (entry->label));
-    free_and_null(& (entry->title));
-
+    free(entry->label);
+    free(entry->title);
     term_remove_panel(entry->pan);
-
-    entry->pan	  = NULL;
-    entry->refnum = -1;
-
     textBuf_destroy(entry->buf);
     event_names_htbl_remove_all(entry);
-
-    entry->num_owners	= 0;
-    entry->num_superops = 0;
-    entry->num_ops	= 0;
-    entry->num_halfops	= 0;
-    entry->num_voices	= 0;
-    entry->num_normal	= 0;
-    entry->num_total	= 0;
-
-    free_not_null(entry);
-    entry = NULL;
-
+    free(entry);
     g_ntotal_windows--;
 }
 
