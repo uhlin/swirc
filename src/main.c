@@ -338,7 +338,7 @@ case_config()
 static void
 process_options(int argc, char *argv[], const char *optstring)
 {
-    int opt = -1;
+    int opt = EOF;
 
     while ((opt = options(argc, argv, optstring)) != EOF) {
 	switch (opt) {
