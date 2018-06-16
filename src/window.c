@@ -307,8 +307,9 @@ destroy_chat_window(const char *label)
     } else {
 	hUndef(window);
 	reassign_window_refnums();
-	errno = changeWindow_by_refnum(g_ntotal_windows);
-	sw_assert_perror(errno);
+	const int ret = changeWindow_by_refnum(g_ntotal_windows);
+	(void) ret;
+	sw_assert_perror(ret);
     }
 
     return (0);
@@ -399,8 +400,9 @@ spawn_chat_window(const char *label, const char *title)
 	PIRC_WINDOW entry = hInstall(&inst_ctx);
 
 	apply_window_options(panel_window(entry->pan));
-	errno = changeWindow_by_label(entry->label);
-	sw_assert_perror(errno);
+	const int ret = changeWindow_by_label(entry->label);
+	(void) ret;
+	sw_assert_perror(ret);
 
 	/* send whois */
 	if (g_on_air && !is_irc_channel(entry->label))
