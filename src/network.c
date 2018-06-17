@@ -102,13 +102,18 @@ select_send_and_recv_funcs()
 static PTR_ARGS_NONNULL void
 send_reg_cmds(const struct network_connect_context *ctx)
 {
-    if (is_sasl_enabled()) {
-	struct printtext_context ptext_ctx = {
-	    .window	= g_status_window,
-	    .spec_type	= TYPE_SPEC1_SUCCESS,
-	    .include_ts	= true,
-	};
+    struct printtext_context ptext_ctx = {
+	.window     = g_status_window,
+	.spec_type  = TYPE_SPEC1_SUCCESS,
+	.include_ts = true,
+    };
 
+    if (config_bool_unparse("ircv3_server_time", false)) {
+	if (net_send("CAP REQ :server-time") > 0)
+	    printtext(&ptext_ctx, "Requesting IRCv3 server time");
+    }
+
+    if (is_sasl_enabled()) {
 	if (strings_match(get_sasl_mechanism(), "PLAIN") && !is_ssl_enabled()) {
 	    ptext_ctx.spec_type = TYPE_SPEC1_WARN;
 	    printtext(&ptext_ctx, "SASL mechanism matches PLAIN and TLS/SSL "
