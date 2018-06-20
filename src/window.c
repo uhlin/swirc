@@ -171,6 +171,10 @@ windowSystem_deinit(void)
 
 /* -------------------------------------------------- */
 
+/**
+ * Return the window identified by the given @label -- or NULL on
+ * error
+ */
 PIRC_WINDOW
 window_by_label(const char *label)
 {
@@ -190,6 +194,10 @@ window_by_label(const char *label)
     return (NULL);
 }
 
+/**
+ * Return the window identified by the given reference number
+ * (@refnum) -- or NULL on error
+ */
 PIRC_WINDOW
 window_by_refnum(int refnum)
 {
@@ -211,6 +219,9 @@ window_by_refnum(int refnum)
     return (NULL);
 }
 
+/**
+ * Change window to the one specified by @label
+ */
 int
 changeWindow_by_label(const char *label)
 {
@@ -242,6 +253,9 @@ changeWindow_by_label(const char *label)
     return (0);
 }
 
+/**
+ * Change window to the one specified by @refnum
+ */
 int
 changeWindow_by_refnum(int refnum)
 {
@@ -273,6 +287,9 @@ changeWindow_by_refnum(int refnum)
     return (0);
 }
 
+/**
+ * Reassign reference numbers (refnums) for all open windows
+ */
 static void
 reassign_window_refnums()
 {
@@ -294,6 +311,9 @@ reassign_window_refnums()
     sw_assert(ref_count == g_ntotal_windows);
 }
 
+/**
+ * Destroy a chat window
+ */
 int
 destroy_chat_window(const char *label)
 {
@@ -315,6 +335,9 @@ destroy_chat_window(const char *label)
     return (0);
 }
 
+/**
+ * spawn_chat_window() helper
+ */
 static PIRC_WINDOW
 hInstall(const struct hInstall_context *ctx)
 {
@@ -365,6 +388,9 @@ hInstall(const struct hInstall_context *ctx)
     return entry;
 }
 
+/**
+ * Apply window options
+ */
 static void
 apply_window_options(WINDOW *win)
 {
@@ -373,6 +399,9 @@ apply_window_options(WINDOW *win)
     }
 }
 
+/**
+ * Spawn a chat window with given label and title
+ */
 int
 spawn_chat_window(const char *label, const char *title)
 {
@@ -412,6 +441,9 @@ spawn_chat_window(const char *label, const char *title)
     return (0);
 }
 
+/**
+ * Set new window title
+ */
 void
 new_window_title(const char *label, const char *title)
 {
@@ -431,6 +463,9 @@ new_window_title(const char *label, const char *title)
     }
 }
 
+/**
+ * Close all private conversations
+ */
 void
 window_close_all_priv_conv(void)
 {
@@ -458,6 +493,9 @@ window_close_all_priv_conv(void)
     }
 }
 
+/**
+ * Destroy names (free them), in all open windows...
+ */
 void
 window_foreach_destroy_names(void)
 {
@@ -486,6 +524,9 @@ window_foreach_destroy_names(void)
     }
 }
 
+/**
+ * Redraw a window
+ */
 static void
 window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 	      bool limit_output)
@@ -524,6 +565,9 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
     readline_top_panel();
 }
 
+/**
+ * Scroll down
+ */
 /* textBuf_size(window->buf) - window->saved_size */
 void
 window_scroll_down(PIRC_WINDOW window)
@@ -551,6 +595,9 @@ window_scroll_down(PIRC_WINDOW window)
 		  false);
 }
 
+/**
+ * Scroll up
+ */
 void
 window_scroll_up(PIRC_WINDOW window)
 {
@@ -586,6 +633,9 @@ window_scroll_up(PIRC_WINDOW window)
 	    window->saved_size - window->scroll_count, true);
 }
 
+/**
+ * Switch to the active window plus 1
+ */
 void
 window_select_next(void)
 {
@@ -596,6 +646,9 @@ window_select_next(void)
     }
 }
 
+/**
+ * Switch to the active window minus 1
+ */
 void
 window_select_prev(void)
 {
@@ -606,6 +659,9 @@ window_select_prev(void)
     }
 }
 
+/**
+ * Recreate one window with given rows and cols
+ */
 static void
 window_recreate(PIRC_WINDOW window, int rows, int cols)
 {
@@ -639,6 +695,9 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
     window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT, false);
 }
 
+/**
+ * Recreate all open windows by calling window_recreate() on each
+ */
 void
 windows_recreate_all(int rows, int cols)
 {
