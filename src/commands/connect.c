@@ -1,5 +1,5 @@
 /* connect and disconnect commands
-   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -268,6 +268,12 @@ get_server(const char *ar[], const size_t ar_sz, const char *msg)
 	printf("Your choice (0-%d): ", i);
 	fflush(stdout);
 
+/*
+ * sscanf() is safe in this context
+ */
+#if WIN32
+#pragma warning(disable: 4996)
+#endif
 	if (fgets(ans, sizeof ans, stdin) == NULL) {
 	    putchar('\n');
 	    continue;
@@ -280,6 +286,12 @@ get_server(const char *ar[], const size_t ar_sz, const char *msg)
 	} else {
 	    break;
 	}
+/*
+ * Reset warning behavior to its default value
+ */
+#if WIN32
+#pragma warning(default: 4996)
+#endif
     }
 
     resume_curses();

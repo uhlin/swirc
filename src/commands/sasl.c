@@ -1,5 +1,5 @@
 /* commands/sasl.c
-   Copyright (C) 2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017, 2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -318,6 +318,13 @@ cmd_sasl(const char *data)
     char password[301] = { '\0' };
     char state[11]     = { '\0' };
 
+/*
+ * sscanf() is safe in this context
+ */
+#if WIN32
+#pragma warning(disable: 4996)
+#endif
+
     if (strings_match(data, "keygen") || strings_match(data, "KEYGEN"))
 	sasl_keygen(false);
     else if (strings_match(data, "keygen --force") ||
@@ -335,6 +342,13 @@ cmd_sasl(const char *data)
 	set_state(state);
     else
 	output_message(true, "bogus operation");
+
+/*
+ * Reset warning behavior to its default value
+ */
+#if WIN32
+#pragma warning(default: 4996)
+#endif
 }
 
 static bool

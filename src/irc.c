@@ -354,6 +354,13 @@ SortMsgCompo(const char *protocol_message)
 	substring = xcalloc(bytes, 1);
 	snprintf(substring, bytes, "%s", protocol_message);
 
+/*
+ * sscanf() is safe in this context
+ */
+#if WIN32
+#pragma warning(disable: 4996)
+#endif
+
 	if (!strncmp(substring, "@time=", 6)) {
 	    if (sscanf(substring, "@time=%d-%d-%dT%d:%d:%d.%dZ",
 		& (compo->year),
@@ -376,6 +383,13 @@ SortMsgCompo(const char *protocol_message)
 	}
 
 	free(substring);
+
+/*
+ * Reset warning behavior to its default value
+ */
+#if WIN32
+#pragma warning(default: 4996)
+#endif
     } /* ===== EOF IRCv3 extensions ===== */
 
     const char *ccp = &protocol_message[bytes];
