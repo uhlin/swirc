@@ -112,6 +112,8 @@ static const char Pad64 = '=';
 	   characters followed by one "=" padding character.
    */
 
+int size_to_int(const size_t);
+
 /*
  * 2016-01-01 Markus: This routine was originally of name b64_ntop.
  */
@@ -173,5 +175,5 @@ b64_encode(uint8_t const *src, size_t srclength, char *target, size_t targsize) 
 	if (datalength >= targsize)
 		return (-1);
 	target[datalength] = '\0';	/* Returned value doesn't count \0. */
-	return (datalength);
+	return (size_to_int(datalength));
 }
