@@ -10,7 +10,32 @@
 
 #include "welcome-w32.h"
 
+#ifndef MAXDWORD
+#define MAXDWORD 4294967295
+#endif
+
 static HANDLE welcome_cond;
+
+/* -------------------------------------------------- */
+
+/**
+ * DWORD is a 32-bit unsigned integer
+ *
+ * Return 'elt_count' elements of size 'elt_size' (elt_count * elt_size) -- but
+ * check for overflow
+ *
+ * Leave the function non-static in case we want to use it somewhere else
+ */
+DWORD
+dword_product(const DWORD elt_count, const DWORD elt_size)
+{
+    if (elt_size && elt_count > MAXDWORD / elt_size) {
+	err_msg("Integer overflow");
+	abort();
+    }
+
+    return (elt_count * elt_size);
+}
 
 bool
 event_welcome_is_signaled(void)
@@ -23,7 +48,7 @@ event_welcome_is_signaled(void)
     };
 
     return WaitForSingleObject(welcome_cond,
-	size_product(config_integer_unparse(&unparse_ctx), 1000)) ==
+	dword_product(config_integer_unparse(&unparse_ctx), 1000)) ==
 	WAIT_OBJECT_0;
 }
 
