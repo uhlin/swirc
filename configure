@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Swirc configure script
+#
+# Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
+
 MAKE_DEF_FILE=unix_def.mk
 
 cat <<EOF >$MAKE_DEF_FILE
