@@ -30,6 +30,7 @@ LDLIBS=$(NAME_libcrypto).lib\
 	advapi32.lib\
 	libcurl.lib\
 	pdcurses.lib\
+	runtimeobject.lib\
 	user32.lib\
 	ws2_32.lib
 
