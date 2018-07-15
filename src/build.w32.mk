@@ -2,6 +2,7 @@ SRC_DIR=src/
 TGTS=$(TGTS) swirc.exe
 
 OBJS=$(OBJS)\
+	$(SRC_DIR)DesktopNotificationManagerCompat.obj\
 	$(SRC_DIR)assertAPI.obj\
 	$(SRC_DIR)b64_decode.obj\
 	$(SRC_DIR)b64_encode.obj\
