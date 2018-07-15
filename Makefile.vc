@@ -23,6 +23,10 @@ main: $(TGTS)
 	$(E) ^ ^ CC^ ^ ^ ^ ^ ^ $@
 	$(Q) $(CC) $(CFLAGS) -c -Fo$*.obj $< 1>>$(BUILD_LOG)
 
+.cpp.obj:
+	$(E) ^ ^ CXX^ ^ ^ ^ ^ $@
+	$(Q) $(CXX) $(CXXFLAGS) -c -Fo$*.obj $< 1>>$(BUILD_LOG)
+
 DIST_DEPS=swirc.exe\
 	"curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll"\
 	"pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll"\
