@@ -1,0 +1,29 @@
+/*
+ * IDL source for ToastActivator
+ * =============================
+ *
+ * This file will be processed by the MIDL tool to produce the type
+ * library (ToastActivator.tlb) and marshalling code.
+ */
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+typedef struct _NOTIFICATION_USER_INPUT_DATA {
+	LPCWSTR Key;
+	LPCWSTR Value;
+} NOTIFICATION_USER_INPUT_DATA;
+
+[
+	object,
+	uuid("62337340-CB78-4AE9-A524-685424C52DC7"),
+	pointer_default(ref)
+]
+
+interface INotificationActivationCallback : IUnknown {
+	HRESULT Activate(
+	    [in, string] LPCWSTR appUserModelId,
+	    [in, string] LPCWSTR invokedArgs,
+	    [in, size_is(dataCount), unique] const NOTIFICATION_USER_INPUT_DATA* data,
+	    [in] ULONG dataCount);
+};
