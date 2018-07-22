@@ -200,7 +200,7 @@ case_connect()
 {
     static bool	 been_case = false;
     char	*token1, *token2;
-    char	*savp	   = "";
+    char	*savp	   = (char *) "";
 
     if (been_case) {
 	DUP_OPTION_ERR('c');
@@ -472,7 +472,7 @@ get_locale_info(int category)
     struct locale_info *li = (struct locale_info *) xcalloc(sizeof *li, 1);
     char  buf[200] = { 0 };
     char *tok      = NULL;
-    char *savp     = "";
+    char *savp     = (char *) "";
 
     li->lang_and_territory = li->codeset = NULL;
 
