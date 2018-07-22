@@ -1,4 +1,4 @@
-/* main.c  --  starts execution
+/* main.cpp  --  starts execution
    Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
