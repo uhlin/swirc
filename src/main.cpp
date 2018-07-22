@@ -114,13 +114,13 @@ static const char *OptionDesc[] = {
 };
 
 static struct cmdline_opt_values opt_values_data = {
-    .server	 = NULL,
-    .port	 = NULL,
-    .nickname	 = NULL,
-    .username	 = NULL,
-    .rl_name	 = NULL,
-    .hostname	 = NULL,
-    .config_file = NULL,
+    NULL, /* server      */
+    NULL, /* port        */
+    NULL, /* nickname    */
+    NULL, /* username    */
+    NULL, /* rl_name     */
+    NULL, /* hostname    */
+    NULL, /* config_file */
 };
 
 struct cmdline_opt_values *g_cmdline_opts = &opt_values_data; /* External */
