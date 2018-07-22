@@ -1,10 +1,6 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #if defined(UNIX)
 #include "term-unix.h"
 #elif defined(WIN32)
@@ -24,6 +20,10 @@ struct current_cursor_pos {
 };
 
 /*lint -sem(term_new_panel, pure) */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 PANEL	*term_new_panel(int rows, int cols, int start_row, int start_col) PURE;
 PANEL	*term_resize_panel(PANEL *, struct term_window_size *);
