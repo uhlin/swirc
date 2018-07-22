@@ -469,7 +469,7 @@ main(int argc, char *argv[])
 struct locale_info *
 get_locale_info(int category)
 {
-    struct locale_info *li = xcalloc(sizeof *li, 1);
+    struct locale_info *li = (struct locale_info *) xcalloc(sizeof *li, 1);
     char  buf[200] = { 0 };
     char *tok      = NULL;
     char *savp     = "";
