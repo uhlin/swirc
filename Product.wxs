@@ -1,0 +1,24 @@
+<!-- -*- mode: xml; -*- -->
+
+<Shortcut
+    Id="ApplicationStartMenuShortcut"
+    Name="Swirc"
+    Description="Curses IRC client"
+    Target="[INSTALLFOLDER]swirc.exe"
+    WorkingDirectory="INSTALLFOLDER">
+	<!-- ===== -->
+	<!-- AUMID -->
+	<!-- ===== -->
+
+	<ShortcutProperty
+	    Key="System.AppUserModel.ID"
+	    Value="SwircDevelopmentTeam.Swirc" />
+
+	<!-- ========= -->
+	<!-- COM CLSID -->
+	<!-- ========= -->
+
+	<ShortcutProperty
+	    Key="System.AppUserModel.ToastActivatorCLSID"
+	    Value="{62337340-CB78-4AE9-A524-685424C52DC7}" />
+</Shortcut>
