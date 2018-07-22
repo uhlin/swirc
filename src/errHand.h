@@ -9,6 +9,10 @@
 /*lint -sem(err_quit, r_no) */
 /*lint -sem(err_sys, r_no)  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 SW_NORET void	err_dump (const char *fmt, ...) PRINTFLIKE(1);
 SW_NORET void	err_exit (int error, const char *fmt, ...) PRINTFLIKE(2);
 SW_NORET void	err_quit (const char *fmt, ...) PRINTFLIKE(1);
@@ -21,5 +25,9 @@ void		err_ret  (const char *fmt, ...) PRINTFLIKE(1);
 
 const char *errdesc_by_num(int);
 const char *xstrerror(int errnum, char *strerrbuf, size_t buflen);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

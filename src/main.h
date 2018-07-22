@@ -29,8 +29,16 @@ extern bool g_explicit_config_file;
 
 extern struct cmdline_opt_values *g_cmdline_opts;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct locale_info	*get_locale_info(int category);
 void			 free_locale_info(struct locale_info *);
 void			 cmdline_options_destroy(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

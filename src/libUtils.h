@@ -6,6 +6,10 @@
 /*lint -printf(2, write_to_stream) */
 /*lint -printf(1, say) */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 FILE		*fopen_exit_on_error   (const char *path, const char *mode);
 FILE		*xfopen                (const char *path, const char *mode);
 const char	*current_time          (const char *fmt);
@@ -21,6 +25,10 @@ void		 write_to_stream       (FILE *, const char *fmt, ...) PRINTFLIKE(2);
 void		*xcalloc               (size_t elt_count, size_t elt_size);
 void		*xmalloc               (size_t);
 void		*xrealloc              (void *ptr, size_t newSize);
+
+#ifdef __cplusplus
+}
+#endif
 
 /* Inline function definitions
    =========================== */

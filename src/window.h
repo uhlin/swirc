@@ -54,6 +54,10 @@ extern PIRC_WINDOW	g_status_window;
 extern PIRC_WINDOW	g_active_window;
 extern int              g_ntotal_windows;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void windowSystem_init(void);
 void windowSystem_deinit(void);
 
@@ -74,5 +78,9 @@ void		window_scroll_up             (PIRC_WINDOW);
 void		window_select_next           (void);
 void		window_select_prev           (void);
 void		windows_recreate_all         (int rows, int cols);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,6 +1,10 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(UNIX)
 #include "term-unix.h"
 #elif defined(WIN32)
@@ -31,5 +35,9 @@ void    term_deinit(void);
 void    term_init(void);
 void    term_remove_panel(PANEL *);
 void    term_resize_all(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

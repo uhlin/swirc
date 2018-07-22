@@ -51,6 +51,10 @@ extern bool    g_resize_requested;
 extern bool g_hist_next;
 extern bool g_hist_prev;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void readline_init(void);
 void readline_deinit(void);
 
@@ -61,5 +65,9 @@ WINDOW	*readline_get_active_pwin (void);
 char	*readline                 (const char *prompt);
 void	 readline_recreate        (int rows, int cols);
 void	 readline_top_panel       (void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

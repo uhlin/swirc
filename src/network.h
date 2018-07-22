@@ -29,6 +29,10 @@ extern volatile bool g_on_air;
 
 /*lint -sem(net_addr_resolve, r_null) */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 bool		 is_sasl_enabled(void);
 struct addrinfo *net_addr_resolve(const char *host, const char *port);
 void		 net_connect(const struct network_connect_context *);
@@ -41,5 +45,9 @@ int	net_ssl_start(void);
 int	net_ssl_send(const char *fmt, ...);
 int	net_ssl_recv(struct network_recv_context *, char *, int);
 int	net_ssl_check_hostname(const char *, unsigned int);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
