@@ -1,0 +1,38 @@
+<!-- -*- mode: xml; -*- -->
+
+<Package
+    xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+    xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+    IgnorableNamespaces="com desktop">
+<Applications>
+<Application>
+<Extensions>
+	<!-- ============================================= -->
+	<!-- Register COM CLSID LocalServer32 registry key -->
+	<!-- ============================================= -->
+
+	<com:Extension Category="windows.comServer">
+		<com:ComServer>
+			<com:ExeServer
+			    Executable="swirc.exe"
+			    Arguments="-ToastActivated"
+			    DisplayName="Toast activator">
+				<com:Class
+				    Id="62337340-CB78-4AE9-A524-685424C52DC7"
+				    DisplayName="Toast activator" />
+			</com:ExeServer>
+		</com:ComServer>
+	</com:Extension>
+
+	<!-- ================================================== -->
+	<!-- Specify which CLSID to activate when toast clicked -->
+	<!-- ================================================== -->
+
+	<desktop:Extension Category="windows.toastNotificationActivation">
+		<desktop:ToastNotificationActivation
+		    ToastActivatorCLSID="62337340-CB78-4AE9-A524-685424C52DC7" />
+	</desktop:Extension>
+</Extensions>
+</Application>
+</Applications>
+</Package>
