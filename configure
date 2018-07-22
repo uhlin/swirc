@@ -108,6 +108,18 @@ CFLAGS=\\
 	-Wall\\
 	-pipe\\
 	-std=c11
+CXX=g++
+CXXFLAGS=\\
+	-DLINUX=1\\
+	-DUNIX=1\\
+	-D_FORTIFY_SOURCE=2\\
+	-D_POSIX_C_SOURCE=200809L\\
+	-D_XOPEN_SOURCE=500\\
+	-D_XOPEN_SOURCE_EXTENDED=1\\
+	-O2\\
+	-Wall\\
+	-pipe\\
+	-std=c++14
 LDFLAGS=
 LDLIBS=\\
 	-lcrypto\\
