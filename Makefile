@@ -1,6 +1,7 @@
 include unix_def.mk
 
 CFLAGS+=-Isrc/include
+CXXFLAGS+=-Isrc/include
 
 all: main
 
@@ -13,6 +14,10 @@ main: $(TGTS)
 .c.o:
 	$(E) "  CC      " $@
 	$(Q) $(CC) $(CFLAGS) -c -o $@ $<
+
+.cpp.o:
+	$(E) "  CXX     " $@
+	$(Q) $(CXX) $(CXXFLAGS) -c -o $@ $<
 
 # install target
 include install.mk

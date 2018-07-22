@@ -18,3 +18,4 @@ OBJS+=$(EVENTS_DIR)auth.o\
 	$(EVENTS_DIR)whois.o
 
 CFLAGS+=-I $(EVENTS_DIR)
+CXXFLAGS+=-I $(EVENTS_DIR)
