@@ -1,7 +1,7 @@
 .\"
 .\" Public domain
 .\"
-.Dd November 12, 2017
+.Dd July 28, 2018
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -32,7 +32,15 @@ Specifies the real name
 .It Fl i
 ICB mode (Internet Citizen's Band, currently not implemented)
 .It Fl p
-Upon connect: ask for a password
+Server password (for private servers). However: InspIRCd has a module
+called password forward, which means that if a server password is
+specified by this flag, it will be used to identify to
+.Em NickServ .
+If so: connect with a TLS/SSL connection, i.e. an encrypted
+connection, to prevent your password from being sniffed.
+.Nm
+also supports IRCv3 SASL authentication which is probably a better
+alternative.
 .It Fl h Ar hostname
 Use this hostname on connect (currently a no-op)
 .It Fl x Ar config
