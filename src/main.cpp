@@ -105,7 +105,7 @@ static const char *OptionDesc[] = {
     "    -u <username>         User identity\n",
     "    -r <rl name>          Specifies the real name\n",
     "    -i                    ICB mode\n",
-    "    -p                    Upon connect: ask for a password\n",
+    "    -p                    Server password (for private servers)\n",
     "    -h <hostname>         Use this hostname on connect\n",
     "    -x <config>           Explicit config file\n",
     "\nExtras\n",
