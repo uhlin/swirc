@@ -62,6 +62,11 @@
 #include "titlebar.h"
 #include "window.h"
 
+#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
+#include "DesktopNotificationManagerCompat.hpp"
+#include "NotificationActivator.hpp"
+#endif
+
 #define DUP_OPTION_ERR(opt)	err_quit("A duplicate of option -%c found", opt)
 #define PUTCHAR(c)		((void) fputc(c, stdout))
 #define PUTS(string)		((void) fputs(string, stdout))
@@ -437,6 +442,22 @@ main(int argc, char *argv[])
     windowSystem_init();
     readline_init();
     net_ssl_init();
+
+#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
+    /*
+     * Register AUMID and COM server (for Desktop Bridge apps, this no-ops)
+     */
+    if (DesktopNotificationManagerCompat::RegisterAumidAndComServer(
+	    L"SwircDevelopmentTeam.Swirc",
+	    __uuidof(NotificationActivator)) != S_OK)
+	err_log(0, "Failed to register AUMID and COM server");
+
+    /*
+     * Register COM activator
+     */
+    if (DesktopNotificationManagerCompat::RegisterActivator() != S_OK)
+	err_log(0, "Failed to register COM activator");
+#endif
 
 #if defined(OpenBSD) && OpenBSD >= 201605 && RESTRICT_SYSOPS
     if (pledge("cpath dns getpw inet rpath stdio tty wpath", NULL) == -1) {
