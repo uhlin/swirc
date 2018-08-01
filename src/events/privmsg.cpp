@@ -140,7 +140,7 @@ event_privmsg(struct irc_message_compo *compo)
 	.include_ts = true,
     };
 
-    state1 = state2 = "";
+    state1 = state2 = (char *) "";
 
     if (!prefix)
 	return;
@@ -151,8 +151,8 @@ event_privmsg(struct irc_message_compo *compo)
     user = strtok_r(NULL, "!@", &state1);
     host = strtok_r(NULL, "!@", &state1);
     if (!user || !host) {
-	user = "<no user>";
-	host = "<no host>";
+	user = (char *) "<no user>";
+	host = (char *) "<no host>";
     }
     if (strFeed(params, 1) != 1 ||
 	(dest = strtok_r(params, "\n", &state2)) == NULL ||
