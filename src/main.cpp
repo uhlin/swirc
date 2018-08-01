@@ -395,7 +395,7 @@ main(int argc, char *argv[])
 #if __OpenBSD__
     extern char *malloc_options;
 
-    malloc_options = "S";
+    malloc_options = (char *) "S";
 #endif
 
     (void) setlocale(LC_ALL, "");
