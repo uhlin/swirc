@@ -3,6 +3,10 @@
 
 #include "int_unparse.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct tagTHEME_HTBL_ENTRY {
     char *name;
     char *value;
@@ -37,5 +41,9 @@ void		 theme_readit          (const char *path, const char *mode);
 #define THE_SPEC1	Theme("specifier1")
 #define THE_SPEC2	Theme("specifier2")
 #define THE_SPEC3	Theme("specifier3")
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

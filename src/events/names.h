@@ -1,6 +1,10 @@
 #ifndef NAMES_H
 #define NAMES_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*lint -sem(event_names_htbl_lookup, r_null) */
 
 PNAMES	event_names_htbl_lookup         (const char *nick, const char *channel);
@@ -17,5 +21,9 @@ void	event_names                     (struct irc_message_compo *);
 void	event_names_deinit              (void);
 void	event_names_htbl_remove_all     (PIRC_WINDOW);
 void	event_names_init                (void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

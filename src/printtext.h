@@ -4,6 +4,10 @@
 #include "mutex.h"
 #include "window.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* text decoration */
 enum {
     BLINK     = '\035',
@@ -46,5 +50,9 @@ void		 printtext         (struct printtext_context *, const char *fmt, ...) PRIN
 void		 printtext_puts    (WINDOW *, const char *buf, int indent, int max_lines, int *rep_count);
 void		 swirc_wprintw     (WINDOW *, const char *fmt, ...) PRINTFLIKE(2);
 void		 vprinttext        (struct printtext_context *, const char *fmt, va_list);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
