@@ -9,6 +9,10 @@
 
 #include "x509_check_host.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct network_connect_context {
     char *server;
     char *port;
@@ -28,10 +32,6 @@ extern volatile bool g_connection_in_progress;
 extern volatile bool g_on_air;
 
 /*lint -sem(net_addr_resolve, r_null) */
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 bool		 is_sasl_enabled(void);
 struct addrinfo *net_addr_resolve(const char *host, const char *port);
