@@ -15,6 +15,10 @@
 
 #define NAMES_HASH_TABLE_SIZE 4500
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct tagNAMES {
     char	*nick;
     bool	 is_owner;
@@ -53,10 +57,6 @@ extern const char       g_status_window_label[];
 extern PIRC_WINDOW	g_status_window;
 extern PIRC_WINDOW	g_active_window;
 extern int              g_ntotal_windows;
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 void windowSystem_init(void);
 void windowSystem_deinit(void);
