@@ -3,6 +3,10 @@
 
 #include "window.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct irc_message_compo {
     int year;
     int month;
@@ -44,5 +48,9 @@ void irc_handle_interpret_events    (char *recvbuffer, char **message_concat, en
 void irc_set_my_nickname            (const char *nick);
 void irc_set_server_hostname        (const char *srv_host);
 void irc_unsuccessful_event_cleanup (void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
