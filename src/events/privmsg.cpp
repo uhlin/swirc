@@ -48,16 +48,33 @@ struct special_msg_context {
     char *host;
     char *dest;
     char *msg;
+
+    special_msg_context() {
+	this->nick = NULL;
+	this->user = NULL;
+	this->host = NULL;
+	this->dest = NULL;
+	this->msg  = NULL;
+    }
+
+    special_msg_context(
+	char *nick,
+	char *user,
+	char *host,
+	char *dest,
+	char *msg) {
+	this->nick = nick;
+	this->user = user;
+	this->host = host;
+	this->dest = dest;
+	this->msg  = msg;
+    }
 };
 
 static void
 acknowledge_ctcp_request(const char *cmd, const struct special_msg_context *ctx)
 {
-    struct printtext_context pt_ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC3,
-	.include_ts = true,
-    };
+    struct printtext_context pt_ctx(g_active_window, TYPE_SPEC3, true);
 
     printtext(&pt_ctx, "%c%s%c %s%s@%s%s requested CTCP %c%s%c form %c%s%c",
 	BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
@@ -109,11 +126,7 @@ handle_special_msg(const struct special_msg_context *ctx)
 static void
 broadcast_window_activity(PIRC_WINDOW src)
 {
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_SUCCESS,
-	.include_ts = true,
-    };
+    struct printtext_context ctx(g_active_window, TYPE_SPEC1_SUCCESS, true);
 
     if (src)
 	printtext(&ctx, "activity at window %c%s%c (refnum: %d)",
@@ -134,11 +147,7 @@ event_privmsg(struct irc_message_compo *compo)
     char	*params = &compo->params[0];
     char	*prefix = compo->prefix ? &compo->prefix[0] : NULL;
     char	*state1, *state2;
-    struct printtext_context ctx = {
-	.window	    = NULL,
-	.spec_type  = TYPE_SPEC_NONE,
-	.include_ts = true,
-    };
+    struct printtext_context ctx(NULL, TYPE_SPEC_NONE, true);
 
     state1 = state2 = (char *) "";
 
@@ -161,15 +170,10 @@ event_privmsg(struct irc_message_compo *compo)
     if (*msg == ':')
 	msg++;
     if (*msg == '\001') {
-	struct special_msg_context msg_ctx = {
-	    .nick = nick,
-	    .user = user,
-	    .host = host,
-	    .dest = dest,
-	    .msg  = msg,
-	};
+	struct special_msg_context msg_ctx(nick, user, host, dest, msg);
 
 	handle_special_msg(&msg_ctx);
+
 	return;
     }
     if (strings_match_ignore_case(dest, g_my_nickname)) {

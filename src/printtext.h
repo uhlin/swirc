@@ -33,6 +33,23 @@ struct printtext_context {
     PIRC_WINDOW			window;
     enum message_specifier_type spec_type;
     bool                        include_ts;
+
+#ifdef __cplusplus
+    printtext_context() {
+	this->window = NULL;
+	this->spec_type = TYPE_SPEC_NONE;
+	this->include_ts = false;
+    }
+
+    printtext_context(
+	PIRC_WINDOW window,
+	enum message_specifier_type spec_type,
+	bool include_ts) {
+	this->window = window;
+	this->spec_type = spec_type;
+	this->include_ts = include_ts;
+    }
+#endif
 };
 
 #if defined(UNIX)
