@@ -129,7 +129,7 @@ namespace DesktopNotificationManagerCompat {
 	 * max file system path (much fewer than max of DWORD).
 	 */
         DWORD dataSize =
-	    static_cast<DWORD>((exePathStr.length() + 1) * sizeof(WCHAR));
+	    static_cast<DWORD>((exePathStr.length() + 1) * sizeof (WCHAR));
 
 	/*
 	 * Register the EXE for the COM server
