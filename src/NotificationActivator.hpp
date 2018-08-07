@@ -4,6 +4,7 @@
 #include "ToastActivator.h"
 
 using namespace ABI::Windows::Data::Xml::Dom;
+using namespace ABI::Windows::UI::Notifications;
 using namespace Microsoft::WRL::Wrappers;
 using namespace Microsoft::WRL;
 
