@@ -48,7 +48,7 @@ namespace DesktopNotificationManagerCompat {
      * RegisterActivator first (and also RegisterAumidAndComServer if
      * you're a classic Win32 app), or this will throw an exception.
      */
-    HRESULT CreateToastNotifier(IToastNotifier** notifier);
+    HRESULT CreateToastNotifier(IToastNotifier **notifier);
 
     /**
      * Creates an XmlDocument initialized with the specified
@@ -56,15 +56,15 @@ namespace DesktopNotificationManagerCompat {
      */
     HRESULT CreateXmlDocumentFromString(
 	const wchar_t *xmlString,
-	ABI::Windows::Data::Xml::Dom::IXmlDocument** doc);
+	ABI::Windows::Data::Xml::Dom::IXmlDocument **doc);
 
     /**
      * Creates a toast notification. This is simply a convenience
      * helper method.
      */
     HRESULT CreateToastNotification(
-	ABI::Windows::Data::Xml::Dom::IXmlDocument* content,
-	IToastNotification** notification);
+	ABI::Windows::Data::Xml::Dom::IXmlDocument *content,
+	IToastNotification **notification);
 
     /**
      * Gets the DesktopNotificationHistoryCompat object.
@@ -74,7 +74,7 @@ namespace DesktopNotificationManagerCompat {
      * this will throw an exception.
      */
     HRESULT get_History(
-	std::unique_ptr<DesktopNotificationHistoryCompat>* history);
+	std::unique_ptr<DesktopNotificationHistoryCompat> *history);
 
     /**
      * Gets a boolean representing whether http images can be used
@@ -97,7 +97,7 @@ public:
      */
     HRESULT GetHistory(
 	ABI::Windows::Foundation::Collections::
-	IVectorView<ToastNotification*>** history);
+	IVectorView<ToastNotification *> **history);
 
     /**
      * Removes an individual toast, with the specified tag label, from

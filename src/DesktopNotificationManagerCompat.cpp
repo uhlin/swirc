@@ -104,7 +104,7 @@ namespace DesktopNotificationManagerCompat {
 
     HRESULT RegisterComServer(GUID clsid, const wchar_t exePath[]) {
 	/* Turn the GUID into a string */
-        OLECHAR* clsidOlechar;
+        OLECHAR *clsidOlechar;
         StringFromCLSID(clsid, &clsidOlechar);
         std::wstring clsidStr(clsidOlechar);
         ::CoTaskMemFree(clsidOlechar);
@@ -139,7 +139,7 @@ namespace DesktopNotificationManagerCompat {
 	    subKey.c_str(),
 	    nullptr,
 	    REG_SZ,
-	    reinterpret_cast<const BYTE*>(exePathStr.c_str()),
+	    reinterpret_cast<const BYTE *>(exePathStr.c_str()),
 	    dataSize));
     }
 
@@ -197,7 +197,7 @@ namespace DesktopNotificationManagerCompat {
     }
 
     HRESULT
-    get_History(std::unique_ptr<DesktopNotificationHistoryCompat>* history)
+    get_History(std::unique_ptr<DesktopNotificationHistoryCompat> *history)
     {
         RETURN_IF_FAILED(EnsureRegistered());
 
@@ -300,7 +300,7 @@ DesktopNotificationHistoryCompat::Clear()
 HRESULT
 DesktopNotificationHistoryCompat::GetHistory(
     ABI::Windows::Foundation::Collections::
-    IVectorView<ToastNotification*> **toasts)
+    IVectorView<ToastNotification *> **toasts)
 {
     ComPtr<IToastNotificationHistory2> history2;
 
