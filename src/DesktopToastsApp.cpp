@@ -46,11 +46,11 @@ DesktopToastsApp::OpenWindowIfNeeded()
 	     * loop is handled correctly
 	     */
 
-	    HANDLE h = CreateEvent(NULL, 0, 0, NULL);
+	    HANDLE h = CreateEvent(nullptr, 0, 0, nullptr);
 	    PostThreadMessage(
 		m_threadId,
 		DesktopToastsApp::WM_USER_OPENWINDOWIFNEEDED,
-		NULL,
+		nullptr,
 		(LPARAM) h);
 	    WaitForSingleObject(h, INFINITE);
 	    return S_OK;
@@ -159,7 +159,7 @@ DesktopToastsApp::RunMessageLoop()
 {
     MSG msg;
 
-    while (GetMessage(&msg, NULL, 0, 0) != 0) {
+    while (GetMessage(&msg, nullptr, 0, 0) != 0) {
 	if (msg.message == DesktopToastsApp::WM_USER_OPENWINDOWIFNEEDED) {
 	    OpenWindowIfNeeded();
 	    SetEvent((HANDLE) msg.lParam);
