@@ -221,7 +221,7 @@ DesktopToastsApp::CreateToastXml(IXmlDocument **toastXml)
 	    &doc));
 
     PCWSTR textValues[] = {
-        L"Foo",
+	L"Foo",
 	L"Bar",
 	L"Baz"
     };
