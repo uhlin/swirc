@@ -50,7 +50,7 @@ DesktopToastsApp::OpenWindowIfNeeded()
 	    PostThreadMessage(
 		m_threadId,
 		DesktopToastsApp::WM_USER_OPENWINDOWIFNEEDED,
-		nullptr,
+		0,
 		(LPARAM) h);
 	    WaitForSingleObject(h, INFINITE);
 	    return S_OK;
