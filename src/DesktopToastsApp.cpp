@@ -11,8 +11,7 @@
  * CONNECTION WITH THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
  */
 
-#include "DesktopNotificationManagerCompat.hpp"
-#include "DesktopToastsApp.hpp"
+#include "common.h"
 
 #include <SDKDDKVer.h>
 #include <atlstr.h>
@@ -20,6 +19,10 @@
 #include <windows.ui.notifications.h>
 #include <wrl.h>
 #include <wrl\wrappers\corewrappers.h>
+
+#include "DesktopNotificationManagerCompat.hpp"
+#include "DesktopToastsApp.hpp"
+#include "errHand.h"
 
 #define RETURN_IF_FAILED(hr)\
 	do {\
