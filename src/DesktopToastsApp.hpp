@@ -25,6 +25,7 @@ public:
     }
 
     static HRESULT DesktopToastsApp::SendBasicToast(PCWSTR message);
+    static void DesktopToastsApp::SendTestNotification();
 
     DesktopToastsApp();
     ~DesktopToastsApp();

@@ -458,3 +458,46 @@ DesktopToastsApp::SendBasicToast(PCWSTR message)
 
     return ShowToast(doc.Get());
 }
+
+/* ----------------------------------------------------------------- */
+
+void
+DesktopToastsApp::SendTestNotification()
+{
+    ComPtr<IToastNotification> toast;
+    ComPtr<IToastNotifier> notifier;
+    HRESULT hr;
+    IXmlDocument *doc;
+
+    hr = DesktopNotificationManagerCompat::CreateXmlDocumentFromString(
+	L"<toast>"
+	L"<visual>"
+	L"<binding template='ToastGeneric'>"
+	L"<text>The universal IRC client</text>"
+	L"</binding>"
+	L"</visual>"
+	L"</toast>",
+	&doc);
+    if (FAILED(hr)) {
+	err_log(0, "In SendTestNotification: "
+	    "CreateXmlDocumentFromString failed");
+	return;
+    }
+
+    hr = DesktopNotificationManagerCompat::CreateToastNotifier(&notifier);
+    if (FAILED(hr)) {
+	err_log(0, "In SendTestNotification: CreateToastNotifier failed");
+	return;
+    }
+
+    hr = DesktopNotificationManagerCompat::CreateToastNotification(doc, &toast);
+    if (FAILED(hr)) {
+	err_log(0, "In SendTestNotification: CreateToastNotification failed");
+	return;
+    }
+
+    /*
+     * And show it!
+     */
+    (void) notifier->Show(toast.Get());
+}
