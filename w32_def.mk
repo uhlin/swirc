@@ -11,7 +11,8 @@ CFLAGS=-DNDEBUG=1\
 CXX=$(CC)
 CXXFLAGS=$(CFLAGS)\
 	-DUNICODE=1\
-	-EHsc
+	-EHsc\
+	-ZW
 
 # Versions
 CURL_VERSION=7.60.0
