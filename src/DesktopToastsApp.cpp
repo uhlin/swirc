@@ -146,6 +146,13 @@ DesktopToastsApp::Initialize(HINSTANCE hInstance)
         174, 12, 150, 25,
         m_hwnd, reinterpret_cast<HMENU>(HM_CLEARTOASTSBUTTON),
         hInstance, nullptr);
+    m_hEdit = ::CreateWindow(
+	L"EDIT",
+	L"Whatever action you take on the displayed toast will be shown here.",
+	ES_LEFT | ES_MULTILINE | ES_READONLY | WS_CHILD | WS_VISIBLE | WS_BORDER,
+	12, 49, 300, 50,
+	m_hwnd, nullptr,
+	hInstance, nullptr);
 
     ::ShowWindow(m_hwnd, SW_SHOWNORMAL);
     ::UpdateWindow(m_hwnd);
