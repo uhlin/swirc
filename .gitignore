@@ -2,8 +2,12 @@
 *.dll
 *.ico
 *.log
+*.msi
 *.o
 *.obj
+*.wixobj
+*.wixpdb
+curl-*
 libressl-*-windows
 pdcurses-*
 swirc
