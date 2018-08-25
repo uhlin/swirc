@@ -5,9 +5,18 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Option `ircv3_server_time`
 - Several code improvements
+- Windows 10 toast notifications
+
+### Changed ###
+- Certain error messages
 
 ### Fixed ###
 - Some functions that should be static, but weren't...
+- Possibly lossy conversions
+
+### News ###
+- Windows-specific:
+  - MSI installer
 
 ## [2.1] - 2018-05-21 ##
 ### Added ###
