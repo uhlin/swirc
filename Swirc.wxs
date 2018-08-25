@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+*****************************************************
+
+Swirc.wxs
+
+Copyright (C) 2018 Markus Uhlin. All rights reserved.
+
+*****************************************************
+-->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Product
+    Id="A3532170-8CC9-47BF-A0F6-5CB3F3341F12"
+    Language="1033"
+    Manufacturer="Swirc Development Team"
+    Name="Swirc"
+    UpgradeCode="4899E3ED-B314-4402-8E66-A2AB1B4632DE"
+    Version="2.1.0.0">
+	<Package Compressed="yes" InstallerVersion="400" Platform="x64" />
+	<Media Cabinet="swirc.cab" EmbedCab="yes" Id="1" />
+
+	<Directory Id="TARGETDIR" Name="SourceDir">
+		<Directory Id="ProgramFiles64Folder">
+			<Directory
+			    Id="APPLICATIONROOTDIRECTORY"
+			    Name="Swirc" />
+		</Directory>
+
+		<!-- ============================== -->
+		<!-- Define the directory structure -->
+		<!-- ============================== -->
+
+		<Directory Id="ProgramMenuFolder">
+			<Directory
+			    Id="ApplicationProgramsFolder"
+			    Name="Swirc" />
+		</Directory>
+	</Directory>
+
+	<DirectoryRef Id="TARGETDIR">
+		<Merge
+		    DiskId="1"
+		    Id="VCRedist"
+		    Language="0"
+		    SourceFile="C:\Source\MergeModules\Microsoft_VC141_CRT_x64.msm" />
+	</DirectoryRef>
+
+	<DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+		<Component Guid="*" Id="libcurl.dll" Win64="yes">
+			<File
+			    Id="libcurl.dll"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\libcurl.dll" />
+		</Component>
+		<Component Guid="*" Id="pdcurses.dll" Win64="yes">
+			<File
+			    Id="pdcurses.dll"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\pdcurses.dll" />
+		</Component>
+		<Component Guid="*" Id="swirc.exe" Win64="yes">
+			<File
+			    Checksum="yes"
+			    Id="swirc.exe"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\swirc.exe" />
+		</Component>
+		<Component Guid="*" Id="trusted_roots.pem" Win64="yes">
+			<File
+			    Id="trusted_roots.pem"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\trusted_roots.pem" />
+		</Component>
+	</DirectoryRef>
+
+	<!-- ========================================= -->
+	<!-- Add the shortcut to our installer package -->
+	<!-- ========================================= -->
+
+	<DirectoryRef Id="ApplicationProgramsFolder">
+		<Component Guid="*" Id="ApplicationShortcut">
+			<Shortcut
+			    Description="Curses IRC client"
+			    Id="ApplicationStartMenuShortcut"
+			    Name="Swirc"
+			    Target="[#swirc.exe]"
+			    WorkingDirectory="APPLICATIONROOTDIRECTORY">
+				<!-- ===== -->
+				<!-- AUMID -->
+				<!-- ===== -->
+
+				<ShortcutProperty
+				    Key="System.AppUserModel.ID"
+				    Value="SwircDevelopmentTeam.Swirc" />
+				<!-- ========= -->
+				<!-- COM CLSID -->
+				<!-- ========= -->
+
+				<ShortcutProperty
+				    Key="System.AppUserModel.ToastActivatorCLSID"
+				    Value="{62337340-CB78-4AE9-A524-685424C52DC7}" />
+			</Shortcut>
+			<RemoveFolder
+			    Id="ApplicationProgramsFolder"
+			    On="uninstall" />
+			<RegistryValue
+			    Key="Software\Microsoft\Swirc"
+			    KeyPath="yes"
+			    Name="installed"
+			    Root="HKCU"
+			    Type="integer"
+			    Value="1" />
+		</Component>
+	</DirectoryRef>
+
+	<Feature Id="MainApplication" Title="Main Application" Level="1">
+		<ComponentRef Id="libcurl.dll" />
+		<ComponentRef Id="pdcurses.dll" />
+		<ComponentRef Id="swirc.exe" />
+		<ComponentRef Id="trusted_roots.pem" />
+
+		<!-- Tell WiX to install the shortcut -->
+		<ComponentRef Id="ApplicationShortcut" />
+	</Feature>
+
+	<Feature
+	    AllowAdvertise="no"
+	    Display="hidden"
+	    Id="VCRedist"
+	    Level="1"
+	    Title="Visual C++ Runtime">
+		<MergeRef Id="VCRedist" />
+	</Feature>
+</Product>
+</Wix>
