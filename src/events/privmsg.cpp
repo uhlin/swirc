@@ -39,6 +39,11 @@
 #include "../strdup_printf.h"
 #include "../theme.h"
 
+#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
+#include "../DesktopNotificationManagerCompat.hpp"
+#include "../DesktopToastsApp.hpp"
+#endif
+
 #include "names.h"
 #include "privmsg.h"
 
@@ -227,6 +232,11 @@ event_privmsg(struct irc_message_compo *compo)
 	    printtext(&ctx, "%s%c%s%s%c%s %s",
 		Theme("nick_s1"), c, COLOR4, nick, NORMAL, Theme("nick_s2"),
 		msg);
+
+#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
+	    DesktopToastsApp::SendBasicToast(L"Someone messaged you!");
+#endif
+
 	    if (ctx.window != g_active_window)
 		broadcast_window_activity(ctx.window);
 	} else {
