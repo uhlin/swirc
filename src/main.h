@@ -18,6 +18,18 @@ struct cmdline_opt_values {
     char *rl_name;
     char *hostname;
     char *config_file;
+
+#ifdef __cplusplus
+    cmdline_opt_values() {
+	this->server      = NULL;
+	this->port        = NULL;
+	this->nickname    = NULL;
+	this->username    = NULL;
+	this->rl_name     = NULL;
+	this->hostname    = NULL;
+	this->config_file = NULL;
+    }
+#endif
 };
 
 extern const char g_swircVersion[];

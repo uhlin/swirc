@@ -86,6 +86,8 @@ bool g_connection_password  = false;
 bool g_bind_hostname        = false;
 bool g_explicit_config_file = false;
 
+struct cmdline_opt_values *g_cmdline_opts = new cmdline_opt_values();
+
 /* Things with internal linkage
    ============================ */
 
@@ -118,18 +120,6 @@ static const char *OptionDesc[] = {
     "    -v, -version          View the current client ver\n",
     "    -?, -help             Print the usage\n",
 };
-
-static struct cmdline_opt_values opt_values_data = {
-    NULL, /* server      */
-    NULL, /* port        */
-    NULL, /* nickname    */
-    NULL, /* username    */
-    NULL, /* rl_name     */
-    NULL, /* hostname    */
-    NULL, /* config_file */
-};
-
-struct cmdline_opt_values *g_cmdline_opts = &opt_values_data; /* External */
 
 /**
  * View Swirc version
@@ -542,4 +532,6 @@ cmdline_options_destroy(void)
     free_and_null(&g_cmdline_opts->rl_name);
     free_and_null(&g_cmdline_opts->hostname);
     free_and_null(&g_cmdline_opts->config_file);
+
+    delete g_cmdline_opts;
 }
