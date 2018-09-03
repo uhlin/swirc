@@ -68,6 +68,7 @@ static struct tagConfDefValues {
     { "kick_close_window",         TYPE_BOOLEAN, "yes" },
     { "max_chat_windows",          TYPE_INTEGER, "60" },
     { "nickname",                  TYPE_STRING,  "warezkid" },
+    { "nickname_aliases",          TYPE_STRING,  "" },
     { "nickserv_host",             TYPE_STRING,  "services." },
     { "part_message",              TYPE_STRING,  "" },
     { "quit_message",              TYPE_STRING,  "Swirc IRC client" },
