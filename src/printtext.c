@@ -486,7 +486,7 @@ replace_characters_with_space(wchar_t *wc_buf, const wchar_t *set)
 static void
 case_blink(WINDOW *win, bool *is_blink)
 {
-    if (!*is_blink) {
+    if (! (*is_blink)) {
 	WATTR_ON(win, A_REVERSE);
 	*is_blink = true;
     } else {
@@ -505,7 +505,7 @@ case_blink(WINDOW *win, bool *is_blink)
 static void
 case_bold(WINDOW *win, bool *is_bold)
 {
-    if (!*is_bold) {
+    if (! (*is_bold)) {
 	WATTR_ON(win, A_BOLD);
 	*is_bold = true;
     } else {
@@ -869,7 +869,7 @@ text_decoration_bools_reset(struct text_decoration_bools *booleans)
 static void
 case_reverse(WINDOW *win, bool *is_reverse)
 {
-    if (!*is_reverse) {
+    if (! (*is_reverse)) {
 	WATTR_ON(win, A_REVERSE);
 	*is_reverse = true;
     } else {
@@ -888,7 +888,7 @@ case_reverse(WINDOW *win, bool *is_reverse)
 static void
 case_underline(WINDOW *win, bool *is_underline)
 {
-    if (!*is_underline) {
+    if (! (*is_underline)) {
 	WATTR_ON(win, A_UNDERLINE);
 	*is_underline = true;
     } else {
