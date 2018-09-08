@@ -138,6 +138,25 @@ broadcast_window_activity(PIRC_WINDOW src)
 		  BOLD, src->label, BOLD, src->refnum);
 }
 
+static bool
+should_highlight_message(const char *msg)
+{
+    bool result = false;
+    char *s1 = strdup_printf("%s:", g_my_nickname);
+    char *s2 = strdup_printf("%s,", g_my_nickname);
+    char *s3 = strdup_printf("%s ", g_my_nickname);
+
+    if (!strncasecmp(msg, s1, strlen(s1)) ||
+	!strncasecmp(msg, s2, strlen(s2)) ||
+	!strncasecmp(msg, s3, strlen(s3)) ||
+	strings_match_ignore_case(msg, g_my_nickname))
+	result = true;
+    free(s1);
+    free(s2);
+    free(s3);
+    return result;
+}
+
 /* event_privmsg
 
    Examples:
@@ -221,14 +240,7 @@ event_privmsg(struct irc_message_compo *compo)
 	else if (n->is_voice)   c = '+';
 	else c = ' ';
 
-	char *s1 = strdup_printf("%s:", g_my_nickname);
-	char *s2 = strdup_printf("%s,", g_my_nickname);
-	char *s3 = strdup_printf("%s ", g_my_nickname);
-
-	if (!strncasecmp(msg, s1, strlen(s1)) ||
-	    !strncasecmp(msg, s2, strlen(s2)) ||
-	    !strncasecmp(msg, s3, strlen(s3)) ||
-	    strings_match_ignore_case(msg, g_my_nickname)) {
+	if (should_highlight_message(msg)) {
 	    printtext(&ctx, "%s%c%s%s%c%s %s",
 		Theme("nick_s1"), c, COLOR4, nick, NORMAL, Theme("nick_s2"),
 		msg);
@@ -244,9 +256,5 @@ event_privmsg(struct irc_message_compo *compo)
 		Theme("nick_s1"), c, COLOR2, nick, NORMAL, Theme("nick_s2"),
 		msg);
 	}
-
-	free(s1);
-	free(s2);
-	free(s3);
     }
 }
