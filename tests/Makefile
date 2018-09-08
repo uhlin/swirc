@@ -18,12 +18,14 @@ TESTS=\
 .SUFFIXES: .c .o .run
 
 .c.o:
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(E) "  CC      " $@
+	$(Q) $(CC) $(CFLAGS) -c -o $@ $<
 
 .o.run:
-	strip --strip-symbol=main $(SRC)/main.o
-	$(CXX) $(CXXFLAGS) -o $@ $< $(SRC)/*.o $(SRC)/commands/*.o $(SRC)/events/*.o $(LDFLAGS) $(LDLIBS)
-	strip $@
+	$(Q) strip --strip-symbol=main $(SRC)/main.o
+	$(E) "  LINK    " $@
+	$(Q) $(CXX) $(CXXFLAGS) -o $@ $< $(SRC)/*.o $(SRC)/commands/*.o $(SRC)/events/*.o $(LDFLAGS) $(LDLIBS)
+	$(Q) strip $@
 
 all: progobjs $(TESTS)
 
