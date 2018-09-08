@@ -22,7 +22,7 @@ TESTS=\
 
 .o.run:
 	strip --strip-symbol=main $(SRC)/main.o
-	$(CC) $(CFLAGS) -o $@ $< $(SRC)/*.o $(SRC)/commands/*.o $(SRC)/events/*.o $(LDFLAGS) $(LDLIBS)
+	$(CXX) $(CXXFLAGS) -o $@ $< $(SRC)/*.o $(SRC)/commands/*.o $(SRC)/events/*.o $(LDFLAGS) $(LDLIBS)
 	strip $@
 
 all: progobjs $(TESTS)
