@@ -3,6 +3,10 @@
 
 #include "int_unparse.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct tagCONF_HTBL_ENTRY {
     char *name;
     char *value;
@@ -26,4 +30,8 @@ void		 config_readit          (const char *path, const char *mode);
 
 void cmd_set(const char *);
 
+#ifdef __cplusplus
+}
 #endif
+
+#endif /* CONFIG_H */
