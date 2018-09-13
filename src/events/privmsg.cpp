@@ -140,7 +140,7 @@ broadcast_window_activity(PIRC_WINDOW src)
 		  BOLD, src->label, BOLD, src->refnum);
 }
 
-static bool
+static PTR_ARGS_NONNULL bool
 shouldHighlightMessage_case1(const char *msg)
 {
     bool result = false;
@@ -159,7 +159,7 @@ shouldHighlightMessage_case1(const char *msg)
     return result;
 }
 
-static bool
+static PTR_ARGS_NONNULL bool
 shouldHighlightMessage_case2(const char *msg)
 {
     bool result = false;
