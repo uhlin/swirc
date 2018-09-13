@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Added ###
 - Option `ircv3_server_time` (currently a no-op)
-- Option `nickname_aliases`
+- Option `nickname_aliases`. A space separated list of nickname
+  aliases.
 - Several code improvements
 - Windows 10 toast notifications
 
