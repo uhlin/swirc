@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include "../config.h"
+#include "../dataClassify.h"
 #include "../errHand.h"
 #include "../irc.h"
 #include "../libUtils.h"
@@ -157,6 +159,47 @@ shouldHighlightMessage_case1(const char *msg)
     return result;
 }
 
+static bool
+shouldHighlightMessage_case2(const char *msg)
+{
+    bool result = false;
+    char *last = (char *) "";
+    char *nickname_aliases = sw_strdup(Config("nickname_aliases"));
+
+    for (char *cp = &nickname_aliases[0];; cp = NULL) {
+	char *token = NULL;
+
+	if ((token = strtok_r(cp, " ", &last)) == NULL) {
+	    result = false;
+	    break;
+	} else if (!is_valid_nickname(token)) {
+	    err_log(0, "config option nickname_aliases "
+		"contains invalid nicknames");
+	    continue;
+	} else {
+	    char *s1 = strdup_printf("%s:", token);
+	    char *s2 = strdup_printf("%s,", token);
+	    char *s3 = strdup_printf("%s ", token);
+
+	    if (!strncasecmp(msg, s1, strlen(s1)) ||
+		!strncasecmp(msg, s2, strlen(s2)) ||
+		!strncasecmp(msg, s3, strlen(s3)) ||
+		strings_match_ignore_case(msg, token))
+		result = true;
+
+	    free_and_null(&s1);
+	    free_and_null(&s2);
+	    free_and_null(&s3);
+
+	    if (result)
+		break;
+	}
+    }
+
+    free_and_null(&nickname_aliases);
+    return result;
+}
+
 /* event_privmsg
 
    Examples:
@@ -240,7 +283,8 @@ event_privmsg(struct irc_message_compo *compo)
 	else if (n->is_voice)   c = '+';
 	else c = ' ';
 
-	if (shouldHighlightMessage_case1(msg)) {
+	if (shouldHighlightMessage_case1(msg) ||
+	    shouldHighlightMessage_case2(msg)) {
 	    printtext(&ctx, "%s%c%s%s%c%s %s",
 		Theme("nick_s1"), c, COLOR4, nick, NORMAL, Theme("nick_s2"),
 		msg);
