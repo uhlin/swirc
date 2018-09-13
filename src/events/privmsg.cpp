@@ -139,7 +139,7 @@ broadcast_window_activity(PIRC_WINDOW src)
 }
 
 static bool
-should_highlight_message(const char *msg)
+shouldHighlightMessage_case1(const char *msg)
 {
     bool result = false;
     char *s1 = strdup_printf("%s:", g_my_nickname);
@@ -240,7 +240,7 @@ event_privmsg(struct irc_message_compo *compo)
 	else if (n->is_voice)   c = '+';
 	else c = ' ';
 
-	if (should_highlight_message(msg)) {
+	if (shouldHighlightMessage_case1(msg)) {
 	    printtext(&ctx, "%s%c%s%s%c%s %s",
 		Theme("nick_s1"), c, COLOR4, nick, NORMAL, Theme("nick_s2"),
 		msg);
