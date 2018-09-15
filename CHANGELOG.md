@@ -8,6 +8,9 @@ All notable changes to this project will be documented in this file.
   aliases.
 - Several code improvements
 - Windows 10 toast notifications
+- Unit tests for
+  - `is_alphabetic()`
+  - `is_numeric()`
 
 ### Changed ###
 - Certain error messages
