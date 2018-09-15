@@ -3,6 +3,7 @@
 TESTS="
 int_diff
 int_sum
+is_alphabetic
 size_product
 squeeze_text_deco
 sw_strcat
