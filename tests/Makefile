@@ -11,6 +11,7 @@ TESTS=\
 	int_diff.run\
 	int_sum.run\
 	is_alphabetic.run\
+	is_numeric.run\
 	size_product.run\
 	squeeze_text_deco.run\
 	sw_strcat.run\
