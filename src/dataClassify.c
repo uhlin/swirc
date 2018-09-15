@@ -1,5 +1,5 @@
 /* Data classification utilities
-   Copyright (C) 2012-2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -41,13 +41,11 @@ static const size_t	hostname_len_max  = 255;
 bool
 is_alphabetic(const char *string)
 {
-    const char *p;
-
     if (string == NULL || *string == '\0') {
 	return false;
     }
 
-    for (p = &string[0]; *p != '\0'; p++) {
+    for (const char *p = &string[0]; *p != '\0'; p++) {
 	if (!sw_isalpha(*p)) {
 	    return false;
 	}
@@ -59,13 +57,11 @@ is_alphabetic(const char *string)
 bool
 is_numeric(const char *string)
 {
-    const char *p;
-
     if (string == NULL || *string == '\0') {
 	return false;
     }
 
-    for (p = &string[0]; *p != '\0'; p++) {
+    for (const char *p = &string[0]; *p != '\0'; p++) {
 	if (!sw_isdigit(*p)) {
 	    return false;
 	}
@@ -77,13 +73,11 @@ is_numeric(const char *string)
 bool
 is_whiteSpace(const char *string)
 {
-    const char *p;
-
     if (string == NULL || *string == '\0') {
 	return false;
     }
 
-    for (p = &string[0]; *p != '\0'; p++) {
+    for (const char *p = &string[0]; *p != '\0'; p++) {
 	if (!sw_isspace(*p)) {
 	    return false;
 	}
@@ -105,13 +99,11 @@ is_irc_channel(const char *name)
 bool
 is_valid_uMode(const char *modes)
 {
-    const char *p;
-
     if (modes == NULL || *modes == '\0') {
 	return false;
     }
 
-    for (p = &modes[0]; *p != '\0'; p++) {
+    for (const char *p = &modes[0]; *p != '\0'; p++) {
 	const char legal_index[] = "aiwroOs";
 
 	if (strchr(legal_index, *p) == NULL) {
@@ -125,7 +117,6 @@ is_valid_uMode(const char *modes)
 bool
 is_valid_nickname(const char *nickname)
 {
-    const char *ccp;
     const char legal_index[] =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 	"-[\\]^_`{|}";
@@ -135,7 +126,7 @@ is_valid_nickname(const char *nickname)
 	return false;
     }
 
-    for (ccp = &nickname[0]; *ccp != '\0'; ccp++) {
+    for (const char *ccp = &nickname[0]; *ccp != '\0'; ccp++) {
 	if (strchr(legal_index, *ccp) == NULL) {
 	    return false;
 	}
@@ -147,7 +138,6 @@ is_valid_nickname(const char *nickname)
 bool
 is_valid_username(const char *username)
 {
-    const char *ccp;
     const char legal_index[] =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 	"$-./[\\]^_`{|}~";
@@ -157,7 +147,7 @@ is_valid_username(const char *username)
 	return false;
     }
 
-    for (ccp = &username[0]; *ccp != '\0'; ccp++) {
+    for (const char *ccp = &username[0]; *ccp != '\0'; ccp++) {
 	if (strchr(legal_index, *ccp) == NULL) {
 	    return false;
 	}
@@ -169,14 +159,12 @@ is_valid_username(const char *username)
 bool
 is_valid_real_name(const char *real_name)
 {
-    const char *ccp;
-
     if (real_name == NULL || *real_name == '\0' ||
 	strlen(real_name) > real_name_len_max) {
 	return false;
     }
 
-    for (ccp = &real_name[0]; *ccp != '\0'; ccp++) {
+    for (const char *ccp = &real_name[0]; *ccp != '\0'; ccp++) {
 	if (!sw_isprint(*ccp)) {
 	    return false;
 	}
@@ -188,7 +176,6 @@ is_valid_real_name(const char *real_name)
 bool
 is_valid_hostname(const char *hostname)
 {
-    const char *ccp;
     const char host_chars[] =
 	"abcdefghijklmnopqrstuvwxyz.0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ:";
 
@@ -197,7 +184,7 @@ is_valid_hostname(const char *hostname)
 	return false;
     }
 
-    for (ccp = &hostname[0]; *ccp != '\0'; ccp++) {
+    for (const char *ccp = &hostname[0]; *ccp != '\0'; ccp++) {
 	if (strchr(host_chars, *ccp) == NULL) {
 	    return false;
 	}
