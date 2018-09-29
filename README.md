@@ -1,5 +1,7 @@
 # README #
 
+![Swirc Logo](https://www.nifty-networks.net/swirc/gfx/swirc-royal-110x110.png)
+
 ## What is Swirc? ##
 
 Swirc is a text-mode IRC client whose goals are to be portable, and to
