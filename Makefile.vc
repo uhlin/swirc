@@ -41,6 +41,12 @@ dist: $(DIST_DEPS)
 	copy "src\trusted_roots.pem" $(DEST)
 	copy "swirc.exe" $(DEST)
 
+PRODUCT_VERSION=2.1
+
+setupfile: dist Swirc.wxs
+	candle Swirc.wxs
+	light -out "Swirc-$(PRODUCT_VERSION).msi" Swirc.wixobj
+
 clean:
 	$(RM) "src\*.obj"
 	$(RM) "src\commands\*.obj"
