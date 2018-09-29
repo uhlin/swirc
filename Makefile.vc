@@ -48,11 +48,14 @@ setupfile: dist Swirc.wxs
 	light -out "Swirc-$(PRODUCT_VERSION).msi" Swirc.wixobj
 
 clean:
+	$(RM) "*.msi"
+	$(RM) "*.wixpdb"
 	$(RM) "src\*.obj"
 	$(RM) "src\commands\*.obj"
 	$(RM) "src\events\*.obj"
 	$(RM) $(BUILD_LOG)
 	$(RM) $(TGTS)
+	$(RM) Swirc.wixobj
 	$(RM) curl-$(CURL_VERSION).cab
 	$(RM) libressl-$(LIBRESSL_VERSION)-windows.cab
 	$(RM) pdcurses-$(PDCURSES_VERSION).cab
