@@ -339,7 +339,16 @@ event_privmsg(struct irc_message_compo *compo)
 		msg);
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
-	    DesktopToastsApp::SendBasicToast(L"Someone messaged you!");
+	    wchar_t *wNick = get_converted_wcs(nick);
+	    wchar_t *wDest = get_converted_wcs(dest);
+	    wchar_t *wMsg  = get_converted_wcs(msg);
+
+	    DesktopToastsApp::SendBasicToast(
+		get_message(wNick, L" @ ", wDest, L": ", wMsg));
+
+	    free(wNick);
+	    free(wDest);
+	    free(wMsg);
 #endif
 
 	    if (ctx.window != g_active_window)
