@@ -173,8 +173,10 @@ shouldHighlightMessage_case2(const char *msg)
 	    result = false;
 	    break;
 	} else if (!is_valid_nickname(token)) {
+#if RISK_FLOODED_LOGS
 	    err_log(0, "config option nickname_aliases "
 		"contains invalid nicknames");
+#endif
 	    continue;
 	} else {
 	    char *s1 = strdup_printf("%s:", token);
