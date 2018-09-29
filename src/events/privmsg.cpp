@@ -301,6 +301,17 @@ event_privmsg(struct irc_message_compo *compo)
 	printtext(&ctx, "%s%s%s%c%s %s",
 	    Theme("nick_s1"), COLOR2, nick, NORMAL, Theme("nick_s2"), msg);
 
+#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
+	wchar_t *wNick = get_converted_wcs(nick);
+	wchar_t *wMsg  = get_converted_wcs(msg);
+
+	DesktopToastsApp::SendBasicToast(
+	    get_message(L"[PM]", L" <", wNick, L"> ", wMsg));
+
+	free(wNick);
+	free(wMsg);
+#endif
+
 	if (ctx.window != g_active_window)
 	    broadcast_window_activity(ctx.window);
     } else {
