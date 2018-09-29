@@ -202,6 +202,42 @@ shouldHighlightMessage_case2(const char *msg)
     return result;
 }
 
+#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
+static wchar_t *
+get_converted_wcs(const char *s)
+{
+    const size_t sz1 = strlen(s) + 1;
+    const size_t sz2 = size_product(sizeof (wchar_t), sz1);
+    wchar_t *out = (wchar_t *) xmalloc(sz2);
+
+    if (MultiByteToWideChar(CP_UTF8, 0, s, -1, out, size_to_int(sz2)) > 0)
+	return out;
+    wmemset(out, 0L, sz2);
+    return out;
+}
+
+static wchar_t *
+get_message(
+    const wchar_t *s1,
+    const wchar_t *s2,
+    const wchar_t *s3,
+    const wchar_t *s4,
+    const wchar_t *s5)
+{
+    static wchar_t message[1001];
+
+    wmemset(message, 0L, ARRAY_SIZE(message));
+
+    sw_wcscpy(message, s1, ARRAY_SIZE(message));
+    sw_wcscat(message, s2, ARRAY_SIZE(message));
+    sw_wcscat(message, s3, ARRAY_SIZE(message));
+    sw_wcscat(message, s4, ARRAY_SIZE(message));
+    sw_wcscat(message, s5, ARRAY_SIZE(message));
+
+    return (&message[0]);
+}
+#endif /* ----- WIN32 and TOAST_NOTIFICATIONS ----- */
+
 /* event_privmsg
 
    Examples:
