@@ -6,6 +6,17 @@
 SECTIONS="bottom.html head_common_tags.html menu.html top.html"
 PAGES="about.html cmds.html doc.html index.html pr.html"
 DIRS="gfx screenshots themes"
+IMAGES="
+blue-globe.ico
+blue-globe.png
+download82-badge1.png
+download82_clean_award_128617.png
+softpedia_download_large_shadow.png
+sp100clean.png
+swirc-royal-110x110.png
+swirc-royal.ico
+swirc-royal.png
+"
 THEMES="
 bx.the
 nano.the
@@ -29,6 +40,12 @@ done
 for dir in $DIRS; do
     printf "  - Checking for %s..." "$dir"
     test -d "$dir" || { printf "error\n"; exit 1; }
+    printf "ok\n"
+done
+
+for img in $IMAGES; do
+    printf "  - Checking for %s..." "gfx/${img}"
+    test -f "gfx/${img}" || { printf "error\n"; exit 1; }
     printf "ok\n"
 done
 
@@ -64,6 +81,13 @@ for pg in $PAGES; do
 	-e "/-----BOTTOM-----/r bottom.html" -e "/-----BOTTOM-----/d" \
 	"templates/${pg}" > "${TEMP_DIR}/${pg}"
     test -f "${TEMP_DIR}/${pg}" || { printf "error\n"; exit 1; }
+    printf "ok\n"
+done
+
+for img in $IMAGES; do
+    printf "  - Adding %s..." "${TEMP_DIR}/gfx/${img}"
+    cp "gfx/${img}" "${TEMP_DIR}/gfx/${img}"
+    test -f "${TEMP_DIR}/gfx/${img}" || { printf "error\n"; exit 1; }
     printf "ok\n"
 done
 
