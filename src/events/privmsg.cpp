@@ -210,9 +210,9 @@ get_converted_wcs(const char *s)
     const size_t sz2 = size_product(sizeof (wchar_t), sz1);
     wchar_t *out = (wchar_t *) xmalloc(sz2);
 
-    if (MultiByteToWideChar(CP_UTF8, 0, s, -1, out, size_to_int(sz2)) > 0)
+    if (MultiByteToWideChar(CP_UTF8, 0, s, -1, out, size_to_int(sz1)) > 0)
 	return out;
-    wmemset(out, 0L, sz2);
+    wmemset(out, 0L, sz1);
     return out;
 }
 
