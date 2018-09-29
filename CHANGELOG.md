@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed ###
 - Certain error messages
+- Output Swirc homepage on CTCP version reply
 
 ### Fixed ###
 - Some functions that should be static, but weren't...

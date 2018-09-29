@@ -114,8 +114,8 @@ handle_special_msg(const struct special_msg_context *ctx)
     if (!strncmp(msg, "ACTION ", 7)) {
 	printtext(&pt_ctx, " - %s %s", ctx->nick, &msg[7]);
     } else if (!strncmp(msg, "VERSION", 8)) {
-	if (net_send("NOTICE %s :\001VERSION Swirc %s by %s\001",
-		     ctx->nick, g_swircVersion, g_swircAuthor) < 0)
+	if (net_send("NOTICE %s :\001VERSION Swirc %s by %s  --  %s\001",
+	    ctx->nick, g_swircVersion, g_swircAuthor, g_swircWebAddr) < 0)
 	    g_on_air = false;
 	acknowledge_ctcp_request("VERSION", ctx);
     } else if (!strncmp(msg, "TIME", 5)) {
