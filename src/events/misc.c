@@ -119,6 +119,10 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
     free(msg_copy);
 }
 
+/* event_bounce: 005 (RPL_BOUNCE)
+
+   Example:
+     :irc.server.com 005 <anything> ... */
 void
 event_bounce(struct irc_message_compo *compo)
 {
