@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [2.2] - 2018-09-30 ##
 ### Added ###
 - Option `ircv3_server_time` (currently a no-op)
 - Option `nickname_aliases`. A space separated list of nickname

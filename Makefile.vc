@@ -41,7 +41,7 @@ dist: $(DIST_DEPS)
 	copy "src\trusted_roots.pem" $(DEST)
 	copy "swirc.exe" $(DEST)
 
-PRODUCT_VERSION=2.1
+PRODUCT_VERSION=2.2
 
 setupfile: dist Swirc.wxs
 	candle Swirc.wxs
