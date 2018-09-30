@@ -152,18 +152,23 @@ event_bounce(struct irc_message_compo *compo)
     }
 
     if (*msg) {
+	const char *ar[] = {
+	    ":are available on this server",
+	    ":are supported by this server",
+	    ":are supported on this server",
+	};
+
 	msg_copy = sw_strdup(msg);
 
-	while (cp = strstr(msg_copy, ":are supported by this server"),
-	       cp != NULL) {
-	    cp++;
-	    (void) memmove(cp - 1, cp, strlen(cp) + 1); /* Delete the colon */
-	}
+	for (const char **ar_p = &ar[0]; ar_p < &ar[ARRAY_SIZE(ar)]; ar_p++) {
+	    while ((cp = strstr(msg_copy, *ar_p)) != NULL) {
+		/*
+		 * Delete the colon
+		 */
 
-	while (cp = strstr(msg_copy, ":are available on this server"),
-	       cp != NULL) {
-	    cp++;
-	    (void) memmove(cp - 1, cp, strlen(cp) + 1); /* Delete the colon */
+		cp++;
+		(void) memmove(cp - 1, cp, strlen(cp) + 1);
+	    }
 	}
 
 	ctx.spec_type = TYPE_SPEC1;
