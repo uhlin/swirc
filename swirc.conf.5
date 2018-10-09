@@ -1,0 +1,200 @@
+.\" -*- mode: nroff; -*-
+.\"
+.\" Copyright 2018 Markus Uhlin. All rights reserved.
+.\"
+.Dd October 9, 2018
+.Dt SWIRC.CONF 5
+.Os
+.Sh NAME
+.Nm swirc.conf
+.Nd swirc configuration file
+.Sh DESCRIPTION
+This manual page describes
+.Nm
+which is a configuration file for
+.Xr swirc 1
+(a curses based irc client).
+.Sh SETTINGS
+.Bl -tag -width Ds
+.\" ----------------------------------------
+.\" ALT NICK
+.\" ----------------------------------------
+.It Sy alt_nick Pq Em string
+Alternative nickname.
+This nickname is used when processing a connection to a server and the
+default nickname is busy.
+.\" ----------------------------------------
+.\" CHANSERV HOST
+.\" ----------------------------------------
+.It Sy chanserv_host Pq Em string
+ChanServ hostname
+.\" ----------------------------------------
+.\" CIPHER SUITE
+.\" ----------------------------------------
+.It Sy cipher_suite Pq Em string
+Cipher suite.
+Which can have one of the following values:
+.Bl -bullet -compact
+.It
+secure
+.It
+compat
+.It
+legacy
+.It
+insecure
+.El
+.\" ----------------------------------------
+.\" CMD HIST SIZE
+.\" ----------------------------------------
+.It Sy cmd_hist_size Pq Em int
+Command history size.
+No more than this number of commands will be stored in the memory.
+.\" ----------------------------------------
+.\" CONNECTION TIMEOUT
+.\" ----------------------------------------
+.It Sy connection_timeout Pq Em int
+Connection timeout in seconds
+.\" ----------------------------------------
+.\" DISABLE BEEPS
+.\" ----------------------------------------
+.It Sy disable_beeps Pq Em bool
+.Xr swirc 1
+alerts the user by sending a beep in certain cases.
+However, with the help of this setting, beeps can be disabled.
+.\" ----------------------------------------
+.\" HOSTNAME CHECKING
+.\" ----------------------------------------
+.It Sy hostname_checking Pq Em bool
+Enable or disable TLS/SSL hostname verification
+.\" ----------------------------------------
+.\" IRCV3 SERVER TIME
+.\" ----------------------------------------
+.It Sy ircv3_server_time Pq Em bool
+Currently a no-op.
+Saved for future use.
+.\" ----------------------------------------
+.\" KICK CLOSE WINDOW
+.\" ----------------------------------------
+.It Sy kick_close_window Pq Em bool
+If the active user gets kicked out from a channel,
+should the channel window be terminated?
+.\" ----------------------------------------
+.\" MAX CHAT WINDOWS
+.\" ----------------------------------------
+.It Sy max_chat_windows Pq Em int
+Max chat windows that can be open simultaneously
+.\" ----------------------------------------
+.\" NICKNAME
+.\" ----------------------------------------
+.It Sy nickname Pq Em string
+Online nickname
+.\" ----------------------------------------
+.\" NICKNAME ALIASES
+.\" ----------------------------------------
+.It Sy nickname_aliases Pq Em string
+A space separated list of nickname aliases which are used, in addition
+to the default nickname, to highlight a message if it matches any of
+the aliases given by this setting.
+.\" ----------------------------------------
+.\" NICKSERV HOST
+.\" ----------------------------------------
+.It Sy nickserv_host Pq Em string
+NickServ hostname
+.\" ----------------------------------------
+.\" PART MESSAGE
+.\" ----------------------------------------
+.It Sy part_message Pq Em string
+Message when leaving a channel
+.\" ----------------------------------------
+.\" QUIT MESSAGE
+.\" ----------------------------------------
+.It Sy quit_message Pq Em string
+Message when disconnecting from a server
+.\" ----------------------------------------
+.\" REAL NAME
+.\" ----------------------------------------
+.It Sy real_name Pq Em string
+Specifies the real name.
+But can be set to anything.
+.\" ----------------------------------------
+.\" SASL
+.\" ----------------------------------------
+.It Sy sasl Pq Em bool
+Request SASL authentication on connection to a server?
+.\" ----------------------------------------
+.\" SASL MECHANISM
+.\" ----------------------------------------
+.It Sy sasl_mechanism Pq Em string
+SASL mechanism.
+Available mechanisms are:
+.Bl -bullet -compact
+.It
+ECDSA-NIST256P-CHALLENGE
+.It
+PLAIN
+.El
+.\" ----------------------------------------
+.\" SASL PASSWORD
+.\" ----------------------------------------
+.It Sy sasl_password Pq Em string
+SASL password.
+For mechanism PLAIN.
+.\" ----------------------------------------
+.\" SASL USERNAME
+.\" ----------------------------------------
+.It Sy sasl_username Pq Em string
+SASL username
+.\" ----------------------------------------
+.\" SHOW PING PONG
+.\" ----------------------------------------
+.It Sy show_ping_pong Pq Em bool
+Show ping pong events?
+The default is NO.
+.\" ----------------------------------------
+.\" SKIP MOTD
+.\" ----------------------------------------
+.It Sy skip_motd Pq Em bool
+Skip message of the day (MOTD) on connection to a server?
+.\" ----------------------------------------
+.\" SSL VERIFY PEER
+.\" ----------------------------------------
+.It Sy ssl_verify_peer Pq Em bool
+Verify peer?
+Setting it to NO decreases TLS/SSL security significantly,
+but is a must on servers with trusted self signed certificates.
+.\" ----------------------------------------
+.\" STARTUP GREETING
+.\" ----------------------------------------
+.It Sy startup_greeting Pq Em bool
+Enable or disable
+.Sy swirc
+startup greeting
+.\" ----------------------------------------
+.\" TEXTBUFFER SIZE ABSOLUTE
+.\" ----------------------------------------
+.It Sy textbuffer_size_absolute Pq Em int
+Max number of elements in a text buffer before head gets removed from
+scroll back history.
+Each open window is assigned a buffer with this size,
+so set a sane value!
+.\" ----------------------------------------
+.\" THEME
+.\" ----------------------------------------
+.It Sy theme Pq Em string
+.Sy swirc
+theme...
+.\" ----------------------------------------
+.\" USERNAME
+.\" ----------------------------------------
+.It Sy username Pq Em string
+User identity.
+Preferably to be set to the same as the nickname.
+.El
+.Sh FILES
+.Bl -tag -width "                    " -compact
+.It Pa ~/.swirc/swirc.conf
+swirc configuration file
+.El
+.Sh SEE ALSO
+.Xr swirc 1
