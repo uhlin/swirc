@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Deleted ###
+- Option `encoding`
+
 ## [2.2] - 2018-09-30 ##
 ### Added ###
 - Option `ircv3_server_time` (currently a no-op)

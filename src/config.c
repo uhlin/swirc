@@ -62,7 +62,6 @@ static struct tagConfDefValues {
     { "cmd_hist_size",             TYPE_INTEGER, "50" },
     { "connection_timeout",        TYPE_INTEGER, "45" },
     { "disable_beeps",             TYPE_BOOLEAN, "no" },
-    { "encoding",                  TYPE_STRING,  "iso-8859-1" },
     { "hostname_checking",         TYPE_BOOLEAN, "yes" },
     { "ircv3_server_time",         TYPE_BOOLEAN, "no" },
     { "kick_close_window",         TYPE_BOOLEAN, "yes" },
