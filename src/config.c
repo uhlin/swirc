@@ -72,7 +72,6 @@ static struct tagConfDefValues {
     { "part_message",              TYPE_STRING,  "" },
     { "quit_message",              TYPE_STRING,  "Swirc IRC client" },
     { "real_name",                 TYPE_STRING,  "pinball" },
-    { "recode",                    TYPE_BOOLEAN, "no" },
     { "sasl",                      TYPE_BOOLEAN, "no" },
     { "sasl_mechanism",            TYPE_STRING,  "PLAIN" },
     { "sasl_password",             TYPE_STRING,  "" },

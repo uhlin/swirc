@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Deleted ###
 - Option `encoding`
+- Option `recode`
 
 ## [2.2] - 2018-09-30 ##
 ### Added ###
