@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- A `swirc.conf` manual page
+
 ### Deleted ###
 - Option `encoding`
 - Option `recode`
