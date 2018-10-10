@@ -468,22 +468,9 @@ enter_io_loop(void)
 	} else if (*line == cmd_char) {
 	    handle_cmds(&line[1]);
 	} else {
-	    if (g_on_air && !strings_match(g_active_window->label,
-					   g_status_window_label)) {
-		struct printtext_context ptext_ctx = {
-		    .window     = g_active_window,
-		    .spec_type  = TYPE_SPEC_NONE,
-		    .include_ts = true,
-		};
-
-		if (config_bool_unparse("recode", false)) {
-		    ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
-		    printtext(&ptext_ctx, "Can't recode user input "
-			"before transmit (yet unsupported)");
-		} else { /* don't recode... */
-		    transmit_user_input(g_active_window->label, line);
-		}
-	    }
+	    if (g_on_air &&
+		!strings_match(g_active_window->label, g_status_window_label))
+		transmit_user_input(g_active_window->label, line);
 	}
 
 	add_to_history(line);
