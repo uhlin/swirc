@@ -41,11 +41,15 @@ dist: $(DIST_DEPS)
 	copy "src\trusted_roots.pem" $(DEST)
 	copy "swirc.exe" $(DEST)
 
+SIGNING_CERT=c:\certs\SwircDevelopmentTeam.pfx
+TIMESTAMP_URL=http://timestamp.verisign.com/scripts/timstamp.dll
 PRODUCT_VERSION=2.2
 
 setupfile: dist Swirc.wxs
+	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v $(DEST)\swirc.exe
 	candle Swirc.wxs
 	light -out "Swirc-$(PRODUCT_VERSION).msi" Swirc.wixobj
+	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "Swirc-$(PRODUCT_VERSION).msi"
 
 clean:
 	$(RM) "*.msi"
