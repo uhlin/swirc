@@ -19,6 +19,7 @@ Copyright (C) 2018 Markus Uhlin. All rights reserved.
     UpgradeCode="4899E3ED-B314-4402-8E66-A2AB1B4632DE"
     Version="2.2.0.0">
 	<Package Compressed="yes" InstallerVersion="400" Platform="x64" />
+
 	<Media Cabinet="swirc.cab" EmbedCab="yes" Id="1" />
 
 	<Directory Id="TARGETDIR" Name="SourceDir">
@@ -133,5 +134,15 @@ Copyright (C) 2018 Markus Uhlin. All rights reserved.
 	    Title="Visual C++ Runtime">
 		<MergeRef Id="VCRedist" />
 	</Feature>
+
+	<CustomAction
+	    Id="SetInstallLocation"
+	    Property="ARPINSTALLLOCATION"
+	    Value="[TARGETDIR]" />
+
+	<InstallExecuteSequence>
+		<Custom Action="SetInstallLocation" After="CostFinalize">
+		</Custom>
+	</InstallExecuteSequence>
 </Product>
 </Wix>
