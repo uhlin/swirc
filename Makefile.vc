@@ -46,6 +46,8 @@ TIMESTAMP_URL=http://timestamp.verisign.com/scripts/timstamp.dll
 PRODUCT_VERSION=2.2
 
 setupfile: dist Swirc.wxs
+	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v $(DEST)\libcurl.dll
+	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v $(DEST)\pdcurses.dll
 	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v $(DEST)\swirc.exe
 	candle Swirc.wxs
 	light -out "Swirc-$(PRODUCT_VERSION).msi" Swirc.wixobj
