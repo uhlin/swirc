@@ -103,6 +103,11 @@ Copyright (C) 2018 Markus Uhlin. All rights reserved.
 				    Key="System.AppUserModel.ToastActivatorCLSID"
 				    Value="{62337340-CB78-4AE9-A524-685424C52DC7}" />
 			</Shortcut>
+			<Shortcut Id="UninstallProduct"
+			    Name="Uninstall Swirc"
+			    Description="Uninstalls Swirc IRC client"
+			    Target="[System64Folder]msiexec.exe"
+			    Arguments="/x [ProductCode]" />
 			<RemoveFolder
 			    Id="ApplicationProgramsFolder"
 			    On="uninstall" />
