@@ -56,6 +56,7 @@ static struct tagConfDefValues {
     enum setting_type	 type;
     char		*value;
 } ConfDefValues[] = {
+    { "account_notify",            TYPE_BOOLEAN, "no" },
     { "alt_nick",                  TYPE_STRING,  "warezkid_" },
     { "chanserv_host",             TYPE_STRING,  "services." },
     { "cipher_suite",              TYPE_STRING,  "compat" },

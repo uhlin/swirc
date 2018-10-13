@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Added ###
 - A `swirc.conf` manual page
+- Option
+  - `account_notify`
 
 ### Deleted ###
 - Option `encoding`
