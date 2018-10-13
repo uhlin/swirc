@@ -30,3 +30,4 @@ BEGIN
 END
 
 1 ICON "swirc-royal.ico"
+1 RT_MANIFEST "swirc.exe.manifest"
