@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 - Option `encoding`
 - Option `recode`
 
+### News ###
+- Windows-specific:
+  - Passes tests of Windows App Certification Kit
+
 ## [2.2] - 2018-09-30 ##
 ### Added ###
 - Option `ircv3_server_time` (currently a no-op)
