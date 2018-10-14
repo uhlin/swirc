@@ -113,12 +113,10 @@ send_reg_cmds(const struct network_connect_context *ctx)
 	    printtext(&ptext_ctx, "Requesting account notify");
     }
 
-#ifdef CODE_SAVED_FOR_FURTHER_USE
     if (config_bool_unparse("ircv3_server_time", false)) {
 	if (net_send("CAP REQ :server-time") > 0)
 	    printtext(&ptext_ctx, "Requesting IRCv3 server time");
     }
-#endif
 
     if (is_sasl_enabled()) {
 	if (strings_match(get_sasl_mechanism(), "PLAIN") && !is_ssl_enabled()) {

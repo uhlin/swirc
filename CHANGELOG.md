@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 - Option
   - `account_notify`
 
+### Changed ###
+- Option `ircv3_server_time` is now working
+
 ### Deleted ###
 - Option `encoding`
 - Option `recode`
