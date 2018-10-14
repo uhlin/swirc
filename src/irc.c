@@ -42,6 +42,7 @@
 #include "statusbar.h"
 #include "strHand.h"
 
+#include "events/account.h"
 #include "events/auth.h"
 #include "events/banlist.h"
 #include "events/cap.h"
@@ -76,6 +77,7 @@ static struct normal_events_tag {
     char		*normal_event;
     event_handler_fn	 event_handler;
 } normal_events[] = {
+    { "ACCOUNT",      event_account      },
     { "AUTHENTICATE", event_authenticate },
     { "CAP",          event_cap          },
     { "ERROR",        event_error        },

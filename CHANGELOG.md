@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 - A `swirc.conf` manual page
 - Option
   - `account_notify`
+- Event
+  - `ACCOUNT`
 
 ### Changed ###
 - Option `ircv3_server_time` is now working
