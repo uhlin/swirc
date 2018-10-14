@@ -108,6 +108,11 @@ send_reg_cmds(const struct network_connect_context *ctx)
 	.include_ts = true,
     };
 
+    if (config_bool_unparse("account_notify", false)) {
+	if (net_send("CAP REQ :account-notify") > 0)
+	    printtext(&ptext_ctx, "Requesting account notify");
+    }
+
 #ifdef CODE_SAVED_FOR_FURTHER_USE
     if (config_bool_unparse("ircv3_server_time", false)) {
 	if (net_send("CAP REQ :server-time") > 0)
