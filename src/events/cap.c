@@ -83,5 +83,5 @@ event_cap(struct irc_message_compo *compo)
     }
 
     net_send("CAP END");
-    printtext(&ctx, "SASL exchange aborted!");
+    printtext(&ctx, "Ended IRCv3 Client Capability Negotiation");
 }
