@@ -145,8 +145,16 @@ Copyright (C) 2018 Markus Uhlin. All rights reserved.
 	    Property="ARPINSTALLLOCATION"
 	    Value="[ProgramFiles64Folder]Swirc" />
 
+	<CustomAction Id="SetNoModify" Property="ARPNOMODIFY" Value="1" />
+	<CustomAction Id="SetNoRepair" Property="ARPNOREPAIR" Value="1" />
+
 	<InstallExecuteSequence>
 		<Custom Action="SetInstallLocation" After="CostFinalize">
+		</Custom>
+
+		<Custom Action="SetNoModify" After="InstallValidate">
+		</Custom>
+		<Custom Action="SetNoRepair" After="InstallValidate">
 		</Custom>
 	</InstallExecuteSequence>
 
