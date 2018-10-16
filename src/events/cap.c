@@ -1,5 +1,5 @@
 /* IRCv3 Client Capability Negotiation
-   Copyright (C) 2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -67,7 +67,7 @@ event_cap(struct irc_message_compo *compo)
 {
     struct printtext_context ctx = {
 	.window	    = g_status_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
+	.spec_type  = TYPE_SPEC_NONE,
 	.include_ts = true,
     };
 
@@ -76,12 +76,19 @@ event_cap(struct irc_message_compo *compo)
     if (strstr(compo->params, "ACK sasl")) {
 	const char *mechanism = get_sasl_mechanism();
 
+	ctx.spec_type = TYPE_SPEC1_SUCCESS;
+	printtext(&ctx, "ACK sasl");
+
 	if (is_sasl_mechanism_supported(mechanism)) {
 	    net_send("AUTHENTICATE %s", mechanism);
 	    return;
 	}
+    } else if (strstr(compo->params, "NAK sasl")) {
+	ctx.spec_type = TYPE_SPEC1_FAILURE;
+	printtext(&ctx, "NAK sasl");
     }
 
     net_send("CAP END");
+    ctx.spec_type = TYPE_SPEC1_WARN;
     printtext(&ctx, "Ended IRCv3 Client Capability Negotiation");
 }
