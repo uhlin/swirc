@@ -65,6 +65,7 @@ short int	 color_pair_find   (short int fg, short int bg);
 void		 print_and_free    (const char *msg, char *cp);
 void		 printtext         (struct printtext_context *, const char *fmt, ...) PRINTFLIKE(2);
 void		 printtext_puts    (WINDOW *, const char *buf, int indent, int max_lines, int *rep_count);
+void		 set_timestamp     (char *dest, size_t destsize, const struct irc_message_compo *) PTR_ARGS_NONNULL;
 void		 swirc_wprintw     (WINDOW *, const char *fmt, ...) PRINTFLIKE(2);
 void		 vprinttext        (struct printtext_context *, const char *fmt, va_list);
 

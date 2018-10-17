@@ -1139,6 +1139,19 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
     mutex_unlock(&g_puts_mutex);
 }
 
+#define B1 Theme("statusbar_leftBracket")
+#define B2 Theme("statusbar_rightBracket")
+
+#define SEP Theme("notice_sep")
+
+void
+set_timestamp(char *dest, size_t destsize,
+	      const struct irc_message_compo *compo)
+{
+    snprintf(dest, destsize, "%s%02d%s%02d%s%02d%s",
+	B1, compo->hour, SEP, compo->minute, SEP, compo->second, B2);
+}
+
 /**
  * Print formatted output in Curses windows
  *
