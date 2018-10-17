@@ -62,6 +62,19 @@ get_sasl_mechanism(void)
     return (strings_match(mechanism, "") ? "PLAIN" : mechanism);
 }
 
+static bool
+shouldContinueCapabilityNegotiation_case1()
+{
+    return (config_bool_unparse("ircv3_server_time", false) ||
+	    config_bool_unparse("sasl", false));
+}
+
+static bool
+shouldContinueCapabilityNegotiation_case2()
+{
+    return config_bool_unparse("sasl", false);
+}
+
 void
 event_cap(struct irc_message_compo *compo)
 {
@@ -73,7 +86,35 @@ event_cap(struct irc_message_compo *compo)
 
     squeeze(compo->params, ":");
 
-    if (strstr(compo->params, "ACK sasl")) {
+    if (strstr(compo->params, "ACK account-notify")) {
+	ctx.spec_type = TYPE_SPEC1_SUCCESS;
+	printtext(&ctx, "Account notify accepted");
+
+	if (shouldContinueCapabilityNegotiation_case1())
+	    return;
+
+    } else if (strstr(compo->params, "NAK account-notify")) {
+	ctx.spec_type = TYPE_SPEC1_FAILURE;
+	printtext(&ctx, "Account notify rejected");
+
+	if (shouldContinueCapabilityNegotiation_case1())
+	    return;
+
+    } else if (strstr(compo->params, "ACK server-time")) {
+	ctx.spec_type = TYPE_SPEC1_SUCCESS;
+	printtext(&ctx, "Server time accepted");
+
+	if (shouldContinueCapabilityNegotiation_case2())
+	    return;
+
+    } else if (strstr(compo->params, "NAK server-time")) {
+	ctx.spec_type = TYPE_SPEC1_FAILURE;
+	printtext(&ctx, "Server time rejected");
+
+	if (shouldContinueCapabilityNegotiation_case2())
+	    return;
+
+    } else if (strstr(compo->params, "ACK sasl")) {
 	const char *mechanism = get_sasl_mechanism();
 
 	ctx.spec_type = TYPE_SPEC1_SUCCESS;
