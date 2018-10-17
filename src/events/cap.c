@@ -77,7 +77,7 @@ event_cap(struct irc_message_compo *compo)
 	const char *mechanism = get_sasl_mechanism();
 
 	ctx.spec_type = TYPE_SPEC1_SUCCESS;
-	printtext(&ctx, "ACK sasl");
+	printtext(&ctx, "SASL authentication accepted");
 
 	if (is_sasl_mechanism_supported(mechanism)) {
 	    net_send("AUTHENTICATE %s", mechanism);
@@ -85,7 +85,7 @@ event_cap(struct irc_message_compo *compo)
 	}
     } else if (strstr(compo->params, "NAK sasl")) {
 	ctx.spec_type = TYPE_SPEC1_FAILURE;
-	printtext(&ctx, "NAK sasl");
+	printtext(&ctx, "SASL authentication rejected");
     }
 
     net_send("CAP END");
