@@ -1211,12 +1211,14 @@ get_mb_strlen(const char *s)
  * @param unproc_msg Unprocessed message
  * @param spec_type  "Specifier"
  * @param include_ts Include timestamp?
+ * @param srv_time   Server time
  * @return Message components
  */
 static struct message_components *
 get_processed_out_message(const char *unproc_msg,
 			  enum message_specifier_type spec_type,
-			  bool include_ts)
+			  bool include_ts,
+			  const char *srv_time)
 {
 #define STRLEN_SQUEEZE(string) ((int) get_mb_strlen(squeeze_text_deco(string)))
     struct message_components *pout = xcalloc(sizeof *pout, 1);
@@ -1370,8 +1372,8 @@ vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
     mutex_lock(&vprinttext_mutex);
 
     fmt_copy = strdup_vprintf(fmt, ap);
-    pout     = get_processed_out_message(fmt_copy, ctx->spec_type,
-					 ctx->include_ts);
+    pout = get_processed_out_message(
+	fmt_copy, ctx->spec_type, ctx->include_ts, ctx->timestamp);
 
     if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
 	/* Buffer full. Remove head... */
