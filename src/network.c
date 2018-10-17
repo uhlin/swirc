@@ -115,7 +115,7 @@ send_reg_cmds(const struct network_connect_context *ctx)
 
     if (config_bool_unparse("ircv3_server_time", false)) {
 	if (net_send("CAP REQ :server-time") > 0)
-	    printtext(&ptext_ctx, "Requesting IRCv3 server time");
+	    printtext(&ptext_ctx, "Requesting server time");
     }
 
     if (is_sasl_enabled()) {
