@@ -127,6 +127,13 @@ event_cap(struct irc_message_compo *compo)
     } else if (strstr(compo->params, "NAK sasl")) {
 	ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ctx, "SASL authentication rejected");
+    } else {
+	ctx.spec_type = TYPE_SPEC1_WARN;
+
+	printtext(&ctx, "Unknown acknowledgement "
+	    "during capability negotiation...");
+	printtext(&ctx, "params = %s", compo->params);
+	printtext(&ctx, "prefix = %s", compo->prefix ? compo->prefix : "none");
     }
 
     net_send("CAP END");
