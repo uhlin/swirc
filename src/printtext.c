@@ -1228,7 +1228,12 @@ get_processed_out_message(const char *unproc_msg,
     pout->indent = 0;
 
     if (include_ts) {
-	char *ts = sw_strdup(current_time(Theme("time_format")));
+	char *ts = NULL;
+
+	if (memcmp(srv_time, B1, strlen(B1)) == 0)
+	    ts = sw_strdup(srv_time);
+	else
+	    ts = sw_strdup(current_time(Theme("time_format")));
 
 	switch (spec_type) {
 	case TYPE_SPEC1:
