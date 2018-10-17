@@ -1369,18 +1369,26 @@ vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
     }
 
     if (textBuf_size(ctx->window->buf) == 0) {
-	if ((errno = textBuf_ins_next(ctx->window->buf, NULL, pout->text,
-	    pout->indent)) != 0)
+	errno =
+	    textBuf_ins_next(ctx->window->buf, NULL, pout->text, pout->indent);
+
+	if (errno)
 	    err_sys("textBuf_ins_next");
     } else {
-	if ((errno = textBuf_ins_next(ctx->window->buf,
-	    textBuf_tail(ctx->window->buf), pout->text, pout->indent)) != 0)
+	errno = textBuf_ins_next(
+	    ctx->window->buf,
+	    textBuf_tail(ctx->window->buf),
+	    pout->text,
+	    pout->indent);
+
+	if (errno)
 	    err_sys("textBuf_ins_next");
     }
 
-    if (! (ctx->window->scroll_mode))
-	printtext_puts(panel_window(ctx->window->pan), pout->text, pout->indent,
-		       -1, NULL);
+    if (! (ctx->window->scroll_mode)) {
+	printtext_puts(
+	    panel_window(ctx->window->pan), pout->text, pout->indent, -1, NULL);
+    }
 
     free_not_null(fmt_copy);
     free_not_null(pout->text);
