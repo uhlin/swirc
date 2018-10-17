@@ -1,8 +1,11 @@
 #ifndef PRINTTEXT_H
 #define PRINTTEXT_H
 
+#include "irc.h"
 #include "mutex.h"
 #include "window.h"
+
+#include <string.h> /* memset() */
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,11 +37,14 @@ struct printtext_context {
     enum message_specifier_type spec_type;
     bool                        include_ts;
 
+    char timestamp[64];
+
 #ifdef __cplusplus
     printtext_context() {
 	this->window = NULL;
 	this->spec_type = TYPE_SPEC_NONE;
 	this->include_ts = false;
+	memset(this->timestamp, 0, sizeof this->timestamp);
     }
 
     printtext_context(
@@ -48,6 +54,7 @@ struct printtext_context {
 	this->window = window;
 	this->spec_type = spec_type;
 	this->include_ts = include_ts;
+	memset(this->timestamp, 0, sizeof this->timestamp);
     }
 #endif
 };
