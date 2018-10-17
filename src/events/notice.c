@@ -1,5 +1,5 @@
 /* Handles event NOTICE
-   Copyright (C) 2014, 2016-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -143,6 +143,9 @@ event_notice(struct irc_message_compo *compo)
     struct printtext_context ptext_ctx;
 
     state1 = state2 = "";
+
+    if (has_server_time(compo))
+	set_timestamp(ptext_ctx.timestamp, sizeof ptext_ctx.timestamp, compo);
 
     if (g_connection_in_progress || g_server_hostname == NULL) {
 	handle_notice_while_connecting(compo);

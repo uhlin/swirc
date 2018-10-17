@@ -256,6 +256,9 @@ event_privmsg(struct irc_message_compo *compo)
 
     state1 = state2 = (char *) "";
 
+    if (has_server_time(compo))
+	set_timestamp(ctx.timestamp, sizeof ctx.timestamp, compo);
+
     if (!prefix)
 	return;
     if (*prefix == ':')
