@@ -412,3 +412,13 @@ event_userModeIs(struct irc_message_compo *compo)
     statusbar_update_display_beta();
     readline_top_panel();
 }
+
+/* event_youAreOper: 381 (RPL_YOUREOPER)
+
+   Example:
+     :irc.server.com 381 ... */
+void
+event_youAreOper(struct irc_message_compo *compo)
+{
+    g_am_irc_op = true;
+}

@@ -167,6 +167,7 @@ static struct numeric_events_tag {
     { "376", "RPL_ENDOFMOTD",           NO_WINDOW,      0, event_motd },
     { "378", "",                        NO_WINDOW,      0, event_whois_conn },
     { "379", "",                        NO_WINDOW,      0, event_whois_modes },
+    { "381", "RPL_YOUREOPER",           NO_WINDOW,      0, event_youAreOper },
     { "396", "",                        NO_WINDOW,      0, event_allaround_extract_remove_colon },
     { "401", "ERR_NOSUCHNICK",          ACTIVE_WINDOW,  2, NULL },
     { "402", "ERR_NOSUCHSERVER",        ACTIVE_WINDOW,  2, NULL },

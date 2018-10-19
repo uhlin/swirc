@@ -10,5 +10,6 @@ void event_channel_forward                (struct irc_message_compo *);
 void event_local_and_global_users         (struct irc_message_compo *);
 void event_nicknameInUse                  (struct irc_message_compo *);
 void event_userModeIs                     (struct irc_message_compo *);
+void event_youAreOper                     (struct irc_message_compo *);
 
 #endif
