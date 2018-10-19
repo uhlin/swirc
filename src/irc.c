@@ -69,6 +69,7 @@
 char	*g_server_hostname = NULL;
 char	*g_my_nickname     = NULL;
 bool	 g_alt_nick_tested = false;
+bool	 g_am_irc_op	   = false;
 
 /* Objects with internal linkage
    ============================= */
@@ -256,6 +257,7 @@ irc_deinit(void)
     BZERO(g_user_modes, sizeof g_user_modes);
 
     g_alt_nick_tested = false;
+    g_am_irc_op = false;
 
     event_names_deinit();
 
