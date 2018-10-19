@@ -155,10 +155,13 @@ event_authenticate(struct irc_message_compo *compo)
      :server 902 <nick> :You must use a nick assigned to you
      :server 904 <nick> :SASL authentication failed
      :server 905 <nick> :SASL message too long
-     :server 907 <nick> :You have already authenticated using SASL */
+     :server 907 <nick> :You have already authenticated using SASL
+     :server 908 <nick> <mechanisms> :are available SASL mechanisms */
 void
 handle_sasl_auth_fail(struct irc_message_compo *compo)
 {
+    if (strings_match(compo->command, "908"))
+	squeeze(compo->params, ":");
     irc_extract_msg(compo, g_status_window, 1, true);
     abort_authentication();
 }

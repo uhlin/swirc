@@ -225,6 +225,7 @@ static struct numeric_events_tag {
     { "905", "ERR_SASLTOOLONG",         NO_WINDOW,      0, handle_sasl_auth_fail },
     { "906", "ERR_SASLABORTED",         STATUS_WINDOW,  1, NULL },
     { "907", "ERR_SASLALREADY",         NO_WINDOW,      0, handle_sasl_auth_fail },
+    { "908", "RPL_SASLMECHS",           NO_WINDOW,      0, handle_sasl_auth_fail },
 };
 
 /* -------------------------------------------------- */

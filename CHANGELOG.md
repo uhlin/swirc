@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
   - `account_notify`
 - Event
   - `ACCOUNT`
+  - 908 (`RPL_SASLMECHS`)
 
 ### Changed ###
 - Option `ircv3_server_time` is now working
