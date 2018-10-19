@@ -1381,10 +1381,14 @@ vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
 	fmt_copy, ctx->spec_type, ctx->include_ts, ctx->timestamp);
 
     if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
-	/* Buffer full. Remove head... */
+	/*
+	 * Buffer full. Remove head...
+	 */
 
-	if ((errno = textBuf_remove(ctx->window->buf,
-	    textBuf_head(ctx->window->buf))) != 0)
+	errno =
+	    textBuf_remove(ctx->window->buf, textBuf_head(ctx->window->buf));
+
+	if (errno)
 	    err_sys("textBuf_remove");
     }
 
