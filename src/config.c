@@ -58,6 +58,7 @@ static struct tagConfDefValues {
 } ConfDefValues[] = {
     { "account_notify",            TYPE_BOOLEAN, "no" },
     { "alt_nick",                  TYPE_STRING,  "warezkid_" },
+    { "auto_op_yourself",          TYPE_BOOLEAN, "yes" },
     { "chanserv_host",             TYPE_STRING,  "services." },
     { "cipher_suite",              TYPE_STRING,  "compat" },
     { "cmd_hist_size",             TYPE_INTEGER, "50" },

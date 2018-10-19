@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - A `swirc.conf` manual page
 - Option
   - `account_notify`
+  - `auto_op_yourself`
 - Event
   - `ACCOUNT`
   - 908 (`RPL_SASLMECHS`)
