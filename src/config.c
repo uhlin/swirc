@@ -57,7 +57,7 @@ static struct tagConfDefValues {
     char		*value;
 } ConfDefValues[] = {
     { "account_notify",            TYPE_BOOLEAN, "no" },
-    { "alt_nick",                  TYPE_STRING,  "warezkid_" },
+    { "alt_nick",                  TYPE_STRING,  "" },
     { "auto_op_yourself",          TYPE_BOOLEAN, "yes" },
     { "chanserv_host",             TYPE_STRING,  "services." },
     { "cipher_suite",              TYPE_STRING,  "compat" },
