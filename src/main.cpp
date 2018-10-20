@@ -112,7 +112,9 @@ static const char *OptionDesc[] = {
     "    -n <nickname>         Online nickname\n",
     "    -u <username>         User identity\n",
     "    -r <rl name>          Specifies the real name\n",
+#ifdef NOT_YET
     "    -i                    ICB mode\n",
+#endif
     "    -p                    Server password (for private servers)\n",
     "    -h <hostname>         Use this hostname on connect\n",
     "    -x <config>           Explicit config file\n",
