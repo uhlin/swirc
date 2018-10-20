@@ -34,7 +34,7 @@ language.
     -n <nickname>         Online nickname
     -u <username>         User identity
     -r <rl name>          Specifies the real name
-    -p                    Upon connect: ask for a password
+    -p                    Server password (for private servers)
     -h <hostname>         Use this hostname on connect
     -x <config>           Explicit config file
 
