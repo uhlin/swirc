@@ -460,6 +460,13 @@ main(int argc, char *argv[])
     DesktopToastsApp::SendTestNotification();
 #endif
 
+#if defined(OpenBSD) && OpenBSD >= 201811
+    if (unveil(g_home_dir, "rwc") == -1) {
+	err_ret("fatal: unveil(%s, ...)", g_home_dir);
+	return EXIT_FAILURE;
+    }
+#endif
+
 #if defined(OpenBSD) && OpenBSD >= 201605 && RESTRICT_SYSOPS
     if (pledge("cpath dns getpw inet rpath stdio tty wpath", NULL) == -1) {
 	err_ret("pledge");
