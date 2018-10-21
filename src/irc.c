@@ -57,6 +57,7 @@
 #include "events/notice.h"
 #include "events/ping.h"
 #include "events/privmsg.h"
+#include "events/wallops.h"
 #include "events/welcome.h"
 #include "events/whois.h"
 
@@ -94,7 +95,7 @@ static struct normal_events_tag {
     { "QUIT",         event_quit         },
     { "SQUIT",        event_noop         },
     { "TOPIC",        event_topic_chg    },
-    { "WALLOPS",      event_noop         },
+    { "WALLOPS",      event_wallops      },
 };
 
 static struct numeric_events_tag {
