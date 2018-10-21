@@ -20,7 +20,9 @@ All notable changes to this project will be documented in this file.
 - Option `recode`
 
 ### News ###
-- Windows-specific:
+- OpenBSD specific:
+  - Uses `unveil()` if available
+- Windows specific:
   - Passes tests of Windows App Certification Kit
 
 ## [2.2] - 2018-09-30 ##
