@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
   - `auto_op_yourself`
 - Event
   - `ACCOUNT`
+  - `WALLOPS`
   - 381 (`RPL_YOUREOPER`)
   - 908 (`RPL_SASLMECHS`)
 
