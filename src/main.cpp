@@ -465,6 +465,14 @@ main(int argc, char *argv[])
 	err_ret("fatal: unveil(%s, ...)", g_home_dir);
 	return EXIT_FAILURE;
     }
+
+    /**
+     * Read access to cert.pem is needed by libcurl
+     */
+    if (unveil("/etc/ssl/cert.pem", "r") == -1) {
+	err_ret("fatal: unveil(%s, ...)", "/etc/ssl/cert.pem");
+	return EXIT_FAILURE;
+    }
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201605 && RESTRICT_SYSOPS
