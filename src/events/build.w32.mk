@@ -15,6 +15,7 @@ OBJS=$(OBJS)\
 	$(EVENTS_DIR)notice.obj\
 	$(EVENTS_DIR)ping.obj\
 	$(EVENTS_DIR)privmsg.obj\
+	$(EVENTS_DIR)wallops.obj\
 	$(EVENTS_DIR)welcome-w32.obj\
 	$(EVENTS_DIR)welcome.obj\
 	$(EVENTS_DIR)whois.obj

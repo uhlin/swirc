@@ -14,6 +14,7 @@ OBJS+=$(EVENTS_DIR)account.o\
 	$(EVENTS_DIR)notice.o\
 	$(EVENTS_DIR)ping.o\
 	$(EVENTS_DIR)privmsg.o\
+	$(EVENTS_DIR)wallops.o\
 	$(EVENTS_DIR)welcome-unix.o\
 	$(EVENTS_DIR)welcome.o\
 	$(EVENTS_DIR)whois.o
