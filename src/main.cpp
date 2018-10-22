@@ -47,7 +47,6 @@
 #include "curses-funcs.h"
 #include "cursesInit.h"
 #include "errHand.h"
-#include "filePred.h"
 #include "io-loop.h"
 #include "libUtils.h"
 #include "main.h"
@@ -470,9 +469,8 @@ main(int argc, char *argv[])
     /**
      * Read access to cert.pem is needed by libcurl
      */
-#define CERTPATH "/etc/ssl/cert.pem"
-    if (is_regular_file(CERTPATH) && unveil(CERTPATH, "r") == -1) {
-	err_ret("fatal: unveil(%s, ...)", CERTPATH);
+    if (unveil("/etc/ssl/cert.pem", "r") == -1) {
+	err_ret("fatal: unveil(%s, ...)", "/etc/ssl/cert.pem");
 	return EXIT_FAILURE;
     }
 #endif
