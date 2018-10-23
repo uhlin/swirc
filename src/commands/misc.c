@@ -213,6 +213,20 @@ cmd_names(const char *data)
     }
 }
 
+/* usage: /oper <name> <password> */
+void
+cmd_oper(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (strings_match(data, "")) {
+	printtext(&ptext_ctx, "/oper: missing arguments");
+    } else {
+	if (net_send("OPER %s", data) < 0)
+	    g_on_air = false;
+    }
+}
+
 /* usage: /query [nick] */
 void
 cmd_query(const char *data)
