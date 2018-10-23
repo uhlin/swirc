@@ -109,6 +109,7 @@ static struct cmds_tag {
       "<service hostname | --> <command> [...]" },
     { "notice",     cmd_notice,     true,  "/notice <recipient> <message>" },
     { "ns",         cmd_nickserv,   true,  "alias for /nickserv" },
+    { "oper",       cmd_oper,       true,  "/oper <name> <password>" },
     { "part",       cmd_part,       true,  "/part [channel] [message]" },
     { "query",      cmd_query,      false, "/query [nick]" },
     { "quit",       cmd_quit,       false, "/quit [message]" },

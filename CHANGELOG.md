@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
   - `WALLOPS`
   - 381 (`RPL_YOUREOPER`)
   - 908 (`RPL_SASLMECHS`)
+- Command /oper
 
 ### Changed ###
 - Option `ircv3_server_time` is now working
