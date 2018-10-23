@@ -109,8 +109,10 @@ event_join(struct irc_message_compo *compo)
 	    goto bad;
 	}
 
-	if (g_am_irc_op && config_bool_unparse("auto_op_yourself", true))
+	if (g_am_irc_op && config_bool_unparse("auto_op_yourself", true)) {
 	    net_send("MODE %s +o %s", channel, nick);
+	    net_send("SAMODE %s +o %s", channel, nick);
+	}
     } else {
 	if (event_names_htbl_insert(nick, channel) != OK) {
 	    goto bad;
