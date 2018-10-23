@@ -1,5 +1,5 @@
 /* misc.c
-   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -46,119 +46,6 @@ static struct printtext_context ptext_ctx = {
     .include_ts = true,
 };
 
-/* usage: /quit [message] */
-void
-cmd_quit(const char *data)
-{
-    const bool has_message = !strings_match(data, "");
-
-    if (g_on_air) {
-	if (has_message)
-	    (void) net_send("QUIT :%s", data);
-	else
-	    (void) net_send("QUIT :%s", Config("quit_message"));
-	g_on_air = false;
-	net_listenThread_join();
-    }
-
-    g_io_loop = false;
-}
-
-/* usage: /whois <nick> */
-void
-cmd_whois(const char *data)
-{
-    ptext_ctx.window = g_active_window;
-
-    if (strings_match(data, "")) {
-	printtext(&ptext_ctx, "/whois: missing arguments");
-    } else if (!is_valid_nickname(data)) {
-	printtext(&ptext_ctx, "/whois: bogus nickname");
-    } else {
-	if (net_send("WHOIS %s %s", data, data) < 0)
-	    g_on_air = false;
-    }
-}
-
-/* usage: /query [nick] */
-void
-cmd_query(const char *data)
-{
-    ptext_ctx.window = g_active_window;
-
-    if (strings_match(data, "")) {
-	if (is_valid_nickname(g_active_window->label)) {
-	    switch (destroy_chat_window(g_active_window->label)) {
-	    case EINVAL:
-		err_exit(EINVAL, "destroy_chat_window");
-	    case ENOENT:
-		printtext(&ptext_ctx, "/query: cannot find window!");
-		break;
-	    }
-	} else {
-	    printtext(&ptext_ctx, "/query: missing arguments");
-	}
-    } else if (!is_valid_nickname(data)) {
-	printtext(&ptext_ctx, "/query: bogus nickname");
-    } else {
-	switch (spawn_chat_window(data, data)) {
-	case EINVAL:
-	    err_exit(EINVAL, "spawn_chat_window");
-	case ENOSPC:
-	    printtext(&ptext_ctx, "/query: too many windows open!");
-	    break;
-	}
-    }
-}
-
-/* usage: /n [channel] */
-void
-cmd_names(const char *data)
-{
-    extern int event_names_print_all(const char *channel);
-
-    ptext_ctx.window = g_active_window;
-
-    if (strings_match(data, "")) {
-	if (is_irc_channel(g_active_window->label)) {
-	    event_names_print_all(g_active_window->label);
-	} else {
-	    printtext(&ptext_ctx, "/n: missing arguments");
-	}
-    } else if (!is_irc_channel(data)) {
-	printtext(&ptext_ctx, "/n: bogus irc channel");
-    } else {
-	event_names_print_all(data);
-    }
-}
-
-/* usage: /mode <modes> [...] */
-void
-cmd_mode(const char *data)
-{
-    ptext_ctx.window = g_active_window;
-
-    if (strings_match(data, "")) {
-	printtext(&ptext_ctx, "/mode: missing arguments");
-    } else {
-	if (net_send("MODE %s", data) < 0)
-	    g_on_air = false;
-    }
-}
-
-/* usage: /resize */
-void
-cmd_resize(const char *data)
-{
-    ptext_ctx.window = g_active_window;
-
-    if (!strings_match(data, "")) {
-	printtext(&ptext_ctx, "/resize: implicit trailing data");
-    } else {
-	term_resize_all();
-    }
-}
-
 /* usage: /away [reason] */
 void
 cmd_away(const char *data)
@@ -170,21 +57,6 @@ cmd_away(const char *data)
 	    g_on_air = false;
     } else {
 	if (net_send("AWAY") < 0)
-	    g_on_air = false;
-    }
-}
-
-/* usage: /list [<max_users[,>min_users][,pattern][...]] */
-void
-cmd_list(const char *data)
-{
-    const bool has_params = !strings_match(data, "");
-
-    if (has_params) {
-	if (net_send("LIST %s", data) < 0)
-	    g_on_air = false;
-    } else {
-	if (net_send("LIST") < 0)
 	    g_on_air = false;
     }
 }
@@ -206,6 +78,45 @@ cmd_banlist(const char *data)
 	printtext(&ptext_ctx, "/banlist: bogus irc channel");
     } else {
 	if (net_send("MODE %s +b", data) < 0)
+	    g_on_air = false;
+    }
+}
+
+/* usage: /close */
+void
+cmd_close(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (!strings_match(data, "")) {
+	printtext(&ptext_ctx, "/close: implicit trailing data");
+    } else if (g_active_window == g_status_window) {
+	printtext(&ptext_ctx, "/close: cannot close status window");
+    } else if (is_irc_channel(g_active_window->label) && g_on_air) {
+	printtext(&ptext_ctx, "/close: cannot close window (connected)");
+    } else {
+	destroy_chat_window(g_active_window->label);
+    }
+}
+
+/* usage: /cycle [channel] */
+void
+cmd_cycle(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (strings_match(data, "")) {
+	if (is_irc_channel(g_active_window->label)) {
+	    if (net_send("PART %s", g_active_window->label) < 0 ||
+		net_send("JOIN %s", g_active_window->label) < 0)
+		g_on_air = false;
+	} else {
+	    printtext(&ptext_ctx, "/cycle: missing arguments");
+	}
+    } else if (!is_irc_channel(data)) {
+	printtext(&ptext_ctx, "/cycle: bogus irc channel");
+    } else {
+	if (net_send("PART %s", data) < 0 || net_send("JOIN %s", data) < 0)
 	    g_on_air = false;
     }
 }
@@ -252,18 +163,115 @@ cmd_ilist(const char *data)
     }
 }
 
-/* usage: /who <mask> */
+/* usage: /list [<max_users[,>min_users][,pattern][...]] */
 void
-cmd_who(const char *data)
+cmd_list(const char *data)
 {
-    const bool has_mask = !strings_match(data, "");
+    const bool has_params = !strings_match(data, "");
 
-    if (has_mask) {
-	if (net_send("WHO %s", data) < 0)
+    if (has_params) {
+	if (net_send("LIST %s", data) < 0)
 	    g_on_air = false;
     } else {
-	if (net_send("WHO") < 0)
+	if (net_send("LIST") < 0)
 	    g_on_air = false;
+    }
+}
+
+/* usage: /mode <modes> [...] */
+void
+cmd_mode(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (strings_match(data, "")) {
+	printtext(&ptext_ctx, "/mode: missing arguments");
+    } else {
+	if (net_send("MODE %s", data) < 0)
+	    g_on_air = false;
+    }
+}
+
+/* usage: /n [channel] */
+void
+cmd_names(const char *data)
+{
+    extern int event_names_print_all(const char *channel);
+
+    ptext_ctx.window = g_active_window;
+
+    if (strings_match(data, "")) {
+	if (is_irc_channel(g_active_window->label)) {
+	    event_names_print_all(g_active_window->label);
+	} else {
+	    printtext(&ptext_ctx, "/n: missing arguments");
+	}
+    } else if (!is_irc_channel(data)) {
+	printtext(&ptext_ctx, "/n: bogus irc channel");
+    } else {
+	event_names_print_all(data);
+    }
+}
+
+/* usage: /query [nick] */
+void
+cmd_query(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (strings_match(data, "")) {
+	if (is_valid_nickname(g_active_window->label)) {
+	    switch (destroy_chat_window(g_active_window->label)) {
+	    case EINVAL:
+		err_exit(EINVAL, "destroy_chat_window");
+	    case ENOENT:
+		printtext(&ptext_ctx, "/query: cannot find window!");
+		break;
+	    }
+	} else {
+	    printtext(&ptext_ctx, "/query: missing arguments");
+	}
+    } else if (!is_valid_nickname(data)) {
+	printtext(&ptext_ctx, "/query: bogus nickname");
+    } else {
+	switch (spawn_chat_window(data, data)) {
+	case EINVAL:
+	    err_exit(EINVAL, "spawn_chat_window");
+	case ENOSPC:
+	    printtext(&ptext_ctx, "/query: too many windows open!");
+	    break;
+	}
+    }
+}
+
+/* usage: /quit [message] */
+void
+cmd_quit(const char *data)
+{
+    const bool has_message = !strings_match(data, "");
+
+    if (g_on_air) {
+	if (has_message)
+	    (void) net_send("QUIT :%s", data);
+	else
+	    (void) net_send("QUIT :%s", Config("quit_message"));
+	g_on_air = false;
+	net_listenThread_join();
+    }
+
+    g_io_loop = false;
+}
+
+/* usage: /resize */
+void
+cmd_resize(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (!strings_match(data, "")) {
+	printtext(&ptext_ctx, "/resize: implicit trailing data");
+    } else {
+	term_resize_all();
     }
 }
 
@@ -281,28 +289,6 @@ cmd_rules(const char *data)
     }
 }
 
-/* usage: /cycle [channel] */
-void
-cmd_cycle(const char *data)
-{
-    ptext_ctx.window = g_active_window;
-
-    if (strings_match(data, "")) {
-	if (is_irc_channel(g_active_window->label)) {
-	    if (net_send("PART %s", g_active_window->label) < 0 ||
-		net_send("JOIN %s", g_active_window->label) < 0)
-		g_on_air = false;
-	} else {
-	    printtext(&ptext_ctx, "/cycle: missing arguments");
-	}
-    } else if (!is_irc_channel(data)) {
-	printtext(&ptext_ctx, "/cycle: bogus irc channel");
-    } else {
-	if (net_send("PART %s", data) < 0 || net_send("JOIN %s", data) < 0)
-	    g_on_air = false;
-    }
-}
-
 static void
 confirm_ctcp_sent(const char *cmd, const char *target)
 {
@@ -314,22 +300,6 @@ confirm_ctcp_sent(const char *cmd, const char *target)
 
     printtext(&ctx, "CTCP %c%s%c request sent to %c%s%c",
 	      BOLD, cmd, BOLD, BOLD, target, BOLD);
-}
-
-/* usage: /version <target> */
-void
-cmd_version(const char *data)
-{
-    ptext_ctx.window = g_active_window;
-
-    if (strings_match(data, "")) {
-	printtext(&ptext_ctx, "/version: missing arguments");
-    } else if (!is_valid_nickname(data) && !is_irc_channel(data)) {
-	printtext(&ptext_ctx, "/version: neither a nickname or irc channel");
-    } else {
-	if (net_send("PRIVMSG %s :\001VERSION\001", data) > 0)
-	    confirm_ctcp_sent("VERSION", data);
-    }
 }
 
 /* usage: /time <target> */
@@ -348,19 +318,49 @@ cmd_time(const char *data)
     }
 }
 
-/* usage: /close */
+/* usage: /version <target> */
 void
-cmd_close(const char *data)
+cmd_version(const char *data)
 {
     ptext_ctx.window = g_active_window;
 
-    if (!strings_match(data, "")) {
-	printtext(&ptext_ctx, "/close: implicit trailing data");
-    } else if (g_active_window == g_status_window) {
-	printtext(&ptext_ctx, "/close: cannot close status window");
-    } else if (is_irc_channel(g_active_window->label) && g_on_air) {
-	printtext(&ptext_ctx, "/close: cannot close window (connected)");
+    if (strings_match(data, "")) {
+	printtext(&ptext_ctx, "/version: missing arguments");
+    } else if (!is_valid_nickname(data) && !is_irc_channel(data)) {
+	printtext(&ptext_ctx, "/version: neither a nickname or irc channel");
     } else {
-	destroy_chat_window(g_active_window->label);
+	if (net_send("PRIVMSG %s :\001VERSION\001", data) > 0)
+	    confirm_ctcp_sent("VERSION", data);
+    }
+}
+
+/* usage: /who <mask> */
+void
+cmd_who(const char *data)
+{
+    const bool has_mask = !strings_match(data, "");
+
+    if (has_mask) {
+	if (net_send("WHO %s", data) < 0)
+	    g_on_air = false;
+    } else {
+	if (net_send("WHO") < 0)
+	    g_on_air = false;
+    }
+}
+
+/* usage: /whois <nick> */
+void
+cmd_whois(const char *data)
+{
+    ptext_ctx.window = g_active_window;
+
+    if (strings_match(data, "")) {
+	printtext(&ptext_ctx, "/whois: missing arguments");
+    } else if (!is_valid_nickname(data)) {
+	printtext(&ptext_ctx, "/whois: bogus nickname");
+    } else {
+	if (net_send("WHOIS %s %s", data, data) < 0)
+	    g_on_air = false;
     }
 }
