@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
   - `ACCOUNT`
   - `WALLOPS`
   - 381 (`RPL_YOUREOPER`)
+  - 491 (`ERR_NOOPERHOST`)
   - 908 (`RPL_SASLMECHS`)
 - Command /oper
 
