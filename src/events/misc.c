@@ -422,7 +422,7 @@ event_youAreOper(struct irc_message_compo *compo)
 {
     struct printtext_context ctx = {
 	.window = g_status_window,
-	.spec_type = TYPE_SPEC1,
+	.spec_type = TYPE_SPEC1_SUCCESS,
 	.include_ts = true,
     };
 
