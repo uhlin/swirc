@@ -21,7 +21,7 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2018-05-21</em></small></p>
+<p><small><em>Updated: 2018-10-24</em></small></p>
 <h3>Program options</h3>
 <h4>Common</h4>
 <table class="po">
@@ -51,7 +51,14 @@ TLS/SSL connection.
   </tr>
   <tr>
     <td>-p</td>
-    <td>Upon connect: ask for a password</td>
+    <td>
+Server password (for private servers). However: InspIRCd has a module
+called password forward, which means that if a server password is
+specified by this flag, it will be used to identify to NickServ. If
+so: connect with a TLS/SSL connection, i.e. an encrypted connection,
+to prevent your password from being sniffed. Swirc also supports IRCv3
+SASL authentication which is probably a better alternative.
+    </td>
   </tr>
   <tr>
     <td>-h &lt;hostname&gt;</td>
