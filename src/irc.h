@@ -40,15 +40,17 @@ extern char	*g_my_nickname;
 extern bool	 g_alt_nick_tested;
 extern bool	 g_am_irc_op;
 
-void irc_init(void);
-void irc_deinit(void);
+void	irc_init(void);
+void	irc_deinit(void);
 
-bool has_server_time                (const struct irc_message_compo *);
-void irc_extract_msg                (struct irc_message_compo *, PIRC_WINDOW, int ext_bits, bool is_error);
-void irc_handle_interpret_events    (char *recvbuffer, char **message_concat, enum message_concat_state *);
-void irc_set_my_nickname            (const char *nick);
-void irc_set_server_hostname        (const char *srv_host);
-void irc_unsuccessful_event_cleanup (void);
+bool	has_server_time(const struct irc_message_compo *);
+void	irc_extract_msg(struct irc_message_compo *, PIRC_WINDOW, int ext_bits,
+	    bool is_error);
+void	irc_handle_interpret_events(char *recvbuffer, char **message_concat,
+	    enum message_concat_state *);
+void	irc_set_my_nickname(const char *);
+void	irc_set_server_hostname(const char *);
+void	irc_unsuccessful_event_cleanup(void);
 
 #ifdef __cplusplus
 }
