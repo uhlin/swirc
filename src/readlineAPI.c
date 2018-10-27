@@ -154,15 +154,12 @@ ins_complex_char(WINDOW *win, int c)
 SW_NORET void
 readline_error(int error, const char *msg)
 {
-    char strerrbuf[MAXERROR];
-    struct printtext_context ptext_ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
+    char strerrbuf[MAXERROR] = { '\0' };
 
-    printtext(&ptext_ctx, "non-fatal: %s: %s",
-	      msg, xstrerror(error, strerrbuf, MAXERROR));
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
+    printtext(&ctx, "non-fatal: %s: %s", msg,
+	xstrerror(error, strerrbuf, MAXERROR));
     g_readline_loop = false;
     longjmp(g_readline_loc_info, 1);
 }
