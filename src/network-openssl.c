@@ -39,26 +39,24 @@
 #include "strdup_printf.h"
 
 static SSL_CTX	*ssl_ctx = NULL;
-static SSL	*ssl	 = NULL;
+static SSL	*ssl     = NULL;
 
-static const char *suite_secure = "TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
-static const char *suite_compat = "HIGH:!aNULL";
-static const char *suite_legacy = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
+static const char *suite_secure   = "TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
+static const char *suite_compat   = "HIGH:!aNULL";
+static const char *suite_legacy   = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
 static const char *suite_insecure = "ALL:!aNULL:!eNULL";
 
 static int
 verify_callback(int ok, X509_STORE_CTX *ctx)
 {
-    X509      *cert         = X509_STORE_CTX_get_current_cert(ctx);
-    char       issuer[256]  = "";
-    char       subject[256] = "";
-    const int  depth        = X509_STORE_CTX_get_error_depth(ctx);
-    const int  err          = X509_STORE_CTX_get_error(ctx);
-    struct printtext_context ptext_ctx = {
-	.window	    = g_status_window,
-	.spec_type  = TYPE_SPEC1_WARN,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ptext_ctx;
+    X509	*cert         = X509_STORE_CTX_get_current_cert(ctx);
+    char	 issuer[256]  = "";
+    char	 subject[256] = "";
+    const int	 depth        = X509_STORE_CTX_get_error_depth(ctx);
+    const int	 err          = X509_STORE_CTX_get_error(ctx);
+
+    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     X509_NAME_oneline(X509_get_issuer_name(cert), issuer, sizeof issuer);
     X509_NAME_oneline(X509_get_subject_name(cert), subject, sizeof subject);
@@ -78,12 +76,10 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
 static void
 set_ciphers(const char *list)
 {
-    char strerrbuf[MAXERROR];
-    struct printtext_context ptext_ctx = {
-	.window	    = g_status_window,
-	.spec_type  = TYPE_SPEC1_WARN,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ptext_ctx;
+    char strerrbuf[MAXERROR] = { '\0' };
+
+    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (ssl_ctx && list && !SSL_CTX_set_cipher_list(ssl_ctx, list))
 	printtext(&ptext_ctx, "warning: set_ciphers: bogus cipher list: %s",
@@ -93,12 +89,10 @@ set_ciphers(const char *list)
 void
 net_ssl_init(void)
 {
-    char strerrbuf[MAXERROR];
-    struct printtext_context ptext_ctx = {
-	.window	    = g_status_window,
-	.spec_type  = TYPE_SPEC1_WARN,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ptext_ctx;
+    char strerrbuf[MAXERROR] = { '\0' };
+
+    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     SSL_load_error_strings();
     SSL_library_init();
@@ -182,12 +176,11 @@ net_ssl_close(void)
 int
 net_ssl_start(void)
 {
-    struct printtext_context ptext_ctx = {
-	.window	    = g_status_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ptext_ctx;
     const int VALUE_HANDSHAKE_OK = 1;
+
+    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
+	true);
 
     if ((ssl = SSL_new(ssl_ctx)) == NULL)
 	err_exit(ENOMEM, "net_ssl_start: Unable to create a new SSL object");
@@ -205,7 +198,7 @@ net_ssl_start(void)
 int
 net_ssl_send(const char *fmt, ...)
 {
-    char	*buf	= NULL;
+    char	*buf    = NULL;
     int		 buflen = 0;
     int		 n_sent = 0;
     va_list	 ap;
@@ -296,8 +289,8 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 int
 net_ssl_check_hostname(const char *host, unsigned int flags)
 {
-    X509 *cert = NULL;
-    int ret = ERR;
+    X509	*cert = NULL;
+    int		 ret  = ERR;
 
     if (ssl == NULL || (cert = SSL_get_peer_certificate(ssl)) == NULL ||
 	host == NULL) {
