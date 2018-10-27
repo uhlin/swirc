@@ -1,5 +1,5 @@
 /* Platform independent networking routines
-   Copyright (C) 2014-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -102,11 +102,10 @@ select_send_and_recv_funcs()
 static PTR_ARGS_NONNULL void
 send_reg_cmds(const struct network_connect_context *ctx)
 {
-    struct printtext_context ptext_ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC1_SUCCESS,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ptext_ctx;
+
+    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_SUCCESS,
+	true);
 
     if (config_bool_unparse("account_notify", false)) {
 	if (net_send("CAP REQ :account-notify") > 0)
@@ -140,18 +139,15 @@ send_reg_cmds(const struct network_connect_context *ctx)
 void
 net_connect(const struct network_connect_context *ctx)
 {
-    struct printtext_context ptext_ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ptext_ctx;
     struct addrinfo *res = NULL, *rp = NULL;
 
     if (ctx == NULL)
 	err_exit(EINVAL, "net_connect");
     g_connection_in_progress = true;
+    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1, true);
     printtext(&ptext_ctx, "Connecting to %s (%s)", ctx->server, ctx->port);
-    ptext_ctx.spec_type  = TYPE_SPEC1_SUCCESS;
+    ptext_ctx.spec_type = TYPE_SPEC1_SUCCESS;
 
 #ifdef WIN32
     if (!winsock_init()) {
@@ -245,22 +241,19 @@ net_connect(const struct network_connect_context *ctx)
 void
 net_irc_listen(void)
 {
+    PRINTTEXT_CONTEXT ptext_ctx;
     char *message_concat = NULL;
     char *recvbuf = xcalloc(RECVBUF_SIZE, 1);
     enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
     int bytes_received = -1;
     struct network_recv_context ctx = {
-	.sock	  = g_socket,
-	.flags	  = 0,
-	.sec	  = 5,
+	.sock     = g_socket,
+	.flags    = 0,
+	.sec      = 5,
 	.microsec = 0,
     };
-    struct printtext_context ptext_ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_WARN,
-	.include_ts = true,
-    };
 
+    printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC1_WARN, true);
     irc_init();
 
     do {
@@ -275,6 +268,7 @@ net_irc_listen(void)
     } while (g_on_air);
 
   out:
+    ptext_ctx.window = g_active_window;
     if (g_on_air) {
 	printtext(&ptext_ctx, "Connection to IRC server lost");
 	g_on_air = false;
