@@ -153,13 +153,11 @@ get_prompt(void)
 static void
 output_help_for_command(const char *command)
 {
-    struct cmds_tag *sp;
-    const size_t ar_sz = ARRAY_SIZE(cmds);
-    struct printtext_context ctx = {
-	.window     = g_active_window,
-	.spec_type  = TYPE_SPEC2,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT	 ctx;
+    const size_t	 ar_sz = ARRAY_SIZE(cmds);
+    struct cmds_tag	*sp = NULL;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
 
     for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
 	if (strings_match(command, sp->cmd)) {
@@ -175,14 +173,11 @@ output_help_for_command(const char *command)
 static void
 list_all_commands()
 {
-    struct printtext_context ctx = {
-	.window     = g_active_window,
-	.spec_type  = TYPE_SPEC_NONE,
-	.include_ts = true,
-    };
-    struct cmds_tag *sp;
-    const size_t ar_sz = ARRAY_SIZE(cmds);
+    PRINTTEXT_CONTEXT	 ctx;
+    const size_t	 ar_sz = ARRAY_SIZE(cmds);
+    struct cmds_tag	*sp = NULL;
 
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
     printtext(&ctx, "--------------- Commands ---------------");
 
     for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
@@ -260,8 +255,8 @@ static void
 swirc_greeting()
 {
 #define USE_LARRY3D_LOGO 1
-    struct printtext_context ptext_ctx;
-    const char **ppcc;
+    PRINTTEXT_CONTEXT ctx;
+    const char **ppcc = NULL;
     const char *logo[] = {
 #if USE_LARRY3D_LOGO
 	"                     __                              ",
@@ -284,39 +279,37 @@ swirc_greeting()
     const size_t logo_size = ARRAY_SIZE(logo);
     double log_size_kb;
 
-    ptext_ctx.window     = g_status_window;
-    ptext_ctx.spec_type  = TYPE_SPEC1;
-    ptext_ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
     for (ppcc = &logo[0]; ppcc < &logo[logo_size]; ppcc++) {
 	const char *color = Theme("logo_color");
-	char       *str   = sw_strdup(*ppcc);
+	char *str = sw_strdup(*ppcc);
 
-	printtext(&ptext_ctx, "%s%s", color, trim(str));
+	printtext(&ctx, "%s%s", color, trim(str));
 	free(str);
     }
 
-    printtext(&ptext_ctx, " ");
+    printtext(&ctx, " ");
 
-    printtext(&ptext_ctx, "    Swirc %s by %s", g_swircVersion, g_swircAuthor);
-    printtext(&ptext_ctx, "    Compiled on %s%s %s%s",
+    printtext(&ctx, "    Swirc %s by %s", g_swircVersion, g_swircAuthor);
+    printtext(&ctx, "    Compiled on %s%s %s%s",
 	      LEFT_BRKT, __DATE__, __TIME__, RIGHT_BRKT);
 
     if (g_initialized_pairs < 0) {
 	g_initialized_pairs = 0;
     }
 
-    printtext(&ptext_ctx, " ");
-    printtext(&ptext_ctx, "Program settings are stored in %s%s%s",
+    printtext(&ctx, " ");
+    printtext(&ctx, "Program settings are stored in %s%s%s",
 	      LEFT_BRKT, g_home_dir, RIGHT_BRKT);
-    printtext(&ptext_ctx, "%c%hd%c color pairs have been initialized",
+    printtext(&ctx, "%c%hd%c color pairs have been initialized",
 	      BOLD, g_initialized_pairs, BOLD);
-    printtext(&ptext_ctx, "Type /help for a list of commands; or /help "
+    printtext(&ctx, "Type /help for a list of commands; or /help "
 	"<command>\n(for a brief usage of that command)");
     if (get_error_log_size(&log_size_kb))
-	printtext(&ptext_ctx, "Error log size %s%.1f KB%s",
-		  LEFT_BRKT, log_size_kb, RIGHT_BRKT);
-    printtext(&ptext_ctx, " ");
+	printtext(&ctx, "Error log size %s%.1f KB%s",
+	    LEFT_BRKT, log_size_kb, RIGHT_BRKT);
+    printtext(&ctx, " ");
 }
 
 static void
@@ -367,14 +360,12 @@ history_prev()
 static void
 handle_cmds(const char *data)
 {
-    struct cmds_tag *sp;
-    const size_t ar_sz = ARRAY_SIZE(cmds);
-    char *cp;
-    struct printtext_context ctx = {
-	.window     = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT	 ctx;
+    char		*cp = NULL;
+    const size_t	 ar_sz = ARRAY_SIZE(cmds);
+    struct cmds_tag	*sp = NULL;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 
     for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
 	cp = strdup_printf("%s ", sp->cmd);
@@ -489,11 +480,10 @@ enter_io_loop(void)
 void
 transmit_user_input(const char *win_label, const char *input)
 {
-    struct printtext_context ctx = {
-	.window     = window_by_label(win_label),
-	.spec_type  = TYPE_SPEC_NONE,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, window_by_label(win_label), TYPE_SPEC_NONE,
+	true);
 
     if (ctx.window == NULL) {
 	err_log(0, "In transmit_user_input: window %s not found", win_label);
