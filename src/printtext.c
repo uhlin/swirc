@@ -128,6 +128,39 @@ static struct ptext_colorMap_tag {
     { COLOR_WHITE,   A_NORMAL },
 };
 
+/* ----------------------------------------------------------------- */
+
+PPRINTTEXT_CONTEXT
+printtext_context_new(PIRC_WINDOW window, enum message_specifier_type spec_type,
+    bool include_ts)
+{
+    PPRINTTEXT_CONTEXT ctx = xcalloc(sizeof *ctx, 1);
+
+    ctx->window = window;
+    ctx->spec_type = spec_type;
+    ctx->include_ts = include_ts;
+    memset(ctx->timestamp, 0, sizeof (ctx->timestamp));
+    return ctx;
+}
+
+void
+printtext_context_destroy(PPRINTTEXT_CONTEXT ctx)
+{
+    free_not_null(ctx);
+}
+
+void
+printtext_context_init(PPRINTTEXT_CONTEXT ctx, PIRC_WINDOW window,
+    enum message_specifier_type spec_type, bool include_ts)
+{
+    if (ctx == NULL)
+	return;
+    ctx->window = window;
+    ctx->spec_type = spec_type;
+    ctx->include_ts = include_ts;
+    memset(ctx->timestamp, 0, sizeof (ctx->timestamp));
+}
+
 /**
  * Helper function for squeeze_text_deco().
  */
@@ -273,24 +306,17 @@ color_pair_find(short int fg, short int bg)
 }
 
 /**
- * Print an error message to the active window and free a
- * char-pointer.
- *
- * @param msg Message
- * @param cp  Char-pointer
- * @return Void
+ * Print an error message to the active window and free the memory
+ * space pointed to by @cp
  */
 void
 print_and_free(const char *msg, char *cp)
 {
-    struct printtext_context ptext_ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
 
-    printtext(&ptext_ctx, "%s", msg);
-    free(cp);
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+    printtext(&ctx, "%s", msg);
+    free_not_null(cp);
 }
 
 /**
@@ -301,7 +327,7 @@ print_and_free(const char *msg, char *cp)
  * @return Void
  */
 void
-printtext(struct printtext_context *ctx, const char *fmt, ...)
+printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
 {
     va_list ap;
 
@@ -457,8 +483,8 @@ perform_convert_buffer(const char **in_buf)
 static void
 append_newline(wchar_t **wc_buf)
 {
-    const size_t newsize = size_product(wcslen(*wc_buf) + sizeof "\n",
-					sizeof (wchar_t));
+    const size_t newsize =
+	size_product(wcslen(*wc_buf) + sizeof "\n", sizeof (wchar_t));
 
     *wc_buf = xrealloc(*wc_buf, newsize);
 
@@ -943,8 +969,8 @@ start_on_a_new_row(const ptrdiff_t sum)
  * @return Void
  */
 static void
-case_default(struct case_default_context *ctx,
-	     int *rep_count, int *line_count, int *insert_count)
+case_default(struct case_default_context *ctx, int *rep_count, int *line_count,
+    int *insert_count)
 {
     chtype c;
     unsigned char *mbs, *p;
@@ -1039,7 +1065,7 @@ case_default(struct case_default_context *ctx,
  */
 void
 printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
-	       int *rep_count)
+    int *rep_count)
 {
     const bool pwin_scrollable = is_scrollok(pwin);
     int insert_count = 0;
@@ -1081,8 +1107,7 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
     replace_characters_with_space(wc_buf, L"\f\t\v");
 
     for (wc_bufp = &wc_buf[0], max_lines_flagged = 0;
-	 *wc_bufp && !max_lines_flagged;
-	 wc_bufp++) {
+	*wc_bufp && !max_lines_flagged; wc_bufp++) {
 	wchar_t wc = *wc_bufp;
 
 	switch (wc) {
@@ -1216,9 +1241,8 @@ get_mb_strlen(const char *s)
  */
 static struct message_components *
 get_processed_out_message(const char *unproc_msg,
-			  enum message_specifier_type spec_type,
-			  bool include_ts,
-			  const char *srv_time)
+    enum message_specifier_type spec_type, bool include_ts,
+    const char *srv_time)
 {
 #define STRLEN_SQUEEZE(string) ((int) get_mb_strlen(squeeze_text_deco(string)))
     struct message_components *pout = xcalloc(sizeof *pout, 1);
@@ -1352,7 +1376,7 @@ get_processed_out_message(const char *unproc_msg,
  * @return Void
  */
 void
-vprinttext(struct printtext_context *ctx, const char *fmt, va_list ap)
+vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 {
     char *fmt_copy = NULL;
     const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
