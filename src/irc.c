@@ -297,14 +297,11 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
     char *cp = NULL, *savp = "";
 
     if (strFeed(compo->params, ext_bits) != ext_bits) {
-	struct printtext_context ptext_ctx = {
-	    .window     = g_status_window,
-	    .spec_type  = TYPE_SPEC1_FAILURE,
-	    .include_ts = true,
-	};
+	PRINTTEXT_CONTEXT ctx;
 
-	printtext(&ptext_ctx, "In irc_extract_msg: strFeed(..., %d) != %d",
-		  ext_bits, ext_bits);
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
+	printtext(&ctx, "In irc_extract_msg: strFeed(..., %d) != %d", ext_bits,
+	    ext_bits);
 	return;
     }
 
@@ -319,17 +316,15 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
 	    }
 
 	    if (*token) {
-		struct printtext_context ptext_ctx = {
-		    .window     = to_window,
-		    .spec_type  = is_error ? TYPE_SPEC1_FAILURE : TYPE_SPEC1,
-		    .include_ts = true,
-		};
+		PRINTTEXT_CONTEXT ctx;
 
-		printtext(&ptext_ctx, "%s", token);
+		printtext_context_init(&ctx, to_window,
+		    is_error ? TYPE_SPEC1_FAILURE : TYPE_SPEC1, true);
+		printtext(&ctx, "%s", token);
 		return;
 	    }
 	} else {
-	    ;
+	    /* null */;
 	}
     }
 }
@@ -473,11 +468,9 @@ FreeMsgCompo(struct irc_message_compo *compo)
 static void
 irc_search_and_route_event(struct irc_message_compo *compo)
 {
-    struct printtext_context ptext_ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC1_WARN,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (is_alphabetic(compo->command)) {
 	struct normal_events_tag *sp = NULL;
@@ -490,11 +483,10 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 	    }
 	}
 
-	printtext(&ptext_ctx, "Unknown normal event: %s", compo->command);
+	printtext(&ctx, "Unknown normal event: %s", compo->command);
 #if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
-	printtext(&ptext_ctx, "params = %s", compo->params);
-	printtext(&ptext_ctx, "prefix = %s",
-		  compo->prefix ? compo->prefix : "none");
+	printtext(&ctx, "params = %s", compo->params);
+	printtext(&ctx, "prefix = %s", compo->prefix ? compo->prefix : "none");
 #endif
     } else if (is_numeric(compo->command) && strlen(compo->command) == 3) {
 	struct numeric_events_tag *sp = NULL;
@@ -519,14 +511,13 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 	    }
 	}
 
-	printtext(&ptext_ctx, "Unknown numeric event: %s", compo->command);
+	printtext(&ctx, "Unknown numeric event: %s", compo->command);
 #if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
-	printtext(&ptext_ctx, "params = %s", compo->params);
-	printtext(&ptext_ctx, "prefix = %s",
-		  compo->prefix ? compo->prefix : "none");
+	printtext(&ctx, "params = %s", compo->params);
+	printtext(&ctx, "prefix = %s", compo->prefix ? compo->prefix : "none");
 #endif
     } else {
-	printtext(&ptext_ctx, "Erroneous event: %s", compo->command);
+	printtext(&ctx, "Erroneous event: %s", compo->command);
     }
 }
 
