@@ -1,5 +1,5 @@
 /* command /invite
-   Copyright (C) 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -58,18 +58,15 @@ cmd_invite(const char *data)
 	print_and_free("/invite: not on that channel", dcopy);
 	return;
     } else {
-	struct printtext_context ctx = {
-	    .window	= g_active_window,
-	    .spec_type  = TYPE_SPEC1,
-	    .include_ts = true,
-	};
+	PRINTTEXT_CONTEXT ctx;
 
-	if (net_send("INVITE %s %s", targ_nick, channel) > 0)
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+
+	if (net_send("INVITE %s %s", targ_nick, channel) > 0) {
 	    printtext(&ctx, "Inviting %s%s%c to %s%s%s%c%s",
-		      COLOR1, targ_nick, NORMAL,
-		      LEFT_BRKT,
-		      COLOR2, channel, NORMAL,
-		      RIGHT_BRKT);
+		COLOR1, targ_nick, NORMAL,
+		LEFT_BRKT, COLOR2, channel, NORMAL, RIGHT_BRKT);
+	}
 
 	free(dcopy);
     }

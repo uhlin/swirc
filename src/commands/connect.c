@@ -157,11 +157,7 @@ get_password()
 void
 do_connect(const char *server, const char *port)
 {
-    struct printtext_context ptext_ctx = {
-	.window	    = g_status_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ptext_ctx;
     struct network_connect_context conn_ctx = {
 	.server   = (char *) server,
 	.port     = (char *) port,
@@ -170,6 +166,9 @@ do_connect(const char *server, const char *port)
 	.rl_name  = "",
 	.nickname = "",
     };
+
+    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
+	true);
 
     if (g_cmdline_opts->username) {
 	conn_ctx.username = g_cmdline_opts->username;
