@@ -426,11 +426,9 @@ get_setting_type(const struct tagConfDefValues *cdv)
 static void
 output_values_for_all_settings()
 {
-    struct printtext_context ctx = {
-	.window = g_active_window,
-	.spec_type = TYPE_SPEC3,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC3, true);
 
     for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
 	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
@@ -445,11 +443,9 @@ output_values_for_all_settings()
 static void
 output_value_for_specific_setting(const char *setting)
 {
-    struct printtext_context ctx = {
-	.window = g_active_window,
-	.spec_type = TYPE_SPEC3,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC3, true);
 
     for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
 	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
@@ -506,12 +502,10 @@ set_value_for_setting(const char *setting, const char *value, char **err_reason)
 static void
 try_to_set_value_for_setting(const char *setting, const char *value)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *err_reason = "no error";
-    struct printtext_context ctx = {
-	.window = g_active_window,
-	.spec_type = TYPE_SPEC1_SUCCESS,
-	.include_ts = true,
-    };
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
 
     for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
 	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
