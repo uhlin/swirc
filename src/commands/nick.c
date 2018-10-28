@@ -12,18 +12,16 @@
 void
 cmd_nick(const char *data)
 {
-    struct printtext_context ptext_ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 
     if (strings_match(data, "")) {
-	printtext(&ptext_ctx, "/nick: missing arguments");
+	printtext(&ctx, "/nick: missing arguments");
     } else if (!is_valid_nickname(data)) {
-	printtext(&ptext_ctx, "/nick: bogus nickname");
+	printtext(&ctx, "/nick: bogus nickname");
     } else if (strings_match_ignore_case(g_my_nickname, data)) {
-	printtext(&ptext_ctx, "/nick: no change");
+	printtext(&ctx, "/nick: no change");
     } else {
 	if (net_send("NICK %s", data) < 0)
 	    g_on_air = false;
