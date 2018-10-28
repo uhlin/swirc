@@ -1,5 +1,5 @@
 /* command /notice
-   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -44,6 +44,7 @@
 void
 cmd_notice(const char *data)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *dcopy = sw_strdup(data);
     char *recipient, *message;
     char *state = "";
@@ -61,20 +62,17 @@ cmd_notice(const char *data)
 	       is_irc_channel(recipient)) {
 	print_and_free("/notice: not on that channel", dcopy);
 	return;
-    } else {
-	struct printtext_context ctx = {
-	    .window	= g_active_window,
-	    .spec_type  = TYPE_SPEC_NONE,
-	    .include_ts = true,
-	};
-
-	if (net_send("NOTICE %s :%s", recipient, message) > 0)
-	    printtext(&ctx, "%s%s%s%c%s%s%s%c%s%s %s",
-		LEFT_BRKT,
-		COLOR1, "notice", NORMAL, B1, COLOR2, recipient, NORMAL, B2,
-		RIGHT_BRKT,
-		message);
-
-	free(dcopy);
     }
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
+
+    if (net_send("NOTICE %s :%s", recipient, message) > 0) {
+	printtext(&ctx, "%s%s%s%c%s%s%s%c%s%s %s",
+	    LEFT_BRKT,
+	    COLOR1, "notice", NORMAL, B1, COLOR2, recipient, NORMAL, B2,
+	    RIGHT_BRKT,
+	    message);
+    }
+
+    free(dcopy);
 }
