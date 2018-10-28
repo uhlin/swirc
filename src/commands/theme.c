@@ -1,5 +1,5 @@
 /* commands/theme.c  --  management of themes on-the-fly
-   Copyright (C) 2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017, 2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -275,18 +275,15 @@ clean_up(char *url, char *path)
 static bool
 theme_is_in_db(const char *name)
 {
+    PRINTTEXT_CONTEXT ctx;
     PTHEME_INFO ar_p = NULL;
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
 
     THEME_INFO_FOREACH(ar_p) {
 	if (ar_p->filename && name && strings_match(ar_p->filename, name))
 	    return true;
     }
 
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
     printtext(&ctx, "theme not in database");
     return false;
 }
@@ -294,18 +291,15 @@ theme_is_in_db(const char *name)
 static PTR_ARGS_NONNULL void
 install_theme(const char *name)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *url = strdup_printf("%s%s%s%s",
 	g_swircWebAddr, "themes/", name, g_theme_filesuffix);
     char *dest = strdup_printf("%s" SLASH "%s%s",
 	g_home_dir, name, g_theme_filesuffix);
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC_NONE,
-	.include_ts = true,
-    };
 
     url_to_file(url, dest);
-    ctx.spec_type = file_exists(dest) ? TYPE_SPEC1_SUCCESS : TYPE_SPEC1_FAILURE;
+    printtext_context_init(&ctx, g_active_window,
+	file_exists(dest) ? TYPE_SPEC1_SUCCESS : TYPE_SPEC1_FAILURE, true);
     if (ctx.spec_type == TYPE_SPEC1_SUCCESS)
 	printtext(&ctx, "theme installed (use 'set' to activate it)");
     else
@@ -319,12 +313,10 @@ list_remote()
 {
 #define B1 Theme("notice_inner_b1")
 #define B2 Theme("notice_inner_b2")
+    PRINTTEXT_CONTEXT ctx;
     PTHEME_INFO ar_p = NULL;
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC2,
-	.include_ts = true,
-    };
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
 
     THEME_INFO_FOREACH(ar_p) {
 	if (ar_p->filename) {
@@ -342,13 +334,10 @@ list_remote()
 static PTR_ARGS_NONNULL void
 set_theme(const char *name)
 {
+    PRINTTEXT_CONTEXT ctx;
     char buf[2300] = "";
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
 
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
     (void) sw_strcpy(buf, g_home_dir, sizeof buf);
     (void) sw_strcat(buf, SLASH,      sizeof buf);
     (void) sw_strcat(buf, name,       sizeof buf);

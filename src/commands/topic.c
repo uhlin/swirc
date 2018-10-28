@@ -7,24 +7,22 @@
 
 #include "topic.h"
 
+#define ACTWINLABEL g_active_window->label
+
 /* usage: /topic [new topic] */
 void
 cmd_topic(const char *data)
 {
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
-
-    if (strings_match(data, "") && is_irc_channel(g_active_window->label)) {
-	if (net_send("TOPIC %s", g_active_window->label) < 0)
+    if (strings_match(data, "") && is_irc_channel(ACTWINLABEL)) {
+	if (net_send("TOPIC %s", ACTWINLABEL) < 0)
 	    g_on_air = false;
-    } else if (!strings_match(data, "") &&
-	       is_irc_channel(g_active_window->label)) {
-	if (net_send("TOPIC %s :%s", g_active_window->label, data) < 0)
+    } else if (!strings_match(data, "") && is_irc_channel(ACTWINLABEL)) {
+	if (net_send("TOPIC %s :%s", ACTWINLABEL, data) < 0)
 	    g_on_air = false;
     } else {
+	PRINTTEXT_CONTEXT ctx;
+
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 	printtext(&ctx, "/topic: "
 	    "switch to a channel in order to set a new topic for it");
     }
