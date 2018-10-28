@@ -1,5 +1,5 @@
 /* Event 367 (RPL_BANLIST) and 368 (RPL_ENDOFBANLIST)
-   Copyright (C) 2016-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -63,11 +63,9 @@ event_banlist(struct irc_message_compo *compo)
     char	*seconds	 = NULL;
     char	*issuer_name	 = "";
     char	*issuer_userhost = "";
-    struct printtext_context ctx = {
-	.window	    = g_status_window,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
+
+    PRINTTEXT_CONTEXT ctx;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
     if ((feeds_written = strFeed(compo->params, 4)) == 4) {
 	char buf[500] = { 0 };
@@ -75,8 +73,8 @@ event_banlist(struct irc_message_compo *compo)
 	(void) strtok_r(compo->params, "\n", &state1); /* recipient */
 
 	if ((channel = strtok_r(NULL, "\n", &state1)) == NULL ||
-	    (mask = strtok_r(NULL, "\n", &state1)) == NULL ||
-	    (issuer = strtok_r(NULL, "\n", &state1)) == NULL ||
+	    (mask    = strtok_r(NULL, "\n", &state1)) == NULL ||
+	    (issuer  = strtok_r(NULL, "\n", &state1)) == NULL ||
 	    (seconds = strtok_r(NULL, "\n", &state1)) == NULL ||
 	    sw_strcpy(buf, issuer, sizeof buf) != 0 ||
 	    !is_numeric(seconds))
@@ -129,11 +127,9 @@ event_eof_banlist(struct irc_message_compo *compo)
     char	*state	 = "";
     char	*channel = NULL;
     char	*msg	 = NULL;
-    struct printtext_context ctx = {
-	.window	    = g_status_window,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
+
+    PRINTTEXT_CONTEXT ctx;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
     if (strFeed(compo->params, 2) != 2)
 	return;

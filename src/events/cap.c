@@ -78,12 +78,9 @@ shouldContinueCapabilityNegotiation_case2()
 void
 event_cap(struct irc_message_compo *compo)
 {
-    struct printtext_context ctx = {
-	.window	    = g_status_window,
-	.spec_type  = TYPE_SPEC_NONE,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
 
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
     squeeze(compo->params, ":");
 
     if (strstr(compo->params, "ACK account-notify")) {
