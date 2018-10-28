@@ -6,22 +6,20 @@
 
 #include "say.h"
 
+#define ACTWINLABEL g_active_window->label
+
 /* usage: /say <message> */
 void
 cmd_say(const char *data)
 {
-    struct printtext_context ptext_ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
 
-    if (strings_match(data, "")) {
-	printtext(&ptext_ctx, "/say: missing arguments");
-    } else if (strings_match_ignore_case(g_active_window->label,
-					 g_status_window_label)) {
-	printtext(&ptext_ctx, "/say: cannot say to status window");
-    } else {
-	transmit_user_input(g_active_window->label, data);
-    }
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+
+    if (strings_match(data, ""))
+	printtext(&ctx, "/say: missing arguments");
+    else if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label))
+	printtext(&ctx, "/say: cannot say to status window");
+    else
+	transmit_user_input(ACTWINLABEL, data);
 }

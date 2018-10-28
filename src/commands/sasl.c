@@ -72,12 +72,10 @@ get_filepath(const bool is_public)
 static void
 output_message(const bool is_error, const char *message)
 {
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = is_error ? TYPE_SPEC1_FAILURE : TYPE_SPEC1_SUCCESS,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
 
+    printtext_context_init(&ctx, g_active_window,
+	is_error ? TYPE_SPEC1_FAILURE : TYPE_SPEC1_SUCCESS, true);
     printtext(&ctx, "%s", message);
 }
 
