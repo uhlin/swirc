@@ -1,5 +1,5 @@
 /* whois events
-   Copyright (C) 2014-2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -89,13 +89,11 @@ get_time_idle(long int sec_idle, long int signon_time)
 void
 event_whois_ssl(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *state = "";
     char *tnick, *msg;
-    struct printtext_context ctx;
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (strFeed(compo->params, 2) != 2) {
 	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
@@ -132,13 +130,11 @@ event_whois_ssl(struct irc_message_compo *compo)
 void
 event_whois_cert(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *state = "";
     char *tnick, *msg;
-    struct printtext_context ctx;
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (strFeed(compo->params, 2) != 2) {
 	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
@@ -174,13 +170,11 @@ event_whois_cert(struct irc_message_compo *compo)
 void
 event_whois_away(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *away_reason;
     char *state = "";
-    struct printtext_context ctx;
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (strFeed(compo->params, 2) != 2) {
 	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
@@ -215,13 +209,11 @@ event_whois_away(struct irc_message_compo *compo)
 void
 event_whois_service(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *msg;
     char *state = "";
-    struct printtext_context ctx;
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (strFeed(compo->params, 2) != 2) {
 	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
@@ -257,13 +249,11 @@ event_whois_service(struct irc_message_compo *compo)
 void
 event_whois_user(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *nick, *user, *host, *rl_name;
     char *state = "";
-    struct printtext_context ctx;
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
 #if 0
     nick = user = host = rl_name = NULL;
@@ -309,13 +299,11 @@ event_whois_user(struct irc_message_compo *compo)
 void
 event_whois_server(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *srv, *info;
     char *state = "";
-    struct printtext_context ctx;
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (strFeed(compo->params, 3) != 3) {
 	printtext(&ctx, "On issuing event %s: strFeed(..., 3) != 3",
@@ -353,13 +341,11 @@ event_whois_server(struct irc_message_compo *compo)
 void
 event_whois_ircOp(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *msg;
     char *state = "";
-    struct printtext_context ctx;
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (strFeed(compo->params, 2) != 2) {
 	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
@@ -395,11 +381,11 @@ event_whois_ircOp(struct irc_message_compo *compo)
 void
 event_whois_idle(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *ep1, *ep2;
     char *sec_idle_str, *signon_time_str;
     char *state = "";
     long int sec_idle, signon_time;
-    struct printtext_context ctx;
     struct time_idle *ti;
 
     if (strFeed(compo->params, 4) != 4) {
@@ -441,9 +427,7 @@ event_whois_idle(struct irc_message_compo *compo)
 	goto bad;
     }
 
-    ctx.window     = g_active_window;
-    ctx.spec_type  = TYPE_SPEC1;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
     printtext(&ctx, "%s %ld days %ld hours %ld mins %ld secs %ssignon: %s%s",
 	      Theme("whois_idle"), ti->days, ti->hours, ti->mins, ti->secs,
 	      LEFT_BRKT, ti->buf, RIGHT_BRKT);
@@ -451,9 +435,7 @@ event_whois_idle(struct irc_message_compo *compo)
     return;
 
   bad:
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
     printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
 }
 
@@ -464,13 +446,11 @@ event_whois_idle(struct irc_message_compo *compo)
 void
 event_whois_channels(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *chan_list;
     char *state = "";
-    struct printtext_context ctx;
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (strFeed(compo->params, 2) != 2) {
 	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
@@ -505,13 +485,11 @@ event_whois_channels(struct irc_message_compo *compo)
 void
 event_whois_acc(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *account_name, *comment;
     char *state = "";
-    struct printtext_context ctx;
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (strFeed(compo->params, 3) != 3) {
 	printtext(&ctx, "On issuing event %s: strFeed(..., 3) != 3",
@@ -550,9 +528,9 @@ event_whois_acc(struct irc_message_compo *compo)
 void
 event_whois_host(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *state = "";
     char *str, *str_copy, *cp;
-    struct printtext_context ctx;
 
     if (strFeed(compo->params, 2) != 2) {
 	goto bad;
@@ -569,17 +547,13 @@ event_whois_host(struct irc_message_compo *compo)
     cp       = &str_copy[0];
     squeeze(str_copy, ":");
 
-    ctx.window     = g_active_window;
-    ctx.spec_type  = TYPE_SPEC1;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
     printtext(&ctx, "%s %s", Theme("whois_host"), cp);
     free(str_copy);
     return;
 
   bad:
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
     printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
 }
 
@@ -591,13 +565,11 @@ event_whois_host(struct irc_message_compo *compo)
 void
 event_whois_conn(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *msg;
     char *state = "";
-    struct printtext_context ctx;
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (strFeed(compo->params, 2) != 2) {
 	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
@@ -635,13 +607,11 @@ event_whois_conn(struct irc_message_compo *compo)
 void
 event_whois_modes(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *msg;
     char *state = "";
-    struct printtext_context ctx;
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_WARN;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (strFeed(compo->params, 2) != 2) {
 	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
@@ -677,6 +647,7 @@ event_whois_modes(struct irc_message_compo *compo)
 void
 event_whoReply(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char	*state	  = "";
     char	*channel  = NULL;
     char	*user	  = NULL;
@@ -686,11 +657,8 @@ event_whoReply(struct irc_message_compo *compo)
     char	*symbol	  = NULL;
     char	*hopcount = NULL;
     char	*rl_name  = NULL;
-    struct printtext_context ctx = {
-	.window	    = g_status_window,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
+
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
     if (strFeed(compo->params, 8) != 8)
 	goto err;
