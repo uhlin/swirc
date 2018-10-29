@@ -8,12 +8,9 @@
 void
 event_noop(struct irc_message_compo *compo)
 {
-    struct printtext_context ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC3,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
 
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC3, true);
     printtext(&ctx, "Got event %s. Currently a noop (aka no operation)",
 	      compo->command);
     printtext(&ctx, "params = %s", compo->params);

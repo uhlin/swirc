@@ -711,7 +711,7 @@ destroy_names_array(const int ntp1, struct name_tag *names_array)
 }
 
 static void
-output_statistics(struct printtext_context ctx, const char *channel,
+output_statistics(PRINTTEXT_CONTEXT ctx, const char *channel,
 		  PIRC_WINDOW window)
 {
     ctx.spec_type = TYPE_SPEC1;
@@ -737,6 +737,7 @@ int
 event_names_print_all(const char *channel)
 {
     PIRC_WINDOW window = NULL;
+    PRINTTEXT_CONTEXT ptext_ctx;
     char fmt1[FORMAT_SIZE] = "";
     char fmt2[FORMAT_SIZE] = "";
     char fmt3[FORMAT_SIZE] = "";
@@ -747,12 +748,7 @@ event_names_print_all(const char *channel)
 	return ERR;
     }
 
-    struct printtext_context ptext_ctx = {
-	.window	    = window,
-	.spec_type  = TYPE_SPEC_NONE,
-	.include_ts = true,
-    };
-
+    printtext_context_init(&ptext_ctx, window, TYPE_SPEC_NONE, true);
     printtext(&ptext_ctx, "%s%sUsers %s%c%s",
 	LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT);
 
