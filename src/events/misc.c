@@ -49,12 +49,10 @@
 void
 event_allaround_extract_find_colon(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *cp = NULL;
-    struct printtext_context ctx = {
-	.window     = g_active_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 
     if ((cp = strchr(compo->params, ':')) == NULL) {
 	printtext(&ctx, "on issuing event %s: no colon found", compo->command);
@@ -81,14 +79,12 @@ event_allaround_extract_find_colon(struct irc_message_compo *compo)
 void
 event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *cp;
     char *msg, *msg_copy;
     char *state = "";
-    struct printtext_context ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC1_WARN,
-	.include_ts = true,
-    };
+
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (strFeed(compo->params, 1) != 1) {
 	printtext(&ctx, "On issuing event %s: strFeed(..., 1) != 1",
@@ -126,14 +122,12 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 void
 event_bounce(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *cp;
     char *msg, *msg_copy;
     char *state = "";
-    struct printtext_context ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
+
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
 
     if (strFeed(compo->params, 1) != 1) {
 	printtext(&ctx, "In event_bounce: strFeed(..., 1) != 1");
@@ -189,18 +183,15 @@ event_bounce(struct irc_message_compo *compo)
 void
 event_channelCreatedWhen(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char	*state	 = "";
     char	*channel = NULL;
     char	*seconds = NULL;
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
 
     if (strFeed(compo->params, 2) != 2)
 	return;
 
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
     (void) strtok_r(compo->params, "\n", &state); /* my nickname */
 
     if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
@@ -228,18 +219,15 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 void
 event_channelModeIs(struct irc_message_compo *compo)
 {
-    char	*state	 = "";
+    PRINTTEXT_CONTEXT ctx;
     char	*channel = NULL;
     char	*data	 = NULL;
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
+    char	*state	 = "";
 
     if (strFeed(compo->params, 2) != 2)
 	return;
 
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
     (void) strtok_r(compo->params, "\n", &state); /* my nickname */
 
     if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
@@ -275,13 +263,13 @@ event_channelModeIs(struct irc_message_compo *compo)
 void
 event_channel_forward(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char	*from_channel;
     char	*msg;
     char	*my_nick;
     char	*params = &compo->params[0];
     char	*state	= "";
     char	*to_channel;
-    struct printtext_context ctx;
 
     if (strFeed(params, 3) != 3) {
 	goto bad;
@@ -297,17 +285,13 @@ event_channel_forward(struct irc_message_compo *compo)
 	goto bad;
     }
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
     printtext(&ctx, "Channel forwarding from %c%s%c to %c%s%c",
 	      BOLD, from_channel, BOLD, BOLD, to_channel, BOLD);
     return;
 
   bad:
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1_FAILURE;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
     printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
 }
 
@@ -324,16 +308,14 @@ event_channel_forward(struct irc_message_compo *compo)
 void
 event_local_and_global_users(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     const char *ccp = strchr(compo->params, ':');
-    struct printtext_context ctx;
 
     if (ccp == NULL || strings_match(++ccp, "")) {
 	return;
     }
 
-    ctx.window     = g_status_window;
-    ctx.spec_type  = TYPE_SPEC1;
-    ctx.include_ts = true;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
     printtext(&ctx, "%s", ccp);
 }
 
@@ -344,14 +326,12 @@ event_local_and_global_users(struct irc_message_compo *compo)
 void
 event_nicknameInUse(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *nick;
     char *params = &compo->params[0];
     char *state = "";
-    struct printtext_context ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC1_FAILURE,
-	.include_ts = true,
-    };
+
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
 
     if (strFeed(params, 2) != 2) {
 	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
@@ -420,12 +400,11 @@ event_userModeIs(struct irc_message_compo *compo)
 void
 event_youAreOper(struct irc_message_compo *compo)
 {
-    struct printtext_context ctx = {
-	.window = g_status_window,
-	.spec_type = TYPE_SPEC1_SUCCESS,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
 
+    (void) compo;
+
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_SUCCESS, true);
     printtext(&ctx, "You're now an IRC operator!");
     printtext(&ctx, "    auto_op_yourself = %s",
 	config_bool_unparse("auto_op_yourself", true) ? "ON" : "OFF");
