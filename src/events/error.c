@@ -11,6 +11,7 @@
 void
 event_error(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *cp = &compo->params[0];
 
     if (*cp == ':') {
@@ -18,12 +19,7 @@ event_error(struct irc_message_compo *compo)
     }
 
     if (*cp) {
-	struct printtext_context ctx = {
-	    .window     = g_active_window,
-	    .spec_type  = TYPE_SPEC1,
-	    .include_ts = true,
-	};
-
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 	printtext(&ctx, "%s", cp);
     }
 

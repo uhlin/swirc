@@ -14,14 +14,11 @@
 void
 event_inviting(struct irc_message_compo *compo)
 {
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1_SUCCESS,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
 
     (void) compo;
 
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
     printtext(&ctx, "Invitation passed onto the end client");
 }
 
@@ -32,15 +29,11 @@ event_inviting(struct irc_message_compo *compo)
 void
 event_invite(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char	*nick, *user, *host;
     char	*prefix = &compo->prefix[1];
     char	*state1, *state2;
     char	*target, *channel;
-    struct printtext_context ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
 
     state1 = state2 = "";
 
@@ -61,6 +54,7 @@ event_invite(struct irc_message_compo *compo)
 	channel++;
 
     if (strings_match_ignore_case(target, g_my_nickname)) {
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 	printtext(&ctx, "%c%s%c %s%s@%s%s invites you to %c%s%c",
 		  BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT,
 		  BOLD, channel, BOLD);

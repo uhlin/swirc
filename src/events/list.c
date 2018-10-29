@@ -1,5 +1,5 @@
 /* event 321 (RPL_LISTSTART) and 322 (RPL_LIST)
-   Copyright (C) 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -53,13 +53,9 @@ event_liststart(struct irc_message_compo *compo)
 void
 event_list(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *state = "";
     char *channel, *num_visible, *topic;
-    struct printtext_context ctx = {
-	.window	    = g_status_window,
-	.spec_type  = TYPE_SPEC3,
-	.include_ts = true,
-    };
 
     channel = num_visible = topic = NULL;
 
@@ -67,14 +63,15 @@ event_list(struct irc_message_compo *compo)
 	return;
 
     (void) strtok_r(compo->params, "\n", &state); /* my nick (not used) */
-    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
+    if ((channel     = strtok_r(NULL, "\n", &state)) == NULL ||
 	(num_visible = strtok_r(NULL, "\n", &state)) == NULL ||
-	(topic = strtok_r(NULL, "\n", &state)) == NULL)
+	(topic       = strtok_r(NULL, "\n", &state)) == NULL)
 	return;
 
     if (*topic == ':')
 	topic++;
 
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC3, true);
     printtext(&ctx, "%s%s%c%s%s%s: %s",
 	      COLOR1, channel, NORMAL,
 	      Theme("notice_inner_b1"), num_visible, Theme("notice_inner_b2"),
