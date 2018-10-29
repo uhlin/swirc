@@ -60,11 +60,7 @@ struct special_msg_context {
 static void
 handle_notice_while_connecting(struct irc_message_compo *compo)
 {
-    struct printtext_context ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC_NONE,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ctx;
     const char	*msg      = strchr(compo->params, ':');
     const char	*srv_host = compo->prefix ? &compo->prefix[1] : "auth";
 
@@ -72,37 +68,34 @@ handle_notice_while_connecting(struct irc_message_compo *compo)
 	return;
     }
 
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
     printtext(&ctx, "%s!%s%c %s", COLOR3, srv_host, NORMAL, msg);
 }
 
 static void
 handle_notice_from_my_server(const struct notice_context *ctx)
 {
-    struct printtext_context ptext_ctx = {
-	.window     = g_status_window,
-	.spec_type  = TYPE_SPEC_NONE,
-	.include_ts = true,
-    };
+    if (g_my_nickname && strings_match_ignore_case(ctx->dest, g_my_nickname)) {
+	PRINTTEXT_CONTEXT ptext_ctx;
 
-    if (g_my_nickname && strings_match_ignore_case(ctx->dest, g_my_nickname))
+	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC_NONE,
+	    true);
 	printtext(&ptext_ctx, "%s!%s%c %s",
 	    COLOR3, ctx->srv_name, NORMAL, ctx->msg);
+    }
 }
 
 static void
 output_ctcp_reply(const char *cmd, const struct special_msg_context *ctx,
 		  const char *msg)
 {
-    struct printtext_context pt_ctx = {
-	.window	    = g_active_window,
-	.spec_type  = TYPE_SPEC2,
-	.include_ts = true,
-    };
+    PRINTTEXT_CONTEXT ptext_ctx;
 
     if (*msg == ':')
 	msg++;
 
-    printtext(&pt_ctx, "CTCP %c%s%c reply from %c%s%c %s%s@%s%s: %s",
+    printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC2, true);
+    printtext(&ptext_ctx, "CTCP %c%s%c reply from %c%s%c %s%s@%s%s: %s",
 	BOLD, cmd, BOLD, BOLD, ctx->nick, BOLD,
 	LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
 	msg);
@@ -128,6 +121,7 @@ handle_special_msg(const struct special_msg_context *ctx)
 }
 
 /* event_notice
+   TODO: Investigate function
 
    Examples:
      :irc.server.com NOTICE <dest> :<msg>
@@ -135,12 +129,12 @@ handle_special_msg(const struct special_msg_context *ctx)
 void
 event_notice(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ptext_ctx;
     char *dest, *msg;
     char *nick, *user, *host;
     char *params = &compo->params[0];
     char *prefix = compo->prefix ? &compo->prefix[0] : NULL;
     char *state1, *state2;
-    struct printtext_context ptext_ctx;
 
     state1 = state2 = "";
 
