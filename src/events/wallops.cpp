@@ -50,6 +50,7 @@ void
 event_wallops(struct irc_message_compo *compo)
 {
     try {
+	PRINTTEXT_CONTEXT ctx;
 	char *last = (char *) "";
 	char *message = & (compo->params[0]);
 	char *nick, *user, *host;
@@ -60,7 +61,7 @@ event_wallops(struct irc_message_compo *compo)
 	if (*message == ':')
 	    message++;
 
-	struct printtext_context ctx(g_active_window, TYPE_SPEC_NONE, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
 
 	if (strings_match_ignore_case(prefix, g_server_hostname)) {
 	    printtext(&ctx, "%s!%s%c %s", COLOR3, "WALLOPS", NORMAL, message);
@@ -81,7 +82,9 @@ event_wallops(struct irc_message_compo *compo)
 		message);
 	}
     } catch (...) {
-	struct printtext_context ctx(g_status_window, TYPE_SPEC1_WARN, true);
+	PRINTTEXT_CONTEXT ctx;
+
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
 	printtext(&ctx, "WALLOPS error");
 	printtext(&ctx, "params = %s", compo->params);

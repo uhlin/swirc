@@ -17,11 +17,13 @@
 void
 event_account(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *accountname = & (compo->params[0]);
     char *last = (char *) "";
     char *nick, *user, *host;
     char *prefix = & (compo->prefix[1]);
-    struct printtext_context ctx(NULL, TYPE_SPEC1_SPEC2, true);
+
+    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
     if ((nick = strtok_r(prefix, "!@", &last)) == NULL ||
 	(user = strtok_r(NULL, "!@", &last)) == NULL ||

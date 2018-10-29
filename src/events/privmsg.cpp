@@ -81,9 +81,10 @@ struct special_msg_context {
 static void
 acknowledge_ctcp_request(const char *cmd, const struct special_msg_context *ctx)
 {
-    struct printtext_context pt_ctx(g_active_window, TYPE_SPEC3, true);
+    PRINTTEXT_CONTEXT ptext_ctx;
 
-    printtext(&pt_ctx, "%c%s%c %s%s@%s%s requested CTCP %c%s%c form %c%s%c",
+    printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC3, true);
+    printtext(&ptext_ctx, "%c%s%c %s%s@%s%s requested CTCP %c%s%c form %c%s%c",
 	BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
 	BOLD, cmd, BOLD, BOLD, ctx->dest, BOLD);
 }
@@ -91,28 +92,27 @@ acknowledge_ctcp_request(const char *cmd, const struct special_msg_context *ctx)
 static void
 handle_special_msg(const struct special_msg_context *ctx)
 {
+    PRINTTEXT_CONTEXT ptext_ctx;
     char *msg = sw_strdup(ctx->msg);
-    struct printtext_context pt_ctx;
 
+    printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
     squeeze(msg, "\001");
     msg = trim(msg);
 
     if (strings_match_ignore_case(ctx->dest, g_my_nickname)) {
 	if (!strncmp(msg, "ACTION ", 7) &&
-	    (pt_ctx.window = window_by_label(ctx->nick)) == NULL)
+	    (ptext_ctx.window = window_by_label(ctx->nick)) == NULL)
 	    spawn_chat_window(ctx->nick, ctx->nick);
-	pt_ctx.window = window_by_label(ctx->nick);
+	ptext_ctx.window = window_by_label(ctx->nick);
     } else {
-	pt_ctx.window = window_by_label(ctx->dest);
+	ptext_ctx.window = window_by_label(ctx->dest);
     }
 
-    if (! (pt_ctx.window))
-	pt_ctx.window = g_active_window;
-    pt_ctx.spec_type  = TYPE_SPEC_NONE;
-    pt_ctx.include_ts = true;
+    if (! (ptext_ctx.window))
+	ptext_ctx.window = g_active_window;
 
     if (!strncmp(msg, "ACTION ", 7)) {
-	printtext(&pt_ctx, " - %s %s", ctx->nick, &msg[7]);
+	printtext(&ptext_ctx, " - %s %s", ctx->nick, &msg[7]);
     } else if (!strncmp(msg, "VERSION", 8)) {
 	if (net_send("NOTICE %s :\001VERSION Swirc %s by %s  --  %s\001",
 	    ctx->nick, g_swircVersion, g_swircAuthor, g_swircWebAddr) < 0)
@@ -133,11 +133,13 @@ handle_special_msg(const struct special_msg_context *ctx)
 static void
 broadcast_window_activity(PIRC_WINDOW src)
 {
-    struct printtext_context ctx(g_active_window, TYPE_SPEC1_SUCCESS, true);
+    PRINTTEXT_CONTEXT ctx;
 
-    if (src)
+    if (src) {
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
 	printtext(&ctx, "activity at window %c%s%c (refnum: %d)",
 		  BOLD, src->label, BOLD, src->refnum);
+    }
 }
 
 static PTR_ARGS_NONNULL bool
@@ -239,6 +241,7 @@ get_message(
 #endif /* ----- WIN32 and TOAST_NOTIFICATIONS ----- */
 
 /* event_privmsg
+   TODO: Investigate function
 
    Examples:
      :<nick>!<user>@<host> PRIVMSG <dest> :<msg>
@@ -247,13 +250,14 @@ get_message(
 void
 event_privmsg(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char	*dest, *msg;
     char	*nick, *user, *host;
     char	*params = &compo->params[0];
     char	*prefix = compo->prefix ? &compo->prefix[0] : NULL;
     char	*state1, *state2;
-    struct printtext_context ctx(NULL, TYPE_SPEC_NONE, true);
 
+    printtext_context_init(&ctx, NULL, TYPE_SPEC_NONE, true);
     state1 = state2 = (char *) "";
 
     if (has_server_time(compo))
