@@ -52,13 +52,9 @@
 void
 event_chan_hp(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *channel, *homepage;
     char *state = "";
-    struct printtext_context ctx = {
-	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
 
     if (strFeed(compo->params, 2) != 2)
 	return;
@@ -68,6 +64,7 @@ event_chan_hp(struct irc_message_compo *compo)
 	return;
     if (*homepage == ':')
 	homepage++;
+    printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
     if ((ctx.window = window_by_label(channel)) == NULL)
 	return;
     printtext(&ctx, "Homepage for %s%s%s%c%s: %s",
@@ -82,6 +79,7 @@ event_chan_hp(struct irc_message_compo *compo)
 void
 event_join(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char	*prefix	 = &compo->prefix[1];
     char	*channel =
 	*(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
@@ -89,7 +87,6 @@ event_join(struct irc_message_compo *compo)
     char	*nick;
     char	*user;
     char	*host;
-    struct printtext_context ctx;
 
     nick = strtok_r(prefix, "!@", &state);
     user = strtok_r(NULL, "!@", &state);
@@ -119,12 +116,11 @@ event_join(struct irc_message_compo *compo)
 	}
     }
 
+    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+
     if ((ctx.window = window_by_label(channel)) == NULL) {
 	goto bad;
     }
-
-    ctx.spec_type  = TYPE_SPEC1_SPEC2;
-    ctx.include_ts = true;
 
     printtext(&ctx, "%s%s%c %s%s@%s%s has joined %s%s%c",
 	      COLOR1, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
@@ -143,17 +139,13 @@ event_join(struct irc_message_compo *compo)
 void
 event_kick(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char	*channel;
     char	*nick, *user, *host;
     char	*prefix = &compo->prefix[1];
     char	*reason;
     char	*state1, *state2;
     char	*victim;
-    struct printtext_context ctx = {
-	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1_SPEC2,
-	.include_ts = true,
-    };
 
     state1 = state2 = "";
 
@@ -200,6 +192,8 @@ event_kick(struct irc_message_compo *compo)
 	    return;
 	}
     }
+
+    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
     if ((ctx.window = window_by_label(channel)) == NULL)
 	ctx.window = g_active_window;
@@ -419,15 +413,13 @@ maintain_channel_stats(const char *channel, const char *input)
 void
 event_mode(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *channel, *s, *s_copy;
     char *nick;
     char *prefix = &compo->prefix[1];
     char *state1 = "", *state2 = "";
-    struct printtext_context ctx = {
-	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
+
+    printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
 
     if (strFeed(compo->params, 1) != 1)
 	return;
@@ -498,16 +490,12 @@ RemoveAndInsertNick(const char *old_nick, const char *new_nick,
 void
 event_nick(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *new_nick =
 	*(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
     char *nick, *user, *host;
     char *prefix = &compo->prefix[1];
     char *state = "";
-    struct printtext_context ctx = {
-	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1_SPEC2,
-	.include_ts = true,
-    };
 
     if ((nick = strtok_r(prefix, "!@", &state)) == NULL ||
 	(user = strtok_r(NULL, "!@", &state)) == NULL ||
@@ -518,6 +506,8 @@ event_nick(struct irc_message_compo *compo)
     /* currently not used */
     (void) user;
     (void) host;
+
+    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
     for (int i = 1; i <= g_ntotal_windows; i++) {
 	PIRC_WINDOW window = window_by_refnum(i);
@@ -542,6 +532,7 @@ event_nick(struct irc_message_compo *compo)
 void
 event_part(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *channel;
     char *host;
     char *message;
@@ -550,7 +541,6 @@ event_part(struct irc_message_compo *compo)
     char *state1, *state2;
     char *user;
     const bool has_message = strFeed(compo->params, 1) == 1;
-    struct printtext_context ctx;
 
     state1 = state2 = "";
 
@@ -579,12 +569,11 @@ event_part(struct irc_message_compo *compo)
 	    goto bad;
     }
 
+    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+
     if ((ctx.window = window_by_label(channel)) == NULL) {
 	goto bad;
     }
-
-    ctx.spec_type  = TYPE_SPEC1_SPEC2;
-    ctx.include_ts = true;
 
     if (!has_message)
 	message = "";
@@ -608,16 +597,12 @@ event_part(struct irc_message_compo *compo)
 void
 event_quit(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *message =
 	*(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
     char *nick, *user, *host;
     char *prefix = &compo->prefix[1];
     char *state = "";
-    struct printtext_context ctx = {
-	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1_SPEC2,
-	.include_ts = true,
-    };
 
     if ((nick = strtok_r(prefix, "!@", &state)) == NULL)
 	return;
@@ -629,6 +614,8 @@ event_quit(struct irc_message_compo *compo)
 	user = "<no user>";
 	host = "<no host>";
     }
+
+    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
     for (int i = 1; i <= g_ntotal_windows; i++) {
 	PIRC_WINDOW window = window_by_refnum(i);
@@ -650,13 +637,9 @@ event_quit(struct irc_message_compo *compo)
 void
 event_topic(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *channel, *topic;
     char *state = "";
-    struct printtext_context ctx = {
-	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
 
     if (strFeed(compo->params, 2) != 2)
 	return;
@@ -666,6 +649,7 @@ event_topic(struct irc_message_compo *compo)
 	return;
     if (*topic == ':')
 	topic++;
+    printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
     if ((ctx.window = window_by_label(channel)) == NULL)
 	return;
     printtext(&ctx, "Topic for %s%s%s%c%s: %s",
@@ -681,15 +665,11 @@ event_topic(struct irc_message_compo *compo)
 void
 event_topic_chg(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char	*channel, *new_topic;
     char	*nick, *user, *host;
     char	*prefix = &compo->prefix[1];
     char	*state1, *state2;
-    struct printtext_context ctx = {
-	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
 
     state1 = state2 = "";
 
@@ -718,6 +698,8 @@ event_topic_chg(struct irc_message_compo *compo)
     if (*new_topic == ':')
 	new_topic++;
 
+    printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
+
     if ((ctx.window = window_by_label(channel)) == NULL)
 	return;
 
@@ -735,14 +717,10 @@ event_topic_chg(struct irc_message_compo *compo)
 void
 event_topic_creator(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
     char *channel, *s, *s_copy, *set_when;
     char *set_by, *user, *host;
     char *state1, *state2;
-    struct printtext_context ctx = {
-	.window	    = NULL,
-	.spec_type  = TYPE_SPEC1,
-	.include_ts = true,
-    };
 
     set_by = user = host = NULL;
     state1 = state2 = "";
@@ -756,6 +734,8 @@ event_topic_creator(struct irc_message_compo *compo)
 	(s = strtok_r(NULL, "\n", &state1)) == NULL ||
 	(set_when = strtok_r(NULL, "\n", &state1)) == NULL)
 	return;
+
+    printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
 
     if ((ctx.window = window_by_label(channel)) == NULL ||
 	!is_numeric(set_when))
