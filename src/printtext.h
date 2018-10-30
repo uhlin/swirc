@@ -34,7 +34,9 @@ typedef struct tagPRINTTEXT_CONTEXT {
     PIRC_WINDOW window;
     enum message_specifier_type spec_type;
     bool include_ts;
-    char timestamp[64];
+
+    char server_time[64];
+    bool has_server_time;
 
 #ifdef __cplusplus
 #endif
