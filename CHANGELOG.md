@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Fixed ###
+- A dependency on uninitialized memory
+
 ## [2.3] - 2018-10-24 ##
 ### Added ###
 - A `swirc.conf` manual page
