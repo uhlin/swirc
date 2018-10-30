@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Fixed ###
 - A dependency on uninitialized memory
+- Off-by-one error
 
 ## [2.3] - 2018-10-24 ##
 ### Added ###
