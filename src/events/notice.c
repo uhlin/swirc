@@ -136,6 +136,7 @@ event_notice(struct irc_message_compo *compo)
     char *prefix = compo->prefix ? &compo->prefix[0] : NULL;
     char *state1, *state2;
 
+    printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
     state1 = state2 = "";
 
     if (has_server_time(compo))
