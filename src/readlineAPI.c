@@ -227,16 +227,15 @@ readline_waddch(WINDOW *win, wint_t wc)
 void
 readline_waddnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
 {
-    const wchar_t   *ptr;
-    const ptrdiff_t  len_of_s   = (ptrdiff_t) wcslen(s ? s : L"");
-    const ptrdiff_t  this_index = ((n <= 0 || n > len_of_s) ? len_of_s : n);
+    const ptrdiff_t length = (ptrdiff_t) (s ? wcslen(s) : 0);
+    const ptrdiff_t this_index = (n <= 0 || n > length ? length : n);
 
     if (win == NULL || s == NULL)
-	err_exit(EINVAL, "readline_waddnstr fatal!");
+	err_exit(EINVAL, "fatal: readline_waddnstr");
 
     update_panels();
 
-    for (ptr = &s[0]; ptr < &s[this_index]; ptr++)
+    for (const wchar_t *ptr = &s[0]; ptr < &s[this_index]; ptr++)
 	readline_waddch(win, *ptr);
 }
 
@@ -303,15 +302,14 @@ readline_winsch(WINDOW *win, wint_t wc)
 void
 readline_winsnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
 {
-    const wchar_t   *ptr;
-    const ptrdiff_t  len_of_s   = (ptrdiff_t) wcslen(s ? s : L"");
-    const ptrdiff_t  this_index = ((n <= 0 || n > len_of_s) ? len_of_s : n);
+    const ptrdiff_t length = (ptrdiff_t) (s ? wcslen(s) : 0);
+    const ptrdiff_t this_index = (n <= 0 || n > length ? length : n);
 
     if (win == NULL || s == NULL)
-	err_exit(EINVAL, "readline_winsnstr fatal!");
+	err_exit(EINVAL, "fatal: readline_winsnstr");
 
     update_panels();
 
-    for (ptr = &s[this_index - 1]; ptr >= &s[0]; ptr--)
+    for (const wchar_t *ptr = &s[this_index - 1]; ptr >= &s[0]; ptr--)
 	readline_winsch(win, *ptr);
 }
