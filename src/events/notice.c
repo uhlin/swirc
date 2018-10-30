@@ -139,8 +139,11 @@ event_notice(struct irc_message_compo *compo)
     printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
     state1 = state2 = "";
 
-    if (has_server_time(compo))
-	set_timestamp(ptext_ctx.timestamp, sizeof ptext_ctx.timestamp, compo);
+    if (has_server_time(compo)) {
+	set_timestamp(ptext_ctx.server_time, sizeof ptext_ctx.server_time,
+	    compo);
+	ptext_ctx.has_server_time = true;
+    }
 
     if (g_connection_in_progress || g_server_hostname == NULL) {
 	handle_notice_while_connecting(compo);

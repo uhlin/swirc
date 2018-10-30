@@ -260,8 +260,10 @@ event_privmsg(struct irc_message_compo *compo)
     printtext_context_init(&ctx, NULL, TYPE_SPEC_NONE, true);
     state1 = state2 = (char *) "";
 
-    if (has_server_time(compo))
-	set_timestamp(ctx.timestamp, sizeof ctx.timestamp, compo);
+    if (has_server_time(compo)) {
+	set_timestamp(ctx.server_time, sizeof ctx.server_time, compo);
+	ctx.has_server_time = true;
+    }
 
     if (!prefix)
 	return;
