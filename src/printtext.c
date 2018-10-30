@@ -1260,7 +1260,7 @@ get_processed_out_message(const char *unproc_msg,
     if (include_ts) {
 	char *ts = NULL;
 
-	if (strlen(B1) > 0 && memcmp(srv_time, B1, strlen(B1)) == 0)
+	if (srv_time)
 	    ts = sw_strdup(srv_time);
 	else
 	    ts = sw_strdup(current_time(Theme("time_format")));
