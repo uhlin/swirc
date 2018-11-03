@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- Option
+  - `away_notify`
+  - `invite_notify`
+
 ### Changed ###
 - Rewrote
   - `event_cap()`

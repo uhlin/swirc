@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018 Markus Uhlin. All rights reserved.
 .\"
-.Dd October 19, 2018
+.Dd November 4, 2018
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -35,6 +35,12 @@ default nickname is busy.
 .It Sy auto_op_yourself Pq Em bool
 Automatically op yourself on channel join when you're identified as an
 IRC operator
+.\" ----------------------------------------
+.\" AWAY NOTIFY
+.\" ----------------------------------------
+.It Sy away_notify Pq Em bool
+Allows a client to specify that it would like to be notified when
+users are marked/unmarked as away
 .\" ----------------------------------------
 .\" CHANSERV HOST
 .\" ----------------------------------------
@@ -79,6 +85,12 @@ However, with the help of this setting, beeps can be disabled.
 .\" ----------------------------------------
 .It Sy hostname_checking Pq Em bool
 Enable or disable TLS/SSL hostname verification
+.\" ----------------------------------------
+.\" INVITE NOTIFY
+.\" ----------------------------------------
+.It Sy invite_notify Pq Em bool
+Allows a client to specify that it would like to be notified when
+users are invited to channels
 .\" ----------------------------------------
 .\" IRCV3 SERVER TIME
 .\" ----------------------------------------

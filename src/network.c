@@ -112,6 +112,16 @@ send_reg_cmds(const struct network_connect_context *ctx)
 	    printtext(&ptext_ctx, "Requesting account notify");
     }
 
+    if (config_bool_unparse("away_notify", false)) {
+	if (net_send("CAP REQ :away-notify") > 0)
+	    printtext(&ptext_ctx, "Requesting away notify");
+    }
+
+    if (config_bool_unparse("invite_notify", false)) {
+	if (net_send("CAP REQ :invite-notify") > 0)
+	    printtext(&ptext_ctx, "Requesting invite notify");
+    }
+
     if (config_bool_unparse("ircv3_server_time", false)) {
 	if (net_send("CAP REQ :server-time") > 0)
 	    printtext(&ptext_ctx, "Requesting server time");

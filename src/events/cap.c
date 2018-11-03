@@ -83,14 +83,31 @@ NAK(const char *feature)
 static bool
 shouldContinueCapabilityNegotiation_case1()
 {
-    return (config_bool_unparse("ircv3_server_time", false) ||
+    return (config_bool_unparse("away_notify", false) ||
+	    config_bool_unparse("invite_notify", false) ||
+	    config_bool_unparse("ircv3_server_time", false) ||
 	    config_bool_unparse("sasl", false));
 }
 
 static bool
 shouldContinueCapabilityNegotiation_case2()
 {
-    return config_bool_unparse("sasl", false);
+    return (config_bool_unparse("invite_notify", false) ||
+	    config_bool_unparse("ircv3_server_time", false) ||
+	    config_bool_unparse("sasl", false));
+}
+
+static bool
+shouldContinueCapabilityNegotiation_case3()
+{
+    return (config_bool_unparse("ircv3_server_time", false) ||
+	    config_bool_unparse("sasl", false));
+}
+
+static bool
+shouldContinueCapabilityNegotiation_case4()
+{
+    return (config_bool_unparse("sasl", false));
 }
 
 /**
@@ -140,6 +157,28 @@ event_cap(struct irc_message_compo *compo)
 		NAK("Account notify");
 	    if (shouldContinueCapabilityNegotiation_case1())
 		return;
+	} else if (strings_match(caplist, "away-notify")) {
+	    /* ----------- */
+	    /* Away notify */
+	    /* ----------- */
+
+	    if (strings_match(cmd, "ACK"))
+		ACK("Away notify");
+	    else
+		NAK("Away notify");
+	    if (shouldContinueCapabilityNegotiation_case2())
+		return;
+	} else if (strings_match(caplist, "invite-notify")) {
+	    /* ------------- */
+	    /* Invite notify */
+	    /* ------------- */
+
+	    if (strings_match(cmd, "ACK"))
+		ACK("Invite notify");
+	    else
+		NAK("Invite notify");
+	    if (shouldContinueCapabilityNegotiation_case3())
+		return;
 	} else if (strings_match(caplist, "server-time")) {
 	    /* ----------- */
 	    /* Server time */
@@ -149,10 +188,12 @@ event_cap(struct irc_message_compo *compo)
 		ACK("Server time");
 	    else
 		NAK("Server time");
-	    if (shouldContinueCapabilityNegotiation_case2())
+	    if (shouldContinueCapabilityNegotiation_case4())
 		return;
 	} else if (strings_match(caplist, "sasl")) {
-	    /* ----------x( SASL authentication )x---------- */
+	    /* ------------------- */
+	    /* SASL authentication */
+	    /* ------------------- */
 
 	    if (strings_match(cmd, "ACK")) {
 		const char *mechanism = get_sasl_mechanism();
