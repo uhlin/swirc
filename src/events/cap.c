@@ -207,12 +207,15 @@ event_cap(struct irc_message_compo *compo)
 	    } else {
 		NAK("SASL authentication");
 	    }
+	} else {
+	    printtext(&ctx, "Unknown acknowledgement "
+		"during capability negotiation...");
+	    printtext(&ctx, "params = %s", compo->params);
+	    printtext(&ctx, "prefix = %s",
+		compo->prefix ? compo->prefix : "none");
 	}
     } else {
-	printtext(&ctx, "Unknown acknowledgement "
-	    "during capability negotiation...");
-	printtext(&ctx, "params = %s", compo->params);
-	printtext(&ctx, "prefix = %s", compo->prefix ? compo->prefix : "none");
+	/* TODO: Take an action */;
     }
 
     net_send("CAP END");
