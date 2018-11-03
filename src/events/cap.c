@@ -62,6 +62,24 @@ get_sasl_mechanism(void)
     return (strings_match(mechanism, "") ? "PLAIN" : mechanism);
 }
 
+static void
+ACK(const char *feature)
+{
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_SUCCESS, true);
+    printtext(&ctx, "%s accepted", feature);
+}
+
+static void
+NAK(const char *feature)
+{
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
+    printtext(&ctx, "%s rejected", feature);
+}
+
 static bool
 shouldContinueCapabilityNegotiation_case1()
 {
@@ -75,58 +93,81 @@ shouldContinueCapabilityNegotiation_case2()
     return config_bool_unparse("sasl", false);
 }
 
+/**
+ * event_cap()
+ *
+ * Examples:
+ *     :server.com CAP * LS :multi-prefix sasl
+ *     :server.com CAP * LIST :multi-prefix
+ *     :server.com CAP * ACK :multi-prefix sasl
+ *     :server.com CAP * NAK :multi-prefix sasl
+ */
 void
 event_cap(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
+    char *last = "";
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
-    squeeze(compo->params, ":");
+    strFeed(compo->params, 2);
 
-    if (strstr(compo->params, "ACK account-notify")) {
-	ctx.spec_type = TYPE_SPEC1_SUCCESS;
-	printtext(&ctx, "Account notify accepted");
+    /* client identifier */
+    (void) strtok_r(compo->params, "\n", &last);
 
-	if (shouldContinueCapabilityNegotiation_case1())
-	    return;
+    char	*cmd	 = strtok_r(NULL, "\n", &last);
+    char	*caplist = strtok_r(NULL, "\n", &last);
 
-    } else if (strstr(compo->params, "NAK account-notify")) {
-	ctx.spec_type = TYPE_SPEC1_FAILURE;
-	printtext(&ctx, "Account notify rejected");
+    if (cmd == NULL || caplist == NULL)
+	return;
 
-	if (shouldContinueCapabilityNegotiation_case1())
-	    return;
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+    if (*caplist == ':')
+	caplist++;
+    trim(caplist);
 
-    } else if (strstr(compo->params, "ACK server-time")) {
-	ctx.spec_type = TYPE_SPEC1_SUCCESS;
-	printtext(&ctx, "Server time accepted");
+    if (strings_match(cmd, "LS")) {
+	/* list the capabilities supported by the server */;
+    } else if (strings_match(cmd, "LIST")) {
+	/* list the capabilities associated with the active connection */;
+    } else if (strings_match(cmd, "ACK") || strings_match(cmd, "NAK")) {
+	if (strings_match(caplist, "account-notify")) {
+	    /* -------------- */
+	    /* Account notify */
+	    /* -------------- */
 
-	if (shouldContinueCapabilityNegotiation_case2())
-	    return;
+	    if (strings_match(cmd, "ACK"))
+		ACK("Account notify");
+	    else
+		NAK("Account notify");
+	    if (shouldContinueCapabilityNegotiation_case1())
+		return;
+	} else if (strings_match(caplist, "server-time")) {
+	    /* ----------- */
+	    /* Server time */
+	    /* ----------- */
 
-    } else if (strstr(compo->params, "NAK server-time")) {
-	ctx.spec_type = TYPE_SPEC1_FAILURE;
-	printtext(&ctx, "Server time rejected");
+	    if (strings_match(cmd, "ACK"))
+		ACK("Server time");
+	    else
+		NAK("Server time");
+	    if (shouldContinueCapabilityNegotiation_case2())
+		return;
+	} else if (strings_match(caplist, "sasl")) {
+	    /* ----------x( SASL authentication )x---------- */
 
-	if (shouldContinueCapabilityNegotiation_case2())
-	    return;
+	    if (strings_match(cmd, "ACK")) {
+		const char *mechanism = get_sasl_mechanism();
 
-    } else if (strstr(compo->params, "ACK sasl")) {
-	const char *mechanism = get_sasl_mechanism();
+		ACK("SASL authentication");
 
-	ctx.spec_type = TYPE_SPEC1_SUCCESS;
-	printtext(&ctx, "SASL authentication accepted");
-
-	if (is_sasl_mechanism_supported(mechanism)) {
-	    net_send("AUTHENTICATE %s", mechanism);
-	    return;
+		if (is_sasl_mechanism_supported(mechanism)) {
+		    net_send("AUTHENTICATE %s", mechanism);
+		    return;
+		}
+	    } else {
+		NAK("SASL authentication");
+	    }
 	}
-    } else if (strstr(compo->params, "NAK sasl")) {
-	ctx.spec_type = TYPE_SPEC1_FAILURE;
-	printtext(&ctx, "SASL authentication rejected");
     } else {
-	ctx.spec_type = TYPE_SPEC1_WARN;
-
 	printtext(&ctx, "Unknown acknowledgement "
 	    "during capability negotiation...");
 	printtext(&ctx, "params = %s", compo->params);
@@ -134,6 +175,5 @@ event_cap(struct irc_message_compo *compo)
     }
 
     net_send("CAP END");
-    ctx.spec_type = TYPE_SPEC1_WARN;
     printtext(&ctx, "Ended IRCv3 Client Capability Negotiation");
 }
