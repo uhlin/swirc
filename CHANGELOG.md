@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Changed ###
+- Rewrote
+  - `event_cap()`
+
 ### Fixed ###
 - A dependency on uninitialized memory
 - Off-by-one error
