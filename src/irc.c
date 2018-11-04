@@ -44,6 +44,7 @@
 
 #include "events/account.h"
 #include "events/auth.h"
+#include "events/away.h"
 #include "events/banlist.h"
 #include "events/cap.h"
 #include "events/channel.h"
@@ -81,6 +82,7 @@ static struct normal_events_tag {
 } normal_events[] = {
     { "ACCOUNT",      event_account      },
     { "AUTHENTICATE", event_authenticate },
+    { "AWAY",         event_away         },
     { "CAP",          event_cap          },
     { "ERROR",        event_error        },
     { "INVITE",       event_invite       },
@@ -402,7 +404,8 @@ SortMsgCompo(const char *protocol_message)
     requested_feeds = message_has_prefix ? 2 : 1;
     remaining_data = sw_strdup(ccp);
 
-    if (strFeed(remaining_data, requested_feeds) != requested_feeds) {
+    if (strFeed(remaining_data, requested_feeds) != requested_feeds &&
+	strstr(remaining_data, "\nAWAY") == NULL) {
 	free(compo);
 	print_and_free("In SortMsgCompo: strFeed: "
 	    "requested feeds mismatch feeds written",
@@ -445,7 +448,8 @@ SortMsgCompo(const char *protocol_message)
     }
 
     free(remaining_data);
-    sw_assert(compo->command != NULL && compo->params != NULL);
+    sw_assert(compo->command != NULL);
+    sw_assert(compo->params != NULL || strings_match(compo->command, "AWAY"));
     return compo;
 }
 
