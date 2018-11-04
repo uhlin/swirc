@@ -1,6 +1,7 @@
 EVENTS_DIR:=src/events/
 OBJS+=$(EVENTS_DIR)account.o\
 	$(EVENTS_DIR)auth.o\
+	$(EVENTS_DIR)away.o\
 	$(EVENTS_DIR)banlist.o\
 	$(EVENTS_DIR)cap.o\
 	$(EVENTS_DIR)channel.o\

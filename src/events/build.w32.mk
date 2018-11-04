@@ -2,6 +2,7 @@ EVENTS_DIR=src/events/
 OBJS=$(OBJS)\
 	$(EVENTS_DIR)account.obj\
 	$(EVENTS_DIR)auth.obj\
+	$(EVENTS_DIR)away.obj\
 	$(EVENTS_DIR)banlist.obj\
 	$(EVENTS_DIR)cap.obj\
 	$(EVENTS_DIR)channel.obj\
