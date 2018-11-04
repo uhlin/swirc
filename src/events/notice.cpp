@@ -49,6 +49,12 @@ struct notice_context {
     char *srv_name;
     char *dest;
     char *msg;
+
+    notice_context(char *srv_name, char *dest, char *msg) {
+	this->srv_name = srv_name;
+	this->dest     = dest;
+	this->msg      = msg;
+    }
 };
 
 struct special_msg_context {
@@ -57,6 +63,15 @@ struct special_msg_context {
     char *host;
     char *dest;
     char *msg;
+
+    special_msg_context(
+	char *nick, char *user, char *host, char *dest, char *msg) {
+	this->nick = nick;
+	this->user = user;
+	this->host = host;
+	this->dest = dest;
+	this->msg  = msg;
+    }
 };
 
 static void
@@ -167,11 +182,7 @@ event_notice(struct irc_message_compo *compo)
 	    msg++;
 
 	if (strings_match_ignore_case(prefix, g_server_hostname)) {
-	    struct notice_context ctx = {
-		.srv_name = prefix,
-		.dest = dest,
-		.msg = msg,
-	    };
+	    struct notice_context ctx(prefix, dest, msg);
 
 	    handle_notice_from_my_server(&ctx);
 	    return;
@@ -192,13 +203,7 @@ event_notice(struct irc_message_compo *compo)
 	    /*
 	     * Special message
 	     */
-	    struct special_msg_context msg_ctx = {
-		.nick = nick,
-		.user = user,
-		.host = host,
-		.dest = dest,
-		.msg = msg,
-	    };
+	    struct special_msg_context msg_ctx(nick, user, host, dest, msg);
 
 	    handle_special_msg(&msg_ctx);
 	    return;
