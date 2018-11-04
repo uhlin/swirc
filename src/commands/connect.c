@@ -94,6 +94,11 @@ static const char *undernet_servers[] = {
     "undernet.rethemhosting.net",
 };
 
+static const char *test_servers[] = {
+    "testnet.inspircd.org",
+    "testnet.oragono.io",
+};
+
 /*lint -sem(get_password, r_null) */
 static char *
 get_password()
@@ -365,6 +370,9 @@ cmd_connect(const char *data)
 	else if (strings_match_ignore_case(server, "undernet"))
 	    do_connect(get_server(undernet_servers,
 		ARRAY_SIZE(undernet_servers), "undernet servers"), port);
+	else if (strings_match_ignore_case(server, "test"))
+	    do_connect(get_server(test_servers,
+		ARRAY_SIZE(test_servers), "test servers"), port);
 	else
 	    do_connect(server, port);
 	free(dcopy);
