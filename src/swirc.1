@@ -1,7 +1,7 @@
 .\"
 .\" Public domain
 .\"
-.Dd October 19, 2018
+.Dd November 4, 2018
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -102,6 +102,10 @@ On OpenBSD
 is used per default in order to force
 .Nm
 into a restricted-service operating mode. This since version 1.1.
+Further, as of 2.3,
+.Xr pledge 2
+is used in combination with
+.Xr unveil 2 .
 .Sh FILES
 .Bl -tag -width "                         " -compact
 .It Pa ~/.swirc/swirc.conf
