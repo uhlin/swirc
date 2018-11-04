@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <stdexcept>
+
 #include "../dataClassify.h"
 #include "../irc.h"
 #include "../network.h"
@@ -121,7 +123,6 @@ handle_special_msg(const struct special_msg_context *ctx)
 }
 
 /* event_notice
-   TODO: Investigate function
 
    Examples:
      :irc.server.com NOTICE <dest> :<msg>
@@ -130,108 +131,106 @@ void
 event_notice(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ptext_ctx;
-    char *dest, *msg;
-    char *nick, *user, *host;
-    char *params = &compo->params[0];
-    char *prefix = compo->prefix ? &compo->prefix[0] : NULL;
-    char *state1, *state2;
 
-    printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
-    state1 = state2 = "";
+    try {
+	char *dest, *msg;
+	char *params = &compo->params[0];
+	char *prefix = compo->prefix ? &compo->prefix[0] : NULL;
+	char *state1, *state2;
 
-    if (has_server_time(compo)) {
-	set_timestamp(ptext_ctx.server_time, sizeof ptext_ctx.server_time,
-	    compo);
-	ptext_ctx.has_server_time = true;
-    }
+	dest = msg = NULL;
+	state1 = state2 = (char *) "";
+	printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
 
-    if (g_connection_in_progress || g_server_hostname == NULL) {
-	handle_notice_while_connecting(compo);
-	return;
-    } else if (!prefix) {
-	/* if this happens it's either the server or a bug (or both) */
-	goto bad;
-    } else if (strFeed(params, 1) != 1) {
-	goto bad;
-    } else if ((dest = strtok_r(params, "\n", &state1)) == NULL ||
-	       (msg = strtok_r(NULL, "\n", &state1)) == NULL) {
-	goto bad;
-    } else {
+	if (has_server_time(compo)) {
+	    set_timestamp(ptext_ctx.server_time, sizeof ptext_ctx.server_time,
+			  compo);
+	    ptext_ctx.has_server_time = true;
+	}
+
+	if (g_connection_in_progress || g_server_hostname == NULL) {
+	    handle_notice_while_connecting(compo);
+	    return;
+	} else if (prefix == NULL) {
+	    throw std::runtime_error("no prefix!");
+	} else if (strFeed(params, 1) != 1) {
+	    throw std::runtime_error("strFeed");
+	} else if ((dest = strtok_r(params, "\n", &state1)) == NULL) {
+	    throw std::runtime_error("no destination");
+	} else if ((msg = strtok_r(NULL, "\n", &state1)) == NULL) {
+	    throw std::runtime_error("no message");
+	}
+
 	if (*prefix == ':')
 	    prefix++;
 	if (*msg == ':')
 	    msg++;
+
+	if (strings_match_ignore_case(prefix, g_server_hostname)) {
+	    struct notice_context ctx = {
+		.srv_name = prefix,
+		.dest = dest,
+		.msg = msg,
+	    };
+
+	    handle_notice_from_my_server(&ctx);
+	    return;
+	}
+
+	char	*nick = strtok_r(prefix, "!@", &state2);
+	char	*user = strtok_r(NULL, "!@", &state2);
+	char	*host = strtok_r(NULL, "!@", &state2);
+
+	if (nick == NULL)
+	    throw std::runtime_error("no nickname");
+	if (user == NULL)
+	    user = (char *) "<no user>";
+	if (host == NULL)
+	    host = (char *) "<no host>";
+
+	if (*msg == '\001') {
+	    /*
+	     * Special message
+	     */
+	    struct special_msg_context msg_ctx = {
+		.nick = nick,
+		.user = user,
+		.host = host,
+		.dest = dest,
+		.msg = msg,
+	    };
+
+	    handle_special_msg(&msg_ctx);
+	    return;
+	} else if ((ptext_ctx.window = window_by_label(dest)) != NULL &&
+		   is_irc_channel(dest)) {
+	    /*
+	     * Output notice in IRC channel
+	     */
+	    printtext(&ptext_ctx, "%s%s%s%c%s%s%s%c%s %s",
+		Theme("notice_lb"), NCOLOR1, nick, NORMAL, Theme("notice_sep"),
+		NCOLOR2, dest, NORMAL, Theme("notice_rb"), msg);
+	} else {
+	    if (strings_match_ignore_case(dest, g_my_nickname)) {
+		ptext_ctx.window = window_by_label(nick)
+		    ? window_by_label(nick)
+		    : g_active_window;
+	    } else {
+		ptext_ctx.window = window_by_label(dest)
+		    ? window_by_label(dest)
+		    : g_status_window;
+	    }
+
+	    printtext(&ptext_ctx, "%s%s%s%c%s%s%s@%s%c%s%s %s",
+		Theme("notice_lb"),
+		NCOLOR1, nick, NORMAL,
+		INNER_B1, NCOLOR2, user, host, NORMAL, INNER_B2,
+		Theme("notice_rb"),
+		msg);
+	}
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_WARN,
+	    true);
+	printtext(&ptext_ctx, "event_notice: error: %s", e.what());
     }
-
-    if (strings_match_ignore_case(prefix, g_server_hostname)) {
-	struct notice_context ctx = {
-	    .srv_name = prefix,
-	    .dest     = dest,
-	    .msg      = msg,
-	};
-
-	handle_notice_from_my_server(&ctx);
-	return;
-    } else if ((nick = strtok_r(prefix, "!@", &state2)) == NULL) {
-	goto bad;
-    }
-
-    user = strtok_r(NULL, "!@", &state2);
-    host = strtok_r(NULL, "!@", &state2);
-
-    if (!user || !host) {
-	user = "<no user>";
-	host = "<no host>";
-    }
-
-    if (*msg == '\001') {
-	struct special_msg_context msg_ctx = {
-	    .nick = nick,
-	    .user = user,
-	    .host = host,
-	    .dest = dest,
-	    .msg  = msg,
-	};
-
-	handle_special_msg(&msg_ctx);
-	return;
-    } else if (window_by_label(dest) != NULL && is_irc_channel(dest)) {
-	ptext_ctx.window     = window_by_label(dest);
-	ptext_ctx.spec_type  = TYPE_SPEC_NONE;
-	ptext_ctx.include_ts = true;
-	printtext(&ptext_ctx, "%s%s%s%c%s%s%s%c%s %s",
-	    Theme("notice_lb"),
-	    NCOLOR1, nick, NORMAL, Theme("notice_sep"), NCOLOR2, dest, NORMAL,
-	    Theme("notice_rb"),
-	    msg);
-    } else {
-	if (strings_match_ignore_case(dest, g_my_nickname))
-	    ptext_ctx.window =
-		window_by_label(nick) ? window_by_label(nick) : g_active_window;
-	else
-	    ptext_ctx.window =
-		window_by_label(dest) ? window_by_label(dest) : g_status_window;
-
-	ptext_ctx.spec_type  = TYPE_SPEC_NONE;
-	ptext_ctx.include_ts = true;
-
-	printtext(&ptext_ctx, "%s%s%s%c%s%s%s@%s%c%s%s %s",
-		  Theme("notice_lb"),
-		  NCOLOR1, nick, NORMAL,
-		  INNER_B1, NCOLOR2, user, host, NORMAL, INNER_B2,
-		  Theme("notice_rb"),
-		  msg);
-    }
-
-    return;
-
-  bad:
-    ptext_ctx.window     = g_status_window;
-    ptext_ctx.spec_type  = TYPE_SPEC1_FAILURE;
-    ptext_ctx.include_ts = true;
-    printtext(&ptext_ctx, "On issuing event %s: An error occurred",
-	      compo->command);
-    printtext(&ptext_ctx, "  params = %s", compo->params);
-    printtext(&ptext_ctx, "  prefix = %s",
-	      compo->prefix ? compo->prefix : "none");
 }
