@@ -277,8 +277,10 @@ event_privmsg(struct irc_message_compo *compo)
 
 	if (nick == NULL)
 	    throw std::runtime_error("no nickname");
-	if (user == NULL || host == NULL)
-	    /* fine */;
+	if (user == NULL)
+	    user = (char *) "<no user>";
+	if (host == NULL)
+	    host = (char *) "<no host>";
 	if (strFeed(params, 1) != 1)
 	    throw std::runtime_error("strFeed");
 
@@ -298,7 +300,6 @@ event_privmsg(struct irc_message_compo *compo)
 	    handle_special_msg(&msg_ctx);
 	    return;
 	}
-
 
 	if (strings_match_ignore_case(dest, g_my_nickname)) {
 	    if (window_by_label(nick) == NULL &&
