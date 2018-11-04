@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 ### Changed ###
 - Rewrote
   - `event_cap()`
+  - Multiple functions to use try-catch blocks
 
 ### Fixed ###
 - A dependency on uninitialized memory
