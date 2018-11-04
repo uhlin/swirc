@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <stdexcept>
+
 #include "../irc.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -49,15 +51,16 @@
 void
 event_wallops(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ctx;
+
     try {
-	PRINTTEXT_CONTEXT ctx;
 	char *last = (char *) "";
 	char *message = & (compo->params[0]);
 	char *nick, *user, *host;
 	char *prefix = compo->prefix ? & (compo->prefix[1]) : NULL;
 
 	if (prefix == NULL)
-	    throw;
+	    throw std::runtime_error("no prefix");
 	if (*message == ':')
 	    message++;
 
@@ -69,7 +72,7 @@ event_wallops(struct irc_message_compo *compo)
 	    if ((nick = strtok_r(prefix, "!@", &last)) == NULL ||
 		(user = strtok_r(NULL, "!@", &last)) == NULL ||
 		(host = strtok_r(NULL, "!@", &last)) == NULL)
-		throw;
+		throw std::runtime_error("no nick or user@host");
 
 	    /*
 	     * FIXME: Current look is identical to notice
@@ -81,13 +84,8 @@ event_wallops(struct irc_message_compo *compo)
 		Theme("notice_rb"),
 		message);
 	}
-    } catch (...) {
-	PRINTTEXT_CONTEXT ctx;
-
+    } catch (std::runtime_error &e) {
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-
-	printtext(&ctx, "WALLOPS error");
-	printtext(&ctx, "params = %s", compo->params);
-	printtext(&ctx, "prefix = %s", compo->prefix ? compo->prefix : "none");
+	printtext(&ctx, "event_wallops: %s", e.what());
     }
 }
