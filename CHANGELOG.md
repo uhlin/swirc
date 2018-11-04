@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
+- Event AWAY
 - Option
   - `away_notify`
   - `invite_notify`
