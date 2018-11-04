@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <stdexcept>
+
 #include "../dataClassify.h"
 #include "../irc.h"
 #include "../printtext.h"
@@ -47,46 +49,56 @@ void
 event_account(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *accountname = & (compo->params[0]);
-    char *last = (char *) "";
-    char *nick, *user, *host;
-    char *prefix = & (compo->prefix[1]);
 
-    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+    try {
+	char *accountname = & (compo->params[0]);
+	char *last = (char *) "";
+	char *prefix = NULL;
 
-    if ((nick = strtok_r(prefix, "!@", &last)) == NULL ||
-	(user = strtok_r(NULL, "!@", &last)) == NULL ||
-	(host = strtok_r(NULL, "!@", &last)) == NULL)
-	return;
+	if (compo->prefix == NULL)
+	    throw std::runtime_error("no prefix");
+	else
+	    prefix = & (compo->prefix[1]);
 
-    if (*accountname == ':')
-	accountname++;
+	char *nick = strtok_r(prefix, "!@", &last);
+	char *user = strtok_r(NULL, "!@", &last);
+	char *host = strtok_r(NULL, "!@", &last);
 
-    const bool logged_out = strings_match(accountname, "*");
+	if (nick == NULL || user == NULL || host == NULL)
+	    throw std::runtime_error("no nick or user@host");
 
-    for (int i = 1; i <= g_ntotal_windows; i++) {
-	PIRC_WINDOW window = window_by_refnum(i);
+	if (*accountname == ':')
+	    accountname++;
 
-	if (window && is_irc_channel(window->label) &&
-	    event_names_htbl_lookup(nick, window->label) != NULL) {
-	    ctx.window = window;
+	const bool logged_out = strings_match(accountname, "*");
+	printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
-	    if (logged_out) {
-		printtext(&ctx, "%s%s%c %s%s@%s%s has logged out "
-		    "of their account",
-		    COLOR2, nick, NORMAL,
-		    LEFT_BRKT, user, host, RIGHT_BRKT);
-	    } else {
-		/**
-		 * Logged in
-		 */
+	for (int i = 1; i <= g_ntotal_windows; i++) {
+	    PIRC_WINDOW window = window_by_refnum(i);
 
-		printtext(&ctx, "%s%s%c %s%s@%s%s has logged into "
-		    "a new account %s%s%c",
-		    COLOR1, nick, NORMAL,
-		    LEFT_BRKT, user, host, RIGHT_BRKT,
-		    COLOR4, accountname, NORMAL);
+	    if (window && is_irc_channel(window->label) &&
+		event_names_htbl_lookup(nick, window->label) != NULL) {
+		ctx.window = window;
+
+		if (logged_out) {
+		    printtext(&ctx, "%s%s%c %s%s@%s%s has logged out "
+			      "of their account",
+			      COLOR2, nick, NORMAL,
+			      LEFT_BRKT, user, host, RIGHT_BRKT);
+		} else {
+		    /*
+		     * Logged in...
+		     */
+		    printtext(&ctx, "%s%s%c %s%s@%s%s has logged into "
+			      "a new account %s%s%c",
+			      COLOR1, nick, NORMAL,
+			      LEFT_BRKT, user, host, RIGHT_BRKT,
+			      COLOR4, accountname, NORMAL);
+		}
 	    }
-	}
+	} /* for */
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
+	printtext(&ctx, "event_account: %s", e.what());
     }
 }
