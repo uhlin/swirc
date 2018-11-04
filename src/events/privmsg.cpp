@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <stdexcept>
+
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
@@ -241,7 +243,6 @@ get_message(
 #endif /* ----- WIN32 and TOAST_NOTIFICATIONS ----- */
 
 /* event_privmsg
-   TODO: Investigate function
 
    Examples:
      :<nick>!<user>@<host> PRIVMSG <dest> :<msg>
@@ -251,121 +252,133 @@ void
 event_privmsg(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char	*dest, *msg;
-    char	*nick, *user, *host;
-    char	*params = &compo->params[0];
-    char	*prefix = compo->prefix ? &compo->prefix[0] : NULL;
-    char	*state1, *state2;
 
-    printtext_context_init(&ctx, NULL, TYPE_SPEC_NONE, true);
-    state1 = state2 = (char *) "";
+    try {
+	char	*params = &compo->params[0];
+	char	*prefix = compo->prefix ? &compo->prefix[0] : NULL;
+	char	*state1, *state2;
 
-    if (has_server_time(compo)) {
-	set_timestamp(ctx.server_time, sizeof ctx.server_time, compo);
-	ctx.has_server_time = true;
-    }
+	state1 = state2 = (char *) "";
+	printtext_context_init(&ctx, NULL, TYPE_SPEC_NONE, true);
 
-    if (!prefix)
-	return;
-    if (*prefix == ':')
-	prefix++;
-    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
-	return;
-    user = strtok_r(NULL, "!@", &state1);
-    host = strtok_r(NULL, "!@", &state1);
-    if (!user || !host) {
-	user = (char *) "<no user>";
-	host = (char *) "<no host>";
-    }
-    if (strFeed(params, 1) != 1 ||
-	(dest = strtok_r(params, "\n", &state2)) == NULL ||
-	(msg = strtok_r(NULL, "\n", &state2)) == NULL)
-	return;
-    if (*msg == ':')
-	msg++;
-    if (*msg == '\001') {
-	struct special_msg_context msg_ctx(nick, user, host, dest, msg);
+	if (has_server_time(compo)) {
+	    set_timestamp(ctx.server_time, sizeof ctx.server_time, compo);
+	    ctx.has_server_time = true;
+	}
 
-	handle_special_msg(&msg_ctx);
+	if (prefix == NULL)
+	    throw std::runtime_error("no prefix");
+	else if (*prefix == ':')
+	    prefix++;
 
-	return;
-    }
-    if (strings_match_ignore_case(dest, g_my_nickname)) {
-	if (window_by_label(nick) == NULL &&
-	    spawn_chat_window(nick, nick) != 0)
-	    return;
-    } else {
-	if (window_by_label(dest) == NULL &&
-	    spawn_chat_window(dest, "No title.") != 0)
-	    return;
-    }
+	char *nick = strtok_r(prefix, "!@", &state1);
+	char *user = strtok_r(NULL, "!@", &state1);
+	char *host = strtok_r(NULL, "!@", &state1);
 
-    if (strings_match_ignore_case(dest, g_my_nickname)) {
-	if ((ctx.window = window_by_label(nick)) == NULL) {
-	    err_log(0, "In event_privmsg: can't find a window with label %s",
-		    nick);
+	if (nick == NULL)
+	    throw std::runtime_error("no nickname");
+	if (user == NULL || host == NULL)
+	    /* fine */;
+	if (strFeed(params, 1) != 1)
+	    throw std::runtime_error("strFeed");
+
+	char	*dest = strtok_r(params, "\n", &state2);
+	char	*msg  = strtok_r(NULL, "\n", &state2);
+
+	if (dest == NULL)
+	    throw std::runtime_error("no destination");
+	else if (msg == NULL)
+	    throw std::runtime_error("no message");
+	else if (*msg == ':')
+	    msg++;
+
+	if (*msg == '\001') {
+	    struct special_msg_context msg_ctx(nick, user, host, dest, msg);
+
+	    handle_special_msg(&msg_ctx);
 	    return;
 	}
 
-	printtext(&ctx, "%s%s%s%c%s %s",
-	    Theme("nick_s1"), COLOR2, nick, NORMAL, Theme("nick_s2"), msg);
 
-#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
-	wchar_t *wNick = get_converted_wcs(nick);
-	wchar_t *wMsg  = get_converted_wcs(msg);
-
-	DesktopToastsApp::SendBasicToast(
-	    get_message(L"[PM]", L" <", wNick, L"> ", wMsg));
-
-	free(wNick);
-	free(wMsg);
-#endif
-
-	if (ctx.window != g_active_window)
-	    broadcast_window_activity(ctx.window);
-    } else {
-	PNAMES	n = NULL;
-	char	c = ' ';
-
-	if ((ctx.window = window_by_label(dest)) == NULL ||
-	    (n = event_names_htbl_lookup(nick, dest)) == NULL) {
-	    err_log(0, "In event_privmsg: "
-		"bogus window label / hash table lookup error");
-	    return;
+	if (strings_match_ignore_case(dest, g_my_nickname)) {
+	    if (window_by_label(nick) == NULL &&
+		spawn_chat_window(nick, nick) != 0)
+		throw std::runtime_error("spawn_chat_window");
+	} else {
+	    if (window_by_label(dest) == NULL &&
+		spawn_chat_window(dest, "No title.") != 0)
+		throw std::runtime_error("spawn_chat_window");
 	}
 
-	if (n->is_owner)        c = '~';
-	else if (n->is_superop) c = '&';
-	else if (n->is_op)      c = '@';
-	else if (n->is_halfop)  c = '%';
-	else if (n->is_voice)   c = '+';
-	else c = ' ';
+	if (strings_match_ignore_case(dest, g_my_nickname)) {
+	    if ((ctx.window = window_by_label(nick)) == NULL)
+		throw std::runtime_error("window lookup error");
 
-	if (shouldHighlightMessage_case1(msg) ||
-	    shouldHighlightMessage_case2(msg)) {
-	    printtext(&ctx, "%s%c%s%s%c%s %s",
-		Theme("nick_s1"), c, COLOR4, nick, NORMAL, Theme("nick_s2"),
-		msg);
+	    printtext(&ctx, "%s%s%s%c%s %s",
+		Theme("nick_s1"), COLOR2, nick, NORMAL, Theme("nick_s2"), msg);
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 	    wchar_t *wNick = get_converted_wcs(nick);
-	    wchar_t *wDest = get_converted_wcs(dest);
 	    wchar_t *wMsg  = get_converted_wcs(msg);
 
 	    DesktopToastsApp::SendBasicToast(
-		get_message(wNick, L" @ ", wDest, L": ", wMsg));
+		get_message(L"[PM]", L" <", wNick, L"> ", wMsg));
 
 	    free(wNick);
-	    free(wDest);
 	    free(wMsg);
 #endif
 
 	    if (ctx.window != g_active_window)
 		broadcast_window_activity(ctx.window);
 	} else {
-	    printtext(&ctx, "%s%c%s%s%c%s %s",
-		Theme("nick_s1"), c, COLOR2, nick, NORMAL, Theme("nick_s2"),
-		msg);
+	    /*
+	     * Dest is an IRC channel
+	     */
+	    PNAMES	n = NULL;
+	    char	c = ' ';
+
+	    if ((ctx.window = window_by_label(dest)) == NULL)
+		throw std::runtime_error("bogus window label");
+	    else if ((n = event_names_htbl_lookup(nick, dest)) == NULL)
+		throw std::runtime_error("hash table lookup error");
+
+	    if (n->is_owner)        c = '~';
+	    else if (n->is_superop) c = '&';
+	    else if (n->is_op)      c = '@';
+	    else if (n->is_halfop)  c = '%';
+	    else if (n->is_voice)   c = '+';
+	    else c = ' ';
+
+	    if (shouldHighlightMessage_case1(msg) ||
+		shouldHighlightMessage_case2(msg)) {
+		printtext(&ctx, "%s%c%s%s%c%s %s",
+		    Theme("nick_s1"), c, COLOR4, nick, NORMAL, Theme("nick_s2"),
+		    msg);
+		if (ctx.window != g_active_window)
+		    broadcast_window_activity(ctx.window);
+#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
+		wchar_t *wNick = get_converted_wcs(nick);
+		wchar_t *wDest = get_converted_wcs(dest);
+		wchar_t *wMsg  = get_converted_wcs(msg);
+
+		DesktopToastsApp::SendBasicToast(
+		    get_message(wNick, L" @ ", wDest, L": ", wMsg));
+
+		free(wNick);
+		free(wDest);
+		free(wMsg);
+#endif
+	    } else {
+		/*
+		 * Normal message with no highlighting
+		 */
+		printtext(&ctx, "%s%c%s%s%c%s %s",
+		    Theme("nick_s1"), c, COLOR2, nick, NORMAL, Theme("nick_s2"),
+		    msg);
+	    }
 	}
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+	printtext(&ctx, "event_privmsg: error: %s", e.what());
     }
 }
