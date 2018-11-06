@@ -111,6 +111,7 @@ SHARED_FLAGS=\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
 	-O2\\
 	-Wall\\
+	-g\\
 	-pipe
 CC=gcc
 CFLAGS=\$(SHARED_FLAGS) -std=c11
