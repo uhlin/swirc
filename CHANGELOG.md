@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed ###
 - A dependency on uninitialized memory
 - Off-by-one error
+- Memory leaks
 
 ## [2.3] - 2018-10-24 ##
 ### Added ###
