@@ -51,6 +51,10 @@
 #include "events/cap.h"
 #include "events/welcome.h"
 
+#ifdef UNIX
+#define INVALID_SOCKET -1
+#endif
+
 NET_SEND_FN net_send = net_send_plain;
 NET_RECV_FN net_recv = net_recv_plain;
 
@@ -163,7 +167,7 @@ net_connect(const struct network_connect_context *ctx)
     if (!winsock_init()) {
 	ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ptext_ctx, "Cannot initiate use of the Winsock DLL");
-	goto out;
+	goto err;
     } else {
 	printtext(&ptext_ctx, "Use of the Winsock DLL granted");
     }
@@ -172,18 +176,12 @@ net_connect(const struct network_connect_context *ctx)
     if ((res = net_addr_resolve(ctx->server, ctx->port)) == NULL) {
 	ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ptext_ctx, "Unable to get a list of IP addresses");
-#ifdef WIN32
-	(void) winsock_deinit();
-#endif
-	goto out;
+	goto err;
     } else {
 	printtext(&ptext_ctx, "Get a list of IP addresses complete");
     }
 
     for (rp = res; rp; rp = rp->ai_next) {
-#ifdef UNIX
-#define INVALID_SOCKET -1
-#endif
 	if ((g_socket = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol))
 	    == INVALID_SOCKET) {
 	    continue;
@@ -206,22 +204,14 @@ net_connect(const struct network_connect_context *ctx)
     if (!g_on_air || (is_ssl_enabled() && net_ssl_start() == -1)) {
 	ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ptext_ctx, "Failed to establish a connection");
-	g_on_air = false;
-#ifdef WIN32
-	(void) winsock_deinit();
-#endif
-	goto out;
+	goto err;
     }
 
     if (is_ssl_enabled() && config_bool_unparse("hostname_checking", true)) {
 	if (net_ssl_check_hostname(ctx->server, 0) != OK) {
 	    ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 	    printtext(&ptext_ctx, "Hostname checking failed!");
-	    g_on_air = false;
-#ifdef WIN32
-	    (void) winsock_deinit();
-#endif
-	    goto out;
+	    goto err;
 	} else {
 	    printtext(&ptext_ctx, "Hostname checking OK!");
 	}
@@ -237,14 +227,22 @@ net_connect(const struct network_connect_context *ctx)
 	printtext(&ptext_ctx, "Event welcome not signaled! "
 	    "(connection_timeout=%s)", Config("connection_timeout"));
 	printtext(&ptext_ctx, "Disconnecting...");
-	g_on_air = false;
-	net_listenThread_join(); /* wait for thread termination */
-	goto out;
+	goto err;
     }
 
     event_welcome_cond_destroy();
+    g_connection_in_progress = false;
+    return;
 
-  out:
+  err:
+    g_on_air = false;
+    net_ssl_close();
+#if defined(UNIX)
+    close(g_socket);
+#elif defined(WIN32)
+    closesocket(g_socket);
+    winsock_deinit();
+#endif
     g_connection_in_progress = false;
 }
 
