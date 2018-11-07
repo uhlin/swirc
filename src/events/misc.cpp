@@ -185,31 +185,44 @@ void
 event_channelCreatedWhen(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char	*state	 = (char *) "";
-    char	*channel = NULL;
-    char	*seconds = NULL;
 
-    if (strFeed(compo->params, 2) != 2)
-	return;
+    try {
+	char *state = (char *) "";
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
-    (void) strtok_r(compo->params, "\n", &state); /* my nickname */
+	if (strFeed(compo->params, 2) != 2)
+	    throw std::runtime_error("strFeed");
 
-    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
-	(seconds = strtok_r(NULL, "\n", &state)) == NULL ||
-	!is_irc_channel(channel) ||
-	!is_numeric(seconds) ||
-	(ctx.window = window_by_label(channel)) == NULL ||
-	ctx.window->received_chancreated)
-	return;
+	/* my nickname */
+	(void) strtok_r(compo->params, "\n", &state);
 
-    const time_t date_of_creation = (time_t) strtol(seconds, NULL, 10);
+	char	*channel = strtok_r(NULL, "\n", &state);
+	char	*seconds = strtok_r(NULL, "\n", &state);
 
-    printtext(&ctx, "Channel %s%s%s%c%s created %s",
-	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-	      trim(ctime(&date_of_creation)));
+	if (channel == NULL)
+	    throw std::runtime_error("unable to get channel");
+	else if (seconds == NULL)
+	    throw std::runtime_error("unable to get seconds");
+	else if (!is_irc_channel(channel))
+	    throw std::runtime_error("invalid irc channel");
+	else if (!is_numeric(seconds))
+	    throw std::runtime_error("expected numeric string");
+	else if ((ctx.window = window_by_label(channel)) == NULL)
+	    throw std::runtime_error("couldn't find channel window");
+	else if (ctx.window->received_chancreated)
+	    return;
 
-    ctx.window->received_chancreated = true;
+	const time_t date_of_creation = (time_t) strtol(seconds, NULL, 10);
+
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+	printtext(&ctx, "Channel %s%s%s%c%s created %s",
+	    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+	    trim(ctime(&date_of_creation)));
+
+	ctx.window->received_chancreated = true;
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+	printtext(&ctx, "event_channelCreatedWhen: error: %s", e.what());
+    }
 }
 
 /* event_channelModeIs: 324 (RPL_CHANNELMODEIS)
