@@ -265,35 +265,35 @@ void
 event_channel_forward(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char	*from_channel;
-    char	*msg;
-    char	*my_nick;
-    char	*params = &compo->params[0];
-    char	*state	= (char *) "";
-    char	*to_channel;
 
-    if (strFeed(params, 3) != 3) {
-	goto bad;
+    try {
+	char *params = & (compo->params[0]);
+	char *state = (char *) "";
+
+	if (strFeed(params, 3) != 3)
+	    throw std::runtime_error("strFeed");
+
+	/* my nickname */
+	(void) strtok_r(params, "\n", &state);
+
+	char	*from_channel = strtok_r(NULL, "\n", &state);
+	char	*to_channel   = strtok_r(NULL, "\n", &state);
+	char	*msg	      = strtok_r(NULL, "\n", &state);
+
+	if (from_channel == NULL)
+	    throw std::runtime_error("no origin channel");
+	else if (to_channel == NULL)
+	    throw std::runtime_error("no destination channel");
+	else if (msg == NULL)
+	    throw std::runtime_error("no message");
+
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+	printtext(&ctx, "Channel forwarding from %c%s%c to %c%s%c",
+	    BOLD, from_channel, BOLD, BOLD, to_channel, BOLD);
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+	printtext(&ctx, "event_channel_forward: error: %s", e.what());
     }
-
-    my_nick	 = strtok_r(params, "\n", &state);
-    from_channel = strtok_r(NULL, "\n", &state);
-    to_channel	 = strtok_r(NULL, "\n", &state);
-    msg		 = strtok_r(NULL, "\n", &state);
-
-    if (my_nick == NULL || from_channel == NULL || to_channel == NULL ||
-	msg == NULL || !strings_match_ignore_case(my_nick, g_my_nickname)) {
-	goto bad;
-    }
-
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
-    printtext(&ctx, "Channel forwarding from %c%s%c to %c%s%c",
-	      BOLD, from_channel, BOLD, BOLD, to_channel, BOLD);
-    return;
-
-  bad:
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
-    printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
 }
 
 /* event_local_and_global_users: 265, 266
