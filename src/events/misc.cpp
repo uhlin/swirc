@@ -82,7 +82,7 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
     PRINTTEXT_CONTEXT ctx;
     char *cp;
     char *msg, *msg_copy;
-    char *state = "";
+    char *state = (char *) "";
 
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
@@ -125,7 +125,7 @@ event_bounce(struct irc_message_compo *compo)
     PRINTTEXT_CONTEXT ctx;
     char *cp;
     char *msg, *msg_copy;
-    char *state = "";
+    char *state = (char *) "";
 
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
 
@@ -184,7 +184,7 @@ void
 event_channelCreatedWhen(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char	*state	 = "";
+    char	*state	 = (char *) "";
     char	*channel = NULL;
     char	*seconds = NULL;
 
@@ -222,7 +222,7 @@ event_channelModeIs(struct irc_message_compo *compo)
     PRINTTEXT_CONTEXT ctx;
     char	*channel = NULL;
     char	*data	 = NULL;
-    char	*state	 = "";
+    char	*state	 = (char *) "";
 
     if (strFeed(compo->params, 2) != 2)
 	return;
@@ -268,7 +268,7 @@ event_channel_forward(struct irc_message_compo *compo)
     char	*msg;
     char	*my_nick;
     char	*params = &compo->params[0];
-    char	*state	= "";
+    char	*state	= (char *) "";
     char	*to_channel;
 
     if (strFeed(params, 3) != 3) {
@@ -329,7 +329,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
     PRINTTEXT_CONTEXT ctx;
     char *nick;
     char *params = &compo->params[0];
-    char *state = "";
+    char *state = (char *) "";
 
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
 
@@ -377,7 +377,7 @@ void
 event_userModeIs(struct irc_message_compo *compo)
 {
     char *modes = NULL;
-    char *state = "";
+    char *state = (char *) "";
 
     if (strFeed(compo->params, 1) != 1)
 	return;
