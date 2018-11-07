@@ -221,36 +221,45 @@ void
 event_channelModeIs(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char	*channel = NULL;
-    char	*data	 = NULL;
-    char	*state	 = (char *) "";
 
-    if (strFeed(compo->params, 2) != 2)
-	return;
+    try {
+	char *state = (char *) "";
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
-    (void) strtok_r(compo->params, "\n", &state); /* my nickname */
+	if (strFeed(compo->params, 2) != 2)
+	    throw std::runtime_error("strFeed");
 
-    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
-	(data = strtok_r(NULL, "\n", &state)) == NULL ||
-	(ctx.window = window_by_label(channel)) == NULL)
-	return;
+	/* my nickname */
+	(void) strtok_r(compo->params, "\n", &state);
 
-    if ((errno = sw_strcpy(ctx.window->chanmodes, trim(data),
-			   sizeof ctx.window->chanmodes)) != 0) {
-	err_log(errno, "In event_channelModeIs: sw_strcpy");
-	return;
+	char	*channel = strtok_r(NULL, "\n", &state);
+	char	*data	 = strtok_r(NULL, "\n", &state);
+
+	if (channel == NULL)
+	    throw std::runtime_error("no channel");
+	else if (data == NULL)
+	    throw std::runtime_error("no data");
+	else if ((ctx.window = window_by_label(channel)) == NULL)
+	    throw std::runtime_error("couldn't find channel window");
+
+	/* -------------------------------------------------- */
+	errno = sw_strcpy(ctx.window->chanmodes, trim(data),
+	    sizeof (ctx.window->chanmodes));
+	if (errno)
+	    throw std::runtime_error("unable to store channel modes");
+	else if (! (ctx.window->received_chanmodes)) {
+	    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+	    printtext(&ctx, "mode/%s%s%s%c%s %s%s%s",
+		LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+		LEFT_BRKT, data, RIGHT_BRKT);
+	    ctx.window->received_chanmodes = true;
+	}
+
+	statusbar_update_display_beta();
+	readline_top_panel();
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+	printtext(&ctx, "event_channelModeIs: error: %s", e.what());
     }
-
-    if (! (ctx.window->received_chanmodes)) {
-	printtext(&ctx, "mode/%s%s%s%c%s %s%s%s",
-		  LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-		  LEFT_BRKT, data, RIGHT_BRKT);
-	ctx.window->received_chanmodes = true;
-    }
-
-    statusbar_update_display_beta();
-    readline_top_panel();
 }
 
 /* event_channel_forward: 470 (undocumented)
