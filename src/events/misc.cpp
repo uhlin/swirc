@@ -189,6 +189,8 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
     try {
 	char *state = (char *) "";
 
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+
 	if (strFeed(compo->params, 2) != 2)
 	    throw std::runtime_error("strFeed");
 
@@ -212,12 +214,9 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 	    return;
 
 	const time_t date_of_creation = (time_t) strtol(seconds, NULL, 10);
-
-	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 	printtext(&ctx, "Channel %s%s%s%c%s created %s",
 	    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 	    trim(ctime(&date_of_creation)));
-
 	ctx.window->received_chancreated = true;
     } catch (std::runtime_error &e) {
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
@@ -237,6 +236,8 @@ event_channelModeIs(struct irc_message_compo *compo)
 
     try {
 	char *state = (char *) "";
+
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	if (strFeed(compo->params, 2) != 2)
 	    throw std::runtime_error("strFeed");
@@ -260,7 +261,6 @@ event_channelModeIs(struct irc_message_compo *compo)
 	if (errno)
 	    throw std::runtime_error("unable to store channel modes");
 	else if (! (ctx.window->received_chanmodes)) {
-	    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 	    printtext(&ctx, "mode/%s%s%s%c%s %s%s%s",
 		LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 		LEFT_BRKT, data, RIGHT_BRKT);
