@@ -124,57 +124,51 @@ void
 event_bounce(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *cp;
-    char *msg, *msg_copy;
-    char *state = (char *) "";
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
+    try {
+	char *cp = NULL;
+	char *msg = NULL, *msg_copy = NULL;
+	char *state = (char *) "";
 
-    if (strFeed(compo->params, 1) != 1) {
-	printtext(&ctx, "In event_bounce: strFeed(..., 1) != 1");
-	goto failure;
-    }
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
-    (void) strtok_r(compo->params, "\n", &state);
+	if (strFeed(compo->params, 1) != 1)
+	    throw std::runtime_error("strFeed");
 
-    if ((msg = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "In event_bounce: Unable to extract message");
-	goto failure;
-    }
+	/* unused */
+	(void) strtok_r(compo->params, "\n", &state);
 
-    if (*msg == ':') {
-	msg++;
-    }
+	if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
+	    throw std::runtime_error("no message!");
+	if (*msg == ':')
+	    msg++;
+	if (*msg) {
+	    const char *ar[] = {
+		":are available on this server",
+		":are supported by this server",
+		":are supported on this server",
+	    };
 
-    if (*msg) {
-	const char *ar[] = {
-	    ":are available on this server",
-	    ":are supported by this server",
-	    ":are supported on this server",
-	};
+	    msg_copy = sw_strdup(msg);
 
-	msg_copy = sw_strdup(msg);
-
-	for (const char **ar_p = &ar[0]; ar_p < &ar[ARRAY_SIZE(ar)]; ar_p++) {
-	    while ((cp = strstr(msg_copy, *ar_p)) != NULL) {
-		/*
-		 * Delete the colon
-		 */
-
-		cp++;
-		(void) memmove(cp - 1, cp, strlen(cp) + 1);
+	    for (const char **ar_p = &ar[0];
+		 ar_p < &ar[ARRAY_SIZE(ar)]; ar_p++) {
+		while ((cp = strstr(msg_copy, *ar_p)) != NULL) {
+		    /*
+		     * Delete the colon
+		     */
+		    cp++;
+		    (void) memmove(cp - 1, cp, strlen(cp) + 1);
+		}
 	    }
+
+	    printtext(&ctx, "%s", msg_copy);
+	    free(msg_copy);
 	}
-
-	ctx.spec_type = TYPE_SPEC1;
-	printtext(&ctx, "%s", msg_copy);
-	free(msg_copy);
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+	printtext(&ctx, "event_bounce: error: %s", e.what());
     }
-
-    return;
-
-  failure:
-    irc_unsuccessful_event_cleanup();
 }
 
 /* event_channelCreatedWhen: 329 (undocumented in the RFC)
