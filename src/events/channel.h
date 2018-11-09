@@ -1,6 +1,10 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef enum {
     STATE_PLUS,
     STATE_MINUS,
@@ -17,5 +21,9 @@ void event_quit          (struct irc_message_compo *);
 void event_topic         (struct irc_message_compo *);
 void event_topic_chg     (struct irc_message_compo *);
 void event_topic_creator (struct irc_message_compo *);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
