@@ -7,6 +7,14 @@
 #include "welcome-w32.h"
 #endif
 
-void event_welcome(struct irc_message_compo *);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void	event_welcome(struct irc_message_compo *);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
