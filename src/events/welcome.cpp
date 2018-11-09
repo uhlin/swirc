@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <stdexcept>
+
 #include "../irc.h"
 #include "../network.h"
 #include "../printtext.h"
@@ -40,51 +42,47 @@ void
 event_welcome(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *msg;
-    char *nick;
-    char *srv_host = &compo->prefix[0];
-    char *state = "";
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
+    try {
+	char *msg = NULL;
+	char *nick = NULL;
+	char *srv_host = NULL;
+	char *state = (char *) "";
 
-    if (*srv_host == ':') {
-	srv_host++;
-    }
+	if (compo->prefix == NULL)
+	    throw std::runtime_error("no prefix!");
 
-    if (strings_match(srv_host, "")) {
-	printtext(&ctx, "Couldn't update the server hostname (empty prefix)");
-	goto bad;
-    } else {
+	srv_host = & (compo->prefix[0]);
+
+	if (*srv_host == ':')
+	    srv_host++;
+	if (strings_match(srv_host, ""))
+	    throw std::runtime_error("unable to set server hostname");
 	irc_set_server_hostname(srv_host);
-    }
 
-    if (strFeed(compo->params, 1) != 1) {
-	printtext(&ctx, "In event_welcome: strFeed(..., 1) != 1");
-	goto bad;
-    }
+	if (strFeed(compo->params, 1) != 1)
+	    throw std::runtime_error("strFeed");
 
-    if ((nick = strtok_r(compo->params, "\n", &state)) == NULL ||
-	(msg = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "In event_welcome: fatal error");
-	goto bad;
-    }
+	nick = strtok_r(compo->params, "\n", &state);
+	msg = strtok_r(NULL, "\n", &state);
 
-    irc_set_my_nickname(nick);
+	if (nick == NULL)
+	    throw std::runtime_error("no nickname");
+	else if (msg == NULL)
+	    throw std::runtime_error("no message");
 
-    if (*msg == ':') {
-	msg++;
-    }
+	irc_set_my_nickname(nick);
 
-    if (*msg) {
-	ctx.spec_type = TYPE_SPEC1;
+	if (*msg == ':')
+	    msg++;
+
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 	printtext(&ctx, "%s", msg);
+	event_welcome_signalit();
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
+	printtext(&ctx, "event_welcome: fatal: %s", e.what());
+	g_on_air = false;
+	event_welcome_signalit();
     }
-
-    event_welcome_signalit();
-    return;
-
-  bad:
-    event_welcome_signalit();
-    net_send("QUIT");
-    g_on_air = false;
 }
