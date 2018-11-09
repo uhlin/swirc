@@ -36,6 +36,7 @@
 #include "../dataClassify.h"
 #include "../errHand.h"
 #include "../irc.h"
+#include "../libUtils.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../readline.h"
@@ -81,39 +82,37 @@ void
 event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *cp;
-    char *msg, *msg_copy;
+    char *cp = NULL;
+    char *msg = NULL, *msg_copy = NULL;
     char *state = (char *) "";
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+    try {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
-    if (strFeed(compo->params, 1) != 1) {
-	printtext(&ctx, "On issuing event %s: strFeed(..., 1) != 1",
-		  compo->command);
-	return;
+	if (strFeed(compo->params, 1) != 1)
+	    throw std::runtime_error("strFeed");
+
+	/* unused */
+	(void) strtok_r(compo->params, "\n", &state);
+
+	if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
+	    throw std::runtime_error("unable to get message");
+
+	msg_copy = sw_strdup(msg);
+
+	if ((cp = strchr(msg_copy, ':')) == NULL)
+	    throw std::runtime_error("no colon found!");
+
+	cp++;
+	(void) memmove(cp - 1, cp, strlen(cp) + 1);
+	printtext(&ctx, "%s", msg_copy);
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+	printtext(&ctx, "on processing event %s: error: %s",
+		  compo->command, e.what());
     }
 
-    (void) strtok_r(compo->params, "\n", &state);
-
-    if ((msg = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message",
-		  compo->command);
-	return;
-    }
-
-    msg_copy = sw_strdup(msg);
-
-    if ((cp = strchr(msg_copy, ':')) == NULL) {
-	printtext(&ctx, "On issuing event %s: No colon found", compo->command);
-	free(msg_copy);
-	return;
-    }
-
-    cp++;
-    (void) memmove(cp - 1, cp, strlen(cp) + 1);
-    ctx.spec_type = TYPE_SPEC1;
-    printtext(&ctx, "%s", msg_copy);
-    free(msg_copy);
+    free_not_null(msg_copy);
 }
 
 /* event_bounce: 005 (RPL_BOUNCE)
