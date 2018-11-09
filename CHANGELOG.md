@@ -12,7 +12,8 @@ All notable changes to this project will be documented in this file.
 - Rewrote
   - `event_cap()`
   - `event_privmsg()`
-  - Multiple functions to use try-catch blocks
+  - ...
+  - MULTIPLE functions to use try-catch blocks
 
 ### Fixed ###
 - A dependency on uninitialized memory
