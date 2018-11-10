@@ -267,7 +267,7 @@ cmd_quit(const char *data)
 	else
 	    (void) net_send("QUIT :%s", Config("quit_message"));
 	g_on_air = false;
-	net_listenThread_join();
+	/* net_listenThread_join(); */
     }
 
     g_io_loop = false;

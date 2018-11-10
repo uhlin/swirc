@@ -391,6 +391,6 @@ cmd_disconnect(const char *data)
 	else
 	    net_send("QUIT :%s", Config("quit_message"));
 	g_on_air = false;
-	net_listenThread_join();
+	/* net_listenThread_join(); */
     }
 }
