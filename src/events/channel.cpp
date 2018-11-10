@@ -333,9 +333,9 @@ maintain_channel_stats(const char *channel, const char *input)
 {
     char               **ar_p           = NULL;
     char                *input_copy     = sw_strdup(input);
-    char                *modes          = "";
+    char                *modes          = (char*) "";
     char                *nicks[15]      = { NULL };
-    char                *state          = "";
+    char                *state          = (char*) "";
     const size_t         ar_sz          = ARRAY_SIZE(nicks);
     plus_minus_state_t   pm_state       = STATE_NEITHER_PM;
     size_t               ar_i           = 0;
