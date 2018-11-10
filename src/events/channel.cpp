@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include <stdexcept>
 #include <time.h>
 
 #include "../assertAPI.h"
@@ -718,49 +719,59 @@ void
 event_topic_creator(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *channel, *s, *s_copy, *set_when;
-    char *set_by, *user, *host;
-    char *state1, *state2;
+    char *string_copy = NULL;
 
-    set_by = user = host = NULL;
-    state1 = state2 = "";
+    try {
+	char *state1 = (char *) "";
+	char *state2 = (char *) "";
 
-    if (strFeed(compo->params, 3) != 3)
-	return;
+	if (strFeed(compo->params, 3) != 3)
+	    throw std::runtime_error("strFeed");
 
-    (void) strtok_r(compo->params, "\n", &state1);
+	/* ignore */
+	(void) strtok_r(compo->params, "\n", &state1);
 
-    if ((channel = strtok_r(NULL, "\n", &state1)) == NULL ||
-	(s = strtok_r(NULL, "\n", &state1)) == NULL ||
-	(set_when = strtok_r(NULL, "\n", &state1)) == NULL)
-	return;
+	char	*channel  = strtok_r(NULL, "\n", &state1);
+	char	*creator  = strtok_r(NULL, "\n", &state1);
+	char	*time_str = strtok_r(NULL, "\n", &state1);
 
-    printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
+	if (channel == NULL)
+	    throw std::runtime_error("no channel");
+	else if (creator == NULL)
+	    throw std::runtime_error("no creator");
+	else if (time_str == NULL)
+	    throw std::runtime_error("no time!");
 
-    if ((ctx.window = window_by_label(channel)) == NULL ||
-	!is_numeric(set_when))
-	return;
+	printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
 
-    const time_t timestamp = (time_t) strtol(set_when, NULL, 10);
+	if ((ctx.window = window_by_label(channel)) == NULL)
+	    throw std::runtime_error("window lookup error");
+	else if (!is_numeric(time_str))
+	    throw std::runtime_error("expected numeric string");
 
-    s_copy = sw_strdup(s);
-    set_by = strtok_r(s_copy, "!@", &state2);
-    user   = strtok_r(NULL, "!@", &state2);
-    host   = strtok_r(NULL, "!@", &state2);
+	const time_t timestamp = (time_t) strtol(time_str, NULL, 10);
+	string_copy = sw_strdup(creator);
 
-    if (set_by && user && host) {
-	printtext(&ctx, "Topic set by %c%s%c %s%s@%s%s %s%s%s",
-		  BOLD, set_by, BOLD,
-		  LEFT_BRKT, user, host, RIGHT_BRKT,
-		  LEFT_BRKT, trim(ctime(&timestamp)), RIGHT_BRKT);
-    } else if (set_by) {
-	printtext(&ctx, "Topic set by %c%s%c %s%s%s",
-		  BOLD, set_by, BOLD,
-		  LEFT_BRKT, trim(ctime(&timestamp)), RIGHT_BRKT);
-    } else {
-	/* do nothing */;
+	char *nick = strtok_r(string_copy, "!@", &state2);
+	char *user = strtok_r(NULL, "!@", &state2);
+	char *host = strtok_r(NULL, "!@", &state2);
+
+	if (nick == NULL)
+	    throw std::runtime_error("no nickname");
+	else if (user && host) {
+	    printtext(&ctx, "Topic set by %c%s%c %s%s@%s%s %s%s%s",
+		BOLD, nick, BOLD,
+		LEFT_BRKT, user, host, RIGHT_BRKT,
+		LEFT_BRKT, trim(ctime(&timestamp)), RIGHT_BRKT);
+	} else {
+	    printtext(&ctx, "Topic set by %c%s%c %s%s%s",
+		BOLD, nick, BOLD,
+		LEFT_BRKT, trim(ctime(&timestamp)), RIGHT_BRKT);
+	}
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+	printtext(&ctx, "event_topic_creator: error: %s", e.what());
     }
 
-    free(s_copy);
+    free_not_null(string_copy);
 }
-/* EOF */
