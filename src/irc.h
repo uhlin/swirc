@@ -50,7 +50,6 @@ void	irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 	    enum message_concat_state *);
 void	irc_set_my_nickname(const char *);
 void	irc_set_server_hostname(const char *);
-void	irc_unsuccessful_event_cleanup(void);
 
 #ifdef __cplusplus
 }

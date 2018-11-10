@@ -658,14 +658,3 @@ irc_set_server_hostname(const char *srv_host)
     free(g_server_hostname);
     g_server_hostname = sw_strdup(srv_host);
 }
-
-/**
- * Function used to clean up within an event after a failure that is
- * fatal enough to prefer IRC shutdown
- */
-void
-irc_unsuccessful_event_cleanup(void)
-{
-    (void) net_send("QUIT");
-    g_on_air = false;
-}
