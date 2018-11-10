@@ -599,35 +599,46 @@ void
 event_quit(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *message =
-	*(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
-    char *nick, *user, *host;
-    char *prefix = &compo->prefix[1];
-    char *state = "";
 
-    if ((nick = strtok_r(prefix, "!@", &state)) == NULL)
-	return;
+    try {
+	char *message = *(compo->params) == ':'
+	    ? &compo->params[1]
+	    : &compo->params[0];
+	char *prefix = NULL;
+	char *state = (char *) "";
 
-    user = strtok_r(NULL, "!@", &state);
-    host = strtok_r(NULL, "!@", &state);
+	if (compo->prefix == NULL)
+	    throw std::runtime_error("no prefix");
+	prefix = & (compo->prefix[1]);
 
-    if (!user || !host) {
-	user = "<no user>";
-	host = "<no host>";
-    }
+	char *nick = strtok_r(prefix, "!@", &state);
+	char *user = strtok_r(NULL, "!@", &state);
+	char *host = strtok_r(NULL, "!@", &state);
 
-    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+	if (nick == NULL)
+	    throw std::runtime_error("unable to get nickname");
+	if (user == NULL)
+	    user = (char*) "<no user>";
+	if (host == NULL)
+	    host = (char*) "<no host>";
 
-    for (int i = 1; i <= g_ntotal_windows; i++) {
-	PIRC_WINDOW window = window_by_refnum(i);
+	printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
-	if (window && is_irc_channel(window->label) &&
-	    event_names_htbl_remove(nick, window->label) == OK) {
-	    ctx.window = window;
-	    printtext(&ctx, "%s%s%c %s%s@%s%s has quit %s%s%s",
-		      COLOR2, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
-		      LEFT_BRKT, message, RIGHT_BRKT);
+	for (int i = 1; i <= g_ntotal_windows; i++) {
+	    PIRC_WINDOW window = window_by_refnum(i);
+
+	    if (window && is_irc_channel(window->label) &&
+		event_names_htbl_remove(nick, window->label) == OK) {
+		ctx.window = window;
+
+		printtext(&ctx, "%s%s%c %s%s@%s%s has quit %s%s%s",
+		    COLOR2, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
+		    LEFT_BRKT, message, RIGHT_BRKT);
+	    }
 	}
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+	printtext(&ctx, "event_quit: error: %s", e.what());
     }
 }
 
