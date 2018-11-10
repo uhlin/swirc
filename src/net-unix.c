@@ -122,6 +122,8 @@ net_spawn_listenThread(void)
     if (errno = pthread_create(&listenThread_id, NULL, listenThread_fn, NULL),
 	errno != 0)
 	err_sys("pthread_create");
+    else if ((errno = pthread_detach(listenThread_id)) != 0)
+	err_sys("pthread_detach");
 }
 
 void
