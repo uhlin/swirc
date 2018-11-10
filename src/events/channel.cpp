@@ -639,24 +639,40 @@ void
 event_topic(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *channel, *topic;
-    char *state = "";
 
-    if (strFeed(compo->params, 2) != 2)
-	return;
-    (void) strtok_r(compo->params, "\n", &state);
-    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
-	(topic = strtok_r(NULL, "\n", &state)) == NULL)
-	return;
-    if (*topic == ':')
-	topic++;
-    printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
-    if ((ctx.window = window_by_label(channel)) == NULL)
-	return;
-    printtext(&ctx, "Topic for %s%s%s%c%s: %s",
-	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-	      topic);
-    new_window_title(channel, topic);
+    try {
+	char *channel = NULL, *topic = NULL;
+	char *state = (char *) "";
+
+	if (strFeed(compo->params, 2) != 2)
+	    throw std::runtime_error("strFeed");
+
+	/* unused */
+	(void) strtok_r(compo->params, "\n", &state);
+
+	channel = strtok_r(NULL, "\n", &state);
+	topic = strtok_r(NULL, "\n", &state);
+
+	if (channel == NULL)
+	    throw std::runtime_error("unable to get channel");
+	else if (topic == NULL)
+	    throw std::runtime_error("unable to get topic");
+	else if (*topic == ':')
+	    topic++;
+
+	printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
+
+	if ((ctx.window = window_by_label(channel)) == NULL)
+	    throw std::runtime_error("window lookup error");
+
+	printtext(&ctx, "Topic for %s%s%s%c%s: %s",
+	    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT, topic);
+
+	new_window_title(channel, topic);
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+	printtext(&ctx, "event_topic: error: %s", e.what());
+    }
 }
 
 /* event_topic_chg
@@ -710,7 +726,6 @@ event_topic_chg(struct irc_message_compo *compo)
 
 	printtext(&ctx, "%c%s%c changed the topic of %c%s%c to: %s",
 	    BOLD, nick, BOLD, BOLD, channel, BOLD, new_topic);
-
     } catch (std::runtime_error &e) {
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 	printtext(&ctx, "event_topic_chg: error: %s", e.what());
