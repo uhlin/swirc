@@ -81,56 +81,55 @@ void
 event_join(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char	*prefix	 = &compo->prefix[1];
-    char	*channel =
-	*(compo->params) == ':' ? &compo->params[1] : &compo->params[0];
-    char	*state	 = "";
-    char	*nick;
-    char	*user;
-    char	*host;
 
-    nick = strtok_r(prefix, "!@", &state);
-    user = strtok_r(NULL, "!@", &state);
-    host = strtok_r(NULL, "!@", &state);
+    try {
+	char *prefix = NULL;
+	char *state = (char *) "";
 
-    if (nick == NULL) {
-	goto bad;
-    }
+	if (compo == NULL)
+	    throw std::runtime_error("no components");
+	else if (compo->prefix == NULL)
+	    throw std::runtime_error("no prefix");
+	prefix = & (compo->prefix[1]);
 
-    if (user == NULL)
-	user = "<no user>";
-    if (host == NULL)
-	host = "<no host>";
+	char	*nick = strtok_r(prefix, "!@", &state);
+	char	*user = strtok_r(NULL, "!@", &state);
+	char	*host = strtok_r(NULL, "!@", &state);
 
-    if (strings_match_ignore_case(nick, g_my_nickname)) {
-	if (spawn_chat_window(channel, "No title.") != 0) {
-	    goto bad;
+	if (nick == NULL)
+	    throw std::runtime_error("no nickname");
+	if (user == NULL)
+	    user = (char *) "<no user>";
+	if (host == NULL)
+	    host = (char *) "<no host>";
+
+	const char *channel = *(compo->params) == ':'
+	    ? &compo->params[1]
+	    : &compo->params[0];
+
+	if (strings_match_ignore_case(nick, g_my_nickname)) {
+	    if (spawn_chat_window(channel, "No title.") != 0)
+		throw std::runtime_error("cannot spawn chat window");
+	    if (g_am_irc_op && config_bool_unparse("auto_op_yourself", true)) {
+		net_send("MODE %s +o %s", channel, nick);
+		net_send("SAMODE %s +o %s", channel, nick);
+	    }
+	} else if (event_names_htbl_insert(nick, channel) != OK) {
+	    throw std::runtime_error("unable to add user to channel list");
 	}
 
-	if (g_am_irc_op && config_bool_unparse("auto_op_yourself", true)) {
-	    net_send("MODE %s +o %s", channel, nick);
-	    net_send("SAMODE %s +o %s", channel, nick);
-	}
-    } else {
-	if (event_names_htbl_insert(nick, channel) != OK) {
-	    goto bad;
-	}
+	printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+	if ((ctx.window = window_by_label(channel)) == NULL)
+	    throw std::runtime_error("window lookup error");
+	printtext(&ctx, "%s%s%c %s%s@%s%s has joined %s%s%c",
+	    COLOR1, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
+	    COLOR2, channel, NORMAL);
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+	printtext(&ctx, "event_join: fatal: %s", e.what());
+	printtext(&ctx, "Shutting down IRC connection...");
+	g_on_air = false;
     }
-
-    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
-
-    if ((ctx.window = window_by_label(channel)) == NULL) {
-	goto bad;
-    }
-
-    printtext(&ctx, "%s%s%c %s%s@%s%s has joined %s%s%c",
-	      COLOR1, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
-	      COLOR2, channel, NORMAL);
-    return;
-
-  bad:
-    err_msg("On issuing event %s: A fatal error occurred", compo->command);
-    abort();
 }
 
 /* event_kick
