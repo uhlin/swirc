@@ -415,41 +415,57 @@ void
 event_mode(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *channel, *s, *s_copy;
-    char *nick;
-    char *prefix = &compo->prefix[1];
-    char *state1 = "", *state2 = "";
+    char *next_token_copy = NULL;
 
-    printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
+    try {
+	char *nick = NULL;
+	char *prefix = NULL;
+	char *state1 = (char*) "";
+	char *state2 = (char*) "";
 
-    if (strFeed(compo->params, 1) != 1)
-	return;
-    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
-	return;
-    if ((channel = strtok_r(compo->params, "\n", &state2)) != NULL &&
-	(s = strtok_r(NULL, "\n", &state2)) != NULL) {
-	s_copy = sw_strdup(s);
-	squeeze(s_copy, ":");
-	(void) trim(s_copy);
+	if (compo->prefix == NULL)
+	    throw std::runtime_error("no prefix");
+	prefix = & (compo->prefix[1]);
 
-	if (strings_match_ignore_case(nick, channel)) { /* user mode */
-	    ctx.window = g_status_window;
+	if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
+	    throw std::runtime_error("unable to get nickname in prefix");
+	else if (strFeed(compo->params, 1) != 1)
+	    throw std::runtime_error("strFeed");
+
+	char *channel = strtok_r(compo->params, "\n", &state2);
+	char *next_token = strtok_r(NULL, "\n", &state2);
+
+	if (channel == NULL || next_token == NULL)
+	    throw std::runtime_error("insufficient data");
+
+	next_token_copy = sw_strdup(next_token);
+	squeeze(next_token_copy, ":");
+	trim(next_token_copy);
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+
+	if (strings_match_ignore_case(nick, channel)) {
+	    /*
+	     * User mode
+	     */
 	    printtext(&ctx, "Mode change %s%s%s for user %c%s%c",
-		      LEFT_BRKT, s_copy, RIGHT_BRKT, BOLD, nick, BOLD);
+		LEFT_BRKT, next_token_copy, RIGHT_BRKT, BOLD, nick, BOLD);
 	    net_send("MODE %s", nick);
 	} else if (is_irc_channel(channel) &&
 		   (ctx.window = window_by_label(channel)) != NULL) {
 	    printtext(&ctx, "mode/%s%s%s%c%s %s%s%s by %s%s%c",
-		      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-		      LEFT_BRKT, s_copy, RIGHT_BRKT,
-		      COLOR2, nick, NORMAL);
-	    maintain_channel_stats(channel, s_copy);
+		LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+		LEFT_BRKT, next_token_copy, RIGHT_BRKT,
+		COLOR2, nick, NORMAL);
+	    maintain_channel_stats(channel, next_token_copy);
 	} else {
-	    /* do nothing */;
+	    throw std::runtime_error("unhandled else branch");
 	}
-
-	free(s_copy);
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+	printtext(&ctx, "event_mode: error: %s", e.what());
     }
+
+    free_not_null(next_token_copy);
 }
 
 static int
