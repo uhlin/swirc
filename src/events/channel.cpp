@@ -534,61 +534,67 @@ void
 event_part(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *channel;
-    char *host;
-    char *message;
-    char *nick;
-    char *prefix = &compo->prefix[1];
-    char *state1, *state2;
-    char *user;
-    const bool has_message = strFeed(compo->params, 1) == 1;
 
-    state1 = state2 = "";
+    try {
+	char *prefix = NULL;
+	char *state1 = (char*) "";
+	char *state2 = (char*) "";
 
-    if ((nick = strtok_r(prefix, "!@", &state1)) == NULL) {
-	return;
-    }
+	if (compo->prefix == NULL)
+	    throw std::runtime_error("no prefix!");
+	prefix = & (compo->prefix[1]);
 
-    if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
-	user = "<no user>";
-    if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
-	host = "<no host>";
+	char *nick = strtok_r(prefix, "!@", &state1);
+	char *user = strtok_r(NULL, "!@", &state1);
+	char *host = strtok_r(NULL, "!@", &state1);
 
-    if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL)
-	goto bad;
-    if (*channel == ':')
-	channel++;
-    message = strtok_r(NULL, "\n", &state2);
+	if (nick == NULL)
+	    throw std::runtime_error("unable to get nickname");
 
-    if (strings_match_ignore_case(nick, g_my_nickname)) {
-	if (destroy_chat_window(channel) != 0)
-	    goto bad;
-	else
+	if (user == NULL)
+	    user = (char*) "<no user>";
+	if (host == NULL)
+	    host = (char*) "<no host>";
+
+	const bool has_message = strFeed(compo->params, 1) == 1;
+	char *channel = strtok_r(compo->params, "\n", &state2);
+	char *message = strtok_r(NULL, "\n", &state2);
+
+	if (channel == NULL)
+	    throw std::runtime_error("unable to get channel");
+	else if (*channel == ':')
+	    channel++;
+
+	if (strings_match_ignore_case(nick, g_my_nickname)) {
+	    if (destroy_chat_window(channel) != 0)
+		throw std::runtime_error("failed to destroy chat window");
 	    return;
-    } else {
-	if (event_names_htbl_remove(nick, channel) != OK)
-	    goto bad;
+	} else {
+	    if (event_names_htbl_remove(nick, channel) != OK) {
+		throw std::runtime_error("failed to remove user from "
+		    "channel list");
+	    }
+	}
+
+	printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+
+	if ((ctx.window = window_by_label(channel)) == NULL)
+	    throw std::runtime_error("window lookup error");
+	if (!has_message)
+	    message = (char*) "";
+	if (has_message && *message == ':')
+	    message++;
+
+	printtext(&ctx, "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s",
+	    COLOR2, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
+	    COLOR2, channel, NORMAL,
+	    LEFT_BRKT, message, RIGHT_BRKT);
+    } catch (std::runtime_error &e) {
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+	printtext(&ctx, "event_part: fatal: %s", e.what());
+	printtext(&ctx, "Shutting down IRC connection...");
+	g_on_air = false;
     }
-
-    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
-
-    if ((ctx.window = window_by_label(channel)) == NULL) {
-	goto bad;
-    }
-
-    if (!has_message)
-	message = "";
-    if (has_message && *message == ':')
-	message++;
-    printtext(&ctx, "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s",
-	      COLOR2, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
-	      COLOR2, channel, NORMAL,
-	      LEFT_BRKT, message, RIGHT_BRKT);
-    return;
-
-  bad:
-    err_msg("On issuing event %s: A fatal error occurred", compo->command);
-    abort();
 }
 
 /* event_quit
