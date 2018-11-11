@@ -53,10 +53,19 @@ event_invite(struct irc_message_compo *compo)
     if (*channel == ':')
 	channel++;
 
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+
     if (strings_match_ignore_case(target, g_my_nickname)) {
-	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 	printtext(&ctx, "%c%s%c %s%s@%s%s invites you to %c%s%c",
 		  BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT,
 		  BOLD, channel, BOLD);
+    } else {
+	/*
+	 * FIXME: Write to the channels where the user that's doing
+	 * the invite is in
+	 */
+	printtext(&ctx, "%c%s%c %s%s@%s%s invites %c%s%c to %c%s%c",
+		  BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT,
+		  BOLD, target, BOLD, BOLD, channel, BOLD);
     }
 }
