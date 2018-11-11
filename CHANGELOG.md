@@ -20,6 +20,10 @@ All notable changes to this project will be documented in this file.
 - Off-by-one error
 - Memory leaks
 
+### News ###
+- Curl 7.62.0
+- LibreSSL 2.8.2
+
 ## [2.3] - 2018-10-24 ##
 ### Added ###
 - A `swirc.conf` manual page
