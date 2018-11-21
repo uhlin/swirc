@@ -26,3 +26,6 @@ clean:
 	$(E) "  CLEAN"
 	$(RM) $(OBJS)
 	$(RM) $(TGTS)
+	$(RM) -R swirc.analyze
+	$(RM) swirc.html
+	$(RM) swirc.static.html
