@@ -13,6 +13,7 @@ pdcurses-*
 swirc
 swirc.analyze
 swirc.exe
+swirc.html
 swirc.res
 swirc.static.html
 tests/*.run
