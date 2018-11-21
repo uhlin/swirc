@@ -133,8 +133,7 @@ EOF
 # --------------------------------------------------
 os_LINUX_suncc () {
     cat <<EOF >>$MAKE_DEF_FILE
-CC=suncc
-CFLAGS=\\
+SHARED_FLAGS=\\
 	-DLINUX=1\\
 	-DUNIX=1\\
 	-D_FORTIFY_SOURCE=2\\
@@ -144,10 +143,13 @@ CFLAGS=\\
 	-I/usr/include/x86_64-linux-gnu\\
 	-O2\\
 	-pedantic\\
-	-std=c99\\
 	-xannotate\\
 	-xprevise\\
 	-xsecure_code_analysis
+CC=suncc
+CFLAGS=\$(SHARED_FLAGS) -std=c11
+CXX=sunCC
+CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
 LDFLAGS=-xannotate -xprevise
 LDLIBS=\\
 	-lcrypto\\
