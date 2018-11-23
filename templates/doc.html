@@ -99,6 +99,520 @@ SASL authentication which is probably a better alternative.
   <tr><td><kbd>F9</kbd></td><td>Reverse</td></tr>
   <tr><td><kbd>F10</kbd></td><td>Underline</td></tr>
 </table>
+<h3>Configuration options in swirc.conf</h3>
+<table id="conf">
+<!-- ============== -->
+<!-- ACCOUNT NOTIFY -->
+<!-- ============== -->
+  <tr>
+    <td>
+      <strong>account_notify</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Allows a client to be notified when another client’s accountname
+changes
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- ALT NICK -->
+<!-- ======== -->
+  <tr>
+    <td>
+      <strong>alt_nick</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Alternative nickname. This nickname is used when processing a
+connection to a server and the default nickname is busy.
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- AUTO OP YOURSELF -->
+<!-- ================ -->
+  <tr>
+    <td>
+      <strong>auto_op_yourself</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Automatically op yourself on channel join when you're identified as an
+IRC operator
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =========== -->
+<!-- AWAY NOTIFY -->
+<!-- =========== -->
+  <tr>
+    <td>
+      <strong>away_notify</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Allows a client to specify that it would like to be notified when
+users are marked/unmarked as away
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- CHANSERV HOST -->
+<!-- ============= -->
+  <tr>
+    <td>
+      <strong>chanserv_host</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+ChanServ hostname
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============ -->
+<!-- CIPHER SUITE -->
+<!-- ============ -->
+  <tr>
+    <td>
+      <strong>cipher_suite</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+      Cipher suite. Which can have one of the following values:
+      <ul>
+	<li>secure</li>
+	<li>compat</li>
+	<li>legacy</li>
+	<li>
+insecure
+(which should've been named all because it will never be used because
+of its name)
+	</li>
+      </ul>
+    </td>
+  </tr>
+<!--<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>-->
+<!-- ============= -->
+<!-- CMD HIST SIZE -->
+<!-- ============= -->
+  <tr>
+    <td>
+      <strong>cmd_hist_size</strong>
+      (<span class="opttype">int</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Command history size. No more than this number of commands will be
+stored in the memory.
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================== -->
+<!-- CONNECTION TIMEOUT -->
+<!-- ================== -->
+  <tr>
+    <td>
+      <strong>connection_timeout</strong>
+      (<span class="opttype">int</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Connection timeout in seconds
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- DISABLE BEEPS -->
+<!-- ============= -->
+  <tr>
+    <td>
+      <strong>disable_beeps</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Swirc alerts the user by sending a beep in certain cases. However,
+with the help of this setting, beeps can be disabled.
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================= -->
+<!-- HOSTNAME CHECKING -->
+<!-- ================= -->
+  <tr>
+    <td>
+      <strong>hostname_checking</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Enable or disable TLS/SSL hostname verification
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- INVITE NOTIFY -->
+<!-- ============= -->
+  <tr>
+    <td>
+      <strong>invite_notify</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Allows a client to specify that it would like to be notified when
+users are invited to channels
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================= -->
+<!-- IRCv3 SERVER TIME -->
+<!-- ================= -->
+  <tr>
+    <td>
+      <strong>ircv3_server_time</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Enable or disable IRCv3 server time extension
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================= -->
+<!-- KICK CLOSE WINDOW -->
+<!-- ================= -->
+  <tr>
+    <td>
+      <strong>kick_close_window</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+If the active user gets kicked out from a channel, should the channel
+window be terminated?
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- MAX CHAT WINDOWS -->
+<!-- ================ -->
+  <tr>
+    <td>
+      <strong>max_chat_windows</strong>
+      (<span class="opttype">int</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Max chat windows that can be open simultaneously
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- NICKNAME -->
+<!-- ======== -->
+  <tr>
+    <td>
+      <strong>nickname</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Online nickname
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- NICKNAME ALIASES -->
+<!-- ================ -->
+  <tr>
+    <td>
+      <strong>nickname_aliases</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+A space separated list of nickname aliases which are used, in addition
+to the default nickname, to highlight a message if it matches any of
+the aliases given by this setting.
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- NICKSERV HOST -->
+<!-- ============= -->
+  <tr>
+    <td>
+      <strong>nickserv_host</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+NickServ hostname
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============ -->
+<!-- PART MESSAGE -->
+<!-- ============ -->
+  <tr>
+    <td>
+      <strong>part_message</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Message when leaving a channel
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============ -->
+<!-- QUIT MESSAGE -->
+<!-- ============ -->
+  <tr>
+    <td>
+      <strong>quit_message</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Message when disconnecting from a server
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========= -->
+<!-- REAL NAME -->
+<!-- ========= -->
+  <tr>
+    <td>
+      <strong>real_name</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Specifies the real name.<br>
+But can be set to anything.
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ==== -->
+<!-- SASL -->
+<!-- ==== -->
+  <tr>
+    <td>
+      <strong>sasl</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Request SASL authentication on connection to a server?
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============== -->
+<!-- SASL MECHANISM -->
+<!-- ============== -->
+  <tr>
+    <td>
+      <strong>sasl_mechanism</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+      SASL mechanism.
+      Available mechanisms are:
+      <ul>
+	<li>ECDSA-NIST256P-CHALLENGE</li>
+	<li>PLAIN</li>
+      </ul>
+    </td>
+  </tr>
+<!--<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>-->
+<!-- ============= -->
+<!-- SASL PASSWORD -->
+<!-- ============= -->
+  <tr>
+    <td>
+      <strong>sasl_password</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+SASL password.
+For mechanism PLAIN.
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- SASL USERNAME -->
+<!-- ============= -->
+  <tr>
+    <td>
+      <strong>sasl_username</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+SASL username
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============== -->
+<!-- SHOW PING PONG -->
+<!-- ============== -->
+  <tr>
+    <td>
+      <strong>show_ping_pong</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Show ping pong events?<br>
+The default is NO.
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========= -->
+<!-- SKIP MOTD -->
+<!-- ========= -->
+  <tr>
+    <td>
+      <strong>skip_motd</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Skip message of the day (MOTD) on connection to a server?
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =============== -->
+<!-- SSL VERIFY PEER -->
+<!-- =============== -->
+  <tr>
+    <td>
+      <strong>ssl_verify_peer</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Verify peer?
+Setting it to NO decreases TLS/SSL security significantly, but is a
+must on servers with trusted self signed certificates.
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- STARTUP GREETING -->
+<!-- ================ -->
+  <tr>
+    <td>
+      <strong>startup_greeting</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Enable or disable Swirc startup greeting
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======================== -->
+<!-- TEXTBUFFER SIZE ABSOLUTE -->
+<!-- ======================== -->
+  <tr>
+    <td>
+      <strong>textbuffer_size_absolute</strong>
+      (<span class="opttype">int</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+Max number of elements in a text buffer before head gets removed from
+scroll back history. Each open window is assigned a buffer with this
+size, so set a sane value!
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ===== -->
+<!-- THEME -->
+<!-- ===== -->
+  <tr>
+    <td>
+      <strong>theme</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+      Swirc theme
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- USERNAME -->
+<!-- ======== -->
+  <tr>
+    <td>
+      <strong>username</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+User identity.
+Preferably to be set to the same as the nickname.
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!--
+  <tr>
+    <td>
+      <strong></strong>
+      (<span class="opttype"></span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+-->
+</table> <!-- conf -->
 <h3>Cloning</h3>
 <p>
 To clone the repository use
