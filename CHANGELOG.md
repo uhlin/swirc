@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Fixed ###
+- Thread termination
+
 ## [2.4] - 2018-11-11 ##
 ### Added ###
 - Event AWAY
