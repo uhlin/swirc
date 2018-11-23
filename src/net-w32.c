@@ -47,6 +47,7 @@ listenThread_fn(void *arg)
 {
     (void) arg;
     net_irc_listen();
+    _endthread();
 }
 
 bool
