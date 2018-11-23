@@ -138,11 +138,11 @@ hInstall(const struct hInstall_context *ctx)
     PNAMES		names_entry;
     const unsigned int	hashval      = hash(ctx->nick);
 
-    names_entry		    = xcalloc(sizeof *names_entry, 1);
-    names_entry->nick	    = sw_strdup(ctx->nick);
+    names_entry             = xcalloc(sizeof *names_entry, 1);
+    names_entry->nick       = sw_strdup(ctx->nick);
     names_entry->is_owner   = ctx->is_owner;
     names_entry->is_superop = ctx->is_superop;
-    names_entry->is_op	    = ctx->is_op;
+    names_entry->is_op      = ctx->is_op;
     names_entry->is_halfop  = ctx->is_halfop;
     names_entry->is_voice   = ctx->is_voice;
 
@@ -180,11 +180,11 @@ event_names_htbl_insert(const char *nick, const char *channel)
 	return ERR;
     }
 
-    ctx.channel	   = (char *) channel;
-    ctx.nick	   = (char *) nick;
+    ctx.channel    = (char *) channel;
+    ctx.nick       = (char *) nick;
     ctx.is_owner   = false;
     ctx.is_superop = false;
-    ctx.is_op	   = false;
+    ctx.is_op      = false;
     ctx.is_halfop  = false;
     ctx.is_voice   = false;
 
