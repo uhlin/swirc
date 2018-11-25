@@ -1032,11 +1032,10 @@ case_default(struct case_default_context *ctx, int *rep_count, int *line_count,
 	}
 	if (care_about_indent)
 	    do_indent(ctx->win, ctx->indent, insert_count);
-	//if (ctx->diff && ctx->wc == L' ')
-	//free(mbs)
-	//return
-	addmbs(ctx->win, mbs);
-	(*insert_count) ++;
+	if (ctx->wc != L' ') {
+	    addmbs(ctx->win, mbs);
+	    (*insert_count) ++;
+	}
     }
 
     free(mbs);
