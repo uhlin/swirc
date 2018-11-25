@@ -19,6 +19,13 @@ enum {
     UNDERLINE = '\037'
 };
 
+#define TXT_BLINK     "\035"
+#define TXT_BOLD      "\002"
+#define TXT_COLOR     "\003"
+#define TXT_NORMAL    "\017"
+#define TXT_REVERSE   "\026"
+#define TXT_UNDERLINE "\037"
+
 enum message_specifier_type {
     TYPE_SPEC1,
     TYPE_SPEC2,
