@@ -926,6 +926,18 @@ event_names(struct irc_message_compo *compo)
     abort();
 }
 
+static void
+reset_counters(PIRC_WINDOW window)
+{
+    window->num_owners   = 0;
+    window->num_superops = 0;
+    window->num_ops      = 0;
+    window->num_halfops  = 0;
+    window->num_voices   = 0;
+    window->num_normal   = 0;
+    window->num_total    = 0;
+}
+
 void
 event_names_htbl_remove_all(PIRC_WINDOW window)
 {
@@ -943,5 +955,8 @@ event_names_htbl_remove_all(PIRC_WINDOW window)
 	    hUndef(window, p);
 	}
     }
+
+    window->received_names = false;
+    reset_counters(window);
 }
 /* EOF */

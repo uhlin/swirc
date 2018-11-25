@@ -506,16 +506,10 @@ window_foreach_destroy_names(void)
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (is_irc_channel(window->label)) {
 		event_names_htbl_remove_all(window);
-		window->received_names = false;
-#if 1
-		window->num_owners   = 0;
-		window->num_superops = 0;
-		window->num_ops	     = 0;
-		window->num_halfops  = 0;
-		window->num_voices   = 0;
-		window->num_normal   = 0;
-		window->num_total    = 0;
-#endif
+
+		/*
+		 * TODO: Investigate if the code below should be moved too.
+		 */
 		BZERO(window->chanmodes, sizeof window->chanmodes);
 		window->received_chanmodes = false;
 		window->received_chancreated = false;
