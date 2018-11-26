@@ -355,11 +355,11 @@ All notable changes to this project will be documented in this file.
 - Additional data to the manual page
 - Event
   - 324 (`RPL_CHANNELMODEIS`)
-  - 329. Undocumented. Channel date of creation.
+  - 329\. Undocumented. Channel date of creation.
   - 346-349 (numeric replies to /exlist and /ilist)
   - 367 (`RPL_BANLIST`)
   - 368 (`RPL_ENDOFBANLIST`)
-  - 487. Undocumented in the RFC. An error meaning that /msg target
+  - 487\. Undocumented in the RFC. An error meaning that /msg target
     *ChanServ* or *NickServ* is no longer supported (in favor of
     **/chanserv** and **/nickserv**).
 - On OpenBSD: restrict system operations by using pledge() if it's
