@@ -385,18 +385,22 @@ All notable changes to this project will be documented in this file.
 
 ## [1.0] - 2016-08-13 ##
 ### Added ###
-- Support for multiple encodings: UTF-8, ISO-8859-1 and ISO-8859-15
+- Support for multiple encodings:
+  - UTF-8
+  - ISO-8859-1
+  - ISO-8859-15
 - Command /list
-- Event 321-323 (numeric replies for /list)
-- Event 412 `ERR_NOTEXTTOSEND`
-- Event 481 `ERR_NOPRIVILEGES`
-- Event 341 `RPL_INVITING`
-- Event 742 (MODE cannot be set due to channel having an active MLOCK
-  restriction policy). ATM not documented in the RFC
-- Event 334. Undocumented. At Undernet, it prints out usage describing
-  parameters for the LIST command
-- Event 467 `ERR_KEYSET`
-- Event 471-474
+- Event
+  - 321-323 (numeric replies for /list)
+  - 334. Undocumented. At Undernet, it prints out usage describing
+    parameters for the LIST command.
+  - 341 (`RPL_INVITING`)
+  - 412 (`ERR_NOTEXTTOSEND`)
+  - 467 (`ERR_KEYSET`)
+  - 471-474
+  - 481 (`ERR_NOPRIVILEGES`)
+  - 742 (MODE cannot be set due to channel having an active MLOCK
+    restriction policy). ATM not documented in the RFC.
 
 ### Changed ###
 - The default theme. Color codes that consisted of only one digit were
