@@ -260,42 +260,45 @@ All notable changes to this project will be documented in this file.
 
 ## [1.3] - 2017-01-14 ##
 ### Added ###
-- Event 435. Undocumented in the RFC. (Cannot change nickname while
-  banned on channel)
-- Event 437 `ERR_UNAVAILRESOURCE`
-- Option -i for ICB mode (Internet Citizen's Band). Planning to
-  support the protocol
-- Command /who
-- Event 352 `RPL_WHOREPLY`
-- Event 315 `RPL_ENDOFWHO`
-- Event 477 `ERR_NOCHANMODES`
-- Event 421 `ERR_UNKNOWNCOMMAND`
-- Event 444 `ERR_NOLOGIN`
-- Broadcast window activity for private messages
-- Command /rules
-- Event 232, 308 and 309 (numeric replies for /rules -- undocumented
-  in the RFC)
-- Command /cycle
-- Event 484 `ERR_RESTRICTED`
+- Broadcasting of window activity for private messages
+- Command
+  - /cycle
+  - /rules
+  - /who
+- Command line option `-i` for ICB mode (Internet Citizen's Band).
+  Plans are to support the protocol but it's **not implemented yet**!
+- Event
+  - 232, 308 and 309 (numeric replies for /rules -- undocumented in
+    the RFC)
+  - 315 (`RPL_ENDOFWHO`)
+  - 352 (`RPL_WHOREPLY`)
+  - 421 (`ERR_UNKNOWNCOMMAND`)
+  - 435\. Undocumented in the RFC. (Cannot change nickname while
+    banned on channel).
+  - 437 (`ERR_UNAVAILRESOURCE`)
+  - 444 (`ERR_NOLOGIN`)
+  - 477 (`ERR_NOCHANMODES`)
+  - 484 (`ERR_RESTRICTED`)
 
 ### Changed ###
-- On event join/part handle an empty user/host
-- In `event_notice`: show prefix/params on error
-- The prompt for the status window to nothing
-- In `event_privmsg`: handle an empty user/host
+- **Attention**: Don't verify peer per default on WIN32 on SSL
+  connections due to unable to get local issuer certificate.
 - Connection timeout to 15 seconds
-- Don't verify peer per default on WIN32 on SSL connections due to
-  unable to get local issuer certificate
-- Decrease `NAMES_HASH_TABLE_SIZE` to 4500
-- In `event_topic_chg`: handle an empty user/host
-- In `event_kick`: handle an empty user/host
-- In `event_quit`: handle an empty user/host
+- The prompt for the status window to nothing...
+- `NAMES_HASH_TABLE_SIZE` to 4500
+- `event_notice`: output IRC prefix + params on error.
 
 ### Fixed ###
+- **Instead of using slots for chunks of names** use a linked list!
+- **Printtext**: switch off all terminal attributes during indentation.
+- Handle empty *user@host* combination for
+  - `event_join()`
+  - `event_kick()`
+  - `event_part()`
+  - `event_privmsg()`
+  - `event_quit()`
+  - `event_topic_chg()`
 - Signal 11 when connecting to [Slack](https://slack.com/).
-- Instead of using slots for chunks of names, use a linked list.
-- In the printtext module: switch off all terminal attributes during
-  indentation.
 
 ## [1.2] - 2016-09-22 ##
 ### Added ###
