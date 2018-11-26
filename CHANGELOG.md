@@ -299,35 +299,30 @@ All notable changes to this project will be documented in this file.
 
 ## [1.2] - 2016-09-22 ##
 ### Added ###
+- A function to show error log size on startup
+- Checks for printflike functions
 - Checks in order to prohibit the program from running with superuser
-  privileges (aka root).
-- Checks for printf-like functions.
-- In strHand.c: documentation.
-- In printtext.c: documentation.
-- Command history!
-- In a config or theme: log if a fallback value is chosen for a
-  certain setting. This means that the setting contains an invalid
-  value.
-- Support for really large channels.
-- Function to show error log size on startup.
+  privileges (aka root)
+- Command history feature
+- Logging to the error log for settings that are detected with invalid
+  values
 
 ### Changed ###
-- The name of function `PrintAndFree` to `print_and_free`.
-- In `print_and_free`: print to the active window.
-- Rewrote commands to use `print_and_free`.
-- For OS X and GNU/Linux: compile using optimization level 2.
-- Option -p. Instead of taking an argument it will now ask for a
-  password upon connect if it's specified.
-- In `event_names_print_all`: adjust the column-width with respect to
+- **GNU/Linux and OS X**: compile using optimization level 2.
+- Command line option `-p`. Instead of taking an argument it will now
+  query the user for a password during connection to an IRC server.
+- The name of function `PrintAndFree()` to `print_and_free()` and its
+  behavior. Plus multiple commands to use it.
+- `event_names_print_all()`: adjust the column-width with respect to
   the longest name in each column.
 
 ### Fixed ###
+- **Printtext**: A problem with converting a wide character to a
+  multibyte sequence due to EILSEQ
 - A bug regarding that mode +q has different meanings on different
-  server software (ircds).
+  server software (IRCd's)
 - Possible crash due to resizing the terminal while connection is in
-  progress.
-- In the printtext module: a problem with converting a wide character
-  to a multibyte sequence due to EILSEQ.
+  progress
 
 ## [1.1+] - 2016-08-31 ##
 ### Changed ###
