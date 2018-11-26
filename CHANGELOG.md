@@ -331,17 +331,18 @@ All notable changes to this project will be documented in this file.
 
 ## [1.1+] - 2016-08-31 ##
 ### Changed ###
-- Increase `NAMES_HASH_TABLE_SIZE` to 6500.
+- `NAMES_HASH_TABLE_SIZE` to 6500
+
+### Deleted ###
+- Duplicated code
 
 ### Fixed ###
-- In `src/unix.mk`: provide a standard default target "all".
-- In the manual page: AUTHORS section without An macro.
-- In io-loop.c: get rid of zero-length printf format string
-  warnings. They weren't harmful in the first place.
-- In readline.c in function `session_destroy`: get rid of possibly
-  issued warning regarding: discards qualifiers from pointer target
-  type.
-- Duplicated code.
+- Absence of *An* macro in the man page
+- Readline: `session_destroy`: Get rid of possibly issued warning
+  regarding: discards qualifiers from pointer target type.
+- `src/unix.mk`: provide a standard default target **all**
+- io-loop: Get rid of zero-length printf format string warnings. (They
+  weren't harmful in the first place.)
 
 ## [1.1] - 2016-08-27 ##
 ### Added ###
