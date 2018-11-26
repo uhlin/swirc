@@ -395,7 +395,7 @@ All notable changes to this project will be documented in this file.
 - Command /list
 - Event
   - 321-323 (numeric replies for /list)
-  - 334. Undocumented. At Undernet, it prints out usage describing
+  - 334\. Undocumented. At Undernet, it prints out usage describing
     parameters for the LIST command.
   - 341 (`RPL_INVITING`)
   - 412 (`ERR_NOTEXTTOSEND`)
