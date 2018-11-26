@@ -345,43 +345,45 @@ All notable changes to this project will be documented in this file.
 
 ## [1.1] - 2016-08-27 ##
 ### Added ###
-- Window scrolling capabilities!
+- Command
+  - /banlist
+  - /chanserv
+  - /exlist
+  - /ilist
+  - /nickserv
+- Additional data to the manual page
+- Event
+  - 324 (`RPL_CHANNELMODEIS`)
+  - 329. Undocumented. Channel date of creation.
+  - 346-349 (numeric replies to /exlist and /ilist)
+  - 367 (`RPL_BANLIST`)
+  - 368 (`RPL_ENDOFBANLIST`)
+  - 487. Undocumented in the RFC. An error meaning that /msg target
+    *ChanServ* or *NickServ* is no longer supported (in favor of
+    **/chanserv** and **/nickserv**).
 - On OpenBSD: restrict system operations by using pledge() if it's
-  available
-- Command /banlist
-- Event 367 `RPL_BANLIST`
-- Event 368 `RPL_ENDOFBANLIST`
-- Event 324 `RPL_CHANNELMODEIS`
-- Event 329. Undocumented. Channel date of creation
-- Command /chanserv
-- Command /nickserv
-- Event 487. Undocumented in the RFC. Prints out an error saying that
-  /msg target ChanServ/NickServ is no longer supported (in favor of
-  /chanserv and /nickserv)
-- Command /exlist
-- Command /ilist
-- Event 346-349 (numeric replies to /exlist and /ilist)
+  available.
+- Window scrolling capabilities!
 
 ### Changed ###
-- Usage for command /list was bogus
-- Document keys pg up/down in the manual page
-- Decorated output of /list a bit
-- In the interpreter: handle string truncation when copying an
-  identifier/argument
-- `textbuffer_size_absolute` now defaults to 1500
+- **/msg**: fail if recipient is *ChanServ* or *NickServ*. (Use of the
+  commands **/chanserv** and **/nickserv** should be considered
+  instead.)
+- Interpreter: handle string truncation when copying an identifier or
+  argument
+- Look of the output produced by /list
 - Only call `unget_wch(MY_KEY_RESIZE)` after sleeping for a requested
   interval. This possibly prevents the program from crashing or the
-  terminal from being hangup due to a "resize attack"
-- In command /msg: fail if recipient is ChanServ or NickServ. Use of
-  the commands /chanserv and /nickserv should be considered instead
-- In the printtext module: replace unbounded `sw_sprintf` calls with
-  `sw_snprintf`
+  terminal from being hung up due to a "resize attack".
+- Printtext: replaced unbounded `sw_sprintf` calls with `sw_snprintf`
+- `textbuffer_size_absolute` now defaults to 1500
 
 ### Fixed ###
-- An issue where the cursor was left at the statusbar (after updating
-  it).
-- In `net_ssl_send`: signed-unsigned mix with relational.
-- An issue regarding the maintenance of channel statistics.
+- An issue
+  - ...regarding the maintenance of channel statistics
+  - ...where the cursor was left at the statusbar (after updating it)
+- Visible usage of /list
+- `net_ssl_send`: signed-unsigned mix with relational
 
 ## [1.0] - 2016-08-13 ##
 ### Added ###
