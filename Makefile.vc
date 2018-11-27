@@ -50,7 +50,7 @@ setupfile: dist Swirc.wxs
 	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v $(DEST)\pdcurses.dll
 	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v $(DEST)\swirc.exe
 	candle Swirc.wxs
-	light -out "Swirc-$(PRODUCT_VERSION).msi" Swirc.wixobj
+	light "-cultures:en-us" -ext WixUIExtension -out "Swirc-$(PRODUCT_VERSION).msi" Swirc.wixobj
 	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "Swirc-$(PRODUCT_VERSION).msi"
 
 clean:
