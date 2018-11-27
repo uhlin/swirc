@@ -20,9 +20,9 @@ All notable changes to this project will be documented in this file.
   - **MULTIPLE** functions to use try-catch blocks
 
 ### Fixed ###
-- A dependency on uninitialized memory
-- Off-by-one error
+- **A dependency on uninitialized memory!**
 - Memory leaks
+- Off-by-one error
 
 ### News ###
 - Curl 7.62.0
