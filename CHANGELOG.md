@@ -31,29 +31,28 @@ All notable changes to this project will be documented in this file.
 ## [2.3] - 2018-10-24 ##
 ### Added ###
 - A `swirc.conf` manual page
-- Option
-  - `account_notify`
-  - `auto_op_yourself`
+- Command /oper
 - Event
   - `ACCOUNT`
   - `WALLOPS`
   - 381 (`RPL_YOUREOPER`)
   - 491 (`ERR_NOOPERHOST`)
   - 908 (`RPL_SASLMECHS`)
-- Command /oper
+- Option
+  - `account_notify`
+  - `auto_op_yourself`
 
 ### Changed ###
-- Option `ircv3_server_time` is now working
+- **Option `ircv3_server_time` is now working**
 
 ### Deleted ###
-- Option `encoding`
-- Option `recode`
+- Option
+  - `encoding`
+  - `recode`
 
 ### News ###
-- OpenBSD specific:
-  - Uses `unveil()` if available
-- Windows specific:
-  - Passes tests of Windows App Certification Kit
+- **OpenBSD**: Uses `unveil()` if available
+- **Windows**: Passes tests of Windows App Certification Kit
 
 ## [2.2] - 2018-09-30 ##
 ### Added ###
