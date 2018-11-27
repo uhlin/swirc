@@ -234,29 +234,35 @@ All notable changes to this project will be documented in this file.
 
 ## [1.4] - 2017-02-03 ##
 ### Added ###
-- WIN32 specific: added a resource script
-- Broadcast channel activity if our nickname is highlighted
-- Command /version (CTCP)
-- Support for reading a CTCP VERSION reply requested by /version
-- Command /time (CTCP)
-- Support for reading a CTCP TIME reply requested by /time
-- Command /close
-- Event 492. Official name: `ERR_NOSERVICEHOST`. On InspIRCd: User
-  does not accept CTCPs
-- Event 500. Undocumented in the RFC. (Only a server may modify the +r
-  user mode)
+- Broadcasting of channel activity if our nickname matches certain
+  patterns
+- Capability of reading a...
+  - CTCP TIME reply (requested by /time)
+  - CTCP VERSION reply (requested by /version)
+- Command
+  - /close
+  - /time
+  - /version
+- Event
+  - 492\. **Official name**: `ERR_NOSERVICEHOST`. **On InspIRCd**:
+    User does not accept CTCPs.
+  - 500\. Undocumented in the RFC. (Only a server may modify the +r
+    user mode)
+- WIN32: A resource script
 
 ### Changed ###
-- If target port is 6697: set SSL on
-- In `event_notice`: handle an empty user/host
+- If server port is 6697 automatically set TLS/SSL on
+
+### Deleted ###
+- Code duplication
 
 ### Fixed ###
-- Reduced code duplication
-- A bogus behaviour in command /connect
+- A bogus behavior in /connect
+- Better performance
 - CTCP VERSION reply bug
 - Save nickname, username and real name automatically to the config if
-  customized by the command-line
-- Better performance
+  customized by the command-line.
+- `event_notice`: handle an empty *user@host* combination
 
 ## [1.3] - 2017-01-14 ##
 ### Added ###
