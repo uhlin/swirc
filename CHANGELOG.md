@@ -3,7 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Fixed ###
-- Thread termination
+- **Cases of missing deinitializations regarding names in a channel!**
+- **Thread termination!**
+
+### News ###
+- Reorganized changelog :-)
 
 ## [2.4] - 2018-11-11 ##
 ### Added ###
