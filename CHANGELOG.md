@@ -189,21 +189,20 @@ All notable changes to this project will be documented in this file.
 
 ## [1.6] - 2017-05-24 ##
 ### Added ###
-- Event 479. Illegal channel name.
-- Event 716, 717. Error responses for CTCP requests.
+- Event
+  - 479 (Illegal channel name)
+  - 716 and 717 (Error responses for CTCP requests)
 
 ### Changed ###
 - The statusbar to display channel modes
 
 ### Fixed ###
-- Using plain integer as NULL pointer
-- Possible dereference of NULL pointer
-- A couple of small errors
-- Handle if server sends names for a particular channel twice or
-  more. See this as a vulnerability fix.
-- A memory leak in `net_ssl_check_hostname`. The leak occurred each
-  time a new TLS/SSL connection was established if config option
-  `hostname_checking` was set to YES (the default).
+- Occurrences of
+  - possible dereferences of null pointers
+  - usage plain integers as null pointers
+- **Handle if server sends names for a particular channel twice or
+  more**
+- `net_ssl_check_hostname`: memory leak.
 
 ## [1.5] - 2017-03-05 ##
 ### Added ###
