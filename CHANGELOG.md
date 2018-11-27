@@ -207,30 +207,35 @@ All notable changes to this project will be documented in this file.
 
 ## [1.5] - 2017-03-05 ##
 ### Added ###
-- Event 461 `ERR_NEEDMOREPARAMS`
+- Config option `cipher_suite`. Valid values are
+  - **secure**
+  - **compat**
+  - **legacy**
+  - **insecure**
+- Config option `hostname_checking`
+- Event 461 (`ERR_NEEDMOREPARAMS`)
 - Function `X509_check_host` for implementations that lacks support
   for it
-- Config option `cipher_suite`. Valid values are secure, compat,
-  legacy and insecure
-- Improved TLS/SSL security
-- Via command /connect it's now possible to connect, only by
-  specifying a particular irc network, that is: "efnet", "freenode",
-  "ircnet", "quakenet" or "undernet"
-- Config option `hostname_checking`
+- Via /connect it's now possible to connect, only by specifying a
+  particular IRC network, preprogrammed networks are:
+  - [efnet](http://www.efnet.org/)
+  - [freenode](https://freenode.net/)
+  - [ircnet](http://www.ircnet.org/)
+  - [quakenet](https://www.quakenet.org/)
+  - [undernet](http://www.undernet.org/)
 
 ### Changed ###
-- Connection timeout to 45 seconds
-- Set `ssl_verify_peer` to YES even on WIN32
 - ASCII logo
-- Title for status window (to Swirc homepage)
+- Connection timeout to 45 seconds
+- Set `ssl_verify_peer` to **YES** even on WIN32
 - Statusbar to display user modes
+- Title for status window (to Swirc homepage)
 
 ### Fixed ###
-- Usage for command /who was bogus. Parameter mask is mandatory.
-- Key enter for Windows.
-- Unget `\n` right after connection to a server. May or may not fix
-  junk characters from sometimes appearing at the prompt.
-- Command history bug fix.
+- A command history feature bug
+- Improved TLS/SSL security
+- Key enter for Windows
+- Usage for /who. (Parameter mask is mandatory.)
 
 ## [1.4] - 2017-02-03 ##
 ### Added ###
