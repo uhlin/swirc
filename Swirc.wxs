@@ -21,6 +21,7 @@ Copyright (C) 2018 Markus Uhlin. All rights reserved.
 	<Package Compressed="yes" InstallerVersion="400" Platform="x64" />
 
 	<Media Cabinet="swirc.cab" EmbedCab="yes" Id="1" />
+	<UIRef Id="WixUI_Minimal" />
 
 	<Directory Id="TARGETDIR" Name="SourceDir">
 		<Directory Id="ProgramFiles64Folder">
