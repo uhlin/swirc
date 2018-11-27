@@ -134,16 +134,17 @@ All notable changes to this project will be documented in this file.
 
 ## [1.9] - 2017-11-12 ##
 ### Added ###
-- Key CTRL+a (move to beginning of line)
-- Key CTRL+e (move to end of line)
+- Key
+  - CTRL+a (move to beginning of line)
+  - CTRL+e (move to end of line)
 
 ### Changed ###
-- Windows-specific: machine type from x86 to x64 which means that a
-  64-bit executable will be built next time
+- **Windows**: Machine type from x86 to x64 which means that a
+  **64-bit executable** will be built next time
 
 ### Fixed ###
-- Windows-specific: library issues causing the newly introduced
-  command /sasl to work improperly
+- **Windows**: Library issues causing the newly introduced command
+  /sasl to work improperly
 
 ## [1.8] - 2017-10-27 ##
 ### Added ###
