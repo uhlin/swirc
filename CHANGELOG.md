@@ -173,19 +173,19 @@ All notable changes to this project will be documented in this file.
 
 ## [1.7] - 2017-08-12 ##
 ### Added ###
-- Enhancements to the printtext module
-- Theme item `slogan`
 - Command /theme for management of themes on-the-fly
-- WIN32: use of function `MessageBox()` in the errHand module
+- Enhancements to the printtext module
 - Event 442 `ERR_NOTONCHANNEL`
+- Theme item `slogan`
+- WIN32: use of function `MessageBox()` in the errHand module
 
 ### Changed ###
 - Theme item `sw_ascLogotype_color` to `logo_color`
-- WIN32: theme item `term_use_default_colors` will always be set to NO
 - Turned `nodelay()` OFF which reduces CPU usage
+- WIN32: theme item `term_use_default_colors` will always be set to NO
 
 ### Fixed ###
-- Buggy behaviour of `squeeze_text_deco`
+- **Buggy behavior of `squeeze_text_deco()`!**
 
 ## [1.6] - 2017-05-24 ##
 ### Added ###
