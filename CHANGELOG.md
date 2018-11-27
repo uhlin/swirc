@@ -57,26 +57,27 @@ All notable changes to this project will be documented in this file.
 
 ## [2.2] - 2018-09-30 ##
 ### Added ###
-- Option `ircv3_server_time` (currently a no-op)
-- Option `nickname_aliases`. A space separated list of nickname
-  aliases.
+- Option
+  - `ircv3_server_time` **currently a no-op**
+  - `nickname_aliases`. A space separated list of nickname aliases
+    which are used, in addition to the default nickname, to highlight
+    a message if it matches any of the aliases given by this setting.
 - Several code improvements
-- Windows 10 toast notifications
 - Unit tests for
   - `is_alphabetic()`
   - `is_numeric()`
+- Windows 10 toast notifications
 
 ### Changed ###
 - Certain error messages
 - Output Swirc homepage on CTCP version reply
 
 ### Fixed ###
-- Some functions that should be static, but weren't...
 - Possibly lossy conversions
+- Some functions that should be static, but weren't...
 
 ### News ###
-- Windows-specific:
-  - MSI installer
+- **Windows**: MSI installer
 
 ## [2.1] - 2018-05-21 ##
 ### Added ###
