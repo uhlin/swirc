@@ -80,20 +80,21 @@ All notable changes to this project will be documented in this file.
 
 ## [2.1] - 2018-05-21 ##
 ### Added ###
+- Command /set
 - New build system for
   - UNIX
   - Windows
 - Unit tests for
-  - `int_diff`
-  - `int_sum`
-  - `size_product`
+  - `int_diff()`
+  - `int_sum()`
+  - `size_product()`
   - `squeeze_text_deco()`
   - `sw_strcat()`
   - `sw_strcpy()`
-- Use of `size_product` in multiple places
-- Command /set
+- Use of `size_product()` in multiple places
 
 ### Changed ###
+- **Linux**: fix cflags with pkg-config
 - Name of function
   - `Strcolor` to `strColor`
   - `Strdup_printf` to `strdup_printf`
@@ -101,19 +102,17 @@ All notable changes to this project will be documented in this file.
   - `Strfeed` to `strFeed`
   - `Strings_match_ignore_case` to `strings_match_ignore_case`
   - `Strings_match` to `strings_match`
-- Linux-specific: fix cflags with pkg-config
 - Send `/whois` on `spawn_chat_window()` when on air and the window
-  isn't an irc channel
+  isn't an irc channel.
 - The printtext color map
 
 ### Fixed ###
 - Building for NetBSD
 
 ### News ###
-- Windows-specific:
-  - Curl 7.60.0
-  - LibreSSL 2.7.3
-  - PDCurses 3.6
+- Curl 7.60.0
+- LibreSSL 2.7.3
+- PDCurses 3.6
 
 ## [2.0] - 2018-02-24 ##
 ### Added ###
