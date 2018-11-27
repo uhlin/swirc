@@ -147,29 +147,32 @@ All notable changes to this project will be documented in this file.
 
 ## [1.8] - 2017-10-27 ##
 ### Added ###
-- Event 486 (You must log in with services to message this user)
-- Option `sasl`
-- Option `sasl_mechanism`
-- Option `sasl_password`
-- Option `sasl_username`
-- Event 462 `ERR_ALREADYREGISTRED`
-- Event 901 `RPL_LOGGEDOUT`
-- Event 902 `ERR_NICKLOCKED`
-- Event 903 `RPL_SASLSUCCESS`
-- Event 904 `ERR_SASLFAIL`
-- Event 905 `ERR_SASLTOOLONG`
-- Event 906 `ERR_SASLABORTED`
-- Event 907 `ERR_SASLALREADY`
-- Tor hidden service to freenode servers
 - Command /sasl
-- Support for SASL authentication during registration process
-- Key F11 (close window)
-- Key F12 (close all private conversations)
+- Event
+  - 462 (`ERR_ALREADYREGISTRED`)
+  - 486 (You must log in with services to message this user)
+  - 901 (`RPL_LOGGEDOUT`)
+  - 902 (`ERR_NICKLOCKED`)
+  - 903 (`RPL_SASLSUCCESS`)
+  - 904 (`ERR_SASLFAIL`)
+  - 905 (`ERR_SASLTOOLONG`)
+  - 906 (`ERR_SASLABORTED`)
+  - 907 (`ERR_SASLALREADY`)
+- Key
+  - F11 (close window)
+  - F12 (close all private conversations)
 - Many small improvements
+- Option
+  - `sasl`
+  - `sasl_mechanism`
+  - `sasl_password`
+  - `sasl_username`
+- Support for SASL authentication during registration process
+- Tor hidden service to freenode servers
 
 ### Fixed ###
-- Browsing the command history caused the program to freeze if the
-  next/prev command exceeded a certain count
+- **Browsing the command history caused the program to freeze if the
+  next/prev command exceeded a certain count!**
 
 ## [1.7] - 2017-08-12 ##
 ### Added ###
