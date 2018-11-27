@@ -117,17 +117,19 @@ All notable changes to this project will be documented in this file.
 
 ## [2.0] - 2018-02-24 ##
 ### Added ###
-- Event 465 `ERR_YOUREBANNEDCREEP`
-- Event 466 `ERR_YOUWILLBEBANNED`
-- Command alias /cs (chanserv)
-- Command alias /ns (nickserv)
+- Command alias
+  - /cs (for chanserv)
+  - /ns (for nickserv)
+- Event
+  - 465 (`ERR_YOUREBANNEDCREEP`)
+  - 466 (`ERR_YOUWILLBEBANNED`)
+- `size_to_int()` which asserts given conversation isn't lossy
 - `xfopen()` which is a wrapper for `fopen` and `fopen_s`
 - `xmbstowcs()` which is a wrapper for `mbstowcs` and `mbstowcs_s`
 - `xstrerror()` which is a wrapper for `strerror_s` and `strerror_r`
-- `size_to_int()` which asserts given conversation isn't lossy
 
 ### Changed ###
-- Windows-specific: always produce UTF-8 output
+- **Windows**: always produce UTF-8 output
 
 ### Fixed ###
 - Errors in the license (more specifically in the disclaimer)
