@@ -727,7 +727,7 @@ output_statistics(PRINTTEXT_CONTEXT ctx, const char *channel,
 	printtext(&ctx, "-- Additionally: %c%d%c channel owner(s)",
 	    BOLD, window->num_owners, BOLD);
     if (window->num_superops)
-	printtext(&ctx, "-- Additionally: %c%d%c superops",
+	printtext(&ctx, "-- Additionally: %c%d%c superop(s)",
 	    BOLD, window->num_superops, BOLD);
 }
 
