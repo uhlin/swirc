@@ -121,6 +121,10 @@ static const char *OptionDesc[] = {
     "\nExtras\n",
     "    -v, -version          View the current client ver\n",
     "    -?, -help             Print the usage\n",
+#ifdef OUTPUT_INTERNAL_OPTIONS
+    "    -T                    Internal option. Windows: Invoked when\n",
+    "                          launched by a toast.\n",
+#endif
 };
 
 /**
@@ -331,6 +335,15 @@ case_config()
 }
 
 /**
+ * Command line option -T. The option is automatically invoked when
+ * launched by a toast.
+ */
+static void
+case_launched_by_toast_hook()
+{
+}
+
+/**
  * Process options
  */
 static void
@@ -363,6 +376,9 @@ process_options(int argc, char *argv[], const char *optstring)
 	    break;
 	case 'x':
 	    case_config();
+	    break;
+	case 'T':
+	    case_launched_by_toast_hook();
 	    break;
 	case UNRECOGNIZED_OPTION:
 	    err_msg("%s: -%c: unrecognized option", argv[0], g_option_save);
@@ -420,7 +436,7 @@ main(int argc, char *argv[])
     }
 #endif
 
-    process_options(argc, argv, "c:n:u:r:iph:x:");
+    process_options(argc, argv, "c:n:u:r:iph:x:T");
 
     term_init();
     nestHome_init();
