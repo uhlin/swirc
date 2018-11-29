@@ -264,21 +264,15 @@ event_names_htbl_modify_op(const char *nick, const char *channel, bool is_op)
 	    else if (! (names->is_op)) {
 		window->num_ops--;
 
-		if (names->is_halfop)
-		    window->num_halfops++;
-		else if (names->is_voice)
-		    window->num_voices++;
-		else
-		    window->num_normal++;
+		if (names->is_halfop)     window->num_halfops++;
+		else if (names->is_voice) window->num_voices++;
+		else window->num_normal++;
 	    } else { /* not op */
 		window->num_ops++;
 
-		if (names->is_halfop)
-		    window->num_halfops--;
-		else if (names->is_voice)
-		    window->num_voices--;
-		else
-		    window->num_normal--;
+		if (names->is_halfop)     window->num_halfops--;
+		else if (names->is_voice) window->num_voices--;
+		else window->num_normal--;
 	    }
 
 	    return OK;
