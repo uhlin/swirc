@@ -474,7 +474,7 @@ main(int argc, char *argv[])
     if (DesktopNotificationManagerCompat::RegisterActivator() != S_OK)
 	err_log(0, "Failed to register COM activator");
 
-    SpawnMessageLoop();
+    //SpawnMessageLoop();
     DesktopToastsApp::SendTestNotification();
 #endif
 
