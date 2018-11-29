@@ -15,7 +15,7 @@
 		<com:ComServer>
 			<com:ExeServer
 			    Executable="swirc.exe"
-			    Arguments="-ToastActivated"
+			    Arguments="-T"
 			    DisplayName="Toast activator">
 				<com:Class
 				    Id="62337340-CB78-4AE9-A524-685424C52DC7"

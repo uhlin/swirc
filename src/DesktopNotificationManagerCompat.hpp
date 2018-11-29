@@ -17,7 +17,7 @@
 #include <Windows.h>
 #include <windows.ui.notifications.h>
 #include <wrl.h>
-#define TOAST_ACTIVATED_LAUNCH_ARG L"-ToastActivated"
+#define TOAST_ACTIVATED_LAUNCH_ARG L"-T"
 
 using namespace ABI::Windows::UI::Notifications;
 
