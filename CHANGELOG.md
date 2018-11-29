@@ -2,12 +2,16 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Changed ###
+- Toast activated launch argument
+
 ### Fixed ###
 - **Cases of missing deinitializations regarding names in a channel!**
 - **Thread termination!**
 
 ### News ###
 - Reorganized changelog :-)
+- Windows: **Improved installer**
 
 ## [2.4] - 2018-11-11 ##
 ### Added ###
