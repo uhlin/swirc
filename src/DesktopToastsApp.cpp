@@ -132,32 +132,27 @@ DesktopToastsApp::Initialize(HINSTANCE hInstance)
     if (!m_hwnd)
 	return E_FAIL;
 
-#ifdef CODE_SAVED_FOR_FURTHER_USE
     ::CreateWindow(
         L"BUTTON",
-        L"View Text Toast",
+        L"Pop Toast",
         BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE,
         12, 12, 150, 25,
         m_hwnd, reinterpret_cast<HMENU>(HM_POPTOASTBUTTON),
         hInstance, nullptr);
-#endif
-    /*174, 12, 150, 25,*/
     ::CreateWindow(
 	L"BUTTON",
-	L"Clear toasts",
+	L"Clear Toasts!",
 	BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE,
-	100, 87, 150, 25,
+	174, 12, 150, 25,
 	m_hwnd, reinterpret_cast<HMENU>(HM_CLEARTOASTSBUTTON),
 	hInstance, nullptr);
-#ifdef CODE_SAVED_FOR_FURTHER_USE
     m_hEdit = ::CreateWindow(
 	L"EDIT",
-	L"Whatever action you take on the displayed toast will be shown here.",
+	L"",
 	ES_LEFT | ES_MULTILINE | ES_READONLY | WS_CHILD | WS_VISIBLE | WS_BORDER,
 	12, 49, 300, 50,
 	m_hwnd, nullptr,
 	hInstance, nullptr);
-#endif
 
     ::ShowWindow(m_hwnd, SW_SHOWNORMAL);
     ::UpdateWindow(m_hwnd);
