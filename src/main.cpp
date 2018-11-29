@@ -416,11 +416,13 @@ main(int argc, char *argv[])
 
     if (argc == 2) {
 	if (strncmp(argv[1], "-v", 3) == 0 ||
-	    strncmp(argv[1], "-version", 9) == 0) {
+	    strncmp(argv[1], "-version", 9) == 0 ||
+	    strncmp(argv[1], "--version", 10) == 0) {
 	    view_version();
 	    return EXIT_SUCCESS;
 	} else if (strncmp(argv[1], "-?", 3) == 0 ||
-		   strncmp(argv[1], "-help", 6) == 0) {
+		   strncmp(argv[1], "-help", 6) == 0 ||
+		   strncmp(argv[1], "--help", 7) == 0) {
 	    print_help(argv[0]);
 	    return EXIT_SUCCESS;
 	} else {
