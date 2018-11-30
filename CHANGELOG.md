@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 ### Changed ###
 - Toast activated launch argument
 
+### Deleted ###
+- Windows: `SpawnMessageLoop()` happened to be a *mistake* and was
+  therefore deleted!
+
 ### Fixed ###
 - **Cases of missing deinitializations regarding names in a channel!**
 - **Thread termination!**
