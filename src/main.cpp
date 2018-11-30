@@ -65,7 +65,6 @@
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 #include "DesktopNotificationManagerCompat.hpp"
 #include "DesktopToastsApp.hpp"
-#include "SpawnMessageLoop.h"
 #endif
 
 #define DUP_OPTION_ERR(opt)	err_quit("A duplicate of option -%c found", opt)
@@ -474,7 +473,6 @@ main(int argc, char *argv[])
     if (DesktopNotificationManagerCompat::RegisterActivator() != S_OK)
 	err_log(0, "Failed to register COM activator");
 
-    //SpawnMessageLoop();
     DesktopToastsApp::SendTestNotification();
 #endif
 
