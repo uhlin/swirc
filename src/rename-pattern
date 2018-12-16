@@ -2,11 +2,17 @@
 
 TARGETS="
 *.c
+*.cpp
 *.h
+*.hpp
 commands/*.c
+commands/*.cpp
 commands/*.h
+commands/*.hpp
 events/*.c
+events/*.cpp
 events/*.h
+events/*.hpp
 "
 
 if test $# != 2; then
