@@ -473,7 +473,7 @@ main(int argc, char *argv[])
     if (DesktopNotificationManagerCompat::RegisterActivator() != S_OK)
 	err_log(0, "Failed to register COM activator");
 
-    DesktopToastsApp::SendTestNotification();
+    Toasts::SendTestNotification();
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201811
