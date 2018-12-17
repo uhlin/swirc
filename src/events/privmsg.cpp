@@ -322,7 +322,7 @@ event_privmsg(struct irc_message_compo *compo)
 	    wchar_t *wNick = get_converted_wcs(nick);
 	    wchar_t *wMsg  = get_converted_wcs(msg);
 
-	    DesktopToastsApp::SendBasicToast(
+	    Toasts::SendBasicToast(
 		get_message(L"[PM]", L" <", wNick, L"> ", wMsg));
 
 	    free(wNick);
@@ -362,7 +362,7 @@ event_privmsg(struct irc_message_compo *compo)
 		wchar_t *wDest = get_converted_wcs(dest);
 		wchar_t *wMsg  = get_converted_wcs(msg);
 
-		DesktopToastsApp::SendBasicToast(
+		Toasts::SendBasicToast(
 		    get_message(wNick, L" @ ", wDest, L": ", wMsg));
 
 		free(wNick);
