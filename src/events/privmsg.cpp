@@ -45,7 +45,7 @@
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 #include "../DesktopNotificationManagerCompat.hpp"
-#include "../DesktopToastsApp.hpp"
+#include "../ToastsAPI.hpp"
 #endif
 
 #include "names.h"

@@ -64,7 +64,7 @@
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 #include "DesktopNotificationManagerCompat.hpp"
-#include "DesktopToastsApp.hpp"
+#include "ToastsAPI.hpp"
 #endif
 
 #define DUP_OPTION_ERR(opt)	err_quit("A duplicate of option -%c found", opt)
