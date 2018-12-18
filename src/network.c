@@ -179,6 +179,8 @@ net_connect(const struct network_connect_context *ctx)
 
     if (ctx == NULL)
 	err_exit(EINVAL, "net_connect");
+    else if (g_connection_in_progress)
+	return;
     g_connection_in_progress = true;
     printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1, true);
     printtext(&ptext_ctx, "Connecting to %s (%s)", ctx->server, ctx->port);
