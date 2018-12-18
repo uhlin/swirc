@@ -40,7 +40,7 @@
 
 SOCKET g_socket = INVALID_SOCKET;
 
-static const uintptr_t UNSUCCESSFUL = (uintptr_t) -1L;
+static const uintptr_t BEGINTHREAD_FAILED = (uintptr_t) -1L;
 static uintptr_t listenThread_id;
 
 static void __cdecl
@@ -131,7 +131,7 @@ void
 net_spawn_listenThread(void)
 {
     if ((listenThread_id = _beginthread(listenThread_fn, 0, NULL)) ==
-	UNSUCCESSFUL)
+	BEGINTHREAD_FAILED)
 	err_sys("_beginthread error");
 }
 
