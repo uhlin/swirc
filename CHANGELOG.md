@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - **Thread termination!**
 
 ### News ###
+- Readline is now non-blocking during connection to a server!
 - Reorganized changelog :-)
 - Windows: **Improved installer**
 
