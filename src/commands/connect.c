@@ -384,13 +384,17 @@ void
 cmd_disconnect(const char *data)
 {
     const bool has_message = !strings_match(data, "");
+    extern void event_welcome_signalit(void);
 
     if (g_on_air) {
 	if (has_message)
 	    net_send("QUIT :%s", data);
 	else
 	    net_send("QUIT :%s", Config("quit_message"));
+
 	g_on_air = false;
-	/* net_listenThread_join(); */
+
+	if (g_connection_in_progress)
+	    event_welcome_signalit();
     }
 }
