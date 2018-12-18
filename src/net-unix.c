@@ -41,6 +41,8 @@
 #include "network.h"
 #include "strdup_printf.h"
 
+#include "commands/connect.h" /* do_connect() */
+
 int g_socket = -1;
 
 static pthread_t listenThread_id;
@@ -131,4 +133,27 @@ net_listenThread_join(void)
 {
     if ((errno = pthread_join(listenThread_id, NULL)) != 0)
 	err_sys("pthread_join");
+}
+
+static void *
+do_connect_wrapper(void *arg)
+{
+    struct server *server = arg;
+
+    do_connect(server->host, server->port);
+
+    return NULL;
+}
+
+void
+net_do_connect_detached(const char *host, const char *port)
+{
+    pthread_t thread;
+    struct server *server = server_new(host, port);
+
+    if ((errno = pthread_create(&thread,NULL,do_connect_wrapper,server)) != 0)
+	err_sys("net_do_connect_detached: pthread_create");
+    else if ((errno = pthread_detach(thread)) != 0)
+	err_sys("net_do_connect_detached: pthread_detach");
+    server_destroy(server);
 }
