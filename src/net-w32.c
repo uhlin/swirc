@@ -47,12 +47,10 @@ SOCKET g_socket = INVALID_SOCKET;
 static const uintptr_t BEGINTHREAD_FAILED = (uintptr_t) -1L;
 static uintptr_t listenThread_id;
 
-static VoidCdecl
-listenThread_fn(void *arg)
+bool
+winsock_deinit(void)
 {
-    (void) arg;
-    net_irc_listen();
-    _endthread();
+    return (WSACleanup() == 0 ? true : false);
 }
 
 bool
@@ -62,41 +60,6 @@ winsock_init(void)
     WSADATA wsa;
 
     return (WSAStartup(ver_req, &wsa) == 0 ? true : false);
-}
-
-bool
-winsock_deinit(void)
-{
-    return (WSACleanup() == 0 ? true : false);
-}
-
-int
-net_send_plain(const char *fmt, ...)
-{
-    char *buffer;
-    int n_sent;
-    va_list ap;
-
-    if (!fmt) {
-	err_exit(EINVAL, "net_send error");
-    } else if (*fmt == '\0') {
-	return (0); /* nothing sent */
-    }
-
-    va_start(ap, fmt);
-    buffer = strdup_vprintf(fmt, ap);
-    va_end(ap);
-
-    realloc_strcat(&buffer, "\r\n");
-
-    if ((n_sent = send(g_socket, buffer, size_to_int(strlen(buffer)), 0)) ==
-	SOCKET_ERROR) {
-	free_and_null(&buffer);
-	return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
-    }
-
-    free_and_null(&buffer);
-    return (n_sent);
 }
 
 int
@@ -131,18 +94,33 @@ net_recv_plain(struct network_recv_context *ctx,
     /*NOTREACHED*/ return (-1);
 }
 
-void
-net_spawn_listenThread(void)
+int
+net_send_plain(const char *fmt, ...)
 {
-    if ((listenThread_id = _beginthread(listenThread_fn, 0, NULL)) ==
-	BEGINTHREAD_FAILED)
-	err_sys("_beginthread error");
-}
+    char *buffer;
+    int n_sent;
+    va_list ap;
 
-void
-net_listenThread_join(void)
-{
-    (void) WaitForSingleObject((HANDLE) listenThread_id, 10000);
+    if (!fmt) {
+	err_exit(EINVAL, "net_send error");
+    } else if (*fmt == '\0') {
+	return (0); /* nothing sent */
+    }
+
+    va_start(ap, fmt);
+    buffer = strdup_vprintf(fmt, ap);
+    va_end(ap);
+
+    realloc_strcat(&buffer, "\r\n");
+
+    if ((n_sent = send(g_socket, buffer, size_to_int(strlen(buffer)), 0)) ==
+	SOCKET_ERROR) {
+	free_and_null(&buffer);
+	return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
+    }
+
+    free_and_null(&buffer);
+    return (n_sent);
 }
 
 static VoidCdecl
@@ -162,4 +140,26 @@ net_do_connect_detached(const char *host, const char *port)
 
     if (_beginthread(do_connect_wrapper, 0, server) == BEGINTHREAD_FAILED)
 	err_sys("_beginthread");
+}
+
+void
+net_listenThread_join(void)
+{
+    (void) WaitForSingleObject((HANDLE) listenThread_id, 10000);
+}
+
+static VoidCdecl
+listenThread_fn(void *arg)
+{
+    (void) arg;
+    net_irc_listen();
+    _endthread();
+}
+
+void
+net_spawn_listenThread(void)
+{
+    if ((listenThread_id = _beginthread(listenThread_fn, 0, NULL)) ==
+	BEGINTHREAD_FAILED)
+	err_sys("_beginthread error");
 }

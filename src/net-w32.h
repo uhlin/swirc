@@ -12,12 +12,13 @@ struct network_recv_context {
 
 extern SOCKET g_socket;
 
-bool winsock_init           (void);
-bool winsock_deinit         (void);
-int  net_send_plain         (const char *fmt, ...);
-int  net_recv_plain         (struct network_recv_context *, char *recvbuf, int recvbuf_size);
-void net_spawn_listenThread (void);
-void net_listenThread_join  (void);
-void net_do_connect_detached(const char *host, const char *port);
+bool	winsock_deinit(void);
+bool	winsock_init(void);
+int	net_recv_plain(struct network_recv_context *, char *recvbuf,
+	    int recvbuf_size);
+int	net_send_plain(const char *, ...);
+void	net_do_connect_detached(const char *host, const char *port);
+void	net_listenThread_join(void);
+void	net_spawn_listenThread(void);
 
 #endif
