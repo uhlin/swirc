@@ -38,6 +38,8 @@
 #include "network.h"
 #include "strdup_printf.h"
 
+#include "commands/connect.h" /* do_connect() */
+
 SOCKET g_socket = INVALID_SOCKET;
 
 static const uintptr_t BEGINTHREAD_FAILED = (uintptr_t) -1L;
@@ -139,4 +141,23 @@ void
 net_listenThread_join(void)
 {
     (void) WaitForSingleObject((HANDLE) listenThread_id, 10000);
+}
+
+static void __cdecl
+do_connect_wrapper(void *arg)
+{
+    struct server *server = arg;
+
+    do_connect(server->host, server->port);
+    server_destroy(server);
+    _endthread();
+}
+
+void
+net_do_connect_detached(const char *host, const char *port)
+{
+    struct server *server = server_new(host, port);
+
+    if (_beginthread(do_connect_wrapper, 0, server) == BEGINTHREAD_FAILED)
+	err_sys("_beginthread");
 }

@@ -18,5 +18,6 @@ int  net_send_plain         (const char *fmt, ...);
 int  net_recv_plain         (struct network_recv_context *, char *recvbuf, int recvbuf_size);
 void net_spawn_listenThread (void);
 void net_listenThread_join  (void);
+void net_do_connect_detached(const char *host, const char *port);
 
 #endif
