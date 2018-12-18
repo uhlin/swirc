@@ -141,7 +141,7 @@ do_connect_wrapper(void *arg)
     struct server *server = arg;
 
     do_connect(server->host, server->port);
-
+    server_destroy(server);
     return NULL;
 }
 
@@ -155,5 +155,4 @@ net_do_connect_detached(const char *host, const char *port)
 	err_sys("net_do_connect_detached: pthread_create");
     else if ((errno = pthread_detach(thread)) != 0)
 	err_sys("net_do_connect_detached: pthread_detach");
-    server_destroy(server);
 }
