@@ -40,12 +40,14 @@
 
 #include "commands/connect.h" /* do_connect() */
 
+typedef void __cdecl VoidCdecl;
+
 SOCKET g_socket = INVALID_SOCKET;
 
 static const uintptr_t BEGINTHREAD_FAILED = (uintptr_t) -1L;
 static uintptr_t listenThread_id;
 
-static void __cdecl
+static VoidCdecl
 listenThread_fn(void *arg)
 {
     (void) arg;
@@ -143,7 +145,7 @@ net_listenThread_join(void)
     (void) WaitForSingleObject((HANDLE) listenThread_id, 10000);
 }
 
-static void __cdecl
+static VoidCdecl
 do_connect_wrapper(void *arg)
 {
     struct server *server = arg;
