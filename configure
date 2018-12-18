@@ -170,6 +170,7 @@ fix_cflags () {
 
 	    if test -n "$cflags"; then
 		echo "CFLAGS+=$cflags" >>$MAKE_DEF_FILE
+		echo "CXXFLAGS+=$cflags" >>$MAKE_DEF_FILE
 	    fi
 
 	    break
