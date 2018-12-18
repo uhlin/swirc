@@ -433,7 +433,7 @@ enter_io_loop(void)
     }
 
     if (g_auto_connect) {
-	do_connect(g_cmdline_opts->server, g_cmdline_opts->port);
+	IRC_CONNECT(g_cmdline_opts->server, g_cmdline_opts->port);
     }
 
     history = textBuf_new();

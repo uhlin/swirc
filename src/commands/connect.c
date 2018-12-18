@@ -356,25 +356,25 @@ cmd_connect(const char *data)
 	return;
     } else {
 	if (strings_match_ignore_case(server, "efnet"))
-	    do_connect(get_server(efnet_servers,
+	    IRC_CONNECT(get_server(efnet_servers,
 		ARRAY_SIZE(efnet_servers), "EFnet servers"), port);
 	else if (strings_match_ignore_case(server, "freenode"))
-	    do_connect(get_server(freenode_servers,
+	    IRC_CONNECT(get_server(freenode_servers,
 		ARRAY_SIZE(freenode_servers), "freenode servers"), port);
 	else if (strings_match_ignore_case(server, "ircnet"))
-	    do_connect(get_server(ircnet_servers,
+	    IRC_CONNECT(get_server(ircnet_servers,
 		ARRAY_SIZE(ircnet_servers), "IRCnet servers"), port);
 	else if (strings_match_ignore_case(server, "quakenet"))
-	    do_connect(get_server(quakenet_servers,
+	    IRC_CONNECT(get_server(quakenet_servers,
 		ARRAY_SIZE(quakenet_servers), "QuakeNet servers"), port);
 	else if (strings_match_ignore_case(server, "undernet"))
-	    do_connect(get_server(undernet_servers,
+	    IRC_CONNECT(get_server(undernet_servers,
 		ARRAY_SIZE(undernet_servers), "undernet servers"), port);
 	else if (strings_match_ignore_case(server, "test"))
-	    do_connect(get_server(test_servers,
+	    IRC_CONNECT(get_server(test_servers,
 		ARRAY_SIZE(test_servers), "test servers"), port);
 	else
-	    do_connect(server, port);
+	    IRC_CONNECT(server, port);
 	free(dcopy);
     }
 }
