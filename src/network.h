@@ -13,6 +13,11 @@
 extern "C" {
 #endif
 
+struct server {
+    char *host;
+    char *port;
+};
+
 struct network_connect_context {
     char *server;
     char *port;
@@ -32,6 +37,9 @@ extern volatile bool g_connection_in_progress;
 extern volatile bool g_on_air;
 
 /*lint -sem(net_addr_resolve, r_null) */
+
+struct server	*server_new(const char *host, const char *port);
+void		 server_destroy(struct server *);
 
 bool		 is_sasl_enabled(void);
 struct addrinfo *net_addr_resolve(const char *host, const char *port);

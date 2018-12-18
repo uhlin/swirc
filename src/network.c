@@ -63,6 +63,27 @@ volatile bool g_on_air = false;
 
 static const int RECVBUF_SIZE = 2048;
 
+struct server *
+server_new(const char *host, const char *port)
+{
+    struct server *server = xmalloc(sizeof *server);
+
+    server->host = sw_strdup(host);
+    server->port = sw_strdup(port);
+
+    return server;
+}
+
+void
+server_destroy(struct server *server)
+{
+    if (server == NULL)
+	return;
+    free_not_null(server->host);
+    free_not_null(server->port);
+    free(server);
+}
+
 bool
 is_sasl_enabled(void)
 {
