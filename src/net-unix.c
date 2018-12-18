@@ -47,43 +47,6 @@ int g_socket = -1;
 
 static pthread_t listenThread_id;
 
-static void *
-listenThread_fn(void *arg)
-{
-    (void) arg;
-    net_irc_listen();
-    return (NULL);
-}
-
-int
-net_send_plain(const char *fmt, ...)
-{
-    char       *buffer;
-    int         n_sent;
-    va_list     ap;
-
-    if (!fmt) {
-	err_exit(EINVAL, "net_send");
-    } else if (*fmt == '\0') {
-	return (0); /* nothing sent */
-    }
-
-    va_start(ap, fmt);
-    buffer = strdup_vprintf(fmt, ap);
-    va_end(ap);
-
-    realloc_strcat(&buffer, "\r\n");
-
-    errno = 0;
-    if ((n_sent = send(g_socket, buffer, strlen(buffer), 0)) == -1) {
-	free_and_null(&buffer);
-	return (errno == EAGAIN || errno == EWOULDBLOCK ? 0 : -1);
-    }
-
-    free_and_null(&buffer);
-    return (n_sent);
-}
-
 int
 net_recv_plain(struct network_recv_context *ctx,
 	       char *recvbuf, int recvbuf_size)
@@ -118,21 +81,33 @@ net_recv_plain(struct network_recv_context *ctx,
     /*NOTREACHED*/ return (-1);
 }
 
-void
-net_spawn_listenThread(void)
+int
+net_send_plain(const char *fmt, ...)
 {
-    if (errno = pthread_create(&listenThread_id, NULL, listenThread_fn, NULL),
-	errno != 0)
-	err_sys("pthread_create");
-    else if ((errno = pthread_detach(listenThread_id)) != 0)
-	err_sys("pthread_detach");
-}
+    char       *buffer;
+    int         n_sent;
+    va_list     ap;
 
-void
-net_listenThread_join(void)
-{
-    if ((errno = pthread_join(listenThread_id, NULL)) != 0)
-	err_sys("pthread_join");
+    if (!fmt) {
+	err_exit(EINVAL, "net_send");
+    } else if (*fmt == '\0') {
+	return (0); /* nothing sent */
+    }
+
+    va_start(ap, fmt);
+    buffer = strdup_vprintf(fmt, ap);
+    va_end(ap);
+
+    realloc_strcat(&buffer, "\r\n");
+
+    errno = 0;
+    if ((n_sent = send(g_socket, buffer, strlen(buffer), 0)) == -1) {
+	free_and_null(&buffer);
+	return (errno == EAGAIN || errno == EWOULDBLOCK ? 0 : -1);
+    }
+
+    free_and_null(&buffer);
+    return (n_sent);
 }
 
 static void *
@@ -155,4 +130,29 @@ net_do_connect_detached(const char *host, const char *port)
 	err_sys("net_do_connect_detached: pthread_create");
     else if ((errno = pthread_detach(thread)) != 0)
 	err_sys("net_do_connect_detached: pthread_detach");
+}
+
+void
+net_listenThread_join(void)
+{
+    if ((errno = pthread_join(listenThread_id, NULL)) != 0)
+	err_sys("pthread_join");
+}
+
+static void *
+listenThread_fn(void *arg)
+{
+    (void) arg;
+    net_irc_listen();
+    return (NULL);
+}
+
+void
+net_spawn_listenThread(void)
+{
+    if (errno = pthread_create(&listenThread_id, NULL, listenThread_fn, NULL),
+	errno != 0)
+	err_sys("pthread_create");
+    else if ((errno = pthread_detach(listenThread_id)) != 0)
+	err_sys("pthread_detach");
 }
