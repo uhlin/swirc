@@ -284,11 +284,11 @@ net_irc_listen(void)
 	.microsec = 0,
     };
 
-    printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC1_WARN, true);
     irc_init();
 
     do {
 	BZERO(recvbuf, RECVBUF_SIZE);
+
 	if ((bytes_received = net_recv(&ctx, recvbuf, RECVBUF_SIZE-1)) == -1) {
 	    goto out;
 	} else if (bytes_received > 0) {
@@ -299,7 +299,7 @@ net_irc_listen(void)
     } while (g_on_air);
 
   out:
-    ptext_ctx.window = g_active_window;
+    printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_WARN, true);
     if (g_on_air) {
 	printtext(&ptext_ctx, "Connection to IRC server lost");
 	g_on_air = false;
