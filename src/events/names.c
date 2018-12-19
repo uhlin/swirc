@@ -718,11 +718,13 @@ output_statistics(PRINTTEXT_CONTEXT ctx, const char *channel,
 	BOLD, window->num_voices, BOLD, BOLD, window->num_normal, BOLD,
 	RIGHT_BRKT);
     if (window->num_owners)
-	printtext(&ctx, "-- Additionally: %c%d%c channel owner(s)",
-	    BOLD, window->num_owners, BOLD);
+	printtext(&ctx, "-- Additionally: %c%d%c channel owner%s",
+	    BOLD, window->num_owners, BOLD,
+	    window->num_owners > 1 ? "s" : "");
     if (window->num_superops)
-	printtext(&ctx, "-- Additionally: %c%d%c superop(s)",
-	    BOLD, window->num_superops, BOLD);
+	printtext(&ctx, "-- Additionally: %c%d%c superop%s",
+	    BOLD, window->num_superops, BOLD,
+	    window->num_superops > 1 ? "s" : "");
 }
 
 #define FORMAT_SIZE 120
