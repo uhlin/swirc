@@ -153,7 +153,14 @@ output_help_for_command(const char *command)
 
     for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
 	if (strings_match(command, sp->cmd)) {
-	    printtext(&ctx, "usage: %s", sp->usage);
+	    const char **lines = & (sp->usage[0]);
+	    const size_t size = sp->size;
+
+	    while (lines < & (sp->usage[size])) {
+		printtext(&ctx, "%s", *lines);
+		lines++;
+	    }
+
 	    return;
 	}
     }
