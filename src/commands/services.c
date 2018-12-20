@@ -1,5 +1,5 @@
 /* commands/services.c
-   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -37,7 +37,7 @@
 
 #include "services.h"
 
-/* usage: /chanserv <service hostname | --> <command> [...] */
+/* usage: /chanserv <[service hostname | --]> <command> [...] */
 void
 cmd_chanserv(const char *data)
 {
@@ -76,7 +76,7 @@ cmd_chanserv(const char *data)
     free(dcopy);
 }
 
-/* usage: /nickserv <service hostname | --> <command> [...] */
+/* usage: /nickserv <[service hostname | --]> <command> [...] */
 void
 cmd_nickserv(const char *data)
 {
