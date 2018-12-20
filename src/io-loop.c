@@ -76,61 +76,53 @@ static size_t bytes_convert = 0;
 static const size_t ARSZ = ARRAY_SIZE(g_push_back_buf);
 static const size_t CONVERT_FAILED = (size_t) -1;
 
+#include "commandhelp.h"
+
 static struct cmds_tag {
-    char		*cmd;
-    CMD_HANDLER_FN	 fn;
-    bool		 requires_connection;
-    char		*usage;
+    char *cmd;
+    CMD_HANDLER_FN fn;
+    bool requires_connection;
+    const char **usage;
+    const size_t size;
 } cmds[] = {
-    { "away",       cmd_away,       true,  "/away [reason]" },
-    { "banlist",    cmd_banlist,    true,  "/banlist [channel]" },
-    { "chanserv",   cmd_chanserv,   true,  "/chanserv "
-      "<service hostname | --> <command> [...]" },
-    { "close",      cmd_close,      false, "/close" },
-    { "connect",    cmd_connect,    false, "/connect [-tls] <server[:port]>" },
-    { "cs",         cmd_chanserv,   true,  "alias for /chanserv" },
-    { "cycle",      cmd_cycle,      true,  "/cycle [channel]" },
-    { "disconnect", cmd_disconnect, true,  "/disconnect [message]" },
-    { "exlist",     cmd_exlist,     true,  "/exlist [channel]" },
-    { "help",       cmd_help,       false, "/help [command]" },
-    { "ilist",      cmd_ilist,      true,  "/ilist [channel]" },
-    { "invite",     cmd_invite,     true,  "/invite <targ_nick> <channel>" },
-    { "join",       cmd_join,       true,  "/join <channel> [key]" },
-    { "kick",       cmd_kick,       true,  "/kick "
-      "<nick1[,nick2][,nick3][...]> [reason]" },
-    { "list",       cmd_list,       true,  "/list "
-      "[<max_users[,>min_users][,pattern][...]]" },
-    { "me",         cmd_me,         true,  "/me <message>" },
-    { "mode",       cmd_mode,       true,  "/mode <modes> [...]" },
-    { "msg",        cmd_msg,        true,  "/msg <recipient> <message>" },
-    { "n",          cmd_names,      true,  "/n [channel]" },
-    { "nick",       cmd_nick,       true,  "/nick <new nickname>" },
-    { "nickserv",   cmd_nickserv,   true,  "/nickserv "
-      "<service hostname | --> <command> [...]" },
-    { "notice",     cmd_notice,     true,  "/notice <recipient> <message>" },
-    { "ns",         cmd_nickserv,   true,  "alias for /nickserv" },
-    { "oper",       cmd_oper,       true,  "/oper <name> <password>" },
-    { "part",       cmd_part,       true,  "/part [channel] [message]" },
-    { "query",      cmd_query,      false, "/query [nick]" },
-    { "quit",       cmd_quit,       false, "/quit [message]" },
-    { "resize",     cmd_resize,     false, "/resize" },
-    { "rules",      cmd_rules,      true,  "/rules" },
-    { "sasl",       cmd_sasl,       false, "/sasl <operation> [...]"
-      "\nkeygen [--force]"
-      "\npubkey"
-      "\nmechanism [ecdsa-nist256p-challenge | plain]"
-      "\nusername <name>"
-      "\npassword <pass>"
-      "\nset [on | off]" },
-    { "say",        cmd_say,        true,  "/say <message>" },
-    { "set",        cmd_set,        false, "/set [[setting] [value]]" },
-    { "theme",      cmd_theme,      false, "/theme "
-      "[install | list-remote | set] [name]" },
-    { "time",       cmd_time,       true,  "/time <target>" },
-    { "topic",      cmd_topic,      true,  "/topic [new topic]" },
-    { "version",    cmd_version,    true,  "/version <target>" },
-    { "who",        cmd_who,        true,  "/who <mask>" },
-    { "whois",      cmd_whois,      true,  "/whois <nick>" },
+    { "away",       cmd_away,       true,  away_usage,       ARRAY_SIZE(away_usage) },
+    { "banlist",    cmd_banlist,    true,  banlist_usage,    ARRAY_SIZE(banlist_usage) },
+    { "chanserv",   cmd_chanserv,   true,  chanserv_usage,   ARRAY_SIZE(chanserv_usage) },
+    { "close",      cmd_close,      false, close_usage,      ARRAY_SIZE(close_usage) },
+    { "connect",    cmd_connect,    false, connect_usage,    ARRAY_SIZE(connect_usage) },
+    { "cs",         cmd_chanserv,   true,  chanserv_usage,   ARRAY_SIZE(chanserv_usage) },
+    { "cycle",      cmd_cycle,      true,  cycle_usage,      ARRAY_SIZE(cycle_usage) },
+    { "disconnect", cmd_disconnect, true,  disconnect_usage, ARRAY_SIZE(disconnect_usage) },
+    { "exlist",     cmd_exlist,     true,  exlist_usage,     ARRAY_SIZE(exlist_usage) },
+    { "help",       cmd_help,       false, help_usage,       ARRAY_SIZE(help_usage) },
+    { "ilist",      cmd_ilist,      true,  ilist_usage,      ARRAY_SIZE(ilist_usage) },
+    { "invite",     cmd_invite,     true,  invite_usage,     ARRAY_SIZE(invite_usage) },
+    { "join",       cmd_join,       true,  join_usage,       ARRAY_SIZE(join_usage) },
+    { "kick",       cmd_kick,       true,  kick_usage,       ARRAY_SIZE(kick_usage) },
+    { "list",       cmd_list,       true,  list_usage,       ARRAY_SIZE(list_usage) },
+    { "me",         cmd_me,         true,  me_usage,         ARRAY_SIZE(me_usage) },
+    { "mode",       cmd_mode,       true,  mode_usage,       ARRAY_SIZE(mode_usage) },
+    { "msg",        cmd_msg,        true,  msg_usage,        ARRAY_SIZE(msg_usage) },
+    { "n",          cmd_names,      true,  n_usage,          ARRAY_SIZE(n_usage) },
+    { "nick",       cmd_nick,       true,  nick_usage,       ARRAY_SIZE(nick_usage) },
+    { "nickserv",   cmd_nickserv,   true,  nickserv_usage,   ARRAY_SIZE(nickserv_usage) },
+    { "notice",     cmd_notice,     true,  notice_usage,     ARRAY_SIZE(notice_usage) },
+    { "ns",         cmd_nickserv,   true,  nickserv_usage,   ARRAY_SIZE(nickserv_usage) },
+    { "oper",       cmd_oper,       true,  oper_usage,       ARRAY_SIZE(oper_usage) },
+    { "part",       cmd_part,       true,  part_usage,       ARRAY_SIZE(part_usage) },
+    { "query",      cmd_query,      false, query_usage,      ARRAY_SIZE(query_usage) },
+    { "quit",       cmd_quit,       false, quit_usage,       ARRAY_SIZE(quit_usage) },
+    { "resize",     cmd_resize,     false, resize_usage,     ARRAY_SIZE(resize_usage) },
+    { "rules",      cmd_rules,      true,  rules_usage,      ARRAY_SIZE(rules_usage) },
+    { "sasl",       cmd_sasl,       false, sasl_usage,       ARRAY_SIZE(sasl_usage) },
+    { "say",        cmd_say,        true,  say_usage,        ARRAY_SIZE(say_usage) },
+    { "set",        cmd_set,        false, set_usage,        ARRAY_SIZE(set_usage) },
+    { "theme",      cmd_theme,      false, theme_usage,      ARRAY_SIZE(theme_usage) },
+    { "time",       cmd_time,       true,  time_usage,       ARRAY_SIZE(time_usage) },
+    { "topic",      cmd_topic,      true,  topic_usage,      ARRAY_SIZE(topic_usage) },
+    { "version",    cmd_version,    true,  version_usage,    ARRAY_SIZE(version_usage) },
+    { "who",        cmd_who,        true,  who_usage,        ARRAY_SIZE(who_usage) },
+    { "whois",      cmd_whois,      true,  whois_usage,      ARRAY_SIZE(whois_usage) },
 };
 
 /* must be freed */
