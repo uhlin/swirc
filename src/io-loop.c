@@ -417,8 +417,7 @@ add_to_history(const char *string)
 	if ((errno = textBuf_ins_next(history, NULL, string, -1)) != 0)
 	    err_sys("textBuf_ins_next");
     } else {
-	if ((errno = textBuf_ins_next(history, textBuf_tail(history), string,
-				      -1)) != 0)
+	if ((errno = textBuf_ins_next(history, textBuf_tail(history), string, -1)) != 0)
 	    err_sys("textBuf_ins_next");
     }
 }
