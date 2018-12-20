@@ -485,7 +485,7 @@ transmit_user_input(const char *win_label, const char *input)
 	true);
 
     if (ctx.window == NULL) {
-	err_log(0, "In transmit_user_input: window %s not found", win_label);
+	err_log(0, "transmit_user_input: window %s not found", win_label);
 	return;
     }
 
@@ -502,7 +502,7 @@ transmit_user_input(const char *win_label, const char *input)
 	char	c = ' ';
 
 	if ((n = event_names_htbl_lookup(g_my_nickname, win_label)) == NULL) {
-	    err_log(0, "In transmit_user_input: hash table lookup error");
+	    err_log(0, "transmit_user_input: hash table lookup error");
 	    return;
 	}
 
