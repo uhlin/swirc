@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [2.5] - 2018-12-21 ##
 ### Added ###
 - Extended help for ALL commands
 
