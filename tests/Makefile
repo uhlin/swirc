@@ -34,6 +34,7 @@ TESTS=\
 all: progobjs $(TESTS)
 
 progobjs:
+	$(RM) $(SRC)/main.o
 	$(MAKE) -C$(ROOT)
 
 clean:
