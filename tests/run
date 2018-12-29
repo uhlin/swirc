@@ -11,6 +11,7 @@ strToLower
 strToUpper
 sw_strcat
 sw_strcpy
+sw_strdup
 "
 
 for test in $TESTS; do

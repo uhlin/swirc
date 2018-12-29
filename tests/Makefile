@@ -17,7 +17,8 @@ TESTS=\
 	strToLower.run\
 	strToUpper.run\
 	sw_strcat.run\
-	sw_strcpy.run
+	sw_strcpy.run\
+	sw_strdup.run
 
 .SUFFIXES: .c .o .run
 
