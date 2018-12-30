@@ -19,6 +19,7 @@ TESTS=\
 	strFeed.run\
 	strToLower.run\
 	strToUpper.run\
+	strdup_printf.run\
 	sw_snprintf.run\
 	sw_strcat.run\
 	sw_strcpy.run\

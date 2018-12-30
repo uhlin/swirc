@@ -12,6 +12,7 @@ strColor
 strFeed
 strToLower
 strToUpper
+strdup_printf
 sw_snprintf
 sw_strcat
 sw_strcpy
