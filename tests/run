@@ -7,6 +7,7 @@ is_alphabetic
 is_numeric
 size_product
 squeeze_text_deco
+strColor
 strToLower
 strToUpper
 sw_strcat

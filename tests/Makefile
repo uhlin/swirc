@@ -14,6 +14,7 @@ TESTS=\
 	is_numeric.run\
 	size_product.run\
 	squeeze_text_deco.run\
+	strColor.run\
 	strToLower.run\
 	strToUpper.run\
 	sw_strcat.run\
