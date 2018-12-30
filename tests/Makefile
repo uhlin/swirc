@@ -12,6 +12,7 @@ TESTS=\
 	int_sum.run\
 	is_alphabetic.run\
 	is_numeric.run\
+	realloc_strcat.run\
 	size_product.run\
 	squeeze.run\
 	squeeze_text_deco.run\

@@ -5,6 +5,7 @@ int_diff
 int_sum
 is_alphabetic
 is_numeric
+realloc_strcat
 size_product
 squeeze
 squeeze_text_deco
