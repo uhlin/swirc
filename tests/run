@@ -14,6 +14,7 @@ strToUpper
 sw_strcat
 sw_strcpy
 sw_strdup
+sw_wcscat
 trim
 "
 
