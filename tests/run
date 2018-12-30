@@ -15,6 +15,7 @@ sw_strcat
 sw_strcpy
 sw_strdup
 sw_wcscat
+sw_wcscpy
 trim
 "
 

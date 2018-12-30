@@ -22,6 +22,7 @@ TESTS=\
 	sw_strcpy.run\
 	sw_strdup.run\
 	sw_wcscat.run\
+	sw_wcscpy.run\
 	trim.run
 
 .SUFFIXES: .c .o .run
