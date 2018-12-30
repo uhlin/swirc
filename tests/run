@@ -12,6 +12,7 @@ strToUpper
 sw_strcat
 sw_strcpy
 sw_strdup
+trim
 "
 
 for test in $TESTS; do

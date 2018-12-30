@@ -18,7 +18,8 @@ TESTS=\
 	strToUpper.run\
 	sw_strcat.run\
 	sw_strcpy.run\
-	sw_strdup.run
+	sw_strdup.run\
+	trim.run
 
 .SUFFIXES: .c .o .run
 
