@@ -15,6 +15,7 @@ TESTS=\
 	size_product.run\
 	squeeze_text_deco.run\
 	strColor.run\
+	strFeed.run\
 	strToLower.run\
 	strToUpper.run\
 	sw_strcat.run\

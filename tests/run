@@ -8,6 +8,7 @@ is_numeric
 size_product
 squeeze_text_deco
 strColor
+strFeed
 strToLower
 strToUpper
 sw_strcat
