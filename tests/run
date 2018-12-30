@@ -6,6 +6,7 @@ int_sum
 is_alphabetic
 is_numeric
 size_product
+squeeze
 squeeze_text_deco
 strColor
 strFeed

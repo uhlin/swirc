@@ -13,6 +13,7 @@ TESTS=\
 	is_alphabetic.run\
 	is_numeric.run\
 	size_product.run\
+	squeeze.run\
 	squeeze_text_deco.run\
 	strColor.run\
 	strFeed.run\
