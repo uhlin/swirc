@@ -8,7 +8,16 @@
 -----HEAD COMMON TAGS-----
 
 <style>
-#news td { vertical-align: top; }
+#news td {
+	vertical-align: top;
+}
+#news {
+	width: 576px;
+}
+.inlineblock {
+	display: inline-block;
+	vertical-align: top;
+}
 </style>
 </head>
 
@@ -18,8 +27,8 @@
 -----MENU-----
 
 <div id="mid">
+<div class="inlineblock">
 <h2>News</h2>
-
 <table id="news">
   <tr>
     <td><sup>December 21 2018</sup></td>
@@ -215,9 +224,10 @@ future. Feedback and help with testing are welcome.
     </td>
   </tr>
 </table>
+</div> <!-- inlineblock -->
 
+<div class="inlineblock">
 <h3>Screenshots</h3>
-
 <table>
   <tr>
     <td><a class="img" href="screenshots/swirc170114-1.png"><img src="screenshots/swirc170114-1.png" alt="screenshot 1" height="100" width="100"></a></td>
@@ -225,10 +235,9 @@ future. Feedback and help with testing are welcome.
     <td><a class="img" href="screenshots/swirc170114-3.png"><img src="screenshots/swirc170114-3.png" alt="screenshot 3" height="100" width="100"></a></td>
   </tr>
 </table>
-
 <h3>GitHub project</h3>
-
 <p><a href="https://github.com/uhlin/swirc">Swirc at GH</a></p>
+</div> <!-- inlineblock -->
 </div> <!--mid-->
 
 -----BOTTOM-----
