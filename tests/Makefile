@@ -27,7 +27,8 @@ TESTS=\
 	sw_strdup.run\
 	sw_wcscat.run\
 	sw_wcscpy.run\
-	trim.run
+	trim.run\
+	write_to_stream.run
 
 .SUFFIXES: .c .o .run
 

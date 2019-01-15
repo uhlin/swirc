@@ -21,6 +21,7 @@ sw_strdup
 sw_wcscat
 sw_wcscpy
 trim
+write_to_stream
 "
 
 for test in $TESTS; do
