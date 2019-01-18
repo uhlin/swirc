@@ -396,7 +396,6 @@ process_options(int argc, char *argv[], const char *optstring)
 /**
  * Starts execution
  */
-#ifndef UNIT_TESTING
 int
 main(int argc, char *argv[])
 {
@@ -514,7 +513,6 @@ main(int argc, char *argv[])
     say("- Exit Success! -\n");
     return EXIT_SUCCESS;
 }
-#endif /* UNIT_TESTING */
 
 /**
  * Get locale info
