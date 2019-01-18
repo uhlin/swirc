@@ -19,13 +19,11 @@ struct current_cursor_pos {
     int curx; /* col */
 };
 
-/*lint -sem(term_new_panel, pure) */
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-PANEL	*term_new_panel(int rows, int cols, int start_row, int start_col) PURE;
+PANEL	*term_new_panel(int rows, int cols, int start_row, int start_col);
 PANEL	*term_resize_panel(PANEL *, struct term_window_size *);
 
 struct current_cursor_pos term_get_pos(WINDOW *);
