@@ -23,6 +23,8 @@
 
 #if defined(UNIX) && defined(__GNUC__)
 #include "gnuattrs.h"
+#elif defined(UNIX) && (defined(__SUNPRO_C) || defined(__SUNPRO_CC))
+#include "sunattrs.h"
 #elif defined(WIN32)
 #include "winattrs.h"
 #else
