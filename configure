@@ -189,6 +189,11 @@ fix_cflags_with_pkg_config () {
     fi
 }
 
+append_compiler_flags () {
+    echo "CFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
+    echo "CXXFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
+}
+
 case "$(uname -s)" in
     "Darwin")
 	os_MAC
@@ -213,6 +218,10 @@ case "$(uname -s)" in
 	exit 1
     ;;
 esac
+
+if test "$1" = "unittesting"; then
+    append_compiler_flags
+fi
 
 if test -f "$MAKE_DEF_FILE"; then
     echo "  - $MAKE_DEF_FILE successfully created!"
