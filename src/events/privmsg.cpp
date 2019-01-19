@@ -1,5 +1,5 @@
 /* Handles event PRIVMSG
-   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -86,7 +86,7 @@ acknowledge_ctcp_request(const char *cmd, const struct special_msg_context *ctx)
     PRINTTEXT_CONTEXT ptext_ctx;
 
     printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC3, true);
-    printtext(&ptext_ctx, "%c%s%c %s%s@%s%s requested CTCP %c%s%c form %c%s%c",
+    printtext(&ptext_ctx, "%c%s%c %s%s@%s%s requested CTCP %c%s%c from %c%s%c",
 	BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
 	BOLD, cmd, BOLD, BOLD, ctx->dest, BOLD);
 }
