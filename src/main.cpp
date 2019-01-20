@@ -437,6 +437,7 @@ main(int argc, char *argv[])
 #endif
 
     process_options(argc, argv, "c:n:u:r:iph:x:T");
+    srand(time(NULL));
 
     term_init();
     nestHome_init();
