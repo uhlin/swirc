@@ -561,6 +561,18 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
     readline_top_panel();
 }
 
+static bool
+shouldLimitOutputYesNoRandom()
+{
+#if defined(BSD) || defined(WIN32)
+    const uint32_t value = arc4random() % 2;
+#else
+    const int value = rand() % 2;
+#endif
+
+    return (value != 0 ? true : false);
+}
+
 /**
  * Scroll down
  */
