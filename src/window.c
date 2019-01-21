@@ -638,7 +638,8 @@ window_scroll_up(PIRC_WINDOW window)
 	window_redraw(window, MIN_SIZE, 0, true);
     else
 	window_redraw(window, MIN_SIZE,
-	    window->saved_size - window->scroll_count, true);
+	    window->saved_size - window->scroll_count,
+	    shouldLimitOutputYesNoRandom() /* true */);
 }
 
 /**
