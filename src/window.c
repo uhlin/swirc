@@ -28,8 +28,10 @@
    POSSIBILITY OF SUCH DAMAGE. */
 
 #include "common.h"
-
 #include "commands/misc.h"
+#ifdef WIN32
+#include "compat/stdlib.h" /* arc4random() */
+#endif
 
 /* names.h wants this header before itself */
 #include "irc.h"
