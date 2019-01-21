@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Fixed ###
+- Improved scrolling
 - Typos
 
 ## [2.5] - 2018-12-21 ##
