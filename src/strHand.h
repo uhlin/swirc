@@ -1,6 +1,7 @@
 #ifndef STRING_HANDLING_H
 #define STRING_HANDLING_H
 
+/*lint -sem(strColor, pure) */
 /*lint -printf(3, sw_snprintf) */
 
 #ifdef __cplusplus
@@ -11,7 +12,7 @@ char		*strToLower  (char *);
 char		*strToUpper  (char *);
 char		*sw_strdup   (const char *string);
 char		*trim        (char *string);
-const char	*strColor    (short int color);
+const char	*strColor    (short int color) NO_SIDE_EFFECT;
 int		 strFeed     (char *string, int count);
 int		 sw_strcat   (char *dest, const char *src, size_t);
 int		 sw_strcpy   (char *dest, const char *src, size_t);
