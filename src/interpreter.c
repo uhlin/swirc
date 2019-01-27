@@ -54,6 +54,7 @@ copy_identifier(const char *id)
 /**
  * Copy argument
  */
+/*lint -sem(copy_argument, r_null) */
 static char *
 copy_argument(const char *arg)
 {
