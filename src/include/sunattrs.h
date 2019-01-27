@@ -6,6 +6,15 @@
  *
  * If the assertion about global access is not true, then the behavior
  * of the program is undefined.
+ *
+ * If a function takes a non-const pointer argument it must not modify
+ * the array it points to, or any other object whose value the rest of
+ * the program may depend on. However, the caller may safely change
+ * the contents of the array between successive calls to the function
+ * (doing so disables the optimization).
+ *
+ * Because a pure function cannot have any observable side effects it
+ * does not make sense for such a function to return void.
  */
 #define DOES_NOT_WRITE_GLOBAL_DATA	__attribute__((pure))
 
@@ -26,6 +35,13 @@
  * If the function does have side effects, the results of executing a
  * program that calls this function are undefined. The compiler takes
  * advantage of this information at optimization level of 3 or above.
+ *
+ * Note that a function that has pointer arguments and examines the
+ * data pointed to must not be declared const if the pointed-to data
+ * might change between successive invocations of the function. In
+ * general, since a function cannot distinguish data that might change
+ * from data that cannot, const functions should never take pointer
+ * or, in C++, reference arguments.
  */
 #define NO_SIDE_EFFECT			__attribute__((const))
 
