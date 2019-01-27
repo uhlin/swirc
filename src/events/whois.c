@@ -1,5 +1,5 @@
 /* whois events
-   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -49,7 +49,6 @@ struct time_idle {
 };
 
 /*lint -sem(get_time_idle, r_null) */
-
 static struct time_idle *
 get_time_idle(long int sec_idle, long int signon_time)
 {
