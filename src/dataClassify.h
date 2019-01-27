@@ -5,10 +5,12 @@
 extern "C" {
 #endif
 
+/*lint -sem(is_irc_channel, pure) */
+
 bool	is_alphabetic      (const char *string);
 bool	is_numeric         (const char *string);
 bool	is_whiteSpace      (const char *string);
-bool	is_irc_channel     (const char *name);
+bool	is_irc_channel     (const char *name) DOES_NOT_WRITE_GLOBAL_DATA;
 bool	is_valid_uMode     (const char *modes);
 bool	is_valid_nickname  (const char *nickname);
 bool	is_valid_username  (const char *username);
