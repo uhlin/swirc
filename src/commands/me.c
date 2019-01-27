@@ -7,8 +7,6 @@
 
 #include "me.h"
 
-#define ACTWINLABEL g_active_window->label
-
 /* usage: /me <message> */
 void
 cmd_me(const char *data)

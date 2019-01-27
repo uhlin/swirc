@@ -7,8 +7,6 @@
 
 #include "topic.h"
 
-#define ACTWINLABEL g_active_window->label
-
 /* usage: /topic [new topic] */
 void
 cmd_topic(const char *data)

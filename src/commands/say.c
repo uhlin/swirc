@@ -6,8 +6,6 @@
 
 #include "say.h"
 
-#define ACTWINLABEL g_active_window->label
-
 /* usage: /say <message> */
 void
 cmd_say(const char *data)
