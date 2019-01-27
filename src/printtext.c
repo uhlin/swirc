@@ -360,6 +360,7 @@ puts_mutex_init(void)
  * @return A wide-character string, or NULL on error.
  */
 #if WIN32
+/*lint -sem(windows_convert_to_utf8, r_null) */
 static wchar_t *
 windows_convert_to_utf8(const char *buf)
 {
