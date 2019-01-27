@@ -129,8 +129,6 @@ static struct cmds_tag {
 char *
 get_prompt(void)
 {
-#define ACTWINLABEL g_active_window->label
-
     if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label)) {
 	return (sw_strdup(""));
     } else if (is_irc_channel(g_active_window->label)) {
