@@ -3,8 +3,9 @@
 
 #include <stdio.h> /* FILE */
 
-/*lint -printf(2, write_to_stream) */
+/*lint -function(fopen, xfopen) */
 /*lint -printf(1, say) */
+/*lint -printf(2, write_to_stream) */
 
 #ifdef __cplusplus
 extern "C" {
