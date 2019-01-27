@@ -110,6 +110,7 @@ net_send_plain(const char *fmt, ...)
     return (n_sent);
 }
 
+/*lint -sem(do_connect_wrapper, r_null) */
 static void *
 do_connect_wrapper(void *arg)
 {
