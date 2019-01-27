@@ -140,6 +140,7 @@ net_listenThread_join(void)
 	err_sys("pthread_join");
 }
 
+/*lint -sem(listenThread_fn, r_null) */
 static void *
 listenThread_fn(void *arg)
 {
