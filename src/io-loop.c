@@ -1,5 +1,5 @@
 /* Input output loop
-   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -131,10 +131,10 @@ get_prompt(void)
 {
     if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label)) {
 	return (sw_strdup(""));
-    } else if (is_irc_channel(g_active_window->label)) {
-	return (strdup_printf("%s: ", g_active_window->label));
+    } else if (is_irc_channel(ACTWINLABEL)) {
+	return (strdup_printf("%s: ", ACTWINLABEL));
     } else {
-	return (strdup_printf("%s> ", g_active_window->label)); /* a query */
+	return (strdup_printf("%s> ", ACTWINLABEL)); /* a query */
     }
 
     /*NOTREACHED*/ sw_assert_not_reached();
