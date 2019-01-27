@@ -13,6 +13,7 @@
 
 #include "textBuffer.h"
 
+#define ACTWINLABEL g_active_window->label
 #define NAMES_HASH_TABLE_SIZE 4500
 
 #ifdef __cplusplus
