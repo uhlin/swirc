@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 TESTS="
+cmd_kick
 int_diff
 int_sum
 is_alphabetic
