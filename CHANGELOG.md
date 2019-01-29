@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- Option
+  - `joins_parts_quits` (Show JOIN/PART/QUIT events?)
+
 ### Fixed ###
 - Bugs in command
   - /kick
