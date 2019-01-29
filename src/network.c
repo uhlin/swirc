@@ -1,5 +1,5 @@
 /* Platform independent networking routines
-   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -55,6 +55,11 @@
 #define INVALID_SOCKET -1
 #endif
 
+/*
+ * net_send_fake() store the sent data into this buffer
+ */
+char g_sent[512] = "";
+
 NET_SEND_FN net_send = net_send_plain;
 NET_RECV_FN net_recv = net_recv_plain;
 
@@ -88,6 +93,19 @@ bool
 is_sasl_enabled(void)
 {
     return config_bool_unparse("sasl", false);
+}
+
+int
+net_send_fake(const char *fmt, ...)
+{
+    int bytes_sent;
+    va_list ap;
+
+    va_start(ap, fmt);
+    bytes_sent = vsnprintf(g_sent, ARRAY_SIZE(g_sent), fmt, ap);
+    va_end(ap);
+
+    return bytes_sent;
 }
 
 struct addrinfo *

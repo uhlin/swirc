@@ -30,6 +30,11 @@ struct network_connect_context {
 typedef PTR_ARGS_NONNULL int (*NET_SEND_FN)(const char *, ...);
 typedef PTR_ARGS_NONNULL int (*NET_RECV_FN)(struct network_recv_context *, char *, int);
 
+/*
+ * net_send_fake() store the sent data into this buffer
+ */
+extern char g_sent[512];
+
 extern NET_SEND_FN net_send;
 extern NET_RECV_FN net_recv;
 
@@ -42,6 +47,7 @@ struct server	*server_new(const char *host, const char *port);
 void		 server_destroy(struct server *);
 
 bool		 is_sasl_enabled(void);
+int		 net_send_fake(const char *, ...);
 struct addrinfo *net_addr_resolve(const char *host, const char *port);
 void		 net_connect(const struct network_connect_context *);
 void		 net_irc_listen(void);
