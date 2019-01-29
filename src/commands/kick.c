@@ -1,5 +1,5 @@
 /* command /kick
-   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -36,6 +36,11 @@
 
 #include "kick.h"
 
+#ifdef UNIT_TESTING
+#undef  ACTWINLABEL
+#define ACTWINLABEL "#channel"
+#endif
+
 /* usage: /kick <nick1[,nick2][,nick3][...]> [reason] */
 void
 cmd_kick(const char *data)
@@ -52,12 +57,12 @@ cmd_kick(const char *data)
 
     const bool has_reason = (reason = strtok_r(NULL, " ", &state)) != NULL;
 
-    if (!is_irc_channel(g_active_window->label)) {
+    if (!is_irc_channel(ACTWINLABEL)) {
 	print_and_free("/kick: active window isn't an irc channel", dcopy);
 	return;
     } else {
 	if (net_send("KICK %s %s :%s",
-	    g_active_window->label, nicks, has_reason ? reason : "") < 0)
+	    ACTWINLABEL, nicks, has_reason ? reason : "") < 0)
 	    g_on_air = false;
 	free(dcopy);
     }
