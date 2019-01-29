@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Fixed ###
+- Bugs in command
+  - /kick
 - Improved scrolling
 - Typos
 
