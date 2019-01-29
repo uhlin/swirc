@@ -3,9 +3,7 @@ SRC=$(ROOT)/src
 
 include $(ROOT)/unix_def.mk
 
-# CFLAGS+=-DUNIT_TESTING=1
 CFLAGS+=-I$(SRC) -I$(SRC)/include -I/usr/local/include
-# LDFLAGS+=-lcmocka
 
 TESTS=\
 	cmd_kick.run\
