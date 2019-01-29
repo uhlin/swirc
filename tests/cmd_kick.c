@@ -32,7 +32,8 @@ static void
 sendsExpectedString_test3(void **state)
 {
     cmd_kick("victim1,victim2,victim3 say good bye!");
-    assert_string_equal(g_sent, "KICK #channel victim1,victim2,victim3 :say good bye!");
+    assert_string_equal(g_sent,
+	"KICK #channel victim1,victim2,victim3 :say good bye!");
 }
 
 int
