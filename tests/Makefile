@@ -5,7 +5,7 @@ include $(ROOT)/unix_def.mk
 
 # CFLAGS+=-DUNIT_TESTING=1
 CFLAGS+=-I$(SRC) -I$(SRC)/include -I/usr/local/include
-LDFLAGS+=-lcmocka
+# LDFLAGS+=-lcmocka
 
 TESTS=\
 	int_diff.run\
