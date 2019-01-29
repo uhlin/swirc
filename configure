@@ -2,7 +2,7 @@
 
 # Swirc configure script
 #
-# Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
+# Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
 
 MAKE_DEF_FILE=unix_def.mk
 
@@ -194,6 +194,10 @@ append_compiler_flags () {
     echo "CXXFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
 }
 
+link_with_cmocka () {
+    echo "LDLIBS+=-lcmocka" >>$MAKE_DEF_FILE
+}
+
 case "$(uname -s)" in
     "Darwin")
 	os_MAC
@@ -221,6 +225,7 @@ esac
 
 if test "$1" = "unittesting"; then
     append_compiler_flags
+    link_with_cmocka
 fi
 
 if test -f "$MAKE_DEF_FILE"; then
