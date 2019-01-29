@@ -29,6 +29,12 @@
 
 #include "common.h"
 
+#ifdef UNIT_TESTING
+#undef UNIT_TESTING
+#include <setjmp.h>
+#include <cmocka.h>
+#define  UNIT_TESTING 1
+#endif
 #include <locale.h>
 #include <wctype.h>
 
@@ -318,11 +324,17 @@ color_pair_find(short int fg, short int bg)
 void
 print_and_free(const char *msg, char *cp)
 {
+#ifdef UNIT_TESTING
+    puts(msg);
+    free_not_null(cp);
+    fail();
+#else
     PRINTTEXT_CONTEXT ctx;
 
     printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
     printtext(&ctx, "%s", msg);
     free_not_null(cp);
+#endif
 }
 
 /**
