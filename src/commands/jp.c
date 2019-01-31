@@ -1,5 +1,5 @@
-/* join and part commands
-   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
+/* Join and Part commands
+   Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -82,8 +82,10 @@ cmd_part(const char *data)
     char *dcopy = sw_strdup(data);
     char *state = "";
 
+    (void) strFeed(dcopy, 1);
+
     if (strings_match(dcopy, "") ||
-	(channel = strtok_r(dcopy, " ", &state)) == NULL) {
+	(channel = strtok_r(dcopy, "\n", &state)) == NULL) {
 	if (is_irc_channel(g_active_window->label)) {
 	    if (net_send("PART %s :%s", g_active_window->label,
 			 Config("part_message")) < 0)
@@ -95,9 +97,9 @@ cmd_part(const char *data)
 	return;
     }
 
-    const bool has_message = (message = strtok_r(NULL, " ", &state)) != NULL;
+    const bool has_message = (message = strtok_r(NULL, "\n", &state)) != NULL;
 
-    if (strtok_r(NULL, " ", &state) != NULL) {
+    if (strtok_r(NULL, "\n", &state) != NULL) {
 	print_and_free("/part: implicit trailing data", dcopy);
 	return;
     } else if (!is_irc_channel(channel) || strpbrk(channel + 1, ",") != NULL) {
