@@ -363,8 +363,10 @@ maintain_channel_stats(const char *channel, const char *input)
     for (ar_p = &nicks[0]; ar_p < &nicks[ar_sz]; ar_p++)
 	*ar_p = NULL;
 
-    if ((modes = strtok_r(input_copy, " ", &state)) == NULL)
-	goto bad;
+    if ((modes = strtok_r(input_copy, " ", &state)) == NULL) {
+	err_log(EINVAL, "maintain_channel_stats: strtok_r: no modes!");
+	return;
+    }
 
     for (nicks_assigned = 0;; nicks_assigned++) {
 	char *token = strtok_r(NULL, " ", &state);
@@ -422,12 +424,6 @@ maintain_channel_stats(const char *channel, const char *input)
 	free_not_null(*ar_p);
 	*ar_p = NULL;
     }
-
-    return;
-
-  bad:
-    err_msg("maintain_channel_stats() fatal error");
-    abort();
 }
 
 /* event_mode
