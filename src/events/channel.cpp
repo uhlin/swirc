@@ -365,6 +365,7 @@ maintain_channel_stats(const char *channel, const char *input)
 
     if ((modes = strtok_r(input_copy, " ", &state)) == NULL) {
 	err_log(EINVAL, "maintain_channel_stats: strtok_r: no modes!");
+	free(input_copy);
 	return;
     }
 
