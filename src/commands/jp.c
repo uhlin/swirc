@@ -37,6 +37,11 @@
 
 #include "jp.h"
 
+#ifdef UNIT_TESTING
+#undef  ACTWINLABEL
+#define ACTWINLABEL "#channel"
+#endif
+
 /* usage: /join <channel> [key] */
 void
 cmd_join(const char *data)
@@ -86,8 +91,8 @@ cmd_part(const char *data)
 
     if (strings_match(dcopy, "") ||
 	(channel = strtok_r(dcopy, "\n", &state)) == NULL) {
-	if (is_irc_channel(g_active_window->label)) {
-	    if (net_send("PART %s :%s", g_active_window->label,
+	if (is_irc_channel(ACTWINLABEL)) {
+	    if (net_send("PART %s :%s", ACTWINLABEL,
 			 Config("part_message")) < 0)
 		g_on_air = false;
 	} else {
