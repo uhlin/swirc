@@ -1,5 +1,5 @@
 /* Channel related events
-   Copyright (C) 2015-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -130,12 +130,19 @@ event_join(struct irc_message_compo *compo)
 	    throw std::runtime_error("unable to add user to channel list");
 	}
 
-	printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
-	if ((ctx.window = window_by_label(channel)) == NULL)
-	    throw std::runtime_error("window lookup error");
-	printtext(&ctx, "%s%s%c %s%s@%s%s has joined %s%s%c",
-	    COLOR1, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
-	    COLOR2, channel, NORMAL);
+	const bool joins_parts_quits =
+	    config_bool_unparse("joins_parts_quits", true);
+
+	if (joins_parts_quits) {
+	    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+
+	    if ((ctx.window = window_by_label(channel)) == NULL)
+		throw std::runtime_error("window lookup error");
+
+	    printtext(&ctx, "%s%s%c %s%s@%s%s has joined %s%s%c",
+		COLOR1, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
+		COLOR2, channel, NORMAL);
+	}
     } catch (std::runtime_error &e) {
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 	printtext(&ctx, "event_join: fatal: %s", e.what());
