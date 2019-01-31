@@ -628,19 +628,24 @@ event_part(struct irc_message_compo *compo)
 	    }
 	}
 
-	printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+	const bool joins_parts_quits =
+	    config_bool_unparse("joins_parts_quits", true);
 
-	if ((ctx.window = window_by_label(channel)) == NULL)
-	    throw std::runtime_error("window lookup error");
-	if (!has_message)
-	    message = (char*) "";
-	if (has_message && *message == ':')
-	    message++;
+	if (joins_parts_quits) {
+	    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
-	printtext(&ctx, "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s",
-	    COLOR2, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
-	    COLOR2, channel, NORMAL,
-	    LEFT_BRKT, message, RIGHT_BRKT);
+	    if ((ctx.window = window_by_label(channel)) == NULL)
+		throw std::runtime_error("window lookup error");
+	    if (!has_message)
+		message = (char*) "";
+	    if (has_message && *message == ':')
+		message++;
+
+	    printtext(&ctx, "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s",
+		COLOR2, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
+		COLOR2, channel, NORMAL,
+		LEFT_BRKT, message, RIGHT_BRKT);
+	}
     } catch (std::runtime_error &e) {
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 	printtext(&ctx, "event_part: fatal: %s", e.what());
