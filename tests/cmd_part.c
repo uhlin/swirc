@@ -21,11 +21,19 @@ sendsExpectedString_test1(void **state)
     assert_string_equal(g_sent, "PART #chatzone");
 }
 
+static void
+sendsExpectedString_test2(void **state)
+{
+    cmd_part("#chatzone adios!");
+    assert_string_equal(g_sent, "PART #chatzone :adios!");
+}
+
 int
 main()
 {
     const struct CMUnitTest tests[] = {
 	cmocka_unit_test(sendsExpectedString_test1),
+	cmocka_unit_test(sendsExpectedString_test2),
     };
 
     return cmocka_run_group_tests(tests, setup, NULL);
