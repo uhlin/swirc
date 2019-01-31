@@ -3,6 +3,8 @@
 #include <setjmp.h>
 #include <cmocka.h>
 
+#include <string.h>
+
 #include "network.h"
 #include "commands/jp.h"
 
