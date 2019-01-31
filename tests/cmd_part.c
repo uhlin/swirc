@@ -35,6 +35,13 @@ sendsExpectedString_test3(void **state)
     assert_string_equal(g_sent, "PART #chatzone :good bye!");
 }
 
+static void
+sendsExpectedString_test4(void **state)
+{
+    cmd_part("");
+    assert_true(strncmp(g_sent, "PART #channel :", 15) == 0);
+}
+
 int
 main()
 {
@@ -42,6 +49,7 @@ main()
 	cmocka_unit_test(sendsExpectedString_test1),
 	cmocka_unit_test(sendsExpectedString_test2),
 	cmocka_unit_test(sendsExpectedString_test3),
+	cmocka_unit_test(sendsExpectedString_test4),
     };
 
     return cmocka_run_group_tests(tests, setup, NULL);
