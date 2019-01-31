@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed ###
 - Bugs in command
   - /kick
+  - /part
 - Improved scrolling
 - Typos
 
