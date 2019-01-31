@@ -2,6 +2,7 @@
 
 TESTS="
 cmd_kick
+cmd_part
 int_diff
 int_sum
 is_alphabetic

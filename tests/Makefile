@@ -7,6 +7,7 @@ CFLAGS+=-I$(SRC) -I$(SRC)/include -I/usr/local/include
 
 TESTS=\
 	cmd_kick.run\
+	cmd_part.run\
 	int_diff.run\
 	int_sum.run\
 	is_alphabetic.run\
