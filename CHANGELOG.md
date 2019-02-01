@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Option
   - `joins_parts_quits` (Show JOIN/PART/QUIT events?)
+  - `reconnect_backoff_delay`: The number of seconds that should be
+    added to each reconnect attempt (0-99)
+  - `reconnect_delay`: Seconds to consume before the first reconnect
+    attempt (0-999)
+  - `reconnect_retries`: If the IRC connection is lost, how many
+    attempts should be performed to get the connection working again
+    before giving up?
 
 ### Fixed ###
 - Bugs in command
