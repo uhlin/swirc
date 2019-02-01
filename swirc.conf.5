@@ -146,6 +146,23 @@ Message when disconnecting from a server
 Specifies the real name.
 But can be set to anything.
 .\" ----------------------------------------
+.\" RECONNECT BACKOFF DELAY
+.\" ----------------------------------------
+.It Sy reconnect_backoff_delay Pq Em int
+The number of seconds that should be added to each reconnect attempt
+(0-99)
+.\" ----------------------------------------
+.\" RECONNECT DELAY
+.\" ----------------------------------------
+.It Sy reconnect_delay Pq Em int
+Seconds to consume before the first reconnect attempt (0-999)
+.\" ----------------------------------------
+.\" RECONNECT RETRIES
+.\" ----------------------------------------
+.It Sy reconnect_retries Pq Em int
+If the IRC connection is lost, how many attempts should be performed
+to get the connection working again before giving up?
+.\" ----------------------------------------
 .\" SASL
 .\" ----------------------------------------
 .It Sy sasl Pq Em bool
