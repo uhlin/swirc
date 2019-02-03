@@ -3,6 +3,11 @@
 
 #include "int_unparse.h"
 
+#define RECONNECT_BACKOFF_DELAY_DEFAULT 60
+#define RECONNECT_DELAY_DEFAULT         10
+#define RECONNECT_DELAY_MAX_DEFAULT     240
+#define RECONNECT_RETRIES_DEFAULT       10
+
 #ifdef __cplusplus
 extern "C" {
 #endif
