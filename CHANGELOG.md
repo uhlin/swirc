@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
     added to each reconnect attempt (0-99)
   - `reconnect_delay`: Seconds to consume before the first reconnect
     attempt (0-999)
+  - `reconnect_delay_max`: Maximum reconnect delay in seconds
+    (0-999). Regardless of the other related reconnect settings.
   - `reconnect_retries`: If the IRC connection is lost, how many
     attempts should be performed to get the connection working again
     before giving up?

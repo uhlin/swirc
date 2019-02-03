@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018 2019 Markus Uhlin. All rights reserved.
 .\"
-.Dd February 1, 2019
+.Dd February 3, 2019
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -156,6 +156,12 @@ The number of seconds that should be added to each reconnect attempt
 .\" ----------------------------------------
 .It Sy reconnect_delay Pq Em int
 Seconds to consume before the first reconnect attempt (0-999)
+.\" ----------------------------------------
+.\" RECONNECT DELAY MAX
+.\" ----------------------------------------
+.It Sy reconnect_delay_max Pq Em int
+Maximum reconnect delay in seconds (0-999).
+Regardless of the other related reconnect settings.
 .\" ----------------------------------------
 .\" RECONNECT RETRIES
 .\" ----------------------------------------

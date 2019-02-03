@@ -79,6 +79,7 @@ static struct tagConfDefValues {
     { "real_name",                 TYPE_STRING,  "pinball" },
     { "reconnect_backoff_delay",   TYPE_INTEGER, "5" },
     { "reconnect_delay",           TYPE_INTEGER, "10" },
+    { "reconnect_delay_max",       TYPE_INTEGER, "240" },
     { "reconnect_retries",         TYPE_INTEGER, "3" },
     { "sasl",                      TYPE_BOOLEAN, "no" },
     { "sasl_mechanism",            TYPE_STRING,  "PLAIN" },
