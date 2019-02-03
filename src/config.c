@@ -77,7 +77,7 @@ static struct tagConfDefValues {
     { "part_message",              TYPE_STRING,  "" },
     { "quit_message",              TYPE_STRING,  "Swirc IRC client" },
     { "real_name",                 TYPE_STRING,  "pinball" },
-    { "reconnect_backoff_delay",   TYPE_INTEGER, "5" },
+    { "reconnect_backoff_delay",   TYPE_INTEGER, "60" },
     { "reconnect_delay",           TYPE_INTEGER, "10" },
     { "reconnect_delay_max",       TYPE_INTEGER, "240" },
     { "reconnect_retries",         TYPE_INTEGER, "10" },
