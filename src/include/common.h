@@ -33,6 +33,7 @@
 
 #define ARRAY_SIZE(ar)	(sizeof (ar) / sizeof ((ar)[0]))
 #define BZERO(b, len)	((void) memset(b, 0, len))
+#define STRING(x)	#x
 
 #ifdef WIN32
 #define strcasecmp	_stricmp
