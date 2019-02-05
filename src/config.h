@@ -35,6 +35,11 @@ void		 config_readit(const char *path, const char *mode);
 
 void cmd_set(const char *);
 
+long int	get_reconnect_backoff_delay(void);
+long int	get_reconnect_delay(void);
+long int	get_reconnect_delay_max(void);
+long int	get_reconnect_retries(void);
+
 #ifdef __cplusplus
 }
 #endif

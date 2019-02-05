@@ -555,3 +555,57 @@ cmd_set(const char *data)
     try_to_set_value_for_setting(setting, value);
     free(dcopy);
 }
+
+/* -------------------------------------------------- */
+
+long int
+get_reconnect_backoff_delay(void)
+{
+    struct integer_unparse_context ctx = {
+	.setting_name = "reconnect_backoff_delay",
+	.lo_limit = 0,
+	.hi_limit = 99,
+	.fallback_default = RECONNECT_BACKOFF_DELAY_DEFAULT,
+    };
+
+    return (config_integer_unparse(&ctx));
+}
+
+long int
+get_reconnect_delay(void)
+{
+    struct integer_unparse_context ctx = {
+	.setting_name = "reconnect_delay",
+	.lo_limit = 0,
+	.hi_limit = 999,
+	.fallback_default = RECONNECT_DELAY_DEFAULT,
+    };
+
+    return (config_integer_unparse(&ctx));
+}
+
+long int
+get_reconnect_delay_max(void)
+{
+    struct integer_unparse_context ctx = {
+	.setting_name = "reconnect_delay_max",
+	.lo_limit = 0,
+	.hi_limit = 999,
+	.fallback_default = RECONNECT_DELAY_MAX_DEFAULT,
+    };
+
+    return (config_integer_unparse(&ctx));
+}
+
+long int
+get_reconnect_retries(void)
+{
+    struct integer_unparse_context ctx = {
+	.setting_name = "reconnect_retries",
+	.lo_limit = 0,
+	.hi_limit = 999,
+	.fallback_default = RECONNECT_RETRIES_DEFAULT,
+    };
+
+    return (config_integer_unparse(&ctx));
+}
