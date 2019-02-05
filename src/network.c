@@ -189,7 +189,7 @@ send_reg_cmds(const struct network_connect_context *ctx)
     (void) net_send("USER %s 8 * :%s", ctx->username, ctx->rl_name);
 }
 
-void
+conn_res_t
 net_connect(const struct network_connect_context *ctx)
 {
     PRINTTEXT_CONTEXT ptext_ctx;
@@ -198,7 +198,7 @@ net_connect(const struct network_connect_context *ctx)
     if (ctx == NULL)
 	err_exit(EINVAL, "net_connect");
     else if (g_connection_in_progress)
-	return;
+	return CONNECTION_FAILED;
     g_connection_in_progress = true;
     printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1, true);
     printtext(&ptext_ctx, "Connecting to %s (%s)", ctx->server, ctx->port);
@@ -273,7 +273,7 @@ net_connect(const struct network_connect_context *ctx)
 
     event_welcome_cond_destroy();
     g_connection_in_progress = false;
-    return;
+    return CONNECTION_ESTABLISHED;
 
   err:
     g_on_air = false;
@@ -285,6 +285,7 @@ net_connect(const struct network_connect_context *ctx)
     winsock_deinit();
 #endif
     g_connection_in_progress = false;
+    return CONNECTION_FAILED;
 }
 
 void
