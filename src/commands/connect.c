@@ -1,5 +1,5 @@
-/* connect and disconnect commands
-   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
+/* Connect and Disconnect commands
+   Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -220,7 +220,9 @@ do_connect(const char *server, const char *port)
 	if (!is_ssl_enabled() && strings_match(conn_ctx.port, SSL_PORT))
 	    set_ssl_on();
 
-	net_connect(&conn_ctx);
+	while (net_connect(&conn_ctx) == SHOULD_RETRY_TO_CONNECT) {
+	    ;
+	}
 
 	if (conn_ctx.password) {
 	    OPENSSL_cleanse(conn_ctx.password, PASSWORD_SIZE);
