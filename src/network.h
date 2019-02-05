@@ -30,6 +30,12 @@ struct network_connect_context {
 typedef PTR_ARGS_NONNULL int (*NET_SEND_FN)(const char *, ...);
 typedef PTR_ARGS_NONNULL int (*NET_RECV_FN)(struct network_recv_context *, char *, int);
 
+typedef enum {
+    CONNECTION_ESTABLISHED,
+    CONNECTION_FAILED,
+    SHOULD_RETRY_TO_CONNECT
+} conn_res_t;
+
 /*
  * net_send_fake() store the sent data into this buffer
  */
