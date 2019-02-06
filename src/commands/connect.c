@@ -35,7 +35,6 @@
 #include "../config.h"
 #include "../curses-funcs.h"
 #include "../dataClassify.h"
-#include "../errHand.h"
 #include "../libUtils.h"
 #include "../main.h"
 #include "../network.h"
