@@ -15,11 +15,13 @@ All notable changes to this project will be documented in this file.
     attempts should be performed to get the connection working again
     before giving up?
 
+### Changed ###
+- Scrolling behavior with the help of `arc4random()`
+
 ### Fixed ###
 - Bugs in command
   - /kick
   - /part
-- Improved scrolling
 - Typos
 
 ## [2.5] - 2018-12-21 ##
