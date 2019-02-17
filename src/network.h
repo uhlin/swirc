@@ -9,6 +9,12 @@
 
 #include "x509_check_host.h"
 
+#define DEFAULT_RECV_TIMEOUT	30
+#define DEFAULT_SEND_TIMEOUT	15
+
+#define TEMP_RECV_TIMEOUT	4
+#define TEMP_SEND_TIMEOUT	4
+
 #ifdef __cplusplus
 extern "C" {
 #endif
