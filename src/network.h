@@ -27,7 +27,7 @@ struct network_connect_context {
     char *nickname;
 };
 
-typedef PTR_ARGS_NONNULL int (*NET_SEND_FN)(const char *, ...);
+typedef PTR_ARGS_NONNULL int (*NET_SEND_FN)(const char *, ...) PRINTFLIKE(1);
 typedef PTR_ARGS_NONNULL int (*NET_RECV_FN)(struct network_recv_context *, char *, int);
 
 typedef enum {
