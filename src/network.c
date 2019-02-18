@@ -55,6 +55,13 @@
 #define INVALID_SOCKET -1
 #endif
 
+struct reconnect_context {
+    long int backoff_delay;
+    long int delay;
+    long int delay_max;
+    long int retries;
+};
+
 /*
  * net_send_fake() store the sent data into this buffer
  */
