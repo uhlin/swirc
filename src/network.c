@@ -371,7 +371,7 @@ net_irc_listen(void)
 	} else if (bytes_received > 0) {
 	    irc_handle_interpret_events(recvbuf, &message_concat, &state);
 	} else {
-	    /*empty*/;
+	    net_send("PING %s", g_server_hostname);
 	}
     } while (g_on_air);
 
