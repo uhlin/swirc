@@ -325,6 +325,21 @@ net_connect(
     closesocket(g_socket);
     winsock_deinit();
 #endif
+    if (retry++ < reconn_ctx.retries) {
+	const bool is_initial_reconnect_attempt = (retry == 1);
+
+	if (is_initial_reconnect_attempt)
+	    *sleep_time_seconds = reconn_ctx.delay;
+	else
+	    *sleep_time_seconds += reconn_ctx.backoff_delay;
+
+	/* -------------------------------------------------- */
+
+	if (*sleep_time_seconds > reconn_ctx.delay_max)
+	    *sleep_time_seconds = reconn_ctx.delay_max;
+	g_connection_in_progress = false;
+	return SHOULD_RETRY_TO_CONNECT;
+    }
     reconnect_context_reinit(&reconn_ctx);
     retry = 0;
     g_connection_in_progress = false;
