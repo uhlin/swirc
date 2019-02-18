@@ -214,13 +214,21 @@ do_connect(const char *server, const char *port)
 		  conn_ctx.nickname);
 	return;
     } else {
+	long int sleep_time_seconds;
+
+	ptext_ctx.spec_type = TYPE_SPEC2;
 	conn_ctx.password = (g_connection_password ? get_password() : NULL);
 
 	if (!is_ssl_enabled() && strings_match(conn_ctx.port, SSL_PORT))
 	    set_ssl_on();
 
-	while (net_connect(&conn_ctx) == SHOULD_RETRY_TO_CONNECT) {
-	    ;
+	while (net_connect(&conn_ctx, &sleep_time_seconds) ==
+	    SHOULD_RETRY_TO_CONNECT) {
+	    const int sleep_time_ms = (int) (sleep_time_seconds * 1000);
+
+	    printtext(&ptext_ctx, "Next reconnect attempt in %ld seconds...",
+		      sleep_time_seconds);
+	    napms(sleep_time_ms);
 	}
 
 	if (conn_ctx.password) {
