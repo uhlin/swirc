@@ -73,6 +73,7 @@ NET_RECV_FN net_recv = net_recv_plain;
 volatile bool g_connection_in_progress = false;
 volatile bool g_on_air = false;
 
+static struct reconnect_context reconn_ctx = { 0 };
 static const int RECVBUF_SIZE = 2048;
 
 struct server *
