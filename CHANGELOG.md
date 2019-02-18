@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
+- Event PONG
 - Option
   - `joins_parts_quits` (Show JOIN/PART/QUIT events?)
   - `reconnect_backoff_delay`: The number of seconds that should be
