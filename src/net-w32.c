@@ -1,5 +1,5 @@
 /* Networking for WIN32
-   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -162,4 +162,35 @@ net_spawn_listenThread(void)
     if ((listenThread_id = _beginthread(listenThread_fn, 0, NULL)) ==
 	BEGINTHREAD_FAILED)
 	err_sys("_beginthread error");
+}
+
+/* ---------------------------------------------------------------------- */
+
+/*
+ * dword_product() is defined in events/welcome-w32.c
+ */
+DWORD dword_product(const DWORD elt_count, const DWORD elt_size);
+
+void
+net_set_recv_timeout(const DWORD seconds)
+{
+    const DWORD timeout_milliseconds = dword_product(seconds, 1000);
+    const int optlen = (int) (sizeof (DWORD));
+
+    if (setsockopt(g_socket, SOL_SOCKET, SO_RCVTIMEO,
+		   ((char *) &timeout_milliseconds), optlen) != 0) {
+	err_log(0, "net_set_recv_timeout: setsockopt");
+    }
+}
+
+void
+net_set_send_timeout(const DWORD seconds)
+{
+    const DWORD timeout_milliseconds = dword_product(seconds, 1000);
+    const int optlen = (int) (sizeof (DWORD));
+
+    if (setsockopt(g_socket, SOL_SOCKET, SO_SNDTIMEO,
+		   ((char *) &timeout_milliseconds), optlen) != 0) {
+	err_log(0, "net_set_send_timeout: setsockopt");
+    }
 }

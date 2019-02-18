@@ -21,4 +21,7 @@ void	net_do_connect_detached(const char *host, const char *port);
 void	net_listenThread_join(void);
 void	net_spawn_listenThread(void);
 
+void	net_set_recv_timeout(const DWORD seconds);
+void	net_set_send_timeout(const DWORD seconds);
+
 #endif
