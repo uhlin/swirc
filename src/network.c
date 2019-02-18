@@ -257,9 +257,16 @@ net_connect(
 	if ((g_socket = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol))
 	    == INVALID_SOCKET) {
 	    continue;
-	} else if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) == 0) {
+	} else {
+	    net_set_recv_timeout(TEMP_RECV_TIMEOUT);
+	    net_set_send_timeout(TEMP_SEND_TIMEOUT);
+	}
+
+	if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) == 0) {
 	    printtext(&ptext_ctx, "Connected!");
 	    g_on_air = true;
+	    net_set_recv_timeout(DEFAULT_RECV_TIMEOUT);
+	    net_set_send_timeout(DEFAULT_SEND_TIMEOUT);
 	    break;
 	} else {
 #if defined(UNIX)
