@@ -76,6 +76,19 @@ volatile bool g_on_air = false;
 static struct reconnect_context reconn_ctx = { 0 };
 static const int RECVBUF_SIZE = 2048;
 
+/* ---------------------------------------------------------------------- */
+
+static void
+reconnect_context_reinit(struct reconnect_context *ctx)
+{
+    if (ctx) {
+	ctx->backoff_delay = get_reconnect_backoff_delay();
+	ctx->delay         = get_reconnect_delay();
+	ctx->delay_max     = get_reconnect_delay_max();
+	ctx->retries       = get_reconnect_retries();
+    }
+}
+
 struct server *
 server_new(const char *host, const char *port)
 {
