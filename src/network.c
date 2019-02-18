@@ -217,6 +217,7 @@ net_connect(
 {
     PRINTTEXT_CONTEXT ptext_ctx;
     static bool reconn_initialized = false;
+    static long int retry = 0;
     struct addrinfo *res = NULL, *rp = NULL;
 
     if (ctx == NULL || sleep_time_seconds == NULL)
@@ -311,6 +312,7 @@ net_connect(
 
     event_welcome_cond_destroy();
     reconnect_context_reinit(&reconn_ctx);
+    retry = 0;
     g_connection_in_progress = false;
     return CONNECTION_ESTABLISHED;
 
@@ -324,6 +326,7 @@ net_connect(
     winsock_deinit();
 #endif
     reconnect_context_reinit(&reconn_ctx);
+    retry = 0;
     g_connection_in_progress = false;
     return CONNECTION_FAILED;
 }
