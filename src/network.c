@@ -211,12 +211,14 @@ send_reg_cmds(const struct network_connect_context *ctx)
 }
 
 conn_res_t
-net_connect(const struct network_connect_context *ctx)
+net_connect(
+    const struct network_connect_context *ctx,
+    long int *sleep_time_seconds)
 {
     PRINTTEXT_CONTEXT ptext_ctx;
     struct addrinfo *res = NULL, *rp = NULL;
 
-    if (ctx == NULL)
+    if (ctx == NULL || sleep_time_seconds == NULL)
 	err_exit(EINVAL, "net_connect");
     else if (g_connection_in_progress)
 	return CONNECTION_FAILED;

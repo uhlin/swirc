@@ -61,7 +61,8 @@ void		 server_destroy(struct server *);
 bool		 is_sasl_enabled(void);
 int		 net_send_fake(const char *, ...);
 struct addrinfo *net_addr_resolve(const char *host, const char *port);
-conn_res_t	 net_connect(const struct network_connect_context *);
+conn_res_t	 net_connect(const struct network_connect_context *,
+		     long int *sleep_time_seconds);
 void		 net_irc_listen(void);
 
 void	net_ssl_init(void);
