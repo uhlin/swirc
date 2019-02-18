@@ -216,12 +216,20 @@ net_connect(
     long int *sleep_time_seconds)
 {
     PRINTTEXT_CONTEXT ptext_ctx;
+    static bool reconn_initialized = false;
     struct addrinfo *res = NULL, *rp = NULL;
 
     if (ctx == NULL || sleep_time_seconds == NULL)
 	err_exit(EINVAL, "net_connect");
     else if (g_connection_in_progress)
 	return CONNECTION_FAILED;
+    else if (!reconn_initialized) {
+	reconn_ctx.backoff_delay = get_reconnect_backoff_delay();
+	reconn_ctx.delay         = get_reconnect_delay();
+	reconn_ctx.delay_max     = get_reconnect_delay_max();
+	reconn_ctx.retries       = get_reconnect_retries();
+	reconn_initialized = true;
+    }
     g_connection_in_progress = true;
     printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1, true);
     printtext(&ptext_ctx, "Connecting to %s (%s)", ctx->server, ctx->port);
