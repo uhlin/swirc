@@ -303,6 +303,7 @@ net_connect(
     }
 
     event_welcome_cond_destroy();
+    reconnect_context_reinit(&reconn_ctx);
     g_connection_in_progress = false;
     return CONNECTION_ESTABLISHED;
 
@@ -315,6 +316,7 @@ net_connect(
     closesocket(g_socket);
     winsock_deinit();
 #endif
+    reconnect_context_reinit(&reconn_ctx);
     g_connection_in_progress = false;
     return CONNECTION_FAILED;
 }
