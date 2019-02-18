@@ -158,3 +158,31 @@ net_spawn_listenThread(void)
     else if ((errno = pthread_detach(listenThread_id)) != 0)
 	err_sys("pthread_detach");
 }
+
+/* ---------------------------------------------------------------------- */
+
+void
+net_set_recv_timeout(const time_t seconds)
+{
+    struct timeval tv = {
+	.tv_sec  = seconds,
+	.tv_usec = 0,
+    };
+
+    errno = 0;
+    if (setsockopt(g_socket, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof tv) != 0)
+	err_log(errno, "net_set_recv_timeout: setsockopt");
+}
+
+void
+net_set_send_timeout(const time_t seconds)
+{
+    struct timeval tv = {
+	.tv_sec  = seconds,
+	.tv_usec = 0,
+    };
+
+    errno = 0;
+    if (setsockopt(g_socket, SOL_SOCKET, SO_SNDTIMEO, &tv, sizeof tv) != 0)
+	err_log(errno, "net_set_send_timeout: setsockopt");
+}
