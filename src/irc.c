@@ -1,5 +1,5 @@
 /* Handle and interpret IRC events
-   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -195,6 +195,7 @@ static struct numeric_events_tag {
     { "443", "ERR_USERONCHANNEL",       ACTIVE_WINDOW,  3, NULL },
     { "444", "ERR_NOLOGIN",             NO_WINDOW,      0, event_allaround_extract_find_colon },
     { "447", "",                        ACTIVE_WINDOW,  1, NULL },
+    { "451", "ERR_NOTREGISTERED",       STATUS_WINDOW,  1, NULL },
     { "461", "ERR_NEEDMOREPARAMS",      ACTIVE_WINDOW,  2, NULL },
     { "462", "ERR_ALREADYREGISTRED",    ACTIVE_WINDOW,  1, NULL },
     { "465", "ERR_YOUREBANNEDCREEP",    STATUS_WINDOW,  1, NULL },

@@ -3,7 +3,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
-- Event PONG
+- Event
+  - **PONG**
+  - 451 (`ERR_NOTREGISTERED`)
 - Option
   - `joins_parts_quits` (Show JOIN/PART/QUIT events?)
   - `reconnect_backoff_delay`: The number of seconds that should be
