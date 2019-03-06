@@ -1,6 +1,8 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
+#include "atomicops.h"
+
 #if defined(UNIX)
 #include "net-unix.h"
 #elif defined(WIN32)
