@@ -231,7 +231,8 @@ net_connect(
 	reconn_ctx.retries       = get_reconnect_retries();
 	reconn_initialized = true;
     }
-    g_connection_in_progress = true;
+    if (atomic_swap_bool(&g_connection_in_progress, true) != false)
+	err_log(0, "error: net_connect: atomic_swap_bool");
     printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1, true);
     printtext(&ptext_ctx, "Connecting to %s (%s)", ctx->server, ctx->port);
     ptext_ctx.spec_type = TYPE_SPEC1_SUCCESS;
@@ -313,7 +314,8 @@ net_connect(
     event_welcome_cond_destroy();
     reconnect_context_reinit(&reconn_ctx);
     retry = 0;
-    g_connection_in_progress = false;
+    if (atomic_swap_bool(&g_connection_in_progress, false) != true)
+	err_log(0, "error: net_connect: atomic_swap_bool");
     return CONNECTION_ESTABLISHED;
 
   err:
@@ -337,12 +339,14 @@ net_connect(
 
 	if (*sleep_time_seconds > reconn_ctx.delay_max)
 	    *sleep_time_seconds = reconn_ctx.delay_max;
-	g_connection_in_progress = false;
+	if (atomic_swap_bool(&g_connection_in_progress, false) != true)
+	    err_log(0, "error: net_connect: atomic_swap_bool");
 	return SHOULD_RETRY_TO_CONNECT;
     }
     reconnect_context_reinit(&reconn_ctx);
     retry = 0;
-    g_connection_in_progress = false;
+    if (atomic_swap_bool(&g_connection_in_progress, false) != true)
+	err_log(0, "error: net_connect: atomic_swap_bool");
     return CONNECTION_FAILED;
 }
 
