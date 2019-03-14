@@ -348,7 +348,7 @@ cmd_connect(const char *data)
 	sw_assert_not_reached();
     }
 
-    if (g_connection_in_progress) {
+    if (atomic_load_bool(&g_connection_in_progress)) {
 	print_and_free("/connect: connection in progress", dcopy);
 	return;
     } else if (g_on_air) {
@@ -403,7 +403,7 @@ cmd_disconnect(const char *data)
 
 	g_on_air = false;
 
-	if (g_connection_in_progress)
+	if (atomic_load_bool(&g_connection_in_progress))
 	    event_welcome_signalit();
     }
 }

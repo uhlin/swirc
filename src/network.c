@@ -222,7 +222,7 @@ net_connect(
 
     if (ctx == NULL || sleep_time_seconds == NULL)
 	err_exit(EINVAL, "net_connect");
-    else if (g_connection_in_progress)
+    else if (atomic_load_bool(&g_connection_in_progress))
 	return CONNECTION_FAILED;
     else if (!reconn_initialized) {
 	reconn_ctx.backoff_delay = get_reconnect_backoff_delay();

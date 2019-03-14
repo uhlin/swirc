@@ -1,4 +1,4 @@
-/* Copyright (C) 2012-2016 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2012-2019 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -51,7 +51,8 @@ signal_handler(int signum)
 
     switch (signum) {
     case SIGWINCH:
-	if (nanosleep(&ts, NULL) == 0 && !g_connection_in_progress)
+	if (nanosleep(&ts, NULL) == 0 &&
+	    !atomic_load_bool(&g_connection_in_progress))
 	    (void) unget_wch(MY_KEY_RESIZE);
 	return;
     default:
