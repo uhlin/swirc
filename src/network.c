@@ -74,8 +74,9 @@ NET_RECV_FN net_recv = net_recv_plain;
 volatile bool g_connection_in_progress = false;
 volatile bool g_on_air = false;
 
-static struct reconnect_context reconn_ctx = { 0 };
 static const int RECVBUF_SIZE = 2048;
+static long int retry = 0;
+static struct reconnect_context reconn_ctx = { 0 };
 
 /* ---------------------------------------------------------------------- */
 
@@ -162,7 +163,6 @@ net_connect(
 {
     PRINTTEXT_CONTEXT ptext_ctx;
     static bool reconn_initialized = false;
-    static long int retry = 0;
     struct addrinfo *res = NULL, *rp = NULL;
 
     if (ctx == NULL || sleep_time_seconds == NULL)
