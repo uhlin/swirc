@@ -57,15 +57,14 @@ extern volatile bool g_on_air;
 
 /*lint -sem(net_addr_resolve, r_null) */
 
-struct server	*server_new(const char *host, const char *port);
-void		 server_destroy(struct server *);
-
 bool		 sasl_is_enabled(void);
-int		 net_send_fake(const char *, ...);
-struct addrinfo *net_addr_resolve(const char *host, const char *port);
 conn_res_t	 net_connect(const struct network_connect_context *,
 		     long int *sleep_time_seconds);
+int		 net_send_fake(const char *, ...);
+struct addrinfo *net_addr_resolve(const char *host, const char *port);
+struct server	*server_new(const char *host, const char *port);
 void		 net_irc_listen(void);
+void		 server_destroy(struct server *);
 
 int	net_ssl_begin(void);
 void	net_ssl_end(void);
