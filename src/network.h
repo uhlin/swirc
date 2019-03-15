@@ -67,13 +67,13 @@ conn_res_t	 net_connect(const struct network_connect_context *,
 		     long int *sleep_time_seconds);
 void		 net_irc_listen(void);
 
-void	net_ssl_init(void);
-void	net_ssl_deinit(void);
-void	net_ssl_end(void);
 int	net_ssl_begin(void);
+void	net_ssl_end(void);
+int	net_ssl_check_hostname(const char *, unsigned int);
 int	net_ssl_send(const char *fmt, ...);
 int	net_ssl_recv(struct network_recv_context *, char *, int);
-int	net_ssl_check_hostname(const char *, unsigned int);
+void	net_ssl_init(void);
+void	net_ssl_deinit(void);
 
 #ifdef __cplusplus
 }
