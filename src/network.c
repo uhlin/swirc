@@ -224,12 +224,14 @@ net_connect(
 	err_exit(EINVAL, "net_connect");
     else if (atomic_load_bool(&g_connection_in_progress))
 	return CONNECTION_FAILED;
-    else if (!reconn_initialized) {
+    else if (!atomic_load_bool(&reconn_initialized)) {
 	reconn_ctx.backoff_delay = get_reconnect_backoff_delay();
 	reconn_ctx.delay         = get_reconnect_delay();
 	reconn_ctx.delay_max     = get_reconnect_delay_max();
 	reconn_ctx.retries       = get_reconnect_retries();
-	reconn_initialized = true;
+	if (atomic_swap_bool(&reconn_initialized, true) != false)
+	    err_log(0, "error: net_connect: atomic_swap_bool: "
+		"reconn_initialized");
     }
     if (atomic_swap_bool(&g_connection_in_progress, true) != false)
 	err_log(0, "error: net_connect: atomic_swap_bool");
