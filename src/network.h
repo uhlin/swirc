@@ -70,7 +70,7 @@ void		 net_irc_listen(void);
 void	net_ssl_init(void);
 void	net_ssl_deinit(void);
 void	net_ssl_close(void);
-int	net_ssl_start(void);
+int	net_ssl_begin(void);
 int	net_ssl_send(const char *fmt, ...);
 int	net_ssl_recv(struct network_recv_context *, char *, int);
 int	net_ssl_check_hostname(const char *, unsigned int);

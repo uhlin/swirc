@@ -285,7 +285,7 @@ net_connect(
     freeaddrinfo(res);
     select_send_and_recv_funcs();
 
-    if (!g_on_air || (ssl_is_enabled() && net_ssl_start() == -1)) {
+    if (!g_on_air || (ssl_is_enabled() && net_ssl_begin() == -1)) {
 	ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ptext_ctx, "Failed to establish a connection");
 	goto err;

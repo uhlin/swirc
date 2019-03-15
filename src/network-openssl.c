@@ -174,7 +174,7 @@ net_ssl_close(void)
 }
 
 int
-net_ssl_start(void)
+net_ssl_begin(void)
 {
     PRINTTEXT_CONTEXT ptext_ctx;
     const int VALUE_HANDSHAKE_OK = 1;
@@ -183,12 +183,12 @@ net_ssl_start(void)
 	true);
 
     if ((ssl = SSL_new(ssl_ctx)) == NULL)
-	err_exit(ENOMEM, "net_ssl_start: Unable to create a new SSL object");
+	err_exit(ENOMEM, "net_ssl_begin: Unable to create a new SSL object");
     else if (!SSL_set_fd(ssl, g_socket))
-	printtext(&ptext_ctx, "net_ssl_start: "
+	printtext(&ptext_ctx, "net_ssl_begin: "
 	    "Unable to associate the global socket fd with the SSL object");
     else if (SSL_connect(ssl) != VALUE_HANDSHAKE_OK)
-	printtext(&ptext_ctx, "net_ssl_start: Handshake NOT ok!");
+	printtext(&ptext_ctx, "net_ssl_begin: Handshake NOT ok!");
     else
 	return (0);
 
