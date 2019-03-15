@@ -90,68 +90,6 @@ reconnect_context_reinit(struct reconnect_context *ctx)
     }
 }
 
-struct server *
-server_new(const char *host, const char *port)
-{
-    struct server *server = xmalloc(sizeof *server);
-
-    server->host = sw_strdup(host);
-    server->port = sw_strdup(port);
-
-    return server;
-}
-
-void
-server_destroy(struct server *server)
-{
-    if (server == NULL)
-	return;
-    free_not_null(server->host);
-    free_not_null(server->port);
-    free(server);
-}
-
-bool
-sasl_is_enabled(void)
-{
-    return config_bool_unparse("sasl", false);
-}
-
-int
-net_send_fake(const char *fmt, ...)
-{
-    int bytes_sent;
-    va_list ap;
-
-    va_start(ap, fmt);
-    bytes_sent = vsnprintf(g_sent, ARRAY_SIZE(g_sent), fmt, ap);
-    va_end(ap);
-
-    return bytes_sent;
-}
-
-struct addrinfo *
-net_addr_resolve(const char *host, const char *port)
-{
-    struct addrinfo hints = {
-	.ai_flags     = AI_CANONNAME,
-	.ai_family    = AF_INET,
-	.ai_socktype  = SOCK_STREAM,
-	.ai_protocol  = 0,
-	.ai_addrlen   = 0,
-	.ai_addr      = NULL,
-	.ai_canonname = NULL,
-	.ai_next      = NULL,
-    };
-    struct addrinfo *res = NULL;
-
-    if (!host || !port || getaddrinfo(host, port, &hints, &res) != 0) {
-	return (NULL);
-    }
-
-    return (res);
-}
-
 static void
 select_send_and_recv_funcs()
 {
@@ -209,6 +147,12 @@ send_reg_cmds(const struct network_connect_context *ctx)
 
     (void) net_send("NICK %s", ctx->nickname);
     (void) net_send("USER %s 8 * :%s", ctx->username, ctx->rl_name);
+}
+
+bool
+sasl_is_enabled(void)
+{
+    return config_bool_unparse("sasl", false);
 }
 
 conn_res_t
@@ -353,6 +297,52 @@ net_connect(
     return CONNECTION_FAILED;
 }
 
+int
+net_send_fake(const char *fmt, ...)
+{
+    int bytes_sent;
+    va_list ap;
+
+    va_start(ap, fmt);
+    bytes_sent = vsnprintf(g_sent, ARRAY_SIZE(g_sent), fmt, ap);
+    va_end(ap);
+
+    return bytes_sent;
+}
+
+struct addrinfo *
+net_addr_resolve(const char *host, const char *port)
+{
+    struct addrinfo hints = {
+	.ai_flags     = AI_CANONNAME,
+	.ai_family    = AF_INET,
+	.ai_socktype  = SOCK_STREAM,
+	.ai_protocol  = 0,
+	.ai_addrlen   = 0,
+	.ai_addr      = NULL,
+	.ai_canonname = NULL,
+	.ai_next      = NULL,
+    };
+    struct addrinfo *res = NULL;
+
+    if (!host || !port || getaddrinfo(host, port, &hints, &res) != 0) {
+	return (NULL);
+    }
+
+    return (res);
+}
+
+struct server *
+server_new(const char *host, const char *port)
+{
+    struct server *server = xmalloc(sizeof *server);
+
+    server->host = sw_strdup(host);
+    server->port = sw_strdup(port);
+
+    return server;
+}
+
 void
 net_irc_listen(void)
 {
@@ -398,4 +388,14 @@ net_irc_listen(void)
     irc_deinit();
     free_not_null(recvbuf);
     free_not_null(message_concat);
+}
+
+void
+server_destroy(struct server *server)
+{
+    if (server == NULL)
+	return;
+    free_not_null(server->host);
+    free_not_null(server->port);
+    free(server);
 }
