@@ -1,4 +1,4 @@
-/* Copyright (c) 2016-2018 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2016-2019 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -45,6 +45,146 @@ static const char *suite_secure   = "TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
 static const char *suite_compat   = "HIGH:!aNULL";
 static const char *suite_legacy   = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
 static const char *suite_insecure = "ALL:!aNULL:!eNULL";
+
+int
+net_ssl_begin(void)
+{
+    PRINTTEXT_CONTEXT ptext_ctx;
+    const int VALUE_HANDSHAKE_OK = 1;
+
+    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
+	true);
+
+    if ((ssl = SSL_new(ssl_ctx)) == NULL)
+	err_exit(ENOMEM, "net_ssl_begin: Unable to create a new SSL object");
+    else if (!SSL_set_fd(ssl, g_socket))
+	printtext(&ptext_ctx, "net_ssl_begin: "
+	    "Unable to associate the global socket fd with the SSL object");
+    else if (SSL_connect(ssl) != VALUE_HANDSHAKE_OK)
+	printtext(&ptext_ctx, "net_ssl_begin: Handshake NOT ok!");
+    else
+	return (0);
+
+    return (-1);
+}
+
+void
+net_ssl_end(void)
+{
+    if (ssl) {
+	SSL_shutdown(ssl);
+	SSL_free(ssl);
+	ssl = NULL;
+    }
+}
+
+int
+net_ssl_check_hostname(const char *host, unsigned int flags)
+{
+    X509	*cert = NULL;
+    int		 ret  = ERR;
+
+    if (ssl == NULL || (cert = SSL_get_peer_certificate(ssl)) == NULL ||
+	host == NULL) {
+	if (cert)
+	    X509_free(cert);
+	return ERR;
+    }
+    ret = X509_check_host(cert, host, 0, flags, NULL) > 0 ? OK : ERR;
+    X509_free(cert);
+    return ret;
+}
+
+int
+net_ssl_send(const char *fmt, ...)
+{
+    char	*buf    = NULL;
+    int		 buflen = 0;
+    int		 n_sent = 0;
+    va_list	 ap;
+
+    if (!ssl)
+	return -1;
+
+    va_start(ap, fmt);
+    buf = strdup_vprintf(fmt, ap);
+    va_end(ap);
+
+    /* message terminate */
+    realloc_strcat(&buf, "\r\n");
+
+    if (strlen(buf) > INT_MAX) {
+	free(buf);
+	return -1;
+    }
+
+    buflen = (int) strlen(buf);
+    ERR_clear_error();
+
+    if ((n_sent = SSL_write(ssl, buf, buflen)) > 0) {
+	free(buf);
+	return n_sent;
+    }
+
+    free(buf);
+
+    switch (SSL_get_error(ssl, n_sent)) {
+    case SSL_ERROR_NONE:
+	return 0;
+    case SSL_ERROR_WANT_READ:
+    case SSL_ERROR_WANT_WRITE:
+	err_log(0, "net_ssl_send: operation did not complete");
+	return 0;
+    }
+
+    return -1;
+}
+
+int
+net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
+{
+#ifdef UNIX
+#define SOCKET_ERROR -1
+#endif
+    const int maxfdp1 = ctx->sock + 1;
+    fd_set readset;
+    struct timeval tv = {
+	.tv_sec  = ctx->sec,
+	.tv_usec = ctx->microsec,
+    };
+
+    if (!ssl)
+	return -1;
+
+    FD_ZERO(&readset);
+    FD_SET(ctx->sock, &readset);
+
+    errno = 0;
+
+    if (select(maxfdp1, &readset, NULL, NULL, &tv) == SOCKET_ERROR) {
+	return errno == EINTR ? 0 : -1;
+    } else if (!FD_ISSET(ctx->sock, &readset)) {
+	return 0;
+    } else {
+	int bytes_received = 0;
+
+	ERR_clear_error();
+	if ((bytes_received = SSL_read(ssl, recvbuf, recvbuf_size)) > 0)
+	    return bytes_received;
+	switch (SSL_get_error(ssl, bytes_received)) {
+	case SSL_ERROR_NONE:
+	    return 0;
+	case SSL_ERROR_WANT_READ:
+	case SSL_ERROR_WANT_WRITE:
+	    err_log(0, "net_ssl_recv: want read / want write");
+	    return 0;
+	}
+	return -1;
+    }
+
+    /*NOTREACHED*/ sw_assert_not_reached();
+    /*NOTREACHED*/ return -1;
+}
 
 static int
 verify_callback(int ok, X509_STORE_CTX *ctx)
@@ -161,144 +301,4 @@ net_ssl_deinit(void)
 	SSL_CTX_free(ssl_ctx);
 	ssl_ctx = NULL;
     }
-}
-
-void
-net_ssl_end(void)
-{
-    if (ssl) {
-	SSL_shutdown(ssl);
-	SSL_free(ssl);
-	ssl = NULL;
-    }
-}
-
-int
-net_ssl_begin(void)
-{
-    PRINTTEXT_CONTEXT ptext_ctx;
-    const int VALUE_HANDSHAKE_OK = 1;
-
-    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
-	true);
-
-    if ((ssl = SSL_new(ssl_ctx)) == NULL)
-	err_exit(ENOMEM, "net_ssl_begin: Unable to create a new SSL object");
-    else if (!SSL_set_fd(ssl, g_socket))
-	printtext(&ptext_ctx, "net_ssl_begin: "
-	    "Unable to associate the global socket fd with the SSL object");
-    else if (SSL_connect(ssl) != VALUE_HANDSHAKE_OK)
-	printtext(&ptext_ctx, "net_ssl_begin: Handshake NOT ok!");
-    else
-	return (0);
-
-    return (-1);
-}
-
-int
-net_ssl_send(const char *fmt, ...)
-{
-    char	*buf    = NULL;
-    int		 buflen = 0;
-    int		 n_sent = 0;
-    va_list	 ap;
-
-    if (!ssl)
-	return -1;
-
-    va_start(ap, fmt);
-    buf = strdup_vprintf(fmt, ap);
-    va_end(ap);
-
-    /* message terminate */
-    realloc_strcat(&buf, "\r\n");
-
-    if (strlen(buf) > INT_MAX) {
-	free(buf);
-	return -1;
-    }
-
-    buflen = (int) strlen(buf);
-    ERR_clear_error();
-
-    if ((n_sent = SSL_write(ssl, buf, buflen)) > 0) {
-	free(buf);
-	return n_sent;
-    }
-
-    free(buf);
-
-    switch (SSL_get_error(ssl, n_sent)) {
-    case SSL_ERROR_NONE:
-	return 0;
-    case SSL_ERROR_WANT_READ:
-    case SSL_ERROR_WANT_WRITE:
-	err_log(0, "net_ssl_send: operation did not complete");
-	return 0;
-    }
-
-    return -1;
-}
-
-int
-net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
-{
-#ifdef UNIX
-#define SOCKET_ERROR -1
-#endif
-    const int maxfdp1 = ctx->sock + 1;
-    fd_set readset;
-    struct timeval tv = {
-	.tv_sec  = ctx->sec,
-	.tv_usec = ctx->microsec,
-    };
-
-    if (!ssl)
-	return -1;
-
-    FD_ZERO(&readset);
-    FD_SET(ctx->sock, &readset);
-
-    errno = 0;
-
-    if (select(maxfdp1, &readset, NULL, NULL, &tv) == SOCKET_ERROR) {
-	return errno == EINTR ? 0 : -1;
-    } else if (!FD_ISSET(ctx->sock, &readset)) {
-	return 0;
-    } else {
-	int bytes_received = 0;
-
-	ERR_clear_error();
-	if ((bytes_received = SSL_read(ssl, recvbuf, recvbuf_size)) > 0)
-	    return bytes_received;
-	switch (SSL_get_error(ssl, bytes_received)) {
-	case SSL_ERROR_NONE:
-	    return 0;
-	case SSL_ERROR_WANT_READ:
-	case SSL_ERROR_WANT_WRITE:
-	    err_log(0, "net_ssl_recv: want read / want write");
-	    return 0;
-	}
-	return -1;
-    }
-
-    /*NOTREACHED*/ sw_assert_not_reached();
-    /*NOTREACHED*/ return -1;
-}
-
-int
-net_ssl_check_hostname(const char *host, unsigned int flags)
-{
-    X509	*cert = NULL;
-    int		 ret  = ERR;
-
-    if (ssl == NULL || (cert = SSL_get_peer_certificate(ssl)) == NULL ||
-	host == NULL) {
-	if (cert)
-	    X509_free(cert);
-	return ERR;
-    }
-    ret = X509_check_host(cert, host, 0, flags, NULL) > 0 ? OK : ERR;
-    X509_free(cert);
-    return ret;
 }
