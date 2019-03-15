@@ -266,14 +266,7 @@ net_connect(
     return CONNECTION_ESTABLISHED;
 
   err:
-    g_on_air = false;
-    net_ssl_end();
-#if defined(UNIX)
-    close(g_socket);
-#elif defined(WIN32)
-    closesocket(g_socket);
-    winsock_deinit();
-#endif
+    net_kill_connection();
     if (retry++ < reconn_ctx.retries) {
 	const bool is_initial_reconnect_attempt = (retry == 1);
 
@@ -373,11 +366,21 @@ net_irc_listen(void)
     } while (g_on_air);
 
     printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_WARN, true);
-    if (g_on_air) {
+
+    if (g_on_air)
 	printtext(&ptext_ctx, "Connection to IRC server lost");
-	g_on_air = false;
-    }
+
+    net_kill_connection();
+    irc_deinit();
+    free_not_null(recvbuf);
+    free_not_null(message_concat);
     printtext(&ptext_ctx, "Disconnected");
+}
+
+void
+net_kill_connection(void)
+{
+    g_on_air = false;
     net_ssl_end();
 #if defined(UNIX)
     close(g_socket);
@@ -385,9 +388,7 @@ net_irc_listen(void)
     closesocket(g_socket);
     winsock_deinit();
 #endif
-    irc_deinit();
-    free_not_null(recvbuf);
-    free_not_null(message_concat);
+    g_socket = INVALID_SOCKET;
 }
 
 void
