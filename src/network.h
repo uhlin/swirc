@@ -60,7 +60,7 @@ extern volatile bool g_on_air;
 struct server	*server_new(const char *host, const char *port);
 void		 server_destroy(struct server *);
 
-bool		 is_sasl_enabled(void);
+bool		 sasl_is_enabled(void);
 int		 net_send_fake(const char *, ...);
 struct addrinfo *net_addr_resolve(const char *host, const char *port);
 conn_res_t	 net_connect(const struct network_connect_context *,

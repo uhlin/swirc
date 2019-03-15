@@ -112,7 +112,7 @@ server_destroy(struct server *server)
 }
 
 bool
-is_sasl_enabled(void)
+sasl_is_enabled(void)
 {
     return config_bool_unparse("sasl", false);
 }
@@ -192,7 +192,7 @@ send_reg_cmds(const struct network_connect_context *ctx)
 	    printtext(&ptext_ctx, "Requesting server time");
     }
 
-    if (is_sasl_enabled()) {
+    if (sasl_is_enabled()) {
 	if (strings_match(get_sasl_mechanism(), "PLAIN") && !is_ssl_enabled()) {
 	    ptext_ctx.spec_type = TYPE_SPEC1_WARN;
 	    printtext(&ptext_ctx, "SASL mechanism matches PLAIN and TLS/SSL "
