@@ -323,7 +323,7 @@ net_connect(
 
   err:
     g_on_air = false;
-    net_ssl_close();
+    net_ssl_end();
 #if defined(UNIX)
     close(g_socket);
 #elif defined(WIN32)
@@ -388,7 +388,7 @@ net_irc_listen(void)
 	g_on_air = false;
     }
     printtext(&ptext_ctx, "Disconnected");
-    net_ssl_close();
+    net_ssl_end();
 #if defined(UNIX)
     close(g_socket);
 #elif defined(WIN32)

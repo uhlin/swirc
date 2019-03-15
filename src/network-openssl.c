@@ -164,7 +164,7 @@ net_ssl_deinit(void)
 }
 
 void
-net_ssl_close(void)
+net_ssl_end(void)
 {
     if (ssl) {
 	SSL_shutdown(ssl);
