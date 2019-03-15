@@ -7,7 +7,7 @@
 void	do_connect(const char *server, const char *port);
 void	set_ssl_on(void);
 void	set_ssl_off(void);
-bool	is_ssl_enabled(void);
+bool	ssl_is_enabled(void);
 
 void	cmd_connect(const char *);
 void	cmd_disconnect(const char *);

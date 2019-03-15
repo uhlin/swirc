@@ -219,7 +219,7 @@ do_connect(const char *server, const char *port)
 	ptext_ctx.spec_type = TYPE_SPEC2;
 	conn_ctx.password = (g_connection_password ? get_password() : NULL);
 
-	if (!is_ssl_enabled() && strings_match(conn_ctx.port, SSL_PORT))
+	if (!ssl_is_enabled() && strings_match(conn_ctx.port, SSL_PORT))
 	    set_ssl_on();
 
 	while (net_connect(&conn_ctx, &sleep_time_seconds) ==
@@ -252,7 +252,7 @@ set_ssl_off(void)
 }
 
 bool
-is_ssl_enabled(void)
+ssl_is_enabled(void)
 {
     return secure_connection;
 }
@@ -337,7 +337,7 @@ cmd_connect(const char *data)
 	sw_assert(server != NULL);
 
 	if ((port = strtok_r(NULL, "\n:", &state)) == NULL)
-	    port = is_ssl_enabled() ? SSL_PORT : "6667";
+	    port = ssl_is_enabled() ? SSL_PORT : "6667";
     } else if (feeds_written == 0) {
 	server = strtok_r(dcopy, "\n:", &state);
 	sw_assert(server != NULL);

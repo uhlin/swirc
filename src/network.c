@@ -155,7 +155,7 @@ net_addr_resolve(const char *host, const char *port)
 static void
 select_send_and_recv_funcs()
 {
-    if (is_ssl_enabled()) {
+    if (ssl_is_enabled()) {
 	net_send = net_ssl_send;
 	net_recv = net_ssl_recv;
     } else {
@@ -193,7 +193,7 @@ send_reg_cmds(const struct network_connect_context *ctx)
     }
 
     if (sasl_is_enabled()) {
-	if (strings_match(get_sasl_mechanism(), "PLAIN") && !is_ssl_enabled()) {
+	if (strings_match(get_sasl_mechanism(), "PLAIN") && !ssl_is_enabled()) {
 	    ptext_ctx.spec_type = TYPE_SPEC1_WARN;
 	    printtext(&ptext_ctx, "SASL mechanism matches PLAIN and TLS/SSL "
 		"is not enabled. Not requesting SASL authentication.");
@@ -285,13 +285,13 @@ net_connect(
     freeaddrinfo(res);
     select_send_and_recv_funcs();
 
-    if (!g_on_air || (is_ssl_enabled() && net_ssl_start() == -1)) {
+    if (!g_on_air || (ssl_is_enabled() && net_ssl_start() == -1)) {
 	ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ptext_ctx, "Failed to establish a connection");
 	goto err;
     }
 
-    if (is_ssl_enabled() && config_bool_unparse("hostname_checking", true)) {
+    if (ssl_is_enabled() && config_bool_unparse("hostname_checking", true)) {
 	if (net_ssl_check_hostname(ctx->server, 0) != OK) {
 	    ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 	    printtext(&ptext_ctx, "Hostname checking failed!");
