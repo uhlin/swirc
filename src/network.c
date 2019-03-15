@@ -39,6 +39,7 @@
 
 #include <string.h>
 
+#include "assertAPI.h"
 #include "config.h"
 #include "errHand.h"
 #include "irc.h"
