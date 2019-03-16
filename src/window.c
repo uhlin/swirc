@@ -466,7 +466,6 @@ new_window_title(const char *label, const char *title)
 void
 window_close_all_priv_conv(void)
 {
-    char **ar_p = NULL;
     char *priv_conv[200] = { NULL };
     size_t pc_assigned = 0;
 
@@ -482,7 +481,7 @@ window_close_all_priv_conv(void)
 	napms(50);
 	return;
     }
-    for (ar_p = &priv_conv[0]; ar_p < &priv_conv[pc_assigned]; ar_p++) {
+    for (char **ar_p = &priv_conv[0]; ar_p < &priv_conv[pc_assigned]; ar_p++) {
 	destroy_chat_window(*ar_p);
 	free(*ar_p);
     }
