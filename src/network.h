@@ -67,7 +67,7 @@ int		 net_send_fake(const char *, ...);
 struct addrinfo *net_addr_resolve(const char *host, const char *port);
 struct server	*server_new(const char *host, const char *port);
 void		 net_connect_clean_up(void);
-void		 net_irc_listen(void);
+void		 net_irc_listen(bool *connection_lost);
 void		 net_kill_connection(void);
 void		 server_destroy(struct server *);
 

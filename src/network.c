@@ -347,7 +347,7 @@ net_connect_clean_up(void)
 }
 
 void
-net_irc_listen(void)
+net_irc_listen(bool *connection_lost)
 {
     PRINTTEXT_CONTEXT ptext_ctx;
     char *message_concat = NULL;
@@ -361,6 +361,7 @@ net_irc_listen(void)
 	.microsec = 0,
     };
 
+    *connection_lost = false;
     irc_init();
 
     do {
@@ -377,8 +378,10 @@ net_irc_listen(void)
 
     printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_WARN, true);
 
-    if (g_on_air)
+    if (g_on_air) {
+	*connection_lost = true;
 	printtext(&ptext_ctx, "Connection to IRC server lost");
+    }
 
     net_kill_connection();
     irc_deinit();
