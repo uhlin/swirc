@@ -241,13 +241,13 @@ do_connect(const char *server, const char *port)
 
 	while (net_connect(&conn_ctx, &sleep_time_seconds) ==
 	    SHOULD_RETRY_TO_CONNECT) {
-	    const int sleep_time_ms = (int) (sleep_time_seconds * 1000);
+	    //const int sleep_time_ms = (int) (sleep_time_seconds * 1000);
 
 	    printtext(&ptext_ctx, "Next reconnect attempt in %ld seconds...",
 		      sleep_time_seconds);
 
-	    for (int ms = 0; ms < sleep_time_ms; ms++) {
-		napms(1);
+	    for (int secs = 0; secs < sleep_time_seconds; secs++) {
+		napms(1000);
 
 		if (quit_reconnecting) {
 		    net_kill_connection();
