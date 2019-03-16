@@ -259,14 +259,13 @@ net_connect(
     }
 
     event_welcome_cond_destroy();
-    reconnect_context_reinit(&reconn_ctx);
-    retry = 0;
-    if (atomic_swap_bool(&g_connection_in_progress, false) != true)
-	err_log(0, "error: net_connect: atomic_swap_bool");
+    net_connect_clean_up();
     return CONNECTION_ESTABLISHED;
 
   err:
+
     net_kill_connection();
+
     if (retry++ < reconn_ctx.retries) {
 	const bool is_initial_reconnect_attempt = (retry == 1);
 
@@ -283,10 +282,8 @@ net_connect(
 	    err_log(0, "error: net_connect: atomic_swap_bool");
 	return SHOULD_RETRY_TO_CONNECT;
     }
-    reconnect_context_reinit(&reconn_ctx);
-    retry = 0;
-    if (atomic_swap_bool(&g_connection_in_progress, false) != true)
-	err_log(0, "error: net_connect: atomic_swap_bool");
+
+    net_connect_clean_up();
     return CONNECTION_FAILED;
 }
 
@@ -334,6 +331,14 @@ server_new(const char *host, const char *port)
     server->port = sw_strdup(port);
 
     return server;
+}
+
+void
+net_connect_clean_up(void)
+{
+    reconnect_context_reinit(&reconn_ctx);
+    retry = 0;
+    atomic_swap_bool(&g_connection_in_progress, false);
 }
 
 void
