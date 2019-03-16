@@ -151,8 +151,12 @@ net_listenThread_join(void)
 static VoidCdecl
 listenThread_fn(void *arg)
 {
+    bool connection_lost;
+
     (void) arg;
-    net_irc_listen();
+    net_irc_listen(&connection_lost);
+    if (connection_lost)
+	IRC_CONNECT(g_last_server, g_last_port);
     _endthread();
 }
 
