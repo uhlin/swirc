@@ -65,20 +65,20 @@ void windowSystem_deinit(void);
 /*lint -sem(window_by_label, r_null) */
 /*lint -sem(window_by_refnum, r_null) */
 
-PIRC_WINDOW	window_by_label              (const char *);
-PIRC_WINDOW	window_by_refnum             (int);
-int		changeWindow_by_label        (const char *);
-int		changeWindow_by_refnum       (int);
-int		destroy_chat_window          (const char *label);
-int		spawn_chat_window            (const char *label, const char *title);
-void		new_window_title             (const char *label, const char *title);
-void		window_close_all_priv_conv   (void);
-void		window_foreach_destroy_names (void);
-void		window_scroll_down           (PIRC_WINDOW);
-void		window_scroll_up             (PIRC_WINDOW);
-void		window_select_next           (void);
-void		window_select_prev           (void);
-void		windows_recreate_all         (int rows, int cols);
+PIRC_WINDOW	window_by_label(const char *);
+PIRC_WINDOW	window_by_refnum(int);
+int		changeWindow_by_label(const char *);
+int		changeWindow_by_refnum(int);
+int		destroy_chat_window(const char *label);
+int		spawn_chat_window(const char *label, const char *title);
+void		new_window_title(const char *label, const char *title);
+void		window_close_all_priv_conv(void);
+void		window_foreach_destroy_names(void);
+void		window_scroll_down(PIRC_WINDOW);
+void		window_scroll_up(PIRC_WINDOW);
+void		window_select_next(void);
+void		window_select_prev(void);
+void		windows_recreate_all(int rows, int cols);
 
 #ifdef __cplusplus
 }
