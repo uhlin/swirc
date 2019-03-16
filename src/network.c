@@ -74,6 +74,9 @@ NET_RECV_FN net_recv = net_recv_plain;
 volatile bool g_connection_in_progress = false;
 volatile bool g_on_air = false;
 
+char g_last_server[512] = { 0 };
+char g_last_port[16] = { 0 };
+
 static const int RECVBUF_SIZE = 2048;
 static long int retry = 0;
 static struct reconnect_context reconn_ctx = { 0 };
@@ -258,6 +261,8 @@ net_connect(
 	goto err;
     }
 
+    snprintf(g_last_server, ARRAY_SIZE(g_last_server), "%s", ctx->server);
+    snprintf(g_last_port, ARRAY_SIZE(g_last_port), "%s", ctx->port);
     event_welcome_cond_destroy();
     net_connect_clean_up();
     return CONNECTION_ESTABLISHED;
