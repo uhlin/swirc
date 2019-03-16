@@ -74,6 +74,7 @@ int		spawn_chat_window(const char *label, const char *title);
 void		new_window_title(const char *label, const char *title);
 void		window_close_all_priv_conv(void);
 void		window_foreach_destroy_names(void);
+void		window_foreach_rejoin_all_channels(void);
 void		window_scroll_down(PIRC_WINDOW);
 void		window_scroll_up(PIRC_WINDOW);
 void		window_select_next(void);

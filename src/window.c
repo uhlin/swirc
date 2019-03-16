@@ -521,6 +521,23 @@ window_foreach_destroy_names(void)
 }
 
 /**
+ * Rejoin all IRC channels
+ */
+void
+window_foreach_rejoin_all_channels(void)
+{
+    PIRC_WINDOW *entry_p;
+    PIRC_WINDOW	 window;
+
+    foreach_hash_table_entry(entry_p) {
+	for (window = *entry_p; window != NULL; window = window->next) {
+	    if (is_irc_channel(window->label))
+		net_send("JOIN %s", window->label);
+	}
+    }
+}
+
+/**
  * Redraw a window
  */
 static void
