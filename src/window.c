@@ -54,7 +54,7 @@
 #include "terminal.h"
 #include "titlebar.h"
 
-#define foreach_hash_table_entry(entry_p) \
+#define FOREACH_HASH_TABLE_ENTRY(entry_p) \
 	for (entry_p = &hash_table[0]; \
 	     entry_p < &hash_table[ARRAY_SIZE(hash_table)]; \
 	     entry_p++)
@@ -93,7 +93,7 @@ windowSystem_init(void)
 {
     PIRC_WINDOW *entry_p;
 
-    foreach_hash_table_entry(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY(entry_p) {
 	*entry_p = NULL;
     }
 
@@ -163,7 +163,7 @@ windowSystem_deinit(void)
     PIRC_WINDOW *entry_p;
     PIRC_WINDOW p, tmp;
 
-    foreach_hash_table_entry(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY(entry_p) {
 	for (p = *entry_p; p != NULL; p = tmp) {
 	    tmp = p->next;
 	    hUndef(p);
@@ -210,7 +210,7 @@ window_by_refnum(int refnum)
 	return (NULL);
     }
 
-    foreach_hash_table_entry(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY(entry_p) {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (refnum == window->refnum) {
 		return (window);
@@ -299,7 +299,7 @@ reassign_window_refnums()
     PIRC_WINDOW	 window;
     int		 ref_count = 1;
 
-    foreach_hash_table_entry(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY(entry_p) {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (!strings_match_ignore_case(window->label,
 					   g_status_window_label)) {
@@ -477,7 +477,7 @@ window_close_all_priv_conv(void)
     char        **ar_p           = NULL;
     size_t        pc_assigned    = 0;
 
-    foreach_hash_table_entry(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY(entry_p) {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (window == g_status_window || is_irc_channel(window->label))
 		continue;
@@ -504,7 +504,7 @@ window_foreach_destroy_names(void)
     PIRC_WINDOW *entry_p;
     PIRC_WINDOW	 window;
 
-    foreach_hash_table_entry(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY(entry_p) {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (is_irc_channel(window->label)) {
 		event_names_htbl_remove_all(window);
@@ -529,7 +529,7 @@ window_foreach_rejoin_all_channels(void)
     PIRC_WINDOW *entry_p;
     PIRC_WINDOW	 window;
 
-    foreach_hash_table_entry(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY(entry_p) {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (is_irc_channel(window->label))
 		net_send("JOIN %s", window->label);
@@ -730,7 +730,7 @@ windows_recreate_all(int rows, int cols)
     PIRC_WINDOW *entry_p;
     PIRC_WINDOW	 window;
 
-    foreach_hash_table_entry(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY(entry_p) {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    window_recreate(window, rows, cols);
 	}
