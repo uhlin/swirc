@@ -45,6 +45,8 @@
 
 #define SSL_PORT "6697"
 
+static bool quit_reconnecting = false;
+static bool reconnecting = false;
 static bool secure_connection = false;
 
 static const char *efnet_servers[] = {
@@ -158,6 +160,19 @@ get_password()
     return (pass);
 }
 
+static void
+reconnect_begin()
+{
+    quit_reconnecting = false;
+    reconnecting = true;
+}
+
+static void
+reconnect_end()
+{
+    reconnecting = false;
+}
+
 void
 do_connect(const char *server, const char *port)
 {
@@ -222,14 +237,30 @@ do_connect(const char *server, const char *port)
 	if (!ssl_is_enabled() && strings_match(conn_ctx.port, SSL_PORT))
 	    set_ssl_on();
 
+	reconnect_begin();
+
 	while (net_connect(&conn_ctx, &sleep_time_seconds) ==
 	    SHOULD_RETRY_TO_CONNECT) {
 	    const int sleep_time_ms = (int) (sleep_time_seconds * 1000);
 
 	    printtext(&ptext_ctx, "Next reconnect attempt in %ld seconds...",
 		      sleep_time_seconds);
-	    napms(sleep_time_ms);
+
+	    for (int ms = 0; ms < sleep_time_ms; ms++) {
+		napms(1);
+
+		if (quit_reconnecting) {
+		    net_kill_connection();
+		    net_connect_clean_up();
+		    printtext(&ptext_ctx, "Reconnection aborted!");
+		    goto out_of_both_loops;
+		}
+	    }
 	}
+
+      out_of_both_loops:
+
+	reconnect_end();
 
 	if (conn_ctx.password) {
 	    OPENSSL_cleanse(conn_ctx.password, PASSWORD_SIZE);
@@ -351,6 +382,9 @@ cmd_connect(const char *data)
     if (atomic_load_bool(&g_connection_in_progress)) {
 	print_and_free("/connect: connection in progress", dcopy);
 	return;
+    } else if (reconnecting) {
+	print_and_free("/connect: reconnecting... /disconnect ?", dcopy);
+	return;
     } else if (g_on_air) {
 	print_and_free("/connect: already connected!", dcopy);
 	return;
@@ -394,6 +428,8 @@ cmd_disconnect(const char *data)
 {
     const bool has_message = !strings_match(data, "");
     extern void event_welcome_signalit(void);
+
+    quit_reconnecting = true;
 
     if (g_on_air) {
 	if (has_message)
