@@ -92,7 +92,7 @@ static struct cmds_tag {
     { "connect",    cmd_connect,    false, connect_usage,    ARRAY_SIZE(connect_usage) },
     { "cs",         cmd_chanserv,   true,  chanserv_usage,   ARRAY_SIZE(chanserv_usage) },
     { "cycle",      cmd_cycle,      true,  cycle_usage,      ARRAY_SIZE(cycle_usage) },
-    { "disconnect", cmd_disconnect, true,  disconnect_usage, ARRAY_SIZE(disconnect_usage) },
+    { "disconnect", cmd_disconnect, false, disconnect_usage, ARRAY_SIZE(disconnect_usage) },
     { "exlist",     cmd_exlist,     true,  exlist_usage,     ARRAY_SIZE(exlist_usage) },
     { "help",       cmd_help,       false, help_usage,       ARRAY_SIZE(help_usage) },
     { "ilist",      cmd_ilist,      true,  ilist_usage,      ARRAY_SIZE(ilist_usage) },
