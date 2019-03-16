@@ -261,9 +261,10 @@ net_connect(
 	goto err;
     }
 
-    snprintf(g_last_server, ARRAY_SIZE(g_last_server), "%s", ctx->server);
-    snprintf(g_last_port, ARRAY_SIZE(g_last_port), "%s", ctx->port);
     event_welcome_cond_destroy();
+    snprintf(g_last_port, ARRAY_SIZE(g_last_port), "%s", ctx->port);
+    snprintf(g_last_server, ARRAY_SIZE(g_last_server), "%s", ctx->server);
+    window_foreach_rejoin_all_channels();
     net_connect_clean_up();
     return CONNECTION_ESTABLISHED;
 
