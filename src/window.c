@@ -54,13 +54,13 @@
 #include "terminal.h"
 #include "titlebar.h"
 
-#define FOREACH_HASH_TABLE_ENTRY(entry_p) \
-	for (entry_p = &hash_table[0]; \
-	     entry_p < &hash_table[ARRAY_SIZE(hash_table)]; \
-	     entry_p++)
+#define FOREACH_HASH_TABLE_ENTRY()\
+    for (PIRC_WINDOW *entry_p = &hash_table[0];\
+	 entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
+	 entry_p++)
 
-#define IS_AT_TOP (window->saved_size > 0 && \
-		   window->saved_size == window->scroll_count)
+#define IS_AT_TOP \
+    (window->saved_size > 0 && window->saved_size == window->scroll_count)
 #define SCROLL_OFFSET 6
 
 /* Structure definitions
@@ -91,9 +91,7 @@ static PIRC_WINDOW hash_table[200];
 void
 windowSystem_init(void)
 {
-    PIRC_WINDOW *entry_p;
-
-    FOREACH_HASH_TABLE_ENTRY(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY() {
 	*entry_p = NULL;
     }
 
@@ -160,10 +158,9 @@ hUndef(PIRC_WINDOW entry)
 void
 windowSystem_deinit(void)
 {
-    PIRC_WINDOW *entry_p;
     PIRC_WINDOW p, tmp;
 
-    FOREACH_HASH_TABLE_ENTRY(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY() {
 	for (p = *entry_p; p != NULL; p = tmp) {
 	    tmp = p->next;
 	    hUndef(p);
@@ -203,14 +200,13 @@ window_by_label(const char *label)
 PIRC_WINDOW
 window_by_refnum(int refnum)
 {
-    PIRC_WINDOW *entry_p;
-    PIRC_WINDOW	 window;
+    PIRC_WINDOW window;
 
     if (refnum < 1 || refnum > g_ntotal_windows) {
 	return (NULL);
     }
 
-    FOREACH_HASH_TABLE_ENTRY(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY() {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (refnum == window->refnum) {
 		return (window);
@@ -295,11 +291,10 @@ changeWindow_by_refnum(int refnum)
 static void
 reassign_window_refnums()
 {
-    PIRC_WINDOW *entry_p;
-    PIRC_WINDOW	 window;
-    int		 ref_count = 1;
+    PIRC_WINDOW window;
+    int ref_count = 1;
 
-    FOREACH_HASH_TABLE_ENTRY(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY() {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (!strings_match_ignore_case(window->label,
 					   g_status_window_label)) {
@@ -471,13 +466,12 @@ new_window_title(const char *label, const char *title)
 void
 window_close_all_priv_conv(void)
 {
-    PIRC_WINDOW   window         = NULL;
-    PIRC_WINDOW  *entry_p        = NULL;
-    char         *priv_conv[200] = { NULL };
-    char        **ar_p           = NULL;
-    size_t        pc_assigned    = 0;
+    PIRC_WINDOW window = NULL;
+    char **ar_p = NULL;
+    char *priv_conv[200] = { NULL };
+    size_t pc_assigned = 0;
 
-    FOREACH_HASH_TABLE_ENTRY(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY() {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (window == g_status_window || is_irc_channel(window->label))
 		continue;
@@ -501,10 +495,9 @@ window_close_all_priv_conv(void)
 void
 window_foreach_destroy_names(void)
 {
-    PIRC_WINDOW *entry_p;
-    PIRC_WINDOW	 window;
+    PIRC_WINDOW window;
 
-    FOREACH_HASH_TABLE_ENTRY(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY() {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (is_irc_channel(window->label)) {
 		event_names_htbl_remove_all(window);
@@ -526,10 +519,9 @@ window_foreach_destroy_names(void)
 void
 window_foreach_rejoin_all_channels(void)
 {
-    PIRC_WINDOW *entry_p;
-    PIRC_WINDOW	 window;
+    PIRC_WINDOW window;
 
-    FOREACH_HASH_TABLE_ENTRY(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY() {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    if (is_irc_channel(window->label))
 		net_send("JOIN %s", window->label);
@@ -727,10 +719,9 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
 void
 windows_recreate_all(int rows, int cols)
 {
-    PIRC_WINDOW *entry_p;
-    PIRC_WINDOW	 window;
+    PIRC_WINDOW window;
 
-    FOREACH_HASH_TABLE_ENTRY(entry_p) {
+    FOREACH_HASH_TABLE_ENTRY() {
 	for (window = *entry_p; window != NULL; window = window->next) {
 	    window_recreate(window, rows, cols);
 	}
