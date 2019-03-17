@@ -246,7 +246,7 @@ do_connect(const char *server, const char *port)
 	    printtext(&ptext_ctx, "Next reconnect attempt in %ld seconds...",
 		      sleep_time_seconds);
 
-	    for (int secs = 0; secs < sleep_time_seconds; secs++) {
+	    for (long int secs = 0; secs < sleep_time_seconds; secs++) {
 		napms(1000);
 
 		if (quit_reconnecting) {
