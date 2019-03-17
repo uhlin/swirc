@@ -50,7 +50,10 @@
     for (PTHEME_HTBL_ENTRY *entry_p = &hash_table[0];\
 	 entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
 	 entry_p++)
-
+#define FOREACH_TDV()\
+    for (struct tagThemeDefValues *tdv_p = &ThemeDefValues[0];\
+	 tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)];\
+	 tdv_p++)
 #define WRITE_ITEM(name, value) \
 	write_to_stream(fp, "%s = \"%s\";\n", name, value)
 
@@ -387,9 +390,9 @@ theme_create(const char *path, const char *mode)
     write_to_stream(fp, "# Automatically generated at %s\n\n",
 		    current_time("%c"));
 
-    for (struct tagThemeDefValues *tdv_p = &ThemeDefValues[0];
-	 tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)]; tdv_p++)
+    FOREACH_TDV() {
 	WRITE_ITEM(tdv_p->item_name, tdv_p->value);
+    }
 
     fclose_ensure_success(fp);
 }
@@ -404,9 +407,9 @@ theme_do_save(const char *path, const char *mode)
     write_to_stream(fp, "# Automatically generated at %s\n\n",
 		    current_time("%c"));
 
-    for (struct tagThemeDefValues *tdv_p = &ThemeDefValues[0];
-	 tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)]; tdv_p++)
+    FOREACH_TDV() {
 	WRITE_ITEM(tdv_p->item_name, Theme(tdv_p->item_name));
+    }
 
     fclose_ensure_success(fp);
 }
@@ -418,8 +421,7 @@ is_recognized_item(const char *item_name)
 	return (false);
     }
 
-    for (struct tagThemeDefValues *tdv_p = &ThemeDefValues[0];
-	 tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)]; tdv_p++) {
+    FOREACH_TDV() {
 	if (strings_match(item_name, tdv_p->item_name))
 	    return (true);
     }
@@ -430,8 +432,7 @@ is_recognized_item(const char *item_name)
 static void
 init_missing_to_defs(void)
 {
-    for (struct tagThemeDefValues *tdv_p = &ThemeDefValues[0];
-	 tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)]; tdv_p++) {
+    FOREACH_TDV() {
 	if (get_hash_table_entry(tdv_p->item_name) == NULL)
 	    hInstall(tdv_p->item_name, tdv_p->value);
     }
