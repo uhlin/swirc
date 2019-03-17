@@ -42,7 +42,10 @@
     for (PCONF_HTBL_ENTRY *entry_p = &hash_table[0];\
 	 entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
 	 entry_p++)
-
+#define FOREACH_CDV()\
+    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];\
+	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)];\
+	 cdv_p++)
 #define WRITE_ITEM(name, value) \
 	write_to_stream(fp, "%s = \"%s\";\n", name, value)
 
@@ -321,9 +324,9 @@ config_create(const char *path, const char *mode)
     write_to_stream(fp, "# Automatically generated at %s\n\n",
 		    current_time("%c"));
 
-    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
-	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++)
+    FOREACH_CDV() {
 	WRITE_ITEM(cdv_p->setting_name, cdv_p->value);
+    }
 
     fclose_ensure_success(fp);
 }
@@ -338,9 +341,9 @@ config_do_save(const char *path, const char *mode)
     write_to_stream(fp, "# Automatically generated at %s\n\n",
 		    current_time("%c"));
 
-    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
-	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++)
+    FOREACH_CDV() {
 	WRITE_ITEM(cdv_p->setting_name, Config(cdv_p->setting_name));
+    }
 
     fclose_ensure_success(fp);
 }
@@ -352,8 +355,7 @@ is_recognized_setting(const char *setting_name)
 	return (false);
     }
 
-    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
-	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
+    FOREACH_CDV() {
 	if (strings_match(setting_name, cdv_p->setting_name))
 	    return (true);
     }
@@ -364,8 +366,7 @@ is_recognized_setting(const char *setting_name)
 static void
 init_missing_to_defs(void)
 {
-    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
-	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
+    FOREACH_CDV() {
 	if (get_hash_table_entry(cdv_p->setting_name) == NULL)
 	    hInstall(cdv_p->setting_name, cdv_p->value);
     }
@@ -434,8 +435,7 @@ output_values_for_all_settings()
 
     printtext_context_init(&ctx, g_active_window, TYPE_SPEC3, true);
 
-    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
-	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
+    FOREACH_CDV() {
 	printtext(&ctx, "%s%s%s%s %s %s",
 	    cdv_p->setting_name,
 	    B1, get_setting_type(cdv_p), B2,
@@ -451,8 +451,7 @@ output_value_for_specific_setting(const char *setting)
 
     printtext_context_init(&ctx, g_active_window, TYPE_SPEC3, true);
 
-    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
-	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
+    FOREACH_CDV() {
 	if (strings_match(setting, cdv_p->setting_name)) {
 	    printtext(&ctx, "%s%s%s%s %s %s",
 		cdv_p->setting_name,
@@ -469,8 +468,7 @@ output_value_for_specific_setting(const char *setting)
 static bool
 set_value_for_setting(const char *setting, const char *value, char **err_reason)
 {
-    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
-	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
+    FOREACH_CDV() {
 	if (strings_match(setting, cdv_p->setting_name)) {
 	    if (cdv_p->type == TYPE_BOOLEAN &&
 		!strings_match_ignore_case(value, "on")    &&
@@ -511,8 +509,7 @@ try_to_set_value_for_setting(const char *setting, const char *value)
 
     printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
 
-    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];
-	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)]; cdv_p++) {
+    FOREACH_CDV() {
 	if (strings_match(setting, cdv_p->setting_name)) {
 	    if (!set_value_for_setting(setting, value, &err_reason))
 		print_and_free(err_reason, NULL);
