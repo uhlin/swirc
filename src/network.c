@@ -397,9 +397,11 @@ net_kill_connection(void)
     g_on_air = false;
     net_ssl_end();
 #if defined(UNIX)
-    close(g_socket);
+    if (g_socket != INVALID_SOCKET)
+	close(g_socket);
 #elif defined(WIN32)
-    closesocket(g_socket);
+    if (g_socket != INVALID_SOCKET)
+	closesocket(g_socket);
     winsock_deinit();
 #endif
     g_socket = INVALID_SOCKET;
