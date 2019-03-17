@@ -38,8 +38,8 @@
 #include "strHand.h"
 #include "theme.h"
 
-#define ENTRY_FOREACH(entry_p)\
-    for (entry_p = &hash_table[0];\
+#define ENTRY_FOREACH()\
+    for (PCONF_HTBL_ENTRY *entry_p = &hash_table[0];\
 	 entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
 	 entry_p++)
 
@@ -99,9 +99,7 @@ static struct tagConfDefValues {
 void
 config_init(void)
 {
-    PCONF_HTBL_ENTRY *entry_p;
-
-    ENTRY_FOREACH(entry_p) {
+    ENTRY_FOREACH() {
 	*entry_p = NULL;
     }
 }
@@ -151,10 +149,9 @@ hUndef(PCONF_HTBL_ENTRY entry)
 void
 config_deinit(void)
 {
-    PCONF_HTBL_ENTRY *entry_p;
     PCONF_HTBL_ENTRY p, tmp;
 
-    ENTRY_FOREACH(entry_p) {
+    ENTRY_FOREACH() {
 	for (p = *entry_p; p != NULL; p = tmp) {
 	    tmp = p->next;
 	    hUndef(p);
