@@ -186,6 +186,34 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
     /*NOTREACHED*/ return -1;
 }
 
+static void
+create_ssl_context_obj()
+{
+    if ((ssl_ctx = SSL_CTX_new(TLS_client_method())) == NULL) {
+	err_exit(ENOMEM, "create_ssl_context_obj: "
+	    "Unable to create a new SSL_CTX object");
+    } else {
+	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_SSLv2);
+	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_SSLv3);
+	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_TLSv1);
+	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_TLSv1_1);
+    }
+}
+
+#if 0
+static void
+create_ssl_context_obj_insecure()
+{
+    if ((ssl_ctx = SSL_CTX_new(SSLv23_client_method())) == NULL) {
+	err_exit(ENOMEM, "create_ssl_context_obj_insecure: "
+	    "Unable to create a new SSL_CTX object");
+    } else {
+	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_SSLv2);
+	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_SSLv3);
+    }
+}
+#endif
+
 static int
 verify_callback(int ok, X509_STORE_CTX *ctx)
 {
@@ -244,21 +272,9 @@ net_ssl_init(void)
     }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-    if ((ssl_ctx = SSL_CTX_new(TLS_client_method())) == NULL) {
-	err_exit(ENOMEM, "net_ssl_init: Unable to create a new SSL_CTX object");
-    } else {
-	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_SSLv2);
-	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_SSLv3);
-	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_TLSv1);
-	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_TLSv1_1);
-    }
+    create_ssl_context_obj();
 #else
-    if ((ssl_ctx = SSL_CTX_new(SSLv23_client_method())) == NULL) {
-	err_exit(ENOMEM, "net_ssl_init: Unable to create a new SSL_CTX object");
-    } else {
-	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_SSLv2);
-	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_SSLv3);
-    }
+#error Consider updating your TLS/SSL library
 #endif
 
     if (config_bool_unparse("ssl_verify_peer", true) &&
