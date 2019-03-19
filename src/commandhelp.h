@@ -116,9 +116,6 @@ static const char *help_usage[] = {
     "Outputs help. If a command is present, it'll output help for that",
     "command.",
     "",
-/*
- * TODO: Update cmds.html
- */
 };
 
 static const char *ilist_usage[] = {
@@ -170,9 +167,6 @@ static const char *me_usage[] = {
     "Action message. Used to simulate role playing on IRC. The active",
     "window must be an IRC channel.",
     "",
-    /*
-     * TODO: Update cmds.html
-     */
 };
 
 static const char *mode_usage[] = {
@@ -238,9 +232,6 @@ static const char *oper_usage[] = {
     "",
     "Identify as an IRC op.",
     "",
-    /*
-     * TODO: Add to cmds.html
-     */
 };
 
 static const char *part_usage[] = {
@@ -276,9 +267,6 @@ static const char *resize_usage[] = {
     "instead this command can be used. First resize the window then",
     "issue this command.",
     "",
-    /*
-     * TODO: Update cmds.html
-     */
 };
 
 static const char *rules_usage[] = {
@@ -317,9 +305,6 @@ static const char *set_usage[] = {
     "",
     "Alter Swirc settings.",
     "",
-    /*
-     * TODO: Add to cmds.html
-     */
 };
 
 static const char *theme_usage[] = {
