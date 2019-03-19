@@ -20,9 +20,10 @@ provide a secure and user-friendly experience to its users.
 .Sh OPTIONS
 .Bl -tag -width Ds
 .It Fl c Ar server[:port]
-Auto-connect to given server. If the port is omitted port 6667 will be
-chosen. And if the port is 6697 the program attempts to initiate a
-TLS/SSL connection.
+Auto-connect to given server.
+If the port is omitted port 6667 will be chosen.
+And if the port is 6697 the program attempts to initiate a TLS/SSL
+connection.
 .It Fl n Ar nickname
 Online nickname
 .It Fl u Ar username
@@ -101,7 +102,8 @@ On OpenBSD
 .Xr pledge 2
 is used per default in order to force
 .Nm
-into a restricted-service operating mode. This since version 1.1.
+into a restricted-service operating mode.
+This since version 1.1.
 Further, as of 2.3,
 .Xr pledge 2
 is used in combination with
@@ -131,7 +133,8 @@ was written by
 If many errors regarding
 "In perform_convert_buffer: characters lost: Illegal byte sequence"
 are present in the error log, then additional encodings for your
-locale should be installed. See
+locale should be installed.
+See
 .Xr locale 1
 for supported character encodings.
 .Nm
