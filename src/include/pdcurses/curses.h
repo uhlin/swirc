@@ -53,7 +53,6 @@ Defined by this header:
 #ifdef __cplusplus
 extern "C"
 {
-# define bool _bool
 #endif
 
 /*----------------------------------------------------------------------
@@ -1368,7 +1367,6 @@ PDCEX  int     sb_refresh(void);
 #define PDC_KEY_MODIFIER_NUMLOCK 8
 
 #ifdef __cplusplus
-# undef bool
 }
 #endif
 
