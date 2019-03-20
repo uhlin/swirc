@@ -6,6 +6,21 @@
 #endif
 
 #if defined(__GNUC__) && __GNUC__ >= 5
+#define HAVE_GCC_ATOMICS 1
+#elif	defined(__GNUC__) &&\
+	defined(__GNUC_MINOR__) &&\
+	__GNUC__ >= 4 &&\
+	__GNUC_MINOR__ >= 8
+#define HAVE_GCC_ATOMICS 1
+#elif	defined(__clang__) &&\
+	__has_builtin(__atomic_load_n) &&\
+	__has_builtin(__atomic_exchange_n)
+#define HAVE_GCC_ATOMICS 1
+#else
+#define HAVE_GCC_ATOMICS 0
+#endif
+
+#if HAVE_GCC_ATOMICS
 #include "atomic/gcc.h"
 #elif defined(BSD)
 #include "atomic/bsd.h"
