@@ -15,5 +15,5 @@ function get_file(url, name)
 
 get_file("http://nifty-networks.net/swirc/curl-7.62.0.cab", "curl-7.62.0.cab");
 get_file("http://nifty-networks.net/swirc/libressl-2.8.2-windows.cab", "libressl-2.8.2-windows.cab");
-get_file("http://nifty-networks.net/swirc/pdcurses-3.6.cab", "pdcurses-3.6.cab");
+get_file("http://nifty-networks.net/swirc/pdcurses-3.8.cab", "pdcurses-3.8.cab");
 get_file("http://nifty-networks.net/swirc/swirc-royal.ico", "swirc-royal.ico");
