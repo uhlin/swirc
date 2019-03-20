@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
+- Code improvements
 - Event
   - **PONG**
   - 451 (`ERR_NOTREGISTERED`)
@@ -19,6 +20,10 @@ All notable changes to this project will be documented in this file.
     before giving up?
 
 ### Changed ###
+- **Lowered recv/send timeouts during connection establishment for
+  faster processing**
+- Abandon legacy TLS/SSL implementations
+- Don't require irc connection for command `/disconnect`
 - Scrolling behavior with the help of `arc4random()`
 
 ### Fixed ###
