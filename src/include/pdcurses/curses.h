@@ -53,9 +53,7 @@ Defined by this header:
 #ifdef __cplusplus
 extern "C"
 {
-#if 0
 # define bool _bool
-#endif
 #endif
 
 /*----------------------------------------------------------------------
