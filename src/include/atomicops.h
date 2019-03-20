@@ -22,7 +22,7 @@
 
 #if HAVE_GCC_ATOMICS
 #include "atomic/gcc.h"
-#elif defined(BSD)
+#elif defined(BSD) || defined(OS_X)
 #include "atomic/bsd.h"
 #elif defined(WIN32)
 #include "atomic/w32.h"
