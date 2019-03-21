@@ -71,6 +71,10 @@ is installed, issue:
 
     $ brew install libressl
 
+#### NetBSD ####
+
+    # pkgin install ncursesw
+
 ### Building for the UNIX environment ###
 
 On the BSDs and GNU/Linux the configure script will per default
