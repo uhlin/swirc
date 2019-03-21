@@ -186,6 +186,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
     /*NOTREACHED*/ return -1;
 }
 
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L
 static void
 create_ssl_context_obj()
 {
@@ -199,8 +200,11 @@ create_ssl_context_obj()
 	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_TLSv1_1);
     }
 }
+#else
+/* -------------------------------- */
+/* OpenSSL version less than v1.1.0 */
+/* -------------------------------- */
 
-#if 0
 static void
 create_ssl_context_obj_insecure()
 {
@@ -274,7 +278,8 @@ net_ssl_init(void)
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
     create_ssl_context_obj();
 #else
-#error Consider updating your TLS/SSL library
+#pragma message("Consider updating your TLS/SSL library")
+    create_ssl_context_obj_insecure();
 #endif
 
     if (config_bool_unparse("ssl_verify_peer", true) &&
