@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [2.6] - 2019-03-21 ##
 ### Added ###
 - Code improvements
 - Event
