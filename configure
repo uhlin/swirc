@@ -76,7 +76,6 @@ SHARED_FLAGS=\\
 	-DBSD=1\\
 	-DUNIX=1\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
-	-I/usr/pkg/include/ncurses\\
 	-I/usr/pkg/include/ncursesw\\
 	-I/usr/pkg/include\\
 	-Wall
