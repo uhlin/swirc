@@ -22,7 +22,6 @@ All notable changes to this project will be documented in this file.
 ### Changed ###
 - **Lowered recv/send timeouts during connection establishment for
   faster processing**
-- Abandon legacy TLS/SSL implementations
 - Don't require irc connection for command `/disconnect`
 - Scrolling behavior with the help of `arc4random()`
 
