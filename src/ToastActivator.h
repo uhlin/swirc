@@ -7,10 +7,10 @@
 /* at Tue Jan 19 04:14:07 2038
  */
 /* Compiler settings for ToastActivator.idl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622
     protocol : dce , ms_ext, c_ext, robust
-    error checks: allocation ref bounds_check enum stub_data 
-    VC __declspec() decoration level: 
+    error checks: allocation ref bounds_check enum stub_data
+    VC __declspec() decoration level:
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
@@ -43,7 +43,7 @@
 #pragma once
 #endif
 
-/* Forward Declarations */ 
+/* Forward Declarations */
 
 #ifndef __INotificationActivationCallback_FWD_DEFINED__
 #define __INotificationActivationCallback_FWD_DEFINED__
@@ -58,11 +58,11 @@ typedef interface INotificationActivationCallback INotificationActivationCallbac
 
 #ifdef __cplusplus
 extern "C"{
-#endif 
+#endif
 
 
 /* interface __MIDL_itf_ToastActivator_0000_0000 */
-/* [local] */ 
+/* [local] */
 
 typedef struct _NOTIFICATION_USER_INPUT_DATA
     {
@@ -79,51 +79,51 @@ extern RPC_IF_HANDLE __MIDL_itf_ToastActivator_0000_0000_v0_0_s_ifspec;
 #define __INotificationActivationCallback_INTERFACE_DEFINED__
 
 /* interface INotificationActivationCallback */
-/* [ref][uuid][object] */ 
+/* [ref][uuid][object] */
 
 
 EXTERN_C const IID IID_INotificationActivationCallback;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("62337340-CB78-4AE9-A524-685424C52DC7")
     INotificationActivationCallback : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE Activate( 
+        virtual HRESULT STDMETHODCALLTYPE Activate(
             /* [string][in] */ LPCWSTR appUserModelId,
             /* [string][in] */ LPCWSTR invokedArgs,
             /* [unique][size_is][in] */ const NOTIFICATION_USER_INPUT_DATA *data,
             /* [in] */ ULONG dataCount) = 0;
-        
+
     };
-    
-    
+
+
 #else 	/* C style interface */
 
     typedef struct INotificationActivationCallbackVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             INotificationActivationCallback * This,
             /* [in] */ REFIID riid,
-            /* [annotation][iid_is][out] */ 
+            /* [annotation][iid_is][out] */
             _COM_Outptr_  void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             INotificationActivationCallback * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             INotificationActivationCallback * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *Activate )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Activate )(
             INotificationActivationCallback * This,
             /* [string][in] */ LPCWSTR appUserModelId,
             /* [string][in] */ LPCWSTR invokedArgs,
             /* [unique][size_is][in] */ const NOTIFICATION_USER_INPUT_DATA *data,
             /* [in] */ ULONG dataCount);
-        
+
         END_INTERFACE
     } INotificationActivationCallbackVtbl;
 
@@ -132,23 +132,23 @@ EXTERN_C const IID IID_INotificationActivationCallback;
         CONST_VTBL struct INotificationActivationCallbackVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
 
 #define INotificationActivationCallback_QueryInterface(This,riid,ppvObject)	\
-    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) )
 
 #define INotificationActivationCallback_AddRef(This)	\
-    ( (This)->lpVtbl -> AddRef(This) ) 
+    ( (This)->lpVtbl -> AddRef(This) )
 
 #define INotificationActivationCallback_Release(This)	\
-    ( (This)->lpVtbl -> Release(This) ) 
+    ( (This)->lpVtbl -> Release(This) )
 
 
 #define INotificationActivationCallback_Activate(This,appUserModelId,invokedArgs,data,dataCount)	\
-    ( (This)->lpVtbl -> Activate(This,appUserModelId,invokedArgs,data,dataCount) ) 
+    ( (This)->lpVtbl -> Activate(This,appUserModelId,invokedArgs,data,dataCount) )
 
 #endif /* COBJMACROS */
 

@@ -7,10 +7,10 @@
 /* at Tue Jan 19 04:14:07 2038
  */
 /* Compiler settings for ToastActivator.idl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622
     protocol : dce , ms_ext, c_ext, robust
-    error checks: allocation ref bounds_check enum stub_data 
-    VC __declspec() decoration level: 
+    error checks: allocation ref bounds_check enum stub_data
+    VC __declspec() decoration level:
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
@@ -30,7 +30,7 @@
 #pragma warning( disable: 4152 )  /* function/data pointer conversion in expression */
 #pragma warning( disable: 4100 ) /* unreferenced arguments in x86 call */
 
-#pragma optimize("", off ) 
+#pragma optimize("", off )
 
 #define USE_STUBLESS_PROXY
 
@@ -49,11 +49,11 @@
 
 #include "ToastActivator.h"
 
-#define TYPE_FORMAT_STRING_SIZE   53                                
-#define PROC_FORMAT_STRING_SIZE   57                                
-#define EXPR_FORMAT_STRING_SIZE   1                                 
-#define TRANSMIT_AS_TABLE_SIZE    0            
-#define WIRE_MARSHAL_TABLE_SIZE   0            
+#define TYPE_FORMAT_STRING_SIZE   53
+#define PROC_FORMAT_STRING_SIZE   57
+#define EXPR_FORMAT_STRING_SIZE   1
+#define TRANSMIT_AS_TABLE_SIZE    0
+#define WIRE_MARSHAL_TABLE_SIZE   0
 
 typedef struct _ToastActivator_MIDL_TYPE_FORMAT_STRING
     {
@@ -74,7 +74,7 @@ typedef struct _ToastActivator_MIDL_EXPR_FORMAT_STRING
     } ToastActivator_MIDL_EXPR_FORMAT_STRING;
 
 
-static const RPC_SYNTAX_IDENTIFIER  _RpcTransferSyntax = 
+static const RPC_SYNTAX_IDENTIFIER  _RpcTransferSyntax =
 {{0x8A885D04,0x1CEB,0x11C9,{0x9F,0xE8,0x08,0x00,0x2B,0x10,0x48,0x60}},{2,0}};
 
 
@@ -167,15 +167,15 @@ static const ToastActivator_MIDL_TYPE_FORMAT_STRING ToastActivator__MIDL_TypeFor
         0,
         {
 			NdrFcShort( 0x0 ),	/* 0 */
-/*  2 */	
+/*  2 */
 			0x11, 0x8,	/* FC_RP [simple_pointer] */
-/*  4 */	
+/*  4 */
 			0x25,		/* FC_C_WSTRING */
 			0x5c,		/* FC_PAD */
-/*  6 */	
+/*  6 */
 			0x12, 0x0,	/* FC_UP */
 /*  8 */	NdrFcShort( 0x16 ),	/* Offset= 22 (30) */
-/* 10 */	
+/* 10 */
 			0x1a,		/* FC_BOGUS_STRUCT */
 			0x3,		/* 3 */
 /* 12 */	NdrFcShort( 0x10 ),	/* 16 */
@@ -185,17 +185,17 @@ static const ToastActivator_MIDL_TYPE_FORMAT_STRING ToastActivator__MIDL_TypeFor
 			0x36,		/* FC_POINTER */
 /* 20 */	0x5c,		/* FC_PAD */
 			0x5b,		/* FC_END */
-/* 22 */	
+/* 22 */
 			0x12, 0x8,	/* FC_UP [simple_pointer] */
-/* 24 */	
+/* 24 */
 			0x25,		/* FC_C_WSTRING */
 			0x5c,		/* FC_PAD */
-/* 26 */	
+/* 26 */
 			0x12, 0x8,	/* FC_UP [simple_pointer] */
-/* 28 */	
+/* 28 */
 			0x25,		/* FC_C_WSTRING */
 			0x5c,		/* FC_PAD */
-/* 30 */	
+/* 30 */
 			0x21,		/* FC_BOGUS_ARRAY */
 			0x3,		/* 3 */
 /* 32 */	NdrFcShort( 0x0 ),	/* 0 */
@@ -244,7 +244,7 @@ static const MIDL_STUBLESS_PROXY_INFO INotificationActivationCallback_ProxyInfo 
     };
 
 
-static const MIDL_SERVER_INFO INotificationActivationCallback_ServerInfo = 
+static const MIDL_SERVER_INFO INotificationActivationCallback_ServerInfo =
     {
     &Object_StubDesc,
     0,
@@ -254,7 +254,7 @@ static const MIDL_SERVER_INFO INotificationActivationCallback_ServerInfo =
     0,
     0,
     0};
-CINTERFACE_PROXY_VTABLE(4) _INotificationActivationCallbackProxyVtbl = 
+CINTERFACE_PROXY_VTABLE(4) _INotificationActivationCallbackProxyVtbl =
 {
     &INotificationActivationCallback_ProxyInfo,
     &IID_INotificationActivationCallback,
@@ -273,7 +273,7 @@ const CInterfaceStubVtbl _INotificationActivationCallbackStubVtbl =
     CStdStubBuffer_METHODS
 };
 
-static const MIDL_STUB_DESC Object_StubDesc = 
+static const MIDL_STUB_DESC Object_StubDesc =
     {
     0,
     NdrOleAllocate,
@@ -297,19 +297,19 @@ static const MIDL_STUB_DESC Object_StubDesc =
     0
     };
 
-const CInterfaceProxyVtbl * const _ToastActivator_ProxyVtblList[] = 
+const CInterfaceProxyVtbl * const _ToastActivator_ProxyVtblList[] =
 {
     ( CInterfaceProxyVtbl *) &_INotificationActivationCallbackProxyVtbl,
     0
 };
 
-const CInterfaceStubVtbl * const _ToastActivator_StubVtblList[] = 
+const CInterfaceStubVtbl * const _ToastActivator_StubVtblList[] =
 {
     ( CInterfaceStubVtbl *) &_INotificationActivationCallbackStubVtbl,
     0
 };
 
-PCInterfaceName const _ToastActivator_InterfaceNamesList[] = 
+PCInterfaceName const _ToastActivator_InterfaceNamesList[] =
 {
     "INotificationActivationCallback",
     0
@@ -320,7 +320,7 @@ PCInterfaceName const _ToastActivator_InterfaceNamesList[] =
 
 int __stdcall _ToastActivator_IID_Lookup( const IID * pIID, int * pIndex )
 {
-    
+
     if(!_ToastActivator_CHECK_IID(0))
         {
         *pIndex = 0;
@@ -330,13 +330,13 @@ int __stdcall _ToastActivator_IID_Lookup( const IID * pIID, int * pIndex )
     return 0;
 }
 
-const ExtendedProxyFileInfo ToastActivator_ProxyFileInfo = 
+const ExtendedProxyFileInfo ToastActivator_ProxyFileInfo =
 {
     (PCInterfaceProxyVtblList *) & _ToastActivator_ProxyVtblList,
     (PCInterfaceStubVtblList *) & _ToastActivator_StubVtblList,
     (const PCInterfaceName * ) & _ToastActivator_InterfaceNamesList,
     0, /* no delegation */
-    & _ToastActivator_IID_Lookup, 
+    & _ToastActivator_IID_Lookup,
     1,
     2,
     0, /* table of [async_uuid] interfaces */
