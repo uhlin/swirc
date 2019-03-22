@@ -126,7 +126,7 @@ Toasts::SendBasicToast(PCWSTR message)
 	    &doc));
 
     PCWSTR textValues[] = {
-        message
+	message
     };
 
     RETURN_IF_FAILED(SetTextValues(textValues,

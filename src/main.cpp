@@ -385,7 +385,7 @@ process_options(int argc, char *argv[], const char *optstring)
 	    exit(EXIT_FAILURE);
 	case OPTION_ARG_MISSING:
 	    err_msg("%s: -%c: option argument missing", argv[0], g_option_save);
-            /*FALLTHROUGH*/
+	    /*FALLTHROUGH*/
 	default:
 	    print_help(argv[0]);
 	    exit(EXIT_FAILURE);

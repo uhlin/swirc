@@ -84,7 +84,7 @@ namespace DesktopNotificationManagerCompat {
 	 * be used. Since we don't care about when it shuts down,
 	 * we'll pass an empty lambda here.
 	 */
-        Module<OutOfProc>::Create([] {});
+	Module<OutOfProc>::Create([] {});
 
 	/*
 	 * If a local server process only hosts the COM object then
@@ -94,20 +94,20 @@ namespace DesktopNotificationManagerCompat {
 	 * don't want to shutdown immediately. Incrementing the object
 	 * count tells COM that we aren't done yet.
 	 */
-        Module<OutOfProc>::GetModule().IncrementObjectCount();
+	Module<OutOfProc>::GetModule().IncrementObjectCount();
 
-        RETURN_IF_FAILED(Module<OutOfProc>::GetModule().RegisterObjects());
+	RETURN_IF_FAILED(Module<OutOfProc>::GetModule().RegisterObjects());
 
-        s_registeredActivator = true;
-        return S_OK;
+	s_registeredActivator = true;
+	return S_OK;
     }
 
     HRESULT RegisterComServer(GUID clsid, const wchar_t exePath[]) {
 	/* Turn the GUID into a string */
-        OLECHAR *clsidOlechar;
-        StringFromCLSID(clsid, &clsidOlechar);
-        std::wstring clsidStr(clsidOlechar);
-        ::CoTaskMemFree(clsidOlechar);
+	OLECHAR *clsidOlechar;
+	StringFromCLSID(clsid, &clsidOlechar);
+	std::wstring clsidStr(clsidOlechar);
+	::CoTaskMemFree(clsidOlechar);
 
 	/**
 	 * Create the subkey
@@ -116,25 +116,25 @@ namespace DesktopNotificationManagerCompat {
 	 *     SOFTWARE\Classes\CLSID\{23A5B06E-20BB-4E7E-A0AC-6982ED6A6041}\
 	 *     LocalServer32
 	 */
-        std::wstring subKey =
+	std::wstring subKey =
 	    LR"(SOFTWARE\Classes\CLSID\)" + clsidStr + LR"(\LocalServer32)";
 
 	/* Include -ToastActivated launch args on the exe */
-        std::wstring exePathStr(exePath);
-        exePathStr = L"\"" + exePathStr + L"\" " + TOAST_ACTIVATED_LAUNCH_ARG;
+	std::wstring exePathStr(exePath);
+	exePathStr = L"\"" + exePathStr + L"\" " + TOAST_ACTIVATED_LAUNCH_ARG;
 
 	/**
 	 * We don't need to worry about overflow here as
 	 * ::GetModuleFileName won't return anything bigger than the
 	 * max file system path (much fewer than max of DWORD).
 	 */
-        DWORD dataSize =
+	DWORD dataSize =
 	    static_cast<DWORD>((exePathStr.length() + 1) * sizeof (WCHAR));
 
 	/*
 	 * Register the EXE for the COM server
 	 */
-        return HRESULT_FROM_WIN32(::RegSetKeyValue(
+	return HRESULT_FROM_WIN32(::RegSetKeyValue(
 	    HKEY_CURRENT_USER,
 	    subKey.c_str(),
 	    nullptr,
@@ -144,10 +144,10 @@ namespace DesktopNotificationManagerCompat {
     }
 
     HRESULT CreateToastNotifier(IToastNotifier **notifier) {
-        RETURN_IF_FAILED(EnsureRegistered());
+	RETURN_IF_FAILED(EnsureRegistered());
 
-        ComPtr<IToastNotificationManagerStatics> toastStatics;
-        RETURN_IF_FAILED(Windows::Foundation::GetActivationFactory(
+	ComPtr<IToastNotificationManagerStatics> toastStatics;
+	RETURN_IF_FAILED(Windows::Foundation::GetActivationFactory(
 	    HStringReference(
 		RuntimeClass_Windows_UI_Notifications_ToastNotificationManager)
 	    .Get(),
@@ -165,19 +165,19 @@ namespace DesktopNotificationManagerCompat {
     HRESULT
     CreateXmlDocumentFromString(const wchar_t *xmlString, IXmlDocument **doc)
     {
-        ComPtr<IXmlDocument> answer;
-        RETURN_IF_FAILED(Windows::Foundation::ActivateInstance(
+	ComPtr<IXmlDocument> answer;
+	RETURN_IF_FAILED(Windows::Foundation::ActivateInstance(
 	    HStringReference(RuntimeClass_Windows_Data_Xml_Dom_XmlDocument)
 	    .Get(),
 	    &answer));
 
-        ComPtr<IXmlDocumentIO> docIO;
-        RETURN_IF_FAILED(answer.As(&docIO));
+	ComPtr<IXmlDocumentIO> docIO;
+	RETURN_IF_FAILED(answer.As(&docIO));
 
 	/* Load the XML string */
-        RETURN_IF_FAILED(docIO->LoadXml(HStringReference(xmlString).Get()));
+	RETURN_IF_FAILED(docIO->LoadXml(HStringReference(xmlString).Get()));
 
-        return answer.CopyTo(doc);
+	return answer.CopyTo(doc);
     }
 
     HRESULT
@@ -185,40 +185,40 @@ namespace DesktopNotificationManagerCompat {
 	IXmlDocument *content,
 	IToastNotification **notification)
     {
-        ComPtr<IToastNotificationFactory> factory;
+	ComPtr<IToastNotificationFactory> factory;
 
-        RETURN_IF_FAILED(Windows::Foundation::GetActivationFactory(
+	RETURN_IF_FAILED(Windows::Foundation::GetActivationFactory(
 	    HStringReference(
 		RuntimeClass_Windows_UI_Notifications_ToastNotification)
 	    .Get(),
 	    &factory));
 
-        return factory->CreateToastNotification(content, notification);
+	return factory->CreateToastNotification(content, notification);
     }
 
     HRESULT
     get_History(std::unique_ptr<DesktopNotificationHistoryCompat> *history)
     {
-        RETURN_IF_FAILED(EnsureRegistered());
+	RETURN_IF_FAILED(EnsureRegistered());
 
-        ComPtr<IToastNotificationManagerStatics> toastStatics;
-        RETURN_IF_FAILED(Windows::Foundation::GetActivationFactory(
+	ComPtr<IToastNotificationManagerStatics> toastStatics;
+	RETURN_IF_FAILED(Windows::Foundation::GetActivationFactory(
 	    HStringReference(
 		RuntimeClass_Windows_UI_Notifications_ToastNotificationManager)
 	    .Get(),
 	    &toastStatics));
 
-        ComPtr<IToastNotificationManagerStatics2> toastStatics2;
-        RETURN_IF_FAILED(toastStatics.As(&toastStatics2));
+	ComPtr<IToastNotificationManagerStatics2> toastStatics2;
+	RETURN_IF_FAILED(toastStatics.As(&toastStatics2));
 
-        ComPtr<IToastNotificationHistory> nativeHistory;
-        RETURN_IF_FAILED(toastStatics2->get_History(&nativeHistory));
+	ComPtr<IToastNotificationHistory> nativeHistory;
+	RETURN_IF_FAILED(toastStatics2->get_History(&nativeHistory));
 
-        *history = std::unique_ptr<DesktopNotificationHistoryCompat>
+	*history = std::unique_ptr<DesktopNotificationHistoryCompat>
 	    (new DesktopNotificationHistoryCompat(s_aumid.c_str(),
 						  nativeHistory));
 
-        return S_OK;
+	return S_OK;
     }
 
     bool CanUseHttpImages() {
