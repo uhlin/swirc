@@ -153,21 +153,14 @@ hash(const char *item_name)
     return (hashval % ARRAY_SIZE(hash_table));
 }
 
-static void
+static PTR_ARGS_NONNULL void
 hUndef(PTHEME_HTBL_ENTRY entry)
 {
-    PTHEME_HTBL_ENTRY tmp;
-    unsigned int hashval = hash(entry->name);
+    PTHEME_HTBL_ENTRY *indirect = & (hash_table[hash(entry->name)]);
 
-    if ((tmp = hash_table[hashval]) == entry) {
-	hash_table[hashval] = entry->next;
-    } else {
-	while (tmp->next != entry) {
-	    tmp = tmp->next;
-	}
-
-	tmp->next = entry->next;
-    }
+    while (*indirect != entry)
+	indirect = & ((*indirect)->next);
+    *indirect = entry->next;
 
     free_not_null(entry->name);
     free_not_null(entry->value);
