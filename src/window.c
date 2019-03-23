@@ -136,18 +136,11 @@ hash(const char *label)
 static PTR_ARGS_NONNULL void
 hUndef(PIRC_WINDOW entry)
 {
-    PIRC_WINDOW tmp;
-    const unsigned int hashval = hash(entry->label);
+    PIRC_WINDOW *indirect = & (hash_table[hash(entry->label)]);
 
-    if ((tmp = hash_table[hashval]) == entry) {
-	hash_table[hashval] = entry->next;
-    } else {
-	while (tmp->next != entry) {
-	    tmp = tmp->next;
-	}
-
-	tmp->next = entry->next;
-    }
+    while (*indirect != entry)
+	indirect = & ((*indirect)->next);
+    *indirect = entry->next;
 
     free(entry->label);
     free(entry->title);
