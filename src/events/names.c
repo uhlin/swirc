@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include "../assertAPI.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
 #include "../irc.h"
@@ -418,7 +419,7 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
 {
     PNAMES *indirect = & (window->names_hash[hash(entry->nick)]);
 
-    while (*indirect != entry)
+    while (sw_assert(indirect != NULL), *indirect != entry)
 	indirect = & ((*indirect)->next);
 
     *indirect = entry->next;
