@@ -413,7 +413,7 @@ event_names_htbl_modify_voice(const char *nick, const char *channel,
     return ERR;
 }
 
-static void
+static PTR_ARGS_NONNULL void
 hUndef(PIRC_WINDOW window, PNAMES entry)
 {
     PNAMES *indirect = & (window->names_hash[hash(entry->nick)]);
