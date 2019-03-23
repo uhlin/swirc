@@ -416,21 +416,12 @@ event_names_htbl_modify_voice(const char *nick, const char *channel,
 static void
 hUndef(PIRC_WINDOW window, PNAMES entry)
 {
-    PNAMES tmp;
-    const unsigned int hashval = hash(entry->nick);
+    PNAMES *indirect = & (window->names_hash[hash(entry->nick)]);
 
-    if ((tmp = window->names_hash[hashval]) == NULL) {
-	err_msg("fatal: null pointer stored to tmp: assertion failed");
-	abort();
-    } else if (tmp == entry) {
-	window->names_hash[hashval] = entry->next;
-    } else {
-	while (tmp->next != entry) {
-	    tmp = tmp->next;
-	}
+    while (*indirect != entry)
+	indirect = & ((*indirect)->next);
 
-	tmp->next = entry->next;
-    }
+    *indirect = entry->next;
 
     free_and_null(&entry->nick);
 
