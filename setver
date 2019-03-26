@@ -5,18 +5,19 @@
 
 MAJOR_VERSION=2
 MINOR_VERSION=6
+PATCHLEVEL=0
 
-VERSION=${MAJOR_VERSION}.${MINOR_VERSION}
+VERSION=${MAJOR_VERSION}.${MINOR_VERSION}.${PATCHLEVEL}
 DATE=$(date +%Y-%m-%d)
 
 sed -i "s/## \[Unreleased\] ##/## \[$VERSION\] - $DATE ##/" CHANGELOG.md
 sed -i "s/PRODUCT_VERSION=.*/PRODUCT_VERSION=$VERSION/" Makefile.vc
 sed -i "18s/    Name=\".*\"/    Name=\"Swirc $VERSION\"/" Swirc.wxs
-sed -i "20s/    Version=\".*\"/    Version=\"${VERSION}\.0\.0\"/" Swirc.wxs
+sed -i "20s/    Version=\".*\"/    Version=\"${VERSION}\.0\"/" Swirc.wxs
 sed -i "s/g_swircVersion\[\] = \"v.*\"/g_swircVersion\[\] = \"v$VERSION\"/" src/main.cpp
 
 REGEX="#define VER [0-9]\,[0-9]\,[0-9]\,[0-9]"
-REPLACEMENT="#define VER $MAJOR_VERSION\,$MINOR_VERSION\,0\,0"
+REPLACEMENT="#define VER $MAJOR_VERSION\,$MINOR_VERSION\,$PATCHLEVEL\,0"
 sed -i "s/$REGEX/$REPLACEMENT/" src/swirc.rc
 
 REGEX="#define VER_STR \".*\""
