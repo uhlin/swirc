@@ -222,7 +222,7 @@ case "$(uname -s)" in
     ;;
 esac
 
-if test "$1" = "unittesting"; then
+if test "$1" = "--unittesting"; then
     append_compiler_flags
     link_with_cmocka
 fi
