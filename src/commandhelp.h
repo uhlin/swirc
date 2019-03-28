@@ -1,3 +1,5 @@
+#ifndef COMMAND_HELP_H
+#define COMMAND_HELP_H
 /* commandhelp.h
    Copyright (C) 2018 2019 Markus Uhlin. All rights reserved.
 
@@ -26,9 +28,6 @@
    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
    POSSIBILITY OF SUCH DAMAGE. */
-
-#ifndef COMMAND_HELP_H
-#define COMMAND_HELP_H
 
 static const char *away_usage[] = {
     "usage: /away [reason]",
