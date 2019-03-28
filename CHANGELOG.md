@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Added ###
+- Algorithm improvements
+
 ## [2.6] - 2019-03-21 ##
 ### Added ###
 - Code improvements
