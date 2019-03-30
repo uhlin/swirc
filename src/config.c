@@ -397,9 +397,11 @@ config_readit(const char *path, const char *mode)
 	fclose_ensure_success(fp);
 	init_missing_to_defs();
     } else if (ferror(fp)) {
-	err_quit("fgets returned NULL and the error indicator is set");
+	err_quit("config_readit: error: "
+	    "fgets() returned null and the error indicator is set");
     } else {
-	err_msg("fgets returned NULL for an unknown reason (bug!)");
+	err_msg("config_readit: error: "
+	    "fgets() returned null for an unknown reason");
 	abort();
     }
 }
