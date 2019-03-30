@@ -28,6 +28,9 @@
    POSSIBILITY OF SUCH DAMAGE. */
 
 #include "common.h"
+#if defined(UNIX) && USE_LIBNOTIFY
+#include <libnotify/notify.h>
+#endif
 #include "commands/misc.h"
 #ifdef WIN32
 #include "compat/stdlib.h" /* arc4random() */
@@ -94,6 +97,11 @@ static PIRC_WINDOW hash_table[200];
 void
 windowSystem_init(void)
 {
+#if defined(UNIX) && USE_LIBNOTIFY
+    if (!notify_init("Swirc IRC client"))
+	err_log(0, "windowSystem_init: notify_init: error");
+#endif
+
     FOREACH_HASH_TABLE_ENTRY() {
 	*entry_p = NULL;
     }
@@ -162,6 +170,10 @@ windowSystem_deinit(void)
 	    hUndef(p);
 	}
     }
+
+#if defined(UNIX) && USE_LIBNOTIFY
+    notify_uninit();
+#endif
 }
 
 /* -------------------------------------------------- */
