@@ -188,15 +188,6 @@ fix_cflags_with_pkg_config () {
 	fi
 }
 
-append_compiler_flags () {
-	echo "CFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
-	echo "CXXFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
-}
-
-link_with_cmocka () {
-	echo "LDLIBS+=-lcmocka" >>$MAKE_DEF_FILE
-}
-
 case "$(uname -s)" in
 	"Darwin")
 		os_MAC
@@ -222,6 +213,15 @@ case "$(uname -s)" in
 		exit 1
 	;;
 esac
+
+append_compiler_flags () {
+	echo "CFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
+	echo "CXXFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
+}
+
+link_with_cmocka () {
+	echo "LDLIBS+=-lcmocka" >>$MAKE_DEF_FILE
+}
 
 if test "$1" = "--unittesting"; then
 	append_compiler_flags
