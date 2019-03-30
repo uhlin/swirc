@@ -65,13 +65,18 @@ struct special_msg_context {
     char *msg;
 
     special_msg_context(
-	char *nick, char *user, char *host, char *dest, char *msg) {
-	this->nick = nick;
-	this->user = user;
-	this->host = host;
-	this->dest = dest;
-	this->msg  = msg;
-    }
+	char *nick,
+	char *user,
+	char *host,
+	char *dest,
+	char *msg)
+	{
+	    this->nick = nick;
+	    this->user = user;
+	    this->host = host;
+	    this->dest = dest;
+	    this->msg  = msg;
+	}
 };
 
 static void
