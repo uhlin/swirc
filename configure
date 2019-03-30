@@ -165,11 +165,11 @@ fix_cflags () {
 
 	for s in $helper_scripts; do
 		if test -x "$(which "$s")"; then
-			cflags="$($s --cflags)"
+			NCURSESW_CFLAGS="$($s --cflags)"
 
-			if test -n "$cflags"; then
-				echo "CFLAGS+=$cflags" >>$MAKE_DEF_FILE
-				echo "CXXFLAGS+=$cflags" >>$MAKE_DEF_FILE
+			if test -n "$NCURSESW_CFLAGS"; then
+				echo "CFLAGS+=$NCURSESW_CFLAGS" >>$MAKE_DEF_FILE
+				echo "CXXFLAGS+=$NCURSESW_CFLAGS" >>$MAKE_DEF_FILE
 			fi
 
 			break
@@ -179,11 +179,11 @@ fix_cflags () {
 
 fix_cflags_with_pkg_config () {
 	if test -x "$(which pkg-config)"; then
-		cflags="$(pkg-config --cflags-only-I ncursesw)"
+		NCURSESW_CFLAGS="$(pkg-config --cflags-only-I ncursesw)"
 
-		if test -n "$cflags"; then
-			echo "CFLAGS+=$cflags" >>$MAKE_DEF_FILE
-			echo "CXXFLAGS+=$cflags" >>$MAKE_DEF_FILE
+		if test -n "$NCURSESW_CFLAGS"; then
+			echo "CFLAGS+=$NCURSESW_CFLAGS" >>$MAKE_DEF_FILE
+			echo "CXXFLAGS+=$NCURSESW_CFLAGS" >>$MAKE_DEF_FILE
 		fi
 	fi
 }
