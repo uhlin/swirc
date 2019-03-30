@@ -46,6 +46,10 @@
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 #include "../DesktopNotificationManagerCompat.hpp"
 #include "../ToastsAPI.hpp"
+#elif defined(UNIX) && USE_LIBNOTIFY
+#include <libnotify/notify.h>
+#define SUMMARY_TEXT	"Swirc IRC client"
+#define SWIRC_ICON	"/tmp/swirc-royal.png"
 #endif
 
 #include "names.h"
@@ -328,6 +332,15 @@ event_privmsg(struct irc_message_compo *compo)
 
 	    free(wNick);
 	    free(wMsg);
+#elif defined(UNIX) && USE_LIBNOTIFY
+	    char *body = strdup_printf("[PM] &lt;%s&gt; %s", nick, msg);
+	    NotifyNotification *notification =
+		notify_notification_new(SUMMARY_TEXT, body, SWIRC_ICON);
+	    notify_notification_show(notification, NULL);
+	    free(body);
+	    g_object_unref(G_OBJECT(notification));
+	    body = NULL;
+	    notification = NULL;
 #endif
 
 	    if (ctx.window != g_active_window)
@@ -369,6 +382,15 @@ event_privmsg(struct irc_message_compo *compo)
 		free(wNick);
 		free(wDest);
 		free(wMsg);
+#elif defined(UNIX) && USE_LIBNOTIFY
+		char *body = strdup_printf("%s @ %s: %s", nick, dest, msg);
+		NotifyNotification *notification =
+		    notify_notification_new(SUMMARY_TEXT, body, SWIRC_ICON);
+		notify_notification_show(notification, NULL);
+		free(body);
+		g_object_unref(G_OBJECT(notification));
+		body = NULL;
+		notification = NULL;
 #endif
 	    } else {
 		/*
