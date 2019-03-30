@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Added ###
 - Algorithm improvements
+- The possibility of desktop notifications with the help of configure
+  flag `--with-libnotify`
 
 ## [2.6] - 2019-03-21 ##
 ### Added ###
