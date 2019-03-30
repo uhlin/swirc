@@ -226,6 +226,19 @@ link_with_cmocka () {
 if test "$1" = "--unittesting"; then
 	append_compiler_flags
 	link_with_cmocka
+elif test "$1" = "--with-libnotify"; then
+	LIBNOTIFY_CFLAGS="$(pkg-config --cflags-only-I libnotify)"
+	LIBNOTIFY_LDLIBS="$(pkg-config --libs-only-l libnotify)"
+
+	cat <<EOF >>$MAKE_DEF_FILE
+CFLAGS+=-DUSE_LIBNOTIFY=1
+CFLAGS+=$LIBNOTIFY_CFLAGS
+
+CXXFLAGS+=-DUSE_LIBNOTIFY=1
+CXXFLAGS+=$LIBNOTIFY_CFLAGS
+
+LDLIBS+=$LIBNOTIFY_LDLIBS
+EOF
 fi
 
 if test -f "$MAKE_DEF_FILE"; then
