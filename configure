@@ -16,7 +16,7 @@ EOF
 # 		     Mac OS X
 # --------------------------------------------------
 os_MAC () {
-    cat <<EOF >>$MAKE_DEF_FILE
+	cat <<EOF >>$MAKE_DEF_FILE
 SHARED_FLAGS=\\
 	-DNCURSES_OPAQUE=0\\
 	-DOS_X=1\\
@@ -45,7 +45,7 @@ EOF
 #    Generic BSD (Berkeley Software Distribution)
 # --------------------------------------------------
 os_BSD () {
-    cat <<EOF >>$MAKE_DEF_FILE
+	cat <<EOF >>$MAKE_DEF_FILE
 SHARED_FLAGS=\\
 	-DBSD=1\\
 	-DUNIX=1\\
@@ -71,7 +71,7 @@ EOF
 # 		      NetBSD
 # --------------------------------------------------
 os_NETBSD () {
-    cat <<EOF >>$MAKE_DEF_FILE
+	cat <<EOF >>$MAKE_DEF_FILE
 SHARED_FLAGS=\\
 	-DBSD=1\\
 	-DUNIX=1\\
@@ -100,7 +100,7 @@ EOF
 # 		    GNU/Linux
 # --------------------------------------------------
 os_LINUX () {
-    cat <<EOF >>$MAKE_DEF_FILE
+	cat <<EOF >>$MAKE_DEF_FILE
 SHARED_FLAGS=\\
 	-DLINUX=1\\
 	-DUNIX=1\\
@@ -131,7 +131,7 @@ EOF
 # 	 GNU/Linux (with Sun C compiler)
 # --------------------------------------------------
 os_LINUX_suncc () {
-    cat <<EOF >>$MAKE_DEF_FILE
+	cat <<EOF >>$MAKE_DEF_FILE
 SHARED_FLAGS=\\
 	-DLINUX=1\\
 	-DUNIX=1\\
@@ -161,75 +161,76 @@ EOF
 }
 
 fix_cflags () {
-    helper_scripts="ncursesw6-config ncursesw5-config"
+	helper_scripts="ncursesw6-config ncursesw5-config"
 
-    for s in $helper_scripts; do
-	if test -x "$(which "$s")"; then
-	    cflags="$($s --cflags)"
+	for s in $helper_scripts; do
+		if test -x "$(which "$s")"; then
+			cflags="$($s --cflags)"
 
-	    if test -n "$cflags"; then
-		echo "CFLAGS+=$cflags" >>$MAKE_DEF_FILE
-		echo "CXXFLAGS+=$cflags" >>$MAKE_DEF_FILE
-	    fi
+			if test -n "$cflags"; then
+				echo "CFLAGS+=$cflags" >>$MAKE_DEF_FILE
+				echo "CXXFLAGS+=$cflags" >>$MAKE_DEF_FILE
+			fi
 
-	    break
-	fi
-    done
+			break
+		fi
+	done
 }
 
 fix_cflags_with_pkg_config () {
-    if test -x "$(which pkg-config)"; then
-	cflags="$(pkg-config --cflags-only-I ncursesw)"
+	if test -x "$(which pkg-config)"; then
+		cflags="$(pkg-config --cflags-only-I ncursesw)"
 
-	if test -n "$cflags"; then
-	    echo "CFLAGS+=$cflags" >>$MAKE_DEF_FILE
-	    echo "CXXFLAGS+=$cflags" >>$MAKE_DEF_FILE
+		if test -n "$cflags"; then
+			echo "CFLAGS+=$cflags" >>$MAKE_DEF_FILE
+			echo "CXXFLAGS+=$cflags" >>$MAKE_DEF_FILE
+		fi
 	fi
-    fi
 }
 
 append_compiler_flags () {
-    echo "CFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
-    echo "CXXFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
+	echo "CFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
+	echo "CXXFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
 }
 
 link_with_cmocka () {
-    echo "LDLIBS+=-lcmocka" >>$MAKE_DEF_FILE
+	echo "LDLIBS+=-lcmocka" >>$MAKE_DEF_FILE
 }
 
 case "$(uname -s)" in
-    "Darwin")
-	os_MAC
-    ;;
-    "FreeBSD" | "OpenBSD")
-	os_BSD
-    ;;
-    "NetBSD")
-	os_NETBSD
-    ;;
-    "Linux")
-	if test "$1" = "suncc"; then
-	    os_LINUX_suncc
-	else
-	    os_LINUX
-	fi
-	#fix_cflags
-	fix_cflags_with_pkg_config
-    ;;
-    *)
-	echo "OS not supported!"
-	exit 1
-    ;;
+	"Darwin")
+		os_MAC
+	;;
+	"FreeBSD" | "OpenBSD")
+		os_BSD
+	;;
+	"NetBSD")
+		os_NETBSD
+	;;
+	"Linux")
+		if test "$1" = "suncc"; then
+			os_LINUX_suncc
+		else
+			os_LINUX
+		fi
+
+#		fix_cflags
+		fix_cflags_with_pkg_config
+	;;
+	*)
+		echo "OS not supported!"
+		exit 1
+	;;
 esac
 
 if test "$1" = "--unittesting"; then
-    append_compiler_flags
-    link_with_cmocka
+	append_compiler_flags
+	link_with_cmocka
 fi
 
 if test -f "$MAKE_DEF_FILE"; then
-    echo "  - $MAKE_DEF_FILE successfully created!"
+	echo "  - $MAKE_DEF_FILE successfully created!"
 else
-    echo "fatal error"
-    exit 1
+	echo "fatal error"
+	exit 1
 fi
