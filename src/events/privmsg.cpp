@@ -49,7 +49,7 @@
 #elif defined(UNIX) && USE_LIBNOTIFY
 #include <libnotify/notify.h>
 #define SUMMARY_TEXT	"Swirc IRC client"
-#define SWIRC_ICON	"/tmp/swirc-royal.png"
+#define SWIRC_ICON	"/usr/local/share/swirc/swirc-royal.png"
 #endif
 
 #include "names.h"
