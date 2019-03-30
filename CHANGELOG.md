@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [2.6.1] - 2019-03-30 ##
 ### Added ###
 - Algorithm improvements
 - The possibility of desktop notifications with the help of configure
