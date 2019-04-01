@@ -21,7 +21,7 @@ BEGIN
 			VALUE "FileDescription",  "Curses IRC client\0"
 			VALUE "FileVersion",      VER_STR
 			VALUE "InternalName",     "swirc\0"
-			VALUE "LegalCopyright",   "BSD, ISC, MIT\0"
+			VALUE "LegalCopyright",   "BSD-3, ISC and MIT\0"
 			VALUE "OriginalFilename", "swirc.exe\0"
 			VALUE "ProductName",      "Swirc IRC client\0"
 			VALUE "ProductVersion",   VER_STR
