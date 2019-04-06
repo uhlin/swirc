@@ -721,7 +721,9 @@ Preferably to be set to the same as the nickname.
 To clone the repository use
 <a href="https://git-scm.com">Git</a>.
 </p>
+<p class="snippet">
 <kbd>$ git clone https://github.com/uhlin/swirc.git</kbd>
+</p>
 <h3>Building</h3>
 <h4>Framework</h4>
 <p>Swirc currently depends on:</p>
@@ -734,13 +736,17 @@ To clone the repository use
 Which means that on for example a Debian GNU/Linux system you need to
 install 3 packages before building:
 </p>
+<p class="snippet">
 <kbd># apt install libcurl4-openssl-dev libncursesw5-dev libssl-dev</kbd>
+</p>
 <p>
 And on Mac OS X, provided that
 <a href="http://brew.sh/">Homebrew</a>
 is installed, issue:
 </p>
+<p class="snippet">
 <kbd>$ brew install libressl</kbd>
+</p>
 <h4>Building for the UNIX environment</h4>
 <p>
 On the BSDs and GNU/Linux the configure script will per default
@@ -753,11 +759,15 @@ you install
 Due to certain circumstances I no longer can confirm that building for
 OS X works.
 </p>
+<p class="snippet">
 <kbd>$ cd /path/to/swirc</kbd><br>
 <kbd>$ ./configure</kbd><br>
 <kbd>$ make</kbd>
+</p>
 <p>Installing it (under <kbd>/usr/local</kbd>):</p>
+<p class="snippet">
 <kbd>$ sudo make install</kbd>
+</p>
 <h4>Building for Windows</h4>
 <p>
 To build Swirc for Windows you must have
@@ -769,14 +779,18 @@ So, fire up the command prompt for
 where the needed tools (the compiler, etc.) are loaded into the
 environment. The regular command prompt won't work. Then:
 </p>
+<p class="snippet">
 <kbd>&gt; cd c:\path\to\swirc</kbd><br>
 <kbd>&gt; nmake -f Makefile.vc</kbd>
+</p>
 <p><em>Done!</em></p>
 <p>To make a distribution of Swirc use:</p>
+<p class="snippet">
 <kbd>&gt; nmake -f Makefile.vc dist</kbd>
+</p>
 <h3>Cleaning</h3>
 <p>Examples:</p>
-<p>
+<p class="snippet">
 <kbd>$ make clean</kbd><br>
 <kbd>$ nmake -f Makefile.vc clean</kbd>
 </p>
