@@ -3,7 +3,12 @@
 # SSG (Static Site Generator) for Swirc homepage.
 # Copyright (C) 2017-2019 Markus Uhlin. ALL RIGHTS RESERVED.
 
-SECTIONS="bottom.html head_common_tags.html menu.html top.html"
+SECTIONS="
+bottom.html
+head_common_tags.html
+menu.html
+top.html
+"
 PAGES="
 about.html
 cmds.html
