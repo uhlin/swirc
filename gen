@@ -4,7 +4,13 @@
 # Copyright (C) 2017-2019 Markus Uhlin. All rights reserved.
 
 SECTIONS="bottom.html head_common_tags.html menu.html top.html"
-PAGES="about.html cmds.html doc.html index.html pr.html"
+PAGES="
+about.html
+cmds.html
+doc.html
+index.html
+pr.html
+"
 DIRS="gfx screenshots themes"
 IMAGES="
 blue-globe.ico
