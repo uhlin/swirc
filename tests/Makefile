@@ -1,7 +1,7 @@
 ROOT=..
 SRC=$(ROOT)/src
 
-include $(ROOT)/unix_def.mk
+include $(ROOT)/options.mk
 
 CFLAGS+=-I$(SRC) -I$(SRC)/include -I/usr/local/include
 
