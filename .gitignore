@@ -9,6 +9,7 @@
 *.wixpdb
 curl-*
 libressl-*-windows
+options.mk
 pdcurses-*
 swirc
 swirc.analyze
