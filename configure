@@ -143,6 +143,7 @@ SHARED_FLAGS=\\
 	-O2\\
 	-pedantic\\
 	-xannotate\\
+	-xatomic=studio\\
 	-xprevise\\
 	-xsecure_code_analysis
 CC=suncc
