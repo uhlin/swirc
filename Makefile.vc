@@ -1,6 +1,6 @@
 # -*- mode: makefile; -*-
 
-!include w32_def.mk
+!include options.w32.mk
 
 BUILD_LOG=build.log
 
