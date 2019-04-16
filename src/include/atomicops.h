@@ -16,6 +16,9 @@
 	__has_builtin(__atomic_load_n) &&\
 	__has_builtin(__atomic_exchange_n)
 #define HAVE_GCC_ATOMICS 1
+#elif	(defined(__SUNPRO_C) && __SUNPRO_C >= 0x5150) ||\
+	(defined(__SUNPRO_CC) && __SUNPRO_CC >= 0x5150)
+#define HAVE_GCC_ATOMICS 1
 #else
 #define HAVE_GCC_ATOMICS 0
 #endif
