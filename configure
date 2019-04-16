@@ -243,8 +243,8 @@ EOF
 fi
 
 if test -f "$MAKE_DEF_FILE"; then
-	echo "  - $MAKE_DEF_FILE successfully created!"
+	echo "configure: $MAKE_DEF_FILE successfully created!"
 else
-	echo "fatal error"
+	echo "configure: fatal error"
 	exit 1
 fi
