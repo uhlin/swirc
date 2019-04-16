@@ -78,5 +78,12 @@ body {
 	min-width: 800px;
 	width: 100%;
 }
-h1, h2, h3, h4, h5, h6 { color: royalblue; }
+h1, h2, h3, h4, h5, h6 {
+	color: royalblue;
+	font-family:
+	    'Comic Sans MS',
+	    'Chalkboard SE',
+	    'Comic Neue',
+	    sans-serif;
+}
 /* EOF */
