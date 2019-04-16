@@ -4,7 +4,7 @@
 #
 # Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
 
-MAKE_DEF_FILE=unix_def.mk
+MAKE_DEF_FILE=options.mk
 
 cat <<EOF >$MAKE_DEF_FILE
 E=@echo
