@@ -141,6 +141,7 @@ SHARED_FLAGS=\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
 	-I/usr/include/x86_64-linux-gnu\\
 	-O2\\
+	-errtags\\
 	-pedantic\\
 	-xannotate\\
 	-xatomic=studio\\
