@@ -63,7 +63,6 @@ bool g_hist_prev = false;
 
 static PANEL			*readline_pan1	     = NULL;
 static PANEL			*readline_pan2	     = NULL;
-static bool			 disable_beeps	     = false;
 static const int		 readline_buffersize = 2700;
 static rl_active_panel_t	 panel_state	     = PANEL1_ACTIVE;
 
@@ -103,8 +102,6 @@ readline_init(void)
 
     apply_readline_options(panel_window(readline_pan1));
     apply_readline_options(panel_window(readline_pan2));
-
-    disable_beeps = config_bool_unparse("disable_beeps", false);
 }
 
 /**
@@ -282,10 +279,7 @@ case_key_left(volatile struct readline_session_context *ctx)
     struct current_cursor_pos yx;
 
     if (ctx->bufpos == 0) {
-	if (!disable_beeps) {
-	    term_beep();
-	}
-
+	term_beep();
 	return;
     }
 
@@ -313,10 +307,7 @@ case_key_right(volatile struct readline_session_context *ctx)
     struct current_cursor_pos yx;
 
     if (!ctx->insert_mode) {
-	if (!disable_beeps) {
-	    term_beep();
-	}
-
+	term_beep();
 	return;
     }
 
@@ -344,10 +335,7 @@ case_key_backspace(volatile struct readline_session_context *ctx)
     struct current_cursor_pos yx;
 
     if (ctx->bufpos == 0) {
-	if (!disable_beeps) {
-	    term_beep();
-	}
-
+	term_beep();
 	return;
     }
 
@@ -393,10 +381,7 @@ case_key_dc(volatile struct readline_session_context *ctx)
     const int	 this_index = ctx->bufpos + 1;
 
     if (!ctx->insert_mode) {
-	if (!disable_beeps) {
-	    term_beep();
-	}
-
+	term_beep();
 	return;
     }
 
@@ -421,10 +406,7 @@ static void
 handle_key(volatile struct readline_session_context *ctx, wint_t wc)
 {
     if (ctx->no_bufspc) {
-	if (!disable_beeps) {
-	    term_beep();
-	}
-
+	term_beep();
 	return;
     }
 
