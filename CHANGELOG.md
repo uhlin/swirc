@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Changed ###
 - Configure script messages
+- Default values for the following options:
+  - `nickname`
+  - `real_name`
+  - `username`
 - UNIX: Produce a stripped executable
 
 ## [2.6.1] - 2019-03-30 ##

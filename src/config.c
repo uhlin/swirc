@@ -74,12 +74,12 @@ static struct tagConfDefValues {
     { "joins_parts_quits",         TYPE_BOOLEAN, "yes" },
     { "kick_close_window",         TYPE_BOOLEAN, "yes" },
     { "max_chat_windows",          TYPE_INTEGER, "60" },
-    { "nickname",                  TYPE_STRING,  "warezkid" },
+    { "nickname",                  TYPE_STRING,  "" },
     { "nickname_aliases",          TYPE_STRING,  "" },
     { "nickserv_host",             TYPE_STRING,  "services." },
     { "part_message",              TYPE_STRING,  "" },
     { "quit_message",              TYPE_STRING,  "Swirc IRC client" },
-    { "real_name",                 TYPE_STRING,  "pinball" },
+    { "real_name",                 TYPE_STRING,  "" },
     { "reconnect_backoff_delay",   TYPE_INTEGER, STRINGIFY(RECONNECT_BACKOFF_DELAY_DEFAULT) },
     { "reconnect_delay",           TYPE_INTEGER, STRINGIFY(RECONNECT_DELAY_DEFAULT) },
     { "reconnect_delay_max",       TYPE_INTEGER, STRINGIFY(RECONNECT_DELAY_MAX_DEFAULT) },
@@ -94,7 +94,7 @@ static struct tagConfDefValues {
     { "startup_greeting",          TYPE_BOOLEAN, "yes" },
     { "textbuffer_size_absolute",  TYPE_INTEGER, "1500" },
     { "theme",                     TYPE_STRING,  "default" },
-    { "username",                  TYPE_STRING,  "swift" },
+    { "username",                  TYPE_STRING,  "" },
 };
 
 /* -------------------------------------------------- */
