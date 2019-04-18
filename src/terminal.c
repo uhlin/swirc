@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include "config.h"
 #include "errHand.h"
 #include "main.h"
 #include "readline.h"
