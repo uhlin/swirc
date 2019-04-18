@@ -68,7 +68,6 @@ static struct tagConfDefValues {
     { "cipher_suite",              TYPE_STRING,  "compat" },
     { "cmd_hist_size",             TYPE_INTEGER, "50" },
     { "connection_timeout",        TYPE_INTEGER, "45" },
-    { "disable_beeps",             TYPE_BOOLEAN, "no" },
     { "hostname_checking",         TYPE_BOOLEAN, "yes" },
     { "invite_notify",             TYPE_BOOLEAN, "no" },
     { "ircv3_server_time",         TYPE_BOOLEAN, "no" },

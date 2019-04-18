@@ -14,6 +14,10 @@ All notable changes to this project will be documented in this file.
   - `username`
 - UNIX: Produce a stripped executable
 
+### Deleted ###
+- Option
+  - `disable_beeps`
+
 ## [2.6.1] - 2019-03-30 ##
 ### Added ###
 - Algorithm improvements
