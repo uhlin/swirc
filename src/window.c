@@ -591,8 +591,7 @@ window_scroll_down(PIRC_WINDOW window)
     const int HEIGHT = LINES - 3;
 
     if (! (window->scroll_mode)) {
-	if (!config_bool_unparse("disable_beeps", false))
-	    term_beep();
+	term_beep();
 	return;
     }
 
@@ -620,8 +619,7 @@ window_scroll_up(PIRC_WINDOW window)
     const int MIN_SIZE = LINES - 3;
 
     if (MIN_SIZE < 0 || !(textBuf_size(window->buf) > MIN_SIZE) || IS_AT_TOP) {
-	if (!config_bool_unparse("disable_beeps", false))
-	    term_beep();
+	term_beep();
 	return;
     }
 
