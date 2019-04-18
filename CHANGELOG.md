@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- Option
+  - `beeps`
+
 ### Changed ###
 - Configure script messages
 - Default values for the following options:

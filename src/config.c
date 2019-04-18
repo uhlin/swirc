@@ -63,6 +63,7 @@ static struct tagConfDefValues {
     { "alt_nick",                  TYPE_STRING,  "" },
     { "auto_op_yourself",          TYPE_BOOLEAN, "yes" },
     { "away_notify",               TYPE_BOOLEAN, "no" },
+    { "beeps",                     TYPE_BOOLEAN, "yes" },
     { "chanserv_host",             TYPE_STRING,  "services." },
     { "cipher_suite",              TYPE_STRING,  "compat" },
     { "cmd_hist_size",             TYPE_INTEGER, "50" },
