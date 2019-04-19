@@ -1,5 +1,6 @@
 #include "common.h"
 #ifdef WIN32
+#include "../DesktopNotificationManagerCompat.hpp"
 #include "../ToastsAPI.hpp"
 #endif
 #include "cleartoasts.h"
