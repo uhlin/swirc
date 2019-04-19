@@ -1,5 +1,6 @@
 COMMANDS_DIR=src/commands/
-OBJS=$(COMMANDS_DIR)connect.obj\
+OBJS=$(COMMANDS_DIR)cleartoasts.obj\
+	$(COMMANDS_DIR)connect.obj\
 	$(COMMANDS_DIR)invite.obj\
 	$(COMMANDS_DIR)jp.obj\
 	$(COMMANDS_DIR)kick.obj\
