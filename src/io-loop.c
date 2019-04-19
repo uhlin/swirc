@@ -49,6 +49,7 @@
 #include "terminal.h"
 #include "theme.h"
 
+#include "commands/cleartoasts.h"
 #include "commands/connect.h"
 #include "commands/invite.h"
 #include "commands/jp.h"
