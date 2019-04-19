@@ -55,6 +55,16 @@ static const char *chanserv_usage[] = {
     "",
 };
 
+static const char *cleartoasts_usage[] = {
+    "usage: /cleartoasts",
+    "",
+    "Clear toasts.",
+    "",
+    /*
+     * TODO: Add to cmds.html
+     */
+};
+
 static const char *close_usage[] = {
     "usage: /close",
     "",
