@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Command
   - `/cleartoasts`
+- Improved help for command
+  - `/set`
 - Option
   - `beeps`
 
