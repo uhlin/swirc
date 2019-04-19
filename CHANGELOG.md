@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
+- Command
+  - `/cleartoasts`
 - Option
   - `beeps`
 
