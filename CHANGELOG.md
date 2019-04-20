@@ -24,6 +24,10 @@ All notable changes to this project will be documented in this file.
 - Option
   - `disable_beeps`
 
+### News ###
+- [Curl](https://curl.haxx.se/) 7.64.1
+- [LibreSSL](https://www.libressl.org/) 2.8.3
+
 ## [2.6.1] - 2019-03-30 ##
 ### Added ###
 - Algorithm improvements
