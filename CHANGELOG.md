@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Command
   - `/cleartoasts`
 - Improved help for command
+  - `/join`
   - `/set`
 - Option
   - `beeps`
@@ -17,6 +18,7 @@ All notable changes to this project will be documented in this file.
   - `real_name`
   - `username`
 - UNIX: Produce a stripped executable
+- WIN32: Compile with O2
 
 ### Deleted ###
 - Option
