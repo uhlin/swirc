@@ -157,6 +157,9 @@ static const char *join_usage[] = {
     "Join a key protected channel:",
     "    /join #secret KeyToJoin",
     "",
+    /*
+     * TODO: Sync with cmds.html
+     */
 };
 
 static const char *kick_usage[] = {
