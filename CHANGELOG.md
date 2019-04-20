@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [2.7.0] - 2019-04-20 ##
 ### Added ###
 - Command
   - `/cleartoasts`
