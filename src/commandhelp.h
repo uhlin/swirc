@@ -150,6 +150,13 @@ static const char *join_usage[] = {
     "Joins a channel (optionally by using a key). For a standard",
     "channel a leading hashtag (#) must be present.",
     "",
+    TXT_BOLD "EXAMPLES" TXT_BOLD,
+    "Join a channel with name freenode:",
+    "    /join #freenode",
+    "",
+    "Join a key protected channel:",
+    "    /join #secret KeyToJoin",
+    "",
 };
 
 static const char *kick_usage[] = {
