@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Changed ###
+- Names module to use DJB2 hashing (for more efficient results)
+
 ## [2.7.0] - 2019-04-20 ##
 ### Added ###
 - Command
