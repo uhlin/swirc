@@ -99,8 +99,10 @@ event_names_deinit(void)
     window_foreach_destroy_names();
 }
 
-static unsigned int
-hash(const char *nick)
+#if DJB2_HASHING_TECHNIQUE
+#else
+static inline unsigned int
+hash_pjw(const char *nick)
 {
     char		 c;
     char		*nick_copy = strToLower(sw_strdup(nick));
@@ -120,6 +122,16 @@ hash(const char *nick)
 
     free(nick_copy);
     return (hashval % NAMES_HASH_TABLE_SIZE);
+}
+#endif
+
+static unsigned int
+hash(const char *nick)
+{
+#if DJB2_HASHING_TECHNIQUE
+#else
+    return hash_pjw(nick);
+#endif
 }
 
 PNAMES
