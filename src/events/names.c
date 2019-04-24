@@ -42,6 +42,8 @@
 
 #include "names.h"
 
+#define DJB2_HASHING_TECHNIQUE 1
+
 /****************************************************************
 *                                                               *
 *  ------------------ Structure definitions ------------------  *
@@ -100,7 +102,29 @@ event_names_deinit(void)
 }
 
 #if DJB2_HASHING_TECHNIQUE
+/*
+ * DJB2
+ */
+
+static inline unsigned int
+hash_djb2(const char *nick)
+{
+#define MAGIC_NUMBER 5381
+    char          c         = '\0';
+    char         *nick_copy = strToLower(sw_strdup(nick));
+    char         *nick_p    = &nick_copy[0];
+    unsigned int  hashval   = MAGIC_NUMBER;
+
+    while ((c = *nick_p++) != '\0')
+	hashval = ((hashval << 5) + hashval) + c;
+    free(nick_copy);
+    return (hashval % NAMES_HASH_TABLE_SIZE);
+}
 #else
+/*
+ * P.J. Weinberger hashing
+ */
+
 static inline unsigned int
 hash_pjw(const char *nick)
 {
@@ -129,6 +153,8 @@ static unsigned int
 hash(const char *nick)
 {
 #if DJB2_HASHING_TECHNIQUE
+#pragma message("Using DJB2 hashing technique")
+    return hash_djb2(nick);
 #else
     return hash_pjw(nick);
 #endif
