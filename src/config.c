@@ -530,7 +530,7 @@ cmd_set(const char *data)
 	free(dcopy);
 	return;
     }
-    strFeed(dcopy, 1);
+    (void) strFeed(dcopy, 1);
     setting = strtok_r(dcopy, "\n", &state);
     value = strtok_r(NULL, "\n", &state);;
     if (setting == NULL) {
