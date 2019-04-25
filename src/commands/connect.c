@@ -295,10 +295,10 @@ ssl_is_enabled(void)
 }
 
 static const char *
-get_server(const char *ar[], const size_t ar_sz, const char *msg)
+get_server(const char **ar, const size_t ar_sz, const char *msg)
 {
     char ans[20] = "";
-    const char **ppcc = &ar[0];
+    const char **ppcc = ar;
     int c = EOF;
     int i = 0;
     int srvno = 0;
