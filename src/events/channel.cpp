@@ -186,7 +186,7 @@ event_kick(struct irc_message_compo *compo)
 	(void) user;
 	(void) host;
 
-	strFeed(compo->params, 2);
+	(void) strFeed(compo->params, 2);
 
 	char	*channel = strtok_r(compo->params, "\n", &state2);
 	char	*victim	 = strtok_r(NULL, "\n", &state2);
