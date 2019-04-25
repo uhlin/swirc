@@ -1,5 +1,5 @@
 /* IRCv3 Client Capability Negotiation
-   Copyright (C) 2017-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -31,6 +31,7 @@
 
 #include "../assertAPI.h"
 #include "../config.h"
+#include "../errHand.h"
 #include "../irc.h"
 #include "../network.h"
 #include "../printtext.h"
@@ -125,7 +126,10 @@ event_cap(struct irc_message_compo *compo)
     PRINTTEXT_CONTEXT ctx;
     char *last = "";
 
-    strFeed(compo->params, 2);
+    if (strFeed(compo->params, 2) != 2) {
+	err_log(0, "event_cap: strFeed() != 2");
+	return;
+    }
 
     /* client identifier */
     (void) strtok_r(compo->params, "\n", &last);
