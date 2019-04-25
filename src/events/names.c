@@ -795,12 +795,12 @@ event_names_print_all(const char *channel)
     qsort(&names_array[0], ntp1, sizeof (struct name_tag), names_cmp_fn);
     struct column_lengths cl = get_column_lengths(ntp1, names_array);
 
-    if (!set_format1(fmt1, sizeof fmt1, cl))
+    if (!set_format1(fmt1, sizeof fmt1, cl) ||
+	!set_format2(fmt2, sizeof fmt2, cl) ||
+	!set_format3(fmt3, sizeof fmt3, cl)) {
+	destroy_names_array(ntp1, names_array);
 	return ERR;
-    if (!set_format2(fmt2, sizeof fmt2, cl))
-	return ERR;
-    if (!set_format3(fmt3, sizeof fmt3, cl))
-	return ERR;
+    }
 
     for (i = 0, ptext_ctx.spec_type = TYPE_SPEC3; i < ntp1; i++) {
 	const char *nick1 = names_array[i].s;

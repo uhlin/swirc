@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed ###
 - Impact of a possibly uninitialized variable
+- Possible resource leaks
 - Unchecked return values
 
 ### News ###
