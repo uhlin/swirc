@@ -8,6 +8,9 @@ All notable changes to this project will be documented in this file.
 ### Fixed ###
 - Impact of a possibly uninitialized variable
 
+### News ###
+- [LibreSSL](https://www.libressl.org/) 2.9.1
+
 ## [2.7.0] - 2019-04-20 ##
 ### Added ###
 - Command
