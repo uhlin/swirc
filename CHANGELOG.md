@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ### Changed ###
 - Names module to use DJB2 hashing (for more efficient results)
 
+### Fixed ###
+- Impact of a possibly uninitialized variable
+
 ## [2.7.0] - 2019-04-20 ##
 ### Added ###
 - Command

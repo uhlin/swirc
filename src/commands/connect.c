@@ -229,7 +229,13 @@ do_connect(const char *server, const char *port)
 		  conn_ctx.nickname);
 	return;
     } else {
-	long int sleep_time_seconds;
+	/*
+	 * The value of sleep_time_seconds assigned below isn't intent
+	 * to be used. net_connect() is responsible for giving it an
+	 * initial value as well as changing/updating it between
+	 * reconnect attempts to reflect the delay.
+	 */
+	long int sleep_time_seconds = 10;
 
 	ptext_ctx.spec_type = TYPE_SPEC2;
 	conn_ctx.password = (g_connection_password ? get_password() : NULL);
