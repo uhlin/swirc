@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed ###
 - Impact of a possibly uninitialized variable
+- Unchecked return values
 
 ### News ###
 - [LibreSSL](https://www.libressl.org/) 2.9.1
