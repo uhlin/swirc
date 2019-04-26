@@ -61,8 +61,11 @@
 
 #define STRLEN_CAST(string) strlen((char *) string)
 
-/* Structure definitions
-   ===================== */
+/****************************************************************
+*                                                               *
+*  ------------------ Structure definitions ------------------  *
+*                                                               *
+****************************************************************/
 
 struct message_components {
     char *text;
@@ -86,8 +89,11 @@ struct case_default_context {
     ptrdiff_t  diff;
 };
 
-/* Objects with external linkage
-   ============================= */
+/****************************************************************
+*                                                               *
+*  -------------- Objects with external linkage --------------  *
+*                                                               *
+****************************************************************/
 
 #if defined(UNIX)
 pthread_mutex_t g_puts_mutex;
@@ -95,8 +101,11 @@ pthread_mutex_t g_puts_mutex;
 HANDLE g_puts_mutex;
 #endif
 
-/* Objects with internal linkage
-   ============================= */
+/****************************************************************
+*                                                               *
+*  -------------- Objects with internal linkage --------------  *
+*                                                               *
+****************************************************************/
 
 #if defined(UNIX)
 static pthread_once_t  vprinttext_init_done = PTHREAD_ONCE_INIT;
@@ -134,7 +143,11 @@ static struct ptext_colorMap_tag {
     { COLOR_WHITE,   A_NORMAL },
 };
 
-/* ----------------------------------------------------------------- */
+/****************************************************************
+*                                                               *
+*  ---------------------    Functions    ---------------------  *
+*                                                               *
+****************************************************************/
 
 PPRINTTEXT_CONTEXT
 printtext_context_new(PIRC_WINDOW window, enum message_specifier_type spec_type,
