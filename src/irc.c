@@ -614,7 +614,7 @@ irc_handle_interpret_events(char *recvbuffer,
 		   strings_match(token, last_token)) {
 	    free_and_null(&(*message_concat));
 	    *message_concat = sw_strdup(last_token);
-	    free(last_token);
+	    free_and_null(&last_token);
 	    *state = CONCAT_BUFFER_CONTAIN_DATA;
 	    /*
 	     * On the next call to this function the (incomplete) irc
@@ -634,6 +634,8 @@ irc_handle_interpret_events(char *recvbuffer,
 
 	ProcessProtoMsg(token);
     }
+
+    free_not_null(last_token);
 }
 
 /**
