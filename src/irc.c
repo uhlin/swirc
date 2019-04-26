@@ -66,16 +66,22 @@
 /* Set to 1 for extended info. Intended for debugging only */
 #define UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO 1
 
-/* Objects with external linkage
-   ============================= */
+/****************************************************************
+*                                                               *
+*  -------------- Objects with external linkage --------------  *
+*                                                               *
+****************************************************************/
 
 char	*g_server_hostname = NULL;
 char	*g_my_nickname     = NULL;
 bool	 g_alt_nick_tested = false;
 bool	 g_am_irc_op	   = false;
 
-/* Objects with internal linkage
-   ============================= */
+/****************************************************************
+*                                                               *
+*  -------------- Objects with internal linkage --------------  *
+*                                                               *
+****************************************************************/
 
 static struct normal_events_tag {
     char		*normal_event;
@@ -237,7 +243,11 @@ static struct numeric_events_tag {
     { "908", "RPL_SASLMECHS",           NO_WINDOW,      0, handle_sasl_auth_fail },
 };
 
-/* -------------------------------------------------- */
+/****************************************************************
+*                                                               *
+*  ---------------------    Functions    ---------------------  *
+*                                                               *
+****************************************************************/
 
 /**
  * Initialize irc module
