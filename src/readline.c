@@ -48,8 +48,11 @@
 
 #include "commands/misc.h"
 
-/* Objects with external linkage
-   ============================= */
+/****************************************************************
+*                                                               *
+*  -------------- Objects with external linkage --------------  *
+*                                                               *
+****************************************************************/
 
 jmp_buf g_readline_loc_info;
 bool    g_readline_loop;
@@ -58,15 +61,22 @@ bool    g_resize_requested;
 bool g_hist_next = false;
 bool g_hist_prev = false;
 
-/* Objects with internal linkage
-   ============================= */
+/****************************************************************
+*                                                               *
+*  -------------- Objects with internal linkage --------------  *
+*                                                               *
+****************************************************************/
 
 static PANEL			*readline_pan1	     = NULL;
 static PANEL			*readline_pan2	     = NULL;
 static const int		 readline_buffersize = 2700;
 static rl_active_panel_t	 panel_state	     = PANEL1_ACTIVE;
 
-/* -------------------------------------------------- */
+/****************************************************************
+*                                                               *
+*  ---------------------    Functions    ---------------------  *
+*                                                               *
+****************************************************************/
 
 /**
  * Apply window-options to the readline panels.
