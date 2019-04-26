@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- A banner in WiX
+
 ### Changed ###
 - Names module to use DJB2 hashing (for more efficient results)
 
