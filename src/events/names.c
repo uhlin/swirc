@@ -153,7 +153,7 @@ static unsigned int
 hash(const char *nick)
 {
 #if DJB2_HASHING_TECHNIQUE
-#pragma message("Using DJB2 hashing technique")
+//#pragma message("Using DJB2 hashing technique")
     return hash_djb2(nick);
 #else
     return hash_pjw(nick);
