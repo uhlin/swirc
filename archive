@@ -1,0 +1,10 @@
+#!/bin/sh
+
+DATE=$(date +%Y%m%d)
+OUTPUT=/tmp/debian-${DATE}.zip
+
+git archive --format=zip "--output=${OUTPUT}" HEAD
+
+echo ""
+echo "$OUTPUT created!"
+echo ""
