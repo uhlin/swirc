@@ -2,7 +2,9 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: swirc
 Source: https://github.com/uhlin/swirc
 
-Files: src/commands/* src/events/* src/*
+Files: src/commands/*
+       src/events/*
+       src/*
 Copyright: 2012-2019 Markus Uhlin <markus.uhlin@bredband.net>
 License: BSD-3
  Redistribution and use in source and binary forms, with or without
@@ -33,11 +35,10 @@ License: BSD-3
  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  DAMAGE.
 
-Files:
- DesktopNotificationManagerCompat.cpp
- DesktopNotificationManagerCompat.hpp
- ToastsAPI.cpp
- ToastsAPI.hpp
+Files: src/DesktopNotificationManagerCompat.cpp
+       src/DesktopNotificationManagerCompat.hpp
+       src/ToastsAPI.cpp
+       src/ToastsAPI.hpp
 Copyright: Microsoft
 License: MIT
  Permission is hereby granted, free of charge, to any person obtaining
@@ -59,15 +60,13 @@ License: MIT
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 
-Files:
- src/b64_decode.c
- src/b64_encode.c
+Files: src/b64_decode.c
+       src/b64_encode.c
 Copyright: 1996 1998 Internet Software Consortium
 License: ISC
 
-Files:
- src/interpreter.c
- src/network-openssl.c
+Files: src/interpreter.c
+       src/network-openssl.c
 Copyright: 2012-2019 Markus Uhlin
 License: ISC
 
@@ -89,7 +88,7 @@ License: ISC
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-Files: x509_check_host.c
+Files: src/x509_check_host.c
 Copyright: 1999-2016 The OpenSSL Project Authors
 License: OpenSSL license
  https://www.openssl.org/source/license.html
