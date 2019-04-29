@@ -3,11 +3,8 @@
 # A script to simplify version change
 #
 
-MAJOR_VERSION=2
-MINOR_VERSION=7
-PATCHLEVEL=1
+. ./VERSION_INFO
 
-VERSION=${MAJOR_VERSION}.${MINOR_VERSION}.${PATCHLEVEL}
 DATE=$(date +%Y-%m-%d)
 
 sed -i "s/## \[Unreleased\] ##/## \[$VERSION\] - $DATE ##/" CHANGELOG.md
