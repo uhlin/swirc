@@ -5,6 +5,10 @@ export PREFIX=/usr
 %:
 	dh $@
 
+override_dh_auto_clean:
+	./configure
+	make clean
+
 override_dh_auto_configure:
 	./configure
 
