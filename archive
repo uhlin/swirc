@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+. ./VERSION_INFO
+
+TGZ=/tmp/swirc-${VERSION}.tgz
+
+git archive --format=tgz --prefix=swirc-${VERSION}/ -o $TGZ v$VERSION
+gpg -o ${TGZ}.sig -a -b $TGZ
+
+if test -f "$TGZ"; then
+	echo "$TGZ created"
+fi
+
+if test -f "${TGZ}.sig"; then
+	echo "${TGZ}.sig created"
+fi
