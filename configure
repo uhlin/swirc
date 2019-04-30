@@ -117,7 +117,9 @@ CC=gcc
 CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=g++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
-LDFLAGS=
+LDFLAGS=\\
+	-Wl,-z,now\\
+	-Wl,-z,relro
 LDLIBS=\\
 	-lcrypto\\
 	-lcurl\\
