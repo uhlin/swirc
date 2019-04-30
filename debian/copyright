@@ -90,5 +90,5 @@ License: ISC
 
 Files: src/x509_check_host.c
 Copyright: 1999-2016 The OpenSSL Project Authors
-License: OpenSSL license
+License: OpenSSL
  https://www.openssl.org/source/license.html
