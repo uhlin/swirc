@@ -110,6 +110,7 @@ SHARED_FLAGS=\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
 	-O2\\
 	-Wall\\
+	-fstack-protector-strong\\
 	-g\\
 	-pipe
 CC=gcc
