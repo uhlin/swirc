@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Changed ###
+- Install-destination of the manual pages
+
 ## [2.7.1] - 2019-04-26 ##
 ### Added ###
 - A banner in WiX
