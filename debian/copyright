@@ -33,6 +33,11 @@ License: BSD-3
  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  DAMAGE.
 
+Files: doc/color.txt
+Copyright: 1998 2001 Tjerk Vonck <tjerk@mirc.com>
+License: public-domain
+ Unknown license
+
 Files: src/DesktopNotificationManagerCompat.cpp
        src/DesktopNotificationManagerCompat.hpp
        src/ToastsAPI.cpp
