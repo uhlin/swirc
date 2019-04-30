@@ -2,9 +2,13 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: swirc
 Source: https://github.com/uhlin/swirc
 
-Files: src/commands/*
+Files: configure
+       src/commands/*
        src/events/*
        src/*
+       swirc.conf.5
+       Swirc.wxs
+       tests/*
 Copyright: 2012-2019 Markus Uhlin <markus.uhlin@bredband.net>
 License: BSD-3
  Redistribution and use in source and binary forms, with or without
