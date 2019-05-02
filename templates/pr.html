@@ -230,6 +230,40 @@ format x64 to be installed
   </tr>
 </table> <!--rel-->
 
+<h3>Debian x64 package</h3>
+
+<p>
+Import current Swirc release signing key:
+</p>
+<p class="snippet">
+<kbd># wget -O - https://www.nifty-networks.net/swirc/mu180520.asc | apt-key add -</kbd>
+</p>
+
+<p>
+Access metadata and packages over https:
+</p>
+<p class="snippet">
+<kbd># apt-get install apt-transport-https</kbd>
+</p>
+
+<p>
+Install Swirc source list for APT:
+</p>
+<p class="snippet">
+<kbd>
+# wget -O - https://www.nifty-networks.net/swirc/swirc.list &gt;
+/etc/apt/sources.list.d/swirc.list
+</kbd>
+</p>
+
+<p>
+Finally update and install:
+</p>
+<p class="snippet">
+<kbd># apt-get update</kbd><br>
+<kbd># apt-get install swirc</kbd>
+</p>
+
 <h3>Source code</h3>
 
 <p>(Unpack with: <kbd>tar xfz &lt;tarball&gt;</kbd>.)</p>
