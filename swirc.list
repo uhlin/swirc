@@ -1,0 +1,4 @@
+# Swirc source list
+
+deb       https://www.nifty-networks.net/swirc/releases/debian ./
+deb-src   https://www.nifty-networks.net/swirc/releases/debian ./

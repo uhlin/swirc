@@ -38,6 +38,7 @@ OTHER_FILES="
 mu170225.asc
 mu180520.asc
 style.css
+swirc.list
 "
 
 for s in $SECTIONS; do
