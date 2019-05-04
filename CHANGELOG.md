@@ -3,7 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
-- GNU/Linux: hardened builds
+- **A rewritten interpreter**
+- **GNU/Linux: hardened builds**
 
 ### Changed ###
 - Install-destination of the manual pages
