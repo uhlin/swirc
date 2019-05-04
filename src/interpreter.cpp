@@ -32,7 +32,7 @@ static char *
 copy_identifier(const char *id)
 {
     size_t	 count    = identifier_maxSize;
-    char	*dest_buf = malloc(count + 1);
+    char	*dest_buf = (char *) malloc(count + 1);
     char	*dest;
 
     if (!dest_buf)
@@ -60,7 +60,7 @@ copy_argument(const char *arg)
 {
     bool	 inside_arg = true;
     size_t	 count      = argument_maxSize;
-    char	*dest_buf   = malloc(count + 1);
+    char	*dest_buf   = (char *) malloc(count + 1);
     char	*dest;
 
     if (!dest_buf)
