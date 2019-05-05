@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Added ###
 - **A rewritten interpreter**
-- **GNU/Linux: hardened builds**
+- **Linux**: hardened builds
+- Improved help for command
+  - `/who`
 
 ### Changed ###
 - Install-destination of the manual pages

@@ -399,6 +399,16 @@ static const char *who_usage[] = {
     "information which 'matches' the mask parameter given by the",
     "client.",
     "",
+    TXT_BOLD "EXAMPLES" TXT_BOLD,
+    "  Show all staff:",
+    "    /who freenode/staff/*",
+    "",
+    "  Show ppl with a german domain:",
+    "    /who *.de",
+    "",
+    /*
+     * TODO: Sync with cmds.html
+     */
 };
 
 static const char *whois_usage[] = {
