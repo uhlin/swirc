@@ -10,6 +10,10 @@ struct network_recv_context {
     long int microsec;
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 extern SOCKET g_socket;
 
 bool	winsock_deinit(void);
@@ -23,5 +27,9 @@ void	net_spawn_listenThread(void);
 
 void	net_set_recv_timeout(const DWORD seconds);
 void	net_set_send_timeout(const DWORD seconds);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
