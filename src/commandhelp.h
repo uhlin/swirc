@@ -362,10 +362,23 @@ static const char *set_usage[] = {
 };
 
 static const char *theme_usage[] = {
-    "usage: /theme [install | list-remote | set] [name]",
+    "usage: /theme [install <name> | list-remote | set <name>]",
     "",
     "Management of themes on-the-fly.",
     "",
+    TXT_BOLD "EXAMPLES" TXT_BOLD,
+    "    Install theme named 'bx':",
+    "        /theme install bx",
+    "",
+    "    List available themes:",
+    "        /theme list-remote",
+    "",
+    "    Activate installed theme:",
+    "        /theme set bx",
+    "",
+    /*
+     * TODO: Sync with cmds.html
+     */
 };
 
 static const char *time_usage[] = {

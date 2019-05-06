@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - **A rewritten interpreter**
 - **Linux**: hardened builds
 - Improved help for command
+  - `/theme`
   - `/who`
 
 ### Changed ###
