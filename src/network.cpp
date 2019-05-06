@@ -331,7 +331,7 @@ net_addr_resolve(const char *host, const char *port)
 struct server *
 server_new(const char *host, const char *port)
 {
-    struct server *server = xmalloc(sizeof *server);
+    struct server *server = (struct server *) xmalloc(sizeof *server);
 
     server->host = sw_strdup(host);
     server->port = sw_strdup(port);
@@ -352,7 +352,7 @@ net_irc_listen(bool *connection_lost)
 {
     PRINTTEXT_CONTEXT ptext_ctx;
     char *message_concat = NULL;
-    char *recvbuf = xcalloc(RECVBUF_SIZE, 1);
+    char *recvbuf = (char *) xcalloc(RECVBUF_SIZE, 1);
     enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
     int bytes_received = -1;
     struct network_recv_context ctx = {
