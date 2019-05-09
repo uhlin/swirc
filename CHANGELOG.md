@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - **A rewritten interpreter**
 - **Linux**: hardened builds
+- Code improvements
 - Event
   - 416\. Officially undocumented. (output too large, truncated)
 - Improved help for command
