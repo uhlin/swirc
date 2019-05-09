@@ -357,7 +357,8 @@ net_irc_listen(bool *connection_lost)
 	} else if (bytes_received > 0) {
 	    irc_handle_interpret_events(recvbuf, &message_concat, &state);
 	} else {
-	    net_send("PING %s", g_server_hostname);
+	    if (g_server_hostname)
+		net_send("PING %s", g_server_hostname);
 	}
     } while (g_on_air);
 
