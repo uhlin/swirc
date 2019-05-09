@@ -61,6 +61,13 @@ struct reconnect_context {
     long int delay;
     long int delay_max;
     long int retries;
+
+    reconnect_context() {
+	this->backoff_delay = 0;
+	this->delay         = 0;
+	this->delay_max     = 0;
+	this->retries       = 0;
+    }
 };
 
 /*
@@ -79,7 +86,7 @@ char g_last_port[16] = { 0 };
 
 static const int RECVBUF_SIZE = 2048;
 static long int retry = 0;
-static struct reconnect_context reconn_ctx = { 0 };
+static struct reconnect_context reconn_ctx;
 
 /* ---------------------------------------------------------------------- */
 
