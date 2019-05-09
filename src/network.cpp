@@ -300,23 +300,23 @@ net_send_fake(const char *fmt, ...)
 struct addrinfo *
 net_addr_resolve(const char *host, const char *port)
 {
-    struct addrinfo hints = {
-	.ai_flags     = AI_CANONNAME,
-	.ai_family    = AF_INET,
-	.ai_socktype  = SOCK_STREAM,
-	.ai_protocol  = 0,
-	.ai_addrlen   = 0,
-	.ai_addr      = NULL,
-	.ai_canonname = NULL,
-	.ai_next      = NULL,
-    };
     struct addrinfo *res = NULL;
+    struct addrinfo hints;
 
-    if (!host || !port || getaddrinfo(host, port, &hints, &res) != 0) {
-	return (NULL);
-    }
+    if (host == NULL || port == NULL)
+	return NULL;
 
-    return (res);
+    BZERO(&hints, sizeof hints);
+    hints.ai_flags     = AI_CANONNAME;
+    hints.ai_family    = AF_INET;
+    hints.ai_socktype  = SOCK_STREAM;
+    hints.ai_protocol  = 0;
+    hints.ai_addrlen   = 0;
+    hints.ai_addr      = NULL;
+    hints.ai_canonname = NULL;
+    hints.ai_next      = NULL;
+
+    return getaddrinfo(host, port, &hints, &res) != 0 ? NULL : res;
 }
 
 struct server *
