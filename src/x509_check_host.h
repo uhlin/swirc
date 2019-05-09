@@ -14,8 +14,16 @@
 
 #define _X509_CHECK_FLAG_DOT_SUBDOMAINS 0x8000
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int X509_check_host(X509 *x, const char *chk, size_t chklen, unsigned int flags,
 		    char **peername);
+
+#ifdef __cplusplus
+}
+#endif
 #else
 #define HAVE_X509_CHECK_HOST 1
 #endif
