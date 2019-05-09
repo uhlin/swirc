@@ -336,7 +336,7 @@ net_irc_listen(bool *connection_lost)
 {
     PRINTTEXT_CONTEXT ptext_ctx;
     char *message_concat = NULL;
-    char *recvbuf = (char *) xcalloc(RECVBUF_SIZE, 1);
+    char *recvbuf = (char *) xmalloc(RECVBUF_SIZE);
     enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
     int bytes_received = -1;
     struct network_recv_context ctx = {
