@@ -15,6 +15,9 @@ All notable changes to this project will be documented in this file.
 ### Changed ###
 - Install-destination of the manual pages
 
+### Fixed ###
+- Missing null checks
+
 ## [2.7.1] - 2019-04-26 ##
 ### Added ###
 - A banner in WiX
