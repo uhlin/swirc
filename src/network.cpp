@@ -56,6 +56,12 @@
 #define INVALID_SOCKET -1
 #endif
 
+/****************************************************************
+*                                                               *
+*  ------------------ Structure definitions ------------------  *
+*                                                               *
+****************************************************************/
+
 struct reconnect_context {
     long int backoff_delay;
     long int delay;
@@ -69,6 +75,12 @@ struct reconnect_context {
 	this->retries       = 0;
     }
 };
+
+/****************************************************************
+*                                                               *
+*  -------------- Objects with external linkage --------------  *
+*                                                               *
+****************************************************************/
 
 /*
  * net_send_fake() store the sent data into this buffer
@@ -84,11 +96,21 @@ volatile bool g_on_air = false;
 char g_last_server[512] = { 0 };
 char g_last_port[16] = { 0 };
 
+/****************************************************************
+*                                                               *
+*  -------------- Objects with internal linkage --------------  *
+*                                                               *
+****************************************************************/
+
 static const int RECVBUF_SIZE = 2048;
 static long int retry = 0;
 static struct reconnect_context reconn_ctx;
 
-/* ---------------------------------------------------------------------- */
+/****************************************************************
+*                                                               *
+*  ---------------------    Functions    ---------------------  *
+*                                                               *
+****************************************************************/
 
 static void
 reconnect_context_reinit(struct reconnect_context *ctx)
