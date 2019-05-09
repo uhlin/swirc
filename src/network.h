@@ -11,6 +11,14 @@
 
 #include "x509_check_host.h"
 
+#if defined(UNIX)
+#define CLOSE_GLOBAL_SOCKET()\
+	((void) close(g_socket))
+#elif defined(WIN32)
+#define CLOSE_GLOBAL_SOCKET()\
+	((void) closesocket(g_socket))
+#endif
+
 #define DEFAULT_RECV_TIMEOUT	30
 #define DEFAULT_SEND_TIMEOUT	15
 
