@@ -5,6 +5,7 @@ FILENAMES="
 shouldFail1.conf
 shouldFail2.conf
 shouldFail3.conf
+shouldFail4.conf
 "
 
 if test ! -f "../swirc"; then
