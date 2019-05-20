@@ -1,0 +1,23 @@
+#!/bin/sh
+
+DIR=configfiles/
+FILENAMES="
+shouldFail1.conf
+shouldFail2.conf
+"
+
+if test ! -f "../swirc"; then
+	echo "error: no swirc executable"
+	exit 1
+fi
+
+for file in $FILENAMES; do
+	echo "---------- ${DIR}${file} ----------"
+
+	if test -f "${DIR}${file}"; then
+		head -1 "${DIR}${file}"
+		../swirc -x "${DIR}${file}"
+	else
+		echo "error: nonexistent"
+	fi
+done
