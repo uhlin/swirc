@@ -55,7 +55,7 @@ copy_identifier(const char *&id)
  */
 /*lint -sem(copy_argument, r_null) */
 static char *
-copy_argument(const char *arg)
+copy_argument(const char *&arg)
 {
     bool    inside_arg = true;
     size_t  count      = argument_maxSize;
@@ -65,6 +65,7 @@ copy_argument(const char *arg)
     while (*arg && count > 1) {
 	if (*arg == '\"') {
 	    inside_arg = false;
+	    arg++;
 	    break;
 	}
 
