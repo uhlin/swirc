@@ -19,6 +19,7 @@
 #include "interpreter.h"
 #include "strHand.h"
 
+#include <iostream>
 #include <stdexcept>
 
 /* Set to 0 to turn off this feature. */
@@ -150,6 +151,7 @@ Interpreter(const struct Interpreter_in *in)
 	} else if ((errno = in->install_func(id, arg)) != 0)
 	    throw std::runtime_error("install error");
     } catch (std::runtime_error &e) {
+	std::cerr << '\t' << in->line << '\n';
 	if (strings_match(e.what(), "install error"))
 	    err_ret("%s:%ld: error: install_func returned %d",
 		    in->path, in->line_num, errno);
