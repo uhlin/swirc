@@ -32,7 +32,7 @@ static const size_t argument_maxSize = 480;
  * Copy identifier
  */
 static char *
-copy_identifier(const char *id)
+copy_identifier(const char *&id)
 {
     size_t  count    = identifier_maxSize;
     char   *dest_buf = new char[count + 1];
