@@ -112,12 +112,14 @@ Interpreter(const struct Interpreter_in *in)
 	if (!sw_isalnum(*cp) && *cp != '_')
 	    throw std::runtime_error("unexpected leading character");
 	id = copy_identifier(cp);
+#ifdef OLD_CODE
 	while (sw_isalnum(*cp) || *cp == '_') {
 	    /*
 	     * Identifier...
 	     */
 	    cp++;
 	}
+#endif
 
 	adv_while_isspace(&cp);
 	if (*cp++ != '=')
@@ -128,9 +130,11 @@ Interpreter(const struct Interpreter_in *in)
 	    throw std::runtime_error("expected string");
 	else if ((arg = copy_argument(cp)) == NULL)
 	    throw std::runtime_error("unterminated argument");
+#ifdef OLD_CODE
 	while (*cp++ != '\"') {
 	    /* discard */;
 	}
+#endif
 
 	adv_while_isspace(&cp);
 	if (*cp++ != ';')
