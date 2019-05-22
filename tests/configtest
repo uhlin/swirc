@@ -7,6 +7,7 @@ shouldFail2.conf
 shouldFail3.conf
 shouldFail4.conf
 shouldFail5.conf
+shouldFail6.conf
 "
 
 if test ! -f "../swirc"; then
