@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Event
   - 416\. Officially undocumented. (output too large, truncated)
 - Improved help for command
+  - `/mode`
   - `/theme`
   - `/who`
 
