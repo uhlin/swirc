@@ -16,7 +16,14 @@ if test ! -f "../swirc"; then
 fi
 
 for file in $FILENAMES; do
-	echo "---------- ${DIR}${file} ----------"
+	printf "%b----------%b"\
+	    "\033[1;30m"\
+	    "\033[0m"
+	printf " %b${DIR}${file}%b " "\033[1;32m" "\033[0m"
+	printf "%b----------%b"\
+	    "\033[1;30m"\
+	    "\033[0m"
+	echo ""
 
 	if test -f "${DIR}${file}"; then
 		head -1 "${DIR}${file}"
