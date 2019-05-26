@@ -209,13 +209,33 @@ static const char *mode_usage[] = {
     "",
     "    b - set/remove ban mask to keep users out",
     "    e - set/remove an exception mask to override a ban mask",
-    "    I - set/remove an invitation mask to automatically override the",
-    "        invite-only flag",
+    "    I - set/remove an invitation mask to automatically override",
+    "        the invite-only flag",
     "",
     TXT_BOLD "USER MODES" TXT_BOLD,
-    "    i - marks a user as invisible",
+    "    i - marks an user as invisible",
     "    w - user receives wallops",
     "",
+    TXT_BOLD "EXAMPLES" TXT_BOLD,
+    "    Give channel operator privilege to Companion on #foo:",
+    "      /mode #foo +o Companion",
+    "",
+    "    Restrict messaging to channel #linux:",
+    "      /mode #linux +n",
+    "",
+    "    Limit user count for #freenode to 10:",
+    "      /mode #freenode +l 10",
+    "",
+    "    Deny all users with hostname spammers.net from joining",
+    "    #chatzone:",
+    "      /mode #chatzone +b *!*@spammers.net",
+    "",
+    "    Turn on reception of WALLOPS messages:",
+    "      /mode MyNickname +w",
+    "",
+    /*
+     * TODO: Sync with cmds.html
+     */
 };
 
 static const char *msg_usage[] = {
