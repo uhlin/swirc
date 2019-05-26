@@ -37,6 +37,7 @@ themes
 OTHER_FILES="
 mu170225.asc
 mu180520.asc
+mu190523.asc
 style.css
 swirc.list
 "
