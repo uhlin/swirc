@@ -73,7 +73,7 @@ Files: src/b64_decode.c
 Copyright: 1996 1998 Internet Software Consortium
 License: ISC
 
-Files: src/interpreter.c
+Files: src/interpreter.cpp
        src/network-openssl.c
 Copyright: 2012-2019 Markus Uhlin
 License: ISC
