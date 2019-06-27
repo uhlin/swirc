@@ -1,0 +1,34 @@
+#!/bin/sh
+
+EXE=../../swirc
+
+if [ ! -x "$(which nc)" ]; then
+	echo "error: unable to find netcat"
+	exit 1
+elif [ ! -x "$(which gdb)" ]; then
+	echo "error: unable to find gnu debugger"
+	exit 1
+elif [ ! -x "$EXE" ]; then
+	echo "error: unable to find swirc executable"
+	echo "make it?"
+	exit 1
+fi
+
+read -p "fuzz log: " log
+
+if [ -z "$log" ]; then
+	echo "error: no fuzz log"
+	exit 1
+elif [ ! -r "$log" ]; then
+	echo "error: fuzz log nonexistent or unreadable"
+	exit 1
+fi
+
+PORT=6969
+echo "Starting netcat server at port $PORT..."
+echo "Using fuzzing data provided within $log..."
+nc -l -p $PORT < "$log" &
+
+echo "Invoking GDB..."
+echo "(Type: run)"
+gdb --args "$EXE" -c 127.0.0.1:$PORT -n maxxe -u maxxe -r maxxe
