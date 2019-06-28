@@ -182,7 +182,7 @@ event_names_htbl_lookup(const char *nick, const char *channel)
     return NULL;
 }
 
-static void
+static int
 hInstall(const struct hInstall_context *ctx)
 {
     PIRC_WINDOW		window_entry = window_by_label(ctx->channel);
@@ -216,10 +216,13 @@ hInstall(const struct hInstall_context *ctx)
 
 	window_entry->num_total++;
     } else {
-	err_msg("FATAL: In events/names.c: Can't find a window with label %s",
-		ctx->channel);
-	abort();
+	err_log(0, "In events/names.c: "
+	    "Can't find a window with label %s during hInstall()",
+	    ctx->channel);
+	return ERR;
     }
+
+    return OK;
 }
 
 int
@@ -239,9 +242,7 @@ event_names_htbl_insert(const char *nick, const char *channel)
     ctx.is_halfop  = false;
     ctx.is_voice   = false;
 
-    hInstall(&ctx);
-
-    return OK;
+    return hInstall(&ctx);
 }
 
 int
@@ -953,7 +954,8 @@ event_names(struct irc_message_compo *compo)
 	ctx.is_halfop  = (*token == '%');
 	ctx.is_voice   = (*token == '+');
 
-	hInstall(&ctx);
+	if (hInstall(&ctx) != OK)
+	    break;
     }
 
     free(names_copy);

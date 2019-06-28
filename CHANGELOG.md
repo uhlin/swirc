@@ -1,6 +1,11 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Fixed ###
+- Reported by [MAGA](https://github.com/MakeItGreatAgain):
+  - Reproducible crash from protocol fuzzing
+
 ## [2.7.2] - 2019-05-26 ##
 ### Added ###
 - **A rewritten interpreter**
