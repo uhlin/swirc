@@ -119,6 +119,9 @@ event_join(struct irc_message_compo *compo)
 	    ? &compo->params[1]
 	    : &compo->params[0];
 
+	if (!is_irc_channel(channel) || strchr(channel, ' ') != NULL)
+	    throw std::runtime_error("bogus irc channel");
+
 	if (strings_match_ignore_case(nick, g_my_nickname)) {
 	    if (spawn_chat_window(channel, "No title.") != 0)
 		throw std::runtime_error("cannot spawn chat window");
