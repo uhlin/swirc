@@ -119,7 +119,7 @@ static struct numeric_events_tag {
     { "002", "RPL_YOURHOST",            STATUS_WINDOW,  1, NULL },
     { "003", "RPL_CREATED",             STATUS_WINDOW,  1, NULL },
     { "004", "RPL_MYINFO",              STATUS_WINDOW,  1, NULL },
-    { "005", "RPL_BOUNCE",              NO_WINDOW,      0, event_bounce },
+    { "005", "RPL_ISUPPORT",            NO_WINDOW,      0, event_serverFeatures },
     { "020", "",                        STATUS_WINDOW,  1, NULL },
     { "042", "",                        NO_WINDOW,      0, event_allaround_extract_remove_colon },
     { "221", "RPL_UMODEIS",             NO_WINDOW,      0, event_userModeIs },

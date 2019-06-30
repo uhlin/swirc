@@ -115,12 +115,15 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
     free_not_null(msg_copy);
 }
 
-/* event_bounce: 005 (RPL_BOUNCE)
+/* event_serverFeatures: 005 (RPL_ISUPPORT)
+
+   Lists features supported by the server.
+   (sent as connection registration is completed)
 
    Example:
      :irc.server.com 005 <anything> ... */
 void
-event_bounce(struct irc_message_compo *compo)
+event_serverFeatures(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
 
@@ -166,7 +169,7 @@ event_bounce(struct irc_message_compo *compo)
 	}
     } catch (std::runtime_error &e) {
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_bounce: error: %s", e.what());
+	printtext(&ctx, "event_serverFeatures: error: %s", e.what());
     }
 }
 
