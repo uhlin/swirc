@@ -185,9 +185,15 @@ event_names_htbl_lookup(const char *nick, const char *channel)
 static int
 hInstall(const struct hInstall_context *ctx)
 {
-    PIRC_WINDOW		window_entry = window_by_label(ctx->channel);
-    PNAMES		names_entry;
-    const unsigned int	hashval      = hash(ctx->nick);
+    PIRC_WINDOW window_entry = NULL;
+    PNAMES names_entry = NULL;
+
+    if ((window_entry = window_by_label(ctx->channel)) == NULL) {
+	err_log(0, "In events/names.c: "
+	    "Can't find a window with label %s during hInstall()",
+	    ctx->channel);
+	return ERR;
+    }
 
     names_entry             = xcalloc(sizeof *names_entry, 1);
     names_entry->nick       = sw_strdup(ctx->nick);
@@ -197,31 +203,23 @@ hInstall(const struct hInstall_context *ctx)
     names_entry->is_halfop  = ctx->is_halfop;
     names_entry->is_voice   = ctx->is_voice;
 
-    if (window_entry) {
-	names_entry->next		  = window_entry->names_hash[hashval];
-	window_entry->names_hash[hashval] = names_entry;
+    const unsigned int hashval = hash(ctx->nick);
+    names_entry->next = window_entry->names_hash[hashval];
+    window_entry->names_hash[hashval] = names_entry;
 
-	if (ctx->is_owner)
-	    window_entry->num_owners++;
-	else if (ctx->is_superop)
-	    window_entry->num_superops++;
-	else if (ctx->is_op)
-	    window_entry->num_ops++;
-	else if (ctx->is_halfop)
-	    window_entry->num_halfops++;
-	else if (ctx->is_voice)
-	    window_entry->num_voices++;
-	else
-	    window_entry->num_normal++;
-
-	window_entry->num_total++;
-    } else {
-	err_log(0, "In events/names.c: "
-	    "Can't find a window with label %s during hInstall()",
-	    ctx->channel);
-	return ERR;
-    }
-
+    if (ctx->is_owner)
+	window_entry->num_owners++;
+    else if (ctx->is_superop)
+	window_entry->num_superops++;
+    else if (ctx->is_op)
+	window_entry->num_ops++;
+    else if (ctx->is_halfop)
+	window_entry->num_halfops++;
+    else if (ctx->is_voice)
+	window_entry->num_voices++;
+    else
+	window_entry->num_normal++;
+    window_entry->num_total++;
     return OK;
 }
 
