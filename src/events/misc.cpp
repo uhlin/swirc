@@ -197,7 +197,10 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 	    throw std::runtime_error("unable to get channel");
 	else if (seconds == NULL)
 	    throw std::runtime_error("unable to get seconds");
-	else if (!is_irc_channel(channel))
+	else if (*seconds == ':')
+	    seconds++; /* Remove leading colon */
+
+	if (!is_irc_channel(channel))
 	    throw std::runtime_error("invalid irc channel");
 	else if (!is_numeric(seconds))
 	    throw std::runtime_error("expected numeric string");

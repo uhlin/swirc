@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed ###
 - Reported by [MAGA](https://github.com/MakeItGreatAgain):
   - Reproducible crash from protocol fuzzing
+  - Issues with protocol colon escaping
 
 ## [2.7.2] - 2019-05-26 ##
 ### Added ###

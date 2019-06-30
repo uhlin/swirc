@@ -842,6 +842,8 @@ event_topic_creator(struct irc_message_compo *compo)
 	    throw std::runtime_error("no creator");
 	else if (time_str == NULL)
 	    throw std::runtime_error("no time!");
+	else if (*time_str == ':')
+	    time_str++; /* Remove leading colon */
 
 	printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
 
