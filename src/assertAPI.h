@@ -9,9 +9,9 @@ extern "C" {
 /*lint -sem(SWAssertPerrorFail, r_no)     */
 /*lint -sem(SWAssertNotReachedFail, r_no) */
 
-SW_NORET void SWAssertFail           (const char *file, long int line, const char *fn, const char *assertion);
-SW_NORET void SWAssertPerrorFail     (const char *file, long int line, const char *fn, int errnum);
-SW_NORET void SWAssertNotReachedFail (const char *file, long int line, const char *fn);
+NORETURN void SWAssertFail           (const char *file, long int line, const char *fn, const char *assertion);
+NORETURN void SWAssertPerrorFail     (const char *file, long int line, const char *fn, int errnum);
+NORETURN void SWAssertNotReachedFail (const char *file, long int line, const char *fn);
 
 #if defined(UNIX)
 #define SW_ASSERT_FN __func__

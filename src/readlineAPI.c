@@ -151,7 +151,7 @@ ins_complex_char(WINDOW *win, int c)
 /**
  * Readline error handling
  */
-SW_NORET void
+NORETURN void
 readline_error(int error, const char *msg)
 {
     PRINTTEXT_CONTEXT ctx;

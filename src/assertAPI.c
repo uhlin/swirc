@@ -67,7 +67,7 @@ assert_doit(const char *fmt, ...)
     fputc('\n', stderr);
 }
 
-SW_NORET void
+NORETURN void
 SWAssertFail(const char *file, long int line, const char *fn,
 	     const char *assertion)
 {
@@ -81,7 +81,7 @@ SWAssertFail(const char *file, long int line, const char *fn,
     abort();
 }
 
-SW_NORET void
+NORETURN void
 SWAssertPerrorFail(const char *file, long int line, const char *fn, int errnum)
 {
     char strerrbuf[MAXERROR];
@@ -95,7 +95,7 @@ SWAssertPerrorFail(const char *file, long int line, const char *fn, int errnum)
     abort();
 }
 
-SW_NORET void
+NORETURN void
 SWAssertNotReachedFail(const char *file, long int line, const char *fn)
 {
     if (file == NULL || *file == '\0')

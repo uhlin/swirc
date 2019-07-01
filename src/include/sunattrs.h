@@ -48,4 +48,4 @@
 #define PRINTFLIKE(arg_no)
 #define PTR_ARGS_NONNULL
 #define SW_INLINE			inline
-#define SW_NORET			__attribute__((noreturn))
+#define NORETURN			__attribute__((noreturn))

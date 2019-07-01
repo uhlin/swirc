@@ -4,7 +4,7 @@
 #define PTR_ARGS_NONNULL
 #define SW_INLINE inline
 #if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
-#define SW_NORET _Noreturn
+#define NORETURN _Noreturn
 #else
-#define SW_NORET
+#define NORETURN
 #endif

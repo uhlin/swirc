@@ -121,7 +121,7 @@ err_doit(bool output_to_stderr, int error, const char *fmt, va_list ap)
     }
 }
 
-SW_NORET void
+NORETURN void
 err_dump(const char *fmt, ...)
 {
     va_list ap;
@@ -133,7 +133,7 @@ err_dump(const char *fmt, ...)
     abort();
 }
 
-SW_NORET void
+NORETURN void
 err_exit(int error, const char *fmt, ...)
 {
     va_list ap;
@@ -145,7 +145,7 @@ err_exit(int error, const char *fmt, ...)
     exit(EXIT_FAILURE);
 }
 
-SW_NORET void
+NORETURN void
 err_quit(const char *fmt, ...)
 {
     va_list ap;
@@ -157,7 +157,7 @@ err_quit(const char *fmt, ...)
     exit(EXIT_FAILURE);
 }
 
-SW_NORET void
+NORETURN void
 err_sys(const char *fmt, ...)
 {
     va_list ap;

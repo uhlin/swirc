@@ -13,10 +13,10 @@
 extern "C" {
 #endif
 
-SW_NORET void	err_dump (const char *fmt, ...) PRINTFLIKE(1);
-SW_NORET void	err_exit (int error, const char *fmt, ...) PRINTFLIKE(2);
-SW_NORET void	err_quit (const char *fmt, ...) PRINTFLIKE(1);
-SW_NORET void	err_sys  (const char *fmt, ...) PRINTFLIKE(1);
+NORETURN void	err_dump (const char *fmt, ...) PRINTFLIKE(1);
+NORETURN void	err_exit (int error, const char *fmt, ...) PRINTFLIKE(2);
+NORETURN void	err_quit (const char *fmt, ...) PRINTFLIKE(1);
+NORETURN void	err_sys  (const char *fmt, ...) PRINTFLIKE(1);
 void		err_log  (int error, const char *fmt, ...) PRINTFLIKE(2);
 void		err_msg  (const char *fmt, ...) PRINTFLIKE(1);
 void		err_ret  (const char *fmt, ...) PRINTFLIKE(1);
