@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Changed ###
 - `RPL_BOUNCE`->`RPL_ISUPPORT`
+- `SW_NORET`->`NORETURN`
 
 ### Fixed ###
 - Reported by [MAGA](https://github.com/MakeItGreatAgain):
