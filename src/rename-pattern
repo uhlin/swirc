@@ -13,6 +13,8 @@ events/*.c
 events/*.cpp
 events/*.h
 events/*.hpp
+include/*.h
+include/*.hpp
 "
 
 if test $# != 2; then
