@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 ### Changed ###
 - `RPL_BOUNCE`->`RPL_ISUPPORT`
 - `SW_NORET`->`NORETURN`
+- Don't shutdown irc connection on runtime error in:
+  - `event_join()`
+  - `event_kick()`
+  - `event_part()`
 
 ### Fixed ###
 - Reported by [MAGA](https://github.com/MakeItGreatAgain):

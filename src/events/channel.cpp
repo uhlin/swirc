@@ -46,6 +46,8 @@
 #include "channel.h"
 #include "names.h"
 
+#define SHUTDOWN_IRC_CONNECTION_BEHAVIOR 0
+
 /* event_chan_hp: 328
 
    Example:
@@ -149,8 +151,10 @@ event_join(struct irc_message_compo *compo)
     } catch (std::runtime_error &e) {
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 	printtext(&ctx, "event_join: fatal: %s", e.what());
+#if SHUTDOWN_IRC_CONNECTION_BEHAVIOR
 	printtext(&ctx, "Shutting down IRC connection...");
 	g_on_air = false;
+#endif
     }
 }
 
@@ -226,8 +230,10 @@ event_kick(struct irc_message_compo *compo)
     } catch (std::runtime_error &e) {
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 	printtext(&ctx, "event_kick: fatal: %s", e.what());
+#if SHUTDOWN_IRC_CONNECTION_BEHAVIOR
 	printtext(&ctx, "Shutting down IRC connection...");
 	g_on_air = false;
+#endif
     }
 }
 
@@ -649,8 +655,10 @@ event_part(struct irc_message_compo *compo)
     } catch (std::runtime_error &e) {
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 	printtext(&ctx, "event_part: fatal: %s", e.what());
+#if SHUTDOWN_IRC_CONNECTION_BEHAVIOR
 	printtext(&ctx, "Shutting down IRC connection...");
 	g_on_air = false;
+#endif
     }
 }
 
