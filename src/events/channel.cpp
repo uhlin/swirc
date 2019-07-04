@@ -469,7 +469,7 @@ event_mode(struct irc_message_compo *compo)
 	    throw std::runtime_error("insufficient data");
 
 	next_token_copy = sw_strdup(next_token);
-	squeeze(next_token_copy, ":");
+	//squeeze(next_token_copy, ":");
 	trim(next_token_copy);
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
