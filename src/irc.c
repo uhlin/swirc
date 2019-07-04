@@ -230,6 +230,7 @@ static struct numeric_events_tag {
     { "615", "",                        NO_WINDOW,      0, event_whois_modes },
     { "616", "",                        NO_WINDOW,      0, event_whois_host },
     { "671", "",                        NO_WINDOW,      0, event_whois_ssl },
+    { "696", "ERR_",                    ACTIVE_WINDOW,  4, NULL },
     { "716", "ERR_",                    ACTIVE_WINDOW,  2, NULL },
     { "717", "ERR_",                    ACTIVE_WINDOW,  2, NULL },
     { "742", "ERR_",                    ACTIVE_WINDOW,  4, NULL },
