@@ -254,7 +254,11 @@ event_channelModeIs(struct irc_message_compo *compo)
 	else if ((ctx.window = window_by_label(channel)) == NULL)
 	    throw std::runtime_error("couldn't find channel window");
 
+	if (*data == ':')
+	    data++;
+
 	/* -------------------------------------------------- */
+
 	errno = sw_strcpy(ctx.window->chanmodes, trim(data),
 	    sizeof (ctx.window->chanmodes));
 	if (errno)
