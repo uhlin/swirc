@@ -448,6 +448,7 @@ event_mode(struct irc_message_compo *compo)
     char *next_token_copy = NULL;
 
     try {
+	char *cp = NULL;
 	char *nick = NULL;
 	char *prefix = NULL;
 	char *state1 = (char*) "";
@@ -467,6 +468,12 @@ event_mode(struct irc_message_compo *compo)
 
 	if (channel == NULL || next_token == NULL)
 	    throw std::runtime_error("insufficient data");
+	else if (*next_token == ':')
+	    next_token ++;
+	else if ((cp = strstr(next_token, " :")) != NULL) {
+	    *++cp = ' ';
+	    (void) memmove(cp - 1, cp, strlen(cp) + 1);
+	}
 
 	next_token_copy = sw_strdup(next_token);
 	//squeeze(next_token_copy, ":");

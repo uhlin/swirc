@@ -234,6 +234,7 @@ event_channelModeIs(struct irc_message_compo *compo)
     PRINTTEXT_CONTEXT ctx;
 
     try {
+	char *cp = NULL;
 	char *state = (char *) "";
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
@@ -256,6 +257,10 @@ event_channelModeIs(struct irc_message_compo *compo)
 
 	if (*data == ':')
 	    data++;
+	else if ((cp = strstr(data, " :")) != NULL) {
+	    *++cp = ' ';
+	    (void) memmove(cp - 1, cp, strlen(cp) + 1);
+	}
 
 	/* -------------------------------------------------- */
 
