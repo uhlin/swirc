@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Event
   - 696\. Undocumented in the RFC. (You must specify a parameter for
     the key mode).
+- Preprogrammed network name [anonops](https://www.anonops.com/).
 
 ### Changed ###
 - `RPL_BOUNCE`->`RPL_ISUPPORT`

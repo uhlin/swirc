@@ -86,12 +86,16 @@ static const char *connect_usage[] = {
     "will connect to freenode using an encrypted connection.",
     "Preconfigured network names are:",
     "",
+    "    - anonops",
     "    - efnet",
     "    - freenode",
     "    - ircnet",
     "    - quakenet",
     "    - undernet",
     "",
+    /*
+     * TODO: Sync with cmds.html
+     */
 };
 
 static const char *cycle_usage[] = {
