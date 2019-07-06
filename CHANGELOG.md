@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
+- Command
+  - `/ban` + `/unban`
 - Event
   - 696\. Undocumented in the RFC. (You must specify a parameter for
     the key mode).

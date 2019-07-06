@@ -37,6 +37,16 @@ static const char *away_usage[] = {
     "",
 };
 
+static const char *ban_usage[] = {
+    "usage: /ban <mask>",
+    "",
+    "Set a ban. The active window must be an IRC channel.",
+    "",
+    /*
+     * TODO: Add to cmds.html
+     */
+};
+
 static const char *banlist_usage[] = {
     "usage: /banlist [channel]",
     "",
@@ -442,6 +452,16 @@ static const char *topic_usage[] = {
     "Set a new topic for a channel. If new topic is omitted, display",
     "the current topic. Active window must be an IRC channel.",
     "",
+};
+
+static const char *unban_usage[] = {
+    "usage: /unban <mask>",
+    "",
+    "Unset a ban. (The active window must be an IRC channel.)",
+    "",
+    /*
+     * TODO: Add to cmds.html
+     */
 };
 
 static const char *version_usage[] = {

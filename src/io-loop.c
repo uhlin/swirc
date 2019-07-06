@@ -49,6 +49,7 @@
 #include "terminal.h"
 #include "theme.h"
 
+#include "commands/ban.h"
 #include "commands/cleartoasts.h"
 #include "commands/connect.h"
 #include "commands/invite.h"
@@ -87,6 +88,7 @@ static struct cmds_tag {
     const size_t size;
 } cmds[] = {
     { "away",        cmd_away,        true,  away_usage,        ARRAY_SIZE(away_usage)        },
+    { "ban",         cmd_ban,         true,  ban_usage,         ARRAY_SIZE(ban_usage)         },
     { "banlist",     cmd_banlist,     true,  banlist_usage,     ARRAY_SIZE(banlist_usage)     },
     { "chanserv",    cmd_chanserv,    true,  chanserv_usage,    ARRAY_SIZE(chanserv_usage)    },
     { "cleartoasts", cmd_cleartoasts, false, cleartoasts_usage, ARRAY_SIZE(cleartoasts_usage) },
@@ -122,6 +124,7 @@ static struct cmds_tag {
     { "theme",       cmd_theme,       false, theme_usage,       ARRAY_SIZE(theme_usage)       },
     { "time",        cmd_time,        true,  time_usage,        ARRAY_SIZE(time_usage)        },
     { "topic",       cmd_topic,       true,  topic_usage,       ARRAY_SIZE(topic_usage)       },
+    { "unban",       cmd_unban,       true,  unban_usage,       ARRAY_SIZE(unban_usage)       },
     { "version",     cmd_version,     true,  version_usage,     ARRAY_SIZE(version_usage)     },
     { "who",         cmd_who,         true,  who_usage,         ARRAY_SIZE(who_usage)         },
     { "whois",       cmd_whois,       true,  whois_usage,       ARRAY_SIZE(whois_usage)       },
