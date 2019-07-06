@@ -60,6 +60,7 @@
 #include "commands/msg.h"
 #include "commands/nick.h"
 #include "commands/notice.h"
+#include "commands/op.h"
 #include "commands/sasl.h"
 #include "commands/say.h"
 #include "commands/services.h"
@@ -96,6 +97,7 @@ static struct cmds_tag {
     { "connect",     cmd_connect,     false, connect_usage,     ARRAY_SIZE(connect_usage)     },
     { "cs",          cmd_chanserv,    true,  chanserv_usage,    ARRAY_SIZE(chanserv_usage)    },
     { "cycle",       cmd_cycle,       true,  cycle_usage,       ARRAY_SIZE(cycle_usage)       },
+    { "deop",        cmd_deop,        true,  deop_usage,        ARRAY_SIZE(deop_usage)        },
     { "disconnect",  cmd_disconnect,  false, disconnect_usage,  ARRAY_SIZE(disconnect_usage)  },
     { "exlist",      cmd_exlist,      true,  exlist_usage,      ARRAY_SIZE(exlist_usage)      },
     { "help",        cmd_help,        false, help_usage,        ARRAY_SIZE(help_usage)        },
@@ -112,6 +114,7 @@ static struct cmds_tag {
     { "nickserv",    cmd_nickserv,    true,  nickserv_usage,    ARRAY_SIZE(nickserv_usage)    },
     { "notice",      cmd_notice,      true,  notice_usage,      ARRAY_SIZE(notice_usage)      },
     { "ns",          cmd_nickserv,    true,  nickserv_usage,    ARRAY_SIZE(nickserv_usage)    },
+    { "op",          cmd_op,          true,  op_usage,          ARRAY_SIZE(op_usage)          },
     { "oper",        cmd_oper,        true,  oper_usage,        ARRAY_SIZE(oper_usage)        },
     { "part",        cmd_part,        true,  part_usage,        ARRAY_SIZE(part_usage)        },
     { "query",       cmd_query,       false, query_usage,       ARRAY_SIZE(query_usage)       },

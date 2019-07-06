@@ -116,6 +116,16 @@ static const char *cycle_usage[] = {
     "",
 };
 
+static const char *deop_usage[] = {
+    "usage: /deop <nick>",
+    "",
+    "Take channel operator privilege.",
+    "",
+    /*
+     * TODO: Add to cmds.html
+     */
+};
+
 static const char *disconnect_usage[] = {
     "usage: /disconnect [message]",
     "",
@@ -301,6 +311,16 @@ static const char *notice_usage[] = {
     "Used to send private messages between users, as well as to send",
     "messages to channels. (In notice form).",
     "",
+};
+
+static const char *op_usage[] = {
+    "usage: /op <nick>",
+    "",
+    "Give channel operator privilege.",
+    "",
+    /*
+     * TODO: Add to cmds.html
+     */
 };
 
 static const char *oper_usage[] = {
