@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 - Event
   - 696\. Undocumented in the RFC. (You must specify a parameter for
     the key mode).
+  - 698\. Undocumented in the RFC. (Channel ban list does not contain
+    `...`).
 - Preprogrammed network name [anonops](https://www.anonops.com/).
 
 ### Changed ###
