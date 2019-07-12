@@ -195,6 +195,18 @@ static const char *kick_usage[] = {
     "",
 };
 
+static const char *kickban_usage[] = {
+    "usage: /kickban <nick> <mask> [reason]",
+    "",
+    "Initially designate a channel ban specified by <mask> and kick",
+    "user <nick> out of a channel. Optionally with a reason.",
+    "(The active window must be an IRC channel.)",
+    "",
+    /*
+     * TODO: Add to cmds.html
+     */
+};
+
 static const char *list_usage[] = {
     "usage: /list [<max_users[,>min_users][,pattern][...]]",
     "",

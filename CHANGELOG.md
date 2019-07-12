@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Command
   - `/ban` + `/unban`
+  - `/kickban`
   - `/op` + `/deop`
 - Event
   - 696\. Undocumented in the RFC. (You must specify a parameter for

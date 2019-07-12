@@ -105,6 +105,7 @@ static struct cmds_tag {
     { "invite",      cmd_invite,      true,  invite_usage,      ARRAY_SIZE(invite_usage)      },
     { "join",        cmd_join,        true,  join_usage,        ARRAY_SIZE(join_usage)        },
     { "kick",        cmd_kick,        true,  kick_usage,        ARRAY_SIZE(kick_usage)        },
+    { "kickban",     cmd_kickban,     true,  kickban_usage,     ARRAY_SIZE(kickban_usage)     },
     { "list",        cmd_list,        true,  list_usage,        ARRAY_SIZE(list_usage)        },
     { "me",          cmd_me,          true,  me_usage,          ARRAY_SIZE(me_usage)          },
     { "mode",        cmd_mode,        true,  mode_usage,        ARRAY_SIZE(mode_usage)        },

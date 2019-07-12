@@ -1,4 +1,4 @@
-/* command /kick
+/* Command /kick + /kickban
    Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -41,7 +41,9 @@
 #define ACTWINLABEL "#channel"
 #endif
 
-/* usage: /kick <nick1[,nick2][,nick3][...]> [reason] */
+/*
+ * usage: /kick <nick1[,nick2][,nick3][...]> [reason]
+ */
 void
 cmd_kick(const char *data)
 {
@@ -68,4 +70,47 @@ cmd_kick(const char *data)
 	    g_on_air = false;
 	free(dcopy);
     }
+}
+
+/*
+ * usage: /kickban <nick> <mask> [reason]
+ */
+void
+cmd_kickban(const char *data)
+{
+    char	*dcopy	= sw_strdup(data);
+    char	*reason = NULL;
+    char	*state	= "";
+
+    if (strings_match(dcopy, "")) {
+	print_and_free("/kickban: missing arguments", dcopy);
+	return;
+    }
+
+    (void) strFeed(dcopy, 2);
+
+    char *nick = strtok_r(dcopy, "\n", &state);
+    char *mask = strtok_r(NULL, "\n", &state);
+
+    const bool has_reason = (reason = strtok_r(NULL, "\n", &state)) != NULL;
+
+    if (nick == NULL) {
+	print_and_free("/kickban: no nickname", dcopy);
+	return;
+    } else if (!is_valid_nickname(nick)) {
+	print_and_free("/kickban: invalid nickname", dcopy);
+	return;
+    } else if (mask == NULL) {
+	print_and_free("/kickban: no mask", dcopy);
+	return;
+    } else if (!is_irc_channel(ACTWINLABEL)) {
+	print_and_free("/kickban: active window isn't an irc channel", dcopy);
+	return;
+    }
+
+    if (net_send("MODE %s +b %s", ACTWINLABEL, mask) < 0 ||
+	net_send("KICK %s %s :%s", ACTWINLABEL, nick, has_reason?reason:"") < 0)
+	g_on_air = false;
+
+    free(dcopy);
 }
