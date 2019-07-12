@@ -1196,23 +1196,6 @@ set_timestamp(char *dest, size_t destsize,
 }
 
 /**
- * Print formatted output in Curses windows
- *
- * @param win Window
- * @param fmt Format control
- * @return Void
- */
-void
-swirc_wprintw(WINDOW *win, const char *fmt, ...)
-{
-    va_list ap;
-
-    va_start(ap, fmt);
-    vwprintw(win, fmt, ap);
-    va_end(ap);
-}
-
-/**
  * Create mutex "vprinttext_mutex".
  */
 static void

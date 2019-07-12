@@ -64,7 +64,7 @@ void	printtext_context_destroy(PPRINTTEXT_CONTEXT);
 void	printtext_context_init(PPRINTTEXT_CONTEXT, PIRC_WINDOW,
 	    enum message_specifier_type, bool include_ts);
 
-/*lint -printf(2, printtext, swirc_wprintw) */
+/*lint -printf(2, printtext) */
 
 char	*squeeze_text_deco(char *);
 short int
@@ -74,7 +74,6 @@ void	 printtext(PPRINTTEXT_CONTEXT, const char *, ...) PRINTFLIKE(2);
 void	 printtext_puts(WINDOW *, const char *buf, int indent, int, int *);
 void	 set_timestamp(char *dest, size_t destsize,
 	     const struct irc_message_compo *) PTR_ARGS_NONNULL;
-void	 swirc_wprintw(WINDOW *, const char *, ...) PRINTFLIKE(2);
 void	 vprinttext(PPRINTTEXT_CONTEXT, const char *format, va_list);
 
 #ifdef __cplusplus

@@ -22,6 +22,9 @@ All notable changes to this project will be documented in this file.
   - `event_kick()`
   - `event_part()`
 
+### Deleted ###
+- `swirc_wprintw()` due to deprecation
+
 ### Fixed ###
 - Reported by [MAGA](https://github.com/MakeItGreatAgain):
   - Issues with protocol colon escaping
