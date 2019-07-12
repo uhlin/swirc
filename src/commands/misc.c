@@ -1,5 +1,5 @@
 /* commands/misc.c
-   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -37,6 +37,7 @@
 #include "../dataClassify.h"
 #include "../errHand.h"
 #include "../io-loop.h"
+#include "../libUtils.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -105,6 +106,70 @@ cmd_close(const char *data)
 	destroy_chat_window(g_active_window->label);
 }
 
+static bool
+has_channel_key(const char *channel, char **key)
+{
+    PIRC_WINDOW win = NULL;
+    char *chanmodes_copy = NULL;
+    char *last = "";
+    char *params[4] = { NULL };
+    size_t assigned_params = 0;
+
+    if ((win = window_by_label(channel)) == NULL)
+	goto no;
+
+    chanmodes_copy = sw_strdup(win->chanmodes);
+    char *modes = strtok_r(chanmodes_copy, " ", &last);
+
+    if (modes == NULL || strchr(modes, 'k') == NULL)
+	goto no;
+
+    squeeze(modes,
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ+abcde"
+	"ghi"
+	"mnopqrstuvwxyz");
+
+    while (assigned_params < ARRAY_SIZE(params)) {
+	char *token = strtok_r(NULL, " ", &last);
+
+	if (!token)
+	    break;
+	params[assigned_params] = token;
+	assigned_params++;
+    }
+
+    const size_t spanned = strcspn(modes, "k");
+
+    if (assigned_params != strlen(modes) || spanned >= ARRAY_SIZE(params) ||
+	params[spanned] == NULL)
+	goto no;
+
+    *key = sw_strdup(params[spanned]);
+    free_not_null(chanmodes_copy);
+    return true;
+
+  no:
+    *key = NULL;
+    free_not_null(chanmodes_copy);
+    return false;
+}
+
+static void
+do_part_and_join(const char *channel)
+{
+    char *key = NULL;
+
+    if (has_channel_key(channel, &key)) {
+	(void) net_send("PART %s", channel);
+	(void) net_send("JOIN %s %s", channel, key);
+    } else {
+	(void) net_send("PART %s", channel);
+	(void) net_send("JOIN %s", channel);
+    }
+
+    free_not_null(key);
+}
+
 /* usage: /cycle [channel] */
 void
 cmd_cycle(const char *data)
@@ -112,9 +177,7 @@ cmd_cycle(const char *data)
     if (strings_match(data, "")) {
 
 	if (is_irc_channel(g_active_window->label)) {
-	    if (net_send("PART %s", g_active_window->label) < 0 ||
-		net_send("JOIN %s", g_active_window->label) < 0)
-		g_on_air = false;
+	    do_part_and_join(g_active_window->label);
 	} else {
 	    output_error("/cycle: missing arguments");
 	}
@@ -122,8 +185,7 @@ cmd_cycle(const char *data)
     } else if (!is_irc_channel(data)) {
 	output_error("/cycle: bogus irc channel");
     } else {
-	if (net_send("PART %s", data) < 0 || net_send("JOIN %s", data) < 0)
-	    g_on_air = false;
+	do_part_and_join(data);
     }
 }
 
