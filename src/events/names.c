@@ -841,27 +841,33 @@ event_names_print_all(const char *channel)
 void
 event_eof_names(struct irc_message_compo *compo)
 {
-    PIRC_WINDOW win;
-    char *channel;
-    char *eof_msg;
+    PIRC_WINDOW win = NULL;
+    PRINTTEXT_CONTEXT ptext_ctx;
+    char *err_reason = "";
     char *state = "";
 
     if (strFeed(compo->params, 2) != 2) {
+	err_reason = "strFeed() has failed";
 	goto bad;
     }
 
     (void) strtok_r(compo->params, "\n", &state);
-    channel = strtok_r(NULL, "\n", &state);
-    eof_msg = strtok_r(NULL, "\n", &state);
+    char *channel = strtok_r(NULL, "\n", &state);
+    char *eof_msg = strtok_r(NULL, "\n", &state);
 
-    if (channel == NULL || eof_msg == NULL ||
-	!strings_match_ignore_case(channel, names_channel)) {
+    if (channel == NULL || eof_msg == NULL) {
+	err_reason = "failed to tokenize event";
+	goto bad;
+    } else if (!strings_match_ignore_case(channel, names_channel)) {
+	err_reason =
+	    "unable to parse names of two (or more) channels simultaneously";
 	goto bad;
     } else {
 	BZERO(names_channel, sizeof names_channel);
     }
 
     if ((win = window_by_label(channel)) == NULL) {
+	err_reason = "window lookup error";
 	goto bad;
     } else if (win->received_names) {
 	err_log(0, "warning: server sent event 366 (RPL_ENDOFNAMES): "
@@ -872,6 +878,7 @@ event_eof_names(struct irc_message_compo *compo)
     }
 
     if (event_names_print_all(channel) != OK) {
+	err_reason = "print all names error";
 	goto bad;
     }
 
@@ -879,8 +886,11 @@ event_eof_names(struct irc_message_compo *compo)
     return;
 
   bad:
-    err_msg("In event_eof_names: FATAL ERROR. Aborting...");
-    abort();
+    printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_FAILURE,
+	true);
+    printtext(&ptext_ctx, "event_eof_names: fatal: %s", err_reason);
+    printtext(&ptext_ctx, "must shutdown irc connection immediately...");
+    g_on_air = false;
 }
 
 /* event_names: 353
