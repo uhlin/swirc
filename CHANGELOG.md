@@ -30,6 +30,7 @@ All notable changes to this project will be documented in this file.
   - Issues with protocol colon escaping
   - Reproducible crash from protocol fuzzing
   - `/cycle` fails when a channel key is in use
+- Reproducible crashes from protocol fuzzing
 
 ## [2.7.2] - 2019-05-26 ##
 ### Added ###
