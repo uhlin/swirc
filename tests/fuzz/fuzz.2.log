@@ -1,0 +1,28 @@
+:localhost 001 Mo :Welcome
+:localhost 002 Mo :Your host is 127.0.0.1
+:localhost 003 Mo :This server was created ...
+:localhost 004 Mo localhost 1.0 abc def
+:localhost 005 Mo FOO BAR
+:localhost 005 Mo BAZ QUX :are supported by this server
+:localhost 042 Mo XXXXXXXXX :your unique ID
+:localhost 251 Mo :There are 1 users and 0 services on 1 servers
+:localhost 252 Mo 0 :operators online
+:localhost 253 Mo 0 :unknown connections
+:localhost 254 Mo 0 :channels formed
+:localhost 255 Mo :I have ...
+:localhost 265 Mo 0 0 :Current local users ...
+:localhost 266 Mo 0 0 :Current global users ...
+:localhost 375 Mo :- 127.0.0.1 Message of the Day -
+:localhost 372 Mo :...
+:localhost 376 Mo :End of MOTD command.
+:Mo MODE Mo :+i
+:Mo!~foo@bar JOIN :#swirc
+:localhost 332 Mo #swirc :Welcome to Swirc IRC client support channel
+:localhost 332 Mo #ircii :ircII project
+: 332 Mo #ircii :
+:localhost 333 Mo #swirc maxxe@nifty-networks.net 1234567890
+:localhost 333 Mo #ircii blackhat@insecure.org 5671237890
+:localhost 353 Mo = #swirc :&maxxe ~Mo
+:localhost 353 Mo = #ircii :&blackhat ~Mo
+:localhost 366 Mo #ircii :End of NAMES list.
+:localhost 366 Mo #swirc :End of NAMES list.
