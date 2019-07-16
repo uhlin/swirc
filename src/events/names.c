@@ -896,34 +896,38 @@ event_eof_names(struct irc_message_compo *compo)
 void
 event_names(struct irc_message_compo *compo)
 {
-    PIRC_WINDOW win;
-    char *chan_type, *channel, *names;
-    char *names_copy, *cp, *token;
-    char *state1, *state2;
-
-    state1 = state2 = "";
+    PIRC_WINDOW win = NULL;
+    PRINTTEXT_CONTEXT ptext_ctx;
+    char *err_reason = "";
+    char *names_copy = NULL;
+    char *state1 = "";
+    char *state2 = "";
 
     if (strFeed(compo->params, 3) != 3) {
+	err_reason = "strFeed() has failed";
 	goto bad;
     }
 
     (void) strtok_r(compo->params, "\n", &state1); /* recipient */
-    chan_type = strtok_r(NULL, "\n", &state1);
-    channel   = strtok_r(NULL, "\n", &state1);
-    names     = strtok_r(NULL, "\n", &state1);
+    char *chan_type = strtok_r(NULL, "\n", &state1);
+    char *channel   = strtok_r(NULL, "\n", &state1);
+    char *names     = strtok_r(NULL, "\n", &state1);
 
     if (chan_type == NULL || channel == NULL || names == NULL) {
+	err_reason = "failed to tokenize event";
 	goto bad;
     }
 
     if (isEmpty(names_channel) && sw_strcpy(names_channel, channel,
 	sizeof names_channel) != 0) {
+	err_reason = "failed to store names channel";
 	goto bad;
     } else if (!strings_match_ignore_case(names_channel, channel)) {
-	err_log(0, "Unable to parse names of two (or more) channels "
-	    "simultaneously");
+	err_reason =
+	    "unable to parse names of two (or more) channels simultaneously";
 	goto bad;
     } else if ((win = window_by_label(channel)) == NULL) {
+	err_reason = "window lookup error";
 	goto bad;
     } else if (win->received_names) {
 	err_log(0, "warning: server sent event 353 (RPL_NAMREPLY): "
@@ -933,24 +937,24 @@ event_names(struct irc_message_compo *compo)
 	names_copy = sw_strdup(*names == ':' ? &names[1] : &names[0]);
     }
 
-    for (cp = &names_copy[0];; cp = NULL) {
-	struct hInstall_context ctx;
+    for (char *cp = &names_copy[0];; cp = NULL) {
+	char *token = strtok_r(cp, " ", &state2);
 
-	if ((token = strtok_r(cp, " ", &state2)) == NULL) {
+	if (!token)
 	    break;
-	}
 
-	ctx.channel    = channel;
-	ctx.nick       =
-	    ((*token == '~' || *token == '&' || *token == '@' ||
-	      *token == '%' || *token == '+')
-	     ? &token[1]
-	     : &token[0]);
-	ctx.is_owner   = (*token == '~');
-	ctx.is_superop = (*token == '&');
-	ctx.is_op      = (*token == '@');
-	ctx.is_halfop  = (*token == '%');
-	ctx.is_voice   = (*token == '+');
+	struct hInstall_context ctx = {
+	    .channel    = channel,
+	    .nick       = ((*token == '~' || *token == '&' || *token == '@' ||
+			    *token == '%' || *token == '+')
+			   ? &token[1]
+			   : &token[0]),
+	    .is_owner   = (*token == '~'),
+	    .is_superop = (*token == '&'),
+	    .is_op      = (*token == '@'),
+	    .is_halfop  = (*token == '%'),
+	    .is_voice   = (*token == '+'),
+	};
 
 	if (hInstall(&ctx) != OK)
 	    break;
@@ -960,8 +964,12 @@ event_names(struct irc_message_compo *compo)
     return;
 
   bad:
-    err_msg("In event_names: FATAL ERROR. Aborting.");
-    abort();
+    printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_FAILURE,
+	true);
+    printtext(&ptext_ctx, "event_names: fatal: %s", err_reason);
+    printtext(&ptext_ctx, "must shutdown irc connection immediately...");
+    g_on_air = false;
+    free(names_copy);
 }
 
 static void
