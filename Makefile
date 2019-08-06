@@ -25,6 +25,8 @@ MASTER_SITES =		https://www.nifty-networks.net/swirc/releases/
 
 EXTRACT_SUFX =		.tgz
 
+LIB_DEPENDS =		net/curl
+
 CONFIGURE_STYLE =	simple
 
 ALL_TARGET =		all
