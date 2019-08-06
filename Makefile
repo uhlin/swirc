@@ -19,7 +19,7 @@ PERMIT_PACKAGE_CDROM =	Yes
 
 # uses pledge()
 
-WANTLIB =		c crypto curl curses m panel ssl
+WANTLIB =		c crypto curl curses m panel pthread ssl
 
 MASTER_SITES =		https://www.nifty-networks.net/swirc/releases/
 
