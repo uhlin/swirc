@@ -1,0 +1,9 @@
+#!/bin/sh
+
+SWIRC_PATH=/usr/ports/net/swirc
+
+install -d $SWIRC_PATH
+install -d $SWIRC_PATH/pkg
+install -m 0644 Makefile $SWIRC_PATH
+install -m 0644 pkg/DESCR $SWIRC_PATH/pkg
+echo "Done"
