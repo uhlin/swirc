@@ -4,10 +4,6 @@ COMMENT =	cool curses irc client
 
 DISTNAME =	swirc-2.8.0
 
-GH_ACCOUNT =	uhlin
-GH_PROJECT =	swirc
-GH_TAGNAME =	v2.8.0
-
 CATEGORIES =	net
 
 HOMEPAGE =	https://www.nifty-networks.net/swirc/
