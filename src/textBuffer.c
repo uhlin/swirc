@@ -152,9 +152,8 @@ void
 textBuf_destroy(PTEXTBUF buf)
 {
     while (textBuf_size(buf) > 0) {
-	if ((errno = textBuf_remove(buf, textBuf_tail(buf))) != 0) {
+	if ((errno = textBuf_remove(buf, textBuf_tail(buf))) != 0)
 	    err_sys("textBuf_remove() returned %d", errno);
-	}
     }
 
     free_not_null(buf);
