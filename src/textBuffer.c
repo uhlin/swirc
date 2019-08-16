@@ -19,16 +19,31 @@ textBuf_new(void)
     return buf;
 }
 
-void
-textBuf_destroy(PTEXTBUF buf)
+/**
+ * Get an element from a textbuffer determined by given position
+ *
+ * @param buf Buffer
+ * @param pos Position
+ * @return The element (or NULL if not found)
+ */
+PTEXTBUF_ELMT
+textBuf_get_element_by_pos(PTEXTBUF buf, int pos)
 {
-    while (textBuf_size(buf) > 0) {
-	if ((errno = textBuf_remove(buf, textBuf_tail(buf))) != 0) {
-	    err_sys("textBuf_remove() returned %d", errno);
+    int			i;
+    PTEXTBUF_ELMT	element;
+
+    if (buf == NULL || pos < 0) {
+	return NULL;
+    }
+
+    for (i = 0, element = textBuf_head(buf); element != NULL;
+	 i++, element = element->next) {
+	if (i == pos) { /* Element found */
+	    return element;
 	}
     }
 
-    free_not_null(buf);
+    return NULL;
 }
 
 int
@@ -133,29 +148,14 @@ textBuf_remove(PTEXTBUF buf, PTEXTBUF_ELMT element)
     return 0;
 }
 
-/**
- * Get an element from a textbuffer determined by given position
- *
- * @param buf Buffer
- * @param pos Position
- * @return The element (or NULL if not found)
- */
-PTEXTBUF_ELMT
-textBuf_get_element_by_pos(PTEXTBUF buf, int pos)
+void
+textBuf_destroy(PTEXTBUF buf)
 {
-    int			i;
-    PTEXTBUF_ELMT	element;
-
-    if (buf == NULL || pos < 0) {
-	return NULL;
-    }
-
-    for (i = 0, element = textBuf_head(buf); element != NULL;
-	 i++, element = element->next) {
-	if (i == pos) { /* Element found */
-	    return element;
+    while (textBuf_size(buf) > 0) {
+	if ((errno = textBuf_remove(buf, textBuf_tail(buf))) != 0) {
+	    err_sys("textBuf_remove() returned %d", errno);
 	}
     }
 
-    return NULL;
+    free_not_null(buf);
 }
