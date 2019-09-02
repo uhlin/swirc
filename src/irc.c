@@ -73,9 +73,10 @@
 ****************************************************************/
 
 char	*g_server_hostname = NULL;
-char	*g_my_nickname     = NULL;
+char	*g_my_nickname	   = NULL;
 bool	 g_alt_nick_tested = false;
 bool	 g_am_irc_op	   = false;
+bool	 g_is_away	   = false;
 
 /****************************************************************
 *                                                               *
@@ -279,6 +280,7 @@ irc_deinit(void)
 
     g_alt_nick_tested = false;
     g_am_irc_op = false;
+    g_is_away = false;
 
     event_names_deinit();
 

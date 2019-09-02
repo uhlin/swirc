@@ -39,6 +39,7 @@ extern char	*g_server_hostname;
 extern char	*g_my_nickname;
 extern bool	 g_alt_nick_tested;
 extern bool	 g_am_irc_op;
+extern bool	 g_is_away;
 
 void	irc_init(void);
 void	irc_deinit(void);
