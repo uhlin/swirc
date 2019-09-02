@@ -1,5 +1,5 @@
 /* events/away.cpp
-   Copyright (C) 2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018, 2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -100,4 +100,24 @@ event_away(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
 	printtext(&ctx, "event_away: %s", e.what());
     }
+}
+
+/*
+ * 305 RPL_UNAWAY
+ */
+void
+event_unaway(struct irc_message_compo *compo)
+{
+    irc_extract_msg(compo, g_active_window, 1, false);
+    g_is_away = false;
+}
+
+/*
+ * 306 RPL_NOWAWAY
+ */
+void
+event_nowAway(struct irc_message_compo *compo)
+{
+    irc_extract_msg(compo, g_active_window, 1, false);
+    g_is_away = true;
 }
