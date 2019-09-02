@@ -274,13 +274,13 @@ irc_init(void)
 void
 irc_deinit(void)
 {
-    free_and_null(&g_server_hostname);
-    free_and_null(&g_my_nickname);
-    BZERO(g_user_modes, sizeof g_user_modes);
-
     g_alt_nick_tested = false;
-    g_am_irc_op = false;
-    g_is_away = false;
+    g_am_irc_op       = false;
+    g_is_away         = false;
+
+    free_and_null(&g_my_nickname);
+    free_and_null(&g_server_hostname);
+    BZERO(g_user_modes, sizeof g_user_modes);
 
     event_names_deinit();
 
