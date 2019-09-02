@@ -72,11 +72,11 @@
 *                                                               *
 ****************************************************************/
 
-char	*g_server_hostname = NULL;
-char	*g_my_nickname	   = NULL;
 bool	 g_alt_nick_tested = false;
-bool	 g_am_irc_op	   = false;
-bool	 g_is_away	   = false;
+bool	 g_am_irc_op       = false;
+bool	 g_is_away         = false;
+char	*g_my_nickname     = NULL;
+char	*g_server_hostname = NULL;
 
 /****************************************************************
 *                                                               *
