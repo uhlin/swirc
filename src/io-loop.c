@@ -138,16 +138,15 @@ static struct cmds_tag {
 char *
 get_prompt(void)
 {
-    if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label)) {
-	return (sw_strdup(""));
-    } else if (is_irc_channel(ACTWINLABEL)) {
-	return (strdup_printf("%s: ", ACTWINLABEL));
-    } else {
-	return (strdup_printf("%s> ", ACTWINLABEL)); /* a query */
-    }
+    if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label))
+	return sw_strdup("");
+    else if (is_irc_channel(ACTWINLABEL))
+	return strdup_printf("%s%s: ", ACTWINLABEL, g_is_away ? "(AFK)" : "");
 
-    /*NOTREACHED*/ sw_assert_not_reached();
-    /*NOTREACHED*/ return (sw_strdup(""));
+    /*
+     * a query
+     */
+    return strdup_printf("%s%s> ", ACTWINLABEL, g_is_away ? "(AFK)" : "");
 }
 
 static void
