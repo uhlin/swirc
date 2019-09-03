@@ -97,9 +97,6 @@ static const char *connect_usage[] = {
     "    - quakenet",
     "    - undernet",
     "",
-    /*
-     * TODO: Sync with cmds.html
-     */
 };
 
 static const char *cycle_usage[] = {
@@ -115,9 +112,6 @@ static const char *deop_usage[] = {
     "",
     "Take channel operator privilege.",
     "",
-    /*
-     * TODO: Add to cmds.html
-     */
 };
 
 static const char *disconnect_usage[] = {
@@ -175,9 +169,6 @@ static const char *join_usage[] = {
     "Join a key protected channel:",
     "    /join #secret KeyToJoin",
     "",
-    /*
-     * TODO: Sync with cmds.html
-     */
 };
 
 static const char *kick_usage[] = {
@@ -196,9 +187,6 @@ static const char *kickban_usage[] = {
     "user <nick> out of a channel. Optionally with a reason.",
     "(The active window must be an IRC channel.)",
     "",
-    /*
-     * TODO: Add to cmds.html
-     */
 };
 
 static const char *list_usage[] = {
