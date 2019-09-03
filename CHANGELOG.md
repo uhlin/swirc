@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- Code improvements
+
 ### Changed ###
 - Tell if a command is unknown
 - Tell if away from keyboard
