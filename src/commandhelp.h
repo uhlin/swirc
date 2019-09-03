@@ -312,9 +312,6 @@ static const char *op_usage[] = {
     "",
     "Give channel operator privilege.",
     "",
-    /*
-     * TODO: Add to cmds.html
-     */
 };
 
 static const char *oper_usage[] = {
@@ -447,9 +444,6 @@ static const char *theme_usage[] = {
     "    Activate installed theme:",
     "        /theme set bx",
     "",
-    /*
-     * TODO: Sync with cmds.html
-     */
 };
 
 static const char *time_usage[] = {
@@ -473,9 +467,6 @@ static const char *unban_usage[] = {
     "",
     "Unset a ban. (The active window must be an IRC channel.)",
     "",
-    /*
-     * TODO: Add to cmds.html
-     */
 };
 
 static const char *version_usage[] = {
