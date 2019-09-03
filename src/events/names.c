@@ -978,7 +978,7 @@ event_names(struct irc_message_compo *compo)
 	true);
     printtext(&ptext_ctx, "event_names: fatal: %s", err_reason);
     printtext(&ptext_ctx, "must shutdown irc connection immediately...");
-    g_on_air = false;
+    net_kill_connection();
     free(names_copy);
 }
 
