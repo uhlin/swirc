@@ -1,4 +1,4 @@
-INSTALL=install
+INSTALL:=install
 INSTALL_DEPS=swirc src/swirc.1 swirc.conf.5 swirc-royal.png
 PREFIX?=/usr/local
 
