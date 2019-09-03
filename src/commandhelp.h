@@ -42,9 +42,6 @@ static const char *ban_usage[] = {
     "",
     "Set a ban. The active window must be an IRC channel.",
     "",
-    /*
-     * TODO: Add to cmds.html
-     */
 };
 
 static const char *banlist_usage[] = {
@@ -70,9 +67,6 @@ static const char *cleartoasts_usage[] = {
     "",
     "Clear toasts.",
     "",
-    /*
-     * TODO: Add to cmds.html
-     */
 };
 
 static const char *close_usage[] = {
