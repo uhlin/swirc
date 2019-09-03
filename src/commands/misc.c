@@ -63,9 +63,13 @@ cmd_away(const char *data)
     if (has_reason) {
 	if (net_send("AWAY :%s", data) < 0)
 	    g_on_air = false;
+	else
+	    g_is_away = true;
     } else {
 	if (net_send("AWAY") < 0)
 	    g_on_air = false;
+	else
+	    g_is_away = false;
     }
 }
 
