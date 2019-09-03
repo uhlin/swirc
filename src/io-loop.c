@@ -383,18 +383,20 @@ handle_cmds(const char *data)
 	    else
 		sp->fn("");
 	    free(cp);
-	    break;
+	    return;
 	} else if (!strncmp(data, cp, strlen(cp))) {
 	    if (sp->requires_connection && !g_on_air)
 		printtext(&ctx, "command requires irc connection");
 	    else
 		sp->fn(&data[strlen(cp)]);
 	    free(cp);
-	    break;
+	    return;
 	} else {
 	    free(cp);
 	}
     }
+
+    printtext(&ctx, "unknown command");
 }
 
 static void
