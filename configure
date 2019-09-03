@@ -9,7 +9,7 @@ MAKE_DEF_FILE=options.mk
 cat <<EOF >$MAKE_DEF_FILE
 E=@echo
 Q=@
-RM?=@rm -f
+RM:=@rm -f
 EOF
 
 # --------------------------------------------------
