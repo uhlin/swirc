@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Changed ###
 - Tell if a command is unknown
+- Tell if away from keyboard
 
 ## [2.8.0] - 2019-07-16 ##
 ### Added ###
