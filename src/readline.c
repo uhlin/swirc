@@ -200,16 +200,10 @@ hiLim_isset(WINDOW *win)
 static void
 write_cmdprompt(WINDOW *win, char *prompt, int size)
 {
-    if (werase(win) == ERR) {
-	readline_error(0, "werase");
-    }
+    if (werase(win) == ERR)
+	readline_error(0, "write_cmdprompt: werase");
 
-    if (waddnstr(win, prompt, size) == ERR) {
-	readline_error(0, "waddnstr");
-    }
-
-    update_panels();
-    (void) doupdate();
+    printtext_puts(win, prompt, -1, -1, NULL);
 }
 
 /**
