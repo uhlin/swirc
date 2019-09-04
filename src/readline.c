@@ -513,9 +513,9 @@ readline(const char *prompt)
     g_hist_next = false;
     g_hist_prev = false;
 
-    mutex_lock(&g_puts_mutex);
+    //mutex_lock(&g_puts_mutex);
     write_cmdprompt(ctx->act, ctx->prompt, ctx->prompt_size);
-    mutex_unlock(&g_puts_mutex);
+    //mutex_unlock(&g_puts_mutex);
 
     do {
 	wint_t wc;
@@ -633,9 +633,9 @@ readline(const char *prompt)
 	return NULL;
     }
 
-    mutex_lock(&g_puts_mutex);
+    //mutex_lock(&g_puts_mutex);
     write_cmdprompt(ctx->act, "", 0);
-    mutex_unlock(&g_puts_mutex);
+    //mutex_unlock(&g_puts_mutex);
 
     out = finalize_out_string(ctx->buffer);
     session_destroy(ctx);
