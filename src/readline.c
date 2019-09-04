@@ -425,8 +425,8 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc)
     }
 
     if (ctx->insert_mode) {
-	wchar_t				*ptr = &ctx->buffer[ctx->bufpos];
-	struct current_cursor_pos	 yx;
+	wchar_t *ptr = &ctx->buffer[ctx->bufpos];
+	struct current_cursor_pos yx;
 
 	(void) wmemmove(ptr + 1, ptr, wcslen(ptr));
 	*ptr = wc;
