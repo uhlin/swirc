@@ -680,12 +680,12 @@ window_select_prev(void)
 static void
 window_recreate(PIRC_WINDOW window, int rows, int cols)
 {
-    struct term_window_size newsize;
-
-    newsize.rows      = rows - 2;
-    newsize.cols      = cols;
-    newsize.start_row = 1;
-    newsize.start_col = 0;
+    struct term_window_size newsize = {
+	.rows      = rows - 2,
+	.cols      = cols,
+	.start_row = 1,
+	.start_col = 0,
+    };
 
     window->pan = term_resize_panel(window->pan, &newsize);
     apply_window_options(panel_window(window->pan));
