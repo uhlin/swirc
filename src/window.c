@@ -229,32 +229,33 @@ window_by_refnum(int refnum)
 int
 changeWindow_by_label(const char *label)
 {
-    PIRC_WINDOW window;
+    PIRC_WINDOW window = NULL;
 
-    if ((window = window_by_label(label)) == NULL) {
-	return (ENOENT);	/* window not found */
-    } else if (window == g_active_window) {
-	return (0);		/* window already active */
-    } else if (top_panel(window->pan) == ERR) {
-	return (EPERM);		/* top_panel() error */
-    } else {
-	WINDOW *pwin = readline_get_active_pwin();
-	char *prompt = NULL;
+    if ((window = window_by_label(label)) == NULL)
+	return ENOENT; /* window not found */
+    else if (window == g_active_window)
+	return 0; /* window already active */
+    else if (top_panel(window->pan) == ERR)
+	return EPERM; /* top_panel() error */
 
-	g_active_window = window;
-	titlebar(" %s ", (window->title != NULL) ? window->title : "");
-	statusbar_update_display_beta();
-	if (pwin) {
-	    werase(pwin);
-	    prompt = get_prompt();
-	    printtext_puts(pwin, prompt, -1, -1, NULL);
-	    free(prompt);
-	}
-	readline_top_panel();
-	(void) ungetch('\a');
+    WINDOW *pwin = readline_get_active_pwin();
+    char *prompt = NULL;
+
+    g_active_window = window;
+    titlebar(" %s ", (window->title != NULL) ? window->title : "");
+    statusbar_update_display_beta();
+
+    if (pwin) {
+	werase(pwin);
+	prompt = get_prompt();
+	printtext_puts(pwin, prompt, -1, -1, NULL);
+	free(prompt);
     }
 
-    return (0);
+    readline_top_panel();
+    (void) ungetch('\a');
+
+    return 0;
 }
 
 /**
