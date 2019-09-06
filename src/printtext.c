@@ -1099,13 +1099,11 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
     wchar_t *wc_buf = NULL, *wc_bufp = NULL;
 
 #if defined(UNIX)
-    if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0) {
-	err_sys("pthread_once error");
-    }
+    if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0)
+	err_sys("printtext_puts: pthread_once");
 #elif defined(WIN32)
-    if ((errno = init_once(&puts_init_done, puts_mutex_init)) != 0) {
-	err_sys("init_once error");
-    }
+    if ((errno = init_once(&puts_init_done, puts_mutex_init)) != 0)
+	err_sys("printtext_puts: init_once");
 #endif
 
     if (rep_count) {
