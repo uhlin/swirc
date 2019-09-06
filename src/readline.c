@@ -147,6 +147,7 @@ static struct readline_session_context *
 new_session(const char *prompt)
 {
     struct readline_session_context *ctx = xcalloc(sizeof *ctx, 1);
+    char *prompt_copy = sw_strdup(prompt);
 
     ctx->buffer       = xcalloc(readline_buffersize + 1, sizeof (wchar_t));
     ctx->bufpos       = 0;
@@ -154,9 +155,10 @@ new_session(const char *prompt)
     ctx->insert_mode  = false;
     ctx->no_bufspc    = false;
     ctx->prompt       = sw_strdup(prompt);
-    ctx->prompt_size  = (int) strlen(prompt);
+    ctx->prompt_size  = (int) strlen(squeeze_text_deco(prompt_copy));
     ctx->act          = panel_window(readline_pan1);
 
+    free(prompt_copy);
     panel_state = PANEL1_ACTIVE;
     readline_top_panel();
 
