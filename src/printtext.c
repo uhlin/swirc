@@ -1388,13 +1388,11 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
     struct message_components *pout = NULL;
 
 #if defined(UNIX)
-    errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init);
-    if (errno)
-	err_sys("pthread_once");
+    if ((errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0)
+	err_sys("vprinttext: pthread_once");
 #elif defined(WIN32)
-    errno = init_once(&vprinttext_init_done, vprinttext_mutex_init);
-    if (errno)
-	err_sys("init_once");
+    if ((errno = init_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0)
+	err_sys("vprinttext: init_once");
 #endif
 
     mutex_lock(&vprinttext_mutex);
