@@ -1410,7 +1410,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 	    textBuf_remove(ctx->window->buf, textBuf_head(ctx->window->buf));
 
 	if (errno)
-	    err_sys("textBuf_remove");
+	    err_sys("vprinttext: textBuf_remove");
     }
 
     if (textBuf_size(ctx->window->buf) == 0) {
@@ -1418,7 +1418,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 	    textBuf_ins_next(ctx->window->buf, NULL, pout->text, pout->indent);
 
 	if (errno)
-	    err_sys("textBuf_ins_next");
+	    err_sys("vprinttext: textBuf_ins_next");
     } else {
 	errno = textBuf_ins_next(
 	    ctx->window->buf,
@@ -1427,7 +1427,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 	    pout->indent);
 
 	if (errno)
-	    err_sys("textBuf_ins_next");
+	    err_sys("vprinttext: textBuf_ins_next");
     }
 
     if (! (ctx->window->scroll_mode)) {
