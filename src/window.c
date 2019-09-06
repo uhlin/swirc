@@ -247,7 +247,7 @@ changeWindow_by_label(const char *label)
 	if (pwin) {
 	    werase(pwin);
 	    prompt = get_prompt();
-	    waddnstr(pwin, prompt, -1);
+	    printtext_puts(pwin, prompt, -1, -1, NULL);
 	    free(prompt);
 	}
 	readline_top_panel();
