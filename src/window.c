@@ -417,32 +417,33 @@ spawn_chat_window(const char *label, const char *title)
 	.hi_limit	  = 200,
     };
 
-    if (isNull(label) || isEmpty(label)) {
-	return (EINVAL);	/* a label is required */
-    } else if (window_by_label(label) != NULL) {
-	return (0);		/* window already exists  --  reuse it */
-    } else if (ntotalp1 > config_integer_unparse(&unparse_ctx)) {
-	return (ENOSPC);
-    } else {
-	struct hInstall_context inst_ctx = {
-	    .label  = (char *) label,
-	    .title  = (char *) title,
-	    .pan    = term_new_panel(LINES - 2, 0, 1, 0),
-	    .refnum = g_ntotal_windows + 1,
-	};
-	PIRC_WINDOW entry = hInstall(&inst_ctx);
+    if (isNull(label) || isEmpty(label))
+	return EINVAL; /* a label is required */
+    else if (window_by_label(label) != NULL)
+	return 0; /* window already exists  --  reuse it */
+    else if (ntotalp1 > config_integer_unparse(&unparse_ctx))
+	return ENOSPC;
 
-	apply_window_options(panel_window(entry->pan));
-	const int ret = changeWindow_by_label(entry->label);
-	(void) ret;
-	sw_assert_perror(ret);
+    struct hInstall_context inst_ctx = {
+	.label  = (char *) label,
+	.title  = (char *) title,
+	.pan    = term_new_panel(LINES - 2, 0, 1, 0),
+	.refnum = g_ntotal_windows + 1,
+    };
 
-	/* send whois */
-	if (g_on_air && !is_irc_channel(entry->label))
-	    cmd_whois(entry->label);
-    }
+    PIRC_WINDOW entry = hInstall(&inst_ctx);
+    apply_window_options(panel_window(entry->pan));
+    const int ret = changeWindow_by_label(entry->label);
+    (void) ret;
+    sw_assert_perror(ret);
 
-    return (0);
+    /*
+     * send whois
+     */
+    if (g_on_air && !is_irc_channel(entry->label))
+	cmd_whois(entry->label);
+
+    return 0;
 }
 
 /**
