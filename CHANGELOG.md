@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file.
 - Tell if a command is unknown
 - Tell if away from keyboard
 
+### Deleted ###
+- `say()`
+
 ## [2.8.0] - 2019-07-16 ##
 ### Added ###
 - Command
