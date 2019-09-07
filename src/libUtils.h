@@ -43,12 +43,10 @@ free_not_null(void *ptr)
 static SW_INLINE void
 free_and_null(char **ptr)
 {
-    if (*ptr == NULL) {
-	return;
+    if (ptr != NULL && *ptr != NULL) {
+	free(*ptr);
+	*ptr = NULL;
     }
-
-    free(*ptr);
-    *ptr = NULL;
 }
 
 #endif
