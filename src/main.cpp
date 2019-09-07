@@ -507,8 +507,8 @@ main(int argc, char *argv[])
     term_deinit();
 
     cmdline_options_destroy();
-    say("- Exit Success! -\n");
-    return EXIT_SUCCESS;
+    puts("- Exit Success! -");
+    return (EXIT_SUCCESS);
 }
 
 /**
