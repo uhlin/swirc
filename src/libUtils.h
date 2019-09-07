@@ -36,9 +36,8 @@ void	*xrealloc(void *ptr, size_t newSize);
 static SW_INLINE void
 free_not_null(void *ptr)
 {
-    if (ptr != NULL) {
+    if (ptr != NULL)
 	free(ptr);
-    }
 }
 
 static SW_INLINE void
