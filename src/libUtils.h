@@ -4,7 +4,6 @@
 #include <stdio.h> /* FILE */
 
 /*lint -function(fopen, xfopen) */
-/*lint -printf(1, say) */
 /*lint -printf(2, write_to_stream) */
 
 #ifdef __cplusplus
@@ -22,7 +21,6 @@ size_t	 size_product(const size_t elt_count, const size_t elt_size);
 size_t	 xmbstowcs(wchar_t *, const char *, size_t);
 void	 fclose_ensure_success(FILE *);
 void	 realloc_strcat(char **dest, const char *src);
-void	 say(const char *fmt, ...) PRINTFLIKE(1);
 void	 write_to_stream(FILE *, const char *fmt, ...) PRINTFLIKE(2);
 void	*xcalloc(size_t elt_count, size_t elt_size);
 void	*xmalloc(size_t);
