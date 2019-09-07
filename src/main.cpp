@@ -35,10 +35,6 @@
 
 #include <locale.h>
 
-#ifndef RESTRICT_SYSOPS
-#define RESTRICT_SYSOPS 1
-#endif
-
 #if UNIX
 #include <unistd.h> /* geteuid() pledge() */
 #endif
@@ -491,7 +487,7 @@ main(int argc, char *argv[])
     }
 #endif
 
-#if defined(OpenBSD) && OpenBSD >= 201605 && RESTRICT_SYSOPS
+#if defined(OpenBSD) && OpenBSD >= 201605
     if (pledge("cpath dns getpw inet rpath stdio tty wpath", NULL) == -1) {
 	err_ret("pledge");
 	return EXIT_FAILURE;
