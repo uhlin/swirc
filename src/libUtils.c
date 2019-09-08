@@ -1,5 +1,5 @@
 /* libUtils.c  --  Library Utilities
-   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -224,6 +224,17 @@ realloc_strcat(char **dest, const char *src)
 	err_exit(ENOMEM, "realloc_strcat");
     if ((errno = sw_strcat(*dest, src, newsize)) != 0)
 	err_sys("realloc_strcat");
+}
+
+void
+write_setting(FILE *stream, const char *name, const char *value,
+	      const bool do_padding_using_tabs, const short int count)
+{
+    fputs(name, stream);
+    const char c = do_padding_using_tabs ? '\t' : ' ';
+    for (short int si = 0; si < count; si++)
+	fputc(c, stream);
+    fprintf(stream, "= \"%s\";\n", value);
 }
 
 void

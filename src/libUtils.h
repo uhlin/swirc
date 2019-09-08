@@ -21,6 +21,8 @@ size_t	 size_product(const size_t elt_count, const size_t elt_size);
 size_t	 xmbstowcs(wchar_t *, const char *, size_t);
 void	 fclose_ensure_success(FILE *);
 void	 realloc_strcat(char **dest, const char *src);
+void	 write_setting(FILE *stream, const char *name, const char *value,
+	     const bool do_padding_using_tabs, const short int count);
 void	 write_to_stream(FILE *, const char *fmt, ...) PRINTFLIKE(2);
 void	*xcalloc(size_t elt_count, size_t elt_size);
 void	*xmalloc(size_t);
