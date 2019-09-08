@@ -13,6 +13,9 @@ All notable changes to this project will be documented in this file.
 ### Deleted ###
 - `say()`
 
+### News ###
+- [PDCurses](https://pdcurses.org/) 3.9
+
 ## [2.8.0] - 2019-07-16 ##
 ### Added ###
 - Command
