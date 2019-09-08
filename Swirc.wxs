@@ -22,7 +22,7 @@ Copyright (C) 2018 Markus Uhlin. All rights reserved.
 
 	<Media Cabinet="swirc.cab" EmbedCab="yes" Id="1" />
 	<UIRef Id="WixUI_Minimal" />
-	<WixVariable Id="WixUIBannerBmp" Value="SwircUIBanner1.bmp" />
+	<!-- WixVariable Id="WixUIBannerBmp" Value="SwircUIBanner1.bmp" /-->
 	<WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
 
 	<Directory Id="TARGETDIR" Name="SourceDir">
