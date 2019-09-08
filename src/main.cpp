@@ -404,7 +404,7 @@ main(int argc, char *argv[])
     (void) setlocale(LC_ALL, "");
 
     if (!sigHand_init()) {
-	err_msg("FATAL: Failed to initialize signal handling");
+	err_msg("fatal: failed to initialize signal handling");
 	return EXIT_FAILURE;
     }
 
