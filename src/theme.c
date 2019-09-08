@@ -74,15 +74,22 @@ static struct tagThemeDefValues {
 #elif defined(WIN32)
     { "term_use_default_colors",   TYPE_BOOLEAN, "no" },
 #endif
+
     { "color3",                    TYPE_STRING,  "\00303" },
     { "color4",                    TYPE_STRING,  "\00305" },
+
     { "gfx_failure",               TYPE_STRING,  "[\0034*\017]" },
     { "gfx_success",               TYPE_STRING,  "[\0039*\017]" },
     { "gfx_warning",               TYPE_STRING,  "[\0038*\017]" },
+
     { "left_bracket",              TYPE_STRING,  "\00314[\017" },
+    { "right_bracket",             TYPE_STRING,  "\00314]\017" },
+
     { "logo_color",                TYPE_STRING,  "\00302" },
+
     { "nick_s1",                   TYPE_STRING,  "\00314:\017" },
     { "nick_s2",                   TYPE_STRING,  "\00314:\017" },
+
     { "notice_color1",             TYPE_STRING,  "\00313" },
     { "notice_color2",             TYPE_STRING,  "\00306" },
     { "notice_inner_b1",           TYPE_STRING,  "\00314(\017" },
@@ -90,23 +97,29 @@ static struct tagThemeDefValues {
     { "notice_lb",                 TYPE_STRING,  "\00314-\017" },
     { "notice_rb",                 TYPE_STRING,  "\00314-\017" },
     { "notice_sep",                TYPE_STRING,  "\00314:\017" },
+
     { "primary_color",             TYPE_STRING,  "\00312" },
-    { "right_bracket",             TYPE_STRING,  "\00314]\017" },
     { "secondary_color",           TYPE_STRING,  "\00300" },
+
     { "slogan",                    TYPE_STRING,
       "\0033,1The universal IRC client\017" },
+
     { "specifier1",                TYPE_STRING,  "\00314[\0030-\00314]\017" },
     { "specifier2",                TYPE_STRING,  "\00314[\0030:\00314]\017" },
     { "specifier3",                TYPE_STRING,  "\00314[\0030x\00314]\017" },
+
     { "statusbar_bg",              TYPE_STRING,  "black" },
     { "statusbar_fg",              TYPE_STRING,  "white" },
     { "statusbar_leftBracket",     TYPE_STRING,  "\00312,1[\017" },
     { "statusbar_rightBracket",    TYPE_STRING,  "\00312,1]\017" },
     { "statusbar_spec",            TYPE_STRING,  "[-]" },
+
     { "time_format",               TYPE_STRING,
       "\00314[\017%H:%M\00314]\017" },
+
     { "titlebar_bg",               TYPE_STRING,  "white" },
     { "titlebar_fg",               TYPE_STRING,  "black" },
+
     { "whois_acc",                 TYPE_STRING,  "\00314=\017> account  :" },
     { "whois_away",                TYPE_STRING,  "\00314=\017> away     :" },
     { "whois_cert",                TYPE_STRING,  "\00314=\017> cert     :" },
