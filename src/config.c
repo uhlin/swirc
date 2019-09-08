@@ -46,8 +46,6 @@
     for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];\
 	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)];\
 	 cdv_p++)
-#define WRITE_ITEM(name, value) \
-	write_to_stream(fp, "%s = \"%s\";\n", name, value)
 
 /* Objects with internal linkage
    ============================= */
@@ -325,7 +323,8 @@ config_create(const char *path, const char *mode)
 		    current_time("%c"));
 
     FOREACH_CDV() {
-	WRITE_ITEM(cdv_p->setting_name, cdv_p->value);
+	write_setting(fp, cdv_p->setting_name, cdv_p->value, false,
+	    cdv_p->padding);
     }
 
     fclose_ensure_success(fp);
@@ -342,7 +341,8 @@ config_do_save(const char *path, const char *mode)
 		    current_time("%c"));
 
     FOREACH_CDV() {
-	WRITE_ITEM(cdv_p->setting_name, Config(cdv_p->setting_name));
+	write_setting(fp, cdv_p->setting_name, Config(cdv_p->setting_name),
+	    false, cdv_p->padding);
     }
 
     fclose_ensure_success(fp);
