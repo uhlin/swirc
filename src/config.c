@@ -323,7 +323,7 @@ config_create(const char *path, const char *mode)
 		    current_time("%c"));
 
     FOREACH_CDV() {
-	write_setting(fp, cdv_p->setting_name, cdv_p->value, false,
+	write_setting(fp, cdv_p->setting_name, cdv_p->value, true,
 	    cdv_p->padding);
     }
 
@@ -342,7 +342,7 @@ config_do_save(const char *path, const char *mode)
 
     FOREACH_CDV() {
 	write_setting(fp, cdv_p->setting_name, Config(cdv_p->setting_name),
-	    false, cdv_p->padding);
+	    true, cdv_p->padding);
     }
 
     fclose_ensure_success(fp);
