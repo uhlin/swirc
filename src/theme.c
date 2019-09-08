@@ -54,8 +54,6 @@
     for (struct tagThemeDefValues *tdv_p = &ThemeDefValues[0];\
 	 tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)];\
 	 tdv_p++)
-#define WRITE_ITEM(name, value) \
-	write_to_stream(fp, "%s = \"%s\";\n", name, value)
 
 /* Objects with internal linkage
    ============================= */
@@ -398,7 +396,8 @@ theme_create(const char *path, const char *mode)
 		    current_time("%c"));
 
     FOREACH_TDV() {
-	WRITE_ITEM(tdv_p->item_name, tdv_p->value);
+	write_setting(fp, tdv_p->item_name, tdv_p->value, false,
+	    tdv_p->padding);
     }
 
     fclose_ensure_success(fp);
@@ -415,7 +414,8 @@ theme_do_save(const char *path, const char *mode)
 		    current_time("%c"));
 
     FOREACH_TDV() {
-	WRITE_ITEM(tdv_p->item_name, Theme(tdv_p->item_name));
+	write_setting(fp, tdv_p->item_name, Theme(tdv_p->item_name), false,
+	    tdv_p->padding);
     }
 
     fclose_ensure_success(fp);
