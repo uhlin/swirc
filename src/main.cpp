@@ -488,7 +488,7 @@ main(int argc, char *argv[])
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201605
-    if (pledge("cpath dns getpw inet rpath stdio tty wpath", NULL) == -1) {
+    if (pledge("cpath rpath wpath dns getpw inet stdio tty", NULL) == -1) {
 	err_ret("pledge");
 	return EXIT_FAILURE;
     }
