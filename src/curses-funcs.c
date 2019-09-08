@@ -74,8 +74,4 @@ bool is_syncok(const WINDOW *win)
     return (win != NULL && win->_sync);
 }
 
-bool is_keypad(const WINDOW *win)
-{
-    return (win != NULL && win->_use_keypad);
-}
 #endif
