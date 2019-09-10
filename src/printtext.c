@@ -779,7 +779,7 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 
     attr = ptext_colorMap[num1 % num_colorMap_entries].at; /*attributes of fg*/
     attr |= COLOR_PAIR(resolved_pair);
-    term_set_attr(win, attr);
+    wattrset(win, attr);
     *is_color = true;
 }
 
@@ -982,7 +982,7 @@ do_indent(WINDOW *win, const int indent, int *insert_count)
 
     /* turn off all attributes during indentation */
     attrs = win->_attrs;
-    term_set_attr(win, A_NORMAL);
+    wattrset(win, A_NORMAL);
 
     while (counter++ != indent) {
 	WADDCH(win, blank);
@@ -990,7 +990,7 @@ do_indent(WINDOW *win, const int indent, int *insert_count)
     }
 
     /* restore attributes after indenting */
-    term_set_attr(win, attrs);
+    wattrset(win, attrs);
 }
 
 /**
@@ -1138,7 +1138,7 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	    break;
 	case NORMAL:
 	    text_decoration_bools_reset(&booleans);
-	    term_set_attr(pwin, A_NORMAL);
+	    wattrset(pwin, A_NORMAL);
 	    break;
 	case REVERSE:
 	    case_reverse(pwin, &booleans.is_reverse);
@@ -1174,7 +1174,7 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
     }
 
     free(wc_buf);
-    term_set_attr(pwin, A_NORMAL);
+    wattrset(pwin, A_NORMAL);
     update_panels();
     doupdate();
     mutex_unlock(&g_puts_mutex);
