@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - **Code improvements**
 - Cleaner auto-generation of configs and themes
+- More color pairs
 
 ### Changed ###
 - Tell if a command is unknown
