@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [2.9.0] - 2019-09-10 ##
 ### Added ###
 - **Code improvements**
 - Cleaner auto-generation of configs and themes
