@@ -1110,9 +1110,9 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	*rep_count = 0;
     }
 
-    if (!buf) {
-	err_exit(EINVAL, "printtext_puts error");
-    } else if (*buf == '\0') {
+    if (isNull(buf)) {
+	err_exit(EINVAL, "printtext_puts");
+    } else if (isEmpty(buf)) {
 	return;
     }
 
