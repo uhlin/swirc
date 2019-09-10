@@ -2,7 +2,7 @@
 
 COMMENT =	cool curses irc client
 
-DISTNAME =	swirc-2.8.0
+DISTNAME =	swirc-2.9.0
 
 CATEGORIES =	net
 
