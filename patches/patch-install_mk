@@ -4,7 +4,7 @@ Index: install.mk
 --- install.mk.orig
 +++ install.mk
 @@ -1,21 +1,18 @@
- INSTALL=install
+ INSTALL:=install
 -INSTALL_DEPS=swirc src/swirc.1 swirc.conf.5 swirc-royal.png
 -PREFIX?=/usr/local
 +INSTALL_DEPS=swirc src/swirc.1 swirc.conf.5
