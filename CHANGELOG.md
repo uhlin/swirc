@@ -14,6 +14,9 @@ All notable changes to this project will be documented in this file.
 ### Deleted ###
 - `say()`
 
+### Fixed ###
+- Colorized statusbar
+
 ### News ###
 - [PDCurses](https://pdcurses.org/) 3.9
 
