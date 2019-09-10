@@ -596,12 +596,12 @@ convert_wc(wchar_t wc)
 #ifdef HAVE_BCI
     if ((errno = wcrtomb_s(&bytes_written, (char *) mbs, size, wc, &ps)) != 0) {
 	/* temporary error handling */
-	err_log(errno, "In convert_wc: wcrtomb_s");
+	err_log(errno, "printtext: convert_wc: wcrtomb_s");
 	return (mbs);
     }
 #else
     if (wcrtomb((char *) mbs, wc, &ps) == ((size_t) -1)) {
-	err_log(EILSEQ, "In convert_wc: wcrtomb");
+	err_log(EILSEQ, "printtext: convert_wc: wcrtomb");
 	return (mbs);
     }
 #endif
