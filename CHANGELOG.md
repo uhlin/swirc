@@ -1,6 +1,11 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Fixed ###
+- Multiple occurrences of `Conditional expression should have
+  essentially Boolean type`
+
 ## [2.9.0] - 2019-09-10 ##
 ### Added ###
 - **Code improvements**
