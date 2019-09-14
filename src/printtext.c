@@ -1034,7 +1034,7 @@ case_default(struct case_default_context *ctx, int *rep_count, int *line_count,
     if (ctx->wc == L'\n') {
 	WADDCH(ctx->win, '\n');
 	*insert_count = 0;
-	if (rep_count)
+	if (!isNull(rep_count))
 	    (*rep_count) ++;
 	if (care_about_max_lines && !(++ (*line_count) < ctx->max_lines)) {
 	    free(mbs);
@@ -1051,7 +1051,7 @@ case_default(struct case_default_context *ctx, int *rep_count, int *line_count,
 	 */
 	WADDCH(ctx->win, '\n');
 	*insert_count = 0;
-	if (rep_count)
+	if (!isNull(rep_count))
 	    (*rep_count) ++;
 	if (care_about_max_lines && !(++ (*line_count) < ctx->max_lines)) {
 	    free(mbs);
