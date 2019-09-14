@@ -1106,7 +1106,7 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	err_sys("printtext_puts: init_once");
 #endif
 
-    if (rep_count) {
+    if (!isNull(rep_count)) {
 	*rep_count = 0;
     }
 
