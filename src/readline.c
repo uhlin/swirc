@@ -37,6 +37,7 @@
 #if defined(WIN32) && defined(PDC_EXP_EXTRAS)
 #include "curses-funcs.h" /* is_scrollok() etc */
 #endif
+#include "dataClassify.h"
 #include "errHand.h"
 #include "io-loop.h"
 #include "libUtils.h"
@@ -171,7 +172,7 @@ new_session(const char *prompt)
 static void
 session_destroy(volatile struct readline_session_context *ctx)
 {
-    if (ctx) {
+    if (ctx != NULL) {
 	free(ctx->buffer);
 	free(ctx->prompt);
 	free((struct readline_session_context *) ctx);
@@ -523,7 +524,7 @@ readline(const char *prompt)
 	ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
 	ctx->no_bufspc	 = (ctx->n_insert + 1 >= readline_buffersize);
 
-	if (*buf_p) {
+	if (*buf_p != L'\0') {
 	    wc = *buf_p++;
 	} else if (wget_wch(ctx->act, &wc) == ERR) {
 	    (void) napms(sleep_time_milliseconds);
@@ -673,10 +674,10 @@ void
 readline_top_panel(void)
 {
     if (panel_state == PANEL1_ACTIVE) {
-	if (readline_pan1)
+	if (!isNull(readline_pan1))
 	    (void) top_panel(readline_pan1);
     } else if (panel_state == PANEL2_ACTIVE) {
-	if (readline_pan2)
+	if (!isNull(readline_pan2))
 	    (void) top_panel(readline_pan2);
     } else {
 	sw_assert_not_reached();
