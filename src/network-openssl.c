@@ -254,9 +254,10 @@ set_ciphers(const char *list)
 
     printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
-    if (ssl_ctx && list && !SSL_CTX_set_cipher_list(ssl_ctx, list))
+    if (ssl_ctx && list && !SSL_CTX_set_cipher_list(ssl_ctx, list)) {
 	printtext(&ptext_ctx, "warning: set_ciphers: bogus cipher list: %s",
 		  xstrerror(EINVAL, strerrbuf, MAXERROR));
+    }
 }
 
 void
