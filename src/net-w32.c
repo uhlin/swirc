@@ -102,7 +102,7 @@ net_send_plain(const char *fmt, ...)
     va_list ap;
 
     if (!fmt) {
-	err_exit(EINVAL, "net_send error");
+	err_exit(EINVAL, "net_send_plain");
     } else if (*fmt == '\0') {
 	return (0); /* nothing sent */
     }
@@ -139,7 +139,7 @@ net_do_connect_detached(const char *host, const char *port)
     struct server *server = server_new(host, port);
 
     if (_beginthread(do_connect_wrapper, 0, server) == BEGINTHREAD_FAILED)
-	err_sys("_beginthread");
+	err_sys("net_do_connect_detached: _beginthread");
 }
 
 void
@@ -165,7 +165,7 @@ net_spawn_listenThread(void)
 {
     if ((listenThread_id = _beginthread(listenThread_fn, 0, NULL)) ==
 	BEGINTHREAD_FAILED)
-	err_sys("_beginthread error");
+	err_sys("net_spawn_listenThread: _beginthread");
 }
 
 /* ---------------------------------------------------------------------- */
