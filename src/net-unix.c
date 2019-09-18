@@ -35,7 +35,6 @@
 #include <pthread.h>
 #include <string.h>
 
-#include "assertAPI.h"
 #include "dataClassify.h"
 #include "errHand.h"
 #include "libUtils.h"
