@@ -79,9 +79,9 @@ net_recv_plain(struct network_recv_context *ctx,
 int
 net_send_plain(const char *fmt, ...)
 {
-    char       *buffer;
-    int         n_sent;
-    va_list     ap;
+    char *buffer = NULL;
+    int n_sent = -1;
+    va_list ap;
 
     if (isNull(fmt)) {
 	err_exit(EINVAL, "net_send_plain");
