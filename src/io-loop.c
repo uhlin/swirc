@@ -420,15 +420,15 @@ add_to_history(const char *string)
 	/* Buffer full. Remove head... */
 
 	if ((errno = textBuf_remove(history, textBuf_head(history))) != 0)
-	    err_sys("textBuf_remove");
+	    err_sys("add_to_history: textBuf_remove");
     }
 
     if (textBuf_size(history) == 0) {
 	if ((errno = textBuf_ins_next(history, NULL, string, -1)) != 0)
-	    err_sys("textBuf_ins_next");
+	    err_sys("add_to_history: textBuf_ins_next");
     } else {
 	if ((errno = textBuf_ins_next(history, textBuf_tail(history), string, -1)) != 0)
-	    err_sys("textBuf_ins_next");
+	    err_sys("add_to_history: textBuf_ins_next");
     }
 }
 
