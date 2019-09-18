@@ -54,7 +54,7 @@ bool is_cleared(const WINDOW *win)
     return (win != NULL && win->_clear);
 }
 
-#if 0
+#if PDC_BUILD < 3900
 bool is_leaveok(const WINDOW *win)
 {
     return (win != NULL && win->_leaveit);
@@ -81,7 +81,7 @@ bool is_syncok(const WINDOW *win)
     return (win != NULL && win->_sync);
 }
 
-#if 0
+#if PDC_BUILD < 3900
 bool is_keypad(const WINDOW *win)
 {
     return (win != NULL && win->_use_keypad);
