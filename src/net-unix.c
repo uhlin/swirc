@@ -36,6 +36,7 @@
 #include <string.h>
 
 #include "assertAPI.h"
+#include "dataClassify.h"
 #include "errHand.h"
 #include "libUtils.h"
 #include "network.h"
@@ -88,10 +89,10 @@ net_send_plain(const char *fmt, ...)
     int         n_sent;
     va_list     ap;
 
-    if (!fmt) {
+    if (isNull(fmt)) {
 	err_exit(EINVAL, "net_send");
-    } else if (*fmt == '\0') {
-	return (0); /* nothing sent */
+    } else if (isEmpty(fmt)) {
+	return 0; /* nothing sent */
     }
 
     va_start(ap, fmt);
@@ -107,7 +108,7 @@ net_send_plain(const char *fmt, ...)
     }
 
     free_and_null(&buffer);
-    return (n_sent);
+    return n_sent;
 }
 
 /*lint -sem(do_connect_wrapper, r_null) */
