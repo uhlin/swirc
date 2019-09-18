@@ -33,6 +33,7 @@
 #include <string.h>
 
 #include "assertAPI.h"
+#include "dataClassify.h"
 #include "errHand.h"
 #include "libUtils.h"
 #include "network.h"
@@ -97,15 +98,14 @@ net_recv_plain(struct network_recv_context *ctx,
 int
 net_send_plain(const char *fmt, ...)
 {
-    char *buffer;
-    int n_sent;
+    char *buffer = NULL;
+    int n_sent = SOCKET_ERROR;
     va_list ap;
 
-    if (!fmt) {
+    if (isNull(fmt))
 	err_exit(EINVAL, "net_send_plain");
-    } else if (*fmt == '\0') {
-	return (0); /* nothing sent */
-    }
+    else if (isEmpty(fmt))
+	return 0; /* nothing sent */
 
     va_start(ap, fmt);
     buffer = strdup_vprintf(fmt, ap);
@@ -120,7 +120,7 @@ net_send_plain(const char *fmt, ...)
     }
 
     free_and_null(&buffer);
-    return (n_sent);
+    return n_sent;
 }
 
 static VoidCdecl
