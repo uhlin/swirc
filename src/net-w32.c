@@ -68,31 +68,25 @@ net_recv_plain(struct network_recv_context *ctx,
 	       char *recvbuf, int recvbuf_size)
 {
     fd_set readset;
-    struct timeval tv;
-    int bytes_received;
+    int bytes_received = SOCKET_ERROR;
+    struct timeval tv = {
+	.tv_sec  = ctx->sec,
+	.tv_usec = ctx->microsec,
+    };
 
     FD_ZERO(&readset);
     FD_SET(ctx->sock, &readset);
 
-    tv.tv_sec  = ctx->sec;
-    tv.tv_usec = ctx->microsec;
-
-    if (select(-1, &readset, NULL, NULL, &tv) == SOCKET_ERROR) {
-	return (-1);
-    } else if (!FD_ISSET(ctx->sock, &readset)) { /* No data to recv() */
-	return (0);
-    } else if ((bytes_received =
-		recv(ctx->sock, recvbuf, recvbuf_size, ctx->flags)) ==
-	       SOCKET_ERROR) {
+    if (select(-1, &readset, NULL, NULL, &tv) == SOCKET_ERROR)
+	return -1;
+    else if (!FD_ISSET(ctx->sock, &readset)) /* No data to recv() */
+	return 0;
+    else if (bytes_received = recv(ctx->sock,recvbuf,recvbuf_size,ctx->flags),
+	     bytes_received == SOCKET_ERROR)
 	return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
-    } else if (bytes_received == 0) { /* Connection gracefully closed */
-	return (-1);
-    } else {
-	return (bytes_received);
-    }
-
-    /*NOTREACHED*/ sw_assert_not_reached();
-    /*NOTREACHED*/ return (-1);
+    else if (bytes_received == 0) /* Connection gracefully closed */
+	return -1;
+    return bytes_received;
 }
 
 int
