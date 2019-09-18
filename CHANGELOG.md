@@ -2,7 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Changed ###
+- Error messages (in order to improve them)
+
 ### Fixed ###
+- Improved functions
 - Multiple occurrences of `Conditional expression should have
   essentially Boolean type`
 
