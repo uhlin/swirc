@@ -54,6 +54,11 @@ bool is_cleared(const WINDOW *win)
     return (win != NULL && win->_clear);
 }
 
+bool is_leaveok(const WINDOW *win)
+{
+    return (win != NULL && win->_leaveit);
+}
+
 bool is_scrollok(const WINDOW *win)
 {
     return (win != NULL && win->_scroll);
