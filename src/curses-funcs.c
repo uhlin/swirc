@@ -54,10 +54,12 @@ bool is_cleared(const WINDOW *win)
     return (win != NULL && win->_clear);
 }
 
+#if 0
 bool is_leaveok(const WINDOW *win)
 {
     return (win != NULL && win->_leaveit);
 }
+#endif
 
 bool is_scrollok(const WINDOW *win)
 {
@@ -79,8 +81,10 @@ bool is_syncok(const WINDOW *win)
     return (win != NULL && win->_sync);
 }
 
+#if 0
 bool is_keypad(const WINDOW *win)
 {
     return (win != NULL && win->_use_keypad);
 }
+#endif
 #endif
