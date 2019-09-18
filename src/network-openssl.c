@@ -162,29 +162,28 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 
     errno = 0;
 
-    if (select(maxfdp1, &readset, NULL, NULL, &tv) == SOCKET_ERROR) {
-	return errno == EINTR ? 0 : -1;
-    } else if (!FD_ISSET(ctx->sock, &readset)) {
+    if (select(maxfdp1, &readset, NULL, NULL, &tv) == SOCKET_ERROR)
+	return (errno == EINTR ? 0 : -1);
+    else if (!FD_ISSET(ctx->sock, &readset))
 	return 0;
-    } else {
-	int bytes_received = 0;
 
-	ERR_clear_error();
-	if ((bytes_received = SSL_read(ssl, recvbuf, recvbuf_size)) > 0)
-	    return bytes_received;
-	switch (SSL_get_error(ssl, bytes_received)) {
-	case SSL_ERROR_NONE:
-	    return 0;
-	case SSL_ERROR_WANT_READ:
-	case SSL_ERROR_WANT_WRITE:
-	    err_log(0, "net_ssl_recv: want read / want write");
-	    return 0;
-	}
-	return -1;
+    int bytes_received = 0;
+
+    ERR_clear_error();
+
+    if ((bytes_received = SSL_read(ssl, recvbuf, recvbuf_size)) > 0)
+	return bytes_received;
+
+    switch (SSL_get_error(ssl, bytes_received)) {
+    case SSL_ERROR_NONE:
+	return 0;
+    case SSL_ERROR_WANT_READ:
+    case SSL_ERROR_WANT_WRITE:
+	err_log(0, "net_ssl_recv: want read / want write");
+	return 0;
     }
 
-    /*NOTREACHED*/ sw_assert_not_reached();
-    /*NOTREACHED*/ return -1;
+    return -1;
 }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
