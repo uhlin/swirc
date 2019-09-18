@@ -84,7 +84,7 @@ net_send_plain(const char *fmt, ...)
     va_list     ap;
 
     if (isNull(fmt)) {
-	err_exit(EINVAL, "net_send");
+	err_exit(EINVAL, "net_send_plain");
     } else if (isEmpty(fmt)) {
 	return 0; /* nothing sent */
     }
@@ -132,7 +132,7 @@ void
 net_listenThread_join(void)
 {
     if ((errno = pthread_join(listenThread_id, NULL)) != 0)
-	err_sys("pthread_join");
+	err_sys("net_listenThread_join: pthread_join");
 }
 
 /*lint -sem(listenThread_fn, r_null) */
@@ -153,9 +153,9 @@ net_spawn_listenThread(void)
 {
     if (errno = pthread_create(&listenThread_id, NULL, listenThread_fn, NULL),
 	errno != 0)
-	err_sys("pthread_create");
+	err_sys("net_spawn_listenThread: pthread_create");
     else if ((errno = pthread_detach(listenThread_id)) != 0)
-	err_sys("pthread_detach");
+	err_sys("net_spawn_listenThread: pthread_detach");
 }
 
 /* ---------------------------------------------------------------------- */
