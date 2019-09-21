@@ -42,8 +42,10 @@
 
 #include "config.h"
 #include "errHand.h"
+#include "icb.h"
 #include "irc.h"
 #include "libUtils.h"
+#include "main.h"
 #include "network.h"
 #include "printtext.h"
 #include "strHand.h"
