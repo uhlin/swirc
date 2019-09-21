@@ -379,8 +379,14 @@ cmd_connect(const char *data)
 	server = strtok_r(NULL, "\n:", &state);
 	sw_assert(server != NULL);
 
-	if ((port = strtok_r(NULL, "\n:", &state)) == NULL)
-	    port = ssl_is_enabled() ? SSL_PORT : "6667";
+	if ((port = strtok_r(NULL, "\n:", &state)) == NULL) {
+	    if (g_icb_mode)
+		port = ICB_PORT;
+	    else if (ssl_is_enabled())
+		port = SSL_PORT;
+	    else
+		port = "6667";
+	}
     } else if (feeds_written == 0) {
 	server = strtok_r(dcopy, "\n:", &state);
 	sw_assert(server != NULL);
