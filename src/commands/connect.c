@@ -43,6 +43,7 @@
 
 #include "connect.h"
 
+#define ICB_PORT "7326"
 #define SSL_PORT "6697"
 
 static bool quit_reconnecting = false;
