@@ -314,7 +314,10 @@ net_connect(
 	    }
 	event_welcome_cond_init();
 	net_spawn_listenThread();
-	send_reg_cmds(ctx);
+	if (g_icb_mode)
+	    send_icb_login_packet(ctx);
+	else
+	    send_reg_cmds(ctx);
 
 	if (!event_welcome_is_signaled()) {
 	    event_welcome_cond_destroy();
