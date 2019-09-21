@@ -184,6 +184,52 @@ send_reg_cmds(const struct network_connect_context *ctx)
     (void) net_send("USER %s 8 * :%s", ctx->username, ctx->rl_name);
 }
 
+/*
+ * ICB Login Packet
+ * ----------------
+ * (Fields: Minimum: 5, Maximum: 7)
+ *
+ * Field 0: Login id of user. Required.
+ * Field 1: Nickname to use upon login into ICB. Required.
+ * Field 2: Default group to log into in ICB, or do group who of. A null string
+ *          for who listing will show all groups. Required.
+ * Field 3: Login command. Required. Currently one of the following:
+ * - "login" log into ICB
+ * - "w" just show who is currently logged into ICB
+ * Field 4: Password to authenticate the user to ICB. Required, but often blank.
+ * Field 5: If when logging in, default group (field 2) does not exist, create
+ *          it with this status. Optional.
+ * Field 6: Protocol level. Optional. Deprecated.
+ *
+ * Thus the ICB Login Packet has the following layout:
+ * aLoginid^ANickname^ADefaultGroup^ACommand^APass^AGroupStatus^AProtocolLevel
+ */
+static PTR_ARGS_NONNULL void
+send_icb_login_packet(const struct network_connect_context *ctx)
+{
+    char *packet = sw_strdup(" ");
+
+    realloc_strcat(&packet, "a");
+    realloc_strcat(&packet, ctx->username);
+    realloc_strcat(&packet, ICB_FIELD_SEP);
+
+    realloc_strcat(&packet, ctx->nickname);
+    realloc_strcat(&packet, ICB_FIELD_SEP);
+    realloc_strcat(&packet, ICB_FIELD_SEP);
+
+    realloc_strcat(&packet, "login");
+    realloc_strcat(&packet, ICB_FIELD_SEP);
+
+    realloc_strcat(&packet, ctx->password ? ctx->password : "");
+    realloc_strcat(&packet, ICB_FIELD_SEP);
+    realloc_strcat(&packet, ICB_FIELD_SEP);
+    realloc_strcat(&packet, ICB_FIELD_SEP);
+
+    packet[0] = (char) strlen(&packet[1]);
+    net_send("%s", packet);
+    free_not_null(packet);
+}
+
 bool
 sasl_is_enabled(void)
 {
