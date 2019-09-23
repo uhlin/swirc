@@ -10,6 +10,7 @@ OBJS+=$(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)dataClassify.o\
 	$(SRC_DIR)errHand.o\
 	$(SRC_DIR)filePred.o\
+	$(SRC_DIR)icb.o\
 	$(SRC_DIR)interpreter.o\
 	$(SRC_DIR)io-loop.o\
 	$(SRC_DIR)irc.o\
