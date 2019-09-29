@@ -1,17 +1,21 @@
 #ifndef ASSERT_API_H
 #define ASSERT_API_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*lint -sem(SWAssertFail, r_no)           */
 /*lint -sem(SWAssertPerrorFail, r_no)     */
 /*lint -sem(SWAssertNotReachedFail, r_no) */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 NORETURN void SWAssertFail           (const char *file, long int line, const char *fn, const char *assertion);
 NORETURN void SWAssertPerrorFail     (const char *file, long int line, const char *fn, int errnum);
 NORETURN void SWAssertNotReachedFail (const char *file, long int line, const char *fn);
+
+#ifdef __cplusplus
+}
+#endif
 
 #if defined(UNIX)
 #define SW_ASSERT_FN __func__
@@ -38,10 +42,6 @@ NORETURN void SWAssertNotReachedFail (const char *file, long int line, const cha
 #define sw_assert(expr)          ((void) 0)
 #define sw_assert_perror(errnum) ((void) 0)
 #define sw_assert_not_reached()  SWAssertNotReachedFail(__FILE__, __LINE__, SW_ASSERT_FN)
-#endif
-
-#ifdef __cplusplus
-}
 #endif
 
 #endif
