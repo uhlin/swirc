@@ -44,4 +44,18 @@ NORETURN void SWAssertNotReachedFail (const char *file, long int line, const cha
 #define sw_assert_not_reached()  SWAssertNotReachedFail(__FILE__, __LINE__, SW_ASSERT_FN)
 #endif
 
+/*
+ * Define sw_static_assert()
+ */
+#if defined(WIN32) || (defined(__cplusplus) && __cplusplus >= 201103L)
+#define sw_static_assert(expr, msg) \
+	static_assert((expr), msg)
+#elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
+#define sw_static_assert(expr, msg) \
+	_Static_assert((expr), msg)
+#else
+#pragma message("warning: sw_static_assert() is a no operation!")
+#define sw_static_assert(expr, msg) ((void) 0)
+#endif
+
 #endif
