@@ -213,6 +213,7 @@ send_icb_login_packet(const struct network_connect_context *ctx)
     realloc_strcat(&packet, ctx->username);
     realloc_strcat(&packet, ICB_FIELD_SEP);
 
+    irc_set_my_nickname(ctx->nickname);
     realloc_strcat(&packet, ctx->nickname);
     realloc_strcat(&packet, ICB_FIELD_SEP);
     realloc_strcat(&packet, ICB_FIELD_SEP);
