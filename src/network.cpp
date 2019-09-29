@@ -424,7 +424,6 @@ net_irc_listen(bool *connection_lost)
 
     *connection_lost = false;
     irc_init();
-    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC_NONE, false);
 
     do {
 	BZERO(recvbuf, RECVBUF_SIZE);
@@ -432,8 +431,6 @@ net_irc_listen(bool *connection_lost)
 	if ((bytes_received = net_recv(&ctx, recvbuf, RECVBUF_SIZE-1)) == -1) {
 	    break;
 	} else if (bytes_received > 0) {
-	    printtext(&ptext_ctx, "recvbuf: %s", &recvbuf[1]);
-
 	    if (g_icb_mode)
 		icb_irc_proxy(recvbuf[0], recvbuf[1], &recvbuf[2]);
 	    else
