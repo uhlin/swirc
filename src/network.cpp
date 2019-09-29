@@ -433,10 +433,11 @@ net_irc_listen(bool *connection_lost)
 	    break;
 	} else if (bytes_received > 0) {
 	    printtext(&ptext_ctx, "recvbuf: %s", &recvbuf[1]);
-	    irc_handle_interpret_events(recvbuf, &message_concat, &state);
-	} else {
-	    if (g_server_hostname)
-		net_send("PING %s", g_server_hostname);
+
+	    if (g_icb_mode)
+		icb_irc_proxy(recvbuf[0], recvbuf[1], &recvbuf[2]);
+	    else
+		irc_handle_interpret_events(recvbuf, &message_concat, &state);
 	}
     } while (g_on_air);
 
