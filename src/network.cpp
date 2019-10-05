@@ -207,24 +207,48 @@ send_reg_cmds(const struct network_connect_context *ctx)
 static PTR_ARGS_NONNULL void
 send_icb_login_packet(const struct network_connect_context *ctx)
 {
-    char *packet = sw_strdup(" ");
+    char *packet = sw_strdup(" a");
 
-    realloc_strcat(&packet, "a");
+    /*
+     * Loginid
+     */
     realloc_strcat(&packet, ctx->username);
     realloc_strcat(&packet, ICB_FIELD_SEP);
 
+    /*
+     * Nickname
+     */
     irc_set_my_nickname(ctx->nickname);
     realloc_strcat(&packet, ctx->nickname);
     realloc_strcat(&packet, ICB_FIELD_SEP);
+
+    /*
+     * DefaultGroup
+     */
+    realloc_strcat(&packet, "1");
     realloc_strcat(&packet, ICB_FIELD_SEP);
 
+    /*
+     * Command
+     */
     realloc_strcat(&packet, "login");
     realloc_strcat(&packet, ICB_FIELD_SEP);
 
-    realloc_strcat(&packet, ctx->password ? ctx->password : "");
+    /*
+     * Pass
+     */
+    realloc_strcat(&packet, ctx->password ? ctx->password : " ");
     realloc_strcat(&packet, ICB_FIELD_SEP);
+
+    /*
+     * GroupStatus
+     */
+    realloc_strcat(&packet, "");
     realloc_strcat(&packet, ICB_FIELD_SEP);
-    realloc_strcat(&packet, ICB_FIELD_SEP);
+
+    /*
+     * ... (ProtocolLevel) ...
+     */
 
     packet[0] = (char) strlen(&packet[1]);
     net_send("%s", packet);
