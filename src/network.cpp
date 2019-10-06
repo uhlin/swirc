@@ -452,12 +452,24 @@ net_irc_listen(bool *connection_lost)
     do {
 	BZERO(recvbuf, RECVBUF_SIZE);
 
-	if ((bytes_received = net_recv(&ctx, recvbuf, RECVBUF_SIZE-1)) == -1) {
-	    break;
-	} else if (bytes_received > 0) {
-	    if (g_icb_mode)
-		icb_irc_proxy(recvbuf[0], recvbuf[1], &recvbuf[2]);
-	    else
+	if (g_icb_mode) {
+	    if (net_recv(&ctx, recvbuf, 1) != 1)
+		continue;
+
+	    char length = recvbuf[0];
+
+	    if ((bytes_received = net_recv(&ctx, recvbuf, length)) == -1)
+		break;
+	    else if (bytes_received > 0)
+		icb_irc_proxy(length, recvbuf[0], &recvbuf[1]);
+	} else {
+	    /*
+	     * IRC
+	     */
+
+	    if ((bytes_received = net_recv(&ctx, recvbuf, RECVBUF_SIZE-1)) == -1)
+		break;
+	    else if (bytes_received > 0)
 		irc_handle_interpret_events(recvbuf, &message_concat, &state);
 	}
     } while (g_on_air);
