@@ -27,30 +27,6 @@ static enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
  */
 
 static void
-handle_proto_packet(const char *pktdata)
-{
-    char *cp = NULL;
-    char *last = "";
-    char *pktdata_copy = sw_strdup(pktdata);
-
-    if ((cp = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) != NULL)
-	(void) sw_strcpy(icb_protolevel, cp, ARRAY_SIZE(icb_protolevel));
-    if ((cp = strtok_r(NULL, ICB_FIELD_SEP, &last)) != NULL)
-	(void) sw_strcpy(icb_hostid, cp, ARRAY_SIZE(icb_hostid));
-    if ((cp = strtok_r(NULL, ICB_FIELD_SEP, &last)) != NULL)
-	(void) sw_strcpy(icb_serverid, cp, ARRAY_SIZE(icb_serverid));
-
-    free_and_null(&pktdata_copy);
-
-    if (strings_match(icb_protolevel, "") || strings_match(icb_hostid, "") ||
-	strings_match(icb_serverid, "")) {
-	memset(icb_protolevel, 0, ARRAY_SIZE(icb_protolevel));
-	memset(icb_hostid, 0, ARRAY_SIZE(icb_hostid));
-	memset(icb_serverid, 0, ARRAY_SIZE(icb_serverid));
-    }
-}
-
-static void
 login_ok()
 {
     if (strings_match(icb_protolevel, "") || strings_match(icb_hostid, "") ||
@@ -105,6 +81,30 @@ login_ok()
 	g_my_nickname);
     irc_handle_interpret_events(event, &message_concat, &state);
     free_and_null(&event);
+}
+
+static void
+handle_proto_packet(const char *pktdata)
+{
+    char *cp = NULL;
+    char *last = "";
+    char *pktdata_copy = sw_strdup(pktdata);
+
+    if ((cp = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) != NULL)
+	(void) sw_strcpy(icb_protolevel, cp, ARRAY_SIZE(icb_protolevel));
+    if ((cp = strtok_r(NULL, ICB_FIELD_SEP, &last)) != NULL)
+	(void) sw_strcpy(icb_hostid, cp, ARRAY_SIZE(icb_hostid));
+    if ((cp = strtok_r(NULL, ICB_FIELD_SEP, &last)) != NULL)
+	(void) sw_strcpy(icb_serverid, cp, ARRAY_SIZE(icb_serverid));
+
+    free_and_null(&pktdata_copy);
+
+    if (strings_match(icb_protolevel, "") || strings_match(icb_hostid, "") ||
+	strings_match(icb_serverid, "")) {
+	memset(icb_protolevel, 0, ARRAY_SIZE(icb_protolevel));
+	memset(icb_hostid, 0, ARRAY_SIZE(icb_hostid));
+	memset(icb_serverid, 0, ARRAY_SIZE(icb_serverid));
+    }
 }
 
 static void
