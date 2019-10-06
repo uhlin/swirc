@@ -84,6 +84,21 @@ login_ok()
 }
 
 static void
+handle_cmd_output_packet(const char *pktdata)
+{
+    PRINTTEXT_CONTEXT ctx;
+    char *pktdata_copy = sw_strdup(pktdata);
+
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+    squeeze(pktdata_copy, ICB_FIELD_SEP);
+
+    if (!strncmp(pktdata_copy, "co", 2))
+	printtext(&ctx, "%s", &pktdata_copy[2]);
+
+    free_and_null(&pktdata_copy);
+}
+
+static void
 handle_proto_packet(const char *pktdata)
 {
     char *cp = NULL;
@@ -123,6 +138,9 @@ icb_irc_proxy(char length, char type, const char *pktdata)
     switch (type) {
     case 'a':
 	login_ok();
+	break;
+    case 'i':
+	handle_cmd_output_packet(pktdata);
 	break;
     case 'j':
 	handle_proto_packet(pktdata);
