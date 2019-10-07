@@ -38,6 +38,7 @@
 #include "../errHand.h"
 #include "../io-loop.h"
 #include "../libUtils.h"
+#include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -332,7 +333,9 @@ cmd_quit(const char *data)
     const bool has_message = !strings_match(data, "");
 
     if (g_on_air) {
-	if (has_message)
+	if (g_icb_mode)
+	    /* empty */;
+	else if (has_message)
 	    (void) net_send("QUIT :%s", data);
 	else
 	    (void) net_send("QUIT :%s", Config("quit_message"));
