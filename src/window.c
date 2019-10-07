@@ -49,6 +49,7 @@
 #include "errHand.h"
 #include "io-loop.h"		/* get_prompt() */
 #include "libUtils.h"
+#include "main.h"
 #include "network.h"
 #include "printtext.h"		/* includes window.h */
 #include "readline.h"		/* readline_top_panel() */
@@ -439,7 +440,7 @@ spawn_chat_window(const char *label, const char *title)
     /*
      * send whois
      */
-    if (g_on_air && !is_irc_channel(entry->label))
+    if (g_on_air && !is_irc_channel(entry->label) && !g_icb_mode)
 	cmd_whois(entry->label);
 
     return 0;
