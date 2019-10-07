@@ -36,6 +36,7 @@
 #include "cursesInit.h"
 #include "dataClassify.h"
 #include "errHand.h"
+#include "icb.h"
 #include "io-loop.h"
 #include "irc.h"
 #include "libUtils.h"
@@ -499,9 +500,23 @@ transmit_user_input(const char *win_label, const char *input)
 	return;
     }
 
-    if (net_send("PRIVMSG %s :%s", win_label, input) < 0) {
-	g_on_air = false;
-	return;
+    if (g_icb_mode) {
+	char packet[ICB_PACKET_MAX] = { '\0' };
+
+	if (is_irc_channel(win_label)) {
+	    snprintf(packet, ARRAY_SIZE(packet), " b%s", input);
+	} else {
+	    snprintf(packet, ARRAY_SIZE(packet), " hm%s%s %s", ICB_FIELD_SEP,
+		win_label, input);
+	}
+
+	packet[0] = (char) strlen(&packet[1]);
+	net_send("%s", packet);
+    } else {
+	if (net_send("PRIVMSG %s :%s", win_label, input) < 0) {
+	    g_on_air = false;
+	    return;
+	}
     }
 
     if (!is_irc_channel(win_label))
