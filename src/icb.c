@@ -84,6 +84,41 @@ login_ok()
 }
 
 static void
+handle_status_msg_packet(const char *pktdata)
+{
+    PRINTTEXT_CONTEXT ctx;
+    char *cp = NULL;
+    char *pktdata_copy = sw_strdup(pktdata);
+
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+
+    if (!strncmp(pktdata_copy, "No-Pass" ICB_FIELD_SEP, 8)) {
+	printtext(&ctx, "%s", &pktdata_copy[8]);
+    } else if (!strncmp(pktdata_copy, "Status" ICB_FIELD_SEP, 7)) {
+	/*
+	 * TODO: Leave previous group?
+	 */
+
+	cp = &pktdata_copy[7];
+
+	if (!strncmp(cp, "You are now in group ", 21)) {
+	    cp += 21;
+	    event = strdup_printf(":%s JOIN :#%s\r\n", g_my_nickname, cp);
+	    irc_handle_interpret_events(event, &message_concat, &state);
+	    free_and_null(&event);
+	}
+    } else {
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "handle_status_msg_packet: "
+	    "unknown status message category");
+	squeeze(pktdata_copy, ICB_FIELD_SEP);
+	printtext(&ctx, "packet data: %s", pktdata_copy);
+    }
+
+    free_and_null(&pktdata_copy);
+}
+
+static void
 handle_cmd_output_packet(const char *pktdata)
 {
     PRINTTEXT_CONTEXT ctx;
@@ -138,6 +173,9 @@ icb_irc_proxy(char length, char type, const char *pktdata)
     switch (type) {
     case 'a':
 	login_ok();
+	break;
+    case 'd':
+	handle_status_msg_packet(pktdata);
 	break;
     case 'i':
 	handle_cmd_output_packet(pktdata);
