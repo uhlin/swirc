@@ -503,6 +503,10 @@ transmit_user_input(const char *win_label, const char *input)
     if (g_icb_mode) {
 	char packet[ICB_PACKET_MAX] = { '\0' };
 
+	/*
+	 * FIXME: Input is too limited in length
+	 */
+
 	if (is_irc_channel(win_label)) {
 	    snprintf(packet, ARRAY_SIZE(packet), " b%s", input);
 	} else {
