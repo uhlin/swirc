@@ -130,6 +130,7 @@ handle_status_msg_packet(const char *pktdata)
 	    event = strdup_printf(":%s JOIN :#%s\r\n", g_my_nickname, cp);
 	    irc_handle_interpret_events(event, &message_concat, &state);
 	    free_and_null(&event);
+	    icb_send_users(cp);
 	}
     } else {
 	ctx.spec_type = TYPE_SPEC1_WARN;
