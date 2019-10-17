@@ -215,3 +215,13 @@ icb_irc_proxy(char length, char type, const char *pktdata)
 	break;
     }
 }
+
+void
+icb_send_group(const char *group)
+{
+    char packet[ICB_PACKET_MAX] = { '\0' };
+
+    snprintf(packet, ARRAY_SIZE(packet), " hg%s%s", ICB_FIELD_SEP, group);
+    packet[0] = (char) strlen(&packet[1]);
+    net_send("%s", packet);
+}

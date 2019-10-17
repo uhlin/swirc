@@ -10,6 +10,7 @@ extern "C" {
 #endif
 
 void icb_irc_proxy(char length, char type, const char *pktdata);
+void icb_send_group(const char *group);
 
 #ifdef __cplusplus
 }
