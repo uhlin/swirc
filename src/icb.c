@@ -8,9 +8,10 @@
 #include "strHand.h"
 #include "strdup_printf.h"
 
-static char icb_protolevel[256] = { '\0' };
-static char icb_hostid[256]     = { '\0' };
-static char icb_serverid[256]   = { '\0' };
+static char	 icb_protolevel[256] = { '\0' };
+static char	 icb_hostid[256]     = { '\0' };
+static char	 icb_serverid[256]   = { '\0' };
+static char	*icb_group           = NULL;
 
 static int items_assigned = -1;
 static char *event = NULL;
