@@ -154,13 +154,42 @@ static void
 handle_cmd_output_packet(const char *pktdata)
 {
     PRINTTEXT_CONTEXT ctx;
+    char *cp = NULL;
+    char *last = "";
     char *pktdata_copy = sw_strdup(pktdata);
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
-    squeeze(pktdata_copy, ICB_FIELD_SEP);
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
 
-    if (!strncmp(pktdata_copy, "co", 2))
+    if (!strncmp(pktdata_copy, "co", 2)) {
+	/*
+	 * Generic command output
+	 */
+
+	squeeze(pktdata_copy, ICB_FIELD_SEP);
+	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s", &pktdata_copy[2]);
+    } else if (!strncmp(pktdata_copy, "wl", 2)) {
+	char *initial_token = strtok_r(&pktdata_copy[2], ICB_FIELD_SEP, &last);
+	char *nickname      = strtok_r(NULL, ICB_FIELD_SEP, &last);
+#if 0
+	char *seconds_idle  = strtok_r(NULL, ICB_FIELD_SEP, &last);
+	char *response_time = strtok_r(NULL, ICB_FIELD_SEP, &last);
+	char *login_time    = strtok_r(NULL, ICB_FIELD_SEP, &last);
+	char *username      = strtok_r(NULL, ICB_FIELD_SEP, &last);
+	char *userhost      = strtok_r(NULL, ICB_FIELD_SEP, &last);
+	char *reg_status    = strtok_r(NULL, ICB_FIELD_SEP, &last);
+#endif
+    } else {
+	/*
+	 * Unknown output type
+	 */
+
+	while ((cp = strpbrk(pktdata_copy, ICB_FIELD_SEP)) != NULL)
+	    *cp = 'X';
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "handle_cmd_output_packet: unknown output type");
+	printtext(&ctx, "data: %s", pktdata_copy);
+    } /* if-then-else */
 
     free_and_null(&pktdata_copy);
 }
