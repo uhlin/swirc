@@ -13,7 +13,6 @@ static char	 icb_hostid[256]     = { '\0' };
 static char	 icb_serverid[256]   = { '\0' };
 static char	*icb_group           = NULL;
 
-static int items_assigned = -1;
 static char *event = NULL;
 static char *message_concat = NULL;
 static enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
