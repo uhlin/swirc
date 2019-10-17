@@ -13,10 +13,6 @@ static char	 icb_hostid[256]     = { '\0' };
 static char	 icb_serverid[256]   = { '\0' };
 static char	*icb_group           = NULL;
 
-static char *event = NULL;
-static char *message_concat = NULL;
-static enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
-
 /*
  * "It's perfectly appropriate to parse strings with sscanf (as long
  * as the return value is checked), because it's so easy to regain
@@ -25,6 +21,24 @@ static enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
  *
  * NOTE: sscanf() not scanf()
  */
+
+/*lint -printf(1, process_event) */
+
+static void
+process_event(const char *format, ...)
+{
+    char *event = NULL;
+    char *message_concat = NULL;
+    enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
+    va_list ap;
+
+    va_start(ap, format);
+    event = strdup_vprintf(format, ap);
+    va_end(ap);
+
+    irc_handle_interpret_events(event, &message_concat, &state);
+    free(event);
+}
 
 static void
 login_ok()
@@ -40,47 +54,36 @@ login_ok()
     /*
      * 001: RPL_WELCOME
      */
-    event = strdup_printf(":%s 001 %s :Welcome to ICB, %s!\r\n", icb_hostid,
+    process_event(":%s 001 %s :Welcome to ICB, %s!\r\n", icb_hostid,
 	g_my_nickname, g_my_nickname);
-    irc_handle_interpret_events(event, &message_concat, &state);
-    free_and_null(&event);
 
     /*
      * 002: RPL_YOURHOST
      */
-    event = strdup_printf(":%s 002 %s :Your host is %s, running version %s\r\n",
+    process_event(":%s 002 %s :Your host is %s, running version %s\r\n",
 	icb_hostid, g_my_nickname, icb_serverid, icb_protolevel);
-    irc_handle_interpret_events(event, &message_concat, &state);
-    free_and_null(&event);
 
     /*
      * 375: RPL_MOTDSTART
      */
-    event = strdup_printf(":%s 375 %s :- %s Message Of The Day -\r\n",
-	icb_hostid, g_my_nickname, icb_serverid);
-    irc_handle_interpret_events(event, &message_concat, &state);
-    free_and_null(&event);
+    process_event(":%s 375 %s :- %s Message Of The Day -\r\n", icb_hostid,
+	g_my_nickname, icb_serverid);
 
     /*
      * 372: RPL_MOTD
      */
-    event = strdup_printf(
+    process_event(
 	":%s 372 %s :-----------------------------\r\n"
 	":%s 372 %s :   Internet Citizen's Band   \r\n"
 	":%s 372 %s :-----------------------------\r\n",
 	icb_hostid, g_my_nickname,
 	icb_hostid, g_my_nickname,
 	icb_hostid, g_my_nickname);
-    irc_handle_interpret_events(event, &message_concat, &state);
-    free_and_null(&event);
 
     /*
      * 376: RPL_ENDOFMOTD
      */
-    event = strdup_printf(":%s 376 %s :End of MOTD\r\n", icb_hostid,
-	g_my_nickname);
-    irc_handle_interpret_events(event, &message_concat, &state);
-    free_and_null(&event);
+    process_event(":%s 376 %s :End of MOTD\r\n", icb_hostid, g_my_nickname);
 }
 
 static void
@@ -100,11 +103,8 @@ handle_personal_msg_packet(const char *pktdata)
 	return;
     }
 
-    event = strdup_printf(":%s PRIVMSG %s :%s\r\n", nickname, g_my_nickname,
-	message);
+    process_event(":%s PRIVMSG %s :%s\r\n", nickname, g_my_nickname, message);
     free_and_null(&pktdata_copy);
-    irc_handle_interpret_events(event, &message_concat, &state);
-    free_and_null(&event);
 }
 
 static void
@@ -122,20 +122,14 @@ handle_status_msg_packet(const char *pktdata)
 	cp = &pktdata_copy[7];
 
 	if (!strncmp(cp, "You are now in group ", 21)) {
-	    if (icb_group) {
-		event = strdup_printf(":%s PART #%s\r\n", g_my_nickname,
-		    icb_group);
-		irc_handle_interpret_events(event, &message_concat, &state);
-		free_and_null(&event);
-	    }
+	    if (icb_group)
+		process_event(":%s PART #%s\r\n", g_my_nickname, icb_group);
 
 	    cp += 21;
 	    free_and_null(&icb_group);
 	    icb_group = sw_strdup(cp);
 
-	    event = strdup_printf(":%s JOIN :#%s\r\n", g_my_nickname, cp);
-	    irc_handle_interpret_events(event, &message_concat, &state);
-	    free_and_null(&event);
+	    process_event(":%s JOIN :#%s\r\n", g_my_nickname, cp);
 
 	    icb_send_users(cp);
 	}
