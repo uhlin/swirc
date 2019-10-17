@@ -119,13 +119,13 @@ handle_status_msg_packet(const char *pktdata)
     if (!strncmp(pktdata_copy, "No-Pass" ICB_FIELD_SEP, 8)) {
 	printtext(&ctx, "%s", &pktdata_copy[8]);
     } else if (!strncmp(pktdata_copy, "Status" ICB_FIELD_SEP, 7)) {
-	/*
-	 * TODO: Leave previous group?
-	 */
-
 	cp = &pktdata_copy[7];
 
 	if (!strncmp(cp, "You are now in group ", 21)) {
+	    /*
+	     * TODO: Leave previous group?
+	     */
+
 	    cp += 21;
 	    event = strdup_printf(":%s JOIN :#%s\r\n", g_my_nickname, cp);
 	    irc_handle_interpret_events(event, &message_concat, &state);
