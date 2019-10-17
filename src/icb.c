@@ -123,14 +123,21 @@ handle_status_msg_packet(const char *pktdata)
 	cp = &pktdata_copy[7];
 
 	if (!strncmp(cp, "You are now in group ", 21)) {
-	    /*
-	     * TODO: Leave previous group?
-	     */
+	    if (icb_group) {
+		event = strdup_printf(":%s PART #%s\r\n", g_my_nickname,
+		    icb_group);
+		irc_handle_interpret_events(event, &message_concat, &state);
+		free_and_null(&event);
+	    }
 
 	    cp += 21;
+	    free_and_null(&icb_group);
+	    icb_group = sw_strdup(cp);
+
 	    event = strdup_printf(":%s JOIN :#%s\r\n", g_my_nickname, cp);
 	    irc_handle_interpret_events(event, &message_concat, &state);
 	    free_and_null(&event);
+
 	    icb_send_users(cp);
 	}
     } else {
