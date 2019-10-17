@@ -134,10 +134,11 @@ handle_status_msg_packet(const char *pktdata)
 	    icb_send_users(cp);
 	}
     } else {
+	while ((cp = strpbrk(pktdata_copy, ICB_FIELD_SEP)) != NULL)
+	    *cp = 'X';
 	ctx.spec_type = TYPE_SPEC1_WARN;
 	printtext(&ctx, "handle_status_msg_packet: "
 	    "unknown status message category");
-	squeeze(pktdata_copy, ICB_FIELD_SEP);
 	printtext(&ctx, "packet data: %s", pktdata_copy);
     }
 
