@@ -173,6 +173,17 @@ handle_cmd_output_packet(const char *pktdata)
 	char *userhost      = strtok_r(NULL, ICB_FIELD_SEP, &last);
 	char *reg_status    = strtok_r(NULL, ICB_FIELD_SEP, &last);
 #endif
+
+	if (initial_token == NULL || nickname == NULL) {
+	    ctx.spec_type = TYPE_SPEC1_FAILURE;
+	    printtext(&ctx, "handle_cmd_output_packet: missing essential "
+		"initial token or nickname during who listing");
+	} else {
+	    const bool is_moderator = !strings_match(initial_token, " ");
+
+	    process_event(":%s 353 %s = #%s :%s%s\r\n", icb_hostid,
+		g_my_nickname, icb_group, is_moderator ? "@" : "", nickname);
+	}
     } else {
 	/*
 	 * Unknown output type
