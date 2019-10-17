@@ -110,14 +110,46 @@ handle_personal_msg_packet(const char *pktdata)
 static void
 handle_status_msg_packet(const char *pktdata)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char *cp = NULL;
-    char *pktdata_copy = sw_strdup(pktdata);
+    PRINTTEXT_CONTEXT	 ctx;
+    char		*cp           = NULL;
+    char		*last         = "";
+    char		*nick         = NULL,
+			*user         = NULL,
+			*host         = NULL;
+    char		*pktdata_copy = sw_strdup(pktdata);
+    const char		 sep[]        = " (@)";
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
 
     if (!strncmp(pktdata_copy, "No-Pass" ICB_FIELD_SEP, 8)) {
+	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s", &pktdata_copy[8]);
+    } else if (!strncmp(pktdata_copy, "Sign-on" ICB_FIELD_SEP, 8)) {
+	if ((nick = strtok_r(&pktdata_copy[8], sep, &last)) == NULL) {
+	    ctx.spec_type = TYPE_SPEC1_FAILURE;
+	    printtext(&ctx, "handle_status_msg_packet: during sign-on: "
+		"no nick");
+	} else {
+	    user = strtok_r(NULL, sep, &last);
+	    host = strtok_r(NULL, sep, &last);
+
+	    process_event(":%s!%s@%s JOIN #%s\r\n", nick,
+		user ? user : "<no user>", host ? host : "<no host>",
+		icb_group);
+	}
+    } else if (!strncmp(pktdata_copy, "Sign-off" ICB_FIELD_SEP, 9)) {
+	if ((nick = strtok_r(&pktdata_copy[9], sep, &last)) == NULL) {
+	    ctx.spec_type = TYPE_SPEC1_FAILURE;
+	    printtext(&ctx, "handle_status_msg_packet: during sign-off: "
+		"no nick");
+	} else {
+	    user = strtok_r(NULL, sep, &last);
+	    host = strtok_r(NULL, sep, &last);
+
+	    process_event(":%s!%s@%s PART #%s\r\n", nick,
+		user ? user : "<no user>", host ? host : "<no host>",
+		icb_group);
+	}
     } else if (!strncmp(pktdata_copy, "Status" ICB_FIELD_SEP, 7)) {
 	cp = &pktdata_copy[7];
 
@@ -140,7 +172,7 @@ handle_status_msg_packet(const char *pktdata)
 	printtext(&ctx, "handle_status_msg_packet: "
 	    "unknown status message category");
 	printtext(&ctx, "packet data: %s", pktdata_copy);
-    }
+    } /* if-then-else */
 
     free_and_null(&pktdata_copy);
 }
