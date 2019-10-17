@@ -225,3 +225,13 @@ icb_send_group(const char *group)
     packet[0] = (char) strlen(&packet[1]);
     net_send("%s", packet);
 }
+
+void
+icb_send_users(const char *arg)
+{
+    char packet[ICB_PACKET_MAX] = { '\0' };
+
+    snprintf(packet, ARRAY_SIZE(packet), " hw%s%s", ICB_FIELD_SEP, arg);
+    packet[0] = (char) strlen(&packet[1]);
+    net_send("%s", packet);
+}
