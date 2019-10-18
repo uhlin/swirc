@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- **Support for the ICB protocol**
+
 ### Changed ###
 - Error messages (in order to improve them)
 
