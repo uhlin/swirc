@@ -35,6 +35,7 @@
 #include "dataClassify.h"
 #include "errHand.h"
 #include "libUtils.h"
+#include "main.h"
 #include "network.h"
 #include "strdup_printf.h"
 
@@ -104,7 +105,8 @@ net_send_plain(const char *fmt, ...)
     buffer = strdup_vprintf(fmt, ap);
     va_end(ap);
 
-    realloc_strcat(&buffer, "\r\n");
+    if (!g_icb_mode)
+	realloc_strcat(&buffer, "\r\n");
 
     if ((n_sent = send(g_socket, buffer, size_to_int(strlen(buffer)), 0)) ==
 	SOCKET_ERROR) {
