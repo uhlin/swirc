@@ -87,6 +87,29 @@ login_ok()
 }
 
 static void
+handle_open_msg_packet(const char *pktdata)
+{
+    char *last = "";
+    char *message = NULL;
+    char *nickname = NULL;
+    char *pktdata_copy = sw_strdup(pktdata);
+
+    nickname = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last);
+    message = strtok_r(NULL, ICB_FIELD_SEP, &last);
+
+    if (nickname == NULL || message == NULL) {
+	print_and_free("handle_open_msg_packet: too few tokens!", pktdata_copy);
+	return;
+    } else if (icb_group == NULL) {
+	print_and_free("handle_open_msg_packet: not in a group", pktdata_copy);
+	return;
+    }
+
+    process_event(":%s PRIVMSG #%s :%s\r\n", nickname, icb_group, message);
+    free_and_null(&pktdata_copy);
+}
+
+static void
 handle_personal_msg_packet(const char *pktdata)
 {
     char *last = "";
@@ -272,6 +295,9 @@ icb_irc_proxy(char length, char type, const char *pktdata)
     switch (type) {
     case 'a':
 	login_ok();
+	break;
+    case 'b':
+	handle_open_msg_packet(pktdata);
 	break;
     case 'c':
 	handle_personal_msg_packet(pktdata);
