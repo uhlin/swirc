@@ -385,9 +385,7 @@ cmd_connect(const char *data)
 	sw_assert(server != NULL);
 
 	if ((port = strtok_r(NULL, "\n:", &state)) == NULL) {
-	    if (g_icb_mode)
-		port = ICB_PORT;
-	    else if (ssl_is_enabled())
+	    if (ssl_is_enabled())
 		port = SSL_PORT;
 	    else
 		port = IRC_PORT;
