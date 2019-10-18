@@ -164,6 +164,12 @@ get_password()
 }
 
 static void
+turn_icb_mode_on()
+{
+    g_icb_mode = true;
+}
+
+static void
 reconnect_begin()
 {
     quit_reconnecting = false;
@@ -243,7 +249,9 @@ do_connect(const char *server, const char *port)
 	ptext_ctx.spec_type = TYPE_SPEC2;
 	conn_ctx.password = (g_connection_password ? get_password() : NULL);
 
-	if (!ssl_is_enabled() && strings_match(conn_ctx.port, SSL_PORT))
+	if (!g_icb_mode && strings_match(conn_ctx.port, ICB_PORT))
+	    turn_icb_mode_on();
+	else if (!ssl_is_enabled() && strings_match(conn_ctx.port, SSL_PORT))
 	    set_ssl_on();
 
 	reconnect_begin();
