@@ -29,6 +29,8 @@
    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
    POSSIBILITY OF SUCH DAMAGE. */
 
+//lint -e786
+
 static const char *away_usage[] = {
     "usage: /away [reason]",
     "",
@@ -503,5 +505,7 @@ static const char *whois_usage[] = {
     "(Specified by nick)",
     "",
 };
+
+//lint +e786
 
 #endif
