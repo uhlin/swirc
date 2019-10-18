@@ -390,14 +390,14 @@ cmd_connect(const char *data)
 	    else if (ssl_is_enabled())
 		port = SSL_PORT;
 	    else
-		port = "6667";
+		port = IRC_PORT;
 	}
     } else if (feeds_written == 0) {
 	server = strtok_r(dcopy, "\n:", &state);
 	sw_assert(server != NULL);
 
 	if ((port = strtok_r(NULL, "\n:", &state)) == NULL)
-	    port = "6667";
+	    port = IRC_PORT;
     } else {
 	sw_assert_not_reached();
     }
