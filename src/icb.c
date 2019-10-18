@@ -42,15 +42,6 @@ static char	 icb_hostid[256]     = { '\0' };
 static char	 icb_serverid[256]   = { '\0' };
 static char	*icb_group           = NULL;
 
-/*
- * "It's perfectly appropriate to parse strings with sscanf (as long
- * as the return value is checked), because it's so easy to regain
- * control, restart the scan, discard the input if it didn't match,
- * etc."  --  c-faq.com/stdio/scanfprobs.html
- *
- * NOTE: sscanf() not scanf()
- */
-
 /*lint -printf(1, process_event) */
 
 static void
