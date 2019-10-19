@@ -300,7 +300,7 @@ handle_proto_packet(const char *pktdata)
 }
 
 static void
-unknown_packet_type(const char length, const char type, const char *pktdata)
+unknown_packet_type(const int length, const char type, const char *pktdata)
 {
     PRINTTEXT_CONTEXT ctx;
 
@@ -310,7 +310,7 @@ unknown_packet_type(const char length, const char type, const char *pktdata)
 }
 
 void
-icb_irc_proxy(char length, char type, const char *pktdata)
+icb_irc_proxy(const int length, const char type, const char *pktdata)
 {
     switch (type) {
     case 'a':

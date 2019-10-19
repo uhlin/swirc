@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-void icb_irc_proxy(char length, char type, const char *pktdata);
+void icb_irc_proxy(const int length, const char type, const char *pktdata);
 void icb_send_group(const char *group);
 void icb_send_users(const char *arg);
 
