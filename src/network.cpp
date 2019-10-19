@@ -456,12 +456,23 @@ net_irc_listen(bool *connection_lost)
 	    if (net_recv(&ctx, recvbuf, 1) != 1)
 		continue;
 
-	    char length = recvbuf[0];
+	    const int length = (int) recvbuf[0];
 
 	    if ((bytes_received = net_recv(&ctx, recvbuf, length)) == -1)
 		break;
-	    else if (bytes_received > 0)
+	    else if (bytes_received != length) {
+		const int bytes_remaining = int_diff(length, bytes_received);
+		char tmp[ICB_PACKET_MAX];
+		char concat[ICB_PACKET_MAX * 2];
+
+		if (net_recv(&ctx, tmp, bytes_remaining) != bytes_remaining)
+		    break;
+
+		snprintf(concat, ARRAY_SIZE(concat), "%s%s", recvbuf, tmp);
+		icb_irc_proxy(length, concat[0], &concat[1]);
+	    } else if (bytes_received > 0) {
 		icb_irc_proxy(length, recvbuf[0], &recvbuf[1]);
+	    }
 	} else {
 	    /*
 	     * IRC
