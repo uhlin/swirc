@@ -133,6 +133,13 @@ static const char *exlist_usage[] = {
     "",
 };
 
+static const char *group_usage[] = {
+    "usage: /group <name>",
+    "",
+    "Changes ICB group.",
+    "",
+};
+
 static const char *help_usage[] = {
     "usage: /help [command]",
     "",

@@ -102,6 +102,7 @@ static struct cmds_tag {
     { "deop",        cmd_deop,        true,  deop_usage,        ARRAY_SIZE(deop_usage),        true  },
     { "disconnect",  cmd_disconnect,  false, disconnect_usage,  ARRAY_SIZE(disconnect_usage),  false },
     { "exlist",      cmd_exlist,      true,  exlist_usage,      ARRAY_SIZE(exlist_usage),      true  },
+    { "group",       cmd_group,       true,  group_usage,       ARRAY_SIZE(group_usage),       false },
     { "help",        cmd_help,        false, help_usage,        ARRAY_SIZE(help_usage),        false },
     { "ilist",       cmd_ilist,       true,  ilist_usage,       ARRAY_SIZE(ilist_usage),       true  },
     { "invite",      cmd_invite,      true,  invite_usage,      ARRAY_SIZE(invite_usage),      true  },

@@ -36,6 +36,7 @@
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
+#include "../icb.h"
 #include "../io-loop.h"
 #include "../libUtils.h"
 #include "../main.h"
@@ -213,6 +214,16 @@ cmd_exlist(const char *data)
 	if (net_send("MODE %s +e", data) < 0)
 	    g_on_air = false;
     }
+}
+
+/* usage: /group <name> */
+void
+cmd_group(const char *data)
+{
+    if (!g_icb_mode)
+	return;
+    if (!strings_match(data, ""))
+	icb_send_group(data);
 }
 
 /* usage: /ilist [channel] */

@@ -6,6 +6,7 @@ void cmd_banlist (const char *);
 void cmd_close   (const char *);
 void cmd_cycle   (const char *);
 void cmd_exlist  (const char *);
+void cmd_group   (const char *);
 void cmd_ilist   (const char *);
 void cmd_list    (const char *);
 void cmd_mode    (const char *);
