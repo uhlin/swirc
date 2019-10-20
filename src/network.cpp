@@ -464,12 +464,16 @@ net_irc_listen(bool *connection_lost)
 	    if ((bytes_received = net_recv(&ctx, recvbuf, length)) == -1)
 		break;
 	    else if (bytes_received != length) {
-		const int bytes_remaining = int_diff(length, bytes_received);
+		const int maxval = MAX(length, bytes_received);
+		const int minval = MIN(length, bytes_received);
+		const int bytes_remaining = int_diff(maxval, minval);
 		char tmp[ICB_PACKET_MAX];
 		char concat[ICB_PACKET_MAX * 2];
 
-		if (net_recv(&ctx, tmp, bytes_remaining) != bytes_remaining)
-		    break;
+		if (net_recv(&ctx, tmp, bytes_remaining) != bytes_remaining) {
+		    err_log(EPROTO, "net_irc_listen: "
+			"read bytes mismatch remaining (%d)", bytes_remaining);
+		}
 
 		snprintf(concat, ARRAY_SIZE(concat), "%s%s", recvbuf, tmp);
 		icb_irc_proxy(length, concat[0], &concat[1]);
