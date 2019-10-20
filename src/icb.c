@@ -37,6 +37,8 @@
 #include "strHand.h"
 #include "strdup_printf.h"
 
+volatile bool g_icb_processing_names = false;
+
 static char	 icb_protolevel[256] = { '\0' };
 static char	 icb_hostid[256]     = { '\0' };
 static char	 icb_serverid[256]   = { '\0' };
