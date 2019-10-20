@@ -471,18 +471,17 @@ main(int argc, char *argv[])
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201811
-    if (unveil(g_home_dir, "rwc") == -1) {
-	err_ret("fatal: unveil(%s, ...)", g_home_dir);
-	return EXIT_FAILURE;
-    }
+    if (unveil(g_home_dir, "rwc") == -1)
+	err_dump("fatal: unveil(%s, ...)", g_home_dir);
 
-    /**
+    /*
      * Read access to cert.pem is needed by libcurl
      */
-    if (unveil("/etc/ssl/cert.pem", "r") == -1) {
-	err_ret("fatal: unveil(%s, ...)", "/etc/ssl/cert.pem");
-	return EXIT_FAILURE;
-    }
+
+    const char cert_pem_path[] = "/etc/ssl/cert.pem";
+
+    if (unveil(cert_pem_path, "r") == -1)
+	err_dump("fatal: unveil(%s, ...)", cert_pem_path);
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201605
