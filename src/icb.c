@@ -225,12 +225,15 @@ handle_status_msg_packet(const char *pktdata)
 static void
 handle_cmd_output_packet(const char *pktdata)
 {
+    PIRC_WINDOW win = NULL;
     PRINTTEXT_CONTEXT ctx;
     char *cp = NULL;
     char *last = "";
     char *pktdata_copy = sw_strdup(pktdata);
+    char label[256] = { '\0' };
 
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
+    snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
 
     if (!strncmp(pktdata_copy, "co", 2)) {
 	/*
@@ -241,14 +244,11 @@ handle_cmd_output_packet(const char *pktdata)
 	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s", &pktdata_copy[2]);
 
-	char str[256] = { '\0' };
-	char label[256] = { '\0' };
-	PIRC_WINDOW win = NULL;
-
-	snprintf(str, ARRAY_SIZE(str), "Group: %s", icb_group);
-	snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
-
 	if ((win = window_by_label(label)) != NULL && ! (win->received_names)) {
+	    char str[256] = { '\0' };
+
+	    snprintf(str, ARRAY_SIZE(str), "Group: %s", icb_group);
+
 	    if (!strncmp(&pktdata_copy[2], str, strlen(str)))
 		atomic_swap_bool(&g_icb_processing_names, true);
 	}
