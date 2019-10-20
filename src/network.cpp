@@ -453,8 +453,11 @@ net_irc_listen(bool *connection_lost)
 	BZERO(recvbuf, RECVBUF_SIZE);
 
 	if (g_icb_mode) {
-	    if (net_recv(&ctx, recvbuf, 1) != 1)
+	    if (net_recv(&ctx, recvbuf, 1) != 1) {
+		if (atomic_load_bool(&g_icb_processing_names))
+		    icb_process_event_eof_names();
 		continue;
+	    }
 
 	    const int length = (int) recvbuf[0];
 
