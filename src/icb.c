@@ -169,8 +169,12 @@ handle_status_msg_packet(const char *pktdata)
     if (!strncmp(pktdata_copy, "No-Pass" ICB_FIELD_SEP, 8)) {
 	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s", &pktdata_copy[8]);
-    } else if (!strncmp(pktdata_copy, "Sign-on" ICB_FIELD_SEP, 8)) {
-	if ((nick = strtok_r(&pktdata_copy[8], sep, &last)) == NULL) {
+    } else if (!strncmp(pktdata_copy, "Sign-on" ICB_FIELD_SEP, 8) ||
+	       !strncmp(pktdata_copy, "Arrive" ICB_FIELD_SEP, 7)) {
+	const int offset =
+	    (!strncmp(pktdata_copy, "Sign-on" ICB_FIELD_SEP, 8) ? 8 : 7);
+
+	if ((nick = strtok_r(&pktdata_copy[offset], sep, &last)) == NULL) {
 	    ctx.spec_type = TYPE_SPEC1_FAILURE;
 	    printtext(&ctx, "handle_status_msg_packet: during sign-on: "
 		"no nick");
@@ -182,8 +186,12 @@ handle_status_msg_packet(const char *pktdata)
 		user ? user : "<no user>", host ? host : "<no host>",
 		icb_group);
 	}
-    } else if (!strncmp(pktdata_copy, "Sign-off" ICB_FIELD_SEP, 9)) {
-	if ((nick = strtok_r(&pktdata_copy[9], sep, &last)) == NULL) {
+    } else if (!strncmp(pktdata_copy, "Sign-off" ICB_FIELD_SEP, 9) ||
+	       !strncmp(pktdata_copy, "Depart" ICB_FIELD_SEP, 7)) {
+	const int offset =
+	    (!strncmp(pktdata_copy, "Sign-off" ICB_FIELD_SEP, 9) ? 9 : 7);
+
+	if ((nick = strtok_r(&pktdata_copy[offset], sep, &last)) == NULL) {
 	    ctx.spec_type = TYPE_SPEC1_FAILURE;
 	    printtext(&ctx, "handle_status_msg_packet: during sign-off: "
 		"no nick");
