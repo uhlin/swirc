@@ -352,6 +352,14 @@ icb_irc_proxy(const int length, const char type, const char *pktdata)
 }
 
 void
+icb_process_event_eof_names(void)
+{
+    process_event(":%s 366 %s #%s :End of names\r\n", icb_hostid, g_my_nickname,
+	icb_group);
+    atomic_swap_bool(&g_icb_processing_names, false);
+}
+
+void
 icb_send_group(const char *group)
 {
     char packet[ICB_PACKET_MAX] = { '\0' };
