@@ -34,6 +34,7 @@
 #include "../errHand.h"
 #include "../irc.h"
 #include "../libUtils.h"
+#include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -882,7 +883,8 @@ event_eof_names(struct irc_message_compo *compo)
 	goto bad;
     }
 
-    net_send("MODE %s", channel);
+    if (!g_icb_mode)
+	net_send("MODE %s", channel);
     return;
 
   bad:
