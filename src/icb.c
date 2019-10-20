@@ -240,6 +240,18 @@ handle_cmd_output_packet(const char *pktdata)
 	squeeze(pktdata_copy, ICB_FIELD_SEP);
 	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s", &pktdata_copy[2]);
+
+	char str[256] = { '\0' };
+	char label[256] = { '\0' };
+	PIRC_WINDOW win = NULL;
+
+	snprintf(str, ARRAY_SIZE(str), "Group: %s", icb_group);
+	snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
+
+	if ((win = window_by_label(label)) != NULL && ! (win->received_names)) {
+	    if (!strncmp(&pktdata_copy[2], str, strlen(str)))
+		atomic_swap_bool(&g_icb_processing_names, true);
+	}
     } else if (!strncmp(pktdata_copy, "wl", 2)) {
 	char *initial_token = strtok_r(&pktdata_copy[2], ICB_FIELD_SEP, &last);
 	char *nickname      = strtok_r(NULL, ICB_FIELD_SEP, &last);
