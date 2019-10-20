@@ -253,6 +253,11 @@ cmd_list(const char *data)
 {
     const bool has_params = !strings_match(data, "");
 
+    if (g_icb_mode) {
+	icb_send_users("-g");
+	return;
+    }
+
     if (has_params) {
 	if (net_send("LIST %s", data) < 0)
 	    g_on_air = false;
