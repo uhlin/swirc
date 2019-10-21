@@ -466,17 +466,35 @@ net_irc_listen(bool *connection_lost)
 	    else if (bytes_received != length) {
 		const int maxval = MAX(length, bytes_received);
 		const int minval = MIN(length, bytes_received);
+
 		const int bytes_remaining = int_diff(maxval, minval);
-		char tmp[ICB_PACKET_MAX];
-		char concat[ICB_PACKET_MAX * 2];
 
-		if (net_recv(&ctx, tmp, bytes_remaining) != bytes_remaining) {
-		    err_log(EPROTO, "net_irc_listen: "
-			"read bytes mismatch remaining (%d)", bytes_remaining);
+		char *tmp = (char *) xmalloc(bytes_remaining + 1);
+		tmp[bytes_remaining + 1] = '\0';
+
+		if (bytes_received = net_recv(&ctx, tmp, bytes_remaining),
+		    bytes_received != bytes_remaining)
+		    {
+			err_log(EPROTO, "net_irc_listen: warning: "
+			    "read bytes mismatch remaining");
+			err_log(0, "read bytes: %d", bytes_received);
+			err_log(0, "remaining:  %d", bytes_remaining);
+			free(tmp);
+			continue;
+		    }
+
+		const size_t concatSize = strlen(recvbuf) + strlen(tmp) + 1;
+		char *concat = (char *) xmalloc(concatSize);
+
+		if (sw_strcpy(concat, recvbuf, concatSize) == 0 &&
+		    sw_strcat(concat, tmp, concatSize) == 0)
+		    icb_irc_proxy(length, concat[0], &concat[1]);
+		else {
+		    err_log(ENOBUFS, "net_irc_listen: "
+			"sw_strcpy() or sw_strcat()");
 		}
-
-		snprintf(concat, ARRAY_SIZE(concat), "%s%s", recvbuf, tmp);
-		icb_irc_proxy(length, concat[0], &concat[1]);
+		free(tmp);
+		free(concat);
 	    } else if (bytes_received > 0) {
 		icb_irc_proxy(length, recvbuf[0], &recvbuf[1]);
 	    }
