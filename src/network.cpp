@@ -40,6 +40,7 @@
 #include <stdexcept>
 #include <string.h>
 
+#include "assertAPI.h"
 #include "config.h"
 #include "errHand.h"
 #include "icb.h"
@@ -459,11 +460,15 @@ net_irc_listen(bool *connection_lost)
 		continue;
 	    }
 
-	    const int length = (int) recvbuf[0];
+	    char array[10] = { '\0' };
+	    snprintf(array, ARRAY_SIZE(array), "%d",
+		(unsigned char) recvbuf[0]);
+	    const int length = atoi(array);
+	    sw_assert(length >= 0 && length <= UCHAR_MAX);
 
 	    if ((bytes_received = net_recv(&ctx, recvbuf, length)) == -1)
 		break;
-	    else if (bytes_received != length) {
+	    else if (bytes_received != length && length != 0) {
 		const int maxval = MAX(length, bytes_received);
 		const int minval = MIN(length, bytes_received);
 
