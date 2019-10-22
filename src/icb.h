@@ -15,6 +15,7 @@ void icb_irc_proxy(const int length, const char type, const char *pktdata);
 void icb_process_event_eof_names(void);
 void icb_send_group(const char *group);
 void icb_send_noop(void);
+void icb_send_open_msg(const char *text);
 void icb_send_pm(const char *to_who, const char *text);
 void icb_send_users(const char *arg);
 
