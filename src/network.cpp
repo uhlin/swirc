@@ -475,7 +475,7 @@ net_irc_listen(bool *connection_lost)
 		const int bytes_remaining = int_diff(maxval, minval);
 
 		char *tmp = (char *) xmalloc(bytes_remaining + 1);
-		tmp[bytes_remaining + 1] = '\0';
+		tmp[bytes_remaining] = '\0';
 
 		if (bytes_received = net_recv(&ctx, tmp, bytes_remaining),
 		    bytes_received != bytes_remaining)
