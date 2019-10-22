@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include "errHand.h"
 #include "icb.h"
 #include "irc.h"
 #include "libUtils.h"
