@@ -261,8 +261,10 @@ handle_cmd_output_packet(const char *pktdata)
 		atomic_swap_bool(&g_icb_processing_names, true);
 	}
     } else if (!strncmp(pktdata_copy, "wl", 2)) {
-	if ((win = window_by_label(label)) != NULL && win->received_names)
+	if ((win = window_by_label(label)) != NULL && win->received_names) {
+	    free_and_null(&pktdata_copy);
 	    return;
+	}
 
 	char *initial_token = strtok_r(&pktdata_copy[2], ICB_FIELD_SEP, &last);
 	char *nickname      = strtok_r(NULL, ICB_FIELD_SEP, &last);
