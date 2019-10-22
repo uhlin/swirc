@@ -385,6 +385,11 @@ icb_send_group(const char *group)
 }
 
 void
+icb_send_noop(void)
+{
+}
+
+void
 icb_send_users(const char *arg)
 {
     char packet[ICB_PACKET_MAX] = { '\0' };
