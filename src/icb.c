@@ -45,6 +45,7 @@ static char	 icb_serverid[256]   = { '\0' };
 static char	*icb_group           = NULL;
 
 /*lint -printf(1, process_event) */
+/*lint -printf(2, sendpacket) */
 
 static void
 process_event(const char *format, ...)
@@ -372,6 +373,29 @@ icb_process_event_eof_names(void)
     process_event(":%s 366 %s #%s :End of names\r\n", icb_hostid, g_my_nickname,
 	icb_group);
     atomic_swap_bool(&g_icb_processing_names, false);
+}
+
+static void
+sendpacket(bool *was_truncated, const char *format, ...)
+{
+    char msg[ICB_MESSAGE_MAX] = { '\0' };
+    int ret = -1;
+    va_list ap;
+
+    if (was_truncated)
+	*was_truncated = false;
+
+    va_start(ap, format);
+    ret = vsnprintf(msg, ARRAY_SIZE(msg), format, ap);
+    va_end(ap);
+
+    if (ret < 0 || ((size_t) ret) >= ARRAY_SIZE(msg)) {
+	if (was_truncated)
+	    *was_truncated = true;
+    }
+
+    const int msglen = (int) strlen(msg);
+    net_send("%c%s", msglen, msg);
 }
 
 void
