@@ -507,21 +507,10 @@ transmit_user_input(const char *win_label, const char *input)
     }
 
     if (g_icb_mode) {
-	char packet[ICB_PACKET_MAX] = { '\0' };
-
-	/*
-	 * FIXME: Input is too limited in length
-	 */
-
-	if (is_irc_channel(win_label)) {
-	    snprintf(packet, ARRAY_SIZE(packet), " b%s", input);
-	} else {
-	    snprintf(packet, ARRAY_SIZE(packet), " hm%s%s %s", ICB_FIELD_SEP,
-		win_label, input);
-	}
-
-	packet[0] = (char) strlen(&packet[1]);
-	net_send("%s", packet);
+	if (is_irc_channel(win_label))
+	    icb_send_open_msg(input);
+	else
+	    icb_send_pm(win_label, input);
     } else {
 	if (net_send("PRIVMSG %s :%s", win_label, input) < 0) {
 	    g_on_air = false;
