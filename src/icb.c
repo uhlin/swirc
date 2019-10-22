@@ -407,6 +407,7 @@ icb_send_group(const char *group)
 void
 icb_send_noop(void)
 {
+    sendpacket(NULL, "n");
 }
 
 void
