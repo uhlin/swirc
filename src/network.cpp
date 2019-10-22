@@ -208,52 +208,24 @@ send_reg_cmds(const struct network_connect_context *ctx)
 static PTR_ARGS_NONNULL void
 send_icb_login_packet(const struct network_connect_context *ctx)
 {
-    char *packet = sw_strdup(" a");
+    char msg[ICB_MESSAGE_MAX] = "";
 
-    /*
-     * Loginid
-     */
-    realloc_strcat(&packet, ctx->username);
-    realloc_strcat(&packet, ICB_FIELD_SEP);
+    const int ret =
+	snprintf(msg, ARRAY_SIZE(msg), "a%s%s%s%s%s%s%s%s%s%s",
+	    ctx->username, ICB_FIELD_SEP,
+	    ctx->nickname, ICB_FIELD_SEP,
+	    "1", ICB_FIELD_SEP,
+	    "login", ICB_FIELD_SEP,
+	    ctx->password ? ctx->password : " ", ICB_FIELD_SEP);
 
-    /*
-     * Nickname
-     */
+    if (ret < 0 || ((size_t) ret) >= ARRAY_SIZE(msg)) {
+	err_log(ENOBUFS, "send_icb_login_packet: message too long!");
+	return;
+    }
+
     irc_set_my_nickname(ctx->nickname);
-    realloc_strcat(&packet, ctx->nickname);
-    realloc_strcat(&packet, ICB_FIELD_SEP);
-
-    /*
-     * DefaultGroup
-     */
-    realloc_strcat(&packet, "1");
-    realloc_strcat(&packet, ICB_FIELD_SEP);
-
-    /*
-     * Command
-     */
-    realloc_strcat(&packet, "login");
-    realloc_strcat(&packet, ICB_FIELD_SEP);
-
-    /*
-     * Pass
-     */
-    realloc_strcat(&packet, ctx->password ? ctx->password : " ");
-    realloc_strcat(&packet, ICB_FIELD_SEP);
-
-    /*
-     * GroupStatus
-     */
-    realloc_strcat(&packet, "");
-    realloc_strcat(&packet, ICB_FIELD_SEP);
-
-    /*
-     * ... (ProtocolLevel) ...
-     */
-
-    packet[0] = (char) strlen(&packet[1]);
-    net_send("%s", packet);
-    free_not_null(packet);
+    const int msglen = (int) strlen(msg);
+    net_send("%c%s", msglen, msg);
 }
 
 bool
