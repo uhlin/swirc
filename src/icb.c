@@ -260,6 +260,8 @@ handle_cmd_output_packet(const char *pktdata)
 	    if (!strncmp(&pktdata_copy[2], str, strlen(str)))
 		atomic_swap_bool(&g_icb_processing_names, true);
 	}
+    } else if (!strncmp(pktdata_copy, "wh", 2)) {
+	/* Tell client to output header for who listing output. Deprecated. */;
     } else if (!strncmp(pktdata_copy, "wl", 2)) {
 	if ((win = window_by_label(label)) != NULL && win->received_names) {
 	    free_and_null(&pktdata_copy);
