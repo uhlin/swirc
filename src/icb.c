@@ -411,6 +411,17 @@ icb_send_noop(void)
 }
 
 void
+icb_send_pm(const char *to_who, const char *text)
+{
+    bool was_truncated = false;
+
+    sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who, text);
+
+    if (was_truncated)
+	err_log(ENOBUFS, "icb_send_pm: text truncated");
+}
+
+void
 icb_send_users(const char *arg)
 {
     sendpacket(NULL, "hw%s%s", ICB_FIELD_SEP, arg);
