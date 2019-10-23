@@ -45,6 +45,9 @@ static char	 icb_hostid[256]     = { '\0' };
 static char	 icb_serverid[256]   = { '\0' };
 static char	*icb_group           = NULL;
 
+static void	 process_event(const char *, ...) PRINTFLIKE(1);
+static void	 sendpacket(bool *, const char *, ...) PRINTFLIKE(2);
+
 /*lint -printf(1, process_event) */
 /*lint -printf(2, sendpacket) */
 
