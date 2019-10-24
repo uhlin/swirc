@@ -1,6 +1,8 @@
 #include "common.h"
 
 #include "../dataClassify.h"
+#include "../icb.h"
+#include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -12,11 +14,15 @@ void
 cmd_topic(const char *data)
 {
     if (strings_match(data, "") && is_irc_channel(ACTWINLABEL)) {
-	if (net_send("TOPIC %s", ACTWINLABEL) < 0)
-	    g_on_air = false;
+	if (g_icb_mode)
+	    icb_send_topic("");
+	else
+	    (void) net_send("TOPIC %s", ACTWINLABEL);
     } else if (!strings_match(data, "") && is_irc_channel(ACTWINLABEL)) {
-	if (net_send("TOPIC %s :%s", ACTWINLABEL, data) < 0)
-	    g_on_air = false;
+	if (g_icb_mode)
+	    icb_send_topic(data);
+	else
+	    (void) net_send("TOPIC %s :%s", ACTWINLABEL, data);
     } else {
 	PRINTTEXT_CONTEXT ctx;
 

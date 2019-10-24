@@ -131,7 +131,7 @@ static struct cmds_tag {
     { "set",         cmd_set,         false, set_usage,         ARRAY_SIZE(set_usage),         false },
     { "theme",       cmd_theme,       false, theme_usage,       ARRAY_SIZE(theme_usage),       false },
     { "time",        cmd_time,        true,  time_usage,        ARRAY_SIZE(time_usage),        true  },
-    { "topic",       cmd_topic,       true,  topic_usage,       ARRAY_SIZE(topic_usage),       true  },
+    { "topic",       cmd_topic,       true,  topic_usage,       ARRAY_SIZE(topic_usage),       false },
     { "unban",       cmd_unban,       true,  unban_usage,       ARRAY_SIZE(unban_usage),       true  },
     { "version",     cmd_version,     true,  version_usage,     ARRAY_SIZE(version_usage),     true  },
     { "who",         cmd_who,         true,  who_usage,         ARRAY_SIZE(who_usage),         true  },
