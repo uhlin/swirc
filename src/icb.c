@@ -457,6 +457,12 @@ icb_send_pm(const char *to_who, const char *text)
 }
 
 void
+icb_send_topic(const char *new_topic)
+{
+    sendpacket(NULL, "htopic%s%s", ICB_FIELD_SEP, new_topic);
+}
+
+void
 icb_send_users(const char *arg)
 {
     sendpacket(NULL, "hw%s%s", ICB_FIELD_SEP, arg);
