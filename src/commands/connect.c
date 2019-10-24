@@ -313,10 +313,9 @@ ssl_is_enabled(void)
 }
 
 static const char *
-get_server(const char **ar, const size_t ar_sz, const char *msg)
+get_server(const char *ar[], const char *msg)
 {
     char ans[20] = "";
-    const char **ppcc = ar;
     int c = EOF;
     int i = 0;
     int srvno = 0;
@@ -324,14 +323,10 @@ get_server(const char **ar, const size_t ar_sz, const char *msg)
     escape_curses();
     puts(msg);
 
-    while (ppcc < &ar[ar_sz]) {
-	printf("    (%d) %s\n", i, *ppcc);
-	ppcc++, i++;
-    }
-
+    for (; ar[i] != NULL; i++)
+	printf("    (%d) %s\n", i, ar[i]);
     if (i > 0)
 	i--;
-
     while (BZERO(ans, sizeof ans), true) {
 	printf("Your choice (0-%d): ", i);
 	fflush(stdout);
