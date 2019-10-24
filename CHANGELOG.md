@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - **Support for the ICB protocol**
 - Command
+  - `/boot`
   - `/group`
 
 ### Changed ###

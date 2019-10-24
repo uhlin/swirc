@@ -55,6 +55,13 @@ static const char *banlist_usage[] = {
     "",
 };
 
+static const char *boot_usage[] = {
+    "usage: /boot <victim>",
+    "",
+    "In ICB mode: kick an user out of the active group.",
+    "",
+};
+
 static const char *chanserv_usage[] = {
     "usage: /chanserv <[service hostname | --]> <command> [...]",
     "",
