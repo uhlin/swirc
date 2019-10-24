@@ -167,11 +167,17 @@ handle_status_msg_packet(const char *pktdata)
 			*user         = NULL,
 			*host         = NULL;
     char		*pktdata_copy = sw_strdup(pktdata);
+    char		 label[256]   = { '\0' };
     const char		 sep[]        = " (@)";
 
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
 
-    if (!strncmp(pktdata_copy, "No-Pass" ICB_FIELD_SEP, 8)) {
+    if (!strncmp(pktdata_copy, "Boot" ICB_FIELD_SEP, 5)) {
+	snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
+	ctx.spec_type = TYPE_SPEC3;
+	if ((ctx.window = window_by_label(label)) != NULL)
+	    printtext(&ctx, "%s", &pktdata_copy[5]);
+    } else if (!strncmp(pktdata_copy, "No-Pass" ICB_FIELD_SEP, 8)) {
 	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s", &pktdata_copy[8]);
     } else if (!strncmp(pktdata_copy, "Notify" ICB_FIELD_SEP, 7)) {
