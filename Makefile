@@ -25,7 +25,4 @@ LIB_DEPENDS =		net/curl
 
 CONFIGURE_STYLE =	simple
 
-ALL_TARGET =		all
-INSTALL_TARGET =	install
-
 .include <bsd.port.mk>
