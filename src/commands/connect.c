@@ -50,6 +50,7 @@ static bool secure_connection = false;
 static const char *anonops_servers[] = {
     "anonops532vcpz6z.onion",
     "irc.anonops.com",
+    NULL
 };
 
 static const char *efnet_servers[] = {
@@ -62,6 +63,7 @@ static const char *efnet_servers[] = {
     "irc.mzima.net",
     "irc.servercentral.net",
     "irc.underworld.no",
+    NULL
 };
 
 static const char *freenode_servers[] = {
@@ -74,6 +76,7 @@ static const char *freenode_servers[] = {
     "orwell.freenode.net",
     "verne.freenode.net",
     "weber.freenode.net",
+    NULL
 };
 
 static const char *ircnet_servers[] = {
@@ -82,6 +85,7 @@ static const char *ircnet_servers[] = {
     "irc.nlnog.net",
     "irc.portlane.se",
     "open.ircnet.net",
+    NULL
 };
 
 static const char *quakenet_servers[] = {
@@ -90,17 +94,20 @@ static const char *quakenet_servers[] = {
     "portlane.se.quakenet.org",
     "underworld1.no.quakenet.org",
     "underworld2.no.quakenet.org",
+    NULL
 };
 
 static const char *undernet_servers[] = {
     "Ashburn.Va.Us.UnderNet.org",
     "irc.undernet.org",
     "undernet.rethemhosting.net",
+    NULL
 };
 
 static const char *test_servers[] = {
     "testnet.inspircd.org",
     "testnet.oragono.io",
+    NULL
 };
 
 /*lint -sem(get_password, r_null) */
