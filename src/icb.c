@@ -174,6 +174,9 @@ handle_status_msg_packet(const char *pktdata)
     if (!strncmp(pktdata_copy, "No-Pass" ICB_FIELD_SEP, 8)) {
 	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s", &pktdata_copy[8]);
+    } else if (!strncmp(pktdata_copy, "Notify" ICB_FIELD_SEP, 7)) {
+	process_event(":%s NOTICE %s :%s\r\n", icb_hostid, g_my_nickname,
+	    &pktdata_copy[7]);
     } else if (!strncmp(pktdata_copy, "Sign-on" ICB_FIELD_SEP, 8) ||
 	       !strncmp(pktdata_copy, "Arrive" ICB_FIELD_SEP, 7)) {
 	const int offset =
