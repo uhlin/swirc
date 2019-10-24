@@ -98,6 +98,16 @@ cmd_banlist(const char *data)
     }
 }
 
+/* usage: /boot <victim> */
+void
+cmd_boot(const char *data)
+{
+    if (!g_icb_mode)
+	return;
+    if (!strings_match(data, ""))
+	icb_send_boot(data);
+}
+
 /* usage: /close */
 void
 cmd_close(const char *data)
