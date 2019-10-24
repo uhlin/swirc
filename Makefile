@@ -1,11 +1,8 @@
 # $OpenBSD$
 
 COMMENT =	curses icb and irc client
-
 DISTNAME =	swirc-2.9.0
-
 CATEGORIES =	net
-
 HOMEPAGE =	https://www.nifty-networks.net/swirc/
 
 MAINTAINER =		Markus Uhlin <markus.uhlin@bredband.net>
@@ -14,15 +11,11 @@ MAINTAINER =		Markus Uhlin <markus.uhlin@bredband.net>
 PERMIT_PACKAGE_CDROM =	Yes
 
 # uses pledge()
-
 WANTLIB =		c crypto curl curses m panel pthread ssl
 
 MASTER_SITES =		https://www.nifty-networks.net/swirc/releases/
-
 EXTRACT_SUFX =		.tgz
-
 LIB_DEPENDS =		net/curl
-
 CONFIGURE_STYLE =	simple
 
 .include <bsd.port.mk>
