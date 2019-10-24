@@ -1,6 +1,6 @@
 # $OpenBSD$
 
-COMMENT =	cool curses irc client
+COMMENT =	curses icb and irc client
 
 DISTNAME =	swirc-2.9.0
 
