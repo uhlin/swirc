@@ -40,10 +40,10 @@
 
 volatile bool g_icb_processing_names = false;
 
-static char	 icb_protolevel[256] = { '\0' };
-static char	 icb_hostid[256]     = { '\0' };
-static char	 icb_serverid[256]   = { '\0' };
-static char	*icb_group           = NULL;
+static char	 icb_protolevel[ICB_PACKET_MAX] = { '\0' };
+static char	 icb_hostid[ICB_PACKET_MAX]     = { '\0' };
+static char	 icb_serverid[ICB_PACKET_MAX]   = { '\0' };
+static char	*icb_group = NULL;
 
 static void	 process_event(const char *, ...) PRINTFLIKE(1);
 static void	 sendpacket(bool *, const char *, ...) PRINTFLIKE(2);
@@ -167,7 +167,7 @@ handle_status_msg_packet(const char *pktdata)
 			*user         = NULL,
 			*host         = NULL;
     char		*pktdata_copy = sw_strdup(pktdata);
-    char		 label[256]   = { '\0' };
+    char		 label[ICB_PACKET_MAX];
     const char		 sep[]        = " (@)";
 
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
@@ -257,7 +257,7 @@ handle_cmd_output_packet(const char *pktdata)
     char *cp = NULL;
     char *last = "";
     char *pktdata_copy = sw_strdup(pktdata);
-    char label[256] = { '\0' };
+    char label[ICB_PACKET_MAX] = { '\0' };
 
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
     snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
@@ -272,7 +272,7 @@ handle_cmd_output_packet(const char *pktdata)
 	printtext(&ctx, "%s", &pktdata_copy[2]);
 
 	if ((win = window_by_label(label)) != NULL && ! (win->received_names)) {
-	    char str[256] = { '\0' };
+	    char str[ICB_PACKET_MAX] = { '\0' };
 
 	    snprintf(str, ARRAY_SIZE(str), "Group: %s", icb_group);
 
