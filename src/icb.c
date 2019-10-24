@@ -403,6 +403,12 @@ sendpacket(bool *was_truncated, const char *format, ...)
 }
 
 void
+icb_send_boot(const char *victim)
+{
+    sendpacket(NULL, "hboot%s%s", ICB_FIELD_SEP, victim);
+}
+
+void
 icb_send_group(const char *group)
 {
     sendpacket(NULL, "hg%s%s", ICB_FIELD_SEP, group);
