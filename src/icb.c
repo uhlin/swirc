@@ -222,9 +222,14 @@ handle_status_msg_packet(const char *pktdata)
 	    free_and_null(&icb_group);
 	    icb_group = sw_strdup(cp);
 
-	    process_event(":%s JOIN :#%s\r\n", g_my_nickname, cp);
+	    const bool as_moderator =
+		(cp = strstr(icb_group, " as moderator")) != NULL;
+	    if (as_moderator)
+		*cp = '\0';
 
-	    icb_send_users(cp);
+	    process_event(":%s JOIN :#%s\r\n", g_my_nickname, icb_group);
+
+	    icb_send_users(icb_group);
 	}
     } else {
 	while ((cp = strpbrk(pktdata_copy, ICB_FIELD_SEP)) != NULL)
