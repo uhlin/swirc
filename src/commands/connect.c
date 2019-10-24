@@ -422,26 +422,20 @@ cmd_connect(const char *data)
 	return;
     } else {
 	if (strings_match_ignore_case(server, "anonops"))
-	    IRC_CONNECT(get_server(anonops_servers,
-		ARRAY_SIZE(anonops_servers), "AnonOps IRC network"), port);
+	    IRC_CONNECT(get_server(anonops_servers, "AnonOps IRC network"),
+			port);
 	else if (strings_match_ignore_case(server, "efnet"))
-	    IRC_CONNECT(get_server(efnet_servers,
-		ARRAY_SIZE(efnet_servers), "EFnet servers"), port);
+	    IRC_CONNECT(get_server(efnet_servers, "EFnet servers"), port);
 	else if (strings_match_ignore_case(server, "freenode"))
-	    IRC_CONNECT(get_server(freenode_servers,
-		ARRAY_SIZE(freenode_servers), "freenode servers"), port);
+	    IRC_CONNECT(get_server(freenode_servers, "freenode servers"), port);
 	else if (strings_match_ignore_case(server, "ircnet"))
-	    IRC_CONNECT(get_server(ircnet_servers,
-		ARRAY_SIZE(ircnet_servers), "IRCnet servers"), port);
+	    IRC_CONNECT(get_server(ircnet_servers, "IRCnet servers"), port);
 	else if (strings_match_ignore_case(server, "quakenet"))
-	    IRC_CONNECT(get_server(quakenet_servers,
-		ARRAY_SIZE(quakenet_servers), "QuakeNet servers"), port);
+	    IRC_CONNECT(get_server(quakenet_servers, "QuakeNet servers"), port);
 	else if (strings_match_ignore_case(server, "undernet"))
-	    IRC_CONNECT(get_server(undernet_servers,
-		ARRAY_SIZE(undernet_servers), "undernet servers"), port);
+	    IRC_CONNECT(get_server(undernet_servers, "undernet servers"), port);
 	else if (strings_match_ignore_case(server, "test"))
-	    IRC_CONNECT(get_server(test_servers,
-		ARRAY_SIZE(test_servers), "test servers"), port);
+	    IRC_CONNECT(get_server(test_servers, "test servers"), port);
 	else
 	    IRC_CONNECT(server, port);
 	free(dcopy);
