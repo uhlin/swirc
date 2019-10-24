@@ -33,6 +33,7 @@
 #include "dataClassify.h"
 #include "errHand.h"
 #include "libUtils.h"
+#include "main.h"
 #include "network.h"
 #include "printtext.h"
 #include "strHand.h"
