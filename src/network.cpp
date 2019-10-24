@@ -350,7 +350,8 @@ net_connect(
 
     snprintf(g_last_server, ARRAY_SIZE(g_last_server), "%s", ctx->server);
     snprintf(g_last_port, ARRAY_SIZE(g_last_port), "%s", ctx->port);
-    window_foreach_rejoin_all_channels();
+    if (!g_icb_mode)
+	window_foreach_rejoin_all_channels();
     net_connect_clean_up();
     return CONNECTION_ESTABLISHED;
 }
