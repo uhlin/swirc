@@ -111,7 +111,8 @@ net_ssl_send(const char *fmt, ...)
     va_end(ap);
 
     /* message terminate */
-    realloc_strcat(&buf, "\r\n");
+    if (!g_icb_mode)
+	realloc_strcat(&buf, "\r\n");
 
     if (strlen(buf) > INT_MAX) {
 	free(buf);
