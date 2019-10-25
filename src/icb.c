@@ -174,8 +174,11 @@ handle_status_msg_packet(const char *pktdata)
 
     if (!strncmp(pktdata_copy, "Boot" ICB_FIELD_SEP, 5)) {
 	snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
+
+	ctx.window = window_by_label(label);
 	ctx.spec_type = TYPE_SPEC3;
-	if ((ctx.window = window_by_label(label)) != NULL)
+
+	if (ctx.window)
 	    printtext(&ctx, "*** %s", &pktdata_copy[5]);
     } else if (!strncmp(pktdata_copy, "No-Pass" ICB_FIELD_SEP, 8)) {
 	ctx.spec_type = TYPE_SPEC1;
