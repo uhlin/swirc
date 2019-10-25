@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include "dataClassify.h"
 #include "errHand.h"
 #include "icb.h"
 #include "irc.h"
@@ -218,7 +219,7 @@ handle_status_msg_packet(const char *pktdata)
 	ctx.window = window_by_label(label);
 	ctx.spec_type = TYPE_SPEC3;
 
-	if (ctx.window)
+	if (!isNull(ctx.window))
 	    printtext(&ctx, "*** %s", &pktdata_copy[5]);
     } else if (!strncmp(pktdata_copy, "No-Pass" ICB_FIELD_SEP, 8)) {
 	ctx.spec_type = TYPE_SPEC1;
@@ -282,7 +283,7 @@ handle_status_msg_packet(const char *pktdata)
 	cp = &pktdata_copy[7];
 
 	if (!strncmp(cp, "You are now in group ", 21)) {
-	    if (icb_group)
+	    if (!isNull(icb_group))
 		process_event(":%s PART #%s\r\n", g_my_nickname, icb_group);
 
 	    cp += 21;
@@ -464,7 +465,7 @@ sendpacket(bool *was_truncated, const char *format, ...)
     int ret = -1;
     va_list ap;
 
-    if (was_truncated)
+    if (!isNull(was_truncated))
 	*was_truncated = false;
 
     va_start(ap, format);
@@ -472,7 +473,7 @@ sendpacket(bool *was_truncated, const char *format, ...)
     va_end(ap);
 
     if (ret < 0 || ((size_t) ret) >= ARRAY_SIZE(msg)) {
-	if (was_truncated)
+	if (!isNull(was_truncated))
 	    *was_truncated = true;
     }
 
