@@ -1,6 +1,10 @@
 #ifndef STRING_HANDLING_H
 #define STRING_HANDLING_H
 
+#ifndef STRINGS_MATCH
+#define STRINGS_MATCH 0
+#endif
+
 /*lint -sem(strColor, pure) */
 /*lint -printf(3, sw_snprintf) */
 
