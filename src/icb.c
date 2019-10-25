@@ -185,6 +185,12 @@ handle_status_msg_packet(const char *pktdata)
 	    &pktdata_copy[7]);
     } else if (!strncmp(pktdata_copy, "Sign-on" ICB_FIELD_SEP, 8) ||
 	       !strncmp(pktdata_copy, "Arrive" ICB_FIELD_SEP, 7)) {
+/***************************************************
+ *
+ * Sign-on / Arrive
+ *
+ ***************************************************/
+
 	const int offset =
 	    (!strncmp(pktdata_copy, "Sign-on" ICB_FIELD_SEP, 8) ? 8 : 7);
 
@@ -202,6 +208,12 @@ handle_status_msg_packet(const char *pktdata)
 	}
     } else if (!strncmp(pktdata_copy, "Sign-off" ICB_FIELD_SEP, 9) ||
 	       !strncmp(pktdata_copy, "Depart" ICB_FIELD_SEP, 7)) {
+/***************************************************
+ *
+ * Sign-off / Depart
+ *
+ ***************************************************/
+
 	const int offset =
 	    (!strncmp(pktdata_copy, "Sign-off" ICB_FIELD_SEP, 9) ? 9 : 7);
 
@@ -218,6 +230,12 @@ handle_status_msg_packet(const char *pktdata)
 		icb_group);
 	}
     } else if (!strncmp(pktdata_copy, "Status" ICB_FIELD_SEP, 7)) {
+/***************************************************
+ *
+ * Status
+ *
+ ***************************************************/
+
 	cp = &pktdata_copy[7];
 
 	if (!strncmp(cp, "You are now in group ", 21)) {
