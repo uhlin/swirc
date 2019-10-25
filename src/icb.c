@@ -38,6 +38,8 @@
 #include "strHand.h"
 #include "strdup_printf.h"
 
+#include "events/names.h"
+
 volatile bool g_icb_processing_names = false;
 
 static char	 icb_protolevel[ICB_PACKET_MAX] = { '\0' };
@@ -158,6 +160,44 @@ handle_personal_msg_packet(const char *pktdata)
 }
 
 static void
+deal_with_category_topic(const char *window_label, const char *data)
+{
+    PRINTTEXT_CONTEXT	 ctx;
+    char		 concat[ICB_PACKET_MAX] = "";
+    const char		*dataptr = &data[0];
+    const char		 changed[] = " changed the topic to \"";
+
+    printtext_context_init(&ctx, window_by_label(window_label), TYPE_SPEC1,
+	true);
+
+    if (ctx.window == NULL)
+	return;
+    else if (strings_match(data, "The topic is not set."))
+	printtext(&ctx, "%s", data);
+    else if (!strncmp(data, "The topic is: ", 14)) {
+	dataptr += 14;
+	process_event(":%s 332 %s #%s :%s\r\n", icb_hostid, g_my_nickname,
+	    icb_group, dataptr);
+    } else if (strstr(data, changed)) {
+	char *nick = sw_strdup(data);
+	nick[strcspn(nick, " ")] = '\0';
+	PNAMES names = event_names_htbl_lookup(nick, window_label);
+	free(nick);
+	if (names == NULL ||
+	    sw_strcpy(concat, names->nick, ARRAY_SIZE(concat)) != 0 ||
+	    sw_strcat(concat, changed, ARRAY_SIZE(concat)) != 0 ||
+	    strncmp(data, concat, strlen(concat)) != STRINGS_MATCH)
+	    return;
+	dataptr += strlen(concat);
+	char *cp = sw_strdup(dataptr);
+	if (cp[strlen(cp) - 1] == '\"')
+	    cp[strlen(cp) - 1] = '\0';
+	process_event(":%s TOPIC #%s :%s\r\n", names->nick, icb_group, cp);
+	free(cp);
+    }
+}
+
+static void
 handle_status_msg_packet(const char *pktdata)
 {
     PRINTTEXT_CONTEXT	 ctx;
@@ -258,6 +298,9 @@ handle_status_msg_packet(const char *pktdata)
 
 	    icb_send_users(icb_group);
 	}
+    } else if (!strncmp(pktdata_copy, "Topic" ICB_FIELD_SEP, 6)) {
+	snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
+	deal_with_category_topic(&label[0], &pktdata_copy[6]);
     } else {
 	while ((cp = strpbrk(pktdata_copy, ICB_FIELD_SEP)) != NULL)
 	    *cp = 'X';
