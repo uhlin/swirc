@@ -544,6 +544,15 @@ icb_send_open_msg(const char *text)
 }
 
 void
+icb_send_ping(const char *arg)
+{
+    if (!isNull(arg) && !strings_match(arg, ""))
+	sendpacket(NULL, "l%s", arg);
+    else
+	sendpacket(NULL, "l");
+}
+
+void
 icb_send_pm(const char *to_who, const char *text)
 {
     bool was_truncated = false;
