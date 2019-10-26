@@ -333,6 +333,15 @@ handle_status_msg_packet(const char *pktdata)
 }
 
 static void
+handle_error_msg_packet(const char *pktdata)
+{
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+    printtext(&ctx, "%s", pktdata);
+}
+
+static void
 handle_exit_packet()
 {
     process_event("ERROR :Closing Link: Received exit packet\r\n");
@@ -467,6 +476,9 @@ icb_irc_proxy(const int length, const char type, const char *pktdata)
 	break;
     case 'd':
 	handle_status_msg_packet(pktdata);
+	break;
+    case 'e':
+	handle_error_msg_packet(pktdata);
 	break;
     case 'g':
 	handle_exit_packet();
