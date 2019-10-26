@@ -564,6 +564,15 @@ icb_send_pm(const char *to_who, const char *text)
 }
 
 void
+icb_send_pong(const char *arg)
+{
+    if (!isNull(arg) && !strings_match(arg, ""))
+	sendpacket(NULL, "m%s", arg);
+    else
+	sendpacket(NULL, "m");
+}
+
+void
 icb_send_topic(const char *new_topic)
 {
     sendpacket(NULL, "htopic%s%s", ICB_FIELD_SEP, new_topic);

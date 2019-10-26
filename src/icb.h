@@ -20,6 +20,7 @@ void	 icb_send_noop(void);
 void	 icb_send_open_msg(const char *text);
 void	 icb_send_ping(const char *arg);
 void	 icb_send_pm(const char *to_who, const char *text);
+void	 icb_send_pong(const char *arg);
 void	 icb_send_topic(const char *new_topic);
 void	 icb_send_users(const char *arg);
 
