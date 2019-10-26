@@ -494,6 +494,12 @@ icb_send_group(const char *group)
 }
 
 void
+icb_send_name(const char *new_nick)
+{
+    sendpacket(NULL, "hname%s%s", ICB_FIELD_SEP, new_nick);
+}
+
+void
 icb_send_noop(void)
 {
     sendpacket(NULL, "n");
