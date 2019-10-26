@@ -437,6 +437,12 @@ handle_proto_packet(const char *pktdata)
 }
 
 static void
+handle_ping_packet(const char *pktdata)
+{
+    icb_send_pong(pktdata);
+}
+
+static void
 unknown_packet_type(const int length, const char type, const char *pktdata)
 {
     PRINTTEXT_CONTEXT ctx;
@@ -470,6 +476,9 @@ icb_irc_proxy(const int length, const char type, const char *pktdata)
 	break;
     case 'j':
 	handle_proto_packet(pktdata);
+	break;
+    case 'l':
+	handle_ping_packet(pktdata);
 	break;
     default:
 	unknown_packet_type(length, type, pktdata);
