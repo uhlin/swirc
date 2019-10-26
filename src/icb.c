@@ -333,6 +333,12 @@ handle_status_msg_packet(const char *pktdata)
 }
 
 static void
+handle_exit_packet()
+{
+    process_event("ERROR :Closing Link: Received exit packet\r\n");
+}
+
+static void
 handle_cmd_output_packet(const char *pktdata)
 {
     PIRC_WINDOW win = NULL;
@@ -455,6 +461,9 @@ icb_irc_proxy(const int length, const char type, const char *pktdata)
 	break;
     case 'd':
 	handle_status_msg_packet(pktdata);
+	break;
+    case 'g':
+	handle_exit_packet();
 	break;
     case 'i':
 	handle_cmd_output_packet(pktdata);
