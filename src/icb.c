@@ -161,6 +161,22 @@ handle_personal_msg_packet(const char *pktdata)
 }
 
 static void
+deal_with_category_name(const char *data)
+{
+    const char	*dataptr   = &data[0];
+    const char	 changed[] = " changed nickname to ";
+
+    if (strstr(data, changed)) {
+	char *old_nick = sw_strdup(data);
+	old_nick[strcspn(old_nick, " ")] = '\0';
+	dataptr += strlen(old_nick);
+	dataptr += strlen(changed);
+	process_event(":%s NICK :%s\r\n", old_nick, dataptr);
+	free(old_nick);
+    }
+}
+
+static void
 deal_with_category_topic(const char *window_label, const char *data)
 {
     PRINTTEXT_CONTEXT	 ctx;
@@ -221,6 +237,8 @@ handle_status_msg_packet(const char *pktdata)
 
 	if (!isNull(ctx.window))
 	    printtext(&ctx, "*** %s", &pktdata_copy[5]);
+    } else if (!strncmp(pktdata_copy, "Name" ICB_FIELD_SEP, 5)) {
+	deal_with_category_name(&pktdata_copy[5]);
     } else if (!strncmp(pktdata_copy, "No-Pass" ICB_FIELD_SEP, 8)) {
 	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s", &pktdata_copy[8]);
