@@ -115,7 +115,7 @@ static struct cmds_tag {
     { "mode",        cmd_mode,        true,  mode_usage,        ARRAY_SIZE(mode_usage),        true  },
     { "msg",         cmd_msg,         true,  msg_usage,         ARRAY_SIZE(msg_usage),         true  },
     { "n",           cmd_names,       true,  n_usage,           ARRAY_SIZE(n_usage),           false },
-    { "nick",        cmd_nick,        true,  nick_usage,        ARRAY_SIZE(nick_usage),        true  },
+    { "nick",        cmd_nick,        true,  nick_usage,        ARRAY_SIZE(nick_usage),        false },
     { "nickserv",    cmd_nickserv,    true,  nickserv_usage,    ARRAY_SIZE(nickserv_usage),    true  },
     { "notice",      cmd_notice,      true,  notice_usage,      ARRAY_SIZE(notice_usage),      true  },
     { "ns",          cmd_nickserv,    true,  nickserv_usage,    ARRAY_SIZE(nickserv_usage),    true  },

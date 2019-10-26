@@ -1,7 +1,9 @@
 #include "common.h"
 
 #include "../dataClassify.h"
+#include "../icb.h"
 #include "../irc.h"
+#include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -22,8 +24,9 @@ cmd_nick(const char *data)
 	printtext(&ctx, "/nick: bogus nickname");
     } else if (strings_match_ignore_case(g_my_nickname, data)) {
 	printtext(&ctx, "/nick: no change");
+    } else if (g_icb_mode) {
+	icb_send_name(data);
     } else {
-	if (net_send("NICK %s", data) < 0)
-	    g_on_air = false;
+	(void) net_send("NICK %s", data);
     }
 }
