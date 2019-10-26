@@ -15,6 +15,7 @@ client written in C/C++, whose goals are to be portable and secure.
     -n <nickname>         Online nickname
     -u <username>         User identity
     -r <rl name>          Specifies the real name
+    -i                    ICB mode
     -p                    Server password (for private servers)
     -h <hostname>         Use this hostname on connect
     -x <config>           Explicit config file
