@@ -279,7 +279,9 @@ handle_status_msg_packet(const char *pktdata)
 	const int offset =
 	    (!strncmp(pktdata_copy, "Sign-off" ICB_FIELD_SEP, 9) ? 9 : 7);
 
-	if ((nick = strtok_r(&pktdata_copy[offset], sep, &last)) == NULL) {
+	if (!strncmp(&pktdata_copy[offset], "Your group moderator", 20)) {
+	    ;
+	} else if ((nick = strtok_r(&pktdata_copy[offset],sep,&last)) == NULL) {
 	    ctx.spec_type = TYPE_SPEC1_FAILURE;
 	    printtext(&ctx, "handle_status_msg_packet: during sign-off: "
 		"no nick");
