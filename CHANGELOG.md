@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
-- **Support for the ICB protocol**
+- **SUPPORT FOR THE ICB PROTOCOL**
 - Command
   - `/beep`
   - `/boot`
