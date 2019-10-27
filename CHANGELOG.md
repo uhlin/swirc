@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
   - `/beep`
   - `/boot`
   - `/group`
+  - `/passmod`
 
 ### Changed ###
 - Error messages (in order to improve them)

@@ -354,6 +354,13 @@ static const char *part_usage[] = {
     "",
 };
 
+static const char *passmod_usage[] = {
+    "usage: /passmod <nickname>",
+    "",
+    "Pass moderation privilege.",
+    "",
+};
+
 static const char *query_usage[] = {
     "usage: /query [nick]",
     "",

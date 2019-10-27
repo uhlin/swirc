@@ -14,6 +14,7 @@ void cmd_list    (const char *);
 void cmd_mode    (const char *);
 void cmd_names   (const char *);
 void cmd_oper    (const char *);
+void cmd_passmod (const char *);
 void cmd_query   (const char *);
 void cmd_quit    (const char *);
 void cmd_resize  (const char *);

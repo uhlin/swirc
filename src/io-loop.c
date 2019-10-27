@@ -123,6 +123,7 @@ static struct cmds_tag {
     { "op",          cmd_op,          true,  op_usage,          ARRAY_SIZE(op_usage),          true  },
     { "oper",        cmd_oper,        true,  oper_usage,        ARRAY_SIZE(oper_usage),        true  },
     { "part",        cmd_part,        true,  part_usage,        ARRAY_SIZE(part_usage),        true  },
+    { "passmod",     cmd_passmod,     true,  passmod_usage,     ARRAY_SIZE(passmod_usage),     false },
     { "query",       cmd_query,       false, query_usage,       ARRAY_SIZE(query_usage),       false },
     { "quit",        cmd_quit,        false, quit_usage,        ARRAY_SIZE(quit_usage),        false },
     { "resize",      cmd_resize,      false, resize_usage,      ARRAY_SIZE(resize_usage),      false },

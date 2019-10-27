@@ -329,6 +329,16 @@ cmd_oper(const char *data)
     }
 }
 
+/* usage: /passmod <nickname> */
+void
+cmd_passmod(const char *data)
+{
+    if (!g_icb_mode)
+	return;
+    if (!strings_match(data, ""))
+	icb_send_pass_mod(data);
+}
+
 /* usage: /query [nick] */
 void
 cmd_query(const char *data)
