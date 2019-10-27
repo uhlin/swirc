@@ -27,12 +27,16 @@ void	resume_curses(void);
 
 #if defined(WIN32) && defined(PDC_EXP_EXTRAS)
 bool	is_cleared  (const WINDOW *);
+#if PDC_BUILD < 3900
 bool	is_leaveok  (const WINDOW *);
+#endif
 bool	is_scrollok (const WINDOW *);
 bool	is_nodelay  (const WINDOW *);
 bool	is_immedok  (const WINDOW *);
 bool	is_syncok   (const WINDOW *);
+#if PDC_BUILD < 3900
 bool	is_keypad   (const WINDOW *);
+#endif
 #endif
 
 #ifdef __cplusplus
