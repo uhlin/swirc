@@ -49,6 +49,10 @@ static char	 icb_hostid[ICB_PACKET_MAX]     = { '\0' };
 static char	 icb_serverid[ICB_PACKET_MAX]   = { '\0' };
 static char	*icb_group = NULL;
 
+static const char	passed1[] = " has passed moderation to ";
+static const char	passed2[] = " just passed you moderation of group ";
+static const char	passed3[] = " just passed you moderation of ";
+
 static void	 process_event(const char *, ...) PRINTFLIKE(1);
 static void	 sendpacket(bool *, const char *, ...) PRINTFLIKE(2);
 
