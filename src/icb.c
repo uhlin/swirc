@@ -448,8 +448,9 @@ handle_cmd_output_packet(const char *pktdata)
     char		 label[ICB_PACKET_MAX] = { '\0' };
 
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
-    snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
 
+    if (!isNull(icb_group))
+	snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
     if (!strncmp(pktdata_copy, "co", 2)) {
 	/*
 	 * Generic command output
