@@ -344,6 +344,26 @@ handle_error_msg_packet(const char *pktdata)
 }
 
 static void
+handle_important_msg_packet(const char *pktdata)
+{
+    char	*category     = NULL;
+    char	*last         = "";
+    char	*msgtext      = NULL;
+    char	*pktdata_copy = sw_strdup(pktdata);
+
+    if ((category = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) == NULL ||
+	(msgtext = strtok_r(NULL, ICB_FIELD_SEP, &last)) == NULL) {
+	print_and_free("handle_important_msg_packet: too few tokens!",
+	    pktdata_copy);
+	return;
+    }
+
+    process_event(":%s NOTICE %s :%s%s%s\r\n", icb_hostid, g_my_nickname,
+	TXT_BOLD, msgtext, TXT_BOLD);
+    free_and_null(&pktdata_copy);
+}
+
+static void
 handle_exit_packet()
 {
     process_event("ERROR :Closing Link: Received exit packet\r\n");
@@ -493,6 +513,9 @@ icb_irc_proxy(const int length, const char type, const char *pktdata)
 	break;
     case 'e':
 	handle_error_msg_packet(pktdata);
+	break;
+    case 'f':
+	handle_important_msg_packet(pktdata);
 	break;
     case 'g':
 	handle_exit_packet();
