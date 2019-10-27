@@ -359,7 +359,7 @@ handle_important_msg_packet(const char *pktdata)
     }
 
     process_event(":%s NOTICE %s :%s%s%s\r\n", icb_hostid, g_my_nickname,
-	TXT_BOLD, msgtext, TXT_BOLD);
+	TXT_BOLD, squeeze_text_deco(msgtext), TXT_BOLD);
     free_and_null(&pktdata_copy);
 }
 
