@@ -204,9 +204,9 @@ modpass(const char *data)
 static void
 deal_with_category_pass(const char *window_label, const char *data)
 {
-    bool by_server = false;
-    char *nick = NULL;
-    const char *dataptr = &data[0];
+    bool	 by_server = false;
+    char	*nick      = NULL;
+    const char	*dataptr   = &data[0];
 
     if (!modpass(data))
 	return;
