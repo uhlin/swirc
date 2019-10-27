@@ -19,6 +19,7 @@ void	 icb_send_group(const char *group);
 void	 icb_send_name(const char *new_nick);
 void	 icb_send_noop(void);
 void	 icb_send_open_msg(const char *text);
+void	 icb_send_pass_mod(const char *to_who);
 void	 icb_send_ping(const char *arg);
 void	 icb_send_pm(const char *to_who, const char *text);
 void	 icb_send_pong(const char *arg);

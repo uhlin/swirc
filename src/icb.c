@@ -610,6 +610,16 @@ icb_send_open_msg(const char *text)
 	err_log(ENOBUFS, "icb_send_open_msg: text truncated");
 }
 
+/*
+ * Pass moderation
+ */
+void
+icb_send_pass_mod(const char *to_who)
+{
+    if (!isNull(to_who) && !strings_match(to_who, ""))
+	sendpacket(NULL, "hpass%s%s", ICB_FIELD_SEP, to_who);
+}
+
 void
 icb_send_ping(const char *arg)
 {
