@@ -119,10 +119,10 @@ login_ok()
 static void
 handle_open_msg_packet(const char *pktdata)
 {
-    char *last = "";
-    char *message = NULL;
-    char *nickname = NULL;
-    char *pktdata_copy = sw_strdup(pktdata);
+    char	*last         = "";
+    char	*message      = NULL;
+    char	*nickname     = NULL;
+    char	*pktdata_copy = sw_strdup(pktdata);
 
     nickname = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last);
     message = strtok_r(NULL, ICB_FIELD_SEP, &last);
@@ -142,10 +142,10 @@ handle_open_msg_packet(const char *pktdata)
 static void
 handle_personal_msg_packet(const char *pktdata)
 {
-    char *last = "";
-    char *message = NULL;
-    char *nickname = NULL;
-    char *pktdata_copy = sw_strdup(pktdata);
+    char	*last         = "";
+    char	*message      = NULL;
+    char	*nickname     = NULL;
+    char	*pktdata_copy = sw_strdup(pktdata);
 
     nickname = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last);
     message = strtok_r(NULL, ICB_FIELD_SEP, &last);
@@ -446,9 +446,9 @@ handle_cmd_output_packet(const char *pktdata)
 static void
 handle_proto_packet(const char *pktdata)
 {
-    char *cp = NULL;
-    char *last = "";
-    char *pktdata_copy = sw_strdup(pktdata);
+    char	*cp           = NULL;
+    char	*last         = "";
+    char	*pktdata_copy = sw_strdup(pktdata);
 
     if ((cp = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) != NULL)
 	(void) sw_strcpy(icb_protolevel, cp, ARRAY_SIZE(icb_protolevel));
