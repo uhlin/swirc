@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include "assertAPI.h"
 #include "dataClassify.h"
 #include "errHand.h"
 #include "icb.h"
