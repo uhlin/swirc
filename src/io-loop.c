@@ -93,6 +93,7 @@ static struct cmds_tag {
     { "away",        cmd_away,        true,  away_usage,        ARRAY_SIZE(away_usage),        true  },
     { "ban",         cmd_ban,         true,  ban_usage,         ARRAY_SIZE(ban_usage),         true  },
     { "banlist",     cmd_banlist,     true,  banlist_usage,     ARRAY_SIZE(banlist_usage),     true  },
+    { "beep",        cmd_beep,        true,  beep_usage,        ARRAY_SIZE(beep_usage),        false },
     { "boot",        cmd_boot,        true,  boot_usage,        ARRAY_SIZE(boot_usage),        false },
     { "chanserv",    cmd_chanserv,    true,  chanserv_usage,    ARRAY_SIZE(chanserv_usage),    true  },
     { "cleartoasts", cmd_cleartoasts, false, cleartoasts_usage, ARRAY_SIZE(cleartoasts_usage), false },

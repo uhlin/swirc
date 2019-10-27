@@ -3,6 +3,7 @@
 
 void cmd_away    (const char *);
 void cmd_banlist (const char *);
+void cmd_beep    (const char *);
 void cmd_boot    (const char *);
 void cmd_close   (const char *);
 void cmd_cycle   (const char *);
