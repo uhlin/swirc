@@ -56,7 +56,7 @@ static const char *banlist_usage[] = {
 };
 
 static const char *beep_usage[] = {
-    "usage: /beep <target>",
+    "usage: /beep <nickname>",
     "",
     "Send beeps.",
     "",

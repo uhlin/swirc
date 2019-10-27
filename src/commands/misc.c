@@ -98,7 +98,7 @@ cmd_banlist(const char *data)
     }
 }
 
-/* usage: /beep <target> */
+/* usage: /beep <nickname> */
 void
 cmd_beep(const char *data)
 {
