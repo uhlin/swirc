@@ -59,6 +59,18 @@ static void	 sendpacket(bool *, const char *, ...) PRINTFLIKE(2);
 /*lint -printf(1, process_event) */
 /*lint -printf(2, sendpacket) */
 
+static const char *
+get_label()
+{
+    static char label[ICB_PACKET_MAX] = { '\0' };
+
+    memset(label, 0, ARRAY_SIZE(label));
+
+    if (!isNull(icb_group))
+	(void) snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
+    return (&label[0]);
+}
+
 static void
 process_event(const char *format, ...)
 {
@@ -284,15 +296,12 @@ handle_status_msg_packet(const char *pktdata)
 			*user         = NULL,
 			*host         = NULL;
     char		*pktdata_copy = sw_strdup(pktdata);
-    char		 label[ICB_PACKET_MAX];
     const char		 sep[]        = " (@)";
 
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
 
     if (!strncmp(pktdata_copy, "Boot" ICB_FIELD_SEP, 5)) {
-	snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
-
-	ctx.window = window_by_label(label);
+	ctx.window = window_by_label(get_label());
 	ctx.spec_type = TYPE_SPEC3;
 
 	if (!isNull(ctx.window))
@@ -306,13 +315,10 @@ handle_status_msg_packet(const char *pktdata)
 	process_event(":%s NOTICE %s :%s\r\n", icb_hostid, g_my_nickname,
 	    &pktdata_copy[7]);
 
-	if (!isNull(icb_group)) {
-	    snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
-	    deal_with_category_pass(&label[0], &pktdata_copy[7]);
-	}
+	if (!isNull(icb_group))
+	    deal_with_category_pass(get_label(), &pktdata_copy[7]);
     } else if (!strncmp(pktdata_copy, "Pass" ICB_FIELD_SEP, 5)) {
-	snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
-	deal_with_category_pass(&label[0], &pktdata_copy[5]);
+	deal_with_category_pass(get_label(), &pktdata_copy[5]);
     } else if (!strncmp(pktdata_copy, "Sign-on" ICB_FIELD_SEP, 8) ||
 	       !strncmp(pktdata_copy, "Arrive" ICB_FIELD_SEP, 7)) {
 /***************************************************
@@ -388,8 +394,7 @@ handle_status_msg_packet(const char *pktdata)
 	    icb_send_users(icb_group);
 	}
     } else if (!strncmp(pktdata_copy, "Topic" ICB_FIELD_SEP, 6)) {
-	snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
-	deal_with_category_topic(&label[0], &pktdata_copy[6]);
+	deal_with_category_topic(get_label(), &pktdata_copy[6]);
     } else {
 	while ((cp = strpbrk(pktdata_copy, ICB_FIELD_SEP)) != NULL)
 	    *cp = 'X';
@@ -445,12 +450,9 @@ handle_cmd_output_packet(const char *pktdata)
     char		*cp = NULL;
     char		*last = "";
     char		*pktdata_copy = sw_strdup(pktdata);
-    char		 label[ICB_PACKET_MAX] = { '\0' };
 
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
 
-    if (!isNull(icb_group))
-	snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
     if (!strncmp(pktdata_copy, "co", 2)) {
 	/*
 	 * Generic command output
@@ -460,7 +462,8 @@ handle_cmd_output_packet(const char *pktdata)
 	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s", &pktdata_copy[2]);
 
-	if ((win = window_by_label(label)) != NULL && ! (win->received_names)) {
+	if ((win = window_by_label(get_label())) != NULL &&
+	    ! (win->received_names)) {
 	    char str[ICB_PACKET_MAX] = { '\0' };
 
 	    snprintf(str, ARRAY_SIZE(str), "Group: %s", icb_group);
@@ -471,10 +474,12 @@ handle_cmd_output_packet(const char *pktdata)
     } else if (!strncmp(pktdata_copy, "wh", 2)) {
 	/* Tell client to output header for who listing output. Deprecated. */;
     } else if (!strncmp(pktdata_copy, "wl", 2)) {
-	if ((win = window_by_label(label)) != NULL && win->received_names) {
-	    free_and_null(&pktdata_copy);
-	    return;
-	}
+	if ((win = window_by_label(get_label())) != NULL &&
+	    win->received_names)
+	    {
+		free_and_null(&pktdata_copy);
+		return;
+	    }
 
 	char *initial_token = strtok_r(&pktdata_copy[2], ICB_FIELD_SEP, &last);
 	char *nickname      = strtok_r(NULL, ICB_FIELD_SEP, &last);
