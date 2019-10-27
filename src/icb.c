@@ -435,12 +435,12 @@ handle_exit_packet()
 static void
 handle_cmd_output_packet(const char *pktdata)
 {
-    PIRC_WINDOW win = NULL;
-    PRINTTEXT_CONTEXT ctx;
-    char *cp = NULL;
-    char *last = "";
-    char *pktdata_copy = sw_strdup(pktdata);
-    char label[ICB_PACKET_MAX] = { '\0' };
+    PIRC_WINDOW		 win = NULL;
+    PRINTTEXT_CONTEXT	 ctx;
+    char		*cp = NULL;
+    char		*last = "";
+    char		*pktdata_copy = sw_strdup(pktdata);
+    char		 label[ICB_PACKET_MAX] = { '\0' };
 
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
     snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
@@ -612,9 +612,9 @@ icb_process_event_eof_names(void)
 static void
 sendpacket(bool *was_truncated, const char *format, ...)
 {
-    char msg[ICB_MESSAGE_MAX] = { '\0' };
-    int ret = -1;
-    va_list ap;
+    char	 msg[ICB_MESSAGE_MAX] = { '\0' };
+    int		 ret = -1;
+    va_list	 ap;
 
     if (!isNull(was_truncated))
 	*was_truncated = false;
