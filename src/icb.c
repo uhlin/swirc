@@ -303,7 +303,7 @@ deal_with_category_status(const char *data)
 	if (as_moderator)
 	    *cp = '\0';
 	process_event(":%s JOIN :#%s\r\n", g_my_nickname, icb_group);
-	icb_send_users(icb_group);
+	icb_send_who(icb_group);
     }
 }
 
@@ -727,7 +727,7 @@ icb_send_topic(const char *new_topic)
 }
 
 void
-icb_send_users(const char *arg)
+icb_send_who(const char *arg)
 {
     sendpacket(NULL, "hw%s%s", ICB_FIELD_SEP, arg);
 }

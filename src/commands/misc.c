@@ -274,7 +274,7 @@ cmd_list(const char *data)
     const bool has_params = !strings_match(data, "");
 
     if (g_icb_mode) {
-	icb_send_users("-g");
+	icb_send_who("-g");
 	return;
     }
 
