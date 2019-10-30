@@ -441,7 +441,7 @@ net_irc_listen(bool *connection_lost)
 	    sw_assert(length >= 0 && length <= UCHAR_MAX);
 
 	    if ((bytes_received = net_recv(&ctx, recvbuf, length)) == -1)
-		break;
+		g_connection_lost = true;
 	    else if (bytes_received != length && length != 0) {
 		const int maxval = MAX(length, bytes_received);
 		const int minval = MIN(length, bytes_received);
@@ -483,7 +483,7 @@ net_irc_listen(bool *connection_lost)
 	     */
 
 	    if ((bytes_received = net_recv(&ctx, recvbuf, RECVBUF_SIZE-1)) == -1)
-		break;
+		g_connection_lost = true;
 	    else if (bytes_received > 0)
 		irc_handle_interpret_events(recvbuf, &message_concat, &state);
 	}
