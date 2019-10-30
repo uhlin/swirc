@@ -212,6 +212,13 @@ static const char *kickban_usage[] = {
     "",
 };
 
+static const char *kill_usage[] = {
+    "usage: /kill <nickname> <comment>",
+    "",
+    "Disconnect a user from the connected network.",
+    "",
+};
+
 static const char *list_usage[] = {
     "usage: /list [<max_users[,>min_users][,pattern][...]]",
     "",

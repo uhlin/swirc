@@ -111,6 +111,7 @@ static struct cmds_tag {
     { "join",        cmd_join,        true,  join_usage,        ARRAY_SIZE(join_usage),        true  },
     { "kick",        cmd_kick,        true,  kick_usage,        ARRAY_SIZE(kick_usage),        true  },
     { "kickban",     cmd_kickban,     true,  kickban_usage,     ARRAY_SIZE(kickban_usage),     true  },
+    { "kill",        cmd_kill,        true,  kill_usage,        ARRAY_SIZE(kill_usage),        true  },
     { "list",        cmd_list,        true,  list_usage,        ARRAY_SIZE(list_usage),        false },
     { "me",          cmd_me,          true,  me_usage,          ARRAY_SIZE(me_usage),          true  },
     { "mode",        cmd_mode,        true,  mode_usage,        ARRAY_SIZE(mode_usage),        true  },
