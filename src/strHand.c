@@ -261,15 +261,14 @@ squeeze(char *buffer, const char *rej)
 void
 sw_snprintf(char *dest, size_t sz, const char *fmt, ...)
 {
-    va_list	ap;
-    int		n_print;
+    int n_print = -1;
+    va_list ap;
 
-    if (dest == NULL || sz == 0 || fmt == NULL) {
-	err_exit(EINVAL, "sw_snprintf error");
-    }
+    if (dest == NULL || sz == 0 || fmt == NULL)
+	err_exit(EINVAL, "sw_snprintf");
 
     va_start(ap, fmt);
     if ((n_print = vsnprintf(dest, sz, fmt, ap)) < 0)
-	err_sys("vsnprintf() returned %d", n_print);
+	err_sys("sw_snprintf: vsnprintf() returned %d", n_print);
     va_end(ap);
 }
