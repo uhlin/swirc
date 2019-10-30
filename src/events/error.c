@@ -23,5 +23,5 @@ event_error(struct irc_message_compo *compo)
 	printtext(&ctx, "%s", cp);
     }
 
-    g_connection_lost = true;
+    //g_connection_lost = true;
 }
