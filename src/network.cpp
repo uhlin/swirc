@@ -94,6 +94,7 @@ NET_SEND_FN net_send = net_send_plain;
 NET_RECV_FN net_recv = net_recv_plain;
 
 volatile bool g_connection_in_progress = false;
+volatile bool g_connection_lost = false;
 volatile bool g_on_air = false;
 
 char g_last_server[512] = { 0 };
@@ -420,7 +421,7 @@ net_irc_listen(bool *connection_lost)
     int bytes_received = -1;
     struct network_recv_context ctx(g_socket, 0, 5, 0);
 
-    *connection_lost = false;
+    *connection_lost = g_connection_lost = false;
     irc_init();
 
     do {
@@ -486,11 +487,11 @@ net_irc_listen(bool *connection_lost)
 	    else if (bytes_received > 0)
 		irc_handle_interpret_events(recvbuf, &message_concat, &state);
 	}
-    } while (g_on_air);
+    } while (g_on_air && !g_connection_lost);
 
     printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_WARN, true);
 
-    if (g_on_air) {
+    if (g_connection_lost) {
 	*connection_lost = true;
 	printtext(&ptext_ctx, "Connection to IRC server lost");
     }
