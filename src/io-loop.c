@@ -516,7 +516,7 @@ transmit_user_input(const char *win_label, const char *input)
 	    icb_send_pm(win_label, input);
     } else {
 	if (net_send("PRIVMSG %s :%s", win_label, input) < 0) {
-	    g_on_air = false;
+	    g_connection_lost = true;
 	    return;
 	}
     }
