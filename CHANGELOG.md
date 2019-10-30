@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - Improved functions
 - Multiple occurrences of `Conditional expression should have
   essentially Boolean type`
+- Spelling errors
 
 ## [2.9.0] - 2019-09-10 ##
 ### Added ###
