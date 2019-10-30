@@ -110,13 +110,11 @@ windowSystem_init(void)
     g_status_window = g_active_window = NULL;
     g_ntotal_windows = 0;
 
-    if ((errno = spawn_chat_window(g_status_window_label, "")) != 0) {
-	err_sys("spawn_chat_window error");
-    }
+    if ((errno = spawn_chat_window(g_status_window_label, "")) != 0)
+	err_sys("windowSystem_init: spawn_chat_window");
 
-    if ((g_status_window = window_by_label(g_status_window_label)) == NULL) {
+    if ((g_status_window = window_by_label(g_status_window_label)) == NULL)
 	err_quit("Unable to locate the status window\nShouldn't happen.");
-    }
 }
 
 static unsigned int
