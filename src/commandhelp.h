@@ -65,7 +65,7 @@ static const char *beep_usage[] = {
 static const char *boot_usage[] = {
     "usage: /boot <victim>",
     "",
-    "In ICB mode: kick an user out of the active group.",
+    "In ICB mode: kick a user out of the active group.",
     "",
 };
 
@@ -261,7 +261,7 @@ static const char *mode_usage[] = {
     "        the invite-only flag",
     "",
     TXT_BOLD "USER MODES" TXT_BOLD,
-    "    i - marks an user as invisible",
+    "    i - marks a user as invisible",
     "    w - user receives wallops",
     "",
     TXT_BOLD "EXAMPLES" TXT_BOLD,
