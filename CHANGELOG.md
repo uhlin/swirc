@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Error messages (in order to improve them)
 
 ### Fixed ###
+- Better reconnection
 - Improved functions
 - Multiple occurrences of `Conditional expression should have
   essentially Boolean type`
