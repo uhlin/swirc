@@ -267,6 +267,16 @@ cmd_ilist(const char *data)
     }
 }
 
+/* usage: /kill <nickname> <comment> */
+void
+cmd_kill(const char *data)
+{
+    if (strings_match(data, ""))
+	output_error("/kill: missing arguments");
+    else
+	(void) net_send("KILL %s", data);
+}
+
 /* usage: /list [<max_users[,>min_users][,pattern][...]] */
 void
 cmd_list(const char *data)
