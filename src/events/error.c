@@ -1,4 +1,4 @@
-/* Copyright (C) 2014, 2016 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2014-2019 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -23,5 +23,5 @@ event_error(struct irc_message_compo *compo)
 	printtext(&ctx, "%s", cp);
     }
 
-    g_on_air = false;
+    g_connection_lost = true;
 }
