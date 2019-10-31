@@ -44,16 +44,18 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2019-03-19</em></small></p>
+<p><small><em>Updated: 2019-10-31</em></small></p>
 <h3>Program options</h3>
 <h4>Common</h4>
 <table class="po">
   <tr>
     <td>-c &lt;server[:port]&gt;</td>
     <td>
-Auto-connect to given server. If the port is omitted port 6667 will be
-chosen. And if the port is 6697 the program attempts to initiate a
-TLS/SSL connection.
+Auto-connect to given server.
+If the port is omitted port 6667 will be chosen.
+And if the port is 7326 ICB mode is turned on automatically.
+Further, if the port is 6697 <strong>swirc</strong> attempts to
+initiate a TLS/SSL connection.
     </td>
   </tr>
   <tr>
@@ -70,7 +72,7 @@ TLS/SSL connection.
   </tr>
   <tr>
     <td>-i</td>
-    <td>ICB mode (not implemented)</td>
+    <td>ICB mode</td>
   </tr>
   <tr>
     <td>-p</td>
