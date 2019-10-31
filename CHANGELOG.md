@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.0.0] - 2019-10-31 ##
 ### Added ###
 - **SUPPORT FOR THE ICB PROTOCOL**
 - Command
