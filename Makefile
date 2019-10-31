@@ -8,7 +8,7 @@ HOMEPAGE =	https://www.nifty-networks.net/swirc/
 MAINTAINER =		Markus Uhlin <markus.uhlin@bredband.net>
 
 # BSD-3, ISC and MIT.
-PERMIT_PACKAGE_CDROM =	Yes
+PERMIT_PACKAGE =	Yes
 
 # uses pledge()
 WANTLIB =		c crypto curl curses m panel pthread ssl
