@@ -1,3 +1,9 @@
+swirc (3.0.0) unstable; urgency=medium
+
+  * New upstream
+
+ -- Markus Uhlin <markus.uhlin@bredband.net>  Thu, 31 Oct 2019 08:51:58 +0100
+
 swirc (2.9.0) unstable; urgency=medium
 
   * New upstream
