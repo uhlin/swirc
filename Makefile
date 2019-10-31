@@ -15,6 +15,7 @@ WANTLIB =		${COMPILER_LIBCXX} c crypto curl curses m panel pthread ssl
 
 MASTER_SITES =		https://www.nifty-networks.net/swirc/releases/
 EXTRACT_SUFX =		.tgz
+COMPILER =		base-clang ports-gcc
 LIB_DEPENDS =		net/curl
 CONFIGURE_STYLE =	simple
 
