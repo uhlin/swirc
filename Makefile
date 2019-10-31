@@ -1,7 +1,7 @@
 # $OpenBSD$
 
 COMMENT =	curses icb and irc client
-DISTNAME =	swirc-2.9.0
+DISTNAME =	swirc-3.0.0
 CATEGORIES =	net
 HOMEPAGE =	https://www.nifty-networks.net/swirc/
 
