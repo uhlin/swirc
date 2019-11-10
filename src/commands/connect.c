@@ -265,7 +265,6 @@ do_connect(const char *server, const char *port)
 
 	while (net_connect(&conn_ctx, &sleep_time_seconds) ==
 	    SHOULD_RETRY_TO_CONNECT) {
-	    //const int sleep_time_ms = (int) (sleep_time_seconds * 1000);
 
 	    printtext(&ptext_ctx, "Next reconnect attempt in %ld seconds...",
 		      sleep_time_seconds);
