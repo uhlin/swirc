@@ -414,12 +414,12 @@ net_connect_clean_up(void)
 void
 net_irc_listen(bool *connection_lost)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
-    char *message_concat = NULL;
-    char *recvbuf = (char *) xmalloc(RECVBUF_SIZE);
-    enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
-    int bytes_received = -1;
-    struct network_recv_context ctx(g_socket, 0, 5, 0);
+    PRINTTEXT_CONTEXT		 ptext_ctx;
+    struct network_recv_context	 ctx(g_socket, 0, 5, 0);
+    char			*message_concat = NULL;
+    char			*recvbuf = (char *) xmalloc(RECVBUF_SIZE);
+    int				 bytes_received = -1;
+    enum message_concat_state	 state = CONCAT_BUFFER_IS_EMPTY;
 
     *connection_lost = g_connection_lost = false;
     irc_init();
