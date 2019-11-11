@@ -358,19 +358,14 @@ chg_status_for_voice(plus_minus_state_t pm_state,
 static PTR_ARGS_NONNULL void
 maintain_channel_stats(const char *channel, const char *input)
 {
-    char               **ar_p           = NULL;
-    char                *input_copy     = sw_strdup(input);
-    char                *modes          = (char*) "";
-    char                *nicks[15]      = { NULL };
-    char                *state          = (char*) "";
-    const size_t         ar_sz          = ARRAY_SIZE(nicks);
-    plus_minus_state_t   pm_state       = STATE_NEITHER_PM;
-    size_t               ar_i           = 0;
-    size_t               nicks_assigned = 0;
-
-    /* initialize the array */
-    for (ar_p = &nicks[0]; ar_p < &nicks[ar_sz]; ar_p++)
-	*ar_p = NULL;
+    char		*nicks[15]      = { NULL };
+    size_t		 ar_i           = 0;
+    const size_t	 ar_sz          = ARRAY_SIZE(nicks);
+    char		*input_copy     = sw_strdup(input);
+    char		*modes          = (char *) "";
+    size_t		 nicks_assigned = 0;
+    char		*state          = (char *) "";
+    plus_minus_state_t	 pm_state       = STATE_NEITHER_PM;
 
     if ((modes = strtok_r(input_copy, " ", &state)) == NULL) {
 	err_log(EINVAL, "maintain_channel_stats: strtok_r: no modes!");
@@ -430,7 +425,7 @@ maintain_channel_stats(const char *channel, const char *input)
     free(input_copy);
 
     /* destroy the array */
-    for (ar_p = &nicks[0]; ar_p < &nicks[ar_sz]; ar_p++) {
+    for (char **ar_p = &nicks[0]; ar_p < &nicks[ar_sz]; ar_p++) {
 	free_not_null(*ar_p);
 	*ar_p = NULL;
     }
