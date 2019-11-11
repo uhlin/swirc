@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Changed ###
+- Made command `/say` available for ICB
+
 ### Updated ###
 - Help for command
   - `/connect`

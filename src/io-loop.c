@@ -130,7 +130,7 @@ static struct cmds_tag {
     { "resize",      cmd_resize,      false, resize_usage,      ARRAY_SIZE(resize_usage),      false },
     { "rules",       cmd_rules,       true,  rules_usage,       ARRAY_SIZE(rules_usage),       true  },
     { "sasl",        cmd_sasl,        false, sasl_usage,        ARRAY_SIZE(sasl_usage),        true  },
-    { "say",         cmd_say,         true,  say_usage,         ARRAY_SIZE(say_usage),         true  },
+    { "say",         cmd_say,         true,  say_usage,         ARRAY_SIZE(say_usage),         false },
     { "set",         cmd_set,         false, set_usage,         ARRAY_SIZE(set_usage),         false },
     { "theme",       cmd_theme,       false, theme_usage,       ARRAY_SIZE(theme_usage),       false },
     { "time",        cmd_time,        true,  time_usage,        ARRAY_SIZE(time_usage),        true  },
