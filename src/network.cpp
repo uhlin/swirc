@@ -97,8 +97,9 @@ volatile bool g_connection_in_progress = false;
 volatile bool g_connection_lost = false;
 volatile bool g_on_air = false;
 
-char g_last_server[512] = { 0 };
-char g_last_port[16] = { 0 };
+char g_last_server[1024] = { 0 };
+char g_last_port[32] = { 0 };
+char g_last_pass[256] = { 0 };
 
 /****************************************************************
 *                                                               *
@@ -351,6 +352,8 @@ net_connect(
 
     snprintf(g_last_server, ARRAY_SIZE(g_last_server), "%s", ctx->server);
     snprintf(g_last_port, ARRAY_SIZE(g_last_port), "%s", ctx->port);
+    snprintf(g_last_pass, ARRAY_SIZE(g_last_pass), "%s",
+	(ctx->password ? ctx->password : ""));
     if (!g_icb_mode)
 	window_foreach_rejoin_all_channels();
     net_connect_clean_up();
@@ -393,12 +396,13 @@ net_addr_resolve(const char *host, const char *port)
 }
 
 struct server *
-server_new(const char *host, const char *port)
+server_new(const char *host, const char *port, const char *pass)
 {
     struct server *server = (struct server *) xmalloc(sizeof *server);
 
     server->host = sw_strdup(host);
     server->port = sw_strdup(port);
+    server->pass = (pass ? sw_strdup(pass) : NULL);
 
     return server;
 }
@@ -526,5 +530,6 @@ server_destroy(struct server *server)
 	return;
     free_not_null(server->host);
     free_not_null(server->port);
+    free_not_null(server->pass);
     free(server);
 }

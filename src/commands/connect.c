@@ -110,15 +110,11 @@ static const char *test_servers[] = {
     NULL
 };
 
-/*lint -sem(get_password, r_null) */
-static char *
-get_password()
+static bool
+shouldConnectUsingPassword()
 {
-    char  answer[20] = "";
-    int   c          = EOF;
-    char *pass       = NULL;
-
-    escape_curses();
+    char answer[20] = "";
+    int c = EOF;
 
     while (BZERO(answer, sizeof answer), true) {
 	printf("Connect using password? [Y/n]: ");
@@ -136,21 +132,34 @@ get_password()
 		   strings_match(answer, "Y")) {
 	    break;
 	} else if (strings_match(answer, "n") || strings_match(answer, "N")) {
-	    resume_curses();
-	    return NULL;
+	    return false;
 	} else {
 	    continue;
 	}
     }
 
-#define PASSWORD_SIZE 100
-    pass = xmalloc(PASSWORD_SIZE);
+    return true;
+}
+
+/*lint -sem(get_password, r_null) */
+static char *
+get_password()
+{
+    static char pass[400] = "";
+    int c = EOF;
+
+    escape_curses();
+
+    if (!shouldConnectUsingPassword()) {
+	resume_curses();
+	return NULL;
+    }
 
     while (true) {
 	printf("Password (will echo): ");
 	fflush(stdout);
 
-	const bool fgets_error = fgets(pass, PASSWORD_SIZE, stdin) == NULL;
+	const bool fgets_error = fgets(pass, ARRAY_SIZE(pass), stdin) == NULL;
 
 	if (fgets_error) {
 	    putchar('\n');
@@ -167,7 +176,7 @@ get_password()
     }
 
     resume_curses();
-    return (pass);
+    return (&pass[0]);
 }
 
 static void
@@ -190,13 +199,13 @@ reconnect_end()
 }
 
 void
-do_connect(const char *server, const char *port)
+do_connect(const char *server, const char *port, const char *pass)
 {
     PRINTTEXT_CONTEXT ptext_ctx;
     struct network_connect_context conn_ctx = {
 	.server   = (char *) server,
 	.port     = (char *) port,
-	.password = NULL,
+	.password = (char *) pass,
 	.username = "",
 	.rl_name  = "",
 	.nickname = "",
@@ -253,14 +262,12 @@ do_connect(const char *server, const char *port)
 	 */
 	long int sleep_time_seconds = 10;
 
-	ptext_ctx.spec_type = TYPE_SPEC2;
-	conn_ctx.password = (g_connection_password ? get_password() : NULL);
-
 	if (!g_icb_mode && strings_match(conn_ctx.port, ICB_PORT))
 	    turn_icb_mode_on();
 	else if (!ssl_is_enabled() && strings_match(conn_ctx.port, SSL_PORT))
 	    set_ssl_on();
 
+	ptext_ctx.spec_type = TYPE_SPEC2;
 	reconnect_begin();
 
 	while (net_connect(&conn_ctx, &sleep_time_seconds) ==
@@ -284,12 +291,6 @@ do_connect(const char *server, const char *port)
       out_of_both_loops:
 
 	reconnect_end();
-
-	if (conn_ctx.password) {
-	    OPENSSL_cleanse(conn_ctx.password, PASSWORD_SIZE);
-	    free(conn_ctx.password);
-	    conn_ctx.password = NULL;
-	}
     }
 }
 

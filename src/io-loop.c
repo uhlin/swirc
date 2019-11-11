@@ -453,7 +453,11 @@ enter_io_loop(void)
     }
 
     if (g_auto_connect) {
-	IRC_CONNECT(g_cmdline_opts->server, g_cmdline_opts->port);
+	char buf[1000];
+
+	snprintf(buf, ARRAY_SIZE(buf), "%s:%s", g_cmdline_opts->server,
+	    g_cmdline_opts->port);
+	cmd_connect(buf);
     }
 
     history = textBuf_new();

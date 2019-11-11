@@ -40,6 +40,7 @@
 #include "libUtils.h"
 #include "main.h"
 #include "network.h"
+#include "strHand.h"
 #include "strdup_printf.h"
 
 #include "commands/connect.h" /* do_connect() */
@@ -113,16 +114,16 @@ do_connect_wrapper(void *arg)
 {
     struct server *server = arg;
 
-    do_connect(server->host, server->port);
+    do_connect(server->host, server->port, server->pass);
     server_destroy(server);
     return NULL;
 }
 
 void
-net_do_connect_detached(const char *host, const char *port)
+net_do_connect_detached(const char *host, const char *port, const char *pass)
 {
     pthread_t thread;
-    struct server *server = server_new(host, port);
+    struct server *server = server_new(host, port, pass);
 
     if ((errno = pthread_create(&thread,NULL,do_connect_wrapper,server)) != 0)
 	err_sys("net_do_connect_detached: pthread_create");
@@ -145,8 +146,10 @@ listenThread_fn(void *arg)
 
     (void) arg;
     net_irc_listen(&connection_lost);
-    if (connection_lost)
-	IRC_CONNECT(g_last_server, g_last_port);
+    if (connection_lost) {
+	net_do_connect_detached(g_last_server, g_last_port,
+	    !strings_match(g_last_pass, "") ? g_last_pass : NULL);
+    }
     return (NULL);
 }
 

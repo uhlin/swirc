@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 ### Changed ###
 - Made command `/say` available for ICB
 
+### Fixed ###
+- Command-line option `-p` (which queries the user for a connection
+  password). It has been broken for some time but I haven't noticed it
+  until now.
+- Reconnection with connection password
+
 ### Updated ###
 - Help for command
   - `/connect`

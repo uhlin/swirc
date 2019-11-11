@@ -32,6 +32,7 @@ extern "C" {
 struct server {
     char *host;
     char *port;
+    char *pass;
 };
 
 struct network_connect_context {
@@ -66,6 +67,7 @@ extern volatile bool g_on_air;
 
 extern char g_last_server[];
 extern char g_last_port[];
+extern char g_last_pass[];
 
 /*lint -sem(net_addr_resolve, r_null) */
 
@@ -74,7 +76,8 @@ conn_res_t	 net_connect(const struct network_connect_context *,
 		     long int *sleep_time_seconds);
 int		 net_send_fake(const char *, ...);
 struct addrinfo *net_addr_resolve(const char *host, const char *port);
-struct server	*server_new(const char *host, const char *port);
+struct server	*server_new(const char *host, const char *port,
+		     const char *pass);
 void		 net_connect_clean_up(void);
 void		 net_irc_listen(bool *connection_lost);
 void		 net_kill_connection(void);

@@ -30,7 +30,8 @@ extern int g_socket;
 int	net_recv_plain(struct network_recv_context *, char *recvbuf,
 	    int recvbuf_size);
 int	net_send_plain(const char *, ...);
-void	net_do_connect_detached(const char *host, const char *port);
+void	net_do_connect_detached(const char *host, const char *port,
+	    const char *pass);
 void	net_listenThread_join(void);
 void	net_spawn_listenThread(void);
 
