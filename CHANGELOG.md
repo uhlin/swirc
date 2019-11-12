@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
+- Event
+  - 464 (`ERR_PASSWDMISMATCH`)
 - Preprogrammed network name:
   - [afternet](https://www.afternet.org/)
   - [blitzed](http://blitzed.org/)
