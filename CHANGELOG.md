@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Preprogrammed network name:
   - [afternet](https://www.afternet.org/)
+  - [blitzed](http://blitzed.org/)
 
 ### Changed ###
 - Made command `/say` available for ICB

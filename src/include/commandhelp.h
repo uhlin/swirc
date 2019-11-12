@@ -109,6 +109,7 @@ static const char *connect_usage[] = {
     "",
     "    - afternet",
     "    - anonops",
+    "    - blitzed",
     "    - efnet",
     "    - freenode",
     "    - ircnet",
