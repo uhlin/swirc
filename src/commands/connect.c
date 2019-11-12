@@ -105,6 +105,7 @@ static const char *undernet_servers[] = {
 };
 
 static const char *test_servers[] = {
+    "misc-services.exbit.io",
     "testnet.inspircd.org",
     "testnet.oragono.io",
     NULL
