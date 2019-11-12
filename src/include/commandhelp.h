@@ -107,6 +107,7 @@ static const char *connect_usage[] = {
     "will connect to freenode using an encrypted connection.",
     "Preconfigured network names are:",
     "",
+    "    - afternet",
     "    - anonops",
     "    - efnet",
     "    - freenode",

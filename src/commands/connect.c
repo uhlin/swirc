@@ -47,6 +47,11 @@ static bool quit_reconnecting = false;
 static bool reconnecting = false;
 static bool secure_connection = false;
 
+static const char *afternet_servers[] = {
+    "irc.afternet.org",
+    NULL
+};
+
 static const char *anonops_servers[] = {
     "anonops532vcpz6z.onion",
     "irc.anonops.com",
@@ -422,9 +427,10 @@ cmd_connect(const char *data)
 	print_and_free("/connect: bogus port number", dcopy);
 	return;
     } else {
-	if (strings_match_ignore_case(server, "anonops"))
-	    IRC_CONNECT(get_server(anonops_servers, "AnonOps IRC network"),
-			port);
+	if (strings_match_ignore_case(server, "afternet"))
+	    IRC_CONNECT(get_server(afternet_servers, "AfterNET IRC network"), port);
+	else if (strings_match_ignore_case(server, "anonops"))
+	    IRC_CONNECT(get_server(anonops_servers, "AnonOps IRC network"), port);
 	else if (strings_match_ignore_case(server, "efnet"))
 	    IRC_CONNECT(get_server(efnet_servers, "EFnet servers"), port);
 	else if (strings_match_ignore_case(server, "freenode"))

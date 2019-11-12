@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- Preprogrammed network name:
+  - [afternet](https://www.afternet.org/)
+
 ### Changed ###
 - Made command `/say` available for ICB
 
