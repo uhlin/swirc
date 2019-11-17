@@ -79,6 +79,7 @@ static const char *efnet_servers[] = {
 static const char *freenode_servers[] = {
     "card.freenode.net",
     "chat.freenode.net",
+    "chat.ipv6.freenode.net",
     "cherryh.freenode.net",
     "freenodeok2gncmy.onion",
     "hobana.freenode.net",
