@@ -96,7 +96,7 @@ static struct tagConfDefValues {
     { "max_chat_windows",          TYPE_INTEGER, 2, "60" },
     { "show_ping_pong",            TYPE_BOOLEAN, 3, "no" },
     { "skip_motd",                 TYPE_BOOLEAN, 3, "no" },
-    { "ssl_verify_peer",           TYPE_BOOLEAN, 3, "YES" },
+    { "ssl_verify_peer",           TYPE_BOOLEAN, 3, "yes" },
     { "startup_greeting",          TYPE_BOOLEAN, 2, "yes" },
     { "textbuffer_size_absolute",  TYPE_INTEGER, 1, "1500" },
     { "theme",                     TYPE_STRING,  4, "default" },
