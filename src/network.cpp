@@ -384,7 +384,7 @@ net_addr_resolve(const char *host, const char *port)
 
     BZERO(&hints, sizeof hints);
     hints.ai_flags     = AI_CANONNAME;
-    hints.ai_family    = AF_INET;
+    hints.ai_family    = AF_UNSPEC;
     hints.ai_socktype  = SOCK_STREAM;
     hints.ai_protocol  = 0;
     hints.ai_addrlen   = 0;

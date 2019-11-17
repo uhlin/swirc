@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Command-line option `-p` (which queries the user for a connection
   password). It has been broken for some time but I haven't noticed it
   until now.
+- Connection to a IPv6-only host. (Reported by Ross Richardson).
 - Reconnection with connection password
 
 ### Updated ###
