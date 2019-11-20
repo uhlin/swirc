@@ -1,5 +1,5 @@
 /* errHand.c  --  Error handling routines
-   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -45,10 +45,10 @@
 static const char *
 get_timestamp()
 {
-    time_t       seconds;
-    const time_t unsuccessful = -1;
-    struct tm    items        = {0};
-    static char  buffer[200]  = "";
+    static char		buffer[200] = "";
+    struct tm		items = { 0 };
+    time_t		seconds = 0;
+    const time_t	unsuccessful = ((time_t) -1);
 
     if (time(&seconds) == unsuccessful) {
 	return "";
