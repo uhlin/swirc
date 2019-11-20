@@ -54,7 +54,6 @@ NORETURN void SWAssertNotReachedFail (const char *file, long int line, const cha
 #define sw_static_assert(expr, msg) \
 	_Static_assert((expr), msg)
 #else
-#pragma message("warning: sw_static_assert() is a no operation!")
 #define sw_static_assert(expr, msg) ((void) 0)
 #endif
 
