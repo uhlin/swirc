@@ -76,10 +76,10 @@ const char g_swircAuthor[]  = "Markus Uhlin";
 const char g_swircWebAddr[] = "https://www.nifty-networks.net/swirc/";
 
 bool g_auto_connect         = false;
-bool g_icb_mode             = false;
-bool g_connection_password  = false;
 bool g_bind_hostname        = false;
+bool g_connection_password  = false;
 bool g_explicit_config_file = false;
+bool g_icb_mode             = false;
 
 struct cmdline_opt_values *g_cmdline_opts = new cmdline_opt_values();
 

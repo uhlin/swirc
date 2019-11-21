@@ -38,10 +38,10 @@ extern const char g_swircAuthor[];
 extern const char g_swircWebAddr[];
 
 extern bool g_auto_connect;
-extern bool g_icb_mode;
-extern bool g_connection_password;
 extern bool g_bind_hostname;
+extern bool g_connection_password;
 extern bool g_explicit_config_file;
+extern bool g_icb_mode;
 
 extern struct cmdline_opt_values *g_cmdline_opts;
 
