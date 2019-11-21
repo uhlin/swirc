@@ -102,22 +102,22 @@ static const char *SoftwareDisclaimer[] = {
 };
 
 static const char *OptionDesc[] = {
-    "\nCommon\n",
-    "    -c <server[:port]>    Auto-connect to given server\n",
-    "    -n <nickname>         Online nickname\n",
-    "    -u <username>         User identity\n",
-    "    -r <rl name>          Specifies the real name\n",
-    "    -i                    ICB mode\n",
-    "    -p                    Server password (for private servers)\n",
-    "    -h <hostname>         Use this hostname on connect\n",
-    "    -x <config>           Explicit config file\n",
-    "\nExtras\n",
-    "    -v, -version          View the current client ver\n",
-    "    -?, -help             Print the usage\n",
+    "\nOptions:\n\n",
+    "    -4                   Use IPv4 addresses only\n",
+    "    -6                   Use IPv6 addresses only\n",
+    "    -?, --help           Output help\n",
 #ifdef OUTPUT_INTERNAL_OPTIONS
-    "    -T                    Internal option. Windows: Invoked when\n",
-    "                          launched by a toast.\n",
+    "    -T                   Internal option. Windows: Invoked when\n",
+    "                         launched by a toast.\n",
 #endif
+    "    -c <server[:port]>   Connect to IRC server\n",
+    "    -i                   Turn on Internet Citizen's Band mode\n",
+    "    -n <nickname>        Online nickname\n",
+    "    -p                   Query for server password (for private servers)\n",
+    "    -r <rl name>         Your real name\n",
+    "    -u <username>        Your username\n",
+    "    -v, --version        Output Swirc version\n",
+    "    -x <config>          Config file\n",
 };
 
 /**
