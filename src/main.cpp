@@ -499,7 +499,9 @@ main(int argc, char *argv[])
 
     enter_io_loop();
 
-    /* XXX: Reverse order... */
+    /*
+     * Reverse order...
+     */
     net_ssl_deinit();
     readline_deinit();
     windowSystem_deinit();
