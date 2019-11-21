@@ -352,32 +352,32 @@ process_options(int argc, char *argv[], const char *optstring)
 	case '6':
 	    net_set_sock_addr_family_ipv6();
 	    break;
+	case 'T':
+	    case_launched_by_toast_hook();
+	    break;
 	case 'c':
 	    case_connect();
-	    break;
-	case 'n':
-	    case_nickname();
-	    break;
-	case 'u':
-	    case_username();
-	    break;
-	case 'r':
-	    case_rl_name();
-	    break;
-	case 'i':
-	    case_icb();
-	    break;
-	case 'p':
-	    case_password();
 	    break;
 	case 'h':
 	    case_hostname();
 	    break;
+	case 'i':
+	    case_icb();
+	    break;
+	case 'n':
+	    case_nickname();
+	    break;
+	case 'p':
+	    case_password();
+	    break;
+	case 'r':
+	    case_rl_name();
+	    break;
+	case 'u':
+	    case_username();
+	    break;
 	case 'x':
 	    case_config();
-	    break;
-	case 'T':
-	    case_launched_by_toast_hook();
 	    break;
 	case UNRECOGNIZED_OPTION:
 	    err_msg("%s: -%c: unrecognized option", argv[0], g_option_save);
