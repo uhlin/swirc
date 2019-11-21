@@ -108,10 +108,10 @@ format_codes_are_ok(const char *fmt)
 const char *
 current_time(const char *fmt)
 {
-    time_t		seconds;
-    const time_t	unsuccessful = -1;
-    struct tm		items        = {0};
-    static char		buffer[200]  = "";
+    static char		buffer[200] = "";
+    struct tm		items = { 0 };
+    time_t		seconds = 0;
+    const time_t	unsuccessful = ((time_t) -1);
 
     if (isNull(fmt) || isEmpty(fmt) || time(&seconds) == unsuccessful) {
 	return "";
