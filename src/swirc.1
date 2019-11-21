@@ -1,7 +1,7 @@
 .\"
 .\" Public domain
 .\"
-.Dd October 20, 2019
+.Dd November 21, 2019
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -10,8 +10,12 @@
 .Sh SYNOPSIS
 .Nm swirc
 .Bk -words
-.Op OPTION
-.Op ...
+.Op Fl 46?ipv
+.Op Fl c Ar server[:port]
+.Op Fl n Ar nickname
+.Op Fl r Ar rl name
+.Op Fl u Ar username
+.Op Fl x Ar config
 .Ek
 .Sh DESCRIPTION
 .Nm
@@ -19,21 +23,23 @@ is a BSD licensed, console based and lightweight ICB and IRC client
 written in C/C++, whose goals are to be portable and secure.
 .Sh OPTIONS
 .Bl -tag -width Ds
+.It Fl 4
+Use IPv4 addresses only
+.It Fl 6
+Use IPv6 addresses only
+.It Fl ?
+Output help
 .It Fl c Ar server[:port]
-Auto-connect to given server.
+Connect to given server.
 If the port is omitted port 6667 will be chosen.
 And if the port is 7326 ICB mode is turned on automatically.
 Further, if the port is 6697
 .Nm
 attempts to initiate a TLS/SSL connection.
+.It Fl i
+Turn on Internet Citizen's Band mode
 .It Fl n Ar nickname
 Online nickname
-.It Fl u Ar username
-User identity
-.It Fl r Ar rl name
-Specifies the real name
-.It Fl i
-ICB mode (Internet Citizen's Band)
 .It Fl p
 Server password (for private servers). However: InspIRCd has a module
 called password forward, which means that if a server password is
@@ -44,16 +50,18 @@ connection, to prevent your password from being sniffed.
 .Nm
 also supports IRCv3 SASL authentication which is probably a better
 alternative.
-.It Fl h Ar hostname
-Use this hostname on connect (currently a no-op)
+.It Fl r Ar rl name
+Your real name
+.It Fl u Ar username
+Your username
+.It Fl v
+Output
+.Nm
+version
 .It Fl x Ar config
-Explicit config file
-.It Fl version
-View the current client version
-.It Fl help
-Print the usage
+Config file
 .El
-.Sh KEY COMBOS
+.Sh KEYS
 .Bl -tag -width "          " -compact
 .It Ic CTRL+a
 Move to beginning of line
