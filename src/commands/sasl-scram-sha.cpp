@@ -240,6 +240,10 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 	out = new unsigned char[*outsize];
 	const char *pass = Config("sasl_password");
 
+	/*
+	 * FIXME: SASLprep normalisation of the password needed
+	 *        (GNU libidn?)
+	 */
 	if (!PKCS5_PBKDF2_HMAC(pass, -1, salt, saltlen, iter, EVP_sha256(),
 			       *outsize, out))
 	    throw std::runtime_error("unable to get salted password");
