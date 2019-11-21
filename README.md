@@ -9,21 +9,17 @@ client written in C/C++, whose goals are to be portable and secure.
 
 ## Program options ##
 
-### Common ###
-
-    -c <server[:port]>    Auto-connect to given server
-    -n <nickname>         Online nickname
-    -u <username>         User identity
-    -r <rl name>          Specifies the real name
-    -i                    ICB mode
-    -p                    Server password (for private servers)
-    -h <hostname>         Use this hostname on connect
-    -x <config>           Explicit config file
-
-### Extras ###
-
-    -v, -version          View the current client ver
-    -?, -help             Print the usage
+    -4                   Use IPv4 addresses only
+    -6                   Use IPv6 addresses only
+    -?, --help           Output help
+    -c <server[:port]>   Connect to IRC server
+    -i                   Turn on Internet Citizen's Band mode
+    -n <nickname>        Online nickname
+    -p                   Query for server password (for private servers)
+    -r <rl name>         Your real name
+    -u <username>        Your username
+    -v, --version        Output Swirc version
+    -x <config>          Config file
 
 ## Cloning ##
 
