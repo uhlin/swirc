@@ -110,6 +110,7 @@ char g_last_pass[256] = { 0 };
 ****************************************************************/
 
 static const int RECVBUF_SIZE = 2048;
+static int socket_address_family = AF_UNSPEC;
 static long int retry = 0;
 static struct reconnect_context reconn_ctx;
 
@@ -387,7 +388,7 @@ net_addr_resolve(const char *host, const char *port)
 
     BZERO(&hints, sizeof hints);
     hints.ai_flags     = AI_CANONNAME;
-    hints.ai_family    = AF_UNSPEC;
+    hints.ai_family    = socket_address_family;
     hints.ai_socktype  = SOCK_STREAM;
     hints.ai_protocol  = 0;
     hints.ai_addrlen   = 0;
@@ -535,4 +536,16 @@ server_destroy(struct server *server)
     free_not_null(server->port);
     free_not_null(server->pass);
     free(server);
+}
+
+void
+net_set_sock_addr_family_ipv4(void)
+{
+    socket_address_family = AF_INET;
+}
+
+void
+net_set_sock_addr_family_ipv6(void)
+{
+    socket_address_family = AF_INET6;
 }

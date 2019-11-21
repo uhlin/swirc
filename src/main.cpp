@@ -346,6 +346,12 @@ process_options(int argc, char *argv[], const char *optstring)
 
     while ((opt = options(argc, argv, optstring)) != EOF) {
 	switch (opt) {
+	case '4':
+	    net_set_sock_addr_family_ipv4();
+	    break;
+	case '6':
+	    net_set_sock_addr_family_ipv6();
+	    break;
 	case 'c':
 	    case_connect();
 	    break;
@@ -430,7 +436,7 @@ main(int argc, char *argv[])
     }
 #endif
 
-    process_options(argc, argv, "c:n:u:r:iph:x:T");
+    process_options(argc, argv, "46c:n:u:r:iph:x:T");
     srand(time(NULL));
 
     term_init();

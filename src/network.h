@@ -83,6 +83,9 @@ void		 net_irc_listen(bool *connection_lost);
 void		 net_kill_connection(void);
 void		 server_destroy(struct server *);
 
+void	net_set_sock_addr_family_ipv4(void);
+void	net_set_sock_addr_family_ipv6(void);
+
 int	net_ssl_begin(void);
 void	net_ssl_end(void);
 int	net_ssl_check_hostname(const char *, unsigned int);
