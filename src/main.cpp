@@ -188,6 +188,15 @@ print_help(const char *exe)
 }
 
 /**
+ * Command line option -T. The option is automatically invoked when
+ * launched by a toast.
+ */
+static void
+case_launched_by_toast_hook()
+{
+}
+
+/**
  * -c <server[:port]>
  */
 static void
@@ -218,6 +227,37 @@ case_connect()
 }
 
 /**
+ * -h <hostname>
+ */
+static void
+case_hostname()
+{
+    static bool been_case = false;
+
+    if (been_case) {
+	DUP_OPTION_ERR('h');
+    }
+
+    g_cmdline_opts->hostname = sw_strdup(g_option_arg);
+    g_bind_hostname = been_case = true;
+}
+
+/**
+ * Option -i
+ */
+static void
+case_icb()
+{
+    static bool been_case = false;
+
+    if (been_case) {
+	DUP_OPTION_ERR('i');
+    }
+
+    g_icb_mode = been_case = true;
+}
+
+/**
  * -n <nickname>
  */
 static void
@@ -230,6 +270,37 @@ case_nickname()
     }
 
     g_cmdline_opts->nickname = sw_strdup(g_option_arg);
+    been_case = true;
+}
+
+/**
+ * Option -p
+ */
+static void
+case_password()
+{
+    static bool been_case = false;
+
+    if (been_case) {
+	DUP_OPTION_ERR('p');
+    }
+
+    g_connection_password = been_case = true;
+}
+
+/**
+ * -r <rl name>
+ */
+static void
+case_rl_name()
+{
+    static bool been_case = false;
+
+    if (been_case) {
+	DUP_OPTION_ERR('r');
+    }
+
+    g_cmdline_opts->rl_name = sw_strdup(g_option_arg);
     been_case = true;
 }
 
@@ -250,68 +321,6 @@ case_username()
 }
 
 /**
- * -r <rl name>
- */
-static void
-case_rl_name()
-{
-    static bool been_case = false;
-
-    if (been_case) {
-	DUP_OPTION_ERR('r');
-    }
-
-    g_cmdline_opts->rl_name = sw_strdup(g_option_arg);
-    been_case = true;
-}
-
-/**
- * Option -i
- */
-static void
-case_icb()
-{
-    static bool been_case = false;
-
-    if (been_case) {
-	DUP_OPTION_ERR('i');
-    }
-
-    g_icb_mode = been_case = true;
-}
-
-/**
- * Option -p
- */
-static void
-case_password()
-{
-    static bool been_case = false;
-
-    if (been_case) {
-	DUP_OPTION_ERR('p');
-    }
-
-    g_connection_password = been_case = true;
-}
-
-/**
- * -h <hostname>
- */
-static void
-case_hostname()
-{
-    static bool been_case = false;
-
-    if (been_case) {
-	DUP_OPTION_ERR('h');
-    }
-
-    g_cmdline_opts->hostname = sw_strdup(g_option_arg);
-    g_bind_hostname = been_case = true;
-}
-
-/**
  * -x <config>
  */
 static void
@@ -325,15 +334,6 @@ case_config()
 
     g_cmdline_opts->config_file = sw_strdup(g_option_arg);
     g_explicit_config_file = been_case = true;
-}
-
-/**
- * Command line option -T. The option is automatically invoked when
- * launched by a toast.
- */
-static void
-case_launched_by_toast_hook()
-{
 }
 
 /**
