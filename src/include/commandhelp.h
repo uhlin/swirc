@@ -412,7 +412,7 @@ static const char *sasl_usage[] = {
     "",
     "    keygen [--force]",
     "    pubkey",
-    "    mechanism [ecdsa-nist256p-challenge | plain]",
+    "    mechanism [ecdsa-nist256p-challenge | plain | scram-sha-256]",
     "    username <name>",
     "    password <pass>",
     "    set [on | off]",

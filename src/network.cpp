@@ -52,6 +52,8 @@
 #include "strHand.h"
 
 #include "commands/connect.h"
+#include "commands/sasl-scram-sha.h"
+
 #include "events/cap.h"
 #include "events/welcome.h"
 
@@ -263,6 +265,7 @@ net_connect(
 
     printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1, true);
     printtext(&ptext_ctx, "Connecting to %s (%s)", ctx->server, ctx->port);
+    g_sasl_scram_sha_got_first_msg = false;
 
     try {
 	ptext_ctx.spec_type = TYPE_SPEC1_SUCCESS;

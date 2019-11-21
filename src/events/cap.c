@@ -48,6 +48,8 @@ is_sasl_mechanism_supported(const char *mechanism)
 	return true;
     else if (strings_match(mechanism, "PLAIN"))
 	return true;
+    else if (strings_match(mechanism, "SCRAM-SHA-256"))
+	return true;
     else
 	return false;
 

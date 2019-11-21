@@ -1,5 +1,5 @@
 /* events/auth.c
-   Copyright (C) 2017-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -39,7 +39,7 @@
 #include "../strHand.h"
 #include "../strdup_printf.h"
 
-/* solve_ecdsa_nist256p_challenge() */
+#include "../commands/sasl-scram-sha.h"
 #include "../commands/sasl.h"
 
 #include "auth.h"
@@ -140,6 +140,9 @@ event_authenticate(struct irc_message_compo *compo)
 
 	    net_send("AUTHENTICATE %s", msg);
 	    free(msg);
+	} else if (strings_match(mechanism, "SCRAM-SHA-256")) {
+	    if (sasl_scram_sha_send_client_first_msg() == -1)
+		abort_authentication();
 	} else {
 	    err_log(0, "SASL mechanism unknown  --  aborting authentication!");
 	    abort_authentication();
@@ -148,6 +151,19 @@ event_authenticate(struct irc_message_compo *compo)
     } else { /*=== not 'AUTHENTICATE +' ===*/
 	if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE"))
 	    handle_ecdsa_nist256p_challenge(compo->params);
+	else if (strings_match(mechanism, "SCRAM-SHA-256")) {
+	    if (! (g_sasl_scram_sha_got_first_msg)) {
+		if (sasl_scram_sha_handle_serv_first_msg(compo->params) == -1)
+		    abort_authentication();
+		else
+		    g_sasl_scram_sha_got_first_msg = true;
+	    } else {
+		if (sasl_scram_sha_handle_serv_final_msg(compo->params) == -1)
+		    abort_authentication();
+		else
+		    net_send("AUTHENTICATE +");
+	    }
+	}
     }
 }
 

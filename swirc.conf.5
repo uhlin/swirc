@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018 2019 Markus Uhlin. All rights reserved.
 .\"
-.Dd April 19, 2019
+.Dd November 20, 2019
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -208,13 +208,17 @@ Available mechanisms are:
 ECDSA-NIST256P-CHALLENGE
 .It
 PLAIN
+.It
+SCRAM-SHA-256
 .El
+.Pp
+Be sure to write them in all uppercase!
 .\" ----------------------------------------
 .\" SASL PASSWORD
 .\" ----------------------------------------
 .It Sy sasl_password Pq Em string
 SASL password.
-For mechanism PLAIN.
+For mechanism PLAIN and SCRAM-SHA-256.
 .\" ----------------------------------------
 .\" SASL USERNAME
 .\" ----------------------------------------
@@ -258,7 +262,7 @@ so set a sane value!
 .\" ----------------------------------------
 .It Sy theme Pq Em string
 .Sy swirc
-theme...
+theme.
 .\" ----------------------------------------
 .\" USERNAME
 .\" ----------------------------------------

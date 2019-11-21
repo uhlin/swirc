@@ -1,5 +1,5 @@
 /* commands/sasl.c
-   Copyright (C) 2017, 2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2019 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -304,7 +304,7 @@ set_state(char *state)
 
    keygen [--force]
    pubkey
-   mechanism [ecdsa-nist256p-challenge | plain]
+   mechanism [ecdsa-nist256p-challenge | plain | scram-sha-256]
    username <name>
    password <pass>
    set [on | off] */

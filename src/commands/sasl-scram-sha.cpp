@@ -1,0 +1,380 @@
+#include "base64.h"
+#include "common.h"
+
+#include <random>
+#include <stdexcept>
+
+#include <openssl/evp.h>
+#include <openssl/hmac.h>
+
+#include "../config.h"
+#include "../dataClassify.h"
+#include "../errHand.h"
+#include "../libUtils.h"
+#include "../network.h"
+#include "../strHand.h"
+#include "../strdup_printf.h"
+
+#include "sasl-scram-sha.h"
+
+volatile bool g_sasl_scram_sha_got_first_msg = false;
+
+static char nonce[24] = { '\0' };
+static char *complete_nonce = NULL;
+
+/*lint -sem(get_decoded_msg, r_null) */
+/*lint -sem(get_salted_password, r_null) */
+
+static void
+generate_and_store_nonce()
+{
+    const char legal_index[] =
+	"!\"#$%&'()*+-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
+	"abcdefghijklmnopqrstuvwxyz{|}~";
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<uint32_t> dist(0, ARRAY_SIZE(legal_index) - 1);
+
+    for (size_t i = 0; i < ARRAY_SIZE(nonce); i++)
+	nonce[i] = legal_index[dist(gen)];
+
+    nonce[ARRAY_SIZE(nonce) - 1] = '\0';
+}
+
+static const char *
+get_encoded_msg(const char *source)
+{
+    static char encoded_msg[4096];
+
+    memset(encoded_msg, 0, ARRAY_SIZE(encoded_msg));
+
+    if (b64_encode((const uint8_t *) source, strlen(source), encoded_msg,
+	ARRAY_SIZE(encoded_msg)) == -1)
+	return "";
+
+    return &encoded_msg[0];
+}
+
+/* C: n,,n=user,r=rOprNGfwEbeRWgbNEkqO */
+int
+sasl_scram_sha_send_client_first_msg(void)
+{
+    char	*msg      = NULL;
+    const char	*username = Config("sasl_username");
+
+    if (!is_valid_username(username))
+	return -1;
+
+    generate_and_store_nonce();
+
+    msg = strdup_printf("n,,n=%s,r=%s", username, nonce);
+    const char *encoded_msg = get_encoded_msg(msg);
+    free(msg);
+
+    if (strings_match(encoded_msg, "") ||
+	net_send("AUTHENTICATE %s", encoded_msg) < 0)
+	return -1;
+
+    return 0;
+}
+
+/* C: c=biws,r=rOprNGfwEbeRWgbNEkqO%hvYDpWUa2RaTCAfuxFIlj)hNlF$k0,
+      p=dHzbZapWIk4jUhN+Ute9ytag9zjfMHgsqmmiz7AndVQ= */
+int
+sasl_scram_sha_send_client_final_msg(const char *proof)
+{
+    std::string str("c=biws,r=");
+
+    str.append(complete_nonce);
+    str.append(",p=");
+    str.append(proof);
+
+    const size_t size = str.length() + 1;
+    char *cli_final_msg = new char[size];
+
+    if (sw_strcpy(cli_final_msg, str.c_str(), size) != 0 ||
+	net_send("AUTHENTICATE %s", get_encoded_msg(cli_final_msg)) < 0) {
+	delete[] cli_final_msg;
+	return -1;
+    }
+
+    delete[] cli_final_msg;
+    return 0;
+}
+
+static char *
+get_decoded_msg(const char *source, int *outlen)
+{
+    char *decoded_msg = NULL;
+    int length_needed = b64_decode(source, NULL, 0);
+
+    if (length_needed < 0)
+	return NULL;
+    if (outlen)
+	*outlen = length_needed;
+
+    length_needed += 1;
+    decoded_msg = new char[length_needed];
+    decoded_msg[length_needed - 1] = '\0';
+
+    if (b64_decode(source, ((uint8_t *) decoded_msg), length_needed) == -1) {
+	delete[] decoded_msg;
+	return NULL;
+    }
+
+    return decoded_msg;
+}
+
+/* S: r=rOprNGfwEbeRWgbNEkqO%hvYDpWUa2RaTCAfuxFIlj)hNlF$k0,
+      s=W22ZaJ0SNY7soEsUEjb6gQ==,i=4096 */
+static int
+get_sfm_components(const char *msg, unsigned char **salt, int *saltlen,
+		   int *iter)
+{
+    char	*decoded_msg = NULL;
+    bool	 ok = false;
+
+    *salt = NULL;
+    *saltlen = 0;
+    *iter = PKCS5_DEFAULT_ITER;
+
+    try {
+	if ((decoded_msg = get_decoded_msg(msg, NULL)) == NULL)
+	    throw std::runtime_error("unable to get decoded message");
+
+	char *cp = decoded_msg;
+
+	if (strncmp(cp, "r=", 2) != STRINGS_MATCH)
+	    throw std::runtime_error("expected nonce");
+
+	cp += 2;
+
+	if (strncmp(cp, nonce, strlen(nonce)) != STRINGS_MATCH)
+	    throw std::runtime_error("nonce mismatch");
+
+	size_t n = strcspn(cp, ",");
+	cp[n] = '\0';
+	free(complete_nonce);
+	complete_nonce = sw_strdup(cp);
+	cp[n] = ',';
+
+	if ((cp = strstr(cp, ",s=")) == NULL)
+	    throw std::runtime_error("no base64-encoded salt");
+
+	cp += 3;
+	n = strcspn(cp, ",");
+	cp[n] = '\0';
+	char *b64salt = sw_strdup(cp);
+	cp[n] = ',';
+	*salt = (unsigned char *) get_decoded_msg(b64salt, saltlen);
+	free(b64salt);
+
+	if (*salt == NULL)
+	    throw std::runtime_error("unable to decode salt");
+	else if ((cp = strstr(cp, ",i=")) == NULL)
+	    throw std::runtime_error("no iteration count");
+
+	cp += 3;
+
+	if (!is_numeric(cp))
+	    throw std::runtime_error("iteration count not numeric");
+
+	*iter = (int) strtol(cp, NULL, 10);
+	ok = true;
+    } catch (std::runtime_error &e) {
+	delete[] *salt;
+	*salt = NULL;
+	*saltlen = 0;
+	*iter = PKCS5_DEFAULT_ITER;
+	err_log(0, "get_sfm_components: %s", e.what());
+    }
+
+    if (decoded_msg)
+	delete[] decoded_msg;
+    return ok ? 0 : -1;
+}
+
+/*
+ * SaltedPassword: Hi(Normalize(password), salt, i)
+ */
+static unsigned char *
+get_salted_password(const unsigned char *salt, int saltlen, int iter,
+		    int *outsize)
+{
+    unsigned char *out = NULL;
+
+    try {
+	if (*outsize = EVP_MD_size(EVP_sha256()), *outsize < 0)
+	    throw std::runtime_error("message digest size negative");
+
+	out = new unsigned char[*outsize];
+	const char *pass = Config("sasl_password");
+
+	if (!PKCS5_PBKDF2_HMAC(pass, -1, salt, saltlen, iter, EVP_sha256(),
+			       *outsize, out))
+	    throw std::runtime_error("unable to get salted password");
+    } catch (std::runtime_error &e) {
+	*outsize = 0;
+	if (out)
+	    delete[] out;
+	err_log(0, "get_salted_password: %s", e.what());
+	return NULL;
+    }
+
+    return out;
+}
+
+struct digest_context {
+    unsigned char	*key;
+    int			 key_len;
+    const unsigned char	*d;
+    size_t		 n;
+    unsigned char	 md[EVP_MAX_MD_SIZE];
+    unsigned int	 md_len;
+
+    digest_context(unsigned char *key, int key_len, const unsigned char *d,
+		   size_t n)
+	{
+	    this->key = key;
+	    this->key_len = key_len;
+	    this->d = d;
+	    this->n = n;
+	    memset(this->md, 0, ARRAY_SIZE(this->md));
+	    this->md_len = 0;
+	}
+};
+
+static int
+get_digest(struct digest_context *ctx)
+{
+    if (HMAC(EVP_sha256(), ctx->key, ctx->key_len, ctx->d, ctx->n, ctx->md,
+	     & (ctx->md_len)) == NULL)
+	return -1;
+    return 0;
+}
+
+static char *
+get_client_first_msg_bare()
+{
+    std::string str("n=");
+
+    str.append(Config("sasl_username"));
+    str.append(",r=");
+    str.append(nonce);
+
+    const size_t size = str.length() + 1;
+    char *msg_bare = new char[size];
+    (void) sw_strcpy(msg_bare, str.c_str(), size);
+    return msg_bare;
+}
+
+static char *
+get_client_final_msg_wo_proof()
+{
+    std::string str("c=biws,r=");
+
+    str.append(complete_nonce);
+
+    const size_t size = str.length() + 1;
+    char *msg_wo_proof = new char[size];
+    (void) sw_strcpy(msg_wo_proof, str.c_str(), size);
+    return msg_wo_proof;
+}
+
+/*
+ * AuthMessage: client-first-message-bare + "," +
+ *              server-first-message + "," +
+ *              client-final-message-without-proof
+ */
+static unsigned char *
+get_auth_msg(const char *b64msg, size_t *auth_msg_len)
+{
+    char	*msg_bare       = get_client_first_msg_bare();
+    char	*serv_first_msg = get_decoded_msg(b64msg, NULL);
+    char	*msg_wo_proof   = get_client_final_msg_wo_proof();
+
+    char *out = strdup_printf("%s,%s,%s",
+	msg_bare, serv_first_msg, msg_wo_proof);
+
+    delete[] msg_bare;
+    delete[] serv_first_msg;
+    delete[] msg_wo_proof;
+
+    *auth_msg_len = strlen(out);
+    return ((unsigned char *) out);
+}
+
+int
+sasl_scram_sha_handle_serv_first_msg(const char *msg)
+{
+    unsigned char *pass = NULL;
+    unsigned char *salt = NULL;
+    int iter = PKCS5_DEFAULT_ITER;
+    int passwdlen = 0;
+    int saltlen = 0;
+
+    if (get_sfm_components(msg, &salt, &saltlen, &iter) == -1 ||
+	(pass = get_salted_password(salt, saltlen, iter, &passwdlen)) == NULL) {
+	delete[] salt;
+	return -1;
+    }
+
+    delete[] salt;
+
+/***************************************************
+ *
+ * ClientKey: HMAC(SaltedPassword, "Client Key")
+ *
+ */
+
+    struct digest_context client_key(pass, passwdlen,
+	((const unsigned char *) "Client Key"), 10);
+
+    if (get_digest(&client_key) == -1) {
+	delete[] pass;
+	return -1;
+    }
+
+    delete[] pass;
+    unsigned char stored_key[SHA256_DIGEST_LENGTH];
+
+    /* StoredKey: H(ClientKey) */
+    if (SHA256(client_key.md, client_key.md_len, stored_key) == NULL)
+	return -1;
+
+    size_t auth_msg_len = 0;
+    unsigned char *auth_msg = get_auth_msg(msg, &auth_msg_len);
+
+/***************************************************
+ *
+ * ClientSignature: HMAC(StoredKey, AuthMessage)
+ *
+ */
+
+    struct digest_context client_signature(stored_key, SHA256_DIGEST_LENGTH,
+	auth_msg, auth_msg_len);
+
+    if (get_digest(&client_signature) == -1) {
+	free(auth_msg);
+	return -1;
+    }
+
+    free(auth_msg);
+    char proof[EVP_MAX_MD_SIZE] = { '\0' };
+
+    /* ClientProof: ClientKey XOR ClientSignature */
+    for (unsigned int i = 0;
+	 i < MIN(client_key.md_len, client_signature.md_len); i++)
+	proof[i] = client_key.md[i] ^ client_signature.md[i];
+
+    return sasl_scram_sha_send_client_final_msg(get_encoded_msg(proof));
+}
+
+int
+sasl_scram_sha_handle_serv_final_msg(const char *msg)
+{
+    (void) msg;
+    free_and_null(&complete_nonce);
+    return 0;
+}

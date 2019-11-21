@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Preprogrammed network name:
   - [afternet](https://www.afternet.org/)
   - [blitzed](http://blitzed.org/)
+- SASL auth mechanism [SCRAM-SHA-256](https://tools.ietf.org/html/rfc7677)
 
 ### Changed ###
 - Made command `/say` available for ICB
