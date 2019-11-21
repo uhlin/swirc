@@ -436,7 +436,7 @@ main(int argc, char *argv[])
     }
 #endif
 
-    process_options(argc, argv, "46c:n:u:r:iph:x:T");
+    process_options(argc, argv, "46Tc:h:in:pr:u:x:");
     srand(time(NULL));
 
     term_init();
