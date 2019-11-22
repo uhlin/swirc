@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Command-line option
   - `-4` (Use IPv4 addresses)
   - `-6` (Use IPv6 addresses)
+  - `-d` Debug logging
 - Event
   - 464 (`ERR_PASSWDMISMATCH`)
 - Preprogrammed network name:

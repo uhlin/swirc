@@ -9,12 +9,13 @@ client written in C/C++, whose goals are to be portable and secure.
 
 ## Program options ##
 
-usage: swirc [-46?ipv] [-c server[:port]] [-n nickname] [-r rl name] [-u username] [-x config]
+usage: swirc [-46?dipv] [-c server[:port]] [-n nickname] [-r rl name] [-u username] [-x config]
 
     -4                   Use IPv4 addresses only
     -6                   Use IPv6 addresses only
     -?, --help           Output help
     -c <server[:port]>   Connect to IRC server
+    -d                   Debug logging
     -i                   Turn on Internet Citizen's Band mode
     -n <nickname>        Online nickname
     -p                   Query for server password (for private servers)

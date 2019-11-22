@@ -1,7 +1,7 @@
 .\"
 .\" Public domain
 .\"
-.Dd November 21, 2019
+.Dd November 22, 2019
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -10,7 +10,7 @@
 .Sh SYNOPSIS
 .Nm swirc
 .Bk -words
-.Op Fl 46?ipv
+.Op Fl 46?dipv
 .Op Fl c Ar server[:port]
 .Op Fl n Ar nickname
 .Op Fl r Ar rl name
@@ -36,6 +36,8 @@ And if the port is 7326 ICB mode is turned on automatically.
 Further, if the port is 6697
 .Nm
 attempts to initiate a TLS/SSL connection.
+.It Fl d
+Debug logging
 .It Fl i
 Turn on Internet Citizen's Band mode
 .It Fl n Ar nickname

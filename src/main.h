@@ -40,6 +40,7 @@ extern const char g_swircWebAddr[];
 extern bool g_auto_connect;
 extern bool g_bind_hostname;
 extern bool g_connection_password;
+extern bool g_debug_logging;
 extern bool g_explicit_config_file;
 extern bool g_icb_mode;
 

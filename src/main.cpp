@@ -78,6 +78,7 @@ const char g_swircWebAddr[] = "https://www.nifty-networks.net/swirc/";
 bool g_auto_connect         = false;
 bool g_bind_hostname        = false;
 bool g_connection_password  = false;
+bool g_debug_logging        = false;
 bool g_explicit_config_file = false;
 bool g_icb_mode             = false;
 
@@ -111,6 +112,7 @@ static const char *OptionDesc[] = {
     "                         launched by a toast.\n",
 #endif
     "    -c <server[:port]>   Connect to IRC server\n",
+    "    -d                   Debug logging",
     "    -i                   Turn on Internet Citizen's Band mode\n",
     "    -n <nickname>        Online nickname\n",
     "    -p                   Query for server password (for private servers)\n",
@@ -358,6 +360,9 @@ process_options(int argc, char *argv[], const char *optstring)
 	case 'c':
 	    case_connect();
 	    break;
+	case 'd':
+	    g_debug_logging = true;
+	    break;
 	case 'h':
 	    case_hostname();
 	    break;
@@ -436,7 +441,7 @@ main(int argc, char *argv[])
     }
 #endif
 
-    process_options(argc, argv, "46Tc:h:in:pr:u:x:");
+    process_options(argc, argv, "46Tc:dh:in:pr:u:x:");
     srand(time(NULL));
 
     term_init();
