@@ -38,6 +38,8 @@
 #include "strHand.h"
 #include "theme.h"
 
+#include <stringprep.h>
+
 #define ENTRY_FOREACH()\
     for (PCONF_HTBL_ENTRY *entry_p = &hash_table[0];\
 	 entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
@@ -411,6 +413,52 @@ config_readit(const char *path, const char *mode)
 	    "fgets() returned null for an unknown reason");
 	abort();
     }
+}
+
+const char *
+config_get_normalized_sasl_username(void)
+{
+    static char buf[SASL_USERNAME_MAXLEN];
+    char *str = NULL;
+
+    if (strings_match(Config("sasl_username"), ""))
+	return NULL;
+
+    memset(buf, 0, ARRAY_SIZE(buf));
+    if ((str = stringprep_locale_to_utf8(Config("sasl_username"))) == NULL ||
+	sw_strcpy(buf, str, ARRAY_SIZE(buf)) != 0) {
+	free(str);
+	return NULL;
+    }
+
+    free(str);
+    Stringprep_profile_flags flags = 0;
+    const int ret =
+	stringprep(buf, ARRAY_SIZE(buf), flags, stringprep_saslprep);
+    return (ret == STRINGPREP_OK ? &buf[0] : NULL);
+}
+
+const char *
+config_get_normalized_sasl_password(void)
+{
+    static char buf[SASL_PASSWORD_MAXLEN];
+    char *str = NULL;
+
+    if (strings_match(Config("sasl_password"), ""))
+	return NULL;
+
+    memset(buf, 0, ARRAY_SIZE(buf));
+    if ((str = stringprep_locale_to_utf8(Config("sasl_password"))) == NULL ||
+	sw_strcpy(buf, str, ARRAY_SIZE(buf)) != 0) {
+	free(str);
+	return NULL;
+    }
+
+    free(str);
+    Stringprep_profile_flags flags = 0;
+    const int ret =
+	stringprep(buf, ARRAY_SIZE(buf), flags, stringprep_saslprep);
+    return (ret == STRINGPREP_OK ? &buf[0] : NULL);
 }
 
 /* -------------------------------------------------- */

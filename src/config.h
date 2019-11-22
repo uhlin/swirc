@@ -33,6 +33,15 @@ void		 config_create(const char *path, const char *mode);
 void		 config_do_save(const char *path, const char *mode);
 void		 config_readit(const char *path, const char *mode);
 
+#define SASL_USERNAME_MAXLEN 480
+#define SASL_PASSWORD_MAXLEN 480
+
+/*lint -sem(config_get_normalized_sasl_username, r_null) */
+/*lint -sem(config_get_normalized_sasl_password, r_null) */
+
+const char	*config_get_normalized_sasl_username(void);
+const char	*config_get_normalized_sasl_password(void);
+
 void cmd_set(const char *);
 
 long int	get_reconnect_backoff_delay(void);
