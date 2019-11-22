@@ -72,6 +72,7 @@ generate_and_store_nonce()
 	nonce[i] = legal_index[dist(gen)];
 
     nonce[ARRAY_SIZE(nonce) - 1] = '\0';
+    debug("generate_and_store_nonce: nonce: %s", nonce);
 }
 
 static const char *
@@ -131,6 +132,7 @@ sasl_scram_sha_send_client_final_msg(const char *proof)
 	return -1;
     }
 
+    debug("sasl_scram_sha_send_client_final_msg: C: %s", cli_final_msg);
     delete[] cli_final_msg;
     return 0;
 }
@@ -175,6 +177,7 @@ get_sfm_components(const char *msg, unsigned char **salt, int *saltlen,
 	if ((decoded_msg = get_decoded_msg(msg, NULL)) == NULL)
 	    throw std::runtime_error("unable to get decoded message");
 
+	debug("get_sfm_components: S: %s", decoded_msg);
 	char *cp = decoded_msg;
 
 	if (strncmp(cp, "r=", 2) != STRINGS_MATCH)
@@ -414,6 +417,9 @@ sasl_scram_sha_handle_serv_first_msg(const char *msg)
     return sasl_scram_sha_send_client_final_msg(get_encoded_msg(proof));
 }
 
+/*
+ * S: v=6rriTRBi23WpRR/wtup+mMhUZUn/dB5nLTJRsjl95G4=
+ */
 int
 sasl_scram_sha_handle_serv_final_msg(const char *msg)
 {
@@ -429,6 +435,7 @@ sasl_scram_sha_handle_serv_final_msg(const char *msg)
 	else if (strncmp(decoded_msg, "v=", 2) != STRINGS_MATCH)
 	    throw std::runtime_error("expected server signature");
 
+	debug("sasl_scram_sha_handle_serv_final_msg: S: %s", decoded_msg);
 	cp = decoded_msg;
 	cp += 2;
 	signature = (unsigned char *) get_decoded_msg(cp, NULL);
