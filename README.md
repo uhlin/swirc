@@ -37,14 +37,15 @@ To clone the repository use [Git](https://git-scm.com).
 Swirc currently depends on:
 
 * [Curl](https://curl.haxx.se/libcurl/)
+* [GNU libidn](https://www.gnu.org/software/libidn/)
 * [Ncurses](https://www.gnu.org/software/ncurses/ncurses.html)
   with wide character support
 * [OpenSSL toolkit](https://www.openssl.org/)
 
 Which means that on for example a Debian GNU/Linux system you need to
-install 3 packages before building:
+install 4 packages before building:
 
-    # apt install libcurl4-openssl-dev libncursesw5-dev libssl-dev
+    # apt install libcurl4-openssl-dev libidn11-dev libncursesw5-dev libssl-dev
 
 And on Mac OS X, provided that
 [Homebrew](http://brew.sh/)
@@ -85,14 +86,14 @@ So, fire up the command prompt for
 where the needed tools (the compiler, etc.) are loaded into the
 environment. The regular command prompt won't work. Then:
 
-    > cd c:\path\to\swirc
-    > nmake -f Makefile.vc
+    cd c:\path\to\swirc
+    nmake -f Makefile.vc
 
 *Done!*
 
 To make a distribution of Swirc use:
 
-    > nmake -f Makefile.vc dist
+    nmake -f Makefile.vc dist
 
 ## Cleaning ##
 
