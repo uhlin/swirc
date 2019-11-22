@@ -112,7 +112,7 @@ static const char *OptionDesc[] = {
     "                         launched by a toast.\n",
 #endif
     "    -c <server[:port]>   Connect to IRC server\n",
-    "    -d                   Debug logging",
+    "    -d                   Debug logging\n",
     "    -i                   Turn on Internet Citizen's Band mode\n",
     "    -n <nickname>        Online nickname\n",
     "    -p                   Query for server password (for private servers)\n",
