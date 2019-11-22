@@ -228,6 +228,10 @@ link_with_cmocka () {
 	echo "LDLIBS+=-lcmocka" >>$MAKE_DEF_FILE
 }
 
+link_with_gnu_libidn () {
+	echo "LDLIBS+=-lidn" >>$MAKE_DEF_FILE
+}
+
 if test "$1" = "--unittesting"; then
 	append_compiler_flags
 	link_with_cmocka
@@ -245,6 +249,8 @@ CXXFLAGS+=$LIBNOTIFY_CFLAGS
 LDLIBS+=$LIBNOTIFY_LDLIBS
 EOF
 fi
+
+link_with_gnu_libidn
 
 if test -f "$MAKE_DEF_FILE"; then
 	echo "configure: $MAKE_DEF_FILE successfully created!"
