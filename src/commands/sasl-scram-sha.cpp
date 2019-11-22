@@ -241,19 +241,16 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 	    throw std::runtime_error("message digest size negative");
 
 	out = new unsigned char[*outsize];
-	const char *pass = Config("sasl_password");
+	const char *pass = config_get_normalized_sasl_password();
 
-	/*
-	 * FIXME: SASLprep normalisation of the password needed
-	 *        (GNU libidn?)
-	 */
-	if (!PKCS5_PBKDF2_HMAC(pass, -1, salt, saltlen, iter, EVP_sha256(),
-			       *outsize, out))
+	if (pass == NULL)
+	    throw std::runtime_error("unable to get normalized sasl password");
+	else if (!PKCS5_PBKDF2_HMAC(pass, -1, salt, saltlen, iter, EVP_sha256(),
+	    *outsize, out))
 	    throw std::runtime_error("unable to get salted password");
     } catch (std::runtime_error &e) {
 	*outsize = 0;
-	if (out)
-	    delete[] out;
+	delete[] out;
 	err_log(0, "get_salted_password: %s", e.what());
 	return NULL;
     }
