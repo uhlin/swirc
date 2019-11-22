@@ -66,7 +66,7 @@ generate_and_store_nonce()
 
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<uint32_t> dist(0, ARRAY_SIZE(legal_index) - 1);
+    std::uniform_int_distribution<uint32_t> dist(0, strlen(legal_index) - 1);
 
     for (size_t i = 0; i < ARRAY_SIZE(nonce); i++)
 	nonce[i] = legal_index[dist(gen)];
