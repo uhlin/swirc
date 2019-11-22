@@ -39,6 +39,7 @@
 #include "curses-funcs.h"
 #include "errHand.h"
 #include "libUtils.h"
+#include "main.h"
 #include "nestHome.h"
 #include "strHand.h"
 
@@ -233,4 +234,48 @@ xstrerror(int errnum, char *strerrbuf, size_t buflen)
 	}
 
     return (trim(strerrbuf));
+}
+
+/* ----------------------------------------------------------------- */
+
+static void
+debug_doit(const char *fmt, va_list ap)
+{
+    char	 out[1300] = { '\0' };
+    char	 path[1300] = { '\0' };
+    FILE	*fp = NULL;
+
+#if defined(UNIX)
+    vsnprintf(out, ARRAY_SIZE(out), fmt, ap);
+#elif defined(WIN32)
+    vsnprintf_s(out, ARRAY_SIZE(out), _TRUNCATE, fmt, ap);
+#endif
+
+    if (g_log_dir == NULL || sw_strcpy(path, g_log_dir, ARRAY_SIZE(path)) != 0)
+	return;
+
+#if defined(UNIX)
+    if (sw_strcat(path, "/debug.log", ARRAY_SIZE(path)) != 0)
+	return;
+#elif defined(WIN32)
+    if (sw_strcat(path, "\\debug.log", ARRAY_SIZE(path)) != 0)
+	return;
+#endif
+
+    if ((fp = xfopen(path, "a")) != NULL) {
+	(void) fprintf(fp, "%s %s\n", get_timestamp(), out);
+	(void) fclose(fp);
+    }
+}
+
+void
+debug(const char *fmt, ...)
+{
+    if (g_debug_logging) {
+	va_list ap;
+
+	va_start(ap, fmt);
+	debug_doit(fmt, ap);
+	va_end(ap);
+    }
 }

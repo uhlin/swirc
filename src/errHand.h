@@ -26,6 +26,10 @@ void		err_ret  (const char *, ...) PRINTFLIKE(1);
 const char *errdesc_by_num(int);
 const char *xstrerror(int errnum, char *strerrbuf, size_t buflen);
 
+/*lint -printf(1, debug) */
+
+void debug(const char *, ...) PRINTFLIKE(1);
+
 #ifdef __cplusplus
 }
 #endif
