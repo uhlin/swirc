@@ -48,8 +48,11 @@
 
 volatile bool g_sasl_scram_sha_got_first_msg = false;
 
-static char nonce[24] = { '\0' };
-static char *complete_nonce = NULL;
+static char	*complete_nonce = NULL;
+static char	 nonce[24] = { '\0' };
+
+static unsigned char	 signature_expected[EVP_MAX_MD_SIZE] = { '\0' };
+static unsigned int	 signature_expected_len = 0;
 
 /*lint -sem(get_decoded_msg, r_null) */
 /*lint -sem(get_salted_password, r_null) */
@@ -358,13 +361,17 @@ sasl_scram_sha_handle_serv_first_msg(const char *msg)
 /***************************************************
  *
  * ClientKey: HMAC(SaltedPassword, "Client Key")
+ * ServerKey: HMAC(SaltedPassword, "Server Key")
  *
  */
 
     struct digest_context client_key(pass, passwdlen,
 	((const unsigned char *) "Client Key"), 10);
+    struct digest_context server_key(pass, passwdlen,
+	((const unsigned char *) "Server Key"), 10);
 
-    if (get_digest(&client_key) == -1) {
+    if (get_digest(&client_key) == -1 ||
+	get_digest(&server_key) == -1) {
 	delete[] pass;
 	return -1;
     }
@@ -382,18 +389,24 @@ sasl_scram_sha_handle_serv_first_msg(const char *msg)
 /***************************************************
  *
  * ClientSignature: HMAC(StoredKey, AuthMessage)
+ * ServerSignature: HMAC(ServerKey, AuthMessage)
  *
  */
 
     struct digest_context client_signature(stored_key, SHA256_DIGEST_LENGTH,
 	auth_msg, auth_msg_len);
+    struct digest_context server_signature(server_key.md, server_key.md_len,
+	auth_msg, auth_msg_len);
 
-    if (get_digest(&client_signature) == -1) {
+    if (get_digest(&client_signature) == -1 ||
+	get_digest(&server_signature) == -1) {
 	free(auth_msg);
 	return -1;
     }
 
     free(auth_msg);
+    memcpy(signature_expected, server_signature.md, server_signature.md_len);
+    signature_expected_len = server_signature.md_len;
     char proof[EVP_MAX_MD_SIZE] = { '\0' };
 
     /* ClientProof: ClientKey XOR ClientSignature */
@@ -407,7 +420,36 @@ sasl_scram_sha_handle_serv_first_msg(const char *msg)
 int
 sasl_scram_sha_handle_serv_final_msg(const char *msg)
 {
-    (void) msg;
+    char		*decoded_msg  = NULL;
+    unsigned char	*signature    = NULL;
+    bool		 signature_ok = false;
+
+    try {
+	char *cp = NULL;
+
+	if ((decoded_msg = get_decoded_msg(msg, NULL)) == NULL)
+	    throw std::runtime_error("unable to get decoded message");
+	else if (strncmp(decoded_msg, "v=", 2) != STRINGS_MATCH)
+	    throw std::runtime_error("expected server signature");
+
+	cp = decoded_msg;
+	cp += 2;
+	signature = (unsigned char *) get_decoded_msg(cp, NULL);
+
+	if (signature == NULL)
+	    throw std::runtime_error("cannot decode server signature!");
+
+	signature_ok =
+	    memcmp(signature, signature_expected, signature_expected_len) == 0;
+
+	delete[] signature;
+    } catch (std::runtime_error &e) {
+	delete[] decoded_msg;
+	err_log(0, "sasl_scram_sha_handle_serv_final_msg: %s", e.what());
+	return -1;
+    }
+
+    delete[] decoded_msg;
     free_and_null(&complete_nonce);
-    return 0;
+    return signature_ok ? 0 : -1;
 }
