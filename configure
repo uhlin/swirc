@@ -255,7 +255,9 @@ LDLIBS+=$LIBNOTIFY_LDLIBS
 EOF
 fi
 
-link_with_gnu_libidn
+if test "$1" != "--without-libidn"; then
+	link_with_gnu_libidn
+fi
 
 if test -f "$MAKE_DEF_FILE"; then
 	echo "configure: $MAKE_DEF_FILE successfully created!"
