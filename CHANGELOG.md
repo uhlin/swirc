@@ -24,6 +24,9 @@ All notable changes to this project will be documented in this file.
 - Connection to a IPv6-only host. (Reported by Ross Richardson).
 - Reconnection with connection password
 
+### News ###
+- [LibreSSL](https://www.libressl.org/) 3.0.2
+
 ### Updated ###
 - Help for command
   - `/connect`
