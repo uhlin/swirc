@@ -44,14 +44,28 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2019-10-31</em></small></p>
+<p><small><em>Updated: 2019-11-23</em></small></p>
 <h3>Program options</h3>
-<h4>Common</h4>
+<p>
+<kbd>usage: swirc [-46?dipv] [-c server[:port]] [-n nickname] [-r rl name] [-u username] [-x config]</kbd>
+</p>
 <table class="po">
+  <tr>
+    <td>-4</td>
+    <td>Use IPv4 addresses only</td>
+  </tr>
+  <tr>
+    <td>-6</td>
+    <td>Use IPv6 addresses only</td>
+  </tr>
+  <tr>
+    <td>-?</td>
+    <td>Output help</td>
+  </tr>
   <tr>
     <td>-c &lt;server[:port]&gt;</td>
     <td>
-Auto-connect to given server.
+Connect to given server.
 If the port is omitted port 6667 will be chosen.
 And if the port is 7326 ICB mode is turned on automatically.
 Further, if the port is 6697 <strong>swirc</strong> attempts to
@@ -59,47 +73,48 @@ initiate a TLS/SSL connection.
     </td>
   </tr>
   <tr>
+    <td>-d</td>
+    <td>Debug logging</td>
+  </tr>
+  <tr>
+    <td>-i</td>
+    <td>Turn on Internet Citizen's Band mode</td>
+  </tr>
+  <tr>
     <td>-n &lt;nickname&gt;</td>
     <td>Online nickname</td>
   </tr>
   <tr>
-    <td>-u &lt;username&gt;</td>
-    <td>User identity</td>
-  </tr>
-  <tr>
-    <td>-r &lt;rl name&gt;</td>
-    <td>Specifies the real name</td>
-  </tr>
-  <tr>
-    <td>-i</td>
-    <td>ICB mode</td>
-  </tr>
-  <tr>
     <td>-p</td>
     <td>
-Server password (for private servers). However: InspIRCd has a module
-called password forward, which means that if a server password is
-specified by this flag, it will be used to identify to NickServ. If
-so: connect with a TLS/SSL connection, i.e. an encrypted connection,
-to prevent your password from being sniffed. Swirc also supports IRCv3
-SASL authentication which is probably a better alternative.
+Server password (for private servers).
+However: InspIRCd has a module called password forward, which means
+that if a server password is specified by this flag, it will be used
+to identify to <em>NickServ</em>.
+If so: connect with a TLS/SSL connection, i.e. an encrypted
+connection, to prevent your password from being sniffed.
+<strong>swirc</strong> also supports IRCv3 SASL authentication which
+is probably a better alternative.
     </td>
   </tr>
   <tr>
-    <td>-h &lt;hostname&gt;</td>
-    <td>Use this hostname on connect (currently a NOOP)</td>
+    <td>-r &lt;rl name&gt;</td>
+    <td>Your real name</td>
+  </tr>
+  <tr>
+    <td>-u &lt;username&gt;</td>
+    <td>Your username</td>
+  </tr>
+  <tr>
+    <td>-v</td>
+    <td>Output <strong>swirc</strong> version</td>
   </tr>
   <tr>
     <td>-x &lt;config&gt;</td>
-    <td>Explicit config file</td>
+    <td>Config file</td>
   </tr>
 </table>
-<h4>Extras</h4>
-<table class="po">
-  <tr><td>-v, -version</td><td>View the current client version</td></tr>
-  <tr><td>-?, -help</td><td>Print the usage</td></tr>
-</table>
-<h3>Key combos</h3>
+<h3>Keys</h3>
 <table>
   <tr><td><kbd>CTRL+a</kbd></td><td>Move to beginning of line</td></tr>
   <tr><td><kbd>CTRL+e</kbd></td><td>Move to end of line</td></tr>
@@ -155,8 +170,9 @@ changes
   </tr>
   <tr>
     <td class="desc">
-Alternative nickname. This nickname is used when processing a
-connection to a server and the default nickname is busy.
+Alternative nickname.
+This nickname is used when processing a connection to a server and the
+default nickname is busy.
     </td>
   </tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -189,6 +205,22 @@ IRC operator
     <td class="desc">
 Allows a client to specify that it would like to be notified when
 users are marked/unmarked as away
+    </td>
+  </tr>
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ===== -->
+<!-- BEEPS -->
+<!-- ===== -->
+  <tr>
+    <td>
+      <strong>beeps</strong>
+      (<span class="opttype">bool</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+<strong>swirc</strong> alerts the user by sending a beep in certain cases.
+However, with the help of this setting, beeps can be turned on/off.
     </td>
   </tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -243,8 +275,8 @@ of its name)
   </tr>
   <tr>
     <td class="desc">
-Command history size. No more than this number of commands will be
-stored in the memory.
+Command history size.
+No more than this number of commands will be stored in the memory.
     </td>
   </tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -260,22 +292,6 @@ stored in the memory.
   <tr>
     <td class="desc">
 Connection timeout in seconds
-    </td>
-  </tr>
-  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<!-- ============= -->
-<!-- DISABLE BEEPS -->
-<!-- ============= -->
-  <tr>
-    <td>
-      <strong>disable_beeps</strong>
-      (<span class="opttype">bool</span>)
-    </td>
-  </tr>
-  <tr>
-    <td class="desc">
-Swirc alerts the user by sending a beep in certain cases. However,
-with the help of this setting, beeps can be disabled.
     </td>
   </tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -506,8 +522,8 @@ Seconds to consume before the first reconnect attempt (0-999)
   </tr>
   <tr>
     <td class="desc">
-Maximum reconnect delay in seconds (0-999). Regardless of the other
-related reconnect settings.
+Maximum reconnect delay in seconds (0-999).
+Regardless of the other related reconnect settings.
     </td>
   </tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -558,10 +574,12 @@ Request SASL authentication on connection to a server?
       <ul>
 	<li>ECDSA-NIST256P-CHALLENGE</li>
 	<li>PLAIN</li>
+	<li>SCRAM-SHA-256</li>
       </ul>
+      Be sure to write them in all uppercase!
     </td>
   </tr>
-<!--<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>-->
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <!-- ============= -->
 <!-- SASL PASSWORD -->
 <!-- ============= -->
@@ -574,7 +592,7 @@ Request SASL authentication on connection to a server?
   <tr>
     <td class="desc">
 SASL password.
-For mechanism PLAIN.
+For mechanism PLAIN and SCRAM-SHA-256.
     </td>
   </tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -667,9 +685,8 @@ Enable or disable Swirc startup greeting
   </tr>
   <tr>
     <td class="desc">
-Max number of elements in a text buffer before head gets removed from
-scroll back history. Each open window is assigned a buffer with this
-size, so set a sane value!
+Max number of elements in a text buffer before head gets removed from scroll back history.
+Each open window is assigned a buffer with this size, so set a sane value!
     </td>
   </tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -684,7 +701,7 @@ size, so set a sane value!
   </tr>
   <tr>
     <td class="desc">
-      Swirc theme
+      <strong>swirc</strong> theme.
     </td>
   </tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -731,15 +748,16 @@ To clone the repository use
 <p>Swirc currently depends on:</p>
 <ul>
   <li><a href="https://curl.haxx.se/libcurl/">Curl</a></li>
-  <li><a href="https://www.gnu.org/software/ncurses/ncurses.html">Ncurses</a> (with wide character support)</li>
+  <li><a href="https://www.gnu.org/software/libidn/">GNU libidn</a></li>
+  <li><a href="https://www.gnu.org/software/ncurses/ncurses.html">Ncurses</a> with wide character support</li>
   <li><a href="https://www.openssl.org/">OpenSSL toolkit</a></li>
 </ul>
 <p>
 Which means that on for example a Debian GNU/Linux system you need to
-install 3 packages before building:
+install 4 packages before building:
 </p>
 <p class="snippet">
-<kbd># apt install libcurl4-openssl-dev libncursesw5-dev libssl-dev</kbd>
+<kbd># apt install libcurl4-openssl-dev libidn11-dev libncursesw5-dev libssl-dev</kbd>
 </p>
 <p>
 And on Mac OS X, provided that
@@ -782,13 +800,13 @@ where the needed tools (the compiler, etc.) are loaded into the
 environment. The regular command prompt won't work. Then:
 </p>
 <p class="snippet">
-<kbd>&gt; cd c:\path\to\swirc</kbd><br>
-<kbd>&gt; nmake -f Makefile.vc</kbd>
+<kbd>cd c:\path\to\swirc</kbd><br>
+<kbd>nmake -f Makefile.vc</kbd>
 </p>
 <p><em>Done!</em></p>
 <p>To make a distribution of Swirc use:</p>
 <p class="snippet">
-<kbd>&gt; nmake -f Makefile.vc dist</kbd>
+<kbd>nmake -f Makefile.vc dist</kbd>
 </p>
 <h3>Cleaning</h3>
 <p>Examples:</p>
