@@ -504,8 +504,6 @@ net_irc_listen(bool *connection_lost)
     *connection_lost = (g_on_air && g_connection_lost);
     if (*connection_lost)
 	printtext(&ptext_ctx, "Connection to IRC server lost");
-    if (atomic_load_bool(&g_connection_in_progress))
-	event_welcome_signalit();
     net_kill_connection();
     irc_deinit();
     free_not_null(recvbuf);
