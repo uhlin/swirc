@@ -38,7 +38,11 @@
 #include "strHand.h"
 #include "theme.h"
 
+#ifdef HAVE_LIBIDN
 #include <stringprep.h>
+#else
+#pragma message("No GNU libidn")
+#endif
 
 #define ENTRY_FOREACH()\
     for (PCONF_HTBL_ENTRY *entry_p = &hash_table[0];\
@@ -418,6 +422,7 @@ config_readit(const char *path, const char *mode)
 const char *
 config_get_normalized_sasl_username(void)
 {
+#ifdef HAVE_LIBIDN
     static char buf[SASL_USERNAME_MAXLEN];
     char *str = NULL;
 
@@ -436,11 +441,17 @@ config_get_normalized_sasl_username(void)
     const int ret =
 	stringprep(buf, ARRAY_SIZE(buf), flags, stringprep_saslprep);
     return (ret == STRINGPREP_OK ? &buf[0] : NULL);
+#else
+    if (strings_match(Config("sasl_username"), ""))
+	return NULL;
+    return Config("sasl_username");
+#endif /* HAVE_LIBIDN */
 }
 
 const char *
 config_get_normalized_sasl_password(void)
 {
+#ifdef HAVE_LIBIDN
     static char buf[SASL_PASSWORD_MAXLEN];
     char *str = NULL;
 
@@ -459,6 +470,11 @@ config_get_normalized_sasl_password(void)
     const int ret =
 	stringprep(buf, ARRAY_SIZE(buf), flags, stringprep_saslprep);
     return (ret == STRINGPREP_OK ? &buf[0] : NULL);
+#else
+    if (strings_match(Config("sasl_password"), ""))
+	return NULL;
+    return Config("sasl_password");
+#endif /* HAVE_LIBIDN */
 }
 
 /* -------------------------------------------------- */
