@@ -229,7 +229,12 @@ link_with_cmocka () {
 }
 
 link_with_gnu_libidn () {
-	echo "LDLIBS+=-lidn" >>$MAKE_DEF_FILE
+	cat <<EOF >>$MAKE_DEF_FILE
+CFLAGS+=-DHAVE_LIBIDN=1
+CXXFLAGS+=-DHAVE_LIBIDN=1
+
+LDLIBS+=-lidn
+EOF
 }
 
 if test "$1" = "--unittesting"; then
