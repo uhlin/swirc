@@ -49,7 +49,7 @@
 volatile bool g_sasl_scram_sha_got_first_msg = false;
 
 static char	*complete_nonce = NULL;
-static char	 nonce[24] = { '\0' };
+static char	 nonce[64] = { '\0' };
 
 static unsigned char	 signature_expected[EVP_MAX_MD_SIZE] = { '\0' };
 static unsigned int	 signature_expected_len = 0;
