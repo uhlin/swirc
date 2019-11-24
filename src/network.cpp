@@ -57,10 +57,6 @@
 #include "events/cap.h"
 #include "events/welcome.h"
 
-#ifdef UNIX
-#define INVALID_SOCKET -1
-#endif
-
 /****************************************************************
 *                                                               *
 *  ------------------ Structure definitions ------------------  *
@@ -300,6 +296,7 @@ net_connect(
 		break;
 	    } else {
 		CLOSE_GLOBAL_SOCKET();
+		g_socket = INVALID_SOCKET;
 	    }
 	} /* for */
 
@@ -520,9 +517,10 @@ net_kill_connection(void)
     if (g_socket != INVALID_SOCKET)
 	close(g_socket);
 #elif defined(WIN32)
-    if (g_socket != INVALID_SOCKET)
+    if (g_socket != INVALID_SOCKET) {
 	closesocket(g_socket);
-    winsock_deinit();
+	winsock_deinit();
+    }
 #endif
     g_socket = INVALID_SOCKET;
 }

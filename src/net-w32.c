@@ -97,7 +97,9 @@ net_send_plain(const char *fmt, ...)
     int n_sent = SOCKET_ERROR;
     va_list ap;
 
-    if (isNull(fmt))
+    if (g_socket == INVALID_SOCKET)
+	return -1;
+    else if (isNull(fmt))
 	err_exit(EINVAL, "net_send_plain");
     else if (isEmpty(fmt))
 	return 0; /* nothing sent */

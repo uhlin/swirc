@@ -4,6 +4,8 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
+#define INVALID_SOCKET -1
+
 struct network_recv_context {
     int         sock;
     int         flags;

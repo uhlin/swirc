@@ -85,11 +85,12 @@ net_send_plain(const char *fmt, ...)
     int n_sent = -1;
     va_list ap;
 
-    if (isNull(fmt)) {
+    if (g_socket == INVALID_SOCKET)
+	return -1;
+    else if (isNull(fmt))
 	err_exit(EINVAL, "net_send_plain");
-    } else if (isEmpty(fmt)) {
+    else if (isEmpty(fmt))
 	return 0; /* nothing sent */
-    }
 
     va_start(ap, fmt);
     buffer = strdup_vprintf(fmt, ap);
