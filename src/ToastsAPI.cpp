@@ -14,7 +14,9 @@
 #include "common.h"
 
 #include <SDKDDKVer.h>
+#ifdef HAVE_ATLSTR_H
 #include <atlstr.h>
+#endif
 #include <string>
 #include <windows.ui.notifications.h>
 #include <wrl.h>
@@ -139,6 +141,7 @@ Toasts::SendBasicToast(PCWSTR message)
 /**
  * Set the value of the "src" attribute of the "image" node
  */
+#ifdef HAVE_ATLSTR_H
 HRESULT
 Toasts::SetImageSrc(PCWSTR imagePath, IXmlDocument *toastXml)
 {
@@ -168,6 +171,7 @@ Toasts::SetImageSrc(PCWSTR imagePath, IXmlDocument *toastXml)
 	srcAttribute.Get(),
 	toastXml);
 }
+#endif
 
 HRESULT
 Toasts::SetNodeValueString(

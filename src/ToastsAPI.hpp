@@ -23,7 +23,9 @@ namespace Toasts {
     HRESULT	DisplayToast(void);
 #endif
     HRESULT	SendBasicToast(PCWSTR);
+#ifdef HAVE_ATLSTR_H
     HRESULT	SetImageSrc(PCWSTR imagePath, IXmlDocument *);
+#endif
     HRESULT	SetNodeValueString(HSTRING, IXmlNode *, IXmlDocument *);
     HRESULT	SetTextValues(const PCWSTR *textValues, UINT32 textValuesCount,
     		    IXmlDocument *);
