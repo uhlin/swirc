@@ -3,139 +3,28 @@
 # SSG (Static Site Generator) for Swirc homepage.
 # Copyright (C) 2017-2019 Markus Uhlin. ALL RIGHTS RESERVED.
 
-SECTIONS="
-bottom.html
-head_common_tags.html
-menu.html
-top.html
-"
-PAGES="
-about.html
-cmds.html
-doc.html
-index.html
-pr.html
-"
-DIRS="gfx screenshots themes"
-IMAGES="
-blue-globe.ico
-blue-globe.png
-download82-badge1.png
-download82_clean_award_128617.png
-softpedia_download_large_shadow.png
-sp100clean.png
-swirc-royal-110x110.png
-swirc-royal.ico
-swirc-royal.png
-"
-THEMES="
-bx.the
-nano.the
-superkod.the
-themes
-"
-OTHER_FILES="
-mu170225.asc
-mu180520.asc
-mu190523.asc
-style.css
-swirc.list
-"
+source "include/check_sections.sh"
+source "include/pages.sh"
+source "include/dirs.sh"
+source "include/images.sh"
+source "include/themes.sh"
+source "include/other_files.sh"
+source "include/transfer_site.sh"
 
-for s in $SECTIONS; do
-	printf "  - Checking for %s..." "$s"
-	test -r "$s" || { printf "error\n"; exit 1; }
-	printf "ok\n"
-done
-
-for pg in $PAGES; do
-	printf "  - Checking for %s..." "templates/${pg}"
-	test -r "templates/${pg}" || { printf "error\n"; exit 1; }
-	printf "ok\n"
-done
-
-for dir in $DIRS; do
-	printf "  - Checking for %s..." "$dir"
-	test -d "$dir" || { printf "error\n"; exit 1; }
-	printf "ok\n"
-done
-
-for img in $IMAGES; do
-	printf "  - Checking for %s..." "gfx/${img}"
-	test -f "gfx/${img}" || { printf "error\n"; exit 1; }
-	printf "ok\n"
-done
-
-for theme in $THEMES; do
-	printf "  - Checking for %s..." "themes/${theme}"
-	test -f "themes/${theme}" || { printf "error\n"; exit 1; }
-	printf "ok\n"
-done
-
-for file in $OTHER_FILES; do
-	printf "  - Checking for %s..." "$file"
-	test -f "$file" || { printf "error\n"; exit 1; }
-	printf "ok\n"
-done
+check_sections
+check_pages
+check_dirs
+check_images
+check_themes
+check_other_files
 
 TEMP_DIR=$(mktemp -d)
 
-for dir in $DIRS; do
-	printf "  - Creating %s..." "${TEMP_DIR}/${dir}"
-
-	if test -d "${TEMP_DIR}/${dir}"; then
-		printf "already existent\n"
-	else
-		mkdir -p "${TEMP_DIR}/${dir}" || { printf "error\n"; exit 1; }
-		printf "ok\n"
-	fi
-done
-
-for pg in $PAGES; do
-	printf "  - Generating %s..." "${TEMP_DIR}/${pg}"
-	sed -e "/-----HEAD COMMON TAGS-----/r head_common_tags.html"\
-	    -e "/-----HEAD COMMON TAGS-----/d"\
-	    -e "/-----TOP-----/r top.html"\
-	    -e "/-----TOP-----/d"\
-	    -e "/-----MENU-----/r menu.html"\
-	    -e "/-----MENU-----/d"\
-	    -e "/-----BOTTOM-----/r bottom.html"\
-	    -e "/-----BOTTOM-----/d"\
-	    "templates/${pg}" > "${TEMP_DIR}/${pg}"
-	test -f "${TEMP_DIR}/${pg}" || { printf "error\n"; exit 1; }
-	printf "ok\n"
-done
-
-for img in $IMAGES; do
-	printf "  - Adding %s..." "${TEMP_DIR}/gfx/${img}"
-	cp "gfx/${img}" "${TEMP_DIR}/gfx/${img}"
-	test -f "${TEMP_DIR}/gfx/${img}" || { printf "error\n"; exit 1; }
-	printf "ok\n"
-done
-
-for theme in $THEMES; do
-	printf "  - Adding %s..." "${TEMP_DIR}/themes/${theme}"
-	cp "themes/${theme}" "${TEMP_DIR}/themes/${theme}"
-	test -f "${TEMP_DIR}/themes/${theme}" || { printf "error\n"; exit 1; }
-	printf "ok\n"
-done
-
-for file in $OTHER_FILES; do
-	printf "  - Adding %s..." "${TEMP_DIR}/${file}"
-	cp "$file" "${TEMP_DIR}/${file}"
-	test -f "${TEMP_DIR}/${file}" || { printf "error\n"; exit 1; }
-	printf "ok\n"
-done
-
-transfer_site () {
-	local dest=maxxe@nifty-networks.net:www-swirc
-
-	printf "  - Checking for rsync..."
-	test -x "$(which rsync)" || { printf "error\n"; exit 1; }
-	printf "ok\n"
-
-	rsync -rv --progress "${TEMP_DIR}/" "${dest}/"
-}
+create_dirs "$TEMP_DIR"
+gen_pages "$TEMP_DIR"
+add_images "$TEMP_DIR"
+add_themes "$TEMP_DIR"
+add_other_files "$TEMP_DIR"
 
 while true; do
 	read -p "Transfer the statically generated site? [Y/n]: " -r choice
