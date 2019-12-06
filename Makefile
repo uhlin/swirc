@@ -11,7 +11,7 @@ MAINTAINER =		Markus Uhlin <markus.uhlin@bredband.net>
 PERMIT_PACKAGE =	Yes
 
 # uses pledge()
-WANTLIB =		${COMPILER_LIBCXX} c crypto curl curses m panel pthread ssl
+WANTLIB =		${COMPILER_LIBCXX} c crypto curl curses idn m panel pthread ssl
 
 MASTER_SITES =		https://www.nifty-networks.net/swirc/releases/
 EXTRACT_SUFX =		.tgz
