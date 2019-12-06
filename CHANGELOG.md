@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.1.0] - 2019-12-06 ##
 ### Added ###
 - Command-line option
   - `-4` (Use IPv4 addresses)
