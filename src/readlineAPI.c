@@ -161,7 +161,7 @@ readline_error(int error, const char *msg)
     printtext(&ctx, "non-fatal: %s: %s", msg,
 	xstrerror(error, strerrbuf, MAXERROR));
     g_readline_loop = false;
-    longjmp(g_readline_loc_info, 1);
+    longjmp(g_readline_loc_info, READLINE_RESTART);
 }
 
 /**
