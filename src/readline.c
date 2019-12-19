@@ -490,36 +490,16 @@ finalize_out_string(const wchar_t *buf)
 }
 #endif
 
-/**
- * Read user input.
- *
- * @param prompt Prompt
- * @return The read line (dynamically allocated) or NULL
- */
-char *
-readline(const char *prompt)
+static char *
+process(volatile struct readline_session_context *ctx)
 {
-    char *out;
-    const int sleep_time_milliseconds = 90;
-    volatile struct readline_session_context *ctx;
-    wchar_t *buf_p = &g_push_back_buf[0];
-
-    ctx = new_session(prompt);
-    if (setjmp(g_readline_loc_info) != 0) {
-	session_destroy(ctx);
-	mutex_unlock(&g_puts_mutex);
-	return NULL;
-    }
-
-    g_readline_loop    = true;
-    g_resize_requested = false;
-    g_hist_next = false;
-    g_hist_prev = false;
+    wchar_t	*buf_p = &g_push_back_buf[0];
+    const int	 sleep_time_milliseconds = 90;
 
     write_cmdprompt(ctx->act, ctx->prompt, ctx->prompt_size);
 
     do {
-	wint_t wc;
+	wint_t wc = 0L;
 
 	ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
 	ctx->no_bufspc	 = (ctx->n_insert + 1 >= readline_buffersize);
@@ -636,10 +616,36 @@ readline(const char *prompt)
 
     write_cmdprompt(ctx->act, "", 0);
 
-    out = finalize_out_string(ctx->buffer);
+    char *out = finalize_out_string(ctx->buffer);
     session_destroy(ctx);
 
     return out;
+}
+
+/**
+ * Read user input.
+ *
+ * @param prompt Prompt
+ * @return The read line (dynamically allocated) or NULL
+ */
+char *
+readline(const char *prompt)
+{
+    volatile struct readline_session_context *ctx = NULL;
+
+    switch (setjmp(g_readline_loc_info)) {
+    case READLINE_PROCESS:
+	g_readline_loop    = true;
+	g_resize_requested = false;
+	g_hist_next        = false;
+	g_hist_prev        = false;
+	ctx = new_session(prompt);
+	return process(ctx);
+    }
+
+    session_destroy(ctx);
+    mutex_unlock(&g_puts_mutex);
+    return NULL;
 }
 
 /**
