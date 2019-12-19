@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Fixed ###
+- Possible readline deadlock
+
 ## [3.1.0] - 2019-12-06 ##
 ### Added ###
 - Command-line option
