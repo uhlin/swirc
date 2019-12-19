@@ -511,8 +511,6 @@ process(volatile struct readline_session_context *ctx)
 	    continue;
 	}
 
-	mutex_lock(&g_puts_mutex);
-
 	switch (wc) {
 	case CTRL_A:
 	    while (ctx->bufpos != 0) {
@@ -535,12 +533,10 @@ process(volatile struct readline_session_context *ctx)
 	case KEY_DOWN:
 	    g_hist_next = true;
 	    session_destroy(ctx);
-	    mutex_unlock(&g_puts_mutex);
 	    return NULL;
 	case KEY_UP:
 	    g_hist_prev = true;
 	    session_destroy(ctx);
-	    mutex_unlock(&g_puts_mutex);
 	    return NULL;
 	case KEY_LEFT: case MY_KEY_STX:
 	    case_key_left(ctx);
@@ -595,7 +591,6 @@ process(volatile struct readline_session_context *ctx)
 	    /*FALLTHROUGH*/
 	case '\a':
 	    session_destroy(ctx);
-	    mutex_unlock(&g_puts_mutex);
 	    return NULL;
 	default:
 	    if (iswprint(wc)) {
@@ -603,8 +598,6 @@ process(volatile struct readline_session_context *ctx)
 	    }
 	    break;
 	}
-
-	mutex_unlock(&g_puts_mutex);
     } while (g_readline_loop);
 
     if (ctx->n_insert > 0) {
@@ -644,7 +637,6 @@ readline(const char *prompt)
     }
 
     session_destroy(ctx);
-    mutex_unlock(&g_puts_mutex);
     return NULL;
 }
 
