@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 ### Fixed ###
 - Possible readline deadlock
 
+### News ###
+- [Curl](https://curl.haxx.se/) 7.67.0
+- [LibreSSL](https://www.libressl.org/) 3.0.2
+
 ## [3.1.0] - 2019-12-06 ##
 ### Added ###
 - Command-line option
