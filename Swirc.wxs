@@ -43,13 +43,13 @@ Copyright (C) 2018 Markus Uhlin. All rights reserved.
 		</Directory>
 	</Directory>
 
-	<!-- DirectoryRef Id="TARGETDIR">
+	<DirectoryRef Id="TARGETDIR">
 		<Merge
 		    DiskId="1"
 		    Id="VCRedist"
 		    Language="0"
-		    SourceFile="C:\Source\MergeModules\Microsoft_VC141_CRT_x64.msm" />
-	</DirectoryRef -->
+		    SourceFile="C:\MergeModules\Microsoft_VC142_CRT_x64.msm" />
+	</DirectoryRef>
 
 	<DirectoryRef Id="APPLICATIONROOTDIRECTORY">
 		<Component Guid="*" Id="libcurl.dll" Win64="yes">
@@ -134,14 +134,14 @@ Copyright (C) 2018 Markus Uhlin. All rights reserved.
 		<ComponentRef Id="ApplicationShortcut" />
 	</Feature>
 
-	<!-- Feature
+	<Feature
 	    AllowAdvertise="no"
 	    Display="hidden"
 	    Id="VCRedist"
 	    Level="1"
 	    Title="Visual C++ Runtime">
 		<MergeRef Id="VCRedist" />
-	</Feature -->
+	</Feature>
 
 	<CustomAction
 	    Id="SetInstallLocation"
