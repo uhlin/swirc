@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.1.1] - 2019-12-22 ##
 ### Fixed ###
 - Possible readline deadlock
 
