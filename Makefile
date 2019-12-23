@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1.1.1 2019/11/11 19:25:12 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.2 2019/12/06 10:19:11 solene Exp $
 
 COMMENT =	curses icb and irc client
 DISTNAME =	swirc-3.1.0
