@@ -7,6 +7,7 @@ source "include/check_sections.sh"
 source "include/pages.sh"
 source "include/dirs.sh"
 source "include/images.sh"
+source "include/screenshots.sh"
 source "include/themes.sh"
 source "include/other_files.sh"
 source "include/transfer_site.sh"
@@ -15,6 +16,7 @@ check_sections
 check_pages
 check_dirs
 check_images
+check_screenshots
 check_themes
 check_other_files
 
@@ -23,6 +25,7 @@ TEMP_DIR=$(mktemp -d)
 create_dirs "$TEMP_DIR"
 gen_pages "$TEMP_DIR"
 add_images "$TEMP_DIR"
+add_screenshots "$TEMP_DIR"
 add_themes "$TEMP_DIR"
 add_other_files "$TEMP_DIR"
 
