@@ -2,6 +2,7 @@ OTHER_FILES="
 mu170225.asc
 mu180520.asc
 mu190523.asc
+navbar.css
 style.css
 swirc.list
 "

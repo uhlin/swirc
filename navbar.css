@@ -1,0 +1,47 @@
+#navbar {
+	background-color: #333;
+	list-style-type: none;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+}
+#navbar li {
+	float: left;
+}
+#navbar li a, a.dropbtn {
+	color: white;
+	display: inline-block;
+	padding: 14px 16px;
+	text-align: center;
+	text-decoration: none;
+}
+#navbar li a:hover, li.dropdown:hover a.dropbtn {
+	background-color: red;
+}
+
+/* -------------------------------------------------- */
+
+#navbar li.dropdown {
+	display: inline-block;
+}
+#navbar div.dropdown-content {
+	background-color: #f9f9f9;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	display: none;
+	min-width: 160px;
+	position: absolute;
+	z-index: 1;
+}
+#navbar div.dropdown-content a {
+	color: black;
+	display: block;
+	padding: 12px 16px;
+	text-align: left;
+	text-decoration: none;
+}
+#navbar div.dropdown-content a:hover {
+	background-color: #f1f1f1;
+}
+#navbar li.dropdown:hover div.dropdown-content {
+	display: block;
+}
