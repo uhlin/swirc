@@ -1,10 +1,12 @@
 PAGES="
 about.html
+cloning-and-building.html
 cmds.html
+confopts.html
 debian.html
-doc.html
 index.html
 openbsd.html
+progopts.html
 source-code.html
 windows.html
 "

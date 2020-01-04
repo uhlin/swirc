@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-<title>Swirc IRC client&nbsp;&nbsp;--&nbsp;&nbsp;Documentation</title>
+<title>Swirc IRC client&nbsp;&nbsp;--&nbsp;&nbsp;Configuration options</title>
 
 -----HEAD COMMON TAGS-----
 
@@ -26,22 +26,6 @@
 	color: red;
 	font-weight: bold;
 }
-.po td {
-	vertical-align: top;
-}
-.po {
-	background-color: cornsilk;
-	border-radius: 25px;
-	border: 2px solid darkgoldenrod;
-	padding: 2em;
-	width: 700px;
-}
-.snippet {
-	background-color: rgb(224, 224, 224);
-	border: 1px solid rgb(192, 192, 192);
-	padding: 1em;
-	width: 500px;
-}
 </style>
 </head>
 
@@ -53,97 +37,6 @@
 <div id="mid">
 <h2>Documentation</h2>
 <p><small><em>Updated: 2019-11-23</em></small></p>
-<h3>Program options</h3>
-<p>
-<kbd>usage: swirc [-46?dipv] [-c server[:port]] [-n nickname] [-r rl name] [-u username] [-x config]</kbd>
-</p>
-<table class="po">
-  <tr>
-    <td><b>-4</b></td>
-    <td>Use IPv4 addresses only</td>
-  </tr>
-  <tr>
-    <td><b>-6</b></td>
-    <td>Use IPv6 addresses only</td>
-  </tr>
-  <tr>
-    <td><b>-?</b></td>
-    <td>Output help</td>
-  </tr>
-  <tr>
-    <td><b>-c</b> &lt;server[:port]&gt;</td>
-    <td>
-Connect to given server.
-If the port is omitted port 6667 will be chosen.
-And if the port is 7326 ICB mode is turned on automatically.
-Further, if the port is 6697 <strong>swirc</strong> attempts to
-initiate a TLS/SSL connection.
-    </td>
-  </tr>
-  <tr>
-    <td><b>-d</b></td>
-    <td>Debug logging</td>
-  </tr>
-  <tr>
-    <td><b>-i</b></td>
-    <td>Turn on Internet Citizen's Band mode</td>
-  </tr>
-  <tr>
-    <td><b>-n</b> &lt;nickname&gt;</td>
-    <td>Online nickname</td>
-  </tr>
-  <tr>
-    <td><b>-p</b></td>
-    <td>
-Server password (for private servers).
-However: InspIRCd has a module called password forward, which means
-that if a server password is specified by this flag, it will be used
-to identify to <em>NickServ</em>.
-If so: connect with a TLS/SSL connection, i.e. an encrypted
-connection, to prevent your password from being sniffed.
-<strong>swirc</strong> also supports IRCv3 SASL authentication which
-is probably a better alternative.
-    </td>
-  </tr>
-  <tr>
-    <td><b>-r</b> &lt;rl name&gt;</td>
-    <td>Your real name</td>
-  </tr>
-  <tr>
-    <td><b>-u</b> &lt;username&gt;</td>
-    <td>Your username</td>
-  </tr>
-  <tr>
-    <td><b>-v</b></td>
-    <td>Output <strong>swirc</strong> version</td>
-  </tr>
-  <tr>
-    <td><b>-x</b> &lt;config&gt;</td>
-    <td>Config file</td>
-  </tr>
-</table>
-<h3>Keys</h3>
-<table>
-  <tr><td><kbd><b>CTRL+a</b></kbd></td><td>Move to beginning of line</td></tr>
-  <tr><td><kbd><b>CTRL+e</b></kbd></td><td>Move to end of line</td></tr>
-  <tr><td><kbd><b>CTRL+b</b></kbd></td><td>Move cursor backward</td></tr>
-  <tr><td><kbd><b>CTRL+f</b></kbd></td><td>Move cursor forward</td></tr>
-  <tr><td><kbd><b>CTRL+d</b></kbd></td><td>Delete</td></tr>
-  <tr><td><kbd><b>CTRL+g</b></kbd></td><td>Clear readline input</td></tr>
-  <tr><td><kbd><b>CTRL+n</b></kbd></td><td>Next window</td></tr>
-  <tr><td><kbd><b>CTRL+p</b></kbd></td><td>Previous window</td></tr>
-  <tr><td><kbd><b>F11</b></kbd></td><td>Close window</td></tr>
-  <tr><td><kbd><b>F12</b></kbd></td><td>Close all private conversations</td></tr>
-</table>
-<h3>Inserting text-decoration</h3>
-<table>
-  <tr><td><kbd><b>F5</b></kbd></td><td>Blink</td></tr>
-  <tr><td><kbd><b>F6</b></kbd></td><td>Bold</td></tr>
-  <tr><td><kbd><b>F7</b></kbd></td><td>Color</td></tr>
-  <tr><td><kbd><b>F8</b></kbd></td><td>Normal</td></tr>
-  <tr><td><kbd><b>F9</b></kbd></td><td>Reverse</td></tr>
-  <tr><td><kbd><b>F10</b></kbd></td><td>Underline</td></tr>
-</table>
 <h3>Configuration options in swirc.conf</h3>
 <p>
 <span class="note">NOTE</span>
@@ -743,85 +636,6 @@ Preferably to be set to the same as the nickname.
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 -->
 </table> <!-- conf -->
-<h3>Cloning</h3>
-<p>
-To clone the repository use
-<a href="https://git-scm.com">Git</a>.
-</p>
-<p class="snippet">
-<kbd>$ git clone https://github.com/uhlin/swirc.git</kbd>
-</p>
-<h3>Building</h3>
-<h4>Framework</h4>
-<p>Swirc currently depends on:</p>
-<ul>
-  <li><a href="https://curl.haxx.se/libcurl/">Curl</a></li>
-  <li><a href="https://www.gnu.org/software/libidn/">GNU libidn</a></li>
-  <li><a href="https://www.gnu.org/software/ncurses/ncurses.html">Ncurses</a> with wide character support</li>
-  <li><a href="https://www.openssl.org/">OpenSSL toolkit</a></li>
-</ul>
-<p>
-Which means that on for example a Debian GNU/Linux system you need to
-install 4 packages before building:
-</p>
-<p class="snippet">
-<kbd># apt install libcurl4-openssl-dev libidn11-dev libncursesw5-dev libssl-dev</kbd>
-</p>
-<p>
-And on Mac OS X, provided that
-<a href="http://brew.sh/">Homebrew</a>
-is installed, issue:
-</p>
-<p class="snippet">
-<kbd>$ brew install libressl</kbd>
-</p>
-<h4>Building for the UNIX environment</h4>
-<p>
-On the BSDs and GNU/Linux the configure script will per default
-generate make definitions that expects that the C compiler
-<a href="https://gcc.gnu.org/">GCC</a>
-is installed on your system.
-A make utility must also be present. Regarding Mac OS X I suggest that
-you install
-<a href="https://developer.apple.com/xcode/">Xcode</a>.
-Due to certain circumstances I no longer can confirm that building for
-OS X works.
-</p>
-<p class="snippet">
-<kbd>$ cd /path/to/swirc</kbd><br>
-<kbd>$ ./configure</kbd><br>
-<kbd>$ make</kbd>
-</p>
-<p>Installing it (under <kbd>/usr/local</kbd>):</p>
-<p class="snippet">
-<kbd>$ sudo make install</kbd>
-</p>
-<h4>Building for Windows</h4>
-<p>
-To build Swirc for Windows you must have
-<a href="http://www.visualstudio.com/">Visual Studio</a>.
-</p>
-<p>
-So, fire up the command prompt for
-<a href="http://www.visualstudio.com/">Visual Studio</a>
-where the needed tools (the compiler, etc.) are loaded into the
-environment. The regular command prompt won't work. Then:
-</p>
-<p class="snippet">
-<kbd>cd c:\path\to\swirc</kbd><br>
-<kbd>nmake -f Makefile.vc</kbd>
-</p>
-<p><em>Done!</em></p>
-<p>To make a distribution of Swirc use:</p>
-<p class="snippet">
-<kbd>nmake -f Makefile.vc dist</kbd>
-</p>
-<h3>Cleaning</h3>
-<p>Examples:</p>
-<p class="snippet">
-<kbd>$ make clean</kbd><br>
-<kbd>$ nmake -f Makefile.vc clean</kbd>
-</p>
 </div> <!--mid-->
 
 -----BOTTOM-----
