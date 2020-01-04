@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<title>Swirc IRC client&nbsp;&nbsp;--&nbsp;&nbsp;Program Releases (Debian)</title>
+
+-----HEAD COMMON TAGS-----
+
+<style>
+.note {
+	color: red;
+	font-weight: bold;
+}
+.snippet {
+	background-color: rgb(224, 224, 224);
+	border: 1px solid rgb(192, 192, 192);
+	padding: 1em;
+	width: 600px;
+}
+</style>
+</head>
+
+<body>
+-----TOP-----
+
+-----MENU-----
+
+<div id="mid">
+<h2>Program Releases</h2>
+
+<h3>Debian x64 package</h3>
+
+<p>
+Import <strong>current</strong> Swirc release signing key:
+</p>
+<p class="snippet">
+<kbd># wget -O - https://www.nifty-networks.net/swirc/mu190523.asc | apt-key add -</kbd>
+</p>
+
+<p>
+Access metadata and packages over https:
+</p>
+<p class="snippet">
+<kbd># apt-get install apt-transport-https</kbd>
+</p>
+
+<p>
+Install Swirc source list for APT:
+</p>
+<p class="snippet">
+<kbd>
+# wget -O - https://www.nifty-networks.net/swirc/swirc.list &gt;
+/etc/apt/sources.list.d/swirc.list
+</kbd>
+</p>
+
+<p>
+Finally update and install:
+</p>
+<p class="snippet">
+<kbd># apt-get update</kbd><br>
+<kbd># apt-get install swirc</kbd>
+</p>
+
+<p>&nbsp;</p>
+
+</div> <!--mid-->
+
+-----BOTTOM-----
+</body>
+
+</html>

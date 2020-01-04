@@ -1,9 +1,12 @@
 PAGES="
 about.html
 cmds.html
+debian.html
 doc.html
 index.html
-pr.html
+openbsd.html
+source-code.html
+windows.html
 "
 
 check_pages () {
