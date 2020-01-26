@@ -48,16 +48,16 @@ struct readline_session_context {
     WINDOW  *act;
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 extern bool	 g_readline_loop;
 extern bool	 g_resize_requested;
 extern jmp_buf	 g_readline_loc_info;
 
 extern bool g_hist_next;
 extern bool g_hist_prev;
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 void readline_init(void);
 void readline_deinit(void);
