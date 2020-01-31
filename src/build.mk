@@ -25,6 +25,7 @@ OBJS+=$(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)pthrMutex.o\
 	$(SRC_DIR)readline.o\
 	$(SRC_DIR)readlineAPI.o\
+	$(SRC_DIR)readlineTabCompletion.o\
 	$(SRC_DIR)sig-unix.o\
 	$(SRC_DIR)statusbar.o\
 	$(SRC_DIR)strHand.o\

@@ -28,6 +28,7 @@ OBJS=$(OBJS)\
 	$(SRC_DIR)printtext.obj\
 	$(SRC_DIR)readline.obj\
 	$(SRC_DIR)readlineAPI.obj\
+	$(SRC_DIR)readlineTabCompletion.obj\
 	$(SRC_DIR)sig-w32.obj\
 	$(SRC_DIR)statusbar.obj\
 	$(SRC_DIR)strHand.obj\
