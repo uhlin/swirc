@@ -1,5 +1,5 @@
 /* Window functions
-   Copyright (C) 2012-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -302,11 +302,11 @@ reassign_window_refnums()
 
     FOREACH_HASH_TABLE_ENTRY() {
 	FOREACH_WINDOW_IN_ENTRY() {
-	    if (!strings_match_ignore_case(window->label,
-					   g_status_window_label)) {
-		/* skip status window and assign new num */
+	    /*
+	     * skip status window and assign new num
+	     */
+	    if (!strings_match_ignore_case(window->label, g_status_window_label))
 		window->refnum = ++ref_count;
-	    }
 	}
     }
 
