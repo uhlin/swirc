@@ -12,6 +12,7 @@
 #endif
 
 #include <setjmp.h> /* want type jmp_buf */
+#include "textBuffer.h"
 
 #define READLINE_PROCESS 0
 #define READLINE_RESTART 1
@@ -37,15 +38,24 @@ enum { /* custom, additional keys */
 
 #define WINDOWS_KEY_ENTER 459
 
+typedef struct tagTAB_COMPLETION {
+    char search_var[64];
+    bool isInCirculationModeForCmds;
+    bool isInCirculationModeForChanUsers;
+    PTEXTBUF matches;
+    PTEXTBUF_ELMT elmt;
+} TAB_COMPLETION, *PTAB_COMPLETION;
+
 struct readline_session_context {
-    wchar_t *buffer;
-    int      bufpos;
-    int      n_insert;
-    bool     insert_mode;
-    bool     no_bufspc;
-    char    *prompt;
-    int      prompt_size;
-    WINDOW  *act;
+    wchar_t         *buffer;
+    int              bufpos;
+    int              n_insert;
+    bool             insert_mode;
+    bool             no_bufspc;
+    char            *prompt;
+    int              prompt_size;
+    WINDOW          *act;
+    PTAB_COMPLETION  tc;
 };
 
 #ifdef __cplusplus
@@ -65,10 +75,14 @@ void readline_deinit(void);
 /*lint -sem(readline_get_active_pwin, r_null) */
 /*lint -sem(readline, r_null) */
 
-WINDOW	*readline_get_active_pwin (void);
-char	*readline                 (const char *prompt);
-void	 readline_recreate        (int rows, int cols);
-void	 readline_top_panel       (void);
+WINDOW	*readline_get_active_pwin(void);
+char	*readline(const char *prompt);
+char	*readline_finalize_out_string_exported(const wchar_t *);
+void	 readline_handle_backspace(volatile struct readline_session_context *);
+void	 readline_handle_key_exported(volatile struct readline_session_context *,
+	     wint_t);
+void	 readline_recreate(int rows, int cols);
+void	 readline_top_panel(void);
 
 #ifdef __cplusplus
 }

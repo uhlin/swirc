@@ -1,6 +1,13 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Added ###
+- **Tab completion**
+
+### Fixed ###
+- Readline bugs
+
 ## [3.1.1] - 2019-12-22 ##
 ### Fixed ###
 - Possible readline deadlock

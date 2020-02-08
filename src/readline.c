@@ -33,7 +33,6 @@
 #include <wctype.h>
 
 #include "assertAPI.h"
-#include "config.h"
 #if defined(WIN32) && defined(PDC_EXP_EXTRAS)
 #include "curses-funcs.h" /* is_scrollok() etc */
 #endif
@@ -44,6 +43,7 @@
 #include "printtext.h"
 #include "readline.h"
 #include "readlineAPI.h"
+#include "readlineTabCompletion.h"
 #include "strHand.h"
 #include "terminal.h"
 
@@ -158,6 +158,7 @@ new_session(const char *prompt)
     ctx->prompt       = sw_strdup(prompt);
     ctx->prompt_size  = (int) strlen(squeeze_text_deco(prompt_copy));
     ctx->act          = panel_window(readline_pan1);
+    ctx->tc           = readline_tab_comp_ctx_new();
 
     free(prompt_copy);
     panel_state = PANEL1_ACTIVE;
@@ -175,6 +176,7 @@ session_destroy(volatile struct readline_session_context *ctx)
     if (ctx != NULL) {
 	free(ctx->buffer);
 	free(ctx->prompt);
+	readline_tab_comp_ctx_destroy(ctx->tc);
 	free((struct readline_session_context *) ctx);
     }
 }
@@ -490,6 +492,13 @@ finalize_out_string(const wchar_t *buf)
 }
 #endif
 
+static inline bool
+isInCirculationMode(PTAB_COMPLETION tc)
+{
+    return (tc->isInCirculationModeForCmds ||
+	    tc->isInCirculationModeForChanUsers);
+}
+
 static char *
 process(volatile struct readline_session_context *ctx)
 {
@@ -512,24 +521,34 @@ process(volatile struct readline_session_context *ctx)
 	}
 
 	switch (wc) {
-	case CTRL_A:
+	case CTRL_A: {
 	    while (ctx->bufpos != 0) {
 		case_key_left(ctx);
 		ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
 	    }
+
+	    if (isInCirculationMode(ctx->tc))
+		readline_tab_comp_ctx_reset(ctx->tc);
 	    break;
-	case CTRL_E:
+	} /* CTRL+a */
+	case CTRL_E: {
 	    while (ctx->insert_mode) {
 		case_key_right(ctx);
 		ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
 	    }
+
+	    if (isInCirculationMode(ctx->tc))
+		readline_tab_comp_ctx_reset(ctx->tc);
 	    break;
+	} /* CTRL+e */
 	case MY_KEY_DLE:
 	    window_select_prev();
-	    break; /* CTRL+P */
+	    session_destroy(ctx);
+	    return NULL; /* CTRL+P */
 	case MY_KEY_SO:
 	    window_select_next();
-	    break; /* CTRL+N */
+	    session_destroy(ctx);
+	    return NULL; /* CTRL+N */
 	case KEY_DOWN:
 	    g_hist_next = true;
 	    session_destroy(ctx);
@@ -538,15 +557,27 @@ process(volatile struct readline_session_context *ctx)
 	    g_hist_prev = true;
 	    session_destroy(ctx);
 	    return NULL;
-	case KEY_LEFT: case MY_KEY_STX:
+	case KEY_LEFT: case MY_KEY_STX: {
 	    case_key_left(ctx);
+
+	    if (isInCirculationMode(ctx->tc))
+		readline_tab_comp_ctx_reset(ctx->tc);
 	    break;
-	case KEY_RIGHT: case MY_KEY_ACK:
+	} /* ---------- KEY_LEFT ---------- */
+	case KEY_RIGHT: case MY_KEY_ACK: {
 	    case_key_right(ctx);
+
+	    if (isInCirculationMode(ctx->tc))
+		readline_tab_comp_ctx_reset(ctx->tc);
 	    break;
-	case KEY_BACKSPACE: case MY_KEY_BS:
+	} /* ---------- KEY_RIGHT ---------- */
+	case KEY_BACKSPACE: case MY_KEY_BS: {
 	    case_key_backspace(ctx);
+
+	    if (isInCirculationMode(ctx->tc))
+		readline_tab_comp_ctx_reset(ctx->tc);
 	    break;
+	} /* ---------- KEY_BACKSPACE ---------- */
 	case KEY_F(5): case BLINK:
 	    handle_key(ctx, btowc(BLINK));
 	    break;
@@ -567,13 +598,19 @@ process(volatile struct readline_session_context *ctx)
 	    break;
 	case KEY_F(11):
 	    cmd_close("");
-	    break;
+	    session_destroy(ctx);
+	    return NULL;
 	case KEY_F(12):
 	    window_close_all_priv_conv();
-	    break;
-	case KEY_DC: case MY_KEY_EOT:
+	    session_destroy(ctx);
+	    return NULL;
+	case KEY_DC: case MY_KEY_EOT: {
 	    case_key_dc(ctx);
+
+	    if (isInCirculationMode(ctx->tc))
+		readline_tab_comp_ctx_reset(ctx->tc);
 	    break;
+	} /* KEY_DC */
 	case KEY_NPAGE:
 	    window_scroll_down(g_active_window);
 	    break;
@@ -581,6 +618,8 @@ process(volatile struct readline_session_context *ctx)
 	    window_scroll_up(g_active_window);
 	    break;
 	case '\t':
+	    readline_handle_tab(ctx);
+	    (void) napms(sleep_time_milliseconds);
 	    break;
 	case '\n': case KEY_ENTER: case WINDOWS_KEY_ENTER:
 	    g_readline_loop = false;
@@ -638,6 +677,25 @@ readline(const char *prompt)
 
     session_destroy(ctx);
     return NULL;
+}
+
+char *
+readline_finalize_out_string_exported(const wchar_t *buf)
+{
+    return finalize_out_string(buf);
+}
+
+void
+readline_handle_backspace(volatile struct readline_session_context *ctx)
+{
+    case_key_backspace(ctx);
+}
+
+void
+readline_handle_key_exported(volatile struct readline_session_context *ctx,
+    wint_t wc)
+{
+    handle_key(ctx, wc);
 }
 
 /**

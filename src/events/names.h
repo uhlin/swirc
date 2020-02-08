@@ -1,9 +1,16 @@
 #ifndef NAMES_H
 #define NAMES_H
 
+#include "../textBuffer.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/*lint -sem(get_list_of_matching_channel_users, r_null) */
+
+PTEXTBUF	get_list_of_matching_channel_users(const char *chan,
+		    const char *search_var);
 
 void	event_names_init(void);
 void	event_names_deinit(void);

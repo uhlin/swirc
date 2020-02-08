@@ -1,5 +1,5 @@
 /* Input output loop
-   Copyright (C) 2014-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -140,6 +140,43 @@ static struct cmds_tag {
     { "who",         cmd_who,         true,  who_usage,         ARRAY_SIZE(who_usage),         true  },
     { "whois",       cmd_whois,       true,  whois_usage,       ARRAY_SIZE(whois_usage),       true  },
 };
+
+#define FOREACH_COMMAND() \
+	for (struct cmds_tag *sp = &cmds[0]; sp < &cmds[ARRAY_SIZE(cmds)]; sp++)
+
+static bool
+got_hits(const char *search_var)
+{
+    FOREACH_COMMAND() {
+	if (!strncmp(search_var, sp->cmd, strlen(search_var)))
+	    return true;
+    }
+
+    return false;
+}
+
+PTEXTBUF
+get_list_of_matching_commands(const char *search_var)
+{
+    if (!got_hits(search_var))
+	return NULL;
+
+    PTEXTBUF matches = textBuf_new();
+
+    FOREACH_COMMAND() {
+	if (!strncmp(search_var, sp->cmd, strlen(search_var))) {
+	    if (textBuf_size(matches) == 0) {
+		if ((errno = textBuf_ins_next(matches, NULL, sp->cmd, -1)) != 0)
+		    err_sys("get_list_of_matching_commands: textBuf_ins_next");
+	    } else {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches), sp->cmd, -1)) != 0)
+		    err_sys("get_list_of_matching_commands: textBuf_ins_next");
+	    }
+	}
+    }
+
+    return matches;
+}
 
 /* must be freed */
 char *

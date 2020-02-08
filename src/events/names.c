@@ -1,5 +1,5 @@
 /* Handle event names (353) and event EOF names (366)
-   Copyright (C) 2015-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -83,6 +83,54 @@ static char names_channel[1000] = "";
 *  ---------------------    Functions    ---------------------  *
 *                                                               *
 ****************************************************************/
+
+static bool
+got_hits(PIRC_WINDOW window, const char *search_var)
+{
+    for (size_t n = 0; n < ARRAY_SIZE(window->names_hash); n++) {
+	for (PNAMES names = window->names_hash[n]; names != NULL;
+	     names = names->next) {
+	    if (!strncmp(search_var, names->nick, strlen(search_var)))
+		return true;
+	}
+    }
+
+    return false;
+}
+
+static void
+add_match(PTEXTBUF matches, const char *user)
+{
+    if (textBuf_size(matches) == 0) {
+	if ((errno = textBuf_ins_next(matches, NULL, user, -1)) != 0)
+	    err_sys("get_list_of_matching_channel_users: textBuf_ins_next");
+    } else {
+	if ((errno = textBuf_ins_next(matches, textBuf_tail(matches), user, -1)) != 0)
+	    err_sys("get_list_of_matching_channel_users: textBuf_ins_next");
+    }
+}
+
+PTEXTBUF
+get_list_of_matching_channel_users(const char *chan, const char *search_var)
+{
+    PIRC_WINDOW window = NULL;
+
+    if ((window = window_by_label(chan)) == NULL ||
+	!got_hits(window, search_var))
+	return NULL;
+
+    PTEXTBUF matches = textBuf_new();
+
+    for (size_t n = 0; n < ARRAY_SIZE(window->names_hash); n++) {
+	for (PNAMES names = window->names_hash[n]; names != NULL;
+	     names = names->next) {
+	    if (!strncmp(search_var, names->nick, strlen(search_var)))
+		add_match(matches, names->nick);
+	}
+    }
+
+    return matches;
+}
 
 /**
  * Initialize the module
