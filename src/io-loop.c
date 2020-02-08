@@ -198,13 +198,11 @@ get_prompt(void)
 static void
 output_help_for_command(const char *command)
 {
-    PRINTTEXT_CONTEXT	 ctx;
-    const size_t	 ar_sz = ARRAY_SIZE(cmds);
-    struct cmds_tag	*sp = NULL;
+    PRINTTEXT_CONTEXT ctx;
 
     printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
 
-    for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
+    FOREACH_COMMAND() {
 	if (strings_match(command, sp->cmd)) {
 	    const char **lines = & (sp->usage[0]);
 	    const size_t size = sp->size;
@@ -225,21 +223,20 @@ output_help_for_command(const char *command)
 static void
 list_all_commands()
 {
-    PRINTTEXT_CONTEXT	 ctx;
-    const size_t	 ar_sz = ARRAY_SIZE(cmds);
-    struct cmds_tag	*sp = NULL;
+    PRINTTEXT_CONTEXT ctx;
 
     printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
     printtext(&ctx, "--------------- Commands ---------------");
 
-    for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
+    FOREACH_COMMAND() {
 	const char *cmd1 = sp->cmd;
 	char *cmd2, *cmd3;
 
-	if ((sp + 1) < &cmds[ar_sz] && (sp + 2) < &cmds[ar_sz]) {
+	if ((sp + 1) < &cmds[ARRAY_SIZE(cmds)] &&
+	    (sp + 2) < &cmds[ARRAY_SIZE(cmds)]) {
 	    sp++, cmd2 = sp->cmd;
 	    sp++, cmd3 = sp->cmd;
-	} else if ((sp + 1) < &cmds[ar_sz]) {
+	} else if ((sp + 1) < &cmds[ARRAY_SIZE(cmds)]) {
 	    sp++, cmd2 = sp->cmd;
 	    cmd3 = NULL;
 	} else {
@@ -412,14 +409,12 @@ history_prev()
 static void
 handle_cmds(const char *data)
 {
-    PRINTTEXT_CONTEXT	 ctx;
-    char		*cp = NULL;
-    const size_t	 ar_sz = ARRAY_SIZE(cmds);
-    struct cmds_tag	*sp = NULL;
+    PRINTTEXT_CONTEXT ctx;
+    char *cp = NULL;
 
     printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 
-    for (sp = &cmds[0]; sp < &cmds[ar_sz]; sp++) {
+    FOREACH_COMMAND() {
 	cp = strdup_printf("%s ", sp->cmd);
 
 	if (strings_match(data, sp->cmd)) {
