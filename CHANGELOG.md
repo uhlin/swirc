@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Added ###
 - **Tab completion**
+- Better detection for connection loss
 
 ### Changed ###
 - For C++, prefer `const_cast` and `static_cast` respectively, instead

@@ -42,6 +42,7 @@
 
 #include "assertAPI.h"
 #include "config.h"
+#include "dataClassify.h"
 #include "errHand.h"
 #include "icb.h"
 #include "irc.h"
@@ -417,6 +418,38 @@ net_connect_clean_up(void)
     atomic_swap_bool(&g_connection_in_progress, false);
 }
 
+static bool
+should_check_connection()
+{
+    static int times_called = 0;
+
+    if (times_called > 3) {
+	times_called = 0;
+	return true;
+    }
+
+    times_called ++;
+    return false;
+}
+
+static int
+conn_check()
+{
+    if (g_icb_mode) {
+	const int msglen = 1;
+
+	if (net_send("%cn", msglen) == -1)
+	    return -1;
+    } else {
+	if (!isNull(g_server_hostname)) {
+	    if (net_send("PING %s", g_server_hostname) == -1)
+		return -1;
+	}
+    }
+
+    return 0;
+}
+
 void
 net_irc_listen(bool *connection_lost)
 {
@@ -496,6 +529,11 @@ net_irc_listen(bool *connection_lost)
 		g_connection_lost = true;
 	    else if (bytes_received > 0)
 		irc_handle_interpret_events(recvbuf, &message_concat, &state);
+	}
+
+	if (should_check_connection()) {
+	    if (conn_check() == -1)
+		g_connection_lost = true;
 	}
     } while (g_on_air && !g_connection_lost);
 
