@@ -1,5 +1,5 @@
 /* Platform independent networking routines
-   Copyright (C) 2014-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -399,7 +399,8 @@ net_addr_resolve(const char *host, const char *port)
 struct server *
 server_new(const char *host, const char *port, const char *pass)
 {
-    struct server *server = (struct server *) xmalloc(sizeof *server);
+    struct server *server =
+	static_cast<struct server *>(xmalloc(sizeof *server));
 
     server->host = sw_strdup(host);
     server->port = sw_strdup(port);
@@ -422,7 +423,8 @@ net_irc_listen(bool *connection_lost)
     PRINTTEXT_CONTEXT		 ptext_ctx;
     struct network_recv_context	 ctx(g_socket, 0, 5, 0);
     char			*message_concat = NULL;
-    char			*recvbuf = (char *) xmalloc(RECVBUF_SIZE);
+    char			*recvbuf =
+	static_cast<char *>(xmalloc(RECVBUF_SIZE));
     int				 bytes_received = -1;
     enum message_concat_state	 state = CONCAT_BUFFER_IS_EMPTY;
 
@@ -456,7 +458,7 @@ net_irc_listen(bool *connection_lost)
 
 		const int bytes_remaining = int_diff(maxval, minval);
 
-		char *tmp = (char *) xmalloc(bytes_remaining + 1);
+		char *tmp = static_cast<char *>(xmalloc(bytes_remaining + 1));
 		tmp[bytes_remaining] = '\0';
 
 		if (bytes_received = net_recv(&ctx, tmp, bytes_remaining),
@@ -471,7 +473,7 @@ net_irc_listen(bool *connection_lost)
 		    }
 
 		const size_t concatSize = strlen(recvbuf) + strlen(tmp) + 1;
-		char *concat = (char *) xmalloc(concatSize);
+		char *concat = static_cast<char *>(xmalloc(concatSize));
 
 		if (sw_strcpy(concat, recvbuf, concatSize) == 0 &&
 		    sw_strcat(concat, tmp, concatSize) == 0)

@@ -1,5 +1,5 @@
 /* Handles event PRIVMSG
-   Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -217,7 +217,7 @@ get_converted_wcs(const char *s)
 {
     const size_t sz1 = strlen(s) + 1;
     const size_t sz2 = size_product(sizeof (wchar_t), sz1);
-    wchar_t *out = (wchar_t *) xmalloc(sz2);
+    wchar_t *out = static_cast<wchar_t *>(xmalloc(sz2));
 
     if (MultiByteToWideChar(CP_UTF8, 0, s, -1, out, size_to_int(sz1)) > 0)
 	return out;
