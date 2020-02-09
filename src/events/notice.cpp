@@ -1,5 +1,5 @@
 /* Handles event NOTICE
-   Copyright (C) 2014-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -159,7 +159,7 @@ event_notice(struct irc_message_compo *compo)
 	char *state1, *state2;
 
 	dest = msg = NULL;
-	state1 = state2 = (char *) "";
+	state1 = state2 = const_cast<char *>("");
 	printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
 
 	if (has_server_time(compo)) {
@@ -201,9 +201,9 @@ event_notice(struct irc_message_compo *compo)
 	if (nick == NULL)
 	    throw std::runtime_error("no nickname");
 	if (user == NULL)
-	    user = (char *) "<no user>";
+	    user = const_cast<char *>("<no user>");
 	if (host == NULL)
-	    host = (char *) "<no host>";
+	    host = const_cast<char *>("<no host>");
 
 	if (*msg == '\001') {
 	    /*

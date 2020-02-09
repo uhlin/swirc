@@ -1,5 +1,5 @@
 /* Channel related events
-   Copyright (C) 2015-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -58,7 +58,7 @@ event_chan_hp(struct irc_message_compo *compo)
     PRINTTEXT_CONTEXT ctx;
 
     try {
-	char *state = (char *) "";
+	char *state = const_cast<char *>("");
 
 	if (strFeed(compo->params, 2) != 2)
 	    throw std::runtime_error("strFeed");
@@ -98,7 +98,7 @@ event_join(struct irc_message_compo *compo)
 
     try {
 	char *prefix = NULL;
-	char *state = (char *) "";
+	char *state = const_cast<char *>("");
 
 	if (compo == NULL)
 	    throw std::runtime_error("no components");
@@ -113,9 +113,9 @@ event_join(struct irc_message_compo *compo)
 	if (nick == NULL)
 	    throw std::runtime_error("no nickname");
 	if (user == NULL)
-	    user = (char *) "<no user>";
+	    user = const_cast<char *>("<no user>");
 	if (host == NULL)
-	    host = (char *) "<no host>";
+	    host = const_cast<char *>("<no host>");
 
 	const char *channel = *(compo->params) == ':'
 	    ? &compo->params[1]
@@ -169,8 +169,8 @@ event_kick(struct irc_message_compo *compo)
 
     try {
 	char *prefix = NULL;
-	char *state1 = (char *) "";
-	char *state2 = (char *) "";
+	char *state1 = const_cast<char *>("");
+	char *state2 = const_cast<char *>("");
 
 	if (compo == NULL)
 	    throw std::runtime_error("no components");
@@ -185,9 +185,9 @@ event_kick(struct irc_message_compo *compo)
 	if (nick == NULL)
 	    throw std::runtime_error("no nickname");
 	if (user == NULL)
-	    user = (char *) "<no user>";
+	    user = const_cast<char *>("<no user>");
 	if (host == NULL)
-	    host = (char *) "<no host>";
+	    host = const_cast<char *>("<no host>");
 
 	/* unused */
 	(void) user;
@@ -362,9 +362,9 @@ maintain_channel_stats(const char *channel, const char *input)
     size_t		 ar_i           = 0;
     const size_t	 ar_sz          = ARRAY_SIZE(nicks);
     char		*input_copy     = sw_strdup(input);
-    char		*modes          = (char *) "";
+    char		*modes          = const_cast<char *>("");
     size_t		 nicks_assigned = 0;
-    char		*state          = (char *) "";
+    char		*state          = const_cast<char *>("");
     plus_minus_state_t	 pm_state       = STATE_NEITHER_PM;
 
     if ((modes = strtok_r(input_copy, " ", &state)) == NULL) {
@@ -446,8 +446,8 @@ event_mode(struct irc_message_compo *compo)
 	char *cp = NULL;
 	char *nick = NULL;
 	char *prefix = NULL;
-	char *state1 = (char*) "";
-	char *state2 = (char*) "";
+	char *state1 = const_cast<char *>("");
+	char *state2 = const_cast<char *>("");
 
 	if (compo->prefix == NULL)
 	    throw std::runtime_error("no prefix");
@@ -546,7 +546,7 @@ event_nick(struct irc_message_compo *compo)
 	    ? &compo->params[1]
 	    : &compo->params[0];
 	char *prefix = NULL;
-	char *state = (char *) "";
+	char *state = const_cast<char *>("");
 
 	if (compo->prefix == NULL)
 	    throw std::runtime_error("no prefix");
@@ -597,8 +597,8 @@ event_part(struct irc_message_compo *compo)
 
     try {
 	char *prefix = NULL;
-	char *state1 = (char*) "";
-	char *state2 = (char*) "";
+	char *state1 = const_cast<char *>("");
+	char *state2 = const_cast<char *>("");
 
 	if (compo->prefix == NULL)
 	    throw std::runtime_error("no prefix!");
@@ -612,9 +612,9 @@ event_part(struct irc_message_compo *compo)
 	    throw std::runtime_error("unable to get nickname");
 
 	if (user == NULL)
-	    user = (char*) "<no user>";
+	    user = const_cast<char *>("<no user>");
 	if (host == NULL)
-	    host = (char*) "<no host>";
+	    host = const_cast<char *>("<no host>");
 
 	const bool has_message = strFeed(compo->params, 1) == 1;
 	char *channel = strtok_r(compo->params, "\n", &state2);
@@ -645,7 +645,7 @@ event_part(struct irc_message_compo *compo)
 	    if ((ctx.window = window_by_label(channel)) == NULL)
 		throw std::runtime_error("window lookup error");
 	    if (!has_message)
-		message = (char*) "";
+		message = const_cast<char *>("");
 	    if (has_message && *message == ':')
 		message++;
 
@@ -678,7 +678,7 @@ event_quit(struct irc_message_compo *compo)
 	    ? &compo->params[1]
 	    : &compo->params[0];
 	char *prefix = NULL;
-	char *state = (char *) "";
+	char *state = const_cast<char *>("");
 
 	if (compo->prefix == NULL)
 	    throw std::runtime_error("no prefix");
@@ -691,9 +691,9 @@ event_quit(struct irc_message_compo *compo)
 	if (nick == NULL)
 	    throw std::runtime_error("unable to get nickname");
 	if (user == NULL)
-	    user = (char*) "<no user>";
+	    user = const_cast<char *>("<no user>");
 	if (host == NULL)
-	    host = (char*) "<no host>";
+	    host = const_cast<char *>("<no host>");
 
 	printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
@@ -731,7 +731,7 @@ event_topic(struct irc_message_compo *compo)
 
     try {
 	char *channel = NULL, *topic = NULL;
-	char *state = (char *) "";
+	char *state = const_cast<char *>("");
 
 	if (strFeed(compo->params, 2) != 2)
 	    throw std::runtime_error("strFeed");
@@ -775,8 +775,8 @@ event_topic_chg(struct irc_message_compo *compo)
 
     try {
 	char *prefix = NULL;
-	char *state1 = (char *) "";
-	char *state2 = (char *) "";
+	char *state1 = const_cast<char *>("");
+	char *state2 = const_cast<char *>("");
 
 	if (compo->prefix == NULL)
 	    throw std::runtime_error("no prefix");
@@ -833,8 +833,8 @@ event_topic_creator(struct irc_message_compo *compo)
     char *string_copy = NULL;
 
     try {
-	char *state1 = (char *) "";
-	char *state2 = (char *) "";
+	char *state1 = const_cast<char *>("");
+	char *state2 = const_cast<char *>("");
 
 	if (strFeed(compo->params, 3) != 3)
 	    throw std::runtime_error("strFeed");

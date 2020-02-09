@@ -206,7 +206,7 @@ case_connect()
 {
     static bool	 been_case = false;
     char	*token1, *token2;
-    char	*savp	   = (char *) "";
+    char	*savp	   = const_cast<char *>("");
 
     if (been_case) {
 	DUP_OPTION_ERR('c');
@@ -407,7 +407,7 @@ main(int argc, char *argv[])
 #if __OpenBSD__
     extern char *malloc_options;
 
-    malloc_options = (char *) "S";
+    malloc_options = const_cast<char *>("S");
 #endif
 
     (void) setlocale(LC_ALL, "");
@@ -531,7 +531,7 @@ get_locale_info(int category)
 	static_cast<struct locale_info *>(xcalloc(sizeof *li, 1));
     char  buf[200] = { 0 };
     char *tok      = NULL;
-    char *savp     = (char *) "";
+    char *savp     = const_cast<char *>("");
 
     li->lang_and_territory = li->codeset = NULL;
 

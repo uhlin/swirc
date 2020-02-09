@@ -172,7 +172,7 @@ static PTR_ARGS_NONNULL bool
 shouldHighlightMessage_case2(const char *msg)
 {
     bool result = false;
-    char *last = (char *) "";
+    char *last = const_cast<char *>("");
     char *nickname_aliases = sw_strdup(Config("nickname_aliases"));
 
     for (char *cp = &nickname_aliases[0];; cp = NULL) {
@@ -263,7 +263,7 @@ event_privmsg(struct irc_message_compo *compo)
 	char	*prefix = compo->prefix ? &compo->prefix[0] : NULL;
 	char	*state1, *state2;
 
-	state1 = state2 = (char *) "";
+	state1 = state2 = const_cast<char *>("");
 	printtext_context_init(&ctx, NULL, TYPE_SPEC_NONE, true);
 
 	if (has_server_time(compo)) {
@@ -283,9 +283,9 @@ event_privmsg(struct irc_message_compo *compo)
 	if (nick == NULL)
 	    throw std::runtime_error("no nickname");
 	if (user == NULL)
-	    user = (char *) "<no user>";
+	    user = const_cast<char *>("<no user>");
 	if (host == NULL)
-	    host = (char *) "<no host>";
+	    host = const_cast<char *>("<no host>");
 	if (strFeed(params, 1) != 1)
 	    throw std::runtime_error("strFeed");
 
