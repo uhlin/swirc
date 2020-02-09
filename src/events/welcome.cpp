@@ -1,5 +1,5 @@
 /* Handle event welcome (001)
-   Copyright (C) 2014-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -47,7 +47,7 @@ event_welcome(struct irc_message_compo *compo)
 	char *msg = NULL;
 	char *nick = NULL;
 	char *srv_host = NULL;
-	char *state = (char *) "";
+	char *state = const_cast<char *>("");
 
 	if (compo->prefix == NULL)
 	    throw std::runtime_error("no prefix!");

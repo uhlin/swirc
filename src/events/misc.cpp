@@ -1,5 +1,5 @@
 /* Miscellaneous events
-   Copyright (C) 2014-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -84,7 +84,7 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
     PRINTTEXT_CONTEXT ctx;
     char *cp = NULL;
     char *msg = NULL, *msg_copy = NULL;
-    char *state = (char *) "";
+    char *state = const_cast<char *>("");
 
     try {
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
@@ -130,7 +130,7 @@ event_serverFeatures(struct irc_message_compo *compo)
     try {
 	char *cp = NULL;
 	char *msg = NULL, *msg_copy = NULL;
-	char *state = (char *) "";
+	char *state = const_cast<char *>("");
 
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
@@ -183,7 +183,7 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
     PRINTTEXT_CONTEXT ctx;
 
     try {
-	char *state = (char *) "";
+	char *state = const_cast<char *>("");
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
@@ -235,7 +235,7 @@ event_channelModeIs(struct irc_message_compo *compo)
 
     try {
 	char *cp = NULL;
-	char *state = (char *) "";
+	char *state = const_cast<char *>("");
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
@@ -298,7 +298,7 @@ event_channel_forward(struct irc_message_compo *compo)
 
     try {
 	char *params = & (compo->params[0]);
-	char *state = (char *) "";
+	char *state = const_cast<char *>("");
 
 	if (strFeed(params, 3) != 3)
 	    throw std::runtime_error("strFeed");
@@ -363,7 +363,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
     try {
 	char *nick = NULL;
 	char *params = & (compo->params[0]);
-	char *state = (char *) "";
+	char *state = const_cast<char *>("");
 
 	if (strFeed(params, 2) != 2)
 	    throw std::runtime_error("strFeed");
@@ -413,7 +413,7 @@ event_userModeIs(struct irc_message_compo *compo)
 {
     try {
 	char *modes = NULL;
-	char *state = (char *) "";
+	char *state = const_cast<char *>("");
 
 	if (strFeed(compo->params, 1) != 1)
 	    throw std::runtime_error("strFeed");

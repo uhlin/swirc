@@ -1,5 +1,5 @@
 /* events/account.cpp
-   Copyright (C) 2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -52,7 +52,7 @@ event_account(struct irc_message_compo *compo)
 
     try {
 	char *accountname = & (compo->params[0]);
-	char *last = (char *) "";
+	char *last = const_cast<char *>("");
 	char *prefix = NULL;
 
 	if (compo->prefix == NULL)

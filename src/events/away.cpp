@@ -1,5 +1,5 @@
 /* events/away.cpp
-   Copyright (C) 2018, 2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -50,7 +50,7 @@ event_away(struct irc_message_compo *compo)
     PRINTTEXT_CONTEXT ctx;
 
     try {
-	char *last = (char *) "";
+	char *last = const_cast<char *>("");
 
 	if (compo == NULL)
 	    throw std::runtime_error("no components");
