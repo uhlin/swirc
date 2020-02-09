@@ -1,5 +1,5 @@
 /* Readline API
-   Copyright (C) 2012-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -258,7 +258,7 @@ readline_mvwinsch(WINDOW *win, int row, int col, wint_t wc)
 	readline_error(EPERM, "wmove");
     }
     if (!is_text_decoration(wc)) {
-	if (winsnstr(win, mbs, strlen(mbs) + 1) == ERR) {
+	if (winsnstr(win, mbs, size_to_int(strlen(mbs) + 1)) == ERR) {
 	    free_and_null(&mbs);
 	    readline_error(EPERM, "winsnstr");
 	}
@@ -281,7 +281,7 @@ readline_winsch(WINDOW *win, wint_t wc)
     char *mbs = convert_wc(wc);
 
     if (!is_text_decoration(wc)) {
-	if (winsnstr(win, mbs, strlen(mbs) + 1) == ERR) {
+	if (winsnstr(win, mbs, size_to_int(strlen(mbs) + 1)) == ERR) {
 	    free_and_null(&mbs);
 	    readline_error(EPERM, "winsnstr");
 	}
