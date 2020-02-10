@@ -42,6 +42,50 @@
 #include "terminal.h"
 
 static void
+auto_complete_command(volatile struct readline_session_context *ctx,
+    const char *s)
+{
+    while (ctx->n_insert != 0)
+	readline_handle_backspace(ctx);
+
+    readline_handle_key_exported(ctx, btowc('/'));
+
+    for (size_t i = 0; i < strlen(s); i++)
+	readline_handle_key_exported(ctx, btowc(s[i]));
+}
+
+static void
+auto_complete_channel_user(volatile struct readline_session_context *ctx,
+    const char *s)
+{
+    while (ctx->n_insert != 0)
+	readline_handle_backspace(ctx);
+
+    for (size_t i = 0; i < strlen(s); i++)
+	readline_handle_key_exported(ctx, btowc(s[i]));
+
+    readline_handle_key_exported(ctx, btowc(':'));
+    readline_handle_key_exported(ctx, btowc(' '));
+}
+
+static bool
+buf_contains_disallowed_chars(volatile struct readline_session_context *ctx)
+{
+    char *s = readline_finalize_out_string_exported(ctx->buffer);
+    const char reject[] =
+	TXT_BLINK TXT_BOLD TXT_COLOR TXT_NORMAL TXT_REVERSE TXT_UNDERLINE;
+    const bool yes_no = strpbrk(s, reject) != NULL;
+    free(s);
+    return yes_no;
+}
+
+static inline char *
+get_search_var(volatile struct readline_session_context *ctx)
+{
+    return (& (ctx->tc->search_var[0]));
+}
+
+static void
 output_error(const char *msg)
 {
     PRINTTEXT_CONTEXT ctx;
@@ -49,6 +93,18 @@ output_error(const char *msg)
     printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_WARN, true);
     printtext(&ctx, "%s", msg);
     term_beep();
+}
+
+static int
+store_search_var(volatile struct readline_session_context *ctx)
+{
+    char *s = readline_finalize_out_string_exported(ctx->buffer);
+
+    const int store_res =
+	sw_strcpy(ctx->tc->search_var, s, ARRAY_SIZE(ctx->tc->search_var));
+
+    free(s);
+    return (store_res != 0 ? -1 : 0);
 }
 
 PTAB_COMPLETION
@@ -86,62 +142,6 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 	ctx->matches = NULL;
 	ctx->elmt = NULL;
     }
-}
-
-static bool
-buf_contains_disallowed_chars(volatile struct readline_session_context *ctx)
-{
-    char *s = readline_finalize_out_string_exported(ctx->buffer);
-    const char reject[] =
-	TXT_BLINK TXT_BOLD TXT_COLOR TXT_NORMAL TXT_REVERSE TXT_UNDERLINE;
-    const bool yes_no = strpbrk(s, reject) != NULL;
-    free(s);
-    return yes_no;
-}
-
-static int
-store_search_var(volatile struct readline_session_context *ctx)
-{
-    char *s = readline_finalize_out_string_exported(ctx->buffer);
-
-    const int store_res =
-	sw_strcpy(ctx->tc->search_var, s, ARRAY_SIZE(ctx->tc->search_var));
-
-    free(s);
-    return (store_res != 0 ? -1 : 0);
-}
-
-static inline char *
-get_search_var(volatile struct readline_session_context *ctx)
-{
-    return (& (ctx->tc->search_var[0]));
-}
-
-static void
-auto_complete_command(volatile struct readline_session_context *ctx,
-    const char *s)
-{
-    while (ctx->n_insert != 0)
-	readline_handle_backspace(ctx);
-
-    readline_handle_key_exported(ctx, btowc('/'));
-
-    for (size_t i = 0; i < strlen(s); i++)
-	readline_handle_key_exported(ctx, btowc(s[i]));
-}
-
-static void
-auto_complete_channel_user(volatile struct readline_session_context *ctx,
-    const char *s)
-{
-    while (ctx->n_insert != 0)
-	readline_handle_backspace(ctx);
-
-    for (size_t i = 0; i < strlen(s); i++)
-	readline_handle_key_exported(ctx, btowc(s[i]));
-
-    readline_handle_key_exported(ctx, btowc(':'));
-    readline_handle_key_exported(ctx, btowc(' '));
 }
 
 void
