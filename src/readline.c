@@ -105,7 +105,7 @@ apply_readline_options(WINDOW *win)
 /**
  * Check if low limit is set
  */
-static SW_INLINE bool
+static inline bool
 loLim_isset(WINDOW *win, int prompt_size)
 {
     return (term_get_pos(win).curx <= prompt_size);
@@ -114,7 +114,7 @@ loLim_isset(WINDOW *win, int prompt_size)
 /**
  * Check if high limit is set
  */
-static SW_INLINE bool
+static inline bool
 hiLim_isset(WINDOW *win)
 {
     return (term_get_pos(win).curx >= COLS - 1);
