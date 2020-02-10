@@ -357,9 +357,10 @@ hInstall(const struct hInstall_context *ctx)
     entry->refnum = ctx->refnum;
     entry->buf    = textBuf_new();
 
-    entry->saved_size	= 0;
+    entry->saved_size   = 0;
     entry->scroll_count = 0;
-    entry->scroll_mode	= false;
+    entry->scroll_mode  = false;
+    entry->logging      = true;
 
     for (n_ent = &entry->names_hash[0];
 	 n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE];
