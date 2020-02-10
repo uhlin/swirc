@@ -1,5 +1,5 @@
 /* Prints and handles text
-   Copyright (C) 2012-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -149,368 +149,14 @@ static struct ptext_colorMap_tag {
 *                                                               *
 ****************************************************************/
 
-PPRINTTEXT_CONTEXT
-printtext_context_new(PIRC_WINDOW window, enum message_specifier_type spec_type,
-    bool include_ts)
-{
-    PPRINTTEXT_CONTEXT ctx = xcalloc(sizeof *ctx, 1);
-
-    ctx->window = window;
-    ctx->spec_type = spec_type;
-    ctx->include_ts = include_ts;
-
-    memset(ctx->server_time, 0, sizeof (ctx->server_time));
-    ctx->has_server_time = false;
-
-    return ctx;
-}
-
-void
-printtext_context_destroy(PPRINTTEXT_CONTEXT ctx)
-{
-    free_not_null(ctx);
-}
-
-void
-printtext_context_init(PPRINTTEXT_CONTEXT ctx, PIRC_WINDOW window,
-    enum message_specifier_type spec_type, bool include_ts)
-{
-    if (ctx == NULL)
-	return;
-
-    ctx->window = window;
-    ctx->spec_type = spec_type;
-    ctx->include_ts = include_ts;
-
-    memset(ctx->server_time, 0, sizeof (ctx->server_time));
-    ctx->has_server_time = false;
-}
-
-/**
- * Helper function for squeeze_text_deco().
- */
-static SW_INLINE void
-handle_foo_situation(char **buffer, long int *i, long int *j,
-		     const char *reject)
-{
-    if (!(*buffer)[*i]) {
-	return;
-    } else if ((*buffer)[*i] == COLOR) {
-	(*i)--;
-    } else if (strchr(reject, (*buffer)[*i]) == NULL) {
-	(*buffer)[(*j)++] = (*buffer)[*i];
-    }
-}
-
-/**
- * Squeeze text-decoration from a buffer
- *
- * @param buffer Target buffer
- * @return The result
- */
-char *
-squeeze_text_deco(char *buffer)
-{
-    bool has_comma;
-    char *reject;
-    long int i, j;
-
-    if (buffer == NULL) {
-	err_exit(EINVAL, "squeeze_text_deco error");
-    } else if (*buffer == '\0') {
-	return (buffer);
-    }
-
-    reject = strdup_printf(
-	"%c%c%c%c%c", BLINK, BOLD, NORMAL, REVERSE, UNDERLINE);
-
-    for (i = j = 0; buffer[i] != '\0'; i++) {
-	switch (buffer[i]) {
-	case COLOR:
-	{
-	    /*
-	     * check for ^CN
-	     */
-	    if (!sw_isdigit(buffer[++i])) {
-		handle_foo_situation(&buffer, &i, &j, reject);
-		break;
-	    }
-
-	    /*
-	     * check for ^CNN or ^CN,
-	     */
-	    if (!sw_isdigit(buffer[++i]) && buffer[i] != ',') {
-		handle_foo_situation(&buffer, &i, &j, reject);
-		break;
-	    }
-
-	    has_comma = buffer[i++] == ',';
-
-	    /*
-	     * check for ^CNN, or ^CN,N
-	     */
-	    if (!has_comma && buffer[i] == ',') {
-		has_comma = true;
-	    } else if (has_comma && sw_isdigit(buffer[i])) {
-		/* ^CN,N */;
-	    } else if (has_comma && !sw_isdigit(buffer[i])) {
-		i--;
-		handle_foo_situation(&buffer, &i, &j, reject);
-		break;
-	    } else {
-		handle_foo_situation(&buffer, &i, &j, reject);
-		break;
-	    }
-
-	    sw_assert(has_comma);
-
-	    /*
-	     * check for ^CNN,N or ^CN,NN
-	     */
-	    if (buffer[i] == ',') { /* ^CNN, */
-		if (!sw_isdigit(buffer[++i])) {
-		    i--;
-		    handle_foo_situation(&buffer, &i, &j, reject);
-		    break;
-		}
-	    } else { /* ^CN,N */
-		sw_assert(sw_isdigit(buffer[i]));
-		if (sw_isdigit(buffer[++i])) /* we have ^CN,NN? */
-		    break;
-		handle_foo_situation(&buffer, &i, &j, reject);
-		break;
-	    }
-
-	    /*
-	     * check for ^CNN,NN
-	     */
-	    if (!sw_isdigit(buffer[++i])) {
-		handle_foo_situation(&buffer, &i, &j, reject);
-		break;
-	    }
-
-	    break;
-	} /* case COLOR */
-	default:
-	    if (strchr(reject, buffer[i]) == NULL) {
-		buffer[j++] = buffer[i];
-	    }
-	    break;
-	} /* switch block */
-    }
-
-    free(reject);
-    buffer[j] = '\0';
-
-    return (buffer);
-}
-
-/**
- * Search for a color pair with given foreground/background.
- *
- * @param fg Foreground
- * @param bg Background
- * @return A color pair number, or -1 if not found.
- */
-short int
-color_pair_find(short int fg, short int bg)
-{
-    const short int gipp1 = g_initialized_pairs + 1;
-    short int pnum; /* pair number */
-    short int x, y;
-
-    for (pnum = 1; pnum < gipp1; pnum++) {
-	if (pair_content(pnum, &x, &y) == ERR) {
-	    return -1;
-	} else if (x == fg && y == bg) { /* found match */
-	    return pnum;
-	}
-    }
-
-    return -1;
-}
-
-/**
- * Print an error message to the active window and free the memory
- * space pointed to by @cp
- */
-void
-print_and_free(const char *msg, char *cp)
-{
-#ifdef UNIT_TESTING
-    puts(msg);
-    free_not_null(cp);
-    fail();
-#else
-    PRINTTEXT_CONTEXT ctx;
-
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
-    printtext(&ctx, "%s", msg);
-    free_not_null(cp);
-#endif
-}
-
-/**
- * Swirc messenger
- *
- * @param ctx Context structure
- * @param fmt Format control
- * @return Void
- */
-void
-printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
-{
-    va_list ap;
-
-    va_start(ap, fmt);
-    vprinttext(ctx, fmt, ap);
-    va_end(ap);
-}
-
-/**
- * Create mutex "g_puts_mutex".
- */
 static void
-puts_mutex_init(void)
+addmbs(WINDOW *win, const unsigned char *mbs)
 {
-    mutex_new(&g_puts_mutex);
-}
+    chtype c = '\0';
+    const unsigned char *p = mbs;
 
-/**
- * WIN32 specific: attempt to convert multibyte character string to
- * wide-character string by using UTF-8. The storage is obtained with
- * xcalloc().
- *
- * @param buf Buffer to convert.
- * @return A wide-character string, or NULL on error.
- */
-#if WIN32
-/*lint -sem(windows_convert_to_utf8, r_null) */
-static wchar_t *
-windows_convert_to_utf8(const char *buf)
-{
-    const int sz = (int) (strlen(buf) + 1);
-    wchar_t *out = xcalloc(sz, sizeof (wchar_t));
-
-    if (MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,buf,-1,out,sz) > 0)
-	return out;
-    free(out);
-    return NULL;
-}
-#endif
-
-/**
- * Attempt convert multibyte character string to wide-character string
- * by using a specific codeset. The storage is dynamically allocated.
- *
- * @param buf     Buffer to convert
- * @param codeset Codeset to use
- * @return A wide-character string, or NULL on error.
- */
-/*lint -sem(try_convert_buf_with_cs, r_null) */
-static wchar_t *
-try_convert_buf_with_cs(const char *buf, const char *codeset)
-{
-    char		*original_locale = NULL;
-    char		*tmp_locale	 = NULL;
-    const size_t	 CONVERT_FAILED	 = (size_t) -1;
-    const size_t	 sz		 = strlen(buf) + 1;
-    size_t		 bytes_convert	 = 0;
-    struct locale_info	*li		 = get_locale_info(LC_CTYPE);
-    wchar_t		*out		 = NULL;
-
-    if (li->lang_and_territory == NULL || li->codeset == NULL)
-	goto err;
-
-    original_locale = strdup_printf("%s.%s",
-	li->lang_and_territory, li->codeset);
-    tmp_locale      = strdup_printf("%s.%s", li->lang_and_territory, codeset);
-    out             = xcalloc(sz, sizeof (wchar_t));
-
-    if (setlocale(LC_CTYPE, tmp_locale) == NULL ||
-	(bytes_convert = xmbstowcs(out, buf, sz - 1)) == CONVERT_FAILED) {
-	if (setlocale(LC_CTYPE, original_locale) == NULL)
-	    err_log(EPERM, "In try_convert_buf_with_cs: "
-		"cannot restore original locale (%s)", original_locale);
-	goto err;
-    }
-
-    if (bytes_convert == sz - 1)
-	out[sz - 1] = 0L;
-
-    if (setlocale(LC_CTYPE, original_locale) == NULL)
-	err_log(EPERM, "In try_convert_buf_with_cs: "
-	    "cannot restore original locale (%s)", original_locale);
-    free_locale_info(li);
-    free_not_null(original_locale);
-    free_not_null(tmp_locale);
-    return out;
-
-  err:
-    free_locale_info(li);
-    free_not_null(original_locale);
-    free_not_null(tmp_locale);
-    free_not_null(out);
-    return NULL;
-}
-
-/**
- * Convert multibyte character string to wide-character string, using
- * different encodings. The storage is dynamically allocated.
- *
- * @param in_buf In buffer.
- * @return A wide-character string.
- */
-static wchar_t *
-perform_convert_buffer(const char **in_buf)
-{
-    bool chars_lost = false;
-    const char *ar[] = {
-#if defined(UNIX)
-	"UTF-8",       "utf8",
-	"ISO-8859-1",  "ISO8859-1",  "iso88591",
-	"ISO-8859-15", "ISO8859-15", "iso885915",
-#elif defined(WIN32)
-	"65001", /* UTF-8 */
-	"28591", /* ISO 8859-1 Latin 1 */
-	"28605", /* ISO 8859-15 Latin 9 */
-#endif
-    };
-    const size_t	 CONVERT_FAILED = (size_t) -1;
-    const size_t	 ar_sz		= ARRAY_SIZE(ar);
-    mbstate_t		 ps;
-    size_t		 sz		= 0;
-    wchar_t		*out		= NULL;
-
-#if WIN32
-    if ((out = windows_convert_to_utf8(*in_buf)) != NULL)
-	return (out);
-#endif
-
-    for (const char **ar_p = &ar[0]; ar_p < &ar[ar_sz]; ar_p++) {
-	if ((out = try_convert_buf_with_cs(*in_buf, *ar_p)) != NULL) /*success*/
-	    return (out);
-    }
-
-    /* fallback solution... */
-    sz  = strlen(*in_buf) + 1;
-    out = xcalloc(sz, sizeof (wchar_t));
-
-    BZERO(&ps, sizeof (mbstate_t));
-
-    while (errno = 0, true) {
-	if (mbsrtowcs(&out[wcslen(out)], in_buf, (sz - wcslen(out)) - 1, &ps) ==
-	    CONVERT_FAILED && errno == EILSEQ) {
-	    chars_lost = true;
-	    (*in_buf)++;
-	} else
-	    break;
-    }
-
-    out[sz - 1] = 0L;
-    if (chars_lost)
-	err_log(EILSEQ, "In perform_convert_buffer: characters lost");
-    return (out);
+    while ((c = *p++) != '\0')
+	WADDCH(win, c);
 }
 
 static void
@@ -523,15 +169,6 @@ append_newline(wchar_t **wc_buf)
 
     if ((errno = sw_wcscat(*wc_buf, L"\n", newsize)) != 0)
 	err_sys("printtext: append_newline");
-}
-
-static void
-replace_characters_with_space(wchar_t *wc_buf, const wchar_t *set)
-{
-    wchar_t *wcp = NULL;
-
-    while ((wcp = wcspbrk(wc_buf, set)) != NULL)
-	*wcp = L' ';
 }
 
 /**
@@ -903,70 +540,6 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 }
 
 /**
- * Reset text-decoration bools
- *
- * @param booleans Context structure
- * @return Void
- */
-static void
-text_decoration_bools_reset(struct text_decoration_bools *booleans)
-{
-    booleans->is_blink     = false;
-    booleans->is_bold      = false;
-    booleans->is_color     = false;
-    booleans->is_reverse   = false;
-    booleans->is_underline = false;
-}
-
-/**
- * Toggle reverse ON/OFF
- *
- * @param[in]     win        Target window
- * @param[in,out] is_reverse Is reverse state
- * @return Void
- */
-static void
-case_reverse(WINDOW *win, bool *is_reverse)
-{
-    if (! (*is_reverse)) {
-	WATTR_ON(win, A_REVERSE);
-	*is_reverse = true;
-    } else {
-	WATTR_OFF(win, A_REVERSE);
-	*is_reverse = false;
-    }
-}
-
-/**
- * Toggle underline ON/OFF
- *
- * @param[in]     win          Target window
- * @param[in,out] is_underline Is underline state
- * @return Void
- */
-static void
-case_underline(WINDOW *win, bool *is_underline)
-{
-    if (! (*is_underline)) {
-	WATTR_ON(win, A_UNDERLINE);
-	*is_underline = true;
-    } else {
-	WATTR_OFF(win, A_UNDERLINE);
-	*is_underline = false;
-    }
-}
-
-static void
-addmbs(WINDOW *win, const unsigned char *mbs)
-{
-    chtype c = '\0';
-    const unsigned char *p = mbs;
-
-    while ((c = *p++) != '\0')
-	WADDCH(win, c);
-}
-
-/**
  * Do indent
  */
 static void
@@ -1069,137 +642,41 @@ case_default(struct case_default_context *ctx, int *rep_count, int *line_count,
 }
 
 /**
- * Output data to window
+ * Toggle reverse ON/OFF
  *
- * @param[in]  pwin      Panel window where the output is to be displayed.
- * @param[in]  buf       A buffer that should contain the data to be written to
- *                       'pwin'.
- * @param[in]  indent    If >0 indent text with this number of blanks.
- * @param[in]  max_lines If >0 write at most this number of lines.
- * @param[out] rep_count "Represent count". How many actual lines does this
- *                       contribution represent in the output window?
- *                       (Passing NULL is ok.)
+ * @param[in]     win        Target window
+ * @param[in,out] is_reverse Is reverse state
  * @return Void
  */
-void
-printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
-    int *rep_count)
+static void
+case_reverse(WINDOW *win, bool *is_reverse)
 {
-    const bool pwin_scrollable = is_scrollok(pwin);
-    int insert_count = 0;
-    int line_count = 0;
-    int max_lines_flagged = 0;
-    struct text_decoration_bools booleans = {
-	.is_blink     = false,
-	.is_bold      = false,
-	.is_color     = false,
-	.is_reverse   = false,
-	.is_underline = false,
-    };
-    wchar_t *wc_buf = NULL, *wc_bufp = NULL;
-
-#if defined(UNIX)
-    if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0)
-	err_sys("printtext_puts: pthread_once");
-#elif defined(WIN32)
-    if ((errno = init_once(&puts_init_done, puts_mutex_init)) != 0)
-	err_sys("printtext_puts: init_once");
-#endif
-
-    if (!isNull(rep_count)) {
-	*rep_count = 0;
+    if (! (*is_reverse)) {
+	WATTR_ON(win, A_REVERSE);
+	*is_reverse = true;
+    } else {
+	WATTR_OFF(win, A_REVERSE);
+	*is_reverse = false;
     }
-
-    if (isNull(buf)) {
-	err_exit(EINVAL, "printtext_puts");
-    } else if (isEmpty(buf)) {
-	return;
-    }
-
-    mutex_lock(&g_puts_mutex);
-    wc_buf = perform_convert_buffer(&buf);
-    if (pwin_scrollable)
-	append_newline(&wc_buf);
-    replace_characters_with_space(wc_buf, L"\f\t\v");
-
-    for (wc_bufp = &wc_buf[0], max_lines_flagged = 0;
-	*wc_bufp && !max_lines_flagged; wc_bufp++) {
-	wchar_t wc = *wc_bufp;
-
-	switch (wc) {
-	case BLINK:
-	    case_blink(pwin, &booleans.is_blink);
-	    break;
-	case BOLD:
-	    case_bold(pwin, &booleans.is_bold);
-	    break;
-	case COLOR:
-	    case_color(pwin, &booleans.is_color, &wc_bufp);
-	    break;
-	case NORMAL:
-	    text_decoration_bools_reset(&booleans);
-	    wattrset(pwin, A_NORMAL);
-	    break;
-	case REVERSE:
-	    case_reverse(pwin, &booleans.is_reverse);
-	    break;
-	case UNDERLINE:
-	    case_underline(pwin, &booleans.is_underline);
-	    break;
-	default:
-	{
-	    ptrdiff_t diff = 0;
-	    wchar_t *wcp = NULL;
-
-	    if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) != NULL) {
-		diff = wcp - wc_bufp;
-	    }
-
-	    struct case_default_context def_ctx = {
-		.win		= pwin,
-		.wc		= wc,
-		.nextchar_empty = !wcscmp(wc_bufp + 1, L""),
-		.indent		= indent,
-		.max_lines	= max_lines,
-		.diff		= diff,
-	    };
-
-	    case_default(&def_ctx, rep_count, &line_count, &insert_count);
-	    break;
-	} /* case default */
-	} /* switch block */
-	if (pwin_scrollable && max_lines > 0) {
-	    max_lines_flagged = line_count >= max_lines;
-	}
-    }
-
-    free(wc_buf);
-    wattrset(pwin, A_NORMAL);
-    update_panels();
-    doupdate();
-    mutex_unlock(&g_puts_mutex);
-}
-
-#define B1 Theme("statusbar_leftBracket")
-#define B2 Theme("statusbar_rightBracket")
-
-#define SEP Theme("notice_sep")
-
-void
-set_timestamp(char *dest, size_t destsize,
-	      const struct irc_message_compo *compo)
-{
-    snprintf(dest, destsize, "%s%02d%s%02d%s%02d%s",
-	B1, compo->hour, SEP, compo->minute, SEP, compo->second, B2);
 }
 
 /**
- * Create mutex "vprinttext_mutex".
+ * Toggle underline ON/OFF
+ *
+ * @param[in]     win          Target window
+ * @param[in,out] is_underline Is underline state
+ * @return Void
  */
 static void
-vprinttext_mutex_init(void)
+case_underline(WINDOW *win, bool *is_underline)
 {
-    mutex_new(&vprinttext_mutex);
+    if (! (*is_underline)) {
+	WATTR_ON(win, A_UNDERLINE);
+	*is_underline = true;
+    } else {
+	WATTR_OFF(win, A_UNDERLINE);
+	*is_underline = false;
+    }
 }
 
 /**
@@ -1364,6 +841,529 @@ get_processed_out_message(const char *unproc_msg,
     }
 
     return (pout);
+}
+
+/**
+ * Helper function for squeeze_text_deco().
+ */
+static SW_INLINE void
+handle_foo_situation(char **buffer, long int *i, long int *j,
+		     const char *reject)
+{
+    if (!(*buffer)[*i]) {
+	return;
+    } else if ((*buffer)[*i] == COLOR) {
+	(*i)--;
+    } else if (strchr(reject, (*buffer)[*i]) == NULL) {
+	(*buffer)[(*j)++] = (*buffer)[*i];
+    }
+}
+
+/**
+ * WIN32 specific: attempt to convert multibyte character string to
+ * wide-character string by using UTF-8. The storage is obtained with
+ * xcalloc().
+ *
+ * @param buf Buffer to convert.
+ * @return A wide-character string, or NULL on error.
+ */
+#if WIN32
+/*lint -sem(windows_convert_to_utf8, r_null) */
+static wchar_t *
+windows_convert_to_utf8(const char *buf)
+{
+    const int sz = (int) (strlen(buf) + 1);
+    wchar_t *out = xcalloc(sz, sizeof (wchar_t));
+
+    if (MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,buf,-1,out,sz) > 0)
+	return out;
+    free(out);
+    return NULL;
+}
+#endif
+
+/**
+ * Attempt convert multibyte character string to wide-character string
+ * by using a specific codeset. The storage is dynamically allocated.
+ *
+ * @param buf     Buffer to convert
+ * @param codeset Codeset to use
+ * @return A wide-character string, or NULL on error.
+ */
+/*lint -sem(try_convert_buf_with_cs, r_null) */
+static wchar_t *
+try_convert_buf_with_cs(const char *buf, const char *codeset)
+{
+    char		*original_locale = NULL;
+    char		*tmp_locale	 = NULL;
+    const size_t	 CONVERT_FAILED	 = (size_t) -1;
+    const size_t	 sz		 = strlen(buf) + 1;
+    size_t		 bytes_convert	 = 0;
+    struct locale_info	*li		 = get_locale_info(LC_CTYPE);
+    wchar_t		*out		 = NULL;
+
+    if (li->lang_and_territory == NULL || li->codeset == NULL)
+	goto err;
+
+    original_locale = strdup_printf("%s.%s",
+	li->lang_and_territory, li->codeset);
+    tmp_locale      = strdup_printf("%s.%s", li->lang_and_territory, codeset);
+    out             = xcalloc(sz, sizeof (wchar_t));
+
+    if (setlocale(LC_CTYPE, tmp_locale) == NULL ||
+	(bytes_convert = xmbstowcs(out, buf, sz - 1)) == CONVERT_FAILED) {
+	if (setlocale(LC_CTYPE, original_locale) == NULL)
+	    err_log(EPERM, "In try_convert_buf_with_cs: "
+		"cannot restore original locale (%s)", original_locale);
+	goto err;
+    }
+
+    if (bytes_convert == sz - 1)
+	out[sz - 1] = 0L;
+
+    if (setlocale(LC_CTYPE, original_locale) == NULL)
+	err_log(EPERM, "In try_convert_buf_with_cs: "
+	    "cannot restore original locale (%s)", original_locale);
+    free_locale_info(li);
+    free_not_null(original_locale);
+    free_not_null(tmp_locale);
+    return out;
+
+  err:
+    free_locale_info(li);
+    free_not_null(original_locale);
+    free_not_null(tmp_locale);
+    free_not_null(out);
+    return NULL;
+}
+
+/**
+ * Convert multibyte character string to wide-character string, using
+ * different encodings. The storage is dynamically allocated.
+ *
+ * @param in_buf In buffer.
+ * @return A wide-character string.
+ */
+static wchar_t *
+perform_convert_buffer(const char **in_buf)
+{
+    bool chars_lost = false;
+    const char *ar[] = {
+#if defined(UNIX)
+	"UTF-8",       "utf8",
+	"ISO-8859-1",  "ISO8859-1",  "iso88591",
+	"ISO-8859-15", "ISO8859-15", "iso885915",
+#elif defined(WIN32)
+	"65001", /* UTF-8 */
+	"28591", /* ISO 8859-1 Latin 1 */
+	"28605", /* ISO 8859-15 Latin 9 */
+#endif
+    };
+    const size_t	 CONVERT_FAILED = (size_t) -1;
+    const size_t	 ar_sz		= ARRAY_SIZE(ar);
+    mbstate_t		 ps;
+    size_t		 sz		= 0;
+    wchar_t		*out		= NULL;
+
+#if WIN32
+    if ((out = windows_convert_to_utf8(*in_buf)) != NULL)
+	return (out);
+#endif
+
+    for (const char **ar_p = &ar[0]; ar_p < &ar[ar_sz]; ar_p++) {
+	if ((out = try_convert_buf_with_cs(*in_buf, *ar_p)) != NULL) /*success*/
+	    return (out);
+    }
+
+    /* fallback solution... */
+    sz  = strlen(*in_buf) + 1;
+    out = xcalloc(sz, sizeof (wchar_t));
+
+    BZERO(&ps, sizeof (mbstate_t));
+
+    while (errno = 0, true) {
+	if (mbsrtowcs(&out[wcslen(out)], in_buf, (sz - wcslen(out)) - 1, &ps) ==
+	    CONVERT_FAILED && errno == EILSEQ) {
+	    chars_lost = true;
+	    (*in_buf)++;
+	} else
+	    break;
+    }
+
+    out[sz - 1] = 0L;
+    if (chars_lost)
+	err_log(EILSEQ, "In perform_convert_buffer: characters lost");
+    return (out);
+}
+
+/**
+ * Create mutex "g_puts_mutex".
+ */
+static void
+puts_mutex_init(void)
+{
+    mutex_new(&g_puts_mutex);
+}
+
+static void
+replace_characters_with_space(wchar_t *wc_buf, const wchar_t *set)
+{
+    wchar_t *wcp = NULL;
+
+    while ((wcp = wcspbrk(wc_buf, set)) != NULL)
+	*wcp = L' ';
+}
+
+/**
+ * Reset text-decoration bools
+ *
+ * @param booleans Context structure
+ * @return Void
+ */
+static void
+text_decoration_bools_reset(struct text_decoration_bools *booleans)
+{
+    booleans->is_blink     = false;
+    booleans->is_bold      = false;
+    booleans->is_color     = false;
+    booleans->is_reverse   = false;
+    booleans->is_underline = false;
+}
+
+/**
+ * Create mutex "vprinttext_mutex".
+ */
+static void
+vprinttext_mutex_init(void)
+{
+    mutex_new(&vprinttext_mutex);
+}
+
+PPRINTTEXT_CONTEXT
+printtext_context_new(PIRC_WINDOW window, enum message_specifier_type spec_type,
+    bool include_ts)
+{
+    PPRINTTEXT_CONTEXT ctx = xcalloc(sizeof *ctx, 1);
+
+    ctx->window = window;
+    ctx->spec_type = spec_type;
+    ctx->include_ts = include_ts;
+
+    memset(ctx->server_time, 0, sizeof (ctx->server_time));
+    ctx->has_server_time = false;
+
+    return ctx;
+}
+
+void
+printtext_context_destroy(PPRINTTEXT_CONTEXT ctx)
+{
+    free_not_null(ctx);
+}
+
+void
+printtext_context_init(PPRINTTEXT_CONTEXT ctx, PIRC_WINDOW window,
+    enum message_specifier_type spec_type, bool include_ts)
+{
+    if (ctx == NULL)
+	return;
+
+    ctx->window = window;
+    ctx->spec_type = spec_type;
+    ctx->include_ts = include_ts;
+
+    memset(ctx->server_time, 0, sizeof (ctx->server_time));
+    ctx->has_server_time = false;
+}
+
+/**
+ * Squeeze text-decoration from a buffer
+ *
+ * @param buffer Target buffer
+ * @return The result
+ */
+char *
+squeeze_text_deco(char *buffer)
+{
+    bool has_comma;
+    char *reject;
+    long int i, j;
+
+    if (buffer == NULL) {
+	err_exit(EINVAL, "squeeze_text_deco error");
+    } else if (*buffer == '\0') {
+	return (buffer);
+    }
+
+    reject = strdup_printf(
+	"%c%c%c%c%c", BLINK, BOLD, NORMAL, REVERSE, UNDERLINE);
+
+    for (i = j = 0; buffer[i] != '\0'; i++) {
+	switch (buffer[i]) {
+	case COLOR:
+	{
+	    /*
+	     * check for ^CN
+	     */
+	    if (!sw_isdigit(buffer[++i])) {
+		handle_foo_situation(&buffer, &i, &j, reject);
+		break;
+	    }
+
+	    /*
+	     * check for ^CNN or ^CN,
+	     */
+	    if (!sw_isdigit(buffer[++i]) && buffer[i] != ',') {
+		handle_foo_situation(&buffer, &i, &j, reject);
+		break;
+	    }
+
+	    has_comma = buffer[i++] == ',';
+
+	    /*
+	     * check for ^CNN, or ^CN,N
+	     */
+	    if (!has_comma && buffer[i] == ',') {
+		has_comma = true;
+	    } else if (has_comma && sw_isdigit(buffer[i])) {
+		/* ^CN,N */;
+	    } else if (has_comma && !sw_isdigit(buffer[i])) {
+		i--;
+		handle_foo_situation(&buffer, &i, &j, reject);
+		break;
+	    } else {
+		handle_foo_situation(&buffer, &i, &j, reject);
+		break;
+	    }
+
+	    sw_assert(has_comma);
+
+	    /*
+	     * check for ^CNN,N or ^CN,NN
+	     */
+	    if (buffer[i] == ',') { /* ^CNN, */
+		if (!sw_isdigit(buffer[++i])) {
+		    i--;
+		    handle_foo_situation(&buffer, &i, &j, reject);
+		    break;
+		}
+	    } else { /* ^CN,N */
+		sw_assert(sw_isdigit(buffer[i]));
+		if (sw_isdigit(buffer[++i])) /* we have ^CN,NN? */
+		    break;
+		handle_foo_situation(&buffer, &i, &j, reject);
+		break;
+	    }
+
+	    /*
+	     * check for ^CNN,NN
+	     */
+	    if (!sw_isdigit(buffer[++i])) {
+		handle_foo_situation(&buffer, &i, &j, reject);
+		break;
+	    }
+
+	    break;
+	} /* case COLOR */
+	default:
+	    if (strchr(reject, buffer[i]) == NULL) {
+		buffer[j++] = buffer[i];
+	    }
+	    break;
+	} /* switch block */
+    }
+
+    free(reject);
+    buffer[j] = '\0';
+
+    return (buffer);
+}
+
+/**
+ * Search for a color pair with given foreground/background.
+ *
+ * @param fg Foreground
+ * @param bg Background
+ * @return A color pair number, or -1 if not found.
+ */
+short int
+color_pair_find(short int fg, short int bg)
+{
+    const short int gipp1 = g_initialized_pairs + 1;
+    short int pnum; /* pair number */
+    short int x, y;
+
+    for (pnum = 1; pnum < gipp1; pnum++) {
+	if (pair_content(pnum, &x, &y) == ERR) {
+	    return -1;
+	} else if (x == fg && y == bg) { /* found match */
+	    return pnum;
+	}
+    }
+
+    return -1;
+}
+
+/**
+ * Print an error message to the active window and free the memory
+ * space pointed to by @cp
+ */
+void
+print_and_free(const char *msg, char *cp)
+{
+#ifdef UNIT_TESTING
+    puts(msg);
+    free_not_null(cp);
+    fail();
+#else
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+    printtext(&ctx, "%s", msg);
+    free_not_null(cp);
+#endif
+}
+
+/**
+ * Swirc messenger
+ *
+ * @param ctx Context structure
+ * @param fmt Format control
+ * @return Void
+ */
+void
+printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
+{
+    va_list ap;
+
+    va_start(ap, fmt);
+    vprinttext(ctx, fmt, ap);
+    va_end(ap);
+}
+
+/**
+ * Output data to window
+ *
+ * @param[in]  pwin      Panel window where the output is to be displayed.
+ * @param[in]  buf       A buffer that should contain the data to be written to
+ *                       'pwin'.
+ * @param[in]  indent    If >0 indent text with this number of blanks.
+ * @param[in]  max_lines If >0 write at most this number of lines.
+ * @param[out] rep_count "Represent count". How many actual lines does this
+ *                       contribution represent in the output window?
+ *                       (Passing NULL is ok.)
+ * @return Void
+ */
+void
+printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
+    int *rep_count)
+{
+    const bool pwin_scrollable = is_scrollok(pwin);
+    int insert_count = 0;
+    int line_count = 0;
+    int max_lines_flagged = 0;
+    struct text_decoration_bools booleans = {
+	.is_blink     = false,
+	.is_bold      = false,
+	.is_color     = false,
+	.is_reverse   = false,
+	.is_underline = false,
+    };
+    wchar_t *wc_buf = NULL, *wc_bufp = NULL;
+
+#if defined(UNIX)
+    if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0)
+	err_sys("printtext_puts: pthread_once");
+#elif defined(WIN32)
+    if ((errno = init_once(&puts_init_done, puts_mutex_init)) != 0)
+	err_sys("printtext_puts: init_once");
+#endif
+
+    if (!isNull(rep_count)) {
+	*rep_count = 0;
+    }
+
+    if (isNull(buf)) {
+	err_exit(EINVAL, "printtext_puts");
+    } else if (isEmpty(buf)) {
+	return;
+    }
+
+    mutex_lock(&g_puts_mutex);
+    wc_buf = perform_convert_buffer(&buf);
+    if (pwin_scrollable)
+	append_newline(&wc_buf);
+    replace_characters_with_space(wc_buf, L"\f\t\v");
+
+    for (wc_bufp = &wc_buf[0], max_lines_flagged = 0;
+	*wc_bufp && !max_lines_flagged; wc_bufp++) {
+	wchar_t wc = *wc_bufp;
+
+	switch (wc) {
+	case BLINK:
+	    case_blink(pwin, &booleans.is_blink);
+	    break;
+	case BOLD:
+	    case_bold(pwin, &booleans.is_bold);
+	    break;
+	case COLOR:
+	    case_color(pwin, &booleans.is_color, &wc_bufp);
+	    break;
+	case NORMAL:
+	    text_decoration_bools_reset(&booleans);
+	    wattrset(pwin, A_NORMAL);
+	    break;
+	case REVERSE:
+	    case_reverse(pwin, &booleans.is_reverse);
+	    break;
+	case UNDERLINE:
+	    case_underline(pwin, &booleans.is_underline);
+	    break;
+	default:
+	{
+	    ptrdiff_t diff = 0;
+	    wchar_t *wcp = NULL;
+
+	    if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) != NULL) {
+		diff = wcp - wc_bufp;
+	    }
+
+	    struct case_default_context def_ctx = {
+		.win		= pwin,
+		.wc		= wc,
+		.nextchar_empty = !wcscmp(wc_bufp + 1, L""),
+		.indent		= indent,
+		.max_lines	= max_lines,
+		.diff		= diff,
+	    };
+
+	    case_default(&def_ctx, rep_count, &line_count, &insert_count);
+	    break;
+	} /* case default */
+	} /* switch block */
+	if (pwin_scrollable && max_lines > 0) {
+	    max_lines_flagged = line_count >= max_lines;
+	}
+    }
+
+    free(wc_buf);
+    wattrset(pwin, A_NORMAL);
+    update_panels();
+    doupdate();
+    mutex_unlock(&g_puts_mutex);
+}
+
+#define B1 Theme("statusbar_leftBracket")
+#define B2 Theme("statusbar_rightBracket")
+
+#define SEP Theme("notice_sep")
+
+void
+set_timestamp(char *dest, size_t destsize,
+	      const struct irc_message_compo *compo)
+{
+    snprintf(dest, destsize, "%s%02d%s%02d%s%02d%s",
+	B1, compo->hour, SEP, compo->minute, SEP, compo->second, B2);
 }
 
 /**
