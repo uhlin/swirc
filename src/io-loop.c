@@ -144,6 +144,83 @@ static struct cmds_tag {
 #define FOREACH_COMMAND() \
 	for (struct cmds_tag *sp = &cmds[0]; sp < &cmds[ARRAY_SIZE(cmds)]; sp++)
 
+static void
+add_to_history(const char *string)
+{
+    struct integer_unparse_context unparse_ctx = {
+	.setting_name     = "cmd_hist_size",
+	.fallback_default = 50,
+	.lo_limit         = 0,
+	.hi_limit         = 300,
+    };
+    const int tbszp1 = textBuf_size(history) + 1;
+
+    if (config_integer_unparse(&unparse_ctx) == 0 ||
+	!strncasecmp(string, "/nickserv -- identify", 21) ||
+	!strncasecmp(string, "/ns -- identify", 15))
+	return;
+
+    if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
+	/* Buffer full. Remove head... */
+
+	if ((errno = textBuf_remove(history, textBuf_head(history))) != 0)
+	    err_sys("add_to_history: textBuf_remove");
+    }
+
+    if (textBuf_size(history) == 0) {
+	if ((errno = textBuf_ins_next(history, NULL, string, -1)) != 0)
+	    err_sys("add_to_history: textBuf_ins_next");
+    } else {
+	if ((errno = textBuf_ins_next(history, textBuf_tail(history), string, -1)) != 0)
+	    err_sys("add_to_history: textBuf_ins_next");
+    }
+}
+
+static void
+bold_fix(char *string)
+{
+    char *cp = NULL;
+
+    if (!string)
+	return;
+    while ((cp = strchr(string, BOLD)) != NULL)
+	*cp = BOLD_ALIAS;
+}
+
+#if WIN32
+#define stat _stat
+#endif
+
+static bool
+get_error_log_size(double *size)
+{
+    char path[1300] = "";
+    struct stat sb = { 0 };
+
+    if (!g_log_dir || sw_strcpy(path, g_log_dir, sizeof path) != 0) {
+	*size = 0;
+	return false;
+    }
+
+#if defined(UNIX)
+    if (sw_strcat(path, "/error.log", sizeof path) != 0)
+#elif defined(WIN32)
+    if (sw_strcat(path, "\\error.log", sizeof path) != 0)
+#endif
+	{
+	    *size = 0;
+	    return false;
+	}
+
+    if (stat(path, &sb) == -1) {
+	*size = 0;
+	return false;
+    }
+
+    *size = (double) (sb.st_size / 1000);
+    return true;
+}
+
 static bool
 got_hits(const char *search_var)
 {
@@ -155,69 +232,75 @@ got_hits(const char *search_var)
     return false;
 }
 
-PTEXTBUF
-get_list_of_matching_commands(const char *search_var)
+static void
+handle_cmds(const char *data)
 {
-    if (!got_hits(search_var))
-	return NULL;
+    PRINTTEXT_CONTEXT ctx;
+    char *cp = NULL;
 
-    PTEXTBUF matches = textBuf_new();
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 
     FOREACH_COMMAND() {
-	if (!strncmp(search_var, sp->cmd, strlen(search_var))) {
-	    if (textBuf_size(matches) == 0) {
-		if ((errno = textBuf_ins_next(matches, NULL, sp->cmd, -1)) != 0)
-		    err_sys("get_list_of_matching_commands: textBuf_ins_next");
-	    } else {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches), sp->cmd, -1)) != 0)
-		    err_sys("get_list_of_matching_commands: textBuf_ins_next");
-	    }
+	cp = strdup_printf("%s ", sp->cmd);
+
+	if (strings_match(data, sp->cmd)) {
+	    if (sp->requires_connection && !g_on_air)
+		printtext(&ctx, "command requires irc connection");
+	    else if (sp->irc_only && g_icb_mode)
+		printtext(&ctx, "command is irc only");
+	    else
+		sp->fn("");
+	    free(cp);
+	    return;
+	} else if (!strncmp(data, cp, strlen(cp))) {
+	    if (sp->requires_connection && !g_on_air)
+		printtext(&ctx, "command requires irc connection");
+	    else if (sp->irc_only && g_icb_mode)
+		printtext(&ctx, "command is irc only");
+	    else
+		sp->fn(&data[strlen(cp)]);
+	    free(cp);
+	    return;
+	} else {
+	    free(cp);
 	}
     }
 
-    return matches;
-}
-
-/* must be freed */
-char *
-get_prompt(void)
-{
-    const char AFK[] = "(\00308AFK\017)";
-
-    if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label))
-	return sw_strdup("");
-    else if (is_irc_channel(ACTWINLABEL))
-	return strdup_printf("%s%s: ", ACTWINLABEL, g_is_away ? AFK : "");
-
-    /*
-     * a query
-     */
-    return strdup_printf("%s%s> ", ACTWINLABEL, g_is_away ? AFK : "");
+    printtext(&ctx, "unknown command");
 }
 
 static void
-output_help_for_command(const char *command)
+history_next()
 {
-    PRINTTEXT_CONTEXT ctx;
+    if (textBuf_size(history) == 0)
+	return;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
-
-    FOREACH_COMMAND() {
-	if (strings_match(command, sp->cmd)) {
-	    const char **lines = & (sp->usage[0]);
-	    const size_t size = sp->size;
-
-	    while (lines < & (sp->usage[size])) {
-		printtext(&ctx, "%s", *lines);
-		lines++;
-	    }
-
-	    return;
-	}
+    if (element != textBuf_tail(history)) {
+	element = element->next;
+	bold_fix(element->text);
+	bytes_convert = xmbstowcs(g_push_back_buf, element->text, ARSZ - 1);
+	if (bytes_convert == CONVERT_FAILED)
+	    wmemset(g_push_back_buf, 0L, ARSZ);
+	else if (bytes_convert == ARSZ - 1)
+	    g_push_back_buf[ARSZ - 1] = 0L;
     }
+}
 
-    ctx.spec_type = TYPE_SPEC1_FAILURE;
-    printtext(&ctx, "no such command");
+static void
+history_prev()
+{
+    if (textBuf_size(history) == 0)
+	return;
+
+    bold_fix(element->text);
+    bytes_convert = xmbstowcs(g_push_back_buf, element->text, ARSZ - 1);
+    if (bytes_convert == CONVERT_FAILED)
+	wmemset(g_push_back_buf, 0L, ARSZ);
+    else if (bytes_convert == ARSZ - 1)
+	g_push_back_buf[ARSZ - 1] = 0L;
+
+    if (element != textBuf_head(history))
+	element = element->prev;
 }
 
 static void
@@ -254,50 +337,29 @@ list_all_commands()
     }
 }
 
-/* usage: /help [command] */
-void
-cmd_help(const char *data)
+static void
+output_help_for_command(const char *command)
 {
-    const bool has_command = !strings_match(data, "");
+    PRINTTEXT_CONTEXT ctx;
 
-    if (has_command)
-	output_help_for_command(data);
-    else
-	list_all_commands();
-}
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
 
-#if WIN32
-#define stat _stat
-#endif
+    FOREACH_COMMAND() {
+	if (strings_match(command, sp->cmd)) {
+	    const char **lines = & (sp->usage[0]);
+	    const size_t size = sp->size;
 
-static bool
-get_error_log_size(double *size)
-{
-    char path[1300] = "";
-    struct stat sb = { 0 };
+	    while (lines < & (sp->usage[size])) {
+		printtext(&ctx, "%s", *lines);
+		lines++;
+	    }
 
-    if (!g_log_dir || sw_strcpy(path, g_log_dir, sizeof path) != 0) {
-	*size = 0;
-	return false;
-    }
-
-#if defined(UNIX)
-    if (sw_strcat(path, "/error.log", sizeof path) != 0)
-#elif defined(WIN32)
-    if (sw_strcat(path, "\\error.log", sizeof path) != 0)
-#endif
-	{
-	    *size = 0;
-	    return false;
+	    return;
 	}
-
-    if (stat(path, &sb) == -1) {
-	*size = 0;
-	return false;
     }
 
-    *size = (double) (sb.st_size / 1000);
-    return true;
+    ctx.spec_type = TYPE_SPEC1_FAILURE;
+    printtext(&ctx, "no such command");
 }
 
 static void
@@ -361,118 +423,56 @@ swirc_greeting()
     printtext(&ctx, " ");
 }
 
-static void
-bold_fix(char *string)
+PTEXTBUF
+get_list_of_matching_commands(const char *search_var)
 {
-    char *cp = NULL;
+    if (!got_hits(search_var))
+	return NULL;
 
-    if (!string)
-	return;
-    while ((cp = strchr(string, BOLD)) != NULL)
-	*cp = BOLD_ALIAS;
-}
-
-static void
-history_next()
-{
-    if (textBuf_size(history) == 0)
-	return;
-
-    if (element != textBuf_tail(history)) {
-	element = element->next;
-	bold_fix(element->text);
-	bytes_convert = xmbstowcs(g_push_back_buf, element->text, ARSZ - 1);
-	if (bytes_convert == CONVERT_FAILED)
-	    wmemset(g_push_back_buf, 0L, ARSZ);
-	else if (bytes_convert == ARSZ - 1)
-	    g_push_back_buf[ARSZ - 1] = 0L;
-    }
-}
-
-static void
-history_prev()
-{
-    if (textBuf_size(history) == 0)
-	return;
-
-    bold_fix(element->text);
-    bytes_convert = xmbstowcs(g_push_back_buf, element->text, ARSZ - 1);
-    if (bytes_convert == CONVERT_FAILED)
-	wmemset(g_push_back_buf, 0L, ARSZ);
-    else if (bytes_convert == ARSZ - 1)
-	g_push_back_buf[ARSZ - 1] = 0L;
-
-    if (element != textBuf_head(history))
-	element = element->prev;
-}
-
-static void
-handle_cmds(const char *data)
-{
-    PRINTTEXT_CONTEXT ctx;
-    char *cp = NULL;
-
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+    PTEXTBUF matches = textBuf_new();
 
     FOREACH_COMMAND() {
-	cp = strdup_printf("%s ", sp->cmd);
-
-	if (strings_match(data, sp->cmd)) {
-	    if (sp->requires_connection && !g_on_air)
-		printtext(&ctx, "command requires irc connection");
-	    else if (sp->irc_only && g_icb_mode)
-		printtext(&ctx, "command is irc only");
-	    else
-		sp->fn("");
-	    free(cp);
-	    return;
-	} else if (!strncmp(data, cp, strlen(cp))) {
-	    if (sp->requires_connection && !g_on_air)
-		printtext(&ctx, "command requires irc connection");
-	    else if (sp->irc_only && g_icb_mode)
-		printtext(&ctx, "command is irc only");
-	    else
-		sp->fn(&data[strlen(cp)]);
-	    free(cp);
-	    return;
-	} else {
-	    free(cp);
+	if (!strncmp(search_var, sp->cmd, strlen(search_var))) {
+	    if (textBuf_size(matches) == 0) {
+		if ((errno = textBuf_ins_next(matches, NULL, sp->cmd, -1)) != 0)
+		    err_sys("get_list_of_matching_commands: textBuf_ins_next");
+	    } else {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches), sp->cmd, -1)) != 0)
+		    err_sys("get_list_of_matching_commands: textBuf_ins_next");
+	    }
 	}
     }
 
-    printtext(&ctx, "unknown command");
+    return matches;
 }
 
-static void
-add_to_history(const char *string)
+/* must be freed */
+char *
+get_prompt(void)
 {
-    struct integer_unparse_context unparse_ctx = {
-	.setting_name     = "cmd_hist_size",
-	.fallback_default = 50,
-	.lo_limit         = 0,
-	.hi_limit         = 300,
-    };
-    const int tbszp1 = textBuf_size(history) + 1;
+    const char AFK[] = "(\00308AFK\017)";
 
-    if (config_integer_unparse(&unparse_ctx) == 0 ||
-	!strncasecmp(string, "/nickserv -- identify", 21) ||
-	!strncasecmp(string, "/ns -- identify", 15))
-	return;
+    if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label))
+	return sw_strdup("");
+    else if (is_irc_channel(ACTWINLABEL))
+	return strdup_printf("%s%s: ", ACTWINLABEL, g_is_away ? AFK : "");
 
-    if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
-	/* Buffer full. Remove head... */
+    /*
+     * a query
+     */
+    return strdup_printf("%s%s> ", ACTWINLABEL, g_is_away ? AFK : "");
+}
 
-	if ((errno = textBuf_remove(history, textBuf_head(history))) != 0)
-	    err_sys("add_to_history: textBuf_remove");
-    }
+/* usage: /help [command] */
+void
+cmd_help(const char *data)
+{
+    const bool has_command = !strings_match(data, "");
 
-    if (textBuf_size(history) == 0) {
-	if ((errno = textBuf_ins_next(history, NULL, string, -1)) != 0)
-	    err_sys("add_to_history: textBuf_ins_next");
-    } else {
-	if ((errno = textBuf_ins_next(history, textBuf_tail(history), string, -1)) != 0)
-	    err_sys("add_to_history: textBuf_ins_next");
-    }
+    if (has_command)
+	output_help_for_command(data);
+    else
+	list_all_commands();
 }
 
 void
