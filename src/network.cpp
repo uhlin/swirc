@@ -117,6 +117,24 @@ static struct reconnect_context reconn_ctx;
 *                                                               *
 ****************************************************************/
 
+static int
+conn_check()
+{
+    if (g_icb_mode) {
+	const int msglen = 1;
+
+	if (net_send("%cn", msglen) == -1)
+	    return -1;
+    } else {
+	if (!isNull(g_server_hostname)) {
+	    if (net_send("PING %s", g_server_hostname) == -1)
+		return -1;
+	}
+    }
+
+    return 0;
+}
+
 static void
 reconnect_context_reinit(struct reconnect_context *ctx)
 {
@@ -138,6 +156,49 @@ select_send_and_recv_funcs()
 	net_send = net_send_plain;
 	net_recv = net_recv_plain;
     }
+}
+
+/*
+ * ICB Login Packet
+ * ----------------
+ * (Fields: Minimum: 5, Maximum: 7)
+ *
+ * Field 0: Login id of user. Required.
+ * Field 1: Nickname to use upon login into ICB. Required.
+ * Field 2: Default group to log into in ICB, or do group who of. A null string
+ *          for who listing will show all groups. Required.
+ * Field 3: Login command. Required. Currently one of the following:
+ * - "login" log into ICB
+ * - "w" just show who is currently logged into ICB
+ * Field 4: Password to authenticate the user to ICB. Required, but often blank.
+ * Field 5: If when logging in, default group (field 2) does not exist, create
+ *          it with this status. Optional.
+ * Field 6: Protocol level. Optional. Deprecated.
+ *
+ * Thus the ICB Login Packet has the following layout:
+ * aLoginid^ANickname^ADefaultGroup^ACommand^APass^AGroupStatus^AProtocolLevel
+ */
+static PTR_ARGS_NONNULL void
+send_icb_login_packet(const struct network_connect_context *ctx)
+{
+    char msg[ICB_MESSAGE_MAX] = "";
+
+    const int ret =
+	snprintf(msg, ARRAY_SIZE(msg), "a%s%s%s%s%s%s%s%s%s%s",
+	    ctx->username, ICB_FIELD_SEP,
+	    ctx->nickname, ICB_FIELD_SEP,
+	    "1", ICB_FIELD_SEP,
+	    "login", ICB_FIELD_SEP,
+	    ctx->password ? ctx->password : " ", ICB_FIELD_SEP);
+
+    if (ret < 0 || ((size_t) ret) >= ARRAY_SIZE(msg)) {
+	err_log(ENOBUFS, "send_icb_login_packet: message too long!");
+	return;
+    }
+
+    irc_set_my_nickname(ctx->nickname);
+    const int msglen = (int) strlen(msg);
+    net_send("%c%s", msglen, msg);
 }
 
 static PTR_ARGS_NONNULL void
@@ -187,47 +248,18 @@ send_reg_cmds(const struct network_connect_context *ctx)
     (void) net_send("USER %s 8 * :%s", ctx->username, ctx->rl_name);
 }
 
-/*
- * ICB Login Packet
- * ----------------
- * (Fields: Minimum: 5, Maximum: 7)
- *
- * Field 0: Login id of user. Required.
- * Field 1: Nickname to use upon login into ICB. Required.
- * Field 2: Default group to log into in ICB, or do group who of. A null string
- *          for who listing will show all groups. Required.
- * Field 3: Login command. Required. Currently one of the following:
- * - "login" log into ICB
- * - "w" just show who is currently logged into ICB
- * Field 4: Password to authenticate the user to ICB. Required, but often blank.
- * Field 5: If when logging in, default group (field 2) does not exist, create
- *          it with this status. Optional.
- * Field 6: Protocol level. Optional. Deprecated.
- *
- * Thus the ICB Login Packet has the following layout:
- * aLoginid^ANickname^ADefaultGroup^ACommand^APass^AGroupStatus^AProtocolLevel
- */
-static PTR_ARGS_NONNULL void
-send_icb_login_packet(const struct network_connect_context *ctx)
+static bool
+should_check_connection()
 {
-    char msg[ICB_MESSAGE_MAX] = "";
+    static int times_called = 0;
 
-    const int ret =
-	snprintf(msg, ARRAY_SIZE(msg), "a%s%s%s%s%s%s%s%s%s%s",
-	    ctx->username, ICB_FIELD_SEP,
-	    ctx->nickname, ICB_FIELD_SEP,
-	    "1", ICB_FIELD_SEP,
-	    "login", ICB_FIELD_SEP,
-	    ctx->password ? ctx->password : " ", ICB_FIELD_SEP);
-
-    if (ret < 0 || ((size_t) ret) >= ARRAY_SIZE(msg)) {
-	err_log(ENOBUFS, "send_icb_login_packet: message too long!");
-	return;
+    if (times_called > 3) {
+	times_called = 0;
+	return true;
     }
 
-    irc_set_my_nickname(ctx->nickname);
-    const int msglen = (int) strlen(msg);
-    net_send("%c%s", msglen, msg);
+    times_called ++;
+    return false;
 }
 
 bool
@@ -416,38 +448,6 @@ net_connect_clean_up(void)
     reconnect_context_reinit(&reconn_ctx);
     retry = 0;
     atomic_swap_bool(&g_connection_in_progress, false);
-}
-
-static bool
-should_check_connection()
-{
-    static int times_called = 0;
-
-    if (times_called > 3) {
-	times_called = 0;
-	return true;
-    }
-
-    times_called ++;
-    return false;
-}
-
-static int
-conn_check()
-{
-    if (g_icb_mode) {
-	const int msglen = 1;
-
-	if (net_send("%cn", msglen) == -1)
-	    return -1;
-    } else {
-	if (!isNull(g_server_hostname)) {
-	    if (net_send("PING %s", g_server_hostname) == -1)
-		return -1;
-	}
-    }
-
-    return 0;
 }
 
 void
