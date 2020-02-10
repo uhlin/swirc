@@ -103,85 +103,6 @@ apply_readline_options(WINDOW *win)
 }
 
 /**
- * Initialize readline (done before usage)
- */
-void
-readline_init(void)
-{
-    readline_pan1 = term_new_panel(1, 0, LINES - 1, 0);
-    readline_pan2 = term_new_panel(1, 0, LINES - 1, 0);
-
-    apply_readline_options(panel_window(readline_pan1));
-    apply_readline_options(panel_window(readline_pan2));
-}
-
-/**
- * De-initialize readline
- */
-void
-readline_deinit(void)
-{
-    term_remove_panel(readline_pan1);
-    term_remove_panel(readline_pan2);
-}
-
-/* -------------------------------------------------- */
-
-/**
- * Get active panelwindow
- */
-WINDOW *
-readline_get_active_pwin(void)
-{
-    if (readline_pan1 == NULL || readline_pan2 == NULL)
-	return NULL;
-
-    return ((panel_state == PANEL1_ACTIVE)
-	    ? panel_window(readline_pan1)
-	    : panel_window(readline_pan2));
-}
-
-/**
- * Initiate a new readline session
- */
-static struct readline_session_context *
-new_session(const char *prompt)
-{
-    struct readline_session_context *ctx = xcalloc(sizeof *ctx, 1);
-    char *prompt_copy = sw_strdup(prompt);
-
-    ctx->buffer       = xcalloc(readline_buffersize + 1, sizeof (wchar_t));
-    ctx->bufpos       = 0;
-    ctx->n_insert     = 0;
-    ctx->insert_mode  = false;
-    ctx->no_bufspc    = false;
-    ctx->prompt       = sw_strdup(prompt);
-    ctx->prompt_size  = (int) strlen(squeeze_text_deco(prompt_copy));
-    ctx->act          = panel_window(readline_pan1);
-    ctx->tc           = readline_tab_comp_ctx_new();
-
-    free(prompt_copy);
-    panel_state = PANEL1_ACTIVE;
-    readline_top_panel();
-
-    return ctx;
-}
-
-/**
- * Destroy readline session
- */
-static void
-session_destroy(volatile struct readline_session_context *ctx)
-{
-    if (ctx != NULL) {
-	free(ctx->buffer);
-	free(ctx->prompt);
-	readline_tab_comp_ctx_destroy(ctx->tc);
-	free((struct readline_session_context *) ctx);
-    }
-}
-
-/**
  * Check if low limit is set
  */
 static SW_INLINE bool
@@ -280,62 +201,6 @@ magic_swap_panels(volatile struct readline_session_context *ctx, bool fwd)
 }
 
 /**
- * Key left
- */
-static void
-case_key_left(volatile struct readline_session_context *ctx)
-{
-    struct current_cursor_pos yx;
-
-    if (ctx->bufpos == 0) {
-	term_beep();
-	return;
-    }
-
-    if (loLim_isset(ctx->act, ctx->prompt_size)) {
-	magic_swap_panels(ctx, false);
-    }
-
-    ctx->bufpos--;
-    yx = term_get_pos(ctx->act);
-
-    if (wmove(ctx->act, yx.cury, yx.curx - 1) == ERR) {
-	readline_error(EPERM, "wmove");
-    }
-
-    update_panels();
-    (void) doupdate();
-}
-
-/**
- * Key right
- */
-static void
-case_key_right(volatile struct readline_session_context *ctx)
-{
-    struct current_cursor_pos yx;
-
-    if (!ctx->insert_mode) {
-	term_beep();
-	return;
-    }
-
-    if (hiLim_isset(ctx->act)) {
-	magic_swap_panels(ctx, true);
-    }
-
-    ctx->bufpos++;
-    yx = term_get_pos(ctx->act);
-
-    if (wmove(ctx->act, yx.cury, yx.curx + 1) == ERR) {
-	readline_error(EPERM, "wmove");
-    }
-
-    update_panels();
-    (void) doupdate();
-}
-
-/**
  * Key backspace.
  */
 static void
@@ -409,12 +274,42 @@ case_key_dc(volatile struct readline_session_context *ctx)
 }
 
 /**
- * Regular handling of a key-press.
+ * Key left
  */
 static void
-handle_key(volatile struct readline_session_context *ctx, wint_t wc)
+case_key_left(volatile struct readline_session_context *ctx)
 {
-    if (ctx->no_bufspc) {
+    struct current_cursor_pos yx;
+
+    if (ctx->bufpos == 0) {
+	term_beep();
+	return;
+    }
+
+    if (loLim_isset(ctx->act, ctx->prompt_size)) {
+	magic_swap_panels(ctx, false);
+    }
+
+    ctx->bufpos--;
+    yx = term_get_pos(ctx->act);
+
+    if (wmove(ctx->act, yx.cury, yx.curx - 1) == ERR) {
+	readline_error(EPERM, "wmove");
+    }
+
+    update_panels();
+    (void) doupdate();
+}
+
+/**
+ * Key right
+ */
+static void
+case_key_right(volatile struct readline_session_context *ctx)
+{
+    struct current_cursor_pos yx;
+
+    if (!ctx->insert_mode) {
 	term_beep();
 	return;
     }
@@ -423,23 +318,11 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc)
 	magic_swap_panels(ctx, true);
     }
 
-    if (ctx->insert_mode) {
-	wchar_t *ptr = &ctx->buffer[ctx->bufpos];
-	struct current_cursor_pos yx;
+    ctx->bufpos++;
+    yx = term_get_pos(ctx->act);
 
-	(void) wmemmove(ptr + 1, ptr, wcslen(ptr));
-	*ptr = wc;
-	ctx->bufpos++, ctx->n_insert++;
-	readline_winsch(ctx->act, wc);
-	yx = term_get_pos(ctx->act);
-
-	if (wmove(ctx->act, yx.cury, yx.curx + 1) == ERR) {
-	    readline_error(EPERM, "wmove");
-	}
-    } else {
-	ctx->buffer[ctx->bufpos] = wc;
-	ctx->bufpos++, ctx->n_insert++;
-	readline_waddch(ctx->act, wc);
+    if (wmove(ctx->act, yx.cury, yx.curx + 1) == ERR) {
+	readline_error(EPERM, "wmove");
     }
 
     update_panels();
@@ -492,11 +375,89 @@ finalize_out_string(const wchar_t *buf)
 }
 #endif
 
+/**
+ * Regular handling of a key-press.
+ */
+static void
+handle_key(volatile struct readline_session_context *ctx, wint_t wc)
+{
+    if (ctx->no_bufspc) {
+	term_beep();
+	return;
+    }
+
+    if (hiLim_isset(ctx->act)) {
+	magic_swap_panels(ctx, true);
+    }
+
+    if (ctx->insert_mode) {
+	wchar_t *ptr = &ctx->buffer[ctx->bufpos];
+	struct current_cursor_pos yx;
+
+	(void) wmemmove(ptr + 1, ptr, wcslen(ptr));
+	*ptr = wc;
+	ctx->bufpos++, ctx->n_insert++;
+	readline_winsch(ctx->act, wc);
+	yx = term_get_pos(ctx->act);
+
+	if (wmove(ctx->act, yx.cury, yx.curx + 1) == ERR) {
+	    readline_error(EPERM, "wmove");
+	}
+    } else {
+	ctx->buffer[ctx->bufpos] = wc;
+	ctx->bufpos++, ctx->n_insert++;
+	readline_waddch(ctx->act, wc);
+    }
+
+    update_panels();
+    (void) doupdate();
+}
+
 static inline bool
 isInCirculationMode(PTAB_COMPLETION tc)
 {
     return (tc->isInCirculationModeForCmds ||
 	    tc->isInCirculationModeForChanUsers);
+}
+
+/**
+ * Initiate a new readline session
+ */
+static struct readline_session_context *
+new_session(const char *prompt)
+{
+    struct readline_session_context *ctx = xcalloc(sizeof *ctx, 1);
+    char *prompt_copy = sw_strdup(prompt);
+
+    ctx->buffer       = xcalloc(readline_buffersize + 1, sizeof (wchar_t));
+    ctx->bufpos       = 0;
+    ctx->n_insert     = 0;
+    ctx->insert_mode  = false;
+    ctx->no_bufspc    = false;
+    ctx->prompt       = sw_strdup(prompt);
+    ctx->prompt_size  = (int) strlen(squeeze_text_deco(prompt_copy));
+    ctx->act          = panel_window(readline_pan1);
+    ctx->tc           = readline_tab_comp_ctx_new();
+
+    free(prompt_copy);
+    panel_state = PANEL1_ACTIVE;
+    readline_top_panel();
+
+    return ctx;
+}
+
+/**
+ * Destroy readline session
+ */
+static void
+session_destroy(volatile struct readline_session_context *ctx)
+{
+    if (ctx != NULL) {
+	free(ctx->buffer);
+	free(ctx->prompt);
+	readline_tab_comp_ctx_destroy(ctx->tc);
+	free((struct readline_session_context *) ctx);
+    }
 }
 
 static char *
@@ -652,6 +613,43 @@ process(volatile struct readline_session_context *ctx)
     session_destroy(ctx);
 
     return out;
+}
+
+/**
+ * Initialize readline (done before usage)
+ */
+void
+readline_init(void)
+{
+    readline_pan1 = term_new_panel(1, 0, LINES - 1, 0);
+    readline_pan2 = term_new_panel(1, 0, LINES - 1, 0);
+
+    apply_readline_options(panel_window(readline_pan1));
+    apply_readline_options(panel_window(readline_pan2));
+}
+
+/**
+ * De-initialize readline
+ */
+void
+readline_deinit(void)
+{
+    term_remove_panel(readline_pan1);
+    term_remove_panel(readline_pan2);
+}
+
+/**
+ * Get active panelwindow
+ */
+WINDOW *
+readline_get_active_pwin(void)
+{
+    if (readline_pan1 == NULL || readline_pan2 == NULL)
+	return NULL;
+
+    return ((panel_state == PANEL1_ACTIVE)
+	    ? panel_window(readline_pan1)
+	    : panel_window(readline_pan2));
 }
 
 /**
