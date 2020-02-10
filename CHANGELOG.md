@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
   of C style casts.
 
 ### Fixed ###
+- Possibly lossy type conversions
 - Readline bugs
 
 ## [3.1.1] - 2019-12-22 ##
