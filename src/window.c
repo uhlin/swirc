@@ -95,26 +95,15 @@ static PIRC_WINDOW hash_table[200];
 
 /* -------------------------------------------------- */
 
-void
-windowSystem_init(void)
+/**
+ * Apply window options
+ */
+static void
+apply_window_options(WINDOW *win)
 {
-#if defined(UNIX) && USE_LIBNOTIFY
-    if (!notify_init("Swirc IRC client"))
-	err_log(0, "windowSystem_init: notify_init: error");
-#endif
-
-    FOREACH_HASH_TABLE_ENTRY() {
-	*entry_p = NULL;
+    if (!is_scrollok(win)) {
+	(void) scrollok(win, true);
     }
-
-    g_status_window = g_active_window = NULL;
-    g_ntotal_windows = 0;
-
-    if ((errno = spawn_chat_window(g_status_window_label, "")) != 0)
-	err_sys("windowSystem_init: spawn_chat_window");
-
-    if ((g_status_window = window_by_label(g_status_window_label)) == NULL)
-	err_quit("Unable to locate the status window\nShouldn't happen.");
 }
 
 static unsigned int
@@ -140,6 +129,60 @@ hash(const char *label)
     return (hashval % ARRAY_SIZE(hash_table));
 }
 
+/**
+ * spawn_chat_window() helper
+ */
+static PIRC_WINDOW
+hInstall(const struct hInstall_context *ctx)
+{
+    PIRC_WINDOW		 entry;
+    PNAMES		*n_ent;
+    unsigned int	 hashval;
+
+    entry	  = xcalloc(sizeof *entry, 1);
+    entry->label  = sw_strdup(ctx->label);
+    entry->title  =
+	((isNull(ctx->title) || isEmpty(ctx->title))
+	 ? NULL
+	 : sw_strdup(ctx->title));
+    entry->pan    = ctx->pan;
+    entry->refnum = ctx->refnum;
+    entry->buf    = textBuf_new();
+
+    entry->saved_size   = 0;
+    entry->scroll_count = 0;
+    entry->scroll_mode  = false;
+    entry->logging      = true;
+
+    for (n_ent = &entry->names_hash[0];
+	 n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE];
+	 n_ent++) {
+	*n_ent = NULL;
+    }
+
+    entry->received_names = false;
+
+    entry->num_owners	= 0;
+    entry->num_superops = 0;
+    entry->num_ops	= 0;
+    entry->num_halfops	= 0;
+    entry->num_voices	= 0;
+    entry->num_normal	= 0;
+    entry->num_total	= 0;
+
+    BZERO(entry->chanmodes, sizeof entry->chanmodes);
+    entry->received_chanmodes = false;
+    entry->received_chancreated = false;
+
+    hashval             = hash(ctx->label);
+    entry->next         = hash_table[hashval];
+    hash_table[hashval] = entry;
+
+    g_ntotal_windows++;
+
+    return entry;
+}
+
 static PTR_ARGS_NONNULL void
 hUndef(PIRC_WINDOW entry)
 {
@@ -158,6 +201,139 @@ hUndef(PIRC_WINDOW entry)
     g_ntotal_windows--;
 }
 
+/**
+ * Reassign reference numbers (refnums) for all open windows
+ */
+static void
+reassign_window_refnums()
+{
+    int ref_count = 1;
+
+    FOREACH_HASH_TABLE_ENTRY() {
+	FOREACH_WINDOW_IN_ENTRY() {
+	    /*
+	     * skip status window and assign new num
+	     */
+	    if (!strings_match_ignore_case(window->label, g_status_window_label))
+		window->refnum = ++ref_count;
+	}
+    }
+
+    sw_assert(g_status_window->refnum == 1);
+    sw_assert(ref_count == g_ntotal_windows);
+}
+
+static bool
+shouldLimitOutputYesNoRandom()
+{
+#if defined(BSD) || defined(WIN32)
+    const uint32_t value = arc4random() % 2;
+#else
+    const int value = rand() % 2;
+#endif
+
+    return (value != 0 ? true : false);
+}
+
+/**
+ * Redraw a window
+ */
+static void
+window_redraw(PIRC_WINDOW window, const int rows, const int pos,
+	      bool limit_output)
+{
+    PTEXTBUF_ELMT	 element   = NULL;
+    WINDOW		*pwin	   = panel_window(window->pan);
+    int			 i	   = 0;
+    int			 rep_count = 0;
+
+    if (element = textBuf_get_element_by_pos(window->buf, pos < 0 ? 0 : pos),
+	!element) {
+	return; /* Nothing stored in the buffer */
+    }
+
+#if 1
+    werase(pwin);
+    update_panels();
+#endif
+
+    if (limit_output) {
+	while (element != NULL && i < rows) {
+	    printtext_puts(pwin, element->text, element->indent, rows - i,
+			   &rep_count);
+	    element = element->next;
+	    i += rep_count;
+	}
+    } else {
+	while (element != NULL && i < rows) {
+	    printtext_puts(pwin, element->text, element->indent, -1, NULL);
+	    element = element->next;
+	    i++;
+	}
+    }
+
+    statusbar_update_display_beta();
+    readline_top_panel();
+}
+
+/**
+ * Recreate one window with given rows and cols
+ */
+static void
+window_recreate(PIRC_WINDOW window, int rows, int cols)
+{
+    struct term_window_size newsize = {
+	.rows      = rows - 2,
+	.cols      = cols,
+	.start_row = 1,
+	.start_col = 0,
+    };
+
+    window->pan = term_resize_panel(window->pan, &newsize);
+    apply_window_options(panel_window(window->pan));
+
+    const int HEIGHT = rows - 3;
+
+    if (window->scroll_mode) {
+	if (! (window->scroll_count > HEIGHT)) {
+	    window->saved_size   = 0;
+	    window->scroll_count = 0;
+	    window->scroll_mode  = false;
+	    window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT,
+			  false);
+	} else {
+	    window_redraw(window, HEIGHT,
+		window->saved_size - window->scroll_count, true);
+	}
+
+	return;
+    }
+
+    window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT, false);
+}
+
+void
+windowSystem_init(void)
+{
+#if defined(UNIX) && USE_LIBNOTIFY
+    if (!notify_init("Swirc IRC client"))
+	err_log(0, "windowSystem_init: notify_init: error");
+#endif
+
+    FOREACH_HASH_TABLE_ENTRY() {
+	*entry_p = NULL;
+    }
+
+    g_status_window = g_active_window = NULL;
+    g_ntotal_windows = 0;
+
+    if ((errno = spawn_chat_window(g_status_window_label, "")) != 0)
+	err_sys("windowSystem_init: spawn_chat_window");
+
+    if ((g_status_window = window_by_label(g_status_window_label)) == NULL)
+	err_quit("Unable to locate the status window\nShouldn't happen.");
+}
+
 void
 windowSystem_deinit(void)
 {
@@ -174,8 +350,6 @@ windowSystem_deinit(void)
     notify_uninit();
 #endif
 }
-
-/* -------------------------------------------------- */
 
 /**
  * Return the window identified by the given @label -- or NULL on
@@ -293,28 +467,6 @@ changeWindow_by_refnum(int refnum)
 }
 
 /**
- * Reassign reference numbers (refnums) for all open windows
- */
-static void
-reassign_window_refnums()
-{
-    int ref_count = 1;
-
-    FOREACH_HASH_TABLE_ENTRY() {
-	FOREACH_WINDOW_IN_ENTRY() {
-	    /*
-	     * skip status window and assign new num
-	     */
-	    if (!strings_match_ignore_case(window->label, g_status_window_label))
-		window->refnum = ++ref_count;
-	}
-    }
-
-    sw_assert(g_status_window->refnum == 1);
-    sw_assert(ref_count == g_ntotal_windows);
-}
-
-/**
  * Destroy a chat window
  */
 int
@@ -335,71 +487,6 @@ destroy_chat_window(const char *label)
     sw_assert_perror(ret);
 
     return 0;
-}
-
-/**
- * spawn_chat_window() helper
- */
-static PIRC_WINDOW
-hInstall(const struct hInstall_context *ctx)
-{
-    PIRC_WINDOW		 entry;
-    PNAMES		*n_ent;
-    unsigned int	 hashval;
-
-    entry	  = xcalloc(sizeof *entry, 1);
-    entry->label  = sw_strdup(ctx->label);
-    entry->title  =
-	((isNull(ctx->title) || isEmpty(ctx->title))
-	 ? NULL
-	 : sw_strdup(ctx->title));
-    entry->pan    = ctx->pan;
-    entry->refnum = ctx->refnum;
-    entry->buf    = textBuf_new();
-
-    entry->saved_size   = 0;
-    entry->scroll_count = 0;
-    entry->scroll_mode  = false;
-    entry->logging      = true;
-
-    for (n_ent = &entry->names_hash[0];
-	 n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE];
-	 n_ent++) {
-	*n_ent = NULL;
-    }
-
-    entry->received_names = false;
-
-    entry->num_owners	= 0;
-    entry->num_superops = 0;
-    entry->num_ops	= 0;
-    entry->num_halfops	= 0;
-    entry->num_voices	= 0;
-    entry->num_normal	= 0;
-    entry->num_total	= 0;
-
-    BZERO(entry->chanmodes, sizeof entry->chanmodes);
-    entry->received_chanmodes = false;
-    entry->received_chancreated = false;
-
-    hashval             = hash(ctx->label);
-    entry->next         = hash_table[hashval];
-    hash_table[hashval] = entry;
-
-    g_ntotal_windows++;
-
-    return entry;
-}
-
-/**
- * Apply window options
- */
-static void
-apply_window_options(WINDOW *win)
-{
-    if (!is_scrollok(win)) {
-	(void) scrollok(win, true);
-    }
 }
 
 /**
@@ -531,59 +618,6 @@ window_foreach_rejoin_all_channels(void)
 }
 
 /**
- * Redraw a window
- */
-static void
-window_redraw(PIRC_WINDOW window, const int rows, const int pos,
-	      bool limit_output)
-{
-    PTEXTBUF_ELMT	 element   = NULL;
-    WINDOW		*pwin	   = panel_window(window->pan);
-    int			 i	   = 0;
-    int			 rep_count = 0;
-
-    if (element = textBuf_get_element_by_pos(window->buf, pos < 0 ? 0 : pos),
-	!element) {
-	return; /* Nothing stored in the buffer */
-    }
-
-#if 1
-    werase(pwin);
-    update_panels();
-#endif
-
-    if (limit_output) {
-	while (element != NULL && i < rows) {
-	    printtext_puts(pwin, element->text, element->indent, rows - i,
-			   &rep_count);
-	    element = element->next;
-	    i += rep_count;
-	}
-    } else {
-	while (element != NULL && i < rows) {
-	    printtext_puts(pwin, element->text, element->indent, -1, NULL);
-	    element = element->next;
-	    i++;
-	}
-    }
-
-    statusbar_update_display_beta();
-    readline_top_panel();
-}
-
-static bool
-shouldLimitOutputYesNoRandom()
-{
-#if defined(BSD) || defined(WIN32)
-    const uint32_t value = arc4random() % 2;
-#else
-    const int value = rand() % 2;
-#endif
-
-    return (value != 0 ? true : false);
-}
-
-/**
  * Scroll down
  */
 /* textBuf_size(window->buf) - window->saved_size */
@@ -674,42 +708,6 @@ window_select_prev(void)
     if (window_by_refnum(refnum_prev) != NULL) {
 	(void) changeWindow_by_refnum(refnum_prev);
     }
-}
-
-/**
- * Recreate one window with given rows and cols
- */
-static void
-window_recreate(PIRC_WINDOW window, int rows, int cols)
-{
-    struct term_window_size newsize = {
-	.rows      = rows - 2,
-	.cols      = cols,
-	.start_row = 1,
-	.start_col = 0,
-    };
-
-    window->pan = term_resize_panel(window->pan, &newsize);
-    apply_window_options(panel_window(window->pan));
-
-    const int HEIGHT = rows - 3;
-
-    if (window->scroll_mode) {
-	if (! (window->scroll_count > HEIGHT)) {
-	    window->saved_size   = 0;
-	    window->scroll_count = 0;
-	    window->scroll_mode  = false;
-	    window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT,
-			  false);
-	} else {
-	    window_redraw(window, HEIGHT,
-		window->saved_size - window->scroll_count, true);
-	}
-
-	return;
-    }
-
-    window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT, false);
 }
 
 /**
