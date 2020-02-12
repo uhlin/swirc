@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
+- **Logging**. Which can be toggled on/off with CTRL+L per window and
+  works while IRC connected. The default is off for all windows.
 - **Tab completion**
 - Better detection for connection loss
 
