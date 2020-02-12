@@ -47,6 +47,7 @@
 #include "dataClassify.h"
 #include "errHand.h"
 #include "libUtils.h"
+#include "log.h"
 #include "main.h"
 #include "printtext.h"
 #include "strHand.h"
@@ -1433,6 +1434,15 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
     if (! (ctx->window->scroll_mode)) {
 	printtext_puts(
 	    panel_window(ctx->window->pan), pout->text, pout->indent, -1, NULL);
+    }
+
+    if (ctx->window->logging) {
+	char *logpath = log_get_path(g_server_hostname, ctx->window->label);
+
+	if (!isNull(logpath)) {
+	    log_msg(logpath, pout->text);
+	    free(logpath);
+	}
     }
 
     free_not_null(fmt_copy);

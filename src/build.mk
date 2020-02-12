@@ -15,6 +15,7 @@ OBJS+=$(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)io-loop.o\
 	$(SRC_DIR)irc.o\
 	$(SRC_DIR)libUtils.o\
+	$(SRC_DIR)log.o\
 	$(SRC_DIR)main.o\
 	$(SRC_DIR)nestHome.o\
 	$(SRC_DIR)net-unix.o\

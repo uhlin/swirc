@@ -19,6 +19,7 @@ OBJS=$(OBJS)\
 	$(SRC_DIR)io-loop.obj\
 	$(SRC_DIR)irc.obj\
 	$(SRC_DIR)libUtils.obj\
+	$(SRC_DIR)log.obj\
 	$(SRC_DIR)main.obj\
 	$(SRC_DIR)nestHome.obj\
 	$(SRC_DIR)net-w32.obj\

@@ -40,6 +40,7 @@
 #include "errHand.h"
 #include "io-loop.h"
 #include "libUtils.h"
+#include "log.h"
 #include "printtext.h"
 #include "readline.h"
 #include "readlineAPI.h"
@@ -502,6 +503,9 @@ process(volatile struct readline_session_context *ctx)
 		readline_tab_comp_ctx_reset(ctx->tc);
 	    break;
 	} /* CTRL+e */
+	case CTRL_L:
+	    log_toggle_on_off();
+	    break;
 	case MY_KEY_DLE:
 	    window_select_prev();
 	    session_destroy(ctx);

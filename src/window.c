@@ -152,7 +152,7 @@ hInstall(const struct hInstall_context *ctx)
     entry->saved_size   = 0;
     entry->scroll_count = 0;
     entry->scroll_mode  = false;
-    entry->logging      = true;
+    entry->logging      = false;
 
     for (n_ent = &entry->names_hash[0];
 	 n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE];
