@@ -1,4 +1,4 @@
-/* Logging
+/* IRC logs i.e. not logs for system messages
    Copyright (C) 2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
