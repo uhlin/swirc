@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.2.0] - 2020-02-13 ##
 ### Added ###
 - **Logging**. Which can be toggled on/off with CTRL+L per window and
   works while IRC connected. The default is off for all windows.
