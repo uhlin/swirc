@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Added ###
+- Improved help
+
 ## [3.2.0] - 2020-02-13 ##
 ### Added ###
 - **Logging**. Which can be toggled on/off with CTRL+L per window and
