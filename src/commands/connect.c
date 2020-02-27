@@ -1,5 +1,5 @@
 /* Connect and Disconnect commands
-   Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -191,10 +191,53 @@ get_password()
     return (&pass[0]);
 }
 
-static void
-turn_icb_mode_on()
+static const char *
+get_server(const char *ar[], const char *msg)
 {
-    g_icb_mode = true;
+    char ans[20] = "";
+    int c = EOF;
+    int i = 0;
+    int srvno = 0;
+
+    escape_curses();
+    puts(msg);
+
+    for (; ar[i] != NULL; i++)
+	printf("    (%d) %s\n", i, ar[i]);
+    if (i > 0)
+	i--;
+    while (BZERO(ans, sizeof ans), true) {
+	printf("Your choice (0-%d): ", i);
+	fflush(stdout);
+
+/*
+ * sscanf() is safe in this context
+ */
+#if WIN32
+#pragma warning(disable: 4996)
+#endif
+	if (fgets(ans, sizeof ans, stdin) == NULL) {
+	    putchar('\n');
+	    continue;
+	} else if (strchr(ans, '\n') == NULL) {
+	    puts("input too big");
+	    while (c = getchar(), c != '\n' && c != EOF)
+		/* discard */;
+	} else if (sscanf(ans, "%d", &srvno) != 1 || srvno < 0 || srvno > i) {
+	    ;
+	} else {
+	    break;
+	}
+/*
+ * Reset warning behavior to its default value
+ */
+#if WIN32
+#pragma warning(default: 4996)
+#endif
+    }
+
+    resume_curses();
+    return (ar[srvno]);
 }
 
 static void
@@ -208,6 +251,12 @@ static void
 reconnect_end()
 {
     reconnecting = false;
+}
+
+static void
+turn_icb_mode_on()
+{
+    g_icb_mode = true;
 }
 
 void
@@ -322,55 +371,6 @@ bool
 ssl_is_enabled(void)
 {
     return secure_connection;
-}
-
-static const char *
-get_server(const char *ar[], const char *msg)
-{
-    char ans[20] = "";
-    int c = EOF;
-    int i = 0;
-    int srvno = 0;
-
-    escape_curses();
-    puts(msg);
-
-    for (; ar[i] != NULL; i++)
-	printf("    (%d) %s\n", i, ar[i]);
-    if (i > 0)
-	i--;
-    while (BZERO(ans, sizeof ans), true) {
-	printf("Your choice (0-%d): ", i);
-	fflush(stdout);
-
-/*
- * sscanf() is safe in this context
- */
-#if WIN32
-#pragma warning(disable: 4996)
-#endif
-	if (fgets(ans, sizeof ans, stdin) == NULL) {
-	    putchar('\n');
-	    continue;
-	} else if (strchr(ans, '\n') == NULL) {
-	    puts("input too big");
-	    while (c = getchar(), c != '\n' && c != EOF)
-		/* discard */;
-	} else if (sscanf(ans, "%d", &srvno) != 1 || srvno < 0 || srvno > i) {
-	    ;
-	} else {
-	    break;
-	}
-/*
- * Reset warning behavior to its default value
- */
-#if WIN32
-#pragma warning(default: 4996)
-#endif
-    }
-
-    resume_curses();
-    return (ar[srvno]);
 }
 
 /* usage: /connect [-tls] <server[:port]> */
