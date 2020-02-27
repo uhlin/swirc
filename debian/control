@@ -1,0 +1,26 @@
+Source: swirc
+Section: net
+Priority: optional
+Maintainer: Markus Uhlin <markus.uhlin@bredband.net>
+Build-Depends:
+  debhelper (>= 9),
+  autotools-dev,
+  libcurl4-gnutls-dev | libcurl4-nss-dev | libcurl4-openssl-dev,
+  libidn11-dev,
+  libncursesw5-dev,
+  libssl-dev
+Standards-Version: 3.9.8
+Homepage: https://www.nifty-networks.net/swirc/
+
+Package: swirc
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Curses ICB and IRC client
+ Swirc is a BSD licensed, console based and lightweight ICB and IRC
+ client written in C/C++, whose goals are to be portable and secure.
+ .
+ Features:
+  * TLS/SSL
+  * Multiple IRCv3 features such as SASL auth mechanism
+  * Themes
+  * And more...

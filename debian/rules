@@ -1,0 +1,18 @@
+#!/usr/bin/make -f
+
+#export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+export DEB_BUILD_MAINT_OPTIONS=hardening=+bindnow
+export PREFIX=/usr
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	./configure
+	make clean
+
+override_dh_auto_configure:
+	./configure
+
+#override_dh_auto_build:
+#	make
