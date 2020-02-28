@@ -1,5 +1,5 @@
 /* Handle and interpret IRC events
-   Copyright (C) 2014-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -496,10 +496,8 @@ irc_search_and_route_event(struct irc_message_compo *compo)
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
 
     if (is_alphabetic(compo->command)) {
-	struct normal_events_tag *sp = NULL;
-	const size_t size = ARRAY_SIZE(normal_events);
-
-	for (sp = &normal_events[0]; sp < &normal_events[size]; sp++) {
+	for (struct normal_events_tag *sp = &normal_events[0];
+	     sp < &normal_events[ARRAY_SIZE(normal_events)]; sp++) {
 	    if (strings_match(sp->normal_event, compo->command)) {
 		sp->event_handler(compo);
 		return;
@@ -512,10 +510,8 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 	printtext(&ctx, "prefix = %s", compo->prefix ? compo->prefix : "none");
 #endif
     } else if (is_numeric(compo->command) && strlen(compo->command) == 3) {
-	struct numeric_events_tag *sp = NULL;
-	const size_t size = ARRAY_SIZE(numeric_events);
-
-	for (sp = &numeric_events[0]; sp < &numeric_events[size]; sp++) {
+	for (struct numeric_events_tag *sp = &numeric_events[0];
+	     sp < &numeric_events[ARRAY_SIZE(numeric_events)]; sp++) {
 	    if (strings_match(sp->numeric_event, compo->command)) {
 		if (sp->event_handler != NULL) {
 		    sp->event_handler(compo);
