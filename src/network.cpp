@@ -196,13 +196,13 @@ send_icb_login_packet(const struct network_connect_context *ctx)
 	    "login", ICB_FIELD_SEP,
 	    ctx->password ? ctx->password : " ", ICB_FIELD_SEP);
 
-    if (ret < 0 || ((size_t) ret) >= ARRAY_SIZE(msg)) {
+    if (ret < 0 || static_cast<size_t>(ret) >= ARRAY_SIZE(msg)) {
 	err_log(ENOBUFS, "send_icb_login_packet: message too long!");
 	return;
     }
 
     irc_set_my_nickname(ctx->nickname);
-    const int msglen = (int) strlen(msg);
+    const int msglen = static_cast<int>(strlen(msg));
     net_send("%c%s", msglen, msg);
 }
 
@@ -484,7 +484,7 @@ net_irc_listen(bool *connection_lost)
 
 	    char array[10] = { '\0' };
 	    snprintf(array, ARRAY_SIZE(array), "%d",
-		(unsigned char) recvbuf[0]);
+		static_cast<unsigned char>(recvbuf[0]));
 	    const int length = atoi(array);
 	    sw_assert(length >= 0 && length <= UCHAR_MAX);
 
