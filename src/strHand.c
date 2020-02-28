@@ -1,5 +1,5 @@
 /* String handling functions
-   Copyright (C) 2012-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -58,8 +58,7 @@
 char *
 strToLower(char *s)
 {
-    size_t  len = 0;
-    char   *p   = NULL;
+    size_t len = 0;
 
     if (s == NULL) {
 	err_exit(EINVAL, "strToLower");
@@ -69,7 +68,7 @@ strToLower(char *s)
 	len = strlen(s);
     }
 
-    for (p = &s[0]; p < &s[len]; p++) {
+    for (char *p = &s[0]; p < &s[len]; p++) {
 	if (sw_isupper(*p)) {
 	    *p = tolower(*p);
 	}
@@ -87,8 +86,7 @@ strToLower(char *s)
 char *
 strToUpper(char *s)
 {
-    size_t  len = 0;
-    char   *p   = NULL;
+    size_t len = 0;
 
     if (s == NULL) {
 	err_exit(EINVAL, "strToUpper");
@@ -98,7 +96,7 @@ strToUpper(char *s)
 	len = strlen(s);
     }
 
-    for (p = &s[0]; p < &s[len]; p++) {
+    for (char *p = &s[0]; p < &s[len]; p++) {
 	if (sw_islower(*p)) {
 	    *p = toupper(*p);
 	}
