@@ -117,6 +117,11 @@ static struct reconnect_context reconn_ctx;
 *                                                               *
 ****************************************************************/
 
+static void	 send_icb_login_packet(const struct network_connect_context *)
+		     PTR_ARGS_NONNULL;
+static void	 send_reg_cmds(const struct network_connect_context *)
+		     PTR_ARGS_NONNULL;
+
 static int
 conn_check()
 {
@@ -178,7 +183,7 @@ select_send_and_recv_funcs()
  * Thus the ICB Login Packet has the following layout:
  * aLoginid^ANickname^ADefaultGroup^ACommand^APass^AGroupStatus^AProtocolLevel
  */
-static PTR_ARGS_NONNULL void
+static void
 send_icb_login_packet(const struct network_connect_context *ctx)
 {
     char msg[ICB_MESSAGE_MAX] = "";
@@ -201,7 +206,7 @@ send_icb_login_packet(const struct network_connect_context *ctx)
     net_send("%c%s", msglen, msg);
 }
 
-static PTR_ARGS_NONNULL void
+static void
 send_reg_cmds(const struct network_connect_context *ctx)
 {
     PRINTTEXT_CONTEXT ptext_ctx;

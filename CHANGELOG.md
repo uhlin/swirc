@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
+- Code improvements
 - Improved help
 
 ## [3.2.0] - 2020-02-13 ##
