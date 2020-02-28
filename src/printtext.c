@@ -259,11 +259,9 @@ typedef enum {
 static cc_check_t
 check_for_part1(wchar_t **bufp, char *fg)
 {
-    unsigned char *mbs = NULL;
-
     if (!*++(*bufp))
 	return BUF_EOF;
-    mbs = convert_wc(**bufp);
+    unsigned char *mbs = convert_wc(**bufp);
     if (STRLEN_CAST(mbs) != 1 || !sw_isdigit(*mbs)) {
 	(*bufp)--;
 	free(mbs);
@@ -280,11 +278,9 @@ check_for_part1(wchar_t **bufp, char *fg)
 static cc_check_t
 check_for_part2(wchar_t **bufp, char *fg, bool *has_comma)
 {
-    unsigned char *mbs = NULL;
-
     if (!*++(*bufp))
 	return BUF_EOF;
-    mbs = convert_wc(**bufp);
+    unsigned char *mbs = convert_wc(**bufp);
     if (STRLEN_CAST(mbs) != 1 || (!sw_isdigit(*mbs) && *mbs != ',')) {
 	(*bufp)--;
 	free(mbs);
@@ -306,11 +302,9 @@ check_for_part2(wchar_t **bufp, char *fg, bool *has_comma)
 static cc_check_t
 check_for_part3(wchar_t **bufp, bool *has_comma, bool fg_complete, char *bg)
 {
-    unsigned char *mbs = NULL;
-
     if (!*++(*bufp))
 	return BUF_EOF;
-    mbs = convert_wc(**bufp);
+    unsigned char *mbs = convert_wc(**bufp);
     if (STRLEN_CAST(mbs) != 1 || (*mbs != ',' && !sw_isdigit(*mbs))) {
 	(*bufp)--;
 	free(mbs);
@@ -342,11 +336,9 @@ check_for_part3(wchar_t **bufp, bool *has_comma, bool fg_complete, char *bg)
 static cc_check_t
 check_for_part4(wchar_t **bufp, bool got_digit_bg, char *bg)
 {
-    unsigned char *mbs = NULL;
-
     if (!*++(*bufp))
 	return BUF_EOF;
-    mbs = convert_wc(**bufp);
+    unsigned char *mbs = convert_wc(**bufp);
     if (STRLEN_CAST(mbs) != 1 || !sw_isdigit(*mbs)) {
 	(*bufp)--;
 	free(mbs);
@@ -367,11 +359,9 @@ check_for_part4(wchar_t **bufp, bool got_digit_bg, char *bg)
 static cc_check_t
 check_for_part5(wchar_t **bufp, char *bg)
 {
-    unsigned char *mbs = NULL;
-
     if (!*++(*bufp))
 	return BUF_EOF;
-    mbs = convert_wc(**bufp);
+    unsigned char *mbs = convert_wc(**bufp);
     if (STRLEN_CAST(mbs) != 1 || !sw_isdigit(*mbs)) {
 	(*bufp)--;
 	free(mbs);
