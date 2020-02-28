@@ -13,7 +13,7 @@ function get_file(url, name)
     stream.SaveToFile(name);
 }
 
+get_file("https://curl.haxx.se/ca/cacert.pem", "src/trusted_roots.pem");
 get_file("https://nifty-networks.net/swirc/curl-7.67.0.cab", "curl-7.67.0.cab");
 get_file("https://nifty-networks.net/swirc/libressl-3.0.2-windows.cab", "libressl-3.0.2-windows.cab");
 get_file("https://nifty-networks.net/swirc/pdcurses-3.9.cab", "pdcurses-3.9.cab");
-//get_file("http://nifty-networks.net/swirc/swirc-royal.ico", "swirc-royal.ico");
