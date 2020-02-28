@@ -1076,18 +1076,16 @@ printtext_context_init(PPRINTTEXT_CONTEXT ctx, PIRC_WINDOW window,
 char *
 squeeze_text_deco(char *buffer)
 {
-    bool has_comma;
-    char *reject;
+    static const char reject[] =
+	TXT_BLINK TXT_BOLD TXT_NORMAL TXT_REVERSE TXT_UNDERLINE;
     long int i, j;
+    bool has_comma;
 
     if (buffer == NULL) {
 	err_exit(EINVAL, "squeeze_text_deco error");
     } else if (*buffer == '\0') {
 	return (buffer);
     }
-
-    reject = strdup_printf(
-	"%c%c%c%c%c", BLINK, BOLD, NORMAL, REVERSE, UNDERLINE);
 
     for (i = j = 0; buffer[i] != '\0'; i++) {
 	switch (buffer[i]) {
@@ -1164,9 +1162,7 @@ squeeze_text_deco(char *buffer)
 	} /* switch block */
     }
 
-    free(reject);
     buffer[j] = '\0';
-
     return (buffer);
 }
 
