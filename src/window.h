@@ -16,10 +16,6 @@
 #define ACTWINLABEL g_active_window->label
 #define NAMES_HASH_TABLE_SIZE 4500
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct tagNAMES {
     char	*nick;
     bool	 is_owner;
@@ -55,6 +51,7 @@ typedef struct tagIRC_WINDOW {
     struct tagIRC_WINDOW *next;
 } IRC_WINDOW, *PIRC_WINDOW;
 
+__SWIRC_BEGIN_DECLS
 extern const char       g_status_window_label[];
 extern PIRC_WINDOW	g_status_window;
 extern PIRC_WINDOW	g_active_window;
@@ -81,9 +78,6 @@ void		window_scroll_up(PIRC_WINDOW);
 void		window_select_next(void);
 void		window_select_prev(void);
 void		windows_recreate_all(int rows, int cols);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif

@@ -25,10 +25,6 @@
 #define TEMP_RECV_TIMEOUT	4
 #define TEMP_SEND_TIMEOUT	4
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 struct server {
     char *host;
     char *port;
@@ -52,6 +48,8 @@ typedef enum {
     CONNECTION_FAILED,
     SHOULD_RETRY_TO_CONNECT
 } conn_res_t;
+
+__SWIRC_BEGIN_DECLS
 
 /*
  * net_send_fake() store the sent data into this buffer
@@ -94,8 +92,6 @@ int	net_ssl_recv(struct network_recv_context *, char *, int);
 void	net_ssl_init(void);
 void	net_ssl_deinit(void);
 
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif

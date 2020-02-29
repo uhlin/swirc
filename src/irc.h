@@ -3,10 +3,6 @@
 
 #include "window.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 struct irc_message_compo {
     int year;
     int month;
@@ -35,6 +31,7 @@ enum message_concat_state {
     CONCAT_BUFFER_CONTAIN_DATA
 };
 
+__SWIRC_BEGIN_DECLS
 extern bool	 g_alt_nick_tested;
 extern bool	 g_am_irc_op;
 extern bool	 g_is_away;
@@ -51,9 +48,6 @@ void	irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 	    enum message_concat_state *);
 void	irc_set_my_nickname(const char *);
 void	irc_set_server_hostname(const char *);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif

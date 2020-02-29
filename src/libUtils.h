@@ -6,10 +6,7 @@
 /*lint -function(fopen, xfopen) */
 /*lint -printf(2, write_to_stream) */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__SWIRC_BEGIN_DECLS
 FILE	*fopen_exit_on_error(const char *path, const char *mode);
 FILE	*xfopen(const char *path, const char *mode);
 const char *
@@ -27,10 +24,7 @@ void	 write_to_stream(FILE *, const char *fmt, ...) PRINTFLIKE(2);
 void	*xcalloc(size_t elt_count, size_t elt_size);
 void	*xmalloc(size_t);
 void	*xrealloc(void *ptr, size_t newSize);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #ifndef MAX
 #define MAX(a,b) (((a)>(b))?(a):(b))

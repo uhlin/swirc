@@ -5,10 +5,7 @@
 #define ICB_MESSAGE_MAX		253
 #define ICB_PACKET_MAX		255
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__SWIRC_BEGIN_DECLS
 extern volatile bool g_icb_processing_names;
 
 void	 icb_irc_proxy(const int length, const char type, const char *pktdata);
@@ -25,9 +22,6 @@ void	 icb_send_pm(const char *to_who, const char *text);
 void	 icb_send_pong(const char *arg);
 void	 icb_send_topic(const char *new_topic);
 void	 icb_send_who(const char *arg);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif

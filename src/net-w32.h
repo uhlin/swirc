@@ -23,10 +23,7 @@ struct network_recv_context {
 #endif
 };
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__SWIRC_BEGIN_DECLS
 extern SOCKET g_socket;
 
 bool	winsock_deinit(void);
@@ -41,9 +38,6 @@ void	net_spawn_listenThread(void);
 
 void	net_set_recv_timeout(const DWORD seconds);
 void	net_set_send_timeout(const DWORD seconds);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif

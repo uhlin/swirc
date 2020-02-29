@@ -5,10 +5,6 @@
 #include "mutex.h"
 #include "window.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* text decoration */
 enum {
     BLINK     = '\035',
@@ -49,14 +45,17 @@ typedef struct tagPRINTTEXT_CONTEXT {
 #endif
 } PRINTTEXT_CONTEXT, *PPRINTTEXT_CONTEXT;
 
+__SWIRC_BEGIN_DECLS
 #if defined(UNIX)
 extern pthread_mutex_t g_puts_mutex;
 #elif defined(WIN32)
 extern HANDLE g_puts_mutex;
 #endif
+__SWIRC_END_DECLS
 
 /* ----------------------------------------------------------------- */
 
+__SWIRC_BEGIN_DECLS
 PPRINTTEXT_CONTEXT
 	printtext_context_new(PIRC_WINDOW, enum message_specifier_type,
 	    bool include_ts);
@@ -75,9 +74,6 @@ void	 printtext_puts(WINDOW *, const char *buf, int indent, int, int *);
 void	 set_timestamp(char *dest, size_t destsize,
 	     const struct irc_message_compo *) PTR_ARGS_NONNULL;
 void	 vprinttext(PPRINTTEXT_CONTEXT, const char *format, va_list);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif

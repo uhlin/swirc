@@ -18,15 +18,9 @@ struct Interpreter_in {
     Interpreter_instFunc	 install_func;
 };
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__SWIRC_BEGIN_DECLS
 void Interpreter(const struct Interpreter_in *);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #include "dataClassify.h" /* sw_isspace() */
 

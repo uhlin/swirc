@@ -23,10 +23,7 @@ struct network_recv_context {
 #endif
 };
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__SWIRC_BEGIN_DECLS
 extern int g_socket;
 
 int	net_recv_plain(struct network_recv_context *, char *recvbuf,
@@ -39,9 +36,6 @@ void	net_spawn_listenThread(void);
 
 void net_set_recv_timeout(const time_t seconds);
 void net_set_send_timeout(const time_t seconds);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif

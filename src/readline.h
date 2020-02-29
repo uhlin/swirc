@@ -59,10 +59,7 @@ struct readline_session_context {
     PTAB_COMPLETION  tc;
 };
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__SWIRC_BEGIN_DECLS
 extern bool	 g_readline_loop;
 extern bool	 g_resize_requested;
 extern jmp_buf	 g_readline_loc_info;
@@ -84,9 +81,6 @@ void	 readline_handle_key_exported(volatile struct readline_session_context *,
 	     wint_t);
 void	 readline_recreate(int rows, int cols);
 void	 readline_top_panel(void);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif

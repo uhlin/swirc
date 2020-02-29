@@ -3,9 +3,7 @@
 
 #include "../textBuffer.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+__SWIRC_BEGIN_DECLS
 
 /*lint -sem(get_list_of_matching_channel_users, r_null) */
 
@@ -35,8 +33,6 @@ void	event_eof_names(struct irc_message_compo *);
 void	event_names(struct irc_message_compo *);
 void	event_names_htbl_remove_all(PIRC_WINDOW);
 
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif

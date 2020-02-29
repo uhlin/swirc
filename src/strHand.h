@@ -8,10 +8,7 @@
 /*lint -sem(strColor, pure) */
 /*lint -printf(3, sw_snprintf) */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__SWIRC_BEGIN_DECLS
 char	*strToLower(char *);
 char	*strToUpper(char *);
 char	*sw_strdup(const char *string);
@@ -25,10 +22,7 @@ int	 sw_wcscat(wchar_t *dest, const wchar_t *src, size_t);
 int	 sw_wcscpy(wchar_t *dest, const wchar_t *src, size_t);
 void	 squeeze(char *buffer, const char *rej);
 void	 sw_snprintf(char *dest, size_t, const char *fmt, ...) PRINTFLIKE(3);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 /* Inline function definitions
    =========================== */

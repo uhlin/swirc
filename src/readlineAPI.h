@@ -13,10 +13,7 @@
 
 /*lint -sem(readline_error, r_no) doesn't return because of longjmp() */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__SWIRC_BEGIN_DECLS
 NORETURN void readline_error(int error, const char *msg);
 
 void	readline_mvwaddch (WINDOW *, int row, int col, wint_t wc);
@@ -25,9 +22,6 @@ void	readline_waddch   (WINDOW *, wint_t wc);
 void	readline_waddnstr (WINDOW *, const wchar_t *s, ptrdiff_t n);
 void	readline_winsch   (WINDOW *, wint_t wc);
 void	readline_winsnstr (WINDOW *, const wchar_t *s, ptrdiff_t n);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif
