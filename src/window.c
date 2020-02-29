@@ -183,7 +183,9 @@ hInstall(const struct hInstall_context *ctx)
     return entry;
 }
 
-static PTR_ARGS_NONNULL void
+static void hUndef(PIRC_WINDOW) PTR_ARGS_NONNULL;
+
+static void
 hUndef(PIRC_WINDOW entry)
 {
     PIRC_WINDOW *indirect = & (hash_table[hash(entry->label)]);
