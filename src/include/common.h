@@ -42,6 +42,14 @@
 #define strtok_r	strtok_s
 #endif
 
+#ifdef __cplusplus
+#define __SWIRC_BEGIN_DECLS	extern "C" {
+#define __SWIRC_END_DECLS	}
+#else
+#define __SWIRC_BEGIN_DECLS
+#define __SWIRC_END_DECLS
+#endif
+
 #include <errno.h>
 #include <stdarg.h>
 #include <stdbool.h>
