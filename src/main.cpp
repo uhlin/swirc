@@ -152,11 +152,8 @@ view_version()
 		/* discard */;
 	} else if (strings_match(trim(answer), "y") ||
 		   strings_match(answer, "Y")) {
-	    const char **ppcc = NULL;
-	    const size_t ar_sz = ARRAY_SIZE(SoftwareDisclaimer);
-
-	    for (ppcc = &SoftwareDisclaimer[0];
-		 ppcc < &SoftwareDisclaimer[ar_sz];
+	    for (const char **ppcc = &SoftwareDisclaimer[0];
+		 ppcc < &SoftwareDisclaimer[ARRAY_SIZE(SoftwareDisclaimer)];
 		 ppcc++) {
 		PUTS(*ppcc);
 	    }
