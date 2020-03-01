@@ -363,6 +363,11 @@ static const char *part_usage[] = {
     "without arguments it tries to part the current window which must",
     "be an IRC channel.",
     "",
+    TXT_BOLD "EXAMPLES" TXT_BOLD,
+    "  Part channel #chatzone with message "
+    TXT_UNDERLINE "bye" TXT_UNDERLINE ":",
+    "    /part #chatzone bye",
+    "",
 };
 
 static const char *passmod_usage[] = {
