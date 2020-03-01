@@ -1,5 +1,5 @@
 /* commands/theme.c  --  management of themes on-the-fly
-   Copyright (C) 2017, 2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -60,6 +60,11 @@
 
 static THEME_INFO theme_info_array[MAX_NO_THEMES];
 
+static void free_theme_info(PTHEME_INFO) PTR_ARGS_NONNULL;
+static void url_to_file(const char *, const char *) PTR_ARGS_NONNULL;
+static void install_theme(const char *) PTR_ARGS_NONNULL;
+static void set_theme(const char *) PTR_ARGS_NONNULL;
+
 static bool
 is_instruction_ok(const char *instruction)
 {
@@ -93,7 +98,7 @@ theme_info_array_init()
     }
 }
 
-static PTR_ARGS_NONNULL void
+static void
 free_theme_info(PTHEME_INFO info)
 {
     free_and_null(&info->filename);
@@ -121,7 +126,7 @@ write_data(void *ptr, size_t size, size_t nmemb, void *stream)
 }
 
 /*lint -e534 */
-static PTR_ARGS_NONNULL void
+static void
 url_to_file(const char *url, const char *path)
 {
     CURL *curl_handle = NULL;
@@ -288,7 +293,7 @@ theme_is_in_db(const char *name)
     return false;
 }
 
-static PTR_ARGS_NONNULL void
+static void
 install_theme(const char *name)
 {
     PRINTTEXT_CONTEXT ctx;
@@ -331,7 +336,7 @@ list_remote()
     }
 }
 
-static PTR_ARGS_NONNULL void
+static void
 set_theme(const char *name)
 {
     PRINTTEXT_CONTEXT ctx;
