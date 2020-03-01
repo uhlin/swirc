@@ -1,6 +1,7 @@
 .gitattributes export-ignore
 .gitignore export-ignore
 archive export-ignore
+bash/ export-ignore
 doc/rfc2811.txt export-ignore
 doc/rfc2812.txt export-ignore
 openbsd/ export-ignore
