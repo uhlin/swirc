@@ -138,7 +138,7 @@ handle_special_msg(const struct special_msg_context *ctx)
 }
 
 static void
-broadcast_window_activity(PIRC_WINDOW src)
+broadcast_window_activity(const IRC_WINDOW *src)
 {
     PRINTTEXT_CONTEXT ctx;
 

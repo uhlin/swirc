@@ -576,8 +576,8 @@ start_on_a_new_row(const ptrdiff_t sum)
  * @return Void
  */
 static void
-case_default(struct case_default_context *ctx, int *rep_count, int *line_count,
-    int *insert_count)
+case_default(const struct case_default_context *ctx, int *rep_count,
+    int *line_count, int *insert_count)
 {
     unsigned char *mbs = NULL;
 

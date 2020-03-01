@@ -125,7 +125,7 @@ hiLim_isset(WINDOW *win)
  * Write the command-prompt.
  */
 static void
-write_cmdprompt(WINDOW *win, char *prompt, int size)
+write_cmdprompt(WINDOW *win, const char *prompt, int size)
 {
     if (werase(win) == ERR)
 	readline_error(0, "write_cmdprompt: werase");
@@ -415,7 +415,7 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc)
 }
 
 static inline bool
-isInCirculationMode(PTAB_COMPLETION tc)
+isInCirculationMode(const TAB_COMPLETION *tc)
 {
     return (tc->isInCirculationModeForCmds ||
 	    tc->isInCirculationModeForChanUsers);

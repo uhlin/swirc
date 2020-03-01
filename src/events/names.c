@@ -126,7 +126,7 @@ struct column_lengths {
 };
 
 static struct column_lengths
-get_column_lengths(const int ntp1, struct name_tag *names_array)
+get_column_lengths(const int ntp1, const struct name_tag *names_array)
 {
     struct column_lengths cl = {
 	.col1 = 0,
@@ -161,7 +161,7 @@ get_column_lengths(const int ntp1, struct name_tag *names_array)
 
 /*lint -sem(next_names, r_null) */
 static PCHUNK
-next_names(PIRC_WINDOW window, int *idx)
+next_names(PIRC_WINDOW window, const int *idx)
 {
     PCHUNK  head        = NULL;
     PCHUNK  new_element = NULL;
@@ -227,7 +227,7 @@ get_names_array(const int ntp1, PIRC_WINDOW window)
 }
 
 static bool
-got_hits(PIRC_WINDOW window, const char *search_var)
+got_hits(const IRC_WINDOW *window, const char *search_var)
 {
     for (size_t n = 0; n < ARRAY_SIZE(window->names_hash); n++) {
 	for (PNAMES names = window->names_hash[n]; names != NULL;
@@ -442,7 +442,7 @@ names_cmp_fn(const void *obj1, const void *obj2)
 
 static void
 output_statistics(PRINTTEXT_CONTEXT ctx, const char *channel,
-		  PIRC_WINDOW window)
+    const IRC_WINDOW *window)
 {
     ctx.spec_type = TYPE_SPEC1;
     printtext(&ctx, "%s%s%s%c%s: Total of %c%d%c nicks "
