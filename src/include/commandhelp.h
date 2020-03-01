@@ -1,7 +1,7 @@
 #ifndef COMMAND_HELP_H
 #define COMMAND_HELP_H
 /* commandhelp.h
-   Copyright (C) 2018 2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -81,7 +81,8 @@ static const char *chanserv_usage[] = {
 static const char *cleartoasts_usage[] = {
     "usage: /cleartoasts",
     "",
-    "Clear toasts.",
+    "On Windows Swirc sends toast notifications. By issuing this command all",
+    "notifications associated with Swirc will be cleared.",
     "",
 };
 
