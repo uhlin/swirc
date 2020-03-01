@@ -368,9 +368,9 @@ sasl_scram_sha_handle_serv_first_msg(const char *msg)
  */
 
     struct digest_context client_key(pass, passwdlen,
-	((const unsigned char *) "Client Key"), 10);
+	reinterpret_cast<const unsigned char *>("Client Key"), 10);
     struct digest_context server_key(pass, passwdlen,
-	((const unsigned char *) "Server Key"), 10);
+	reinterpret_cast<const unsigned char *>("Server Key"), 10);
 
     if (get_digest(&client_key) == -1 ||
 	get_digest(&server_key) == -1) {
