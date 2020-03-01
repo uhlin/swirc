@@ -18,7 +18,7 @@ typedef struct tagTEXTBUF {
 
 __SWIRC_BEGIN_DECLS
 PTEXTBUF	textBuf_new(void);
-PTEXTBUF_ELMT	textBuf_get_element_by_pos(PTEXTBUF, int pos);
+PTEXTBUF_ELMT	textBuf_get_element_by_pos(const TEXTBUF *, int pos);
 int		textBuf_ins_next(PTEXTBUF, PTEXTBUF_ELMT, const char *text,
 		    int indent);
 int		textBuf_ins_prev(PTEXTBUF, PTEXTBUF_ELMT, const char *text,

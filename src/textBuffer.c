@@ -27,7 +27,7 @@ textBuf_new(void)
  * @return The element (or NULL if not found)
  */
 PTEXTBUF_ELMT
-textBuf_get_element_by_pos(PTEXTBUF buf, int pos)
+textBuf_get_element_by_pos(const TEXTBUF *buf, int pos)
 {
     int			i;
     PTEXTBUF_ELMT	element;
