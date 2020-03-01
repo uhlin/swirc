@@ -3,16 +3,13 @@
 
 #include "int_unparse.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct tagTHEME_HTBL_ENTRY {
     char *name;
     char *value;
     struct tagTHEME_HTBL_ENTRY *next;
 } THEME_HTBL_ENTRY, *PTHEME_HTBL_ENTRY;
 
+__SWIRC_BEGIN_DECLS
 void	theme_init(void);
 void	theme_deinit(void);
 
@@ -28,6 +25,7 @@ short int	 theme_color_unparse(const char *, short int);
 void		 theme_create(const char *path, const char *mode);
 void		 theme_do_save(const char *path, const char *mode);
 void		 theme_readit(const char *path, const char *mode);
+__SWIRC_END_DECLS
 
 #define COLOR1		Theme("primary_color")
 #define COLOR2		Theme("secondary_color")
@@ -41,9 +39,5 @@ void		 theme_readit(const char *path, const char *mode);
 #define THE_SPEC1	Theme("specifier1")
 #define THE_SPEC2	Theme("specifier2")
 #define THE_SPEC3	Theme("specifier3")
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

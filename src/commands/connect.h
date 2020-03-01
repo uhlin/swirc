@@ -9,10 +9,7 @@
 	net_do_connect_detached((m_server), (m_port),\
 	    (g_connection_password ? get_password() : NULL))
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__SWIRC_BEGIN_DECLS
 void	do_connect(const char *server, const char *port, const char *pass);
 void	set_ssl_on(void);
 void	set_ssl_off(void);
@@ -20,9 +17,6 @@ bool	ssl_is_enabled(void);
 
 void	cmd_connect(const char *);
 void	cmd_disconnect(const char *);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif

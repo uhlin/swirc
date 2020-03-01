@@ -8,16 +8,13 @@
 #define RECONNECT_DELAY_MAX_DEFAULT     240
 #define RECONNECT_RETRIES_DEFAULT       30
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct tagCONF_HTBL_ENTRY {
     char *name;
     char *value;
     struct tagCONF_HTBL_ENTRY *next;
 } CONF_HTBL_ENTRY, *PCONF_HTBL_ENTRY;
 
+__SWIRC_BEGIN_DECLS
 void	config_init(void);
 void	config_deinit(void);
 
@@ -48,9 +45,6 @@ long int	get_reconnect_backoff_delay(void);
 long int	get_reconnect_delay(void);
 long int	get_reconnect_delay_max(void);
 long int	get_reconnect_retries(void);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif /* CONFIG_H */
