@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
-- Code improvements
+- **Code improvements**
 - Fetching of the Mozilla CA certificate store (in PEM format) for
   Windows builds
 - Improved help and documentation

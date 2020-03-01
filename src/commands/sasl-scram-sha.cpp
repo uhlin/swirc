@@ -1,5 +1,5 @@
 /* SASL auth mechanism SCRAM-SHA-256
-   Copyright (C) 2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -82,8 +82,8 @@ get_encoded_msg(const char *source)
 
     memset(encoded_msg, 0, ARRAY_SIZE(encoded_msg));
 
-    if (b64_encode((const uint8_t *) source, strlen(source), encoded_msg,
-	ARRAY_SIZE(encoded_msg)) == -1)
+    if (b64_encode(reinterpret_cast<const uint8_t *>(source), strlen(source),
+	encoded_msg, ARRAY_SIZE(encoded_msg)) == -1)
 	return "";
 
     return &encoded_msg[0];
@@ -152,7 +152,8 @@ get_decoded_msg(const char *source, int *outlen)
     decoded_msg = new char[length_needed];
     decoded_msg[length_needed - 1] = '\0';
 
-    if (b64_decode(source, ((uint8_t *) decoded_msg), length_needed) == -1) {
+    if (b64_decode(source, reinterpret_cast<uint8_t *>(decoded_msg),
+	length_needed) == -1) {
 	delete[] decoded_msg;
 	return NULL;
     }
@@ -202,7 +203,8 @@ get_sfm_components(const char *msg, unsigned char **salt, int *saltlen,
 	cp[n] = '\0';
 	char *b64salt = sw_strdup(cp);
 	cp[n] = ',';
-	*salt = (unsigned char *) get_decoded_msg(b64salt, saltlen);
+	*salt =
+	    reinterpret_cast<unsigned char *>(get_decoded_msg(b64salt, saltlen));
 	free(b64salt);
 
 	if (*salt == NULL)
@@ -338,7 +340,7 @@ get_auth_msg(const char *b64msg, size_t *auth_msg_len)
     delete[] msg_wo_proof;
 
     *auth_msg_len = strlen(out);
-    return ((unsigned char *) out);
+    return reinterpret_cast<unsigned char *>(out);
 }
 
 int
@@ -438,7 +440,7 @@ sasl_scram_sha_handle_serv_final_msg(const char *msg)
 	debug("sasl_scram_sha_handle_serv_final_msg: S: %s", decoded_msg);
 	cp = decoded_msg;
 	cp += 2;
-	signature = (unsigned char *) get_decoded_msg(cp, NULL);
+	signature = reinterpret_cast<unsigned char *>(get_decoded_msg(cp, NULL));
 
 	if (signature == NULL)
 	    throw std::runtime_error("cannot decode server signature!");
