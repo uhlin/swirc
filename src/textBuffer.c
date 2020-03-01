@@ -32,15 +32,13 @@ textBuf_get_element_by_pos(const TEXTBUF *buf, int pos)
     int			i;
     PTEXTBUF_ELMT	element;
 
-    if (buf == NULL || pos < 0) {
+    if (buf == NULL || pos < 0)
 	return NULL;
-    }
 
     for (i = 0, element = textBuf_head(buf); element != NULL;
 	 i++, element = element->next) {
-	if (i == pos) { /* Element found */
+	if (i == pos)
 	    return element;
-	}
     }
 
     return NULL;
