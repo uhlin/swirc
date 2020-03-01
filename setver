@@ -1,24 +1,17 @@
 #!/usr/bin/env bash
-#
-# A script to simplify version change
-#
 
-. ./VERSION_INFO
+source "VERSION_INFO"
 
-DATE=$(date +%Y-%m-%d)
+source "bash/edit_changelog.sh"
+source "bash/edit_dot_wxs.sh"
+source "bash/edit_main_cpp.sh"
+source "bash/edit_rc_file.sh"
+source "bash/edit_vc_makefile.sh"
 
-sed -i "s/## \[Unreleased\] ##/## \[$VERSION\] - $DATE ##/" CHANGELOG.md
-sed -i "s/PRODUCT_VERSION=.*/PRODUCT_VERSION=$VERSION/" Makefile.vc
-sed -i "18s/    Name=\".*\"/    Name=\"Swirc $VERSION\"/" Swirc.wxs
-sed -i "20s/    Version=\".*\"/    Version=\"${VERSION}\.0\"/" Swirc.wxs
-sed -i "s/g_swircVersion\[\] = \"v.*\"/g_swircVersion\[\] = \"v$VERSION\"/" src/main.cpp
+edit_changelog		"CHANGELOG.md"
+edit_dot_wxs		"Swirc.wxs"
+edit_main_cpp		"src/main.cpp"
+edit_rc_file		"src/swirc.rc"
+edit_vc_makefile	"Makefile.vc"
 
-REGEX="#define VER [0-9]\,[0-9]\,[0-9]\,[0-9]"
-REPLACEMENT="#define VER $MAJOR_VERSION\,$MINOR_VERSION\,$PATCHLEVEL\,0"
-sed -i "s/$REGEX/$REPLACEMENT/" src/swirc.rc
-
-REGEX="#define VER_STR \".*\""
-REPLACEMENT="#define VER_STR \"${VERSION}\\\\0\""
-sed -i "s/$REGEX/$REPLACEMENT/" src/swirc.rc
-
-echo "ok"
+echo "Done"
