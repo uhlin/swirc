@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.2.1] - 2020-03-01 ##
 ### Added ###
 - **Code improvements**
 - Fetching of the Mozilla CA certificate store (in PEM format) for
