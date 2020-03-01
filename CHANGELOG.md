@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Fetching of the Mozilla CA certificate store (in PEM format) for
   Windows builds
 - Improved help and documentation
+- Updated setver script :-)
 
 ### Fixed ###
 - Multiple occurrences where:
