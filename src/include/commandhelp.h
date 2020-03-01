@@ -374,6 +374,7 @@ static const char *passmod_usage[] = {
     "usage: /passmod <nickname>",
     "",
     "Pass moderation privilege.",
+    "In IRC mode this is a no operation.",
     "",
 };
 
