@@ -31,19 +31,19 @@ __SWIRC_END_DECLS
    =========================== */
 
 static SW_INLINE int
-textBuf_size(PTEXTBUF buf)
+textBuf_size(const TEXTBUF *buf)
 {
     return (buf->size);
 }
 
 static SW_INLINE PTEXTBUF_ELMT
-textBuf_head(PTEXTBUF buf)
+textBuf_head(const TEXTBUF *buf)
 {
     return (buf->head);
 }
 
 static SW_INLINE PTEXTBUF_ELMT
-textBuf_tail(PTEXTBUF buf)
+textBuf_tail(const TEXTBUF *buf)
 {
     return (buf->tail);
 }

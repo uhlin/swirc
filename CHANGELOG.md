@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed ###
 - Multiple occurrences where:
+  - Pointer parameters could be declared as pointing to const
   - Previously assigned value to a variable hasn't been used
 
 ## [3.2.0] - 2020-02-13 ##
