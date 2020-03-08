@@ -30,7 +30,9 @@
 #include "base64.h"
 #include "common.h"
 
+#ifndef _lint
 #include <random>
+#endif
 #include <stdexcept>
 
 #include <openssl/evp.h>
@@ -60,6 +62,7 @@ static unsigned int	 signature_expected_len = 0;
 static void
 generate_and_store_nonce()
 {
+#ifndef _lint
     const char legal_index[] =
 	"!\"#$%&'()*+-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
 	"abcdefghijklmnopqrstuvwxyz{|}~";
@@ -73,6 +76,7 @@ generate_and_store_nonce()
 
     nonce[ARRAY_SIZE(nonce) - 1] = '\0';
     debug("generate_and_store_nonce: nonce: %s", nonce);
+#endif
 }
 
 static const char *
