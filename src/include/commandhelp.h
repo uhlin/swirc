@@ -95,6 +95,13 @@ static const char *close_usage[] = {
     "",
 };
 
+static const char *colormap_usage[] = {
+    "usage: /colormap",
+    "",
+    "Output colors.",
+    "",
+};
+
 static const char *connect_usage[] = {
     "usage: /connect [-tls] <server[:port]>",
     "",

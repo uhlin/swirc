@@ -52,6 +52,7 @@
 
 #include "commands/ban.h"
 #include "commands/cleartoasts.h"
+#include "commands/colormap.h"
 #include "commands/connect.h"
 #include "commands/invite.h"
 #include "commands/jp.h"
@@ -98,6 +99,7 @@ static struct cmds_tag {
     { "chanserv",    cmd_chanserv,    true,  chanserv_usage,    ARRAY_SIZE(chanserv_usage),    true  },
     { "cleartoasts", cmd_cleartoasts, false, cleartoasts_usage, ARRAY_SIZE(cleartoasts_usage), false },
     { "close",       cmd_close,       false, close_usage,       ARRAY_SIZE(close_usage),       false },
+    { "colormap",    cmd_colormap,    false, colormap_usage,    ARRAY_SIZE(colormap_usage),    false },
     { "connect",     cmd_connect,     false, connect_usage,     ARRAY_SIZE(connect_usage),     false },
     { "cs",          cmd_chanserv,    true,  chanserv_usage,    ARRAY_SIZE(chanserv_usage),    true  },
     { "cycle",       cmd_cycle,       true,  cycle_usage,       ARRAY_SIZE(cycle_usage),       true  },
