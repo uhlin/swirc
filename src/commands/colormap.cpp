@@ -32,6 +32,7 @@
 #include <string>
 #include <vector>
 
+#include "../cursesInit.h"
 #include "../printtext.h"
 #include "../strHand.h"
 
@@ -90,4 +91,6 @@ cmd_colormap(const char *data)
 
     printtext(&ctx, "COLORS:      %d", COLORS);
     printtext(&ctx, "COLOR_PAIRS: %d", COLOR_PAIRS);
+    printtext(&ctx, "can_change_color: %s", can_change_color() ? "Yes" : "No");
+    printtext(&ctx, "g_initialized_pairs: %hd", g_initialized_pairs);
 }
