@@ -87,4 +87,7 @@ cmd_colormap(const char *data)
 
     for (std::vector<std::string>::size_type i = 0; i < out.size(); i++)
 	printtext(&ctx, "%s", out[i].c_str());
+
+    printtext(&ctx, "COLORS:      %d", COLORS);
+    printtext(&ctx, "COLOR_PAIRS: %d", COLOR_PAIRS);
 }
