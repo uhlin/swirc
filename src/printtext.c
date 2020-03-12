@@ -406,8 +406,9 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
     }
 
     attr = ptext_colorMap[num1 % num_colorMap_entries].at; /*attributes of fg*/
-    attr |= COLOR_PAIR(resolved_pair);
-    wattrset(win, attr);
+    //attr |= COLOR_PAIR(resolved_pair);
+    //wattrset(win, attr);
+    wattr_set(win, attr, resolved_pair, NULL);
     *is_color = true;
 }
 
