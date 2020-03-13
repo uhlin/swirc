@@ -56,16 +56,6 @@ static const short int ext_colors[] = {
 static const size_t numColors = ARRAY_SIZE(colors);
 static const size_t numExtended = ARRAY_SIZE(ext_colors);
 
-#define FOREACH_FOREGROUND_EXTENDED()\
-	for (const short int *fg = &ext_colors[0]; fg < &ext_colors[numExtended]; fg++)
-#define FOREACH_BACKGROUND_EXTENDED()\
-	for (const short int *bg = &ext_colors[0]; bg < &ext_colors[numExtended]; bg++)
-
-#define FOREACH_FOREGROUND_ANSI()\
-	for (const short int *fg = &colors[0]; fg < &colors[numColors]; fg++)
-#define FOREACH_BACKGROUND_ANSI()\
-	for (const short int *bg = &colors[0]; bg < &colors[numColors]; bg++)
-
 static int
 init_fg_on_bg_case1(short int *pair_n)
 {
