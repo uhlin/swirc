@@ -426,14 +426,15 @@ check_for_part5(wchar_t **bufp, char *bg)
 static void
 printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 {
+#if defined(UNIX)
     const short int num_colorMap_entries =
 	(short int) ((COLORS >= 256) ? ARRAY_SIZE(ptext_colorMap) : 16);
-    short int fg, bg, resolved_pair;
-#if defined(UNIX)
     attr_t attr;
 #elif defined(WIN32)
+    const short int num_colorMap_entries = 16;
     chtype attr;
 #endif
+    short int fg, bg, resolved_pair;
 
     /* num1 shouldn't under any circumstances appear negative */
     sw_assert(num1 >= 0);
