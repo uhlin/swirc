@@ -1,0 +1,55 @@
+:a MODE http://2I.com/XN http://7M.com/  7P8 :PQ:RJ 306 a 4SB :HHHHH	HHHHHH
+:127.0.0.1 376 joseph :a
+:localhost 332 Mo #ircii :ircII project
+:localhost 252 Mo 0 :operators online
+:V NAMES    Y20 ppCTCP QB c   :d
+:localhost 005 Mo BAZ QUX :are supported by this server
+PRIVMSG  :CDCC LIST pp 5UFA http://H.com/J IG3DA joseph  :
+:127.0.0.1 375 joseph :a
+PRIVMSG pp :VERSION d
+:localhost 003 Mo :This server was created ...
+:localhost 253 Mo 0 :unknown connections
+:localhost 366 Mo #ircii :End of NAMES list.
+:localhost 333 Mo #swirc maxxe@nifty-networks.net 1234567890
+:127.0.0.1 372 joseph :a
+:YY PRIVMSG c :VERSION 1A d
+:localhost 004 Mo localhost 1.0 abc def
+:127.0.0.1 005 joseph :a
+:localhost 255 Mo :I have ...
+:localhost 042 Mo XXXXXXXXX :your unique ID
+:3U INVITE joseph I1PK  :joseph:WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW	WWWW PRIVMSG a :CDCC SEND V NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+:localhost 366 Mo #swirc :End of NAMES list.
+: 332 Mo #ircii :
+:a LIST http:/	H.com/Z http://J.com/ :
+:127.0.0.1 255 joseph :a
+:localhost 266 Mo 0 0 :Current global users ...
+:localhost 333 Mo #ircii blackhat@insecure.org 5671237890
+:localhost 254 Mo 0 :channels formed
+:localhost 353 Mo = #ircii :&blackhat ~Mo
+:localhost 001 Mo :Welcome
+:Mo MODE Mo :+i
+:http://8J.com/ WHO a  
+:127.0.0.1 004 joseph :a
+: 303 GH :ZMI6LCTCP 48  joseph   E http://N1.com/6 
+:localhost 332 Mo #swirc :Welcome to Swirc IRC client support channel
+:localhost 265 Mo 0 0 :Current local users ...
+:127.0.0.1 252 joseph :a
+:127.0.0.1 002 joseph :a
+:localhost 002 Mo :Your host is 127.0.0.1
+:127.0.0.1 253 joseph :a
+:127.0.0.1 254 joseph :a
+:127.0.0.1 003 joseph :a
+:localhost 375 Mo :- 127.0.0.1 Message of the Day -
+:localhost 005 Mo FOO BAR
+:localhost 376 Mo :End of MOTD command.
+:127.0.0.1 251 joseph :a
+:c JOIN pp  NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+PRIVMSG http://8.com/E :PING :
+:localhost 251 Mo :There are 1 users and 0 services on 1 servers
+:127.0.0.1 001 joseph :a
+:localhost 353 Mo = #swirc :&maxxe ~Mo
+PRIVMSG a :TIME a 66666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666306 c c  
+: PRIVMSG http://.com	1K :XDCC SEND c :GH
+NICK http:	/1L.com/ a joseph MH9  Y9  :http://.com/
+:Mo!~foo@bar JOIN :#swirc
+:localhost 372 Mo :...

@@ -1,0 +1,55 @@
+PRIVMSG http://8.com/E :PING :
+: PRIVMSG http://.com	1K :XDCC SEND c :GH
+: 332 Mo #ircii :
+:http://8J.com/ WHO a  
+:localhost 253 Mo 0 :unknown connections
+:localhost 366 Mo #swirc :End of NAMES list.
+PRIVMSG pp :VERSION d
+: 303 GH :ZMI6LCTCP 48  joseph   E http://N1.com/6 
+:localhost 251 Mo :There are 1 users and 0 services on 1 servers
+:localhost 252 Mo 0 :operators online
+:YY PRIVMSG c :VERSION 1A d
+:127.0.0.1 254 joseph :a
+:localhost 375 Mo :- 127.0.0.1 Message of the Day -
+:localhost 005 Mo BAZ QUX :are supported by this server
+:V NAMES    Y20 ppCTCP QB c   :d
+:localhost 332 Mo #swirc :Welcome to Swirc IRC client support channel
+:127.0.0.1 002 joseph :a
+:localhost 255 Mo :I have ...
+:localhost 001 Mo :Welcome
+:127.0.0.1 004 joseph :a
+:localhost 372 Mo :...
+:Mo!~foo@bar JOIN :#swirc
+:127.0.0.1 251 joseph :a
+PRIVMSG  :CDCC LIST pp 5UFA http://H.com/J IG3DA joseph  :
+:localhost 376 Mo :End of MOTD command.
+:127.0.0.1 252 joseph :a
+:localhost 254 Mo 0 :channels formed
+:localhost 266 Mo 0 0 :Current global users ...
+:127.0.0.1 376 joseph :a
+:127.0.0.1 253 joseph :a
+:localhost 265 Mo 0 0 :Current local users ...
+:localhost 003 Mo :This server was created ...
+:127.0.0.1 001 joseph :a
+:127.0.0.1 003 joseph :a
+:localhost 333 Mo #ircii blackhat@insecure.org 5671237890
+:127.0.0.1 005 joseph :a
+:localhost 366 Mo #ircii :End of NAMES list.
+:localhost 333 Mo #swirc maxxe@nifty-networks.net 1234567890
+:c JOIN pp  NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+:localhost 353 Mo = #swirc :&maxxe ~Mo
+:a MODE http://2I.com/XN http://7M.com/  7P8 :PQ:RJ 306 a 4SB :HHHHH	HHHHHH
+:127.0.0.1 375 joseph :a
+:localhost 332 Mo #ircii :ircII project
+:localhost 353 Mo = #ircii :&blackhat ~Mo
+:3U INVITE joseph I1PK  :joseph:WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW	WWWW PRIVMSG a :CDCC SEND V NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+:127.0.0.1 372 joseph :a
+:Mo MODE Mo :+i
+NICK http:	/1L.com/ a joseph MH9  Y9  :http://.com/
+:localhost 005 Mo FOO BAR
+:a LIST http:/	H.com/Z http://J.com/ :
+:localhost 002 Mo :Your host is 127.0.0.1
+PRIVMSG a :TIME a 66666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666306 c c  
+:localhost 042 Mo XXXXXXXXX :your unique ID
+:localhost 004 Mo localhost 1.0 abc def
+:127.0.0.1 255 joseph :a
