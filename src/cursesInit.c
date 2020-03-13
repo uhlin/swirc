@@ -56,11 +56,21 @@ static const short int ext_colors[] = {
 static const size_t numColors = ARRAY_SIZE(colors);
 static const size_t numExtended = ARRAY_SIZE(ext_colors);
 
+#define FOREACH_FOREGROUND_EXTENDED()\
+	for (const short int *fg = &ext_colors[0]; fg < &ext_colors[numExtended]; fg++)
+#define FOREACH_BACKGROUND_EXTENDED()\
+	for (const short int *bg = &ext_colors[0]; bg < &ext_colors[numExtended]; bg++)
+
+#define FOREACH_FOREGROUND_ANSI()\
+	for (const short int *fg = &colors[0]; fg < &colors[numColors]; fg++)
+#define FOREACH_BACKGROUND_ANSI()\
+	for (const short int *bg = &colors[0]; bg < &colors[numColors]; bg++)
+
 static int
 init_fg_on_bg_case1(short int *pair_n)
 {
-    for (const short int *fg = &ext_colors[0]; fg < &ext_colors[numExtended]; fg++) {
-	for (const short int *bg = &colors[0]; bg < &colors[numColors]; bg++) {
+    FOREACH_FOREGROUND_EXTENDED() {
+	FOREACH_BACKGROUND_ANSI() {
 	    if (init_pair(++ (*pair_n), *fg, *bg) == ERR)
 		return ERR;
 	}
@@ -72,8 +82,8 @@ init_fg_on_bg_case1(short int *pair_n)
 static int
 init_fg_on_bg_case2(short int *pair_n)
 {
-    for (const short int *fg = &colors[0]; fg < &colors[numColors]; fg++) {
-	for (const short int *bg = &ext_colors[0]; bg < &ext_colors[numExtended]; bg++) {
+    FOREACH_FOREGROUND_ANSI() {
+	FOREACH_BACKGROUND_EXTENDED() {
 	    if (init_pair(++ (*pair_n), *fg, *bg) == ERR)
 		return ERR;
 	}
@@ -85,8 +95,8 @@ init_fg_on_bg_case2(short int *pair_n)
 static int
 init_extended_colors(short int *pair_n)
 {
-    for (const short int *fg = &ext_colors[0]; fg < &ext_colors[numExtended]; fg++) {
-	for (const short int *bg = &ext_colors[0]; bg < &ext_colors[numExtended]; bg++) {
+    FOREACH_FOREGROUND_EXTENDED() {
+	FOREACH_BACKGROUND_EXTENDED() {
 	    if (*fg != *bg && init_pair(++ (*pair_n), *fg, *bg) == ERR)
 		return ERR;
 	}
@@ -139,8 +149,8 @@ init_color_pairs()
 	}
     }
 
-    for (const short int *fg = &colors[0]; fg < &colors[numColors]; fg++) {
-	for (const short int *bg = &colors[0]; bg < &colors[numColors]; bg++) {
+    FOREACH_FOREGROUND_ANSI() {
+	FOREACH_BACKGROUND_ANSI() {
 	    if (*fg != *bg && init_pair(++pair_n, *fg, *bg) == ERR) {
 		if (pair_n == 64) {
 		    /* The pair number is 64. The terminal that is
