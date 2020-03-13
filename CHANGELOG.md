@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Added ###
+- **Multicolor support**. For terminals supporting minimum 256 colors.
 - Command
   - `/colormap`
 

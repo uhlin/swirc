@@ -1,5 +1,5 @@
 /* Initialization of the Ncurses library
-   Copyright (C) 2012-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -38,6 +38,80 @@
 bool		g_no_colors         = false;
 short int	g_initialized_pairs = -1;
 
+static short int colors[] = {
+    COLOR_BLACK, COLOR_RED, COLOR_GREEN, COLOR_YELLOW,
+    COLOR_BLUE, COLOR_MAGENTA, COLOR_CYAN, COLOR_WHITE
+};
+
+static short int ext_colors[] = {
+    52,   94, 100,  58,  22,  29,  23,  24,  17,  54,  53,  89, /* 16-27 */
+    88,  130, 142,  64,  28,  35,  30,  25,  18,  91,  90, 125, /* 28-39 */
+    124, 166, 184, 106,  34,  49,  37,  33,  19, 129, 127, 161, /* 40-51 */
+    196, 208, 226, 154,  46,  86,  51,  75,  21, 171, 201, 198, /* 52-63 */
+    203, 215, 227, 191,  83, 122,  87, 111,  63, 177, 207, 205, /* 64-75 */
+    217, 223, 229, 193, 157, 158, 159, 153, 147, 183, 219, 212, /* 76-87 */
+    16,  233, 235, 237, 239, 241, 244, 247, 250, 254, 231       /* 88-98 */
+};
+
+static const size_t numColors = ARRAY_SIZE(colors);
+static const size_t numExtended = ARRAY_SIZE(ext_colors);
+
+static int
+init_fg_on_bg_case1(short int *pair_n)
+{
+    for (short int *fg = &ext_colors[0]; fg < &ext_colors[numExtended]; fg++) {
+	for (short int *bg = &colors[0]; bg < &colors[numColors]; bg++) {
+	    if (init_pair(++ (*pair_n), *fg, *bg) == ERR)
+		return ERR;
+	}
+    }
+
+    return OK;
+}
+
+static int
+init_fg_on_bg_case2(short int *pair_n)
+{
+    for (short int *fg = &colors[0]; fg < &colors[numColors]; fg++) {
+	for (short int *bg = &ext_colors[0]; bg < &ext_colors[numExtended]; bg++) {
+	    if (init_pair(++ (*pair_n), *fg, *bg) == ERR)
+		return ERR;
+	}
+    }
+
+    return OK;
+}
+
+static int
+init_extended_colors(short int *pair_n)
+{
+    for (short int *fg = &ext_colors[0]; fg < &ext_colors[numExtended]; fg++) {
+	for (short int *bg = &ext_colors[0]; bg < &ext_colors[numExtended]; bg++) {
+	    if (*fg != *bg && init_pair(++ (*pair_n), *fg, *bg) == ERR)
+		return ERR;
+	}
+    }
+
+    return OK;
+}
+
+static int
+init_more_pairs(short int *pair_n)
+{
+    if (theme_bool_unparse("term_use_default_colors", true)) {
+	for (short int *psi = &ext_colors[0]; psi < &ext_colors[numExtended]; psi++) {
+	    if (init_pair(++ (*pair_n), *psi, -1) == ERR)
+		return ERR;
+	}
+    }
+
+    if (init_fg_on_bg_case1(pair_n) == ERR ||
+	init_fg_on_bg_case2(pair_n) == ERR)
+	return ERR;
+
+    return init_extended_colors(pair_n);
+}
+
 /**
  * Initialize color pairs by calling init_pair()
  *
@@ -48,17 +122,6 @@ static short int
 init_color_pairs()
 {
     short int pair_n = 0;
-    short int colors[] = {
-	COLOR_BLACK,
-	COLOR_RED,
-	COLOR_GREEN,
-	COLOR_YELLOW,
-	COLOR_BLUE,
-	COLOR_MAGENTA,
-	COLOR_CYAN,
-	COLOR_WHITE
-    };
-    const size_t numColors = ARRAY_SIZE(colors);
     short int *fg, *bg;
 
     /* Initialize black on black */
@@ -108,6 +171,12 @@ init_color_pairs()
 	    return (pair_n - 1);
     }
 
+    if (COLORS >= 256) {
+	if (init_more_pairs(&pair_n) == ERR)
+	    return (pair_n - 1);
+    }
+
+    debug("init_color_pairs: all ok: %hd initialized pairs", pair_n);
     return pair_n;
 }
 
