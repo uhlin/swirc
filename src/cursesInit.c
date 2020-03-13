@@ -38,12 +38,12 @@
 bool		g_no_colors         = false;
 short int	g_initialized_pairs = -1;
 
-static short int colors[] = {
+static const short int colors[] = {
     COLOR_BLACK, COLOR_RED, COLOR_GREEN, COLOR_YELLOW,
     COLOR_BLUE, COLOR_MAGENTA, COLOR_CYAN, COLOR_WHITE
 };
 
-static short int ext_colors[] = {
+static const short int ext_colors[] = {
     52,   94, 100,  58,  22,  29,  23,  24,  17,  54,  53,  89, /* 16-27 */
     88,  130, 142,  64,  28,  35,  30,  25,  18,  91,  90, 125, /* 28-39 */
     124, 166, 184, 106,  34,  49,  37,  33,  19, 129, 127, 161, /* 40-51 */
@@ -59,8 +59,8 @@ static const size_t numExtended = ARRAY_SIZE(ext_colors);
 static int
 init_fg_on_bg_case1(short int *pair_n)
 {
-    for (short int *fg = &ext_colors[0]; fg < &ext_colors[numExtended]; fg++) {
-	for (short int *bg = &colors[0]; bg < &colors[numColors]; bg++) {
+    for (const short int *fg = &ext_colors[0]; fg < &ext_colors[numExtended]; fg++) {
+	for (const short int *bg = &colors[0]; bg < &colors[numColors]; bg++) {
 	    if (init_pair(++ (*pair_n), *fg, *bg) == ERR)
 		return ERR;
 	}
@@ -72,8 +72,8 @@ init_fg_on_bg_case1(short int *pair_n)
 static int
 init_fg_on_bg_case2(short int *pair_n)
 {
-    for (short int *fg = &colors[0]; fg < &colors[numColors]; fg++) {
-	for (short int *bg = &ext_colors[0]; bg < &ext_colors[numExtended]; bg++) {
+    for (const short int *fg = &colors[0]; fg < &colors[numColors]; fg++) {
+	for (const short int *bg = &ext_colors[0]; bg < &ext_colors[numExtended]; bg++) {
 	    if (init_pair(++ (*pair_n), *fg, *bg) == ERR)
 		return ERR;
 	}
@@ -85,8 +85,8 @@ init_fg_on_bg_case2(short int *pair_n)
 static int
 init_extended_colors(short int *pair_n)
 {
-    for (short int *fg = &ext_colors[0]; fg < &ext_colors[numExtended]; fg++) {
-	for (short int *bg = &ext_colors[0]; bg < &ext_colors[numExtended]; bg++) {
+    for (const short int *fg = &ext_colors[0]; fg < &ext_colors[numExtended]; fg++) {
+	for (const short int *bg = &ext_colors[0]; bg < &ext_colors[numExtended]; bg++) {
 	    if (*fg != *bg && init_pair(++ (*pair_n), *fg, *bg) == ERR)
 		return ERR;
 	}
@@ -99,7 +99,7 @@ static int
 init_more_pairs(short int *pair_n)
 {
     if (theme_bool_unparse("term_use_default_colors", true)) {
-	for (short int *psi = &ext_colors[0]; psi < &ext_colors[numExtended]; psi++) {
+	for (const short int *psi = &ext_colors[0]; psi < &ext_colors[numExtended]; psi++) {
 	    if (init_pair(++ (*pair_n), *psi, -1) == ERR)
 		return ERR;
 	}
@@ -122,7 +122,6 @@ static short int
 init_color_pairs()
 {
     short int pair_n = 0;
-    short int *fg, *bg;
 
     /* Initialize black on black */
     if (init_pair(++pair_n, colors[0], colors[0]) == ERR) {
@@ -132,9 +131,7 @@ init_color_pairs()
 
     /* Initialize a color on the default background of the terminal */
     if (theme_bool_unparse("term_use_default_colors", true)) {
-	short int *psi;
-
-	for (psi = &colors[0]; psi < &colors[numColors]; psi++) {
+	for (const short int *psi = &colors[0]; psi < &colors[numColors]; psi++) {
 	    if (init_pair(++pair_n, *psi, -1) == ERR) {
 		err_msg("Could not initialize pair %hd", pair_n);
 		return -1;
@@ -142,8 +139,8 @@ init_color_pairs()
 	}
     }
 
-    for (fg = &colors[0]; fg < &colors[numColors]; fg++) {
-	for (bg = &colors[0]; bg < &colors[numColors]; bg++) {
+    for (const short int *fg = &colors[0]; fg < &colors[numColors]; fg++) {
+	for (const short int *bg = &colors[0]; bg < &colors[numColors]; bg++) {
 	    if (*fg != *bg && init_pair(++pair_n, *fg, *bg) == ERR) {
 		if (pair_n == 64) {
 		    /* The pair number is 64. The terminal that is
