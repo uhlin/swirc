@@ -149,6 +149,17 @@ static const char *disconnect_usage[] = {
     "",
 };
 
+static const char *echo_usage[] = {
+    "usage: /echo <text>",
+    "",
+    "Echo text.",
+    "",
+    TXT_BOLD "EXAMPLE" TXT_BOLD,
+    "Echo " TXT_UNDERLINE "Hello World!" TXT_UNDERLINE ":",
+    "    /echo Hello World!",
+    "",
+};
+
 static const char *exlist_usage[] = {
     "usage: /exlist [channel]",
     "",

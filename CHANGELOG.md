@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - **Multicolor support**. For terminals supporting minimum 256 colors.
 - Command
   - `/colormap`
+  - `/echo`
 
 ### Fixed ###
 - Multiple occurrences where:

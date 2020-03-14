@@ -3,6 +3,7 @@ OBJS=$(COMMANDS_DIR)ban.obj\
 	$(COMMANDS_DIR)cleartoasts.obj\
 	$(COMMANDS_DIR)colormap.obj\
 	$(COMMANDS_DIR)connect.obj\
+	$(COMMANDS_DIR)echo.obj\
 	$(COMMANDS_DIR)invite.obj\
 	$(COMMANDS_DIR)jp.obj\
 	$(COMMANDS_DIR)kick.obj\
