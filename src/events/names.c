@@ -340,7 +340,9 @@ hInstall(const struct hInstall_context *ctx)
     return OK;
 }
 
-static PTR_ARGS_NONNULL void
+static void hUndef(PIRC_WINDOW, PNAMES) PTR_ARGS_NONNULL;
+
+static void
 hUndef(PIRC_WINDOW window, PNAMES entry)
 {
     PNAMES *indirect = & (window->names_hash[hash(entry->nick)]);

@@ -85,6 +85,9 @@ struct special_msg_context {
 	}
 };
 
+static bool shouldHighlightMessage_case1(const char *) PTR_ARGS_NONNULL;
+static bool shouldHighlightMessage_case2(const char *) PTR_ARGS_NONNULL;
+
 static void
 acknowledge_ctcp_request(const char *cmd, const struct special_msg_context *ctx)
 {
@@ -149,7 +152,7 @@ broadcast_window_activity(const IRC_WINDOW *src)
     }
 }
 
-static PTR_ARGS_NONNULL bool
+static bool
 shouldHighlightMessage_case1(const char *msg)
 {
     bool result = false;
@@ -168,7 +171,7 @@ shouldHighlightMessage_case1(const char *msg)
     return result;
 }
 
-static PTR_ARGS_NONNULL bool
+static bool
 shouldHighlightMessage_case2(const char *msg)
 {
     bool result = false;
