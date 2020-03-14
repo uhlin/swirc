@@ -110,6 +110,44 @@ static struct tagConfDefValues {
 
 /* -------------------------------------------------- */
 
+static bool
+got_hits(const char *search_var)
+{
+    FOREACH_CDV() {
+	if (!strncmp(search_var, cdv_p->setting_name, strlen(search_var)))
+	    return true;
+    }
+
+    return false;
+}
+
+PTEXTBUF
+get_list_of_matching_settings(const char *search_var)
+{
+    if (!got_hits(search_var))
+	return NULL;
+
+    PTEXTBUF matches = textBuf_new();
+
+    FOREACH_CDV() {
+	if (!strncmp(search_var, cdv_p->setting_name, strlen(search_var))) {
+	    if (textBuf_size(matches) == 0) {
+		if ((errno = textBuf_ins_next(matches, NULL, cdv_p->setting_name, -1)) != 0)
+		    err_sys("get_list_of_matching_settings: textBuf_ins_next");
+	    } else {
+		errno =
+		    textBuf_ins_next(matches, textBuf_tail(matches), cdv_p->setting_name, -1);
+		if (errno)
+		    err_sys("get_list_of_matching_settings: textBuf_ins_next");
+	    }
+	}
+    }
+
+    return matches;
+}
+
+/* -------------------------------------------------- */
+
 void
 config_init(void)
 {

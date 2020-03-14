@@ -33,6 +33,7 @@
 #include "irc.h"
 #include "events/names.h"
 
+#include "config.h"
 #include "dataClassify.h"
 #include "io-loop.h"
 #include "printtext.h"
@@ -40,6 +41,22 @@
 #include "readlineTabCompletion.h"
 #include "strHand.h"
 #include "terminal.h"
+
+static void
+auto_complete_setting(volatile struct readline_session_context *ctx,
+    const char *s)
+{
+    const wchar_t cmd[] = L"/set ";
+    size_t i = 0;
+
+    while (ctx->n_insert != 0)
+	readline_handle_backspace(ctx);
+
+    for (i = 0; i < wcslen(cmd); i++)
+	readline_handle_key_exported(ctx, cmd[i]);
+    for (i = 0; i < strlen(s); i++)
+	readline_handle_key_exported(ctx, btowc(s[i]));
+}
 
 static void
 auto_complete_command(volatile struct readline_session_context *ctx,
@@ -113,6 +130,7 @@ readline_tab_comp_ctx_new(void)
     static TAB_COMPLETION ctx;
 
     memset(ctx.search_var, 0, ARRAY_SIZE(ctx.search_var));
+    ctx.isInCirculationModeForSettings = false;
     ctx.isInCirculationModeForCmds = false;
     ctx.isInCirculationModeForChanUsers = false;
     ctx.matches = NULL;
@@ -135,6 +153,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 {
     if (ctx) {
 	memset(ctx->search_var, 0, ARRAY_SIZE(ctx->search_var));
+	ctx->isInCirculationModeForSettings = false;
 	ctx->isInCirculationModeForCmds = false;
 	ctx->isInCirculationModeForChanUsers = false;
 	if (!isNull(ctx->matches))
@@ -151,6 +170,15 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 	buf_contains_disallowed_chars(ctx)) {
 	output_error("no magic");
 	readline_tab_comp_ctx_reset(ctx->tc);
+	return;
+    } else if (ctx->tc->isInCirculationModeForSettings) {
+	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+	    output_error("no more matches");
+	} else {
+	    ctx->tc->elmt = ctx->tc->elmt->next;
+	    auto_complete_setting(ctx, ctx->tc->elmt->text);
+	}
+
 	return;
     } else if (ctx->tc->isInCirculationModeForCmds) {
 	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
@@ -180,7 +208,20 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
     const bool is_command = (ctx->tc->search_var[0] == '/');
     const bool n_insert_greater_than_one = ctx->n_insert > 1;
 
-    if (is_command) {
+    if (!strncmp(get_search_var(ctx), "/set ", 5)) {
+	char *p = & (ctx->tc->search_var[5]);
+
+	if ((ctx->tc->matches = get_list_of_matching_settings(p)) == NULL) {
+	    output_error("no magic");
+	    return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_setting(ctx, ctx->tc->elmt->text);
+
+	ctx->tc->isInCirculationModeForSettings = true;
+	return;
+    } else if (is_command) {
 	char *p = & (ctx->tc->search_var[1]);
 
 	if (!n_insert_greater_than_one ||

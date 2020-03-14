@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Command
   - `/colormap`
   - `/echo`
+- Tab completion for `/set`
 
 ### Fixed ###
 - Multiple occurrences where:

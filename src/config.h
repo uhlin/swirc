@@ -2,6 +2,7 @@
 #define CONFIG_H
 
 #include "int_unparse.h"
+#include "textBuffer.h"
 
 #define RECONNECT_BACKOFF_DELAY_DEFAULT 60
 #define RECONNECT_DELAY_DEFAULT         10
@@ -15,6 +16,11 @@ typedef struct tagCONF_HTBL_ENTRY {
 } CONF_HTBL_ENTRY, *PCONF_HTBL_ENTRY;
 
 __SWIRC_BEGIN_DECLS
+
+/*lint -sem(get_list_of_matching_settings, r_null) */
+
+PTEXTBUF get_list_of_matching_settings(const char *);
+
 void	config_init(void);
 void	config_deinit(void);
 
@@ -45,6 +51,7 @@ long int	get_reconnect_backoff_delay(void);
 long int	get_reconnect_delay(void);
 long int	get_reconnect_delay_max(void);
 long int	get_reconnect_retries(void);
+
 __SWIRC_END_DECLS
 
 #endif /* CONFIG_H */
