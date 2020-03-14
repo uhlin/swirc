@@ -69,7 +69,7 @@ auto_complete_channel_user(volatile struct readline_session_context *ctx,
 }
 
 static bool
-buf_contains_disallowed_chars(volatile struct readline_session_context *ctx)
+buf_contains_disallowed_chars(const volatile struct readline_session_context *ctx)
 {
     char *s = readline_finalize_out_string_exported(ctx->buffer);
     const char reject[] =
@@ -80,7 +80,7 @@ buf_contains_disallowed_chars(volatile struct readline_session_context *ctx)
 }
 
 static inline char *
-get_search_var(volatile struct readline_session_context *ctx)
+get_search_var(const volatile struct readline_session_context *ctx)
 {
     return (& (ctx->tc->search_var[0]));
 }
@@ -96,7 +96,7 @@ output_error(const char *msg)
 }
 
 static int
-store_search_var(volatile struct readline_session_context *ctx)
+store_search_var(const volatile struct readline_session_context *ctx)
 {
     char *s = readline_finalize_out_string_exported(ctx->buffer);
 

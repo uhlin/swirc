@@ -137,7 +137,7 @@ write_cmdprompt(WINDOW *win, const char *prompt, int size)
  * When swapping between panels: computes the new window entry.
  */
 static void
-compute_new_window_entry(volatile struct readline_session_context *ctx,
+compute_new_window_entry(const volatile struct readline_session_context *ctx,
 			 bool fwd)
 {
     int		 diff, buf_index;

@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
 - Command
   - `/colormap`
 
+### Fixed ###
+- Multiple occurrences where:
+  - Pointer parameters could be declared as pointing to const
+
 ## [3.2.1] - 2020-03-01 ##
 ### Added ###
 - **Code improvements**
