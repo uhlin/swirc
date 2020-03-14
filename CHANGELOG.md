@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed ###
 - Multiple occurrences where:
   - Pointer parameters could be declared as pointing to const
+- Tab completion bugs
 
 ## [3.2.1] - 2020-03-01 ##
 ### Added ###

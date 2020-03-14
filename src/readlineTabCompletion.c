@@ -174,6 +174,7 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
     } else if (ctx->tc->isInCirculationModeForSettings) {
 	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
 	    output_error("no more matches");
+	    readline_tab_comp_ctx_reset(ctx->tc);
 	} else {
 	    ctx->tc->elmt = ctx->tc->elmt->next;
 	    auto_complete_setting(ctx, ctx->tc->elmt->text);
@@ -183,6 +184,7 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
     } else if (ctx->tc->isInCirculationModeForCmds) {
 	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
 	    output_error("no more matches");
+	    readline_tab_comp_ctx_reset(ctx->tc);
 	} else {
 	    ctx->tc->elmt = ctx->tc->elmt->next;
 	    auto_complete_command(ctx, ctx->tc->elmt->text);
@@ -192,6 +194,7 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
     } else if (ctx->tc->isInCirculationModeForChanUsers) {
 	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
 	    output_error("no more matches");
+	    readline_tab_comp_ctx_reset(ctx->tc);
 	} else {
 	    ctx->tc->elmt = ctx->tc->elmt->next;
 	    auto_complete_channel_user(ctx, ctx->tc->elmt->text);
