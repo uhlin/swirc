@@ -24,7 +24,7 @@ extern "C" {
 #endif
 
 PANEL	*term_new_panel(int rows, int cols, int start_row, int start_col);
-PANEL	*term_resize_panel(PANEL *, struct term_window_size *);
+PANEL	*term_resize_panel(PANEL *, const struct term_window_size *);
 
 struct current_cursor_pos term_get_pos(WINDOW *);
 

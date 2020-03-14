@@ -1,5 +1,5 @@
 /* OS-independent terminal stuff
-   Copyright (C) 2012-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -81,7 +81,7 @@ term_remove_panel(PANEL *pan)
 }
 
 PANEL *
-term_resize_panel(PANEL *pan, struct term_window_size *newsize)
+term_resize_panel(PANEL *pan, const struct term_window_size *newsize)
 {
     WINDOW *old_window = panel_window(pan);
     WINDOW *repl_win; /* replacement window */
