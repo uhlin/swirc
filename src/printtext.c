@@ -119,12 +119,8 @@ static HANDLE      vprinttext_mutex;
 #endif
 
 static struct ptext_colorMap_tag {
-    short int color;
-#if defined(UNIX)
-    attr_t at;
-#elif defined(WIN32)
-    chtype at;
-#endif
+    short int	color;
+    attr_t	at;
 } ptext_colorMap[] = {
     { COLOR_WHITE,   A_BOLD   },
     { COLOR_BLACK,   A_NORMAL },
@@ -414,6 +410,26 @@ check_for_part5(wchar_t **bufp, char *bg)
     return GO_ON;
 }
 
+static void
+map_color(short int *inout, const short int i, const short int colorMap_size,
+    attr_t *attr_out)
+{
+    switch (*inout) {
+    case COLOR_BLACK:
+	if (ptext_colorMap[i % colorMap_size].at == A_BOLD) {
+	    *inout = GREY;
+	    *attr_out = A_NORMAL;
+	}
+	break;
+    case COLOR_WHITE:
+	if (ptext_colorMap[i % colorMap_size].at == A_NORMAL) {
+	    *inout = LIGHT_GREY;
+	    *attr_out = A_NORMAL;
+	}
+	break;
+    }
+}
+
 /**
  * Set color for output in a window.
  *
@@ -429,11 +445,10 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 #if defined(UNIX)
     const short int num_colorMap_entries =
 	(short int) ((COLORS >= 256) ? ARRAY_SIZE(ptext_colorMap) : 16);
-    attr_t attr;
 #elif defined(WIN32)
     const short int num_colorMap_entries = 16;
-    chtype attr;
 #endif
+    attr_t attr = 0xff;
     short int fg, bg, resolved_pair;
 
     /* num1 shouldn't under any circumstances appear negative */
@@ -442,15 +457,20 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
     fg = ptext_colorMap[num1 % num_colorMap_entries].color;
     bg = (num2 < 0 ? -1 : ptext_colorMap[num2 % num_colorMap_entries].color);
 
+    if (COLORS >= 16 && can_change_color()) {
+	map_color(&fg, num1, num_colorMap_entries, &attr);
+	map_color(&bg, num2, num_colorMap_entries, &attr);
+    }
+
+    if (attr != A_NORMAL)
+	attr = ptext_colorMap[num1 % num_colorMap_entries].at;
+
     if ((resolved_pair = color_pair_find(fg, bg)) == -1) {
 	WCOLOR_SET(win, 0);
 	*is_color = false;
 	return;
     }
 
-    attr = ptext_colorMap[num1 % num_colorMap_entries].at; /*attributes of fg*/
-    //attr |= COLOR_PAIR(resolved_pair);
-    //wattrset(win, attr);
     wattr_set(win, attr, resolved_pair, NULL);
     *is_color = true;
 }
