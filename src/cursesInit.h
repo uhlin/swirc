@@ -1,6 +1,15 @@
 #ifndef CURSES_INIT_H
 #define CURSES_INIT_H
 
+#define LIGHT_RED	8
+//#define LIGHT_YELLOW	8
+#define LIGHT_GREEN	9
+#define LIGHT_CYAN	11
+#define LIGHT_BLUE	12
+#define PINK		13
+#define GREY		14
+#define LIGHT_GREY	15
+
 #define FOREACH_FOREGROUND_EXTENDED()\
 	for (const short int *fg = &ext_colors[0]; fg < &ext_colors[numExtended]; fg++)
 #define FOREACH_BACKGROUND_EXTENDED()\
