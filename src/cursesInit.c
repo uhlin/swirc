@@ -148,7 +148,9 @@ init_color_pairs()
 
     /* Initialize a color on the default background of the terminal */
     if (theme_bool_unparse("term_use_default_colors", true)) {
-	for (const short int *psi = &colors[0]; psi < &colors[numColors]; psi++) {
+	for (const short int *psi = &colors[0];
+	     psi < &colors[COLORS >= 16 && can_change_color() ? numColors : 8];
+	     psi++) {
 	    if (init_pair(++pair_n, *psi, -1) == ERR) {
 		err_msg("Could not initialize pair %hd", pair_n);
 		return -1;
