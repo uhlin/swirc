@@ -40,7 +40,17 @@ short int	g_initialized_pairs = -1;
 
 static const short int colors[] = {
     COLOR_BLACK, COLOR_RED, COLOR_GREEN, COLOR_YELLOW,
-    COLOR_BLUE, COLOR_MAGENTA, COLOR_CYAN, COLOR_WHITE
+    COLOR_BLUE, COLOR_MAGENTA, COLOR_CYAN, COLOR_WHITE,
+
+#if 0
+    LIGHT_RED,
+    LIGHT_GREEN,
+    LIGHT_CYAN,
+    LIGHT_BLUE,
+    PINK,
+#endif
+    GREY,
+    LIGHT_GREY,
 };
 
 static const short int ext_colors[] = {
@@ -122,6 +132,13 @@ static short int
 init_color_pairs()
 {
     short int pair_n = 0;
+
+    if (COLORS >= 16 && can_change_color()) {
+	if (init_color(GREY, 498,498,498) == ERR)
+	    err_log(0, "init_color_pairs: init_color: GREY error");
+	if (init_color(LIGHT_GREY, 824,824,824) == ERR)
+	    err_log(0, "init_color_pairs: init_color: LIGHT_GREY error");
+    }
 
     /* Initialize black on black */
     if (init_pair(++pair_n, colors[0], colors[0]) == ERR) {
