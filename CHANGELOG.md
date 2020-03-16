@@ -10,6 +10,9 @@ All notable changes to this project will be documented in this file.
 - Tab completion for `/set`
 
 ### Fixed ###
+- Color (Note: For terminals supporting minimum 16 colors)
+  - Grey
+  - Light Grey
 - Multiple occurrences where:
   - Pointer parameters could be declared as pointing to const
 - Tab completion bugs
