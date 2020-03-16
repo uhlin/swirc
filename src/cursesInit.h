@@ -16,9 +16,13 @@
 	for (const short int *bg = &ext_colors[0]; bg < &ext_colors[numExtended]; bg++)
 
 #define FOREACH_FOREGROUND_ANSI()\
-	for (const short int *fg = &colors[0]; fg < &colors[numColors]; fg++)
+	for (const short int *fg = &colors[0];\
+	     fg < &colors[COLORS >= 16 && can_change_color() ? numColors : 8];\
+	     fg++)
 #define FOREACH_BACKGROUND_ANSI()\
-	for (const short int *bg = &colors[0]; bg < &colors[numColors]; bg++)
+	for (const short int *bg = &colors[0];\
+	     bg < &colors[COLORS >= 16 && can_change_color() ? numColors : 8];\
+	     bg++)
 
 __SWIRC_BEGIN_DECLS
 extern bool		g_no_colors;
