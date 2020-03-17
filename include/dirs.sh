@@ -1,5 +1,6 @@
 DIRS="
 gfx
+reports
 screenshots
 themes
 "
