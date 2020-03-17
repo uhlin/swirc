@@ -3,6 +3,7 @@ mu170225.asc
 mu180520.asc
 mu190523.asc
 navbar.css
+reports/swirc-3.2.2.html
 style.css
 swirc.list
 "
