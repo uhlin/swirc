@@ -103,12 +103,16 @@ init_fg_on_bg_case2(short int *pair_n)
 static int
 init_extended_colors(short int *pair_n)
 {
+#if LINUX
     FOREACH_FOREGROUND_EXTENDED() {
 	FOREACH_BACKGROUND_EXTENDED() {
 	    if (*fg != *bg && init_pair(++ (*pair_n), *fg, *bg) == ERR)
 		return ERR;
 	}
     }
+#else
+    (void) pair_n;
+#endif
 
     return OK;
 }
