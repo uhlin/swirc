@@ -32,7 +32,7 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2019-11-23</em></small></p>
+<p><small><em>Updated: 2020-03-19</em></small></p>
 <h3>Program options</h3>
 <p>
 <kbd>usage: swirc [-46?dipv] [-c server[:port]] [-n nickname] [-r rl name] [-u username] [-x config]</kbd>
@@ -80,7 +80,8 @@ However: InspIRCd has a module called password forward, which means
 that if a server password is specified by this flag, it will be used
 to identify to <em>NickServ</em>.
 If so: connect with a TLS/SSL connection, i.e. an encrypted
-connection, to prevent your password from being sniffed.
+connection, to prevent your password from being disclosed in clear
+text.
 <strong>swirc</strong> also supports IRCv3 SASL authentication which
 is probably a better alternative.
     </td>
