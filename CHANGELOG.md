@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Changed ###
+- Multiple remaining events to use try-catch blocks
+
 ## [3.2.2] - 2020-03-17 ##
 ### Added ###
 - **Multicolor support**. For terminals supporting minimum 256 colors.
