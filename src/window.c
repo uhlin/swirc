@@ -548,7 +548,7 @@ new_window_title(const char *label, const char *title)
 	return;
     }
 
-    free_not_null(window->title);
+    free(window->title);
     window->title = sw_strdup(title);
 
     if (window == g_active_window) {

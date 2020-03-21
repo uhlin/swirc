@@ -171,12 +171,12 @@ has_channel_key(const char *channel, char **key)
 	goto no;
 
     *key = sw_strdup(params[spanned]);
-    free_not_null(chanmodes_copy);
+    free(chanmodes_copy);
     return true;
 
   no:
     *key = NULL;
-    free_not_null(chanmodes_copy);
+    free(chanmodes_copy);
     return false;
 }
 
@@ -193,7 +193,7 @@ do_part_and_join(const char *channel)
 	(void) net_send("JOIN %s", channel);
     }
 
-    free_not_null(key);
+    free(key);
 }
 
 /* usage: /cycle [channel] */

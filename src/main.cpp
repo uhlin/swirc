@@ -549,8 +549,8 @@ get_locale_info(int category)
 void
 free_locale_info(struct locale_info *li)
 {
-    free_not_null(li->lang_and_territory);
-    free_not_null(li->codeset);
+    free(li->lang_and_territory);
+    free(li->codeset);
 
     free(li);
 }

@@ -139,8 +139,8 @@ textBuf_remove(PTEXTBUF buf, PTEXTBUF_ELMT element)
 	}
     }
 
-    free_not_null(element->text);
-    free_not_null(element);
+    free(element->text);
+    free(element);
 
     (buf->size)--;
     return 0;
@@ -154,5 +154,5 @@ textBuf_destroy(PTEXTBUF buf)
 	    err_sys("textBuf_remove() returned %d", errno);
     }
 
-    free_not_null(buf);
+    free(buf);
 }

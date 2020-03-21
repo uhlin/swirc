@@ -188,9 +188,9 @@ hUndef(PCONF_HTBL_ENTRY entry)
 	indirect = & ((*indirect)->next);
     *indirect = entry->next;
 
-    free_not_null(entry->name);
-    free_not_null(entry->value);
-    free_not_null(entry);
+    free(entry->name);
+    free(entry->value);
+    free(entry);
 }
 
 void

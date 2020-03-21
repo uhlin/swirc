@@ -112,7 +112,7 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 		  compo->command, e.what());
     }
 
-    free_not_null(msg_copy);
+    free(msg_copy);
 }
 
 /* event_serverFeatures: 005 (RPL_ISUPPORT)

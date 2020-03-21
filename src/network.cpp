@@ -548,8 +548,8 @@ net_irc_listen(bool *connection_lost)
 	printtext(&ptext_ctx, "Connection to IRC server lost");
     net_kill_connection();
     irc_deinit();
-    free_not_null(recvbuf);
-    free_not_null(message_concat);
+    free(recvbuf);
+    free(message_concat);
     printtext(&ptext_ctx, "Disconnected");
 }
 
@@ -575,9 +575,9 @@ server_destroy(struct server *server)
 {
     if (server == NULL)
 	return;
-    free_not_null(server->host);
-    free_not_null(server->port);
-    free_not_null(server->pass);
+    free(server->host);
+    free(server->port);
+    free(server->pass);
     free(server);
 }
 

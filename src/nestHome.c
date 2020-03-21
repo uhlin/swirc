@@ -179,7 +179,7 @@ nestHome_init(void)
 	theme_readit(g_theme_file, "r");
     }
 
-    free_not_null(hp);
+    free(hp);
 }
 
 void

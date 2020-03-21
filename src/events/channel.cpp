@@ -429,7 +429,7 @@ maintain_channel_stats(const char *channel, const char *input)
 
     /* destroy the array */
     for (char **ar_p = &nicks[0]; ar_p < &nicks[ar_sz]; ar_p++) {
-	free_not_null(*ar_p);
+	free(*ar_p);
 	*ar_p = NULL;
     }
 }
@@ -500,7 +500,7 @@ event_mode(struct irc_message_compo *compo)
 	printtext(&ctx, "event_mode: error: %s", e.what());
     }
 
-    free_not_null(next_token_copy);
+    free(next_token_copy);
 }
 
 static int
@@ -889,5 +889,5 @@ event_topic_creator(struct irc_message_compo *compo)
 	printtext(&ctx, "event_topic_creator: error: %s", e.what());
     }
 
-    free_not_null(string_copy);
+    free(string_copy);
 }

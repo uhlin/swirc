@@ -100,7 +100,7 @@ static void
 destroy_names_array(const int ntp1, struct name_tag *names_array)
 {
     for (int i = 0; i < ntp1; i++) {
-	free_not_null(names_array[i].s);
+	free(names_array[i].s);
 	names_array[i].s = NULL;
     }
 
@@ -369,7 +369,7 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
 
     window->num_total--;
 
-    free_not_null(entry);
+    free(entry);
     entry = NULL;
 }
 
