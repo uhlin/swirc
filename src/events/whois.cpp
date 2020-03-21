@@ -1,5 +1,5 @@
 /* whois events
-   Copyright (C) 2014-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -54,7 +54,8 @@ get_time_idle(long int sec_idle, long int signon_time)
 {
     time_t elapsed = signon_time;
     struct tm res;
-    struct time_idle *ti = xcalloc(sizeof *ti, 1);
+    struct time_idle *ti =
+	static_cast<struct time_idle *>(xcalloc(sizeof *ti, 1));
     const char fmt[] = "%c";
 
 #if defined(UNIX)
