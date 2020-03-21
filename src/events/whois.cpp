@@ -127,6 +127,44 @@ event_whoReply(struct irc_message_compo *compo)
     }
 }
 
+/* event_whois_acc: 330
+
+   Example:
+     :irc.server.com 330 <issuer> <target> <account name> :is logged in as */
+void
+event_whois_acc(struct irc_message_compo *compo)
+{
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+
+    try {
+	char *state = const_cast<char *>("");
+
+	if (strFeed(compo->params, 3) != 3)
+	    throw std::runtime_error("strFeed");
+
+	(void) strtok_r(compo->params, "\n", &state);
+	(void) strtok_r(NULL, "\n", &state);
+	char *account_name = strtok_r(NULL, "\n", &state);
+	char *comment      = strtok_r(NULL, "\n", &state);
+
+	if (account_name == NULL || comment == NULL)
+	    throw std::runtime_error("unable to retrieve event components");
+	if (*comment == ':')
+	    comment++;
+	if (*comment) {
+	    printtext(&ctx, "%s %s %s",
+		Theme("whois_acc"), comment, account_name);
+	}
+    } catch (const std::runtime_error &e) {
+	ctx.window = g_status_window;
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "event_whois_acc(%s): error: %s",
+	    compo->command, e.what());
+    }
+}
+
 /* event_whois_ssl: 275, 671
 
    Examples:
@@ -521,47 +559,6 @@ event_whois_channels(struct irc_message_compo *compo)
 	ctx.window    = g_active_window;
 	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s %s", Theme("whois_channels"), chan_list);
-    }
-}
-
-/* event_whois_acc: 330
-
-   Example:
-     :irc.server.com 330 <issuer> <target> <account name> :is logged in as */
-void
-event_whois_acc(struct irc_message_compo *compo)
-{
-    PRINTTEXT_CONTEXT ctx;
-    char *account_name, *comment;
-    char *state = "";
-
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-
-    if (strFeed(compo->params, 3) != 3) {
-	printtext(&ctx, "On issuing event %s: strFeed(..., 3) != 3",
-		  compo->command);
-	return;
-    }
-
-    (void) strtok_r(compo->params, "\n", &state);
-    (void) strtok_r(NULL, "\n", &state);
-    account_name = strtok_r(NULL, "\n", &state);
-    comment      = strtok_r(NULL, "\n", &state);
-
-    if (account_name == NULL || comment == NULL) {
-	printtext(&ctx, "On issuing event %s: Erroneous server params",
-		  compo->command);
-	return;
-    }
-
-    if (*comment == ':') {
-	comment++;
-    }
-
-    if (*comment) {
-	ctx.window    = g_active_window;
-	ctx.spec_type = TYPE_SPEC1;
-	printtext(&ctx, "%s %s %s", Theme("whois_acc"), comment, account_name);
     }
 }
 
