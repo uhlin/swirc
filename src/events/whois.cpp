@@ -29,8 +29,9 @@
 
 #include "common.h"
 
-#include <limits.h>
-#include <time.h>
+#include <climits>
+#include <ctime>
+#include <stdexcept>
 
 #include "../irc.h"
 #include "../libUtils.h"
@@ -79,6 +80,51 @@ get_time_idle(long int sec_idle, long int signon_time)
     }
 
     return (ti);
+}
+
+/* event_whoReply: 352 (RPL_WHOREPLY)
+
+   Example:
+     :irc.server.com 352 <my nick> <channel> <user> <host> <server> <nick>
+                         <"H" / "G"> :<hopcount> <real name> */
+void
+event_whoReply(struct irc_message_compo *compo)
+{
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+
+    try {
+	char *state = const_cast<char *>("");
+
+	if (strFeed(compo->params, 8) != 8)
+	    throw std::runtime_error("strFeed");
+
+	(void) strtok_r(compo->params, "\n", &state); /* my nick */
+	char *channel  = strtok_r(NULL, "\n", &state);
+	char *user     = strtok_r(NULL, "\n", &state);
+	char *host     = strtok_r(NULL, "\n", &state);
+	char *server   = strtok_r(NULL, "\n", &state); /* unused */
+	char *nick     = strtok_r(NULL, "\n", &state);
+	char *symbol   = strtok_r(NULL, "\n", &state);
+	char *hopcount = strtok_r(NULL, "\n", &state);
+	char *rl_name  = strtok_r(NULL, "\n", &state);
+
+	if (channel==NULL || user==NULL || host==NULL || server==NULL ||
+	    nick==NULL || symbol==NULL || hopcount==NULL || rl_name==NULL)
+	    throw std::runtime_error("unable to retrieve event components");
+	if (*hopcount == ':')
+	    hopcount++;
+	printtext(&ctx, "%s%s%s%c%s: %s%s%c %s %s %s@%s %s%s%s%c%s",
+	    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+	    COLOR2, nick, NORMAL,
+	    symbol, hopcount, user, host,
+	    LEFT_BRKT, COLOR2, rl_name, NORMAL, RIGHT_BRKT);
+    } catch (const std::runtime_error &e) {
+	ctx.spec_type = TYPE_SPEC1_FAILURE;
+	printtext(&ctx, "event_whoReply(%s): error: %s",
+	    compo->command, e.what());
+    }
 }
 
 /* event_whois_ssl: 275, 671
@@ -637,51 +683,4 @@ event_whois_modes(struct irc_message_compo *compo)
 	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s %s", Theme("whois_modes"), msg);
     }
-}
-
-/* event_whoReply: 352 (RPL_WHOREPLY)
-
-   Example:
-     :irc.server.com 352 <my nick> <channel> <user> <host> <server> <nick>
-                         <"H" / "G"> :<hopcount> <real name> */
-void
-event_whoReply(struct irc_message_compo *compo)
-{
-    PRINTTEXT_CONTEXT ctx;
-    char	*state	  = "";
-    char	*channel  = NULL;
-    char	*user	  = NULL;
-    char	*host	  = NULL;
-    char	*server	  = NULL;
-    char	*nick	  = NULL;
-    char	*symbol	  = NULL;
-    char	*hopcount = NULL;
-    char	*rl_name  = NULL;
-
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
-
-    if (strFeed(compo->params, 8) != 8)
-	goto err;
-    (void) strtok_r(compo->params, "\n", &state); /* my nick */
-    if ((channel     = strtok_r(NULL, "\n", &state)) == NULL
-	|| (user     = strtok_r(NULL, "\n", &state)) == NULL
-	|| (host     = strtok_r(NULL, "\n", &state)) == NULL
-	|| (server   = strtok_r(NULL, "\n", &state)) == NULL /* unused */
-	|| (nick     = strtok_r(NULL, "\n", &state)) == NULL
-	|| (symbol   = strtok_r(NULL, "\n", &state)) == NULL
-	|| (hopcount = strtok_r(NULL, "\n", &state)) == NULL
-	|| (rl_name  = strtok_r(NULL, "\n", &state)) == NULL)
-	goto err;
-    if (*hopcount == ':')
-	hopcount++;
-    printtext(&ctx, "%s%s%s%c%s: %s%s%c %s %s %s@%s %s%s%s%c%s",
-	      LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-	      COLOR2, nick, NORMAL,
-	      symbol, hopcount, user, host,
-	      LEFT_BRKT, COLOR2, rl_name, NORMAL, RIGHT_BRKT);
-    return;
-
-err:
-    ctx.spec_type = TYPE_SPEC1_FAILURE;
-    printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
 }
