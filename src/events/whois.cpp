@@ -346,6 +346,72 @@ event_whois_host(struct irc_message_compo *compo)
     }
 }
 
+/* event_whois_idle: 317
+
+   Example:
+     :irc.server.com 317 <issuer> <target> <sec idle> <signon time>
+                         :<comment> */
+void
+event_whois_idle(struct irc_message_compo *compo)
+{
+    PRINTTEXT_CONTEXT ctx;
+    char *ep1, *ep2;
+    char *sec_idle_str, *signon_time_str;
+    char *state = "";
+    long int sec_idle, signon_time;
+    struct time_idle *ti;
+
+    if (strFeed(compo->params, 4) != 4) {
+	goto bad;
+    }
+
+    (void) strtok_r(compo->params, "\n", &state);
+    (void) strtok_r(NULL, "\n", &state);
+    sec_idle_str    = strtok_r(NULL, "\n", &state);
+    signon_time_str = strtok_r(NULL, "\n", &state);
+
+    if (sec_idle_str == NULL || signon_time_str == NULL) {
+	goto bad;
+    }
+
+    errno = 0;
+    sec_idle = strtol(sec_idle_str, &ep1, 10);
+    if (sec_idle_str[0] == '\0' || *ep1 != '\0') {
+	goto bad;
+    } else if (errno == ERANGE &&
+	       (sec_idle == LONG_MAX || sec_idle == LONG_MIN)) {
+	goto bad;
+    } else {
+	/* do nothing */;
+    }
+
+    errno = 0;
+    signon_time = strtol(signon_time_str, &ep2, 10);
+    if (signon_time_str[0] == '\0' || *ep2 != '\0') {
+	goto bad;
+    } else if (errno == ERANGE &&
+	       (signon_time == LONG_MAX || signon_time == LONG_MIN)) {
+	goto bad;
+    } else {
+	/* do nothing */;
+    }
+
+    if ((ti = get_time_idle(sec_idle, signon_time)) == NULL) {
+	goto bad;
+    }
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+    printtext(&ctx, "%s %ld days %ld hours %ld mins %ld secs %ssignon: %s%s",
+	      Theme("whois_idle"), ti->days, ti->hours, ti->mins, ti->secs,
+	      LEFT_BRKT, ti->buf, RIGHT_BRKT);
+    free(ti);
+    return;
+
+  bad:
+    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+    printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
+}
+
 /* event_whois_ssl: 275, 671
 
    Examples:
@@ -556,72 +622,6 @@ event_whois_ircOp(struct irc_message_compo *compo)
 	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s %s", Theme("whois_ircOp"), msg);
     }
-}
-
-/* event_whois_idle: 317
-
-   Example:
-     :irc.server.com 317 <issuer> <target> <sec idle> <signon time>
-                         :<comment> */
-void
-event_whois_idle(struct irc_message_compo *compo)
-{
-    PRINTTEXT_CONTEXT ctx;
-    char *ep1, *ep2;
-    char *sec_idle_str, *signon_time_str;
-    char *state = "";
-    long int sec_idle, signon_time;
-    struct time_idle *ti;
-
-    if (strFeed(compo->params, 4) != 4) {
-	goto bad;
-    }
-
-    (void) strtok_r(compo->params, "\n", &state);
-    (void) strtok_r(NULL, "\n", &state);
-    sec_idle_str    = strtok_r(NULL, "\n", &state);
-    signon_time_str = strtok_r(NULL, "\n", &state);
-
-    if (sec_idle_str == NULL || signon_time_str == NULL) {
-	goto bad;
-    }
-
-    errno = 0;
-    sec_idle = strtol(sec_idle_str, &ep1, 10);
-    if (sec_idle_str[0] == '\0' || *ep1 != '\0') {
-	goto bad;
-    } else if (errno == ERANGE &&
-	       (sec_idle == LONG_MAX || sec_idle == LONG_MIN)) {
-	goto bad;
-    } else {
-	/* do nothing */;
-    }
-
-    errno = 0;
-    signon_time = strtol(signon_time_str, &ep2, 10);
-    if (signon_time_str[0] == '\0' || *ep2 != '\0') {
-	goto bad;
-    } else if (errno == ERANGE &&
-	       (signon_time == LONG_MAX || signon_time == LONG_MIN)) {
-	goto bad;
-    } else {
-	/* do nothing */;
-    }
-
-    if ((ti = get_time_idle(sec_idle, signon_time)) == NULL) {
-	goto bad;
-    }
-
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
-    printtext(&ctx, "%s %ld days %ld hours %ld mins %ld secs %ssignon: %s%s",
-	      Theme("whois_idle"), ti->days, ti->hours, ti->mins, ti->secs,
-	      LEFT_BRKT, ti->buf, RIGHT_BRKT);
-    free(ti);
-    return;
-
-  bad:
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-    printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
 }
 
 /* event_whois_modes: 379, 310, 615
