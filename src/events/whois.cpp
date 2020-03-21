@@ -41,46 +41,52 @@
 
 #include "whois.h"
 
-struct time_idle {
+class time_idle {
     long int days;
     long int hours;
     long int mins;
     long int secs;
     char buf[200];
-};
 
-/*lint -sem(get_time_idle, r_null) */
-static struct time_idle *
-get_time_idle(long int sec_idle, long int signon_time)
-{
-    time_t elapsed = signon_time;
-    struct tm res;
-    struct time_idle *ti =
-	static_cast<struct time_idle *>(xcalloc(sizeof *ti, 1));
-    const char fmt[] = "%c";
+public:
+    time_idle(long int sec_idle, long int signon_time) {
+	struct tm res = { 0 };
+	time_t elapsed = signon_time;
 
 #if defined(UNIX)
-    if (localtime_r(&elapsed, &res) == NULL)
+	if (localtime_r(&elapsed, &res) == NULL)
 #elif defined(WIN32)
-    if (localtime_s(&res, &elapsed) != 0)
+	if (localtime_s(&res, &elapsed) != 0)
 #endif
-	{
-	    free(ti);
-	    return (NULL);
-	}
+	    {
+		throw std::runtime_error("cannot retrieve tm structure");
+	    }
 
-    ti->days  = sec_idle / 86400;
-    ti->hours = (sec_idle / 3600) - (ti->days * 24);
-    ti->mins  = (sec_idle / 60) - (ti->days * 1440) - (ti->hours * 60);
-    ti->secs  = sec_idle % 60;
+	this->days  = sec_idle / 86400;
+	this->hours = (sec_idle / 3600) - (this->days * 24);
+	this->mins  = (sec_idle / 60) - (this->days * 1440) - (this->hours * 60);
+	this->secs  = sec_idle % 60;
 
-    if (strftime(ti->buf, sizeof ti->buf - 1, fmt, &res) == 0) {
-	free(ti);
-	return (NULL);
+	if (strftime(this->buf, ARRAY_SIZE(this->buf), "%c", &res) == 0)
+	    throw std::runtime_error("cannot format date and time");
     }
 
-    return (ti);
-}
+    long int getDays(void) {
+	return this->days;
+    }
+    long int getHours(void) {
+	return this->hours;
+    }
+    long int getMins(void) {
+	return this->mins;
+    }
+    long int getSecs(void) {
+	return this->secs;
+    }
+    const char *getBuf(void) {
+	return (&this->buf[0]);
+    }
+};
 
 /* event_whoReply: 352 (RPL_WHOREPLY)
 
@@ -355,61 +361,52 @@ void
 event_whois_idle(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *ep1, *ep2;
-    char *sec_idle_str, *signon_time_str;
-    char *state = "";
-    long int sec_idle, signon_time;
-    struct time_idle *ti;
-
-    if (strFeed(compo->params, 4) != 4) {
-	goto bad;
-    }
-
-    (void) strtok_r(compo->params, "\n", &state);
-    (void) strtok_r(NULL, "\n", &state);
-    sec_idle_str    = strtok_r(NULL, "\n", &state);
-    signon_time_str = strtok_r(NULL, "\n", &state);
-
-    if (sec_idle_str == NULL || signon_time_str == NULL) {
-	goto bad;
-    }
-
-    errno = 0;
-    sec_idle = strtol(sec_idle_str, &ep1, 10);
-    if (sec_idle_str[0] == '\0' || *ep1 != '\0') {
-	goto bad;
-    } else if (errno == ERANGE &&
-	       (sec_idle == LONG_MAX || sec_idle == LONG_MIN)) {
-	goto bad;
-    } else {
-	/* do nothing */;
-    }
-
-    errno = 0;
-    signon_time = strtol(signon_time_str, &ep2, 10);
-    if (signon_time_str[0] == '\0' || *ep2 != '\0') {
-	goto bad;
-    } else if (errno == ERANGE &&
-	       (signon_time == LONG_MAX || signon_time == LONG_MIN)) {
-	goto bad;
-    } else {
-	/* do nothing */;
-    }
-
-    if ((ti = get_time_idle(sec_idle, signon_time)) == NULL) {
-	goto bad;
-    }
 
     printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
-    printtext(&ctx, "%s %ld days %ld hours %ld mins %ld secs %ssignon: %s%s",
-	      Theme("whois_idle"), ti->days, ti->hours, ti->mins, ti->secs,
-	      LEFT_BRKT, ti->buf, RIGHT_BRKT);
-    free(ti);
-    return;
 
-  bad:
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-    printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
+    try {
+	char *state = const_cast<char *>("");
+	if (strFeed(compo->params, 4) != 4)
+	    throw std::runtime_error("strFeed");
+
+	(void) strtok_r(compo->params, "\n", &state);
+	(void) strtok_r(NULL, "\n", &state);
+	char *sec_idle_str    = strtok_r(NULL, "\n", &state);
+	char *signon_time_str = strtok_r(NULL, "\n", &state);
+
+	if (sec_idle_str == NULL || signon_time_str == NULL)
+	    throw std::runtime_error("unable to retrieve event components");
+
+	errno = 0;
+	char *ep1 = const_cast<char *>("");
+	long int sec_idle = strtol(sec_idle_str, &ep1, 10);
+	if (sec_idle_str[0] == '\0' || *ep1 != '\0')
+	    throw std::runtime_error("sec idle: not a number");
+	else if (errno == ERANGE &&
+		 (sec_idle == LONG_MAX || sec_idle == LONG_MIN))
+	    throw std::runtime_error("sec idle: out of range");
+
+	errno = 0;
+	char *ep2 = const_cast<char *>("");
+	long int signon_time = strtol(signon_time_str, &ep2, 10);
+	if (signon_time_str[0] == '\0' || *ep2 != '\0')
+	    throw std::runtime_error("signon time: not a number");
+	else if (errno == ERANGE &&
+		 (signon_time == LONG_MAX || signon_time == LONG_MIN))
+	    throw std::runtime_error("signon time: out of range");
+
+	time_idle ti(sec_idle, signon_time);
+
+	printtext(&ctx, "%s %ld days %ld hours %ld mins %ld secs %ssignon: %s%s",
+	    Theme("whois_idle"),
+	    ti.getDays(), ti.getHours(), ti.getMins(), ti.getSecs(),
+	    LEFT_BRKT, ti.getBuf(), RIGHT_BRKT);
+    } catch (const std::runtime_error &e) {
+	ctx.window = g_status_window;
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "event_whois_idle(%s): error: %s",
+	    compo->command, e.what());
+    }
 }
 
 /* event_whois_ircOp: 313
