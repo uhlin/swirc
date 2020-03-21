@@ -485,6 +485,47 @@ event_whois_modes(struct irc_message_compo *compo)
     }
 }
 
+/* event_whois_server: 312
+
+   Example:
+     :irc.server.com 312 <issuer> <target> <server> :<info> */
+void
+event_whois_server(struct irc_message_compo *compo)
+{
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+
+    try {
+	char *state = const_cast<char *>("");
+
+	if (strFeed(compo->params, 3) != 3)
+	    throw std::runtime_error("strFeed");
+
+	(void) strtok_r(compo->params, "\n", &state);
+	(void) strtok_r(NULL, "\n", &state);
+	char *srv  = strtok_r(NULL, "\n", &state);
+	char *info = strtok_r(NULL, "\n", &state);
+
+	if (srv == NULL)
+	    throw std::runtime_error("no server");
+	else if (info == NULL)
+	    throw std::runtime_error("no info");
+
+	if (*info == ':')
+	    info++;
+	if (*info) {
+	    printtext(&ctx, "%s %s %s%s%s",
+		Theme("whois_server"), srv, LEFT_BRKT, info, RIGHT_BRKT);
+	}
+    } catch (const std::runtime_error &e) {
+	ctx.window = g_status_window;
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "event_whois_server(%s): error: %s",
+	    compo->command, e.what());
+    }
+}
+
 /* event_whois_ssl: 275, 671
 
    Examples:
@@ -613,47 +654,5 @@ event_whois_user(struct irc_message_compo *compo)
 
     if (*rl_name) {
 	printtext(&ctx, "%s %s", Theme("whois_ircName"), rl_name);
-    }
-}
-
-/* event_whois_server: 312
-
-   Example:
-     :irc.server.com 312 <issuer> <target> <server> :<info> */
-void
-event_whois_server(struct irc_message_compo *compo)
-{
-    PRINTTEXT_CONTEXT ctx;
-    char *srv, *info;
-    char *state = "";
-
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-
-    if (strFeed(compo->params, 3) != 3) {
-	printtext(&ctx, "On issuing event %s: strFeed(..., 3) != 3",
-		  compo->command);
-	return;
-    }
-
-    (void) strtok_r(compo->params, "\n", &state);
-    (void) strtok_r(NULL, "\n", &state);
-    srv  = strtok_r(NULL, "\n", &state);
-    info = strtok_r(NULL, "\n", &state);
-
-    if (srv == NULL || info == NULL) {
-	printtext(&ctx, "On issuing event %s: Erroneous server params",
-		  compo->command);
-	return;
-    }
-
-    if (*info == ':') {
-	info++;
-    }
-
-    if (*info) {
-	ctx.window    = g_active_window;
-	ctx.spec_type = TYPE_SPEC1;
-	printtext(&ctx, "%s %s %s%s%s", Theme("whois_server"), srv,
-		  LEFT_BRKT, info, RIGHT_BRKT);
     }
 }
