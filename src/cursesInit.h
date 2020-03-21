@@ -7,7 +7,7 @@
 #define LIGHT_CYAN	11
 #define LIGHT_BLUE	12
 #define PINK		13
-#define GREY		14
+#define GREY		0xff
 #define LIGHT_GREY	15
 
 #define FOREACH_FOREGROUND_EXTENDED()\
