@@ -236,6 +236,41 @@ event_whois_cert(struct irc_message_compo *compo)
     }
 }
 
+/* event_whois_channels: 319
+
+   Example:
+     :irc.server.com 319 <issuer> <target> :<channel list> */
+void
+event_whois_channels(struct irc_message_compo *compo)
+{
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+
+    try {
+	char *chan_list = NULL;
+	char *state = const_cast<char *>("");
+
+	if (strFeed(compo->params, 2) != 2)
+	    throw std::runtime_error("strFeed");
+
+	(void) strtok_r(compo->params, "\n", &state);
+	(void) strtok_r(NULL, "\n", &state);
+
+	if ((chan_list = strtok_r(NULL, "\n", &state)) == NULL)
+	    throw std::runtime_error("no chan list");
+	if (*chan_list == ':')
+	    chan_list++;
+	if (*chan_list)
+	    printtext(&ctx, "%s %s", Theme("whois_channels"), chan_list);
+    } catch (const std::runtime_error &e) {
+	ctx.window = g_status_window;
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "event_whois_channels(%s): error: %s",
+	    compo->command, e.what());
+    }
+}
+
 /* event_whois_ssl: 275, 671
 
    Examples:
@@ -512,45 +547,6 @@ event_whois_idle(struct irc_message_compo *compo)
   bad:
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
     printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
-}
-
-/* event_whois_channels: 319
-
-   Example:
-     :irc.server.com 319 <issuer> <target> :<channel list> */
-void
-event_whois_channels(struct irc_message_compo *compo)
-{
-    PRINTTEXT_CONTEXT ctx;
-    char *chan_list;
-    char *state = "";
-
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-
-    if (strFeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
-		  compo->command);
-	return;
-    }
-
-    (void) strtok_r(compo->params, "\n", &state);
-    (void) strtok_r(NULL, "\n", &state);
-
-    if ((chan_list = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message",
-		  compo->command);
-	return;
-    }
-
-    if (*chan_list == ':') {
-	chan_list++;
-    }
-
-    if (*chan_list) {
-	ctx.window    = g_active_window;
-	ctx.spec_type = TYPE_SPEC1;
-	printtext(&ctx, "%s %s", Theme("whois_channels"), chan_list);
-    }
 }
 
 /* event_whois_host: 338, 616
