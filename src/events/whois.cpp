@@ -200,6 +200,42 @@ event_whois_away(struct irc_message_compo *compo)
     }
 }
 
+/* event_whois_cert: 276
+
+   Example:
+     :irc.server.com 276 <issuer> <target> :has client certificate fingerprint
+                                            <string> */
+void
+event_whois_cert(struct irc_message_compo *compo)
+{
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+
+    try {
+	char *state = const_cast<char *>("");
+
+	if (strFeed(compo->params, 2) != 2)
+	    throw std::runtime_error("strFeed");
+
+	(void) strtok_r(compo->params, "\n", &state);
+	char *tnick = strtok_r(NULL, "\n", &state);
+	char *msg   = strtok_r(NULL, "\n", &state);
+
+	if (tnick == NULL || msg == NULL)
+	    throw std::runtime_error("unable to retrieve event components");
+	if (*msg == ':')
+	    msg++;
+	if (*msg)
+	    printtext(&ctx, "%s %s %s", Theme("whois_cert"), tnick, msg);
+    } catch (const std::runtime_error &e) {
+	ctx.window = g_status_window;
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "event_whois_cert(%s): error: %s",
+	    compo->command, e.what());
+    }
+}
+
 /* event_whois_ssl: 275, 671
 
    Examples:
@@ -238,47 +274,6 @@ event_whois_ssl(struct irc_message_compo *compo)
 	ctx.window    = g_active_window;
 	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s %s %s", Theme("whois_ssl"), tnick, msg);
-    }
-}
-
-/* event_whois_cert: 276
-
-   Example:
-     :irc.server.com 276 <issuer> <target> :has client certificate fingerprint
-                                            <string> */
-void
-event_whois_cert(struct irc_message_compo *compo)
-{
-    PRINTTEXT_CONTEXT ctx;
-    char *state = "";
-    char *tnick, *msg;
-
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-
-    if (strFeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
-		  compo->command);
-	return;
-    }
-
-    (void) strtok_r(compo->params, "\n", &state);
-    tnick = strtok_r(NULL, "\n", &state);
-    msg   = strtok_r(NULL, "\n", &state);
-
-    if (tnick == NULL || msg == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message",
-		  compo->command);
-	return;
-    }
-
-    if (*msg == ':') {
-	msg++;
-    }
-
-    if (*msg) {
-	ctx.window    = g_active_window;
-	ctx.spec_type = TYPE_SPEC1;
-	printtext(&ctx, "%s %s %s", Theme("whois_cert"), tnick, msg);
     }
 }
 
