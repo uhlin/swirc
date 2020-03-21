@@ -570,35 +570,30 @@ void
 event_whois_ssl(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *state = "";
-    char *tnick, *msg;
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
-    if (strFeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
-		  compo->command);
-	return;
-    }
+    try {
+	char *state = const_cast<char *>("");
 
-    (void) strtok_r(compo->params, "\n", &state);
-    tnick = strtok_r(NULL, "\n", &state);
-    msg   = strtok_r(NULL, "\n", &state);
+	if (strFeed(compo->params, 2) != 2)
+	    throw std::runtime_error("strFeed");
 
-    if (tnick == NULL || msg == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message",
-		  compo->command);
-	return;
-    }
+	(void) strtok_r(compo->params, "\n", &state);
+	char *tnick = strtok_r(NULL, "\n", &state);
+	char *msg   = strtok_r(NULL, "\n", &state);
 
-    if (*msg == ':') {
-	msg++;
-    }
-
-    if (*msg) {
-	ctx.window    = g_active_window;
-	ctx.spec_type = TYPE_SPEC1;
-	printtext(&ctx, "%s %s %s", Theme("whois_ssl"), tnick, msg);
+	if (tnick == NULL || msg == NULL)
+	    throw std::runtime_error("unable to retrieve event components");
+	if (*msg == ':')
+	    msg++;
+	if (*msg)
+	    printtext(&ctx, "%s %s %s", Theme("whois_ssl"), tnick, msg);
+    } catch (const std::runtime_error &e) {
+	ctx.window = g_status_window;
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "event_whois_ssl(%s): error: %s",
+	    compo->command, e.what());
     }
 }
 
