@@ -606,44 +606,32 @@ void
 event_whois_user(struct irc_message_compo *compo)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *nick, *user, *host, *rl_name;
-    char *state = "";
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
-#if 0
-    nick = user = host = rl_name = NULL;
-#endif
+    try {
+	char *state = const_cast<char *>("");
 
-    if (strFeed(compo->params, 5) != 5) {
-	printtext(&ctx, "On issuing event %s: strFeed(..., 5) != 5",
-		  compo->command);
-	return;
-    }
+	if (strFeed(compo->params, 5) != 5)
+	    throw std::runtime_error("strFeed");
 
-    (void) strtok_r(compo->params, "\n", &state); /* <issuer> */
-    nick    = strtok_r(NULL, "\n", &state);
-    user    = strtok_r(NULL, "\n", &state);
-    host    = strtok_r(NULL, "\n", &state);
-    (void) strtok_r(NULL, "\n", &state);
-    rl_name = strtok_r(NULL, "\n", &state);
+	(void) strtok_r(compo->params, "\n", &state); /* <issuer> */
+	char *nick = strtok_r(NULL, "\n", &state);
+	char *user = strtok_r(NULL, "\n", &state);
+	char *host = strtok_r(NULL, "\n", &state);
+	(void) strtok_r(NULL, "\n", &state);
+	char *rl_name = strtok_r(NULL, "\n", &state);
 
-    if (nick == NULL || user == NULL || host == NULL || rl_name == NULL) {
-	printtext(&ctx, "On issuing event %s: Erroneous server params",
-		  compo->command);
-	return;
-    }
-
-    ctx.window    = g_active_window;
-    ctx.spec_type = TYPE_SPEC1;
-    printtext(&ctx, "%c%s%c %s%s@%s%s", BOLD, nick, BOLD,
-	      LEFT_BRKT, user, host, RIGHT_BRKT);
-
-    if (*rl_name == ':') {
-	rl_name++;
-    }
-
-    if (*rl_name) {
-	printtext(&ctx, "%s %s", Theme("whois_ircName"), rl_name);
+	if (nick == NULL || user == NULL || host == NULL || rl_name == NULL)
+	    throw std::runtime_error("unable to retrieve event components");
+	if (*rl_name == ':')
+	    rl_name++;
+	if (*rl_name)
+	    printtext(&ctx, "%s %s", Theme("whois_ircName"), rl_name);
+    } catch (const std::runtime_error &e) {
+	ctx.window = g_status_window;
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "event_whois_user(%s): error: %s",
+	    compo->command, e.what());
     }
 }
