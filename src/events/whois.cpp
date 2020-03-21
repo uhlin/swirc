@@ -447,6 +447,44 @@ event_whois_ircOp(struct irc_message_compo *compo)
     }
 }
 
+/* event_whois_modes: 379, 310, 615
+
+   Example:
+     :irc.server.com 379 <issuer> <target> :is using modes <modes>
+     :irc.server.com 310 <issuer> <target> :is using modes <modes> authflags:
+                                            [...]
+     :irc.server.com 615 <issuer> <target> :is using modes ... */
+void
+event_whois_modes(struct irc_message_compo *compo)
+{
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+
+    try {
+	char *msg = NULL;
+	char *state = const_cast<char *>("");
+
+	if (strFeed(compo->params, 2) != 2)
+	    throw std::runtime_error("strFeed");
+
+	(void) strtok_r(compo->params, "\n", &state);
+	(void) strtok_r(NULL, "\n", &state);
+
+	if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
+	    throw std::runtime_error("no message");
+	if (*msg == ':')
+	    msg++;
+	if (*msg)
+	    printtext(&ctx, "%s %s", Theme("whois_modes"), msg);
+    } catch (const std::runtime_error &e) {
+	ctx.window = g_status_window;
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "event_whois_modes(%s): error: %s",
+	    compo->command, e.what());
+    }
+}
+
 /* event_whois_ssl: 275, 671
 
    Examples:
@@ -617,47 +655,5 @@ event_whois_server(struct irc_message_compo *compo)
 	ctx.spec_type = TYPE_SPEC1;
 	printtext(&ctx, "%s %s %s%s%s", Theme("whois_server"), srv,
 		  LEFT_BRKT, info, RIGHT_BRKT);
-    }
-}
-
-/* event_whois_modes: 379, 310, 615
-
-   Example:
-     :irc.server.com 379 <issuer> <target> :is using modes <modes>
-     :irc.server.com 310 <issuer> <target> :is using modes <modes> authflags:
-                                            [...]
-     :irc.server.com 615 <issuer> <target> :is using modes ... */
-void
-event_whois_modes(struct irc_message_compo *compo)
-{
-    PRINTTEXT_CONTEXT ctx;
-    char *msg;
-    char *state = "";
-
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-
-    if (strFeed(compo->params, 2) != 2) {
-	printtext(&ctx, "On issuing event %s: strFeed(..., 2) != 2",
-		  compo->command);
-	return;
-    }
-
-    (void) strtok_r(compo->params, "\n", &state);
-    (void) strtok_r(NULL, "\n", &state);
-
-    if ((msg = strtok_r(NULL, "\n", &state)) == NULL) {
-	printtext(&ctx, "On issuing event %s: Unable to extract message",
-		  compo->command);
-	return;
-    }
-
-    if (*msg == ':') {
-	msg++;
-    }
-
-    if (*msg) {
-	ctx.window    = g_active_window;
-	ctx.spec_type = TYPE_SPEC1;
-	printtext(&ctx, "%s %s", Theme("whois_modes"), msg);
     }
 }
