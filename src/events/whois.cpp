@@ -71,19 +71,19 @@ public:
 	    throw std::runtime_error("cannot format date and time");
     }
 
-    long int getDays(void) {
+    long int getDays(void) const {
 	return this->days;
     }
-    long int getHours(void) {
+    long int getHours(void) const {
 	return this->hours;
     }
-    long int getMins(void) {
+    long int getMins(void) const {
 	return this->mins;
     }
-    long int getSecs(void) {
+    long int getSecs(void) const {
 	return this->secs;
     }
-    const char *getBuf(void) {
+    const char *getBuf(void) const {
 	return (&this->buf[0]);
     }
 };
