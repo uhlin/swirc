@@ -981,15 +981,15 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 	err_log(EPERM, "In try_convert_buf_with_cs: "
 	    "cannot restore original locale (%s)", original_locale);
     free_locale_info(li);
-    free_not_null(original_locale);
-    free_not_null(tmp_locale);
+    free(original_locale);
+    free(tmp_locale);
     return out;
 
   err:
     free_locale_info(li);
-    free_not_null(original_locale);
-    free_not_null(tmp_locale);
-    free_not_null(out);
+    free(original_locale);
+    free(tmp_locale);
+    free(out);
     return NULL;
 }
 
@@ -1114,7 +1114,7 @@ printtext_context_new(PIRC_WINDOW window, enum message_specifier_type spec_type,
 void
 printtext_context_destroy(PPRINTTEXT_CONTEXT ctx)
 {
-    free_not_null(ctx);
+    free(ctx);
 }
 
 void
@@ -1265,14 +1265,14 @@ print_and_free(const char *msg, char *cp)
 {
 #ifdef UNIT_TESTING
     puts(msg);
-    free_not_null(cp);
+    free(cp);
     fail();
 #else
     PRINTTEXT_CONTEXT ctx;
 
     printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
     printtext(&ctx, "%s", msg);
-    free_not_null(cp);
+    free(cp);
 #endif
 }
 
@@ -1496,9 +1496,9 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 	}
     }
 
-    free_not_null(fmt_copy);
-    free_not_null(pout->text);
-    free_not_null(pout);
+    free(fmt_copy);
+    free(pout->text);
+    free(pout);
 
     mutex_unlock(&vprinttext_mutex);
 }

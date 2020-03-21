@@ -478,9 +478,9 @@ SortMsgCompo(const char *protocol_message)
 static void
 FreeMsgCompo(struct irc_message_compo *compo)
 {
-    free_not_null(compo->prefix);
-    free_not_null(compo->command);
-    free_not_null(compo->params);
+    free(compo->prefix);
+    free(compo->command);
+    free(compo->params);
 
     free(compo);
 }
@@ -647,7 +647,7 @@ irc_handle_interpret_events(char *recvbuffer,
 	ProcessProtoMsg(token);
     }
 
-    free_not_null(last_token);
+    free(last_token);
 }
 
 /**
