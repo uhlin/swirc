@@ -307,6 +307,45 @@ event_whois_conn(struct irc_message_compo *compo)
     }
 }
 
+/* event_whois_host: 338, 616
+
+   Example:
+     :irc.server.com 338 <issuer> <target> <IP> :actually using host
+     :irc.server.com 338 <issuer> <target> :is actually <user@host> [<IP>]
+     :irc.server.com 616 <issuer> <target> :real hostname ... */
+void
+event_whois_host(struct irc_message_compo *compo)
+{
+    PRINTTEXT_CONTEXT ctx;
+
+    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+
+    try {
+	char *state = const_cast<char *>("");
+	char *str = NULL;
+
+	if (strFeed(compo->params, 2) != 2)
+	    throw std::runtime_error("strFeed");
+
+	(void) strtok_r(compo->params, "\n", &state);
+	(void) strtok_r(NULL, "\n", &state);
+
+	if ((str = strtok_r(NULL, "\n", &state)) == NULL)
+	    throw std::runtime_error("null string");
+
+	char *str_copy = sw_strdup(str);
+	//char *cp = &str_copy[0];
+	squeeze(str_copy, ":");
+	printtext(&ctx, "%s %s", Theme("whois_host"), str_copy);
+	free(str_copy);
+    } catch (const std::runtime_error &e) {
+	ctx.window = g_status_window;
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "event_whois_host(%s): error: %s",
+	    compo->command, e.what());
+    }
+}
+
 /* event_whois_ssl: 275, 671
 
    Examples:
@@ -578,44 +617,6 @@ event_whois_idle(struct irc_message_compo *compo)
 	      Theme("whois_idle"), ti->days, ti->hours, ti->mins, ti->secs,
 	      LEFT_BRKT, ti->buf, RIGHT_BRKT);
     free(ti);
-    return;
-
-  bad:
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-    printtext(&ctx, "On issuing event %s: An error occurred", compo->command);
-}
-
-/* event_whois_host: 338, 616
-
-   Example:
-     :irc.server.com 338 <issuer> <target> <IP> :actually using host
-     :irc.server.com 338 <issuer> <target> :is actually <user@host> [<IP>]
-     :irc.server.com 616 <issuer> <target> :real hostname ... */
-void
-event_whois_host(struct irc_message_compo *compo)
-{
-    PRINTTEXT_CONTEXT ctx;
-    char *state = "";
-    char *str, *str_copy, *cp;
-
-    if (strFeed(compo->params, 2) != 2) {
-	goto bad;
-    }
-
-    (void) strtok_r(compo->params, "\n", &state);
-    (void) strtok_r(NULL, "\n", &state);
-
-    if ((str = strtok_r(NULL, "\n", &state)) == NULL) {
-	goto bad;
-    }
-
-    str_copy = sw_strdup(str);
-    cp       = &str_copy[0];
-    squeeze(str_copy, ":");
-
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
-    printtext(&ctx, "%s %s", Theme("whois_host"), cp);
-    free(str_copy);
     return;
 
   bad:
