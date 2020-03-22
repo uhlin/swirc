@@ -600,11 +600,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 static void
 do_indent(WINDOW *win, const int indent, int *insert_count)
 {
-#if defined(UNIX)
-    attr_t attrs;
-#elif defined(WIN32)
-    chtype attrs;
-#endif
+    attr_t attrs = 0;
     const chtype blank = ' ';
     int counter = 0;
 
