@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include <stdexcept>
 #include <time.h>
 
 #include "../dataClassify.h"
@@ -54,62 +55,78 @@
 void
 event_banlist(struct irc_message_compo *compo)
 {
-    int		 feeds_written	 = 0;
-    char	*state1		 = "";
-    char	*state2		 = "";
-    char	*channel	 = NULL;
-    char	*mask		 = NULL;
-    char	*issuer		 = NULL;
-    char	*seconds	 = NULL;
-    char	*issuer_name	 = "";
-    char	*issuer_userhost = "";
-
     PRINTTEXT_CONTEXT ctx;
+    char *state1 = const_cast<char *>("");
+    char *state2 = const_cast<char *>("");
+    int feeds_written = 0;
+
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
-    if ((feeds_written = strFeed(compo->params, 4)) == 4) {
-	char buf[500] = { 0 };
+    try {
+	if ((feeds_written = strFeed(compo->params, 4)) == 4) {
+	    char buf[500] = { 0 };
 
-	(void) strtok_r(compo->params, "\n", &state1); /* recipient */
+	    (void) strtok_r(compo->params, "\n", &state1); /* recipient */
 
-	if ((channel = strtok_r(NULL, "\n", &state1)) == NULL ||
-	    (mask    = strtok_r(NULL, "\n", &state1)) == NULL ||
-	    (issuer  = strtok_r(NULL, "\n", &state1)) == NULL ||
-	    (seconds = strtok_r(NULL, "\n", &state1)) == NULL ||
-	    sw_strcpy(buf, issuer, sizeof buf) != 0 ||
-	    !is_numeric(seconds))
-	    return;
+	    char *channel = strtok_r(NULL, "\n", &state1);
+	    char *mask    = strtok_r(NULL, "\n", &state1);
+	    char *issuer  = strtok_r(NULL, "\n", &state1);
+	    char *seconds = strtok_r(NULL, "\n", &state1);
 
-	if (window_by_label(channel))
-	    ctx.window = window_by_label(channel);
+	    if (channel == NULL)
+		throw std::runtime_error("unable to get channel");
+	    else if (mask == NULL)
+		throw std::runtime_error("unable to get mask");
+	    else if (issuer == NULL)
+		throw std::runtime_error("unable to get issuer");
+	    else if (seconds == NULL)
+		throw std::runtime_error("unable to get seconds");
+	    else if (sw_strcpy(buf, issuer, ARRAY_SIZE(buf)) != 0)
+		throw std::runtime_error("cannot copy issuer");
+	    else if (!is_numeric(seconds))
+		throw std::runtime_error("seconds not a number");
 
-	if ((issuer_name = strtok_r(buf, "!", &state2)) == NULL)
-	    return;
-	issuer_userhost = strtok_r(NULL, "!", &state2);
+	    if (window_by_label(channel))
+		ctx.window = window_by_label(channel);
 
-	const time_t date_of_issue = (time_t) strtol(seconds, NULL, 10);
+	    char *issuer_name     = strtok_r(buf, "!", &state2);
+	    char *issuer_userhost = strtok_r(NULL, "!", &state2);
 
-	printtext(&ctx, "%s%s%s%c%s: %s%s%c issued by %s%s%c %s%s%s %s%s%s",
-		  LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-		  COLOR4, mask, NORMAL,
-		  COLOR2, issuer_name, NORMAL,
-		  LEFT_BRKT, issuer_userhost ? issuer_userhost : "", RIGHT_BRKT,
-		  LEFT_BRKT, trim(ctime(&date_of_issue)), RIGHT_BRKT);
-    } else if (feeds_written == 2) {
-	(void) strtok_r(compo->params, "\n", &state1); /* recipient */
+	    if (issuer_name == NULL)
+		throw std::runtime_error("unable to get issuer name");
 
-	if ((channel = strtok_r(NULL, "\n", &state1)) == NULL ||
-	    (mask = strtok_r(NULL, "\n", &state1)) == NULL)
-	    return;
+	    const time_t date_of_issue = (time_t) strtol(seconds, NULL, 10);
 
-	if (window_by_label(channel))
-	    ctx.window = window_by_label(channel);
+	    printtext(&ctx, "%s%s%s%c%s: %s%s%c issued by %s%s%c %s%s%s %s%s%s",
+		LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+		COLOR4, mask, NORMAL,
+		COLOR2, issuer_name, NORMAL,
+		LEFT_BRKT, issuer_userhost ? issuer_userhost : "", RIGHT_BRKT,
+		LEFT_BRKT, trim(ctime(&date_of_issue)), RIGHT_BRKT);
+	} else if (feeds_written == 2) {
+	    (void) strtok_r(compo->params, "\n", &state1); /* recipient */
+	    char *channel = strtok_r(NULL, "\n", &state1);
+	    char *mask    = strtok_r(NULL, "\n", &state1);
 
-	printtext(&ctx, "%s%s%s%c%s: %s%s%c",
-		  LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-		  COLOR4, mask, NORMAL);
-    } else {
-	err_log(0, "On issuing event %s: an error occurred", compo->command);
+	    if (channel == NULL)
+		throw std::runtime_error("unable to get channel");
+	    else if (mask == NULL)
+		throw std::runtime_error("unable to get mask");
+
+	    if (window_by_label(channel))
+		ctx.window = window_by_label(channel);
+
+	    printtext(&ctx, "%s%s%s%c%s: %s%s%c",
+		LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+		COLOR4, mask, NORMAL);
+	} else {
+	    throw std::runtime_error("unexpected number of feeds written");
+	}
+    } catch (const std::runtime_error &e) {
+	ctx.window    = g_status_window;
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "event_banlist(%s): error: %s",
+	    compo->command, e.what());
     }
 }
 
