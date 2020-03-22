@@ -124,7 +124,7 @@ event_banlist(struct irc_message_compo *compo)
 	}
     } catch (const std::runtime_error &e) {
 	ctx.window    = g_status_window;
-	ctx.spec_type = TYPE_SPEC1_WARN;
+	ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ctx, "event_banlist(%s): error: %s",
 	    compo->command, e.what());
     }
@@ -166,7 +166,7 @@ event_eof_banlist(struct irc_message_compo *compo)
 	    printtext(&ctx, "%s", msg);
     } catch (const std::runtime_error &e) {
 	ctx.window    = g_status_window;
-	ctx.spec_type = TYPE_SPEC1_WARN;
+	ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ctx, "event_eof_banlist(%s): error: %s",
 	    compo->command, e.what());
     }
