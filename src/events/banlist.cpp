@@ -141,27 +141,33 @@ event_banlist(struct irc_message_compo *compo)
 void
 event_eof_banlist(struct irc_message_compo *compo)
 {
-    char	*state	 = "";
-    char	*channel = NULL;
-    char	*msg	 = NULL;
-
     PRINTTEXT_CONTEXT ctx;
+
     printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
-    if (strFeed(compo->params, 2) != 2)
-	return;
+    try {
+	char *state = const_cast<char *>("");
 
-    (void) strtok_r(compo->params, "\n", &state); /* recipient */
+	if (strFeed(compo->params, 2) != 2)
+	    throw std::runtime_error("strFeed");
 
-    if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
-	(msg = strtok_r(NULL, "\n", &state)) == NULL)
-	return;
+	(void) strtok_r(compo->params, "\n", &state); /* recipient */
+	char *channel = strtok_r(NULL, "\n", &state);
+	char *msg     = strtok_r(NULL, "\n", &state);
 
-    if (window_by_label(channel))
-	ctx.window = window_by_label(channel);
+	if (channel == NULL || msg == NULL)
+	    throw std::runtime_error("unable to retrieve event components");
 
-    if (*msg == ':')
-	msg++;
-
-    printtext(&ctx, "%s", msg);
+	if (window_by_label(channel))
+	    ctx.window = window_by_label(channel);
+	if (*msg == ':')
+	    msg++;
+	if (*msg)
+	    printtext(&ctx, "%s", msg);
+    } catch (const std::runtime_error &e) {
+	ctx.window    = g_status_window;
+	ctx.spec_type = TYPE_SPEC1_WARN;
+	printtext(&ctx, "event_eof_banlist(%s): error: %s",
+	    compo->command, e.what());
+    }
 }
