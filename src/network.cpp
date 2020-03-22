@@ -37,6 +37,7 @@
 #include <unistd.h> /* close() */
 #endif
 
+#include <algorithm>
 #include <stdexcept>
 #include <string.h>
 
@@ -491,8 +492,8 @@ net_irc_listen(bool *connection_lost)
 	    if ((bytes_received = net_recv(&ctx, recvbuf, length)) == -1)
 		g_connection_lost = true;
 	    else if (bytes_received != length && length != 0) {
-		const int maxval = MAX(length, bytes_received);
-		const int minval = MIN(length, bytes_received);
+		const int maxval = std::max(length, bytes_received);
+		const int minval = std::min(length, bytes_received);
 
 		const int bytes_remaining = int_diff(maxval, minval);
 
