@@ -621,6 +621,10 @@ event_whois_user(struct irc_message_compo *compo)
 
 	if (nick == NULL || user == NULL || host == NULL || rl_name == NULL)
 	    throw std::runtime_error("unable to retrieve event components");
+
+	printtext(&ctx, "%c%s%c %s%s@%s%s", BOLD, nick, BOLD,
+	    LEFT_BRKT, user, host, RIGHT_BRKT);
+
 	if (*rl_name == ':')
 	    rl_name++;
 	if (*rl_name)
