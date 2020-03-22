@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file.
 - Code improvements
 
 ### Changed ###
-- Multiple remaining events to use try-catch blocks
+- Multiple events to use try-catch blocks
+- Stopped using `free_not_null()` as `free()` handles null
 
 ### Fixed ###
 - Color 11
