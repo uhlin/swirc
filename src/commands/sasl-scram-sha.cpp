@@ -30,6 +30,7 @@
 #include "base64.h"
 #include "common.h"
 
+#include <algorithm>
 #ifndef _lint
 #include <random>
 #endif
@@ -417,7 +418,7 @@ sasl_scram_sha_handle_serv_first_msg(const char *msg)
 
     /* ClientProof: ClientKey XOR ClientSignature */
     for (unsigned int i = 0;
-	 i < MIN(client_key.md_len, client_signature.md_len); i++)
+	 i < std::min(client_key.md_len, client_signature.md_len); i++)
 	proof[i] = client_key.md[i] ^ client_signature.md[i];
 
     return sasl_scram_sha_send_client_final_msg(get_encoded_msg(proof));
