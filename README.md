@@ -57,6 +57,10 @@ is installed, issue:
 
     # pkgin install ncursesw
 
+#### Void Linux ####
+
+    # xbps-install libcurl-devel libressl-devel ncurses-devel libidn-devel
+
 ### Building for the UNIX environment ###
 
 On the BSDs and GNU/Linux the configure script will per default
