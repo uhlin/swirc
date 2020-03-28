@@ -59,7 +59,7 @@ is installed, issue:
 
 #### Void Linux ####
 
-    # xbps-install libcurl-devel libressl-devel ncurses-devel libidn-devel
+    # xbps-install -S libcurl-devel libressl-devel ncurses-devel libidn-devel
 
 ### Building for the UNIX environment ###
 
