@@ -7,6 +7,8 @@
 Swirc is a BSD licensed, console based and lightweight ICB and IRC
 client written in C/C++, whose goals are to be portable and secure.
 
+[Official Swirc homepage](https://www.nifty-networks.net/swirc/)
+
 ## Program options ##
 
 usage: swirc [-46?dipv] [-c server[:port]] [-n nickname] [-r rl name] [-u username] [-x config]
