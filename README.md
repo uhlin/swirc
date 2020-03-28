@@ -57,7 +57,7 @@ is installed, issue:
 
     # pkgin install ncursesw
 
-#### Void Linux ####
+#### Void GNU/Linux ####
 
     # xbps-install -S libcurl-devel libressl-devel ncurses-devel libidn-devel
 
