@@ -57,7 +57,7 @@ is installed, issue:
 
 #### NetBSD ####
 
-    # pkgin install ncursesw
+    # pkgin install curl libidn ncursesw
 
 #### Void GNU/Linux ####
 
