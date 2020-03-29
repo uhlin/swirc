@@ -6,5 +6,4 @@ doc/rfc2811.txt export-ignore
 doc/rfc2812.txt export-ignore
 openbsd/ export-ignore
 setver export-ignore
-tests/ export-ignore
 voidlinux/ export-ignore
