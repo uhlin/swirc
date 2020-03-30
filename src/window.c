@@ -571,6 +571,9 @@ window_close_all_priv_conv(void)
 		continue;
 	    if (window->label)
 		priv_conv[pc_assigned++] = sw_strdup(window->label);
+	    /*
+	     * FIXME: Array size checking?
+	     */
 	}
     }
     if (pc_assigned == 0) {
