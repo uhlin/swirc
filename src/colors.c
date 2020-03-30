@@ -14,6 +14,9 @@
    TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
    PERFORMANCE OF THIS SOFTWARE. */
 
+// Dump extended IRC color palette in Curses RGB scale (0-1000) converted
+// from base 16 suitable for init_color().
+//
 // Compile with: cc -O2 -Wall -lm -pipe colors.c
 
 #include <math.h>
