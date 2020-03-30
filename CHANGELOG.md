@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Added ###
 - Improved documentation
-- More colors for Windows
+- More colors for Windows and a synchronized colormap
 
 ## [3.2.3] - 2020-03-22 ##
 ### Added ###
