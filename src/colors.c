@@ -117,7 +117,7 @@ static struct {
     { 231, {0xff,0xff,0xff} },
 };
 
-long int
+static long int
 getval(short int i)
 {
     const double input_start = 0.0;
