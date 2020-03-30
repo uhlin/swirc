@@ -15,6 +15,7 @@ OBJS=$(OBJS)\
 	$(SRC_DIR)filePred.obj\
 	$(SRC_DIR)icb.obj\
 	$(SRC_DIR)init_once.obj\
+	$(SRC_DIR)initcolors.obj\
 	$(SRC_DIR)interpreter.obj\
 	$(SRC_DIR)io-loop.obj\
 	$(SRC_DIR)irc.obj\

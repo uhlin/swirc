@@ -32,6 +32,7 @@
 #include "curses-funcs.h"
 #include "cursesInit.h"
 #include "errHand.h"
+#include "initcolors.h"
 #include "strHand.h"
 #include "theme.h"
 
@@ -150,6 +151,7 @@ init_color_pairs()
 	    err_log(0, "init_color_pairs: init_color: GREY error");
 	if (init_color(LIGHT_GREY, 824,824,824) == ERR)
 	    err_log(0, "init_color_pairs: init_color: LIGHT_GREY error");
+	initcolors();
     }
 
     /* Initialize black on black */

@@ -1,6 +1,11 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+### Added ###
+- Improved documentation
+- More colors for Windows
+
 ## [3.2.3] - 2020-03-22 ##
 ### Added ###
 - Code improvements
