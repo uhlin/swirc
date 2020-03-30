@@ -201,12 +201,17 @@ init_color_pairs()
 	    return (pair_n - 1);
     }
 
-#if UNIX
     if (COLORS >= 256) {
+#if UNIX
 	if (init_more_pairs(&pair_n) == ERR)
 	    return (pair_n - 1);
-    }
+#elif WIN32
+	FOREACH_FOREGROUND_EXTENDED() {
+	    if (init_pair(++pair_n, *fg, COLOR_BLACK) == ERR)
+		return (pair_n - 1);
+	}
 #endif
+    }
 
     debug("init_color_pairs: all ok: %hd initialized pairs", pair_n);
     return pair_n;
