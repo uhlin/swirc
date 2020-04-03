@@ -3,7 +3,7 @@ COMMANDS_DIR:=$(ROOT)/src/commands/
 EVENTS_DIR:=$(ROOT)/src/events/
 SRC_DIR:=$(ROOT)/src/
 
-TEST_LOGFILE?=tests.log
+TEST_LOGFILE?=/tmp/run.log
 
 include $(ROOT)/options.mk
 
