@@ -38,5 +38,6 @@ main: $(RECOMPILE) $(TESTS)
 
 clean:
 	$(E) "  CLEAN"
+	$(RM) "$(TEST_LOG)"
 	$(RM) $(TESTS)
 	$(RM) *.o
