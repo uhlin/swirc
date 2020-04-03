@@ -14,9 +14,10 @@ LDLIBS+=-lcmocka
 
 all: main
 
+include recompile.mk
 include tests.mk
 
-main: $(TESTS)
+main: $(RECOMPILE) $(TESTS)
 
 .SUFFIXES: .c .o .run
 

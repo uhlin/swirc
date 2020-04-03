@@ -19,19 +19,10 @@ main: $(TGTS)
 	$(E) "  CXX     " $@
 	$(Q) $(CXX) $(CXXFLAGS) -c -o $@ $<
 
-RECOMPILE=$(COMMANDS_DIR)ban.o\
-	$(COMMANDS_DIR)jp.o\
-	$(COMMANDS_DIR)kick.o\
-	$(COMMANDS_DIR)op.o\
-	$(SRC_DIR)printtext.o
+include tests/recompile.mk
 
-check-init:
+check: $(OBJS)
 	$(RM) $(RECOMPILE)
-#	./configure --unittesting
-	$(eval CFLAGS += "-DUNIT_TESTING=1")
-	$(eval CXXFLAGS += "-DUNIT_TESTING=1")
-
-check: check-init $(OBJS)
 	$(Q) strip --strip-symbol=main $(SRC_DIR)main.o
 	$(MAKE) -Ctests
 
