@@ -3,6 +3,8 @@ COMMANDS_DIR:=$(ROOT)/src/commands/
 EVENTS_DIR:=$(ROOT)/src/events/
 SRC_DIR:=$(ROOT)/src/
 
+TEST_LOG?=tests.log
+
 include $(ROOT)/options.mk
 
 CFLAGS+=-DUNIT_TESTING=1\
@@ -18,6 +20,8 @@ include recompile.mk
 include tests.mk
 
 main: $(RECOMPILE) $(TESTS)
+	./run > "$(TEST_LOG)"
+	$(E) "$(TEST_LOG) written"
 
 .SUFFIXES: .c .o .run
 
