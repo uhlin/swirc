@@ -3,7 +3,7 @@ COMMANDS_DIR:=$(ROOT)/src/commands/
 EVENTS_DIR:=$(ROOT)/src/events/
 SRC_DIR:=$(ROOT)/src/
 
-TEST_LOG?=tests.log
+TEST_LOGFILE?=tests.log
 
 include $(ROOT)/options.mk
 
@@ -20,8 +20,8 @@ include recompile.mk
 include tests.mk
 
 main: $(RECOMPILE) $(TESTS)
-	./run > "$(TEST_LOG)"
-	$(E) "$(TEST_LOG) written"
+	./run > "$(TEST_LOGFILE)"
+	$(E) "$(TEST_LOGFILE) written"
 
 .SUFFIXES: .c .o .run
 
@@ -38,6 +38,6 @@ main: $(RECOMPILE) $(TESTS)
 
 clean:
 	$(E) "  CLEAN"
-	$(RM) "$(TEST_LOG)"
+	$(RM) "$(TEST_LOGFILE)"
 	$(RM) $(TESTS)
 	$(RM) *.o
