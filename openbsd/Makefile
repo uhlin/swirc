@@ -19,7 +19,8 @@ COMPILER =		base-clang ports-gcc
 LIB_DEPENDS =		devel/libidn net/curl
 CONFIGURE_STYLE =	simple
 
-NO_TEST =		Yes
+TEST_DEPENDS =		devel/cmocka
+TEST_TARGET =		check
 
 MAKE_FLAGS =		DEST_CONFMAN=${WRKINST}${PREFIX}/man/man5 \
 			DEST_MANUAL=${WRKINST}${PREFIX}/man/man1 \
