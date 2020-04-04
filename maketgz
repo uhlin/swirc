@@ -4,7 +4,7 @@ source "VERSION_INFO"
 
 TGZ=/tmp/swirc-${VERSION}.tgz
 
-if test "$1" = "--head"; then
+if [ "$1" = "--head" ]; then
 	echo "warning: archiving HEAD as $VERSION"
 	git archive --format=tgz --prefix=swirc-${VERSION}/ -o $TGZ HEAD
 else
@@ -12,10 +12,10 @@ else
 	gpg -o ${TGZ}.sig -a -b $TGZ
 fi
 
-if test -f "$TGZ"; then
+if [ -f "$TGZ" ]; then
 	echo "$TGZ created"
 fi
 
-if test -f "${TGZ}.sig"; then
+if [ -f "${TGZ}.sig" ]; then
 	echo "${TGZ}.sig created"
 fi
