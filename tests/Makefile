@@ -1,11 +1,11 @@
-ROOT=..
-COMMANDS_DIR:=$(ROOT)/src/commands/
-EVENTS_DIR:=$(ROOT)/src/events/
-SRC_DIR:=$(ROOT)/src/
+ROOT=../
+COMMANDS_DIR:=$(ROOT)src/commands/
+EVENTS_DIR:=$(ROOT)src/events/
+SRC_DIR:=$(ROOT)src/
 
 TEST_LOGFILE?=/tmp/run.log
 
-include $(ROOT)/options.mk
+include $(ROOT)options.mk
 
 CFLAGS+=-DUNIT_TESTING=1\
 	-I$(SRC_DIR)\
