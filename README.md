@@ -55,6 +55,10 @@ is installed, issue:
 
     $ brew install libressl
 
+#### FreeBSD ####
+
+    # pkg install curl libidn
+
 #### NetBSD ####
 
     # pkgin install curl libidn ncursesw
