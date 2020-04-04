@@ -442,12 +442,8 @@ map_color(short int *inout, const short int i, const short int colorMap_size,
 static void
 printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 {
-#if 1 /* defined(UNIX) */
     const short int num_colorMap_entries =
 	(short int) ((COLORS >= 256) ? ARRAY_SIZE(ptext_colorMap) : 16);
-#elif defined(WIN32)
-    const short int num_colorMap_entries = 16;
-#endif
     attr_t attr = 0xff;
     short int fg, bg, resolved_pair;
 
