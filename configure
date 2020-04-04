@@ -17,8 +17,7 @@ EOF
 # --------------------------------------------------
 os_MAC () {
 	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=\\
-	-DNCURSES_OPAQUE=0\\
+SHARED_FLAGS=-DNCURSES_OPAQUE=0\\
 	-DOS_X=1\\
 	-DUNIX=1\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
@@ -31,8 +30,7 @@ CFLAGS=\$(SHARED_FLAGS) -std=c99
 CXX=clang++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
 LDFLAGS=-L/usr/local/opt/libressl/lib
-LDLIBS=\\
-	-lcrypto\\
+LDLIBS=-lcrypto\\
 	-lcurl\\
 	-lncurses\\
 	-lpanel\\
@@ -46,8 +44,7 @@ EOF
 # --------------------------------------------------
 os_BSD () {
 	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=\\
-	-DBSD=1\\
+SHARED_FLAGS=-DBSD=1\\
 	-DUNIX=1\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
 	-I/usr/local/include\\
@@ -57,8 +54,7 @@ CFLAGS=\$(SHARED_FLAGS) -std=c99
 CXX=c++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
 LDFLAGS=-L/usr/local/lib
-LDLIBS=\\
-	-lcrypto\\
+LDLIBS=-lcrypto\\
 	-lcurl\\
 	-lncursesw\\
 	-lpanelw\\
@@ -72,8 +68,7 @@ EOF
 # --------------------------------------------------
 os_NETBSD () {
 	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=\\
-	-DBSD=1\\
+SHARED_FLAGS=-DBSD=1\\
 	-DUNIX=1\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
 	-I/usr/pkg/include/ncursesw\\
@@ -83,11 +78,9 @@ CC=gcc
 CFLAGS=\$(SHARED_FLAGS) -std=c99
 CXX=g++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
-LDFLAGS=\\
-	-L/usr/pkg/lib\\
+LDFLAGS=-L/usr/pkg/lib\\
 	-Wl,-rpath,/usr/pkg/lib
-LDLIBS=\\
-	-lcrypto\\
+LDLIBS=-lcrypto\\
 	-lcurl\\
 	-lgnupanelw\\
 	-lncursesw\\
@@ -101,8 +94,7 @@ EOF
 # --------------------------------------------------
 os_LINUX () {
 	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=\\
-	-DLINUX=1\\
+SHARED_FLAGS=-DLINUX=1\\
 	-DUNIX=1\\
 	-D_FORTIFY_SOURCE=2\\
 	-D_POSIX_C_SOURCE=200809L\\
@@ -117,11 +109,9 @@ CC=gcc
 CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=g++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
-LDFLAGS=\\
-	-Wl,-z,now\\
+LDFLAGS=-Wl,-z,now\\
 	-Wl,-z,relro
-LDLIBS=\\
-	-lcrypto\\
+LDLIBS=-lcrypto\\
 	-lcurl\\
 	-lncursesw\\
 	-lpanelw\\
@@ -135,8 +125,7 @@ EOF
 # --------------------------------------------------
 os_LINUX_suncc () {
 	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=\\
-	-DLINUX=1\\
+SHARED_FLAGS=-DLINUX=1\\
 	-DUNIX=1\\
 	-D_FORTIFY_SOURCE=2\\
 	-D_POSIX_C_SOURCE=200809L\\
@@ -155,8 +144,7 @@ CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=sunCC
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
 LDFLAGS=-xannotate -xprevise
-LDLIBS=\\
-	-lcrypto\\
+LDLIBS=-lcrypto\\
 	-lcurl\\
 	-lncursesw\\
 	-lpanelw\\
