@@ -1,9 +1,9 @@
 .gitattributes export-ignore
 .gitignore export-ignore
-archive export-ignore
 bash/ export-ignore
 doc/rfc2811.txt export-ignore
 doc/rfc2812.txt export-ignore
+maketgz export-ignore
 openbsd/ export-ignore
 setver export-ignore
 voidlinux/ export-ignore
