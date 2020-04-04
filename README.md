@@ -11,11 +11,13 @@ client written in C/C++, whose goals are to be portable and secure.
 
 ## Program options ##
 
-usage: swirc [-46?dipv] [-c server[:port]] [-n nickname] [-r rl name] [-u username] [-x config]
+usage: swirc [-46?CPdipv] [-c server[:port]] [-n nickname] [-r rl name] [-u username] [-x config]
 
     -4                   Use IPv4 addresses only
     -6                   Use IPv6 addresses only
     -?, --help           Output help
+    -C                   Do not change color definitions
+    -P                   Permanently disable SASL authentication
     -c <server[:port]>   Connect to IRC server
     -d                   Debug logging
     -i                   Turn on Internet Citizen's Band mode

@@ -1,7 +1,7 @@
 .\"
 .\" Public domain
 .\"
-.Dd March 11, 2020
+.Dd April 4, 2020
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -10,7 +10,7 @@
 .Sh SYNOPSIS
 .Nm swirc
 .Bk -words
-.Op Fl 46?dipv
+.Op Fl 46?CPdipv
 .Op Fl c Ar server[:port]
 .Op Fl n Ar nickname
 .Op Fl r Ar rl name
@@ -29,6 +29,10 @@ Use IPv4 addresses only
 Use IPv6 addresses only
 .It Fl ?
 Output help
+.It Fl C
+Do not change color definitions
+.It Fl P
+Permanently disable SASL authentication
 .It Fl c Ar server[:port]
 Connect to given server.
 If the port is omitted port 6667 will be chosen.

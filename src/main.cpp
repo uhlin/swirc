@@ -77,10 +77,12 @@ const char g_swircWebAddr[] = "https://www.nifty-networks.net/swirc/";
 
 bool g_auto_connect         = false;
 bool g_bind_hostname        = false;
+bool g_change_color_defs    = true;
 bool g_connection_password  = false;
 bool g_debug_logging        = false;
 bool g_explicit_config_file = false;
 bool g_icb_mode             = false;
+bool g_sasl_authentication  = true;
 
 struct cmdline_opt_values *g_cmdline_opts = new cmdline_opt_values();
 
@@ -107,6 +109,8 @@ static const char *OptionDesc[] = {
     "    -4                   Use IPv4 addresses only\n",
     "    -6                   Use IPv6 addresses only\n",
     "    -?, --help           Output help\n",
+    "    -C                   Do not change color definitions\n",
+    "    -P                   Permanently disable SASL authentication\n",
 #ifdef OUTPUT_INTERNAL_OPTIONS
     "    -T                   Internal option. Windows: Invoked when\n",
     "                         launched by a toast.\n",
@@ -351,6 +355,12 @@ process_options(int argc, char *argv[], const char *optstring)
 	case '6':
 	    net_set_sock_addr_family_ipv6();
 	    break;
+	case 'C':
+	    g_change_color_defs = false;
+	    break;
+	case 'P':
+	    g_sasl_authentication = false;
+	    break;
 	case 'T':
 	    case_launched_by_toast_hook();
 	    break;
@@ -438,7 +448,7 @@ main(int argc, char *argv[])
     }
 #endif
 
-    process_options(argc, argv, "46Tc:dh:in:pr:u:x:");
+    process_options(argc, argv, "46CPTc:dh:in:pr:u:x:");
     srand(time(NULL));
 
     term_init();

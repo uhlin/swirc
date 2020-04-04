@@ -36,10 +36,12 @@ extern const char g_swircWebAddr[];
 
 extern bool g_auto_connect;
 extern bool g_bind_hostname;
+extern bool g_change_color_defs;
 extern bool g_connection_password;
 extern bool g_debug_logging;
 extern bool g_explicit_config_file;
 extern bool g_icb_mode;
+extern bool g_sasl_authentication;
 
 extern struct cmdline_opt_values *g_cmdline_opts;
 

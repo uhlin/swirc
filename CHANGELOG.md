@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 - Improved documentation
 - More colors for Windows and a synchronized colormap
 - Make target (`check`) for running unittests
+- Command-line option
+  - `-C` (Do not change color definitions)
+  - `-P` (Permanently disable SASL authentication)
 
 ## [3.2.3] - 2020-03-22 ##
 ### Added ###
