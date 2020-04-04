@@ -2,7 +2,7 @@
 
 # Swirc configure script
 #
-# Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
+# Copyright (C) 2016-2020 Markus Uhlin. All rights reserved.
 
 MAKE_DEF_FILE=options.mk
 
@@ -219,15 +219,6 @@ case "$(uname -s)" in
 	;;
 esac
 
-append_compiler_flags () {
-	echo "CFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
-	echo "CXXFLAGS+=-DUNIT_TESTING=1" >>$MAKE_DEF_FILE
-}
-
-link_with_cmocka () {
-	echo "LDLIBS+=-lcmocka" >>$MAKE_DEF_FILE
-}
-
 link_with_gnu_libidn () {
 	cat <<EOF >>$MAKE_DEF_FILE
 CFLAGS+=-DHAVE_LIBIDN=1
@@ -237,10 +228,7 @@ LDLIBS+=-lidn
 EOF
 }
 
-if test "$1" = "--unittesting"; then
-	append_compiler_flags
-	link_with_cmocka
-elif test "$1" = "--with-libnotify"; then
+if test "$1" = "--with-libnotify"; then
 	LIBNOTIFY_CFLAGS="$(pkg-config --cflags-only-I libnotify)"
 	LIBNOTIFY_LDLIBS="$(pkg-config --libs-only-l libnotify)"
 
