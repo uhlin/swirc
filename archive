@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. ./VERSION_INFO
+source "VERSION_INFO"
 
 TGZ=/tmp/swirc-${VERSION}.tgz
 
