@@ -30,6 +30,7 @@
 #include "common.h"
 #include "errHand.h"
 #include "initcolors.h"
+#include "main.h"
 
 static struct {
     short int	num;
@@ -136,8 +137,14 @@ static struct {
 void
 initcolors(void)
 {
+    if (!g_change_color_defs) {
+	debug("initcolors: disabled by command-line option");
+	return;
+    }
+
     for (size_t i = 0; i < ARRAY_SIZE(ext_colors_rgb); i++) {
 	const rgb_t val = ext_colors_rgb[i].val;
+
 	if (init_color(ext_colors_rgb[i].num, val.r,val.g,val.b) == ERR) {
 	    debug("initcolors: init_color: cannot initialize color %hd",
 		ext_colors_rgb[i].num);
