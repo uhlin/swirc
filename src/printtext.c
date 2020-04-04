@@ -1097,7 +1097,7 @@ printtext_context_new(PIRC_WINDOW window, enum message_specifier_type spec_type,
     ctx->spec_type = spec_type;
     ctx->include_ts = include_ts;
 
-    memset(ctx->server_time, 0, sizeof (ctx->server_time));
+    memset(ctx->server_time, 0, ARRAY_SIZE(ctx->server_time));
     ctx->has_server_time = false;
 
     return ctx;
@@ -1120,7 +1120,7 @@ printtext_context_init(PPRINTTEXT_CONTEXT ctx, PIRC_WINDOW window,
     ctx->spec_type = spec_type;
     ctx->include_ts = include_ts;
 
-    memset(ctx->server_time, 0, sizeof (ctx->server_time));
+    memset(ctx->server_time, 0, ARRAY_SIZE(ctx->server_time));
     ctx->has_server_time = false;
 }
 
