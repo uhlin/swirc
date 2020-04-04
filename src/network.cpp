@@ -270,6 +270,8 @@ should_check_connection()
 bool
 sasl_is_enabled(void)
 {
+    if (! (g_sasl_authentication))
+	return false;
     return config_bool_unparse("sasl", false);
 }
 
