@@ -38,6 +38,7 @@
 #include "log.h"
 #include "nestHome.h"
 #include "printtext.h"
+#include "readline.h"
 #include "statusbar.h"
 #include "strHand.h"
 #include "window.h"
@@ -169,4 +170,5 @@ log_toggle_on_off(void)
     }
 
     statusbar_update_display_beta();
+    readline_top_panel();
 }
