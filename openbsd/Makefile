@@ -20,7 +20,6 @@ LIB_DEPENDS =		devel/libidn net/curl
 CONFIGURE_STYLE =	simple
 
 TEST_DEPENDS =		devel/cmocka
-TEST_LOG =		| tee
 TEST_TARGET =		check
 
 MAKE_FLAGS =		DEST_CONFMAN=${WRKINST}${PREFIX}/man/man5 \
