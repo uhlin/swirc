@@ -1,10 +1,7 @@
 #ifndef STATUSBAR_H
 #define STATUSBAR_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__SWIRC_BEGIN_DECLS
 extern char g_user_modes[100];
 
 void	statusbar_deinit(void);
@@ -13,9 +10,6 @@ void	statusbar_init(void);
 void	statusbar_recreate(int rows, int cols);
 void	statusbar_show(void);
 void	statusbar_update_display_beta(void);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif
