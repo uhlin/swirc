@@ -144,8 +144,9 @@ statusbar_update_display_beta(void)
     str.append(" ");
     str.append(lb);
     str.append(std::to_string(g_active_window->refnum));
-    str.append("/");
+    str.append("(");
     str.append(std::to_string(g_ntotal_windows));
+    str.append(")");
     str.append(rb);
 #endif
 
