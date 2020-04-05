@@ -1,5 +1,5 @@
 /* Swirc statusbar
-   Copyright (C) 2012-2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <string>
+
 #if defined(WIN32) && defined(PDC_EXP_EXTRAS)
 #include "curses-funcs.h" /* is_scrollok() */
 #endif
@@ -39,7 +41,6 @@
 #include "printtext.h"
 #include "statusbar.h"
 #include "strHand.h"
-#include "strdup_printf.h"
 #include "terminal.h"
 #include "theme.h"
 
@@ -84,49 +85,43 @@ statusbar_deinit(void)
     term_remove_panel(statusbar_pan);
 }
 
-static char *
+static std::string
 get_nick_and_server()
 {
-    static char buf[500];
-
-    BZERO(buf, sizeof buf);
+    std::string str("");
 
     if (g_my_nickname && g_server_hostname) {
-	(void) sw_strcpy(buf, g_my_nickname, sizeof buf);
-	(void) sw_strcat(buf, "(", sizeof buf);
-	(void) sw_strcat(buf,
-	    g_user_modes[0] == ':' ? &g_user_modes[1] : &g_user_modes[0],
-	    sizeof buf);
-	(void) sw_strcat(buf, ")", sizeof buf);
-	(void) sw_strcat(buf, "@", sizeof buf);
-	(void) sw_strcat(buf, g_server_hostname, sizeof buf);
+	str.append(g_my_nickname);
+	str.append("(");
+	str.append(g_user_modes[0] == ':' ? &g_user_modes[1] : &g_user_modes[0]);
+	str.append(")");
+	str.append("@");
+	str.append(g_server_hostname);
     }
 
-    return (&buf[0]);
+    return str;
 }
 
-static char *
+static std::string
 get_chanmodes()
 {
     PIRC_WINDOW win;
-    static char buf[500];
-
-    BZERO(buf, sizeof buf);
+    std::string str("");
 
     if ((win = g_active_window) != NULL) {
 	if (strings_match_ignore_case(win->label, g_status_window_label)) {
-	    sw_strcpy(buf, Theme("slogan"), sizeof buf);
+	    str.append(Theme("slogan"));
 	} else if (is_irc_channel(win->label)) {
-	    (void) sw_strcpy(buf, win->label, sizeof buf);
-	    (void) sw_strcat(buf, "(", sizeof buf);
-	    (void) sw_strcat(buf, win->chanmodes, sizeof buf);
-	    (void) sw_strcat(buf, ")", sizeof buf);
+	    str.append(win->label);
+	    str.append("(");
+	    str.append(win->chanmodes);
+	    str.append(")");
 	} else {
-	    sw_strcpy(buf, win->label, sizeof buf);
+	    str.append(win->label);
 	}
     }
 
-    return (&buf[0]);
+    return str;
 }
 
 void
@@ -137,19 +132,43 @@ statusbar_update_display_beta(void)
     WINDOW     *win    = panel_window(statusbar_pan);
     chtype      blank  = ' ';
     short int   pair_n = get_pair_num();
-    const char *lb     = Theme("statusbar_leftBracket");
-    const char *rb     = Theme("statusbar_rightBracket");
-    char       *out_s  = strdup_printf(
-	"%s %s%d/%d%s %s%s%s %s%s%s %s",
-	Theme("statusbar_spec"),
-	lb, g_active_window->refnum, g_ntotal_windows, rb,
-	lb, get_nick_and_server(), rb,
-	lb, get_chanmodes(), rb,
-	g_active_window->scroll_mode ? "-- MORE --" : "");
+    std::string lb(Theme("statusbar_leftBracket"));
+    std::string rb(Theme("statusbar_rightBracket"));
 
     WERASE(win);
     WBKGD(win, blank | COLOR_PAIR(pair_n) | A_NORMAL);
 
+    std::string str(Theme("statusbar_spec"));
+
+#ifndef _lint
+    str.append(" ");
+    str.append(lb);
+    str.append(std::to_string(g_active_window->refnum));
+    str.append("/");
+    str.append(std::to_string(g_ntotal_windows));
+    str.append(rb);
+#endif
+
+    str.append(" ");
+    str.append(lb);
+    str.append(get_nick_and_server());
+    str.append(rb);
+
+    str.append(" ");
+    str.append(lb);
+    str.append(get_chanmodes());
+    str.append(rb);
+
+    str.append(" ");
+    str.append(lb);
+    str.append("Log: ");
+    str.append(g_active_window->logging ? "Yes" : "No");
+    str.append(rb);
+
+    str.append(" ");
+    str.append(g_active_window->scroll_mode ? "-- MORE --" : "");
+
+    char *out_s = sw_strdup(str.c_str());
     printtext_puts(win, g_no_colors ? squeeze_text_deco(out_s) : out_s, -1, -1,
 		   NULL);
     free(out_s);
