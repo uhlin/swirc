@@ -10,6 +10,9 @@ All notable changes to this project will be documented in this file.
   - `-C` (Do not change color definitions)
   - `-P` (Permanently disable SASL authentication)
 
+### Changed ###
+- Display logging in statusbar
+
 ### Fixed ###
 - A possible out-of-bounds read/write array operation
 
