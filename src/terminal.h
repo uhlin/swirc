@@ -12,6 +12,15 @@ struct term_window_size {
     int cols;
     int start_row;
     int start_col;
+
+#ifdef __cplusplus
+    term_window_size(int rows, int cols, int start_row, int start_col) {
+	this->rows = rows;
+	this->cols = cols;
+	this->start_row = start_row;
+	this->start_col = start_col;
+    }
+#endif
 };
 
 struct current_cursor_pos {
