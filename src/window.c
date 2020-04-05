@@ -249,10 +249,9 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
     int			 i	   = 0;
     int			 rep_count = 0;
 
-    if (element = textBuf_get_element_by_pos(window->buf, pos < 0 ? 0 : pos),
-	!element) {
+    if ((element = textBuf_get_element_by_pos(window->buf, pos < 0 ? 0 : pos)) ==
+	NULL)
 	return; /* Nothing stored in the buffer */
-    }
 
 #if 1
     werase(pwin);
