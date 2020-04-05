@@ -569,17 +569,20 @@ window_close_all_priv_conv(void)
 	FOREACH_WINDOW_IN_ENTRY() {
 	    if (window == g_status_window || is_irc_channel(window->label))
 		continue;
-	    if (window->label)
+	    if (window->label && pc_assigned < ARRAY_SIZE(priv_conv))
 		priv_conv[pc_assigned++] = sw_strdup(window->label);
-	    /*
-	     * FIXME: Array size checking?
-	     */
+	    if (pc_assigned == ARRAY_SIZE(priv_conv))
+		goto out_of_both_loops;
 	}
     }
+
+  out_of_both_loops:
+
     if (pc_assigned == 0) {
 	napms(50);
 	return;
     }
+
     for (char **ar_p = &priv_conv[0]; ar_p < &priv_conv[pc_assigned]; ar_p++) {
 	destroy_chat_window(*ar_p);
 	free(*ar_p);
