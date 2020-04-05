@@ -38,6 +38,7 @@
 #include "log.h"
 #include "nestHome.h"
 #include "printtext.h"
+#include "statusbar.h"
 #include "strHand.h"
 #include "window.h"
 
@@ -166,4 +167,6 @@ log_toggle_on_off(void)
 		  g_active_window->refnum);
 	g_active_window->logging = true;
     }
+
+    statusbar_update_display_beta();
 }
