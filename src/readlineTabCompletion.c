@@ -202,8 +202,10 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 static void
 init_mode_for_query(volatile struct readline_session_context *ctx)
 {
-    if (!is_irc_channel(ACTWINLABEL))
+    if (!is_irc_channel(ACTWINLABEL)) {
+	output_error("not in irc channel");
 	return;
+    }
 
     char *p = & (ctx->tc->search_var[7]);
     ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
