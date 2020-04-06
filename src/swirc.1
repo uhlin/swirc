@@ -1,7 +1,7 @@
 .\"
 .\" Public domain
 .\"
-.Dd April 4, 2020
+.Dd April 6, 2020
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -30,7 +30,19 @@ Use IPv6 addresses only
 .It Fl ?
 Output help
 .It Fl C
-Do not change color definitions
+Do not change color definitions.
+If the terminal used to run
+.Nm
+supports >= 256 colors and
+.Xr can_change_color 3
+is true
+.Nm
+uses
+.Xr init_color 3
+to initialize the extended IRC color palette.
+Which may or may not already be set correctly by the terminal.
+This option is useful in case the terminal look strange after exit,
+which is possible to fix by simply restarting it.
 .It Fl P
 Permanently disable SASL authentication
 .It Fl c Ar server[:port]
