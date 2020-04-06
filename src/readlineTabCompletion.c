@@ -187,10 +187,10 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 {
     if (ctx) {
 	memset(ctx->search_var, 0, ARRAY_SIZE(ctx->search_var));
-	ctx->isInCirculationModeForQuery = false;
-	ctx->isInCirculationModeForSettings = false;
-	ctx->isInCirculationModeForWhois = false;
-	ctx->isInCirculationModeForCmds = false;
+	ctx->isInCirculationModeForQuery     = false;
+	ctx->isInCirculationModeForSettings  = false;
+	ctx->isInCirculationModeForWhois     = false;
+	ctx->isInCirculationModeForCmds	     = false;
 	ctx->isInCirculationModeForChanUsers = false;
 	if (!isNull(ctx->matches))
 	    textBuf_destroy(ctx->matches);
