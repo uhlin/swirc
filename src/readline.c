@@ -417,7 +417,9 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc)
 static inline bool
 isInCirculationMode(const TAB_COMPLETION *tc)
 {
-    return (tc->isInCirculationModeForSettings ||
+    return (tc->isInCirculationModeForQuery ||
+	    tc->isInCirculationModeForSettings ||
+	    tc->isInCirculationModeForWhois ||
 	    tc->isInCirculationModeForCmds ||
 	    tc->isInCirculationModeForChanUsers);
 }
