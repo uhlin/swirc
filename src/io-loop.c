@@ -493,6 +493,10 @@ enter_io_loop(void)
 
 	snprintf(buf, ARRAY_SIZE(buf), "%s:%s", g_cmdline_opts->server,
 	    g_cmdline_opts->port);
+	/*
+	 * napms: let i/o finish
+	 */
+	napms(100);
 	cmd_connect(buf);
     }
 
