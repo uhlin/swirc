@@ -264,6 +264,7 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 	return;
     }
 
+    char *p = NULL;
     const bool is_command = (ctx->tc->search_var[0] == '/');
     const bool n_insert_greater_than_one = ctx->n_insert > 1;
 
@@ -271,7 +272,7 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 	if (!is_irc_channel(ACTWINLABEL))
 	    return;
 
-	char *p = & (ctx->tc->search_var[7]);
+	p = & (ctx->tc->search_var[7]);
 	ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
 
 	if (ctx->tc->matches == NULL) {
@@ -285,7 +286,7 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 	ctx->tc->isInCirculationModeForQuery = true;
 	return;
     } else if (!strncmp(get_search_var(ctx), "/set ", 5)) {
-	char *p = & (ctx->tc->search_var[5]);
+	p = & (ctx->tc->search_var[5]);
 
 	if ((ctx->tc->matches = get_list_of_matching_settings(p)) == NULL) {
 	    output_error("no magic");
@@ -301,7 +302,7 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 	if (!is_irc_channel(ACTWINLABEL))
 	    return;
 
-	char *p = & (ctx->tc->search_var[7]);
+	p = & (ctx->tc->search_var[7]);
 	ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
 
 	if (ctx->tc->matches == NULL) {
@@ -315,7 +316,7 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 	ctx->tc->isInCirculationModeForWhois = true;
 	return;
     } else if (is_command) {
-	char *p = & (ctx->tc->search_var[1]);
+	p = & (ctx->tc->search_var[1]);
 
 	if (!n_insert_greater_than_one ||
 	    (ctx->tc->matches = get_list_of_matching_commands(p)) == NULL) {
