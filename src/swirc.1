@@ -44,7 +44,9 @@ Which may or may not already be set correctly by the terminal.
 This option is useful in case the terminal look strange after exit,
 which is possible to fix by simply restarting it.
 .It Fl P
-Permanently disable SASL authentication
+Permanently disable SASL authentication.
+If specified, the effect is \fIfinal\fP (i.e. it overrides any config
+file value.)
 .It Fl c Ar server[:port]
 Connect to given server.
 If the port is omitted port 6667 will be chosen.
