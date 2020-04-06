@@ -199,6 +199,92 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
     }
 }
 
+static void
+init_mode_for_query(volatile struct readline_session_context *ctx)
+{
+    if (!is_irc_channel(ACTWINLABEL))
+	return;
+
+    char *p = & (ctx->tc->search_var[7]);
+    ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
+
+    if (ctx->tc->matches == NULL) {
+	output_error("no magic");
+	return;
+    }
+
+    ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+    auto_complete_query(ctx, ctx->tc->elmt->text);
+    ctx->tc->isInCirculationModeForQuery = true;
+}
+
+static void
+init_mode_for_set(volatile struct readline_session_context *ctx)
+{
+    char *p = & (ctx->tc->search_var[5]);
+
+    if ((ctx->tc->matches = get_list_of_matching_settings(p)) == NULL) {
+	output_error("no magic");
+	return;
+    }
+
+    ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+    auto_complete_setting(ctx, ctx->tc->elmt->text);
+    ctx->tc->isInCirculationModeForSettings = true;
+}
+
+static void
+init_mode_for_whois(volatile struct readline_session_context *ctx)
+{
+    if (!is_irc_channel(ACTWINLABEL))
+	return;
+
+    char *p = & (ctx->tc->search_var[7]);
+    ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
+
+    if (ctx->tc->matches == NULL) {
+	output_error("no magic");
+	return;
+    }
+
+    ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+    auto_complete_whois(ctx, ctx->tc->elmt->text);
+    ctx->tc->isInCirculationModeForWhois = true;
+}
+
+static void
+init_mode_for_commands(volatile struct readline_session_context *ctx,
+		       const bool n_insert_greater_than_one)
+{
+    char *p = & (ctx->tc->search_var[1]);
+
+    if (!n_insert_greater_than_one ||
+	(ctx->tc->matches = get_list_of_matching_commands(p)) == NULL) {
+	output_error("no magic");
+	return;
+    }
+
+    ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+    auto_complete_command(ctx, ctx->tc->elmt->text);
+    ctx->tc->isInCirculationModeForCmds = true;
+}
+
+static void
+init_mode_for_channel_users(volatile struct readline_session_context *ctx)
+{
+    ctx->tc->matches =
+	get_list_of_matching_channel_users(ACTWINLABEL, get_search_var(ctx));
+
+    if (ctx->tc->matches == NULL) {
+	output_error("no magic");
+	return;
+    }
+
+    ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+    auto_complete_channel_user(ctx, ctx->tc->elmt->text);
+    ctx->tc->isInCirculationModeForChanUsers = true;
+}
+
 void
 readline_handle_tab(volatile struct readline_session_context *ctx)
 {
@@ -264,84 +350,17 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 	return;
     }
 
-    char *p = NULL;
     const bool is_command = (ctx->tc->search_var[0] == '/');
-    const bool n_insert_greater_than_one = ctx->n_insert > 1;
 
     if (!strncmp(get_search_var(ctx), "/query ", 7)) {
-	if (!is_irc_channel(ACTWINLABEL))
-	    return;
-
-	p = & (ctx->tc->search_var[7]);
-	ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
-
-	if (ctx->tc->matches == NULL) {
-	    output_error("no magic");
-	    return;
-	}
-
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
-	auto_complete_query(ctx, ctx->tc->elmt->text);
-
-	ctx->tc->isInCirculationModeForQuery = true;
-	return;
+	init_mode_for_query(ctx);
     } else if (!strncmp(get_search_var(ctx), "/set ", 5)) {
-	p = & (ctx->tc->search_var[5]);
-
-	if ((ctx->tc->matches = get_list_of_matching_settings(p)) == NULL) {
-	    output_error("no magic");
-	    return;
-	}
-
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
-	auto_complete_setting(ctx, ctx->tc->elmt->text);
-
-	ctx->tc->isInCirculationModeForSettings = true;
-	return;
+	init_mode_for_set(ctx);
     } else if (!strncmp(get_search_var(ctx), "/whois ", 7)) {
-	if (!is_irc_channel(ACTWINLABEL))
-	    return;
-
-	p = & (ctx->tc->search_var[7]);
-	ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
-
-	if (ctx->tc->matches == NULL) {
-	    output_error("no magic");
-	    return;
-	}
-
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
-	auto_complete_whois(ctx, ctx->tc->elmt->text);
-
-	ctx->tc->isInCirculationModeForWhois = true;
-	return;
+	init_mode_for_whois(ctx);
     } else if (is_command) {
-	p = & (ctx->tc->search_var[1]);
-
-	if (!n_insert_greater_than_one ||
-	    (ctx->tc->matches = get_list_of_matching_commands(p)) == NULL) {
-	    output_error("no magic");
-	    return;
-	}
-
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
-	auto_complete_command(ctx, ctx->tc->elmt->text);
-
-	ctx->tc->isInCirculationModeForCmds = true;
-	return;
+	init_mode_for_commands(ctx, ctx->n_insert > 1);
     } else if (is_irc_channel(ACTWINLABEL)) {
-	ctx->tc->matches =
-	    get_list_of_matching_channel_users(ACTWINLABEL, get_search_var(ctx));
-
-	if (ctx->tc->matches == NULL) {
-	    output_error("no magic");
-	    return;
-	}
-
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
-	auto_complete_channel_user(ctx, ctx->tc->elmt->text);
-
-	ctx->tc->isInCirculationModeForChanUsers = true;
-	return;
+	init_mode_for_channel_users(ctx);
     }
 }
