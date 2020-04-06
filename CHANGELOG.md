@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file.
 - Command-line option
   - `-C` (Do not change color definitions)
   - `-P` (Permanently disable SASL authentication)
+- Tab completion for
+  - `/query`
+  - `/whois`
 
 ### Changed ###
 - Display logging in statusbar

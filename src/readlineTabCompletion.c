@@ -270,7 +270,20 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
     if (!strncmp(get_search_var(ctx), "/query ", 7)) {
 	if (!is_irc_channel(ACTWINLABEL))
 	    return;
-	/* TODO: Add code */;
+
+	char *p = & (ctx->tc->search_var[7]);
+	ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
+
+	if (ctx->tc->matches == NULL) {
+	    output_error("no magic");
+	    return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_query(ctx, ctx->tc->elmt->text);
+
+	ctx->tc->isInCirculationModeForQuery = true;
+	return;
     } else if (!strncmp(get_search_var(ctx), "/set ", 5)) {
 	char *p = & (ctx->tc->search_var[5]);
 
