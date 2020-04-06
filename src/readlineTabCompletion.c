@@ -287,7 +287,20 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
     } else if (!strncmp(get_search_var(ctx), "/whois ", 7)) {
 	if (!is_irc_channel(ACTWINLABEL))
 	    return;
-	/* TODO: Add code */;
+
+	char *p = & (ctx->tc->search_var[7]);
+	ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
+
+	if (ctx->tc->matches == NULL) {
+	    output_error("no magic");
+	    return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_whois(ctx, ctx->tc->elmt->text);
+
+	ctx->tc->isInCirculationModeForWhois = true;
+	return;
     } else if (is_command) {
 	char *p = & (ctx->tc->search_var[1]);
 
