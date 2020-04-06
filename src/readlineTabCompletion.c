@@ -208,7 +208,15 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 	readline_tab_comp_ctx_reset(ctx->tc);
 	return;
     } else if (ctx->tc->isInCirculationModeForQuery) {
-	/* TODO: Add code */;
+	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+	    output_error("no more matches");
+	    readline_tab_comp_ctx_reset(ctx->tc);
+	} else {
+	    ctx->tc->elmt = ctx->tc->elmt->next;
+	    auto_complete_query(ctx, ctx->tc->elmt->text);
+	}
+
+	return;
     } else if (ctx->tc->isInCirculationModeForSettings) {
 	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
 	    output_error("no more matches");
@@ -220,7 +228,15 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 
 	return;
     } else if (ctx->tc->isInCirculationModeForWhois) {
-	/* TODO: Add code */;
+	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+	    output_error("no more matches");
+	    readline_tab_comp_ctx_reset(ctx->tc);
+	} else {
+	    ctx->tc->elmt = ctx->tc->elmt->next;
+	    auto_complete_whois(ctx, ctx->tc->elmt->text);
+	}
+
+	return;
     } else if (ctx->tc->isInCirculationModeForCmds) {
 	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
 	    output_error("no more matches");
