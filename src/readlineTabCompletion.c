@@ -352,15 +352,14 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 
     const bool is_command = (ctx->tc->search_var[0] == '/');
 
-    if (!strncmp(get_search_var(ctx), "/query ", 7)) {
+    if (!strncmp(get_search_var(ctx), "/query ", 7))
 	init_mode_for_query(ctx);
-    } else if (!strncmp(get_search_var(ctx), "/set ", 5)) {
+    else if (!strncmp(get_search_var(ctx), "/set ", 5))
 	init_mode_for_set(ctx);
-    } else if (!strncmp(get_search_var(ctx), "/whois ", 7)) {
+    else if (!strncmp(get_search_var(ctx), "/whois ", 7))
 	init_mode_for_whois(ctx);
-    } else if (is_command) {
+    else if (is_command)
 	init_mode_for_commands(ctx, ctx->n_insert > 1);
-    } else if (is_irc_channel(ACTWINLABEL)) {
+    else if (is_irc_channel(ACTWINLABEL))
 	init_mode_for_channel_users(ctx);
-    }
 }
