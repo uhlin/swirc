@@ -238,8 +238,10 @@ init_mode_for_set(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_whois(volatile struct readline_session_context *ctx)
 {
-    if (!is_irc_channel(ACTWINLABEL))
+    if (!is_irc_channel(ACTWINLABEL)) {
+	output_error("not in irc channel");
 	return;
+    }
 
     char *p = & (ctx->tc->search_var[7]);
     ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
