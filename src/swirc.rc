@@ -1,8 +1,8 @@
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 
-#define VER 3,2,3,0
-#define VER_STR "3.2.3\0"
+#define VER 3,2,4,0
+#define VER_STR "3.2.4\0"
 
 1 VERSIONINFO
 FILEVERSION    VER

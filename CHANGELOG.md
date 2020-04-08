@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.2.4] - 2020-04-08 ##
 ### Added ###
 - Improved documentation
 - More colors for Windows and a synchronized colormap
