@@ -2,9 +2,23 @@
 
 SWIRC_PATH=/usr/ports/net/swirc
 
+install_patches () {
+	_patches="
+patch-configure
+patch-src_events_cap_c
+"
+
+	for p in $_patches; do
+		install -m 0644 "patches/$p" $SWIRC_PATH/patches
+	done
+}
+
 install -d $SWIRC_PATH
+install -d $SWIRC_PATH/patches
 install -d $SWIRC_PATH/pkg
 install -m 0644 Makefile $SWIRC_PATH
+install_patches
 install -m 0644 pkg/DESCR $SWIRC_PATH/pkg
 install -m 0644 pkg/PLIST $SWIRC_PATH/pkg
+
 echo "Done"
