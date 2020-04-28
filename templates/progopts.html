@@ -32,10 +32,10 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2020-03-19</em></small></p>
+<p><small><em>Updated: 2020-04-28</em></small></p>
 <h3>Program options</h3>
 <p>
-<kbd>usage: swirc [-46?dipv] [-c server[:port]] [-n nickname] [-r rl name] [-u username] [-x config]</kbd>
+<kbd>usage: swirc [-46?CPdipv] [-c server[:port]] [-n nickname] [-r rl name] [-u username] [-x config]</kbd>
 </p>
 <table class="po">
   <tr>
@@ -49,6 +49,21 @@
   <tr>
     <td><b>-?</b></td>
     <td>Output help</td>
+  </tr>
+  <tr>
+    <td><b>-C</b></td>
+    <td>
+Do not change color definitions
+    </td>
+  </tr>
+  <tr>
+    <td><b>-P</b></td>
+    <td>
+Permanently disable SASL authentication.
+If specified, the effect is
+<u>final</u>
+(i.e. it overrides any config file value.)
+    </td>
   </tr>
   <tr>
     <td><b>-c</b> &lt;server[:port]&gt;</td>
