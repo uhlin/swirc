@@ -2,6 +2,7 @@
 
 TESTS="
 cmd_ban
+cmd_deop
 cmd_kick
 cmd_op
 cmd_part
