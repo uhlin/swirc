@@ -1,6 +1,7 @@
 TESTS=cmd_ban.run\
 	cmd_kick.run\
 	cmd_part.run\
+	cmd_unban.run\
 	int_diff.run\
 	int_sum.run\
 	is_alphabetic.run\
