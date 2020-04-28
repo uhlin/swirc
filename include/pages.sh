@@ -8,6 +8,7 @@ index.html
 openbsd.html
 progopts.html
 source-code.html
+voidlinux.html
 windows.html
 "
 
