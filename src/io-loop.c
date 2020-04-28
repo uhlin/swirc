@@ -69,6 +69,7 @@
 #include "commands/services.h"
 #include "commands/theme.h"
 #include "commands/topic.h"
+#include "commands/znc.h"
 
 #include "events/names.h"
 
@@ -143,6 +144,7 @@ static struct cmds_tag {
     { "version",     cmd_version,     true,  version_usage,     ARRAY_SIZE(version_usage),     true  },
     { "who",         cmd_who,         true,  who_usage,         ARRAY_SIZE(who_usage),         true  },
     { "whois",       cmd_whois,       true,  whois_usage,       ARRAY_SIZE(whois_usage),       true  },
+    { "znc",         cmd_znc,         true,  znc_usage,         ARRAY_SIZE(znc_usage),         true  },
 };
 
 #define FOREACH_COMMAND() \

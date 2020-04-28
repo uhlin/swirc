@@ -18,7 +18,8 @@ OBJS=$(COMMANDS_DIR)ban.o\
 	$(COMMANDS_DIR)say.o\
 	$(COMMANDS_DIR)services.o\
 	$(COMMANDS_DIR)theme.o\
-	$(COMMANDS_DIR)topic.o
+	$(COMMANDS_DIR)topic.o\
+	$(COMMANDS_DIR)znc.o
 
 CFLAGS+=-I $(COMMANDS_DIR)
 CXXFLAGS+=-I $(COMMANDS_DIR)

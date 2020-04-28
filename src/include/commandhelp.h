@@ -591,6 +591,20 @@ static const char *whois_usage[] = {
     "",
 };
 
+static const char *znc_usage[] = {
+    "usage: /znc [*module] <command>",
+    "",
+    "This command simplifies communication with ZNC (an IRC bouncer).",
+    "",
+    TXT_BOLD "EXAMPLES" TXT_BOLD,
+    "  Output ZNC version:",
+    "    /znc version",
+    "",
+    "  Same as above:",
+    "    /znc *status version",
+    "",
+};
+
 //lint +e786
 
 #endif

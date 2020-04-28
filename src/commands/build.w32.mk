@@ -18,6 +18,7 @@ OBJS=$(COMMANDS_DIR)ban.obj\
 	$(COMMANDS_DIR)say.obj\
 	$(COMMANDS_DIR)services.obj\
 	$(COMMANDS_DIR)theme.obj\
-	$(COMMANDS_DIR)topic.obj
+	$(COMMANDS_DIR)topic.obj\
+	$(COMMANDS_DIR)znc.obj
 
 CFLAGS=$(CFLAGS) -I $(COMMANDS_DIR)

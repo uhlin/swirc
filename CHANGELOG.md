@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+### Added ###
+- Command
+  - `/znc` (for communication with [znc](https://www.znc.in/))
+
 ### Fixed ###
 - Command-line option `-P`. (It disabled SASL authentication but
   didn't end IRCv3 capability negotiation.)
