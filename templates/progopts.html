@@ -53,7 +53,19 @@
   <tr>
     <td><b>-C</b></td>
     <td>
-Do not change color definitions
+Do not change color definitions.
+If the terminal used to run
+<strong>swirc</strong>
+supports >= 256 colors and
+<a href="https://man.openbsd.org/can_change_color.3">can_change_color(3)</a>
+is true
+<strong>swirc</strong>
+uses
+<a href="https://man.openbsd.org/init_color.3">init_color(3)</a>
+to initialize the extended IRC color palette.
+Which may or may not already be set correctly by the terminal.
+This option is useful in case the terminal look strange after exit,
+which is possible to fix by simply restarting it.
     </td>
   </tr>
   <tr>
