@@ -3,6 +3,7 @@
 TESTS="
 cmd_ban
 cmd_kick
+cmd_op
 cmd_part
 cmd_unban
 int_diff
