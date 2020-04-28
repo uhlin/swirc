@@ -1,4 +1,5 @@
-TESTS=cmd_kick.run\
+TESTS=cmd_ban.run\
+	cmd_kick.run\
 	cmd_part.run\
 	int_diff.run\
 	int_sum.run\

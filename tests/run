@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 TESTS="
+cmd_ban
 cmd_kick
 cmd_part
 int_diff
