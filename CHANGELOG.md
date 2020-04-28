@@ -3,8 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 ### Fixed ###
-- Command-line option `-P`. It disables SASL authentication but
-  doesn't end IRCv3 capability negotiation.
+- Command-line option `-P`. (It disabled SASL authentication but
+  didn't end IRCv3 capability negotiation.)
 
 ## [3.2.4] - 2020-04-08 ##
 ### Added ###
