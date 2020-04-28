@@ -7,6 +7,7 @@ cmd_kick
 cmd_op
 cmd_part
 cmd_unban
+cmd_znc
 int_diff
 int_sum
 is_alphabetic
