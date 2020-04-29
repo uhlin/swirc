@@ -28,12 +28,20 @@ sendsExpected_test2(void **state)
     assert_string_equal(g_sent, "PRIVMSG *status :setbuffer #chatzone 300");
 }
 
+static void
+sendsExpected_test3(void **state)
+{
+    cmd_znc("*controlpanel help");
+    assert_string_equal(g_sent, "PRIVMSG *controlpanel :help");
+}
+
 int
 main(void)
 {
     const struct CMUnitTest tests[] = {
 	cmocka_unit_test(sendsExpected_test1),
 	cmocka_unit_test(sendsExpected_test2),
+	cmocka_unit_test(sendsExpected_test3),
     };
 
     return cmocka_run_group_tests(tests, setup, NULL);
