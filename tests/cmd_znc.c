@@ -18,20 +18,20 @@ static void
 sendsExpected_test1(void **state)
 {
     cmd_znc("SetBuffer #ChatZone 300");
-    assert_string_equal(g_sent, "PRIVMSG *status :setbuffer #chatzone 300");
+    assert_string_equal(g_sent, "PRIVMSG *status :SetBuffer #ChatZone 300");
 }
 
 static void
 sendsExpected_test2(void **state)
 {
     cmd_znc("*status SeTbUfFeR #ChatZone 300");
-    assert_string_equal(g_sent, "PRIVMSG *status :setbuffer #chatzone 300");
+    assert_string_equal(g_sent, "PRIVMSG *status :SeTbUfFeR #ChatZone 300");
 }
 
 static void
 sendsExpected_test3(void **state)
 {
-    cmd_znc("*controlpanel help");
+    cmd_znc("*ControlPanel help");
     assert_string_equal(g_sent, "PRIVMSG *controlpanel :help");
 }
 
