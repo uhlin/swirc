@@ -35,7 +35,7 @@ notice_sep      = "14:";
 primary_color   = "12";
 secondary_color = "08";
 
-slogan = "cool curses irc client";
+slogan = "";
 
 specifier1 = "09***";
 specifier2 = "14[00:14]";
