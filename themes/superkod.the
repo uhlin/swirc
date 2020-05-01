@@ -19,7 +19,7 @@ gfx_warning = "08:07:15:";
 left_bracket  = "14[";
 right_bracket = "14]";
 
-logo_color = "13";
+logo_color = "00";
 
 nick_s1 = "04<";
 nick_s2 = "04>";
