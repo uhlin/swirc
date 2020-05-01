@@ -1,13 +1,17 @@
 IMAGES="
 blue-globe.ico
 blue-globe.png
+debian128X128.png
 download82-badge1.png
 download82_clean_award_128617.png
+openbsd128X128.png
 softpedia_download_large_shadow.png
 sp100clean.png
 swirc-royal-110x110.png
 swirc-royal.ico
 swirc-royal.png
+void128X128.png
+windows128X128.png
 "
 
 check_images () {
