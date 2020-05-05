@@ -96,6 +96,7 @@ static const char *ircnet_servers[] = {
     "irc.nlnog.net",
     "irc.portlane.se",
     "open.ircnet.net",
+    "ssl.irc.atw-inter.net",
     NULL
 };
 
