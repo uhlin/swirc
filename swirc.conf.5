@@ -1,8 +1,8 @@
 .\" -*- mode: nroff; -*-
 .\"
-.\" Copyright 2018 2019 Markus Uhlin. All rights reserved.
+.\" Copyright 2018-2020 Markus Uhlin. All rights reserved.
 .\"
-.Dd November 20, 2019
+.Dd May 5, 2020
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -119,7 +119,10 @@ users are invited to channels
 .\" IRCV3 SERVER TIME
 .\" ----------------------------------------
 .It Sy ircv3_server_time Pq Em bool
-Enable or disable IRCv3 server time extension
+Enable or disable IRCv3 server time extension.
+The server time extension is particularly useful if you're using an
+IRC bouncer like
+.Lk https://znc.in/ ZNC
 .\" ----------------------------------------
 .\" JOINS PARTS QUITS
 .\" ----------------------------------------
