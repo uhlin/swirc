@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ### Added ###
 - Command
   - `/znc` (for communication with [znc](https://www.znc.in/))
+- Event
+  - 493\. Undocumented in the RFC. ngIRCd: `You must share a common
+    channel with [...]`.
 
 ### Fixed ###
 - Command-line option `-P`. (It disabled SASL authentication but
