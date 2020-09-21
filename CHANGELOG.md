@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 ### Added ###
 - Command
+  - `/servlist`: used to list services currently connected to the
+    network.
   - `/znc` (for communication with [znc](https://www.znc.in/))
 - Event
   - 493\. Undocumented in the RFC. ngIRCd: `You must share a common

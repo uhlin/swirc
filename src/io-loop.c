@@ -67,6 +67,7 @@
 #include "commands/sasl.h"
 #include "commands/say.h"
 #include "commands/services.h"
+#include "commands/servlist.h"
 #include "commands/theme.h"
 #include "commands/topic.h"
 #include "commands/znc.h"
@@ -136,6 +137,7 @@ static struct cmds_tag {
     { "rules",       cmd_rules,       true,  rules_usage,       ARRAY_SIZE(rules_usage),       true  },
     { "sasl",        cmd_sasl,        false, sasl_usage,        ARRAY_SIZE(sasl_usage),        true  },
     { "say",         cmd_say,         true,  say_usage,         ARRAY_SIZE(say_usage),         false },
+    { "servlist",    cmd_servlist,    true,  servlist_usage,    ARRAY_SIZE(servlist_usage),    true  },
     { "set",         cmd_set,         false, set_usage,         ARRAY_SIZE(set_usage),         false },
     { "theme",       cmd_theme,       false, theme_usage,       ARRAY_SIZE(theme_usage),       false },
     { "time",        cmd_time,        true,  time_usage,        ARRAY_SIZE(time_usage),        true  },
