@@ -502,7 +502,7 @@ enter_io_loop(void)
 	/*
 	 * napms: let i/o finish
 	 */
-	napms(100);
+	napms(333);
 	cmd_connect(buf);
     }
 
