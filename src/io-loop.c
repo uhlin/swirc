@@ -68,6 +68,7 @@
 #include "commands/say.h"
 #include "commands/services.h"
 #include "commands/servlist.h"
+#include "commands/squery.h"
 #include "commands/theme.h"
 #include "commands/topic.h"
 #include "commands/znc.h"
@@ -139,6 +140,7 @@ static struct cmds_tag {
     { "say",         cmd_say,         true,  say_usage,         ARRAY_SIZE(say_usage),         false },
     { "servlist",    cmd_servlist,    true,  servlist_usage,    ARRAY_SIZE(servlist_usage),    true  },
     { "set",         cmd_set,         false, set_usage,         ARRAY_SIZE(set_usage),         false },
+    { "squery",      cmd_squery,      true,  squery_usage,      ARRAY_SIZE(squery_usage),      true  },
     { "theme",       cmd_theme,       false, theme_usage,       ARRAY_SIZE(theme_usage),       false },
     { "time",        cmd_time,        true,  time_usage,        ARRAY_SIZE(time_usage),        true  },
     { "topic",       cmd_topic,       true,  topic_usage,       ARRAY_SIZE(topic_usage),       false },

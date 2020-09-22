@@ -526,6 +526,14 @@ static const char *set_usage[] = {
      */
 };
 
+static const char *squery_usage[] = {
+    "usage: /squery <servicename> <text>",
+    "",
+    "This command is used similarly to '/msg'. The only difference is that the",
+    "recipient MUST be a service.",
+    "",
+};
+
 static const char *theme_usage[] = {
     "usage: /theme [install <name> | list-remote | set <name>]",
     "",

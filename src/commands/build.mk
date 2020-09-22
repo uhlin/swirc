@@ -18,6 +18,7 @@ OBJS=$(COMMANDS_DIR)ban.o\
 	$(COMMANDS_DIR)say.o\
 	$(COMMANDS_DIR)services.o\
 	$(COMMANDS_DIR)servlist.o\
+	$(COMMANDS_DIR)squery.o\
 	$(COMMANDS_DIR)theme.o\
 	$(COMMANDS_DIR)topic.o\
 	$(COMMANDS_DIR)znc.o
