@@ -66,8 +66,10 @@ cmd_znc(const char *data)
 	    tokens.push_back(token);
 
 	if (! (written_linefeed)) {
-	    if (tokens.size() != 1)
-		throw std::runtime_error("bogus number of tokens (expected one)");
+	    if (tokens.size() != 1) {
+		throw std::runtime_error("bogus number of tokens "
+		    "(expected one)");
+	    }
 
 	    (void) net_send("PRIVMSG *status :%s", tokens.at(0).c_str());
 	    return;
