@@ -1,4 +1,4 @@
-/* Copyright (c) 2016-2019 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2016-2020 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -42,7 +42,7 @@
 static SSL_CTX	*ssl_ctx = NULL;
 static SSL	*ssl     = NULL;
 
-static const char *suite_secure   = "TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
+static const char *suite_secure   = "TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
 static const char *suite_compat   = "HIGH:!aNULL";
 static const char *suite_legacy   = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
 static const char *suite_insecure = "ALL:!aNULL:!eNULL";

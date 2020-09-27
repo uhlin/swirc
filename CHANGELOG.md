@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file.
   - 493\. Undocumented in the RFC. ngIRCd: `You must share a common
     channel with [...]`.
 
+### Changed ###
+- `network-openssl.c`: `suite_secure`:
+  `TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE` ->
+  `TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE`
+
 ### Fixed ###
 - Command-line option `-P`. (It disabled SASL authentication but
   didn't end IRCv3 capability negotiation.)
