@@ -72,9 +72,7 @@ cmd_znc(const char *data)
 
 	(void) net_send("PRIVMSG *status :%s", tokens.at(0).c_str());
 	return;
-    }
-
-    if (tokens.size() != 2) {
+    } else if (tokens.size() != 2) {
 	print_and_free("/znc: bogus number of tokens (expected two)", NULL);
 	return;
     } else if (tokens.at(0).at(0) != '*') {
