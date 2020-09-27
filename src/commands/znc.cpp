@@ -46,14 +46,13 @@
 void
 cmd_znc(const char *data)
 {
-    bool written_linefeed = false;
-
     if (strings_match(data, "")) {
 	print_and_free("/znc: missing arguments", NULL);
 	return;
     }
 
     char *dcopy = sw_strdup(data);
+    bool written_linefeed = false;
     if (*dcopy == '*')
 	written_linefeed = strFeed(dcopy, 1) == 1;
     std::istringstream input(dcopy);
