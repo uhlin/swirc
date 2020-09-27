@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -60,22 +61,25 @@ cmd_znc(const char *data)
     std::vector<std::string> tokens;
     std::string token;
 
-    while (std::getline(input, token))
-	tokens.push_back(token);
+    try {
+	while (std::getline(input, token))
+	    tokens.push_back(token);
 
-    if (! (written_linefeed)) {
-	if (tokens.size() != 1) {
-	    print_and_free("/znc: bogus number of tokens (expected one)", NULL);
+	if (! (written_linefeed)) {
+	    if (tokens.size() != 1)
+		throw std::runtime_error("bogus number of tokens (expected one)");
+
+	    (void) net_send("PRIVMSG *status :%s", tokens.at(0).c_str());
 	    return;
+	} else if (tokens.size() != 2) {
+	    throw std::runtime_error("bogus number of tokens (expected two)");
+	} else if (tokens.at(0).at(0) != '*') {
+	    throw std::runtime_error("bogus module name");
 	}
-
-	(void) net_send("PRIVMSG *status :%s", tokens.at(0).c_str());
-	return;
-    } else if (tokens.size() != 2) {
-	print_and_free("/znc: bogus number of tokens (expected two)", NULL);
-	return;
-    } else if (tokens.at(0).at(0) != '*') {
-	print_and_free("/znc: bogus module name", NULL);
+    } catch (std::runtime_error &e) {
+	std::string s("/znc: ");
+	s.append(e.what());
+	print_and_free(s.c_str(), NULL);
 	return;
     }
 
