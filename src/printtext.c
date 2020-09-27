@@ -1256,7 +1256,7 @@ void
 print_and_free(const char *msg, char *cp)
 {
 #ifdef UNIT_TESTING
-    puts(msg);
+    (void) fprintf(stderr, "** %s **\r\n", msg);
     free(cp);
     fail();
 #else
