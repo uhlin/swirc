@@ -3,6 +3,7 @@ TESTS=cmd_ban.run\
 	cmd_kick.run\
 	cmd_op.run\
 	cmd_part.run\
+	cmd_servlist.run\
 	cmd_squery.run\
 	cmd_unban.run\
 	cmd_znc.run\
