@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
   - `/squery`: used for communication with irc network services.
   - `/znc` (for communication with [znc](https://www.znc.in/))
 - Event
+  - 234 (`RPL_SERVLIST`)
+  - 235 (`RPL_SERVLISTEND`)
   - 493\. Undocumented in the RFC. ngIRCd: `You must share a common
     channel with [...]`.
 

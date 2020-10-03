@@ -59,6 +59,7 @@
 #include "events/ping.h"
 #include "events/pong.h"
 #include "events/privmsg.h"
+#include "events/servlist.h"
 #include "events/wallops.h"
 #include "events/welcome.h"
 #include "events/whois.h"
@@ -125,6 +126,8 @@ static struct numeric_events_tag {
     { "042", "",                        NO_WINDOW,      0, event_allaround_extract_remove_colon },
     { "221", "RPL_UMODEIS",             NO_WINDOW,      0, event_userModeIs },
     { "232", "",                        ACTIVE_WINDOW,  1, NULL },
+    { "234", "RPL_SERVLIST",            NO_WINDOW,      0, event_servlist },
+    { "235", "RPL_SERVLISTEND",         NO_WINDOW,      0, event_servlistEnd },
     { "250", "",                        STATUS_WINDOW,  1, NULL },
     { "251", "RPL_LUSERCLIENT",         STATUS_WINDOW,  1, NULL },
     { "252", "RPL_LUSEROP",             NO_WINDOW,      0, event_allaround_extract_remove_colon },
