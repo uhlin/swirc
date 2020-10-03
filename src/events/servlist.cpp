@@ -63,5 +63,5 @@ event_servlist(struct irc_message_compo *compo)
 void
 event_servlistEnd(struct irc_message_compo *compo)
 {
-    (void) compo;
+    irc_extract_msg(compo, g_active_window, 3, false);
 }
