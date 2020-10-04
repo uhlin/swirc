@@ -96,13 +96,28 @@ event_banlist(struct irc_message_compo *compo)
 		throw std::runtime_error("unable to get issuer name");
 
 	    const time_t date_of_issue = (time_t) strtol(seconds, NULL, 10);
+	    struct tm result = { 0 };
+
+#define TM_STRUCT_MSG "unable to retrieve tm structure"
+#if defined(UNIX)
+	    if (localtime_r(&date_of_issue, &result) == NULL)
+		throw std::runtime_error("localtime_r: " TM_STRUCT_MSG);
+#elif defined(WIN32)
+	    if (localtime_s(&result, &date_of_issue) != 0)
+		throw std::runtime_error("localtime_s: " TM_STRUCT_MSG);
+#endif
+
+	    char tbuf[100] = { '\0' };
+
+	    if (strftime(tbuf, ARRAY_SIZE(tbuf), "%c", &result) == 0)
+		throw std::runtime_error("strftime: zero return");
 
 	    printtext(&ctx, "%s%s%s%c%s: %s%s%c issued by %s%s%c %s%s%s %s%s%s",
 		LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 		COLOR4, mask, NORMAL,
 		COLOR2, issuer_name, NORMAL,
 		LEFT_BRKT, issuer_userhost ? issuer_userhost : "", RIGHT_BRKT,
-		LEFT_BRKT, trim(ctime(&date_of_issue)), RIGHT_BRKT);
+		LEFT_BRKT, trim(tbuf), RIGHT_BRKT);
 	} else if (feeds_written == 2) {
 	    (void) strtok_r(compo->params, "\n", &state1); /* recipient */
 	    char *channel = strtok_r(NULL, "\n", &state1);
