@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 ### Changed ###
 - `network-openssl.c`: `suite_secure`:
   `TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE`
+- From obsolete `ctime()` calls to instead use `strftime()`
 
 ### Fixed ###
 - Command-line option `-P`. (It disabled SASL authentication but
