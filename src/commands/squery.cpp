@@ -71,7 +71,7 @@ cmd_squery(const char *data)
 
 	if (net_send("SQUERY %s :%s", servicename, text) < 0)
 	    throw std::runtime_error("cannot send");
-    } catch (std::runtime_error &e) {
+    } catch (const std::runtime_error &e) {
 	std::string s("/squery: ");
 	s.append(e.what());
 	print_and_free(s.c_str(), NULL);
