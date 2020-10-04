@@ -78,7 +78,7 @@ cmd_znc(const char *data)
 	} else if (tokens.at(0).at(0) != '*') {
 	    throw std::runtime_error("bogus module name");
 	}
-    } catch (std::runtime_error &e) {
+    } catch (const std::runtime_error &e) {
 	std::string s("/znc: ");
 	s.append(e.what());
 	print_and_free(s.c_str(), NULL);
