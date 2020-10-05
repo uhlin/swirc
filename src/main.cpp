@@ -449,7 +449,17 @@ main(int argc, char *argv[])
 #endif
 
     process_options(argc, argv, "46CPTc:dh:in:pr:u:x:");
-    srand(time(NULL));
+
+    errno = 0;
+    struct timeval tv = { 0 };
+    if (gettimeofday(&tv, NULL) != 0)
+	err_dump("%s", "fatal: gettimeofday: ");
+#if defined(UNIX)
+    const unsigned int seed = (getpid() ^ tv.tv_sec ^ tv.tv_usec);
+#elif defined(WIN32)
+    const unsigned int seed = (_getpid() ^ tv.tv_sec ^ tv.tv_usec);
+#endif
+    srand(seed);
 
     term_init();
     nestHome_init();
