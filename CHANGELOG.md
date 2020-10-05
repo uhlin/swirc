@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - `network-openssl.c`: `suite_secure`:
   `TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE`
 - From obsolete `ctime()` calls to instead use `strftime()`
+- To seed the random number generator using a new approach
 
 ### Fixed ###
 - Command-line option `-P`. (It disabled SASL authentication but
