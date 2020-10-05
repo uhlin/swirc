@@ -47,6 +47,7 @@
 #include "names.h"
 
 #define SHUTDOWN_IRC_CONNECTION_BEHAVIOR 0
+#define TM_STRUCT_MSG "unable to retrieve tm structure"
 
 /* event_chan_hp: 328
 
@@ -866,8 +867,22 @@ event_topic_creator(struct irc_message_compo *compo)
 	    throw std::runtime_error("expected numeric string");
 
 	const time_t timestamp = (time_t) strtol(time_str, NULL, 10);
-	string_copy = sw_strdup(creator);
+	struct tm result = { 0 };
 
+#if defined(UNIX)
+	if (localtime_r(&timestamp, &result) == NULL)
+	    throw std::runtime_error("localtime_r: " TM_STRUCT_MSG);
+#elif defined(WIN32)
+	if (localtime_s(&result, &timestamp) != 0)
+	    throw std::runtime_error("localtime_s: " TM_STRUCT_MSG);
+#endif
+
+	char tbuf[100] = { '\0' };
+
+	if (strftime(tbuf, ARRAY_SIZE(tbuf), "%c", &result) == 0)
+	    throw std::runtime_error("strftime: zero return");
+
+	string_copy = sw_strdup(creator);
 	char *nick = strtok_r(string_copy, "!@", &state2);
 	char *user = strtok_r(NULL, "!@", &state2);
 	char *host = strtok_r(NULL, "!@", &state2);
@@ -878,11 +893,11 @@ event_topic_creator(struct irc_message_compo *compo)
 	    printtext(&ctx, "Topic set by %c%s%c %s%s@%s%s %s%s%s",
 		BOLD, nick, BOLD,
 		LEFT_BRKT, user, host, RIGHT_BRKT,
-		LEFT_BRKT, trim(ctime(&timestamp)), RIGHT_BRKT);
+		LEFT_BRKT, trim(tbuf), RIGHT_BRKT);
 	} else {
 	    printtext(&ctx, "Topic set by %c%s%c %s%s%s",
 		BOLD, nick, BOLD,
-		LEFT_BRKT, trim(ctime(&timestamp)), RIGHT_BRKT);
+		LEFT_BRKT, trim(tbuf), RIGHT_BRKT);
 	}
     } catch (std::runtime_error &e) {
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
