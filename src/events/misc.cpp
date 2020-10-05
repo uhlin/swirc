@@ -213,9 +213,25 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 	    return;
 
 	const time_t date_of_creation = (time_t) strtol(seconds, NULL, 10);
+	struct tm result = { 0 };
+
+#define TM_STRUCT_MSG "unable to retrieve tm structure"
+#if defined(UNIX)
+	if (localtime_r(&date_of_creation, &result) == NULL)
+	    throw std::runtime_error("localtime_r: " TM_STRUCT_MSG);
+#elif defined(WIN32)
+	if (localtime_s(&result, &date_of_creation) != 0)
+	    throw std::runtime_error("localtime_s: " TM_STRUCT_MSG);
+#endif
+
+	char tbuf[100] = { '\0' };
+
+	if (strftime(tbuf, ARRAY_SIZE(tbuf), "%c", &result) == 0)
+	    throw std::runtime_error("strftime: zero return");
+
 	printtext(&ctx, "Channel %s%s%s%c%s created %s",
 	    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-	    trim(ctime(&date_of_creation)));
+	    trim(tbuf));
 	ctx.window->received_chancreated = true;
     } catch (std::runtime_error &e) {
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
