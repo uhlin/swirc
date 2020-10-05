@@ -454,14 +454,16 @@ main(int argc, char *argv[])
 
     process_options(argc, argv, "46CPTc:dh:in:pr:u:x:");
 
+#if defined(UNIX)
     errno = 0;
     struct timeval tv = { 0 };
     if (gettimeofday(&tv, NULL) != 0)
 	err_dump("%s", "fatal: gettimeofday: ");
-#if defined(UNIX)
     const unsigned int seed = (getpid() ^ tv.tv_sec ^ tv.tv_usec);
 #elif defined(WIN32)
-    const unsigned int seed = (_getpid() ^ tv.tv_sec ^ tv.tv_usec);
+    SYSTEMTIME st = { 0 };
+    GetLocalTime(&st);
+    const unsigned int seed = (_getpid() ^ st.wSecond ^ st.wMilliseconds);
 #endif
     srand(seed);
 
