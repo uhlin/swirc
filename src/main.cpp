@@ -39,6 +39,10 @@
 #include <unistd.h> /* geteuid() pledge() */
 #endif
 
+#if WIN32
+#include <process.h> /* _getpid() */
+#endif
+
 #include "assertAPI.h"
 #include "curses-funcs.h"
 #include "cursesInit.h"
