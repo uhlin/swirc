@@ -458,7 +458,7 @@ main(int argc, char *argv[])
     errno = 0;
     struct timeval tv = { 0 };
     if (gettimeofday(&tv, NULL) != 0)
-	err_dump("%s", "fatal: gettimeofday: ");
+	err_dump("%s", "fatal: gettimeofday");
     const unsigned int seed = (getpid() ^ tv.tv_sec ^ tv.tv_usec);
 #elif defined(WIN32)
     SYSTEMTIME st = { 0 };
