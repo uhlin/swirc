@@ -25,6 +25,9 @@ All notable changes to this project will be documented in this file.
 - Command-line option `-P`. (It disabled SASL authentication but
   didn't end IRCv3 capability negotiation.)
 
+### News ###
+- [LibreSSL](https://www.libressl.org/) 3.1.4
+
 ## [3.2.4] - 2020-04-08 ##
 ### Added ###
 - Improved documentation
