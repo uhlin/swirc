@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.2.5] - 2020-10-09 ##
 ### Added ###
 - Command
   - `/servlist`: used to list services currently connected to the
