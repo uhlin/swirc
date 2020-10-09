@@ -5,7 +5,6 @@ SWIRC_PATH=/usr/ports/net/swirc
 install_patches () {
 	_patches="
 patch-configure
-patch-src_events_cap_c
 "
 
 	for p in $_patches; do
