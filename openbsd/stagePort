@@ -15,6 +15,7 @@ patch-configure
 cd /tmp
 cvs -d anoncvs@anoncvs.fr.openbsd.org:/cvs checkout -P ports/net/swirc
 
+cd -
 install -d $SWIRC_PATH
 install -d $SWIRC_PATH/patches
 install -d $SWIRC_PATH/pkg
