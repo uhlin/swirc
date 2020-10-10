@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SWIRC_PATH=/usr/ports/net/swirc
+SWIRC_PATH=/tmp/ports/net/swirc
 
 install_patches () {
 	_patches="
