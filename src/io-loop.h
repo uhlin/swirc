@@ -4,6 +4,7 @@
 #include "textBuffer.h"
 
 #define BOLD_ALIAS '\025'
+#define MAX_PBB 2705
 
 typedef void (*CMD_HANDLER_FN)(const char *);
 
@@ -11,7 +12,7 @@ typedef void (*CMD_HANDLER_FN)(const char *);
 extern "C" {
 #endif
 
-extern wchar_t g_push_back_buf[2705]; /* FIXME: #define array size */
+extern wchar_t g_push_back_buf[MAX_PBB];
 extern bool g_io_loop;
 
 /*lint -sem(get_list_of_matching_commands, r_null) */
