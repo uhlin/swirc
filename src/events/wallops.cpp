@@ -75,7 +75,7 @@ event_wallops(struct irc_message_compo *compo)
 		throw std::runtime_error("no nick or user@host");
 
 	    /*
-	     * FIXME: Current look is identical to notice
+	     * NOTE: Current look is identical to notice
 	     */
 	    printtext(&ctx, "%s%s%s%c%s%s%s@%s%c%s%s %s",
 		Theme("notice_lb"),
