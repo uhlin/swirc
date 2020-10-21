@@ -1,5 +1,5 @@
 /* commands/misc.c
-   Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -32,6 +32,9 @@
 #ifdef UNIX
 #include <sys/socket.h> /* shutdown() */
 #endif
+
+#include "../irc.h"
+#include "../events/names.h"
 
 #include "../config.h"
 #include "../dataClassify.h"
@@ -313,8 +316,6 @@ cmd_mode(const char *data)
 void
 cmd_names(const char *data)
 {
-    extern int event_names_print_all(const char *channel);
-
     if (strings_match(data, "")) {
 	if (is_irc_channel(g_active_window->label))
 	    event_names_print_all(g_active_window->label);

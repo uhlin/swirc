@@ -31,6 +31,9 @@
 
 #include <openssl/crypto.h> /* OPENSSL_cleanse() */
 
+#include "../irc.h"
+#include "../events/welcome.h"
+
 #include "../assertAPI.h"
 #include "../config.h"
 #include "../curses-funcs.h"
@@ -466,7 +469,6 @@ void
 cmd_disconnect(const char *data)
 {
     const bool has_message = !strings_match(data, "");
-    extern void event_welcome_signalit(void);
 
     quit_reconnecting = true;
 

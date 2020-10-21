@@ -1,5 +1,5 @@
 /* commands/sasl.c
-   Copyright (C) 2017-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2020 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -31,6 +31,9 @@
 #include "common.h"
 
 #include <openssl/pem.h>
+
+#include "../irc.h"
+#include "../events/cap.h"
 
 #include "../assertAPI.h"
 #include "../config.h"
@@ -240,8 +243,6 @@ save_to_config()
 static void
 set_mechanism(char *mechanism)
 {
-    extern bool is_sasl_mechanism_supported(const char *); /*from events/cap.c*/
-
     (void) strToUpper(mechanism);
 
     if (!is_sasl_mechanism_supported(mechanism)) {
