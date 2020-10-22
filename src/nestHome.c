@@ -205,7 +205,7 @@ path_to_home(void)
 #elif defined(WIN32)
     const char *var = "APPDATA";
 #endif
-    static char buf[1000] = "";
+    static char buf[2000] = "";
 
     if ((var_data = getenv(var)) == NULL ||
 	sw_strcpy(buf, var_data, ARRAY_SIZE(buf)) != 0 ||
