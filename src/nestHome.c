@@ -207,11 +207,25 @@ path_to_home(void)
 #endif
     static char buf[2000] = "";
 
+/*
+ * getenv() is safe in this context
+ */
+#if WIN32
+#pragma warning(disable: 4996)
+#endif
+
     if ((var_data = getenv(var)) == NULL ||
 	sw_strcpy(buf, var_data, ARRAY_SIZE(buf)) != 0 ||
 	!is_directory(buf)) {
 	return (NULL);
     }
+
+/*
+ * Reset warning behavior to its default value
+ */
+#if WIN32
+#pragma warning(default: 4996)
+#endif
 
     return (&buf[0]);
 }
