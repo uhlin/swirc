@@ -208,7 +208,7 @@ path_to_home(void)
     static char buf[1000] = "";
 
     if ((var_data = getenv(var)) == NULL ||
-	sw_strcpy(buf, var_data, sizeof buf) != 0 ||
+	sw_strcpy(buf, var_data, ARRAY_SIZE(buf)) != 0 ||
 	!is_directory(buf)) {
 	return (NULL);
     }
