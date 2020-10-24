@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include "commands/znc.h"
+
 /* names.h wants this header before itself */
 #include "irc.h"
 #include "events/names.h"
@@ -79,6 +81,22 @@ auto_complete_whois(volatile struct readline_session_context *ctx,
     const char *s)
 {
     const wchar_t cmd[] = L"/whois ";
+    size_t i = 0;
+
+    while (ctx->n_insert != 0)
+	readline_handle_backspace(ctx);
+
+    for (i = 0; i < wcslen(cmd); i++)
+	readline_handle_key_exported(ctx, cmd[i]);
+    for (i = 0; i < strlen(s); i++)
+	readline_handle_key_exported(ctx, btowc(s[i]));
+}
+
+static void
+auto_complete_znc_cmd(volatile struct readline_session_context *ctx,
+    const char *s)
+{
+    const wchar_t cmd[] = L"/znc ";
     size_t i = 0;
 
     while (ctx->n_insert != 0)
@@ -165,6 +183,7 @@ readline_tab_comp_ctx_new(void)
     ctx.isInCirculationModeForQuery	= false;
     ctx.isInCirculationModeForSettings	= false;
     ctx.isInCirculationModeForWhois	= false;
+    ctx.isInCirculationModeForZncCmds	= false;
     ctx.isInCirculationModeForCmds	= false;
     ctx.isInCirculationModeForChanUsers = false;
     ctx.matches = NULL;
@@ -190,6 +209,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 	ctx->isInCirculationModeForQuery     = false;
 	ctx->isInCirculationModeForSettings  = false;
 	ctx->isInCirculationModeForWhois     = false;
+	ctx->isInCirculationModeForZncCmds   = false;
 	ctx->isInCirculationModeForCmds	     = false;
 	ctx->isInCirculationModeForChanUsers = false;
 	if (!isNull(ctx->matches))
@@ -254,6 +274,21 @@ init_mode_for_whois(volatile struct readline_session_context *ctx)
     ctx->tc->elmt = textBuf_head(ctx->tc->matches);
     auto_complete_whois(ctx, ctx->tc->elmt->text);
     ctx->tc->isInCirculationModeForWhois = true;
+}
+
+static void
+init_mode_for_znc_cmds(volatile struct readline_session_context *ctx)
+{
+    char *p = & (ctx->tc->search_var[5]);
+
+    if ((ctx->tc->matches = get_list_of_matching_znc_commands(p)) == NULL) {
+	output_error("no magic");
+	return;
+    }
+
+    ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+    auto_complete_znc_cmd(ctx, ctx->tc->elmt->text);
+    ctx->tc->isInCirculationModeForZncCmds = true;
 }
 
 static void
@@ -327,6 +362,16 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 	}
 
 	return;
+    } else if (ctx->tc->isInCirculationModeForZncCmds) {
+	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+	    output_error("no more matches");
+	    readline_tab_comp_ctx_reset(ctx->tc);
+	} else {
+	    ctx->tc->elmt = ctx->tc->elmt->next;
+	    auto_complete_znc_cmd(ctx, ctx->tc->elmt->text);
+	}
+
+	return;
     } else if (ctx->tc->isInCirculationModeForCmds) {
 	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
 	    output_error("no more matches");
@@ -362,6 +407,8 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 	init_mode_for_set(ctx);
     else if (!strncmp(get_search_var(ctx), "/whois ", 7))
 	init_mode_for_whois(ctx);
+    else if (!strncmp(get_search_var(ctx), "/znc ", 5))
+	init_mode_for_znc_cmds(ctx);
     else if (is_command)
 	init_mode_for_commands(ctx, ctx->n_insert > 1);
     else if (is_irc_channel(ACTWINLABEL))

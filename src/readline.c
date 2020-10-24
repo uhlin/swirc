@@ -420,6 +420,7 @@ isInCirculationMode(const TAB_COMPLETION *tc)
     return (tc->isInCirculationModeForQuery ||
 	    tc->isInCirculationModeForSettings ||
 	    tc->isInCirculationModeForWhois ||
+	    tc->isInCirculationModeForZncCmds ||
 	    tc->isInCirculationModeForCmds ||
 	    tc->isInCirculationModeForChanUsers);
 }

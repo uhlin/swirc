@@ -44,6 +44,7 @@ typedef struct tagTAB_COMPLETION {
     bool isInCirculationModeForQuery;
     bool isInCirculationModeForSettings;
     bool isInCirculationModeForWhois;
+    bool isInCirculationModeForZncCmds;
     bool isInCirculationModeForCmds;
     bool isInCirculationModeForChanUsers;
     PTEXTBUF matches;
