@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Added tab completion for
+  - `/znc`
+
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###
 - Command
