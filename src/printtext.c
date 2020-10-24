@@ -1029,6 +1029,13 @@ perform_convert_buffer(const char **in_buf)
 
     BZERO(&ps, sizeof (mbstate_t));
 
+/*
+ * mbsrtowcs() is complex enough to use
+ */
+#if WIN32
+#pragma warning(disable: 4996)
+#endif
+
     while (errno = 0, true) {
 	if (mbsrtowcs(&out[wcslen(out)], in_buf, (sz - wcslen(out)) - 1, &ps) ==
 	    CONVERT_FAILED && errno == EILSEQ) {
@@ -1037,6 +1044,13 @@ perform_convert_buffer(const char **in_buf)
 	} else
 	    break;
     }
+
+/*
+ * Reset warning behavior to its default value
+ */
+#if WIN32
+#pragma warning(default: 4996)
+#endif
 
     out[sz - 1] = 0L;
     if (chars_lost)
