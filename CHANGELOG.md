@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added tab completion for
+  - `/help`
   - `/znc`
 
 ## [3.2.5] - 2020-10-09 ##
