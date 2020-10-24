@@ -184,6 +184,13 @@ static const char *help_usage[] = {
     "",
 };
 
+static const char *ignore_usage[] = {
+    "usage: /ignore ...",
+    "",
+    "No help yet.",
+    "",
+};
+
 static const char *ilist_usage[] = {
     "usage: /ilist [channel]",
     "",

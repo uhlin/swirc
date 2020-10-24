@@ -2,11 +2,12 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Made functions that yet weren't declared at file scope to be
 - `path_to_home`: increased buf size to 2000
 - Added tab completion for:
   - `/help`
   - `/znc`
-- Made functions that yet weren't declared at file scope to be
+- Added command `/ignore`
 
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###

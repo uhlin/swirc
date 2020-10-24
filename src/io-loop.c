@@ -55,6 +55,7 @@
 #include "commands/colormap.h"
 #include "commands/connect.h"
 #include "commands/echo.h"
+#include "commands/ignore.h"
 #include "commands/invite.h"
 #include "commands/jp.h"
 #include "commands/kick.h"
@@ -113,6 +114,7 @@ static struct cmds_tag {
     { "exlist",      cmd_exlist,      true,  exlist_usage,      ARRAY_SIZE(exlist_usage),      true  },
     { "group",       cmd_group,       true,  group_usage,       ARRAY_SIZE(group_usage),       false },
     { "help",        cmd_help,        false, help_usage,        ARRAY_SIZE(help_usage),        false },
+    { "ignore",      cmd_ignore,      true,  ignore_usage,      ARRAY_SIZE(ignore_usage),      false },
     { "ilist",       cmd_ilist,       true,  ilist_usage,       ARRAY_SIZE(ilist_usage),       true  },
     { "invite",      cmd_invite,      true,  invite_usage,      ARRAY_SIZE(invite_usage),      true  },
     { "join",        cmd_join,        true,  join_usage,        ARRAY_SIZE(join_usage),        true  },
