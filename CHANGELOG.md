@@ -2,10 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- `path_to_home`: increased buf size to 2000
 - Added tab completion for:
   - `/help`
   - `/znc`
-- `path_to_home`: increased buf size to 2000
+- Made functions that yet weren't declared at file scope to be
 
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###
