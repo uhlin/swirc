@@ -61,7 +61,7 @@ event_invite(struct irc_message_compo *compo)
 		  BOLD, channel, BOLD);
     } else {
 	/*
-	 * FIXME: Write to the channels where the user that's doing
+	 * TODO: Write to the channels where the user that's doing
 	 * the invite is in
 	 */
 	printtext(&ctx, "%c%s%c %s%s@%s%s invites %c%s%c to %c%s%c",
