@@ -41,6 +41,7 @@ enum { /* custom, additional keys */
 
 typedef struct tagTAB_COMPLETION {
     char search_var[64];
+    bool isInCirculationModeForHelp;
     bool isInCirculationModeForQuery;
     bool isInCirculationModeForSettings;
     bool isInCirculationModeForWhois;

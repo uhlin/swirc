@@ -45,6 +45,22 @@
 #include "terminal.h"
 
 static void
+auto_complete_help(volatile struct readline_session_context *ctx,
+    const char *s)
+{
+    const wchar_t cmd[] = L"/help ";
+    size_t i = 0;
+
+    while (ctx->n_insert != 0)
+	readline_handle_backspace(ctx);
+
+    for (i = 0; i < wcslen(cmd); i++)
+	readline_handle_key_exported(ctx, cmd[i]);
+    for (i = 0; i < strlen(s); i++)
+	readline_handle_key_exported(ctx, btowc(s[i]));
+}
+
+static void
 auto_complete_query(volatile struct readline_session_context *ctx,
     const char *s)
 {
@@ -180,6 +196,7 @@ readline_tab_comp_ctx_new(void)
     static TAB_COMPLETION ctx;
 
     memset(ctx.search_var, 0, ARRAY_SIZE(ctx.search_var));
+    ctx.isInCirculationModeForHelp	= false;
     ctx.isInCirculationModeForQuery	= false;
     ctx.isInCirculationModeForSettings	= false;
     ctx.isInCirculationModeForWhois	= false;
@@ -206,6 +223,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 {
     if (ctx) {
 	memset(ctx->search_var, 0, ARRAY_SIZE(ctx->search_var));
+	ctx->isInCirculationModeForHelp	     = false;
 	ctx->isInCirculationModeForQuery     = false;
 	ctx->isInCirculationModeForSettings  = false;
 	ctx->isInCirculationModeForWhois     = false;
@@ -217,6 +235,21 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 	ctx->matches = NULL;
 	ctx->elmt = NULL;
     }
+}
+
+static void
+init_mode_for_help(volatile struct readline_session_context *ctx)
+{
+    char *p = & (ctx->tc->search_var[6]);
+
+    if ((ctx->tc->matches = get_list_of_matching_commands(p)) == NULL) {
+	output_error("no magic");
+	return;
+    }
+
+    ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+    auto_complete_help(ctx, ctx->tc->elmt->text);
+    ctx->tc->isInCirculationModeForHelp = true;
 }
 
 static void
@@ -332,6 +365,16 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 	output_error("no magic");
 	readline_tab_comp_ctx_reset(ctx->tc);
 	return;
+    } else if (ctx->tc->isInCirculationModeForHelp) {
+	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+	    output_error("no more matches");
+	    readline_tab_comp_ctx_reset(ctx->tc);
+	} else {
+	    ctx->tc->elmt = ctx->tc->elmt->next;
+	    auto_complete_help(ctx, ctx->tc->elmt->text);
+	}
+
+	return;
     } else if (ctx->tc->isInCirculationModeForQuery) {
 	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
 	    output_error("no more matches");
@@ -401,7 +444,9 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 
     const bool is_command = (ctx->tc->search_var[0] == '/');
 
-    if (!strncmp(get_search_var(ctx), "/query ", 7))
+    if (!strncmp(get_search_var(ctx), "/help ", 6))
+	init_mode_for_help(ctx);
+    else if (!strncmp(get_search_var(ctx), "/query ", 7))
 	init_mode_for_query(ctx);
     else if (!strncmp(get_search_var(ctx), "/set ", 5))
 	init_mode_for_set(ctx);
