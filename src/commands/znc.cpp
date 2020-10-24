@@ -34,12 +34,83 @@
 #include <string>
 #include <vector>
 
+#include "../errHand.h"
 #include "../libUtils.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
 
 #include "znc.h"
+
+static const char *znc_commands[] = {
+    "Version",
+    "ListMods",
+    "ListAvailMods",
+    "ListNicks",
+    "ListServers",
+    "AddNetwork",
+    "DelNetwork",
+    "ListNetworks",
+    "MoveNetwork",
+    "JumpNetwork",
+    "AddServer",
+    "DelServer",
+    "AddTrustedServerFingerprint",
+    "DelTrustedServerFingerprint",
+    "ListTrustedServerFingerprints",
+    "EnableChan",
+    "DisableChan",
+    "Attach",
+    "Detach",
+    "Topics",
+    "PlayBuffer",
+    "ClearBuffer",
+    "ClearAllBuffers",
+    "ClearAllChannelBuffers",
+    "ClearAllQueryBuffers",
+    "SetBuffer",
+    "SetBindHost",
+    "SetUserBindHost",
+    "ClearBindHost",
+    "ClearUserBindHost",
+    "ShowBindHost",
+    "Jump",
+    "Disconnect",
+    "Connect",
+    "Uptime",
+    "LoadMod",
+    "UnloadMod",
+    "ReloadMod",
+    "UpdateMod",
+    "ShowMOTD",
+    "SetMOTD",
+    "AddMOTD",
+    "ClearMOTD",
+    "ListPorts",
+    "AddPort",
+    "DelPort",
+    "Rehash",
+    "SaveConfig",
+    "ListUsers",
+    "ListAllUserNetworks",
+    "ListChans",
+    "ListClients",
+    "Traffic",
+    "Broadcast",
+    "Shutdown",
+    "Restart",
+};
+
+static bool
+got_hits(const char *search_var)
+{
+    for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i ++) {
+	if (!strncmp(search_var, znc_commands[i], strlen(search_var)))
+	    return true;
+    }
+
+    return false;
+}
 
 /*
  * usage: /znc [*module] <command>
@@ -88,4 +159,29 @@ cmd_znc(const char *data)
     char *module = sw_strdup(tokens.at(0).c_str());
     (void) net_send("PRIVMSG %s :%s", strToLower(module), tokens.at(1).c_str());
     free_and_null(&module);
+}
+
+PTEXTBUF
+get_list_of_matching_znc_commands(const char *search_var)
+{
+    if (!got_hits(search_var))
+	return NULL;
+
+    PTEXTBUF matches = textBuf_new();
+
+    for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i ++) {
+	const char *cmd = znc_commands[i];
+
+	if (!strncmp(search_var, cmd, strlen(search_var))) {
+	    if (textBuf_size(matches) == 0) {
+		if ((errno = textBuf_ins_next(matches, NULL, cmd, -1)) != 0)
+		    err_sys("get_list_of_matching_znc_commands: textBuf_ins_next");
+	    } else {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches), cmd, -1)) != 0)
+		    err_sys("get_list_of_matching_znc_commands: textBuf_ins_next");
+	    }
+	}
+    }
+
+    return matches;
 }
