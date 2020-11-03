@@ -26,7 +26,7 @@ SHARED_FLAGS=-DNCURSES_OPAQUE=0\\
 	-Wall\\
 	-pipe
 CC=clang
-CFLAGS=\$(SHARED_FLAGS) -std=c11
+CFLAGS=\$(SHARED_FLAGS) -std=c17
 CXX=clang++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-L/usr/local/opt/libressl/lib
@@ -50,7 +50,7 @@ SHARED_FLAGS=-DBSD=1\\
 	-I/usr/local/include\\
 	-Wall
 CC=cc
-CFLAGS=\$(SHARED_FLAGS) -std=c11
+CFLAGS=\$(SHARED_FLAGS) -std=c17
 CXX=c++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-L/usr/local/lib
@@ -75,7 +75,7 @@ SHARED_FLAGS=-DBSD=1\\
 	-I/usr/pkg/include\\
 	-Wall
 CC=gcc
-CFLAGS=\$(SHARED_FLAGS) -std=c11
+CFLAGS=\$(SHARED_FLAGS) -std=c17
 CXX=g++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-L/usr/pkg/lib\\
@@ -106,7 +106,7 @@ SHARED_FLAGS=-DLINUX=1\\
 	-g\\
 	-pipe
 CC=gcc
-CFLAGS=\$(SHARED_FLAGS) -std=c11
+CFLAGS=\$(SHARED_FLAGS) -std=c17
 CXX=g++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-Wl,-z,now\\
@@ -140,7 +140,7 @@ SHARED_FLAGS=-DLINUX=1\\
 	-xprevise\\
 	-xsecure_code_analysis
 CC=suncc
-CFLAGS=\$(SHARED_FLAGS) -std=c11
+CFLAGS=\$(SHARED_FLAGS) -std=c17
 CXX=sunCC
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-xannotate -xprevise
