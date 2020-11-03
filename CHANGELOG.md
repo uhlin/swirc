@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
   - `/help`
   - `/znc`
 - Added command `/ignore`
+- CFLAGS: std: c99 -> c11
+- CXXFLAGS: std: c++14 -> c++17
 
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###
