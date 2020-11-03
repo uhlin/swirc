@@ -28,7 +28,7 @@ SHARED_FLAGS=-DNCURSES_OPAQUE=0\\
 CC=clang
 CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=clang++
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
+CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-L/usr/local/opt/libressl/lib
 LDLIBS=-lcrypto\\
 	-lcurl\\
@@ -52,7 +52,7 @@ SHARED_FLAGS=-DBSD=1\\
 CC=cc
 CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=c++
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
+CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-L/usr/local/lib
 LDLIBS=-lcrypto\\
 	-lcurl\\
@@ -77,7 +77,7 @@ SHARED_FLAGS=-DBSD=1\\
 CC=gcc
 CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=g++
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
+CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-L/usr/pkg/lib\\
 	-Wl,-rpath,/usr/pkg/lib
 LDLIBS=-lcrypto\\
@@ -108,7 +108,7 @@ SHARED_FLAGS=-DLINUX=1\\
 CC=gcc
 CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=g++
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
+CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-Wl,-z,now\\
 	-Wl,-z,relro
 LDLIBS=-lcrypto\\
@@ -142,7 +142,7 @@ SHARED_FLAGS=-DLINUX=1\\
 CC=suncc
 CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=sunCC
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
+CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-xannotate -xprevise
 LDLIBS=-lcrypto\\
 	-lcurl\\
