@@ -453,7 +453,7 @@ All notable changes to this project will be documented in this file.
 - Event
   - 465 (`ERR_YOUREBANNEDCREEP`)
   - 466 (`ERR_YOUWILLBEBANNED`)
-- `size_to_int()` which asserts given conversation isn't lossy
+- `size_to_int()` which asserts given conversion isn't lossy
 - `xfopen()` which is a wrapper for `fopen` and `fopen_s`
 - `xmbstowcs()` which is a wrapper for `mbstowcs` and `mbstowcs_s`
 - `xstrerror()` which is a wrapper for `strerror_s` and `strerror_r`
