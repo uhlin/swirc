@@ -120,6 +120,7 @@ static const char *undernet_servers[] = {
 };
 
 static const char *test_servers[] = {
+    "default.icb.net",
     "internetcitizens.band",
     "misc-services.exbit.io",
     "testnet.inspircd.org",
