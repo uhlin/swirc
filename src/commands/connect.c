@@ -1,5 +1,5 @@
 /* Connect and Disconnect commands
-   Copyright (C) 2016-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -120,6 +120,7 @@ static const char *undernet_servers[] = {
 };
 
 static const char *test_servers[] = {
+    "internetcitizens.band",
     "misc-services.exbit.io",
     "testnet.inspircd.org",
     "testnet.oragono.io",
