@@ -401,7 +401,7 @@ window_by_refnum(int refnum)
  * Change window to the one specified by @label
  */
 int
-changeWindow_by_label(const char *label)
+change_window_by_label(const char *label)
 {
     PIRC_WINDOW window = NULL;
 
@@ -520,7 +520,7 @@ spawn_chat_window(const char *label, const char *title)
 
     PIRC_WINDOW entry = hInstall(&inst_ctx);
     apply_window_options(panel_window(entry->pan));
-    const int ret = changeWindow_by_label(entry->label);
+    const int ret = change_window_by_label(entry->label);
     (void) ret;
     sw_assert_perror(ret);
 
