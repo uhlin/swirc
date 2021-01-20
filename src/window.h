@@ -68,7 +68,7 @@ void windowSystem_deinit(void);
 PIRC_WINDOW	window_by_label(const char *);
 PIRC_WINDOW	window_by_refnum(int);
 int		change_window_by_label(const char *);
-int		changeWindow_by_refnum(int);
+int		change_window_by_refnum(int);
 int		destroy_chat_window(const char *label);
 int		spawn_chat_window(const char *label, const char *title);
 void		new_window_title(const char *label, const char *title);

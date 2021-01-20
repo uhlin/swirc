@@ -436,7 +436,7 @@ change_window_by_label(const char *label)
  * Change window to the one specified by @refnum
  */
 int
-changeWindow_by_refnum(int refnum)
+change_window_by_refnum(int refnum)
 {
     PIRC_WINDOW window = NULL;
 
@@ -483,7 +483,7 @@ destroy_chat_window(const char *label)
 
     hUndef(window);
     reassign_window_refnums();
-    const int ret = changeWindow_by_refnum(g_ntotal_windows);
+    const int ret = change_window_by_refnum(g_ntotal_windows);
     (void) ret;
     sw_assert_perror(ret);
 
@@ -700,7 +700,7 @@ window_select_next(void)
     const int refnum_next = g_active_window->refnum + 1;
 
     if (window_by_refnum(refnum_next) != NULL) {
-	(void) changeWindow_by_refnum(refnum_next);
+	(void) change_window_by_refnum(refnum_next);
     }
 }
 
@@ -713,7 +713,7 @@ window_select_prev(void)
     const int refnum_prev = g_active_window->refnum - 1;
 
     if (window_by_refnum(refnum_prev) != NULL) {
-	(void) changeWindow_by_refnum(refnum_prev);
+	(void) change_window_by_refnum(refnum_prev);
     }
 }
 
