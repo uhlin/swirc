@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 - Added command `/ignore`
 - CFLAGS: std: c99 -> c17
 - CXXFLAGS: std: c++14 -> c++17
+- `changeWindow_by_label()` -> `change_window_by_label()`
+- `changeWindow_by_refnum()` -> `change_window_by_refnum()`
 
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###
