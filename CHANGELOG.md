@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - CXXFLAGS: std: c++14 -> c++17
 - `changeWindow_by_label()` -> `change_window_by_label()`
 - `changeWindow_by_refnum()` -> `change_window_by_refnum()`
+- `titlebar`: do not dynamically allocate 'reject'
 
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###
