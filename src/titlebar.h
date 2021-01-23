@@ -3,17 +3,11 @@
 
 /*lint -printf(1, titlebar) */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void	titlebar(const char *fmt, ...) PRINTFLIKE(1);
+__SWIRC_BEGIN_DECLS
+void	titlebar(const char *, ...) PRINTFLIKE(1);
 void	titlebar_deinit(void);
 void	titlebar_init(void);
 void	titlebar_recreate(int cols);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif
