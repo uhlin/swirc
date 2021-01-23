@@ -1,5 +1,5 @@
 /* Prints and handles text
-   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -1489,8 +1489,8 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
     }
 
     if (! (ctx->window->scroll_mode)) {
-	printtext_puts(
-	    panel_window(ctx->window->pan), pout->text, pout->indent, -1, NULL);
+	printtext_puts(panel_window(ctx->window->pan), pout->text, pout->indent,
+	    -1, NULL);
     }
 
     if (ctx->window->logging) {
