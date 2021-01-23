@@ -2,7 +2,7 @@
 
 # Swirc configure script
 #
-# Copyright (C) 2016-2020 Markus Uhlin. All rights reserved.
+# Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
 
 MAKE_DEF_FILE=options.mk
 
@@ -181,6 +181,15 @@ fix_cflags_with_pkg_config () {
 	fi
 }
 
+link_with_gnu_libidn () {
+	cat <<EOF >>$MAKE_DEF_FILE
+CFLAGS+=-DHAVE_LIBIDN=1
+CXXFLAGS+=-DHAVE_LIBIDN=1
+
+LDLIBS+=-lidn
+EOF
+}
+
 case "$(uname -s)" in
 	"Darwin")
 		os_MAC
@@ -206,15 +215,6 @@ case "$(uname -s)" in
 		exit 1
 	;;
 esac
-
-link_with_gnu_libidn () {
-	cat <<EOF >>$MAKE_DEF_FILE
-CFLAGS+=-DHAVE_LIBIDN=1
-CXXFLAGS+=-DHAVE_LIBIDN=1
-
-LDLIBS+=-lidn
-EOF
-}
 
 if test "$1" = "--with-libnotify"; then
 	LIBNOTIFY_CFLAGS="$(pkg-config --cflags-only-I libnotify)"
