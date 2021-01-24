@@ -19,7 +19,7 @@ SHARED_FLAGS=-DLINUX=1\\
 	-xprevise\\
 	-xsecure_code_analysis
 CC=suncc
-CFLAGS=\$(SHARED_FLAGS) -std=c17
+CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=sunCC
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-xannotate -xprevise
