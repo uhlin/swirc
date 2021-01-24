@@ -1,5 +1,5 @@
 /* Input output loop
-   Copyright (C) 2014-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -504,7 +504,7 @@ enter_io_loop(void)
 	/*
 	 * napms: let i/o finish
 	 */
-	napms(333);
+	napms(444);
 	cmd_connect(buf);
     }
 
