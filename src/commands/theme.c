@@ -1,5 +1,5 @@
 /* commands/theme.c  --  management of themes on-the-fly
-   Copyright (C) 2017-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -84,7 +84,7 @@ is_instruction_ok(const char *instruction)
 }
 
 static void
-theme_info_array_init()
+theme_info_array_init(void)
 {
     PTHEME_INFO ar_p;
 
@@ -110,7 +110,7 @@ free_theme_info(PTHEME_INFO info)
 }
 
 static void
-theme_info_array_deinit()
+theme_info_array_deinit(void)
 {
     PTHEME_INFO ar_p;
 
@@ -314,7 +314,7 @@ install_theme(const char *name)
 }
 
 static void
-list_remote()
+list_remote(void)
 {
 #define B1 Theme("notice_inner_b1")
 #define B2 Theme("notice_inner_b2")

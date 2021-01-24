@@ -133,7 +133,7 @@ static const uint8_t b64rmap_invalid = 0xff;
  * Which is fine for NSD. For now...
  **/
 static void
-b64_initialize_rmap ()
+b64_initialize_rmap (void)
 {
 	int i;
 

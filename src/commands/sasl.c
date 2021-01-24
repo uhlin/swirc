@@ -1,5 +1,5 @@
 /* commands/sasl.c
-   Copyright (C) 2017-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -150,7 +150,7 @@ public_key_blob(EC_KEY *key)
 }
 
 static void
-sasl_pubkey()
+sasl_pubkey(void)
 {
     EC_KEY        *key       = NULL;
     FILE          *fp        = NULL;
@@ -216,7 +216,7 @@ modify_setting(const char *setting_name, const char *new_value)
 }
 
 static void
-save_to_config()
+save_to_config(void)
 {
     char path[2300] = { '\0' };
     size_t len = 0;

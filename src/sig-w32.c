@@ -1,4 +1,4 @@
-/* Copyright (C) 2012-2016 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2012-2021 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 #include "errHand.h"
@@ -7,7 +7,7 @@
 #include <signal.h>
 
 static void
-clean_up()
+clean_up(void)
 {
 }
 

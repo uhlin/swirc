@@ -55,7 +55,7 @@ apply_titlebar_options(WINDOW *win)
 }
 
 static short int
-get_pair_num()
+get_pair_num(void)
 {
     short int fg, bg;
     short int pair_n;

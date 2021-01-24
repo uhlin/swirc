@@ -1,5 +1,5 @@
 /* ICB protocol handling
-   Copyright (C) 2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -60,7 +60,7 @@ static void	 sendpacket(bool *, const char *, ...) PRINTFLIKE(2);
 /*lint -printf(2, sendpacket) */
 
 static const char *
-get_label()
+get_label(void)
 {
     static char label[ICB_PACKET_MAX] = { '\0' };
 
@@ -88,7 +88,7 @@ process_event(const char *format, ...)
 }
 
 static void
-login_ok()
+login_ok(void)
 {
     if (strings_match(icb_protolevel, "") || strings_match(icb_hostid, "") ||
 	strings_match(icb_serverid, "")) {
@@ -434,7 +434,7 @@ handle_important_msg_packet(const char *pktdata)
 }
 
 static void
-handle_exit_packet()
+handle_exit_packet(void)
 {
     process_event("ERROR :Closing Link: Received exit packet\r\n");
 }

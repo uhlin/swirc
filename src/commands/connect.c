@@ -129,7 +129,7 @@ static const char *test_servers[] = {
 };
 
 static bool
-shouldConnectUsingPassword()
+shouldConnectUsingPassword(void)
 {
     char answer[20] = "";
     int c = EOF;
@@ -161,7 +161,7 @@ shouldConnectUsingPassword()
 
 /*lint -sem(get_password, r_null) */
 static char *
-get_password()
+get_password(void)
 {
     static char pass[400] = "";
     int c = EOF;
@@ -247,20 +247,20 @@ get_server(const char *ar[], const char *msg)
 }
 
 static void
-reconnect_begin()
+reconnect_begin(void)
 {
     quit_reconnecting = false;
     reconnecting = true;
 }
 
 static void
-reconnect_end()
+reconnect_end(void)
 {
     reconnecting = false;
 }
 
 static void
-turn_icb_mode_on()
+turn_icb_mode_on(void)
 {
     g_icb_mode = true;
 }

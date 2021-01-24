@@ -1,5 +1,5 @@
 /* IRCv3 Client Capability Negotiation
-   Copyright (C) 2017-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -84,7 +84,7 @@ NAK(const char *feature)
 }
 
 static bool
-shouldContinueCapabilityNegotiation_case1()
+shouldContinueCapabilityNegotiation_case1(void)
 {
     return (config_bool_unparse("away_notify", false) ||
 	    config_bool_unparse("invite_notify", false) ||
@@ -93,7 +93,7 @@ shouldContinueCapabilityNegotiation_case1()
 }
 
 static bool
-shouldContinueCapabilityNegotiation_case2()
+shouldContinueCapabilityNegotiation_case2(void)
 {
     return (config_bool_unparse("invite_notify", false) ||
 	    config_bool_unparse("ircv3_server_time", false) ||
@@ -101,14 +101,14 @@ shouldContinueCapabilityNegotiation_case2()
 }
 
 static bool
-shouldContinueCapabilityNegotiation_case3()
+shouldContinueCapabilityNegotiation_case3(void)
 {
     return (config_bool_unparse("ircv3_server_time", false) ||
 	    sasl_is_enabled());
 }
 
 static bool
-shouldContinueCapabilityNegotiation_case4()
+shouldContinueCapabilityNegotiation_case4(void)
 {
     return (sasl_is_enabled());
 }

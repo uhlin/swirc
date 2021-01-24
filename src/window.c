@@ -207,7 +207,7 @@ hUndef(PIRC_WINDOW entry)
  * Reassign reference numbers (refnums) for all open windows
  */
 static void
-reassign_window_refnums()
+reassign_window_refnums(void)
 {
     int ref_count = 1;
 
@@ -226,7 +226,7 @@ reassign_window_refnums()
 }
 
 static bool
-shouldLimitOutputYesNoRandom()
+shouldLimitOutputYesNoRandom(void)
 {
 #if defined(BSD) || defined(WIN32)
     const uint32_t value = arc4random() % 2;

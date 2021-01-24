@@ -1,5 +1,5 @@
 /* User configuration
-   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -535,7 +535,7 @@ get_setting_type(const struct tagConfDefValues *cdv)
 #define B2 Theme("notice_inner_b2")
 
 static void
-output_values_for_all_settings()
+output_values_for_all_settings(void)
 {
     PRINTTEXT_CONTEXT ctx;
 

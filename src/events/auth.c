@@ -1,5 +1,5 @@
 /* events/auth.c
-   Copyright (C) 2017-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -46,7 +46,7 @@
 #include "cap.h" /* get_sasl_mechanism() */
 
 static void
-abort_authentication()
+abort_authentication(void)
 {
     (void) net_send("AUTHENTICATE *");
     (void) net_send("CAP END");
@@ -54,7 +54,7 @@ abort_authentication()
 
 /*lint -sem(get_b64_encoded_username, r_null) */
 static char *
-get_b64_encoded_username()
+get_b64_encoded_username(void)
 {
     const char *username = Config("sasl_username");
 

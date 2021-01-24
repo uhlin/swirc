@@ -1,4 +1,4 @@
-/* Copyright (c) 2016-2020 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2016-2021 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -189,7 +189,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
 static void
-create_ssl_context_obj()
+create_ssl_context_obj(void)
 {
     if ((ssl_ctx = SSL_CTX_new(TLS_client_method())) == NULL) {
 	err_exit(ENOMEM, "create_ssl_context_obj: "
@@ -207,7 +207,7 @@ create_ssl_context_obj()
 /* -------------------------------- */
 
 static void
-create_ssl_context_obj_insecure()
+create_ssl_context_obj_insecure(void)
 {
     if ((ssl_ctx = SSL_CTX_new(SSLv23_client_method())) == NULL) {
 	err_exit(ENOMEM, "create_ssl_context_obj_insecure: "

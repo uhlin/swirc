@@ -1,4 +1,4 @@
-/* Copyright (C) 2012-2019 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2012-2021 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -35,7 +35,7 @@ static struct sig_message_tag {
 };
 
 static void
-clean_up()
+clean_up(void)
 {
 }
 

@@ -282,7 +282,7 @@ handle_cmds(const char *data)
 }
 
 static void
-history_next()
+history_next(void)
 {
     if (textBuf_size(history) == 0)
 	return;
@@ -299,7 +299,7 @@ history_next()
 }
 
 static void
-history_prev()
+history_prev(void)
 {
     if (textBuf_size(history) == 0)
 	return;
@@ -316,7 +316,7 @@ history_prev()
 }
 
 static void
-list_all_commands()
+list_all_commands(void)
 {
     PRINTTEXT_CONTEXT ctx;
 
@@ -375,7 +375,7 @@ output_help_for_command(const char *command)
 }
 
 static void
-swirc_greeting()
+swirc_greeting(void)
 {
 #define USE_LARRY3D_LOGO 1
     PRINTTEXT_CONTEXT ctx;
