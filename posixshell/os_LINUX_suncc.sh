@@ -10,8 +10,8 @@ SHARED_FLAGS=-DLINUX=1\\
 	-D_POSIX_C_SOURCE=200809L\\
 	-D_XOPEN_SOURCE=500\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
-	-I/usr/include/x86_64-linux-gnu\\
 	-O2\\
+	-Wp,-I/usr/include/x86_64-linux-gnu\\
 	-errtags\\
 	-pedantic\\
 	-xannotate\\
