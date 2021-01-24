@@ -32,7 +32,7 @@ case "$(uname -s)" in
 		os_NETBSD
 	;;
 	"Linux")
-		if test "$1" = "suncc"; then
+		if [ "$1" = "suncc" ]; then
 			os_LINUX_suncc
 		else
 			os_LINUX
@@ -47,15 +47,31 @@ case "$(uname -s)" in
 	;;
 esac
 
-if test "$1" = "--with-libnotify"; then
-	true
+_with_libnotify=0
+_without_libidn=0
+
+for arg in "$@"; do
+	case "$arg" in
+		"--with-libnotify")
+			_with_libnotify=1
+		;;
+		"--without-libidn")
+			_without_libidn=1
+		;;
+		*)
+		;;
+	esac
+done
+
+if [ $_with_libnotify -eq 1 ]; then
+	link_with_libnotify
 fi
 
-if test "$1" != "--without-libidn"; then
+if [ $_without_libidn -eq 0 ]; then
 	link_with_gnu_libidn
 fi
 
-if test -f "$MAKE_DEF_FILE"; then
+if [ -f "$MAKE_DEF_FILE" ]; then
 	echo "configure: $MAKE_DEF_FILE successfully created!"
 else
 	echo "configure: fatal error"
