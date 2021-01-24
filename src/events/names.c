@@ -1,5 +1,5 @@
 /* Handle event names (353) and event EOF names (366)
-   Copyright (C) 2015-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -148,11 +148,11 @@ get_column_lengths(const int ntp1, const struct name_tag *names_array)
 	    nick2 = nick3 = NULL;
 	}
 
-	if (nick1 && strlen(nick1) > cl.col1)
+	if (nick1 && size_to_int(strlen(nick1)) > cl.col1)
 	    cl.col1 = (int) strlen(nick1);
-	if (nick2 && strlen(nick2) > cl.col2)
+	if (nick2 && size_to_int(strlen(nick2)) > cl.col2)
 	    cl.col2 = (int) strlen(nick2);
-	if (nick3 && strlen(nick3) > cl.col3)
+	if (nick3 && size_to_int(strlen(nick3)) > cl.col3)
 	    cl.col3 = (int) strlen(nick3);
     }
 
@@ -483,7 +483,7 @@ set_format1(char *dest, size_t destsize, struct column_lengths cl)
     int ret = snprintf(dest, destsize, "%%s%%-%ds%%s %%s%%-%ds%%s %%s%%-%ds%%s",
 		       cl.col1, cl.col2, cl.col3);
 
-    return ((ret == -1 || ret >= destsize) ? false : true);
+    return ((ret == -1 || ((size_t) ret) >= destsize) ? false : true);
 }
 
 static bool
@@ -492,7 +492,7 @@ set_format2(char *dest, size_t destsize, struct column_lengths cl)
     int ret = snprintf(dest, destsize, "%%s%%-%ds%%s %%s%%-%ds%%s",
 		       cl.col1, cl.col2);
 
-    return ((ret == -1 || ret >= destsize) ? false : true);
+    return ((ret == -1 || ((size_t) ret) >= destsize) ? false : true);
 }
 
 static bool
@@ -501,7 +501,7 @@ set_format3(char *dest, size_t destsize, struct column_lengths cl)
     int ret = snprintf(dest, destsize, "%%s%%-%ds%%s",
 		       cl.col1);
 
-    return ((ret == -1 || ret >= destsize) ? false : true);
+    return ((ret == -1 || ((size_t) ret) >= destsize) ? false : true);
 }
 
 PTEXTBUF
