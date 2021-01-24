@@ -6,189 +6,20 @@
 
 MAKE_DEF_FILE=options.mk
 
+. "posixshell/fix_cflags.sh"
+. "posixshell/link_with_gnu_libidn.sh"
+. "posixshell/link_with_libnotify.sh"
+. "posixshell/os_BSD.sh"
+. "posixshell/os_LINUX.sh"
+. "posixshell/os_LINUX_suncc.sh"
+. "posixshell/os_MAC.sh"
+. "posixshell/os_NETBSD.sh"
+
 cat <<EOF >$MAKE_DEF_FILE
 E=@echo
 Q=@
 RM:=@rm -f
 EOF
-
-# --------------------------------------------------
-# 		     Mac OS X
-# --------------------------------------------------
-os_MAC () {
-	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=-DNCURSES_OPAQUE=0\\
-	-DOS_X=1\\
-	-DUNIX=1\\
-	-D_XOPEN_SOURCE_EXTENDED=1\\
-	-I/usr/local/opt/libressl/include\\
-	-O2\\
-	-Wall\\
-	-pipe
-CC=clang
-CFLAGS=\$(SHARED_FLAGS) -std=c17
-CXX=clang++
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
-LDFLAGS=-L/usr/local/opt/libressl/lib
-LDLIBS=-lcrypto\\
-	-lcurl\\
-	-lncurses\\
-	-lpanel\\
-	-lpthread\\
-	-lssl
-EOF
-}
-
-# --------------------------------------------------
-#    Generic BSD (Berkeley Software Distribution)
-# --------------------------------------------------
-os_BSD () {
-	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=-DBSD=1\\
-	-DUNIX=1\\
-	-D_XOPEN_SOURCE_EXTENDED=1\\
-	-I/usr/local/include\\
-	-Wall
-CC=cc
-CFLAGS=\$(SHARED_FLAGS) -std=c17
-CXX=c++
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
-LDFLAGS=-L/usr/local/lib
-LDLIBS=-lcrypto\\
-	-lcurl\\
-	-lncursesw\\
-	-lpanelw\\
-	-lpthread\\
-	-lssl
-EOF
-}
-
-# --------------------------------------------------
-# 		      NetBSD
-# --------------------------------------------------
-os_NETBSD () {
-	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=-DBSD=1\\
-	-DUNIX=1\\
-	-D_XOPEN_SOURCE_EXTENDED=1\\
-	-I/usr/pkg/include/ncursesw\\
-	-I/usr/pkg/include\\
-	-Wall
-CC=gcc
-CFLAGS=\$(SHARED_FLAGS) -std=c17
-CXX=g++
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
-LDFLAGS=-L/usr/pkg/lib\\
-	-Wl,-rpath,/usr/pkg/lib
-LDLIBS=-lcrypto\\
-	-lcurl\\
-	-lgnupanelw\\
-	-lncursesw\\
-	-lpthread\\
-	-lssl
-EOF
-}
-
-# --------------------------------------------------
-# 		    GNU/Linux
-# --------------------------------------------------
-os_LINUX () {
-	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=-DLINUX=1\\
-	-DUNIX=1\\
-	-D_FORTIFY_SOURCE=2\\
-	-D_POSIX_C_SOURCE=200809L\\
-	-D_XOPEN_SOURCE=500\\
-	-D_XOPEN_SOURCE_EXTENDED=1\\
-	-O2\\
-	-Wall\\
-	-fstack-protector-strong\\
-	-g\\
-	-pipe
-CC=gcc
-CFLAGS=\$(SHARED_FLAGS) -std=c17
-CXX=g++
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
-LDFLAGS=-Wl,-z,now\\
-	-Wl,-z,relro
-LDLIBS=-lcrypto\\
-	-lcurl\\
-	-lncursesw\\
-	-lpanelw\\
-	-lpthread\\
-	-lssl
-EOF
-}
-
-# --------------------------------------------------
-# 	 GNU/Linux (with Sun C compiler)
-# --------------------------------------------------
-os_LINUX_suncc () {
-	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=-DLINUX=1\\
-	-DUNIX=1\\
-	-D_FORTIFY_SOURCE=2\\
-	-D_POSIX_C_SOURCE=200809L\\
-	-D_XOPEN_SOURCE=500\\
-	-D_XOPEN_SOURCE_EXTENDED=1\\
-	-I/usr/include/x86_64-linux-gnu\\
-	-O2\\
-	-errtags\\
-	-pedantic\\
-	-xannotate\\
-	-xatomic=studio\\
-	-xprevise\\
-	-xsecure_code_analysis
-CC=suncc
-CFLAGS=\$(SHARED_FLAGS) -std=c17
-CXX=sunCC
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
-LDFLAGS=-xannotate -xprevise
-LDLIBS=-lcrypto\\
-	-lcurl\\
-	-lncursesw\\
-	-lpanelw\\
-	-lpthread\\
-	-lssl
-EOF
-}
-
-fix_cflags () {
-	helper_scripts="ncursesw6-config ncursesw5-config"
-
-	for s in $helper_scripts; do
-		if test -x "$(which "$s")"; then
-			NCURSESW_CFLAGS="$($s --cflags)"
-
-			if test -n "$NCURSESW_CFLAGS"; then
-				echo "CFLAGS+=$NCURSESW_CFLAGS" >>$MAKE_DEF_FILE
-				echo "CXXFLAGS+=$NCURSESW_CFLAGS" >>$MAKE_DEF_FILE
-			fi
-
-			break
-		fi
-	done
-}
-
-fix_cflags_with_pkg_config () {
-	if test -x "$(which pkg-config)"; then
-		NCURSESW_CFLAGS="$(pkg-config --cflags-only-I ncursesw)"
-
-		if test -n "$NCURSESW_CFLAGS"; then
-			echo "CFLAGS+=$NCURSESW_CFLAGS" >>$MAKE_DEF_FILE
-			echo "CXXFLAGS+=$NCURSESW_CFLAGS" >>$MAKE_DEF_FILE
-		fi
-	fi
-}
-
-link_with_gnu_libidn () {
-	cat <<EOF >>$MAKE_DEF_FILE
-CFLAGS+=-DHAVE_LIBIDN=1
-CXXFLAGS+=-DHAVE_LIBIDN=1
-
-LDLIBS+=-lidn
-EOF
-}
 
 case "$(uname -s)" in
 	"Darwin")
@@ -217,18 +48,7 @@ case "$(uname -s)" in
 esac
 
 if test "$1" = "--with-libnotify"; then
-	LIBNOTIFY_CFLAGS="$(pkg-config --cflags-only-I libnotify)"
-	LIBNOTIFY_LDLIBS="$(pkg-config --libs-only-l libnotify)"
-
-	cat <<EOF >>$MAKE_DEF_FILE
-CFLAGS+=-DUSE_LIBNOTIFY=1
-CFLAGS+=$LIBNOTIFY_CFLAGS
-
-CXXFLAGS+=-DUSE_LIBNOTIFY=1
-CXXFLAGS+=$LIBNOTIFY_CFLAGS
-
-LDLIBS+=$LIBNOTIFY_LDLIBS
-EOF
+	true
 fi
 
 if test "$1" != "--without-libidn"; then
