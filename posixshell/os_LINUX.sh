@@ -16,7 +16,8 @@ SHARED_FLAGS=-DLINUX=1\\
 	-g\\
 	-pipe
 CC=gcc
-CFLAGS=\$(SHARED_FLAGS) -std=c17
+CFLAGS=\$(SHARED_FLAGS) -std=c17\\
+	-Wsign-compare -Wstrict-prototypes
 CXX=g++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-Wl,-z,now\\
