@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - `titlebar`: do not dynamically allocate 'reject'
 - Splitted the configure script into smaller parts
 - Improved the configure script
+- Fixed multiple non-ANSI function declarations
 
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###
