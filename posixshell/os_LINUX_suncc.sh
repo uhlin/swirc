@@ -21,7 +21,7 @@ SHARED_FLAGS=-DLINUX=1\\
 CC=suncc
 CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=sunCC
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
+CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
 LDFLAGS=-xannotate -xprevise
 LDLIBS=-lcrypto\\
 	-lcurl\\
