@@ -3,7 +3,7 @@ Upstream-Name: swirc
 Source: https://github.com/uhlin/swirc
 
 Files: *
-Copyright: 2012-2020 Markus Uhlin <markus.uhlin@bredband.net>
+Copyright: 2012-2021 Markus Uhlin <markus.uhlin@bredband.net>
 License: BSD-3
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are
@@ -75,7 +75,7 @@ License: ISC
 
 Files: src/interpreter.cpp
        src/network-openssl.c
-Copyright: 2012-2019 Markus Uhlin
+Copyright: 2012-2021 Markus Uhlin
 License: ISC
 
 Files: debian/*
