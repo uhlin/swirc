@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - `changeWindow_by_label()` -> `change_window_by_label()`
 - `changeWindow_by_refnum()` -> `change_window_by_refnum()`
 - `titlebar`: do not dynamically allocate 'reject'
+- Splitted the configure script into smaller parts
 
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###
