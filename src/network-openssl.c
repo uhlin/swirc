@@ -145,7 +145,7 @@ net_ssl_begin(void)
 void
 net_ssl_end(void)
 {
-    if (!isNull(ssl)) {
+    if (ssl) {
 	SSL_shutdown(ssl);
 	SSL_free(ssl);
 	ssl = NULL;
@@ -160,7 +160,7 @@ net_ssl_check_hostname(const char *host, unsigned int flags)
 
     if (ssl == NULL || (cert = SSL_get_peer_certificate(ssl)) == NULL ||
 	host == NULL) {
-	if (!isNull(cert))
+	if (cert)
 	    X509_free(cert);
 	return ERR;
     }
@@ -177,7 +177,7 @@ net_ssl_send(const char *fmt, ...)
     int		 n_sent = 0;
     va_list	 ap;
 
-    if (isNull(ssl))
+    if (ssl == NULL)
 	return -1;
 
     va_start(ap, fmt);
@@ -228,7 +228,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 	.tv_usec = ctx->microsec,
     };
 
-    if (isNull(ssl))
+    if (ssl == NULL)
 	return -1;
 
     FD_ZERO(&readset);
@@ -315,12 +315,13 @@ net_ssl_init(void)
 void
 net_ssl_deinit(void)
 {
-    if (!isNull(ssl)) {
+    if (ssl) {
 	SSL_shutdown(ssl);
 	SSL_free(ssl);
 	ssl = NULL;
     }
-    if (!isNull(ssl_ctx)) {
+
+    if (ssl_ctx) {
 	SSL_CTX_free(ssl_ctx);
 	ssl_ctx = NULL;
     }
