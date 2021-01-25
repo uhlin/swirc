@@ -286,13 +286,14 @@ net_ssl_init(void)
 
     if (config_bool_unparse("ssl_verify_peer", true) &&
 	SSL_CTX_set_default_verify_paths(ssl_ctx)) {
-	SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, verify_callback);
-	SSL_CTX_set_verify_depth(ssl_ctx, 4);
 #ifdef WIN32
 	if (!SSL_CTX_load_verify_locations(ssl_ctx, "trusted_roots.pem", NULL))
 	    printtext(&ptext_ctx, "net_ssl_init: "
 		"Error setting default locations for trusted CA certificates");
 #endif
+
+	SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, verify_callback);
+	SSL_CTX_set_verify_depth(ssl_ctx, 4);
     } else {
 	printtext(&ptext_ctx, "net_ssl_init: "
 	    "Certificate verification is disabled: Option set to NO?");
