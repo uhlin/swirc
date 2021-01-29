@@ -17,7 +17,6 @@ All notable changes to this project will be documented in this file.
 - Improved the configure script
 - Fixed multiple non-ANSI function declarations
 - Fixed multiple sign-compare warnings
-- Rethought function `net_ssl_send()`
 
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###
