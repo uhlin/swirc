@@ -39,6 +39,9 @@
 #include "strHand.h"
 #include "strdup_printf.h"
 
+#define CAFILE "trusted_roots.pem"
+#define CADIR NULL
+
 static SSL_CTX	*ssl_ctx = NULL;
 static SSL	*ssl     = NULL;
 
@@ -284,13 +287,16 @@ net_ssl_init(void)
     create_ssl_context_obj_insecure();
 #endif
 
-    if (config_bool_unparse("ssl_verify_peer", true) &&
-	SSL_CTX_set_default_verify_paths(ssl_ctx)) {
+    if (config_bool_unparse("ssl_verify_peer", true)) {
 #ifdef WIN32
-	if (!SSL_CTX_load_verify_locations(ssl_ctx, "trusted_roots.pem", NULL))
+	if (!SSL_CTX_load_verify_locations(ssl_ctx, CAFILE, CADIR))
 	    printtext(&ptext_ctx, "net_ssl_init: "
-		"Error setting default locations for trusted CA certificates");
+		"Error loading CA file and/or directory");
 #endif
+
+	if (!SSL_CTX_set_default_verify_paths(ssl_ctx))
+	    printtext(&ptext_ctx, "net_ssl_init: "
+		"Error loading default CA file and/or directory");
 
 	SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, verify_callback);
 	SSL_CTX_set_verify_depth(ssl_ctx, 4);
