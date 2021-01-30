@@ -10,7 +10,7 @@ SHARED_FLAGS=-DBSD=1\\
 	-I/usr/pkg/include/ncursesw\\
 	-I/usr/pkg/include\\
 	-Wall
-CC=gcc
+CC=cc
 CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=g++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
