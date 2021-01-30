@@ -47,7 +47,7 @@
 
 int g_socket = -1;
 
-static pthread_t listenThread_id;
+static pthread_t listen_thread_id;
 
 int
 net_recv_plain(struct network_recv_context *ctx,
@@ -133,15 +133,15 @@ net_do_connect_detached(const char *host, const char *port, const char *pass)
 }
 
 void
-net_listenThread_join(void)
+net_listen_thread_join(void)
 {
-    if ((errno = pthread_join(listenThread_id, NULL)) != 0)
-	err_sys("net_listenThread_join: pthread_join");
+    if ((errno = pthread_join(listen_thread_id, NULL)) != 0)
+	err_sys("net_listen_thread_join: pthread_join");
 }
 
-/*lint -sem(listenThread_fn, r_null) */
+/*lint -sem(listen_thread_fn, r_null) */
 static void *
-listenThread_fn(void *arg)
+listen_thread_fn(void *arg)
 {
     bool connection_lost;
 
@@ -155,13 +155,13 @@ listenThread_fn(void *arg)
 }
 
 void
-net_spawn_listenThread(void)
+net_spawn_listen_thread(void)
 {
-    if (errno = pthread_create(&listenThread_id, NULL, listenThread_fn, NULL),
+    if (errno = pthread_create(&listen_thread_id, NULL, listen_thread_fn, NULL),
 	errno != 0)
-	err_sys("net_spawn_listenThread: pthread_create");
-    else if ((errno = pthread_detach(listenThread_id)) != 0)
-	err_sys("net_spawn_listenThread: pthread_detach");
+	err_sys("net_spawn_listen_thread: pthread_create");
+    else if ((errno = pthread_detach(listen_thread_id)) != 0)
+	err_sys("net_spawn_listen_thread: pthread_detach");
 }
 
 /* ---------------------------------------------------------------------- */

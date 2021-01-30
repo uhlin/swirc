@@ -403,7 +403,7 @@ cmd_quit(const char *data)
 	    err_log(errno, "cmd_quit: shutdown");
 	napms(500);
 #elif defined(WIN32)
-	net_listenThread_join();
+	net_listen_thread_join();
 #endif
     }
 

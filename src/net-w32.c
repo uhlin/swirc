@@ -47,7 +47,7 @@ typedef void __cdecl VoidCdecl;
 SOCKET g_socket = INVALID_SOCKET;
 
 static const uintptr_t BEGINTHREAD_FAILED = (uintptr_t) -1L;
-static uintptr_t listenThread_id;
+static uintptr_t listen_thread_id;
 
 bool
 winsock_deinit(void)
@@ -141,13 +141,13 @@ net_do_connect_detached(const char *host, const char *port, const char *pass)
 }
 
 void
-net_listenThread_join(void)
+net_listen_thread_join(void)
 {
-    (void) WaitForSingleObject((HANDLE) listenThread_id, 10000);
+    (void) WaitForSingleObject((HANDLE) listen_thread_id, 10000);
 }
 
 static VoidCdecl
-listenThread_fn(void *arg)
+listen_thread_fn(void *arg)
 {
     bool connection_lost;
 
@@ -161,11 +161,11 @@ listenThread_fn(void *arg)
 }
 
 void
-net_spawn_listenThread(void)
+net_spawn_listen_thread(void)
 {
-    if ((listenThread_id = _beginthread(listenThread_fn, 0, NULL)) ==
+    if ((listen_thread_id = _beginthread(listen_thread_fn, 0, NULL)) ==
 	BEGINTHREAD_FAILED)
-	err_sys("net_spawn_listenThread: _beginthread");
+	err_sys("net_spawn_listen_thread: _beginthread");
 }
 
 /* ---------------------------------------------------------------------- */

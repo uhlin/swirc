@@ -354,7 +354,7 @@ net_connect(
 		    printtext(&ptext_ctx, "Hostname checking OK!");
 	    }
 	event_welcome_cond_init();
-	net_spawn_listenThread();
+	net_spawn_listen_thread();
 	if (g_icb_mode)
 	    send_icb_login_packet(ctx);
 	else

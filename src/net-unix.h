@@ -31,8 +31,8 @@ int	net_recv_plain(struct network_recv_context *, char *recvbuf,
 int	net_send_plain(const char *, ...);
 void	net_do_connect_detached(const char *host, const char *port,
 	    const char *pass);
-void	net_listenThread_join(void);
-void	net_spawn_listenThread(void);
+void	net_listen_thread_join(void);
+void	net_spawn_listen_thread(void);
 
 void net_set_recv_timeout(const time_t seconds);
 void net_set_send_timeout(const time_t seconds);
