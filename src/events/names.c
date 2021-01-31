@@ -381,9 +381,9 @@ names_cmp_fn(const void *obj1, const void *obj2)
     const char			*nick1 = p1 && p1->s ? p1->s : NULL;
     const char			*nick2 = p2 && p2->s ? p2->s : NULL;
 
-    if (nick1 == NULL) {
+    if (isNull(nick1)) {
 	return (1);
-    } else if (nick2 == NULL) {
+    } else if (isNull(nick2)) {
 	return (-1);
     } else {
 	if (*nick1 == ' ') {
@@ -916,7 +916,7 @@ event_eof_names(struct irc_message_compo *compo)
     char *channel = strtok_r(NULL, "\n", &state);
     char *eof_msg = strtok_r(NULL, "\n", &state);
 
-    if (channel == NULL || eof_msg == NULL) {
+    if (isNull(channel) || isNull(eof_msg)) {
 	err_reason = "failed to tokenize event";
 	goto bad;
     } else if (!strings_match_ignore_case(channel, names_channel)) {
@@ -985,7 +985,7 @@ event_names(struct irc_message_compo *compo)
     char *channel   = strtok_r(NULL, "\n", &state1);
     char *names     = strtok_r(NULL, "\n", &state1);
 
-    if (chan_type == NULL || channel == NULL || names == NULL) {
+    if (isNull(chan_type) || isNull(channel) || isNull(names)) {
 	err_reason = "failed to tokenize event";
 	goto bad;
     }
@@ -1050,7 +1050,7 @@ event_names_htbl_remove_all(PIRC_WINDOW window)
     PNAMES *entry_p;
     PNAMES p, tmp;
 
-    if (window == NULL)
+    if (isNull(window))
 	return;
 
     for (entry_p = &window->names_hash[0];
