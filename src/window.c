@@ -1,5 +1,5 @@
 /* Window functions
-   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -139,20 +139,8 @@ hInstall(const struct hInstall_context *ctx)
     PNAMES		*n_ent;
     unsigned int	 hashval;
 
-    entry	  = xcalloc(sizeof *entry, 1);
-    entry->label  = sw_strdup(ctx->label);
-    entry->title  =
-	((isNull(ctx->title) || isEmpty(ctx->title))
-	 ? NULL
-	 : sw_strdup(ctx->title));
-    entry->pan    = ctx->pan;
-    entry->refnum = ctx->refnum;
-    entry->buf    = textBuf_new();
-
-    entry->saved_size   = 0;
-    entry->scroll_count = 0;
-    entry->scroll_mode  = false;
-    entry->logging      = false;
+    entry      = xcalloc(sizeof *entry, 1);
+    entry->pan = ctx->pan;
 
     for (n_ent = &entry->names_hash[0];
 	 n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE];
@@ -160,7 +148,19 @@ hInstall(const struct hInstall_context *ctx)
 	*n_ent = NULL;
     }
 
-    entry->received_names = false;
+    entry->buf                  = textBuf_new();
+    entry->logging              = false;
+    entry->received_chancreated = false;
+    entry->received_chanmodes   = false;
+    entry->received_names       = false;
+    entry->scroll_mode          = false;
+    BZERO(entry->chanmodes, ARRAY_SIZE(entry->chanmodes));
+
+    entry->label = sw_strdup(ctx->label);
+    entry->title =
+	((isNull(ctx->title) || isEmpty(ctx->title))
+	 ? NULL
+	 : sw_strdup(ctx->title));
 
     entry->num_owners	= 0;
     entry->num_superops = 0;
@@ -170,9 +170,9 @@ hInstall(const struct hInstall_context *ctx)
     entry->num_normal	= 0;
     entry->num_total	= 0;
 
-    BZERO(entry->chanmodes, sizeof entry->chanmodes);
-    entry->received_chanmodes = false;
-    entry->received_chancreated = false;
+    entry->refnum       = ctx->refnum;
+    entry->saved_size   = 0;
+    entry->scroll_count = 0;
 
     hashval             = hash(ctx->label);
     entry->next         = hash_table[hashval];
