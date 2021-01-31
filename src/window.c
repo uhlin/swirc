@@ -194,11 +194,13 @@ hUndef(PIRC_WINDOW entry)
 	indirect = & ((*indirect)->next);
     *indirect = entry->next;
 
+    term_remove_panel(entry->pan);
+    event_names_htbl_remove_all(entry);
+    textBuf_destroy(entry->buf);
+
     free(entry->label);
     free(entry->title);
-    term_remove_panel(entry->pan);
-    textBuf_destroy(entry->buf);
-    event_names_htbl_remove_all(entry);
+
     free(entry);
     g_ntotal_windows--;
 }
