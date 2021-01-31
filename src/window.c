@@ -602,7 +602,7 @@ window_foreach_destroy_names(void)
 		/*
 		 * TODO: Investigate if the code below should be moved too.
 		 */
-		BZERO(window->chanmodes, sizeof window->chanmodes);
+		BZERO(window->chanmodes, ARRAY_SIZE(window->chanmodes));
 		window->received_chanmodes = false;
 		window->received_chancreated = false;
 	    }
