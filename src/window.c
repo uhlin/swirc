@@ -650,7 +650,7 @@ window_scroll_down(PIRC_WINDOW window)
     }
 
     window_redraw(window, HEIGHT, window->saved_size - window->scroll_count,
-		  shouldLimitOutputYesNoRandom() /* false */);
+		  shouldLimitOutputYesNoRandom());
 }
 
 /**
@@ -685,10 +685,11 @@ window_scroll_up(PIRC_WINDOW window)
 
     if (IS_AT_TOP)
 	window_redraw(window, MIN_SIZE, 0, true);
-    else
+    else {
 	window_redraw(window, MIN_SIZE,
 	    window->saved_size - window->scroll_count,
-	    shouldLimitOutputYesNoRandom() /* true */);
+	    shouldLimitOutputYesNoRandom());
+    }
 }
 
 /**
