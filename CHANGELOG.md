@@ -3,23 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Made functions that yet weren't declared at file scope to be
-- `path_to_home`: increased buf size to 2000
 - Added tab completion for:
   - `/help`
   - `/znc`
 - Added command `/ignore`
-- CFLAGS: std: c99 -> c17
-- CXXFLAGS: std: c++14 -> c++17
-- `changeWindow_by_label()` -> `change_window_by_label()`
-- `changeWindow_by_refnum()` -> `change_window_by_refnum()`
 - `titlebar`: do not dynamically allocate 'reject'
 - Splitted the configure script into smaller parts
 - Improved the configure script
 - Fixed multiple non-ANSI function declarations
 - Fixed multiple sign-compare warnings
-- Pattern: `listenThread` -> `listen_thread`
-- `config_bool_unparse()` -> `config_bool()`
-- `theme_bool_unparse()` -> `theme_bool()`
 
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###
