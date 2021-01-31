@@ -144,10 +144,10 @@ handle_open_msg_packet(const char *pktdata)
     nickname = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last);
     message = strtok_r(NULL, ICB_FIELD_SEP, &last);
 
-    if (nickname == NULL || message == NULL) {
+    if (isNull(nickname) || isNull(message)) {
 	print_and_free("handle_open_msg_packet: too few tokens!", pktdata_copy);
 	return;
-    } else if (icb_group == NULL) {
+    } else if (isNull(icb_group)) {
 	print_and_free("handle_open_msg_packet: not in a group", pktdata_copy);
 	return;
     }
@@ -167,7 +167,7 @@ handle_personal_msg_packet(const char *pktdata)
     nickname = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last);
     message = strtok_r(NULL, ICB_FIELD_SEP, &last);
 
-    if (nickname == NULL || message == NULL) {
+    if (isNull(nickname) || isNull(message)) {
 	print_and_free("handle_personal_msg_packet: too few tokens!",
 	    pktdata_copy);
 	return;
@@ -259,7 +259,7 @@ deal_with_category_topic(const char *window_label, const char *data)
     printtext_context_init(&ctx, window_by_label(window_label), TYPE_SPEC1,
 	true);
 
-    if (ctx.window == NULL)
+    if (isNull(ctx.window))
 	return;
     else if (strings_match(data, "The topic is not set."))
 	printtext(&ctx, "%s", data);
@@ -272,7 +272,7 @@ deal_with_category_topic(const char *window_label, const char *data)
 	nick[strcspn(nick, " ")] = '\0';
 	PNAMES names = event_names_htbl_lookup(nick, window_label);
 	free(nick);
-	if (names == NULL ||
+	if (isNull(names) ||
 	    sw_strcpy(concat, names->nick, ARRAY_SIZE(concat)) != 0 ||
 	    sw_strcat(concat, changed, ARRAY_SIZE(concat)) != 0 ||
 	    strncmp(data, concat, strlen(concat)) != STRINGS_MATCH)
@@ -489,7 +489,7 @@ handle_cmd_output_packet(const char *pktdata)
 	char *reg_status    = strtok_r(NULL, ICB_FIELD_SEP, &last);
 #endif
 
-	if (initial_token == NULL || nickname == NULL) {
+	if (isNull(initial_token) || isNull(nickname)) {
 	    ctx.spec_type = TYPE_SPEC1_FAILURE;
 	    printtext(&ctx, "handle_cmd_output_packet: missing essential "
 		"initial token or nickname during who listing");
