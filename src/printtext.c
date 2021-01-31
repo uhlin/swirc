@@ -33,7 +33,7 @@
 #undef UNIT_TESTING
 #include <setjmp.h>
 #include <cmocka.h>
-#define  UNIT_TESTING 1
+#define UNIT_TESTING 1
 #endif
 #include <locale.h>
 #include <wctype.h>
@@ -882,7 +882,7 @@ get_processed_out_message(const char *unproc_msg,
 	sw_assert_not_reached();
     }
 
-    sw_assert(pout->text != NULL);
+    sw_assert(!isNull(pout->text));
 
     if (g_no_colors) {
 	pout->text = squeeze_text_deco(pout->text);
@@ -950,7 +950,7 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
     struct locale_info	*li		 = get_locale_info(LC_CTYPE);
     wchar_t		*out		 = NULL;
 
-    if (li->lang_and_territory == NULL || li->codeset == NULL)
+    if (isNull(li->lang_and_territory) || isNull(li->codeset))
 	goto err;
 
     original_locale = strdup_printf("%s.%s",
@@ -960,18 +960,22 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 
     if (setlocale(LC_CTYPE, tmp_locale) == NULL ||
 	(bytes_convert = xmbstowcs(out, buf, sz - 1)) == CONVERT_FAILED) {
-	if (setlocale(LC_CTYPE, original_locale) == NULL)
+	if (setlocale(LC_CTYPE, original_locale) == NULL) {
 	    err_log(EPERM, "In try_convert_buf_with_cs: "
 		"cannot restore original locale (%s)", original_locale);
+	}
+
 	goto err;
     }
 
     if (bytes_convert == sz - 1)
 	out[sz - 1] = 0L;
 
-    if (setlocale(LC_CTYPE, original_locale) == NULL)
+    if (setlocale(LC_CTYPE, original_locale) == NULL) {
 	err_log(EPERM, "In try_convert_buf_with_cs: "
 	    "cannot restore original locale (%s)", original_locale);
+    }
+
     free_locale_info(li);
     free(original_locale);
     free(tmp_locale);
@@ -1127,7 +1131,7 @@ void
 printtext_context_init(PPRINTTEXT_CONTEXT ctx, PIRC_WINDOW window,
     enum message_specifier_type spec_type, bool include_ts)
 {
-    if (ctx == NULL)
+    if (isNull(ctx))
 	return;
 
     ctx->window = window;
@@ -1152,9 +1156,9 @@ squeeze_text_deco(char *buffer)
     long int i, j;
     bool has_comma;
 
-    if (buffer == NULL) {
+    if (isNull(buffer)) {
 	err_exit(EINVAL, "squeeze_text_deco error");
-    } else if (*buffer == '\0') {
+    } else if (isEmpty(buffer)) {
 	return (buffer);
     }
 
