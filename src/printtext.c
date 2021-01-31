@@ -578,7 +578,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
     if (!isEmpty(bg)) {
 	num2 = (short int) atoi(bg);
     } else if (isEmpty(bg) &&
-	       theme_bool_unparse("term_use_default_colors", true)) {
+	       theme_bool("term_use_default_colors", true)) {
 	num2 = -1;
     } else {
 	num2 = (short int) theme_integer_unparse(&unparse_ctx);

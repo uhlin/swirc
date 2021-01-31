@@ -121,7 +121,7 @@ init_extended_colors(short int *pair_n)
 static int
 init_more_pairs(short int *pair_n)
 {
-    if (theme_bool_unparse("term_use_default_colors", true)) {
+    if (theme_bool("term_use_default_colors", true)) {
 	for (const short int *psi = &ext_colors[0]; psi < &ext_colors[numExtended]; psi++) {
 	    if (init_pair(++ (*pair_n), *psi, -1) == ERR)
 		return ERR;
@@ -161,7 +161,7 @@ init_color_pairs(void)
     }
 
     /* Initialize a color on the default background of the terminal */
-    if (theme_bool_unparse("term_use_default_colors", true)) {
+    if (theme_bool("term_use_default_colors", true)) {
 	for (const short int *psi = &colors[0];
 	     psi < &colors[COLORS >= 16 && can_change_color() ? numColors : 8];
 	     psi++) {
@@ -229,11 +229,11 @@ curses_init(void)
     g_endwin_fn   = endwin;
     g_doupdate_fn = doupdate;
 
-    if (!theme_bool_unparse("term_enable_colors", true) || !has_colors() ||
+    if (!theme_bool("term_enable_colors", true) || !has_colors() ||
 	start_color() == ERR) {
 	g_no_colors = true;
     } else {
-	if (theme_bool_unparse("term_use_default_colors", true) &&
+	if (theme_bool("term_use_default_colors", true) &&
 	    use_default_colors() != OK) {
 	    err_msg("use_default_colors() ran unsuccessful!\n"
 		"Troubleshooting: set option term_use_default_colors to NO.");

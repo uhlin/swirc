@@ -197,12 +197,12 @@ theme_deinit(void)
 /* -------------------------------------------------- */
 
 bool
-theme_bool_unparse(const char *item_name, bool fallback_default)
+theme_bool(const char *item_name, bool fallback_default)
 {
     PTHEME_HTBL_ENTRY item;
 
     if (!item_name)
-	err_exit(EINVAL, "theme_bool_unparse");
+	err_exit(EINVAL, "theme_bool");
 
     for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
 	if (strings_match(item_name, item->name)) {

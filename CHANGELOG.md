@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - Fixed multiple sign-compare warnings
 - Pattern: `listenThread` -> `listen_thread`
 - `config_bool_unparse()` -> `config_bool()`
+- `theme_bool_unparse()` -> `theme_bool()`
 
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###

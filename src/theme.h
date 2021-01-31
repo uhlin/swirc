@@ -15,7 +15,7 @@ void	theme_deinit(void);
 
 /*lint -sem(Theme_mod, r_null) */
 
-bool		 theme_bool_unparse(const char *, bool);
+bool		 theme_bool(const char *, bool);
 char		*Theme_mod(const char *);
 const char	*Theme(const char *);
 int		 theme_item_install(const char *name, const char *value);
