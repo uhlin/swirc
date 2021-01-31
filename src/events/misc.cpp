@@ -281,7 +281,7 @@ event_channelModeIs(struct irc_message_compo *compo)
 	/* -------------------------------------------------- */
 
 	errno = sw_strcpy(ctx.window->chanmodes, trim(data),
-	    sizeof (ctx.window->chanmodes));
+	    sizeof(ctx.window->chanmodes));
 	if (errno)
 	    throw std::runtime_error("unable to store channel modes");
 	else if (! (ctx.window->received_chanmodes)) {

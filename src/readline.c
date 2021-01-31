@@ -435,7 +435,7 @@ new_session(const char *prompt)
     struct readline_session_context *ctx = xcalloc(sizeof *ctx, 1);
     char *prompt_copy = sw_strdup(prompt);
 
-    ctx->buffer       = xcalloc(readline_buffersize + 1, sizeof (wchar_t));
+    ctx->buffer       = xcalloc(readline_buffersize + 1, sizeof(wchar_t));
     ctx->bufpos       = 0;
     ctx->n_insert     = 0;
     ctx->insert_mode  = false;

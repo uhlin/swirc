@@ -55,7 +55,7 @@ convert_wc(wchar_t wc)
     const size_t size = MB_LEN_MAX + 1;
     char *mbs = xcalloc(size, 1);
 
-    BZERO(&ps, sizeof (mbstate_t));
+    BZERO(&ps, sizeof(mbstate_t));
 #ifdef HAVE_BCI
     if ((errno = wcrtomb_s(&bytes_written, mbs, size, wc, &ps)) != 0) {
 	readline_error(errno, "wcrtomb_s");

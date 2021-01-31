@@ -186,13 +186,13 @@ next_names(PIRC_WINDOW window, const int *idx)
 	}
 
 	if (!head) {
-	    head = xmalloc(sizeof (CHUNK));
+	    head = xmalloc(sizeof(CHUNK));
 	    head->nick = strdup_printf("%c%s", c, p->nick);
 	    head->next = NULL;
 	    continue;
 	}
 
-	new_element = xmalloc(sizeof (CHUNK));
+	new_element = xmalloc(sizeof(CHUNK));
 	new_element->nick = strdup_printf("%c%s", c, p->nick);
 	new_element->next = NULL;
 
@@ -209,7 +209,7 @@ static struct name_tag *
 get_names_array(const int ntp1, PIRC_WINDOW window)
 {
     int i = 0, j = 0;
-    struct name_tag *names_array = xcalloc(ntp1, sizeof (struct name_tag));
+    struct name_tag *names_array = xcalloc(ntp1, sizeof(struct name_tag));
 
     for (i = j = 0; i < NAMES_HASH_TABLE_SIZE; i++) {
 	PCHUNK head, element;
@@ -852,7 +852,7 @@ event_names_print_all(const char *channel)
 
     const int ntp1 = window->num_total + 1;
     names_array = get_names_array(ntp1, window);
-    qsort(&names_array[0], ntp1, sizeof (struct name_tag), names_cmp_fn);
+    qsort(&names_array[0], ntp1, sizeof(struct name_tag), names_cmp_fn);
     struct column_lengths cl = get_column_lengths(ntp1, names_array);
 
     if (!set_format1(fmt1, sizeof fmt1, cl) ||

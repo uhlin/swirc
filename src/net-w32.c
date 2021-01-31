@@ -179,7 +179,7 @@ void
 net_set_recv_timeout(const DWORD seconds)
 {
     const DWORD timeout_milliseconds = dword_product(seconds, 1000);
-    const int optlen = (int) (sizeof (DWORD));
+    const int optlen = (int) (sizeof(DWORD));
 
     if (setsockopt(g_socket, SOL_SOCKET, SO_RCVTIMEO,
 		   ((char *) &timeout_milliseconds), optlen) != 0) {
@@ -191,7 +191,7 @@ void
 net_set_send_timeout(const DWORD seconds)
 {
     const DWORD timeout_milliseconds = dword_product(seconds, 1000);
-    const int optlen = (int) (sizeof (DWORD));
+    const int optlen = (int) (sizeof(DWORD));
 
     if (setsockopt(g_socket, SOL_SOCKET, SO_SNDTIMEO,
 		   ((char *) &timeout_milliseconds), optlen) != 0) {
