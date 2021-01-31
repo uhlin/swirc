@@ -86,24 +86,24 @@ NAK(const char *feature)
 static bool
 shouldContinueCapabilityNegotiation_case1(void)
 {
-    return (config_bool_unparse("away_notify", false) ||
-	    config_bool_unparse("invite_notify", false) ||
-	    config_bool_unparse("ircv3_server_time", false) ||
+    return (config_bool("away_notify", false) ||
+	    config_bool("invite_notify", false) ||
+	    config_bool("ircv3_server_time", false) ||
 	    sasl_is_enabled());
 }
 
 static bool
 shouldContinueCapabilityNegotiation_case2(void)
 {
-    return (config_bool_unparse("invite_notify", false) ||
-	    config_bool_unparse("ircv3_server_time", false) ||
+    return (config_bool("invite_notify", false) ||
+	    config_bool("ircv3_server_time", false) ||
 	    sasl_is_enabled());
 }
 
 static bool
 shouldContinueCapabilityNegotiation_case3(void)
 {
-    return (config_bool_unparse("ircv3_server_time", false) ||
+    return (config_bool("ircv3_server_time", false) ||
 	    sasl_is_enabled());
 }
 

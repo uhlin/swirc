@@ -104,7 +104,7 @@ term_resize_panel(PANEL *pan, const struct term_window_size *newsize)
 void
 term_beep(void)
 {
-    const bool beeps = config_bool_unparse("beeps", true);
+    const bool beeps = config_bool("beeps", true);
 
     if (beeps)
 	beep();

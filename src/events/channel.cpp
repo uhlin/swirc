@@ -128,7 +128,7 @@ event_join(struct irc_message_compo *compo)
 	if (strings_match_ignore_case(nick, g_my_nickname)) {
 	    if (spawn_chat_window(channel, "No title.") != 0)
 		throw std::runtime_error("cannot spawn chat window");
-	    if (g_am_irc_op && config_bool_unparse("auto_op_yourself", true)) {
+	    if (g_am_irc_op && config_bool("auto_op_yourself", true)) {
 		net_send("MODE %s +o %s", channel, nick);
 		net_send("SAMODE %s +o %s", channel, nick);
 	    }
@@ -137,7 +137,7 @@ event_join(struct irc_message_compo *compo)
 	}
 
 	const bool joins_parts_quits =
-	    config_bool_unparse("joins_parts_quits", true);
+	    config_bool("joins_parts_quits", true);
 
 	if (joins_parts_quits) {
 	    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
@@ -210,7 +210,7 @@ event_kick(struct irc_message_compo *compo)
 	    reason++;
 
 	if (strings_match_ignore_case(victim, g_my_nickname)) {
-	    if (config_bool_unparse("kick_close_window", true)) {
+	    if (config_bool("kick_close_window", true)) {
 		if (destroy_chat_window(channel) != 0)
 		    throw std::runtime_error("failed to destroy chat window");
 	    } else {
@@ -641,7 +641,7 @@ event_part(struct irc_message_compo *compo)
 	}
 
 	const bool joins_parts_quits =
-	    config_bool_unparse("joins_parts_quits", true);
+	    config_bool("joins_parts_quits", true);
 
 	if (joins_parts_quits) {
 	    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
@@ -707,7 +707,7 @@ event_quit(struct irc_message_compo *compo)
 	    if (window && is_irc_channel(window->label) &&
 		event_names_htbl_remove(nick, window->label) == OK) {
 		const bool joins_parts_quits =
-		    config_bool_unparse("joins_parts_quits", true);
+		    config_bool("joins_parts_quits", true);
 
 		if (joins_parts_quits) {
 		    ctx.window = window;

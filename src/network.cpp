@@ -214,22 +214,22 @@ send_reg_cmds(const struct network_connect_context *ctx)
     printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_SUCCESS,
 	true);
 
-    if (config_bool_unparse("account_notify", false)) {
+    if (config_bool("account_notify", false)) {
 	if (net_send("CAP REQ :account-notify") > 0)
 	    printtext(&ptext_ctx, "Requesting account notify");
     }
 
-    if (config_bool_unparse("away_notify", false)) {
+    if (config_bool("away_notify", false)) {
 	if (net_send("CAP REQ :away-notify") > 0)
 	    printtext(&ptext_ctx, "Requesting away notify");
     }
 
-    if (config_bool_unparse("invite_notify", false)) {
+    if (config_bool("invite_notify", false)) {
 	if (net_send("CAP REQ :invite-notify") > 0)
 	    printtext(&ptext_ctx, "Requesting invite notify");
     }
 
-    if (config_bool_unparse("ircv3_server_time", false)) {
+    if (config_bool("ircv3_server_time", false)) {
 	if (net_send("CAP REQ :server-time") > 0)
 	    printtext(&ptext_ctx, "Requesting server time");
     }
@@ -272,7 +272,7 @@ sasl_is_enabled(void)
 {
     if (! (g_sasl_authentication))
 	return false;
-    return config_bool_unparse("sasl", false);
+    return config_bool("sasl", false);
 }
 
 conn_res_t
@@ -346,7 +346,7 @@ net_connect(
 
 	if (!g_on_air || (ssl_is_enabled() && net_ssl_begin() == -1))
 	    throw std::runtime_error("Failed to establish a connection");
-	if (ssl_is_enabled() && config_bool_unparse("hostname_checking", true))
+	if (ssl_is_enabled() && config_bool("hostname_checking", true))
 	    {
 		if (net_ssl_check_hostname(ctx->server, 0) != OK)
 		    throw std::runtime_error("Hostname checking failed!");

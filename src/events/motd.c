@@ -8,7 +8,7 @@
 void
 event_motd(struct irc_message_compo *compo)
 {
-    if (config_bool_unparse("skip_motd", false)) {
+    if (config_bool("skip_motd", false)) {
 	return;
     }
 

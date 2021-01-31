@@ -209,12 +209,12 @@ config_deinit(void)
 /* -------------------------------------------------- */
 
 bool
-config_bool_unparse(const char *setting_name, bool fallback_default)
+config_bool(const char *setting_name, bool fallback_default)
 {
     PCONF_HTBL_ENTRY item;
 
     if (!setting_name)
-	err_exit(EINVAL, "config_bool_unparse");
+	err_exit(EINVAL, "config_bool");
 
     for (item = hash_table[hash(setting_name)]; item; item = item->next) {
 	if (strings_match(setting_name, item->name)) {

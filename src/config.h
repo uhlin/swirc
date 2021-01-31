@@ -26,7 +26,7 @@ void	config_deinit(void);
 
 /*lint -sem(Config_mod, r_null) */
 
-bool		 config_bool_unparse(const char *, bool);
+bool		 config_bool(const char *, bool);
 char		*Config_mod(const char *);
 const char	*Config(const char *);
 int		 config_item_install(const char *name, const char *value);

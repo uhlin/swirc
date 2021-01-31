@@ -492,7 +492,7 @@ enter_io_loop(void)
 {
     new_window_title(g_status_window_label, g_swircWebAddr);
 
-    if (config_bool_unparse("startup_greeting", true)) {
+    if (config_bool("startup_greeting", true)) {
 	swirc_greeting();
     }
 

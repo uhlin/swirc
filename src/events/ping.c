@@ -24,7 +24,7 @@ event_ping(struct irc_message_compo *compo)
 	return;
     } else if ((n_sent = net_send("PONG %s", cp)) == -1) {
 	g_on_air = false;
-    } else if (n_sent > 0 && config_bool_unparse("show_ping_pong", true)) {
+    } else if (n_sent > 0 && config_bool("show_ping_pong", true)) {
 	PRINTTEXT_CONTEXT ctx;
 
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
