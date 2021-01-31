@@ -389,9 +389,8 @@ window_by_refnum(int refnum)
 
     FOREACH_HASH_TABLE_ENTRY() {
 	FOREACH_WINDOW_IN_ENTRY() {
-	    if (refnum == window->refnum) {
+	    if (refnum == window->refnum)
 		return (window);
-	    }
 	}
     }
 
