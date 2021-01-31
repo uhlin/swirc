@@ -64,7 +64,7 @@
 	 entry_p++)
 #define FOREACH_WINDOW_IN_ENTRY()\
     for (PIRC_WINDOW window = *entry_p;\
-	 window != NULL;\
+	 !isNull(window);\
 	 window = window->next)
 #define IS_AT_TOP \
     (window->saved_size > 0 && window->saved_size == window->scroll_count)
@@ -261,14 +261,14 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 #endif
 
     if (limit_output) {
-	while (element != NULL && i < rows) {
+	while (!isNull(element) && i < rows) {
 	    printtext_puts(pwin, element->text, element->indent, rows - i,
 			   &rep_count);
 	    element = element->next;
 	    i += rep_count;
 	}
     } else {
-	while (element != NULL && i < rows) {
+	while (!isNull(element) && i < rows) {
 	    printtext_puts(pwin, element->text, element->indent, -1, NULL);
 	    element = element->next;
 	    i++;
@@ -343,7 +343,7 @@ windowSystem_deinit(void)
     PIRC_WINDOW p, tmp;
 
     FOREACH_HASH_TABLE_ENTRY() {
-	for (p = *entry_p; p != NULL; p = tmp) {
+	for (p = *entry_p; !isNull(p); p = tmp) {
 	    tmp = p->next;
 	    hUndef(p);
 	}
@@ -363,12 +363,11 @@ window_by_label(const char *label)
 {
     PIRC_WINDOW window;
 
-    if (label == NULL || *label == '\0') {
+    if (isNull(label) || isEmpty(label)) {
 	return (NULL);
     }
 
-    for (window = hash_table[hash(label)];
-	 window != NULL;
+    for (window = hash_table[hash(label)]; !isNull(window);
 	 window = window->next) {
 	if (strings_match_ignore_case(label, window->label))
 	    return (window);
@@ -418,7 +417,7 @@ change_window_by_label(const char *label)
     char *prompt = NULL;
 
     g_active_window = window;
-    titlebar(" %s ", (window->title != NULL) ? window->title : "");
+    titlebar(" %s ", (!isNull(window->title) ? window->title : ""));
     statusbar_update_display_beta();
 
     if (pwin) {
@@ -453,7 +452,7 @@ change_window_by_refnum(int refnum)
     char *prompt = NULL;
 
     g_active_window = window;
-    titlebar(" %s ", (window->title != NULL) ? window->title : "");
+    titlebar(" %s ", (!isNull(window->title) ? window->title : ""));
     statusbar_update_display_beta();
 
     if (pwin) {
@@ -544,8 +543,8 @@ new_window_title(const char *label, const char *title)
     PIRC_WINDOW window;
 
     if ((window = window_by_label(label)) == NULL ||
-	title == NULL ||
-	*title == '\0') {
+	isNull(title) ||
+	isEmpty(title)) {
 	return;
     }
 
@@ -629,7 +628,6 @@ window_foreach_rejoin_all_channels(void)
 /**
  * Scroll down
  */
-/* textBuf_size(window->buf) - window->saved_size */
 void
 window_scroll_down(PIRC_WINDOW window)
 {
