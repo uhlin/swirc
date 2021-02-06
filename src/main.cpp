@@ -79,6 +79,9 @@ const char g_swircYear[]    = "2012-2021";
 const char g_swircAuthor[]  = "Markus Uhlin";
 const char g_swircWebAddr[] = "https://www.nifty-networks.net/swirc/";
 
+char     *g_progname = const_cast<char *>("");
+long int  g_pid = -1;
+
 bool g_auto_connect         = false;
 bool g_bind_hostname        = false;
 bool g_change_color_defs    = true;
@@ -467,6 +470,27 @@ main(int argc, char *argv[])
     extern char *malloc_options;
 
     malloc_options = const_cast<char *>("S");
+#endif
+
+#if defined(UNIX)
+#define SLASH '/'
+#elif defined(WIN32)
+#define SLASH '\\'
+#endif
+
+    char *cp = strrchr(argv[0], SLASH);
+    if (cp == NULL)
+	g_progname = argv[0];
+    else
+	g_progname = cp + 1;
+
+#if defined(UNIX)
+    sw_static_assert(sizeof(pid_t) <= sizeof(long int),
+	"pid type unexpectedly large");
+
+    g_pid = getpid();
+#elif defined(WIN32)
+    g_pid = _getpid();
 #endif
 
     (void) setlocale(LC_ALL, "");

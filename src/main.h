@@ -34,6 +34,9 @@ extern const char g_swircYear[];
 extern const char g_swircAuthor[];
 extern const char g_swircWebAddr[];
 
+extern char *g_progname;
+extern long int g_pid;
+
 extern bool g_auto_connect;
 extern bool g_bind_hostname;
 extern bool g_change_color_defs;
