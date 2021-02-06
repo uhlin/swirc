@@ -409,6 +409,27 @@ process_options(int argc, char *argv[], const char *optstring)
     }
 }
 
+static const unsigned int
+get_seed()
+{
+#if defined(UNIX)
+    struct timeval tv = { 0 };
+
+    errno = 0;
+
+    if (gettimeofday(&tv, NULL) != 0)
+	err_dump("%s", "get_seed: gettimeofday");
+
+    return (getpid() ^ tv.tv_sec ^ tv.tv_usec);
+#elif defined(WIN32)
+    SYSTEMTIME st = { 0 };
+
+    GetLocalTime(&st);
+
+    return (_getpid() ^ st.wSecond ^ st.wMilliseconds);
+#endif
+}
+
 /**
  * Starts execution
  */
@@ -454,18 +475,7 @@ main(int argc, char *argv[])
 
     process_options(argc, argv, "46CPTc:dh:in:pr:u:x:");
 
-#if defined(UNIX)
-    errno = 0;
-    struct timeval tv = { 0 };
-    if (gettimeofday(&tv, NULL) != 0)
-	err_dump("%s", "fatal: gettimeofday");
-    const unsigned int seed = (getpid() ^ tv.tv_sec ^ tv.tv_usec);
-#elif defined(WIN32)
-    SYSTEMTIME st = { 0 };
-    GetLocalTime(&st);
-    const unsigned int seed = (_getpid() ^ st.wSecond ^ st.wMilliseconds);
-#endif
-    srand(seed);
+    srand(get_seed());
 
     term_init();
     nestHome_init();
