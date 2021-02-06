@@ -115,7 +115,7 @@ static const char *OptionDesc[] = {
     "    -?, --help           Output help\n",
     "    -C                   Do not change color definitions\n",
     "    -P                   Permanently disable SASL authentication\n",
-#ifdef OUTPUT_INTERNAL_OPTIONS
+#if OUTPUT_INTERNAL_OPTIONS
     "    -T                   Internal option. Windows: Invoked when\n",
     "                         launched by a toast.\n",
 #endif
