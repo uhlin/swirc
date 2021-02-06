@@ -430,6 +430,33 @@ get_seed()
 #endif
 }
 
+#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
+static void
+toast_notifications_init()
+{
+    /*
+     * Initializes the COM library for use by the calling thread
+     */
+    (void) CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+
+    /*
+     * Register AUMID and COM server (for Desktop Bridge apps, this no-ops)
+     */
+    if (DesktopNotificationManagerCompat::RegisterAumidAndComServer(
+	    L"SwircDevelopmentTeam.Swirc",
+	    __uuidof(NotificationActivator)) != S_OK)
+	err_log(0, "Failed to register AUMID and COM server");
+
+    /*
+     * Register COM activator
+     */
+    if (DesktopNotificationManagerCompat::RegisterActivator() != S_OK)
+	err_log(0, "Failed to register COM activator");
+
+    Toasts::SendTestNotification();
+}
+#endif
+
 /**
  * Starts execution
  */
@@ -492,26 +519,7 @@ main(int argc, char *argv[])
     net_ssl_init();
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
-    /*
-     * Initializes the COM library for use by the calling thread
-     */
-    (void) CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-
-    /*
-     * Register AUMID and COM server (for Desktop Bridge apps, this no-ops)
-     */
-    if (DesktopNotificationManagerCompat::RegisterAumidAndComServer(
-	    L"SwircDevelopmentTeam.Swirc",
-	    __uuidof(NotificationActivator)) != S_OK)
-	err_log(0, "Failed to register AUMID and COM server");
-
-    /*
-     * Register COM activator
-     */
-    if (DesktopNotificationManagerCompat::RegisterActivator() != S_OK)
-	err_log(0, "Failed to register COM activator");
-
-    Toasts::SendTestNotification();
+    toast_notifications_init();
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201811
