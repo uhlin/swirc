@@ -264,7 +264,8 @@ debug_doit(const char *fmt, va_list ap)
 #endif
 
     if ((fp = xfopen(path, "a")) != NULL) {
-	(void) fprintf(fp, "%s %s\n", get_timestamp(), out);
+	(void) fprintf(fp, "%s %s[%ld]: %s\n",
+	    get_timestamp(), g_progname, g_pid, out);
 	(void) fclose(fp);
     }
 }
