@@ -88,7 +88,8 @@ write_to_error_log(const char *msg)
 #endif
 
     if ((fp = xfopen(path, "a")) != NULL) {
-	(void) fprintf(fp, "%s %s\n", get_timestamp(), msg);
+	(void) fprintf(fp, "%s %s[%ld]: %s\n",
+	    get_timestamp(), g_progname, g_pid, msg);
 	(void) fclose(fp);
     }
 }
