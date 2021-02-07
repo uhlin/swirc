@@ -412,7 +412,7 @@ process_options(int argc, char *argv[], const char *optstring)
     }
 }
 
-static const unsigned int
+static unsigned int
 get_seed()
 {
 #if defined(UNIX)
