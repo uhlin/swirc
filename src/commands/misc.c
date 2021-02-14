@@ -1,5 +1,5 @@
 /* commands/misc.c
-   Copyright (C) 2016-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -397,14 +397,15 @@ cmd_quit(const char *data)
 	else
 	    (void) net_send("QUIT :%s", Config("quit_message"));
 	g_on_air = false;
-#if defined(UNIX)
 	errno = 0;
+#if defined(UNIX)
 	if (shutdown(g_socket, SHUT_RDWR) == -1)
 	    err_log(errno, "cmd_quit: shutdown");
-	napms(500);
 #elif defined(WIN32)
-	net_listen_thread_join();
+	if (shutdown(g_socket, SD_BOTH) != 0)
+	    err_log(errno, "cmd_quit: shutdown");
 #endif
+	napms(500);
     }
 
     g_io_loop = false;
