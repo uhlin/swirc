@@ -578,7 +578,7 @@ window_close_all_priv_conv(void)
   out_of_both_loops:
 
     if (pc_assigned == 0) {
-	napms(50);
+	napms(222);
 	return;
     }
 
