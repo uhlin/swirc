@@ -21,7 +21,7 @@ void		err_log  (int error, const char *, ...) PRINTFLIKE(2);
 void		err_msg  (const char *, ...) PRINTFLIKE(1);
 void		err_ret  (const char *, ...) PRINTFLIKE(1);
 
-#define MAXERROR 512
+#define MAXERROR 600
 
 const char *errdesc_by_num(int);
 const char *xstrerror(int errnum, char *strerrbuf, size_t buflen);
