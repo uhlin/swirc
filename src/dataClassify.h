@@ -1,12 +1,9 @@
 #ifndef DATA_CLASSIFY_H
 #define DATA_CLASSIFY_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*lint -sem(is_irc_channel, pure) */
 
+__SWIRC_BEGIN_DECLS
 bool	is_alphabetic      (const char *string);
 bool	is_numeric         (const char *string);
 bool	is_whiteSpace      (const char *string);
@@ -16,10 +13,7 @@ bool	is_valid_nickname  (const char *nickname);
 bool	is_valid_username  (const char *username);
 bool	is_valid_real_name (const char *real_name);
 bool	is_valid_hostname  (const char *hostname);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 /* Inline function definitions
    =========================== */
