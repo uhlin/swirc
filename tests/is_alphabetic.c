@@ -52,7 +52,7 @@ returnsFalse_test4(void **state)
 }
 
 int
-main()
+main(void)
 {
     const struct CMUnitTest tests[] = {
 	cmocka_unit_test(returnsFalseOnNullInput),

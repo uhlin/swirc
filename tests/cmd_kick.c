@@ -37,7 +37,7 @@ sendsExpectedString_test3(void **state)
 }
 
 int
-main()
+main(void)
 {
     const struct CMUnitTest tests[] = {
 	cmocka_unit_test(sendsExpectedString_test1),

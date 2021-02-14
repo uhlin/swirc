@@ -57,7 +57,7 @@ canConcatenate_test1(void **state)
 }
 
 int
-main()
+main(void)
 {
     const struct CMUnitTest tests[] = {
 	cmocka_unit_test(handlesInvalidArguments_test1),

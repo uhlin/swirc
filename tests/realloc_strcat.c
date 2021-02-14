@@ -60,7 +60,7 @@ zeroLengthDestAndSrc_test(void **state)
 }
 
 int
-main()
+main(void)
 {
     const struct CMUnitTest tests[] = {
 	cmocka_unit_test(canConcatenate_test1),
