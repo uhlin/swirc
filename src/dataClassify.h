@@ -18,11 +18,15 @@ __SWIRC_END_DECLS
 /* Inline function definitions
    =========================== */
 
+#ifndef _lint
 static SW_INLINE bool
 isNull(const void *data)
 {
     return (data == NULL);
 }
+#else
+#define isNull(_obj) ((_obj) == NULL)
+#endif
 
 static SW_INLINE bool
 isEmpty(const char *data)
