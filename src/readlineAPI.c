@@ -1,5 +1,5 @@
 /* Readline API
-   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -57,13 +57,11 @@ convert_wc(wchar_t wc)
 
     BZERO(&ps, sizeof(mbstate_t));
 #ifdef HAVE_BCI
-    if ((errno = wcrtomb_s(&bytes_written, mbs, size, wc, &ps)) != 0) {
+    if ((errno = wcrtomb_s(&bytes_written, mbs, size, wc, &ps)) != 0)
 	readline_error(errno, "wcrtomb_s");
-    }
 #else
-    if (wcrtomb(mbs, wc, &ps) == ((size_t) -1)) {
+    if (wcrtomb(mbs, wc, &ps) == ((size_t) -1))
 	readline_error(errno, "wcrtomb");
-    }
 #endif
     return (mbs);
 }
