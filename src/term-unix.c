@@ -53,9 +53,8 @@ term_get_size(void)
 {
     struct winsize size = { 0 };
 
-    if (ioctl(fileno(stdin), TIOCGWINSZ, &size) == -1) {
+    if (ioctl(fileno(stdin), TIOCGWINSZ, &size) == -1)
 	err_sys("TIOCGWINSZ error");
-    }
 
     return size;
 }
