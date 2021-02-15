@@ -15,16 +15,17 @@ static const char *known_brands[] = {
 void
 term_set_title(const char *fmt, ...)
 {
-    char term_brand[80] = { '\0' };
-    char *var_data = NULL;
-    const size_t ar_sz = ARRAY_SIZE(known_brands);
+    char	*var_data = NULL;
+    char	 term_brand[80] = { '\0' };
 
     if ((var_data = getenv("TERM")) == NULL ||
 	sw_strcpy(term_brand, var_data, sizeof term_brand) != 0)
 	return;
 
-    for (const char **ppcc = &known_brands[0]; ppcc < &known_brands[ar_sz];
+    for (const char **ppcc = &known_brands[0];
+	 ppcc < &known_brands[ARRAY_SIZE(known_brands)];
 	 ppcc++) {
+
 	if (strings_match(*ppcc, term_brand)) {
 	    char os_cmd[1100] = { '\0' };
 	    va_list ap;
@@ -40,7 +41,8 @@ term_set_title(const char *fmt, ...)
 	    (void) fflush(stdout);
 	    return;
 	}
-    }
+
+    } /* for */
 }
 
 void
