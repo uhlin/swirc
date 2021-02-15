@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Fixed multiple sign-compare warnings
 - Added logging of program name and PID for debug/error messages
 - WIN32: fixed behavior in `/quit`
+- Fixed unchecked return values
 
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###
