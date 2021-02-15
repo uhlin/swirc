@@ -27,8 +27,8 @@ term_set_title(const char *fmt, ...)
 	 ppcc++) {
 
 	if (strings_match(*ppcc, term_brand)) {
-	    char os_cmd[1100] = { '\0' };
-	    va_list ap;
+	    char	os_cmd[1100] = { '\0' };
+	    va_list	ap;
 
 	    (void) sw_strcpy(os_cmd, "\033]2;", sizeof os_cmd);
 	    va_start(ap, fmt);
