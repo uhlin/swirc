@@ -6,7 +6,6 @@ All notable changes to this project will be documented in this file.
 - Added tab completion for:
   - `/help`
   - `/znc`
-- Added command `/ignore`
 - `titlebar`: do not dynamically allocate 'reject'
 - Splitted the configure script into smaller parts
 - Improved the configure script
