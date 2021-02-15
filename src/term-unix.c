@@ -34,10 +34,10 @@ term_set_title(const char *fmt, ...)
 		sizeof os_cmd - strlen(os_cmd), fmt, ap);
 	    va_end(ap);
 	    if (sw_strcat(os_cmd, "\a", sizeof os_cmd) != 0)
-		break;
+		return;
 	    (void) fputs(os_cmd, stdout);
 	    (void) fflush(stdout);
-	    break;
+	    return;
 	}
     }
 }
