@@ -1,7 +1,7 @@
 #ifndef COMMAND_HELP_H
 #define COMMAND_HELP_H
 /* commandhelp.h
-   Copyright (C) 2018-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -184,12 +184,14 @@ static const char *help_usage[] = {
     "",
 };
 
+#if NOT_YET
 static const char *ignore_usage[] = {
     "usage: /ignore ...",
     "",
     "No help yet.",
     "",
 };
+#endif
 
 static const char *ilist_usage[] = {
     "usage: /ilist [channel]",
