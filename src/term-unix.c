@@ -5,17 +5,18 @@
 #include "strHand.h"
 #include "term-unix.h"
 
+static const char *known_brands[] = {
+    "xterm",
+    "xterm-256color",
+    "rxvt-unicode",
+    "rxvt-unicode-256color",
+};
+
 void
 term_set_title(const char *fmt, ...)
 {
     char term_brand[80] = { '\0' };
     char *var_data = NULL;
-    const char *known_brands[] = {
-	"xterm",
-	"xterm-256color",
-	"rxvt-unicode",
-	"rxvt-unicode-256color",
-    };
     const size_t ar_sz = ARRAY_SIZE(known_brands);
 
     if ((var_data = getenv("TERM")) == NULL ||
