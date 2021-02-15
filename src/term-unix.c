@@ -1,4 +1,4 @@
-/* Copyright (C) 2012-2014, 2016, 2018 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2012-2021 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 #include "errHand.h"
@@ -8,8 +8,8 @@
 void
 term_set_title(const char *fmt, ...)
 {
-    char term_brand[80];
-    char *var_data;
+    char term_brand[80] = { '\0' };
+    char *var_data = NULL;
     const char *known_brands[] = {
 	"xterm",
 	"xterm-256color",
@@ -26,7 +26,7 @@ term_set_title(const char *fmt, ...)
     for (const char **ppcc = &known_brands[0]; ppcc < &known_brands[ar_sz];
 	 ppcc++) {
 	if (strings_match(*ppcc, term_brand)) {
-	    char os_cmd[1100];
+	    char os_cmd[1100] = { '\0' };
 	    va_list ap;
 
 	    sw_strcpy(os_cmd, "\033]2;", sizeof os_cmd);
@@ -51,7 +51,7 @@ term_restore_title(void)
 struct winsize
 term_get_size(void)
 {
-    struct winsize size;
+    struct winsize size = { 0 };
 
     if (ioctl(fileno(stdin), TIOCGWINSZ, &size) == -1) {
 	err_sys("TIOCGWINSZ error");
