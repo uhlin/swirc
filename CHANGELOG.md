@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Fixed multiple sign-compare warnings
 - Added logging of program name and PID for debug/error messages
 - WIN32: fixed behavior in `/quit`
+- WIN32: upgraded to [LibreSSL](https://www.libressl.org/) 3.2.4
 - Fixed unchecked return values
 
 ## [3.2.5] - 2020-10-09 ##
