@@ -42,7 +42,7 @@ dist: $(DIST_DEPS)
 	copy "swirc.exe" $(DEST)
 
 SIGNING_CERT=c:\certs\SwircDevelopmentTeam.pfx
-TIMESTAMP_URL=http://timestamp.verisign.com/scripts/timstamp.dll
+TIMESTAMP_URL=http://timestamp.comodoca.com/
 PRODUCT_VERSION=3.2.5
 
 setupfile: dist Swirc.wxs
