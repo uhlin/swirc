@@ -101,24 +101,28 @@ err_doit(bool output_to_stderr, int error, const char *fmt, va_list ap)
     char strerrbuf[MAXERROR] = "";
 
 #if defined(UNIX)
-    vsnprintf(out, sizeof out, fmt, ap);
+    (void) vsnprintf(out, sizeof out, fmt, ap);
 #elif defined(WIN32)
-    vsnprintf_s(out, sizeof out, _TRUNCATE, fmt, ap);
+    (void) vsnprintf_s(out, sizeof out, _TRUNCATE, fmt, ap);
 #endif
 
     if (error) {
-	sw_strcat(out, ": ", sizeof out);
-	sw_strcat(out, xstrerror(error, strerrbuf, MAXERROR), sizeof out);
+	(void) sw_strcat(out, ": ", sizeof out);
+	(void) sw_strcat(out, xstrerror(error, strerrbuf, MAXERROR),
+	    sizeof out);
     }
 
     write_to_error_log(out);
 
     if (output_to_stderr) {
 	escape_curses();
-	fputs(out, stderr);
-	fputc('\n', stderr);
+
+	(void) fputs(out, stderr);
+	(void) fputc('\n', stderr);
+
 #ifdef WIN32
-	MessageBox(NULL, out, "Fatal", MB_OK | MB_ICONSTOP | MB_DEFBUTTON1);
+	(void) MessageBox(NULL, out, "Fatal",
+	    (MB_OK | MB_ICONSTOP | MB_DEFBUTTON1));
 #endif
     }
 }
