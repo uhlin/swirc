@@ -25,7 +25,6 @@ TEST_TARGET =		check
 MAKE_FLAGS =		DEST_CONFMAN=${WRKINST}${PREFIX}/man/man5 \
 			DEST_MANUAL=${WRKINST}${PREFIX}/man/man1 \
 			INSTALL_DEPS=swirc src/swirc.1 swirc.conf.5 \
-			PREFIX=${PREFIX} CC="${CC}" CXX="${CXX}" \
-			E=@: Q=
+			PREFIX=${PREFIX} CC="${CC}" CXX="${CXX}"
 
 .include <bsd.port.mk>
