@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.2.6] - 2021-02-17 ##
 - Made functions that yet weren't declared at file scope to be
 - Added tab completion for:
   - `/help`
