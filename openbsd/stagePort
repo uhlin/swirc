@@ -3,9 +3,7 @@
 SWIRC_PATH=/usr/ports/net/swirc
 
 install_patches () {
-	_patches="
-patch-configure
-"
+	_patches=""
 
 	for p in $_patches; do
 		install -m 0644 "patches/$p" $SWIRC_PATH/patches
