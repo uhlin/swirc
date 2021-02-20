@@ -25,6 +25,18 @@ post_configure() {
 	vsed -i "$_file" -e "s/CXX=/CXX?=/"
 }
 
+post_check() {
+	# "make clean" is needed here because after running "make
+	# check" multiple objects in the main source dir and its
+	# subdirectories have been compiled with the intention to make
+	# unittesting possible by simulating real behavior. The
+	# main-symbol is also stripped (i.e. removed) from the main.o
+	# file during the "make check" phase. Thus a fresh rebuild is
+	# needed.
+	make clean
+	make ${makejobs}
+}
+
 post_install() {
 	vlicense debian/copyright COPYING
 }
