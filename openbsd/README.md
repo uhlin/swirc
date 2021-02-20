@@ -8,7 +8,7 @@
 4. `make build`
 5. `make fake`
 6. `make update-plist`
-7. `make package`
+7. `make package` (`PKG_CREATE_NO_CHECKS=Yes`)
   * install
   * uninstall
 8. `make port-lib-depends-check`
