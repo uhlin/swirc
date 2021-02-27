@@ -2,19 +2,18 @@
 All notable changes to this project will be documented in this file.
 
 ## [3.2.6] - 2021-02-17 ##
-- Made functions that yet weren't declared at file scope to be
+- Added logging of program name and PID for debug/error messages
 - Added tab completion for:
   - `/help`
   - `/znc`
-- `titlebar`: do not dynamically allocate 'reject'
-- Splitted the configure script into smaller parts
-- Improved the configure script
 - Fixed multiple non-ANSI function declarations
 - Fixed multiple sign-compare warnings
-- Added logging of program name and PID for debug/error messages
+- Fixed unchecked return values
+- Improved the configure script
+- Made functions that yet weren't declared at file scope to be
+- Splitted the configure script into smaller parts
 - WIN32: fixed behavior in `/quit`
 - WIN32: upgraded to [LibreSSL](https://www.libressl.org/) 3.2.4
-- Fixed unchecked return values
 
 ## [3.2.5] - 2020-10-09 ##
 ### Added ###
