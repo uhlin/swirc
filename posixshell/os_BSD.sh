@@ -5,10 +5,13 @@
 os_BSD () {
 	cat <<EOF >>$MAKE_DEF_FILE
 SHARED_FLAGS=-DBSD=1\\
+	-DNDEBUG=1\\
 	-DUNIX=1\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
 	-I/usr/local/include\\
-	-Wall
+	-O2\\
+	-Wall\\
+	-pipe
 CC=cc
 CFLAGS=\$(SHARED_FLAGS) -std=c17
 CXX=c++
