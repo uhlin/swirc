@@ -1,6 +1,9 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Improved automatic resizing
+
 ## [3.2.6] - 2021-02-17 ##
 - Added logging of program name and PID for debug/error messages
 - Added tab completion for:
@@ -10,8 +13,8 @@ All notable changes to this project will be documented in this file.
 - Fixed multiple sign-compare warnings
 - Fixed unchecked return values
 - Improved the configure script
-- Made functions that yet weren't declared at file scope to be
 - Splitted the configure script into smaller parts
+- Made functions that yet weren't declared at file scope to be
 - WIN32: fixed behavior in `/quit`
 - WIN32: upgraded to [LibreSSL](https://www.libressl.org/) 3.2.4
 
