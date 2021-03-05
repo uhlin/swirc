@@ -1,7 +1,9 @@
+*.log
+!tests/fuzz/*.log
+
 *.cab
 *.dll
 *.ico
-*.log
 *.msi
 *.o
 *.obj
@@ -18,4 +20,3 @@ swirc.html
 swirc.res
 swirc.static.html
 tests/*.run
-unix_def.mk
