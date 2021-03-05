@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Improved automatic resizing
+- Rewrote `event_invite()` and thus fixed a vulnerability that imply
+  that a malicious IRC server message could cause a crash. (Reported
+  by Michael Ortmann.)
 
 ## [3.2.6] - 2021-02-17 ##
 - Added logging of program name and PID for debug/error messages
