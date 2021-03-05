@@ -57,11 +57,13 @@ event_wallops(struct irc_message_compo *compo)
 	if (g_server_hostname == NULL)
 	    throw std::runtime_error("no server hostname");
 
-	char *message = & (compo->params[0]);
-	char *prefix = compo->prefix ? & (compo->prefix[1]) : NULL;
+	char *prefix = compo->prefix;
+	char *message = compo->params;
 
 	if (prefix == NULL)
 	    throw std::runtime_error("no prefix");
+	if (*prefix == ':')
+	    prefix++;
 	if (*message == ':')
 	    message++;
 
