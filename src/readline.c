@@ -346,13 +346,12 @@ case_key_right(volatile struct readline_session_context *ctx)
 static char *
 finalize_out_string(const wchar_t *buf)
 {
-    const size_t CONVERT_FAILED = (size_t) -1;
     const size_t SZ = size_product(wcslen(buf), MB_LEN_MAX) + 1;
     char *out = xmalloc(SZ);
     size_t bytes_convert = 0;
 
     errno = 0;
-    if ((bytes_convert = wcstombs(out, buf, SZ - 1)) == CONVERT_FAILED) {
+    if ((bytes_convert = wcstombs(out, buf, SZ - 1)) == g_conversion_failed) {
 	err_log(errno, "in finalize_out_string: wcstombs failed");
 	BZERO(out, SZ);
 	return out;

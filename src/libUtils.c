@@ -1,5 +1,5 @@
 /* libUtils.c  --  Library Utilities
-   Copyright (C) 2012-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -44,6 +44,8 @@
 #elif defined(WIN32)
 #define PRINT_SZ	"%Iu"
 #endif
+
+const size_t g_conversion_failed = (size_t) -1;
 
 FILE *
 fopen_exit_on_error(const char *path, const char *mode)
@@ -187,18 +189,17 @@ size_t
 xmbstowcs(wchar_t *pwcs, const char *s, size_t n)
 {
     size_t bytes_convert = 0;
-    static const size_t CONVERT_FAILED = (size_t) -1;
 
     if (s == NULL) {
 	errno = EINVAL;
-	return (CONVERT_FAILED);
+	return (g_conversion_failed);
     }
 #if defined(UNIX)
     bytes_convert = mbstowcs(pwcs, s, n);
     return (bytes_convert);
 #elif defined(WIN32)
     if ((errno = mbstowcs_s(&bytes_convert, pwcs, n + 1, s, n)) != 0)
-	return (CONVERT_FAILED);
+	return (g_conversion_failed);
     return (bytes_convert);
 #endif
 }

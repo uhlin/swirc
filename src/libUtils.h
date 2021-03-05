@@ -3,6 +3,8 @@
 
 #include <stdio.h> /* FILE */
 
+extern const size_t g_conversion_failed;
+
 /*lint -function(fopen, xfopen) */
 /*lint -printf(2, write_to_stream) */
 

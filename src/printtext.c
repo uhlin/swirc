@@ -939,7 +939,6 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 {
     char		*original_locale = NULL;
     char		*tmp_locale	 = NULL;
-    const size_t	 CONVERT_FAILED	 = (size_t) -1;
     const size_t	 sz		 = strlen(buf) + 1;
     size_t		 bytes_convert	 = 0;
     struct locale_info	*li		 = get_locale_info(LC_CTYPE);
@@ -954,7 +953,7 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
     out             = xcalloc(sz, sizeof(wchar_t));
 
     if (setlocale(LC_CTYPE, tmp_locale) == NULL ||
-	(bytes_convert = xmbstowcs(out, buf, sz - 1)) == CONVERT_FAILED) {
+	(bytes_convert = xmbstowcs(out, buf, sz - 1)) == g_conversion_failed) {
 	if (setlocale(LC_CTYPE, original_locale) == NULL) {
 	    err_log(EPERM, "In try_convert_buf_with_cs: "
 		"cannot restore original locale (%s)", original_locale);
@@ -1006,7 +1005,6 @@ perform_convert_buffer(const char **in_buf)
 	"28605", /* ISO 8859-15 Latin 9 */
 #endif
     };
-    const size_t	 CONVERT_FAILED = (size_t) -1;
     const size_t	 ar_sz		= ARRAY_SIZE(ar);
     mbstate_t		 ps;
     size_t		 sz		= 0;
@@ -1037,7 +1035,7 @@ perform_convert_buffer(const char **in_buf)
 
     while (errno = 0, true) {
 	if (mbsrtowcs(&out[wcslen(out)], in_buf, (sz - wcslen(out)) - 1, &ps) ==
-	    CONVERT_FAILED && errno == EILSEQ) {
+	    g_conversion_failed && errno == EILSEQ) {
 	    chars_lost = true;
 	    (*in_buf)++;
 	} else
