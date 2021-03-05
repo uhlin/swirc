@@ -1,5 +1,7 @@
 # CONTRIBUTORS #
 
+- Michael Ortmann
+  - Bug report
 - [Sebastian Nielsen](https://github.com/sebastiannielsen)
   - Feedback and ideas. Join his IRC server (address:
     **sebbe.eu**). The main channel is *#sebastian* but also try
