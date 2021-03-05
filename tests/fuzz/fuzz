@@ -31,4 +31,4 @@ nc -l -p $PORT < "$log" &
 
 echo "Invoking GDB..."
 echo "(Type: run)"
-gdb --args "$EXE" -c 127.0.0.1:$PORT -n maxxe -u maxxe -r maxxe
+gdb --args "$EXE" -Cc 127.0.0.1:$PORT -n maxxe -u maxxe -r maxxe
