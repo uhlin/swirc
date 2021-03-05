@@ -1,5 +1,5 @@
 /* wallops.cpp
-   Copyright (C) 2018-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -54,6 +54,9 @@ event_wallops(struct irc_message_compo *compo)
     PRINTTEXT_CONTEXT ctx;
 
     try {
+	if (g_server_hostname == NULL)
+	    throw std::runtime_error("no server hostname");
+
 	char *last = const_cast<char *>("");
 	char *message = & (compo->params[0]);
 	char *nick, *user, *host;
