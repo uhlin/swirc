@@ -57,7 +57,6 @@ event_wallops(struct irc_message_compo *compo)
 	if (g_server_hostname == NULL)
 	    throw std::runtime_error("no server hostname");
 
-	char *last = const_cast<char *>("");
 	char *message = & (compo->params[0]);
 	char *prefix = compo->prefix ? & (compo->prefix[1]) : NULL;
 
@@ -71,6 +70,7 @@ event_wallops(struct irc_message_compo *compo)
 	if (strings_match_ignore_case(prefix, g_server_hostname)) {
 	    printtext(&ctx, "%s!%s%c %s", COLOR3, "WALLOPS", NORMAL, message);
 	} else {
+	    char *last = const_cast<char *>("");
 	    char *nick, *user, *host;
 
 	    if ((nick = strtok_r(prefix, "!@", &last)) == NULL ||
