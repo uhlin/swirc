@@ -86,14 +86,14 @@ struct hInstall_context {
     bool	 is_voice;
 };
 
+struct name_tag {
+    char *s;
+};
+
 typedef struct tagCHUNK {
     char *nick;
     struct tagCHUNK *next;
 } CHUNK, *PCHUNK;
-
-struct name_tag {
-    char *s;
-};
 
 /****************************************************************
 *                                                               *
