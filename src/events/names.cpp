@@ -186,13 +186,13 @@ next_names(PIRC_WINDOW window, const int *idx)
 	}
 
 	if (!head) {
-	    head = xmalloc(sizeof(CHUNK));
+	    head = static_cast<PCHUNK>(xmalloc(sizeof(CHUNK)));
 	    head->nick = strdup_printf("%c%s", c, p->nick);
 	    head->next = NULL;
 	    continue;
 	}
 
-	new_element = xmalloc(sizeof(CHUNK));
+	new_element = static_cast<PCHUNK>(xmalloc(sizeof(CHUNK)));
 	new_element->nick = strdup_printf("%c%s", c, p->nick);
 	new_element->next = NULL;
 
@@ -209,7 +209,10 @@ static struct name_tag *
 get_names_array(const int ntp1, PIRC_WINDOW window)
 {
     int i = 0, j = 0;
-    struct name_tag *names_array = xcalloc(ntp1, sizeof(struct name_tag));
+    struct name_tag *names_array =
+	static_cast<struct name_tag *>(xcalloc(ntp1, sizeof *names_array));
+    sw_static_assert(sizeof *names_array == sizeof(struct name_tag),
+	"get_names_array: sizes mismatch");
 
     for (i = j = 0; i < NAMES_HASH_TABLE_SIZE; i++) {
 	PCHUNK head, element;
@@ -312,7 +315,7 @@ hInstall(const struct hInstall_context *ctx)
 	return ERR;
     }
 
-    names_entry             = xcalloc(sizeof *names_entry, 1);
+    names_entry = static_cast<PNAMES>(xcalloc(sizeof *names_entry, 1));
     names_entry->nick       = sw_strdup(ctx->nick);
     names_entry->is_owner   = ctx->is_owner;
     names_entry->is_superop = ctx->is_superop;
@@ -376,10 +379,10 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
 static int
 names_cmp_fn(const void *obj1, const void *obj2)
 {
-    const struct name_tag	*p1    = obj1;
-    const struct name_tag	*p2    = obj2;
-    const char			*nick1 = p1 && p1->s ? p1->s : NULL;
-    const char			*nick2 = p2 && p2->s ? p2->s : NULL;
+    const struct name_tag *p1 = static_cast<const struct name_tag *>(obj1);
+    const struct name_tag *p2 = static_cast<const struct name_tag *>(obj2);
+    const char *nick1 = p1 && p1->s ? p1->s : NULL;
+    const char *nick2 = p2 && p2->s ? p2->s : NULL;
 
     if (isNull(nick1)) {
 	return (1);
