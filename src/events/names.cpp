@@ -1057,7 +1057,7 @@ event_names(struct irc_message_compo *compo)
 	    struct hInstall_context ctx(channel, nick, *token);
 
 	    if (hInstall(&ctx) != OK)
-		break; /* continue? */
+		continue; // change back to break?
 	}
     } catch (const std::runtime_error &e) {
 	PRINTTEXT_CONTEXT ptext_ctx;
