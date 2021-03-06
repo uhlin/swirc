@@ -468,12 +468,12 @@ get_prompt(void)
     if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label))
 	return sw_strdup("");
     else if (is_irc_channel(ACTWINLABEL))
-	return strdup_printf("%s%s: ", ACTWINLABEL, g_is_away ? AFK : "");
+	return strdup_printf("%s%s: ", ACTWINLABEL, (g_is_away ? AFK : ""));
 
     /*
      * a query
      */
-    return strdup_printf("%s%s> ", ACTWINLABEL, g_is_away ? AFK : "");
+    return strdup_printf("%s%s> ", ACTWINLABEL, (g_is_away ? AFK : ""));
 }
 
 /* usage: /help [command] */
