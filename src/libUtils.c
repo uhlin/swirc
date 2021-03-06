@@ -114,9 +114,8 @@ current_time(const char *fmt)
     static char		buffer[200] = "";
     struct tm		items = { 0 };
     time_t		seconds = 0;
-    const time_t	unsuccessful = ((time_t) -1);
 
-    if (isNull(fmt) || isEmpty(fmt) || time(&seconds) == unsuccessful) {
+    if (isNull(fmt) || isEmpty(fmt) || time(&seconds) == g_time_error) {
 	return "";
     }
 
