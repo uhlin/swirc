@@ -185,14 +185,17 @@ next_names(PIRC_WINDOW window, const int *idx)
 	    c = ' ';
 	}
 
+	sw_static_assert(sizeof *head == sizeof(CHUNK),
+	    "next_names: sizes mismatch");
+
 	if (!head) {
-	    head = static_cast<PCHUNK>(xmalloc(sizeof(CHUNK)));
+	    head = static_cast<PCHUNK>(xmalloc(sizeof *head));
 	    head->nick = strdup_printf("%c%s", c, p->nick);
 	    head->next = NULL;
 	    continue;
 	}
 
-	new_element = static_cast<PCHUNK>(xmalloc(sizeof(CHUNK)));
+	new_element = static_cast<PCHUNK>(xmalloc(sizeof *new_element));
 	new_element->nick = strdup_printf("%c%s", c, p->nick);
 	new_element->next = NULL;
 
