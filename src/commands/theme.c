@@ -397,7 +397,6 @@ set_theme(const char *name)
 
     ctx.spec_type = TYPE_SPEC1_SUCCESS;
     printtext(&ctx, "theme activated");
-    ctx.spec_type = TYPE_SPEC1_FAILURE;
 
     if ((errno = config_item_undef("theme")) != 0)
 	err_log(errno, "set_theme: config_item_undef");
@@ -410,10 +409,9 @@ set_theme(const char *name)
 	(errno = sw_strcat(buf, SLASH, sizeof buf)) != 0 ||
 	(errno = sw_strcat(buf, "swirc", sizeof buf)) != 0 ||
 	(errno = sw_strcat(buf, g_config_filesuffix, sizeof buf)) != 0) {
+	ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ctx, "error building path to swirc%s (errno=%d)",
 	    g_config_filesuffix, errno);
-	return;
-    } else if (!is_regular_file(buf)) {
 	printtext(&ctx, "error saving swirc%s", g_config_filesuffix);
 	return;
     }
