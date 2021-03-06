@@ -151,11 +151,11 @@ get_column_lengths(const int ntp1, const struct name_tag *names_array)
 	}
 
 	if (nick1 && size_to_int(strlen(nick1)) > cl.col1)
-	    cl.col1 = (int) strlen(nick1);
+	    cl.col1 = static_cast<int>(strlen(nick1));
 	if (nick2 && size_to_int(strlen(nick2)) > cl.col2)
-	    cl.col2 = (int) strlen(nick2);
+	    cl.col2 = static_cast<int>(strlen(nick2));
 	if (nick3 && size_to_int(strlen(nick3)) > cl.col3)
-	    cl.col3 = (int) strlen(nick3);
+	    cl.col3 = static_cast<int>(strlen(nick3));
     }
 
     return cl;
