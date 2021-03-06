@@ -616,19 +616,14 @@ event_names_htbl_lookup(const char *nick, const char *channel)
 int
 event_names_htbl_insert(const char *nick, const char *channel)
 {
-    struct hInstall_context ctx;
-
     if (isNull(nick) || isEmpty(nick)) {
 	return ERR;
     }
 
-    ctx.channel    = const_cast<char *>(channel);
-    ctx.nick       = const_cast<char *>(nick);
-    ctx.is_owner   = false;
-    ctx.is_superop = false;
-    ctx.is_op      = false;
-    ctx.is_halfop  = false;
-    ctx.is_voice   = false;
+    struct hInstall_context ctx; // calls constructor
+
+    ctx.channel = const_cast<char *>(channel);
+    ctx.nick = const_cast<char *>(nick);
 
     return hInstall(&ctx);
 }
