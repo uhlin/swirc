@@ -53,6 +53,12 @@
 *                                                               *
 ****************************************************************/
 
+struct column_lengths {
+    int col1;
+    int col2;
+    int col3;
+};
+
 struct hInstall_context {
     char	*channel;
     char	*nick;
@@ -120,12 +126,6 @@ free_names_chunk(PCHUNK head)
 	free(p);
     }
 }
-
-struct column_lengths {
-    int col1;
-    int col2;
-    int col3;
-};
 
 static struct column_lengths
 get_column_lengths(const int ntp1, const struct name_tag *names_array)
