@@ -2,8 +2,10 @@
 #define LIBRARY_UTILITIES_H
 
 #include <stdio.h> /* FILE */
+#include <time.h>
 
 extern const size_t g_conversion_failed;
+extern const time_t g_time_error;
 
 /*lint -function(fopen, xfopen) */
 /*lint -printf(2, write_to_stream) */
