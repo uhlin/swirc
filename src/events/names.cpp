@@ -491,7 +491,7 @@ set_format1(char *dest, size_t destsize, struct column_lengths cl)
     int ret = snprintf(dest, destsize, "%%s%%-%ds%%s %%s%%-%ds%%s %%s%%-%ds%%s",
 		       cl.col1, cl.col2, cl.col3);
 
-    return ((ret == -1 || ((size_t) ret) >= destsize) ? false : true);
+    return ((ret == -1 || static_cast<size_t>(ret) >= destsize) ? false : true);
 }
 
 static bool
@@ -500,7 +500,7 @@ set_format2(char *dest, size_t destsize, struct column_lengths cl)
     int ret = snprintf(dest, destsize, "%%s%%-%ds%%s %%s%%-%ds%%s",
 		       cl.col1, cl.col2);
 
-    return ((ret == -1 || ((size_t) ret) >= destsize) ? false : true);
+    return ((ret == -1 || static_cast<size_t>(ret) >= destsize) ? false : true);
 }
 
 static bool
@@ -509,7 +509,7 @@ set_format3(char *dest, size_t destsize, struct column_lengths cl)
     int ret = snprintf(dest, destsize, "%%s%%-%ds%%s",
 		       cl.col1);
 
-    return ((ret == -1 || ((size_t) ret) >= destsize) ? false : true);
+    return ((ret == -1 || static_cast<size_t>(ret) >= destsize) ? false : true);
 }
 
 PTEXTBUF
