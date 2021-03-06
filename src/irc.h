@@ -32,6 +32,8 @@ enum message_concat_state {
 };
 
 __SWIRC_BEGIN_DECLS
+extern const char g_forbidden_chan_name_chars[];
+
 extern bool	 g_alt_nick_tested;
 extern bool	 g_am_irc_op;
 extern bool	 g_is_away;
