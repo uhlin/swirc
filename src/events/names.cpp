@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <stdexcept>
+
 #include "../assertAPI.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
@@ -908,57 +910,54 @@ event_names_print_all(const char *channel)
 void
 event_eof_names(struct irc_message_compo *compo)
 {
-    PIRC_WINDOW win = NULL;
-    PRINTTEXT_CONTEXT ptext_ctx;
-    char *err_reason = "";
-    char *state = "";
+    try {
+	PIRC_WINDOW win = NULL;
+	char *state = const_cast<char *>("");
 
-    if (strFeed(compo->params, 2) != 2) {
-	err_reason = "strFeed() has failed";
-	goto bad;
-    }
+	if (strFeed(compo->params, 2) != 2)
+	    throw std::runtime_error("strFeed");
 
-    (void) strtok_r(compo->params, "\n", &state);
-    char *channel = strtok_r(NULL, "\n", &state);
-    char *eof_msg = strtok_r(NULL, "\n", &state);
+	(void) strtok_r(compo->params, "\n", &state);
+	char *channel = strtok_r(NULL, "\n", &state);
+	char *eof_msg = strtok_r(NULL, "\n", &state);
 
-    if (isNull(channel) || isNull(eof_msg)) {
-	err_reason = "failed to tokenize event";
-	goto bad;
-    } else if (!strings_match_ignore_case(channel, names_channel)) {
-	err_reason =
-	    "unable to parse names of two (or more) channels simultaneously";
-	goto bad;
-    } else {
-	BZERO(names_channel, sizeof names_channel);
-    }
+	if (isNull(channel))
+	    throw std::runtime_error("null channel");
+	else if (isNull(eof_msg))
+	    throw std::runtime_error("null message");
+	else if (!strings_match_ignore_case(channel, names_channel)) {
+	    throw std::runtime_error("unable to parse names of two (or more) "
+		"channels simultaneously");
+	} else {
+	    BZERO(names_channel, sizeof names_channel);
+	}
 
-    if ((win = window_by_label(channel)) == NULL) {
-	err_reason = "window lookup error";
-	goto bad;
-    } else if (win->received_names) {
-	err_log(0, "warning: server sent event 366 (RPL_ENDOFNAMES): "
-	    "already received names for channel %s", channel);
+	if ((win = window_by_label(channel)) == NULL)
+	    throw std::runtime_error("window lookup error");
+	else if (win->received_names) {
+	    err_log(0, "warning: server sent event 366 (RPL_ENDOFNAMES): "
+		"already received names for channel %s", channel);
+	    return;
+	} else {
+	    win->received_names = true;
+	}
+
+	if (event_names_print_all(channel) != OK)
+	    throw std::runtime_error("cannot print names");
+	if (!g_icb_mode)
+	    (void) net_send("MODE %s", channel);
 	return;
-    } else {
-	win->received_names = true;
+    } catch (const std::runtime_error &e) {
+	PRINTTEXT_CONTEXT ptext_ctx;
+
+	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_FAILURE,
+	    true);
+
+	printtext(&ptext_ctx, "event_eof_names: fatal: %s", e.what());
+	printtext(&ptext_ctx, "must shutdown irc connection immediately...");
+
+	net_kill_connection();
     }
-
-    if (event_names_print_all(channel) != OK) {
-	err_reason = "print all names error";
-	goto bad;
-    }
-
-    if (!g_icb_mode)
-	net_send("MODE %s", channel);
-    return;
-
-  bad:
-    printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_FAILURE,
-	true);
-    printtext(&ptext_ctx, "event_eof_names: fatal: %s", err_reason);
-    printtext(&ptext_ctx, "must shutdown irc connection immediately...");
-    net_kill_connection();
 }
 
 /* event_names: 353
