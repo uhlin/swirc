@@ -60,7 +60,7 @@ convert_wc(wchar_t wc)
     if ((errno = wcrtomb_s(&bytes_written, mbs, size, wc, &ps)) != 0)
 	readline_error(errno, "wcrtomb_s");
 #else
-    if (wcrtomb(mbs, wc, &ps) == ((size_t) -1))
+    if (wcrtomb(mbs, wc, &ps) == g_conversion_failed)
 	readline_error(errno, "wcrtomb");
 #endif
     return (mbs);

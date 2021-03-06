@@ -273,7 +273,7 @@ convert_wc(wchar_t wc)
     if ((errno = wcrtomb_s(&bytes_written, ((char *) mbs), size, wc, &ps)) != 0)
 	err_log(errno, "printtext: convert_wc: wcrtomb_s");
 #else
-    if (wcrtomb((char *) mbs, wc, &ps) == ((size_t) -1))
+    if (wcrtomb((char *) mbs, wc, &ps) == g_conversion_failed)
 	err_log(EILSEQ, "printtext: convert_wc: wcrtomb");
 #endif
 
