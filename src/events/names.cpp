@@ -583,8 +583,8 @@ event_names_htbl_insert(const char *nick, const char *channel)
 	return ERR;
     }
 
-    ctx.channel    = (char *) channel;
-    ctx.nick       = (char *) nick;
+    ctx.channel    = const_cast<char *>(channel);
+    ctx.nick       = const_cast<char *>(nick);
     ctx.is_owner   = false;
     ctx.is_superop = false;
     ctx.is_op      = false;
