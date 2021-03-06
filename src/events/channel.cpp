@@ -1,5 +1,5 @@
 /* Channel related events
-   Copyright (C) 2015-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -122,7 +122,8 @@ event_join(struct irc_message_compo *compo)
 	    ? &compo->params[1]
 	    : &compo->params[0];
 
-	if (!is_irc_channel(channel) || strchr(channel, ' ') != NULL)
+	if (!is_irc_channel(channel) ||
+	    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL)
 	    throw std::runtime_error("bogus irc channel");
 
 	if (strings_match_ignore_case(nick, g_my_nickname)) {

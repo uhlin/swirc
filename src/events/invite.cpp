@@ -99,7 +99,8 @@ event_invite(struct irc_message_compo *compo)
 	else if (*channel == ':')
 	    channel++;
 
-	if (!is_irc_channel(channel))
+	if (!is_irc_channel(channel) ||
+	    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL)
 	    throw std::runtime_error("bogus irc channel");
 
 	if (strings_match_ignore_case(target, g_my_nickname)) {

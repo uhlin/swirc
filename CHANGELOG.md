@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Defined `g_conversion_failed` and made use of it
 - Fixed a bug that could lead to null pointer comparison
+- Fixed stricter checking of channel names
 - Improved automatic resizing
 - Rewrote `event_invite()` and thus fixed a vulnerability that imply
   that a malicious IRC server message could cause a crash. (Reported
