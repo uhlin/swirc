@@ -57,7 +57,24 @@ struct column_lengths {
     int col1;
     int col2;
     int col3;
+
+    column_lengths();
+    column_lengths(int, int, int);
 };
+
+column_lengths::column_lengths()
+{
+    this->col1 = 0;
+    this->col2 = 0;
+    this->col3 = 0;
+}
+
+column_lengths::column_lengths(int x, int y, int z)
+{
+    this->col1 = x;
+    this->col2 = y;
+    this->col3 = z;
+}
 
 struct hInstall_context {
     char	*channel;
@@ -130,11 +147,8 @@ free_names_chunk(PCHUNK head)
 static struct column_lengths
 get_column_lengths(const int ntp1, const struct name_tag *names_array)
 {
-    struct column_lengths cl = {
-	.col1 = 0,
-	.col2 = 0,
-	.col3 = 0,
-    };
+    //struct column_lengths cl;
+    struct column_lengths cl(0, 0, 0);
 
     for (int i = 0; i < ntp1; i++) {
 	const char *nick1 = names_array[i].s;
