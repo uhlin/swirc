@@ -1454,7 +1454,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 
     fmt_copy = strdup_vprintf(fmt, ap);
     pout = get_processed_out_message(fmt_copy, ctx->spec_type, ctx->include_ts,
-	ctx->has_server_time ? ctx->server_time : NULL);
+	(ctx->has_server_time ? ctx->server_time : NULL));
 
     if (tbszp1 > config_integer_unparse(&unparse_ctx)) {
 	/*
