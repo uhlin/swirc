@@ -1044,24 +1044,17 @@ event_names(struct irc_message_compo *compo)
 	    names_copy = sw_strdup(*names == ':' ? &names[1] : &names[0]);
 	}
 
-	for (char *cp = &names_copy[0];; cp = NULL) {
-	    char *token = strtok_r(cp, " ", &state2);
+	char *nick = NULL;
+	char *token = NULL;
 
-	    if (!token)
+	for (char *cp = &names_copy[0];; cp = NULL) {
+	    if ((token = strtok_r(cp, " ", &state2)) == NULL)
 		break;
 
-	    struct hInstall_context ctx = {
-		.channel = channel,
-		.nick = ((*token == '~' || *token == '&' || *token == '@' ||
-			  *token == '%' || *token == '+')
-			 ? &token[1]
-			 : &token[0]),
-		.is_owner   = (*token == '~'),
-		.is_superop = (*token == '&'),
-		.is_op      = (*token == '@'),
-		.is_halfop  = (*token == '%'),
-		.is_voice   = (*token == '+'),
-	    };
+	    nick = ((*token == '~' || *token == '&' || *token == '@' ||
+		     *token == '%' || *token == '+') ? &token[1] : &token[0]);
+
+	    struct hInstall_context ctx(channel, nick, *token);
 
 	    if (hInstall(&ctx) != OK)
 		break; /* continue? */
