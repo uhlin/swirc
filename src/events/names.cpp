@@ -1004,11 +1004,13 @@ event_eof_names(struct irc_message_compo *compo)
 
 	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_FAILURE,
 	    true);
-
 	printtext(&ptext_ctx, "event_eof_names: fatal: %s", e.what());
-	printtext(&ptext_ctx, "must shutdown irc connection immediately...");
 
-	net_kill_connection();
+	if (strstr(e.what(), "parse names of two (or more)") ||
+	    strings_match(e.what(), "window lookup error")) {
+	    printtext(&ptext_ctx, "must shutdown irc connection immediately...");
+	    net_kill_connection();
+	}
     }
 }
 
