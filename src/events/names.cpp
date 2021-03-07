@@ -363,7 +363,7 @@ hInstall(const struct hInstall_context *ctx)
 	debug("events/names.cpp: hInstall: cannot find window labelled %s",
 	    ctx->channel);
 	return ERR;
-    } else if (!is_valid_nickname(ctx->nick)) {
+    } else if (!g_icb_mode && !is_valid_nickname(ctx->nick)) {
 	/*
 	 * XXX: This check might be too strict
 	 */
