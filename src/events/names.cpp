@@ -363,7 +363,12 @@ hInstall(const struct hInstall_context *ctx)
 	debug("events/names.cpp: hInstall: cannot find window labelled %s",
 	    ctx->channel);
 	return ERR;
-    } else if (!g_icb_mode && !is_valid_nickname(ctx->nick)) {
+    } else if (strings_match(ctx->nick, "")) {
+	debug("events/names.cpp: hInstall: nickname zero length");
+	return ERR;
+    }
+#if CHECK_NICKNAMES
+    else if (!g_icb_mode && !is_valid_nickname(ctx->nick)) {
 	/*
 	 * XXX: This check might be too strict
 	 */
@@ -371,6 +376,7 @@ hInstall(const struct hInstall_context *ctx)
 	    "\"%s\" (channel=%s)", ctx->nick, ctx->channel);
 	return ERR;
     }
+#endif
     /*
      * TODO: Check for duplicates?
      */
