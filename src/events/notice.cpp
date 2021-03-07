@@ -51,12 +51,15 @@ struct notice_context {
     char *dest;
     char *msg;
 
-    notice_context(char *srv_name, char *dest, char *msg) {
-	this->srv_name = srv_name;
-	this->dest     = dest;
-	this->msg      = msg;
-    }
+    notice_context(char *, char *, char *);
 };
+
+notice_context::notice_context(char *srv_name, char *dest, char *msg)
+{
+    this->srv_name = srv_name;
+    this->dest = dest;
+    this->msg = msg;
+}
 
 static void
 handle_notice_while_connecting(struct irc_message_compo *compo)
