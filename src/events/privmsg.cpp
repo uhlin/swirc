@@ -1,5 +1,5 @@
 /* Handles event PRIVMSG
-   Copyright (C) 2016-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -54,36 +54,7 @@
 
 #include "names.h"
 #include "privmsg.h"
-
-struct special_msg_context {
-    char *nick;
-    char *user;
-    char *host;
-    char *dest;
-    char *msg;
-
-    special_msg_context() {
-	this->nick = NULL;
-	this->user = NULL;
-	this->host = NULL;
-	this->dest = NULL;
-	this->msg  = NULL;
-    }
-
-    special_msg_context(
-	char *nick,
-	char *user,
-	char *host,
-	char *dest,
-	char *msg)
-	{
-	    this->nick = nick;
-	    this->user = user;
-	    this->host = host;
-	    this->dest = dest;
-	    this->msg  = msg;
-	}
-};
+#include "special-msg-context.hpp"
 
 static bool shouldHighlightMessage_case1(const char *) PTR_ARGS_NONNULL;
 static bool shouldHighlightMessage_case2(const char *) PTR_ARGS_NONNULL;

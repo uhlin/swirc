@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Fixed stricter checking of channel names
 - Fixed unchecked return values and made code improvements
 - Improved automatic resizing
+- Reduced code duplication
 - Rewrote `event_invite()` and thus fixed a vulnerability that imply
   that a malicious IRC server message could cause a crash. (Reported
   by Michael Ortmann.)

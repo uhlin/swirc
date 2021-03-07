@@ -1,5 +1,5 @@
 /* Handles event NOTICE
-   Copyright (C) 2014-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -39,6 +39,7 @@
 #include "../theme.h"
 
 #include "notice.h"
+#include "special-msg-context.hpp"
 
 #define INNER_B1	Theme("notice_inner_b1")
 #define INNER_B2	Theme("notice_inner_b2")
@@ -55,28 +56,6 @@ struct notice_context {
 	this->dest     = dest;
 	this->msg      = msg;
     }
-};
-
-struct special_msg_context {
-    char *nick;
-    char *user;
-    char *host;
-    char *dest;
-    char *msg;
-
-    special_msg_context(
-	char *nick,
-	char *user,
-	char *host,
-	char *dest,
-	char *msg)
-	{
-	    this->nick = nick;
-	    this->user = user;
-	    this->host = host;
-	    this->dest = dest;
-	    this->msg  = msg;
-	}
 };
 
 static void
