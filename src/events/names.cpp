@@ -1087,11 +1087,13 @@ event_names(struct irc_message_compo *compo)
 
 	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_FAILURE,
 	    true);
-
 	printtext(&ptext_ctx, "event_names: fatal: %s", e.what());
-	printtext(&ptext_ctx, "must shutdown irc connection immediately...");
 
-	net_kill_connection();
+	if (strstr(e.what(), "store names channel") ||
+	    strstr(e.what(), "parse names of two (or more)")) {
+	    printtext(&ptext_ctx, "must shutdown irc connection immediately...");
+	    net_kill_connection();
+	}
     }
 
     free(names_copy);
