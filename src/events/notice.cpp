@@ -51,8 +51,16 @@ struct notice_context {
     char *dest;
     char *msg;
 
+    notice_context();
     notice_context(char *, char *, char *);
 };
+
+notice_context::notice_context()
+{
+    this->srv_name = NULL;
+    this->dest = NULL;
+    this->msg = NULL;
+}
 
 notice_context::notice_context(char *srv_name, char *dest, char *msg)
 {
