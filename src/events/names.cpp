@@ -113,7 +113,14 @@ hInstall_context::hInstall_context(char *channel, char *nick, const char c)
 
 struct name_tag {
     char *s;
+
+    name_tag();
 };
+
+name_tag::name_tag()
+{
+    this->s = NULL;
+}
 
 typedef struct tagCHUNK {
     char *nick;
