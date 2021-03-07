@@ -433,7 +433,6 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
     window->num_total--;
 
     free(entry);
-    entry = NULL;
 }
 
 static int
