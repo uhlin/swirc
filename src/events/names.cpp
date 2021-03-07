@@ -972,6 +972,9 @@ event_eof_names(struct irc_message_compo *compo)
 
 	if (isNull(channel))
 	    throw std::runtime_error("null channel");
+	else if (!is_irc_channel(channel) ||
+		 strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL)
+	    throw std::runtime_error("invalid channel");
 	else if (isNull(eof_msg))
 	    throw std::runtime_error("null message");
 	else if (!strings_match_ignore_case(channel, names_channel)) {
@@ -1041,6 +1044,9 @@ event_names(struct irc_message_compo *compo)
 	    throw std::runtime_error("no channel type");
 	else if (isNull(channel))
 	    throw std::runtime_error("no channel");
+	else if (!is_irc_channel(channel) ||
+		 strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL)
+	    throw std::runtime_error("invalid channel");
 	else if (isNull(names))
 	    throw std::runtime_error("no names");
 	else if (strings_match(names_channel, "") &&
