@@ -353,11 +353,20 @@ hInstall(const struct hInstall_context *ctx)
     PNAMES names_entry = NULL;
 
     if ((window_entry = window_by_label(ctx->channel)) == NULL) {
-	err_log(0, "In events/names.c: "
-	    "Can't find a window with label %s during hInstall()",
+	debug("events/names.cpp: hInstall: cannot find window labelled %s",
 	    ctx->channel);
 	return ERR;
+    } else if (!is_valid_nickname(ctx->nick)) {
+	/*
+	 * XXX: This check might be too strict
+	 */
+	debug("events/names.cpp: hInstall: invalid nickname: "
+	    "\"%s\" (channel=%s)", ctx->nick, ctx->channel);
+	return ERR;
     }
+    /*
+     * TODO: Check for duplicates?
+     */
 
     names_entry = static_cast<PNAMES>(xcalloc(sizeof *names_entry, 1));
     names_entry->nick       = sw_strdup(ctx->nick);
