@@ -421,6 +421,9 @@ static void hUndef(PIRC_WINDOW, PNAMES) PTR_ARGS_NONNULL;
 static void
 hUndef(PIRC_WINDOW window, PNAMES entry)
 {
+    if (isNull(window) || isNull(entry))
+	return;
+
     PNAMES *indirect = & (window->names_hash[hash(entry->nick)]);
 
     while (sw_assert(indirect != NULL), *indirect != entry)
