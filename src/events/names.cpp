@@ -421,7 +421,8 @@ static void hUndef(PIRC_WINDOW, PNAMES) PTR_ARGS_NONNULL;
 static void
 hUndef(PIRC_WINDOW window, PNAMES entry)
 {
-    if (isNull(window) || isNull(entry))
+    if (isNull(window) || isNull(entry) || isNull(entry->nick) ||
+	isEmpty(entry->nick))
 	return;
 
     PNAMES *indirect = & (window->names_hash[hash(entry->nick)]);
