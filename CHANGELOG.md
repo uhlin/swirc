@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added null checks
 - Defined `g_conversion_failed` and made use of it
 - Defined `g_time_error` and made use of it
 - Fixed a bug that could lead to null pointer comparison
