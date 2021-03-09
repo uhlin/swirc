@@ -372,7 +372,9 @@ hInstall(const struct hInstall_context *ctx)
     PIRC_WINDOW window_entry = NULL;
     PNAMES names_entry = NULL;
 
-    if ((window_entry = window_by_label(ctx->channel)) == NULL) {
+    if (isNull(ctx) || isNull(ctx->channel) || isNull(ctx->nick))
+	return ERR;
+    else if ((window_entry = window_by_label(ctx->channel)) == NULL) {
 	debug("events/names.cpp: hInstall: cannot find window labelled %s",
 	    ctx->channel);
 	return ERR;
