@@ -353,6 +353,19 @@ hash(const char *nick)
 #endif
 }
 
+static inline bool
+already_is_in_names_hash(const char *nick, PIRC_WINDOW window)
+{
+    for (PNAMES names = window->names_hash[hash(nick)];
+	 names != NULL;
+	 names = names->next) {
+	if (strings_match_ignore_case(nick, names->nick))
+	    return true;
+    }
+
+    return false;
+}
+
 static int
 hInstall(const struct hInstall_context *ctx)
 {
