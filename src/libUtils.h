@@ -4,8 +4,10 @@
 #include <stdio.h> /* FILE */
 #include <time.h>
 
+__SWIRC_BEGIN_DECLS
 extern const size_t g_conversion_failed;
 extern const time_t g_time_error;
+__SWIRC_END_DECLS
 
 /*lint -function(fopen, xfopen) */
 /*lint -printf(2, write_to_stream) */
