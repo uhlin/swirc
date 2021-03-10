@@ -258,7 +258,7 @@ should_check_connection()
 {
     static int times_called = 0;
 
-    if (times_called > 3) {
+    if (times_called > 9) {
 	times_called = 0;
 	return true;
     }
