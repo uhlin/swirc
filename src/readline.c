@@ -211,6 +211,7 @@ static void
 case_key_backspace(volatile struct readline_session_context *ctx)
 {
     struct current_cursor_pos yx;
+    wchar_t *ptr;
 
     if (ctx->bufpos == 0) {
 	term_beep();
@@ -222,7 +223,7 @@ case_key_backspace(volatile struct readline_session_context *ctx)
     }
 
     if (ctx->insert_mode) {
-	wchar_t *ptr = &ctx->buffer[ctx->bufpos--];
+	ptr = &ctx->buffer[ctx->bufpos--];
 
 	(void) wmemmove(ptr - 1, ptr, wcslen(ptr));
 	ctx->buffer[--ctx->n_insert] = 0L;
