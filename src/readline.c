@@ -294,15 +294,21 @@ case_key_left(volatile struct readline_session_context *ctx)
 	magic_swap_panels(ctx, false);
     }
 
+    mutex_lock(&g_puts_mutex);
+
     ctx->bufpos--;
     yx = term_get_pos(ctx->act);
 
     if (wmove(ctx->act, yx.cury, yx.curx - 1) == ERR) {
+	mutex_unlock(&g_puts_mutex);
 	readline_error(EPERM, "wmove");
+	/* NOTREACHED */
     }
 
     update_panels();
     (void) doupdate();
+
+    mutex_unlock(&g_puts_mutex);
 }
 
 /**
