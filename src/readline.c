@@ -484,9 +484,17 @@ process(volatile struct readline_session_context *ctx)
 
 	if (*buf_p != L'\0') {
 	    wc = *buf_p++;
-	} else if (wget_wch(ctx->act, &wc) == ERR) {
-	    (void) napms(sleep_time_milliseconds);
-	    continue;
+	} else {
+	    int ret;
+
+	    mutex_lock(&g_puts_mutex);
+	    ret = wget_wch(ctx->act, &wc);
+	    mutex_unlock(&g_puts_mutex);
+
+	    if (ret == ERR) {
+		(void) napms(sleep_time_milliseconds);
+		continue;
+	    }
 	}
 
 	switch (wc) {
