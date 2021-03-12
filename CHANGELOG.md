@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added checking of `term_is_too_small()`
 - Added null checks
 - Defined `g_conversion_failed` and made use of it
 - Defined `g_time_error` and made use of it
