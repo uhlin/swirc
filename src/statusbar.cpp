@@ -135,6 +135,9 @@ statusbar_update_display_beta(void)
     std::string lb(Theme("statusbar_leftBracket"));
     std::string rb(Theme("statusbar_rightBracket"));
 
+    if (term_is_too_small())
+	return;
+
     WERASE(win);
     WBKGD(win, blank | COLOR_PAIR(pair_n) | A_NORMAL);
 

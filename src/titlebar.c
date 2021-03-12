@@ -92,6 +92,9 @@ titlebar(const char *fmt, ...)
     chtype     blank  = ' ';
     short int  pair_n = get_pair_num();
 
+    if (term_is_too_small())
+	return;
+
     va_start(ap, fmt);
     fmt_copy = strdup_vprintf(fmt, ap);
     va_end(ap);

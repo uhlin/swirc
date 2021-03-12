@@ -1340,7 +1340,7 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 
     if (isNull(buf)) {
 	err_exit(EINVAL, "printtext_puts");
-    } else if (isEmpty(buf)) {
+    } else if (isEmpty(buf) || term_is_too_small()) {
 	return;
     }
 
