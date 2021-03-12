@@ -262,15 +262,11 @@ readline_mvwinsch(WINDOW *win, int row, int col, wint_t wc)
 	free_and_null(&mbs);
 	mutex_unlock(&g_puts_mutex);
 	readline_error(0, "readline_mvwinsch: wmove");
-	/* NOTREACHED */
-    }
-
-    if (!is_text_decoration(wc)) {
+    } else if (!is_text_decoration(wc)) {
 	if (winsnstr(win, mbs, size_to_int(strlen(mbs) + 1)) == ERR) {
 	    free_and_null(&mbs);
 	    mutex_unlock(&g_puts_mutex);
 	    readline_error(0, "readline_mvwinsch: winsnstr");
-	    /* NOTREACHED */
 	}
     } else {
 	ins_complex_char(win, *mbs);
