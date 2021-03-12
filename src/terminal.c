@@ -56,6 +56,28 @@ term_deinit(void)
     term_restore_title();
 }
 
+void
+term_beep(void)
+{
+    const bool beeps = config_bool("beeps", true);
+
+    if (beeps)
+	beep();
+}
+
+struct current_cursor_pos
+term_get_pos(WINDOW *win)
+{
+    struct current_cursor_pos yx;
+
+    update_panels();
+
+    yx.cury = win != NULL ? win->_cury : -1;
+    yx.curx = win != NULL ? win->_curx : -1;
+
+    return (yx);
+}
+
 PANEL *
 term_new_panel(int rows, int cols, int start_row, int start_col)
 {
@@ -80,36 +102,6 @@ term_remove_panel(PANEL *pan)
     if (del_panel(pan) == ERR || delwin(win) == ERR) {
 	err_quit("del_panel or delwin error");
     }
-}
-
-PANEL *
-term_resize_panel(PANEL *pan, const struct term_window_size *newsize)
-{
-    WINDOW *old_window = panel_window(pan);
-    WINDOW *repl_win; /* replacement window */
-
-    if ((repl_win = newwin(newsize->rows, newsize->cols,
-			   newsize->start_row, newsize->start_col)) == NULL) {
-	err_quit("newwin(%d, %d, %d, %d) unable to create window",
-		 newsize->rows, newsize->cols,
-		 newsize->start_row, newsize->start_col);
-    }
-    if (replace_panel(pan, repl_win) == ERR) {
-	err_quit("replace_panel error");
-    }
-    if (delwin(old_window) == ERR) {
-	err_quit("delwin error");
-    }
-    return pan;
-}
-
-void
-term_beep(void)
-{
-    const bool beeps = config_bool("beeps", true);
-
-    if (beeps)
-	beep();
 }
 
 void
@@ -153,15 +145,23 @@ term_resize_all(void)
     (void) doupdate();
 }
 
-struct current_cursor_pos
-term_get_pos(WINDOW *win)
+PANEL *
+term_resize_panel(PANEL *pan, const struct term_window_size *newsize)
 {
-    struct current_cursor_pos yx;
+    WINDOW *old_window = panel_window(pan);
+    WINDOW *repl_win; /* replacement window */
 
-    update_panels();
-
-    yx.cury = win != NULL ? win->_cury : -1;
-    yx.curx = win != NULL ? win->_curx : -1;
-
-    return (yx);
+    if ((repl_win = newwin(newsize->rows, newsize->cols,
+			   newsize->start_row, newsize->start_col)) == NULL) {
+	err_quit("newwin(%d, %d, %d, %d) unable to create window",
+		 newsize->rows, newsize->cols,
+		 newsize->start_row, newsize->start_col);
+    }
+    if (replace_panel(pan, repl_win) == ERR) {
+	err_quit("replace_panel error");
+    }
+    if (delwin(old_window) == ERR) {
+	err_quit("delwin error");
+    }
+    return pan;
 }
