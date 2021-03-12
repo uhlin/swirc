@@ -31,16 +31,16 @@ struct current_cursor_pos {
 __SWIRC_BEGIN_DECLS
 extern volatile bool g_resizing_term;
 
+void	 term_init(void);
+void	 term_deinit(void);
+
+void	 term_beep(void);
+struct current_cursor_pos
+	 term_get_pos(WINDOW *);
 PANEL	*term_new_panel(int rows, int cols, int start_row, int start_col);
+void	 term_remove_panel(PANEL *);
+void	 term_resize_all(void);
 PANEL	*term_resize_panel(PANEL *, const struct term_window_size *);
-
-struct current_cursor_pos term_get_pos(WINDOW *);
-
-void    term_beep(void);
-void    term_deinit(void);
-void    term_init(void);
-void    term_remove_panel(PANEL *);
-void    term_resize_all(void);
 __SWIRC_END_DECLS
 
 #endif
