@@ -208,15 +208,21 @@ readline_waddch(WINDOW *win, wint_t wc)
 {
     char *mbs = convert_wc(wc);
 
+    mutex_lock(&g_puts_mutex);
+
     if (!is_text_decoration(wc)) {
 	if (waddnstr(win, mbs, -1) == ERR) {
 	    free_and_null(&mbs);
-	    readline_error(EPERM, "waddnstr");
+	    mutex_unlock(&g_puts_mutex);
+	    readline_error(EPERM, "readline_waddch: waddnstr");
+	    /* NOTREACHED */
 	}
     } else {
 	add_complex_char(win, *mbs);
     }
+
     free_and_null(&mbs);
+    mutex_unlock(&g_puts_mutex);
 }
 
 /**
