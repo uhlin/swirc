@@ -260,19 +260,28 @@ readline_mvwinsch(WINDOW *win, int row, int col, wint_t wc)
 {
     char *mbs = convert_wc(wc);
 
+    mutex_lock(&g_puts_mutex);
+
     if (wmove(win, row, col) == ERR) {
 	free_and_null(&mbs);
-	readline_error(EPERM, "wmove");
+	mutex_unlock(&g_puts_mutex);
+	readline_error(0, "readline_mvwinsch: wmove");
+	/* NOTREACHED */
     }
+
     if (!is_text_decoration(wc)) {
 	if (winsnstr(win, mbs, size_to_int(strlen(mbs) + 1)) == ERR) {
 	    free_and_null(&mbs);
-	    readline_error(EPERM, "winsnstr");
+	    mutex_unlock(&g_puts_mutex);
+	    readline_error(0, "readline_mvwinsch: winsnstr");
+	    /* NOTREACHED */
 	}
     } else {
 	ins_complex_char(win, *mbs);
     }
+
     free_and_null(&mbs);
+    mutex_unlock(&g_puts_mutex);
 }
 
 /**
