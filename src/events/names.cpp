@@ -372,15 +372,15 @@ hInstall(const struct hInstall_context *ctx)
     PIRC_WINDOW window_entry = NULL;
     PNAMES names_entry = NULL;
 
-    if (isNull(ctx) || isNull(ctx->channel) || isNull(ctx->nick))
+    if (isNull(ctx) || isNull(ctx->channel))
 	return ERR;
     else if ((window_entry = window_by_label(ctx->channel)) == NULL) {
-	debug("events/names.cpp: hInstall: cannot find window labelled %s",
+	debug("events/names.cpp: hInstall: cannot find window labelled \"%s\"",
 	    ctx->channel);
 	return ERR;
-    } else if (!is_valid_nickname(ctx->nick)) {
-	debug("events/names.cpp: hInstall: invalid nickname: "
-	    "\"%s\" (channel=%s)", ctx->nick, ctx->channel);
+    } else if (isNull(ctx->nick) || isEmpty(ctx->nick)) {
+	debug("events/names.cpp: hInstall: no nickname (channel=%s)",
+	    ctx->channel);
 	return ERR;
     } else if (already_is_in_names_hash(ctx->nick, window_entry)) {
 	debug("events/names.cpp: hInstall: busy nickname: "
