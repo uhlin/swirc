@@ -521,10 +521,12 @@ RemoveAndInsertNick(const char *old_nick, const char *new_nick,
     is_halfop  = p->is_halfop;
     is_voice   = p->is_voice;
 
-    if (event_names_htbl_remove(old_nick, label) != OK ||
-	event_names_htbl_insert(new_nick, label) != OK) {
-	err_msg("RemoveAndInsertNick() fatal error");
-	abort();
+    if (event_names_htbl_remove(old_nick, label) != OK) {
+	err_log(0, "RemoveAndInsertNick: event_names_htbl_remove");
+	return ERR;
+    } else if (event_names_htbl_insert(new_nick, label) != OK) {
+	err_log(0, "RemoveAndInsertNick: event_names_htbl_insert");
+	return ERR;
     }
 
     /* XXX: Reverse order */
