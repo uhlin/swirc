@@ -161,6 +161,7 @@ compute_new_window_entry(const volatile struct readline_session_context *ctx,
 
 	if ((buf_index = int_diff(ctx->bufpos, diff)) < 0) {
 	    readline_error(ERANGE, "compute_new_window_entry");
+	    /* NOTREACHED */
 	}
 
 	str1 = &ctx->buffer[buf_index];
@@ -177,8 +178,10 @@ compute_new_window_entry(const volatile struct readline_session_context *ctx,
 	readline_waddnstr(ctx->act, str1, -1);
     }
 
+    mutex_lock(&g_puts_mutex);
     update_panels();
     (void) doupdate();
+    mutex_unlock(&g_puts_mutex);
 }
 
 /**
