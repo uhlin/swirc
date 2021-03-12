@@ -1,5 +1,5 @@
 /* OS-independent terminal stuff
-   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -37,6 +37,8 @@
 #include "terminal.h"
 #include "titlebar.h"
 #include "window.h"
+
+volatile bool g_resizing_term = false;
 
 static const short int TermMinimumRows = 6;
 static const short int TermMinimumCols = 12;

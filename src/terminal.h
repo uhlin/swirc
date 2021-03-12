@@ -28,9 +28,8 @@ struct current_cursor_pos {
     int curx; /* col */
 };
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+__SWIRC_BEGIN_DECLS
+extern volatile bool g_resizing_term;
 
 PANEL	*term_new_panel(int rows, int cols, int start_row, int start_col);
 PANEL	*term_resize_panel(PANEL *, const struct term_window_size *);
@@ -42,9 +41,6 @@ void    term_deinit(void);
 void    term_init(void);
 void    term_remove_panel(PANEL *);
 void    term_resize_all(void);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif
