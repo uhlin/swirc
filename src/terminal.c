@@ -78,6 +78,14 @@ term_get_pos(WINDOW *win)
     return (yx);
 }
 
+bool
+term_is_too_small(void)
+{
+    struct winsize size = term_get_size();
+
+    return (size.ws_row < TermMinimumRows || size.ws_col < TermMinimumCols);
+}
+
 PANEL *
 term_new_panel(int rows, int cols, int start_row, int start_col)
 {
