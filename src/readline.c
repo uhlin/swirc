@@ -407,26 +407,40 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc)
     }
 
     if (ctx->insert_mode) {
-	wchar_t *ptr = &ctx->buffer[ctx->bufpos];
+	int ret;
 	struct current_cursor_pos yx;
+	wchar_t *ptr;
 
+	ptr = &ctx->buffer[ctx->bufpos];
 	(void) wmemmove(ptr + 1, ptr, wcslen(ptr));
 	*ptr = wc;
-	ctx->bufpos++, ctx->n_insert++;
+
+	ctx->bufpos++;
+	ctx->n_insert++;
+
 	readline_winsch(ctx->act, wc);
+
 	yx = term_get_pos(ctx->act);
 
-	if (wmove(ctx->act, yx.cury, yx.curx + 1) == ERR) {
-	    readline_error(EPERM, "wmove");
-	}
+	mutex_lock(&g_puts_mutex);
+	ret = wmove(ctx->act, yx.cury, yx.curx + 1);
+	mutex_unlock(&g_puts_mutex);
+
+	if (ret == ERR)
+	    readline_error(0, "handle_key: wmove");
     } else {
 	ctx->buffer[ctx->bufpos] = wc;
-	ctx->bufpos++, ctx->n_insert++;
+
+	ctx->bufpos++;
+	ctx->n_insert++;
+
 	readline_waddch(ctx->act, wc);
     }
 
+    mutex_lock(&g_puts_mutex);
     update_panels();
     (void) doupdate();
+    mutex_unlock(&g_puts_mutex);
 }
 
 static inline bool
