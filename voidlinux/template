@@ -1,6 +1,6 @@
 # Template file for 'swirc'
 pkgname=swirc
-version=3.2.6
+version=3.2.7
 revision=1
 build_style=configure
 make_install_args="PREFIX=/usr"

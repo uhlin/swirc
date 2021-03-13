@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.2.7] - 2021-03-13 ##
 - Added checking of `term_is_too_small()`
 - Added null checks
 - Defined `g_conversion_failed` and made use of it
