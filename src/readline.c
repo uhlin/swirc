@@ -102,8 +102,13 @@ apply_readline_options(WINDOW *win)
 	SCROLLOK(win, 0);
     }
 
-    const int wait_time_millisec = 270;
-    wtimeout(win, wait_time_millisec);
+#if defined(UNIX)
+#define WAIT_TIME_MILLISEC 100
+#elif defined(WIN32)
+#define WAIT_TIME_MILLISEC 0
+#endif
+
+    wtimeout(win, WAIT_TIME_MILLISEC);
 }
 
 /**
