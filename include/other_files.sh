@@ -7,6 +7,8 @@ reports/swirc-3.2.2.html
 reports/swirc-3.2.3.html
 reports/swirc-3.2.4.html
 reports/swirc-3.2.5.html
+reports/swirc-3.2.6.html
+reports/swirc-3.2.7.html
 style.css
 swirc.list
 "
