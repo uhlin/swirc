@@ -488,6 +488,13 @@ get_prompt(void)
 	return sw_strdup("");
     }
 
+    for (const char *cp = prompt; *cp != '\0'; cp++) {
+	if (!sw_isprint(*cp)) {
+	    free(prompt);
+	    return sw_strdup("");
+	}
+    }
+
     return prompt;
 }
 
