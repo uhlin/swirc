@@ -463,17 +463,32 @@ get_list_of_matching_commands(const char *search_var)
 char *
 get_prompt(void)
 {
-    const char AFK[] = "(\00308AFK\017)";
+    const char AFK[] = "(away)";
+    const size_t minimum_cols = sizeof "#abc...: ";
 
-    if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label))
+    if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label) ||
+	COLS < size_to_int(minimum_cols))
 	return sw_strdup("");
-    else if (is_irc_channel(ACTWINLABEL))
-	return strdup_printf("%s%s: ", ACTWINLABEL, (g_is_away ? AFK : ""));
 
-    /*
-     * a query
-     */
-    return strdup_printf("%s%s> ", ACTWINLABEL, (g_is_away ? AFK : ""));
+    const size_t prompt_maxlen = (size_t) (COLS / 2);
+
+    if (prompt_maxlen < minimum_cols)
+	return sw_strdup("");
+
+    char *prompt;
+    int ret;
+
+    prompt = xmalloc(prompt_maxlen);
+    ret = snprintf(prompt, prompt_maxlen, "%s%s%c ",
+	ACTWINLABEL,
+	(g_is_away ? AFK : ""),
+	(is_irc_channel(ACTWINLABEL) ? ':' : '>'));
+    if (ret < 0 || ((size_t) ret) >= prompt_maxlen) {
+	free(prompt);
+	return sw_strdup("");
+    }
+
+    return prompt;
 }
 
 /* usage: /help [command] */
