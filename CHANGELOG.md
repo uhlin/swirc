@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Defined `g_conversion_failed` and made use of it
 - Defined `g_time_error` and made use of it
 - Fixed a bug that could lead to null pointer comparison
+- Fixed limited prompt length
 - Fixed stricter checking of channel names
 - Fixed unchecked return values and made code improvements
 - Improved automatic resizing
