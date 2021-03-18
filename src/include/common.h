@@ -35,6 +35,7 @@
 #define BZERO(b, len)	((void) memset(b, 0, len))
 #define STRING(x)	#x
 #define STRINGIFY(x)	STRING(x)
+#define addrof(x)	(&(x))
 
 #ifdef WIN32
 #define strcasecmp	_stricmp
