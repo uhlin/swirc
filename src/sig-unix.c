@@ -43,11 +43,9 @@ static void
 signal_handler(int signum)
 {
     struct timespec ts = {
-	.tv_sec  = 0,
+	.tv_sec = 0,
 	.tv_nsec = 250000000,
     };
-    struct sig_message_tag	*ssp;
-    const size_t		 ar_sz = ARRAY_SIZE(sig_message);
 
     switch (signum) {
     case SIGWINCH:
@@ -58,18 +56,17 @@ signal_handler(int signum)
     default:
 	clean_up();
 
-	for (ssp = &sig_message[0]; ssp < &sig_message[ar_sz]; ssp++) {
+	for (struct sig_message_tag *ssp = &sig_message[0];
+	     ssp < &sig_message[ARRAY_SIZE(sig_message)]; ssp++) {
 	    if (ssp->num == signum) {
 #if USE_STRSIGNAL
-		err_msg("[-] FATAL: Received signal %d (%s)\n    %s",
-		    ssp->num,
+		err_msg("[-] FATAL: Received signal %d (%s)\n    %s", ssp->num,
 		    ssp->num_str,
-		    strsignal(ssp->num) ? strsignal(ssp->num) : ssp->msg);
+		    (strsignal(ssp->num) ? strsignal(ssp->num) : ssp->msg));
 #else
-		err_msg("[-] FATAL: Received signal %d (%s)\n    %s",
-			ssp->num, ssp->num_str, ssp->msg);
+		err_msg("[-] FATAL: Received signal %d (%s)\n    %s", ssp->num,
+		    ssp->num_str, ssp->msg);
 #endif
-
 		break;
 	    }
 	}
