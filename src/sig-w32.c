@@ -25,12 +25,11 @@ signal_handler(int signum)
 	{ SIGSEGV, "SIGSEGV", "Illegal storage access" },
 	{ SIGTERM, "SIGTERM", "Termination request"    },
     };
-    struct sigmsg_tag	*ssp;
-    const size_t	 ar_sz = ARRAY_SIZE(sigmsg);
 
     clean_up();
 
-    for (ssp = &sigmsg[0]; ssp < &sigmsg[ar_sz]; ssp++) {
+    for (struct sigmsg_tag *ssp = &sigmsg[0]; ssp < &sigmsg[ARRAY_SIZE(sigmsg)];
+	 ssp++) {
 	if (ssp->num == signum) {
 	    err_msg("[-] FATAL: Received signal %d (%s)\n    %s",
 		    ssp->num, ssp->num_str, ssp->msg);
