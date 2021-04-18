@@ -83,38 +83,38 @@ signal_handler(int signum)
 bool
 sighand_init(void)
 {
-    sigset_t			 set;
-    struct sigaction		 act;
-    struct sig_message_tag	*ssp;
-    const size_t		 ar_sz = ARRAY_SIZE(sig_message);
+    sigset_t set;
+    struct sigaction act = { 0 };
 
     (void) sigfillset(&set);
+    (void) sigfillset(&act.sa_mask);
+    act.sa_flags = 0;
+
     if (sigprocmask(SIG_SETMASK, &set, NULL) != 0) {
-	err_ret("SIG_SETMASK error");
-	return (false);
+	err_ret("sighand_init: SIG_SETMASK");
+	return false;
     }
 
-    (void) sigfillset(&act.sa_mask);
-    for (act.sa_flags = 0, ssp = &sig_message[0]; ssp < &sig_message[ar_sz];
-	 ssp++) {
+    for (struct sig_message_tag *ssp = &sig_message[0];
+	 ssp < &sig_message[ARRAY_SIZE(sig_message)]; ssp++) {
 	if (ssp->ignore) {
 	    act.sa_handler = SIG_IGN;
 	} else {
 	    act.sa_handler = signal_handler;
 	}
-
 	if (sigaction(ssp->num, &act, NULL) != 0) {
-	    err_ret("sigaction failed on signal %d (%s)",
+	    err_ret("sighand_init: sigaction failed on signal %d (%s)",
 		    ssp->num, ssp->num_str);
-	    return (false);
+	    return false;
 	}
     }
 
     (void) sigemptyset(&set);
+
     if (sigprocmask(SIG_SETMASK, &set, NULL) != 0) {
-	err_ret("SIG_SETMASK error");
-	return (false);
+	err_ret("sighand_init: SIG_SETMASK");
+	return false;
     }
 
-    return (true); /* All ok! */
+    return true;
 }
