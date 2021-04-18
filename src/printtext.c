@@ -102,6 +102,14 @@ pthread_mutex_t g_puts_mutex;
 HANDLE g_puts_mutex;
 #endif
 
+const char g_textdeco_chars[] =
+    TXT_BLINK
+    TXT_BOLD
+    TXT_COLOR
+    TXT_NORMAL
+    TXT_REVERSE
+    TXT_UNDERLINE;
+
 /****************************************************************
 *                                                               *
 *  -------------- Objects with internal linkage --------------  *

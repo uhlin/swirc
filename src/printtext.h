@@ -40,9 +40,6 @@ typedef struct tagPRINTTEXT_CONTEXT {
 
     char server_time[64];
     bool has_server_time;
-
-#ifdef __cplusplus
-#endif
 } PRINTTEXT_CONTEXT, *PPRINTTEXT_CONTEXT;
 
 __SWIRC_BEGIN_DECLS
@@ -51,6 +48,8 @@ extern pthread_mutex_t g_puts_mutex;
 #elif defined(WIN32)
 extern HANDLE g_puts_mutex;
 #endif
+
+extern const char g_textdeco_chars[];
 __SWIRC_END_DECLS
 
 /* ----------------------------------------------------------------- */

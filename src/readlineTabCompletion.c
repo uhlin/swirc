@@ -1,5 +1,5 @@
 /* Readline tab completion
-   Copyright (C) 2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -155,9 +155,7 @@ static bool
 buf_contains_disallowed_chars(const volatile struct readline_session_context *ctx)
 {
     char *s = readline_finalize_out_string_exported(ctx->buffer);
-    const char reject[] =
-	TXT_BLINK TXT_BOLD TXT_COLOR TXT_NORMAL TXT_REVERSE TXT_UNDERLINE;
-    const bool yes_no = strpbrk(s, reject) != NULL;
+    const bool yes_no = strpbrk(s, g_textdeco_chars) != NULL;
     free(s);
     return yes_no;
 }

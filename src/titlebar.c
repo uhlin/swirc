@@ -41,9 +41,6 @@
 #include "theme.h"
 #include "titlebar.h"
 
-static const char reject[] =
-    TXT_BLINK TXT_BOLD TXT_COLOR TXT_NORMAL TXT_REVERSE TXT_UNDERLINE;
-
 static PANEL *titlebar_pan = NULL;
 
 static void
@@ -102,7 +99,7 @@ titlebar(const char *fmt, ...)
     (void) werase(win);
     (void) wbkgd(win, blank | COLOR_PAIR(pair_n) | A_NORMAL);
 
-    if (strpbrk(fmt_copy, reject) != NULL) {
+    if (strpbrk(fmt_copy, g_textdeco_chars) != NULL) {
 	printtext_puts(win, squeeze_text_deco(fmt_copy), -1, -1, NULL);
     } else {
 	printtext_puts(win, fmt_copy, -1, -1, NULL);
