@@ -1,35 +1,37 @@
 #ifndef INTERPRETER_H
 #define INTERPRETER_H
 
+/* Set to 0 to turn off this feature. */
+#define IGNORE_UNRECOGNIZED_IDENTIFIERS 1
+
 enum setting_type {
-    TYPE_BOOLEAN,
-    TYPE_INTEGER,
-    TYPE_STRING
+	TYPE_BOOLEAN,
+	TYPE_INTEGER,
+	TYPE_STRING
 };
 
 typedef bool (*Interpreter_vFunc)(const char *);
 typedef int (*Interpreter_instFunc)(const char *, const char *);
 
 struct Interpreter_in {
-    char			*path;
-    char			*line;
-    long int			 line_num;
-    Interpreter_vFunc		 validator_func;
-    Interpreter_instFunc	 install_func;
+	char *path;
+	char *line;
+	long int line_num;
+	Interpreter_vFunc validator_func;
+	Interpreter_instFunc install_func;
 };
 
 __SWIRC_BEGIN_DECLS
-void Interpreter(const struct Interpreter_in *);
+void	Interpreter(const struct Interpreter_in *);
 __SWIRC_END_DECLS
 
 #include "dataClassify.h" /* sw_isspace() */
 
-static SW_INLINE void
+static inline void
 adv_while_isspace(const char **ptr)
 {
-    while (sw_isspace(**ptr)) {
-	(*ptr)++;
-    }
+	while (sw_isspace(**ptr))
+		(*ptr)++;
 }
 
 #endif
