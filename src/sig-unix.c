@@ -81,7 +81,7 @@ signal_handler(int signum)
 }
 
 bool
-sigHand_init(void)
+sighand_init(void)
 {
     sigset_t			 set;
     struct sigaction		 act;

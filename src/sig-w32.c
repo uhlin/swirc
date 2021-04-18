@@ -42,7 +42,7 @@ signal_handler(int signum)
 }
 
 bool
-sigHand_init(void)
+sighand_init(void)
 {
     if (signal(SIGABRT, signal_handler) == SIG_ERR) {
 	err_ret("SIGABRT error");

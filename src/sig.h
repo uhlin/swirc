@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-bool sigHand_init(void);
+bool sighand_init(void);
 
 #ifdef __cplusplus
 }
