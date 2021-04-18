@@ -1,14 +1,8 @@
 #ifndef GUARD_SIG_H
 #define GUARD_SIG_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-bool sighand_init(void);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_BEGIN_DECLS
+bool	sighand_init(void);
+__SWIRC_END_DECLS
 
 #endif
