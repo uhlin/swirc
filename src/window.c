@@ -135,14 +135,13 @@ hash(const char *label)
 static PIRC_WINDOW
 hInstall(const struct hInstall_context *ctx)
 {
-    PIRC_WINDOW		 entry;
-    PNAMES		*n_ent;
-    unsigned int	 hashval;
+    PIRC_WINDOW entry;
+    unsigned int hashval;
 
     entry      = xcalloc(sizeof *entry, 1);
     entry->pan = ctx->pan;
 
-    for (n_ent = &entry->names_hash[0];
+    for (PNAMES *n_ent = &entry->names_hash[0];
 	 n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE];
 	 n_ent++) {
 	*n_ent = NULL;
@@ -169,6 +168,10 @@ hInstall(const struct hInstall_context *ctx)
     entry->num_voices	= 0;
     entry->num_normal	= 0;
     entry->num_total	= 0;
+
+    entry->nicklist.pan = NULL;
+    entry->nicklist.scroll_pos = 0;
+    entry->nicklist.width = 0;
 
     entry->refnum       = ctx->refnum;
     entry->saved_size   = 0;
