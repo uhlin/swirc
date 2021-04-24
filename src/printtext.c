@@ -620,9 +620,10 @@ do_indent(WINDOW *win, const int indent, int *insert_count)
  * Start on a new row?
  */
 static bool
-start_on_a_new_row(const ptrdiff_t sum)
+start_on_a_new_row(const ptrdiff_t sum, WINDOW *win)
 {
-    return (sum < (COLS - 1) ? false : true);
+    //return (sum < (COLS - 1) ? false : true);
+    return (sum < win->_maxx ? false : true);
 }
 
 /**
@@ -665,7 +666,7 @@ case_default(const struct case_default_context *ctx, int *rep_count,
 	}
 	if (! (ctx->nextchar_empty) && care_about_indent)
 	    do_indent(ctx->win, ctx->indent, insert_count);
-    } else if (!start_on_a_new_row((*insert_count) + ctx->diff + 1)) {
+    } else if (!start_on_a_new_row((*insert_count) + ctx->diff + 1, ctx->win)) {
 	addmbs(ctx->win, mbs);
 	(*insert_count) ++;
     } else {
