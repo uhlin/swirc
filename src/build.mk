@@ -22,6 +22,7 @@ OBJS+=$(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)net-unix.o\
 	$(SRC_DIR)network-openssl.o\
 	$(SRC_DIR)network.o\
+	$(SRC_DIR)nicklist.o\
 	$(SRC_DIR)options.o\
 	$(SRC_DIR)printtext.o\
 	$(SRC_DIR)pthrMutex.o\
