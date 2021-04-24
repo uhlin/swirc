@@ -639,7 +639,7 @@ window_recreate_exported(PIRC_WINDOW window, int rows, int cols)
 void
 window_scroll_down(PIRC_WINDOW window)
 {
-    const int HEIGHT = LINES - 3;
+    const int	HEIGHT = LINES - 3;
 
     if (! (window->scroll_mode)) {
 	term_beep();
@@ -667,7 +667,7 @@ window_scroll_down(PIRC_WINDOW window)
 void
 window_scroll_up(PIRC_WINDOW window)
 {
-    const int MIN_SIZE = LINES - 3;
+    const int	MIN_SIZE = LINES - 3;
 
     if (MIN_SIZE < 0 || !(textBuf_size(window->buf) > MIN_SIZE) || IS_AT_TOP) {
 	term_beep();
