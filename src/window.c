@@ -249,10 +249,10 @@ static void
 window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 	      bool limit_output)
 {
-    PTEXTBUF_ELMT	 element   = NULL;
-    WINDOW		*pwin	   = panel_window(window->pan);
-    int			 i	   = 0;
-    int			 rep_count = 0;
+    PTEXTBUF_ELMT element = NULL;
+    WINDOW *pwin = panel_window(window->pan);
+    int i = 0;
+    int rep_count = 0;
 
     if ((element = textBuf_get_element_by_pos(window->buf, pos < 0 ? 0 : pos)) ==
 	NULL)
