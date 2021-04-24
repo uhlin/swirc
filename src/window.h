@@ -47,6 +47,12 @@ typedef struct tagIRC_WINDOW {
     int		 num_normal;
     int		 num_total;
 
+    struct {
+	PANEL *pan;
+	int scroll_pos;
+	int width;
+    } nicklist;
+
     int		 refnum;
     int		 saved_size;
     int		 scroll_count;
