@@ -1493,9 +1493,16 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 	    err_sys("vprinttext: textBuf_ins_next");
     }
 
-    if (! (ctx->window->scroll_mode)) {
-	printtext_puts(panel_window(ctx->window->pan), pout->text, pout->indent,
-	    -1, NULL);
+    const bool shouldOutData = !(ctx->window->scroll_mode);
+
+    if (shouldOutData) {
+	if (is_irc_channel(ctx->window->label) &&
+	    (!ctx->window->received_names || isNull(ctx->window->nicklist.pan)))
+	    /* no */;
+	else {
+	    printtext_puts(panel_window(ctx->window->pan), pout->text,
+		pout->indent, -1, NULL);
+	}
     }
 
     if (ctx->window->logging) {
