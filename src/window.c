@@ -205,6 +205,9 @@ hUndef(PIRC_WINDOW entry)
     free(entry->label);
     free(entry->title);
 
+    if (nicklist_destroy(entry) != 0)
+	debug("hUndef: nicklist_destroy: error");
+
     free(entry);
     g_ntotal_windows--;
 }
