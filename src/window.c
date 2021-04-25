@@ -51,6 +51,7 @@
 #include "libUtils.h"
 #include "main.h"
 #include "network.h"
+#include "nicklist.h"
 #include "printtext.h"		/* includes window.h */
 #include "readline.h"		/* readline_top_panel() */
 #include "statusbar.h"
@@ -288,25 +289,62 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 static void
 window_recreate(PIRC_WINDOW window, int rows, int cols)
 {
-    struct term_window_size newsize = {
-	.rows      = rows - 2,
-	.cols      = cols,
-	.start_row = 1,
-	.start_col = 0,
-    };
+    const int	HEIGHT = rows - 3;
 
-    window->pan = term_resize_panel(window->pan, &newsize);
-    apply_window_options(panel_window(window->pan));
+    if (!is_irc_channel(window->label)) {
+	struct term_window_size newsize = {
+	    .rows = rows - 2,
+	    .cols = cols,
+	    .start_row = 1,
+	    .start_col = 0,
+	};
 
-    const int HEIGHT = rows - 3;
+	window->pan = term_resize_panel(window->pan, &newsize);
+	apply_window_options(panel_window(window->pan));
+    } else {
+	/*
+	 * irc channel
+	 */
+	int width;
+	const bool width_changed =
+	    (width = nicklist_get_width(window)) != window->nicklist.width;
+	if (width_changed)
+	    window->nicklist.width = width;
+	struct term_window_size nicklist_dim;
+	nicklist_dim.rows = rows - 2;
+	nicklist_dim.cols = width;
+	nicklist_dim.start_row = 1;
+	nicklist_dim.start_col = cols - width;
+	if (window->nicklist.pan) {
+	    window->nicklist.pan = term_resize_panel(window->nicklist.pan,
+		&nicklist_dim);
+	} else {
+	    window->nicklist.pan =
+		term_new_panel(nicklist_dim.rows, nicklist_dim.cols,
+		    nicklist_dim.start_row, nicklist_dim.start_col);
+	}
+	struct term_window_size channel_dim;
+	channel_dim.rows = rows - 2;
+	channel_dim.cols = MAX(cols, width) - MIN(cols, width);
+	channel_dim.start_row = 1;
+	channel_dim.start_col = 0;
+	window->pan = term_resize_panel(window->pan, &channel_dim);
+	apply_window_options(panel_window(window->nicklist.pan));
+	apply_window_options(panel_window(window->pan));
+	if (nicklist_draw(window, rows) != 0)
+	    debug("window_recreate: nicklist_draw: error");
+    }
 
+    /*
+     * draw main window
+     */
     if (window->scroll_mode) {
 	if (! (window->scroll_count > HEIGHT)) {
-	    window->saved_size   = 0;
+	    window->saved_size = 0;
 	    window->scroll_count = 0;
-	    window->scroll_mode  = false;
+	    window->scroll_mode = false;
 	    window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT,
-			  false);
+		false);
 	} else {
 	    window_redraw(window, HEIGHT,
 		window->saved_size - window->scroll_count, true);
