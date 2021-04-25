@@ -38,6 +38,7 @@
 #include "../libUtils.h"
 #include "../main.h"
 #include "../network.h"
+#include "../nicklist.h"
 #include "../printtext.h"
 #include "../strHand.h"
 #include "../strdup_printf.h"
@@ -976,6 +977,8 @@ event_names_print_all(const char *channel)
 void
 event_eof_names(struct irc_message_compo *compo)
 {
+    PRINTTEXT_CONTEXT ptext_ctx;
+
     try {
 	PIRC_WINDOW win = NULL;
 	char *state = const_cast<char *>("");
@@ -1011,14 +1014,16 @@ event_eof_names(struct irc_message_compo *compo)
 	    win->received_names = true;
 	}
 
-	if (event_names_print_all(channel) != OK)
-	    throw std::runtime_error("cannot print names");
+	if (nicklist_new(win) != 0)
+	    debug("event_eof_names: cannot create nicklist");
 	if (!g_icb_mode)
 	    (void) net_send("MODE %s", channel);
+
+	printtext_context_init(&ptext_ctx, win, TYPE_SPEC3, true);
+	output_statistics(ptext_ctx, channel, win);
+
 	return;
     } catch (const std::runtime_error &e) {
-	PRINTTEXT_CONTEXT ptext_ctx;
-
 	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_FAILURE,
 	    true);
 	printtext(&ptext_ctx, "event_eof_names: fatal: %s", e.what());
