@@ -453,6 +453,9 @@ change_window_by_label(const char *label)
     else if (top_panel(window->pan) == ERR)
 	return EPERM; /* top_panel() error */
 
+    if (!isNull(window->nicklist.pan))
+	(void) top_panel(window->nicklist.pan);
+
     WINDOW *pwin = readline_get_active_pwin();
     char *prompt = NULL;
 
@@ -487,6 +490,9 @@ change_window_by_refnum(int refnum)
 	return 0;
     else if (top_panel(window->pan) == ERR)
 	return EPERM;
+
+    if (!isNull(window->nicklist.pan))
+	(void) top_panel(window->nicklist.pan);
 
     WINDOW *pwin = readline_get_active_pwin();
     char *prompt = NULL;
