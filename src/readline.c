@@ -41,6 +41,7 @@
 #include "io-loop.h"
 #include "libUtils.h"
 #include "log.h"
+#include "nicklist.h"
 #include "printtext.h"
 #include "readline.h"
 #include "readlineAPI.h"
@@ -619,6 +620,12 @@ process(volatile struct readline_session_context *ctx)
 		readline_tab_comp_ctx_reset(ctx->tc);
 	    break;
 	} /* ---------- KEY_BACKSPACE ---------- */
+	case KEY_F(3):
+	    nicklist_scroll_up(g_active_window);
+	    break;
+	case KEY_F(4):
+	    nicklist_scroll_down(g_active_window);
+	    break;
 	case KEY_F(5): case BLINK:
 	    handle_key(ctx, btowc(BLINK));
 	    break;
