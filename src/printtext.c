@@ -49,6 +49,7 @@
 #include "libUtils.h"
 #include "log.h"
 #include "main.h"
+#include "network.h"
 #include "printtext.h"
 #include "strHand.h"
 #include "strdup_printf.h"
@@ -1497,7 +1498,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
     const bool shouldOutData = !(ctx->window->scroll_mode);
 
     if (shouldOutData) {
-	if (is_irc_channel(ctx->window->label) &&
+	if (g_on_air && is_irc_channel(ctx->window->label) &&
 	    (!ctx->window->received_names || isNull(ctx->window->nicklist.pan)))
 	    /* no */;
 	else {
