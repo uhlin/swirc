@@ -1,6 +1,15 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Added key F3 (scroll nicklist up) and F4 (scroll nicklist down)
+- Added nicklist
+- Defined and made use of `addrof()`
+- Defined and made use of `g_textdeco_chars`
+- Moved defines
+- Reindented files
+- Renamed functions and patterns
+
 ## [3.2.7] - 2021-03-13 ##
 - Added checking of `term_is_too_small()`
 - Added null checks
