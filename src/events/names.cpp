@@ -437,6 +437,7 @@ event_names_htbl_modify_halfop(const char *nick, const char *channel,
 		    window->num_normal--;
 	    }
 
+	    (void) nicklist_draw(window, LINES);
 	    return OK;
 	}
     }
@@ -480,6 +481,7 @@ event_names_htbl_modify_op(const char *nick, const char *channel, bool is_op)
 		else window->num_normal--;
 	    }
 
+	    (void) nicklist_draw(window, LINES);
 	    return OK;
 	}
     }
@@ -526,6 +528,7 @@ event_names_htbl_modify_owner(const char *nick, const char *channel,
 		else window->num_normal--;
 	    }
 
+	    (void) nicklist_draw(window, LINES);
 	    return OK;
 	}
     }
@@ -572,6 +575,7 @@ event_names_htbl_modify_superop(const char *nick, const char *channel,
 		else window->num_normal--;
 	    }
 
+	    (void) nicklist_draw(window, LINES);
 	    return OK;
 	}
     }
@@ -611,6 +615,7 @@ event_names_htbl_modify_voice(const char *nick, const char *channel,
 		window->num_normal--;
 	    }
 
+	    (void) nicklist_draw(window, LINES);
 	    return OK;
 	}
     }
