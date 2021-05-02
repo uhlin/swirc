@@ -41,7 +41,6 @@
 #include "../nicklist.h"
 #include "../printtext.h"
 #include "../strHand.h"
-#include "../strdup_printf.h"
 #include "../theme.h"
 
 #include "names.h"
