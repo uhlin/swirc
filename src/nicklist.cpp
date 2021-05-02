@@ -319,3 +319,17 @@ nicklist_scroll_up(PIRC_WINDOW win)
     if (nicklist_draw(win, LINES) != 0)
 	debug("nicklist_scroll_up: nicklist_draw: error");
 }
+
+int
+nicklist_update(PIRC_WINDOW win)
+{
+    if (win == NULL || !is_irc_channel(win->label) || !win->received_names)
+	return -1;
+
+    const bool width_changed = nicklist_get_width(win) != win->nicklist.width;
+
+    if (!width_changed)
+	return nicklist_draw(win, LINES);
+    window_recreate_exported(win, LINES, COLS);
+    return 0;
+}

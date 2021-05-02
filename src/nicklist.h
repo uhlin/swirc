@@ -15,6 +15,7 @@ int	nicklist_get_width(const PIRC_WINDOW);
 
 void	nicklist_scroll_down(PIRC_WINDOW);
 void	nicklist_scroll_up(PIRC_WINDOW);
+int	nicklist_update(PIRC_WINDOW);
 __SWIRC_END_DECLS
 
 #endif
