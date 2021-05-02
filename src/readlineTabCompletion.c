@@ -163,7 +163,7 @@ buf_contains_disallowed_chars(const volatile struct readline_session_context *ct
 static inline char *
 get_search_var(const volatile struct readline_session_context *ctx)
 {
-    return (& (ctx->tc->search_var[0]));
+    return addrof(ctx->tc->search_var[0]);
 }
 
 static void
@@ -238,7 +238,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 static void
 init_mode_for_help(volatile struct readline_session_context *ctx)
 {
-    char *p = & (ctx->tc->search_var[6]);
+    char *p = addrof(ctx->tc->search_var[6]);
 
     if ((ctx->tc->matches = get_list_of_matching_commands(p)) == NULL) {
 	output_error("no magic");
@@ -258,7 +258,7 @@ init_mode_for_query(volatile struct readline_session_context *ctx)
 	return;
     }
 
-    char *p = & (ctx->tc->search_var[7]);
+    char *p = addrof(ctx->tc->search_var[7]);
     ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
 
     if (ctx->tc->matches == NULL) {
@@ -274,7 +274,7 @@ init_mode_for_query(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_set(volatile struct readline_session_context *ctx)
 {
-    char *p = & (ctx->tc->search_var[5]);
+    char *p = addrof(ctx->tc->search_var[5]);
 
     if ((ctx->tc->matches = get_list_of_matching_settings(p)) == NULL) {
 	output_error("no magic");
@@ -294,7 +294,7 @@ init_mode_for_whois(volatile struct readline_session_context *ctx)
 	return;
     }
 
-    char *p = & (ctx->tc->search_var[7]);
+    char *p = addrof(ctx->tc->search_var[7]);
     ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
 
     if (ctx->tc->matches == NULL) {
@@ -310,7 +310,7 @@ init_mode_for_whois(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_znc_cmds(volatile struct readline_session_context *ctx)
 {
-    char *p = & (ctx->tc->search_var[5]);
+    char *p = addrof(ctx->tc->search_var[5]);
 
     if ((ctx->tc->matches = get_list_of_matching_znc_commands(p)) == NULL) {
 	output_error("no magic");
@@ -326,7 +326,7 @@ static void
 init_mode_for_commands(volatile struct readline_session_context *ctx,
 		       const bool n_insert_greater_than_one)
 {
-    char *p = & (ctx->tc->search_var[1]);
+    char *p = addrof(ctx->tc->search_var[1]);
 
     if (!n_insert_greater_than_one ||
 	(ctx->tc->matches = get_list_of_matching_commands(p)) == NULL) {
