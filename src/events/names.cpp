@@ -54,29 +54,6 @@
 *                                                               *
 ****************************************************************/
 
-struct column_lengths {
-    int col1;
-    int col2;
-    int col3;
-
-    column_lengths();
-    column_lengths(int, int, int);
-};
-
-column_lengths::column_lengths()
-{
-    this->col1 = 0;
-    this->col2 = 0;
-    this->col3 = 0;
-}
-
-column_lengths::column_lengths(int x, int y, int z)
-{
-    this->col1 = x;
-    this->col2 = y;
-    this->col3 = z;
-}
-
 struct hInstall_context {
     char	*channel;
     char	*nick;
@@ -112,22 +89,6 @@ hInstall_context::hInstall_context(char *channel, char *nick, const char c)
     this->is_voice   = (c == '+');
 }
 
-struct name_tag {
-    char *s;
-
-    name_tag();
-};
-
-name_tag::name_tag()
-{
-    this->s = NULL;
-}
-
-typedef struct tagCHUNK {
-    char *nick;
-    struct tagCHUNK *next;
-} CHUNK, *PCHUNK;
-
 /****************************************************************
 *                                                               *
 *  -------------- Objects with internal linkage --------------  *
@@ -152,133 +113,6 @@ add_match(PTEXTBUF matches, const char *user)
 	if ((errno = textBuf_ins_next(matches, textBuf_tail(matches), user, -1)) != 0)
 	    err_sys("get_list_of_matching_channel_users: textBuf_ins_next");
     }
-}
-
-static void
-destroy_names_array(const int ntp1, struct name_tag *names_array)
-{
-    for (int i = 0; i < ntp1; i++) {
-	free(names_array[i].s);
-	names_array[i].s = NULL;
-    }
-
-    free(names_array);
-}
-
-static void
-free_names_chunk(PCHUNK head)
-{
-    PCHUNK p, tmp;
-
-    for (p = head; p; p = tmp) {
-	tmp = p->next;
-	free(p->nick);
-	free(p);
-    }
-}
-
-static struct column_lengths
-get_column_lengths(const int ntp1, const struct name_tag *names_array)
-{
-    //struct column_lengths cl;
-    struct column_lengths cl(0, 0, 0);
-
-    for (int i = 0; i < ntp1; i++) {
-	const char *nick1 = names_array[i].s;
-	char *nick2, *nick3;
-
-	if ((i + 1) < ntp1 && (i + 2) < ntp1) {
-	    nick2 = names_array[++i].s;
-	    nick3 = names_array[++i].s;
-	} else if ((i + 1) < ntp1) {
-	    nick2 = names_array[++i].s;
-	    nick3 = NULL;
-	} else {
-	    nick2 = nick3 = NULL;
-	}
-
-	if (nick1 && size_to_int(strlen(nick1)) > cl.col1)
-	    cl.col1 = static_cast<int>(strlen(nick1));
-	if (nick2 && size_to_int(strlen(nick2)) > cl.col2)
-	    cl.col2 = static_cast<int>(strlen(nick2));
-	if (nick3 && size_to_int(strlen(nick3)) > cl.col3)
-	    cl.col3 = static_cast<int>(strlen(nick3));
-    }
-
-    return cl;
-}
-
-/*lint -sem(next_names, r_null) */
-static PCHUNK
-next_names(PIRC_WINDOW window, const int *idx)
-{
-    PCHUNK  head        = NULL;
-    PCHUNK  new_element = NULL;
-    PCHUNK  temp        = NULL;
-    PNAMES *entry_p     = & (window->names_hash[*idx]);
-
-    for (PNAMES p = *entry_p; p != NULL; p = p->next) {
-	char c;
-
-	if (p->is_owner) {
-	    c = '~';
-	} else if (p->is_superop) {
-	    c = '&';
-	} else if (p->is_op) {
-	    c = '@';
-	} else if (p->is_halfop) {
-	    c = '%';
-	} else if (p->is_voice) {
-	    c = '+';
-	} else {
-	    c = ' ';
-	}
-
-	sw_static_assert(sizeof *head == sizeof(CHUNK),
-	    "next_names: sizes mismatch");
-
-	if (!head) {
-	    head = static_cast<PCHUNK>(xmalloc(sizeof *head));
-	    head->nick = strdup_printf("%c%s", c, p->nick);
-	    head->next = NULL;
-	    continue;
-	}
-
-	new_element = static_cast<PCHUNK>(xmalloc(sizeof *new_element));
-	new_element->nick = strdup_printf("%c%s", c, p->nick);
-	new_element->next = NULL;
-
-	temp = head;
-	while (temp->next)
-	    temp = temp->next;
-	temp->next = new_element;
-    }
-
-    return (head);
-}
-
-static struct name_tag *
-get_names_array(const int ntp1, PIRC_WINDOW window)
-{
-    int i = 0, j = 0;
-    struct name_tag *names_array =
-	static_cast<struct name_tag *>(xcalloc(ntp1, sizeof *names_array));
-    sw_static_assert(sizeof *names_array == sizeof(struct name_tag),
-	"get_names_array: sizes mismatch");
-
-    for (i = j = 0; i < NAMES_HASH_TABLE_SIZE; i++) {
-	PCHUNK head, element;
-
-	if ((head = next_names(window, &i)) == NULL)
-	    continue;
-
-	for (element = head; element; element = element->next)
-	    names_array[j++].s = sw_strdup(element->nick);
-
-	free_names_chunk(head);
-    }
-
-    return names_array;
 }
 
 static bool
@@ -453,75 +287,6 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
     free(entry);
 }
 
-static int
-names_cmp_fn(const void *obj1, const void *obj2)
-{
-    const struct name_tag *p1 = static_cast<const struct name_tag *>(obj1);
-    const struct name_tag *p2 = static_cast<const struct name_tag *>(obj2);
-    const char *nick1 = p1 && p1->s ? p1->s : NULL;
-    const char *nick2 = p2 && p2->s ? p2->s : NULL;
-
-    if (isNull(nick1)) {
-	return (1);
-    } else if (isNull(nick2)) {
-	return (-1);
-    } else {
-	if (*nick1 == ' ') {
-	    nick1++;
-	}
-
-	if (*nick2 == ' ') {
-	    nick2++;
-	}
-
-	switch (*nick1) {
-	case '~':
-	    if (*nick2 == '&' || *nick2 == '@' || *nick2 == '%' ||
-		*nick2 == '+' || *nick2 != '~')
-		return (-1);
-	    break;
-	case '&':
-	    if (*nick2 == '@' || *nick2 == '%' || *nick2 == '+')
-		return (-1);
-	    break;
-	case '@':
-	    if (*nick2 == '%' || *nick2 == '+')
-		return (-1);
-	    break;
-	case '%':
-	    if (*nick2 == '+')
-		return (-1);
-	    break;
-	case '+':
-	    break;
-	}
-
-	switch (*nick2) {
-	case '~':
-	    if (*nick1 == '&' || *nick1 == '@' || *nick1 == '%' ||
-		*nick1 == '+' || *nick1 != '~')
-		return (1);
-	    break;
-	case '&':
-	    if (*nick1 == '@' || *nick1 == '%' || *nick1 == '+')
-		return (1);
-	    break;
-	case '@':
-	    if (*nick1 == '%' || *nick1 == '+')
-		return (1);
-	    break;
-	case '%':
-	    if (*nick1 == '+')
-		return (1);
-	    break;
-	case '+':
-	    break;
-	}
-    }
-
-    return (strcasecmp(nick1, nick2));
-}
-
 static void
 output_statistics(PRINTTEXT_CONTEXT ctx, const char *channel,
     const IRC_WINDOW *window)
@@ -555,33 +320,6 @@ reset_counters(PIRC_WINDOW window)
     window->num_voices   = 0;
     window->num_normal   = 0;
     window->num_total    = 0;
-}
-
-static bool
-set_format1(char *dest, size_t destsize, struct column_lengths cl)
-{
-    int ret = snprintf(dest, destsize, "%%s%%-%ds%%s %%s%%-%ds%%s %%s%%-%ds%%s",
-		       cl.col1, cl.col2, cl.col3);
-
-    return ((ret == -1 || static_cast<size_t>(ret) >= destsize) ? false : true);
-}
-
-static bool
-set_format2(char *dest, size_t destsize, struct column_lengths cl)
-{
-    int ret = snprintf(dest, destsize, "%%s%%-%ds%%s %%s%%-%ds%%s",
-		       cl.col1, cl.col2);
-
-    return ((ret == -1 || static_cast<size_t>(ret) >= destsize) ? false : true);
-}
-
-static bool
-set_format3(char *dest, size_t destsize, struct column_lengths cl)
-{
-    int ret = snprintf(dest, destsize, "%%s%%-%ds%%s",
-		       cl.col1);
-
-    return ((ret == -1 || static_cast<size_t>(ret) >= destsize) ? false : true);
 }
 
 PTEXTBUF
@@ -902,72 +640,6 @@ event_names_htbl_remove(const char *nick, const char *channel)
     }
 
     return ERR;
-}
-
-#define FORMAT_SIZE 120
-
-int
-event_names_print_all(const char *channel)
-{
-    PIRC_WINDOW window = NULL;
-    PRINTTEXT_CONTEXT ptext_ctx;
-    char fmt1[FORMAT_SIZE] = "";
-    char fmt2[FORMAT_SIZE] = "";
-    char fmt3[FORMAT_SIZE] = "";
-    int i = 0;
-    struct name_tag *names_array = NULL;
-
-    if ((window = window_by_label(channel)) == NULL) {
-	return ERR;
-    }
-
-    printtext_context_init(&ptext_ctx, window, TYPE_SPEC_NONE, true);
-    printtext(&ptext_ctx, "%s%sUsers %s%c%s",
-	LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT);
-
-    const int ntp1 = window->num_total + 1;
-    names_array = get_names_array(ntp1, window);
-    qsort(&names_array[0], ntp1, sizeof(struct name_tag), names_cmp_fn);
-    struct column_lengths cl = get_column_lengths(ntp1, names_array);
-
-    if (!set_format1(fmt1, sizeof fmt1, cl) ||
-	!set_format2(fmt2, sizeof fmt2, cl) ||
-	!set_format3(fmt3, sizeof fmt3, cl)) {
-	destroy_names_array(ntp1, names_array);
-	return ERR;
-    }
-
-    for (i = 0, ptext_ctx.spec_type = TYPE_SPEC3; i < ntp1; i++) {
-	const char *nick1 = names_array[i].s;
-	char *nick2, *nick3;
-
-	if ((i + 1) < ntp1 && (i + 2) < ntp1) {
-	    nick2 = names_array[++i].s;
-	    nick3 = names_array[++i].s;
-	} else if ((i + 1) < ntp1) {
-	    nick2 = names_array[++i].s;
-	    nick3 = NULL;
-	} else {
-	    nick2 = nick3 = NULL;
-	}
-
-	if (nick1 && nick2 && nick3) {
-	    printtext(&ptext_ctx, fmt1,
-		      LEFT_BRKT, nick1, RIGHT_BRKT,
-		      LEFT_BRKT, nick2, RIGHT_BRKT,
-		      LEFT_BRKT, nick3, RIGHT_BRKT);
-	} else if (nick1 && nick2) {
-	    printtext(&ptext_ctx, fmt2,
-		      LEFT_BRKT, nick1, RIGHT_BRKT,
-		      LEFT_BRKT, nick2, RIGHT_BRKT);
-	} else if (nick1) {
-	    printtext(&ptext_ctx, fmt3, LEFT_BRKT, nick1, RIGHT_BRKT);
-	}
-    }
-
-    destroy_names_array(ntp1, names_array);
-    output_statistics(ptext_ctx, channel, window);
-    return OK;
 }
 
 /* event_eof_names: 366

@@ -28,7 +28,6 @@ int	event_names_htbl_modify_superop(const char *nick, const char *channel,
 int	event_names_htbl_modify_voice(const char *nick, const char *channel,
 	    bool is_voice);
 int	event_names_htbl_remove(const char *nick, const char *channel);
-int	event_names_print_all(const char *channel);
 void	event_eof_names(struct irc_message_compo *);
 void	event_names(struct irc_message_compo *);
 void	event_names_htbl_remove_all(PIRC_WINDOW);
