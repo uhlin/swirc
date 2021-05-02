@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Added nicklist
 - Defined and made use of `addrof()`
 - Defined and made use of `g_textdeco_chars`
+- Deleted command `/n`
 - Moved defines
 - Reindented files
 - Renamed functions and patterns

@@ -33,9 +33,6 @@
 #include <sys/socket.h> /* shutdown() */
 #endif
 
-#include "../irc.h"
-#include "../events/names.h"
-
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
@@ -309,22 +306,6 @@ cmd_mode(const char *data)
     } else {
 	if (net_send("MODE %s", data) < 0)
 	    g_on_air = false;
-    }
-}
-
-/* usage: /n [channel] */
-void
-cmd_names(const char *data)
-{
-    if (strings_match(data, "")) {
-	if (is_irc_channel(g_active_window->label))
-	    event_names_print_all(g_active_window->label);
-	else
-	    output_error("/n: missing arguments");
-    } else if (!is_irc_channel(data)) {
-	output_error("/n: bogus irc channel");
-    } else {
-	event_names_print_all(data);
     }
 }
 

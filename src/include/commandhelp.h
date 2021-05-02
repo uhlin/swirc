@@ -325,14 +325,6 @@ static const char *msg_usage[] = {
     "",
 };
 
-static const char *n_usage[] = {
-    "usage: /n [channel]",
-    "",
-    "Outputs users in a channel. If channel is omitted and the active",
-    "window is an IRC channel, it'll output the users of that channel.",
-    "",
-};
-
 static const char *nick_usage[] = {
     "usage: /nick <new nickname>",
     "",
