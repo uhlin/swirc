@@ -1,7 +1,7 @@
 #ifndef THEME_H
 #define THEME_H
 
-#include "int_unparse.h"
+#include "integer-context.h"
 
 typedef struct tagTHEME_HTBL_ENTRY {
     char *name;
