@@ -9,6 +9,7 @@
 #include "network.h"		/* g_connection_in_progress */
 #include "readline.h"		/* MY_KEY_RESIZE */
 #include "sig.h"
+#include "terminal.h"
 
 static struct sig_message_tag {
     int		 num;
@@ -35,6 +36,7 @@ static struct sig_message_tag {
 static void
 clean_up(void)
 {
+    term_restore_title();
 }
 
 static void

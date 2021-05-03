@@ -1,14 +1,17 @@
 /* Copyright (C) 2012-2021 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
-#include "errHand.h"
-#include "sig.h"
 
 #include <signal.h>
+
+#include "errHand.h"
+#include "sig.h"
+#include "terminal.h"
 
 static void
 clean_up(void)
 {
+    term_restore_title();
 }
 
 static void
