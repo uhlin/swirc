@@ -21,7 +21,7 @@ const char	*Theme(const char *);
 int		 theme_item_install(const char *name, const char *value);
 int		 theme_item_undef(const char *name);
 long int	 theme_integer_unparse(struct integer_unparse_context *);
-short int	 theme_color_unparse(const char *, short int);
+short int	 theme_color(const char *, short int);
 void		 theme_create(const char *path, const char *mode);
 void		 theme_do_save(const char *path, const char *mode);
 void		 theme_readit(const char *path, const char *mode);

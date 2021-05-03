@@ -357,12 +357,12 @@ theme_integer_unparse(struct integer_unparse_context *ctx)
 }
 
 short int
-theme_color_unparse(const char *item_name, short int fallback_color)
+theme_color(const char *item_name, short int fallback_color)
 {
     PTHEME_HTBL_ENTRY item;
 
     if (!item_name)
-	err_exit(EINVAL, "theme_color_unparse");
+	err_exit(EINVAL, "theme_color");
 
     for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
 	if (strings_match(item_name, item->name)) {
