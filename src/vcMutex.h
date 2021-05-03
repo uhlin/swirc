@@ -6,9 +6,11 @@
 /*lint -sem(mutex_lock, thread_lock) */
 /*lint -sem(mutex_unlock, thread_unlock) */
 
-void	mutex_lock    (HANDLE *mutex);
-void	mutex_unlock  (HANDLE *mutex);
-void	mutex_destroy (HANDLE *mutex);
-void	mutex_new     (HANDLE *mutex);
+__SWIRC_BEGIN_DECLS
+void	mutex_lock(HANDLE *);
+void	mutex_unlock(HANDLE *);
+void	mutex_destroy(HANDLE *);
+void	mutex_new(HANDLE *);
+__SWIRC_END_DECLS
 
 #endif
