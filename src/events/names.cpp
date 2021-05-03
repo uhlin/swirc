@@ -395,7 +395,11 @@ event_names_htbl_insert(const char *nick, const char *channel)
     ctx.channel = const_cast<char *>(channel);
     ctx.nick = const_cast<char *>(nick);
 
-    return hInstall(&ctx);
+    if (hInstall(&ctx) == ERR)
+	return ERR;
+    if (nicklist_update(window_by_label(channel)) != 0)
+	debug("event_names_htbl_insert: nicklist_update: error");
+    return OK;
 }
 
 int
@@ -639,6 +643,8 @@ event_names_htbl_remove(const char *nick, const char *channel)
 	 names = names->next) {
 	if (strings_match_ignore_case(nick, names->nick)) {
 	    hUndef(window, names);
+	    if (nicklist_update(window) != 0)
+		debug("event_names_htbl_remove: nicklist_update: error");
 	    return OK;
 	}
     }
