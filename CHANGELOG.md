@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added key F3 (scroll nicklist up) and F4 (scroll nicklist down)
 - Added nicklist
+- Added theme item `nicklist_nick_color`
+- Added theme item `nicklist_privilege_color`
+- Added theme item `nicklist_vline_color`
 - Defined and made use of `addrof()`
 - Defined and made use of `g_textdeco_chars`
 - Deleted command `/n`
