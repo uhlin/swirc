@@ -39,6 +39,7 @@
 #include "nicklist.h"
 #include "printtext.h"
 #include "terminal.h"
+#include "theme.h"
 
 const int	g_nicklist_maxnick = 16;
 const int	g_nicklist_scroll_amount = 10;
@@ -162,11 +163,27 @@ get_list(const PIRC_WINDOW window, const bool sort)
 static void
 printnick(WINDOW *win, const int row, const int col, const char *nick)
 {
+    bool state1 = false;
+    bool state2 = false;
+    bool state3 = false;
+    struct integer_context color1("nicklist_vline_color", 0, 99, 0);
+    struct integer_context color2("nicklist_privilege_color", 0, 99, 0);
+    struct integer_context color3("nicklist_nick_color", 0, 99, 0);
+
     mutex_lock(&g_puts_mutex);
     (void) wmove(win, row, col);
+    printtext_set_color(win, &state1,
+	static_cast<short int>(theme_integer(&color1)), -1);
     (void) waddch(win, ACS_VLINE);
-    if (nick)
-	(void) waddstr(win, nick);
+    if (nick) {
+	printtext_set_color(win, &state2,
+	    static_cast<short int>(theme_integer(&color2)), -1);
+	(void) waddch(win, *nick);
+	printtext_set_color(win, &state3,
+	    static_cast<short int>(theme_integer(&color3)), -1);
+	(void) waddstr(win, nick + 1);
+    }
+    (void) wattrset(win, A_NORMAL);
     mutex_unlock(&g_puts_mutex);
 }
 
