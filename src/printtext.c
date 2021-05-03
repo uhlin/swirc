@@ -491,7 +491,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
     char           fg[10]    = { 0 };
     short int      num1      = -1;
     short int      num2      = -1;
-    struct integer_context unparse_ctx = {
+    struct integer_context intctx = {
 	.setting_name	  = "term_background",
 	.fallback_default = 1,	/* black */
 	.lo_limit	  = 0,
@@ -585,7 +585,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	       theme_bool("term_use_default_colors", true)) {
 	num2 = -1;
     } else {
-	num2 = (short int) theme_integer(&unparse_ctx);
+	num2 = (short int) theme_integer(&intctx);
     }
 
     printtext_set_color(win, is_color, num1, num2);
@@ -1444,7 +1444,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 {
     char *fmt_copy = NULL;
     const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
-    struct integer_context unparse_ctx = {
+    struct integer_context intctx = {
 	.setting_name     = "textbuffer_size_absolute",
 	.fallback_default = 1000,
 	.lo_limit         = 350,
@@ -1466,7 +1466,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
     pout = get_processed_out_message(fmt_copy, ctx->spec_type, ctx->include_ts,
 	(ctx->has_server_time ? ctx->server_time : NULL));
 
-    if (tbszp1 > config_integer(&unparse_ctx)) {
+    if (tbszp1 > config_integer(&intctx)) {
 	/*
 	 * Buffer full. Remove head...
 	 */

@@ -40,7 +40,7 @@ dword_product(const DWORD elt_count, const DWORD elt_size)
 bool
 event_welcome_is_signaled(void)
 {
-    struct integer_context unparse_ctx = {
+    struct integer_context intctx = {
 	.setting_name     = "connection_timeout",
 	.lo_limit         = 0,
 	.hi_limit         = 300, /* 5 min */
@@ -48,7 +48,7 @@ event_welcome_is_signaled(void)
     };
 
     return WaitForSingleObject(welcome_cond,
-	dword_product(config_integer(&unparse_ctx), 1000)) ==
+	dword_product(config_integer(&intctx), 1000)) ==
 	WAIT_OBJECT_0;
 }
 

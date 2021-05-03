@@ -547,7 +547,7 @@ int
 spawn_chat_window(const char *label, const char *title)
 {
     const int ntotalp1 = g_ntotal_windows + 1;
-    struct integer_context unparse_ctx = {
+    struct integer_context intctx = {
 	.setting_name	  = "max_chat_windows",
 	.fallback_default = 60,
 	.lo_limit	  = 10,
@@ -558,7 +558,7 @@ spawn_chat_window(const char *label, const char *title)
 	return EINVAL; /* a label is required */
     else if (window_by_label(label) != NULL)
 	return 0; /* window already exists  --  reuse it */
-    else if (ntotalp1 > config_integer(&unparse_ctx))
+    else if (ntotalp1 > config_integer(&intctx))
 	return ENOSPC;
 
     struct hInstall_context inst_ctx = {

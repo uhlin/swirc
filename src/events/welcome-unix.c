@@ -17,20 +17,20 @@ bool
 event_welcome_is_signaled(void)
 {
     bool is_signaled = false; /* initial state */
-    struct integer_context unparse_ctx;
+    struct integer_context intctx;
     struct timespec ts;
     struct timeval tv;
 
-    unparse_ctx.setting_name     = "connection_timeout";
-    unparse_ctx.lo_limit         = 0;
-    unparse_ctx.hi_limit         = 300; /* 5 min */
-    unparse_ctx.fallback_default = 45;
+    intctx.setting_name     = "connection_timeout";
+    intctx.lo_limit         = 0;
+    intctx.hi_limit         = 300; /* 5 min */
+    intctx.fallback_default = 45;
 
     if (gettimeofday(&tv, NULL) != 0) {
 	err_sys("gettimeofday error");
     }
 
-    ts.tv_sec  = tv.tv_sec + config_integer(&unparse_ctx);
+    ts.tv_sec  = tv.tv_sec + config_integer(&intctx);
     ts.tv_nsec = tv.tv_usec;
 
     mutex_lock(&foo_mutex);

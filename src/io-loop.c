@@ -159,7 +159,7 @@ static struct cmds_tag {
 static void
 add_to_history(const char *string)
 {
-    struct integer_context unparse_ctx = {
+    struct integer_context intctx = {
 	.setting_name     = "cmd_hist_size",
 	.fallback_default = 50,
 	.lo_limit         = 0,
@@ -167,12 +167,12 @@ add_to_history(const char *string)
     };
     const int tbszp1 = textBuf_size(history) + 1;
 
-    if (config_integer(&unparse_ctx) == 0 ||
+    if (config_integer(&intctx) == 0 ||
 	!strncasecmp(string, "/nickserv -- identify", 21) ||
 	!strncasecmp(string, "/ns -- identify", 15))
 	return;
 
-    if (tbszp1 > config_integer(&unparse_ctx)) {
+    if (tbszp1 > config_integer(&intctx)) {
 	/* Buffer full. Remove head... */
 
 	if ((errno = textBuf_remove(history, textBuf_head(history))) != 0)
