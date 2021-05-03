@@ -443,7 +443,7 @@ map_color(short int *inout, const short int i, const short int colorMap_size,
  * @param[in]  num2     Number for background
  * @return Void
  */
-static void
+void
 printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 {
     const short int num_colorMap_entries =

@@ -70,6 +70,7 @@ short int
 void	 print_and_free(const char *msg, char *);
 void	 printtext(PPRINTTEXT_CONTEXT, const char *, ...) PRINTFLIKE(2);
 void	 printtext_puts(WINDOW *, const char *buf, int indent, int, int *);
+void	 printtext_set_color(WINDOW *, bool *, short int, short int);
 void	 set_timestamp(char *dest, size_t destsize,
 	     const struct irc_message_compo *) PTR_ARGS_NONNULL;
 void	 vprinttext(PPRINTTEXT_CONTEXT, const char *format, va_list);
