@@ -1,5 +1,5 @@
-#ifndef INT_UNPARSE_H
-#define INT_UNPARSE_H
+#ifndef INTEGER_CONTEXT_H
+#define INTEGER_CONTEXT_H
 
 struct integer_context {
     char	*setting_name;  /* Name of the setting or item */
