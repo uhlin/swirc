@@ -30,7 +30,7 @@ event_welcome_is_signaled(void)
 	err_sys("gettimeofday error");
     }
 
-    ts.tv_sec  = tv.tv_sec + config_integer_unparse(&unparse_ctx);
+    ts.tv_sec  = tv.tv_sec + config_integer(&unparse_ctx);
     ts.tv_nsec = tv.tv_usec;
 
     mutex_lock(&foo_mutex);

@@ -31,7 +31,7 @@ char		*Config_mod(const char *);
 const char	*Config(const char *);
 int		 config_item_install(const char *name, const char *value);
 int		 config_item_undef(const char *name);
-long int	 config_integer_unparse(struct integer_unparse_context *);
+long int	 config_integer(struct integer_unparse_context *);
 void		 config_create(const char *path, const char *mode);
 void		 config_do_save(const char *path, const char *mode);
 void		 config_readit(const char *path, const char *mode);

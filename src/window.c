@@ -558,7 +558,7 @@ spawn_chat_window(const char *label, const char *title)
 	return EINVAL; /* a label is required */
     else if (window_by_label(label) != NULL)
 	return 0; /* window already exists  --  reuse it */
-    else if (ntotalp1 > config_integer_unparse(&unparse_ctx))
+    else if (ntotalp1 > config_integer(&unparse_ctx))
 	return ENOSPC;
 
     struct hInstall_context inst_ctx = {

@@ -48,7 +48,7 @@ event_welcome_is_signaled(void)
     };
 
     return WaitForSingleObject(welcome_cond,
-	dword_product(config_integer_unparse(&unparse_ctx), 1000)) ==
+	dword_product(config_integer(&unparse_ctx), 1000)) ==
 	WAIT_OBJECT_0;
 }
 

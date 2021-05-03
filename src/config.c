@@ -329,13 +329,13 @@ config_item_undef(const char *name)
 }
 
 long int
-config_integer_unparse(struct integer_unparse_context *ctx)
+config_integer(struct integer_unparse_context *ctx)
 {
     PCONF_HTBL_ENTRY item;
     long int val;
 
     if (!ctx)
-	err_exit(EINVAL, "config_integer_unparse");
+	err_exit(EINVAL, "config_integer");
 
     for (item = hash_table[hash(ctx->setting_name)]; item; item = item->next) {
 	if (strings_match(ctx->setting_name, item->name)) {
@@ -668,7 +668,7 @@ get_reconnect_backoff_delay(void)
 	.fallback_default = RECONNECT_BACKOFF_DELAY_DEFAULT,
     };
 
-    return (config_integer_unparse(&ctx));
+    return (config_integer(&ctx));
 }
 
 long int
@@ -681,7 +681,7 @@ get_reconnect_delay(void)
 	.fallback_default = RECONNECT_DELAY_DEFAULT,
     };
 
-    return (config_integer_unparse(&ctx));
+    return (config_integer(&ctx));
 }
 
 long int
@@ -694,7 +694,7 @@ get_reconnect_delay_max(void)
 	.fallback_default = RECONNECT_DELAY_MAX_DEFAULT,
     };
 
-    return (config_integer_unparse(&ctx));
+    return (config_integer(&ctx));
 }
 
 long int
@@ -707,5 +707,5 @@ get_reconnect_retries(void)
 	.fallback_default = RECONNECT_RETRIES_DEFAULT,
     };
 
-    return (config_integer_unparse(&ctx));
+    return (config_integer(&ctx));
 }
