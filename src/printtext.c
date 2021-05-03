@@ -585,7 +585,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	       theme_bool("term_use_default_colors", true)) {
 	num2 = -1;
     } else {
-	num2 = (short int) theme_integer_unparse(&unparse_ctx);
+	num2 = (short int) theme_integer(&unparse_ctx);
     }
 
     printtext_set_color(win, is_color, num1, num2);

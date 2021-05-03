@@ -327,13 +327,13 @@ theme_item_undef(const char *name)
 }
 
 long int
-theme_integer_unparse(struct integer_unparse_context *ctx)
+theme_integer(struct integer_unparse_context *ctx)
 {
     PTHEME_HTBL_ENTRY item;
     long int val;
 
     if (!ctx)
-	err_exit(EINVAL, "theme_integer_unparse");
+	err_exit(EINVAL, "theme_integer");
 
     for (item = hash_table[hash(ctx->setting_name)]; item; item = item->next) {
 	if (strings_match(ctx->setting_name, item->name)) {
