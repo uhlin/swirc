@@ -40,7 +40,7 @@ dword_product(const DWORD elt_count, const DWORD elt_size)
 bool
 event_welcome_is_signaled(void)
 {
-    struct integer_unparse_context unparse_ctx = {
+    struct integer_context unparse_ctx = {
 	.setting_name     = "connection_timeout",
 	.lo_limit         = 0,
 	.hi_limit         = 300, /* 5 min */

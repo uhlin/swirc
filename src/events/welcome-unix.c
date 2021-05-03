@@ -17,7 +17,7 @@ bool
 event_welcome_is_signaled(void)
 {
     bool is_signaled = false; /* initial state */
-    struct integer_unparse_context unparse_ctx;
+    struct integer_context unparse_ctx;
     struct timespec ts;
     struct timeval tv;
 

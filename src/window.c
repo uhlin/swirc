@@ -547,7 +547,7 @@ int
 spawn_chat_window(const char *label, const char *title)
 {
     const int ntotalp1 = g_ntotal_windows + 1;
-    struct integer_unparse_context unparse_ctx = {
+    struct integer_context unparse_ctx = {
 	.setting_name	  = "max_chat_windows",
 	.fallback_default = 60,
 	.lo_limit	  = 10,

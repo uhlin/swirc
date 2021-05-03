@@ -491,7 +491,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
     char           fg[10]    = { 0 };
     short int      num1      = -1;
     short int      num2      = -1;
-    struct integer_unparse_context unparse_ctx = {
+    struct integer_context unparse_ctx = {
 	.setting_name	  = "term_background",
 	.fallback_default = 1,	/* black */
 	.lo_limit	  = 0,
@@ -1444,7 +1444,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 {
     char *fmt_copy = NULL;
     const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
-    struct integer_unparse_context unparse_ctx = {
+    struct integer_context unparse_ctx = {
 	.setting_name     = "textbuffer_size_absolute",
 	.fallback_default = 1000,
 	.lo_limit         = 350,

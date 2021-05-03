@@ -159,7 +159,7 @@ static struct cmds_tag {
 static void
 add_to_history(const char *string)
 {
-    struct integer_unparse_context unparse_ctx = {
+    struct integer_context unparse_ctx = {
 	.setting_name     = "cmd_hist_size",
 	.fallback_default = 50,
 	.lo_limit         = 0,

@@ -329,7 +329,7 @@ config_item_undef(const char *name)
 }
 
 long int
-config_integer(struct integer_unparse_context *ctx)
+config_integer(struct integer_context *ctx)
 {
     PCONF_HTBL_ENTRY item;
     long int val;
@@ -661,7 +661,7 @@ cmd_set(const char *data)
 long int
 get_reconnect_backoff_delay(void)
 {
-    struct integer_unparse_context ctx = {
+    struct integer_context ctx = {
 	.setting_name = "reconnect_backoff_delay",
 	.lo_limit = 0,
 	.hi_limit = 99,
@@ -674,7 +674,7 @@ get_reconnect_backoff_delay(void)
 long int
 get_reconnect_delay(void)
 {
-    struct integer_unparse_context ctx = {
+    struct integer_context ctx = {
 	.setting_name = "reconnect_delay",
 	.lo_limit = 0,
 	.hi_limit = 999,
@@ -687,7 +687,7 @@ get_reconnect_delay(void)
 long int
 get_reconnect_delay_max(void)
 {
-    struct integer_unparse_context ctx = {
+    struct integer_context ctx = {
 	.setting_name = "reconnect_delay_max",
 	.lo_limit = 0,
 	.hi_limit = 999,
@@ -700,7 +700,7 @@ get_reconnect_delay_max(void)
 long int
 get_reconnect_retries(void)
 {
-    struct integer_unparse_context ctx = {
+    struct integer_context ctx = {
 	.setting_name = "reconnect_retries",
 	.lo_limit = 0,
 	.hi_limit = 999,
