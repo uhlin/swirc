@@ -162,10 +162,12 @@ get_list(const PIRC_WINDOW window, const bool sort)
 static void
 printnick(WINDOW *win, const int row, const int col, const char *nick)
 {
+    mutex_lock(&g_puts_mutex);
     (void) wmove(win, row, col);
     (void) waddch(win, ACS_VLINE);
     if (nick)
 	(void) waddstr(win, nick);
+    mutex_unlock(&g_puts_mutex);
 }
 
 int
