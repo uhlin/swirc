@@ -89,9 +89,9 @@ static struct tagThemeDefValues {
     { "nick_s1",                   TYPE_STRING,  1, "\00314:\017" },
     { "nick_s2",                   TYPE_STRING,  1, "\00314:\017" },
 
-    { "nicklist_nick_color",       TYPE_STRING,  6, "blue" },
-    { "nicklist_privilege_color",  TYPE_STRING,  1, "green" },
-    { "nicklist_vline_color",      TYPE_STRING,  5, "white" },
+    { "nicklist_nick_color",       TYPE_INTEGER, 6, "2" },
+    { "nicklist_privilege_color",  TYPE_INTEGER, 1, "3" },
+    { "nicklist_vline_color",      TYPE_INTEGER, 5, "0" },
 
     { "notice_color1",             TYPE_STRING,  3, "\00313" },
     { "notice_color2",             TYPE_STRING,  3, "\00306" },
