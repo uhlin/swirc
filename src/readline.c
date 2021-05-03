@@ -136,10 +136,17 @@ hiLim_isset(WINDOW *win)
 static void
 write_cmdprompt(WINDOW *win, const char *prompt, int size)
 {
-    if (werase(win) == ERR)
+    int ret;
+
+    mutex_lock(&g_puts_mutex);
+    ret = werase(win);
+    mutex_unlock(&g_puts_mutex);
+
+    if (ret == ERR)
 	readline_error(0, "write_cmdprompt: werase");
-    (void) size;
+
     printtext_puts(win, prompt, -1, -1, NULL);
+    (void) size; /* unused. provided for compatibility. */
 }
 
 /**
