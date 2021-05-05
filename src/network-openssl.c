@@ -225,7 +225,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 #ifdef UNIX
 #define SOCKET_ERROR -1
 #endif
-    if (ssl == NULL)
+    if (ctx == NULL || recvbuf == NULL || ssl == NULL)
 	return -1;
 
     if (!SSL_pending(ssl)) {
