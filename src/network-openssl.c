@@ -180,7 +180,7 @@ net_ssl_send(const char *fmt, ...)
     int		 n_sent = 0;
     va_list	 ap;
 
-    if (ssl == NULL)
+    if (fmt == NULL || ssl == NULL)
 	return -1;
 
     va_start(ap, fmt);
