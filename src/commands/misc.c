@@ -377,6 +377,7 @@ cmd_quit(const char *data)
 	    (void) net_send("QUIT :%s", data);
 	else
 	    (void) net_send("QUIT :%s", Config("quit_message"));
+#if 0
 	g_on_air = false;
 	errno = 0;
 #if defined(UNIX)
@@ -386,6 +387,8 @@ cmd_quit(const char *data)
 	if (shutdown(g_socket, SD_BOTH) != 0)
 	    err_log(errno, "cmd_quit: shutdown");
 #endif
+#endif
+	net_kill_connection();
 	napms(500);
     }
 
