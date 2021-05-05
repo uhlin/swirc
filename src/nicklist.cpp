@@ -228,8 +228,8 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	return -1;
 
     mutex_lock(&g_puts_mutex);
-    (void) werase(nl_win);
-    update_panels();
+    if (werase(nl_win) != ERR)
+	update_panels();
     mutex_unlock(&g_puts_mutex);
 
     const bool list_fits = !(win->num_total > HEIGHT);
