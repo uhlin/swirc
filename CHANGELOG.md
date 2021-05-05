@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 - Defined and made use of `addrof()`
 - Defined and made use of `g_textdeco_chars`
 - Deleted command `/n`
+- Fixed a bug in `/quit` that resulted in SIGPIPE due to calling
+  `SSL_shutdown()` on an already shutdown socket.
 - Moved defines
 - Reindented files
 - Renamed functions and patterns
