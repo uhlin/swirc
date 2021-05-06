@@ -278,7 +278,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 		break;
 	    case SSL_ERROR_WANT_READ:
 	    case SSL_ERROR_WANT_WRITE:
-		err_log(0, "net_ssl_recv: want read / want write");
+		debug("net_ssl_recv: want read / want write");
 		break;
 	    default:
 		return -1;
