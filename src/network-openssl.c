@@ -225,8 +225,6 @@ net_ssl_send(const char *fmt, ...)
 	}
     }
 
-    debug("net_ssl_send: buflen = %d", buflen);
-    debug("net_ssl_send: n_sent = %d", n_sent);
     free(buf);
     return n_sent;
 }
