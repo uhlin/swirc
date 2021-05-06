@@ -176,10 +176,11 @@ net_ssl_check_hostname(const char *host, unsigned int flags)
 int
 net_ssl_send(const char *fmt, ...)
 {
-    char	*buf    = NULL;
-    int		 buflen = 0;
-    int		 n_sent = 0;
-    va_list	 ap;
+    char *buf = NULL;
+    char *bufptr = NULL;
+    int buflen = 0;
+    int n_sent = 0;
+    va_list ap;
 
     if (fmt == NULL || ssl == NULL)
 	return -1;
@@ -197,26 +198,37 @@ net_ssl_send(const char *fmt, ...)
 	return -1;
     }
 
+    bufptr = buf;
     buflen = (int) strlen(buf);
-    ERR_clear_error();
 
-    if ((n_sent = SSL_write(ssl, buf, buflen)) > 0) {
-	free(buf);
-	return n_sent;
+    while (buflen > 0) {
+	ERR_clear_error();
+	const int ret = SSL_write(ssl, bufptr, buflen);
+
+	if (ret > 0) {
+	    n_sent += ret;
+	    bufptr += ret;
+	    buflen -= ret;
+	} else {
+	    switch (SSL_get_error(ssl, ret)) {
+	    case SSL_ERROR_NONE:
+		sw_assert_not_reached();
+		break;
+	    case SSL_ERROR_WANT_READ:
+	    case SSL_ERROR_WANT_WRITE:
+		debug("net_ssl_send: want read / want write");
+		continue;
+	    }
+
+	    free(buf);
+	    return -1;
+	}
     }
 
+    debug("net_ssl_send: buflen = %d", buflen);
+    debug("net_ssl_send: n_sent = %d", n_sent);
     free(buf);
-
-    switch (SSL_get_error(ssl, n_sent)) {
-    case SSL_ERROR_NONE:
-	return 0;
-    case SSL_ERROR_WANT_READ:
-    case SSL_ERROR_WANT_WRITE:
-	err_log(0, "net_ssl_send: operation did not complete");
-	return 0;
-    }
-
-    return -1;
+    return n_sent;
 }
 
 int
