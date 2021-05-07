@@ -9,9 +9,7 @@
 /*lint -sem(err_quit, r_no) */
 /*lint -sem(err_sys, r_no)  */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+__SWIRC_BEGIN_DECLS
 
 NORETURN void	err_dump (const char *, ...) PRINTFLIKE(1);
 NORETURN void	err_exit (int error, const char *, ...) PRINTFLIKE(2);
@@ -30,8 +28,6 @@ const char *xstrerror(int errnum, char *strerrbuf, size_t buflen);
 
 void debug(const char *, ...) PRINTFLIKE(1);
 
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif
