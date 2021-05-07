@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added key F3 (scroll nicklist up) and F4 (scroll nicklist down)
 - Added nicklist
+- Added null checks
+- Added support for partial writes in `net_ssl_send()`
 - Added theme item `nicklist_nick_color`
 - Added theme item `nicklist_privilege_color`
 - Added theme item `nicklist_vline_color`
@@ -12,6 +14,8 @@ All notable changes to this project will be documented in this file.
 - Deleted command `/n`
 - Fixed a bug in `/quit` that resulted in SIGPIPE due to calling
   `SSL_shutdown()` on an already shutdown socket.
+- Fixed the behavior of `net_ssl_recv()` by checking the condition of
+  `SSL_pending()`.
 - Moved defines
 - Reindented files
 - Renamed functions and patterns
