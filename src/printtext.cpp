@@ -1429,8 +1429,11 @@ void
 set_timestamp(char *dest, size_t destsize,
 	      const struct irc_message_compo *compo)
 {
-    snprintf(dest, destsize, "%s%02d%s%02d%s%02d%s",
-	B1, compo->hour, SEP, compo->minute, SEP, compo->second, B2);
+	const int ret = snprintf(dest, destsize, "%s%02d%s%02d%s%02d%s",
+	    B1, compo->hour, SEP, compo->minute, SEP, compo->second, B2);
+
+	if (ret < 0 || static_cast<size_t>(ret) >= destsize)
+		debug("set_timestamp: snprintf: error");
 }
 
 /**
