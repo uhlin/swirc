@@ -36,6 +36,7 @@ LDFLAGS=-LIBPATH:curl-$(CURL_VERSION)/$(MACHINE)\
 LDLIBS=$(NAME_libcrypto).lib\
 	$(NAME_libssl).lib\
 	advapi32.lib\
+	kernel32.lib\
 	libcurl.lib\
 	pdcurses.lib\
 	runtimeobject.lib\
