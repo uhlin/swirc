@@ -80,7 +80,18 @@ struct text_decoration_bools {
 	bool	 is_color;
 	bool	 is_reverse;
 	bool	 is_underline;
+
+	text_decoration_bools();
 };
+
+text_decoration_bools::text_decoration_bools()
+{
+	this->is_blink     = false;
+	this->is_bold      = false;
+	this->is_color     = false;
+	this->is_reverse   = false;
+	this->is_underline = false;
+}
 
 struct case_default_context {
 	WINDOW		*win;
