@@ -36,6 +36,7 @@
 #include <windows.h>		/* MessageBox() */
 #endif
 
+#include "assertAPI.h"
 #include "curses-funcs.h"
 #include "errHand.h"
 #include "libUtils.h"
@@ -202,6 +203,37 @@ err_ret(const char *fmt, ...)
     va_start(ap, fmt);
     err_doit(true, errno, fmt, ap);
     va_end(ap);
+}
+
+const char *
+errdesc_by_last_err(void)
+{
+#if defined(UNIX)
+    return ("Unknown error!");
+#elif defined(WIN32)
+    const DWORD dwFlags = (FORMAT_MESSAGE_FROM_SYSTEM |
+			   FORMAT_MESSAGE_IGNORE_INSERTS);
+    const DWORD dwMessageId = GetLastError();
+    const DWORD dwLanguageId = MAKELANGID(LANG_NEUTRAL, SUBLANG_SYS_DEFAULT);
+    TCHAR lpBuffer[MAXERROR];
+
+    BZERO(lpBuffer, ARRAY_SIZE(lpBuffer));
+
+    if (sizeof(TCHAR) != 1 ||
+	!FormatMessage(dwFlags, NULL, dwMessageId, dwLanguageId,
+	    addrof(lpBuffer[0]), ARRAY_SIZE(lpBuffer), NULL)) {
+	return ("Unknown error!");
+    }
+
+    sw_static_assert(sizeof(TCHAR) == 1, "TCHAR unexpectedly large. "
+	"UNICODE defined?");
+
+    static char desc[MAXERROR];
+
+    (void) memcpy(desc, lpBuffer, ARRAY_SIZE(desc));
+
+    return addrof(desc[0]);
+#endif
 }
 
 const char *
