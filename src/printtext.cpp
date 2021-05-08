@@ -213,7 +213,7 @@ append_newline(wchar_t **wc_buf)
     const size_t newsize =
 	size_product(wcslen(*wc_buf) + sizeof "\n", sizeof(wchar_t));
 
-    *wc_buf = xrealloc(*wc_buf, newsize);
+    *wc_buf = static_cast<wchar_t *>(xrealloc(*wc_buf, newsize));
 
     if ((errno = sw_wcscat(*wc_buf, L"\n", newsize)) != 0)
 	err_sys("printtext: append_newline");
@@ -274,7 +274,7 @@ convert_wc(wchar_t wc)
     size_t bytes_written; /* not used */
 #endif
     const size_t size = MB_LEN_MAX + 1;
-    unsigned char *mbs = xcalloc(size, 1);
+    unsigned char *mbs = static_cast<unsigned char *>(xcalloc(size, 1));
 
     BZERO(&ps, sizeof(mbstate_t));
 
@@ -785,7 +785,8 @@ get_processed_out_message(const char *unproc_msg,
     enum message_specifier_type spec_type, bool include_ts,
     const char *srv_time)
 {
-    struct message_components *pout = xcalloc(sizeof *pout, 1);
+    struct message_components *pout =
+	static_cast<struct message_components *>(xcalloc(sizeof *pout, 1));
 
     pout->text = NULL;
     pout->indent = 0;
@@ -926,7 +927,7 @@ static wchar_t *
 windows_convert_to_utf8(const char *buf)
 {
     const int sz = (int) (strlen(buf) + 1);
-    wchar_t *out = xcalloc(sz, sizeof(wchar_t));
+    wchar_t *out = static_cast<wchar_t *>(xcalloc(sz, sizeof *out));
 
     if (MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,buf,-1,out,sz) > 0)
 	return out;
@@ -960,7 +961,7 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
     original_locale = strdup_printf("%s.%s",
 	li->lang_and_territory, li->codeset);
     tmp_locale      = strdup_printf("%s.%s", li->lang_and_territory, codeset);
-    out             = xcalloc(sz, sizeof(wchar_t));
+    out             = static_cast<wchar_t *>(xcalloc(sz, sizeof *out));
 
     if (setlocale(LC_CTYPE, tmp_locale) == NULL ||
 	(bytes_convert = xmbstowcs(out, buf, sz - 1)) == g_conversion_failed) {
@@ -1032,7 +1033,7 @@ perform_convert_buffer(const char **in_buf)
 
     /* fallback solution... */
     sz  = strlen(*in_buf) + 1;
-    out = xcalloc(sz, sizeof(wchar_t));
+    out = static_cast<wchar_t *>(xcalloc(sz, sizeof *out));
 
     BZERO(&ps, sizeof(mbstate_t));
 
@@ -1112,7 +1113,8 @@ PPRINTTEXT_CONTEXT
 printtext_context_new(PIRC_WINDOW window, enum message_specifier_type spec_type,
     bool include_ts)
 {
-    PPRINTTEXT_CONTEXT ctx = xcalloc(sizeof *ctx, 1);
+    PPRINTTEXT_CONTEXT ctx =
+	static_cast<PPRINTTEXT_CONTEXT>(xcalloc(sizeof *ctx, 1));
 
     ctx->window = window;
     ctx->spec_type = spec_type;
