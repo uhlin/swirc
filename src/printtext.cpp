@@ -1340,13 +1340,7 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
     int insert_count = 0;
     int line_count = 0;
     int max_lines_flagged = 0;
-    struct text_decoration_bools booleans = {
-	.is_blink     = false,
-	.is_bold      = false,
-	.is_color     = false,
-	.is_reverse   = false,
-	.is_underline = false,
-    };
+    struct text_decoration_bools booleans; // calls constructor
     wchar_t *wc_buf = NULL, *wc_bufp = NULL;
 
 #if defined(UNIX)
