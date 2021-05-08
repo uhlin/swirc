@@ -1498,7 +1498,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
     const bool shouldOutData = !(ctx->window->scroll_mode);
 
     if (shouldOutData) {
-	if (g_on_air && is_irc_channel(ctx->window->label) &&
+	if (g_on_air && is_irc_channel(ctx->window->label) && !g_icb_mode &&
 	    (!ctx->window->received_names || isNull(ctx->window->nicklist.pan)))
 	    /* no */;
 	else {
