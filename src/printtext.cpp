@@ -1444,83 +1444,74 @@ set_timestamp(char *dest, size_t destsize,
 void
 vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 {
-    char *fmt_copy = NULL;
-    const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
-    struct integer_context intctx = {
-	.setting_name     = "textbuffer_size_absolute",
-	.fallback_default = 1000,
-	.lo_limit         = 350,
-	.hi_limit         = 4700,
-    };
-    struct message_components *pout = NULL;
+	char *fmt_copy = NULL;
+	const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
+	struct integer_context intctx("textbuffer_size_absolute", 350, 4700,
+	    1000);
+	struct message_components *pout = NULL;
 
 #if defined(UNIX)
-    if ((errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0)
-	err_sys("vprinttext: pthread_once");
+	if ((errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init))
+	    != 0)
+		err_sys("vprinttext: pthread_once");
 #elif defined(WIN32)
-    if ((errno = init_once(&vprinttext_init_done, vprinttext_mutex_init)) != 0)
-	err_sys("vprinttext: init_once");
+	if ((errno = init_once(&vprinttext_init_done, vprinttext_mutex_init))
+	    != 0)
+		err_sys("vprinttext: init_once");
 #endif
 
-    mutex_lock(&vprinttext_mutex);
+	mutex_lock(&vprinttext_mutex);
+	fmt_copy = strdup_vprintf(fmt, ap);
+	pout = get_processed_out_message(fmt_copy, ctx->spec_type,
+	    ctx->include_ts, (ctx->has_server_time ? ctx->server_time : NULL));
 
-    fmt_copy = strdup_vprintf(fmt, ap);
-    pout = get_processed_out_message(fmt_copy, ctx->spec_type, ctx->include_ts,
-	(ctx->has_server_time ? ctx->server_time : NULL));
-
-    if (tbszp1 > config_integer(&intctx)) {
-	/*
-	 * Buffer full. Remove head...
-	 */
-
-	errno =
-	    textBuf_remove(ctx->window->buf, textBuf_head(ctx->window->buf));
-
-	if (errno)
-	    err_sys("vprinttext: textBuf_remove");
-    }
-
-    if (textBuf_size(ctx->window->buf) == 0) {
-	errno =
-	    textBuf_ins_next(ctx->window->buf, NULL, pout->text, pout->indent);
-
-	if (errno)
-	    err_sys("vprinttext: textBuf_ins_next");
-    } else {
-	errno = textBuf_ins_next(
-	    ctx->window->buf,
-	    textBuf_tail(ctx->window->buf),
-	    pout->text,
-	    pout->indent);
-
-	if (errno)
-	    err_sys("vprinttext: textBuf_ins_next");
-    }
-
-    const bool shouldOutData = !(ctx->window->scroll_mode);
-
-    if (shouldOutData) {
-	if (g_on_air && is_irc_channel(ctx->window->label) && !g_icb_mode &&
-	    (!ctx->window->received_names || isNull(ctx->window->nicklist.pan)))
-	    /* no */;
-	else {
-	    printtext_puts(panel_window(ctx->window->pan), pout->text,
-		pout->indent, -1, NULL);
+	if (tbszp1 > config_integer(&intctx)) {
+		/*
+		 * Buffer full. Remove head...
+		 */
+		if ((errno = textBuf_remove(ctx->window->buf,
+		    textBuf_head(ctx->window->buf))) != 0)
+			err_sys("vprinttext: textBuf_remove");
 	}
-    }
 
-    if (ctx->window->logging) {
-	char *logpath = log_get_path(g_server_hostname, ctx->window->label);
-
-	if (!isNull(logpath)) {
-	    log_msg(logpath, pout->text);
-	    free(logpath);
+	if (textBuf_size(ctx->window->buf) == 0) {
+		if ((errno = textBuf_ins_next(ctx->window->buf, NULL,
+		    pout->text, pout->indent)) != 0)
+			err_sys("vprinttext: textBuf_ins_next");
+	} else {
+		if ((errno = textBuf_ins_next(ctx->window->buf,
+		    textBuf_tail(ctx->window->buf), pout->text,
+		    pout->indent)) != 0)
+			err_sys("vprinttext: textBuf_ins_next");
 	}
-    }
 
-    free(fmt_copy);
-    free(pout->text);
-    free(pout);
+	const bool shouldOutData = !(ctx->window->scroll_mode);
 
-    mutex_unlock(&vprinttext_mutex);
+	if (shouldOutData) {
+		if (g_on_air &&
+		    is_irc_channel(ctx->window->label) &&
+		    !g_icb_mode &&
+		    (!ctx->window->received_names ||
+		     ctx->window->nicklist.pan == NULL))
+			/* no */;
+		else {
+			printtext_puts(panel_window(ctx->window->pan),
+			    pout->text, pout->indent, -1, NULL);
+		}
+	}
+
+	if (ctx->window->logging) {
+		char *logpath = log_get_path(g_server_hostname,
+		    ctx->window->label);
+
+		if (logpath) {
+			log_msg(logpath, pout->text);
+			free(logpath);
+		}
+	}
+
+	free(fmt_copy);
+	free(pout->text);
+	free(pout);
+	mutex_unlock(&vprinttext_mutex);
 }
