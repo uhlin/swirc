@@ -70,25 +70,25 @@
 ****************************************************************/
 
 struct message_components {
-    char *text;
-    int   indent;
+	char	*text;
+	int	 indent;
 };
 
 struct text_decoration_bools {
-    bool is_blink;
-    bool is_bold;
-    bool is_color;
-    bool is_reverse;
-    bool is_underline;
+	bool	 is_blink;
+	bool	 is_bold;
+	bool	 is_color;
+	bool	 is_reverse;
+	bool	 is_underline;
 };
 
 struct case_default_context {
-    WINDOW    *win;
-    wchar_t    wc;
-    int        nextchar_empty;
-    int        indent;
-    int        max_lines;
-    ptrdiff_t  diff;
+	WINDOW		*win;
+	wchar_t		 wc;
+	bool		 nextchar_empty;
+	int		 indent;
+	int		 max_lines;
+	ptrdiff_t	 diff;
 };
 
 /****************************************************************
