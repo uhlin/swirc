@@ -1,5 +1,5 @@
 /* Wrappers that deals with WIN32 mutexes
-   Copyright (C) 2012, 2013 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012, 2013, 2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -28,39 +28,52 @@
    POSSIBILITY OF SUCH DAMAGE. */
 
 #include "common.h"
+
+#include "assertAPI.h"
 #include "errHand.h"		/* err_quit() */
 #include "vcMutex.h"
 
 void
 mutex_lock(HANDLE *mutex)
 {
-    if (WaitForSingleObject(*mutex, INFINITE) != WAIT_OBJECT_0) {
-	err_quit("WaitForSingleObject error 0x%lx",
-		 (unsigned long int) GetLastError());
-    }
+	switch (WaitForSingleObject(*mutex, INFINITE)) {
+	case WAIT_ABANDONED:
+		debug("mutex_lock: WaitForSingleObject: wait abandoned");
+		break;
+	case WAIT_OBJECT_0:
+		break;
+	case WAIT_TIMEOUT:
+		sw_assert_not_reached();
+		break;
+	case WAIT_FAILED:
+	default:
+		err_quit("mutex_lock: WaitForSingleObject: %s",
+		    errdesc_by_last_err());
+		break;
+	}
 }
 
 void
 mutex_unlock(HANDLE *mutex)
 {
-    if (!ReleaseMutex(*mutex)) {
-	err_quit("ReleaseMutex error 0x%lx",
-		 (unsigned long int) GetLastError());
-    }
+	if (!ReleaseMutex(*mutex)) {
+		err_quit("mutex_unlock: ReleaseMutex: %s",
+		    errdesc_by_last_err());
+	}
 }
 
 void
 mutex_destroy(HANDLE *mutex)
 {
-    if (!CloseHandle(*mutex)) {
-	err_quit("CloseHandle error 0x%lx", (unsigned long int) GetLastError());
-    }
+	if (!CloseHandle(*mutex)) {
+		err_quit("mutex_destroy: CloseHandle: %s",
+		    errdesc_by_last_err());
+	}
 }
 
 void
 mutex_new(HANDLE *mutex)
 {
-    if ((*mutex = CreateMutex(NULL, FALSE, NULL)) == NULL) {
-	err_quit("CreateMutex error 0x%lx", (unsigned long int) GetLastError());
-    }
+	if ((*mutex = CreateMutex(NULL, FALSE, NULL)) == NULL)
+		err_quit("mutex_new: CreateMutex: %s", errdesc_by_last_err());
 }
