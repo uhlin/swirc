@@ -160,13 +160,13 @@ const char g_textdeco_chars[] =
 ****************************************************************/
 
 #if defined(UNIX)
-static pthread_once_t  vprinttext_init_done = PTHREAD_ONCE_INIT;
-static pthread_once_t  puts_init_done       = PTHREAD_ONCE_INIT;
-static pthread_mutex_t vprinttext_mutex;
+static pthread_once_t	vprinttext_init_done = PTHREAD_ONCE_INIT;
+static pthread_once_t	puts_init_done = PTHREAD_ONCE_INIT;
+static pthread_mutex_t	vprinttext_mutex;
 #elif defined(WIN32)
-static init_once_t vprinttext_init_done = ONCE_INITIALIZER;
-static init_once_t puts_init_done       = ONCE_INITIALIZER;
-static HANDLE      vprinttext_mutex;
+static init_once_t	vprinttext_init_done = ONCE_INITIALIZER;
+static init_once_t	puts_init_done = ONCE_INITIALIZER;
+static HANDLE		vprinttext_mutex;
 #endif
 
 static struct ptext_colorMap_tag {
