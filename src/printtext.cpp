@@ -1118,10 +1118,10 @@ puts_mutex_init(void)
 static void
 replace_characters_with_spaces(wchar_t *wc_buf, const wchar_t *set)
 {
-    wchar_t *wcp = NULL;
+	wchar_t *wcp;
 
-    while ((wcp = wcspbrk(wc_buf, set)) != NULL)
-	*wcp = L' ';
+	while ((wcp = wcspbrk(wc_buf, set)) != NULL)
+		*wcp = L' ';
 }
 
 /**
