@@ -1296,19 +1296,17 @@ squeeze_text_deco(char *buffer)
 short int
 color_pair_find(short int fg, short int bg)
 {
-    const short int gipp1 = g_initialized_pairs + 1;
-    short int pnum; /* pair number */
-    short int x, y;
+	const short int gipp1 = g_initialized_pairs + 1;
+	short int x, y;
 
-    for (pnum = 1; pnum < gipp1; pnum++) {
-	if (pair_content(pnum, &x, &y) == ERR) {
-	    return -1;
-	} else if (x == fg && y == bg) { /* found match */
-	    return pnum;
+	for (short int pnum = 1; pnum < gipp1; pnum++) {
+		if (pair_content(pnum, &x, &y) == ERR)
+			return -1;
+		else if (x == fg && y == bg) /* found match */
+			return pnum;
 	}
-    }
 
-    return -1;
+	return -1;
 }
 
 /**
