@@ -386,32 +386,36 @@ check_for_part2(wchar_t **bufp, char *fg, bool *has_comma)
 static cc_check_t
 check_for_part3(wchar_t **bufp, bool *has_comma, bool fg_complete, char *bg)
 {
-    if (!*++(*bufp))
-	return BUF_EOF;
-    unsigned char *mbs = convert_wc(**bufp);
-    if (STRLEN_CAST(mbs) != 1 || (*mbs != ',' && !sw_isdigit(*mbs))) {
-	(*bufp)--;
-	free(mbs);
-	return STOP_INTERPRETING;
-    } else if (*mbs == ',' && *has_comma) {
-	(*bufp)--;
-	free(mbs);
-	return STOP_INTERPRETING;
-    } else if (*mbs != ',' && fg_complete) {
-	(*bufp)--;
-	free(mbs);
-	return STOP_INTERPRETING;
-    }
+	unsigned char *mbs;
 
-    if (*mbs == ',')
-	*has_comma = true;
-    else if (sw_isdigit(*mbs))
-	sw_snprintf(bg, 2, "%c", *mbs);
-    else
-	sw_assert_not_reached();
+	if (!*++(*bufp))
+		return BUF_EOF;
 
-    free(mbs);
-    return GO_ON;
+	mbs = convert_wc(**bufp);
+
+	if (STRLEN_CAST(mbs) != 1 || (*mbs != ',' && !sw_isdigit(*mbs))) {
+		(*bufp)--;
+		free(mbs);
+		return STOP_INTERPRETING;
+	} else if (*mbs == ',' && *has_comma) {
+		(*bufp)--;
+		free(mbs);
+		return STOP_INTERPRETING;
+	} else if (*mbs != ',' && fg_complete) {
+		(*bufp)--;
+		free(mbs);
+		return STOP_INTERPRETING;
+	}
+
+	if (*mbs == ',')
+		*has_comma = true;
+	else if (sw_isdigit(*mbs))
+		sw_snprintf(bg, 2, "%c", *mbs);
+	else
+		sw_assert_not_reached();
+
+	free(mbs);
+	return GO_ON;
 }
 
 /**
