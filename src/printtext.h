@@ -7,12 +7,12 @@
 
 /* text decoration */
 enum {
-    BLINK     = '\035',
-    BOLD      = '\002',
-    COLOR     = '\003',
-    NORMAL    = '\017',
-    REVERSE   = '\026',
-    UNDERLINE = '\037'
+	BLINK     = '\035',
+	BOLD      = '\002',
+	COLOR     = '\003',
+	NORMAL    = '\017',
+	REVERSE   = '\026',
+	UNDERLINE = '\037'
 };
 
 #define TXT_BLINK     "\035"
@@ -23,14 +23,14 @@ enum {
 #define TXT_UNDERLINE "\037"
 
 enum message_specifier_type {
-    TYPE_SPEC1,
-    TYPE_SPEC2,
-    TYPE_SPEC3,
-    TYPE_SPEC1_SPEC2,
-    TYPE_SPEC1_FAILURE,
-    TYPE_SPEC1_SUCCESS,
-    TYPE_SPEC1_WARN,
-    TYPE_SPEC_NONE
+	TYPE_SPEC1,
+	TYPE_SPEC2,
+	TYPE_SPEC3,
+	TYPE_SPEC1_SPEC2,
+	TYPE_SPEC1_FAILURE,
+	TYPE_SPEC1_SUCCESS,
+	TYPE_SPEC1_WARN,
+	TYPE_SPEC_NONE
 };
 
 typedef struct tagPRINTTEXT_CONTEXT {
