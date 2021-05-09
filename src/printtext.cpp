@@ -362,22 +362,28 @@ check_for_part1(wchar_t **bufp, char *fg)
 static cc_check_t
 check_for_part2(wchar_t **bufp, char *fg, bool *has_comma)
 {
-    if (!*++(*bufp))
-	return BUF_EOF;
-    unsigned char *mbs = convert_wc(**bufp);
-    if (STRLEN_CAST(mbs) != 1 || (!sw_isdigit(*mbs) && *mbs != ',')) {
-	(*bufp)--;
+	unsigned char *mbs;
+
+	if (!*++(*bufp))
+		return BUF_EOF;
+
+	mbs = convert_wc(**bufp);
+
+	if (STRLEN_CAST(mbs) != 1 || (!sw_isdigit(*mbs) && *mbs != ',')) {
+		(*bufp)--;
+		free(mbs);
+		return STOP_INTERPRETING;
+	}
+
+	if (sw_isdigit(*mbs))
+		sw_snprintf(fg, 2, "%c", *mbs);
+	else if (*mbs == ',')
+		*has_comma = true;
+	else
+		sw_assert_not_reached();
+
 	free(mbs);
-	return STOP_INTERPRETING;
-    }
-    if (sw_isdigit(*mbs))
-	sw_snprintf(fg, 2, "%c", *mbs);
-    else if (*mbs == ',')
-	*has_comma = true;
-    else
-	sw_assert_not_reached();
-    free(mbs);
-    return GO_ON;
+	return GO_ON;
 }
 
 /**
