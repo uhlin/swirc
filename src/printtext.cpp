@@ -291,13 +291,13 @@ case_blink(WINDOW *win, bool *is_blink)
 static void
 case_bold(WINDOW *win, bool *is_bold)
 {
-    if (! (*is_bold)) {
-	WATTR_ON(win, A_BOLD);
-	*is_bold = true;
-    } else {
-	WATTR_OFF(win, A_BOLD);
-	*is_bold = false;
-    }
+	if (! (*is_bold)) {
+		WATTR_ON(win, A_BOLD);
+		*is_bold = true;
+	} else {
+		WATTR_OFF(win, A_BOLD);
+		*is_bold = false;
+	}
 }
 
 /**
