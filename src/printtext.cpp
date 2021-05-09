@@ -100,7 +100,36 @@ struct case_default_context {
 	int		 indent;
 	int		 max_lines;
 	ptrdiff_t	 diff;
+
+	case_default_context();
+	case_default_context(WINDOW *, wchar_t, bool, int, int, ptrdiff_t);
 };
+
+case_default_context::case_default_context()
+{
+	this->win            = NULL;
+	this->wc             = 0L;
+	this->nextchar_empty = false;
+	this->indent         = 0;
+	this->max_lines      = 0;
+	this->diff           = 0;
+}
+
+case_default_context::case_default_context(
+	WINDOW		*win,
+	wchar_t		 wc,
+	bool		 nextchar_empty,
+	int		 indent,
+	int		 max_lines,
+	ptrdiff_t	 diff)
+{
+	this->win            = win;
+	this->wc             = wc;
+	this->nextchar_empty = nextchar_empty;
+	this->indent         = indent;
+	this->max_lines      = max_lines;
+	this->diff           = diff;
+}
 
 /****************************************************************
 *                                                               *
