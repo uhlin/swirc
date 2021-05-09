@@ -29,14 +29,16 @@
 
 #include "common.h"
 
+#include <clocale>
+#include <cwctype>
+#include <stdexcept>
+
 #ifdef UNIT_TESTING
 #undef UNIT_TESTING
 #include <setjmp.h>
 #include <cmocka.h>
 #define UNIT_TESTING 1
 #endif
-#include <locale.h>
-#include <wctype.h>
 
 #include "assertAPI.h"
 #include "config.h"
@@ -988,50 +990,64 @@ windows_convert_to_utf8(const char *buf)
 static wchar_t *
 try_convert_buf_with_cs(const char *buf, const char *codeset)
 {
-    char		*original_locale = NULL;
-    char		*tmp_locale	 = NULL;
-    const size_t	 sz		 = strlen(buf) + 1;
-    size_t		 bytes_convert	 = 0;
-    struct locale_info	*li		 = get_locale_info(LC_CTYPE);
-    wchar_t		*out		 = NULL;
+	struct locale_info *li = get_locale_info(LC_CTYPE);
+	char *original_locale = NULL;
+	char *tmp_locale = NULL;
+	wchar_t *out = NULL;
 
-    if (isNull(li->lang_and_territory) || isNull(li->codeset))
-	goto err;
+	try {
+		size_t bytes_convert = 0;
 
-    original_locale = strdup_printf("%s.%s",
-	li->lang_and_territory, li->codeset);
-    tmp_locale      = strdup_printf("%s.%s", li->lang_and_territory, codeset);
-    out             = static_cast<wchar_t *>(xcalloc(sz, sizeof *out));
+		if (buf == NULL || codeset == NULL) {
+			throw std::runtime_error("invalid arguments");
+		} else if (li->lang_and_territory == NULL ||
+			   li->codeset == NULL) {
+			throw std::runtime_error("failed to get locale "
+			    "information");
+		}
 
-    if (setlocale(LC_CTYPE, tmp_locale) == NULL ||
-	(bytes_convert = xmbstowcs(out, buf, sz - 1)) == g_conversion_failed) {
-	if (setlocale(LC_CTYPE, original_locale) == NULL) {
-	    err_log(EPERM, "In try_convert_buf_with_cs: "
-		"cannot restore original locale (%s)", original_locale);
+		const size_t size = strlen(buf) + 1;
+
+		original_locale = strdup_printf("%s.%s", li->lang_and_territory,
+		    li->codeset);
+		tmp_locale = strdup_printf("%s.%s", li->lang_and_territory,
+		    codeset);
+		out = static_cast<wchar_t *>(xcalloc(size, sizeof *out));
+
+		if (setlocale(LC_CTYPE, tmp_locale) == NULL ||
+		    (bytes_convert = xmbstowcs(out, buf, size - 1)) ==
+		    g_conversion_failed) {
+			if (setlocale(LC_CTYPE, original_locale) == NULL) {
+				err_log(EPERM, "try_convert_buf_with_cs: "
+				    "cannot restore original locale (%s)",
+				    original_locale);
+			}
+
+			throw std::runtime_error("conversion failed");
+		}
+
+		if (bytes_convert == (size - 1))
+			out[size - 1] = 0L;
+		if (setlocale(LC_CTYPE, original_locale) == NULL) {
+			err_log(EPERM, "try_convert_buf_with_cs: "
+			    "cannot restore original locale (%s)",
+			    original_locale);
+		}
+
+		free_locale_info(li);
+		free(original_locale);
+		free(tmp_locale);
+		return out;
+	} catch (std::runtime_error &e) {
+		err_log(0, "try_convert_buf_with_cs: %s", e.what());
+		free_locale_info(li);
+		free(original_locale);
+		free(tmp_locale);
+		free(out);
+		/* FALLTHROUGH */
 	}
 
-	goto err;
-    }
-
-    if (bytes_convert == sz - 1)
-	out[sz - 1] = 0L;
-
-    if (setlocale(LC_CTYPE, original_locale) == NULL) {
-	err_log(EPERM, "In try_convert_buf_with_cs: "
-	    "cannot restore original locale (%s)", original_locale);
-    }
-
-    free_locale_info(li);
-    free(original_locale);
-    free(tmp_locale);
-    return out;
-
-  err:
-    free_locale_info(li);
-    free(original_locale);
-    free(tmp_locale);
-    free(out);
-    return NULL;
+	return NULL;
 }
 
 /**
