@@ -247,6 +247,8 @@ addmbs(WINDOW *win, const unsigned char *mbs)
 
 	while ((c = *p++) != '\0')
 		WADDCH(win, c);
+
+	(void) wnoutrefresh(win);
 }
 
 static void
@@ -1505,8 +1507,6 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 			break;
 		} /* case default */
 		} /* switch block */
-
-		(void) wnoutrefresh(pwin);
 
 		++ wc_bufp;
 
