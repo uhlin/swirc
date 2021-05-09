@@ -642,21 +642,21 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 static void
 do_indent(WINDOW *win, const int indent, int *insert_count)
 {
-    attr_t attrs = 0;
-    const chtype blank = ' ';
-    int counter = 0;
+	attr_t		attrs = 0;
+	const chtype	blank = ' ';
+	int		counter = 0;
 
-    /* turn off all attributes during indentation */
-    attrs = win->_attrs;
-    wattrset(win, A_NORMAL);
+	/* turn off all attributes during indentation */
+	attrs = win->_attrs;
+	(void) wattrset(win, A_NORMAL);
 
-    while (counter++ != indent) {
-	WADDCH(win, blank);
-	(*insert_count)++;
-    }
+	while (counter++ != indent) {
+		WADDCH(win, blank);
+		(*insert_count)++;
+	}
 
-    /* restore attributes after indenting */
-    wattrset(win, attrs);
+	/* restore attributes after indenting */
+	(void) wattrset(win, attrs);
 }
 
 /**
