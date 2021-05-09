@@ -332,9 +332,9 @@ convert_wc(wchar_t wc)
 }
 
 typedef enum {
-    BUF_EOF,
-    GO_ON,
-    STOP_INTERPRETING
+	BUF_EOF,
+	GO_ON,
+	STOP_INTERPRETING
 } cc_check_t;
 
 /**
