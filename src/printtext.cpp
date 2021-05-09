@@ -745,13 +745,13 @@ case_default(const struct case_default_context *ctx, int *rep_count,
 static void
 case_reverse(WINDOW *win, bool *is_reverse)
 {
-    if (! (*is_reverse)) {
-	WATTR_ON(win, A_REVERSE);
-	*is_reverse = true;
-    } else {
-	WATTR_OFF(win, A_REVERSE);
-	*is_reverse = false;
-    }
+	if (! (*is_reverse)) {
+		WATTR_ON(win, A_REVERSE);
+		*is_reverse = true;
+	} else {
+		WATTR_OFF(win, A_REVERSE);
+		*is_reverse = false;
+	}
 }
 
 /**
