@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added function `errdesc_by_last_err()` and made use of it
 - Added key F3 (scroll nicklist up) and F4 (scroll nicklist down)
 - Added nicklist
 - Added null checks
@@ -17,8 +18,9 @@ All notable changes to this project will be documented in this file.
 - Fixed the behavior of `net_ssl_recv()` by checking the condition of
   `SSL_pending()`.
 - Moved defines
-- Reindented files
+- Reformatted and reindented files
 - Renamed functions and patterns
+- Rewrote the printtext module in C++ and made multiple improvements!
 
 ## [3.2.7] - 2021-03-13 ##
 - Added checking of `term_is_too_small()`
