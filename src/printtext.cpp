@@ -946,13 +946,13 @@ static SW_INLINE void
 handle_foo_situation(char **buffer, long int *i, long int *j,
 		     const char *reject)
 {
-    if (!(*buffer)[*i]) {
-	return;
-    } else if ((*buffer)[*i] == COLOR) {
-	(*i)--;
-    } else if (strchr(reject, (*buffer)[*i]) == NULL) {
-	(*buffer)[(*j)++] = (*buffer)[*i];
-    }
+	if (!(*buffer)[*i]) {
+		return;
+	} else if ((*buffer)[*i] == COLOR) {
+		(*i)--;
+	} else if (strchr(reject, (*buffer)[*i]) == NULL) {
+		(*buffer)[(*j)++] = (*buffer)[*i];
+	}
 }
 
 /**
