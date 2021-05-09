@@ -252,13 +252,13 @@ addmbs(WINDOW *win, const unsigned char *mbs)
 static void
 append_newline(wchar_t **wc_buf)
 {
-    const size_t newsize =
-	size_product(wcslen(*wc_buf) + sizeof "\n", sizeof(wchar_t));
+	const size_t newsize = size_product(wcslen(*wc_buf) + sizeof "\n",
+	    sizeof(wchar_t));
 
-    *wc_buf = static_cast<wchar_t *>(xrealloc(*wc_buf, newsize));
+	*wc_buf = static_cast<wchar_t *>(xrealloc(*wc_buf, newsize));
 
-    if ((errno = sw_wcscat(*wc_buf, L"\n", newsize)) != 0)
-	err_sys("printtext: append_newline");
+	if ((errno = sw_wcscat(*wc_buf, L"\n", newsize)) != 0)
+		err_sys("printtext: append_newline");
 }
 
 /**
