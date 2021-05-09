@@ -803,14 +803,15 @@ get_mb_strlen(const char *s)
 static void
 set_indent(int *indent, const char *fmt, ...)
 {
-    va_list	 ap;
-    char	*str = NULL;
+	va_list ap;
+	char *str = NULL;
 
-    va_start(ap, fmt);
-    str = strdup_vprintf(fmt, ap);
-    va_end(ap);
-    *indent = ((int) get_mb_strlen(squeeze_text_deco(str)));
-    free(str);
+	va_start(ap, fmt);
+	str = strdup_vprintf(fmt, ap);
+	va_end(ap);
+
+	*indent = static_cast<int>(get_mb_strlen(squeeze_text_deco(str)));
+	free(str);
 }
 
 /**
