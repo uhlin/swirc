@@ -1363,95 +1363,95 @@ printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
  */
 void
 printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
-    int *rep_count)
+	       int *rep_count)
 {
-    const bool pwin_scrollable = is_scrollok(pwin);
-    int insert_count = 0;
-    int line_count = 0;
-    int max_lines_flagged = 0;
-    struct text_decoration_bools booleans; // calls constructor
-    wchar_t *wc_buf = NULL, *wc_bufp = NULL;
+	int insert_count = 0;
+	int line_count = 0;
+	struct text_decoration_bools booleans; // calls constructor
+	wchar_t *wc_buf = NULL;
 
 #if defined(UNIX)
-    if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0)
-	err_sys("printtext_puts: pthread_once");
+	if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0)
+		err_sys("printtext_puts: pthread_once");
 #elif defined(WIN32)
-    if ((errno = init_once(&puts_init_done, puts_mutex_init)) != 0)
-	err_sys("printtext_puts: init_once");
+	if ((errno = init_once(&puts_init_done, puts_mutex_init)) != 0)
+		err_sys("printtext_puts: init_once");
 #endif
 
-    if (!isNull(rep_count)) {
-	*rep_count = 0;
-    }
+	if (rep_count)
+		*rep_count = 0;
+	if (pwin == NULL || buf == NULL)
+		err_exit(EINVAL, "printtext_puts");
+	else if (strings_match(buf, "") || term_is_too_small())
+		return;
 
-    if (isNull(buf)) {
-	err_exit(EINVAL, "printtext_puts");
-    } else if (isEmpty(buf) || term_is_too_small()) {
-	return;
-    }
+	mutex_lock(&g_puts_mutex);
+	wc_buf = perform_convert_buffer(&buf);
 
-    mutex_lock(&g_puts_mutex);
-    wc_buf = perform_convert_buffer(&buf);
-    if (pwin_scrollable)
-	append_newline(&wc_buf);
-    replace_characters_with_space(wc_buf, L"\f\t\v");
+	if (is_scrollok(pwin))
+		append_newline(&wc_buf);
 
-    for (wc_bufp = &wc_buf[0], max_lines_flagged = 0;
-	*wc_bufp && !max_lines_flagged; wc_bufp++) {
-	wchar_t wc = *wc_bufp;
+	replace_characters_with_space(wc_buf, L"\f\t\v");
 
-	switch (wc) {
-	case BLINK:
-	    case_blink(pwin, &booleans.is_blink);
-	    break;
-	case BOLD:
-	    case_bold(pwin, &booleans.is_bold);
-	    break;
-	case COLOR:
-	    case_color(pwin, &booleans.is_color, &wc_bufp);
-	    break;
-	case NORMAL:
-	    text_decoration_bools_reset(&booleans);
-	    wattrset(pwin, A_NORMAL);
-	    break;
-	case REVERSE:
-	    case_reverse(pwin, &booleans.is_reverse);
-	    break;
-	case UNDERLINE:
-	    case_underline(pwin, &booleans.is_underline);
-	    break;
-	default:
-	{
-	    ptrdiff_t diff = 0;
-	    wchar_t *wcp = NULL;
+	wchar_t *wc_bufp = &wc_buf[0];
+	bool max_lines_flagged = false;
 
-	    if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) != NULL) {
-		diff = wcp - wc_bufp;
-	    }
+	while (*wc_bufp && !max_lines_flagged) {
+		wchar_t wc = *wc_bufp;
 
-	    struct case_default_context def_ctx = {
-		.win		= pwin,
-		.wc		= wc,
-		.nextchar_empty = !wcscmp(wc_bufp + 1, L""),
-		.indent		= indent,
-		.max_lines	= max_lines,
-		.diff		= diff,
-	    };
+		switch (wc) {
+		case BLINK:
+			case_blink(pwin, &booleans.is_blink);
+			break;
+		case BOLD:
+			case_bold(pwin, &booleans.is_bold);
+			break;
+		case COLOR:
+			case_color(pwin, &booleans.is_color, &wc_bufp);
+			break;
+		case NORMAL:
+			text_decoration_bools_reset(&booleans);
+			(void) wattrset(pwin, A_NORMAL);
+			break;
+		case REVERSE:
+			case_reverse(pwin, &booleans.is_reverse);
+			break;
+		case UNDERLINE:
+			case_underline(pwin, &booleans.is_underline);
+			break;
+		default:
+		{
+			ptrdiff_t	 diff = 0;
+			wchar_t		*wcp = NULL;
 
-	    case_default(&def_ctx, rep_count, &line_count, &insert_count);
-	    break;
-	} /* case default */
-	} /* switch block */
-	if (pwin_scrollable && max_lines > 0) {
-	    max_lines_flagged = line_count >= max_lines;
+			if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) !=
+			    NULL)
+				diff = (wcp - wc_bufp);
+			struct case_default_context def_ctx(pwin, wc,
+			    !wcscmp(wc_bufp + 1, L""), indent, max_lines, diff);
+			case_default(&def_ctx, rep_count, &line_count,
+			    &insert_count);
+			break;
+		} /* case default */
+		} /* switch block */
+
+		(void) wnoutrefresh(pwin);
+
+		++ wc_bufp;
+
+		if (is_scrollok(pwin) && max_lines > 0)
+			max_lines_flagged = line_count >= max_lines;
 	}
-    }
 
-    free(wc_buf);
-    wattrset(pwin, A_NORMAL);
-    update_panels();
-    doupdate();
-    mutex_unlock(&g_puts_mutex);
+	free(wc_buf);
+	wc_buf = NULL;
+
+	(void) wattrset(pwin, A_NORMAL);
+
+	update_panels();
+	(void) doupdate();
+
+	mutex_unlock(&g_puts_mutex);
 }
 
 #define B1 Theme("statusbar_leftBracket")
