@@ -1196,94 +1196,97 @@ printtext_context_init(PPRINTTEXT_CONTEXT ctx, PIRC_WINDOW window,
 char *
 squeeze_text_deco(char *buffer)
 {
-    static const char reject[] =
-	TXT_BLINK TXT_BOLD TXT_NORMAL TXT_REVERSE TXT_UNDERLINE;
-    long int i, j;
-    bool has_comma;
+	static const char reject[] =
+	    TXT_BLINK
+	    TXT_BOLD
+	    TXT_NORMAL
+	    TXT_REVERSE
+	    TXT_UNDERLINE;
+	long int	i, j;
+	bool		has_comma;
 
-    if (isNull(buffer)) {
-	err_exit(EINVAL, "squeeze_text_deco error");
-    } else if (isEmpty(buffer)) {
-	return (buffer);
-    }
+	if (buffer == NULL)
+		err_exit(EINVAL, "squeeze_text_deco");
+	else if (strings_match(buffer, ""))
+		return buffer;
 
-    for (i = j = 0; buffer[i] != '\0'; i++) {
-	switch (buffer[i]) {
-	case COLOR:
-	{
-	    /*
-	     * check for ^CN
-	     */
-	    if (!sw_isdigit(buffer[++i])) {
-		handle_foo_situation(&buffer, &i, &j, reject);
-		break;
-	    }
+	for (i = j = 0; buffer[i] != '\0'; i++) {
+		switch (buffer[i]) {
+		case COLOR:
+		{
+			/*
+			 * check for ^CN
+			 */
+			if (!sw_isdigit(buffer[++i])) {
+				handle_foo_situation(&buffer, &i, &j, reject);
+				break;
+			}
 
-	    /*
-	     * check for ^CNN or ^CN,
-	     */
-	    if (!sw_isdigit(buffer[++i]) && buffer[i] != ',') {
-		handle_foo_situation(&buffer, &i, &j, reject);
-		break;
-	    }
+			/*
+			 * check for ^CNN or ^CN,
+			 */
+			if (!sw_isdigit(buffer[++i]) && buffer[i] != ',') {
+				handle_foo_situation(&buffer, &i, &j, reject);
+				break;
+			}
 
-	    has_comma = buffer[i++] == ',';
+			has_comma = buffer[i++] == ',';
 
-	    /*
-	     * check for ^CNN, or ^CN,N
-	     */
-	    if (!has_comma && buffer[i] == ',') {
-		has_comma = true;
-	    } else if (has_comma && sw_isdigit(buffer[i])) {
-		/* ^CN,N */;
-	    } else if (has_comma && !sw_isdigit(buffer[i])) {
-		i--;
-		handle_foo_situation(&buffer, &i, &j, reject);
-		break;
-	    } else {
-		handle_foo_situation(&buffer, &i, &j, reject);
-		break;
-	    }
+			/*
+			 * check for ^CNN, or ^CN,N
+			 */
+			if (!has_comma && buffer[i] == ',') {
+				has_comma = true;
+			} else if (has_comma && sw_isdigit(buffer[i])) {
+				/* ^CN,N */;
+			} else if (has_comma && !sw_isdigit(buffer[i])) {
+				i--;
+				handle_foo_situation(&buffer, &i, &j, reject);
+				break;
+			} else {
+				handle_foo_situation(&buffer, &i, &j, reject);
+				break;
+			}
 
-	    sw_assert(has_comma);
+			sw_assert(has_comma);
 
-	    /*
-	     * check for ^CNN,N or ^CN,NN
-	     */
-	    if (buffer[i] == ',') { /* ^CNN, */
-		if (!sw_isdigit(buffer[++i])) {
-		    i--;
-		    handle_foo_situation(&buffer, &i, &j, reject);
-		    break;
-		}
-	    } else { /* ^CN,N */
-		sw_assert(sw_isdigit(buffer[i]));
-		if (sw_isdigit(buffer[++i])) /* we have ^CN,NN? */
-		    break;
-		handle_foo_situation(&buffer, &i, &j, reject);
-		break;
-	    }
+			/*
+			 * check for ^CNN,N or ^CN,NN
+			 */
+			if (buffer[i] == ',') { /* ^CNN, */
+				if (!sw_isdigit(buffer[++i])) {
+					i--;
+					handle_foo_situation(&buffer, &i, &j,
+					    reject);
+					break;
+				}
+			} else { /* ^CN,N */
+				sw_assert(sw_isdigit(buffer[i]));
+				if (sw_isdigit(buffer[++i])) /* we have ^CN,NN? */
+					break;
+				handle_foo_situation(&buffer, &i, &j, reject);
+				break;
+			}
 
-	    /*
-	     * check for ^CNN,NN
-	     */
-	    if (!sw_isdigit(buffer[++i])) {
-		handle_foo_situation(&buffer, &i, &j, reject);
-		break;
-	    }
+			/*
+			 * check for ^CNN,NN
+			 */
+			if (!sw_isdigit(buffer[++i])) {
+				handle_foo_situation(&buffer, &i, &j, reject);
+				break;
+			}
 
-	    break;
-	} /* case COLOR */
-	default:
-	    if (strchr(reject, buffer[i]) == NULL) {
-		buffer[j++] = buffer[i];
-	    }
-	    break;
-	} /* switch block */
-    }
+			break;
+		} /* case COLOR */
+		default:
+			if (strchr(reject, buffer[i]) == NULL)
+				buffer[j++] = buffer[i];
+			break;
+		} /* switch block */
+	}
 
-    buffer[j] = '\0';
-    return (buffer);
+	buffer[j] = '\0';
+	return buffer;
 }
 
 /**
