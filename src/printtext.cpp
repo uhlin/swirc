@@ -488,33 +488,34 @@ map_color(short int *inout, const short int i, const short int colorMap_size,
 void
 printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 {
-    const short int num_colorMap_entries =
-	(short int) ((COLORS >= 256) ? ARRAY_SIZE(ptext_colorMap) : 16);
-    attr_t attr = 0xff;
-    short int fg, bg, resolved_pair;
+	attr_t attr = 0xff;
+	const short int num_colorMap_entries =
+	    static_cast<short int>(COLORS >= 256
+				   ? ARRAY_SIZE(ptext_colorMap)
+				   : 16);
+	short int fg, bg, resolved_pair;
 
-    /* num1 shouldn't under any circumstances appear negative */
-    sw_assert(num1 >= 0);
+	sw_assert(num1 >= 0);
 
-    fg = ptext_colorMap[num1 % num_colorMap_entries].color;
-    bg = (num2 < 0 ? -1 : ptext_colorMap[num2 % num_colorMap_entries].color);
+	fg = ptext_colorMap[num1 % num_colorMap_entries].color;
+	bg = (num2 < 0 ? -1 : ptext_colorMap[num2 % num_colorMap_entries].color);
 
-    if (COLORS >= 16 && can_change_color()) {
-	map_color(&fg, num1, num_colorMap_entries, &attr);
-	map_color(&bg, num2, num_colorMap_entries, &attr);
-    }
+	if (COLORS >= 16 && can_change_color()) {
+		map_color(&fg, num1, num_colorMap_entries, &attr);
+		map_color(&bg, num2, num_colorMap_entries, &attr);
+	}
 
-    if (attr != A_NORMAL)
-	attr = ptext_colorMap[num1 % num_colorMap_entries].at;
+	if (attr != A_NORMAL)
+		attr = ptext_colorMap[num1 % num_colorMap_entries].at;
 
-    if ((resolved_pair = color_pair_find(fg, bg)) == -1) {
-	WCOLOR_SET(win, 0);
-	*is_color = false;
-	return;
-    }
+	if ((resolved_pair = color_pair_find(fg, bg)) == -1) {
+		WCOLOR_SET(win, 0);
+		*is_color = false;
+		return;
+	}
 
-    wattr_set(win, attr, resolved_pair, NULL);
-    *is_color = true;
+	(void) wattr_set(win, attr, resolved_pair, NULL);
+	*is_color = true;
 }
 
 /**
