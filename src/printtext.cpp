@@ -528,112 +528,107 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 static void
 case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 {
-    bool           has_comma = false;
-    char           bg[10]    = { 0 };
-    char           fg[10]    = { 0 };
-    short int      num1      = -1;
-    short int      num2      = -1;
-    struct integer_context intctx = {
-	.setting_name	  = "term_background",
-	.fallback_default = 1,	/* black */
-	.lo_limit	  = 0,
-	.hi_limit	  = 15,
-    };
+	bool has_comma = false;
+	char bg[10] = { 0 };
+	char fg[10] = { 0 };
+	short int num1 = -1;
+	short int num2 = -1;
+	struct integer_context intctx("term_background", 0, 15, 1);
 
-    if (*is_color) {
-	WCOLOR_SET(win, 0);
-	*is_color = false;
-    }
+	if (*is_color) {
+		WCOLOR_SET(win, 0);
+		*is_color = false;
+	}
 
 /***************************************************
  *
  * check for ^CN
  *
  ***************************************************/
-    switch (check_for_part1(bufp, &fg[0])) {
-    case BUF_EOF:
-    case STOP_INTERPRETING:
-	return;
-    case GO_ON:
-    default:
-	break;
-    }
+	switch (check_for_part1(bufp, &fg[0])) {
+	case BUF_EOF:
+	case STOP_INTERPRETING:
+		return;
+	case GO_ON:
+	default:
+		break;
+	}
 
 /***************************************************
  *
  * check for ^CNN or ^CN,
  *
  ***************************************************/
-    switch (check_for_part2(bufp, &fg[1], &has_comma)) {
-    case BUF_EOF:
-	return;
-    case STOP_INTERPRETING:
-	goto out;
-    case GO_ON:
-    default:
-	break;
-    }
+	switch (check_for_part2(bufp, &fg[1], &has_comma)) {
+	case BUF_EOF:
+		return;
+	case STOP_INTERPRETING:
+		goto out;
+	case GO_ON:
+	default:
+		break;
+	}
 
 /***************************************************
  *
  * check for ^CNN, or ^CN,N
  *
  ***************************************************/
-    switch (check_for_part3(bufp, &has_comma, fg[1] != '\0', &bg[0])) {
-    case BUF_EOF:
-	return;
-    case STOP_INTERPRETING:
-	goto out;
-    case GO_ON:
-    default:
-	break;
-    }
+	switch (check_for_part3(bufp, &has_comma, fg[1] != '\0', &bg[0])) {
+	case BUF_EOF:
+		return;
+	case STOP_INTERPRETING:
+		goto out;
+	case GO_ON:
+	default:
+		break;
+	}
 
 /***************************************************
  *
  * check for ^CNN,N or ^CN,NN
  *
  ***************************************************/
-    switch (check_for_part4(bufp, bg[0] != '\0', &bg[0])) {
-    case BUF_EOF:
-	return;
-    case STOP_INTERPRETING:
-	goto out;
-    case GO_ON:
-    default:
-	break;
-    }
+	switch (check_for_part4(bufp, bg[0] != '\0', &bg[0])) {
+	case BUF_EOF:
+		return;
+	case STOP_INTERPRETING:
+		goto out;
+	case GO_ON:
+	default:
+		break;
+	}
 
 /***************************************************
  *
  * check for ^CNN,NN
  *
  ***************************************************/
-    switch (check_for_part5(bufp, &bg[1])) {
-    case BUF_EOF:
-	return;
-    case STOP_INTERPRETING:
-	goto out;
-    case GO_ON:
-    default:
-	break;
-    }
+	switch (check_for_part5(bufp, &bg[1])) {
+	case BUF_EOF:
+		return;
+	case STOP_INTERPRETING:
+		goto out;
+	case GO_ON:
+	default:
+		break;
+	}
 
   out:
-    num1 = (short int) atoi(fg);
-    if (!isEmpty(bg)) {
-	num2 = (short int) atoi(bg);
-    } else if (isEmpty(bg) &&
-	       theme_bool("term_use_default_colors", true)) {
-	num2 = -1;
-    } else {
-	num2 = (short int) theme_integer(&intctx);
-    }
+	num1 = static_cast<short int>(atoi(fg));
 
-    printtext_set_color(win, is_color, num1, num2);
+	if (!isEmpty(bg)) {
+		num2 = static_cast<short int>(atoi(bg));
+	} else if (isEmpty(bg) && theme_bool("term_use_default_colors", true)) {
+		num2 = -1;
+	} else {
+		num2 = static_cast<short int>(theme_integer(&intctx));
+	}
 
-    if (has_comma && !(bg[0]))
-	(*bufp)--;
+	printtext_set_color(win, is_color, num1, num2);
+
+	if (has_comma && !(bg[0]))
+		(*bufp)--;
 }
 
 /**
