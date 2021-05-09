@@ -665,8 +665,7 @@ do_indent(WINDOW *win, const int indent, int *insert_count)
 static bool
 start_on_a_new_row(const ptrdiff_t sum, const WINDOW *win)
 {
-    //return (sum < (COLS - 1) ? false : true);
-    return (sum < win->_maxx ? false : true);
+	return (sum < win->_maxx ? false : true);
 }
 
 /**
