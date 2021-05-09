@@ -63,7 +63,7 @@
 #define WATTR_ON(win, attrs)  ((void) wattr_on(win, attrs, NULL))
 #define WCOLOR_SET(win, cpn)  ((void) wcolor_set(win, cpn, NULL))
 
-#define STRLEN_CAST(string) strlen((char *) string)
+#define STRLEN_CAST(string) strlen(reinterpret_cast<const char *>(string))
 
 /****************************************************************
 *                                                               *
