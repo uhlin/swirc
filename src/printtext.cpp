@@ -443,17 +443,22 @@ check_for_part4(wchar_t **bufp, bool got_digit_bg, char *bg)
 static cc_check_t
 check_for_part5(wchar_t **bufp, char *bg)
 {
-    if (!*++(*bufp))
-	return BUF_EOF;
-    unsigned char *mbs = convert_wc(**bufp);
-    if (STRLEN_CAST(mbs) != 1 || !sw_isdigit(*mbs)) {
-	(*bufp)--;
+	unsigned char *mbs;
+
+	if (!*++(*bufp))
+		return BUF_EOF;
+
+	mbs = convert_wc(**bufp);
+
+	if (STRLEN_CAST(mbs) != 1 || !sw_isdigit(*mbs)) {
+		(*bufp)--;
+		free(mbs);
+		return STOP_INTERPRETING;
+	}
+
+	sw_snprintf(bg, 2, "%c", *mbs);
 	free(mbs);
-	return STOP_INTERPRETING;
-    }
-    sw_snprintf(bg, 2, "%c", *mbs);
-    free(mbs);
-    return GO_ON;
+	return GO_ON;
 }
 
 static void
