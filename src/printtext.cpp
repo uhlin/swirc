@@ -1044,38 +1044,40 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 static wchar_t *
 perform_convert_buffer(const char **in_buf)
 {
-    bool chars_lost = false;
-    const char *ar[] = {
+	bool		 chars_lost = false;
+	const char	*ar[] = {
 #if defined(UNIX)
-	"UTF-8",       "utf8",
-	"ISO-8859-1",  "ISO8859-1",  "iso88591",
-	"ISO-8859-15", "ISO8859-15", "iso885915",
+		"UTF-8", "utf8",
+		"ISO-8859-1", "ISO8859-1", "iso88591",
+		"ISO-8859-15", "ISO8859-15", "iso885915",
 #elif defined(WIN32)
-	"65001", /* UTF-8 */
-	"28591", /* ISO 8859-1 Latin 1 */
-	"28605", /* ISO 8859-15 Latin 9 */
+		"65001", /* UTF-8 */
+		"28591", /* ISO 8859-1 Latin 1 */
+		"28605", /* ISO 8859-15 Latin 9 */
 #endif
-    };
-    const size_t	 ar_sz		= ARRAY_SIZE(ar);
-    mbstate_t		 ps;
-    size_t		 sz		= 0;
-    wchar_t		*out		= NULL;
+	};
+	mbstate_t	 ps;
+	size_t		 size = 0;
+	wchar_t		*out = NULL;
 
 #if WIN32
-    if ((out = windows_convert_to_utf8(*in_buf)) != NULL)
-	return (out);
+	if ((out = windows_convert_to_utf8(*in_buf)) != NULL)
+		return out;
 #endif
 
-    for (const char **ar_p = &ar[0]; ar_p < &ar[ar_sz]; ar_p++) {
-	if ((out = try_convert_buf_with_cs(*in_buf, *ar_p)) != NULL) /*success*/
-	    return (out);
-    }
+	for (const char **ar_p = &ar[0]; ar_p < &ar[ARRAY_SIZE(ar)]; ar_p++) {
+		if ((out = try_convert_buf_with_cs(*in_buf, *ar_p)) != NULL) {
+			/*
+			 * success
+			 */
+			return out;
+		}
+	}
 
-    /* fallback solution... */
-    sz  = strlen(*in_buf) + 1;
-    out = static_cast<wchar_t *>(xcalloc(sz, sizeof *out));
-
-    BZERO(&ps, sizeof(mbstate_t));
+	/* fallback solution... */
+	size = strlen(*in_buf) + 1;
+	out = static_cast<wchar_t *>(xcalloc(size, sizeof *out));
+	BZERO(&ps, sizeof(mbstate_t));
 
 /*
  * mbsrtowcs() is complex enough to use
@@ -1084,14 +1086,15 @@ perform_convert_buffer(const char **in_buf)
 #pragma warning(disable: 4996)
 #endif
 
-    while (errno = 0, true) {
-	if (mbsrtowcs(&out[wcslen(out)], in_buf, (sz - wcslen(out)) - 1, &ps) ==
-	    g_conversion_failed && errno == EILSEQ) {
-	    chars_lost = true;
-	    (*in_buf)++;
-	} else
-	    break;
-    }
+	while (errno = 0, true) {
+		if (mbsrtowcs(&out[wcslen(out)], in_buf,
+		    (size - wcslen(out)) - 1, &ps) == g_conversion_failed &&
+		    errno == EILSEQ) {
+			chars_lost = true;
+			(*in_buf)++;
+		} else
+			break;
+	}
 
 /*
  * Reset warning behavior to its default value
@@ -1100,10 +1103,11 @@ perform_convert_buffer(const char **in_buf)
 #pragma warning(default: 4996)
 #endif
 
-    out[sz - 1] = 0L;
-    if (chars_lost)
-	err_log(EILSEQ, "In perform_convert_buffer: characters lost");
-    return (out);
+	out[size - 1] = 0L;
+
+	if (chars_lost)
+		err_log(EILSEQ, "In perform_convert_buffer: characters lost");
+	return out;
 }
 
 /**
