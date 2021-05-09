@@ -1146,7 +1146,7 @@ text_decoration_bools_reset(struct text_decoration_bools *booleans)
 static void
 vprinttext_mutex_init(void)
 {
-    mutex_new(&vprinttext_mutex);
+	mutex_new(&vprinttext_mutex);
 }
 
 PPRINTTEXT_CONTEXT
