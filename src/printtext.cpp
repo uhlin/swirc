@@ -1169,7 +1169,7 @@ printtext_context_new(PIRC_WINDOW window, enum message_specifier_type spec_type,
 void
 printtext_context_destroy(PPRINTTEXT_CONTEXT ctx)
 {
-    free(ctx);
+	free(ctx);
 }
 
 void
