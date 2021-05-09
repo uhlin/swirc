@@ -1173,18 +1173,23 @@ printtext_context_destroy(PPRINTTEXT_CONTEXT ctx)
 }
 
 void
-printtext_context_init(PPRINTTEXT_CONTEXT ctx, PIRC_WINDOW window,
-    enum message_specifier_type spec_type, bool include_ts)
+printtext_context_init(
+	PPRINTTEXT_CONTEXT ctx,
+	PIRC_WINDOW window,
+	enum message_specifier_type spec_type,
+	bool include_ts)
 {
-    if (isNull(ctx))
-	return;
+	if (ctx == NULL) {
+		err_log(EINVAL, "printtext_context_init");
+		return;
+	}
 
-    ctx->window = window;
-    ctx->spec_type = spec_type;
-    ctx->include_ts = include_ts;
+	ctx->window     = window;
+	ctx->spec_type  = spec_type;
+	ctx->include_ts = include_ts;
 
-    memset(ctx->server_time, 0, ARRAY_SIZE(ctx->server_time));
-    ctx->has_server_time = false;
+	BZERO(ctx->server_time, ARRAY_SIZE(ctx->server_time));
+	ctx->has_server_time = false;
 }
 
 /**
