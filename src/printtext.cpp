@@ -311,24 +311,25 @@ case_bold(WINDOW *win, bool *is_bold)
 static unsigned char *
 convert_wc(wchar_t wc)
 {
-    mbstate_t ps;
-#ifdef HAVE_BCI
-    size_t bytes_written; /* not used */
-#endif
-    const size_t size = MB_LEN_MAX + 1;
-    unsigned char *mbs = static_cast<unsigned char *>(xcalloc(size, 1));
+	const size_t	 size = MB_LEN_MAX + 1;
+	mbstate_t	 ps;
+	size_t		 bytes_written;
+	unsigned char	*mbs = static_cast<unsigned char *>(xcalloc(size, 1));
 
-    BZERO(&ps, sizeof(mbstate_t));
+	BZERO(&ps, sizeof(mbstate_t));
 
 #ifdef HAVE_BCI
-    if ((errno = wcrtomb_s(&bytes_written, ((char *) mbs), size, wc, &ps)) != 0)
-	err_log(errno, "printtext: convert_wc: wcrtomb_s");
+	if ((errno = wcrtomb_s(&bytes_written, reinterpret_cast<char *>(mbs),
+	    size, wc, &ps)) != 0)
+		err_log(errno, "printtext: convert_wc: wcrtomb_s");
 #else
-    if (wcrtomb((char *) mbs, wc, &ps) == g_conversion_failed)
-	err_log(EILSEQ, "printtext: convert_wc: wcrtomb");
+	if ((bytes_written = wcrtomb(reinterpret_cast<char *>(mbs), wc, &ps)) ==
+	    g_conversion_failed)
+		err_log(EILSEQ, "printtext: convert_wc: wcrtomb");
 #endif
 
-    return (mbs);
+	(void) bytes_written; /* not used. provided for compatibility. */
+	return mbs;
 }
 
 typedef enum {
