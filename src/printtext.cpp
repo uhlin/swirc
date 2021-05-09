@@ -764,13 +764,13 @@ case_reverse(WINDOW *win, bool *is_reverse)
 static void
 case_underline(WINDOW *win, bool *is_underline)
 {
-    if (! (*is_underline)) {
-	WATTR_ON(win, A_UNDERLINE);
-	*is_underline = true;
-    } else {
-	WATTR_OFF(win, A_UNDERLINE);
-	*is_underline = false;
-    }
+	if (! (*is_underline)) {
+		WATTR_ON(win, A_UNDERLINE);
+		*is_underline = true;
+	} else {
+		WATTR_OFF(win, A_UNDERLINE);
+		*is_underline = false;
+	}
 }
 
 /**
