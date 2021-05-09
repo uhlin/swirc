@@ -1341,11 +1341,11 @@ print_and_free(const char *msg, char *cp)
 void
 printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
 {
-    va_list ap;
+	va_list ap;
 
-    va_start(ap, fmt);
-    vprinttext(ctx, fmt, ap);
-    va_end(ap);
+	va_start(ap, fmt);
+	vprinttext(ctx, fmt, ap);
+	va_end(ap);
 }
 
 /**
