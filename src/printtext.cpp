@@ -1116,7 +1116,7 @@ puts_mutex_init(void)
 }
 
 static void
-replace_characters_with_space(wchar_t *wc_buf, const wchar_t *set)
+replace_characters_with_spaces(wchar_t *wc_buf, const wchar_t *set)
 {
     wchar_t *wcp = NULL;
 
@@ -1394,7 +1394,7 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	if (is_scrollok(pwin))
 		append_newline(&wc_buf);
 
-	replace_characters_with_space(wc_buf, L"\f\t\v");
+	replace_characters_with_spaces(wc_buf, L"\f\t\v");
 
 	wchar_t *wc_bufp = &wc_buf[0];
 	bool max_lines_flagged = false;
