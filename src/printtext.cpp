@@ -1151,19 +1151,19 @@ vprinttext_mutex_init(void)
 
 PPRINTTEXT_CONTEXT
 printtext_context_new(PIRC_WINDOW window, enum message_specifier_type spec_type,
-    bool include_ts)
+		      bool include_ts)
 {
-    PPRINTTEXT_CONTEXT ctx =
-	static_cast<PPRINTTEXT_CONTEXT>(xcalloc(sizeof *ctx, 1));
+	PPRINTTEXT_CONTEXT ctx =
+	    static_cast<PPRINTTEXT_CONTEXT>(xcalloc(sizeof *ctx, 1));
 
-    ctx->window = window;
-    ctx->spec_type = spec_type;
-    ctx->include_ts = include_ts;
+	ctx->window     = window;
+	ctx->spec_type  = spec_type;
+	ctx->include_ts = include_ts;
 
-    memset(ctx->server_time, 0, ARRAY_SIZE(ctx->server_time));
-    ctx->has_server_time = false;
+	BZERO(ctx->server_time, ARRAY_SIZE(ctx->server_time));
+	ctx->has_server_time = false;
 
-    return ctx;
+	return ctx;
 }
 
 void
