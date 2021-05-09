@@ -968,13 +968,14 @@ handle_foo_situation(char **buffer, long int *i, long int *j,
 static wchar_t *
 windows_convert_to_utf8(const char *buf)
 {
-    const int sz = (int) (strlen(buf) + 1);
-    wchar_t *out = static_cast<wchar_t *>(xcalloc(sz, sizeof *out));
+	const int size = static_cast<int>(strlen(buf) + 1);
+	wchar_t *out = static_cast<wchar_t *>(xcalloc(size, sizeof *out));
 
-    if (MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,buf,-1,out,sz) > 0)
-	return out;
-    free(out);
-    return NULL;
+	if (MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, buf, -1, out,
+	    size) > 0)
+		return out;
+	free(out);
+	return NULL;
 }
 #endif
 
