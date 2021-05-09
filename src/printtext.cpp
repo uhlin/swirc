@@ -1112,7 +1112,7 @@ perform_convert_buffer(const char **in_buf)
 static void
 puts_mutex_init(void)
 {
-    mutex_new(&g_puts_mutex);
+	mutex_new(&g_puts_mutex);
 }
 
 static void
