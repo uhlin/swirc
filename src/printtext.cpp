@@ -680,59 +680,64 @@ start_on_a_new_row(const ptrdiff_t sum, const WINDOW *win)
  */
 static void
 case_default(const struct case_default_context *ctx, int *rep_count,
-    int *line_count, int *insert_count)
+	     int *line_count, int *insert_count)
 {
-    unsigned char *mbs = NULL;
+	unsigned char *mbs;
 
-    if (!iswprint(ctx->wc) && ctx->wc != L'\n')
-	return;
-    mbs = convert_wc(ctx->wc);
-    if (!is_scrollok(ctx->win)) {
-	addmbs(ctx->win, mbs);
+	if (!iswprint(ctx->wc) && ctx->wc != L'\n')
+		return;
+
+	mbs = convert_wc(ctx->wc);
+
+	if (!is_scrollok(ctx->win)) {
+		addmbs(ctx->win, mbs);
+		free(mbs);
+		return;
+	}
+
+	/* -------------------------------------------------- */
+
+	const bool care_about_indent = (ctx->indent > 0);
+	const bool care_about_max_lines = (ctx->max_lines > 0);
+
+	if (ctx->wc == L'\n') {
+		WADDCH(ctx->win, '\n');
+		*insert_count = 0;
+		if (rep_count != NULL)
+			(*rep_count) ++;
+		if (care_about_max_lines &&
+		    !(++ (*line_count) < ctx->max_lines)) {
+			free(mbs);
+			return;
+		}
+		if (! (ctx->nextchar_empty) && care_about_indent)
+			do_indent(ctx->win, ctx->indent, insert_count);
+	} else if (!start_on_a_new_row((*insert_count) + ctx->diff + 1,
+		    ctx->win)) {
+		addmbs(ctx->win, mbs);
+		(*insert_count) ++;
+	} else {
+		/*
+		 * Start on a new row
+		 */
+		WADDCH(ctx->win, '\n');
+		*insert_count = 0;
+		if (rep_count != NULL)
+			(*rep_count) ++;
+		if (care_about_max_lines &&
+		    !(++ (*line_count) < ctx->max_lines)) {
+			free(mbs);
+			return;
+		}
+		if (care_about_indent)
+			do_indent(ctx->win, ctx->indent, insert_count);
+		if (ctx->wc != L' ') {
+			addmbs(ctx->win, mbs);
+			(*insert_count) ++;
+		}
+	}
+
 	free(mbs);
-	return;
-    }
-
-    /* -------------------------------------------------- */
-
-    const bool care_about_indent    = ctx->indent > 0;
-    const bool care_about_max_lines = ctx->max_lines > 0;
-
-    if (ctx->wc == L'\n') {
-	WADDCH(ctx->win, '\n');
-	*insert_count = 0;
-	if (!isNull(rep_count))
-	    (*rep_count) ++;
-	if (care_about_max_lines && !(++ (*line_count) < ctx->max_lines)) {
-	    free(mbs);
-	    return;
-	}
-	if (! (ctx->nextchar_empty) && care_about_indent)
-	    do_indent(ctx->win, ctx->indent, insert_count);
-    } else if (!start_on_a_new_row((*insert_count) + ctx->diff + 1, ctx->win)) {
-	addmbs(ctx->win, mbs);
-	(*insert_count) ++;
-    } else {
-	/*
-	 * Start on a new row
-	 */
-	WADDCH(ctx->win, '\n');
-	*insert_count = 0;
-	if (!isNull(rep_count))
-	    (*rep_count) ++;
-	if (care_about_max_lines && !(++ (*line_count) < ctx->max_lines)) {
-	    free(mbs);
-	    return;
-	}
-	if (care_about_indent)
-	    do_indent(ctx->win, ctx->indent, insert_count);
-	if (ctx->wc != L' ') {
-	    addmbs(ctx->win, mbs);
-	    (*insert_count) ++;
-	}
-    }
-
-    free(mbs);
 }
 
 /**
