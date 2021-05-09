@@ -458,22 +458,22 @@ check_for_part5(wchar_t **bufp, char *bg)
 
 static void
 map_color(short int *inout, const short int i, const short int colorMap_size,
-    attr_t *attr_out)
+	  attr_t *attr_out)
 {
-    switch (*inout) {
-    case COLOR_BLACK:
-	if (ptext_colorMap[i % colorMap_size].at == A_BOLD) {
-	    *inout = GREY;
-	    *attr_out = A_NORMAL;
+	switch (*inout) {
+	case COLOR_BLACK:
+		if (ptext_colorMap[i % colorMap_size].at == A_BOLD) {
+			*inout = GREY;
+			*attr_out = A_NORMAL;
+		}
+		break;
+	case COLOR_WHITE:
+		if (ptext_colorMap[i % colorMap_size].at == A_NORMAL) {
+			*inout = LIGHT_GREY;
+			*attr_out = A_NORMAL;
+		}
+		break;
 	}
-	break;
-    case COLOR_WHITE:
-	if (ptext_colorMap[i % colorMap_size].at == A_NORMAL) {
-	    *inout = LIGHT_GREY;
-	    *attr_out = A_NORMAL;
-	}
-	break;
-    }
 }
 
 /**
