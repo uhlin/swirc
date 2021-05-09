@@ -1133,11 +1133,11 @@ replace_characters_with_spaces(wchar_t *wc_buf, const wchar_t *set)
 static void
 text_decoration_bools_reset(struct text_decoration_bools *booleans)
 {
-    booleans->is_blink     = false;
-    booleans->is_bold      = false;
-    booleans->is_color     = false;
-    booleans->is_reverse   = false;
-    booleans->is_underline = false;
+	booleans->is_blink     = false;
+	booleans->is_bold      = false;
+	booleans->is_color     = false;
+	booleans->is_reverse   = false;
+	booleans->is_underline = false;
 }
 
 /**
