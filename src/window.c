@@ -85,9 +85,9 @@ struct hInstall_context {
    ============================= */
 
 const char	g_status_window_label[] = "(status)";
-PIRC_WINDOW	g_status_window         = NULL;
-PIRC_WINDOW	g_active_window         = NULL;
-int		g_ntotal_windows        = 0;
+PIRC_WINDOW	g_status_window = NULL;
+PIRC_WINDOW	g_active_window = NULL;
+int		g_ntotal_windows = 0;
 
 /* Objects with internal linkage
    ============================= */
