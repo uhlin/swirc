@@ -523,21 +523,21 @@ change_window_by_refnum(int refnum)
 int
 destroy_chat_window(const char *label)
 {
-    PIRC_WINDOW window = NULL;
+	PIRC_WINDOW window;
 
-    if (isNull(label) || isEmpty(label) ||
-	strings_match_ignore_case(label, g_status_window_label))
-	return EINVAL;
-    else if ((window = window_by_label(label)) == NULL)
-	return ENOENT;
+	if (label == NULL || strings_match(label, "") ||
+	    strings_match_ignore_case(label, g_status_window_label))
+		return EINVAL;
+	else if ((window = window_by_label(label)) == NULL)
+		return ENOENT;
 
-    hUndef(window);
-    reassign_window_refnums();
-    const int ret = change_window_by_refnum(g_ntotal_windows);
-    (void) ret;
-    sw_assert_perror(ret);
+	hUndef(window);
+	reassign_window_refnums();
+	const int ret = change_window_by_refnum(g_ntotal_windows);
+	(void) ret;
+	sw_assert_perror(ret);
 
-    return 0;
+	return 0;
 }
 
 /**
