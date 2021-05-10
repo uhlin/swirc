@@ -246,7 +246,7 @@ addmbs(WINDOW *win, const unsigned char *mbs)
 	while ((c = *p++) != '\0')
 		WADDCH(win, c);
 
-	(void) wnoutrefresh(win);
+	update_panels();
 }
 
 static void
