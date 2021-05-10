@@ -405,19 +405,18 @@ windowSystem_deinit(void)
 PIRC_WINDOW
 window_by_label(const char *label)
 {
-    PIRC_WINDOW window;
+	PIRC_WINDOW window;
 
-    if (isNull(label) || isEmpty(label)) {
-	return (NULL);
-    }
+	if (label == NULL || strings_match(label, ""))
+		return NULL;
 
-    for (window = hash_table[hash(label)]; !isNull(window);
-	 window = window->next) {
-	if (strings_match_ignore_case(label, window->label))
-	    return (window);
-    }
+	for (window = hash_table[hash(label)]; window != NULL;
+	     window = window->next) {
+		if (strings_match_ignore_case(label, window->label))
+			return window;
+	}
 
-    return (NULL);
+	return NULL;
 }
 
 /**
