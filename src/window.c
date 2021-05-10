@@ -686,26 +686,27 @@ window_recreate_exported(PIRC_WINDOW window, int rows, int cols)
 void
 window_scroll_down(PIRC_WINDOW window)
 {
-    const int	HEIGHT = LINES - 3;
+	const int HEIGHT = LINES - 3;
 
-    if (! (window->scroll_mode)) {
-	term_beep();
-	return;
-    }
+	if (window == NULL || !window->scroll_mode) {
+		term_beep();
+		return;
+	}
 
-    window->scroll_count -= SCROLL_OFFSET;
+	window->scroll_count -= SCROLL_OFFSET;
 
-    if (! (window->scroll_count > HEIGHT)) {
-	window->saved_size   = 0;
-	window->scroll_count = 0;
-	window->scroll_mode  = false;
-	window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT,
-		      false);
-	return;
-    }
+	if (! (window->scroll_count > HEIGHT)) {
+		window->saved_size = 0;
+		window->scroll_count = 0;
+		window->scroll_mode = false;
+		window_redraw(window, HEIGHT,
+		    textBuf_size(window->buf) - HEIGHT, false);
+		return;
+	}
 
-    window_redraw(window, HEIGHT, window->saved_size - window->scroll_count,
-		  shouldLimitOutputYesNoRandom());
+	window_redraw(window, HEIGHT,
+	    (window->saved_size - window->scroll_count),
+	    shouldLimitOutputYesNoRandom());
 }
 
 /**
