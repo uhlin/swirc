@@ -225,14 +225,13 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	list.size() != static_cast<unsigned int>(win->num_total))
 	return -1;
 
-    if (werase(nl_win) != ERR)
-	update_panels();
-
     const bool list_fits = !(win->num_total > HEIGHT);
     std::list<std::string>::iterator it;
     int count;
 
     if (list_fits) {
+	mutex_lock(&g_puts_mutex);
+	(void) werase(nl_win);
 	win->nicklist.scroll_pos = 0;
 
 	it = list.begin();
@@ -252,8 +251,12 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 
 	update_panels();
 	(void) doupdate();
+	mutex_unlock(&g_puts_mutex);
 	return 0;
     } else { /* !list_fits */
+	mutex_lock(&g_puts_mutex);
+	(void) werase(nl_win);
+
 	if (win->nicklist.scroll_pos < 0)
 	    win->nicklist.scroll_pos = 0;
 	else {
@@ -281,10 +284,12 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	    ++it;
 	    ++count;
 	}
+
+	update_panels();
+	(void) doupdate();
+	mutex_unlock(&g_puts_mutex);
     }
 
-    update_panels();
-    (void) doupdate();
     return 0;
 }
 
