@@ -714,37 +714,38 @@ window_scroll_down(PIRC_WINDOW window)
 void
 window_scroll_up(PIRC_WINDOW window)
 {
-    const int	MIN_SIZE = LINES - 3;
+	const int MIN_SIZE = LINES - 3;
 
-    if (MIN_SIZE < 0 || !(textBuf_size(window->buf) > MIN_SIZE) || IS_AT_TOP) {
-	term_beep();
-	return;
-    }
+	if (window == NULL || MIN_SIZE < 0 ||
+	    !(textBuf_size(window->buf) > MIN_SIZE) || IS_AT_TOP) {
+		term_beep();
+		return;
+	}
 
-    if (! (window->scroll_mode)) {
-	window->saved_size  = textBuf_size(window->buf);
-	window->scroll_mode = true;
-    }
+	if (! (window->scroll_mode)) {
+		window->saved_size = textBuf_size(window->buf);
+		window->scroll_mode = true;
+	}
 
-    if (window->scroll_count > window->saved_size) /* past top */
-	window->scroll_count = window->saved_size;
-    else {
-	if (window->scroll_count == 0) /* first page up */
-	    window->scroll_count += MIN_SIZE;
+	if (window->scroll_count > window->saved_size) /* past top */
+		window->scroll_count = window->saved_size;
+	else {
+		if (window->scroll_count == 0) /* first page up */
+			window->scroll_count += MIN_SIZE;
 
-	window->scroll_count += SCROLL_OFFSET;
+		window->scroll_count += SCROLL_OFFSET;
 
-	if (window->scroll_count > window->saved_size)
-	    window->scroll_count = window->saved_size;
-    }
+		if (window->scroll_count > window->saved_size)
+			window->scroll_count = window->saved_size;
+	}
 
-    if (IS_AT_TOP)
-	window_redraw(window, MIN_SIZE, 0, true);
-    else {
-	window_redraw(window, MIN_SIZE,
-	    window->saved_size - window->scroll_count,
-	    shouldLimitOutputYesNoRandom());
-    }
+	if (IS_AT_TOP)
+		window_redraw(window, MIN_SIZE, 0, true);
+	else {
+		window_redraw(window, MIN_SIZE,
+		    (window->saved_size - window->scroll_count),
+		    shouldLimitOutputYesNoRandom());
+	}
 }
 
 /**
