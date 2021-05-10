@@ -427,18 +427,15 @@ window_by_label(const char *label)
 PIRC_WINDOW
 window_by_refnum(int refnum)
 {
-    if (refnum < 1 || refnum > g_ntotal_windows) {
-	return (NULL);
-    }
-
-    FOREACH_HASH_TABLE_ENTRY() {
-	FOREACH_WINDOW_IN_ENTRY() {
-	    if (refnum == window->refnum)
-		return (window);
+	if (refnum < 1 || refnum > g_ntotal_windows)
+		return NULL;
+	FOREACH_HASH_TABLE_ENTRY() {
+		FOREACH_WINDOW_IN_ENTRY() {
+			if (refnum == window->refnum)
+				return window;
+		}
 	}
-    }
-
-    return (NULL);
+	return NULL;
 }
 
 /**
