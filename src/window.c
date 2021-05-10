@@ -75,10 +75,10 @@
    ===================== */
 
 struct hInstall_context {
-    char	*label;
-    char	*title;
-    PANEL	*pan;
-    int		 refnum;
+	char	*label;
+	char	*title;
+	PANEL	*pan;
+	int	 refnum;
 };
 
 /* Objects with external linkage
