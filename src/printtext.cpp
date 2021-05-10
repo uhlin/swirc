@@ -33,14 +33,12 @@
 #include <cwctype>
 #include <stdexcept>
 
+#include "assertAPI.h"
 #ifdef UNIT_TESTING
 #undef UNIT_TESTING
-#include <setjmp.h>
-#include <cmocka.h>
+#include "cmocka-c++.h"
 #define UNIT_TESTING 1
 #endif
-
-#include "assertAPI.h"
 #include "config.h"
 #if defined(WIN32) && defined(PDC_EXP_EXTRAS)
 #include "curses-funcs.h" /* is_scrollok() */
