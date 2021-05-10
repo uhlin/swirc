@@ -644,20 +644,21 @@ window_close_all_priv_conv(void)
 void
 window_foreach_destroy_names(void)
 {
-    FOREACH_HASH_TABLE_ENTRY() {
-	FOREACH_WINDOW_IN_ENTRY() {
-	    if (is_irc_channel(window->label)) {
-		event_names_htbl_remove_all(window);
-
-		/*
-		 * TODO: Investigate if the code below should be moved too.
-		 */
-		BZERO(window->chanmodes, ARRAY_SIZE(window->chanmodes));
-		window->received_chanmodes = false;
-		window->received_chancreated = false;
-	    }
+	FOREACH_HASH_TABLE_ENTRY() {
+		FOREACH_WINDOW_IN_ENTRY() {
+			if (is_irc_channel(window->label)) {
+				event_names_htbl_remove_all(window);
+				/*
+				 * TODO: Investigate if the code below
+				 * should be moved too.
+				 */
+				BZERO(window->chanmodes,
+				    ARRAY_SIZE(window->chanmodes));
+				window->received_chanmodes = false;
+				window->received_chancreated = false;
+			}
+		}
 	}
-    }
 }
 
 /**
