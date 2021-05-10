@@ -238,12 +238,12 @@ static bool
 shouldLimitOutputYesNoRandom(void)
 {
 #if defined(BSD) || defined(WIN32)
-    const uint32_t value = arc4random() % 2;
+	const uint32_t value = arc4random() % 2;
 #else
-    const int value = rand() % 2;
+	const int value = rand() % 2;
 #endif
 
-    return (value != 0 ? true : false);
+	return (value != 0 ? true : false);
 }
 
 /**
