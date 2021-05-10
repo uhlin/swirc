@@ -192,24 +192,24 @@ static void hUndef(PIRC_WINDOW) PTR_ARGS_NONNULL;
 static void
 hUndef(PIRC_WINDOW entry)
 {
-    PIRC_WINDOW *indirect = & (hash_table[hash(entry->label)]);
+	PIRC_WINDOW *indirect = addrof(hash_table[hash(entry->label)]);
 
-    while (*indirect != entry)
-	indirect = & ((*indirect)->next);
-    *indirect = entry->next;
+	while (*indirect != entry)
+		indirect = & ((*indirect)->next);
+	*indirect = entry->next;
 
-    term_remove_panel(entry->pan);
-    event_names_htbl_remove_all(entry);
-    textBuf_destroy(entry->buf);
+	term_remove_panel(entry->pan);
+	event_names_htbl_remove_all(entry);
+	textBuf_destroy(entry->buf);
 
-    free(entry->label);
-    free(entry->title);
+	free(entry->label);
+	free(entry->title);
 
-    if (nicklist_destroy(entry) != 0)
-	debug("hUndef: nicklist_destroy: error");
+	if (nicklist_destroy(entry) != 0)
+		debug("hUndef: nicklist_destroy: error");
 
-    free(entry);
-    g_ntotal_windows--;
+	free(entry);
+	g_ntotal_windows--;
 }
 
 /**
