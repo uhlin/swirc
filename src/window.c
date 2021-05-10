@@ -447,36 +447,36 @@ window_by_refnum(int refnum)
 int
 change_window_by_label(const char *label)
 {
-    PIRC_WINDOW window = NULL;
+	PIRC_WINDOW window = NULL;
 
-    if ((window = window_by_label(label)) == NULL)
-	return ENOENT; /* window not found */
-    else if (window == g_active_window)
-	return 0; /* window already active */
-    else if (top_panel(window->pan) == ERR)
-	return EPERM; /* top_panel() error */
+	if ((window = window_by_label(label)) == NULL)
+		return ENOENT; /* window not found */
+	else if (window == g_active_window)
+		return 0; /* window already active */
+	else if (top_panel(window->pan) == ERR)
+		return EPERM; /* top_panel() error */
 
-    if (!isNull(window->nicklist.pan))
-	(void) top_panel(window->nicklist.pan);
+	if (window->nicklist.pan != NULL)
+		(void) top_panel(window->nicklist.pan);
 
-    WINDOW *pwin = readline_get_active_pwin();
-    char *prompt = NULL;
+	WINDOW *pwin = readline_get_active_pwin();
+	char *prompt = NULL;
 
-    g_active_window = window;
-    titlebar(" %s ", (!isNull(window->title) ? window->title : ""));
-    statusbar_update_display_beta();
+	g_active_window = window;
+	titlebar(" %s ", (window->title != NULL ? window->title : ""));
+	statusbar_update_display_beta();
 
-    if (pwin) {
-	werase(pwin);
-	prompt = get_prompt();
-	printtext_puts(pwin, prompt, -1, -1, NULL);
-	free(prompt);
-    }
+	if (pwin) {
+		(void) werase(pwin);
+		prompt = get_prompt();
+		printtext_puts(pwin, prompt, -1, -1, NULL);
+		free(prompt);
+	}
 
-    readline_top_panel();
-    (void) ungetch('\a');
+	readline_top_panel();
+	(void) ungetch('\a');
 
-    return 0;
+	return 0;
 }
 
 /**
