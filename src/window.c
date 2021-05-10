@@ -677,7 +677,7 @@ window_foreach_rejoin_all_channels(void)
 void
 window_recreate_exported(PIRC_WINDOW window, int rows, int cols)
 {
-    window_recreate(window, rows, cols);
+	window_recreate(window, rows, cols);
 }
 
 /**
