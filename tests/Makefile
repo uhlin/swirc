@@ -12,6 +12,11 @@ CFLAGS+=-DUNIT_TESTING=1\
 	-I$(SRC_DIR)include\
 	-I/usr/local/include
 
+CXXFLAGS+=-DUNIT_TESTING=1\
+	-I$(SRC_DIR)\
+	-I$(SRC_DIR)include\
+	-I/usr/local/include
+
 LDLIBS+=-lcmocka
 
 all: main
