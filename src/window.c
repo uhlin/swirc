@@ -779,9 +779,9 @@ window_select_prev(void)
 void
 windows_recreate_all(int rows, int cols)
 {
-    FOREACH_HASH_TABLE_ENTRY() {
-	FOREACH_WINDOW_IN_ENTRY() {
-	    window_recreate(window, rows, cols);
+	FOREACH_HASH_TABLE_ENTRY() {
+		FOREACH_WINDOW_IN_ENTRY() {
+			window_recreate(window, rows, cols);
+		}
 	}
-    }
 }
