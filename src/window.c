@@ -363,22 +363,24 @@ void
 windowSystem_init(void)
 {
 #if defined(UNIX) && USE_LIBNOTIFY
-    if (!notify_init("Swirc IRC client"))
-	err_log(0, "windowSystem_init: notify_init: error");
+	if (!notify_init("Swirc IRC client"))
+		err_log(0, "windowSystem_init: notify_init: error");
 #endif
 
-    FOREACH_HASH_TABLE_ENTRY() {
-	*entry_p = NULL;
-    }
+	FOREACH_HASH_TABLE_ENTRY() {
+		*entry_p = NULL;
+	}
 
-    g_status_window = g_active_window = NULL;
-    g_ntotal_windows = 0;
+	g_status_window = g_active_window = NULL;
+	g_ntotal_windows = 0;
 
-    if ((errno = spawn_chat_window(g_status_window_label, "")) != 0)
-	err_sys("windowSystem_init: spawn_chat_window");
-
-    if ((g_status_window = window_by_label(g_status_window_label)) == NULL)
-	err_quit("Unable to locate the status window\nShouldn't happen.");
+	if ((errno = spawn_chat_window(g_status_window_label, "")) != 0)
+		err_sys("windowSystem_init: spawn_chat_window");
+	else if ((g_status_window = window_by_label(g_status_window_label)) ==
+		 NULL) {
+		err_quit("Unable to locate the status window\n"
+		    "Shouldn't happen.");
+	}
 }
 
 void
