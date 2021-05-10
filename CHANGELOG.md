@@ -24,6 +24,7 @@ All notable changes to this project will be documented in this file.
   - `sig-unix.c`
   - `sig-w32.c`
   - `vcMutex.c`
+  - `window.c`
 - Moved defines
 - Reformatted and reindented files
 - Renamed functions and patterns
