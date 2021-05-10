@@ -1007,7 +1007,6 @@ handle_foo_situation(char **buffer, long int *i, long int *j,
  * @return A wide-character string, or NULL on error.
  */
 #if WIN32
-/*lint -sem(windows_convert_to_utf8, r_null) */
 static wchar_t *
 windows_convert_to_utf8(const char *buf)
 {
@@ -1030,7 +1029,6 @@ windows_convert_to_utf8(const char *buf)
  * @param codeset Codeset to use
  * @return A wide-character string, or NULL on error.
  */
-/*lint -sem(try_convert_buf_with_cs, r_null) */
 static wchar_t *
 try_convert_buf_with_cs(const char *buf, const char *codeset)
 {

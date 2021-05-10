@@ -54,6 +54,9 @@ __SWIRC_END_DECLS
 
 /* ----------------------------------------------------------------- */
 
+/*lint -sem(windows_convert_to_utf8, r_null) */
+/*lint -sem(try_convert_buf_with_cs, r_null) */
+
 __SWIRC_BEGIN_DECLS
 PPRINTTEXT_CONTEXT
 	printtext_context_new(PIRC_WINDOW, enum message_specifier_type,
