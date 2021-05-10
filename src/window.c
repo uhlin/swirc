@@ -766,11 +766,13 @@ window_select_next(void)
 void
 window_select_prev(void)
 {
-    const int refnum_prev = g_active_window->refnum - 1;
+	if (g_active_window == NULL)
+		return;
 
-    if (window_by_refnum(refnum_prev) != NULL) {
-	(void) change_window_by_refnum(refnum_prev);
-    }
+	const int refnum_prev = g_active_window->refnum - 1;
+
+	if (window_by_refnum(refnum_prev) != NULL)
+		(void) change_window_by_refnum(refnum_prev);
 }
 
 /**
