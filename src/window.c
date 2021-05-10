@@ -589,20 +589,15 @@ spawn_chat_window(const char *label, const char *title)
 void
 new_window_title(const char *label, const char *title)
 {
-    PIRC_WINDOW window;
+	PIRC_WINDOW window;
 
-    if ((window = window_by_label(label)) == NULL ||
-	isNull(title) ||
-	isEmpty(title)) {
-	return;
-    }
-
-    free(window->title);
-    window->title = sw_strdup(title);
-
-    if (window == g_active_window) {
-	titlebar(" %s ", title);
-    }
+	if ((window = window_by_label(label)) == NULL ||
+	    title == NULL || strings_match(title, ""))
+		return;
+	free(window->title);
+	window->title = sw_strdup(title);
+	if (window == g_active_window)
+		titlebar(" %s ", title);
 }
 
 /**
