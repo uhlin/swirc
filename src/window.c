@@ -666,12 +666,12 @@ window_foreach_destroy_names(void)
 void
 window_foreach_rejoin_all_channels(void)
 {
-    FOREACH_HASH_TABLE_ENTRY() {
-	FOREACH_WINDOW_IN_ENTRY() {
-	    if (is_irc_channel(window->label))
-		net_send("JOIN %s", window->label);
+	FOREACH_HASH_TABLE_ENTRY() {
+		FOREACH_WINDOW_IN_ENTRY() {
+			if (is_irc_channel(window->label))
+				(void) net_send("JOIN %s", window->label);
+		}
 	}
-    }
 }
 
 void
