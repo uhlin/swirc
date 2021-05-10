@@ -546,41 +546,42 @@ destroy_chat_window(const char *label)
 int
 spawn_chat_window(const char *label, const char *title)
 {
-    const int ntotalp1 = g_ntotal_windows + 1;
-    struct integer_context intctx = {
-	.setting_name	  = "max_chat_windows",
-	.fallback_default = 60,
-	.lo_limit	  = 10,
-	.hi_limit	  = 200,
-    };
+	const int ntotalp1 = g_ntotal_windows + 1;
+	struct integer_context intctx = {
+		.setting_name = "max_chat_windows",
+		.lo_limit = 10,
+		.hi_limit = 200,
+		.fallback_default = 60,
+	};
 
-    if (isNull(label) || isEmpty(label))
-	return EINVAL; /* a label is required */
-    else if (window_by_label(label) != NULL)
-	return 0; /* window already exists  --  reuse it */
-    else if (ntotalp1 > config_integer(&intctx))
-	return ENOSPC;
+	if (label == NULL || strings_match(label, ""))
+		return EINVAL; /* a label is required */
+	else if (window_by_label(label) != NULL)
+		return 0; /* window already exists  --  reuse it */
+	else if (ntotalp1 > config_integer(&intctx))
+		return ENOSPC;
 
-    struct hInstall_context inst_ctx = {
-	.label  = (char *) label,
-	.title  = (char *) title,
-	.pan    = term_new_panel(LINES - 2, 0, 1, 0),
-	.refnum = g_ntotal_windows + 1,
-    };
+	struct hInstall_context inst_ctx;
+	PIRC_WINDOW entry;
 
-    PIRC_WINDOW entry = hInstall(&inst_ctx);
-    apply_window_options(panel_window(entry->pan));
-    const int ret = change_window_by_label(entry->label);
-    (void) ret;
-    sw_assert_perror(ret);
+	inst_ctx.label  = (char *) label;
+	inst_ctx.title  = (char *) title;
+	inst_ctx.pan    = term_new_panel(LINES - 2, 0, 1, 0);
+	inst_ctx.refnum = g_ntotal_windows + 1;
 
-    /*
-     * send whois
-     */
-    if (g_on_air && !is_irc_channel(entry->label) && !g_icb_mode)
-	cmd_whois(entry->label);
+	entry = hInstall(&inst_ctx);
+	apply_window_options(panel_window(entry->pan));
+	const int ret = change_window_by_label(entry->label);
+	(void) ret;
+	sw_assert_perror(ret);
 
-    return 0;
+	/*
+	 * send whois
+	 */
+	if (g_on_air && !is_irc_channel(entry->label) && !g_icb_mode)
+		cmd_whois(entry->label);
+
+	return 0;
 }
 
 /**
