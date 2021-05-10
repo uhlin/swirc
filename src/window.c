@@ -110,24 +110,24 @@ apply_window_options(WINDOW *win)
 static unsigned int
 hash(const char *label)
 {
-    char		 c;
-    char		*label_copy = strToLower(sw_strdup(label));
-    char		*label_p    = label_copy;
-    unsigned int	 hashval    = 0;
-    unsigned int	 tmp;
+	char c;
+	char *label_copy = strToLower(sw_strdup(label));
+	char *label_p = label_copy;
+	unsigned int hashval = 0;
+	unsigned int tmp;
 
-    while ((c = *label_p++) != '\0') {
-	hashval = (hashval << 4) + c;
-	tmp = hashval & 0xf0000000;
+	while ((c = *label_p++) != '\0') {
+		hashval = (hashval << 4) + c;
+		tmp = hashval & 0xf0000000;
 
-	if (tmp) {
-	    hashval ^= (tmp >> 24);
-	    hashval ^= tmp;
+		if (tmp) {
+			hashval ^= (tmp >> 24);
+			hashval ^= tmp;
+		}
 	}
-    }
 
-    free(label_copy);
-    return (hashval % ARRAY_SIZE(hash_table));
+	free(label_copy);
+	return (hashval % ARRAY_SIZE(hash_table));
 }
 
 /**
