@@ -12,11 +12,18 @@ All notable changes to this project will be documented in this file.
 - Added theme item `nicklist_vline_color`
 - Defined and made use of `addrof()`
 - Defined and made use of `g_textdeco_chars`
+- Deleted `ToastActivator_i.c`
+- Deleted `ToastActivator_p.c`
 - Deleted command `/n`
 - Fixed a bug in `/quit` that resulted in SIGPIPE due to calling
   `SSL_shutdown()` on an already shutdown socket.
 - Fixed the behavior of `net_ssl_recv()` by checking the condition of
   `SSL_pending()`.
+- Made improvements to the following files:
+  - `pthrMutex.c`
+  - `sig-unix.c`
+  - `sig-w32.c`
+  - `vcMutex.c`
 - Moved defines
 - Reformatted and reindented files
 - Renamed functions and patterns
