@@ -218,20 +218,21 @@ hUndef(PIRC_WINDOW entry)
 static void
 reassign_window_refnums(void)
 {
-    int ref_count = 1;
+	int ref_count = 1;
 
-    FOREACH_HASH_TABLE_ENTRY() {
-	FOREACH_WINDOW_IN_ENTRY() {
-	    /*
-	     * skip status window and assign new num
-	     */
-	    if (!strings_match_ignore_case(window->label, g_status_window_label))
-		window->refnum = ++ref_count;
+	FOREACH_HASH_TABLE_ENTRY() {
+		FOREACH_WINDOW_IN_ENTRY() {
+			/*
+			 * skip status window and assign new num
+			 */
+			if (!strings_match_ignore_case(window->label,
+			    g_status_window_label))
+				window->refnum = ++ref_count;
+		}
 	}
-    }
 
-    sw_assert(g_status_window->refnum == 1);
-    sw_assert(ref_count == g_ntotal_windows);
+	sw_assert(g_status_window->refnum == 1);
+	sw_assert(ref_count == g_ntotal_windows);
 }
 
 static bool
