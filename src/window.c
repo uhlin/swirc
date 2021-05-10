@@ -136,55 +136,54 @@ hash(const char *label)
 static PIRC_WINDOW
 hInstall(const struct hInstall_context *ctx)
 {
-    PIRC_WINDOW entry;
-    unsigned int hashval;
+	PIRC_WINDOW	entry;
+	unsigned int	hashval;
 
-    entry      = xcalloc(sizeof *entry, 1);
-    entry->pan = ctx->pan;
+	entry      = xcalloc(sizeof *entry, 1);
+	entry->pan = ctx->pan;
 
-    for (PNAMES *n_ent = &entry->names_hash[0];
-	 n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE];
-	 n_ent++) {
-	*n_ent = NULL;
-    }
+	for (PNAMES *n_ent = &entry->names_hash[0];
+	     n_ent < &entry->names_hash[NAMES_HASH_TABLE_SIZE];
+	     n_ent++) {
+		*n_ent = NULL;
+	}
 
-    entry->buf                  = textBuf_new();
-    entry->logging              = false;
-    entry->received_chancreated = false;
-    entry->received_chanmodes   = false;
-    entry->received_names       = false;
-    entry->scroll_mode          = false;
-    BZERO(entry->chanmodes, ARRAY_SIZE(entry->chanmodes));
+	entry->buf                  = textBuf_new();
+	entry->logging              = false;
+	entry->received_chancreated = false;
+	entry->received_chanmodes   = false;
+	entry->received_names       = false;
+	entry->scroll_mode          = false;
+	BZERO(entry->chanmodes, ARRAY_SIZE(entry->chanmodes));
 
-    entry->label = sw_strdup(ctx->label);
-    entry->title =
-	((isNull(ctx->title) || isEmpty(ctx->title))
-	 ? NULL
-	 : sw_strdup(ctx->title));
+	entry->label = sw_strdup(ctx->label);
+	entry->title = ((ctx->title == NULL || strings_match(ctx->title, ""))
+			? NULL
+			: sw_strdup(ctx->title));
 
-    entry->num_owners	= 0;
-    entry->num_superops = 0;
-    entry->num_ops	= 0;
-    entry->num_halfops	= 0;
-    entry->num_voices	= 0;
-    entry->num_normal	= 0;
-    entry->num_total	= 0;
+	entry->num_owners   = 0;
+	entry->num_superops = 0;
+	entry->num_ops      = 0;
+	entry->num_halfops  = 0;
+	entry->num_voices   = 0;
+	entry->num_normal   = 0;
+	entry->num_total    = 0;
 
-    entry->nicklist.pan = NULL;
-    entry->nicklist.scroll_pos = 0;
-    entry->nicklist.width = 0;
+	entry->nicklist.pan        = NULL;
+	entry->nicklist.scroll_pos = 0;
+	entry->nicklist.width      = 0;
 
-    entry->refnum       = ctx->refnum;
-    entry->saved_size   = 0;
-    entry->scroll_count = 0;
+	entry->refnum       = ctx->refnum;
+	entry->saved_size   = 0;
+	entry->scroll_count = 0;
 
-    hashval             = hash(ctx->label);
-    entry->next         = hash_table[hashval];
-    hash_table[hashval] = entry;
+	hashval             = hash(ctx->label);
+	entry->next         = hash_table[hashval];
+	hash_table[hashval] = entry;
 
-    g_ntotal_windows++;
+	g_ntotal_windows++;
 
-    return entry;
+	return entry;
 }
 
 static void hUndef(PIRC_WINDOW) PTR_ARGS_NONNULL;
