@@ -753,11 +753,13 @@ window_scroll_up(PIRC_WINDOW window)
 void
 window_select_next(void)
 {
-    const int refnum_next = g_active_window->refnum + 1;
+	if (g_active_window == NULL)
+		return;
 
-    if (window_by_refnum(refnum_next) != NULL) {
-	(void) change_window_by_refnum(refnum_next);
-    }
+	const int refnum_next = g_active_window->refnum + 1;
+
+	if (window_by_refnum(refnum_next) != NULL)
+		(void) change_window_by_refnum(refnum_next);
 }
 
 /**
