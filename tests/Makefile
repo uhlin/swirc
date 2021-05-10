@@ -28,7 +28,7 @@ main: $(RECOMPILE) $(TESTS)
 	./run > "$(TEST_LOGFILE)"
 	$(E) "$(TEST_LOGFILE) written"
 
-.SUFFIXES: .c .o .run
+.SUFFIXES: .c .cpp .o .run
 
 .c.o:
 	$(E) "  CC      " $@
