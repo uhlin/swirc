@@ -384,17 +384,17 @@ windowSystem_init(void)
 void
 windowSystem_deinit(void)
 {
-    PIRC_WINDOW p, tmp;
+	PIRC_WINDOW p, tmp;
 
-    FOREACH_HASH_TABLE_ENTRY() {
-	for (p = *entry_p; !isNull(p); p = tmp) {
-	    tmp = p->next;
-	    hUndef(p);
+	FOREACH_HASH_TABLE_ENTRY() {
+		for (p = *entry_p; p != NULL; p = tmp) {
+			tmp = p->next;
+			hUndef(p);
+		}
 	}
-    }
 
 #if defined(UNIX) && USE_LIBNOTIFY
-    notify_uninit();
+	notify_uninit();
 #endif
 }
 
