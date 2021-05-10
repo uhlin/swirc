@@ -102,9 +102,8 @@ static PIRC_WINDOW hash_table[200];
 static void
 apply_window_options(WINDOW *win)
 {
-    if (!is_scrollok(win)) {
-	(void) scrollok(win, true);
-    }
+	if (!is_scrollok(win))
+		(void) scrollok(win, true);
 }
 
 static unsigned int
