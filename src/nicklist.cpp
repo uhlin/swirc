@@ -170,7 +170,6 @@ printnick(WINDOW *win, const int row, const int col, const char *nick)
     struct integer_context color2("nicklist_privilege_color", 0, 99, 0);
     struct integer_context color3("nicklist_nick_color", 0, 99, 0);
 
-    mutex_lock(&g_puts_mutex);
     (void) wmove(win, row, col);
     printtext_set_color(win, &state1,
 	static_cast<short int>(theme_integer(&color1)), -1);
@@ -184,7 +183,6 @@ printnick(WINDOW *win, const int row, const int col, const char *nick)
 	(void) waddstr(win, nick + 1);
     }
     (void) wattrset(win, A_NORMAL);
-    mutex_unlock(&g_puts_mutex);
 }
 
 int
@@ -227,10 +225,8 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	list.size() != static_cast<unsigned int>(win->num_total))
 	return -1;
 
-    mutex_lock(&g_puts_mutex);
     if (werase(nl_win) != ERR)
 	update_panels();
-    mutex_unlock(&g_puts_mutex);
 
     const bool list_fits = !(win->num_total > HEIGHT);
     std::list<std::string>::iterator it;
@@ -254,10 +250,8 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	    count++;
 	}
 
-	mutex_lock(&g_puts_mutex);
 	update_panels();
 	(void) doupdate();
-	mutex_unlock(&g_puts_mutex);
 	return 0;
     } else { /* !list_fits */
 	if (win->nicklist.scroll_pos < 0)
@@ -289,10 +283,8 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	}
     }
 
-    mutex_lock(&g_puts_mutex);
     update_panels();
     (void) doupdate();
-    mutex_unlock(&g_puts_mutex);
     return 0;
 }
 
