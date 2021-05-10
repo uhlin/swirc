@@ -253,37 +253,34 @@ static void
 window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 	      bool limit_output)
 {
-    PTEXTBUF_ELMT element = NULL;
-    WINDOW *pwin = panel_window(window->pan);
-    int i = 0;
-    int rep_count = 0;
+	PTEXTBUF_ELMT element = NULL;
+	WINDOW *pwin = panel_window(window->pan);
+	int i = 0;
+	int rep_count = 0;
 
-    if ((element = textBuf_get_element_by_pos(window->buf, pos < 0 ? 0 : pos)) ==
-	NULL)
-	return; /* Nothing stored in the buffer */
-
-#if 1
-    werase(pwin);
-    update_panels();
-#endif
-
-    if (limit_output) {
-	while (!isNull(element) && i < rows) {
-	    printtext_puts(pwin, element->text, element->indent, rows - i,
-			   &rep_count);
-	    element = element->next;
-	    i += rep_count;
+	if ((element = textBuf_get_element_by_pos(window->buf,
+	    pos < 0 ? 0 : pos)) == NULL)
+		return; /* Nothing stored in the buffer */
+	if (werase(pwin) != ERR)
+		update_panels();
+	if (limit_output) {
+		while (element != NULL && i < rows) {
+			printtext_puts(pwin, element->text, element->indent,
+			    (rows - i), &rep_count);
+			element = element->next;
+			i += rep_count;
+		}
+	} else {
+		while (element != NULL && i < rows) {
+			printtext_puts(pwin, element->text, element->indent, -1,
+			    NULL);
+			element = element->next;
+			++ i;
+		}
 	}
-    } else {
-	while (!isNull(element) && i < rows) {
-	    printtext_puts(pwin, element->text, element->indent, -1, NULL);
-	    element = element->next;
-	    i++;
-	}
-    }
 
-    statusbar_update_display_beta();
-    readline_top_panel();
+	statusbar_update_display_beta();
+	readline_top_panel();
 }
 
 /**
