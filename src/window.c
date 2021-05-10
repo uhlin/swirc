@@ -92,7 +92,7 @@ int		g_ntotal_windows        = 0;
 /* Objects with internal linkage
    ============================= */
 
-static PIRC_WINDOW hash_table[200];
+static PIRC_WINDOW hash_table[200] = { NULL };
 
 /* -------------------------------------------------- */
 
