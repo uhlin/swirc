@@ -69,7 +69,6 @@
 	     window = window->next)
 #define IS_AT_TOP \
 	(window->saved_size > 0 && window->saved_size == window->scroll_count)
-#define SCROLL_OFFSET 6
 
 /* Structure definitions
    ===================== */
@@ -93,6 +92,7 @@ int		g_ntotal_windows = 0;
    ============================= */
 
 static PIRC_WINDOW hash_table[200] = { NULL };
+static const int scroll_amount = 6;
 
 /* -------------------------------------------------- */
 
@@ -699,7 +699,7 @@ window_scroll_down(PIRC_WINDOW window)
 		return;
 	}
 
-	window->scroll_count -= SCROLL_OFFSET;
+	window->scroll_count -= scroll_amount;
 
 	if (! (window->scroll_count > HEIGHT)) {
 		window->saved_size = 0;
@@ -740,7 +740,7 @@ window_scroll_up(PIRC_WINDOW window)
 		if (window->scroll_count == 0) /* first page up */
 			window->scroll_count += MIN_SIZE;
 
-		window->scroll_count += SCROLL_OFFSET;
+		window->scroll_count += scroll_amount;
 
 		if (window->scroll_count > window->saved_size)
 			window->scroll_count = window->saved_size;
