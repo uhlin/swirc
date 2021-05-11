@@ -60,15 +60,15 @@
 #include "titlebar.h"
 
 #define FOREACH_HASH_TABLE_ENTRY()\
-    for (PIRC_WINDOW *entry_p = &hash_table[0];\
-	 entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
-	 entry_p++)
+	for (PIRC_WINDOW *entry_p = &hash_table[0];\
+	     entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
+	     entry_p++)
 #define FOREACH_WINDOW_IN_ENTRY()\
-    for (PIRC_WINDOW window = *entry_p;\
-	 !isNull(window);\
-	 window = window->next)
+	for (PIRC_WINDOW window = *entry_p;\
+	     !isNull(window);\
+	     window = window->next)
 #define IS_AT_TOP \
-    (window->saved_size > 0 && window->saved_size == window->scroll_count)
+	(window->saved_size > 0 && window->saved_size == window->scroll_count)
 #define SCROLL_OFFSET 6
 
 /* Structure definitions
