@@ -678,6 +678,7 @@ do_indent(WINDOW *win, const int indent, int *insert_count)
 	}
 
 	/* restore attributes after indenting */
+	update_panels();
 	(void) wattrset(win, attrs);
 }
 
