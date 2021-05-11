@@ -1079,7 +1079,7 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 		free(tmp_locale);
 		return out;
 	} catch (std::runtime_error &e) {
-		err_log(0, "try_convert_buf_with_cs: %s", e.what());
+		debug("try_convert_buf_with_cs: %s", e.what());
 		free_locale_info(li);
 		free(original_locale);
 		free(tmp_locale);
