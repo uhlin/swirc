@@ -3,8 +3,8 @@
 
 #include "textBuffer.h"
 
-#define BOLD_ALIAS '\025'
-#define MAX_PBB 2705
+#define BOLD_ALIAS	'\025'
+#define MAX_PBB		2705
 
 typedef void (*CMD_HANDLER_FN)(const char *);
 
