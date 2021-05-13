@@ -337,7 +337,8 @@ void
 nicklist_scroll_up(PIRC_WINDOW win)
 {
     if (win == NULL || !is_irc_channel(win->label) || !win->received_names ||
-	win->nicklist.pan == NULL || win->nicklist.width <= 0) {
+	win->nicklist.pan == NULL || win->nicklist.width <= 0 ||
+	term_is_too_small()) {
 	term_beep();
 	return;
     }
