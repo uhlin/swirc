@@ -79,10 +79,8 @@
 wchar_t g_push_back_buf[MAX_PBB] = { 0L };
 bool g_io_loop = true;
 
-static PTEXTBUF		history = NULL;
-static PTEXTBUF_ELMT	element = NULL;
-
-static size_t bytes_convert = 0;
+static PTEXTBUF history = NULL;
+static PTEXTBUF_ELMT element = NULL;
 
 #include "commandhelp.h"
 
@@ -283,6 +281,7 @@ handle_cmds(const char *data)
 static void
 history_next(void)
 {
+	size_t bytes_convert;
 	static const size_t size = ARRAY_SIZE(g_push_back_buf);
 
 	if (textBuf_size(history) == 0 || element == textBuf_tail(history))
@@ -301,6 +300,7 @@ history_next(void)
 static void
 history_prev(void)
 {
+	size_t bytes_convert;
 	static const size_t size = ARRAY_SIZE(g_push_back_buf);
 
 	if (textBuf_size(history) == 0 || element == textBuf_head(history))
