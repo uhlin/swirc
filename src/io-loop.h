@@ -9,8 +9,8 @@
 typedef void (*CMD_HANDLER_FN)(const char *);
 
 __SWIRC_BEGIN_DECLS
-extern bool g_io_loop;
-extern wchar_t g_push_back_buf[MAX_PBB];
+extern bool	g_io_loop;
+extern wchar_t	g_push_back_buf[MAX_PBB];
 
 /*lint -sem(get_list_of_matching_commands, r_null) */
 
