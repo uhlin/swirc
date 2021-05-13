@@ -341,6 +341,7 @@ nicklist_scroll_up(PIRC_WINDOW win)
 	win->nicklist.pan == NULL || win->nicklist.width <= 0 ||
 	term_is_too_small()) {
 	term_beep();
+	(void) napms(30);
 	return;
     }
 
