@@ -76,8 +76,8 @@
 
 #include "events/names.h"
 
-wchar_t g_push_back_buf[MAX_PBB] = { 0L };
 bool g_io_loop = true;
+wchar_t g_push_back_buf[MAX_PBB] = { 0L };
 
 static PTEXTBUF		history = NULL;
 static PTEXTBUF_ELMT	element = NULL;
