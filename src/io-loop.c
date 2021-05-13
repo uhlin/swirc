@@ -438,24 +438,30 @@ swirc_greeting(void)
 PTEXTBUF
 get_list_of_matching_commands(const char *search_var)
 {
-    if (!got_hits(search_var))
-	return NULL;
+	PTEXTBUF matches;
 
-    PTEXTBUF matches = textBuf_new();
+	if (!got_hits(search_var))
+		return NULL;
 
-    FOREACH_COMMAND() {
-	if (!strncmp(search_var, sp->cmd, strlen(search_var))) {
-	    if (textBuf_size(matches) == 0) {
-		if ((errno = textBuf_ins_next(matches, NULL, sp->cmd, -1)) != 0)
-		    err_sys("get_list_of_matching_commands: textBuf_ins_next");
-	    } else {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches), sp->cmd, -1)) != 0)
-		    err_sys("get_list_of_matching_commands: textBuf_ins_next");
-	    }
+	matches = textBuf_new();
+
+	FOREACH_COMMAND() {
+		if (!strncmp(search_var, sp->cmd, strlen(search_var))) {
+			if (textBuf_size(matches) == 0) {
+				if ((errno = textBuf_ins_next(matches, NULL,
+				    sp->cmd, -1)) != 0)
+					err_sys("get_list_of_matching_commands"
+					    ": textBuf_ins_next");
+			} else {
+				if ((errno = textBuf_ins_next(matches,
+				    textBuf_tail(matches), sp->cmd, -1)) != 0)
+					err_sys("get_list_of_matching_commands"
+					    ": textBuf_ins_next");
+			}
+		}
 	}
-    }
 
-    return matches;
+	return matches;
 }
 
 char *
