@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - Fixed the behavior of `net_ssl_recv()` by checking the condition of
   `SSL_pending()`.
 - Made improvements to the following files:
+  - `io-loop.c`
   - `pthrMutex.c`
   - `sig-unix.c`
   - `sig-w32.c`
