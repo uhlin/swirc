@@ -196,38 +196,30 @@ bold_fix(char *string)
 	*cp = BOLD_ALIAS;
 }
 
-#if WIN32
-#define stat _stat
-#endif
-
 static bool
 get_error_log_size(double *size)
 {
-    char path[1300] = "";
-    struct stat sb = { 0 };
-
-    if (!g_log_dir || sw_strcpy(path, g_log_dir, sizeof path) != 0) {
-	*size = 0;
-	return false;
-    }
-
 #if defined(UNIX)
-    if (sw_strcat(path, "/error.log", sizeof path) != 0)
+#define LOGFILE "/error.log"
 #elif defined(WIN32)
-    if (sw_strcat(path, "\\error.log", sizeof path) != 0)
+#define LOGFILE "\\error.log"
 #endif
-	{
-	    *size = 0;
-	    return false;
+#if WIN32
+#define stat _stat
+#endif
+	char path[1300] = { 0 };
+	struct stat sb = { 0 };
+
+	if (g_log_dir == NULL ||
+	    sw_strcpy(path, g_log_dir, sizeof path) != 0 ||
+	    sw_strcat(path, LOGFILE, sizeof path) != 0 ||
+	    stat(path, &sb) == -1) {
+		*size = 0;
+		return false;
 	}
 
-    if (stat(path, &sb) == -1) {
-	*size = 0;
-	return false;
-    }
-
-    *size = (double) (sb.st_size / 1000);
-    return true;
+	*size = (double) (sb.st_size / 1000);
+	return true;
 }
 
 static bool
