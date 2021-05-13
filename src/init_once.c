@@ -1,5 +1,5 @@
 /* WIN32 one-time initialization
-   Copyright (C) 2012-2014 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -41,14 +41,11 @@
 int
 init_once(init_once_t *once_control, PTR_TO_INIT_ROUTINE init_routine)
 {
-    if (once_control == NULL || init_routine == NULL) {
-	return EINVAL;
-    } else if (*once_control == ONCE_INITIALIZER &&
-	_InterlockedCompareExchange(
-	    once_control,
-	    ONCE_EXCHANGE_VALUE,
-	    ONCE_INITIALIZER) == ONCE_INITIALIZER) {
-	init_routine();
-    }
-    return 0;
+	if (once_control == NULL || init_routine == NULL)
+		return EINVAL;
+	else if (*once_control == ONCE_INITIALIZER &&
+	    _InterlockedCompareExchange(once_control, ONCE_EXCHANGE_VALUE,
+					ONCE_INITIALIZER) == ONCE_INITIALIZER)
+		init_routine();
+	return 0;
 }
