@@ -572,50 +572,61 @@ enter_io_loop(void)
 #define S2 Theme("nick_s2")
 
 void
-transmit_user_input(const char *win_label, const char *input)
+transmit_user_input(const char *winlabel, const char *input)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT ctx;
 
-    printtext_context_init(&ctx, window_by_label(win_label), TYPE_SPEC_NONE,
-	true);
+	printtext_context_init(&ctx, window_by_label(winlabel), TYPE_SPEC_NONE,
+	    true);
 
-    if (ctx.window == NULL) {
-	err_log(0, "transmit_user_input: window %s not found", win_label);
-	return;
-    }
-
-    if (g_icb_mode) {
-	if (is_irc_channel(win_label))
-	    icb_send_open_msg(input);
-	else
-	    icb_send_pm(win_label, input);
-    } else {
-	if (net_send("PRIVMSG %s :%s", win_label, input) < 0) {
-	    g_connection_lost = true;
-	    return;
-	}
-    }
-
-    if (!is_irc_channel(win_label))
-	printtext(&ctx, "%s%s%s%c%s %s",
-	    S1, COLOR1, g_my_nickname, NORMAL, S2, input);
-    else {
-	PNAMES	n = NULL;
-	char	c = ' ';
-
-	if ((n = event_names_htbl_lookup(g_my_nickname, win_label)) == NULL) {
-	    err_log(0, "transmit_user_input: hash table lookup error");
-	    return;
+	if (ctx.window == NULL) {
+		err_log(0, "transmit_user_input: window %s not found",
+		    winlabel);
+		return;
 	}
 
-	if (n->is_owner)        c = '~';
-	else if (n->is_superop) c = '&';
-	else if (n->is_op)      c = '@';
-	else if (n->is_halfop)  c = '%';
-	else if (n->is_voice)   c = '+';
-	else c = ' ';
+	if (g_icb_mode) {
+		if (is_irc_channel(winlabel))
+			icb_send_open_msg(input);
+		else
+			icb_send_pm(winlabel, input);
+	} else {
+		if (net_send("PRIVMSG %s :%s", winlabel, input) < 0) {
+			g_connection_lost = true;
+			return;
+		}
+	}
 
-	printtext(&ctx, "%s%c%s%s%c%s %s",
-	    S1, c, COLOR1, g_my_nickname, NORMAL, S2, input);
-    }
+	if (!is_irc_channel(winlabel)) {
+		printtext(&ctx, "%s%s%s%c%s %s",
+		    S1, COLOR1, g_my_nickname, NORMAL, S2,
+		    input);
+	} else {
+		PNAMES n;
+		char c;
+
+		if ((n = event_names_htbl_lookup(g_my_nickname, winlabel)) ==
+		    NULL) {
+			err_log(0, "transmit_user_input: "
+			    "hash table lookup error");
+			return;
+		}
+
+		if (n->is_owner)
+			c = '~';
+		else if (n->is_superop)
+			c = '&';
+		else if (n->is_op)
+			c = '@';
+		else if (n->is_halfop)
+			c = '%';
+		else if (n->is_voice)
+			c = '+';
+		else
+			c = ' ';
+
+		printtext(&ctx, "%s%c%s%s%c%s %s",
+		    S1, c, COLOR1, g_my_nickname, NORMAL, S2,
+		    input);
+	}
 }
