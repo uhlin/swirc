@@ -809,7 +809,7 @@ event_names_htbl_remove_all(PIRC_WINDOW window)
     PNAMES *entry_p;
     PNAMES p, tmp;
 
-    if (isNull(window))
+    if (isNull(window) || !is_irc_channel(window->label))
 	return;
 
     for (entry_p = &window->names_hash[0];
