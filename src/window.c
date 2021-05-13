@@ -193,7 +193,7 @@ hUndef(PIRC_WINDOW entry)
 	PIRC_WINDOW *indirect = addrof(hash_table[hash(entry->label)]);
 
 	while (*indirect != entry)
-		indirect = & ((*indirect)->next);
+		indirect = addrof((*indirect)->next);
 	*indirect = entry->next;
 
 	term_remove_panel(entry->pan);
