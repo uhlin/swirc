@@ -156,33 +156,36 @@ static struct cmds_tag {
 static void
 add_to_history(const char *string)
 {
-    struct integer_context intctx = {
-	.setting_name     = "cmd_hist_size",
-	.fallback_default = 50,
-	.lo_limit         = 0,
-	.hi_limit         = 300,
-    };
-    const int tbszp1 = textBuf_size(history) + 1;
+	const int tbszp1 = textBuf_size(history) + 1;
+	struct integer_context intctx = {
+		.setting_name = "cmd_hist_size",
+		.lo_limit = 0,
+		.hi_limit = 300,
+		.fallback_default = 50,
+	};
 
-    if (config_integer(&intctx) == 0 ||
-	!strncasecmp(string, "/nickserv -- identify", 21) ||
-	!strncasecmp(string, "/ns -- identify", 15))
-	return;
+	if (config_integer(&intctx) == 0 ||
+	    !strncasecmp(string, "/nickserv -- identify", 21) ||
+	    !strncasecmp(string, "/ns -- identify", 15))
+		return;
+	if (tbszp1 > config_integer(&intctx)) {
+		/*
+		 * Buffer full. Remove head...
+		 */
 
-    if (tbszp1 > config_integer(&intctx)) {
-	/* Buffer full. Remove head... */
+		if ((errno = textBuf_remove(history, textBuf_head(history))) !=
+		    0)
+			err_sys("add_to_history: textBuf_remove");
+	}
 
-	if ((errno = textBuf_remove(history, textBuf_head(history))) != 0)
-	    err_sys("add_to_history: textBuf_remove");
-    }
-
-    if (textBuf_size(history) == 0) {
-	if ((errno = textBuf_ins_next(history, NULL, string, -1)) != 0)
-	    err_sys("add_to_history: textBuf_ins_next");
-    } else {
-	if ((errno = textBuf_ins_next(history, textBuf_tail(history), string, -1)) != 0)
-	    err_sys("add_to_history: textBuf_ins_next");
-    }
+	if (textBuf_size(history) == 0) {
+		if ((errno = textBuf_ins_next(history, NULL, string, -1)) != 0)
+			err_sys("add_to_history: textBuf_ins_next");
+	} else {
+		if ((errno = textBuf_ins_next(history, textBuf_tail(history),
+		    string, -1)) != 0)
+			err_sys("add_to_history: textBuf_ins_next");
+	}
 }
 
 static void
