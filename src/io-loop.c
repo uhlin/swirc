@@ -568,9 +568,6 @@ enter_io_loop(void)
     textBuf_destroy(history);
 }
 
-#define S1 Theme("nick_s1")
-#define S2 Theme("nick_s2")
-
 void
 transmit_user_input(const char *winlabel, const char *input)
 {
@@ -596,6 +593,9 @@ transmit_user_input(const char *winlabel, const char *input)
 			return;
 		}
 	}
+
+#define S1 Theme("nick_s1")
+#define S2 Theme("nick_s2")
 
 	if (!is_irc_channel(winlabel)) {
 		printtext(&ctx, "%s%s%s%c%s %s",
