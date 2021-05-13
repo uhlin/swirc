@@ -217,6 +217,10 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
     if (win == NULL || rows < 0 || !win->received_names ||
 	win->nicklist.pan == NULL)
 	return -1;
+    else if (term_is_too_small()) {
+	(void) napms(30);
+	return -1;
+    }
 
     WINDOW *nl_win = panel_window(win->nicklist.pan);
     const int HEIGHT = rows - 3;
