@@ -31,8 +31,8 @@ term_get_size(void)
     struct winsize size;
 
     if (!GetConsoleScreenBufferInfo(hOut, &info)) {
-	err_quit("GetConsoleScreenBufferInfo error 0x%lx",
-		 (unsigned long int) GetLastError());
+	err_quit("term_get_size: GetConsoleScreenBufferInfo: %s",
+		 errdesc_by_last_err());
     }
 
     size.ws_row = (info.srWindow.Bottom - info.srWindow.Top) + 1;
