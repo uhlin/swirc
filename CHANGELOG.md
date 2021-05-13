@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
   `SSL_shutdown()` on an already shutdown socket.
 - Fixed the behavior of `net_ssl_recv()` by checking the condition of
   `SSL_pending()`.
+- Fixed unchecked return values
 - Made improvements to the following files:
   - `io-loop.c`
   - `pthrMutex.c`
