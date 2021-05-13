@@ -244,38 +244,39 @@ got_hits(const char *search_var)
 static void
 handle_cmds(const char *data)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char *cp = NULL;
+	PRINTTEXT_CONTEXT ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 
-    FOREACH_COMMAND() {
-	cp = strdup_printf("%s ", sp->cmd);
+	FOREACH_COMMAND() {
+		char *cp = strdup_printf("%s ", sp->cmd);
 
-	if (strings_match(data, sp->cmd)) {
-	    if (sp->requires_connection && !g_on_air)
-		printtext(&ctx, "command requires irc connection");
-	    else if (sp->irc_only && g_icb_mode)
-		printtext(&ctx, "command is irc only");
-	    else
-		sp->fn("");
-	    free(cp);
-	    return;
-	} else if (!strncmp(data, cp, strlen(cp))) {
-	    if (sp->requires_connection && !g_on_air)
-		printtext(&ctx, "command requires irc connection");
-	    else if (sp->irc_only && g_icb_mode)
-		printtext(&ctx, "command is irc only");
-	    else
-		sp->fn(&data[strlen(cp)]);
-	    free(cp);
-	    return;
-	} else {
-	    free(cp);
+		if (strings_match(data, sp->cmd)) {
+			if (sp->requires_connection && !g_on_air)
+				printtext(&ctx, "command requires "
+				    "irc connection");
+			else if (sp->irc_only && g_icb_mode)
+				printtext(&ctx, "command is irc only");
+			else
+				sp->fn("");
+			free(cp);
+			return;
+		} else if (!strncmp(data, cp, strlen(cp))) {
+			if (sp->requires_connection && !g_on_air)
+				printtext(&ctx, "command requires "
+				    "irc connection");
+			else if (sp->irc_only && g_icb_mode)
+				printtext(&ctx, "command is irc only");
+			else
+				sp->fn(&data[strlen(cp)]);
+			free(cp);
+			return;
+		} else {
+			free(cp);
+		}
 	}
-    }
 
-    printtext(&ctx, "unknown command");
+	printtext(&ctx, "unknown command");
 }
 
 static void
