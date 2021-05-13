@@ -40,8 +40,8 @@
 
 volatile bool g_resizing_term = false;
 
-static const short int TermMinimumRows = 6;
-static const short int TermMinimumCols = 12;
+static const short int TermMinimumRows = 10;
+static const short int TermMinimumCols = 30;
 
 void
 term_init(void)
