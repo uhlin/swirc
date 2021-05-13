@@ -318,35 +318,35 @@ history_prev(void)
 static void
 list_all_commands(void)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
-    printtext(&ctx, "--------------- Commands ---------------");
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
+	printtext(&ctx, "--------------- Commands ---------------");
 
-    FOREACH_COMMAND() {
-	const char *cmd1 = sp->cmd;
-	char *cmd2, *cmd3;
+	FOREACH_COMMAND() {
+		const char *cmd1 = sp->cmd;
+		char *cmd2, *cmd3;
 
-	if ((sp + 1) < &cmds[ARRAY_SIZE(cmds)] &&
-	    (sp + 2) < &cmds[ARRAY_SIZE(cmds)]) {
-	    sp++, cmd2 = sp->cmd;
-	    sp++, cmd3 = sp->cmd;
-	} else if ((sp + 1) < &cmds[ARRAY_SIZE(cmds)]) {
-	    sp++, cmd2 = sp->cmd;
-	    cmd3 = NULL;
-	} else {
-	    cmd2 = cmd3 = NULL;
+		if ((sp + 1) < &cmds[ARRAY_SIZE(cmds)] &&
+		    (sp + 2) < &cmds[ARRAY_SIZE(cmds)]) {
+			sp++, cmd2 = sp->cmd;
+			sp++, cmd3 = sp->cmd;
+		} else if ((sp + 1) < &cmds[ARRAY_SIZE(cmds)]) {
+			sp++, cmd2 = sp->cmd;
+			cmd3 = NULL;
+		} else {
+			cmd2 = cmd3 = NULL;
+		}
+
+		if (cmd1 && cmd2 && cmd3)
+			printtext(&ctx, "%-15s %-15s %s", cmd1, cmd2, cmd3);
+		else if (cmd1 && cmd2)
+			printtext(&ctx, "%-15s %s", cmd1, cmd2);
+		else if (cmd1)
+			printtext(&ctx, "%s", cmd1);
+		else
+			sw_assert_not_reached();
 	}
-
-	if (cmd1 && cmd2 && cmd3)
-	    printtext(&ctx, "%-15s %-15s %s", cmd1, cmd2, cmd3);
-	else if (cmd1 && cmd2)
-	    printtext(&ctx, "%-15s %s", cmd1, cmd2);
-	else if (cmd1)
-	    printtext(&ctx, "%s", cmd1);
-	else
-	    sw_assert_not_reached();
-    }
 }
 
 static void
