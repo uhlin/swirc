@@ -83,7 +83,6 @@ static PTEXTBUF		history = NULL;
 static PTEXTBUF_ELMT	element = NULL;
 
 static size_t bytes_convert = 0;
-static const size_t ARSZ = ARRAY_SIZE(g_push_back_buf);
 
 #include "commandhelp.h"
 
@@ -284,18 +283,19 @@ handle_cmds(const char *data)
 static void
 history_next(void)
 {
-    if (textBuf_size(history) == 0)
-	return;
+	static const size_t size = ARRAY_SIZE(g_push_back_buf);
 
-    if (element != textBuf_tail(history)) {
+	if (textBuf_size(history) == 0 || element == textBuf_tail(history))
+		return;
+
 	element = element->next;
 	bold_fix(element->text);
-	bytes_convert = xmbstowcs(g_push_back_buf, element->text, ARSZ - 1);
-	if (bytes_convert == g_conversion_failed)
-	    wmemset(g_push_back_buf, 0L, ARSZ);
-	else if (bytes_convert == ARSZ - 1)
-	    g_push_back_buf[ARSZ - 1] = 0L;
-    }
+
+	if ((bytes_convert = xmbstowcs(g_push_back_buf, element->text,
+		    size - 1)) == g_conversion_failed)
+		(void) wmemset(g_push_back_buf, 0L, size);
+	else if (bytes_convert == (size - 1))
+		g_push_back_buf[size - 1] = 0L;
 }
 
 static void
