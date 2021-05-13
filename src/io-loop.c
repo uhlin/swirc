@@ -79,8 +79,8 @@
 wchar_t g_push_back_buf[MAX_PBB] = { 0L };
 bool g_io_loop = true;
 
-static PTEXTBUF history = NULL;
-static PTEXTBUF_ELMT element = NULL;
+static PTEXTBUF		history = NULL;
+static PTEXTBUF_ELMT	element = NULL;
 
 #include "commandhelp.h"
 
