@@ -377,62 +377,59 @@ output_help_for_command(const char *command)
 static void
 swirc_greeting(void)
 {
+	PRINTTEXT_CONTEXT ctx;
+	const char *logo[] = {
 #define USE_LARRY3D_LOGO 1
-    PRINTTEXT_CONTEXT ctx;
-    const char **ppcc = NULL;
-    const char *logo[] = {
 #if USE_LARRY3D_LOGO
-	"                     __                              ",
-	"    ____  __  __  __/\\_\\  _ __   ___               ",
-	"   /',__\\/\\ \\/\\ \\/\\ \\/\\ \\/\\`'__\\/'___\\   ",
-	"  /\\__, `\\ \\ \\_/ \\_/ \\ \\ \\ \\ \\//\\ \\__/   ",
-	"  \\/\\____/\\ \\___x___/'\\ \\_\\ \\_\\\\ \\____\\  ",
-	"   \\/___/  \\/__//__/   \\/_/\\/_/ \\/____/         ",
+		"                     __                              ",
+		"    ____  __  __  __/\\_\\  _ __   ___               ",
+		"   /',__\\/\\ \\/\\ \\/\\ \\/\\ \\/\\`'__\\/'___\\   ",
+		"  /\\__, `\\ \\ \\_/ \\_/ \\ \\ \\ \\ \\//\\ \\__/   ",
+		"  \\/\\____/\\ \\___x___/'\\ \\_\\ \\_\\\\ \\____\\  ",
+		"   \\/___/  \\/__//__/   \\/_/\\/_/ \\/____/         ",
 #else
-	" _______          _________ _______  _______     ",
-	"(  ____ \\|\\     /|\\__   __/(  ____ )(  ____ \\",
-	"| (    \\/| )   ( |   ) (   | (    )|| (    \\/  ",
-	"| (_____ | | _ | |   | |   | (____)|| |          ",
-	"(_____  )| |( )| |   | |   |     __)| |          ",
-	"      ) || || || |   | |   | (\\ (   | |         ",
-	"/\\____) || () () |___) (___| ) \\ \\__| (____/\\",
-	"\\_______)(_______)\\_______/|/   \\__/(_______/ ",
+		" _______          _________ _______  _______     ",
+		"(  ____ \\|\\     /|\\__   __/(  ____ )(  ____ \\",
+		"| (    \\/| )   ( |   ) (   | (    )|| (    \\/  ",
+		"| (_____ | | _ | |   | |   | (____)|| |          ",
+		"(_____  )| |( )| |   | |   |     __)| |          ",
+		"      ) || || || |   | |   | (\\ (   | |         ",
+		"/\\____) || () () |___) (___| ) \\ \\__| (____/\\",
+		"\\_______)(_______)\\_______/|/   \\__/(_______/ ",
 #endif
-    };
-    const size_t logo_size = ARRAY_SIZE(logo);
-    double log_size_kb;
+	};
+	double log_size_kb;
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
-    for (ppcc = &logo[0]; ppcc < &logo[logo_size]; ppcc++) {
-	const char *color = Theme("logo_color");
-	char *str = sw_strdup(*ppcc);
+	for (const char **ppcc = &logo[0];
+	     ppcc < &logo[ARRAY_SIZE(logo)];
+	     ppcc++) {
+		char *str = sw_strdup(*ppcc);
 
-	printtext(&ctx, "%s%s", color, trim(str));
-	free(str);
-    }
+		printtext(&ctx, "%s%s", Theme("logo_color"), trim(str));
+		free(str);
+	}
 
-    printtext(&ctx, " ");
-
-    printtext(&ctx, "    Swirc %s by %s", g_swircVersion, g_swircAuthor);
-    printtext(&ctx, "    Compiled on %s%s %s%s",
-	      LEFT_BRKT, __DATE__, __TIME__, RIGHT_BRKT);
-
-    if (g_initialized_pairs < 0) {
-	g_initialized_pairs = 0;
-    }
-
-    printtext(&ctx, " ");
-    printtext(&ctx, "Program settings are stored in %s%s%s",
-	      LEFT_BRKT, g_home_dir, RIGHT_BRKT);
-    printtext(&ctx, "%c%hd%c color pairs have been initialized",
-	      BOLD, g_initialized_pairs, BOLD);
-    printtext(&ctx, "Type /help for a list of commands; or /help <command>");
-    printtext(&ctx, "for help of a specific command");
-    if (get_error_log_size(&log_size_kb))
-	printtext(&ctx, "Error log size %s%.1f KB%s",
-	    LEFT_BRKT, log_size_kb, RIGHT_BRKT);
-    printtext(&ctx, " ");
+	printtext(&ctx, " ");
+	printtext(&ctx, "    Swirc %s by %s", g_swircVersion, g_swircAuthor);
+	printtext(&ctx, "    Compiled on %s%s %s%s",
+	    LEFT_BRKT, __DATE__, __TIME__, RIGHT_BRKT);
+	if (g_initialized_pairs < 0)
+		g_initialized_pairs = 0;
+	printtext(&ctx, " ");
+	printtext(&ctx, "Program settings are stored in %s%s%s",
+	    LEFT_BRKT, g_home_dir, RIGHT_BRKT);
+	printtext(&ctx, "%c%hd%c color pairs have been initialized",
+	    BOLD, g_initialized_pairs, BOLD);
+	printtext(&ctx, "Type /help for a list of commands; "
+	    "or /help <command>");
+	printtext(&ctx, "for help of a specific command");
+	if (get_error_log_size(&log_size_kb)) {
+		printtext(&ctx, "Error log size %s%.1f KB%s",
+		    LEFT_BRKT, log_size_kb, RIGHT_BRKT);
+	}
+	printtext(&ctx, " ");
 }
 
 PTEXTBUF
