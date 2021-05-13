@@ -1,4 +1,4 @@
-/* Copyright (C) 2012-2014, 2016 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2012-2021 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 #include "errHand.h"
@@ -8,7 +8,7 @@ void
 term_set_title(const char *fmt, ...)
 {
     va_list ap;
-    char title[900];
+    char title[900] = { '\0' };
 
     va_start(ap, fmt);
     vsnprintf_s(title, sizeof title, _TRUNCATE, fmt, ap);
