@@ -85,12 +85,12 @@ static PTEXTBUF_ELMT element = NULL;
 #include "commandhelp.h"
 
 static struct cmds_tag {
-    char *cmd;
-    CMD_HANDLER_FN fn;
-    bool requires_connection;
-    const char **usage;
-    const size_t size;
-    bool irc_only;
+	char		 *cmd;
+	CMD_HANDLER_FN	  fn;
+	bool		  requires_connection;
+	const char	**usage;
+	const size_t	  size;
+	bool		  irc_only;
 } cmds[] = {
     { "away",        cmd_away,        true,  away_usage,        ARRAY_SIZE(away_usage),        true  },
     { "ban",         cmd_ban,         true,  ban_usage,         ARRAY_SIZE(ban_usage),         true  },
