@@ -310,7 +310,7 @@ history_prev(void)
 
 	if ((bytes_convert = xmbstowcs(g_push_back_buf, element->text,
 	    size - 1)) == g_conversion_failed)
-		wmemset(g_push_back_buf, 0L, size);
+		(void) wmemset(g_push_back_buf, 0L, size);
 	else if (bytes_convert == (size - 1))
 		g_push_back_buf[size - 1] = 0L;
 
