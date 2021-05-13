@@ -352,26 +352,26 @@ list_all_commands(void)
 static void
 output_help_for_command(const char *command)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
 
-    FOREACH_COMMAND() {
-	if (strings_match(command, sp->cmd)) {
-	    const char **lines = & (sp->usage[0]);
-	    const size_t size = sp->size;
+	FOREACH_COMMAND() {
+		if (strings_match(command, sp->cmd)) {
+			const char **lines = & (sp->usage[0]);
+			const size_t size = sp->size;
 
-	    while (lines < & (sp->usage[size])) {
-		printtext(&ctx, "%s", *lines);
-		lines++;
-	    }
+			while (lines < & (sp->usage[size])) {
+				printtext(&ctx, "%s", *lines);
+				++lines;
+			}
 
-	    return;
+			return;
+		}
 	}
-    }
 
-    ctx.spec_type = TYPE_SPEC1_FAILURE;
-    printtext(&ctx, "no such command");
+	ctx.spec_type = TYPE_SPEC1_FAILURE;
+	printtext(&ctx, "no such command");
 }
 
 static void
