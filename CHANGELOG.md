@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Defined and made use of `g_textdeco_chars`
 - Deleted `ToastActivator_i.c`
 - Deleted `ToastActivator_p.c`
+- Deleted `dlldata.c`
 - Deleted command `/n`
 - Fixed a bug in `/quit` that resulted in SIGPIPE due to calling
   `SSL_shutdown()` on an already shutdown socket.
