@@ -233,12 +233,11 @@ get_error_log_size(double *size)
 static bool
 got_hits(const char *search_var)
 {
-    FOREACH_COMMAND() {
-	if (!strncmp(search_var, sp->cmd, strlen(search_var)))
-	    return true;
-    }
-
-    return false;
+	FOREACH_COMMAND() {
+		if (!strncmp(search_var, sp->cmd, strlen(search_var)))
+			return true;
+	}
+	return false;
 }
 
 static void
