@@ -298,10 +298,11 @@ history_prev(void)
 	size_t bytes_convert;
 	static const size_t size = ARRAY_SIZE(g_push_back_buf);
 
-	if (textBuf_size(history) == 0 || element == textBuf_head(history))
+	if (textBuf_size(history) == 0)
 		return;
+	else if (element != textBuf_head(history))
+		element = element->prev;
 
-	element = element->prev;
 	bold_fix(element->text);
 
 	if ((bytes_convert = xmbstowcs(g_push_back_buf, element->text,
