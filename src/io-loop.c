@@ -188,12 +188,12 @@ add_to_history(const char *string)
 static void
 bold_fix(char *string)
 {
-    char *cp = NULL;
+	char *cp;
 
-    if (!string)
-	return;
-    while ((cp = strchr(string, BOLD)) != NULL)
-	*cp = BOLD_ALIAS;
+	if (string == NULL)
+		return;
+	while ((cp = strchr(string, BOLD)) != NULL)
+		*cp = BOLD_ALIAS;
 }
 
 static bool
