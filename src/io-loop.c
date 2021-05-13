@@ -512,60 +512,69 @@ cmd_help(const char *data)
 void
 enter_io_loop(void)
 {
-    new_window_title(g_status_window_label, g_swircWebAddr);
+	new_window_title(g_status_window_label, g_swircWebAddr);
 
-    if (config_bool("startup_greeting", true)) {
-	swirc_greeting();
-    }
+	if (config_bool("startup_greeting", true))
+		swirc_greeting();
+	if (g_auto_connect) {
+		char buf[400] = { '\0' };
 
-    if (g_auto_connect) {
-	char buf[1000];
+		const int ret = snprintf(buf, ARRAY_SIZE(buf), "%s:%s",
+		    g_cmdline_opts->server, g_cmdline_opts->port);
 
-	snprintf(buf, ARRAY_SIZE(buf), "%s:%s", g_cmdline_opts->server,
-	    g_cmdline_opts->port);
-	/*
-	 * napms: let i/o finish
-	 */
-	napms(444);
-	cmd_connect(buf);
-    }
+		if (ret < 0 || ((size_t) ret) >= ARRAY_SIZE(buf)) {
+			err_log(EOVERFLOW, "enter_io_loop: snprintf");
+		} else {
+			/*
+			 * napms: let i/o finish
+			 */
 
-    history = textBuf_new();
+			(void) napms(333);
+			cmd_connect(buf);
+		}
 
-    do {
-	char *prompt, *line;
-	const char cmd_char = '/';
-
-	prompt = get_prompt();
-	line   = readline(prompt);
-	free(prompt);
-	wmemset(g_push_back_buf, 0L, ARSZ);
-
-	if (line == NULL) {
-	    if (g_resize_requested) {
-		term_resize_all();
-	    } else if (g_hist_next) {
-		history_next();
-	    } else if (g_hist_prev) {
-		history_prev();
-	    }
-
-	    continue;
-	} else if (*line == cmd_char) {
-	    handle_cmds(&line[1]);
-	} else {
-	    if (g_on_air &&
-		!strings_match(g_active_window->label, g_status_window_label))
-		transmit_user_input(g_active_window->label, line);
 	}
 
-	add_to_history(line);
-	element = textBuf_tail(history);
+	history = textBuf_new();
 
-	free(line);
-    } while (g_io_loop);
+	do {
+		char *prompt, *line;
+		static const char cmd_char = '/';
 
-    textBuf_destroy(history);
+		prompt = get_prompt();
+		line = readline(prompt);
+		free(prompt);
+
+		(void) wmemset(g_push_back_buf, 0L, ARSZ);
+
+		if (line == NULL) {
+			if (g_resize_requested)
+				term_resize_all();
+			else if (g_hist_next)
+				history_next();
+			else if (g_hist_prev)
+				history_prev();
+
+			continue;
+		} else if (*line == cmd_char) {
+			handle_cmds(&line[1]);
+		} else {
+			if (g_on_air && !strings_match(g_active_window->label,
+			    g_status_window_label)) {
+				transmit_user_input(g_active_window->label,
+				    line);
+			}
+		}
+
+		add_to_history(line);
+
+		free(line);
+		line = NULL;
+
+		element = textBuf_tail(history);
+	} while (g_io_loop);
+
+	textBuf_destroy(history);
 }
 
 void
