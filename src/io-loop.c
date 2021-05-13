@@ -301,18 +301,21 @@ history_next(void)
 static void
 history_prev(void)
 {
-    if (textBuf_size(history) == 0)
-	return;
+	static const size_t size = ARRAY_SIZE(g_push_back_buf);
 
-    bold_fix(element->text);
-    bytes_convert = xmbstowcs(g_push_back_buf, element->text, ARSZ - 1);
-    if (bytes_convert == g_conversion_failed)
-	wmemset(g_push_back_buf, 0L, ARSZ);
-    else if (bytes_convert == ARSZ - 1)
-	g_push_back_buf[ARSZ - 1] = 0L;
+	if (textBuf_size(history) == 0)
+		return;
 
-    if (element != textBuf_head(history))
-	element = element->prev;
+	bold_fix(element->text);
+
+	if ((bytes_convert = xmbstowcs(g_push_back_buf, element->text,
+	    size - 1)) == g_conversion_failed)
+		wmemset(g_push_back_buf, 0L, size);
+	else if (bytes_convert == (size - 1))
+		g_push_back_buf[size - 1] = 0L;
+
+	if (element != textBuf_head(history))
+		element = element->prev;
 }
 
 static void
