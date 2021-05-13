@@ -545,7 +545,8 @@ enter_io_loop(void)
 		line = readline(prompt);
 		free(prompt);
 
-		(void) wmemset(g_push_back_buf, 0L, ARSZ);
+		(void) wmemset(g_push_back_buf, 0L,
+		    ARRAY_SIZE(g_push_back_buf));
 
 		if (line == NULL) {
 			if (g_resize_requested)
