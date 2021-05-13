@@ -501,12 +501,12 @@ get_prompt(void)
 void
 cmd_help(const char *data)
 {
-    const bool has_command = !strings_match(data, "");
+	const bool has_command = !strings_match(data, "");
 
-    if (has_command)
-	output_help_for_command(data);
-    else
-	list_all_commands();
+	if (has_command)
+		output_help_for_command(data);
+	else
+		list_all_commands();
 }
 
 void
