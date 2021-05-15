@@ -66,11 +66,21 @@ create_ssl_context_obj(void)
     if ((ssl_ctx = SSL_CTX_new(TLS_client_method())) == NULL) {
 	err_exit(ENOMEM, "create_ssl_context_obj: "
 	    "Unable to create a new SSL_CTX object");
-    } else {
-	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_SSLv2);
-	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_SSLv3);
-	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_TLSv1);
-	SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_TLSv1_1);
+    }
+
+    (void) SSL_CTX_set_mode(ssl_ctx, SSL_MODE_ENABLE_PARTIAL_WRITE);
+    (void) SSL_CTX_set_mode(ssl_ctx, SSL_MODE_ACCEPT_MOVING_WRITE_BUFFER);
+    (void) SSL_CTX_set_mode(ssl_ctx, SSL_MODE_AUTO_RETRY);
+    (void) SSL_CTX_set_mode(ssl_ctx, SSL_MODE_RELEASE_BUFFERS);
+
+    (void) SSL_CTX_set_options(ssl_ctx, (SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3));
+
+    //(void) SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_TLSv1);
+    //(void) SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_TLSv1_1);
+
+    if (!SSL_CTX_set_min_proto_version(ssl_ctx, TLS1_2_VERSION)) {
+	err_log(0, "create_ssl_context_obj: error setting "
+	    "minimum supported protocol version");
     }
 }
 #else
