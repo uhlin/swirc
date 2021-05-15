@@ -48,10 +48,14 @@ static SSL	*ssl     = NULL;
 
 #if defined(UNIX)
 static pthread_once_t ssl_end_init_done = PTHREAD_ONCE_INIT;
+static pthread_once_t ssl_send_init_done = PTHREAD_ONCE_INIT;
 static pthread_mutex_t ssl_end_mutex;
+static pthread_mutex_t ssl_send_mutex;
 #elif defined(WIN32)
 static init_once_t ssl_end_init_done = ONCE_INITIALIZER;
+static init_once_t ssl_send_init_done = ONCE_INITIALIZER;
 static HANDLE ssl_end_mutex;
+static HANDLE ssl_send_mutex;
 #endif
 
 static const char suite_secure[]   = "TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
@@ -119,6 +123,12 @@ static void
 ssl_end_mutex_init(void)
 {
     mutex_new(&ssl_end_mutex);
+}
+
+static void
+ssl_send_mutex_init(void)
+{
+    mutex_new(&ssl_send_mutex);
 }
 
 static int
@@ -216,8 +226,20 @@ net_ssl_send(const char *fmt, ...)
     int n_sent = 0;
     va_list ap;
 
-    if (fmt == NULL || ssl == NULL)
+#if defined(UNIX)
+    if ((errno = pthread_once(&ssl_send_init_done, ssl_send_mutex_init)) != 0)
+	err_sys("net_ssl_send: pthread_once");
+#elif defined(WIN32)
+    if ((errno = init_once(&ssl_send_init_done, ssl_send_mutex_init)) != 0)
+	err_sys("net_ssl_send: init_once");
+#endif
+
+    mutex_lock(&ssl_send_mutex);
+
+    if (fmt == NULL || ssl == NULL) {
+	mutex_unlock(&ssl_send_mutex);
 	return -1;
+    }
 
     va_start(ap, fmt);
     buf = strdup_vprintf(fmt, ap);
@@ -229,6 +251,7 @@ net_ssl_send(const char *fmt, ...)
 
     if (strlen(buf) > INT_MAX) {
 	free(buf);
+	mutex_unlock(&ssl_send_mutex);
 	return -1;
     }
 
@@ -255,11 +278,13 @@ net_ssl_send(const char *fmt, ...)
 	    }
 
 	    free(buf);
+	    mutex_unlock(&ssl_send_mutex);
 	    return -1;
 	}
     }
 
     free(buf);
+    mutex_unlock(&ssl_send_mutex);
     return n_sent;
 }
 
