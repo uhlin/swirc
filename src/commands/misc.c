@@ -389,6 +389,8 @@ cmd_quit(const char *data)
 #endif
 #endif
 	net_kill_connection();
+	mutex_lock(&g_irc_listen_mutex);
+	mutex_unlock(&g_irc_listen_mutex);
 	napms(500);
     }
 
