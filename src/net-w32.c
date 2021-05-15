@@ -1,5 +1,5 @@
 /* Networking for WIN32
-   Copyright (C) 2014-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -34,6 +34,7 @@
 
 #include "dataClassify.h"
 #include "errHand.h"
+#include "io-loop.h"
 #include "libUtils.h"
 #include "main.h"
 #include "network.h"
@@ -152,11 +153,14 @@ listen_thread_fn(void *arg)
     bool connection_lost;
 
     (void) arg;
+
     net_irc_listen(&connection_lost);
-    if (connection_lost) {
+
+    if (g_io_loop && connection_lost) {
 	net_do_connect_detached(g_last_server, g_last_port,
 	    !strings_match(g_last_pass, "") ? g_last_pass : NULL);
     }
+
     _endthread();
 }
 
