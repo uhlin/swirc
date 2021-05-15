@@ -162,7 +162,7 @@ net_ssl_begin(void)
     else if (!SSL_set_fd(ssl, g_socket))
 	printtext(&ptext_ctx, "net_ssl_begin: "
 	    "Unable to associate the global socket fd with the SSL object");
-    else if (SSL_connect(ssl) != VALUE_HANDSHAKE_OK)
+    else if (SSL_set_connect_state(ssl), SSL_connect(ssl) != VALUE_HANDSHAKE_OK)
 	printtext(&ptext_ctx, "net_ssl_begin: Handshake NOT ok!");
     else
 	return (0);
