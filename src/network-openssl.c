@@ -46,6 +46,14 @@
 static SSL_CTX	*ssl_ctx = NULL;
 static SSL	*ssl     = NULL;
 
+#if defined(UNIX)
+static pthread_once_t ssl_end_init_done = PTHREAD_ONCE_INIT;
+static pthread_mutex_t ssl_end_mutex;
+#elif defined(WIN32)
+static init_once_t ssl_end_init_done = ONCE_INITIALIZER;
+static HANDLE ssl_end_mutex;
+#endif
+
 static const char suite_secure[]   = "TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
 static const char suite_compat[]   = "HIGH:!aNULL";
 static const char suite_legacy[]   = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
@@ -95,6 +103,12 @@ set_ciphers(const char *list)
 	printtext(&ptext_ctx, "warning: set_ciphers: bogus cipher list: %s",
 		  xstrerror(EINVAL, strerrbuf, MAXERROR));
     }
+}
+
+static void
+ssl_end_mutex_init(void)
+{
+    mutex_new(&ssl_end_mutex);
 }
 
 static int
@@ -149,11 +163,21 @@ net_ssl_begin(void)
 void
 net_ssl_end(void)
 {
+#if defined(UNIX)
+    if ((errno = pthread_once(&ssl_end_init_done, ssl_end_mutex_init)) != 0)
+	err_sys("net_ssl_end: pthread_once");
+#elif defined(WIN32)
+    if ((errno = init_once(&ssl_end_init_done, ssl_end_mutex_init)) != 0)
+	err_sys("net_ssl_end: init_once");
+#endif
+
+    mutex_lock(&ssl_end_mutex);
     if (ssl) {
 	SSL_shutdown(ssl);
 	SSL_free(ssl);
 	ssl = NULL;
     }
+    mutex_unlock(&ssl_end_mutex);
 }
 
 int
