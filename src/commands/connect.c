@@ -477,6 +477,8 @@ cmd_disconnect(const char *data)
     quit_reconnecting = true;
 
     if (g_on_air) {
+	g_disconnect_wanted = true;
+
 	if (has_message)
 	    net_send("QUIT :%s", data);
 	else
