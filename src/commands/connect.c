@@ -46,6 +46,8 @@
 
 #include "connect.h"
 
+bool g_disconnect_wanted = false;
+
 static bool quit_reconnecting = false;
 static bool reconnecting = false;
 static bool secure_connection = false;

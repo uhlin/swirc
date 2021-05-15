@@ -10,6 +10,8 @@
 	    (g_connection_password ? get_password() : NULL))
 
 __SWIRC_BEGIN_DECLS
+extern bool g_disconnect_wanted;
+
 void	do_connect(const char *server, const char *port, const char *pass);
 void	set_ssl_on(void);
 void	set_ssl_off(void);
