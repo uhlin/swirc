@@ -1,5 +1,5 @@
 /* Platform independent networking routines
-   Copyright (C) 2014-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -100,6 +100,12 @@ char g_last_server[1024] = { 0 };
 char g_last_port[32] = { 0 };
 char g_last_pass[256] = { 0 };
 
+#if defined(UNIX)
+pthread_mutex_t g_irc_listen_mutex;
+#elif defined(WIN32)
+HANDLE g_irc_listen_mutex;
+#endif
+
 /****************************************************************
 *                                                               *
 *  -------------- Objects with internal linkage --------------  *
@@ -110,6 +116,12 @@ static const int RECVBUF_SIZE = 2048;
 static int socket_address_family = AF_UNSPEC;
 static long int retry = 0;
 static struct reconnect_context reconn_ctx;
+
+#if defined(UNIX)
+static pthread_once_t irc_listen_init_done = PTHREAD_ONCE_INIT;
+#elif defined(WIN32)
+static init_once_t irc_listen_init_done = ONCE_INITIALIZER;
+#endif
 
 /****************************************************************
 *                                                               *
@@ -138,6 +150,12 @@ conn_check()
     }
 
     return 0;
+}
+
+static void
+irc_listen_mutex_init()
+{
+    mutex_new(&g_irc_listen_mutex);
 }
 
 static void
@@ -460,15 +478,24 @@ net_connect_clean_up(void)
 void
 net_irc_listen(bool *connection_lost)
 {
-    PRINTTEXT_CONTEXT		 ptext_ctx;
-    struct network_recv_context	 ctx(g_socket, 0, 5, 0);
-    char			*message_concat = NULL;
-    char			*recvbuf =
-	static_cast<char *>(xmalloc(RECVBUF_SIZE));
-    int				 bytes_received = -1;
-    enum message_concat_state	 state = CONCAT_BUFFER_IS_EMPTY;
+    PRINTTEXT_CONTEXT ptext_ctx;
+    struct network_recv_context ctx(g_socket, 0, 5, 0);
+    char *message_concat = NULL;
+    char *recvbuf = NULL;
+    int bytes_received = -1;
+    enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
 
+#if defined(UNIX)
+    if ((errno = pthread_once(&irc_listen_init_done, irc_listen_mutex_init)) != 0)
+	err_sys("net_irc_listen: pthread_once");
+#elif defined(WIN32)
+    if ((errno = init_once(&irc_listen_init_done, irc_listen_mutex_init)) != 0)
+	err_sys("net_irc_listen: init_once");
+#endif
+
+    mutex_lock(&g_irc_listen_mutex);
     *connection_lost = g_connection_lost = false;
+    recvbuf = static_cast<char *>(xmalloc(RECVBUF_SIZE));
     irc_init();
 
     do {
@@ -553,6 +580,7 @@ net_irc_listen(bool *connection_lost)
     free(recvbuf);
     free(message_concat);
     printtext(&ptext_ctx, "Disconnected");
+    mutex_unlock(&g_irc_listen_mutex);
 }
 
 void

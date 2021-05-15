@@ -2,6 +2,7 @@
 #define NETWORK_H
 
 #include "atomicops.h"
+#include "mutex.h"
 
 #if defined(UNIX)
 #include "net-unix.h"
@@ -66,6 +67,12 @@ extern volatile bool g_on_air;
 extern char g_last_server[];
 extern char g_last_port[];
 extern char g_last_pass[];
+
+#if defined(UNIX)
+extern pthread_mutex_t g_irc_listen_mutex;
+#elif defined(WIN32)
+extern HANDLE g_irc_listen_mutex;
+#endif
 
 /*lint -sem(net_addr_resolve, r_null) */
 
