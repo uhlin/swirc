@@ -263,6 +263,8 @@ net_ssl_send(const char *fmt, ...)
 	const int ret = SSL_write(ssl, bufptr, buflen);
 
 	if (ret > 0) {
+	    if (BIO_flush(SSL_get_wbio(ssl)) != 1)
+		debug("net_ssl_send: error flushing write bio");
 	    n_sent += ret;
 	    bufptr += ret;
 	    buflen -= ret;
