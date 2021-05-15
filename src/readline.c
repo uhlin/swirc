@@ -821,6 +821,7 @@ readline_recreate(int rows, int cols)
 void
 readline_top_panel(void)
 {
+    mutex_lock(&g_puts_mutex);
     if (panel_state == PANEL1_ACTIVE) {
 	if (!isNull(readline_pan1))
 	    (void) top_panel(readline_pan1);
@@ -833,4 +834,5 @@ readline_top_panel(void)
 
     update_panels();
     (void) doupdate();
+    mutex_unlock(&g_puts_mutex);
 }
