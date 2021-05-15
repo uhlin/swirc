@@ -46,6 +46,8 @@
 static SSL_CTX	*ssl_ctx = NULL;
 static SSL	*ssl     = NULL;
 
+static volatile bool ssl_object_is_null = true;
+
 #if defined(UNIX)
 static pthread_once_t ssl_end_init_done = PTHREAD_ONCE_INIT;
 static pthread_once_t ssl_send_init_done = PTHREAD_ONCE_INIT;
@@ -169,7 +171,10 @@ net_ssl_begin(void)
 
     if ((ssl = SSL_new(ssl_ctx)) == NULL)
 	err_exit(ENOMEM, "net_ssl_begin: Unable to create a new SSL object");
-    else if (!SSL_set_fd(ssl, g_socket))
+    else
+	(void) atomic_swap_bool(&ssl_object_is_null, false);
+
+    if (!SSL_set_fd(ssl, g_socket))
 	printtext(&ptext_ctx, "net_ssl_begin: "
 	    "Unable to associate the global socket fd with the SSL object");
     else if (SSL_set_connect_state(ssl), SSL_connect(ssl) != VALUE_HANDSHAKE_OK)
@@ -183,6 +188,9 @@ net_ssl_begin(void)
 void
 net_ssl_end(void)
 {
+    if (atomic_load_bool(&ssl_object_is_null))
+	return;
+
 #if defined(UNIX)
     if ((errno = pthread_once(&ssl_end_init_done, ssl_end_mutex_init)) != 0)
 	err_sys("net_ssl_end: pthread_once");
@@ -196,6 +204,7 @@ net_ssl_end(void)
 	SSL_shutdown(ssl);
 	SSL_free(ssl);
 	ssl = NULL;
+	(void) atomic_swap_bool(&ssl_object_is_null, true);
     }
     mutex_unlock(&ssl_end_mutex);
 }
