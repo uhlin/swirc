@@ -181,8 +181,9 @@ has_channel_key(const char *channel, char **key)
 }
 
 static void
-do_part_and_join(const char *channel)
+do_part_and_join(const char *_channel)
 {
+    char *channel = sw_strdup(_channel);
     char *key = NULL;
 
     if (has_channel_key(channel, &key)) {
@@ -193,6 +194,7 @@ do_part_and_join(const char *channel)
 	(void) net_send("JOIN %s", channel);
     }
 
+    free(channel);
     free(key);
 }
 
