@@ -480,9 +480,11 @@ cmd_disconnect(const char *data)
 	else
 	    net_send("QUIT :%s", Config("quit_message"));
 
-	g_on_air = false;
-
 	if (atomic_load_bool(&g_connection_in_progress))
 	    event_welcome_signalit();
+
+	net_kill_connection();
+	mutex_lock(&g_irc_listen_mutex);
+	mutex_unlock(&g_irc_listen_mutex);
     }
 }
