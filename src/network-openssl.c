@@ -229,74 +229,75 @@ net_ssl_check_hostname(const char *host, unsigned int flags)
 int
 net_ssl_send(const char *fmt, ...)
 {
-    char *buf = NULL;
-    char *bufptr = NULL;
-    int buflen = 0;
-    int n_sent = 0;
-    va_list ap;
+	char *buf = NULL;
+	char *bufptr = NULL;
+	int buflen = 0;
+	int n_sent = 0;
+	va_list ap;
 
 #if defined(UNIX)
-    if ((errno = pthread_once(&ssl_send_init_done, ssl_send_mutex_init)) != 0)
-	err_sys("net_ssl_send: pthread_once");
+	if ((errno = pthread_once(&ssl_send_init_done, ssl_send_mutex_init)) !=
+	    0)
+		err_sys("net_ssl_send: pthread_once");
 #elif defined(WIN32)
-    if ((errno = init_once(&ssl_send_init_done, ssl_send_mutex_init)) != 0)
-	err_sys("net_ssl_send: init_once");
+	if ((errno = init_once(&ssl_send_init_done, ssl_send_mutex_init)) != 0)
+		err_sys("net_ssl_send: init_once");
 #endif
 
-    mutex_lock(&ssl_send_mutex);
+	mutex_lock(&ssl_send_mutex);
 
-    if (fmt == NULL || ssl == NULL) {
-	mutex_unlock(&ssl_send_mutex);
-	return -1;
-    }
+	if (fmt == NULL || ssl == NULL) {
+		mutex_unlock(&ssl_send_mutex);
+		return -1;
+	}
 
-    va_start(ap, fmt);
-    buf = strdup_vprintf(fmt, ap);
-    va_end(ap);
+	va_start(ap, fmt);
+	buf = strdup_vprintf(fmt, ap);
+	va_end(ap);
 
-    /* message terminate */
-    if (!g_icb_mode)
-	realloc_strcat(&buf, "\r\n");
+	/* message terminate */
+	if (!g_icb_mode)
+		realloc_strcat(&buf, "\r\n");
 
-    if (strlen(buf) > INT_MAX) {
+	if (strlen(buf) > INT_MAX) {
+		free(buf);
+		mutex_unlock(&ssl_send_mutex);
+		return -1;
+	}
+
+	bufptr = buf;
+	buflen = (int) strlen(buf);
+
+	while (buflen > 0) {
+		ERR_clear_error();
+		const int ret = SSL_write(ssl, bufptr, buflen);
+
+		if (ret > 0) {
+			if (BIO_flush(SSL_get_wbio(ssl)) != 1)
+				debug("net_ssl_send: error flushing write bio");
+			n_sent += ret;
+			bufptr += ret;
+			buflen -= ret;
+		} else {
+			switch (SSL_get_error(ssl, ret)) {
+			case SSL_ERROR_NONE:
+				sw_assert_not_reached();
+				break;
+			case SSL_ERROR_WANT_READ:
+			case SSL_ERROR_WANT_WRITE:
+				debug("net_ssl_send: want read / want write");
+				continue;
+			}
+
+			free(buf);
+			mutex_unlock(&ssl_send_mutex);
+			return -1;
+		}
+	}
+
 	free(buf);
 	mutex_unlock(&ssl_send_mutex);
-	return -1;
-    }
-
-    bufptr = buf;
-    buflen = (int) strlen(buf);
-
-    while (buflen > 0) {
-	ERR_clear_error();
-	const int ret = SSL_write(ssl, bufptr, buflen);
-
-	if (ret > 0) {
-	    if (BIO_flush(SSL_get_wbio(ssl)) != 1)
-		debug("net_ssl_send: error flushing write bio");
-	    n_sent += ret;
-	    bufptr += ret;
-	    buflen -= ret;
-	} else {
-	    switch (SSL_get_error(ssl, ret)) {
-	    case SSL_ERROR_NONE:
-		sw_assert_not_reached();
-		break;
-	    case SSL_ERROR_WANT_READ:
-	    case SSL_ERROR_WANT_WRITE:
-		debug("net_ssl_send: want read / want write");
-		continue;
-	    }
-
-	    free(buf);
-	    mutex_unlock(&ssl_send_mutex);
-	    return -1;
-	}
-    }
-
-    free(buf);
-    mutex_unlock(&ssl_send_mutex);
-    return n_sent;
+	return n_sent;
 }
 
 int
