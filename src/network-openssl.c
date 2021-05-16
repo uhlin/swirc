@@ -49,15 +49,15 @@ static SSL	*ssl     = NULL;
 static volatile bool ssl_object_is_null = true;
 
 #if defined(UNIX)
-static pthread_once_t ssl_end_init_done = PTHREAD_ONCE_INIT;
-static pthread_once_t ssl_send_init_done = PTHREAD_ONCE_INIT;
-static pthread_mutex_t ssl_end_mutex;
-static pthread_mutex_t ssl_send_mutex;
+static pthread_once_t	ssl_end_init_done = PTHREAD_ONCE_INIT;
+static pthread_once_t	ssl_send_init_done = PTHREAD_ONCE_INIT;
+static pthread_mutex_t	ssl_end_mutex;
+static pthread_mutex_t	ssl_send_mutex;
 #elif defined(WIN32)
-static init_once_t ssl_end_init_done = ONCE_INITIALIZER;
-static init_once_t ssl_send_init_done = ONCE_INITIALIZER;
-static HANDLE ssl_end_mutex;
-static HANDLE ssl_send_mutex;
+static init_once_t	ssl_end_init_done = ONCE_INITIALIZER;
+static init_once_t	ssl_send_init_done = ONCE_INITIALIZER;
+static HANDLE		ssl_end_mutex;
+static HANDLE		ssl_send_mutex;
 #endif
 
 static const char suite_secure[]   = "TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
