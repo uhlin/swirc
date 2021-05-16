@@ -130,7 +130,7 @@ ssl_end_mutex_init(void)
 static void
 ssl_send_mutex_init(void)
 {
-    mutex_new(&ssl_send_mutex);
+	mutex_new(&ssl_send_mutex);
 }
 
 static int
