@@ -360,57 +360,58 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 void
 net_ssl_init(void)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
-    char strerrbuf[MAXERROR] = { '\0' };
+	PRINTTEXT_CONTEXT ptext_ctx;
+	char strerrbuf[MAXERROR] = { '\0' };
 
-    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_WARN, true);
+	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_WARN,
+	    true);
 
-    SSL_load_error_strings();
-    SSL_library_init();
+	SSL_load_error_strings();
+	(void) SSL_library_init();
 
-    if (RAND_load_file("/dev/urandom", 1024) <= 0) {
-	printtext(&ptext_ctx, "net_ssl_init: "
-	    "Error seeding the PRNG! (%s)",
-	    xstrerror(ENOSYS, strerrbuf, MAXERROR));
-    }
+	if (RAND_load_file("/dev/urandom", 1024) <= 0) {
+		printtext(&ptext_ctx, "net_ssl_init: "
+		    "Error seeding the PRNG! (%s)",
+		    xstrerror(ENOSYS, strerrbuf, MAXERROR));
+	}
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-    create_ssl_context_obj();
+	create_ssl_context_obj();
 #else
 #pragma message("Consider updating your TLS/SSL library")
-    create_ssl_context_obj_insecure();
+	create_ssl_context_obj_insecure();
 #endif
 
-    if (config_bool("ssl_verify_peer", true)) {
+	if (config_bool("ssl_verify_peer", true)) {
 #ifdef WIN32
-	if (!SSL_CTX_load_verify_locations(ssl_ctx, CAFILE, CADIR))
-	    printtext(&ptext_ctx, "net_ssl_init: "
-		"Error loading CA file and/or directory");
+		if (!SSL_CTX_load_verify_locations(ssl_ctx, CAFILE, CADIR)) {
+			printtext(&ptext_ctx, "net_ssl_init: Error loading "
+			    "CA file and/or directory");
+		}
 #endif
+		if (!SSL_CTX_set_default_verify_paths(ssl_ctx)) {
+			printtext(&ptext_ctx, "net_ssl_init: Error loading "
+			    "default CA file and/or directory");
+		}
+		SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, verify_callback);
+		SSL_CTX_set_verify_depth(ssl_ctx, 4);
+	} else {
+		printtext(&ptext_ctx, "net_ssl_init: "
+		    "Certificate verification is disabled: Option set to NO?");
+	}
 
-	if (!SSL_CTX_set_default_verify_paths(ssl_ctx))
-	    printtext(&ptext_ctx, "net_ssl_init: "
-		"Error loading default CA file and/or directory");
+	const char *cs = Config("cipher_suite");
 
-	SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, verify_callback);
-	SSL_CTX_set_verify_depth(ssl_ctx, 4);
-    } else {
-	printtext(&ptext_ctx, "net_ssl_init: "
-	    "Certificate verification is disabled: Option set to NO?");
-    }
-
-    const char *cs = Config("cipher_suite");
-
-    if (strings_match(cs, "secure") || strings_match(cs, "SECURE"))
-	set_ciphers(suite_secure);
-    else if (strings_match(cs, "compat") || strings_match(cs, "COMPAT"))
-	set_ciphers(suite_compat);
-    else if (strings_match(cs, "legacy") || strings_match(cs, "LEGACY"))
-	set_ciphers(suite_legacy);
-    else if (strings_match(cs, "insecure") || strings_match(cs, "INSECURE"))
-	set_ciphers(suite_insecure);
-    else
-	set_ciphers(suite_compat);
+	if (strings_match(cs, "secure") || strings_match(cs, "SECURE"))
+		set_ciphers(suite_secure);
+	else if (strings_match(cs, "compat") || strings_match(cs, "COMPAT"))
+		set_ciphers(suite_compat);
+	else if (strings_match(cs, "legacy") || strings_match(cs, "LEGACY"))
+		set_ciphers(suite_legacy);
+	else if (strings_match(cs, "insecure") || strings_match(cs, "INSECURE"))
+		set_ciphers(suite_insecure);
+	else
+		set_ciphers(suite_compat);
 }
 
 void
