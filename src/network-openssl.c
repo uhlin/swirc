@@ -408,7 +408,8 @@ net_ssl_init(void)
 		set_ciphers(suite_compat);
 	else if (strings_match(cs, "legacy") || strings_match(cs, "LEGACY"))
 		set_ciphers(suite_legacy);
-	else if (strings_match(cs, "insecure") || strings_match(cs, "INSECURE"))
+	else if (strings_match(cs, "all") || strings_match(cs, "ALL") ||
+		 strings_match(cs, "insecure") || strings_match(cs, "INSECURE"))
 		set_ciphers(suite_insecure);
 	else
 		set_ciphers(suite_compat);
