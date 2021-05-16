@@ -212,18 +212,18 @@ net_ssl_end(void)
 int
 net_ssl_check_hostname(const char *host, unsigned int flags)
 {
-    X509	*cert = NULL;
-    int		 ret  = ERR;
+	X509	*cert = NULL;
+	int	 ret = ERR;
 
-    if (ssl == NULL || (cert = SSL_get_peer_certificate(ssl)) == NULL ||
-	host == NULL) {
-	if (cert)
-	    X509_free(cert);
-	return ERR;
-    }
-    ret = X509_check_host(cert, host, 0, flags, NULL) > 0 ? OK : ERR;
-    X509_free(cert);
-    return ret;
+	if (ssl == NULL || (cert = SSL_get_peer_certificate(ssl)) == NULL ||
+	    host == NULL) {
+		if (cert)
+			X509_free(cert);
+		return ERR;
+	}
+	ret = (X509_check_host(cert, host, 0, flags, NULL) > 0 ? OK : ERR);
+	X509_free(cert);
+	return ret;
 }
 
 int
