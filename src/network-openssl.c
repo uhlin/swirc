@@ -416,10 +416,10 @@ net_ssl_init(void)
 void
 net_ssl_deinit(void)
 {
-    net_ssl_end();
+	net_ssl_end();
 
-    if (ssl_ctx) {
-	SSL_CTX_free(ssl_ctx);
-	ssl_ctx = NULL;
-    }
+	if (ssl_ctx) {
+		SSL_CTX_free(ssl_ctx);
+		ssl_ctx = NULL;
+	}
 }
