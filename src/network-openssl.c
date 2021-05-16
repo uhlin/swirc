@@ -188,25 +188,33 @@ net_ssl_begin(void)
 void
 net_ssl_end(void)
 {
-    if (atomic_load_bool(&ssl_object_is_null))
-	return;
-
 #if defined(UNIX)
-    if ((errno = pthread_once(&ssl_end_init_done, ssl_end_mutex_init)) != 0)
-	err_sys("net_ssl_end: pthread_once");
+	if ((errno = pthread_once(&ssl_end_init_done, ssl_end_mutex_init)) != 0)
+		err_sys("net_ssl_end: pthread_once");
 #elif defined(WIN32)
-    if ((errno = init_once(&ssl_end_init_done, ssl_end_mutex_init)) != 0)
-	err_sys("net_ssl_end: init_once");
+	if ((errno = init_once(&ssl_end_init_done, ssl_end_mutex_init)) != 0)
+		err_sys("net_ssl_end: init_once");
 #endif
 
-    mutex_lock(&ssl_end_mutex);
-    if (ssl) {
-	SSL_shutdown(ssl);
-	SSL_free(ssl);
-	ssl = NULL;
-	(void) atomic_swap_bool(&ssl_object_is_null, true);
-    }
-    mutex_unlock(&ssl_end_mutex);
+	mutex_lock(&ssl_end_mutex);
+	if (ssl != NULL && !atomic_load_bool(&ssl_object_is_null)) {
+		switch (SSL_shutdown(ssl)) {
+		case 0:
+			debug("net_ssl_end: SSL_shutdown: not yet finished");
+			break;
+		case 1:
+			/* success! */
+			break;
+		default:
+			err_log(0, "net_ssl_end: SSL_shutdown: error");
+			break;
+		}
+		SSL_free(ssl);
+		ssl = NULL;
+		(void) atomic_swap_bool(&ssl_object_is_null, true);
+		(void) napms(10);
+	}
+	mutex_unlock(&ssl_end_mutex);
 }
 
 int
