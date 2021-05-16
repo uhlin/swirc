@@ -110,15 +110,15 @@ create_ssl_context_obj_insecure(void)
 static void
 set_ciphers(const char *list)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
-    char strerrbuf[MAXERROR] = { '\0' };
+	if (ssl_ctx && list && !SSL_CTX_set_cipher_list(ssl_ctx, list)) {
+		PRINTTEXT_CONTEXT ptext_ctx;
+		char strerrbuf[MAXERROR] = { '\0' };
 
-    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_WARN, true);
-
-    if (ssl_ctx && list && !SSL_CTX_set_cipher_list(ssl_ctx, list)) {
-	printtext(&ptext_ctx, "warning: set_ciphers: bogus cipher list: %s",
-		  xstrerror(EINVAL, strerrbuf, MAXERROR));
-    }
+		printtext_context_init(&ptext_ctx, g_status_window,
+		    TYPE_SPEC1_WARN, true);
+		printtext(&ptext_ctx, "set_ciphers: bogus cipher list: %s",
+		    xstrerror(EINVAL, strerrbuf, MAXERROR));
+	}
 }
 
 static void
