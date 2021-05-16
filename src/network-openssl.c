@@ -124,7 +124,7 @@ set_ciphers(const char *list)
 static void
 ssl_end_mutex_init(void)
 {
-    mutex_new(&ssl_end_mutex);
+	mutex_new(&ssl_end_mutex);
 }
 
 static void
