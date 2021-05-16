@@ -136,28 +136,31 @@ ssl_send_mutex_init(void)
 static int
 verify_callback(int ok, X509_STORE_CTX *ctx)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
-    X509	*cert         = X509_STORE_CTX_get_current_cert(ctx);
-    char	 issuer[256]  = "";
-    char	 subject[256] = "";
-    const int	 depth        = X509_STORE_CTX_get_error_depth(ctx);
-    const int	 err          = X509_STORE_CTX_get_error(ctx);
+	if (!ok) {
+		PRINTTEXT_CONTEXT ptext_ctx;
+		X509 *cert = X509_STORE_CTX_get_current_cert(ctx);
+		char issuer[256]  = { '\0' };
+		char subject[256] = { '\0' };
+		const int depth = X509_STORE_CTX_get_error_depth(ctx);
+		const int err   = X509_STORE_CTX_get_error(ctx);
 
-    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_WARN, true);
+		(void) X509_NAME_oneline(X509_get_issuer_name(cert), issuer,
+		    sizeof issuer);
+		(void) X509_NAME_oneline(X509_get_subject_name(cert), subject,
+		    sizeof subject);
 
-    X509_NAME_oneline(X509_get_issuer_name(cert), issuer, sizeof issuer);
-    X509_NAME_oneline(X509_get_subject_name(cert), subject, sizeof subject);
+		printtext_context_init(&ptext_ctx, g_status_window,
+		    TYPE_SPEC1_WARN, true);
 
-    if (!ok) {
-	printtext(&ptext_ctx, "Error with certificate at depth: %d", depth);
-	printtext(&ptext_ctx, "  issuer  = %s", issuer);
-	printtext(&ptext_ctx, "  subject = %s", subject);
-	printtext(&ptext_ctx, "Reason: %s", X509_verify_cert_error_string(err));
-    } else {
-	/*Cert verification OK!*/;
-    }
+		printtext(&ptext_ctx, "Error with certificate at depth: %d",
+		    depth);
+		printtext(&ptext_ctx, "  issuer  = %s", issuer);
+		printtext(&ptext_ctx, "  subject = %s", subject);
+		printtext(&ptext_ctx, "Reason: %s",
+		    X509_verify_cert_error_string(err));
+	}
 
-    return (ok);
+	return ok;
 }
 
 int
