@@ -4,18 +4,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added function `errdesc_by_last_err()` and made use of it
 - Added key F3 (scroll nicklist up) and F4 (scroll nicklist down)
+- Added new modes and options for TLS/SSL connections
 - Added nicklist
 - Added null checks
 - Added support for partial writes in `net_ssl_send()`
 - Added theme item `nicklist_nick_color`
 - Added theme item `nicklist_privilege_color`
 - Added theme item `nicklist_vline_color`
+- Asserted that the program is terminated correctly
 - Defined and made use of `addrof()`
 - Defined and made use of `g_textdeco_chars`
 - Deleted `ToastActivator_i.c`
 - Deleted `ToastActivator_p.c`
 - Deleted `dlldata.c`
 - Deleted command `/n`
+- Explicitly set client mode for TLS/SSL connections
+- Fixed "use after free" bug in `/cycle`
 - Fixed a bug in `/quit` that resulted in SIGPIPE due to calling
   `SSL_shutdown()` on an already shutdown socket.
 - Fixed the behavior of `net_ssl_recv()` by checking the condition of
