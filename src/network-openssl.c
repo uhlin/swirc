@@ -44,7 +44,7 @@
 #define CADIR NULL
 
 static SSL_CTX	*ssl_ctx = NULL;
-static SSL	*ssl     = NULL;
+static SSL	*ssl = NULL;
 
 static volatile bool ssl_object_is_null = true;
 
