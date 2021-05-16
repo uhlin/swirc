@@ -305,56 +305,55 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 #ifdef UNIX
 #define SOCKET_ERROR -1
 #endif
-    if (ctx == NULL || recvbuf == NULL || ssl == NULL)
-	return -1;
-
-    if (!SSL_pending(ssl)) {
-	const int	maxfdp1 = ctx->sock + 1;
-	fd_set		readset;
-	struct timeval	tv;
-
-	tv.tv_sec = ctx->sec;
-	tv.tv_usec = ctx->microsec;
-
-	FD_ZERO(&readset);
-	FD_SET(ctx->sock, &readset);
-
-	errno = 0;
-
-	if (select(maxfdp1, &readset, NULL, NULL, &tv) == SOCKET_ERROR)
-	    return (errno == EINTR ? 0 : -1);
-	else if (!FD_ISSET(ctx->sock, &readset))
-	    return 0;
-    }
-
-    char *bufptr = recvbuf;
-    int buflen = recvbuf_size;
-    int bytes_received = 0;
-
-    do {
-	ERR_clear_error();
-	const int ret = SSL_read(ssl, bufptr, buflen);
-
-	if (ret > 0) {
-	    bytes_received += ret;
-	    bufptr += ret;
-	    buflen -= ret;
-	} else {
-	    switch (SSL_get_error(ssl, ret)) {
-	    case SSL_ERROR_NONE:
-		sw_assert_not_reached();
-		break;
-	    case SSL_ERROR_WANT_READ:
-	    case SSL_ERROR_WANT_WRITE:
-		debug("net_ssl_recv: want read / want write");
-		break;
-	    default:
+	if (ctx == NULL || recvbuf == NULL || ssl == NULL)
 		return -1;
-	    }
-	}
-    } while (buflen > 0 && SSL_pending(ssl));
+	if (!SSL_pending(ssl)) {
+		const int	maxfdp1 = ctx->sock + 1;
+		fd_set		readset;
+		struct timeval	tv;
 
-    return bytes_received;
+		tv.tv_sec = ctx->sec;
+		tv.tv_usec = ctx->microsec;
+
+		FD_ZERO(&readset);
+		FD_SET(ctx->sock, &readset);
+
+		errno = 0;
+
+		if (select(maxfdp1, &readset, NULL, NULL, &tv) == SOCKET_ERROR)
+			return (errno == EINTR ? 0 : -1);
+		else if (!FD_ISSET(ctx->sock, &readset))
+			return 0;
+	}
+
+	char	*bufptr = recvbuf;
+	int	 buflen = recvbuf_size;
+	int	 bytes_received = 0;
+
+	do {
+		ERR_clear_error();
+		const int ret = SSL_read(ssl, bufptr, buflen);
+
+		if (ret > 0) {
+			bytes_received += ret;
+			bufptr += ret;
+			buflen -= ret;
+		} else {
+			switch (SSL_get_error(ssl, ret)) {
+			case SSL_ERROR_NONE:
+				sw_assert_not_reached();
+				break;
+			case SSL_ERROR_WANT_READ:
+			case SSL_ERROR_WANT_WRITE:
+				debug("net_ssl_recv: want read / want write");
+				break;
+			default:
+				return -1;
+			}
+		}
+	} while (buflen > 0 && SSL_pending(ssl));
+
+	return bytes_received;
 }
 
 void
