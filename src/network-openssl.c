@@ -163,26 +163,40 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
 int
 net_ssl_begin(void)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
-    const int VALUE_HANDSHAKE_OK = 1;
+	PRINTTEXT_CONTEXT ptext_ctx;
+	const char *err_reason = "";
+	static const int VALUE_HANDSHAKE_OK = 1;
 
-    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
-	true);
+	if (ssl != NULL) {
+		err_reason = "SSL object nonnull";
+		goto err;
+	} else if ((ssl = SSL_new(ssl_ctx)) == NULL) {
+		err_exit(ENOMEM, "net_ssl_begin: Unable to create a new "
+		    "SSL object");
+	} else {
+		(void) atomic_swap_bool(&ssl_object_is_null, false);
+	}
 
-    if ((ssl = SSL_new(ssl_ctx)) == NULL)
-	err_exit(ENOMEM, "net_ssl_begin: Unable to create a new SSL object");
-    else
-	(void) atomic_swap_bool(&ssl_object_is_null, false);
+	if (!SSL_set_fd(ssl, g_socket)) {
+		err_reason = "Unable to associate the global socket fd with "
+		    "the SSL object";
+		goto err;
+	}
 
-    if (!SSL_set_fd(ssl, g_socket))
-	printtext(&ptext_ctx, "net_ssl_begin: "
-	    "Unable to associate the global socket fd with the SSL object");
-    else if (SSL_set_connect_state(ssl), SSL_connect(ssl) != VALUE_HANDSHAKE_OK)
-	printtext(&ptext_ctx, "net_ssl_begin: Handshake NOT ok!");
-    else
-	return (0);
+	SSL_set_connect_state(ssl);
 
-    return (-1);
+	if (SSL_connect(ssl) != VALUE_HANDSHAKE_OK) {
+		err_reason = "TLS/SSL handshake failed!";
+		goto err;
+	}
+
+	return 0;
+
+  err:
+	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
+	    true);
+	printtext(&ptext_ctx, "net_ssl_begin: %s", err_reason);
+	return -1;
 }
 
 void
