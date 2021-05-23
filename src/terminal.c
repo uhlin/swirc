@@ -70,7 +70,7 @@ term_get_pos(WINDOW *win)
 {
     struct current_cursor_pos yx;
 
-    update_panels();
+    (void) wnoutrefresh(win);
 
     yx.cury = win != NULL ? win->_cury : -1;
     yx.curx = win != NULL ? win->_curx : -1;
@@ -148,9 +148,6 @@ term_resize_all(void)
     statusbar_recreate(rows, cols);
     windows_recreate_all(rows, cols);
     readline_recreate(rows, cols);
-
-    update_panels();
-    (void) doupdate();
 }
 
 PANEL *

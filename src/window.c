@@ -261,7 +261,7 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 	    pos < 0 ? 0 : pos)) == NULL)
 		return; /* Nothing stored in the buffer */
 	if (werase(pwin) != ERR)
-		update_panels();
+		(void) wnoutrefresh(pwin);
 	if (limit_output) {
 		while (element != NULL && i < rows) {
 			printtext_puts(pwin, element->text, element->indent,

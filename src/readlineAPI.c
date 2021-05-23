@@ -242,7 +242,7 @@ readline_waddnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
     if (win == NULL || s == NULL)
 	err_exit(EINVAL, "fatal: readline_waddnstr");
 
-    update_panels();
+    (void) wnoutrefresh(win);
 
     for (const wchar_t *ptr = &s[0]; ptr < &s[this_index]; ptr++)
 	readline_waddch(win, *ptr);
@@ -328,7 +328,7 @@ readline_winsnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
     if (win == NULL || s == NULL)
 	err_exit(EINVAL, "fatal: readline_winsnstr");
 
-    update_panels();
+    (void) wnoutrefresh(win);
 
     for (const wchar_t *ptr = &s[this_index - 1]; ptr >= &s[0]; ptr--)
 	readline_winsch(win, *ptr);

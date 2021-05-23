@@ -192,8 +192,7 @@ compute_new_window_entry(const volatile struct readline_session_context *ctx,
     }
 
     mutex_lock(&g_puts_mutex);
-    update_panels();
-    (void) doupdate();
+    (void) wrefresh(ctx->act);
     mutex_unlock(&g_puts_mutex);
 }
 
@@ -278,8 +277,7 @@ case_key_backspace(volatile struct readline_session_context *ctx)
     }
 
     mutex_lock(&g_puts_mutex);
-    update_panels();
-    (void) doupdate();
+    (void) wrefresh(ctx->act);
     mutex_unlock(&g_puts_mutex);
 }
 
@@ -315,8 +313,7 @@ case_key_dc(volatile struct readline_session_context *ctx)
     readline_winsnstr(ctx->act, &ctx->buffer[ctx->bufpos], -1);
 
     mutex_lock(&g_puts_mutex);
-    update_panels();
-    (void) doupdate();
+    (void) wrefresh(ctx->act);
     mutex_unlock(&g_puts_mutex);
 }
 
@@ -348,8 +345,7 @@ case_key_left(volatile struct readline_session_context *ctx)
 	/* NOTREACHED */
     }
 
-    update_panels();
-    (void) doupdate();
+    (void) wrefresh(ctx->act);
 
     mutex_unlock(&g_puts_mutex);
 }
@@ -382,8 +378,7 @@ case_key_right(volatile struct readline_session_context *ctx)
 	/* NOTREACHED */
     }
 
-    update_panels();
-    (void) doupdate();
+    (void) wrefresh(ctx->act);
 
     mutex_unlock(&g_puts_mutex);
 }
@@ -480,8 +475,7 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc)
     }
 
     mutex_lock(&g_puts_mutex);
-    update_panels();
-    (void) doupdate();
+    (void) wrefresh(ctx->act);
     mutex_unlock(&g_puts_mutex);
 }
 
@@ -832,7 +826,5 @@ readline_top_panel(void)
 	sw_assert_not_reached();
     }
 
-    update_panels();
-    (void) doupdate();
     mutex_unlock(&g_puts_mutex);
 }

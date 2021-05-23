@@ -246,7 +246,7 @@ addmbs(WINDOW *win, const unsigned char *mbs)
 	while ((c = *p++) != '\0')
 		WADDCH(win, c);
 
-	update_panels();
+	(void) wnoutrefresh(win);
 }
 
 static void
@@ -678,7 +678,7 @@ do_indent(WINDOW *win, const int indent, int *insert_count)
 	}
 
 	/* restore attributes after indenting */
-	update_panels();
+	(void) wnoutrefresh(win);
 	(void) wattrset(win, attrs);
 }
 
@@ -1515,9 +1515,7 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	wc_buf = NULL;
 
 	(void) wattrset(pwin, A_NORMAL);
-
-	update_panels();
-	(void) doupdate();
+	(void) wrefresh(pwin);
 
 	mutex_unlock(&g_puts_mutex);
 }
