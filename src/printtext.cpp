@@ -1413,9 +1413,11 @@ printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
 {
 	va_list ap;
 
+	(void) curs_set(0);
 	va_start(ap, fmt);
 	vprinttext(ctx, fmt, ap);
 	va_end(ap);
+	(void) curs_set(1);
 }
 
 /**
