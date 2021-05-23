@@ -51,6 +51,8 @@
 #include "main.h"
 #include "network.h"
 #include "printtext.h"
+#include "readline.h"
+#include "statusbar.h"
 #include "strHand.h"
 #include "strdup_printf.h"
 #include "terminal.h"
@@ -1413,11 +1415,13 @@ printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
 {
 	va_list ap;
 
-	(void) curs_set(0);
+	//(void) curs_set(0);
 	va_start(ap, fmt);
 	vprinttext(ctx, fmt, ap);
 	va_end(ap);
-	(void) curs_set(1);
+	//(void) curs_set(1);
+	statusbar_top_panel();
+	readline_top_panel();
 }
 
 /**
