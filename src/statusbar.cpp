@@ -1,5 +1,5 @@
 /* Swirc statusbar
-   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -56,6 +56,45 @@ apply_statusbar_options(WINDOW *win)
     }
 }
 
+static std::string
+get_chanmodes()
+{
+    PIRC_WINDOW win;
+    std::string str("");
+
+    if ((win = g_active_window) != NULL) {
+	if (strings_match_ignore_case(win->label, g_status_window_label)) {
+	    str.append(Theme("slogan"));
+	} else if (is_irc_channel(win->label)) {
+	    str.append(win->label);
+	    str.append("(");
+	    str.append(win->chanmodes);
+	    str.append(")");
+	} else {
+	    str.append(win->label);
+	}
+    }
+
+    return str;
+}
+
+static std::string
+get_nick_and_server()
+{
+    std::string str("");
+
+    if (g_my_nickname && g_server_hostname) {
+	str.append(g_my_nickname);
+	str.append("(");
+	str.append(g_user_modes[0] == ':' ? &g_user_modes[1] : &g_user_modes[0]);
+	str.append(")");
+	str.append("@");
+	str.append(g_server_hostname);
+    }
+
+    return str;
+}
+
 static short int
 get_pair_num()
 {
@@ -83,45 +122,6 @@ void
 statusbar_deinit(void)
 {
     term_remove_panel(statusbar_pan);
-}
-
-static std::string
-get_nick_and_server()
-{
-    std::string str("");
-
-    if (g_my_nickname && g_server_hostname) {
-	str.append(g_my_nickname);
-	str.append("(");
-	str.append(g_user_modes[0] == ':' ? &g_user_modes[1] : &g_user_modes[0]);
-	str.append(")");
-	str.append("@");
-	str.append(g_server_hostname);
-    }
-
-    return str;
-}
-
-static std::string
-get_chanmodes()
-{
-    PIRC_WINDOW win;
-    std::string str("");
-
-    if ((win = g_active_window) != NULL) {
-	if (strings_match_ignore_case(win->label, g_status_window_label)) {
-	    str.append(Theme("slogan"));
-	} else if (is_irc_channel(win->label)) {
-	    str.append(win->label);
-	    str.append("(");
-	    str.append(win->chanmodes);
-	    str.append(")");
-	} else {
-	    str.append(win->label);
-	}
-    }
-
-    return str;
 }
 
 void
