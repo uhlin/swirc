@@ -498,11 +498,14 @@ change_window_by_refnum(int refnum)
 		return ENOENT;
 	else if (window == g_active_window)
 		return 0;
-	else if (top_panel(window->pan) == ERR)
+	else if (top_panel(window->pan) == ERR ||
+		 wrefresh(panel_window(window->pan)) == ERR)
 		return EPERM;
 
-	if (window->nicklist.pan != NULL)
+	if (window->nicklist.pan != NULL) {
 		(void) top_panel(window->nicklist.pan);
+		(void) wrefresh(panel_window(window->nicklist.pan));
+	}
 
 	WINDOW *pwin = readline_get_active_pwin();
 	char *prompt = NULL;
