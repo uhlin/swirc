@@ -151,6 +151,15 @@ statusbar_recreate(int rows, int cols)
 }
 
 void
+statusbar_top_panel(void)
+{
+    if (statusbar_pan) {
+	(void) top_panel(statusbar_pan);
+	(void) wrefresh(panel_window(statusbar_pan));
+    }
+}
+
+void
 statusbar_update_display_beta(void)
 {
 #define WERASE(win)   ((void) werase(win))
