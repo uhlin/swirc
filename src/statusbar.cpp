@@ -125,6 +125,32 @@ statusbar_deinit(void)
 }
 
 void
+statusbar_show(void)
+{
+    if (statusbar_pan) {
+	(void) show_panel(statusbar_pan);
+    }
+}
+
+void
+statusbar_hide(void)
+{
+    if (statusbar_pan) {
+	(void) hide_panel(statusbar_pan);
+    }
+}
+
+void
+statusbar_recreate(int rows, int cols)
+{
+    struct term_window_size newsize(1, cols, rows - 2, 0);
+
+    statusbar_pan = term_resize_panel(statusbar_pan, &newsize);
+    apply_statusbar_options(panel_window(statusbar_pan));
+    statusbar_update_display_beta();
+}
+
+void
 statusbar_update_display_beta(void)
 {
 #define WERASE(win)   ((void) werase(win))
@@ -177,30 +203,4 @@ statusbar_update_display_beta(void)
 		   NULL);
     free(out_s);
     statusbar_show();
-}
-
-void
-statusbar_recreate(int rows, int cols)
-{
-    struct term_window_size newsize(1, cols, rows - 2, 0);
-
-    statusbar_pan = term_resize_panel(statusbar_pan, &newsize);
-    apply_statusbar_options(panel_window(statusbar_pan));
-    statusbar_update_display_beta();
-}
-
-void
-statusbar_show(void)
-{
-    if (statusbar_pan) {
-	(void) show_panel(statusbar_pan);
-    }
-}
-
-void
-statusbar_hide(void)
-{
-    if (statusbar_pan) {
-	(void) hide_panel(statusbar_pan);
-    }
 }
