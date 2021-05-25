@@ -46,8 +46,8 @@ static const short int TermMinimumCols = 30;
 void
 term_init(void)
 {
-    term_set_title("Swirc %s | Copyright (C) %s %s",
-		   g_swircVersion, g_swircYear, g_swircAuthor);
+	term_set_title("Swirc %s | Copyright (C) %s %s", g_swircVersion,
+	    g_swircYear, g_swircAuthor);
 }
 
 void
