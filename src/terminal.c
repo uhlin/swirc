@@ -115,39 +115,36 @@ term_remove_panel(PANEL *pan)
 void
 term_resize_all(void)
 {
-    struct winsize size = term_get_size();
-    int rows, cols;
+	struct winsize size = term_get_size();
+	int rows, cols;
 
-    if (size.ws_row < TermMinimumRows ||
-	size.ws_col < TermMinimumCols) {
-	return;
-    }
+	if (size.ws_row < TermMinimumRows || size.ws_col < TermMinimumCols)
+		return;
 
-    rows = (int) size.ws_row;
-    cols = (int) size.ws_col;
+	rows = (int) size.ws_row;
+	cols = (int) size.ws_col;
 
 #if defined(UNIX)
-    if (!is_term_resized(rows, cols)) {
-	return;
-    }
-#elif defined(WIN32)
-    if (false) {
-	return;
-    }
-#endif
-    else {
-	if (resize_term(rows, cols) == ERR) {
-	    err_quit("ERROR resize_term()");
+	if (!is_term_resized(rows, cols)) {
+		return;
 	}
-    }
+#elif defined(WIN32)
+	if (false) {
+		return;
+	}
+#endif
+	else {
+		if (resize_term(rows, cols) == ERR)
+			err_quit("term_resize_all: ERROR resize_term()");
+	}
 
-    (void) erase();
-    (void) refresh();
+	(void) erase();
+	(void) refresh();
 
-    titlebar_recreate(cols);
-    statusbar_recreate(rows, cols);
-    windows_recreate_all(rows, cols);
-    readline_recreate(rows, cols);
+	titlebar_recreate(cols);
+	statusbar_recreate(rows, cols);
+	windows_recreate_all(rows, cols);
+	readline_recreate(rows, cols);
 }
 
 PANEL *
