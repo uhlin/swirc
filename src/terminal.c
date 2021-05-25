@@ -81,9 +81,9 @@ term_get_pos(WINDOW *win)
 bool
 term_is_too_small(void)
 {
-    struct winsize size = term_get_size();
+	struct winsize size = term_get_size();
 
-    return (size.ws_row < TermMinimumRows || size.ws_col < TermMinimumCols);
+	return (size.ws_row < TermMinimumRows || size.ws_col < TermMinimumCols);
 }
 
 PANEL *
