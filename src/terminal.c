@@ -59,10 +59,8 @@ term_deinit(void)
 void
 term_beep(void)
 {
-    const bool beeps = config_bool("beeps", true);
-
-    if (beeps)
-	beep();
+	if (config_bool("beeps", true))
+		beep();
 }
 
 struct current_cursor_pos
