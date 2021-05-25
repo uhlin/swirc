@@ -8,18 +8,18 @@
 #endif
 
 struct term_window_size {
-    int rows;
-    int cols;
-    int start_row;
-    int start_col;
+	int rows;
+	int cols;
+	int start_row;
+	int start_col;
 
 #ifdef __cplusplus
-    term_window_size(int rows, int cols, int start_row, int start_col) {
-	this->rows = rows;
-	this->cols = cols;
-	this->start_row = start_row;
-	this->start_col = start_col;
-    }
+	term_window_size(int rows, int cols, int start_row, int start_col) {
+		this->rows = rows;
+		this->cols = cols;
+		this->start_row = start_row;
+		this->start_col = start_col;
+	}
 #endif
 };
 
