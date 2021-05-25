@@ -89,17 +89,19 @@ term_is_too_small(void)
 PANEL *
 term_new_panel(int rows, int cols, int start_row, int start_col)
 {
-    WINDOW *win;
-    PANEL *pan;
+	WINDOW	*win;
+	PANEL	*pan;
 
-    if ((win = newwin(rows, cols, start_row, start_col)) == NULL) {
-	err_quit("newwin(%d, %d, %d, %d) unable to create window",
-		 rows, cols, start_row, start_col);
-    }
-    if ((pan = new_panel(win)) == NULL) {
-	err_quit("new_panel error. could not associate window with a panel");
-    }
-    return pan;
+	if ((win = newwin(rows, cols, start_row, start_col)) == NULL) {
+		err_quit("term_new_panel: newwin(%d, %d, %d, %d): "
+		    "unable to create new window", rows, cols,
+		    start_row, start_col);
+	} else if ((pan = new_panel(win)) == NULL) {
+		err_quit("term_new_panel: new_panel error "
+		    "(could not associate window with a panel)");
+	}
+
+	return pan;
 }
 
 void
