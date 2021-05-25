@@ -153,20 +153,19 @@ term_resize_all(void)
 PANEL *
 term_resize_panel(PANEL *pan, const struct term_window_size *newsize)
 {
-    WINDOW *old_window = panel_window(pan);
-    WINDOW *repl_win; /* replacement window */
+	WINDOW	*old_window = panel_window(pan);
+	WINDOW	*repl_win; /* replacement window */
 
-    if ((repl_win = newwin(newsize->rows, newsize->cols,
-			   newsize->start_row, newsize->start_col)) == NULL) {
-	err_quit("newwin(%d, %d, %d, %d) unable to create window",
-		 newsize->rows, newsize->cols,
-		 newsize->start_row, newsize->start_col);
-    }
-    if (replace_panel(pan, repl_win) == ERR) {
-	err_quit("replace_panel error");
-    }
-    if (delwin(old_window) == ERR) {
-	err_quit("delwin error");
-    }
-    return pan;
+	if ((repl_win = newwin(newsize->rows, newsize->cols, newsize->start_row,
+	    newsize->start_col)) == NULL) {
+		err_quit("term_resize_panel: newwin(%d, %d, %d, %d): "
+		    "unable to create new window", newsize->rows, newsize->cols,
+		    newsize->start_row, newsize->start_col);
+	} else if (replace_panel(pan, repl_win) == ERR) {
+		err_quit("term_resize_panel: replace_panel error");
+	} else if (delwin(old_window) == ERR) {
+		err_quit("term_resize_panel: delwin error");
+	}
+
+	return pan;
 }
