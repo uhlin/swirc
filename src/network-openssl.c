@@ -362,6 +362,8 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 		const int ret = SSL_read(ssl, bufptr, buflen);
 
 		if (ret > 0) {
+			if (BIO_flush(SSL_get_rbio(ssl)) != 1)
+				debug("net_ssl_recv: error flushing read bio");
 			bytes_received += ret;
 			bufptr += ret;
 			buflen -= ret;
