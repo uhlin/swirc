@@ -218,6 +218,7 @@ net_ssl_end(void)
 		switch (SSL_shutdown(ssl)) {
 		case 0:
 			debug("net_ssl_end: SSL_shutdown: not yet finished");
+			(void) SSL_shutdown(ssl);
 			break;
 		case 1:
 			/* success! */
