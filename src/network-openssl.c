@@ -230,7 +230,7 @@ net_ssl_end(void)
 		SSL_free(ssl);
 		ssl = NULL;
 		(void) atomic_swap_bool(&ssl_object_is_null, true);
-		(void) napms(10);
+		(void) napms(101);
 	}
 	mutex_unlock(&ssl_end_mutex);
 }
