@@ -53,7 +53,7 @@ term_init(void)
 void
 term_deinit(void)
 {
-    term_restore_title();
+	term_restore_title();
 }
 
 void
