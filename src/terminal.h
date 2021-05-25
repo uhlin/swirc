@@ -24,8 +24,8 @@ struct term_window_size {
 };
 
 struct current_cursor_pos {
-    int cury; /* row */
-    int curx; /* col */
+	int cury; /* row */
+	int curx; /* col */
 };
 
 __SWIRC_BEGIN_DECLS
