@@ -38,6 +38,8 @@
 #include "libUtils.h"
 #include "nicklist.h"
 #include "printtext.h"
+#include "readline.h"
+#include "statusbar.h"
 #include "terminal.h"
 #include "theme.h"
 
@@ -124,6 +126,13 @@ cmp_fn(const std::string& nick1, const std::string& nick2)
     }
 
     return (nick1.length() < nick2.length() ? true : false);
+}
+
+static void
+draw_hook()
+{
+    statusbar_top_panel();
+    readline_top_panel();
 }
 
 static std::list<std::string>
@@ -256,6 +265,7 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	}
 
 	(void) doupdate();
+	draw_hook();
 	mutex_unlock(&g_puts_mutex);
 	return 0;
     } else { /* !list_fits */
@@ -292,6 +302,7 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	}
 
 	(void) doupdate();
+	draw_hook();
 	mutex_unlock(&g_puts_mutex);
     }
 
