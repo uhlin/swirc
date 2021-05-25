@@ -68,14 +68,14 @@ term_beep(void)
 struct current_cursor_pos
 term_get_pos(WINDOW *win)
 {
-    struct current_cursor_pos yx;
+	struct current_cursor_pos yx = { 0 };
 
-    (void) wnoutrefresh(win);
+	(void) wnoutrefresh(win);
 
-    yx.cury = win != NULL ? win->_cury : -1;
-    yx.curx = win != NULL ? win->_curx : -1;
+	yx.cury = (win != NULL ? win->_cury : -1); /* row */
+	yx.curx = (win != NULL ? win->_curx : -1); /* col */
 
-    return (yx);
+	return yx;
 }
 
 bool
