@@ -146,6 +146,9 @@ term_resize_all(void)
 	statusbar_recreate(rows, cols);
 	windows_recreate_all(rows, cols);
 	readline_recreate(rows, cols);
+
+	update_panels();
+	(void) doupdate();
 }
 
 PANEL *
