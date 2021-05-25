@@ -105,11 +105,12 @@ term_new_panel(int rows, int cols, int start_row, int start_col)
 void
 term_remove_panel(PANEL *pan)
 {
-    WINDOW *win = panel_window(pan);
+	WINDOW *win = panel_window(pan);
 
-    if (del_panel(pan) == ERR || delwin(win) == ERR) {
-	err_quit("del_panel or delwin error");
-    }
+	if (del_panel(pan) == ERR)
+		err_quit("term_remove_panel: del_panel error");
+	else if (delwin(win) == ERR)
+		err_quit("term_remove_panel: delwin error");
 }
 
 void
