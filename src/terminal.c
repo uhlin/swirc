@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include "atomicops.h"
 #include "config.h"
 #include "errHand.h"
 #include "main.h"
@@ -119,25 +120,18 @@ term_resize_all(void)
 	struct winsize size = term_get_size();
 	int rows, cols;
 
-	if (size.ws_row < TermMinimumRows || size.ws_col < TermMinimumCols)
+	if (size.ws_row < TermMinimumRows || size.ws_col < TermMinimumCols ||
+	    !is_term_resized(size.ws_row, size.ws_col) ||
+	    atomic_load_bool(&g_resizing_term))
 		return;
+	else
+		(void) atomic_swap_bool(&g_resizing_term, true);
 
 	rows = (int) size.ws_row;
 	cols = (int) size.ws_col;
 
-#if defined(UNIX)
-	if (!is_term_resized(rows, cols)) {
-		return;
-	}
-#elif defined(WIN32)
-	if (false) {
-		return;
-	}
-#endif
-	else {
-		if (resize_term(rows, cols) == ERR)
-			err_quit("term_resize_all: ERROR resize_term()");
-	}
+	if (resize_term(rows, cols) == ERR)
+		err_quit("term_resize_all: ERROR resize_term()");
 
 	(void) erase();
 	(void) refresh();
@@ -149,6 +143,7 @@ term_resize_all(void)
 
 	update_panels();
 	(void) doupdate();
+	(void) atomic_swap_bool(&g_resizing_term, false);
 }
 
 PANEL *
