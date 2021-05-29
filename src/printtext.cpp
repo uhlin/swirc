@@ -1520,8 +1520,10 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	free(wc_buf);
 	wc_buf = NULL;
 
+	update_panels();
+	(void) doupdate();
+
 	(void) wattrset(pwin, A_NORMAL);
-	(void) wrefresh(pwin);
 
 	mutex_unlock(&g_puts_mutex);
 }
