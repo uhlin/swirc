@@ -493,5 +493,8 @@ cmd_disconnect(const char *data)
 	    event_welcome_signalit();
 
 	net_kill_connection();
+
+	while (atomic_load_bool(&g_irc_listening))
+	    (void) napms(1);
     }
 }

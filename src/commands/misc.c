@@ -391,6 +391,8 @@ cmd_quit(const char *data)
 #endif
 #endif
 	net_kill_connection();
+	while (atomic_load_bool(&g_irc_listening))
+	    napms(1);
 	napms(500);
     }
 
