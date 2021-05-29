@@ -49,14 +49,10 @@ static SSL	*ssl = NULL;
 static volatile bool ssl_object_is_null = true;
 
 #if defined(UNIX)
-static pthread_once_t	ssl_end_init_done = PTHREAD_ONCE_INIT;
 static pthread_once_t	ssl_send_init_done = PTHREAD_ONCE_INIT;
-static pthread_mutex_t	ssl_end_mutex;
 static pthread_mutex_t	ssl_send_mutex;
 #elif defined(WIN32)
-static init_once_t	ssl_end_init_done = ONCE_INITIALIZER;
 static init_once_t	ssl_send_init_done = ONCE_INITIALIZER;
-static HANDLE		ssl_end_mutex;
 static HANDLE		ssl_send_mutex;
 #endif
 
@@ -119,12 +115,6 @@ set_ciphers(const char *list)
 		printtext(&ptext_ctx, "set_ciphers: bogus cipher list: %s",
 		    xstrerror(EINVAL, strerrbuf, MAXERROR));
 	}
-}
-
-static void
-ssl_end_mutex_init(void)
-{
-	mutex_new(&ssl_end_mutex);
 }
 
 static void
@@ -205,15 +195,6 @@ net_ssl_begin(void)
 void
 net_ssl_end(void)
 {
-#if defined(UNIX)
-	if ((errno = pthread_once(&ssl_end_init_done, ssl_end_mutex_init)) != 0)
-		err_sys("net_ssl_end: pthread_once");
-#elif defined(WIN32)
-	if ((errno = init_once(&ssl_end_init_done, ssl_end_mutex_init)) != 0)
-		err_sys("net_ssl_end: init_once");
-#endif
-
-	mutex_lock(&ssl_end_mutex);
 	if (ssl != NULL && !atomic_load_bool(&ssl_object_is_null)) {
 		switch (SSL_shutdown(ssl)) {
 		case 0:
@@ -230,9 +211,7 @@ net_ssl_end(void)
 		SSL_free(ssl);
 		ssl = NULL;
 		(void) atomic_swap_bool(&ssl_object_is_null, true);
-		(void) napms(101);
 	}
-	mutex_unlock(&ssl_end_mutex);
 }
 
 int
