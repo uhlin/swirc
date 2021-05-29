@@ -62,6 +62,7 @@ extern NET_RECV_FN net_recv;
 
 extern volatile bool g_connection_in_progress;
 extern volatile bool g_connection_lost;
+extern volatile bool g_irc_listening;
 extern volatile bool g_on_air;
 
 extern char g_last_server[];

@@ -94,6 +94,7 @@ NET_RECV_FN net_recv = net_recv_plain;
 
 volatile bool g_connection_in_progress = false;
 volatile bool g_connection_lost = false;
+volatile bool g_irc_listening = false;
 volatile bool g_on_air = false;
 
 char g_last_server[1024] = { 0 };
@@ -467,6 +468,11 @@ net_irc_listen(bool *connection_lost)
     int bytes_received = -1;
     enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
 
+    if (atomic_load_bool(&g_irc_listening))
+	return;
+    else
+	(void) atomic_swap_bool(&g_irc_listening, true);
+
     *connection_lost = g_connection_lost = false;
     recvbuf = static_cast<char *>(xmalloc(RECVBUF_SIZE));
     irc_init();
@@ -553,6 +559,7 @@ net_irc_listen(bool *connection_lost)
     free(recvbuf);
     free(message_concat);
     printtext(&ptext_ctx, "Disconnected");
+    (void) atomic_swap_bool(&g_irc_listening, false);
 }
 
 void
