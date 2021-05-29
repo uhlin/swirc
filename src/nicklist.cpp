@@ -33,6 +33,7 @@
 #include <list>
 #include <string>
 
+#include "atomicops.h"
 #include "dataClassify.h"
 #include "errHand.h"
 #include "libUtils.h"
@@ -131,6 +132,11 @@ cmp_fn(const std::string& nick1, const std::string& nick2)
 static void
 draw_hook()
 {
+    if (!atomic_load_bool(&g_resizing_term)) {
+	update_panels();
+	(void) doupdate();
+    }
+
     statusbar_top_panel();
     readline_top_panel();
 }
@@ -264,8 +270,6 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	    count++;
 	}
 
-	update_panels();
-	(void) doupdate();
 	draw_hook();
 	mutex_unlock(&g_puts_mutex);
 	return 0;
@@ -302,8 +306,6 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	    ++count;
 	}
 
-	update_panels();
-	(void) doupdate();
 	draw_hook();
 	mutex_unlock(&g_puts_mutex);
 	return 0;
