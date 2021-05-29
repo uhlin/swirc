@@ -43,6 +43,12 @@
 #define CAFILE "trusted_roots.pem"
 #define CADIR NULL
 
+#if defined(UNIX)
+pthread_mutex_t g_ssl_recv_mutex;
+#elif defined(WIN32)
+HANDLE g_ssl_recv_mutex;
+#endif
+
 static SSL_CTX	*ssl_ctx = NULL;
 static SSL	*ssl = NULL;
 
@@ -51,11 +57,13 @@ static volatile bool ssl_object_is_null = true;
 #if defined(UNIX)
 static pthread_once_t	ssl_end_init_done = PTHREAD_ONCE_INIT;
 static pthread_once_t	ssl_send_init_done = PTHREAD_ONCE_INIT;
+static pthread_once_t	ssl_recv_init_done = PTHREAD_ONCE_INIT;
 static pthread_mutex_t	ssl_end_mutex;
 static pthread_mutex_t	ssl_send_mutex;
 #elif defined(WIN32)
 static init_once_t	ssl_end_init_done = ONCE_INITIALIZER;
 static init_once_t	ssl_send_init_done = ONCE_INITIALIZER;
+static init_once_t	ssl_recv_init_done = ONCE_INITIALIZER;
 static HANDLE		ssl_end_mutex;
 static HANDLE		ssl_send_mutex;
 #endif
@@ -131,6 +139,12 @@ static void
 ssl_send_mutex_init(void)
 {
 	mutex_new(&ssl_send_mutex);
+}
+
+static void
+ssl_recv_mutex_init(void)
+{
+	mutex_new(&g_ssl_recv_mutex);
 }
 
 static int
@@ -332,9 +346,17 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 #ifdef UNIX
 #define SOCKET_ERROR -1
 #endif
-	if (ctx == NULL || recvbuf == NULL || ssl == NULL)
+#if defined(UNIX)
+	if ((errno = pthread_once(&ssl_recv_init_done, ssl_recv_mutex_init)) !=
+	    0)
+		err_sys("net_ssl_recv: pthread_once");
+#elif defined(WIN32)
+	if ((errno = init_once(&ssl_recv_init_done, ssl_recv_mutex_init)) != 0)
+		err_sys("net_ssl_recv: init_once");
+#endif
+	else if (ctx == NULL || recvbuf == NULL || ssl == NULL)
 		return -1;
-	if (!SSL_pending(ssl)) {
+	else if (!SSL_pending(ssl)) {
 		const int	maxfdp1 = ctx->sock + 1;
 		fd_set		readset;
 		struct timeval	tv;
@@ -352,6 +374,8 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 		else if (!FD_ISSET(ctx->sock, &readset))
 			return 0;
 	}
+
+	mutex_lock(&g_ssl_recv_mutex);
 
 	char	*bufptr = recvbuf;
 	int	 buflen = recvbuf_size;
@@ -377,11 +401,13 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 				debug("net_ssl_recv: want read / want write");
 				break;
 			default:
+				mutex_unlock(&g_ssl_recv_mutex);
 				return -1;
 			}
 		}
 	} while (buflen > 0 && SSL_pending(ssl));
 
+	mutex_unlock(&g_ssl_recv_mutex);
 	return bytes_received;
 }
 
