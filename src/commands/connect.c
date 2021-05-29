@@ -38,6 +38,7 @@
 #include "../config.h"
 #include "../curses-funcs.h"
 #include "../dataClassify.h"
+#include "../io-loop.h"
 #include "../libUtils.h"
 #include "../main.h"
 #include "../network.h"
@@ -279,6 +280,10 @@ do_connect(const char *server, const char *port, const char *pass)
 	.rl_name  = "",
 	.nickname = "",
     };
+
+    if (atomic_load_bool(&g_connection_in_progress) || g_disconnect_wanted ||
+	!g_io_loop || g_on_air)
+	return;
 
     printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
 	true);
