@@ -34,6 +34,7 @@
 #include <stdexcept>
 
 #include "assertAPI.h"
+#include "atomicops.h"
 #ifdef UNIT_TESTING
 #undef UNIT_TESTING
 #include "cmocka-c++.h"
@@ -1520,8 +1521,10 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	free(wc_buf);
 	wc_buf = NULL;
 
-	update_panels();
-	(void) doupdate();
+	if (!atomic_load_bool(&g_resizing_term)) {
+		update_panels();
+		(void) doupdate();
+	}
 
 	(void) wattrset(pwin, A_NORMAL);
 
