@@ -334,7 +334,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 #endif
 	if (ctx == NULL || recvbuf == NULL || ssl == NULL)
 		return -1;
-	if (!SSL_pending(ssl)) {
+	else if (!SSL_pending(ssl)) {
 		const int	maxfdp1 = ctx->sock + 1;
 		fd_set		readset;
 		struct timeval	tv;
