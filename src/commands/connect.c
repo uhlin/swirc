@@ -493,7 +493,5 @@ cmd_disconnect(const char *data)
 	    event_welcome_signalit();
 
 	net_kill_connection();
-	mutex_lock(&g_irc_listen_mutex);
-	mutex_unlock(&g_irc_listen_mutex);
     }
 }
