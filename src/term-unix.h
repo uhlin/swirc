@@ -31,9 +31,8 @@ __SWIRC_END_DECLS
 static SW_INLINE void
 term_set_attr(WINDOW *win, attr_t at)
 {
-    if (win != NULL) {
+    if (win != NULL)
 	win->_attrs = at;
-    }
 }
 
 #endif
