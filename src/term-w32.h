@@ -10,6 +10,7 @@ struct winsize {
 
 /*lint -printf(1, term_set_title) */
 
+bool		is_term_resized(int, int);
 struct winsize	term_get_size(void);
 void		term_restore_title(void);
 void		term_set_title(const char *fmt, ...);

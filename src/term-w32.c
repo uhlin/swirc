@@ -4,6 +4,14 @@
 #include "errHand.h"
 #include "term-w32.h"
 
+bool
+is_term_resized(int rows, int cols)
+{
+    (void) rows;
+    (void) cols;
+    return is_termresized();
+}
+
 void
 term_set_title(const char *fmt, ...)
 {
