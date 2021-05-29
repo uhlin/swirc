@@ -9,9 +9,11 @@
 
 /*lint -printf(1, term_set_title) */
 
+__SWIRC_BEGIN_DECLS
 struct winsize	term_get_size(void);
 void		term_restore_title(void);
-void		term_set_title(const char *fmt, ...) PRINTFLIKE(1);
+void		term_set_title(const char *, ...) PRINTFLIKE(1);
+__SWIRC_END_DECLS
 
 /* Inline function definitions
    =========================== */
