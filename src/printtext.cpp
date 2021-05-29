@@ -248,8 +248,6 @@ addmbs(WINDOW *win, const unsigned char *mbs)
 
 	while ((c = *p++) != '\0')
 		WADDCH(win, c);
-
-	(void) wnoutrefresh(win);
 }
 
 static void
@@ -681,7 +679,6 @@ do_indent(WINDOW *win, const int indent, int *insert_count)
 	}
 
 	/* restore attributes after indenting */
-	(void) wnoutrefresh(win);
 	(void) wattrset(win, attrs);
 }
 

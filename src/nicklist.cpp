@@ -198,7 +198,6 @@ printnick(WINDOW *win, const int row, const int col, const char *nick)
 	(void) waddstr(win, nick + 1);
     }
     (void) wattrset(win, A_NORMAL);
-    (void) wnoutrefresh(win);
 }
 
 int
@@ -251,8 +250,7 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 
     if (list_fits) {
 	mutex_lock(&g_puts_mutex);
-	if (werase(nl_win) != ERR)
-	    (void) wnoutrefresh(nl_win);
+	(void) werase(nl_win);
 	win->nicklist.scroll_pos = 0;
 
 	it = list.begin();
@@ -275,8 +273,7 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	return 0;
     } else { /* !list_fits */
 	mutex_lock(&g_puts_mutex);
-	if (werase(nl_win) != ERR)
-	    (void) wnoutrefresh(nl_win);
+	(void) werase(nl_win);
 
 	if (win->nicklist.scroll_pos < 0)
 	    win->nicklist.scroll_pos = 0;
