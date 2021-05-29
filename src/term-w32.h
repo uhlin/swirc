@@ -10,10 +10,12 @@ struct winsize {
 
 /*lint -printf(1, term_set_title) */
 
+__SWIRC_BEGIN_DECLS
 bool		is_term_resized(int, int);
 struct winsize	term_get_size(void);
 void		term_restore_title(void);
-void		term_set_title(const char *fmt, ...);
+void		term_set_title(const char *, ...);
+__SWIRC_END_DECLS
 
 /* Inline function definitions
    =========================== */
