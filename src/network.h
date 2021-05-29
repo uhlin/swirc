@@ -70,8 +70,10 @@ extern char g_last_pass[];
 
 #if defined(UNIX)
 extern pthread_mutex_t g_irc_listen_mutex;
+extern pthread_mutex_t g_ssl_recv_mutex;
 #elif defined(WIN32)
 extern HANDLE g_irc_listen_mutex;
+extern HANDLE g_ssl_recv_mutex;
 #endif
 
 /*lint -sem(net_addr_resolve, r_null) */
