@@ -264,6 +264,7 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	    count++;
 	}
 
+	update_panels();
 	(void) doupdate();
 	draw_hook();
 	mutex_unlock(&g_puts_mutex);
@@ -301,12 +302,14 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	    ++count;
 	}
 
+	update_panels();
 	(void) doupdate();
 	draw_hook();
 	mutex_unlock(&g_puts_mutex);
+	return 0;
     }
 
-    return 0;
+    /*NOTREACHED*/ return -1;
 }
 
 int
