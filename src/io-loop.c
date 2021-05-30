@@ -574,6 +574,9 @@ enter_io_loop(void)
 	} while (g_io_loop);
 
 	textBuf_destroy(history);
+
+	while (atomic_load_bool(&g_irc_listening))
+		(void) napms(1);
 }
 
 void
