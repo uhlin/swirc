@@ -554,7 +554,16 @@ net_irc_listen(bool *connection_lost)
     *connection_lost = (g_on_air && g_connection_lost);
     if (*connection_lost)
 	printtext(&ptext_ctx, "Connection to IRC server lost");
-    net_kill_connection();
+    if (g_on_air)
+	g_on_air = false;
+    net_ssl_end();
+    if (g_socket != INVALID_SOCKET) {
+	CLOSE_GLOBAL_SOCKET();
+	g_socket = INVALID_SOCKET;
+    }
+#ifdef WIN32
+    winsock_deinit();
+#endif
     irc_deinit();
     free(recvbuf);
     free(message_concat);
