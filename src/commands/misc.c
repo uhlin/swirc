@@ -33,6 +33,9 @@
 #include <sys/socket.h> /* shutdown() */
 #endif
 
+#include "../irc.h"
+#include "../events/welcome.h"
+
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
@@ -45,6 +48,7 @@
 #include "../strHand.h"
 #include "../terminal.h"
 
+#include "connect.h"
 #include "misc.h"
 
 static void
@@ -373,27 +377,21 @@ cmd_quit(const char *data)
     const bool has_message = !strings_match(data, "");
 
     if (g_on_air) {
+	g_disconnect_wanted = true;
+	g_connection_lost = g_on_air = false;
+
 	if (g_icb_mode)
 	    /* empty */;
 	else if (has_message)
 	    (void) net_send("QUIT :%s", data);
 	else
 	    (void) net_send("QUIT :%s", Config("quit_message"));
-#if 0
-	g_on_air = false;
-	errno = 0;
-#if defined(UNIX)
-	if (shutdown(g_socket, SHUT_RDWR) == -1)
-	    err_log(errno, "cmd_quit: shutdown");
-#elif defined(WIN32)
-	if (shutdown(g_socket, SD_BOTH) != 0)
-	    err_log(errno, "cmd_quit: shutdown");
-#endif
-#endif
-	net_kill_connection();
+
+	if (atomic_load_bool(&g_connection_in_progress))
+	    event_welcome_signalit();
+
 	while (atomic_load_bool(&g_irc_listening))
-	    napms(1);
-	napms(500);
+	    (void) napms(1);
     }
 
     g_io_loop = false;
