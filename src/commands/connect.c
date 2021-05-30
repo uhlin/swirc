@@ -483,6 +483,7 @@ cmd_disconnect(const char *data)
 
     if (g_on_air) {
 	g_disconnect_wanted = true;
+	g_connection_lost = g_on_air = false;
 
 	if (has_message)
 	    net_send("QUIT :%s", data);
@@ -491,8 +492,6 @@ cmd_disconnect(const char *data)
 
 	if (atomic_load_bool(&g_connection_in_progress))
 	    event_welcome_signalit();
-
-	net_kill_connection();
 
 	while (atomic_load_bool(&g_irc_listening))
 	    (void) napms(1);
