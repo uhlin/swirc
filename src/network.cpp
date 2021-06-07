@@ -591,12 +591,12 @@ net_kill_connection(void)
 void
 server_destroy(struct server *server)
 {
-    if (server == NULL)
-	return;
-    free(server->host);
-    free(server->port);
-    free(server->pass);
-    free(server);
+	if (server == NULL)
+		return;
+	free(server->host);
+	free(server->port);
+	free(server->pass);
+	free(server);
 }
 
 void
