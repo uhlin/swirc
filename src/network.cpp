@@ -574,18 +574,21 @@ net_irc_listen(bool *connection_lost)
 void
 net_kill_connection(void)
 {
-    g_on_air = false;
-    net_ssl_end();
+	g_disconnect_wanted = true;
+	g_connection_lost = g_on_air = false;
+
+	if (g_socket == INVALID_SOCKET)
+		return;
+
+	errno = 0;
+
 #if defined(UNIX)
-    if (g_socket != INVALID_SOCKET)
-	close(g_socket);
+	if (shutdown(g_socket, SHUT_RDWR) == -1)
+		err_log(errno, "net_kill_connection: shutdown");
 #elif defined(WIN32)
-    if (g_socket != INVALID_SOCKET) {
-	closesocket(g_socket);
-	winsock_deinit();
-    }
+	if (shutdown(g_socket, SD_BOTH) != 0)
+		err_log(errno, "net_kill_connection: shutdown");
 #endif
-    g_socket = INVALID_SOCKET;
 }
 
 void
