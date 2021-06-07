@@ -195,14 +195,13 @@ net_ssl_begin(void)
 void
 net_ssl_end(void)
 {
-#define BIDIRECTIONAL_SHUTDOWN 0
 	if (ssl != NULL && !atomic_load_bool(&ssl_object_is_null)) {
+#define SHUTDOWN_CONN 0
+#if SHUTDOWN_CONN
 		switch (SSL_shutdown(ssl)) {
 		case 0:
 			debug("net_ssl_end: SSL_shutdown: not yet finished");
-#if BIDIRECTIONAL_SHUTDOWN
 			(void) SSL_shutdown(ssl);
-#endif
 			break;
 		case 1:
 			/* success! */
@@ -211,6 +210,7 @@ net_ssl_end(void)
 			err_log(0, "net_ssl_end: SSL_shutdown: error");
 			break;
 		}
+#endif
 		SSL_free(ssl);
 		ssl = NULL;
 		(void) atomic_swap_bool(&ssl_object_is_null, true);
