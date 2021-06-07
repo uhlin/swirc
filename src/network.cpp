@@ -602,7 +602,7 @@ server_destroy(struct server *server)
 void
 net_set_sock_addr_family_ipv4(void)
 {
-    socket_address_family = AF_INET;
+	socket_address_family = AF_INET;
 }
 
 void
