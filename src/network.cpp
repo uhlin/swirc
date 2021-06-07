@@ -608,5 +608,5 @@ net_set_sock_addr_family_ipv4(void)
 void
 net_set_sock_addr_family_ipv6(void)
 {
-    socket_address_family = AF_INET6;
+	socket_address_family = AF_INET6;
 }
