@@ -815,19 +815,22 @@ readline_recreate(int rows, int cols)
 void
 readline_top_panel(void)
 {
-    mutex_lock(&g_puts_mutex);
-    if (panel_state == PANEL1_ACTIVE) {
-	if (!isNull(readline_pan1)) {
-	    (void) top_panel(readline_pan1);
-	    (void) wrefresh(panel_window(readline_pan1));
+	mutex_lock(&g_puts_mutex);
+
+	if (panel_state == PANEL1_ACTIVE) {
+		if (readline_pan1)
+			(void) top_panel(readline_pan1);
+	} else if (panel_state == PANEL2_ACTIVE) {
+		if (readline_pan2)
+			(void) top_panel(readline_pan2);
+	} else {
+		sw_assert_not_reached();
 	}
-    } else if (panel_state == PANEL2_ACTIVE) {
-	if (!isNull(readline_pan2)) {
-	    (void) top_panel(readline_pan2);
-	    (void) wrefresh(panel_window(readline_pan2));
+
+	if (!atomic_load_bool(&g_resizing_term)) {
+		update_panels();
+		(void) doupdate();
 	}
-    } else {
-	sw_assert_not_reached();
-    }
-    mutex_unlock(&g_puts_mutex);
+
+	mutex_unlock(&g_puts_mutex);
 }
