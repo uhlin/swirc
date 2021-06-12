@@ -478,7 +478,6 @@ change_window_by_label(const char *label)
 	}
 
 	readline_top_panel();
-	(void) ungetch('\a');
 
 	return 0;
 }
@@ -516,7 +515,6 @@ change_window_by_refnum(int refnum)
 	}
 
 	readline_top_panel();
-	(void) ungetch('\a');
 
 	return 0;
 }
