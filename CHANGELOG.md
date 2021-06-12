@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Added new modes and options for TLS/SSL connections
 - Added nicklist
 - Added null checks
+- Added preprogrammed network name [libera](https://libera.chat/)
 - Added support for partial writes in `net_ssl_send()`
 - Added theme item `nicklist_nick_color`
 - Added theme item `nicklist_privilege_color`
