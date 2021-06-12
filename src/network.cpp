@@ -498,9 +498,9 @@ server_new(const char *host, const char *port, const char *pass)
 void
 net_connect_clean_up(void)
 {
-    reconnect_context_reinit(&reconn_ctx);
-    retry = 0;
-    atomic_swap_bool(&g_connection_in_progress, false);
+	reconnect_context_reinit(&reconn_ctx);
+	retry = 0;
+	atomic_swap_bool(&g_connection_in_progress, false);
 }
 
 void
