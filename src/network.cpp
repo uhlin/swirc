@@ -146,12 +146,12 @@ static int
 get_and_handle_remaining_bytes(const int bytes_remaining,
     struct network_recv_context *ctx, const char *recvbuf, const int length)
 {
-	char *tmp = NULL;
-	char *concat = NULL;
+	char	*tmp = NULL;
+	char	*concat = NULL;
 
 	try {
-		int bytes_received;
-		size_t concatSize;
+		int	bytes_received;
+		size_t	concatSize;
 
 		if (bytes_remaining <= 0 || ctx == NULL || recvbuf == NULL ||
 		    length < 0 || length > UCHAR_MAX)
