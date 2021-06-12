@@ -782,7 +782,7 @@ void
 readline_handle_key_exported(volatile struct readline_session_context *ctx,
     wint_t wc)
 {
-    handle_key(ctx, wc);
+	handle_key(ctx, wc);
 }
 
 /**
