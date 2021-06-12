@@ -316,9 +316,9 @@ should_check_connection()
 bool
 sasl_is_enabled(void)
 {
-    if (! (g_sasl_authentication))
-	return false;
-    return config_bool("sasl", false);
+	if (!g_sasl_authentication)
+		return false;
+	return config_bool("sasl", false);
 }
 
 conn_res_t
