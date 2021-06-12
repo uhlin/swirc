@@ -65,17 +65,17 @@
 ****************************************************************/
 
 struct reconnect_context {
-    long int backoff_delay;
-    long int delay;
-    long int delay_max;
-    long int retries;
+	long int backoff_delay;
+	long int delay;
+	long int delay_max;
+	long int retries;
 
-    reconnect_context() {
-	this->backoff_delay = 0;
-	this->delay         = 0;
-	this->delay_max     = 0;
-	this->retries       = 0;
-    }
+	reconnect_context() {
+		this->backoff_delay = 0;
+		this->delay         = 0;
+		this->delay_max     = 0;
+		this->retries       = 0;
+	}
 };
 
 /****************************************************************
