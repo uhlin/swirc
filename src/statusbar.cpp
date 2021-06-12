@@ -211,5 +211,5 @@ statusbar_update_display_beta(void)
     printtext_puts(win, g_no_colors ? squeeze_text_deco(out_s) : out_s, -1, -1,
 		   NULL);
     free(out_s);
-    statusbar_show();
+    statusbar_top_panel();
 }
