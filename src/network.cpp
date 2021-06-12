@@ -463,23 +463,23 @@ net_send_fake(const char *fmt, ...)
 struct addrinfo *
 net_addr_resolve(const char *host, const char *port)
 {
-    struct addrinfo *res = NULL;
-    struct addrinfo hints;
+	struct addrinfo *res = NULL;
+	struct addrinfo hints;
 
-    if (host == NULL || port == NULL)
-	return NULL;
+	if (host == NULL || port == NULL)
+		return NULL;
 
-    BZERO(&hints, sizeof hints);
-    hints.ai_flags     = AI_CANONNAME;
-    hints.ai_family    = socket_address_family;
-    hints.ai_socktype  = SOCK_STREAM;
-    hints.ai_protocol  = 0;
-    hints.ai_addrlen   = 0;
-    hints.ai_addr      = NULL;
-    hints.ai_canonname = NULL;
-    hints.ai_next      = NULL;
+	BZERO(&hints, sizeof hints);
+	hints.ai_flags     = AI_CANONNAME;
+	hints.ai_family    = socket_address_family;
+	hints.ai_socktype  = SOCK_STREAM;
+	hints.ai_protocol  = 0;
+	hints.ai_addrlen   = 0;
+	hints.ai_addr      = NULL;
+	hints.ai_canonname = NULL;
+	hints.ai_next      = NULL;
 
-    return getaddrinfo(host, port, &hints, &res) != 0 ? NULL : res;
+	return (getaddrinfo(host, port, &hints, &res) != 0 ? NULL : res);
 }
 
 struct server *
