@@ -132,11 +132,6 @@ cmp_fn(const std::string& nick1, const std::string& nick2)
 static void
 draw_hook()
 {
-    if (!atomic_load_bool(&g_resizing_term)) {
-	update_panels();
-	(void) doupdate();
-    }
-
     statusbar_top_panel();
     readline_top_panel();
 }
