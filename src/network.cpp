@@ -507,11 +507,11 @@ void
 net_irc_listen(bool *connection_lost)
 {
 	PRINTTEXT_CONTEXT ptext_ctx;
-	struct network_recv_context ctx(g_socket, 0, 5, 0);
 	char *message_concat = NULL;
 	char *recvbuf = NULL;
-	int bytes_received = -1;
 	enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
+	int bytes_received = -1;
+	struct network_recv_context ctx(g_socket, 0, 5, 0);
 
 	if (atomic_load_bool(&g_irc_listening))
 		return;
