@@ -795,18 +795,18 @@ readline_handle_key_exported(volatile struct readline_session_context *ctx,
 void
 readline_recreate(int rows, int cols)
 {
-    struct term_window_size newsize = {
-	.rows      = 1,
-	.cols      = cols,
-	.start_row = rows - 1,
-	.start_col = 0,
-    };
+	struct term_window_size newsize = {
+		.rows = 1,
+		.cols = cols,
+		.start_row = (rows - 1),
+		.start_col = 0,
+	};
 
-    readline_pan1 = term_resize_panel(readline_pan1, &newsize);
-    readline_pan2 = term_resize_panel(readline_pan2, &newsize);
+	readline_pan1 = term_resize_panel(readline_pan1, &newsize);
+	readline_pan2 = term_resize_panel(readline_pan2, &newsize);
 
-    apply_readline_options(panel_window(readline_pan1));
-    apply_readline_options(panel_window(readline_pan2));
+	apply_readline_options(panel_window(readline_pan1));
+	apply_readline_options(panel_window(readline_pan2));
 }
 
 /**
