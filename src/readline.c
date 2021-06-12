@@ -33,6 +33,7 @@
 #include <wctype.h>
 
 #include "assertAPI.h"
+#include "atomicops.h"
 #if defined(WIN32) && defined(PDC_EXP_EXTRAS)
 #include "curses-funcs.h" /* is_scrollok() etc */
 #endif
