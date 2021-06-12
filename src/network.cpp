@@ -232,24 +232,26 @@ select_send_and_recv_funcs()
 static void
 send_icb_login_packet(const struct network_connect_context *ctx)
 {
-    char msg[ICB_MESSAGE_MAX] = "";
+	char	msg[ICB_MESSAGE_MAX] = { '\0' };
+	int	msglen, ret;
 
-    const int ret =
-	snprintf(msg, ARRAY_SIZE(msg), "a%s%s%s%s%s%s%s%s%s%s",
+	ret = snprintf(msg, ARRAY_SIZE(msg), "a%s%s%s%s%s%s%s%s%s%s",
 	    ctx->username, ICB_FIELD_SEP,
 	    ctx->nickname, ICB_FIELD_SEP,
 	    "1", ICB_FIELD_SEP,
 	    "login", ICB_FIELD_SEP,
-	    ctx->password ? ctx->password : " ", ICB_FIELD_SEP);
+	    (ctx->password ? ctx->password : ""), ICB_FIELD_SEP);
 
-    if (ret < 0 || static_cast<size_t>(ret) >= ARRAY_SIZE(msg)) {
-	err_log(ENOBUFS, "send_icb_login_packet: message too long!");
-	return;
-    }
+	if (ret < 0 || static_cast<size_t>(ret) >= ARRAY_SIZE(msg)) {
+		err_log(ENOBUFS, "send_icb_login_packet");
+		return;
+	}
 
-    irc_set_my_nickname(ctx->nickname);
-    const int msglen = static_cast<int>(strlen(msg));
-    net_send("%c%s", msglen, msg);
+	msglen = static_cast<int>(strlen(msg));
+	irc_set_my_nickname(ctx->nickname);
+
+	if (net_send("%c%s", msglen, msg) < 0)
+		err_log(ENOTCONN, "send_icb_login_packet");
 }
 
 static void
