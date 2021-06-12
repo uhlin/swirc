@@ -121,6 +121,7 @@ static const char *connect_usage[] = {
     "    - efnet",
     "    - freenode",
     "    - ircnet",
+    "    - libera",
     "    - quakenet",
     "    - undernet",
     "",

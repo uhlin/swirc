@@ -106,6 +106,11 @@ static const char *ircnet_servers[] = {
     NULL
 };
 
+static const char *libera_servers[] = {
+    "irc.libera.chat",
+    NULL
+};
+
 static const char *quakenet_servers[] = {
     "ServerCentral.IL.US.Quakenet.Org",
     "irc.quakenet.org",
@@ -461,6 +466,8 @@ cmd_connect(const char *data)
 	    IRC_CONNECT(get_server(freenode_servers, "freenode servers"), port);
 	else if (strings_match_ignore_case(server, "ircnet"))
 	    IRC_CONNECT(get_server(ircnet_servers, "IRCnet servers"), port);
+	else if (strings_match_ignore_case(server, "libera"))
+	    IRC_CONNECT(get_server(libera_servers, "Libera Chat"), port);
 	else if (strings_match_ignore_case(server, "quakenet"))
 	    IRC_CONNECT(get_server(quakenet_servers, "QuakeNet servers"), port);
 	else if (strings_match_ignore_case(server, "undernet"))
