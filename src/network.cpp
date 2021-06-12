@@ -126,19 +126,19 @@ static void	 send_reg_cmds(const struct network_connect_context *)
 static int
 conn_check()
 {
-    if (g_icb_mode) {
-	const int msglen = 1;
+	if (g_icb_mode) {
+		const int msglen = 1;
 
-	if (net_send("%cn", msglen) == -1)
-	    return -1;
-    } else {
-	if (!isNull(g_server_hostname)) {
-	    if (net_send("PING %s", g_server_hostname) == -1)
-		return -1;
+		if (net_send("%cn", msglen) == -1)
+			return -1;
+	} else {
+		if (g_server_hostname != NULL) {
+			if (net_send("PING %s", g_server_hostname) == -1)
+				return -1;
+		}
 	}
-    }
 
-    return 0;
+	return 0;
 }
 
 static int
