@@ -77,6 +77,23 @@ signal_handler(int signum)
     _Exit(EXIT_FAILURE);
 }
 
+void
+block_signals(void)
+{
+    sigset_t set;
+
+    (void) sigemptyset(&set);
+
+    for (struct sig_message_tag *ssp = &sig_message[0];
+	 ssp < &sig_message[ARRAY_SIZE(sig_message)]; ssp++) {
+	if (ssp->ignore)
+	    (void) sigaddset(&set, ssp->num);
+    }
+
+    if ((errno = pthread_sigmask(SIG_BLOCK, &set, NULL)) != 0)
+	err_sys("block_signals: pthread_sigmask");
+}
+
 bool
 sighand_init(void)
 {

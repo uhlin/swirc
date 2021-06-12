@@ -43,6 +43,12 @@ signal_handler(int signum)
     _exit(EXIT_FAILURE);
 }
 
+void
+block_signals(void)
+{
+    debug("block_signals() called");
+}
+
 bool
 sighand_init(void)
 {
