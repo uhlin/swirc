@@ -50,6 +50,7 @@
 #include "main.h"
 #include "network.h"
 #include "printtext.h"
+#include "sig.h"
 #include "strHand.h"
 
 #include "commands/connect.h"
@@ -534,6 +535,7 @@ net_irc_listen(bool *connection_lost)
 	else
 		(void) atomic_swap_bool(&g_irc_listening, true);
 
+	block_signals();
 	*connection_lost = g_connection_lost = false;
 	recvbuf = static_cast<char *>(xmalloc(RECVBUF_SIZE));
 	irc_init();
