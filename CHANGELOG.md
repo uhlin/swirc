@@ -28,6 +28,7 @@ All notable changes to this project will be documented in this file.
 - Made improvements to the following files:
   - `io-loop.c`
   - `network-openssl.c`
+  - `network.cpp`
   - `pthrMutex.c`
   - `sig-unix.c`
   - `sig-w32.c`
