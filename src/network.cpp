@@ -322,129 +322,147 @@ sasl_is_enabled(void)
 }
 
 conn_res_t
-net_connect(
-    const struct network_connect_context *ctx,
+net_connect(const struct network_connect_context *ctx,
     long int *sleep_time_seconds)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
-    static bool reconn_initialized = false;
-    struct addrinfo *res = NULL, *rp = NULL;
+	PRINTTEXT_CONTEXT ptext_ctx;
+	static bool reconn_initialized = false;
+	struct addrinfo *res = NULL, *rp = NULL;
 
-    if (ctx == NULL || sleep_time_seconds == NULL)
-	err_exit(EINVAL, "net_connect");
-    else if (atomic_load_bool(&g_connection_in_progress))
-	return CONNECTION_FAILED;
+	if (ctx == NULL || sleep_time_seconds == NULL)
+		err_exit(EINVAL, "net_connect");
+	else if (atomic_load_bool(&g_connection_in_progress))
+		return CONNECTION_FAILED;
+	else
+		(void) atomic_swap_bool(&g_connection_in_progress, true);
 
-    (void) atomic_swap_bool(&g_connection_in_progress, true);
+	if (!atomic_load_bool(&reconn_initialized)) {
+		reconn_ctx.backoff_delay = get_reconnect_backoff_delay();
+		reconn_ctx.delay         = get_reconnect_delay();
+		reconn_ctx.delay_max     = get_reconnect_delay_max();
+		reconn_ctx.retries       = get_reconnect_retries();
+		(void) atomic_swap_bool(&reconn_initialized, true);
+	}
 
-    if (!atomic_load_bool(&reconn_initialized)) {
-	reconn_ctx.backoff_delay = get_reconnect_backoff_delay();
-	reconn_ctx.delay         = get_reconnect_delay();
-	reconn_ctx.delay_max     = get_reconnect_delay_max();
-	reconn_ctx.retries       = get_reconnect_retries();
+	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1, true);
+	printtext(&ptext_ctx, "Connecting to %s (%s)", ctx->server, ctx->port);
+	g_sasl_scram_sha_got_first_msg = false;
 
-	(void) atomic_swap_bool(&reconn_initialized, true);
-    }
-
-    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1, true);
-    printtext(&ptext_ctx, "Connecting to %s (%s)", ctx->server, ctx->port);
-    g_sasl_scram_sha_got_first_msg = false;
-
-    try {
-	ptext_ctx.spec_type = TYPE_SPEC1_SUCCESS;
+	try {
+		ptext_ctx.spec_type = TYPE_SPEC1_SUCCESS;
 
 #ifdef WIN32
-	if (!winsock_init())
-	    throw std::runtime_error("Cannot initiate use of the Winsock DLL");
-	else
-	    printtext(&ptext_ctx, "Use of the Winsock DLL granted");
+		if (!winsock_init()) {
+			throw std::runtime_error("Cannot initiate use of the "
+			    "Winsock DLL");
+		} else {
+			printtext(&ptext_ctx, "Use of the Winsock DLL granted");
+		}
 #endif
 
-	if ((res = net_addr_resolve(ctx->server, ctx->port)) == NULL)
-	    throw std::runtime_error("Unable to get a list of IP addresses");
-	else
-	    printtext(&ptext_ctx, "Get a list of IP addresses complete");
+		if ((res = net_addr_resolve(ctx->server, ctx->port)) == NULL) {
+			throw std::runtime_error("Unable to get a list of "
+			    "IP addresses");
+		} else {
+			printtext(&ptext_ctx, "Get a list of IP addresses "
+			    "completed");
+		}
 
-	for (rp = res; rp; rp = rp->ai_next) {
-	    if ((g_socket = socket(rp->ai_family,
-				   rp->ai_socktype,
-				   rp->ai_protocol)) == INVALID_SOCKET)
-		continue;
+		for (rp = res; rp; rp = rp->ai_next) {
+			if ((g_socket = socket(rp->ai_family, rp->ai_socktype,
+			    rp->ai_protocol)) == INVALID_SOCKET)
+				continue;
 
-	    net_set_recv_timeout(TEMP_RECV_TIMEOUT);
-	    net_set_send_timeout(TEMP_SEND_TIMEOUT);
+			net_set_recv_timeout(TEMP_RECV_TIMEOUT);
+			net_set_send_timeout(TEMP_SEND_TIMEOUT);
 
-	    if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) == 0) {
-		printtext(&ptext_ctx, "Connected!");
-		g_on_air = true;
-		net_set_recv_timeout(DEFAULT_RECV_TIMEOUT);
-		net_set_send_timeout(DEFAULT_SEND_TIMEOUT);
-		break;
-	    } else {
-		CLOSE_GLOBAL_SOCKET();
-		g_socket = INVALID_SOCKET;
-	    }
-	} /* for */
+			if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) ==
+			    0) {
+				printtext(&ptext_ctx, "Connected!");
 
-	if (res)
-	    freeaddrinfo(res);
-	select_send_and_recv_funcs();
+				g_on_air = true;
 
-	if (!g_on_air || (ssl_is_enabled() && net_ssl_begin() == -1))
-	    throw std::runtime_error("Failed to establish a connection");
-	if (ssl_is_enabled() && config_bool("hostname_checking", true))
-	    {
-		if (net_ssl_check_hostname(ctx->server, 0) != OK)
-		    throw std::runtime_error("Hostname checking failed!");
+				net_set_recv_timeout(DEFAULT_RECV_TIMEOUT);
+				net_set_send_timeout(DEFAULT_SEND_TIMEOUT);
+				break;
+			} else {
+				CLOSE_GLOBAL_SOCKET();
+				g_socket = INVALID_SOCKET;
+			}
+		} /* for */
+
+		if (res)
+			freeaddrinfo(res);
+
+		select_send_and_recv_funcs();
+
+		if (!g_on_air || (ssl_is_enabled() && net_ssl_begin() == -1)) {
+			throw std::runtime_error("Failed to establish a "
+			    "connection");
+		}
+
+		if (ssl_is_enabled() &&
+		    config_bool("hostname_checking", true)) {
+			if (net_ssl_check_hostname(ctx->server, 0) != OK) {
+				throw std::runtime_error("Hostname checking "
+				    "failed!");
+			} else {
+				printtext(&ptext_ctx, "Hostname checking OK!");
+			}
+		}
+
+		event_welcome_cond_init();
+		net_spawn_listen_thread();
+
+		if (g_icb_mode)
+			send_icb_login_packet(ctx);
 		else
-		    printtext(&ptext_ctx, "Hostname checking OK!");
-	    }
-	event_welcome_cond_init();
-	net_spawn_listen_thread();
-	if (g_icb_mode)
-	    send_icb_login_packet(ctx);
-	else
-	    send_reg_cmds(ctx);
+			send_reg_cmds(ctx);
 
-	if (!event_welcome_is_signaled()) {
-	    event_welcome_cond_destroy();
-	    throw std::runtime_error("Event welcome not signaled!");
+		if (!event_welcome_is_signaled()) {
+			event_welcome_cond_destroy();
+			throw std::runtime_error("Event welcome not signaled!");
+		}
+
+		event_welcome_cond_destroy();
+	} catch (std::runtime_error &e) {
+		ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
+		printtext(&ptext_ctx, "%s", e.what());
+		net_kill_connection(); /* XXX */
+
+		if (retry++ < reconn_ctx.retries) {
+			const bool is_initial_reconnect_attempt = (retry == 1);
+
+			if (is_initial_reconnect_attempt)
+				*sleep_time_seconds = reconn_ctx.delay;
+			else
+				*sleep_time_seconds += reconn_ctx.backoff_delay;
+
+			/* --------------------------------------------- */
+
+			if (*sleep_time_seconds > reconn_ctx.delay_max)
+				*sleep_time_seconds = reconn_ctx.delay_max;
+
+			(void) atomic_swap_bool(&g_connection_in_progress,
+			    false);
+			return SHOULD_RETRY_TO_CONNECT;
+		}
+
+		net_connect_clean_up();
+		return CONNECTION_FAILED;
 	}
 
-	event_welcome_cond_destroy();
-    } catch (std::runtime_error &e) {
-	ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
-	printtext(&ptext_ctx, "%s", e.what());
-	net_kill_connection();
+	(void) snprintf(g_last_server, ARRAY_SIZE(g_last_server), "%s",
+	    ctx->server);
+	(void) snprintf(g_last_port, ARRAY_SIZE(g_last_port), "%s", ctx->port);
+	(void) snprintf(g_last_pass, ARRAY_SIZE(g_last_pass), "%s",
+	    (ctx->password ? ctx->password : ""));
 
-	if (retry++ < reconn_ctx.retries) {
-	    const bool is_initial_reconnect_attempt = (retry == 1);
+	if (!g_icb_mode)
+		window_foreach_rejoin_all_channels();
 
-	    if (is_initial_reconnect_attempt)
-		*sleep_time_seconds = reconn_ctx.delay;
-	    else
-		*sleep_time_seconds += reconn_ctx.backoff_delay;
-
-	    /* --------------------------------------------- */
-
-	    if (*sleep_time_seconds > reconn_ctx.delay_max)
-		*sleep_time_seconds = reconn_ctx.delay_max;
-
-	    (void) atomic_swap_bool(&g_connection_in_progress, false);
-	    return SHOULD_RETRY_TO_CONNECT;
-	}
 	net_connect_clean_up();
-	return CONNECTION_FAILED;
-    }
-
-    snprintf(g_last_server, ARRAY_SIZE(g_last_server), "%s", ctx->server);
-    snprintf(g_last_port, ARRAY_SIZE(g_last_port), "%s", ctx->port);
-    snprintf(g_last_pass, ARRAY_SIZE(g_last_pass), "%s",
-	(ctx->password ? ctx->password : ""));
-    if (!g_icb_mode)
-	window_foreach_rejoin_all_channels();
-    net_connect_clean_up();
-    return CONNECTION_ESTABLISHED;
+	return CONNECTION_ESTABLISHED;
 }
 
 int
