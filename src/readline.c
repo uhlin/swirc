@@ -750,20 +750,20 @@ readline_get_active_pwin(void)
 char *
 readline(const char *prompt)
 {
-    volatile struct readline_session_context *ctx = NULL;
+	volatile struct readline_session_context *ctx = NULL;
 
-    switch (setjmp(g_readline_loc_info)) {
-    case READLINE_PROCESS:
-	g_readline_loop    = true;
-	g_resize_requested = false;
-	g_hist_next        = false;
-	g_hist_prev        = false;
-	ctx = new_session(prompt);
-	return process(ctx);
-    }
+	switch (setjmp(g_readline_loc_info)) {
+	case READLINE_PROCESS:
+		g_readline_loop = true;
+		g_resize_requested = false;
+		g_hist_next = false;
+		g_hist_prev = false;
+		ctx = new_session(prompt);
+		return process(ctx);
+	}
 
-    session_destroy(ctx);
-    return NULL;
+	session_destroy(ctx);
+	return NULL;
 }
 
 char *
