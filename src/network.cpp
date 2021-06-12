@@ -189,12 +189,12 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 static void
 reconnect_context_reinit(struct reconnect_context *ctx)
 {
-    if (ctx) {
-	ctx->backoff_delay = get_reconnect_backoff_delay();
-	ctx->delay         = get_reconnect_delay();
-	ctx->delay_max     = get_reconnect_delay_max();
-	ctx->retries       = get_reconnect_retries();
-    }
+	if (ctx) {
+		ctx->backoff_delay = get_reconnect_backoff_delay();
+		ctx->delay         = get_reconnect_delay();
+		ctx->delay_max     = get_reconnect_delay_max();
+		ctx->retries       = get_reconnect_retries();
+	}
 }
 
 static void
