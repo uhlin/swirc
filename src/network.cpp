@@ -141,6 +141,51 @@ conn_check()
     return 0;
 }
 
+static int
+get_and_handle_remaining_bytes(const int bytes_remaining,
+    struct network_recv_context *ctx, const char *recvbuf, const int length)
+{
+	char *tmp = NULL;
+	char *concat = NULL;
+
+	try {
+		int bytes_received;
+		size_t concatSize;
+
+		if (bytes_remaining <= 0 || ctx == NULL || recvbuf == NULL ||
+		    length < 0 || length > UCHAR_MAX)
+			throw std::runtime_error("invalid arguments");
+
+		tmp = static_cast<char *>(xmalloc(bytes_remaining + 1));
+		tmp[bytes_remaining] = '\0';
+
+		if ((bytes_received = net_recv(ctx, tmp, bytes_remaining)) !=
+		    bytes_remaining) {
+			throw std::runtime_error("read bytes mismatch "
+			    "remaining");
+		}
+
+		concatSize = strlen(recvbuf) + strlen(tmp) + 1;
+		concat = static_cast<char *>(xmalloc(concatSize));
+
+		if (sw_strcpy(concat, recvbuf, concatSize) == 0 &&
+		    sw_strcat(concat, tmp, concatSize) == 0)
+			icb_irc_proxy(length, concat[0], &concat[1]);
+		else
+			throw std::runtime_error("insufficient buffer size");
+
+		free(tmp);
+		free(concat);
+		return OK;
+	} catch (std::runtime_error &e) {
+		err_log(0, "get_and_handle_remaining_bytes: %s", e.what());
+		free(tmp);
+		free(concat);
+	}
+
+	return ERR;
+}
+
 static void
 reconnect_context_reinit(struct reconnect_context *ctx)
 {
@@ -461,114 +506,113 @@ net_connect_clean_up(void)
 void
 net_irc_listen(bool *connection_lost)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
-    struct network_recv_context ctx(g_socket, 0, 5, 0);
-    char *message_concat = NULL;
-    char *recvbuf = NULL;
-    int bytes_received = -1;
-    enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
+	PRINTTEXT_CONTEXT ptext_ctx;
+	struct network_recv_context ctx(g_socket, 0, 5, 0);
+	char *message_concat = NULL;
+	char *recvbuf = NULL;
+	int bytes_received = -1;
+	enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
 
-    if (atomic_load_bool(&g_irc_listening))
-	return;
-    else
-	(void) atomic_swap_bool(&g_irc_listening, true);
+	if (atomic_load_bool(&g_irc_listening))
+		return;
+	else
+		(void) atomic_swap_bool(&g_irc_listening, true);
 
-    *connection_lost = g_connection_lost = false;
-    recvbuf = static_cast<char *>(xmalloc(RECVBUF_SIZE));
-    irc_init();
+	*connection_lost = g_connection_lost = false;
+	recvbuf = static_cast<char *>(xmalloc(RECVBUF_SIZE));
+	irc_init();
 
-    do {
-	BZERO(recvbuf, RECVBUF_SIZE);
+	do {
+		BZERO(recvbuf, RECVBUF_SIZE);
 
-	if (g_icb_mode) {
-	    if ((bytes_received = net_recv(&ctx, recvbuf, 1)) == -1) {
-		g_connection_lost = true;
-		break;
-	    } else if (bytes_received != 1) {
-		if (atomic_load_bool(&g_icb_processing_names))
-		    icb_process_event_eof_names();
-		continue;
-	    }
+		if (g_icb_mode) {
+			/*
+			 * ICB
+			 */
 
-	    char array[10] = { '\0' };
-	    snprintf(array, ARRAY_SIZE(array), "%d",
-		static_cast<unsigned char>(recvbuf[0]));
-	    const int length = atoi(array);
-	    sw_assert(length >= 0 && length <= UCHAR_MAX);
+			char array[10] = { '\0' };
+			int length, ret;
 
-	    if ((bytes_received = net_recv(&ctx, recvbuf, length)) == -1)
-		g_connection_lost = true;
-	    else if (bytes_received != length && length != 0) {
-		const int maxval = MAX(length, bytes_received);
-		const int minval = MIN(length, bytes_received);
+			if ((bytes_received = net_recv(&ctx, recvbuf, 1)) ==
+			    -1) {
+				g_connection_lost = true;
+				break;
+			} else if (bytes_received != 1) {
+				if (atomic_load_bool(&g_icb_processing_names))
+					icb_process_event_eof_names();
+				continue;
+			}
 
-		const int bytes_remaining = int_diff(maxval, minval);
+			ret = snprintf(array, ARRAY_SIZE(array), "%d",
+			    static_cast<unsigned char>(recvbuf[0]));
 
-		char *tmp = static_cast<char *>(xmalloc(bytes_remaining + 1));
-		tmp[bytes_remaining] = '\0';
+			if (ret < 0 || static_cast<size_t>(ret) >=
+			    ARRAY_SIZE(array)) {
+				err_log(ENOBUFS, "net_irc_listen");
+				g_connection_lost = true;
+				break;
+			}
 
-		if (bytes_received = net_recv(&ctx, tmp, bytes_remaining),
-		    bytes_received != bytes_remaining)
-		    {
-			err_log(EPROTO, "net_irc_listen: warning: "
-			    "read bytes mismatch remaining");
-			err_log(0, "read bytes: %d", bytes_received);
-			err_log(0, "remaining:  %d", bytes_remaining);
-			free(tmp);
-			continue;
-		    }
+			length = atoi(array);
+			sw_assert(length >= 0 && length <= UCHAR_MAX);
 
-		const size_t concatSize = strlen(recvbuf) + strlen(tmp) + 1;
-		char *concat = static_cast<char *>(xmalloc(concatSize));
+			if ((bytes_received = net_recv(&ctx, recvbuf,
+			    length)) == -1) {
+				g_connection_lost = true;
+			} else if (bytes_received != length && length != 0) {
+				const int maxval = MAX(length, bytes_received);
+				const int minval = MIN(length, bytes_received);
+				const int bytes_rem = int_diff(maxval, minval);
 
-		if (sw_strcpy(concat, recvbuf, concatSize) == 0 &&
-		    sw_strcat(concat, tmp, concatSize) == 0)
-		    icb_irc_proxy(length, concat[0], &concat[1]);
-		else {
-		    err_log(ENOBUFS, "net_irc_listen: "
-			"sw_strcpy() or sw_strcat()");
+				if (get_and_handle_remaining_bytes(bytes_rem,
+				    &ctx, recvbuf, length) == ERR) {
+					err_log(EPROTO, "net_irc_listen");
+					g_connection_lost = true;
+					break;
+				}
+			} else if (bytes_received > 0) {
+				icb_irc_proxy(length, recvbuf[0], &recvbuf[1]);
+			}
+		} else {
+			/*
+			 * IRC
+			 */
+
+			if ((bytes_received = net_recv(&ctx, recvbuf,
+			    RECVBUF_SIZE)) == -1) {
+				g_connection_lost = true;
+			} else if (bytes_received > 0) {
+				irc_handle_interpret_events(recvbuf,
+				    &message_concat, &state);
+			}
 		}
-		free(tmp);
-		free(concat);
-	    } else if (bytes_received > 0) {
-		icb_irc_proxy(length, recvbuf[0], &recvbuf[1]);
-	    }
-	} else {
-	    /*
-	     * IRC
-	     */
 
-	    if ((bytes_received = net_recv(&ctx, recvbuf, RECVBUF_SIZE-1)) == -1)
-		g_connection_lost = true;
-	    else if (bytes_received > 0)
-		irc_handle_interpret_events(recvbuf, &message_concat, &state);
+		if (should_check_connection()) {
+			if (conn_check() == -1)
+				g_connection_lost = true;
+		}
+	} while (g_on_air && !g_connection_lost);
+
+	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_WARN,
+	    true);
+	*connection_lost = (g_on_air && g_connection_lost);
+	if (*connection_lost)
+		printtext(&ptext_ctx, "Connection to IRC server lost");
+	if (g_on_air)
+		g_on_air = false;
+	net_ssl_end();
+	if (g_socket != INVALID_SOCKET) {
+		CLOSE_GLOBAL_SOCKET();
+		g_socket = INVALID_SOCKET;
 	}
-
-	if (should_check_connection()) {
-	    if (conn_check() == -1)
-		g_connection_lost = true;
-	}
-    } while (g_on_air && !g_connection_lost);
-
-    printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_WARN, true);
-    *connection_lost = (g_on_air && g_connection_lost);
-    if (*connection_lost)
-	printtext(&ptext_ctx, "Connection to IRC server lost");
-    if (g_on_air)
-	g_on_air = false;
-    net_ssl_end();
-    if (g_socket != INVALID_SOCKET) {
-	CLOSE_GLOBAL_SOCKET();
-	g_socket = INVALID_SOCKET;
-    }
 #ifdef WIN32
-    winsock_deinit();
+	winsock_deinit();
 #endif
-    irc_deinit();
-    free(recvbuf);
-    free(message_concat);
-    printtext(&ptext_ctx, "Disconnected");
-    (void) atomic_swap_bool(&g_irc_listening, false);
+	irc_deinit();
+	free(recvbuf);
+	free(message_concat);
+	printtext(&ptext_ctx, "Disconnected");
+	(void) atomic_swap_bool(&g_irc_listening, false);
 }
 
 void
