@@ -155,7 +155,6 @@ statusbar_top_panel(void)
 {
     if (statusbar_pan) {
 	(void) top_panel(statusbar_pan);
-	(void) wrefresh(panel_window(statusbar_pan));
     }
 }
 
