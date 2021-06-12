@@ -87,7 +87,7 @@ sighand_init(void)
     (void) sigfillset(&act.sa_mask);
     act.sa_flags = 0;
 
-    if (sigprocmask(SIG_SETMASK, &set, NULL) != 0) {
+    if (pthread_sigmask(SIG_SETMASK, &set, NULL) != 0) {
 	err_ret("sighand_init: SIG_SETMASK");
 	return false;
     }
@@ -108,7 +108,7 @@ sighand_init(void)
 
     (void) sigemptyset(&set);
 
-    if (sigprocmask(SIG_SETMASK, &set, NULL) != 0) {
+    if (pthread_sigmask(SIG_SETMASK, &set, NULL) != 0) {
 	err_ret("sighand_init: SIG_SETMASK");
 	return false;
     }
