@@ -769,7 +769,7 @@ readline(const char *prompt)
 char *
 readline_finalize_out_string_exported(const wchar_t *buf)
 {
-    return finalize_out_string(buf);
+	return finalize_out_string(buf);
 }
 
 void
