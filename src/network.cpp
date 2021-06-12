@@ -302,15 +302,15 @@ send_reg_cmds(const struct network_connect_context *ctx)
 static bool
 should_check_connection()
 {
-    static int times_called = 0;
+	static int times_called = 0;
 
-    if (times_called > 9) {
-	times_called = 0;
-	return true;
-    }
+	if (times_called > 9) {
+		times_called = 0;
+		return true;
+	}
 
-    times_called ++;
-    return false;
+	times_called ++;
+	return false;
 }
 
 bool
