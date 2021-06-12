@@ -255,48 +255,44 @@ send_icb_login_packet(const struct network_connect_context *ctx)
 static void
 send_reg_cmds(const struct network_connect_context *ctx)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
+	PRINTTEXT_CONTEXT ptext_ctx;
 
-    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_SUCCESS,
-	true);
-
-    if (config_bool("account_notify", false)) {
-	if (net_send("CAP REQ :account-notify") > 0)
-	    printtext(&ptext_ctx, "Requesting account notify");
-    }
-
-    if (config_bool("away_notify", false)) {
-	if (net_send("CAP REQ :away-notify") > 0)
-	    printtext(&ptext_ctx, "Requesting away notify");
-    }
-
-    if (config_bool("invite_notify", false)) {
-	if (net_send("CAP REQ :invite-notify") > 0)
-	    printtext(&ptext_ctx, "Requesting invite notify");
-    }
-
-    if (config_bool("ircv3_server_time", false)) {
-	if (net_send("CAP REQ :server-time") > 0)
-	    printtext(&ptext_ctx, "Requesting server time");
-    }
-
-    if (sasl_is_enabled()) {
-	if (strings_match(get_sasl_mechanism(), "PLAIN") && !ssl_is_enabled()) {
-	    ptext_ctx.spec_type = TYPE_SPEC1_WARN;
-	    printtext(&ptext_ctx, "SASL mechanism matches PLAIN and TLS/SSL "
-		"is not enabled. Not requesting SASL authentication.");
-	} else {
-	    if (net_send("CAP REQ :sasl") > 0)
-		printtext(&ptext_ctx, "Requesting SASL authentication");
+	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_SUCCESS,
+	    true);
+	if (config_bool("account_notify", false)) {
+		if (net_send("CAP REQ :account-notify") > 0)
+			printtext(&ptext_ctx, "Requesting account notify");
 	}
-    }
-
-    if (ctx->password) {
-	(void) net_send("PASS %s", ctx->password);
-    }
-
-    (void) net_send("NICK %s", ctx->nickname);
-    (void) net_send("USER %s 8 * :%s", ctx->username, ctx->rl_name);
+	if (config_bool("away_notify", false)) {
+		if (net_send("CAP REQ :away-notify") > 0)
+			printtext(&ptext_ctx, "Requesting away notify");
+	}
+	if (config_bool("invite_notify", false)) {
+		if (net_send("CAP REQ :invite-notify") > 0)
+			printtext(&ptext_ctx, "Requesting invite notify");
+	}
+	if (config_bool("ircv3_server_time", false)) {
+		if (net_send("CAP REQ :server-time") > 0)
+			printtext(&ptext_ctx, "Requesting server time");
+	}
+	if (sasl_is_enabled()) {
+		if (strings_match(get_sasl_mechanism(), "PLAIN") &&
+		    !ssl_is_enabled()) {
+			ptext_ctx.spec_type = TYPE_SPEC1_WARN;
+			printtext(&ptext_ctx, "SASL mechanism matches PLAIN "
+			    "and TLS/SSL is not enabled. Not requesting SASL "
+			    "authentication.");
+		} else {
+			if (net_send("CAP REQ :sasl") > 0) {
+				printtext(&ptext_ctx, "Requesting SASL "
+				    "authentication");
+			}
+		}
+	}
+	if (ctx->password)
+		(void) net_send("PASS %s", ctx->password);
+	(void) net_send("NICK %s", ctx->nickname);
+	(void) net_send("USER %s 8 * :%s", ctx->username, ctx->rl_name);
 }
 
 static bool
