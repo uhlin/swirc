@@ -775,7 +775,7 @@ readline_finalize_out_string_exported(const wchar_t *buf)
 void
 readline_handle_backspace(volatile struct readline_session_context *ctx)
 {
-    case_key_backspace(ctx);
+	case_key_backspace(ctx);
 }
 
 void
