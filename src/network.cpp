@@ -200,13 +200,13 @@ reconnect_context_reinit(struct reconnect_context *ctx)
 static void
 select_send_and_recv_funcs()
 {
-    if (ssl_is_enabled()) {
-	net_send = net_ssl_send;
-	net_recv = net_ssl_recv;
-    } else {
-	net_send = net_send_plain;
-	net_recv = net_recv_plain;
-    }
+	if (ssl_is_enabled()) {
+		net_send = net_ssl_send;
+		net_recv = net_ssl_recv;
+	} else {
+		net_send = net_send_plain;
+		net_recv = net_recv_plain;
+	}
 }
 
 /*
