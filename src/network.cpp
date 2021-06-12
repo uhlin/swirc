@@ -450,14 +450,14 @@ net_connect(
 int
 net_send_fake(const char *fmt, ...)
 {
-    int bytes_sent;
-    va_list ap;
+	int bytes_sent;
+	va_list ap;
 
-    va_start(ap, fmt);
-    bytes_sent = vsnprintf(g_sent, ARRAY_SIZE(g_sent), fmt, ap);
-    va_end(ap);
+	va_start(ap, fmt);
+	bytes_sent = vsnprintf(g_sent, ARRAY_SIZE(g_sent), fmt, ap);
+	va_end(ap);
 
-    return bytes_sent;
+	return bytes_sent;
 }
 
 struct addrinfo *
