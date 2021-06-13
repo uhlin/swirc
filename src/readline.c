@@ -397,18 +397,22 @@ case_key_right(volatile struct readline_session_context *ctx)
 static char *
 finalize_out_string(const wchar_t *buf)
 {
-    const size_t SZ = size_product(wcslen(buf), MB_LEN_MAX) + 1;
-    char *out = xmalloc(SZ);
-    size_t bytes_convert = 0;
+	const size_t	 size = size_product(wcslen(buf) + 1, MB_CUR_MAX);
+	char		*out = xmalloc(size);
+	size_t		 bytes_convert;
 
-    errno = 0;
-    if ((bytes_convert = wcstombs(out, buf, SZ - 1)) == g_conversion_failed) {
-	err_log(errno, "in finalize_out_string: wcstombs failed");
-	BZERO(out, SZ);
+	errno = 0;
+
+	if ((bytes_convert = wcstombs(out, buf, size - 1)) ==
+	    g_conversion_failed) {
+		err_log(errno, "finalize_out_string: wcstombs");
+		BZERO(out, size);
+		return out;
+	} else if (bytes_convert == (size - 1)) {
+		out[size - 1] = '\0';
+	}
+
 	return out;
-    } else if (bytes_convert == SZ - 1)
-	out[SZ - 1] = '\0';
-    return out;
 }
 #elif defined(WIN32)
 /* ----- */
