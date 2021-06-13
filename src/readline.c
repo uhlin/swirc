@@ -733,12 +733,11 @@ readline_deinit(void)
 WINDOW *
 readline_get_active_pwin(void)
 {
-    if (readline_pan1 == NULL || readline_pan2 == NULL)
-	return NULL;
-
-    return ((panel_state == PANEL1_ACTIVE)
-	    ? panel_window(readline_pan1)
-	    : panel_window(readline_pan2));
+	if (readline_pan1 == NULL || readline_pan2 == NULL)
+		return NULL;
+	return ((panel_state == PANEL1_ACTIVE)
+		? panel_window(readline_pan1)
+		: panel_window(readline_pan2));
 }
 
 /**
