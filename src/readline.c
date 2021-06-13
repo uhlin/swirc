@@ -73,7 +73,7 @@ bool g_hist_prev = false;
 
 static PANEL *readline_pan1 = NULL;
 static PANEL *readline_pan2 = NULL;
-static const int readline_buffersize = 2700;
+static const int readline_bufsize = 2700;
 static rl_active_panel_t panel_state = PANEL1_ACTIVE;
 
 /****************************************************************
@@ -501,7 +501,7 @@ new_session(const char *prompt)
     struct readline_session_context *ctx = xcalloc(sizeof *ctx, 1);
     char *prompt_copy = sw_strdup(prompt);
 
-    ctx->buffer = xcalloc(readline_buffersize + 1, sizeof(wchar_t));
+    ctx->buffer = xcalloc(readline_bufsize + 1, sizeof(wchar_t));
     ctx->bufpos = 0;
     ctx->n_insert = 0;
     ctx->insert_mode = false;
@@ -545,7 +545,7 @@ process(volatile struct readline_session_context *ctx)
 		wint_t wc = 0L;
 
 		ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
-		ctx->no_bufspc = (ctx->n_insert + 1 >= readline_buffersize);
+		ctx->no_bufspc = (ctx->n_insert + 1 >= readline_bufsize);
 
 		if (*buf_p != L'\0') {
 			wc = *buf_p++;
