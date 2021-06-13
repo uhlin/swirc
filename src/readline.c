@@ -723,8 +723,8 @@ readline_init(void)
 void
 readline_deinit(void)
 {
-    term_remove_panel(readline_pan1);
-    term_remove_panel(readline_pan2);
+	term_remove_panel(readline_pan1);
+	term_remove_panel(readline_pan2);
 }
 
 /**
