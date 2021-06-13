@@ -535,173 +535,186 @@ session_destroy(volatile struct readline_session_context *ctx)
 static char *
 process(volatile struct readline_session_context *ctx)
 {
-    wchar_t	*buf_p = &g_push_back_buf[0];
-    const int	 sleep_time_milliseconds = 90;
+	char *out;
+	static const int sleep_time_milliseconds = 90;
+	wchar_t *buf_p = &g_push_back_buf[0];
 
-    write_cmdprompt(ctx->act, ctx->prompt, ctx->prompt_size);
+	write_cmdprompt(ctx->act, ctx->prompt, ctx->prompt_size);
 
-    do {
-	wint_t wc = 0L;
+	do {
+		wint_t wc = 0L;
 
-	ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
-	ctx->no_bufspc	 = (ctx->n_insert + 1 >= readline_buffersize);
+		ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
+		ctx->no_bufspc = (ctx->n_insert + 1 >= readline_buffersize);
 
-	if (*buf_p != L'\0') {
-	    wc = *buf_p++;
+		if (*buf_p != L'\0') {
+			wc = *buf_p++;
+		} else {
+			int ret;
+
+			mutex_lock(&g_puts_mutex);
+			ret = wget_wch(ctx->act, &wc);
+			mutex_unlock(&g_puts_mutex);
+
+			if (ret == ERR) {
+				(void) napms(sleep_time_milliseconds);
+				continue;
+			}
+		}
+
+		switch (wc) {
+		case CTRL_A: {
+			while (ctx->bufpos != 0) {
+				case_key_left(ctx);
+				ctx->insert_mode =
+				    (ctx->bufpos != ctx->n_insert);
+			}
+
+			if (isInCirculationMode(ctx->tc))
+				readline_tab_comp_ctx_reset(ctx->tc);
+			break;
+		} /* ---------- CTRL+A ---------- */
+		case CTRL_E: {
+			while (ctx->insert_mode) {
+				case_key_right(ctx);
+				ctx->insert_mode =
+				    (ctx->bufpos != ctx->n_insert);
+			}
+
+			if (isInCirculationMode(ctx->tc))
+				readline_tab_comp_ctx_reset(ctx->tc);
+			break;
+		} /* ---------- CTRL+E ---------- */
+		case CTRL_L:
+			log_toggle_on_off();
+			break;
+		case MY_KEY_DLE:
+			window_select_prev();
+			session_destroy(ctx);
+			return NULL; /* CTRL+P */
+		case MY_KEY_SO:
+			window_select_next();
+			session_destroy(ctx);
+			return NULL; /* CTRL+N */
+		case KEY_DOWN:
+			g_hist_next = true;
+			session_destroy(ctx);
+			return NULL;
+		case KEY_UP:
+			g_hist_prev = true;
+			session_destroy(ctx);
+			return NULL;
+		case KEY_LEFT:
+		case MY_KEY_STX: {
+			case_key_left(ctx);
+
+			if (isInCirculationMode(ctx->tc))
+				readline_tab_comp_ctx_reset(ctx->tc);
+			break;
+		} /* ---------- KEY_LEFT ---------- */
+		case KEY_RIGHT:
+		case MY_KEY_ACK: {
+			case_key_right(ctx);
+
+			if (isInCirculationMode(ctx->tc))
+				readline_tab_comp_ctx_reset(ctx->tc);
+			break;
+		} /* ---------- KEY_RIGHT ---------- */
+		case KEY_BACKSPACE:
+		case MY_KEY_BS: {
+			case_key_backspace(ctx);
+
+			if (isInCirculationMode(ctx->tc))
+				readline_tab_comp_ctx_reset(ctx->tc);
+			break;
+		} /* ---------- KEY_BACKSPACE ---------- */
+		case KEY_F(3):
+			nicklist_scroll_up(g_active_window);
+			break;
+		case KEY_F(4):
+			nicklist_scroll_down(g_active_window);
+			break;
+		case KEY_F(5):
+		case BLINK:
+			handle_key(ctx, btowc(BLINK));
+			break;
+		case KEY_F(6):
+		case BOLD_ALIAS:
+			handle_key(ctx, btowc(BOLD));
+			break;
+		case KEY_F(7):
+		case COLOR:
+			handle_key(ctx, btowc(COLOR));
+			break;
+		case KEY_F(8):
+		case NORMAL:
+			handle_key(ctx, btowc(NORMAL));
+			break;
+		case KEY_F(9):
+		case REVERSE:
+			handle_key(ctx, btowc(REVERSE));
+			break;
+		case KEY_F(10):
+		case UNDERLINE:
+			handle_key(ctx, btowc(UNDERLINE));
+			break;
+		case KEY_F(11):
+			cmd_close("");
+			session_destroy(ctx);
+			return NULL;
+		case KEY_F(12):
+			window_close_all_priv_conv();
+			session_destroy(ctx);
+			return NULL;
+		case KEY_DC:
+		case MY_KEY_EOT: {
+			case_key_dc(ctx);
+
+			if (isInCirculationMode(ctx->tc))
+				readline_tab_comp_ctx_reset(ctx->tc);
+			break;
+		} /* ---------- KEY_DC ---------- */
+		case KEY_NPAGE:
+			window_scroll_down(g_active_window);
+			break;
+		case KEY_PPAGE:
+			window_scroll_up(g_active_window);
+			break;
+		case '\t':
+			readline_handle_tab(ctx);
+			(void) napms(sleep_time_milliseconds);
+			break;
+		case '\n':
+		case KEY_ENTER:
+		case WINDOWS_KEY_ENTER:
+			g_readline_loop = false;
+			break;
+		case KEY_RESIZE:
+		case MY_KEY_RESIZE:
+			g_resize_requested = true;
+			/* FALLTHROUGH */
+		case '\a':
+			session_destroy(ctx);
+			return NULL;
+		default:
+			if (iswprint(wc))
+				handle_key(ctx, wc);
+			break;
+		}
+	} while (g_readline_loop);
+
+	write_cmdprompt(ctx->act, "", 0);
+
+	if (ctx->n_insert > 0) {
+		ctx->buffer[ctx->n_insert] = 0L;
 	} else {
-	    int ret;
-
-	    mutex_lock(&g_puts_mutex);
-	    ret = wget_wch(ctx->act, &wc);
-	    mutex_unlock(&g_puts_mutex);
-
-	    if (ret == ERR) {
-		(void) napms(sleep_time_milliseconds);
-		continue;
-	    }
+		session_destroy(ctx);
+		return NULL;
 	}
 
-	switch (wc) {
-	case CTRL_A: {
-	    while (ctx->bufpos != 0) {
-		case_key_left(ctx);
-		ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
-	    }
-
-	    if (isInCirculationMode(ctx->tc))
-		readline_tab_comp_ctx_reset(ctx->tc);
-	    break;
-	} /* CTRL+a */
-	case CTRL_E: {
-	    while (ctx->insert_mode) {
-		case_key_right(ctx);
-		ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
-	    }
-
-	    if (isInCirculationMode(ctx->tc))
-		readline_tab_comp_ctx_reset(ctx->tc);
-	    break;
-	} /* CTRL+e */
-	case CTRL_L:
-	    log_toggle_on_off();
-	    break;
-	case MY_KEY_DLE:
-	    window_select_prev();
-	    session_destroy(ctx);
-	    return NULL; /* CTRL+P */
-	case MY_KEY_SO:
-	    window_select_next();
-	    session_destroy(ctx);
-	    return NULL; /* CTRL+N */
-	case KEY_DOWN:
-	    g_hist_next = true;
-	    session_destroy(ctx);
-	    return NULL;
-	case KEY_UP:
-	    g_hist_prev = true;
-	    session_destroy(ctx);
-	    return NULL;
-	case KEY_LEFT: case MY_KEY_STX: {
-	    case_key_left(ctx);
-
-	    if (isInCirculationMode(ctx->tc))
-		readline_tab_comp_ctx_reset(ctx->tc);
-	    break;
-	} /* ---------- KEY_LEFT ---------- */
-	case KEY_RIGHT: case MY_KEY_ACK: {
-	    case_key_right(ctx);
-
-	    if (isInCirculationMode(ctx->tc))
-		readline_tab_comp_ctx_reset(ctx->tc);
-	    break;
-	} /* ---------- KEY_RIGHT ---------- */
-	case KEY_BACKSPACE: case MY_KEY_BS: {
-	    case_key_backspace(ctx);
-
-	    if (isInCirculationMode(ctx->tc))
-		readline_tab_comp_ctx_reset(ctx->tc);
-	    break;
-	} /* ---------- KEY_BACKSPACE ---------- */
-	case KEY_F(3):
-	    nicklist_scroll_up(g_active_window);
-	    break;
-	case KEY_F(4):
-	    nicklist_scroll_down(g_active_window);
-	    break;
-	case KEY_F(5): case BLINK:
-	    handle_key(ctx, btowc(BLINK));
-	    break;
-	case KEY_F(6): case BOLD_ALIAS:
-	    handle_key(ctx, btowc(BOLD));
-	    break;
-	case KEY_F(7): case COLOR:
-	    handle_key(ctx, btowc(COLOR));
-	    break;
-	case KEY_F(8): case NORMAL:
-	    handle_key(ctx, btowc(NORMAL));
-	    break;
-	case KEY_F(9): case REVERSE:
-	    handle_key(ctx, btowc(REVERSE));
-	    break;
-	case KEY_F(10): case UNDERLINE:
-	    handle_key(ctx, btowc(UNDERLINE));
-	    break;
-	case KEY_F(11):
-	    cmd_close("");
-	    session_destroy(ctx);
-	    return NULL;
-	case KEY_F(12):
-	    window_close_all_priv_conv();
-	    session_destroy(ctx);
-	    return NULL;
-	case KEY_DC: case MY_KEY_EOT: {
-	    case_key_dc(ctx);
-
-	    if (isInCirculationMode(ctx->tc))
-		readline_tab_comp_ctx_reset(ctx->tc);
-	    break;
-	} /* KEY_DC */
-	case KEY_NPAGE:
-	    window_scroll_down(g_active_window);
-	    break;
-	case KEY_PPAGE:
-	    window_scroll_up(g_active_window);
-	    break;
-	case '\t':
-	    readline_handle_tab(ctx);
-	    (void) napms(sleep_time_milliseconds);
-	    break;
-	case '\n': case KEY_ENTER: case WINDOWS_KEY_ENTER:
-	    g_readline_loop = false;
-	    break;
-	case KEY_RESIZE:
-	case MY_KEY_RESIZE:
-	    g_resize_requested = true;
-	    /*FALLTHROUGH*/
-	case '\a':
-	    session_destroy(ctx);
-	    return NULL;
-	default:
-	    if (iswprint(wc)) {
-		handle_key(ctx, wc);
-	    }
-	    break;
-	}
-    } while (g_readline_loop);
-
-    if (ctx->n_insert > 0) {
-	ctx->buffer[ctx->n_insert] = 0L;
-    } else {
+	out = finalize_out_string(ctx->buffer);
 	session_destroy(ctx);
-	return NULL;
-    }
-
-    write_cmdprompt(ctx->act, "", 0);
-
-    char *out = finalize_out_string(ctx->buffer);
-    session_destroy(ctx);
-
-    return out;
+	return out;
 }
 
 /**
