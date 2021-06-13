@@ -288,34 +288,34 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 static void
 case_key_dc(volatile struct readline_session_context *ctx)
 {
-    const int i = ctx->bufpos + 1;
-    int ret[2];
-    wchar_t *ptr;
+	const int	 i = ctx->bufpos + 1;
+	int		 ret[2];
+	wchar_t		*ptr;
 
-    if (!ctx->insert_mode) {
-	term_beep();
-	return;
-    }
+	if (!ctx->insert_mode) {
+		term_beep();
+		return;
+	}
 
-    ptr = &ctx->buffer[i];
-    (void) wmemmove(ptr - 1, ptr, wcslen(ptr));
-    ctx->buffer[--ctx->n_insert] = 0L;
+	ptr = &ctx->buffer[i];
+	(void) wmemmove(ptr - 1, ptr, wcslen(ptr));
+	ctx->buffer[--ctx->n_insert] = 0L;
 
-    mutex_lock(&g_puts_mutex);
-    ret[0] = wdelch(ctx->act);
-    ret[1] = wclrtoeol(ctx->act);
-    mutex_unlock(&g_puts_mutex);
+	mutex_lock(&g_puts_mutex);
+	ret[0] = wdelch(ctx->act);
+	ret[1] = wclrtoeol(ctx->act);
+	mutex_unlock(&g_puts_mutex);
 
-    if (ret[0] == ERR)
-	readline_error(EPERM, "case_key_dc: wdelch");
-    else if (ret[1] == ERR)
-	readline_error(EPERM, "case_key_dc: wclrtoeol");
+	if (ret[0] == ERR)
+		readline_error(EPERM, "case_key_dc: wdelch");
+	else if (ret[1] == ERR)
+		readline_error(EPERM, "case_key_dc: wclrtoeol");
 
-    readline_winsnstr(ctx->act, &ctx->buffer[ctx->bufpos], -1);
+	readline_winsnstr(ctx->act, &ctx->buffer[ctx->bufpos], -1);
 
-    mutex_lock(&g_puts_mutex);
-    (void) wrefresh(ctx->act);
-    mutex_unlock(&g_puts_mutex);
+	mutex_lock(&g_puts_mutex);
+	(void) wrefresh(ctx->act);
+	mutex_unlock(&g_puts_mutex);
 }
 
 /**
