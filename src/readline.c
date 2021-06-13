@@ -417,15 +417,17 @@ finalize_out_string(const wchar_t *buf)
 static char *
 finalize_out_string(const wchar_t *buf)
 {
-    const int sz = size_to_int(size_product(wcslen(buf), MB_LEN_MAX) + 1);
-    char *out = xmalloc(sz);
+	const int size = size_to_int(size_product(wcslen(buf) + 1, MB_CUR_MAX));
+	char *out = xmalloc(size);
 
-    errno = 0;
-    if (WideCharToMultiByte(CP_UTF8, 0, buf, -1, out, sz, NULL, NULL) > 0)
+	errno = 0;
+
+	if (WideCharToMultiByte(CP_UTF8, 0, buf, -1, out, size, NULL, NULL) > 0)
+		return out;
+
+	err_log(errno, "finalize_out_string: WideCharToMultiByte");
+	BZERO(out, size);
 	return out;
-    err_log(errno, "in finalize_out_string: WideCharToMultiByte failed");
-    BZERO(out, sz);
-    return out;
 }
 #endif
 
