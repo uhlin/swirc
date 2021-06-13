@@ -710,11 +710,11 @@ process(volatile struct readline_session_context *ctx)
 void
 readline_init(void)
 {
-    readline_pan1 = term_new_panel(1, 0, LINES - 1, 0);
-    readline_pan2 = term_new_panel(1, 0, LINES - 1, 0);
+	readline_pan1 = term_new_panel(1, 0, LINES - 1, 0);
+	readline_pan2 = term_new_panel(1, 0, LINES - 1, 0);
 
-    apply_readline_options(panel_window(readline_pan1));
-    apply_readline_options(panel_window(readline_pan2));
+	apply_readline_options(panel_window(readline_pan1));
+	apply_readline_options(panel_window(readline_pan2));
 }
 
 /**
