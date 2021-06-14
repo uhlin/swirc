@@ -14,7 +14,7 @@
 /*lint -sem(readline_error, r_no) doesn't return because of longjmp() */
 
 __SWIRC_BEGIN_DECLS
-NORETURN void readline_error(int error, const char *msg);
+NORETURN void readline_error(int, const char *);
 
 void	readline_mvwaddch(WINDOW *, int row, int col, wint_t);
 void	readline_mvwinsch(WINDOW *, int row, int col, wint_t);
