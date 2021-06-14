@@ -31,6 +31,8 @@ All notable changes to this project will be documented in this file.
   - `network-openssl.c`
   - `network.cpp`
   - `pthrMutex.c`
+  - `readline.c`
+  - `readlineAPI.c`
   - `sig-unix.c`
   - `sig-w32.c`
   - `vcMutex.c`
