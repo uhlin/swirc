@@ -292,23 +292,21 @@ readline_mvwinsch(WINDOW *win, int row, int col, wint_t wc)
 void
 readline_winsch(WINDOW *win, wint_t wc)
 {
-    char *mbs = convert_wc(wc);
+	char *mbs = convert_wc(wc);
 
-    mutex_lock(&g_puts_mutex);
-
-    if (!is_text_decoration(wc)) {
-	if (winsnstr(win, mbs, size_to_int(strlen(mbs) + 1)) == ERR) {
-	    free_and_null(&mbs);
-	    mutex_unlock(&g_puts_mutex);
-	    readline_error(EPERM, "readline_winsch: winsnstr");
-	    /* NOTREACHED */
+	mutex_lock(&g_puts_mutex);
+	if (!is_text_decoration(wc)) {
+		if (winsnstr(win, mbs, size_to_int(strlen(mbs) + 1)) == ERR) {
+			free_and_null(&mbs);
+			mutex_unlock(&g_puts_mutex);
+			readline_error(EPERM, "readline_winsch: winsnstr");
+			/* NOTREACHED */
+		}
+	} else {
+		ins_complex_char(win, *mbs);
 	}
-    } else {
-	ins_complex_char(win, *mbs);
-    }
-
-    free_and_null(&mbs);
-    mutex_unlock(&g_puts_mutex);
+	free_and_null(&mbs);
+	mutex_unlock(&g_puts_mutex);
 }
 
 /**
