@@ -53,15 +53,15 @@ typedef struct tagTAB_COMPLETION {
 } TAB_COMPLETION, *PTAB_COMPLETION;
 
 struct readline_session_context {
-    wchar_t *buffer;
-    int bufpos;
-    int n_insert;
-    bool insert_mode;
-    bool no_bufspc;
-    char *prompt;
-    int prompt_size;
-    WINDOW *act;
-    PTAB_COMPLETION tc;
+	wchar_t         *buffer;
+	int              bufpos;
+	int              n_insert;
+	bool             insert_mode;
+	bool             no_bufspc;
+	char            *prompt;
+	int              prompt_size;
+	WINDOW          *act;
+	PTAB_COMPLETION  tc;
 };
 
 __SWIRC_BEGIN_DECLS
