@@ -48,22 +48,21 @@
 static char *
 convert_wc(wchar_t wc)
 {
-    mbstate_t ps;
-#ifdef HAVE_BCI
-    size_t bytes_written;
-#endif
-    const size_t size = MB_LEN_MAX + 1;
-    char *mbs = xcalloc(size, 1);
+	const size_t	 size = (MB_CUR_MAX + 1);
+	char		*mbs = xcalloc(size, 1);
+	mbstate_t	 ps;
+	size_t		 bytes_written;
 
-    BZERO(&ps, sizeof(mbstate_t));
+	BZERO(&ps, sizeof(mbstate_t));
 #ifdef HAVE_BCI
-    if ((errno = wcrtomb_s(&bytes_written, mbs, size, wc, &ps)) != 0)
-	readline_error(errno, "wcrtomb_s");
+	if ((errno = wcrtomb_s(&bytes_written, mbs, size, wc, &ps)) != 0)
+		readline_error(errno, "wcrtomb_s");
 #else
-    if (wcrtomb(mbs, wc, &ps) == g_conversion_failed)
-	readline_error(errno, "wcrtomb");
+	if ((bytes_written = wcrtomb(mbs, wc, &ps)) == g_conversion_failed)
+		readline_error(errno, "wcrtomb");
 #endif
-    return (mbs);
+	(void) bytes_written;
+	return mbs;
 }
 
 /**
