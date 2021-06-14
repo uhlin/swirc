@@ -70,10 +70,14 @@ convert_wc(wchar_t wc)
  * Check for text-decoration
  */
 static bool
-is_text_decoration(wint_t wc)
+is_text_decoration(const wint_t wc)
 {
-    return (wc==btowc(BLINK) || wc==btowc(BOLD) || wc==btowc(COLOR) ||
-	    wc==btowc(NORMAL) || wc==btowc(REVERSE) || wc==btowc(UNDERLINE));
+	return (wc == btowc(BLINK) ||
+	    wc == btowc(BOLD) ||
+	    wc == btowc(COLOR) ||
+	    wc == btowc(NORMAL) ||
+	    wc == btowc(REVERSE) ||
+	    wc == btowc(UNDERLINE));
 }
 
 /**
