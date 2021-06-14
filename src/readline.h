@@ -14,9 +14,9 @@
 #include <setjmp.h> /* want type jmp_buf */
 #include "textBuffer.h"
 
-#define READLINE_PROCESS 0
-#define READLINE_RESTART 1
-#define READLINE_TERMINATE 2
+#define READLINE_PROCESS	0
+#define READLINE_RESTART	1
+#define READLINE_TERMINATE	2
 
 typedef enum {
 	PANEL1_ACTIVE,
