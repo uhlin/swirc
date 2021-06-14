@@ -236,16 +236,13 @@ readline_waddch(WINDOW *win, wint_t wc)
 void
 readline_waddnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
 {
-    const ptrdiff_t length = (ptrdiff_t) (s ? wcslen(s) : 0);
-    const ptrdiff_t this_index = (n <= 0 || n > length ? length : n);
+	const ptrdiff_t length = (ptrdiff_t) wcslen(s);
+	const ptrdiff_t i = (n <= 0 || n > length ? length : n);
 
-    if (win == NULL || s == NULL)
-	err_exit(EINVAL, "fatal: readline_waddnstr");
+	(void) wnoutrefresh(win);
 
-    (void) wnoutrefresh(win);
-
-    for (const wchar_t *ptr = &s[0]; ptr < &s[this_index]; ptr++)
-	readline_waddch(win, *ptr);
+	for (const wchar_t *ptr = &s[0]; ptr < &s[i]; ptr++)
+		readline_waddch(win, *ptr);
 }
 
 /**
