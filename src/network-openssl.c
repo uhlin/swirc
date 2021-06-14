@@ -362,7 +362,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 				return -1;
 			}
 		}
-	} while (buflen > 0 && SSL_pending(ssl));
+	} while (false); /* buflen > 0 && SSL_pending(ssl) */
 
 	return bytes_received;
 }
