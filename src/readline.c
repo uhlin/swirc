@@ -58,12 +58,12 @@
 *                                                               *
 ****************************************************************/
 
-bool g_readline_loop;
-bool g_resize_requested;
-jmp_buf g_readline_loc_info;
+bool		g_readline_loop;
+bool		g_resize_requested;
+jmp_buf		g_readline_loc_info;
 
-bool g_hist_next = false;
-bool g_hist_prev = false;
+bool	g_hist_next = false;
+bool	g_hist_prev = false;
 
 /****************************************************************
 *                                                               *
@@ -71,10 +71,10 @@ bool g_hist_prev = false;
 *                                                               *
 ****************************************************************/
 
-static PANEL *readline_pan1 = NULL;
-static PANEL *readline_pan2 = NULL;
-static const int readline_bufsize = 2700;
-static rl_active_panel_t panel_state = PANEL1_ACTIVE;
+static PANEL			*readline_pan1 = NULL;
+static PANEL			*readline_pan2 = NULL;
+static const int		 readline_bufsize = 2700;
+static rl_active_panel_t	 panel_state = PANEL1_ACTIVE;
 
 /****************************************************************
 *                                                               *
