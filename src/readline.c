@@ -204,20 +204,20 @@ compute_new_window_entry(const volatile struct readline_session_context *ctx,
 static void
 magic_swap_panels(volatile struct readline_session_context *ctx, bool fwd)
 {
-    if (panel_state == PANEL1_ACTIVE) {
-	ctx->act = panel_window(readline_pan2);
-	(void) top_panel(readline_pan2);
-	panel_state = PANEL2_ACTIVE;
-    } else if (panel_state == PANEL2_ACTIVE) {
-	ctx->act = panel_window(readline_pan1);
-	(void) top_panel(readline_pan1);
-	panel_state = PANEL1_ACTIVE;
-    } else {
-	sw_assert_not_reached();
-    }
+	if (panel_state == PANEL1_ACTIVE) {
+		ctx->act = panel_window(readline_pan2);
+		(void) top_panel(readline_pan2);
+		panel_state = PANEL2_ACTIVE;
+	} else if (panel_state == PANEL2_ACTIVE) {
+		ctx->act = panel_window(readline_pan1);
+		(void) top_panel(readline_pan1);
+		panel_state = PANEL1_ACTIVE;
+	} else {
+		sw_assert_not_reached();
+	}
 
-    write_cmdprompt(ctx->act, ctx->prompt, ctx->prompt_size);
-    compute_new_window_entry(ctx, fwd);
+	write_cmdprompt(ctx->act, ctx->prompt, ctx->prompt_size);
+	compute_new_window_entry(ctx, fwd);
 }
 
 /**
