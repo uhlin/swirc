@@ -83,32 +83,32 @@ static void
 add_complex_char(WINDOW *win, int c)
 {
 #define WADDCH(win, c) ((void) waddch(win, c))
-    WATTR_ON(win, A_REVERSE);
+	WATTR_ON(win, A_REVERSE);
 
-    switch (c) {
-    case BLINK:
-	WADDCH(win, 'I');
-	break;
-    case BOLD:
-	WADDCH(win, 'B');
-	break;
-    case COLOR:
-	WADDCH(win, 'C');
-	break;
-    case NORMAL:
-	WADDCH(win, 'N');
-	break;
-    case REVERSE:
-	WADDCH(win, 'R');
-	break;
-    case UNDERLINE:
-	WADDCH(win, 'U');
-	break;
-    default:
-	sw_assert_not_reached();
-    }
+	switch (c) {
+	case BLINK:
+		WADDCH(win, 'I');
+		break;
+	case BOLD:
+		WADDCH(win, 'B');
+		break;
+	case COLOR:
+		WADDCH(win, 'C');
+		break;
+	case NORMAL:
+		WADDCH(win, 'N');
+		break;
+	case REVERSE:
+		WADDCH(win, 'R');
+		break;
+	case UNDERLINE:
+		WADDCH(win, 'U');
+		break;
+	default:
+		sw_assert_not_reached();
+	}
 
-    WATTR_OFF(win, A_REVERSE);
+	WATTR_OFF(win, A_REVERSE);
 }
 
 /**
