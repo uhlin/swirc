@@ -174,26 +174,24 @@ readline_error(int error, const char *msg)
 void
 readline_mvwaddch(WINDOW *win, int row, int col, wint_t wc)
 {
-    char *mbs = convert_wc(wc);
+	char *mbs = convert_wc(wc);
 
-    mutex_lock(&g_puts_mutex);
-
-    if (wmove(win, row, col) == ERR) {
+	mutex_lock(&g_puts_mutex);
+	if (wmove(win, row, col) == ERR) {
+		free_and_null(&mbs);
+		mutex_unlock(&g_puts_mutex);
+		readline_error(0, "readline_mvwaddch: wmove");
+	} else if (!is_text_decoration(wc)) {
+		if (waddnstr(win, mbs, -1) == ERR) {
+			free_and_null(&mbs);
+			mutex_unlock(&g_puts_mutex);
+			readline_error(0, "readline_mvwaddch: waddnstr");
+		}
+	} else {
+		add_complex_char(win, *mbs);
+	}
 	free_and_null(&mbs);
 	mutex_unlock(&g_puts_mutex);
-	readline_error(0, "readline_mvwaddch: wmove");
-    } else if (!is_text_decoration(wc)) {
-	if (waddnstr(win, mbs, -1) == ERR) {
-	    free_and_null(&mbs);
-	    mutex_unlock(&g_puts_mutex);
-	    readline_error(0, "readline_mvwaddch: waddnstr");
-	}
-    } else {
-	add_complex_char(win, *mbs);
-    }
-
-    free_and_null(&mbs);
-    mutex_unlock(&g_puts_mutex);
 }
 
 /**
