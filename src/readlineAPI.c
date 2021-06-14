@@ -214,7 +214,7 @@ readline_waddch(WINDOW *win, wint_t wc)
 		if (waddnstr(win, mbs, -1) == ERR) {
 			free_and_null(&mbs);
 			mutex_unlock(&g_puts_mutex);
-			readline_error(EPERM, "readline_waddch: waddnstr");
+			readline_error(EIO, "readline_waddch: waddnstr");
 			/* NOTREACHED */
 		}
 	} else {
@@ -293,7 +293,7 @@ readline_winsch(WINDOW *win, wint_t wc)
 		if (winsnstr(win, mbs, size_to_int(strlen(mbs) + 1)) == ERR) {
 			free_and_null(&mbs);
 			mutex_unlock(&g_puts_mutex);
-			readline_error(EPERM, "readline_winsch: winsnstr");
+			readline_error(EIO, "readline_winsch: winsnstr");
 			/* NOTREACHED */
 		}
 	} else {
