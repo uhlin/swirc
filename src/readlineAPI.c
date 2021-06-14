@@ -118,32 +118,32 @@ static void
 ins_complex_char(WINDOW *win, int c)
 {
 #define WINSCH(win, c) ((void) winsch(win, c))
-    WATTR_ON(win, A_REVERSE);
+	WATTR_ON(win, A_REVERSE);
 
-    switch (c) {
-    case BLINK:
-	WINSCH(win, 'I');
-	break;
-    case BOLD:
-	WINSCH(win, 'B');
-	break;
-    case COLOR:
-	WINSCH(win, 'C');
-	break;
-    case NORMAL:
-	WINSCH(win, 'N');
-	break;
-    case REVERSE:
-	WINSCH(win, 'R');
-	break;
-    case UNDERLINE:
-	WINSCH(win, 'U');
-	break;
-    default:
-	sw_assert_not_reached();
-    }
+	switch (c) {
+	case BLINK:
+		WINSCH(win, 'I');
+		break;
+	case BOLD:
+		WINSCH(win, 'B');
+		break;
+	case COLOR:
+		WINSCH(win, 'C');
+		break;
+	case NORMAL:
+		WINSCH(win, 'N');
+		break;
+	case REVERSE:
+		WINSCH(win, 'R');
+		break;
+	case UNDERLINE:
+		WINSCH(win, 'U');
+		break;
+	default:
+		sw_assert_not_reached();
+	}
 
-    WATTR_OFF(win, A_REVERSE);
+	WATTR_OFF(win, A_REVERSE);
 }
 
 /**
