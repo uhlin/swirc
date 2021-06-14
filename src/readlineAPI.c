@@ -322,14 +322,11 @@ readline_winsch(WINDOW *win, wint_t wc)
 void
 readline_winsnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
 {
-    const ptrdiff_t length = (ptrdiff_t) (s ? wcslen(s) : 0);
-    const ptrdiff_t this_index = (n <= 0 || n > length ? length : n);
+	const ptrdiff_t length = (ptrdiff_t) wcslen(s);
+	const ptrdiff_t i = (n <= 0 || n > length ? length : n);
 
-    if (win == NULL || s == NULL)
-	err_exit(EINVAL, "fatal: readline_winsnstr");
+	(void) wnoutrefresh(win);
 
-    (void) wnoutrefresh(win);
-
-    for (const wchar_t *ptr = &s[this_index - 1]; ptr >= &s[0]; ptr--)
-	readline_winsch(win, *ptr);
+	for (const wchar_t *ptr = &s[i - 1]; ptr >= &s[0]; ptr--)
+		readline_winsch(win, *ptr);
 }
