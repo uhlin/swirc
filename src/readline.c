@@ -128,7 +128,7 @@ loLim_isset(WINDOW *win, int prompt_size)
 static inline bool
 hiLim_isset(WINDOW *win)
 {
-    return (term_get_pos(win).curx >= COLS - 1);
+	return (term_get_pos(win).curx >= (COLS - 1));
 }
 
 /**
