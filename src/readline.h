@@ -19,22 +19,22 @@
 #define READLINE_TERMINATE 2
 
 typedef enum {
-    PANEL1_ACTIVE,
-    PANEL2_ACTIVE
+	PANEL1_ACTIVE,
+	PANEL2_ACTIVE
 } rl_active_panel_t;
 
 enum { /* custom, additional keys */
-    MY_KEY_BS = '\010', /* ^H */
-    MY_KEY_DEL = '\177', /* ^? */
-    MY_KEY_EOT = '\004', /* ^D */
-    MY_KEY_ACK = '\006', /* ^F */
-    MY_KEY_STX = '\002', /* ^B */
-    MY_KEY_SO = '\016', /* ^N */
-    MY_KEY_DLE = '\020', /* ^P */
-    MY_KEY_RESIZE = '\033',
-    CTRL_A = '\001',
-    CTRL_E = '\005',
-    CTRL_L = '\014'
+	MY_KEY_BS     = '\010', /* ^H */
+	MY_KEY_DEL    = '\177', /* ^? */
+	MY_KEY_EOT    = '\004', /* ^D */
+	MY_KEY_ACK    = '\006', /* ^F */
+	MY_KEY_STX    = '\002', /* ^B */
+	MY_KEY_SO     = '\016', /* ^N */
+	MY_KEY_DLE    = '\020', /* ^P */
+	MY_KEY_RESIZE = '\033',
+	CTRL_A = '\001',
+	CTRL_E = '\005',
+	CTRL_L = '\014'
 };
 
 #define WINDOWS_KEY_ENTER 459
