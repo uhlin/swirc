@@ -119,7 +119,7 @@ apply_readline_options(WINDOW *win)
 static inline bool
 loLim_isset(WINDOW *win, int prompt_size)
 {
-    return (term_get_pos(win).curx <= prompt_size);
+	return (term_get_pos(win).curx <= prompt_size);
 }
 
 /**
