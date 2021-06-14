@@ -152,14 +152,14 @@ ins_complex_char(WINDOW *win, int c)
 NORETURN void
 readline_error(int error, const char *msg)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char strerrbuf[MAXERROR] = { '\0' };
+	PRINTTEXT_CONTEXT ctx;
+	char strerrbuf[MAXERROR] = { '\0' };
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
-    printtext(&ctx, "non-fatal: %s: %s", msg,
-	xstrerror(error, strerrbuf, MAXERROR));
-    g_readline_loop = false;
-    longjmp(g_readline_loc_info, READLINE_RESTART);
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
+	printtext(&ctx, "non-fatal: %s: %s", msg, xstrerror(error, strerrbuf,
+	    MAXERROR));
+	g_readline_loop = false;
+	longjmp(g_readline_loc_info, READLINE_RESTART);
 }
 
 /**
