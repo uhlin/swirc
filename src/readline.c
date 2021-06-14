@@ -226,60 +226,58 @@ magic_swap_panels(volatile struct readline_session_context *ctx, bool fwd)
 static void
 case_key_backspace(volatile struct readline_session_context *ctx)
 {
-    int ret[3];
-    struct current_cursor_pos yx;
-    wchar_t *ptr;
+	int		 ret[3];
+	wchar_t		*ptr;
 
-    if (ctx->bufpos == 0) {
-	term_beep();
-	return;
-    }
+	if (ctx->bufpos == 0) {
+		term_beep();
+		return;
+	}
+	if (loLim_isset(ctx->act, ctx->prompt_size))
+		magic_swap_panels(ctx, false);
+	if (ctx->insert_mode) {
+		ptr = &ctx->buffer[ctx->bufpos--];
+		(void) wmemmove(ptr - 1, ptr, wcslen(ptr));
+		ctx->buffer[--ctx->n_insert] = 0L;
 
-    if (loLim_isset(ctx->act, ctx->prompt_size)) {
-	magic_swap_panels(ctx, false);
-    }
+		mutex_lock(&g_puts_mutex);
+		ret[0] = wmove(ctx->act, term_get_pos(ctx->act).cury,
+		    term_get_pos(ctx->act).curx - 1);
+		ret[1] = wdelch(ctx->act);
+		ret[2] = wclrtoeol(ctx->act);
+		mutex_unlock(&g_puts_mutex);
 
-    if (ctx->insert_mode) {
-	ptr = &ctx->buffer[ctx->bufpos--];
-	(void) wmemmove(ptr - 1, ptr, wcslen(ptr));
-	ctx->buffer[--ctx->n_insert] = 0L;
+		if (ret[0] == ERR)
+			readline_error(EPERM, "case_key_backspace: wmove");
+		else if (ret[1] == ERR)
+			readline_error(EPERM, "case_key_backspace: wdelch");
+		else if (ret[2] == ERR)
+			readline_error(EPERM, "case_key_backspace: wclrtoeol");
 
-	yx = term_get_pos(ctx->act);
+		readline_winsnstr(ctx->act, &ctx->buffer[ctx->bufpos], -1);
+	} else {
+		/*
+		 * Not insert mode
+		 */
+
+		ctx->buffer[--ctx->bufpos] = 0L;
+		ctx->n_insert--;
+
+		mutex_lock(&g_puts_mutex);
+		ret[0] = wmove(ctx->act, term_get_pos(ctx->act).cury,
+		    term_get_pos(ctx->act).curx - 1);
+		ret[1] = wdelch(ctx->act);
+		mutex_unlock(&g_puts_mutex);
+
+		if (ret[0] == ERR)
+			readline_error(EPERM, "case_key_backspace: wmove");
+		else if (ret[1] == ERR)
+			readline_error(EPERM, "case_key_backspace: wdelch");
+	}
 
 	mutex_lock(&g_puts_mutex);
-	ret[0] = wmove(ctx->act, yx.cury, yx.curx - 1);
-	ret[1] = wdelch(ctx->act);
-	ret[2] = wclrtoeol(ctx->act);
+	(void) wrefresh(ctx->act);
 	mutex_unlock(&g_puts_mutex);
-
-	if (ret[0] == ERR)
-	    readline_error(EPERM, "case_key_backspace: wmove");
-	else if (ret[1] == ERR)
-	    readline_error(EPERM, "case_key_backspace: wdelch");
-	else if (ret[2] == ERR)
-	    readline_error(EPERM, "case_key_backspace: wclrtoeol");
-
-	readline_winsnstr(ctx->act, &ctx->buffer[ctx->bufpos], -1);
-    } else { /* not insert_mode */
-	ctx->buffer[--ctx->bufpos] = 0L;
-	ctx->n_insert--;
-
-	yx = term_get_pos(ctx->act);
-
-	mutex_lock(&g_puts_mutex);
-	ret[0] = wmove(ctx->act, yx.cury, yx.curx - 1);
-	ret[1] = wdelch(ctx->act);
-	mutex_unlock(&g_puts_mutex);
-
-	if (ret[0] == ERR)
-	    readline_error(EPERM, "case_key_backspace: wmove");
-	else if (ret[1] == ERR)
-	    readline_error(EPERM, "case_key_backspace: wdelch");
-    }
-
-    mutex_lock(&g_puts_mutex);
-    (void) wrefresh(ctx->act);
-    mutex_unlock(&g_puts_mutex);
 }
 
 /**
