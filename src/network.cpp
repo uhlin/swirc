@@ -427,7 +427,18 @@ net_connect(const struct network_connect_context *ctx,
 	} catch (std::runtime_error &e) {
 		ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 		printtext(&ptext_ctx, "%s", e.what());
-		net_kill_connection(); /* XXX */
+
+		/* XXX */
+		if (g_on_air)
+			g_on_air = false;
+		net_ssl_end();
+		if (g_socket != INVALID_SOCKET) {
+			CLOSE_GLOBAL_SOCKET();
+			g_socket = INVALID_SOCKET;
+		}
+#ifdef WIN32
+		winsock_deinit();
+#endif
 
 		if (retry++ < reconn_ctx.retries) {
 			const bool is_initial_reconnect_attempt = (retry == 1);
