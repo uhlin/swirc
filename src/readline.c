@@ -157,44 +157,41 @@ static void
 compute_new_window_entry(const volatile struct readline_session_context *ctx,
 			 bool fwd)
 {
-    int		 diff, buf_index;
-    wchar_t	*str1, *str2;
+	int bufindex, diff;
+	wchar_t *str1, *str2;
 
-    if (fwd) {
-	diff	  = COLS / 2;
-	buf_index = int_diff(ctx->bufpos, diff);
+	if (fwd) {
+		diff = (COLS / 2);
+		bufindex = int_diff(ctx->bufpos, diff);
 
-	if (COLS % 2 == 0) {
-	    buf_index += 1;
+		if ((COLS % 2) == 0)
+			bufindex += 1;
+
+		str1 = &ctx->buffer[bufindex];
+		str2 = &ctx->buffer[ctx->bufpos];
+	} else {
+		diff = int_diff(COLS / 2, ctx->prompt_size);
+
+		if ((bufindex = int_diff(ctx->bufpos, diff)) < 0) {
+			readline_error(ERANGE, "compute_new_window_entry");
+			/* NOTREACHED */
+		}
+
+		str1 = &ctx->buffer[bufindex];
+		str2 = &ctx->buffer[ctx->bufpos];
 	}
 
-	str1 = &ctx->buffer[buf_index];
-	str2 = &ctx->buffer[ctx->bufpos];
-    } else {
-	diff = int_diff(COLS / 2, ctx->prompt_size);
-
-	if ((buf_index = int_diff(ctx->bufpos, diff)) < 0) {
-	    readline_error(ERANGE, "compute_new_window_entry");
-	    /* NOTREACHED */
+	if (ctx->insert_mode) {
+		if (ctx->bufpos > 0)
+			readline_waddnstr(ctx->act, str1, (str2 - str1));
+		readline_winsnstr(ctx->act, str2, -1);
+	} else {
+		readline_waddnstr(ctx->act, str1, -1);
 	}
 
-	str1 = &ctx->buffer[buf_index];
-	str2 = &ctx->buffer[ctx->bufpos];
-    }
-
-    if (ctx->insert_mode) {
-	if (ctx->bufpos > 0) {
-	    readline_waddnstr(ctx->act, str1, str2 - str1);
-	}
-
-	readline_winsnstr(ctx->act, str2, -1);
-    } else {
-	readline_waddnstr(ctx->act, str1, -1);
-    }
-
-    mutex_lock(&g_puts_mutex);
-    (void) wrefresh(ctx->act);
-    mutex_unlock(&g_puts_mutex);
+	mutex_lock(&g_puts_mutex);
+	(void) wrefresh(ctx->act);
+	mutex_unlock(&g_puts_mutex);
 }
 
 /**
