@@ -94,15 +94,15 @@ apply_readline_options(WINDOW *win)
 #define KEYPAD(win, b)   ((void) keypad(win, b))
 #define NODELAY(win, b)  ((void) nodelay(win, b))
 #define SCROLLOK(win, b) ((void) scrollok(win, b))
-    if (!is_keypad(win)) {
-	KEYPAD(win, 1);
-    }
-    if (is_nodelay(win)) {
-	NODELAY(win, 0);
-    }
-    if (is_scrollok(win)) {
-	SCROLLOK(win, 0);
-    }
+	if (!is_keypad(win)) {
+		KEYPAD(win, 1);
+	}
+	if (is_nodelay(win)) {
+		NODELAY(win, 0);
+	}
+	if (is_scrollok(win)) {
+		SCROLLOK(win, 0);
+	}
 
 #if defined(UNIX)
 #define WAIT_TIME_MILLISEC 100
@@ -110,7 +110,7 @@ apply_readline_options(WINDOW *win)
 #define WAIT_TIME_MILLISEC 0
 #endif
 
-    wtimeout(win, WAIT_TIME_MILLISEC);
+	wtimeout(win, WAIT_TIME_MILLISEC);
 }
 
 /**
