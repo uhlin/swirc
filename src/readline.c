@@ -58,8 +58,8 @@
 *                                                               *
 ****************************************************************/
 
-bool		g_readline_loop;
-bool		g_resize_requested;
+bool		g_readline_loop = false;
+bool		g_resize_requested = false;
 jmp_buf		g_readline_loc_info;
 
 bool	g_hist_next = false;
