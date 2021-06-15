@@ -553,7 +553,7 @@ net_irc_listen(bool *connection_lost)
 	irc_init();
 
 	do {
-		BZERO(recvbuf, RECVBUF_SIZE);
+		OPENSSL_cleanse(recvbuf, RECVBUF_SIZE);
 
 		if (g_icb_mode) {
 			/*
