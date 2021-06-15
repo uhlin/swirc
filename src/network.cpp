@@ -548,7 +548,8 @@ net_irc_listen(bool *connection_lost)
 
 	block_signals();
 	*connection_lost = g_connection_lost = false;
-	recvbuf = static_cast<char *>(xmalloc(RECVBUF_SIZE));
+	recvbuf = static_cast<char *>(xmalloc(RECVBUF_SIZE + 1));
+	recvbuf[RECVBUF_SIZE] = '\0';
 	irc_init();
 
 	do {
