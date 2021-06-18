@@ -46,7 +46,7 @@ static HANDLE		mutex;
 static void
 mutex_init(void)
 {
-    mutex_new(&mutex);
+	mutex_new(&mutex);
 }
 
 static int
