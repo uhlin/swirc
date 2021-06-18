@@ -582,78 +582,74 @@ get_last_token(const char *buffer)
  * Handle and interpret irc events
  */
 void
-irc_handle_interpret_events(char *recvbuffer,
-			    char **message_concat,
-			    enum message_concat_state *state)
+irc_handle_interpret_events(char *recvbuffer, char **message_concat,
+    enum message_concat_state *state)
 {
-    bool terminated_recvchunk = false;
-    char *cp = NULL, *savp = "";
-    char *last_token = NULL;
-    const char separators[] = "\r\n";
-    long int loop_count = 0;
+	bool terminated_recvchunk = false;
+	char *cp = NULL, *tokstate = "";
+	char *last_token = NULL;
+	long int loop_count = 0;
+	static const char separators[] = "\r\n";
 
-    if (recvbuffer == NULL || (*state != CONCAT_BUFFER_IS_EMPTY &&
-			       *state != CONCAT_BUFFER_CONTAIN_DATA)) {
-	err_exit(EINVAL, "irc_handle_interpret_events");
-    } else if (strings_match(recvbuffer, "") ||
-	       strpbrk(recvbuffer, separators) == NULL) {
-	return;
-    } else {
-	/*empty*/;
-    }
+	if (recvbuffer == NULL || message_concat == NULL || state == NULL)
+		err_exit(EINVAL, "irc_handle_interpret_events");
+	else if (strings_match(recvbuffer, "") ||
+		 strpbrk(recvbuffer, separators) == NULL)
+		return;
 
-    if (*state == CONCAT_BUFFER_CONTAIN_DATA &&
-	recvbuffer[0] == '\r' && recvbuffer[1] == '\n') {
-	ProcessProtoMsg(*message_concat);
-	free_and_null(&(*message_concat));
-	*state = CONCAT_BUFFER_IS_EMPTY;
-    }
-
-    switch (recvbuffer[strlen(recvbuffer) - 1]) {
-    case '\r':
-    case '\n':
-	terminated_recvchunk = true;
-	break;
-    default:
-	terminated_recvchunk = false;
-	break;
-    }
-
-    if (!terminated_recvchunk) {
-	last_token = get_last_token(recvbuffer); /* Must be freed */
-    }
-
-    for (cp = &recvbuffer[0], loop_count = 0;; cp = NULL, loop_count++) {
-	char *token = NULL;
-
-	if ((token = strtok_r(cp, separators, &savp)) == NULL) {
-	    break; /* No more tokens  --  end loop... */
-	} else if (last_token != NULL && *state == CONCAT_BUFFER_IS_EMPTY &&
-		   strings_match(token, last_token)) {
-	    free_and_null(&(*message_concat));
-	    *message_concat = sw_strdup(last_token);
-	    free_and_null(&last_token);
-	    *state = CONCAT_BUFFER_CONTAIN_DATA;
-	    /*
-	     * On the next call to this function the (incomplete) irc
-	     * message will be concatenated
-	     */
-	    return;
-	} else if (loop_count == 0 && *state == CONCAT_BUFFER_CONTAIN_DATA) {
-	    realloc_strcat(&(*message_concat), token);
-	    token = *message_concat;
-	    *state = CONCAT_BUFFER_IS_EMPTY;
-	    /*
-	     * The special token can now be passed to the handler
-	     */
-	} else {
-	    /*no action*/;
+	if (*state == CONCAT_BUFFER_CONTAIN_DATA &&
+	    recvbuffer[0] == '\r' && recvbuffer[1] == '\n') {
+		ProcessProtoMsg(*message_concat);
+		free_and_null(&(*message_concat));
+		*state = CONCAT_BUFFER_IS_EMPTY;
 	}
 
-	ProcessProtoMsg(token);
-    }
+	switch (recvbuffer[strlen(recvbuffer) - 1]) {
+	case '\r':
+	case '\n':
+		terminated_recvchunk = true;
+		break;
+	default:
+		terminated_recvchunk = false;
+		break;
+	}
 
-    free(last_token);
+	if (!terminated_recvchunk)
+		last_token = get_last_token(recvbuffer); /* Must be freed */
+
+	for (cp = &recvbuffer[0], loop_count = 0;; cp = NULL, loop_count++) {
+		char *token;
+
+		if ((token = strtok_r(cp, separators, &tokstate)) == NULL) {
+			break; /* No more tokens  --  end loop... */
+		} else if (last_token != NULL &&
+		    *state == CONCAT_BUFFER_IS_EMPTY &&
+		    strings_match(token, last_token)) {
+			free_and_null(&(*message_concat));
+			*message_concat = sw_strdup(last_token);
+			free_and_null(&last_token);
+			*state = CONCAT_BUFFER_CONTAIN_DATA;
+			/*
+			 * On the next call to this function the
+			 * (incomplete) irc message will be
+			 * concatenated...
+			 */
+			return;
+		} else if (loop_count == 0 &&
+		    *state == CONCAT_BUFFER_CONTAIN_DATA) {
+			realloc_strcat(&(*message_concat), token);
+			token = *message_concat;
+			*state = CONCAT_BUFFER_IS_EMPTY;
+
+			/*
+			 * The special token can now be passed to the handler...
+			 */
+		}
+
+		ProcessProtoMsg(token);
+	} /* for */
+
+	free(last_token);
 }
 
 /**
