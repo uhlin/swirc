@@ -676,8 +676,8 @@ irc_set_my_nickname(const char *nick)
 void
 irc_set_server_hostname(const char *srv_host)
 {
-    if (srv_host == NULL || strings_match(srv_host, ""))
-	err_exit(EINVAL, "irc_set_server_hostname");
-    free(g_server_hostname);
-    g_server_hostname = sw_strdup(srv_host);
+	if (srv_host == NULL || strings_match(srv_host, ""))
+		err_exit(EINVAL, "irc_set_server_hostname");
+	free(g_server_hostname);
+	g_server_hostname = sw_strdup(srv_host);
 }
