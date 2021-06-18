@@ -662,12 +662,13 @@ irc_handle_interpret_events(char *recvbuffer,
 void
 irc_set_my_nickname(const char *nick)
 {
-    if (nick == NULL || strings_match(nick, ""))
-	err_exit(EINVAL, "irc_set_my_nickname");
-    free(g_my_nickname);
-    g_my_nickname = sw_strdup(nick);
-    statusbar_update_display_beta();
-    readline_top_panel();
+	if (nick == NULL || strings_match(nick, ""))
+		err_exit(EINVAL, "irc_set_my_nickname");
+	free(g_my_nickname);
+	g_my_nickname = sw_strdup(nick);
+
+	statusbar_update_display_beta();
+	readline_top_panel();
 }
 
 /**
