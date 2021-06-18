@@ -10,10 +10,6 @@
 
 #include "welcome-w32.h"
 
-#ifndef MAXDWORD
-#define MAXDWORD 4294967295
-#endif
-
 static HANDLE welcome_cond;
 
 /* -------------------------------------------------- */
