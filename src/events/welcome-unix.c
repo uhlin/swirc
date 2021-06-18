@@ -10,8 +10,8 @@
 
 #include "welcome-unix.h"
 
-static pthread_mutex_t foo_mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t welcome_cond;
+static pthread_mutex_t	foo_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t	welcome_cond;
 
 bool
 event_welcome_is_signaled(void)
