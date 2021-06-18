@@ -56,9 +56,9 @@ static init_once_t	ssl_send_init_done = ONCE_INITIALIZER;
 static HANDLE		ssl_send_mutex;
 #endif
 
-static const char suite_secure[]   = "TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
-static const char suite_compat[]   = "HIGH:!aNULL";
-static const char suite_legacy[]   = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
+static const char suite_secure[] = "TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
+static const char suite_compat[] = "HIGH:!aNULL";
+static const char suite_legacy[] = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
 static const char suite_insecure[] = "ALL:!aNULL:!eNULL";
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
