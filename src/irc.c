@@ -552,12 +552,12 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 static void
 ProcessProtoMsg(const char *token)
 {
-    struct irc_message_compo *compo = NULL;
+	struct irc_message_compo *compo;
 
-    if ((compo = SortMsgCompo(token)) == NULL)
-	return;
-    irc_search_and_route_event(compo);
-    FreeMsgCompo(compo);
+	if ((compo = SortMsgCompo(token)) == NULL)
+		return;
+	irc_search_and_route_event(compo);
+	FreeMsgCompo(compo);
 }
 
 /**
