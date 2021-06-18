@@ -1,5 +1,5 @@
 /* Duplicate a printf style format string
-   Copyright (C) 2012-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -82,34 +82,41 @@ strdup_printf(const char *fmt, ...)
 char *
 strdup_vprintf(const char *fmt, va_list ap)
 {
-    char	*buffer	 = NULL;
-    int		 size	 = -1;
-    int		 n_print = -1;
+	char	*buffer;
+	int	 n_print;
+	int	 size;
 
 #if defined(UNIX)
-    if ((errno = pthread_once(&init_done, mutex_init)) != 0)
-	err_sys("strdup_vprintf: pthread_once");
+	if ((errno = pthread_once(&init_done, mutex_init)) != 0)
+		err_sys("strdup_vprintf: pthread_once");
 #elif defined(WIN32)
-    if ((errno = init_once(&init_done, mutex_init)) != 0)
-	err_sys("strdup_vprintf: init_once");
+	if ((errno = init_once(&init_done, mutex_init)) != 0)
+		err_sys("strdup_vprintf: init_once");
 #endif
 
-    mutex_lock(&mutex);
-    if ((size = get_size(fmt, ap)) < 0)
-	err_exit(ENOSYS, "strdup_vprintf: get_size");
-    else
-	size += 1;
-    if ((buffer = malloc(size)) == NULL)
-	err_exit(ENOMEM, "strdup_vprintf: malloc (allocating %d bytes)", size);
-    errno = 0;
+	mutex_lock(&mutex);
+
+	if ((size = get_size(fmt, ap)) < 0)
+		err_exit(ENOSYS, "strdup_vprintf: get_size");
+	else
+		size += 1;
+
+	if ((buffer = malloc(size)) == NULL) {
+		err_exit(ENOMEM, "strdup_vprintf: malloc (allocating %d bytes)",
+		    size);
+	}
+
+	errno = 0;
+
 #if defined(UNIX)
-    if ((n_print = vsnprintf(buffer, size, fmt, ap)) < 0 || n_print >= size)
-	err_sys("strdup_vprintf: vsnprintf() returned %d", n_print);
+	if ((n_print = vsnprintf(buffer, size, fmt, ap)) < 0 || n_print >= size)
+		err_sys("strdup_vprintf: vsnprintf() returned %d", n_print);
 #elif defined(WIN32)
-    if ((n_print = vsnprintf_s(buffer, size, size - 1, fmt, ap)) < 0)
-	err_sys("strdup_vprintf: vsnprintf_s() returned %d", n_print);
+	if ((n_print = vsnprintf_s(buffer, size, size - 1, fmt, ap)) < 0)
+		err_sys("strdup_vprintf: vsnprintf_s() returned %d", n_print);
 #endif
-    mutex_unlock(&mutex);
 
-    return (buffer);
+	mutex_unlock(&mutex);
+
+	return buffer;
 }
