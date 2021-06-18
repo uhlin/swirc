@@ -1,4 +1,4 @@
-/* Copyright (C) 2014-2018 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2014-2021 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -29,46 +29,51 @@ static HANDLE welcome_cond;
 DWORD
 dword_product(const DWORD elt_count, const DWORD elt_size)
 {
-    if (elt_size && elt_count > MAXDWORD / elt_size) {
-	err_msg("Integer overflow");
-	abort();
-    }
+	if (elt_size && elt_count > MAXDWORD / elt_size) {
+		err_msg("Integer overflow");
+		abort();
+	}
 
-    return (elt_count * elt_size);
+	return (elt_count * elt_size);
 }
 
 bool
 event_welcome_is_signaled(void)
 {
-    struct integer_context intctx = {
-	.setting_name     = "connection_timeout",
-	.lo_limit         = 0,
-	.hi_limit         = 300, /* 5 min */
-	.fallback_default = 45,
-    };
+	struct integer_context intctx = {
+		.setting_name = "connection_timeout",
+		.lo_limit = 0,
+		.hi_limit = 300, /* 5 min */
+		.fallback_default = 45,
+	};
 
-    return WaitForSingleObject(welcome_cond,
-	dword_product(config_integer(&intctx), 1000)) ==
-	WAIT_OBJECT_0;
+	return (WaitForSingleObject(welcome_cond,
+	    dword_product(config_integer(&intctx), 1000)) == WAIT_OBJECT_0);
 }
 
 void
 event_welcome_cond_init(void)
 {
-    if ((welcome_cond = CreateEvent(NULL, true, false, NULL)) == NULL)
-	err_quit("CreateEvent error 0x%lx", (unsigned long int) GetLastError());
+	if ((welcome_cond = CreateEvent(NULL, true, false, NULL)) == NULL) {
+		err_quit("event_welcome_cond_init: CreateEvent: %s",
+		    errdesc_by_last_err());
+	}
 }
 
 void
 event_welcome_cond_destroy(void)
 {
-    if (!CloseHandle(welcome_cond))
-	err_quit("CloseHandle error 0x%lx", (unsigned long int) GetLastError());
+	if (!CloseHandle(welcome_cond)) {
+		err_quit("event_welcome_cond_destroy: CloseHandle: %s",
+		    errdesc_by_last_err());
+	}
 }
 
 void
 event_welcome_signalit(void)
 {
-    if (!SetEvent(welcome_cond))
-	err_quit("SetEvent error 0x%lx", (unsigned long int) GetLastError());
+	if (!SetEvent(welcome_cond)) {
+		err_quit("event_welcome_signalit: SetEvent: %s",
+		    errdesc_by_last_err());
+	}
 }
