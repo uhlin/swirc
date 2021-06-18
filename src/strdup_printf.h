@@ -3,15 +3,9 @@
 
 /*lint -printf(1, strdup_printf) */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-char	*strdup_printf  (const char *fmt, ...) PRINTFLIKE(1);
-char	*strdup_vprintf (const char *fmt, va_list);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_BEGIN_DECLS
+char	*strdup_printf(const char *, ...) PRINTFLIKE(1);
+char	*strdup_vprintf(const char *, va_list);
+__SWIRC_END_DECLS
 
 #endif
