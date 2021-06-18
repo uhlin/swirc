@@ -69,14 +69,14 @@ get_size(const char *fmt, va_list ap)
 char *
 strdup_printf(const char *fmt, ...)
 {
-    va_list	 ap;
-    char	*buffer;
+	char	*buffer;
+	va_list	 ap;
 
-    va_start(ap, fmt);
-    buffer = strdup_vprintf(fmt, ap);
-    va_end(ap);
+	va_start(ap, fmt);
+	buffer = strdup_vprintf(fmt, ap);
+	va_end(ap);
 
-    return (buffer);
+	return buffer;
 }
 
 char *
