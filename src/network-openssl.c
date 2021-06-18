@@ -59,7 +59,7 @@ static HANDLE		ssl_send_mutex;
 static const char suite_secure[] = "TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
 static const char suite_compat[] = "HIGH:!aNULL";
 static const char suite_legacy[] = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
-static const char suite_insecure[] = "ALL:!aNULL:!eNULL";
+static const char suite_all[] = "ALL:!aNULL:!eNULL";
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
 static void
@@ -420,7 +420,7 @@ net_ssl_init(void)
 		set_ciphers(suite_legacy);
 	else if (strings_match(cs, "all") || strings_match(cs, "ALL") ||
 		 strings_match(cs, "insecure") || strings_match(cs, "INSECURE"))
-		set_ciphers(suite_insecure);
+		set_ciphers(suite_all);
 	else
 		set_ciphers(suite_compat);
 }
