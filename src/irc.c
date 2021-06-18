@@ -568,14 +568,15 @@ ProcessProtoMsg(const char *token)
 static char *
 get_last_token(const char *buffer)
 {
-    const char *last_token = strrchr(buffer, '\n');
+	const char *last_token;
 
-    if (last_token == NULL) {
-	err_msg("get_last_token error. (this is a bug and shouldn't happen!)");
-	abort();
-    }
+	if ((last_token = strrchr(buffer, '\n')) == NULL) {
+		err_msg("get_last_token error. "
+		    "(this is a bug and shouldn't happen!)");
+		abort();
+	}
 
-    return (sw_strdup(++last_token));
+	return sw_strdup(++ last_token);
 }
 
 /**
