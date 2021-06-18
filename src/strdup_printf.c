@@ -52,18 +52,18 @@ mutex_init(void)
 static int
 get_size(const char *fmt, va_list ap)
 {
-    va_list	ap_copy;
-    int		size = -1;
+	int	size;
+	va_list	ap_copy;
 
-    va_copy(ap_copy, ap);
+	va_copy(ap_copy, ap);
 #if defined(UNIX)
-    size = vsnprintf(NULL, 0, fmt, ap_copy); /* C99 */
+	size = vsnprintf(NULL, 0, fmt, ap_copy); /* C99 */
 #elif defined(WIN32)
-    size = _vscprintf(fmt, ap_copy);
+	size = _vscprintf(fmt, ap_copy);
 #endif
-    va_end(ap_copy);
+	va_end(ap_copy);
 
-    return (size);
+	return size;
 }
 
 char *
