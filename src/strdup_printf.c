@@ -36,11 +36,11 @@
 #include "strdup_printf.h"
 
 #if defined(UNIX)
-static pthread_once_t	init_done = PTHREAD_ONCE_INIT;
-static pthread_mutex_t	mutex;
+static pthread_once_t init_done = PTHREAD_ONCE_INIT;
+static pthread_mutex_t mutex;
 #elif defined(WIN32)
-static init_once_t	init_done = ONCE_INITIALIZER;
-static HANDLE		mutex;
+static init_once_t init_done = ONCE_INITIALIZER;
+static HANDLE mutex;
 #endif
 
 static void
