@@ -629,6 +629,7 @@ irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 			*message_concat = sw_strdup(last_token);
 			free_and_null(&last_token);
 			*state = CONCAT_BUFFER_CONTAIN_DATA;
+
 			/*
 			 * On the next call to this function the
 			 * (incomplete) irc message will be
@@ -660,6 +661,7 @@ irc_set_my_nickname(const char *nick)
 {
 	if (nick == NULL || strings_match(nick, ""))
 		err_exit(EINVAL, "irc_set_my_nickname");
+
 	free(g_my_nickname);
 	g_my_nickname = sw_strdup(nick);
 
