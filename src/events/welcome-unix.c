@@ -1,4 +1,4 @@
-/* Copyright (C) 2014, 2016 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2014-2021 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -16,49 +16,50 @@ static pthread_cond_t welcome_cond;
 bool
 event_welcome_is_signaled(void)
 {
-    bool is_signaled = false; /* initial state */
-    struct integer_context intctx;
-    struct timespec ts;
-    struct timeval tv;
+	bool			is_signaled = false; /* initial state */
+	struct integer_context	intctx = { 0 };
+	struct timespec		ts = { 0 };
+	struct timeval		tv = { 0 };
 
-    intctx.setting_name     = "connection_timeout";
-    intctx.lo_limit         = 0;
-    intctx.hi_limit         = 300; /* 5 min */
-    intctx.fallback_default = 45;
+	intctx.setting_name = "connection_timeout";
+	intctx.lo_limit = 0;
+	intctx.hi_limit = 300; /* 5 min */
+	intctx.fallback_default = 45;
 
-    if (gettimeofday(&tv, NULL) != 0) {
-	err_sys("gettimeofday error");
-    }
+	if (gettimeofday(&tv, NULL) != 0)
+		err_sys("event_welcome_is_signaled: gettimeofday");
 
-    ts.tv_sec  = tv.tv_sec + config_integer(&intctx);
-    ts.tv_nsec = tv.tv_usec;
+	ts.tv_sec = tv.tv_sec + config_integer(&intctx);
+	ts.tv_nsec = tv.tv_usec;
 
-    mutex_lock(&foo_mutex);
-    if (pthread_cond_timedwait(&welcome_cond, &foo_mutex, &ts) == 0)
-	is_signaled = true;
-    mutex_unlock(&foo_mutex);
+	mutex_lock(&foo_mutex);
+	if (pthread_cond_timedwait(&welcome_cond, &foo_mutex, &ts) == 0)
+		is_signaled = true;
+	mutex_unlock(&foo_mutex);
 
-    return (is_signaled);
+	return is_signaled;
 }
 
 void
 event_welcome_cond_init(void)
 {
-    if ((errno = pthread_cond_init(&welcome_cond, NULL)) != 0)
-	err_sys("pthread_cond_init error");
+	if ((errno = pthread_cond_init(&welcome_cond, NULL)) != 0)
+		err_sys("event_welcome_cond_init: pthread_cond_init");
 }
 
 void
 event_welcome_cond_destroy(void)
 {
-    if ((errno = pthread_cond_destroy(&welcome_cond)) != 0)
-	err_sys("pthread_cond_destroy error");
+	if ((errno = pthread_cond_destroy(&welcome_cond)) != 0)
+		err_sys("event_welcome_cond_destroy: pthread_cond_destroy");
 }
 
-/* Wake up ANY thread that's currently blocked on the condition variable */
+/*
+ * Wake up ANY thread that's currently blocked on the condition variable
+ */
 void
 event_welcome_signalit(void)
 {
-    if ((errno = pthread_cond_broadcast(&welcome_cond)) != 0)
-	err_sys("pthread_cond_broadcast error");
+	if ((errno = pthread_cond_broadcast(&welcome_cond)) != 0)
+		err_sys("event_welcome_signalit: pthread_cond_broadcast");
 }
