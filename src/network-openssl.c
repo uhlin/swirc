@@ -196,7 +196,7 @@ void
 net_ssl_end(void)
 {
 	if (ssl != NULL && !atomic_load_bool(&ssl_object_is_null)) {
-#define SHUTDOWN_CONN 0
+#define SHUTDOWN_CONN 1
 #if SHUTDOWN_CONN
 		switch (SSL_shutdown(ssl)) {
 		case 0:
