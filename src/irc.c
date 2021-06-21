@@ -484,11 +484,11 @@ SortMsgCompo(const char *protocol_message)
 static void
 FreeMsgCompo(struct irc_message_compo *compo)
 {
-    free(compo->prefix);
-    free(compo->command);
-    free(compo->params);
+	free(compo->prefix);
+	free(compo->command);
+	free(compo->params);
 
-    free(compo);
+	free(compo);
 }
 
 static int
