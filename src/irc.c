@@ -356,6 +356,57 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
     }
 }
 
+static int
+handle_extension(size_t *bytes, const char *protocol_message,
+    struct irc_message_compo *compo)
+{
+	char	*substring;
+	int	 ret;
+
+	*bytes = strcspn(protocol_message, " ");
+	substring = xmalloc((*bytes) + 1);
+	substring[*bytes] = '\0';
+	ret = snprintf(substring, *bytes, "%s", protocol_message);
+
+/*
+ * sscanf() is safe in this context
+ */
+#if WIN32
+#pragma warning(disable: 4996)
+#endif
+	if (ret < 0) {
+		print_and_free("handle_extension: print formatted error",
+		    substring);
+		return -1;
+	} else if (!strncmp(substring, "@time=", 6)) {
+		if (sscanf(substring, "@time=%d-%d-%dT%d:%d:%d.%dZ",
+		    & (compo->year),
+		    & (compo->month),
+		    & (compo->day),
+		    & (compo->hour),
+		    & (compo->minute),
+		    & (compo->second),
+		    & (compo->precision)) != 7) {
+			print_and_free("handle_extension: server time error",
+			    substring);
+			return -1;
+		}
+	} else {
+		print_and_free("handle_extension: unsupported extension",
+		    substring);
+		return -1;
+	}
+/*
+ * Reset warning behavior to its default value
+ */
+#if WIN32
+#pragma warning(default: 4996)
+#endif
+
+	free(substring);
+	return 0;
+}
+
 /**
  * Sort message components - into prefix, command and params.
  */
@@ -378,51 +429,10 @@ SortMsgCompo(const char *protocol_message)
 	compo->params = NULL;
 
 	if (*protocol_message == '@') {
-		char *substring;
-		int ret;
-
-		bytes = strcspn(protocol_message, " ");
-		substring = xcalloc(bytes, 1);
-		ret = snprintf(substring, bytes, "%s", protocol_message);
-
-/*
- * sscanf() is safe in this context
- */
-#if WIN32
-#pragma warning(disable: 4996)
-#endif
-		if (ret < 0 || ((size_t) ret) >= bytes) {
+		if (handle_extension(&bytes, protocol_message, compo) == -1) {
 			free(compo);
-			print_and_free("", substring);
-			return NULL;
-		} else if (!strncmp(substring, "@time=", 6)) {
-			if (sscanf(substring, "@time=%d-%d-%dT%d:%d:%d.%dZ",
-			    & (compo->year),
-			    & (compo->month),
-			    & (compo->day),
-			    & (compo->hour),
-			    & (compo->minute),
-			    & (compo->second),
-			    & (compo->precision)) != 7) {
-				free(compo);
-				print_and_free("In SortMsgCompo: IRCv3: "
-				    "server time error", substring);
-				return NULL;
-			}
-		} else {
-			free(compo);
-			print_and_free("In SortMsgCompo: IRCv3: "
-			    "unsupported extension", substring);
 			return NULL;
 		}
-
-		free(substring);
-/*
- * Reset warning behavior to its default value
- */
-#if WIN32
-#pragma warning(default: 4996)
-#endif
 	} /* ===== EOF IRCv3 extensions ===== */
 
 	const char *ccp = &protocol_message[bytes];
