@@ -363,26 +363,27 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
 static struct irc_message_compo *
 SortMsgCompo(const char *protocol_message)
 {
-    char *cp = NULL, *savp = "";
-    char *remaining_data = NULL;
-    int message_has_prefix = 0, requested_feeds = -1;
-    short int loop_run = 0;
-    size_t bytes = 0;
-    struct irc_message_compo *compo = xcalloc(sizeof *compo, 1);
+	char *cp = NULL, *state = "";
+	char *remaining_data = NULL;
+	int message_has_prefix = 0, requested_feeds = -1;
+	short int loop_run = 0;
+	size_t bytes = 0;
+	struct irc_message_compo *compo = xcalloc(sizeof *compo, 1);
 
-    compo->year = compo->month = compo->day = -1;
-    compo->hour = compo->minute = compo->second = compo->precision = -1;
+	compo->year = compo->month = compo->day = -1;
+	compo->hour = compo->minute = compo->second = compo->precision = -1;
 
-    compo->prefix  = NULL;
-    compo->command = NULL;
-    compo->params  = NULL;
+	compo->prefix = NULL;
+	compo->command = NULL;
+	compo->params = NULL;
 
-    if (*protocol_message == '@') {
-	char *substring = NULL;
+	if (*protocol_message == '@') {
+		char *substring;
+		int ret;
 
-	bytes = strcspn(protocol_message, " ");
-	substring = xcalloc(bytes, 1);
-	snprintf(substring, bytes, "%s", protocol_message);
+		bytes = strcspn(protocol_message, " ");
+		substring = xcalloc(bytes, 1);
+		ret = snprintf(substring, bytes, "%s", protocol_message);
 
 /*
  * sscanf() is safe in this context
@@ -390,92 +391,92 @@ SortMsgCompo(const char *protocol_message)
 #if WIN32
 #pragma warning(disable: 4996)
 #endif
+		if (ret < 0 || ((size_t) ret) >= bytes) {
+			free(compo);
+			print_and_free("", substring);
+			return NULL;
+		} else if (!strncmp(substring, "@time=", 6)) {
+			if (sscanf(substring, "@time=%d-%d-%dT%d:%d:%d.%dZ",
+			    & (compo->year),
+			    & (compo->month),
+			    & (compo->day),
+			    & (compo->hour),
+			    & (compo->minute),
+			    & (compo->second),
+			    & (compo->precision)) != 7) {
+				free(compo);
+				print_and_free("In SortMsgCompo: IRCv3: "
+				    "server time error", substring);
+				return NULL;
+			}
+		} else {
+			free(compo);
+			print_and_free("In SortMsgCompo: IRCv3: "
+			    "unsupported extension", substring);
+			return NULL;
+		}
 
-	if (!strncmp(substring, "@time=", 6)) {
-	    if (sscanf(substring, "@time=%d-%d-%dT%d:%d:%d.%dZ",
-		& (compo->year),
-		& (compo->month),
-		& (compo->day),
-		& (compo->hour),
-		& (compo->minute),
-		& (compo->second),
-		& (compo->precision)) != 7) {
-		free(compo);
-		print_and_free("In SortMsgCompo: IRCv3: server time error",
-			       substring);
-		return NULL;
-	    }
-	} else {
-	    free(compo);
-	    print_and_free("In SortMsgCompo: IRCv3: unsupported extension",
-			   substring);
-	    return NULL;
-	}
-
-	free(substring);
-
+		free(substring);
 /*
  * Reset warning behavior to its default value
  */
 #if WIN32
 #pragma warning(default: 4996)
 #endif
-    } /* ===== EOF IRCv3 extensions ===== */
+	} /* ===== EOF IRCv3 extensions ===== */
 
-    const char *ccp = &protocol_message[bytes];
-    while (*ccp == ' ')
-	ccp++;
-    message_has_prefix = (*ccp == ':');
-    requested_feeds = message_has_prefix ? 2 : 1;
-    remaining_data = sw_strdup(ccp);
+	const char *ccp = &protocol_message[bytes];
+	while (*ccp == ' ')
+		ccp++;
+	message_has_prefix = (*ccp == ':');
+	requested_feeds = (message_has_prefix ? 2 : 1);
+	remaining_data = sw_strdup(ccp);
 
-    if (strFeed(remaining_data, requested_feeds) != requested_feeds &&
-	strstr(remaining_data, "\nAWAY") == NULL) {
-	free(compo);
-	print_and_free("In SortMsgCompo: strFeed: "
-	    "requested feeds mismatch feeds written",
-	    remaining_data);
-	return NULL;
-    }
-
-    for (loop_run = 0, cp = &remaining_data[0];; loop_run++, cp = NULL) {
-	char *token = NULL;
-
-	if ((token = strtok_r(cp, "\n", &savp)) == NULL) {
-	    break;
+	if (strFeed(remaining_data, requested_feeds) != requested_feeds &&
+	    strstr(remaining_data, "\nAWAY") == NULL) {
+		free(compo);
+		print_and_free("In SortMsgCompo: strFeed: "
+		    "requested feeds mismatch feeds written", remaining_data);
+		return NULL;
 	}
 
-	switch (loop_run) {
-	case 0:
-	    if (message_has_prefix) {
-		compo->prefix = sw_strdup(token);
-	    } else {
-		compo->command = sw_strdup(token);
-	    }
-	    break; /* loop_run 0 */
-	case 1:
-	    if (message_has_prefix) {
-		compo->command = sw_strdup(token);
-	    } else {
-		compo->params = sw_strdup(token);
-	    }
-	    break; /* loop_run 1 */
-	case 2:
-	    compo->params = sw_strdup(token);
-	    break; /* loop_run 2 */
-	default:
-	    sw_assert_not_reached();
+	for (loop_run = 0, cp = &remaining_data[0];; loop_run++, cp = NULL) {
+		char *token;
+
+		if ((token = strtok_r(cp, "\n", &state)) == NULL)
+			break;
+
+		switch (loop_run) {
+		case 0:
+			if (message_has_prefix) {
+				compo->prefix = sw_strdup(token);
+			} else {
+				compo->command = sw_strdup(token);
+			}
+			break; /* loop_run 0 */
+		case 1:
+			if (message_has_prefix) {
+				compo->command = sw_strdup(token);
+			} else {
+				compo->params = sw_strdup(token);
+			}
+			break; /* loop_run 1 */
+		case 2:
+			compo->params = sw_strdup(token);
+			break; /* loop_run 2 */
+		default:
+			sw_assert_not_reached();
+		}
+
+		if (compo->command != NULL && compo->params != NULL)
+			break;
 	}
 
-	if (compo->command != NULL && compo->params != NULL) {
-	    break;
-	}
-    }
-
-    free(remaining_data);
-    sw_assert(compo->command != NULL);
-    sw_assert(compo->params != NULL || strings_match(compo->command, "AWAY"));
-    return compo;
+	free(remaining_data);
+	sw_assert(compo->command != NULL);
+	sw_assert(compo->params != NULL ||
+	    strings_match(compo->command, "AWAY"));
+	return compo;
 }
 
 /**
