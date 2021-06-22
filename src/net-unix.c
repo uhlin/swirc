@@ -114,11 +114,11 @@ net_send_plain(const char *fmt, ...)
 static void *
 do_connect_wrapper(void *arg)
 {
-    struct server *server = arg;
+	struct server *server = arg;
 
-    do_connect(server->host, server->port, server->pass);
-    server_destroy(server);
-    return NULL;
+	do_connect(server->host, server->port, server->pass);
+	server_destroy(server);
+	return NULL;
 }
 
 void
