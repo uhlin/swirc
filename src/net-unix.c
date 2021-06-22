@@ -82,32 +82,33 @@ net_recv_plain(struct network_recv_context *ctx,
 int
 net_send_plain(const char *fmt, ...)
 {
-    char *buffer = NULL;
-    int n_sent = -1;
-    va_list ap;
+	char	*buffer;
+	int	 n_sent;
+	va_list	 ap;
 
-    if (g_socket == INVALID_SOCKET)
-	return -1;
-    else if (isNull(fmt))
-	err_exit(EINVAL, "net_send_plain");
-    else if (isEmpty(fmt))
-	return 0; /* nothing sent */
+	if (g_socket == INVALID_SOCKET)
+		return -1;
+	else if (fmt == NULL)
+		err_exit(EINVAL, "net_send_plain");
+	else if (strings_match(fmt, ""))
+		return 0;
 
-    va_start(ap, fmt);
-    buffer = strdup_vprintf(fmt, ap);
-    va_end(ap);
+	va_start(ap, fmt);
+	buffer = strdup_vprintf(fmt, ap);
+	va_end(ap);
 
-    if (!g_icb_mode)
-	realloc_strcat(&buffer, "\r\n");
+	if (!g_icb_mode)
+		realloc_strcat(&buffer, "\r\n");
 
-    errno = 0;
-    if ((n_sent = send(g_socket, buffer, strlen(buffer), 0)) == -1) {
+	errno = 0;
+
+	if ((n_sent = send(g_socket, buffer, strlen(buffer), 0)) == -1) {
+		free_and_null(&buffer);
+		return (errno == EAGAIN || errno == EWOULDBLOCK ? 0 : -1);
+	}
+
 	free_and_null(&buffer);
-	return (errno == EAGAIN || errno == EWOULDBLOCK ? 0 : -1);
-    }
-
-    free_and_null(&buffer);
-    return n_sent;
+	return n_sent;
 }
 
 /*lint -sem(do_connect_wrapper, r_null) */
