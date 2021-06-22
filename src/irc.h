@@ -4,31 +4,31 @@
 #include "window.h"
 
 struct irc_message_compo {
-    int year;
-    int month;
-    int day;
+	int year;
+	int month;
+	int day;
 
-    int hour;
-    int minute;
-    int second;
-    int precision;
+	int hour;
+	int minute;
+	int second;
+	int precision;
 
-    char *prefix;
-    char *command;
-    char *params;
+	char *prefix;
+	char *command;
+	char *params;
 };
 
 typedef void (*event_handler_fn)(struct irc_message_compo *);
 
 enum to_window {
-    STATUS_WINDOW,
-    ACTIVE_WINDOW,
-    NO_WINDOW
+	STATUS_WINDOW,
+	ACTIVE_WINDOW,
+	NO_WINDOW
 };
 
 enum message_concat_state {
-    CONCAT_BUFFER_IS_EMPTY,
-    CONCAT_BUFFER_CONTAIN_DATA
+	CONCAT_BUFFER_IS_EMPTY,
+	CONCAT_BUFFER_CONTAIN_DATA
 };
 
 __SWIRC_BEGIN_DECLS
