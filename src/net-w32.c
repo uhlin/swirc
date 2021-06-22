@@ -168,9 +168,9 @@ listen_thread_fn(void *arg)
 void
 net_spawn_listen_thread(void)
 {
-    if ((listen_thread_id = _beginthread(listen_thread_fn, 0, NULL)) ==
-	BEGINTHREAD_FAILED)
-	err_sys("net_spawn_listen_thread: _beginthread");
+	if ((listen_thread_id = _beginthread(listen_thread_fn, 0, NULL)) ==
+	    BEGINTHREAD_FAILED)
+		err_sys("net_spawn_listen_thread: _beginthread");
 }
 
 /* ---------------------------------------------------------------------- */
