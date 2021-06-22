@@ -144,7 +144,7 @@ net_do_connect_detached(const char *host, const char *port, const char *pass)
 void
 net_listen_thread_join(void)
 {
-    (void) WaitForSingleObject((HANDLE) listen_thread_id, 10000);
+	(void) WaitForSingleObject((HANDLE) listen_thread_id, 10000);
 }
 
 static VoidCdecl
