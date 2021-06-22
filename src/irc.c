@@ -64,9 +64,6 @@
 #include "events/welcome.h"
 #include "events/whois.h"
 
-/* Set to 1 for extended info. Intended for debugging only */
-#define UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO 1
-
 /****************************************************************
 *                                                               *
 *  -------------- Objects with external linkage --------------  *

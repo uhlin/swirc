@@ -31,6 +31,8 @@ enum message_concat_state {
 	CONCAT_BUFFER_CONTAIN_DATA
 };
 
+#define UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO 1
+
 __SWIRC_BEGIN_DECLS
 extern const char g_forbidden_chan_name_chars[];
 
