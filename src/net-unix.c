@@ -136,8 +136,8 @@ net_do_connect_detached(const char *host, const char *port, const char *pass)
 void
 net_listen_thread_join(void)
 {
-    if ((errno = pthread_join(listen_thread_id, NULL)) != 0)
-	err_sys("net_listen_thread_join: pthread_join");
+	if ((errno = pthread_join(listen_thread_id, NULL)) != 0)
+		err_sys("net_listen_thread_join: pthread_join");
 }
 
 /*lint -sem(listen_thread_fn, r_null) */
