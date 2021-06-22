@@ -28,6 +28,7 @@ All notable changes to this project will be documented in this file.
 - **Fixed** unchecked return values
 - Made improvements to the following files:
   - `io-loop.c`
+  - `irc.c`
   - `network-openssl.c`
   - `network.cpp`
   - `pthrMutex.c`
