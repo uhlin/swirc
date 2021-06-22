@@ -187,12 +187,13 @@ net_set_recv_timeout(const time_t seconds)
 void
 net_set_send_timeout(const time_t seconds)
 {
-    struct timeval tv = {
-	.tv_sec  = seconds,
-	.tv_usec = 0,
-    };
+	struct timeval tv = {
+		.tv_sec = seconds,
+		.tv_usec = 0,
+	};
 
-    errno = 0;
-    if (setsockopt(g_socket, SOL_SOCKET, SO_SNDTIMEO, &tv, sizeof tv) != 0)
-	err_log(errno, "net_set_send_timeout: setsockopt");
+	errno = 0;
+
+	if (setsockopt(g_socket, SOL_SOCKET, SO_SNDTIMEO, &tv, sizeof tv) != 0)
+		err_log(errno, "net_set_send_timeout: setsockopt");
 }
