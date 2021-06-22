@@ -266,13 +266,13 @@ static struct numeric_events_tag {
 void
 irc_init(void)
 {
-    if (g_cmdline_opts->nickname)
-	irc_set_my_nickname(g_cmdline_opts->nickname);
-    else if (Config_mod("nickname"))
-	irc_set_my_nickname(Config_mod("nickname"));
-    else
-	err_quit("fatal: in irc_init: no nickname");
-    event_names_init();
+	if (g_cmdline_opts->nickname)
+		irc_set_my_nickname(g_cmdline_opts->nickname);
+	else if (Config_mod("nickname"))
+		irc_set_my_nickname(Config_mod("nickname"));
+	else
+		err_quit("irc_init: no nickname");
+	event_names_init();
 }
 
 /**
