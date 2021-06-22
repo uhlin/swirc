@@ -125,11 +125,11 @@ net_send_plain(const char *fmt, ...)
 static VoidCdecl
 do_connect_wrapper(void *arg)
 {
-    struct server *server = arg;
+	struct server *server = arg;
 
-    do_connect(server->host, server->port, server->pass);
-    server_destroy(server);
-    _endthread();
+	do_connect(server->host, server->port, server->pass);
+	server_destroy(server);
+	_endthread();
 }
 
 void
