@@ -53,7 +53,7 @@ static uintptr_t listen_thread_id;
 bool
 winsock_deinit(void)
 {
-    return (WSACleanup() == 0 ? true : false);
+	return (WSACleanup() == 0 ? true : false);
 }
 
 bool
