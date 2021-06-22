@@ -42,6 +42,9 @@ All notable changes to this project will be documented in this file.
 - Reformatted and reindented files
 - Renamed functions and patterns
 - **Rewrote the printtext module in C++ and made multiple improvements**!
+- Upgraded to:
+  - [Curl](https://curl.se/) 7.77.0
+  - [LibreSSL](https://www.libressl.org/) 3.3.3
 
 ## [3.2.7] - 2021-03-13 ##
 - Added checking of `term_is_too_small()`
