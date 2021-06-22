@@ -135,10 +135,12 @@ do_connect_wrapper(void *arg)
 void
 net_do_connect_detached(const char *host, const char *port, const char *pass)
 {
-    struct server *server = server_new(host, port, pass);
+	struct server *server = server_new(host, port, pass);
 
-    if (_beginthread(do_connect_wrapper, 0, server) == BEGINTHREAD_FAILED)
-	err_sys("net_do_connect_detached: _beginthread");
+	errno = 0;
+
+	if (_beginthread(do_connect_wrapper, 0, server) == BEGINTHREAD_FAILED)
+		err_sys("net_do_connect_detached: _beginthread");
 }
 
 void
