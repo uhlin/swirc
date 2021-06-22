@@ -47,8 +47,8 @@ typedef void __cdecl VoidCdecl;
 
 SOCKET g_socket = INVALID_SOCKET;
 
-static const uintptr_t BEGINTHREAD_FAILED = (uintptr_t) -1L;
-static uintptr_t listen_thread_id;
+static const uintptr_t	BEGINTHREAD_FAILED = (uintptr_t) -1L;
+static uintptr_t	listen_thread_id;
 
 bool
 winsock_deinit(void)
