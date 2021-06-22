@@ -88,8 +88,8 @@ char	*g_server_hostname = NULL;
 ****************************************************************/
 
 static struct normal_events_tag {
-    char		*normal_event;
-    event_handler_fn	 event_handler;
+	char			*normal_event;
+	event_handler_fn	 event_handler;
 } normal_events[] = {
 	{ "ACCOUNT",      event_account      },
 	{ "AUTHENTICATE", event_authenticate },
