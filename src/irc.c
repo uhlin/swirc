@@ -113,11 +113,11 @@ static struct normal_events_tag {
 };
 
 static struct numeric_events_tag {
-    char             *numeric_event;
-    char             *official_name;
-    enum to_window    window;
-    int               ext_bits;
-    event_handler_fn  event_handler;
+	char			*numeric_event;
+	char			*official_name;
+	enum to_window		 window;
+	int			 ext_bits;
+	event_handler_fn	 event_handler;
 } numeric_events[] = {
 	{ "001", "RPL_WELCOME",             NO_WINDOW,      0, event_welcome },
 	{ "002", "RPL_YOURHOST",            STATUS_WINDOW,  1, NULL },
