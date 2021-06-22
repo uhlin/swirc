@@ -124,13 +124,14 @@ do_connect_wrapper(void *arg)
 void
 net_do_connect_detached(const char *host, const char *port, const char *pass)
 {
-    pthread_t thread;
-    struct server *server = server_new(host, port, pass);
+	pthread_t	 thread;
+	struct server	*server = server_new(host, port, pass);
 
-    if ((errno = pthread_create(&thread,NULL,do_connect_wrapper,server)) != 0)
-	err_sys("net_do_connect_detached: pthread_create");
-    else if ((errno = pthread_detach(thread)) != 0)
-	err_sys("net_do_connect_detached: pthread_detach");
+	if ((errno = pthread_create(&thread, NULL, do_connect_wrapper,
+	    server)) != 0)
+		err_sys("net_do_connect_detached: pthread_create");
+	else if ((errno = pthread_detach(thread)) != 0)
+		err_sys("net_do_connect_detached: pthread_detach");
 }
 
 void
