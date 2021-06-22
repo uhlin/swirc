@@ -150,19 +150,19 @@ net_listen_thread_join(void)
 static VoidCdecl
 listen_thread_fn(void *arg)
 {
-    bool connection_lost;
+	bool connection_lost;
 
-    (void) arg;
+	(void) arg;
 
-    net_irc_listen(&connection_lost);
+	net_irc_listen(&connection_lost);
 
-    if (!g_disconnect_wanted && g_io_loop && connection_lost) {
-	net_do_connect_detached(g_last_server, g_last_port,
-	    !strings_match(g_last_pass, "") ? g_last_pass : NULL);
-    }
+	if (!g_disconnect_wanted && g_io_loop && connection_lost) {
+		net_do_connect_detached(g_last_server, g_last_port,
+		    (!strings_match(g_last_pass, "") ? g_last_pass : NULL));
+	}
 
-    g_disconnect_wanted = false;
-    _endthread();
+	g_disconnect_wanted = false;
+	_endthread();
 }
 
 void
