@@ -320,40 +320,38 @@ void
 irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
 		int ext_bits, bool is_error)
 {
-    int i = 0;
-    char *cp = NULL, *savp = "";
+	char *cp = NULL, *state = "";
+	int i = 0;
 
-    if (strFeed(compo->params, ext_bits) != ext_bits) {
-	PRINTTEXT_CONTEXT ctx;
-
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
-	printtext(&ctx, "In irc_extract_msg: strFeed(..., %d) != %d", ext_bits,
-	    ext_bits);
-	return;
-    }
-
-    for (i = 0, cp = &compo->params[0];; i++, cp = NULL) {
-	char *token = NULL;
-
-	if ((token = strtok_r(cp, "\n", &savp)) == NULL) {
-	    break;
-	} else if (i == ext_bits) {
-	    if (*token == ':') {
-		token++;
-	    }
-
-	    if (*token) {
+	if (strFeed(compo->params, ext_bits) != ext_bits) {
 		PRINTTEXT_CONTEXT ctx;
 
-		printtext_context_init(&ctx, to_window,
-		    is_error ? TYPE_SPEC1_FAILURE : TYPE_SPEC1, true);
-		printtext(&ctx, "%s", token);
+		printtext_context_init(&ctx, g_status_window,
+		    TYPE_SPEC1_FAILURE, true);
+		printtext(&ctx, "In irc_extract_msg: strFeed(..., %d) != %d",
+		    ext_bits, ext_bits);
 		return;
-	    }
-	} else {
-	    /* null */;
 	}
-    }
+
+	for (i = 0, cp = &compo->params[0];; i++, cp = NULL) {
+		char *token;
+
+		if ((token = strtok_r(cp, "\n", &state)) == NULL) {
+			break;
+		} else if (i == ext_bits) {
+			if (*token == ':')
+				token++;
+			if (*token) {
+				PRINTTEXT_CONTEXT ctx;
+
+				printtext_context_init(&ctx, to_window,
+				    (is_error ? TYPE_SPEC1_FAILURE :
+				    TYPE_SPEC1), true);
+				printtext(&ctx, "%s", token);
+				return;
+			}
+		}
+	}
 }
 
 static int
