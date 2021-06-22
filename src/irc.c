@@ -281,18 +281,18 @@ irc_init(void)
 void
 irc_deinit(void)
 {
-    g_alt_nick_tested = false;
-    g_am_irc_op       = false;
-    g_is_away         = false;
+	g_alt_nick_tested = false;
+	g_am_irc_op = false;
+	g_is_away = false;
 
-    free_and_null(&g_my_nickname);
-    free_and_null(&g_server_hostname);
-    BZERO(g_user_modes, sizeof g_user_modes);
+	free_and_null(&g_my_nickname);
+	free_and_null(&g_server_hostname);
+	BZERO(g_user_modes, sizeof g_user_modes);
 
-    event_names_deinit();
+	event_names_deinit();
 
-    statusbar_update_display_beta();
-    readline_top_panel();
+	statusbar_update_display_beta();
+	readline_top_panel();
 }
 
 /* -------------------------------------------------- */
