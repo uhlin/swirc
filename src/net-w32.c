@@ -59,10 +59,10 @@ winsock_deinit(void)
 bool
 winsock_init(void)
 {
-    WORD    ver_req = MAKEWORD(2, 2);
-    WSADATA wsa;
+	WORD ver_req = MAKEWORD(2, 2);
+	WSADATA wsa;
 
-    return (WSAStartup(ver_req, &wsa) == 0 ? true : false);
+	return (WSAStartup(ver_req, &wsa) == 0 ? true : false);
 }
 
 int
