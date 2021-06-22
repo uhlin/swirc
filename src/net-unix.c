@@ -162,11 +162,11 @@ listen_thread_fn(void *arg)
 void
 net_spawn_listen_thread(void)
 {
-    if (errno = pthread_create(&listen_thread_id, NULL, listen_thread_fn, NULL),
-	errno != 0)
-	err_sys("net_spawn_listen_thread: pthread_create");
-    else if ((errno = pthread_detach(listen_thread_id)) != 0)
-	err_sys("net_spawn_listen_thread: pthread_detach");
+	if ((errno = pthread_create(&listen_thread_id, NULL, listen_thread_fn,
+	    NULL)) != 0)
+		err_sys("net_spawn_listen_thread: pthread_create");
+	else if ((errno = pthread_detach(listen_thread_id)) != 0)
+		err_sys("net_spawn_listen_thread: pthread_detach");
 }
 
 /* ---------------------------------------------------------------------- */
