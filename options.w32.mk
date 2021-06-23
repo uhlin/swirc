@@ -38,7 +38,7 @@ LDLIBS=$(NAME_libcrypto).lib\
 	advapi32.lib\
 	bcrypt.lib\
 	kernel32.lib\
-	libcurl.lib\
+	libcurl_imp.lib\
 	pdcurses.lib\
 	runtimeobject.lib\
 	user32.lib\
