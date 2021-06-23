@@ -1,5 +1,5 @@
 /* filePred.c  --  File Predicates
-   Copyright (C) 2012, 2013, 2016 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -73,9 +73,9 @@ is_device(const char *path)
 bool
 is_regular_file(const char *path)
 {
-    struct stat sb;
+	struct stat sb = { 0 };
 
-    if (!path || *path == '\0')
-	return false;
-    return stat(path, &sb) == 0 && S_ISREG(sb.st_mode);
+	if (path == NULL || *path == '\0')
+		return false;
+	return (stat(path, &sb) == 0 && S_ISREG(sb.st_mode));
 }
