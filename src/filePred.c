@@ -63,11 +63,11 @@ is_directory(const char *path)
 bool
 is_device(const char *path)
 {
-    struct stat sb;
+	struct stat sb = { 0 };
 
-    if (!path || *path == '\0')
-	return false;
-    return stat(path, &sb) == 0 && S_ISCHR(sb.st_mode);
+	if (path == NULL || *path == '\0')
+		return false;
+	return (stat(path, &sb) == 0 && S_ISCHR(sb.st_mode));
 }
 
 bool
