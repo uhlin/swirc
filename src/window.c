@@ -233,6 +233,7 @@ reassign_window_refnums(void)
 	sw_assert(ref_count == g_ntotal_windows);
 }
 
+#if 0
 static bool
 shouldLimitOutputYesNoRandom(void)
 {
@@ -244,6 +245,7 @@ shouldLimitOutputYesNoRandom(void)
 
 	return (value != 0 ? true : false);
 }
+#endif
 
 /**
  * Redraw a window
@@ -714,7 +716,7 @@ window_scroll_down(PIRC_WINDOW window)
 
 	window_redraw(window, HEIGHT,
 	    (window->saved_size - window->scroll_count),
-	    shouldLimitOutputYesNoRandom());
+	    false);
 }
 
 /**
@@ -753,7 +755,7 @@ window_scroll_up(PIRC_WINDOW window)
 	else {
 		window_redraw(window, MIN_SIZE,
 		    (window->saved_size - window->scroll_count),
-		    shouldLimitOutputYesNoRandom());
+		    false);
 	}
 }
 
