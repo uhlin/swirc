@@ -38,6 +38,7 @@ All notable changes to this project will be documented in this file.
   - `sig-w32.c`
   - `vcMutex.c`
   - `window.c`
+- Modified the scrolling behavior
 - Moved defines
 - Reformatted and reindented files
 - Renamed functions and patterns
