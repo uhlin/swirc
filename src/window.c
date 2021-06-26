@@ -263,19 +263,23 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 	if (werase(pwin) != ERR)
 		(void) wnoutrefresh(pwin);
 	if (limit_output) {
+		(void) curs_set(0);
 		while (element != NULL && i < rows) {
 			printtext_puts(pwin, element->text, element->indent,
 			    (rows - i), &rep_count);
 			element = element->next;
 			i += rep_count;
 		}
+		(void) curs_set(1);
 	} else {
+		(void) curs_set(0);
 		while (element != NULL && i < rows) {
 			printtext_puts(pwin, element->text, element->indent, -1,
 			    NULL);
 			element = element->next;
 			++ i;
 		}
+		(void) curs_set(1);
 	}
 
 	statusbar_update_display_beta();
