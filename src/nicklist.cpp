@@ -33,7 +33,6 @@
 #include <list>
 #include <string>
 
-#include "atomicops.h"
 #include "dataClassify.h"
 #include "errHand.h"
 #include "libUtils.h"
