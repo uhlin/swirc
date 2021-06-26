@@ -279,10 +279,11 @@ history_next(void)
 	size_t bytes_convert;
 	static const size_t size = ARRAY_SIZE(g_push_back_buf);
 
-	if (textBuf_size(history) == 0 || element == textBuf_tail(history))
+	if (textBuf_size(history) == 0 || element == NULL)
 		return;
+	else if (element != textBuf_tail(history))
+		element = element->next;
 
-	element = element->next;
 	bold_fix(element->text);
 
 	if ((bytes_convert = xmbstowcs(g_push_back_buf, element->text,
@@ -298,10 +299,8 @@ history_prev(void)
 	size_t bytes_convert;
 	static const size_t size = ARRAY_SIZE(g_push_back_buf);
 
-	if (textBuf_size(history) == 0)
+	if (textBuf_size(history) == 0 || element == NULL)
 		return;
-	else if (element != textBuf_head(history))
-		element = element->prev;
 
 	bold_fix(element->text);
 
@@ -310,6 +309,8 @@ history_prev(void)
 		(void) wmemset(g_push_back_buf, 0L, size);
 	else if (bytes_convert == (size - 1))
 		g_push_back_buf[size - 1] = 0L;
+	if (element != textBuf_head(history))
+		element = element->prev;
 }
 
 static void
