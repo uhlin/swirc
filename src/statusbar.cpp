@@ -181,26 +181,16 @@ statusbar_update_display_beta(void)
     str.append(" ");
     str.append(lb);
     str.append(std::to_string(g_active_window->refnum));
-    str.append("(");
-    str.append(std::to_string(g_ntotal_windows));
-    str.append(")");
+    str.append("(").append(std::to_string(g_ntotal_windows)).append(")");
     str.append(rb);
 #endif
 
-    str.append(" ");
-    str.append(lb);
-    str.append(get_nick_and_server());
-    str.append(rb);
+    str.append(" ").append(lb).append(get_nick_and_server()).append(rb);
+    str.append(" ").append(lb).append(get_chanmodes()).append(rb);
 
     str.append(" ");
     str.append(lb);
-    str.append(get_chanmodes());
-    str.append(rb);
-
-    str.append(" ");
-    str.append(lb);
-    str.append("Log: ");
-    str.append(g_active_window->logging ? "Yes" : "No");
+    str.append("Log: ").append(g_active_window->logging ? "Yes" : "No");
     str.append(rb);
 
     str.append(" ");
