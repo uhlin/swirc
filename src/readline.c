@@ -245,11 +245,11 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 		mutex_unlock(&g_puts_mutex);
 
 		if (ret[0] == ERR)
-			readline_error(EPERM, "case_key_backspace: wmove");
+			readline_error(EIO, "case_key_backspace: wmove");
 		else if (ret[1] == ERR)
-			readline_error(EPERM, "case_key_backspace: wdelch");
+			readline_error(EIO, "case_key_backspace: wdelch");
 		else if (ret[2] == ERR)
-			readline_error(EPERM, "case_key_backspace: wclrtoeol");
+			readline_error(EIO, "case_key_backspace: wclrtoeol");
 
 		readline_winsnstr(ctx->act, &ctx->buffer[ctx->bufpos], -1);
 	} else {
@@ -267,9 +267,9 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 		mutex_unlock(&g_puts_mutex);
 
 		if (ret[0] == ERR)
-			readline_error(EPERM, "case_key_backspace: wmove");
+			readline_error(EIO, "case_key_backspace: wmove");
 		else if (ret[1] == ERR)
-			readline_error(EPERM, "case_key_backspace: wdelch");
+			readline_error(EIO, "case_key_backspace: wdelch");
 	}
 
 	mutex_lock(&g_puts_mutex);
@@ -302,9 +302,9 @@ case_key_dc(volatile struct readline_session_context *ctx)
 	mutex_unlock(&g_puts_mutex);
 
 	if (ret[0] == ERR)
-		readline_error(EPERM, "case_key_dc: wdelch");
+		readline_error(EIO, "case_key_dc: wdelch");
 	else if (ret[1] == ERR)
-		readline_error(EPERM, "case_key_dc: wclrtoeol");
+		readline_error(EIO, "case_key_dc: wclrtoeol");
 
 	readline_winsnstr(ctx->act, &ctx->buffer[ctx->bufpos], -1);
 
@@ -334,7 +334,7 @@ case_key_left(volatile struct readline_session_context *ctx)
 	yx = term_get_pos(ctx->act);
 	if (wmove(ctx->act, yx.cury, yx.curx - 1) == ERR) {
 		mutex_unlock(&g_puts_mutex);
-		readline_error(EPERM, "wmove");
+		readline_error(EIO, "wmove");
 		/* NOTREACHED */
 	}
 	(void) wrefresh(ctx->act);
@@ -362,7 +362,7 @@ case_key_right(volatile struct readline_session_context *ctx)
 	yx = term_get_pos(ctx->act);
 	if (wmove(ctx->act, yx.cury, yx.curx + 1) == ERR) {
 		mutex_unlock(&g_puts_mutex);
-		readline_error(EPERM, "wmove");
+		readline_error(EIO, "wmove");
 		/* NOTREACHED */
 	}
 	(void) wrefresh(ctx->act);
