@@ -382,7 +382,7 @@ case_key_right(volatile struct readline_session_context *ctx)
 static char *
 finalize_out_string(const wchar_t *buf)
 {
-	const size_t	 size = size_product(wcslen(buf) + 1, MB_CUR_MAX);
+	const size_t	 size = size_product(wcslen(buf) + 1, MB_LEN_MAX);
 	char		*out = xmalloc(size);
 	size_t		 bytes_convert;
 
@@ -406,7 +406,7 @@ finalize_out_string(const wchar_t *buf)
 static char *
 finalize_out_string(const wchar_t *buf)
 {
-	const int size = size_to_int(size_product(wcslen(buf) + 1, MB_CUR_MAX));
+	const int size = size_to_int(size_product(wcslen(buf) + 1, MB_LEN_MAX));
 	char *out = xmalloc(size);
 
 	errno = 0;

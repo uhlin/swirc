@@ -48,7 +48,7 @@
 static char *
 convert_wc(wchar_t wc)
 {
-	const size_t	 size = (MB_CUR_MAX + 1);
+	const size_t	 size = (MB_LEN_MAX + 1);
 	char		*mbs = xcalloc(size, 1);
 	mbstate_t	 ps;
 	size_t		 bytes_written;
