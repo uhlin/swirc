@@ -1,6 +1,9 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Fixed "no text to send" bug
+
 ## [3.3.0] - 2021-06-27 ##
 - **Added** function `errdesc_by_last_err()` and made use of it
 - **Added** key F3 (scroll nicklist up) and F4 (scroll nicklist down)
