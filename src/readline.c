@@ -73,7 +73,7 @@ bool	g_hist_prev = false;
 
 static PANEL			*readline_pan1 = NULL;
 static PANEL			*readline_pan2 = NULL;
-static const int		 readline_bufsize = 2700;
+static const int		 readline_bufsize = 2000;
 static rl_active_panel_t	 panel_state = PANEL1_ACTIVE;
 
 /****************************************************************
