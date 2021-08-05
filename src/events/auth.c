@@ -101,17 +101,18 @@ build_auth_message(char **msg)
 static void
 handle_ecdsa_nist256p_challenge(const char *challenge)
 {
-    char *err_reason = "";
-    char *solution = solve_ecdsa_nist256p_challenge(challenge, &err_reason);
+	char	*err_reason = "";
+	char	*solution;
 
-    if (solution == NULL) {
-	err_log(0, "solve_ecdsa_nist256p_challenge failed: %s", err_reason);
-	abort_authentication();
-	return;
-    }
+	if ((solution = solve_ecdsa_nist256p_challenge(challenge,
+	    &err_reason)) == NULL) {
+		err_log(0, "solve_ecdsa_nist256p_challenge: %s", err_reason);
+		abort_authentication();
+		return;
+	}
 
-    (void) net_send("AUTHENTICATE %s", solution);
-    free(solution);
+	(void) net_send("AUTHENTICATE %s", solution);
+	free(solution);
 }
 
 static void
