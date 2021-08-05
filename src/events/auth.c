@@ -189,11 +189,11 @@ handle_sasl_auth_fail(struct irc_message_compo *compo)
 void
 sasl_auth_success(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT ctx;
 
-    (void) compo;
+	(void) compo;
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_SUCCESS, true);
-    printtext(&ctx, "SASL authentication successful");
-    net_send("CAP END");
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_SUCCESS, true);
+	printtext(&ctx, "SASL authentication successful");
+	(void) net_send("CAP END");
 }
