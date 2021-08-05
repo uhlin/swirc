@@ -531,7 +531,6 @@ enter_io_loop(void)
 			(void) napms(333);
 			cmd_connect(buf);
 		}
-
 	}
 
 	history = textBuf_new();
