@@ -176,10 +176,10 @@ event_authenticate(struct irc_message_compo *compo)
 void
 handle_sasl_auth_fail(struct irc_message_compo *compo)
 {
-    if (strings_match(compo->command, "908"))
-	squeeze(compo->params, ":");
-    irc_extract_msg(compo, g_status_window, 1, true);
-    abort_authentication();
+	if (strings_match(compo->command, "908"))
+		squeeze(compo->params, ":");
+	irc_extract_msg(compo, g_status_window, 1, true);
+	abort_authentication();
 }
 
 /* sasl_auth_success: 903 (RPL_SASLSUCCESS)
