@@ -114,57 +114,69 @@ handle_ecdsa_nist256p_challenge(const char *challenge)
     free(solution);
 }
 
+static void
+handle_else_branch(const char *mechanism, const char *params)
+{
+	if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE")) {
+		handle_ecdsa_nist256p_challenge(params);
+	} else if (strings_match(mechanism, "SCRAM-SHA-256")) {
+		if (!g_sasl_scram_sha_got_first_msg) {
+			if (sasl_scram_sha_handle_serv_first_msg(params) == -1)
+				abort_authentication();
+			else
+				g_sasl_scram_sha_got_first_msg = true;
+		} else {
+			if (sasl_scram_sha_handle_serv_final_msg(params) == -1)
+				abort_authentication();
+			else
+				(void) net_send("AUTHENTICATE +");
+		}
+	}
+}
+
 void
 event_authenticate(struct irc_message_compo *compo)
 {
-    const char *mechanism = get_sasl_mechanism();
+	const char *mechanism = get_sasl_mechanism();
 
-    if (strings_match(compo->params, "+")) {
-	if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE")) {
-	    char *encoded_username = get_b64_encoded_username();
+	if (strings_match(compo->params, "+")) {
+		if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE")) {
+			char *encoded_username;
 
-	    if (!encoded_username) {
-		abort_authentication();
-		return;
-	    }
+			if ((encoded_username = get_b64_encoded_username()) ==
+			    NULL) {
+				abort_authentication();
+				return;
+			}
 
-	    net_send("AUTHENTICATE %s", encoded_username);
-	    free(encoded_username);
-	} else if (strings_match(mechanism, "PLAIN")) {
-	    char *msg = NULL;
+			(void) net_send("AUTHENTICATE %s", encoded_username);
+			free(encoded_username);
+		} else if (strings_match(mechanism, "PLAIN")) {
+			char *msg = NULL;
 
-	    if (!build_auth_message(&msg)) {
-		abort_authentication();
-		return;
-	    }
+			if (!build_auth_message(&msg)) {
+				abort_authentication();
+				return;
+			}
 
-	    net_send("AUTHENTICATE %s", msg);
-	    free(msg);
-	} else if (strings_match(mechanism, "SCRAM-SHA-256")) {
-	    if (sasl_scram_sha_send_client_first_msg() == -1)
-		abort_authentication();
+			(void) net_send("AUTHENTICATE %s", msg);
+			free(msg);
+		} else if (strings_match(mechanism, "SCRAM-SHA-256")) {
+			if (sasl_scram_sha_send_client_first_msg() == -1)
+				abort_authentication();
+		} else {
+			err_log(0, "SASL mechanism unknown  --  "
+			    "aborting authentication!");
+			abort_authentication();
+			return;
+		}
 	} else {
-	    err_log(0, "SASL mechanism unknown  --  aborting authentication!");
-	    abort_authentication();
-	    return;
+		/*
+		 * not 'AUTHENTICATE +'...
+		 */
+
+		handle_else_branch(mechanism, compo->params);
 	}
-    } else { /*=== not 'AUTHENTICATE +' ===*/
-	if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE"))
-	    handle_ecdsa_nist256p_challenge(compo->params);
-	else if (strings_match(mechanism, "SCRAM-SHA-256")) {
-	    if (! (g_sasl_scram_sha_got_first_msg)) {
-		if (sasl_scram_sha_handle_serv_first_msg(compo->params) == -1)
-		    abort_authentication();
-		else
-		    g_sasl_scram_sha_got_first_msg = true;
-	    } else {
-		if (sasl_scram_sha_handle_serv_final_msg(compo->params) == -1)
-		    abort_authentication();
-		else
-		    net_send("AUTHENTICATE +");
-	    }
-	}
-    }
 }
 
 /* Examples:
