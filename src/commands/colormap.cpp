@@ -1,5 +1,5 @@
 /* colormap.cpp  --  output colors
-   Copyright (C) 2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020, 2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -37,6 +37,12 @@
 #include "../strHand.h"
 
 #include "colormap.h"
+
+static void
+print_function_key(PPRINTTEXT_CONTEXT ctx, const char *key, const char *desc)
+{
+    printtext(ctx, "  %c%-3s%c = %s", BOLD, key, NORMAL, desc);
+}
 
 /* usage: /colormap */
 void
@@ -113,6 +119,13 @@ cmd_colormap(const char *data)
     for (std::vector<std::string>::size_type i = 0; i < out.size(); i++)
 	printtext(&ctx, "%s", out[i].c_str());
 
+    print_function_key(&ctx, "F5", "Blink");
+    print_function_key(&ctx, "F6", "Bold");
+    print_function_key(&ctx, "F7", "Color");
+    print_function_key(&ctx, "F8", "Normal");
+    print_function_key(&ctx, "F9", "Reverse");
+    print_function_key(&ctx, "F10", "Underline");
+    printtext(&ctx, " ");
     printtext(&ctx, "COLORS:      %d", COLORS);
     printtext(&ctx, "COLOR_PAIRS: %d", COLOR_PAIRS);
     printtext(&ctx, "can_change_color: %s", can_change_color() ? "Yes" : "No");
