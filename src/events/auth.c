@@ -48,8 +48,8 @@
 static void
 abort_authentication(void)
 {
-    (void) net_send("AUTHENTICATE *");
-    (void) net_send("CAP END");
+	(void) net_send("AUTHENTICATE *");
+	(void) net_send("CAP END");
 }
 
 /*lint -sem(get_b64_encoded_username, r_null) */
