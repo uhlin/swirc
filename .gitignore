@@ -9,6 +9,7 @@
 *.obj
 *.wixobj
 *.wixpdb
+_LINT.TMP
 curl-*
 libressl-*-windows
 options.mk
@@ -20,3 +21,4 @@ swirc.html
 swirc.res
 swirc.static.html
 tests/*.run
+trusted_roots.pem
