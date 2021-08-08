@@ -59,13 +59,13 @@ clean:
 	$(RM) "src\*.obj"
 	$(RM) "src\commands\*.obj"
 	$(RM) "src\events\*.obj"
+	$(RM) "src\trusted_roots.pem"
 	$(RM) $(BUILD_LOG)
 	$(RM) $(TGTS)
 	$(RM) Swirc.wixobj
 	$(RM) curl-$(CURL_VERSION).cab
 	$(RM) libressl-$(LIBRESSL_VERSION)-windows.cab
 	$(RM) pdcurses-$(PDCURSES_VERSION).cab
-	$(RM) swirc-royal.ico
 	$(RM) swirc.res
 	rmdir /s /q curl-$(CURL_VERSION)
 	rmdir /s /q libressl-$(LIBRESSL_VERSION)-windows
