@@ -75,27 +75,31 @@ get_b64_encoded_username(void)
 static bool
 build_auth_message(char **msg)
 {
-    const char *username = Config("sasl_username");
-    const char *password = Config("sasl_password");
+	char		*msg_unencoded;
+	const char	*username = Config("sasl_username");
+	const char	*password = Config("sasl_password");
+	const size_t	 msgsize = 1000;
+	size_t		 len;
 
-    if (strings_match(username, "") || strings_match(password, "")) {
-	*msg = NULL;
-	return false;
-    }
-    char *msg_unencoded = strdup_printf("%s%c%s%c%s",
-	username, '\0', username, '\0', password);
-    size_t len = size_product(strlen(username), 2);
-    len += 2;
-    len += strlen(password);
-    *msg = xmalloc(1000);
-    if (b64_encode((uint8_t *) msg_unencoded, len, *msg, 1000) == -1) {
+	if (strings_match(username, "") || strings_match(password, "")) {
+		*msg = NULL;
+		return false;
+	}
+	msg_unencoded = strdup_printf("%s%c%s%c%s",
+	    username, '\0', username, '\0', password);
+	len = size_product(strlen(username), 2);
+	len += 2;
+	len += strlen(password);
+	*msg = xmalloc(msgsize + 1);
+	(*msg)[msgsize] = '\0';
+	if (b64_encode((uint8_t *) msg_unencoded, len, *msg, msgsize) == -1) {
+		free(msg_unencoded);
+		free(*msg);
+		*msg = NULL;
+		return false;
+	}
 	free(msg_unencoded);
-	free(*msg);
-	*msg = NULL;
-	return false;
-    }
-    free(msg_unencoded);
-    return true;
+	return true;
 }
 
 static void
