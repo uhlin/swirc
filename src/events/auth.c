@@ -56,20 +56,23 @@ abort_authentication(void)
 static char *
 get_b64_encoded_username(void)
 {
-    const char *username = Config("sasl_username");
+	char		*encoded_username;
+	const char	*username = Config("sasl_username");
+	const size_t	 namesize = 500;
 
-    if (strings_match(username, ""))
-	return NULL;
+	if (strings_match(username, ""))
+		return NULL;
 
-    char *encoded_username = xmalloc(500);
+	encoded_username = xmalloc(namesize + 1);
+	encoded_username[namesize] = '\0';
 
-    if (b64_encode((uint8_t *) username, strlen(username),
-		   encoded_username, 500) == -1) {
-	free(encoded_username);
-	return NULL;
-    }
+	if (b64_encode((uint8_t *) username, strlen(username), encoded_username,
+	    namesize) == -1) {
+		free(encoded_username);
+		return NULL;
+	}
 
-    return encoded_username;
+	return encoded_username;
 }
 
 static bool
