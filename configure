@@ -49,6 +49,7 @@ esac
 
 _with_libnotify=0
 _without_libidn=0
+_without_libintl=0
 
 for arg in "$@"; do
 	case "$arg" in
@@ -57,6 +58,9 @@ for arg in "$@"; do
 		;;
 		"--without-libidn")
 			_without_libidn=1
+		;;
+		"--without-libintl")
+			_without_libintl=1
 		;;
 		*)
 		;;
@@ -69,6 +73,13 @@ fi
 
 if [ $_without_libidn -eq 0 ]; then
 	link_with_gnu_libidn
+fi
+
+if [ $_without_libintl -eq 0 ]; then
+	cat <<EOF >>$MAKE_DEF_FILE
+CFLAGS += -DHAVE_LIBINTL_H=1
+CXXFLAGS += -DHAVE_LIBINTL_H=1
+EOF
 fi
 
 if [ -f "$MAKE_DEF_FILE" ]; then
