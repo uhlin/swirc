@@ -47,6 +47,7 @@
 #include "curses-funcs.h"
 #include "cursesInit.h"
 #include "errHand.h"
+#include "i18n.h"
 #include "io-loop.h"
 #include "libUtils.h"
 #include "main.h"
@@ -185,7 +186,7 @@ view_version()
 static void
 print_help(const char *exe)
 {
-    char *MessageUsage = strdup_printf("Usage: %s [OPTION] ...\n", exe);
+    char *MessageUsage = strdup_printf(_("Usage: %s [OPTION] ...\n"), exe);
     const char **ppcc;
     const size_t ar_sz = ARRAY_SIZE(OptionDesc);
 
