@@ -36,4 +36,5 @@ clean:
 	$(RM) -R swirc.analyze
 	$(RM) swirc.html
 	$(RM) swirc.static.html
+	$(MAKE) -Cpo clean
 	$(MAKE) -Ctests clean
