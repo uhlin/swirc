@@ -497,6 +497,24 @@ main(int argc, char *argv[])
 
     (void) setlocale(LC_ALL, "");
 
+#ifdef HAVE_LIBINTL_H
+#if defined(UNIX)
+    if (bindtextdomain("swirc", "/usr/local/share/locale") == NULL) {
+	err_ret("bindtextdomain");
+	return EXIT_FAILURE;
+    }
+#elif defined(WIN32)
+    if (bindtextdomain("swirc", getenv("CD")) == NULL) {
+	err_ret("bindtextdomain");
+	return EXIT_FAILURE;
+    }
+#endif
+    if (textdomain("swirc") == NULL) {
+	err_ret("textdomain");
+	return EXIT_FAILURE;
+    }
+#endif
+
     if (!sighand_init()) {
 	err_msg("fatal: failed to initialize signal handling");
 	return EXIT_FAILURE;
