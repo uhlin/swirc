@@ -113,25 +113,25 @@ static const char *SoftwareDisclaimer[] = {
 };
 
 static const char *OptionDesc[] = {
-    "\nOptions:\n\n",
-    "    -4                   Use IPv4 addresses only\n",
-    "    -6                   Use IPv6 addresses only\n",
-    "    -?, --help           Output help\n",
-    "    -C                   Do not change color definitions\n",
-    "    -P                   Permanently disable SASL authentication\n",
+    N_("\nOptions:\n\n"),
+    N_("    -4                   Use IPv4 addresses only\n"),
+    N_("    -6                   Use IPv6 addresses only\n"),
+    N_("    -?, --help           Output help\n"),
+    N_("    -C                   Do not change color definitions\n"),
+    N_("    -P                   Permanently disable SASL authentication\n"),
 #if OUTPUT_INTERNAL_OPTIONS
     "    -T                   Internal option. Windows: Invoked when\n",
     "                         launched by a toast.\n",
 #endif
-    "    -c <server[:port]>   Connect to IRC server\n",
-    "    -d                   Debug logging\n",
-    "    -i                   Turn on Internet Citizen's Band mode\n",
-    "    -n <nickname>        Online nickname\n",
-    "    -p                   Query for server password (for private servers)\n",
-    "    -r <rl name>         Your real name\n",
-    "    -u <username>        Your username\n",
-    "    -v, --version        Output Swirc version\n",
-    "    -x <config>          Config file\n",
+    N_("    -c <server[:port]>   Connect to IRC server\n"),
+    N_("    -d                   Debug logging\n"),
+    N_("    -i                   Turn on Internet Citizen's Band mode\n"),
+    N_("    -n <nickname>        Online nickname\n"),
+    N_("    -p                   Query for server password (for private servers)\n"),
+    N_("    -r <rl name>         Your real name\n"),
+    N_("    -u <username>        Your username\n"),
+    N_("    -v, --version        Output Swirc version\n"),
+    N_("    -x <config>          Config file\n"),
 };
 
 /**
