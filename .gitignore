@@ -4,9 +4,11 @@
 *.cab
 *.dll
 *.ico
+*.mo
 *.msi
 *.o
 *.obj
+*.pot
 *.wixobj
 *.wixpdb
 _LINT.TMP
