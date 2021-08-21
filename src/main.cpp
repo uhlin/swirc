@@ -194,7 +194,7 @@ print_help(const char *exe)
     free(MessageUsage);
 
     for (ppcc = &OptionDesc[0]; ppcc < &OptionDesc[ar_sz]; ppcc++) {
-	PUTS(gettext(*ppcc));
+	PUTS(_(*ppcc));
     }
 }
 
