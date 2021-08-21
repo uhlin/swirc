@@ -3,6 +3,9 @@
 
 #ifdef HAVE_LIBINTL_H
 #include <libintl.h>
+#ifndef gettext_noop
+#define gettext_noop(msgid) (msgid)
+#endif
 #define _(msgid)	gettext(msgid)
 #define N_(msgid)	gettext_noop(msgid)
 #else
