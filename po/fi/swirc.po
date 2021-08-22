@@ -1,0 +1,91 @@
+# Finnish translations for swirc package
+# Suomenkielinen käännös swirc-paketille.
+# This file is put in the public domain.
+#  <markus.uhlin@bredband.net>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: swirc 3.3.0\n"
+"Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
+"POT-Creation-Date: 2021-08-22 22:22+0200\n"
+"PO-Revision-Date: 2021-08-22 22:22+0200\n"
+"Last-Translator:  <markus.uhlin@bredband.net>\n"
+"Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../src/main.cpp:116
+msgid ""
+"\n"
+"Options:\n"
+"\n"
+msgstr ""
+"\n"
+"Vaihtoehdot:\n"
+"\n"
+
+#: ../src/main.cpp:117
+msgid "    -4                   Use IPv4 addresses only\n"
+msgstr "    -4                   Käytä IPv4-osoitteet vain\n"
+
+#: ../src/main.cpp:118
+msgid "    -6                   Use IPv6 addresses only\n"
+msgstr "    -6                   Käytä IPv6-osoitteita vain\n"
+
+#: ../src/main.cpp:119
+msgid "    -?, --help           Output help\n"
+msgstr "    -?, --help           Lähtö help\n"
+
+#: ../src/main.cpp:120
+msgid "    -C                   Do not change color definitions\n"
+msgstr "    -C                   Älä muuta värimääritysten\n"
+
+#: ../src/main.cpp:121
+msgid "    -P                   Permanently disable SASL authentication\n"
+msgstr "    -P                   Poista SASL todennus pysyvästi käytöstä\n"
+
+#: ../src/main.cpp:126
+msgid "    -c <server[:port]>   Connect to IRC server\n"
+msgstr "    -c <server[:port]>   Muodosta yhteys IRC palvelimeen\n"
+
+#: ../src/main.cpp:127
+msgid "    -d                   Debug logging\n"
+msgstr "    -d                   Kirjaa virheenkorjausviestejä\n"
+
+#: ../src/main.cpp:128
+msgid "    -i                   Turn on Internet Citizen's Band mode\n"
+msgstr "    -i                   Ota Internet Citizen's Band tila käyttöön\n"
+
+#: ../src/main.cpp:129
+msgid "    -n <nickname>        Online nickname\n"
+msgstr "    -n <nickname>        Online nickname\n"
+
+#: ../src/main.cpp:130
+msgid ""
+"    -p                   Query for server password (for private servers)\n"
+msgstr ""
+"    -p                   Kyselyn palvelimen salasanaa (yksityisten palvelimien)\n"
+
+#: ../src/main.cpp:131
+msgid "    -r <rl name>         Your real name\n"
+msgstr "    -r <rl name>         Oikea nimesi\n"
+
+#: ../src/main.cpp:132
+msgid "    -u <username>        Your username\n"
+msgstr "    -u <username>        Sinun käyttäjä nimesi\n"
+
+#: ../src/main.cpp:133
+msgid "    -v, --version        Output Swirc version\n"
+msgstr "    -v, --version        Lähtö Swirc versio\n"
+
+#: ../src/main.cpp:134
+msgid "    -x <config>          Config file\n"
+msgstr "    -x <config>          Config tiedosto\n"
+
+#: ../src/main.cpp:189
+#, c-format
+msgid "Usage: %s [OPTION] ...\n"
+msgstr "Käyttö: %s [VAIHTOEHTO] ...\n"
