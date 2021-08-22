@@ -29,11 +29,11 @@ msgstr ""
 
 #: ../src/main.cpp:117
 msgid "    -4                   Use IPv4 addresses only\n"
-msgstr "    -4                   Käytä IPv4-osoitteet vain\n"
+msgstr "    -4                   Käytä IPv4 osoitteita vain\n"
 
 #: ../src/main.cpp:118
 msgid "    -6                   Use IPv6 addresses only\n"
-msgstr "    -6                   Käytä IPv6-osoitteita vain\n"
+msgstr "    -6                   Käytä IPv6 osoitteita vain\n"
 
 #: ../src/main.cpp:119
 msgid "    -?, --help           Output help\n"
