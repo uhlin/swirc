@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added configuration flag `--without-libintl`
 - Documented F5-F10 in command `/colormap`
 - Fixed "no text to send" bug
 - Made improvements to the following files:
