@@ -398,7 +398,7 @@ net_ssl_init(void)
 	create_ssl_context_obj_insecure();
 #endif
 
-	if (config_bool("ssl_verify_peer", true)) {
+	if (g_ssl_verify_peer && config_bool("ssl_verify_peer", true)) {
 #ifdef WIN32
 		if (!SSL_CTX_load_verify_locations(ssl_ctx, CAFILE, CADIR)) {
 			printtext(&ptext_ctx, "net_ssl_init: Error loading "
