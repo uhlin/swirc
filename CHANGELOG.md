@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added command line option `-R` (Disable TLS/SSL peer verification)
 - Added configuration flag `--without-libintl`
 - Configuration option `joins_parts_quits` now defaults to NO
 - Documented F5-F10 in command `/colormap`

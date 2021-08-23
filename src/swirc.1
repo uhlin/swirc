@@ -1,7 +1,7 @@
 .\"
 .\" Public domain
 .\"
-.Dd June 12, 2021
+.Dd August 24, 2021
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -10,7 +10,7 @@
 .Sh SYNOPSIS
 .Nm swirc
 .Bk -words
-.Op Fl 46?CPdipv
+.Op Fl 46?CPRdipv
 .Op Fl c Ar server[:port]
 .Op Fl n Ar nickname
 .Op Fl r Ar rl name
@@ -47,6 +47,8 @@ which is possible to fix by simply restarting it.
 Permanently disable SASL authentication.
 If specified, the effect is \fIfinal\fP (i.e. it overrides any config
 file value.)
+.It Fl R
+Disable TLS/SSL peer verification
 .It Fl c Ar server[:port]
 Connect to given server.
 If the port is omitted port 6667 will be chosen.

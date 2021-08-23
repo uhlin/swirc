@@ -91,6 +91,7 @@ bool g_debug_logging        = false;
 bool g_explicit_config_file = false;
 bool g_icb_mode             = false;
 bool g_sasl_authentication  = true;
+bool g_ssl_verify_peer      = true;
 
 struct cmdline_opt_values *g_cmdline_opts = new cmdline_opt_values();
 
@@ -119,6 +120,7 @@ static const char *OptionDesc[] = {
     N_("    -?, --help           Output help\n"),
     N_("    -C                   Do not change color definitions\n"),
     N_("    -P                   Permanently disable SASL authentication\n"),
+    N_("    -R                   Disable TLS/SSL peer verification\n"),
 #if OUTPUT_INTERNAL_OPTIONS
     "    -T                   Internal option. Windows: Invoked when\n",
     "                         launched by a toast.\n",
@@ -370,6 +372,9 @@ process_options(int argc, char *argv[], const char *optstring)
 	case 'P':
 	    g_sasl_authentication = false;
 	    break;
+	case 'R':
+	    g_ssl_verify_peer = false;
+	    break;
 	case 'T':
 	    case_launched_by_toast_hook();
 	    break;
@@ -544,7 +549,7 @@ main(int argc, char *argv[])
     }
 #endif
 
-    process_options(argc, argv, "46CPTc:dh:in:pr:u:x:");
+    process_options(argc, argv, "46CPRTc:dh:in:pr:u:x:");
 
     srand(get_seed());
 

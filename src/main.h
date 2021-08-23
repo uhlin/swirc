@@ -45,6 +45,7 @@ extern bool g_debug_logging;
 extern bool g_explicit_config_file;
 extern bool g_icb_mode;
 extern bool g_sasl_authentication;
+extern bool g_ssl_verify_peer;
 
 extern struct cmdline_opt_values *g_cmdline_opts;
 
