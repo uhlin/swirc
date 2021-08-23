@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2021-08-22 01:10+0200\n"
 "PO-Revision-Date: 2021-08-22 01:10+0200\n"
-"Last-Translator:  <markus.uhlin@bredband.net>\n"
+"Last-Translator:  <michi+git@dataswamp.org>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -24,20 +24,20 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Flaggen:\n"
+"Optionen:\n"
 "\n"
 
 #: ../src/main.cpp:117
 msgid "    -4                   Use IPv4 addresses only\n"
-msgstr "    -4                   Verwenden Sie nur IPv4-Adressen\n"
+msgstr "    -4                   Nur IPv4-Adressen verwenden\n"
 
 #: ../src/main.cpp:118
 msgid "    -6                   Use IPv6 addresses only\n"
-msgstr "    -6                   Verwenden Sie nur IPv6-Adressen\n"
+msgstr "    -6                   Nur IPv6-Adressen verwenden\n"
 
 #: ../src/main.cpp:119
 msgid "    -?, --help           Output help\n"
-msgstr "    -?, --help           Hilfe drucken\n"
+msgstr "    -?, --help           Hilfe anzeigen\n"
 
 #: ../src/main.cpp:120
 msgid "    -C                   Do not change color definitions\n"
@@ -57,11 +57,11 @@ msgstr "    -d                   Debug Protokollierung\n"
 
 #: ../src/main.cpp:128
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
-msgstr "    -i                   Aktivieren Sie den Internet-Bürgerband-Modus\n"
+msgstr "    -i                   Internet Citizen's Band aktivieren\n"
 
 #: ../src/main.cpp:129
 msgid "    -n <nickname>        Online nickname\n"
-msgstr "    -n <nickname>        Online nickname\n"
+msgstr "    -n <nickname>        Online Nickname\n"
 
 #: ../src/main.cpp:130
 msgid ""
@@ -71,7 +71,7 @@ msgstr ""
 
 #: ../src/main.cpp:131
 msgid "    -r <rl name>         Your real name\n"
-msgstr "    -r <rl name>         Dein richtiger Name\n"
+msgstr "    -r <rl name>         Dein echter Name\n"
 
 #: ../src/main.cpp:132
 msgid "    -u <username>        Your username\n"
@@ -88,4 +88,4 @@ msgstr "    -x <config>          Konfigurationsdatei\n"
 #: ../src/main.cpp:189
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
-msgstr "Verwenden: %s [FLAGGE] ...\n"
+msgstr "Anwendung: %s [FLAGGE] ...\n"
