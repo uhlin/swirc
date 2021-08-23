@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Fixed "no text to send" bug
 - Made improvements to the following files:
   - `events/auth.c`
+- Translated parts to German, Finnish, French and Swedish.
 
 ## [3.3.0] - 2021-06-27 ##
 - **Added** function `errdesc_by_last_err()` and made use of it
