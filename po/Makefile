@@ -45,7 +45,7 @@ merge:
 	$(MSGMERGE) $(MMFLAGS) fr/$(PKG).po $(PKG).pot
 	$(MSGMERGE) $(MMFLAGS) sv/$(PKG).po $(PKG).pot
 
-main: $(PKG).pot $(POFILES) merge $(MOFILES)
+main: $(PKG).pot $(POFILES) $(MOFILES)
 
 $(PKG).pot:
 	$(XGETTEXT) $(XGTFLAGS) $(INPUTFILES)
