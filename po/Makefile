@@ -29,13 +29,11 @@ INPUTFILES = $(SRC_DIR)main.cpp
 POFILES = de/$(PKG).po\
 	fi/$(PKG).po\
 	fr/$(PKG).po\
-	sv/$(PKG).po\
-	th/$(PKG).po
+	sv/$(PKG).po
 MOFILES = de/$(PKG).mo\
 	fi/$(PKG).mo\
 	fr/$(PKG).mo\
-	sv/$(PKG).mo\
-	th/$(PKG).mo
+	sv/$(PKG).mo
 
 include $(ROOT)options.mk
 
@@ -46,7 +44,6 @@ merge:
 	$(MSGMERGE) $(MMFLAGS) fi/$(PKG).po $(PKG).pot
 	$(MSGMERGE) $(MMFLAGS) fr/$(PKG).po $(PKG).pot
 	$(MSGMERGE) $(MMFLAGS) sv/$(PKG).po $(PKG).pot
-	$(MSGMERGE) $(MMFLAGS) th/$(PKG).po $(PKG).pot
 
 main: $(PKG).pot $(POFILES) merge $(MOFILES)
 
@@ -92,16 +89,6 @@ sv/$(PKG).po:
 	msginit --input=$(PKG).pot --output-file=sv/$(PKG).po --locale=sv_SE.UTF-8
 sv/$(PKG).mo:
 	msgfmt --output-file=sv/$(PKG).mo sv/$(PKG).po
-
-##############
-##   Thai   ##
-##############
-
-th/$(PKG).po:
-	mkdir -p th
-	msginit --input=$(PKG).pot --output-file=th/$(PKG).po --locale=th_TH.UTF-8
-th/$(PKG).mo:
-	msgfmt --output-file=th/$(PKG).mo th/$(PKG).po
 
 clean:
 	$(E) "  CLEAN"
