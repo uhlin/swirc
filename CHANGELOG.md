@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added configuration flag `--without-libintl`
+- Configuration option `joins_parts_quits` now defaults to NO
 - Documented F5-F10 in command `/colormap`
 - Fixed "no text to send" bug
 - Made improvements to the following files:
