@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.0\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2021-08-22 22:22+0200\n"
+"POT-Creation-Date: 2021-08-24 12:44+0200\n"
 "PO-Revision-Date: 2021-08-22 22:22+0200\n"
 "Last-Translator:  <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/main.cpp:116
+#: ../src/main.cpp:117
 msgid ""
 "\n"
 "Options:\n"
@@ -27,65 +27,71 @@ msgstr ""
 "Vaihtoehdot:\n"
 "\n"
 
-#: ../src/main.cpp:117
+#: ../src/main.cpp:118
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   Käytä IPv4 osoitteita vain\n"
 
-#: ../src/main.cpp:118
+#: ../src/main.cpp:119
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   Käytä IPv6 osoitteita vain\n"
 
-#: ../src/main.cpp:119
+#: ../src/main.cpp:120
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Lähtö help\n"
 
-#: ../src/main.cpp:120
+#: ../src/main.cpp:121
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Älä muuta värimääritysten\n"
 
-#: ../src/main.cpp:121
+#: ../src/main.cpp:122
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr "    -P                   Poista SASL todennus pysyvästi käytöstä\n"
 
-#: ../src/main.cpp:126
+#: ../src/main.cpp:123
+#, fuzzy
+msgid "    -R                   Disable TLS/SSL peer verification\n"
+msgstr "    -R                   Disable TLS/SSL peer verification\n"
+
+#: ../src/main.cpp:128
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Muodosta yhteys IRC palvelimeen\n"
 
-#: ../src/main.cpp:127
+#: ../src/main.cpp:129
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Kirjaa virheenkorjausviestejä\n"
 
-#: ../src/main.cpp:128
+#: ../src/main.cpp:130
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Ota Internet Citizen's Band tila käyttöön\n"
 
-#: ../src/main.cpp:129
+#: ../src/main.cpp:131
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Online nickname\n"
 
-#: ../src/main.cpp:130
+#: ../src/main.cpp:132
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
-"    -p                   Kyselyn palvelimen salasanaa (yksityisten palvelimien)\n"
+"    -p                   Kyselyn palvelimen salasanaa (yksityisten "
+"palvelimien)\n"
 
-#: ../src/main.cpp:131
+#: ../src/main.cpp:133
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Oikea nimesi\n"
 
-#: ../src/main.cpp:132
+#: ../src/main.cpp:134
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Sinun käyttäjä nimesi\n"
 
-#: ../src/main.cpp:133
+#: ../src/main.cpp:135
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Lähtö Swirc versio\n"
 
-#: ../src/main.cpp:134
+#: ../src/main.cpp:136
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Config tiedosto\n"
 
-#: ../src/main.cpp:189
+#: ../src/main.cpp:191
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Käyttö: %s [VAIHTOEHTO] ...\n"
