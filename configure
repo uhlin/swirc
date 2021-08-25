@@ -22,28 +22,27 @@ RM:=@rm -f
 EOF
 
 case "$(uname -s)" in
-	"Darwin")
-		os_MAC
+"Darwin")
+	os_MAC
 	;;
-	"FreeBSD" | "OpenBSD")
-		os_BSD
+"FreeBSD" | "OpenBSD")
+	os_BSD
 	;;
-	"NetBSD")
-		os_NETBSD
+"NetBSD")
+	os_NETBSD
 	;;
-	"Linux")
-		if [ "$1" = "suncc" ]; then
-			os_LINUX_suncc
-		else
-			os_LINUX
-		fi
+"Linux")
+	if [ "$1" = "suncc" ]; then
+		os_LINUX_suncc
+	else
+		os_LINUX
+	fi
 
-#		fix_cflags
-		fix_cflags_with_pkg_config
+	fix_cflags_with_pkg_config
 	;;
-	*)
-		echo "OS not supported!"
-		exit 1
+*)
+	echo "OS not supported!"
+	exit 1
 	;;
 esac
 
@@ -53,16 +52,16 @@ _without_libintl=0
 
 for arg in "$@"; do
 	case "$arg" in
-		"--with-libnotify")
-			_with_libnotify=1
+	"--with-libnotify")
+		_with_libnotify=1
 		;;
-		"--without-libidn")
-			_without_libidn=1
+	"--without-libidn")
+		_without_libidn=1
 		;;
-		"--without-libintl")
-			_without_libintl=1
+	"--without-libintl")
+		_without_libintl=1
 		;;
-		*)
+	*)
 		;;
 	esac
 done
