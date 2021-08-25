@@ -48,7 +48,6 @@ msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr "    -P                   Poista SASL todennus pysyvästi käytöstä\n"
 
 #: ../src/main.cpp:123
-#, fuzzy
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   Disable TLS/SSL peer verification\n"
 

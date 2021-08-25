@@ -49,7 +49,6 @@ msgstr ""
 "    -P                   SASL-Authentifizierung dauerhaft deaktivieren\n"
 
 #: ../src/main.cpp:123
-#, fuzzy
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   Disable TLS/SSL peer verification\n"
 
