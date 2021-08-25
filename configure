@@ -88,6 +88,8 @@ EOF
 	*)
 		;;
 	esac
+	${MAKE:-make} -Cpo clean
+	${MAKE:-make} -Cpo
 fi
 
 if [ -f "$MAKE_DEF_FILE" ]; then
