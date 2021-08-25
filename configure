@@ -79,6 +79,15 @@ if [ $_without_libintl -eq 0 ]; then
 CFLAGS += -DHAVE_LIBINTL_H=1
 CXXFLAGS += -DHAVE_LIBINTL_H=1
 EOF
+	case "$(uname -s)" in
+	"Darwin" | "FreeBSD" | "NetBSD" | "OpenBSD")
+		cat <<EOF >>$MAKE_DEF_FILE
+LDLIBS += -lintl
+EOF
+		;;
+	*)
+		;;
+	esac
 fi
 
 if [ -f "$MAKE_DEF_FILE" ]; then
