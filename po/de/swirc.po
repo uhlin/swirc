@@ -50,7 +50,7 @@ msgstr ""
 
 #: ../src/main.cpp:123
 msgid "    -R                   Disable TLS/SSL peer verification\n"
-msgstr "    -R                   Disable TLS/SSL peer verification\n"
+msgstr "    -R                   TLS/SSL peer verification deaktivieren\n"
 
 #: ../src/main.cpp:128
 msgid "    -c <server[:port]>   Connect to IRC server\n"
