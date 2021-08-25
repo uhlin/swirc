@@ -10,7 +10,6 @@ include src/events/build.mk
 include src/build.mk
 
 main: $(TGTS)
-	$(MAKE) -Cpo
 
 .c.o:
 	$(E) "  CC      " $@
