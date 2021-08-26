@@ -5,12 +5,13 @@ All notable changes to this project will be documented in this file.
 - **Added** command line option `-R` (Disable TLS/SSL peer verification)
 - **Added** configuration flag `--without-libintl`
 - **Added** key F1 (Output help)
-- Configuration option `joins_parts_quits` now defaults to NO
-- Documented F5-F10 in command `/colormap`
+- Configuration option `joins_parts_quits` now defaults to **NO**
+- Documented F5 - F10 in command `/colormap`
 - **Fixed** "no text to send" bug
 - Made improvements to the following files:
   - `events/auth.c`
-- Translated parts to German, Finnish, French and Swedish.
+- Translated parts to **German**, **Finnish**, **French** and
+  **Swedish**.
 
 ## [3.3.0] - 2021-06-27 ##
 - **Added** function `errdesc_by_last_err()` and made use of it
