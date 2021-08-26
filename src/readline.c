@@ -501,6 +501,35 @@ new_session(const char *prompt)
 	return ctx;
 }
 
+static void
+output_help(void)
+{
+	PRINTTEXT_CONTEXT ctx;
+
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
+
+	printtext(&ctx, "--------------- Keys ---------------");
+	printtext(&ctx, " ");
+	printtext(&ctx, "CTRL+a     Move to beginning of line");
+	printtext(&ctx, "CTRL+e     Move to end of line");
+	printtext(&ctx, "CTRL+b     Move cursor backward");
+	printtext(&ctx, "CTRL+f     Move cursor forward");
+	printtext(&ctx, "CTRL+d     Delete");
+	printtext(&ctx, "CTRL+g     Clear readline input");
+	printtext(&ctx, "CTRL+l     Toggle logging on/off");
+	printtext(&ctx, "CTRL+n     Next window");
+	printtext(&ctx, "CTRL+p     Previous window");
+	printtext(&ctx, "PG UP      Scroll up");
+	printtext(&ctx, "PG DOWN    Scroll down");
+	printtext(&ctx, "Up arrow   History previous");
+	printtext(&ctx, "Down arrow History next");
+	printtext(&ctx, "F3         Scroll nicklist up");
+	printtext(&ctx, "F4         Scroll nicklist down");
+	printtext(&ctx, "F11        Close window");
+	printtext(&ctx, "F12        Close all private conversations");
+	printtext(&ctx, " ");
+}
+
 /**
  * Destroy readline session
  */
@@ -611,6 +640,9 @@ process(volatile struct readline_session_context *ctx)
 				readline_tab_comp_ctx_reset(ctx->tc);
 			break;
 		} /* ---------- KEY_BACKSPACE ---------- */
+		case KEY_F(1):
+			output_help();
+			break;
 		case KEY_F(3):
 			nicklist_scroll_up(g_active_window);
 			break;
