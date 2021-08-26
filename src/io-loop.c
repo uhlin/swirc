@@ -423,6 +423,7 @@ swirc_greeting(void)
 	printtext(&ctx, "Type /help for a list of commands; "
 	    "or /help <command>");
 	printtext(&ctx, "for help of a specific command");
+	printtext(&ctx, "Type F1 for keys");
 	if (get_error_log_size(&log_size_kb)) {
 		printtext(&ctx, "Error log size %s%.1f KB%s",
 		    LEFT_BRKT, log_size_kb, RIGHT_BRKT);
