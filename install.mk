@@ -36,3 +36,13 @@ install: $(INSTALL_DEPS)
 	$(INSTALL) -m 0644 po/fi/swirc.mo $(DEST_LC_MSGS)fi/LC_MESSAGES
 	$(INSTALL) -m 0644 po/fr/swirc.mo $(DEST_LC_MSGS)fr/LC_MESSAGES
 	$(INSTALL) -m 0644 po/sv/swirc.mo $(DEST_LC_MSGS)sv/LC_MESSAGES
+
+install-no-lc-msgs:
+	$(INSTALL) -d $(DEST_PROGRAM)
+	$(INSTALL) -d $(DEST_MANUAL)
+	$(INSTALL) -d $(DEST_CONFMAN)
+	$(INSTALL) -d $(DEST_LOGO)
+	$(INSTALL) -m 0755 swirc $(DEST_PROGRAM)
+	$(INSTALL) -m 0444 src/swirc.1 $(DEST_MANUAL)
+	$(INSTALL) -m 0444 swirc.conf.5 $(DEST_CONFMAN)
+	$(INSTALL) -m 0444 swirc-royal.png $(DEST_LOGO)
