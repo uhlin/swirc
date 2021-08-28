@@ -1,12 +1,12 @@
 INSTALL := install
-INSTALL_DEPS = po/de/swirc.mo\
-	po/fi/swirc.mo\
-	po/fr/swirc.mo\
-	po/sv/swirc.mo\
-	src/swirc.1\
+INSTALL_DEPS = src/swirc.1\
 	swirc\
 	swirc-royal.png\
 	swirc.conf.5
+LC_MSGS = po/de/swirc.mo\
+	po/fi/swirc.mo\
+	po/fr/swirc.mo\
+	po/sv/swirc.mo
 
 PREFIX ?= /usr/local
 
@@ -19,7 +19,7 @@ DEST_CONFMAN	= $(DESTDIR)$(PREFIX)/share/man/man5
 DEST_LOGO	= $(DESTDIR)$(PREFIX)/share/swirc
 DEST_LC_MSGS	= $(DESTDIR)$(PREFIX)/share/locale/
 
-install: $(INSTALL_DEPS)
+install: $(INSTALL_DEPS) $(LC_MSGS)
 	$(INSTALL) -d $(DEST_PROGRAM)
 	$(INSTALL) -d $(DEST_MANUAL)
 	$(INSTALL) -d $(DEST_CONFMAN)
@@ -37,7 +37,7 @@ install: $(INSTALL_DEPS)
 	$(INSTALL) -m 0644 po/fr/swirc.mo $(DEST_LC_MSGS)fr/LC_MESSAGES
 	$(INSTALL) -m 0644 po/sv/swirc.mo $(DEST_LC_MSGS)sv/LC_MESSAGES
 
-install-no-lc-msgs:
+install-no-lc-msgs: $(INSTALL_DEPS)
 	$(INSTALL) -d $(DEST_PROGRAM)
 	$(INSTALL) -d $(DEST_MANUAL)
 	$(INSTALL) -d $(DEST_CONFMAN)
