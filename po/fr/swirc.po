@@ -49,7 +49,7 @@ msgstr "    -P                   Désactiver l'authentification SASL\n"
 
 #: ../src/main.cpp:123
 msgid "    -R                   Disable TLS/SSL peer verification\n"
-msgstr "    -R                   Disable TLS/SSL peer verification\n"
+msgstr "    -R                   Désactivation de la vérification du certificat TLS/SSL\n"
 
 #: ../src/main.cpp:128
 msgid "    -c <server[:port]>   Connect to IRC server\n"
