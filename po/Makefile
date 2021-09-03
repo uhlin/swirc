@@ -20,8 +20,6 @@ XGTFLAGS = --add-comments\
 	--keyword=_\
 	--msgid-bugs-address="https://github.com/uhlin/swirc/issues"\
 	--output=$(PKG).pot\
-	--package-name=$(PKG)\
-	--package-version=3.3.1\
 	--sort-output
 
 INPUTFILES = $(SRC_DIR)main.cpp
