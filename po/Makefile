@@ -48,7 +48,7 @@ merge:
 main: $(PKG).pot $(POFILES) $(MOFILES)
 
 $(PKG).pot:
-	$(XGETTEXT) $(XGTFLAGS) $(INPUTFILES)
+	$(Q) $(XGETTEXT) $(XGTFLAGS) $(INPUTFILES)
 
 ################
 ##   German   ##
