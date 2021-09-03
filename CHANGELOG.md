@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.3.1] - 2021-09-03 ##
 - **Added** command line option `-R` (Disable TLS/SSL peer verification)
 - **Added** configuration flag `--without-libintl`
 - **Added** key F1 (Output help)
