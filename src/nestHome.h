@@ -2,6 +2,8 @@
 #define NEST_HOME_H
 
 __SWIRC_BEGIN_DECLS
+extern char	*g_user;
+
 extern char	*g_home_dir;
 extern char	*g_tmp_dir;
 extern char	*g_log_dir;

@@ -48,6 +48,8 @@
 #include "strdup_printf.h"
 #include "theme.h"
 
+char	*g_user = "";
+
 char	*g_home_dir = NULL;
 char	*g_tmp_dir = NULL;
 char	*g_log_dir = NULL;
@@ -107,6 +109,8 @@ nestHome_init(void)
 
 	if (isNull(hp))
 		err_quit("Can't resolve homepath!");
+
+	g_user = sw_strdup(getuser());
 
 #if defined(UNIX)
 	g_home_dir = strdup_printf("%s/.swirc", hp);
@@ -192,6 +196,8 @@ nestHome_init(void)
 void
 nestHome_deinit(void)
 {
+	free_and_null(&g_user);
+
 	free_and_null(&g_home_dir);
 	free_and_null(&g_tmp_dir);
 	free_and_null(&g_log_dir);
