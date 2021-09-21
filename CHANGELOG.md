@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added function `getuser()` and made use of it
+- Made improvements to the following files:
+  - `nestHome.c`
 
 ## [3.3.1] - 2021-09-03 ##
 - **Added** command line option `-R` (Disable TLS/SSL peer verification)
