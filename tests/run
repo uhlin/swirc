@@ -10,6 +10,7 @@ cmd_servlist
 cmd_squery
 cmd_unban
 cmd_znc
+getuser
 int_diff
 int_sum
 is_alphabetic

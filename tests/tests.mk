@@ -7,6 +7,7 @@ TESTS=cmd_ban.run\
 	cmd_squery.run\
 	cmd_unban.run\
 	cmd_znc.run\
+	getuser.run\
 	int_diff.run\
 	int_sum.run\
 	is_alphabetic.run\
