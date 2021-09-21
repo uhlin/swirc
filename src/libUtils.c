@@ -137,6 +137,12 @@ current_time(const char *fmt)
     return (strftime(buffer, sizeof buffer, fmt, &items) > 0 ? &buffer[0] : "");
 }
 
+const char *
+getuser(void)
+{
+    return "";
+}
+
 /* Return the difference of 'a - b' */
 int
 int_diff(const int a, const int b)
