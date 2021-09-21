@@ -199,13 +199,13 @@ nestHome_deinit(void)
 const char *
 path_to_home(void)
 {
-    char *var_data = "";
+	char *var_data;
 #if defined(UNIX)
-    const char *var = "HOME";
+	const char var[] = "HOME";
 #elif defined(WIN32)
-    const char *var = "APPDATA";
+	const char var[] = "APPDATA";
 #endif
-    static char buf[1000] = "";
+	static char buf[1000] = { '\0' };
 
 /*
  * getenv() is safe in this context
@@ -213,13 +213,10 @@ path_to_home(void)
 #if WIN32
 #pragma warning(disable: 4996)
 #endif
-
-    if ((var_data = getenv(var)) == NULL ||
-	sw_strcpy(buf, var_data, ARRAY_SIZE(buf)) != 0 ||
-	!is_directory(buf)) {
-	return (NULL);
-    }
-
+	if ((var_data = getenv(var)) == NULL ||
+	    sw_strcpy(buf, var_data, ARRAY_SIZE(buf)) != 0 ||
+	    !is_directory(buf))
+		return (NULL);
 /*
  * Reset warning behavior to its default value
  */
@@ -227,5 +224,5 @@ path_to_home(void)
 #pragma warning(default: 4996)
 #endif
 
-    return (&buf[0]);
+	return (&buf[0]);
 }
