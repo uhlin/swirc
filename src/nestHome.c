@@ -88,14 +88,14 @@ modify_setting(const char *setting_name, const char *new_value)
 static void
 save_cmdline_opts(const char *path)
 {
-    if (g_cmdline_opts->nickname)
-	modify_setting("nickname", g_cmdline_opts->nickname);
-    if (g_cmdline_opts->username)
-	modify_setting("username", g_cmdline_opts->username);
-    if (g_cmdline_opts->rl_name)
-	modify_setting("real_name", g_cmdline_opts->rl_name);
+	if (g_cmdline_opts->nickname)
+		modify_setting("nickname", g_cmdline_opts->nickname);
+	if (g_cmdline_opts->username)
+		modify_setting("username", g_cmdline_opts->username);
+	if (g_cmdline_opts->rl_name)
+		modify_setting("real_name", g_cmdline_opts->rl_name);
 
-    config_do_save(path, "w");
+	config_do_save(path, "w");
 }
 
 void
