@@ -48,15 +48,15 @@
 #include "strdup_printf.h"
 #include "theme.h"
 
-char *g_home_dir = NULL;
-char *g_tmp_dir = NULL;
-char *g_log_dir = NULL;
+char	*g_home_dir = NULL;
+char	*g_tmp_dir = NULL;
+char	*g_log_dir = NULL;
 
-const char g_config_filesuffix[] = ".conf";
-const char g_theme_filesuffix[] = ".the";
+const char	g_config_filesuffix[] = ".conf";
+const char	g_theme_filesuffix[] = ".the";
 
-char *g_config_file = NULL;
-char *g_theme_file = NULL;
+char	*g_config_file = NULL;
+char	*g_theme_file = NULL;
 
 static void
 make_requested_dir(const char *path)
