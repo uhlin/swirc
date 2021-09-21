@@ -61,21 +61,22 @@ char *g_theme_file  = NULL;
 static void
 make_requested_dir(const char *path)
 {
-    if (is_directory(path)) {
-	return; /* Already exists! */
-    } else if (file_exists(path)) {
-	err_quit("%s exists. However; it isn't a directory.", path);
-    } else {
+	if (is_directory(path)) {
+		/*
+		 * Already exists!
+		 */
+		return;
+	} else if (file_exists(path)) {
+		err_quit("%s exists. However; it isn't a directory.", path);
+	} else {
 #if defined(UNIX)
-	if (mkdir(path, S_IRWXU) != 0) {
-	    err_sys("mkdir error");
-	}
+		if (mkdir(path, S_IRWXU) != 0)
+			err_sys("mkdir error");
 #elif defined(WIN32)
-	if (_mkdir(path) != 0) {
-	    err_sys("_mkdir error");
-	}
+		if (_mkdir(path) != 0)
+			err_sys("_mkdir error");
 #endif
-    }
+	}
 }
 
 static void
