@@ -185,15 +185,15 @@ nestHome_init(void)
 void
 nestHome_deinit(void)
 {
-    free_and_null(&g_home_dir);
-    free_and_null(&g_tmp_dir);
-    free_and_null(&g_log_dir);
+	free_and_null(&g_home_dir);
+	free_and_null(&g_tmp_dir);
+	free_and_null(&g_log_dir);
 
-    free_and_null(&g_config_file);
-    free_and_null(&g_theme_file);
+	free_and_null(&g_config_file);
+	free_and_null(&g_theme_file);
 
-    config_deinit();
-    theme_deinit();
+	config_deinit();
+	theme_deinit();
 }
 
 const char *
