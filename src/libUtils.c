@@ -140,7 +140,20 @@ current_time(const char *fmt)
 const char *
 getuser(void)
 {
-    return "";
+    char *var_data;
+#if defined(UNIX)
+    const char var[] = "USER";
+#elif defined(WIN32)
+    const char var[] = "USERNAME";
+#endif
+    static char buf[100] = { '\0' };
+
+    if ((var_data = getenv(var)) == NULL ||
+	sw_strcpy(buf, var_data, ARRAY_SIZE(buf)) != 0)
+	return "";
+
+    buf[strcspn(buf, " ")] = '\0';
+    return addrof(buf[0]);
 }
 
 /* Return the difference of 'a - b' */
