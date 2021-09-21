@@ -81,8 +81,8 @@ make_requested_dir(const char *path)
 static void
 modify_setting(const char *setting_name, const char *new_value)
 {
-    config_item_undef(setting_name);
-    config_item_install(setting_name, new_value);
+	(void) config_item_undef(setting_name);
+	(void) config_item_install(setting_name, new_value);
 }
 
 static void
