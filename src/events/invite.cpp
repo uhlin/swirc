@@ -115,7 +115,6 @@ event_invite(struct irc_message_compo *compo)
 	    printtext(&ctx, "%c%s%c %s%s@%s%s invites %c%s%c to %c%s%c",
 		      BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT,
 		      BOLD, target, BOLD, BOLD, channel, BOLD);
-
 	}
     } catch (const std::runtime_error &e) {
 	ctx.spec_type = TYPE_SPEC1_WARN;
