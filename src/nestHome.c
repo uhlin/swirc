@@ -102,84 +102,90 @@ void
 nestHome_init(void)
 {
 #define EXPLICIT_CONFIG g_cmdline_opts->config_file
-    char *hp = path_to_home() ? sw_strdup(path_to_home()) : NULL;
+	char *hp = path_to_home() ? sw_strdup(path_to_home()) : NULL;
 
-    if (isNull(hp)) {
-	err_quit("Can't resolve homepath!");
-    }
-
-#if defined(UNIX)
-    g_home_dir  = strdup_printf("%s/.swirc", hp);
-    g_tmp_dir   = strdup_printf("%s/.swirc/tmp", hp);
-    g_log_dir   = strdup_printf("%s/.swirc/log", hp);
-    g_config_file =
-	strdup_printf("%s/.swirc/swirc%s", hp, g_config_filesuffix);
-#elif defined(WIN32)
-    g_home_dir  = strdup_printf("%s\\swirc", hp);
-    g_tmp_dir   = strdup_printf("%s\\swirc\\tmp", hp);
-    g_log_dir   = strdup_printf("%s\\swirc\\log", hp);
-    g_config_file =
-	strdup_printf("%s\\swirc\\swirc%s", hp, g_config_filesuffix);
-#endif
-
-    make_requested_dir(g_home_dir);
-    make_requested_dir(g_tmp_dir);
-    make_requested_dir(g_log_dir);
-
-    config_init();
-    theme_init();
-
-    if (g_explicit_config_file) {
-	if (file_exists(EXPLICIT_CONFIG) && !is_regular_file(EXPLICIT_CONFIG)) {
-	    err_quit("%s exists  --  but isn't a regular file.",
-		     EXPLICIT_CONFIG);
-	} else if (!file_exists(EXPLICIT_CONFIG)) {
-	    err_quit("%s no such file or directory. Exiting...",
-		     EXPLICIT_CONFIG);
-	} else {
-	    config_readit(EXPLICIT_CONFIG, "r");
-	}
-    } else if (!g_explicit_config_file) {
-	if (file_exists(g_config_file) && !is_regular_file(g_config_file)) {
-	    err_quit("%s exists  --  but isn't a regular file.", g_config_file);
-	} else if (!file_exists(g_config_file)) {
-	    config_create(g_config_file, "w+");
-	    config_readit(g_config_file, "r");
-	} else {
-	    config_readit(g_config_file, "r");
-	}
-
-	if (g_cmdline_opts->nickname || g_cmdline_opts->username ||
-	    g_cmdline_opts->rl_name)
-	    save_cmdline_opts(g_config_file);
-    } else {
-	sw_assert_not_reached();
-    }
+	if (isNull(hp))
+		err_quit("Can't resolve homepath!");
 
 #if defined(UNIX)
-    g_theme_file = strdup_printf("%s/.swirc/%s%s",
-	hp, Config("theme"), g_theme_filesuffix);
+	g_home_dir = strdup_printf("%s/.swirc", hp);
+	g_tmp_dir = strdup_printf("%s/.swirc/tmp", hp);
+	g_log_dir = strdup_printf("%s/.swirc/log", hp);
+	g_config_file = strdup_printf("%s/.swirc/swirc%s", hp,
+	    g_config_filesuffix);
 #elif defined(WIN32)
-    g_theme_file = strdup_printf("%s\\swirc\\%s%s",
-	hp, Config("theme"), g_theme_filesuffix);
+	g_home_dir = strdup_printf("%s\\swirc", hp);
+	g_tmp_dir = strdup_printf("%s\\swirc\\tmp", hp);
+	g_log_dir = strdup_printf("%s\\swirc\\log", hp);
+	g_config_file = strdup_printf("%s\\swirc\\swirc%s", hp,
+	    g_config_filesuffix);
 #endif
 
-    if (isEmpty(Config("theme"))) {
-	err_quit("Item theme in user config file holds no data. Error.");
-    } else if (file_exists(g_theme_file) && !is_regular_file(g_theme_file)) {
-	err_quit("%s exists  --  but isn't a regular file.", g_theme_file);
-    } else if (!file_exists(g_theme_file) &&
-	       strncmp(Config("theme"), "default", 8) == 0) {
-	theme_create(g_theme_file, "w+");
-	theme_readit(g_theme_file, "r");
-    } else if (!file_exists(g_theme_file) &&
-	       strncmp(Config("theme"), "default", 8) != 0) {
-	err_quit("%s no such file or directory. Exiting...", g_theme_file);
-    } else {
-	theme_readit(g_theme_file, "r");
-    }
+	make_requested_dir(g_home_dir);
+	make_requested_dir(g_tmp_dir);
+	make_requested_dir(g_log_dir);
 
-    free(hp);
+	config_init();
+	theme_init();
+
+	if (g_explicit_config_file) {
+		if (file_exists(EXPLICIT_CONFIG) &&
+		    !is_regular_file(EXPLICIT_CONFIG)) {
+			err_quit("%s exists  --  but isn't a regular file.",
+			    EXPLICIT_CONFIG);
+		} else if (!file_exists(EXPLICIT_CONFIG)) {
+			err_quit("%s no such file or directory. Exiting...",
+			    EXPLICIT_CONFIG);
+		} else {
+			config_readit(EXPLICIT_CONFIG, "r");
+		}
+	} else if (!g_explicit_config_file) {
+		if (file_exists(g_config_file) &&
+		    !is_regular_file(g_config_file)) {
+			err_quit("%s exists  --  but isn't a regular file.",
+			    g_config_file);
+		} else if (!file_exists(g_config_file)) {
+			config_create(g_config_file, "w+");
+			config_readit(g_config_file, "r");
+		} else {
+			config_readit(g_config_file, "r");
+		}
+
+		if (g_cmdline_opts->nickname || g_cmdline_opts->username ||
+		    g_cmdline_opts->rl_name)
+			save_cmdline_opts(g_config_file);
+	} else {
+		sw_assert_not_reached();
+	}
+
+#if defined(UNIX)
+	g_theme_file = strdup_printf("%s/.swirc/%s%s", hp, Config("theme"),
+	    g_theme_filesuffix);
+#elif defined(WIN32)
+	g_theme_file = strdup_printf("%s\\swirc\\%s%s", hp, Config("theme"),
+	    g_theme_filesuffix);
+#endif
+
+	if (isEmpty(Config("theme"))) {
+		err_quit("Item theme in user config file holds no data. "
+		    "Error.");
+	} else if (file_exists(g_theme_file) &&
+	    !is_regular_file(g_theme_file)) {
+		err_quit("%s exists  --  but isn't a regular file.",
+		    g_theme_file);
+	} else if (!file_exists(g_theme_file) &&
+	    strncmp(Config("theme"), "default", 8) == 0) {
+		theme_create(g_theme_file, "w+");
+		theme_readit(g_theme_file, "r");
+	} else if (!file_exists(g_theme_file) &&
+	    strncmp(Config("theme"), "default", 8) != 0) {
+		err_quit("%s no such file or directory. Exiting...",
+		    g_theme_file);
+	} else {
+		theme_readit(g_theme_file, "r");
+	}
+
+	free(hp);
 }
 
 void
