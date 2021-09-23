@@ -36,6 +36,7 @@
 #include "irc.h"
 #include "libUtils.h"
 #include "main.h"
+#include "nestHome.h"
 #include "network.h"
 #include "printtext.h"
 #include "readline.h"		/* readline_top_panel() */
@@ -264,10 +265,15 @@ static struct numeric_events_tag {
 void
 irc_init(void)
 {
+	char *nickname;
+
 	if (g_cmdline_opts->nickname)
 		irc_set_my_nickname(g_cmdline_opts->nickname);
-	else if (Config_mod("nickname"))
-		irc_set_my_nickname(Config_mod("nickname"));
+	else if ((nickname = Config_mod("nickname")) != NULL &&
+	    !strings_match(nickname, ""))
+		irc_set_my_nickname(nickname);
+	else if ((nickname = g_user) != NULL && !strings_match(nickname, ""))
+		irc_set_my_nickname(nickname);
 	else
 		err_quit("irc_init: no nickname");
 	event_names_init();
