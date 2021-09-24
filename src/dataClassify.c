@@ -89,11 +89,10 @@ is_whiteSpace(const char *string)
 bool
 is_irc_channel(const char *name)
 {
-    if (name == NULL || *name == '\0') {
-	return (false);
-    }
+	if (name == NULL || *name == '\0')
+		return false;
 
-    return (*name == '&' || *name == '#' || *name == '+' || *name == '!');
+	return (*name == '&' || *name == '#' || *name == '+' || *name == '!');
 }
 
 bool
