@@ -33,10 +33,10 @@
 
 #include "dataClassify.h"
 
-static const size_t nickname_len_max = 45;
-static const size_t username_len_max = 100;
-static const size_t real_name_len_max = 60;
-static const size_t hostname_len_max = 255;
+static const size_t	nickname_len_max = 45;
+static const size_t	username_len_max = 100;
+static const size_t	real_name_len_max = 60;
+static const size_t	hostname_len_max = 255;
 
 bool
 is_alphabetic(const char *string)
