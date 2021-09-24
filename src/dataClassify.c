@@ -57,17 +57,15 @@ is_alphabetic(const char *string)
 bool
 is_numeric(const char *string)
 {
-    if (string == NULL || *string == '\0') {
-	return false;
-    }
+	if (string == NULL || *string == '\0')
+		return false;
 
-    for (const char *p = &string[0]; *p != '\0'; p++) {
-	if (!sw_isdigit(*p)) {
-	    return false;
+	for (const char *p = &string[0]; *p != '\0'; p++) {
+		if (!sw_isdigit(*p))
+			return false;
 	}
-    }
 
-    return true;
+	return true;
 }
 
 bool
