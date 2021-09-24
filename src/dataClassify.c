@@ -138,22 +138,20 @@ is_valid_nickname(const char *nickname)
 bool
 is_valid_username(const char *username)
 {
-    const char legal_index[] =
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-	"$-./[\\]^_`{|}~";
+	const char legal_index[] =
+	    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	    "$-./[\\]^_`{|}~";
 
-    if (username == NULL || *username == '\0' ||
-	strlen(username) > username_len_max) {
-	return false;
-    }
+	if (username == NULL || *username == '\0' ||
+	    strlen(username) > username_len_max)
+		return false;
 
-    for (const char *ccp = &username[0]; *ccp != '\0'; ccp++) {
-	if (strchr(legal_index, *ccp) == NULL) {
-	    return false;
+	for (const char *ccp = &username[0]; *ccp != '\0'; ccp++) {
+		if (strchr(legal_index, *ccp) == NULL)
+			return false;
 	}
-    }
 
-    return true;
+	return true;
 }
 
 bool
