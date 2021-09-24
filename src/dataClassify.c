@@ -117,22 +117,20 @@ is_valid_uMode(const char *modes)
 bool
 is_valid_nickname(const char *nickname)
 {
-    const char legal_index[] =
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-	"-[\\]^_`{|}";
+	const char legal_index[] =
+	    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	    "-[\\]^_`{|}";
 
-    if (nickname == NULL || *nickname == '\0' ||
-	strlen(nickname) > nickname_len_max) {
-	return false;
-    }
+	if (nickname == NULL || *nickname == '\0' ||
+	    strlen(nickname) > nickname_len_max)
+		return false;
 
-    for (const char *ccp = &nickname[0]; *ccp != '\0'; ccp++) {
-	if (strchr(legal_index, *ccp) == NULL) {
-	    return false;
+	for (const char *ccp = &nickname[0]; *ccp != '\0'; ccp++) {
+		if (strchr(legal_index, *ccp) == NULL)
+			return false;
 	}
-    }
 
-    return true;
+	return true;
 }
 
 bool
