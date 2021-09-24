@@ -159,18 +159,16 @@ is_valid_username(const char *username)
 bool
 is_valid_real_name(const char *real_name)
 {
-    if (real_name == NULL || *real_name == '\0' ||
-	strlen(real_name) > real_name_len_max) {
-	return false;
-    }
+	if (real_name == NULL || *real_name == '\0' ||
+	    strlen(real_name) > real_name_len_max)
+		return false;
 
-    for (const char *ccp = &real_name[0]; *ccp != '\0'; ccp++) {
-	if (!sw_isprint(*ccp)) {
-	    return false;
+	for (const char *ccp = &real_name[0]; *ccp != '\0'; ccp++) {
+		if (!sw_isprint(*ccp))
+			return false;
 	}
-    }
 
-    return true;
+	return true;
 }
 
 bool
