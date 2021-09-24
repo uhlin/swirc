@@ -41,6 +41,7 @@
 #include "../io-loop.h"
 #include "../libUtils.h"
 #include "../main.h"
+#include "../nestHome.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -273,6 +274,66 @@ turn_icb_mode_on(void)
     g_icb_mode = true;
 }
 
+static bool
+assign_username(char **cp)
+{
+    static char *username;
+
+    if (g_cmdline_opts->username) {
+	*cp = g_cmdline_opts->username;
+	return true;
+    } else if ((username = Config_mod("username")) != NULL &&
+	       !strings_match(username, "")) {
+	*cp = username;
+	return true;
+    } else if ((username = g_user) != NULL && !strings_match(username, "")) {
+	*cp = username;
+	return true;
+    }
+
+    return false;
+}
+
+static bool
+assign_rl_name(char **cp)
+{
+    static char *rl_name;
+
+    if (g_cmdline_opts->rl_name) {
+	*cp = g_cmdline_opts->rl_name;
+	return true;
+    } else if ((rl_name = Config_mod("real_name")) != NULL &&
+	       !strings_match(rl_name, "")) {
+	*cp = rl_name;
+	return true;
+    } else if ((rl_name = g_user) != NULL && !strings_match(rl_name, "")) {
+	*cp = rl_name;
+	return true;
+    }
+
+    return false;
+}
+
+static bool
+assign_nickname(char **cp)
+{
+    static char *nickname;
+
+    if (g_cmdline_opts->nickname) {
+	*cp = g_cmdline_opts->nickname;
+	return true;
+    } else if ((nickname = Config_mod("nickname")) != NULL &&
+	       !strings_match(nickname, "")) {
+	*cp = nickname;
+	return true;
+    } else if ((nickname = g_user) != NULL && !strings_match(nickname, "")) {
+	*cp = nickname;
+	return true;
+    }
+
+    return false;
+}
+
 void
 do_connect(const char *server, const char *port, const char *pass)
 {
@@ -293,29 +354,13 @@ do_connect(const char *server, const char *port, const char *pass)
     printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
 	true);
 
-    if (g_cmdline_opts->username) {
-	conn_ctx.username = g_cmdline_opts->username;
-    } else if (Config_mod("username")) {
-	conn_ctx.username = Config_mod("username");
-    } else {
+    if (!assign_username(&conn_ctx.username)) {
 	printtext(&ptext_ctx, "Unable to connect: No username");
 	return;
-    }
-
-    if (g_cmdline_opts->rl_name) {
-	conn_ctx.rl_name = g_cmdline_opts->rl_name;
-    } else if (Config_mod("real_name")) {
-	conn_ctx.rl_name = Config_mod("real_name");
-    } else {
+    } else if (!assign_rl_name(&conn_ctx.rl_name)) {
 	printtext(&ptext_ctx, "Unable to connect: No real name");
 	return;
-    }
-
-    if (g_cmdline_opts->nickname) {
-	conn_ctx.nickname = g_cmdline_opts->nickname;
-    } else if (Config_mod("nickname")) {
-	conn_ctx.nickname = Config_mod("nickname");
-    } else {
+    } else if (!assign_nickname(&conn_ctx.nickname)) {
 	printtext(&ptext_ctx, "Unable to connect: No nickname");
 	return;
     }
