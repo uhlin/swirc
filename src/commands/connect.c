@@ -265,7 +265,7 @@ reconnect_begin(void)
 static void
 reconnect_end(void)
 {
-    reconnecting = false;
+	reconnecting = false;
 }
 
 static void
