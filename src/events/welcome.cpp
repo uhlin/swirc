@@ -62,50 +62,56 @@ autojoin()
 void
 event_welcome(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	char *msg = NULL;
-	char *nick = NULL;
-	char *srv_host = NULL;
-	char *state = const_cast<char *>("");
+	try {
+		char	*msg = NULL;
+		char	*nick = NULL;
+		char	*srv_host = NULL;
+		char	*state = const_cast<char *>("");
 
-	if (compo->prefix == NULL)
-	    throw std::runtime_error("no prefix!");
+		if (compo->prefix == NULL)
+			throw std::runtime_error("no prefix!");
 
-	srv_host = & (compo->prefix[0]);
+		srv_host = & (compo->prefix[0]);
 
-	if (*srv_host == ':')
-	    srv_host++;
-	if (strings_match(srv_host, ""))
-	    throw std::runtime_error("unable to set server hostname");
-	irc_set_server_hostname(srv_host);
+		if (*srv_host == ':')
+			srv_host++;
+		if (strings_match(srv_host, "")) {
+			throw std::runtime_error("unable to set "
+			    "server hostname");
+		}
 
-	if (strFeed(compo->params, 1) != 1)
-	    throw std::runtime_error("strFeed");
+		irc_set_server_hostname(srv_host);
 
-	nick = strtok_r(compo->params, "\n", &state);
-	msg = strtok_r(NULL, "\n", &state);
+		if (strFeed(compo->params, 1) != 1)
+			throw std::runtime_error("strFeed");
 
-	if (nick == NULL)
-	    throw std::runtime_error("no nickname");
-	else if (msg == NULL)
-	    throw std::runtime_error("no message");
+		nick = strtok_r(compo->params, "\n", &state);
+		msg = strtok_r(NULL, "\n", &state);
 
-	irc_set_my_nickname(nick);
+		if (nick == NULL)
+			throw std::runtime_error("no nickname");
+		else if (msg == NULL)
+			throw std::runtime_error("no message");
 
-	if (*msg == ':')
-	    msg++;
+		irc_set_my_nickname(nick);
 
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
-	printtext(&ctx, "%s", msg);
-	event_welcome_signalit();
-	if (!g_icb_mode)
-	    autojoin();
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
-	printtext(&ctx, "event_welcome: fatal: %s", e.what());
-	g_on_air = false;
-	event_welcome_signalit();
-    }
+		if (*msg == ':')
+			msg++;
+
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+		printtext(&ctx, "%s", msg);
+
+		event_welcome_signalit();
+
+		if (!g_icb_mode)
+			autojoin();
+	} catch (std::runtime_error &e) {
+		printtext_context_init(&ctx, g_status_window,
+		    TYPE_SPEC1_FAILURE, true);
+		printtext(&ctx, "event_welcome: fatal: %s", e.what());
+		g_on_air = false;
+		event_welcome_signalit();
+	}
 }
