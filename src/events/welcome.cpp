@@ -74,7 +74,7 @@ event_welcome(struct irc_message_compo *compo)
 		if (compo->prefix == NULL)
 			throw std::runtime_error("no prefix!");
 
-		srv_host = & (compo->prefix[0]);
+		srv_host = addrof(compo->prefix[0]);
 
 		if (*srv_host == ':')
 			srv_host++;
