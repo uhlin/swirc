@@ -98,13 +98,13 @@ static const char *freenode_servers[] = {
 };
 
 static const char *ircnet_servers[] = {
-    "eris.us.ircnet.net",
-    "irc.atw-inter.net",
-    "irc.nlnog.net",
-    "irc.portlane.se",
-    "open.ircnet.net",
-    "ssl.irc.atw-inter.net",
-    NULL
+	"eris.us.ircnet.net",
+	"irc.atw-inter.net",
+	"irc.nlnog.net",
+	"irc.portlane.se",
+	"open.ircnet.net",
+	"ssl.irc.atw-inter.net",
+	NULL
 };
 
 static const char *libera_servers[] = {
