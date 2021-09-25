@@ -430,7 +430,7 @@ set_ssl_on(void)
 void
 set_ssl_off(void)
 {
-    secure_connection = false;
+	secure_connection = false;
 }
 
 bool
