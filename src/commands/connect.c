@@ -140,32 +140,33 @@ static const char *test_servers[] = {
 static bool
 shouldConnectUsingPassword(void)
 {
-    char answer[20] = "";
-    int c = EOF;
+	char	answer[20] = { '\0' };
+	int	c = EOF;
 
-    while (BZERO(answer, sizeof answer), true) {
-	printf("Connect using password? [Y/n]: ");
-	fflush(stdout);
+	while (BZERO(answer, sizeof answer), true) {
+		(void) printf("Connect using password? [Y/n]: ");
+		(void) fflush(stdout);
 
-	if (fgets(answer, sizeof answer, stdin) == NULL) {
-	    putchar('\n');
-	    continue;
-	} else if (strchr(answer, '\n') == NULL) {
-	    puts("input too big");
-	    while (c = getchar(), c != '\n' && c != EOF)
-		/* discard */;
-	} else if (strings_match(trim(answer), "") ||
-		   strings_match(answer, "y") ||
-		   strings_match(answer, "Y")) {
-	    break;
-	} else if (strings_match(answer, "n") || strings_match(answer, "N")) {
-	    return false;
-	} else {
-	    continue;
+		if (fgets(answer, sizeof answer, stdin) == NULL) {
+			(void) putchar('\n');
+			continue;
+		} else if (strchr(answer, '\n') == NULL) {
+			(void) puts("input too big");
+
+			while (c = getchar(), c != '\n' && c != EOF)
+				/* discard */;
+		} else if (strings_match(trim(answer), "") ||
+		    strings_match(answer, "y") || strings_match(answer, "Y")) {
+			break;
+		} else if (strings_match(answer, "n") ||
+		    strings_match(answer, "N")) {
+			return false;
+		} else {
+			continue;
+		}
 	}
-    }
 
-    return true;
+	return true;
 }
 
 /*lint -sem(get_password, r_null) */
