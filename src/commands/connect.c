@@ -209,21 +209,24 @@ get_password(void)
 static const char *
 get_server(const char *ar[], const char *msg)
 {
-    char ans[20] = "";
-    int c = EOF;
-    int i = 0;
-    int srvno = 0;
+	char	ans[20] = { '\0' };
+	int	c = EOF;
+	int	i = 0;
+	int	srvno = 0;
 
-    escape_curses();
-    puts(msg);
+	escape_curses();
 
-    for (; ar[i] != NULL; i++)
-	printf("    (%d) %s\n", i, ar[i]);
-    if (i > 0)
-	i--;
-    while (BZERO(ans, sizeof ans), true) {
-	printf("Your choice (0-%d): ", i);
-	fflush(stdout);
+	(void) puts(msg);
+
+	for (; ar[i] != NULL; i++)
+		(void) printf("    (%d) %s\n", i, ar[i]);
+
+	if (i > 0)
+		i--;
+
+	while (BZERO(ans, sizeof ans), true) {
+		(void) printf("Your choice (0-%d): ", i);
+		(void) fflush(stdout);
 
 /*
  * sscanf() is safe in this context
@@ -231,28 +234,30 @@ get_server(const char *ar[], const char *msg)
 #if WIN32
 #pragma warning(disable: 4996)
 #endif
-	if (fgets(ans, sizeof ans, stdin) == NULL) {
-	    putchar('\n');
-	    continue;
-	} else if (strchr(ans, '\n') == NULL) {
-	    puts("input too big");
-	    while (c = getchar(), c != '\n' && c != EOF)
-		/* discard */;
-	} else if (sscanf(ans, "%d", &srvno) != 1 || srvno < 0 || srvno > i) {
-	    ;
-	} else {
-	    break;
-	}
+		if (fgets(ans, sizeof ans, stdin) == NULL) {
+			(void) putchar('\n');
+			continue;
+		} else if (strchr(ans, '\n') == NULL) {
+			(void) puts("input too big");
+
+			while (c = getchar(), c != '\n' && c != EOF)
+				/* discard */;
+		} else if (sscanf(ans, "%d", &srvno) != 1 || srvno < 0 ||
+		    srvno > i) {
+			;
+		} else {
+			break;
+		}
 /*
  * Reset warning behavior to its default value
  */
 #if WIN32
 #pragma warning(default: 4996)
 #endif
-    }
+	}
 
-    resume_curses();
-    return (ar[srvno]);
+	resume_curses();
+	return (ar[srvno]);
 }
 
 static void
