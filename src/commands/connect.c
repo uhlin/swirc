@@ -172,38 +172,40 @@ shouldConnectUsingPassword(void)
 static char *
 get_password(void)
 {
-    static char pass[400] = "";
-    int c = EOF;
+	int c = EOF;
+	static char pass[400] = { '\0' };
 
-    escape_curses();
+	escape_curses();
 
-    if (!shouldConnectUsingPassword()) {
-	resume_curses();
-	return NULL;
-    }
-
-    while (true) {
-	printf("Password (will echo): ");
-	fflush(stdout);
-
-	const bool fgets_error = fgets(pass, ARRAY_SIZE(pass), stdin) == NULL;
-
-	if (fgets_error) {
-	    putchar('\n');
-	    continue;
-	} else if (strchr(pass, '\n') == NULL) {
-	    puts("input too big");
-	    while (c = getchar(), c != '\n' && c != EOF)
-		/* discard */;
-	} else if (strings_match(trim(pass), "")) {
-	    continue;
-	} else {
-	    break;
+	if (!shouldConnectUsingPassword()) {
+		resume_curses();
+		return NULL;
 	}
-    }
 
-    resume_curses();
-    return (&pass[0]);
+	while (true) {
+		(void) printf("Password (will echo): ");
+		(void) fflush(stdout);
+
+		const bool fgets_error =
+		    (fgets(pass, ARRAY_SIZE(pass), stdin) == NULL);
+
+		if (fgets_error) {
+			(void) putchar('\n');
+			continue;
+		} else if (strchr(pass, '\n') == NULL) {
+			(void) puts("input too big");
+
+			while (c = getchar(), c != '\n' && c != EOF)
+				/* discard */;
+		} else if (strings_match(trim(pass), "")) {
+			continue;
+		} else {
+			break;
+		}
+	}
+
+	resume_curses();
+	return (&pass[0]);
 }
 
 static const char *
