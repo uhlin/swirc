@@ -122,10 +122,10 @@ static const char *quakenet_servers[] = {
 };
 
 static const char *undernet_servers[] = {
-    "Ashburn.Va.Us.UnderNet.org",
-    "irc.undernet.org",
-    "undernet.rethemhosting.net",
-    NULL
+	"Ashburn.Va.Us.UnderNet.org",
+	"irc.undernet.org",
+	"undernet.rethemhosting.net",
+	NULL
 };
 
 static const char *test_servers[] = {
