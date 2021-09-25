@@ -529,23 +529,23 @@ cmd_connect(const char *data)
 void
 cmd_disconnect(const char *data)
 {
-    const bool has_message = !strings_match(data, "");
+	const bool	has_message = !strings_match(data, "");
 
-    quit_reconnecting = true;
+	quit_reconnecting = true;
 
-    if (g_on_air) {
-	g_disconnect_wanted = true;
-	g_connection_lost = g_on_air = false;
+	if (g_on_air) {
+		g_disconnect_wanted = true;
+		g_connection_lost = g_on_air = false;
 
-	if (has_message)
-	    net_send("QUIT :%s", data);
-	else
-	    net_send("QUIT :%s", Config("quit_message"));
+		if (has_message)
+			(void) net_send("QUIT :%s", data);
+		else
+			(void) net_send("QUIT :%s", Config("quit_message"));
 
-	if (atomic_load_bool(&g_connection_in_progress))
-	    event_welcome_signalit();
+		if (atomic_load_bool(&g_connection_in_progress))
+			event_welcome_signalit();
 
-	while (atomic_load_bool(&g_irc_listening))
-	    (void) napms(1);
-    }
+		while (atomic_load_bool(&g_irc_listening))
+			(void) napms(1);
+	}
 }
