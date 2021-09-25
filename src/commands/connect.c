@@ -337,88 +337,90 @@ assign_nickname(char **cp)
 void
 do_connect(const char *server, const char *port, const char *pass)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
-    struct network_connect_context conn_ctx = {
-	.server   = (char *) server,
-	.port     = (char *) port,
-	.password = (char *) pass,
-	.username = "",
-	.rl_name  = "",
-	.nickname = "",
-    };
+	PRINTTEXT_CONTEXT ptext_ctx;
+	struct network_connect_context conn_ctx = {
+		.server   = ((char *) server),
+		.port     = ((char *) port),
+		.password = ((char *) pass),
+		.username = "",
+		.rl_name  = "",
+		.nickname = "",
+	};
 
-    if (atomic_load_bool(&g_connection_in_progress) || g_disconnect_wanted ||
-	!g_io_loop || g_on_air)
-	return;
+	if (atomic_load_bool(&g_connection_in_progress) ||
+	    g_disconnect_wanted || !g_io_loop || g_on_air)
+		return;
 
-    printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
-	true);
+	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
+	    true);
 
-    if (!assign_username(&conn_ctx.username)) {
-	printtext(&ptext_ctx, "Unable to connect: No username");
-	return;
-    } else if (!assign_rl_name(&conn_ctx.rl_name)) {
-	printtext(&ptext_ctx, "Unable to connect: No real name");
-	return;
-    } else if (!assign_nickname(&conn_ctx.nickname)) {
-	printtext(&ptext_ctx, "Unable to connect: No nickname");
-	return;
-    }
-
-    if (!is_valid_username(conn_ctx.username)) {
-	printtext(&ptext_ctx, "Unable to connect: Invalid username: \"%s\"",
-		  conn_ctx.username);
-	printtext(&ptext_ctx, "Change with /set username");
-	return;
-    } else if (!is_valid_real_name(conn_ctx.rl_name)) {
-	printtext(&ptext_ctx, "Unable to connect: Invalid real name: \"%s\"",
-		  conn_ctx.rl_name);
-	printtext(&ptext_ctx, "Change with /set real_name");
-	return;
-    } else if (!is_valid_nickname(conn_ctx.nickname)) {
-	printtext(&ptext_ctx, "Unable to connect: Invalid nickname: \"%s\"",
-		  conn_ctx.nickname);
-	printtext(&ptext_ctx, "Change with /set nickname");
-	return;
-    } else {
-	/*
-	 * The value of sleep_time_seconds assigned below isn't intent
-	 * to be used. net_connect() is responsible for giving it an
-	 * initial value as well as changing/updating it between
-	 * reconnect attempts to reflect the delay.
-	 */
-	long int sleep_time_seconds = 10;
-
-	if (!g_icb_mode && strings_match(conn_ctx.port, ICB_PORT))
-	    turn_icb_mode_on();
-	else if (!ssl_is_enabled() && strings_match(conn_ctx.port, SSL_PORT))
-	    set_ssl_on();
-
-	ptext_ctx.spec_type = TYPE_SPEC2;
-	reconnect_begin();
-
-	while (net_connect(&conn_ctx, &sleep_time_seconds) ==
-	    SHOULD_RETRY_TO_CONNECT) {
-
-	    printtext(&ptext_ctx, "Next reconnect attempt in %ld seconds...",
-		      sleep_time_seconds);
-
-	    for (long int secs = 0; secs < sleep_time_seconds; secs++) {
-		napms(1000);
-
-		if (quit_reconnecting) {
-		    net_kill_connection();
-		    net_connect_clean_up();
-		    printtext(&ptext_ctx, "Reconnection aborted!");
-		    goto out_of_both_loops;
-		}
-	    }
+	if (!assign_username(&conn_ctx.username)) {
+		printtext(&ptext_ctx, "Unable to connect: No username");
+		return;
+	} else if (!assign_rl_name(&conn_ctx.rl_name)) {
+		printtext(&ptext_ctx, "Unable to connect: No real name");
+		return;
+	} else if (!assign_nickname(&conn_ctx.nickname)) {
+		printtext(&ptext_ctx, "Unable to connect: No nickname");
+		return;
 	}
 
-      out_of_both_loops:
+	if (!is_valid_username(conn_ctx.username)) {
+		printtext(&ptext_ctx, "Unable to connect: Invalid username: "
+		    "\"%s\"", conn_ctx.username);
+		printtext(&ptext_ctx, "Change with /set username");
+		return;
+	} else if (!is_valid_real_name(conn_ctx.rl_name)) {
+		printtext(&ptext_ctx, "Unable to connect: Invalid real name: "
+		    "\"%s\"", conn_ctx.rl_name);
+		printtext(&ptext_ctx, "Change with /set real_name");
+		return;
+	} else if (!is_valid_nickname(conn_ctx.nickname)) {
+		printtext(&ptext_ctx, "Unable to connect: Invalid nickname: "
+		    "\"%s\"", conn_ctx.nickname);
+		printtext(&ptext_ctx, "Change with /set nickname");
+		return;
+	} else {
+		/* The value of sleep_time_seconds assigned below
+		 * isn't intent to be used. net_connect() is
+		 * responsible for giving it an initial value as well
+		 * as changing/updating it between reconnect attempts
+		 * to reflect the delay. */
+		long int	sleep_time_seconds = 10;
 
-	reconnect_end();
-    }
+		if (!g_icb_mode && strings_match(conn_ctx.port, ICB_PORT))
+			turn_icb_mode_on();
+		else if (!ssl_is_enabled() &&
+		    strings_match(conn_ctx.port, SSL_PORT))
+			set_ssl_on();
+
+		reconnect_begin();
+		ptext_ctx.spec_type = TYPE_SPEC2;
+
+		while (net_connect(&conn_ctx, &sleep_time_seconds) ==
+		    SHOULD_RETRY_TO_CONNECT) {
+			printtext(&ptext_ctx, "Next reconnect attempt in %ld "
+			    "seconds...", sleep_time_seconds);
+
+			for (long int secs = 0;
+			    secs < sleep_time_seconds;
+			    secs++) {
+				(void) napms(1000);
+
+				if (quit_reconnecting) {
+					net_kill_connection();
+					net_connect_clean_up();
+					printtext(&ptext_ctx, "Reconnection "
+					    "aborted!");
+					goto out_of_both_loops;
+				}
+			}
+		}
+
+	  out_of_both_loops:
+
+		reconnect_end();
+	}
 }
 
 void
