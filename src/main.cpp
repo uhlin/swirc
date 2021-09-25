@@ -83,6 +83,8 @@ const char g_swircWebAddr[] = "https://www.nifty-networks.net/swirc/";
 char     *g_progname = const_cast<char *>("");
 long int  g_pid = -1;
 
+std::vector<std::string> g_join_list;
+
 bool g_auto_connect         = false;
 bool g_bind_hostname        = false;
 bool g_change_color_defs    = true;

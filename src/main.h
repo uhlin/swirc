@@ -1,6 +1,11 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#ifdef __cplusplus
+#include <string>
+#include <vector>
+#endif
+
 struct locale_info {
     char *lang_and_territory;
     char *codeset;
@@ -36,6 +41,10 @@ extern const char g_swircWebAddr[];
 
 extern char *g_progname;
 extern long int g_pid;
+
+#ifdef __cplusplus
+extern std::vector<std::string> g_join_list;
+#endif
 
 extern bool g_auto_connect;
 extern bool g_bind_hostname;
