@@ -258,8 +258,8 @@ get_server(const char *ar[], const char *msg)
 static void
 reconnect_begin(void)
 {
-    quit_reconnecting = false;
-    reconnecting = true;
+	quit_reconnecting = false;
+	reconnecting = true;
 }
 
 static void
