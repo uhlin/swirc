@@ -317,21 +317,21 @@ assign_rl_name(char **cp)
 static bool
 assign_nickname(char **cp)
 {
-    static char *nickname;
+	static char	*nickname;
 
-    if (g_cmdline_opts->nickname) {
-	*cp = g_cmdline_opts->nickname;
-	return true;
-    } else if ((nickname = Config_mod("nickname")) != NULL &&
-	       !strings_match(nickname, "")) {
-	*cp = nickname;
-	return true;
-    } else if ((nickname = g_user) != NULL && !strings_match(nickname, "")) {
-	*cp = nickname;
-	return true;
-    }
-
-    return false;
+	if (g_cmdline_opts->nickname) {
+		*cp = g_cmdline_opts->nickname;
+		return true;
+	} else if ((nickname = Config_mod("nickname")) != NULL &&
+	    !strings_match(nickname, "")) {
+		*cp = nickname;
+		return true;
+	} else if ((nickname = g_user) != NULL &&
+	    !strings_match(nickname, "")) {
+		*cp = nickname;
+		return true;
+	}
+	return false;
 }
 
 void
