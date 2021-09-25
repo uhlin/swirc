@@ -297,21 +297,20 @@ assign_username(char **cp)
 static bool
 assign_rl_name(char **cp)
 {
-    static char *rl_name;
+	static char	*rl_name;
 
-    if (g_cmdline_opts->rl_name) {
-	*cp = g_cmdline_opts->rl_name;
-	return true;
-    } else if ((rl_name = Config_mod("real_name")) != NULL &&
-	       !strings_match(rl_name, "")) {
-	*cp = rl_name;
-	return true;
-    } else if ((rl_name = g_user) != NULL && !strings_match(rl_name, "")) {
-	*cp = rl_name;
-	return true;
-    }
-
-    return false;
+	if (g_cmdline_opts->rl_name) {
+		*cp = g_cmdline_opts->rl_name;
+		return true;
+	} else if ((rl_name = Config_mod("real_name")) != NULL &&
+	    !strings_match(rl_name, "")) {
+		*cp = rl_name;
+		return true;
+	} else if ((rl_name = g_user) != NULL && !strings_match(rl_name, "")) {
+		*cp = rl_name;
+		return true;
+	}
+	return false;
 }
 
 static bool
