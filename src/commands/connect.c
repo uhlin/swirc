@@ -108,8 +108,8 @@ static const char *ircnet_servers[] = {
 };
 
 static const char *libera_servers[] = {
-    "irc.libera.chat",
-    NULL
+	"irc.libera.chat",
+	NULL
 };
 
 static const char *quakenet_servers[] = {
