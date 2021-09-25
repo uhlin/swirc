@@ -66,8 +66,8 @@ static const char *anonops_servers[] = {
 };
 
 static const char *blitzed_servers[] = {
-    "irc.blitzed.org",
-    NULL
+	"irc.blitzed.org",
+	NULL
 };
 
 static const char *efnet_servers[] = {
