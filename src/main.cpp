@@ -128,6 +128,7 @@ static const char *OptionDesc[] = {
     N_("    -c <server[:port]>   Connect to IRC server\n"),
     N_("    -d                   Debug logging\n"),
     N_("    -i                   Turn on Internet Citizen's Band mode\n"),
+    N_("    -j <join>            A comma-separated list of channels to join\n"),
     N_("    -n <nickname>        Online nickname\n"),
     N_("    -p                   Query for server password (for private servers)\n"),
     N_("    -r <rl name>         Your real name\n"),
@@ -271,6 +272,12 @@ case_icb()
     g_icb_mode = been_case = true;
 }
 
+static void
+case_join()
+{
+    debug("case_join() called");
+}
+
 /**
  * -n <nickname>
  */
@@ -389,6 +396,9 @@ process_options(int argc, char *argv[], const char *optstring)
 	    break;
 	case 'i':
 	    case_icb();
+	    break;
+	case 'j':
+	    case_join();
 	    break;
 	case 'n':
 	    case_nickname();
@@ -549,7 +559,7 @@ main(int argc, char *argv[])
     }
 #endif
 
-    process_options(argc, argv, "46CPRTc:dh:in:pr:u:x:");
+    process_options(argc, argv, "46CPRTc:dh:ij:n:pr:u:x:");
 
     srand(get_seed());
 

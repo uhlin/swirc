@@ -14,7 +14,7 @@ client written in C/C++, whose goals are to be portable and secure.
 
 ## Program options ##
 
-usage: swirc [-46?CPRdipv] [-c server[:port]] [-n nickname] [-r rl name] [-u username] [-x config]
+usage: swirc [-46?CPRdipv] [-c server[:port]] [-j join] [-n nickname] [-r rl name] [-u username] [-x config]
 
     -4                   Use IPv4 addresses only
     -6                   Use IPv6 addresses only
@@ -25,6 +25,7 @@ usage: swirc [-46?CPRdipv] [-c server[:port]] [-n nickname] [-r rl name] [-u use
     -c <server[:port]>   Connect to IRC server
     -d                   Debug logging
     -i                   Turn on Internet Citizen's Band mode
+    -j <join>            A comma-separated list of channels to join
     -n <nickname>        Online nickname
     -p                   Query for server password (for private servers)
     -r <rl name>         Your real name

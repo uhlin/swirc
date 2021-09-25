@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added command line option `-j`
 - Added function `getuser()` and made use of it
 - Added the following command aliases:
   - `/j` (`/join`)

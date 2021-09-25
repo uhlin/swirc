@@ -1,7 +1,7 @@
 .\"
 .\" Public domain
 .\"
-.Dd August 24, 2021
+.Dd September 25, 2021
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -12,6 +12,7 @@
 .Bk -words
 .Op Fl 46?CPRdipv
 .Op Fl c Ar server[:port]
+.Op Fl j Ar join
 .Op Fl n Ar nickname
 .Op Fl r Ar rl name
 .Op Fl u Ar username
@@ -60,6 +61,8 @@ attempts to initiate a TLS/SSL connection.
 Debug logging
 .It Fl i
 Turn on Internet Citizen's Band mode
+.It Fl j Ar join
+A comma-separated list of channels to join
 .It Fl n Ar nickname
 Online nickname
 .It Fl p
