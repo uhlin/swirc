@@ -49,12 +49,12 @@ autojoin()
 		char	*str;
 
 		if (!is_irc_channel(it->c_str()))
-			it->insert(0, "#");
+			(void) it->insert(0, "#");
 
 		str = sw_strdup(it->c_str());
 
 		if (window_by_label(str) == NULL)
-			net_send("JOIN %s", strToLower(str));
+			(void) net_send("JOIN %s", strToLower(str));
 
 		free(str);
 	}
