@@ -1,5 +1,5 @@
 /* Handle event welcome (001)
-   Copyright (C) 2014-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -31,12 +31,33 @@
 
 #include <stdexcept>
 
+#include "../dataClassify.h"
 #include "../irc.h"
+#include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
 
 #include "welcome.h"
+
+static void
+autojoin()
+{
+    char *str;
+    std::vector<std::string>::iterator it;
+
+    for (it = g_join_list.begin(); it != g_join_list.end(); ++it) {
+	if (!is_irc_channel(it->c_str()))
+	    it->insert(0, "#");
+
+	str = sw_strdup(it->c_str());
+
+	if (window_by_label(str) == NULL)
+	    net_send("JOIN %s", strToLower(str));
+
+	free(str);
+    }
+}
 
 void
 event_welcome(struct irc_message_compo *compo)
@@ -79,6 +100,8 @@ event_welcome(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 	printtext(&ctx, "%s", msg);
 	event_welcome_signalit();
+	if (!g_icb_mode)
+	    autojoin();
     } catch (std::runtime_error &e) {
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
 	printtext(&ctx, "event_welcome: fatal: %s", e.what());
