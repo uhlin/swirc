@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added function `getuser()` and made use of it
+- Added the following command aliases:
+  - `/j` (`/join`)
+  - `/p` (`/part`)
 - Made improvements to the following files:
   - `nestHome.c`
 
