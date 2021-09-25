@@ -424,7 +424,7 @@ do_connect(const char *server, const char *port, const char *pass)
 void
 set_ssl_on(void)
 {
-    secure_connection = true;
+	secure_connection = true;
 }
 
 void
