@@ -443,86 +443,110 @@ ssl_is_enabled(void)
 void
 cmd_connect(const char *data)
 {
-    char *dcopy = sw_strdup(data);
-    char *server, *port;
-    char *state = "";
-    int feeds_written = 0;
+	char	*dcopy = sw_strdup(data);
+	char	*server, *port;
+	char	*state = "";
+	int	 feeds_written = 0;
 
-    set_ssl_off();
+	set_ssl_off();
 
-    if (strings_match(dcopy, "") || is_whiteSpace(dcopy)) {
-	print_and_free("/connect: missing arguments", dcopy);
-	return;
-    } else if ((feeds_written = strFeed(dcopy, 1)) == 1) {
-	char *token;
+	if (strings_match(dcopy, "") || is_whiteSpace(dcopy)) {
+		print_and_free("/connect: missing arguments", dcopy);
+		return;
+	} else if ((feeds_written = strFeed(dcopy, 1)) == 1) {
+		char *token;
 
-	token = strtok_r(dcopy, "\n:", &state);
-	sw_assert(token != NULL);
-	if (strings_match(token, "-tls") || strings_match(token, "-ssl"))
-	    set_ssl_on();
+		token = strtok_r(dcopy, "\n:", &state);
+		sw_assert(token != NULL);
 
-	server = strtok_r(NULL, "\n:", &state);
-	sw_assert(server != NULL);
+		if (strings_match(token, "-tls") ||
+		    strings_match(token, "-ssl"))
+			set_ssl_on();
 
-	if ((port = strtok_r(NULL, "\n:", &state)) == NULL) {
-	    if (ssl_is_enabled())
-		port = SSL_PORT;
-	    else
-		port = IRC_PORT;
+		server = strtok_r(NULL, "\n:", &state);
+		sw_assert(server != NULL);
+
+		if ((port = strtok_r(NULL, "\n:", &state)) == NULL) {
+			if (ssl_is_enabled())
+				port = SSL_PORT;
+			else
+				port = IRC_PORT;
+		}
+	} else if (feeds_written == 0) {
+		server = strtok_r(dcopy, "\n:", &state);
+		sw_assert(server != NULL);
+
+		if ((port = strtok_r(NULL, "\n:", &state)) == NULL)
+			port = IRC_PORT;
+	} else {
+		sw_assert_not_reached();
 	}
-    } else if (feeds_written == 0) {
-	server = strtok_r(dcopy, "\n:", &state);
-	sw_assert(server != NULL);
 
-	if ((port = strtok_r(NULL, "\n:", &state)) == NULL)
-	    port = IRC_PORT;
-    } else {
-	sw_assert_not_reached();
-    }
+	if (atomic_load_bool(&g_connection_in_progress)) {
+		print_and_free("/connect: connection in progress", dcopy);
+		return;
+	} else if (reconnecting) {
+		print_and_free("/connect: reconnecting... /disconnect ?",
+		    dcopy);
+		return;
+	} else if (g_on_air) {
+		print_and_free("/connect: already connected!", dcopy);
+		return;
+	} else if (strtok_r(NULL, "\n:", &state) != NULL) {
+		print_and_free("/connect: implicit trailing data", dcopy);
+		return;
+	} else if (!is_valid_hostname(server)) {
+		print_and_free("/connect: bogus server name", dcopy);
+		return;
+	} else if (!is_numeric(port)) {
+		print_and_free("/connect: bogus port number", dcopy);
+		return;
+	} else {
+		if (strings_match_ignore_case(server, "afternet"))
+			IRC_CONNECT(get_server(afternet_servers,
+			    "AfterNET IRC network"),
+			    port);
+		else if (strings_match_ignore_case(server, "anonops"))
+			IRC_CONNECT(get_server(anonops_servers,
+			    "AnonOps IRC network"),
+			    port);
+		else if (strings_match_ignore_case(server, "blitzed"))
+			IRC_CONNECT(get_server(blitzed_servers,
+			    "Blitzed IRC network"),
+			    port);
+		else if (strings_match_ignore_case(server, "efnet"))
+			IRC_CONNECT(get_server(efnet_servers,
+			    "EFnet servers"),
+			    port);
+		else if (strings_match_ignore_case(server, "freenode"))
+			IRC_CONNECT(get_server(freenode_servers,
+			    "freenode servers"),
+			    port);
+		else if (strings_match_ignore_case(server, "ircnet"))
+			IRC_CONNECT(get_server(ircnet_servers,
+			    "IRCnet servers"),
+			    port);
+		else if (strings_match_ignore_case(server, "libera"))
+			IRC_CONNECT(get_server(libera_servers,
+			    "Libera Chat"),
+			    port);
+		else if (strings_match_ignore_case(server, "quakenet"))
+			IRC_CONNECT(get_server(quakenet_servers,
+			    "QuakeNet servers"),
+			    port);
+		else if (strings_match_ignore_case(server, "undernet"))
+			IRC_CONNECT(get_server(undernet_servers,
+			    "undernet servers"),
+			    port);
+		else if (strings_match_ignore_case(server, "test"))
+			IRC_CONNECT(get_server(test_servers,
+			    "test servers"),
+			    port);
+		else
+			IRC_CONNECT(server, port);
 
-    if (atomic_load_bool(&g_connection_in_progress)) {
-	print_and_free("/connect: connection in progress", dcopy);
-	return;
-    } else if (reconnecting) {
-	print_and_free("/connect: reconnecting... /disconnect ?", dcopy);
-	return;
-    } else if (g_on_air) {
-	print_and_free("/connect: already connected!", dcopy);
-	return;
-    } else if (strtok_r(NULL, "\n:", &state) != NULL) {
-	print_and_free("/connect: implicit trailing data", dcopy);
-	return;
-    } else if (!is_valid_hostname(server)) {
-	print_and_free("/connect: bogus server name", dcopy);
-	return;
-    } else if (!is_numeric(port)) {
-	print_and_free("/connect: bogus port number", dcopy);
-	return;
-    } else {
-	if (strings_match_ignore_case(server, "afternet"))
-	    IRC_CONNECT(get_server(afternet_servers, "AfterNET IRC network"), port);
-	else if (strings_match_ignore_case(server, "anonops"))
-	    IRC_CONNECT(get_server(anonops_servers, "AnonOps IRC network"), port);
-	else if (strings_match_ignore_case(server, "blitzed"))
-	    IRC_CONNECT(get_server(blitzed_servers, "Blitzed IRC network"), port);
-	else if (strings_match_ignore_case(server, "efnet"))
-	    IRC_CONNECT(get_server(efnet_servers, "EFnet servers"), port);
-	else if (strings_match_ignore_case(server, "freenode"))
-	    IRC_CONNECT(get_server(freenode_servers, "freenode servers"), port);
-	else if (strings_match_ignore_case(server, "ircnet"))
-	    IRC_CONNECT(get_server(ircnet_servers, "IRCnet servers"), port);
-	else if (strings_match_ignore_case(server, "libera"))
-	    IRC_CONNECT(get_server(libera_servers, "Libera Chat"), port);
-	else if (strings_match_ignore_case(server, "quakenet"))
-	    IRC_CONNECT(get_server(quakenet_servers, "QuakeNet servers"), port);
-	else if (strings_match_ignore_case(server, "undernet"))
-	    IRC_CONNECT(get_server(undernet_servers, "undernet servers"), port);
-	else if (strings_match_ignore_case(server, "test"))
-	    IRC_CONNECT(get_server(test_servers, "test servers"), port);
-	else
-	    IRC_CONNECT(server, port);
-	free(dcopy);
-    }
+		free(dcopy);
+	}
 }
 
 /* usage: /disconnect [message] */
