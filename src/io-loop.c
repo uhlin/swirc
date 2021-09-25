@@ -115,6 +115,7 @@ static struct cmds_tag {
 #endif
 	{ "ilist",       cmd_ilist,       true,  ilist_usage,       ARRAY_SIZE(ilist_usage),       true  },
 	{ "invite",      cmd_invite,      true,  invite_usage,      ARRAY_SIZE(invite_usage),      true  },
+	{ "j",           cmd_join,        true,  join_usage,        ARRAY_SIZE(join_usage),        true  },
 	{ "join",        cmd_join,        true,  join_usage,        ARRAY_SIZE(join_usage),        true  },
 	{ "kick",        cmd_kick,        true,  kick_usage,        ARRAY_SIZE(kick_usage),        true  },
 	{ "kickban",     cmd_kickban,     true,  kickban_usage,     ARRAY_SIZE(kickban_usage),     true  },
@@ -129,6 +130,7 @@ static struct cmds_tag {
 	{ "ns",          cmd_nickserv,    true,  nickserv_usage,    ARRAY_SIZE(nickserv_usage),    true  },
 	{ "op",          cmd_op,          true,  op_usage,          ARRAY_SIZE(op_usage),          true  },
 	{ "oper",        cmd_oper,        true,  oper_usage,        ARRAY_SIZE(oper_usage),        true  },
+	{ "p",           cmd_part,        true,  part_usage,        ARRAY_SIZE(part_usage),        true  },
 	{ "part",        cmd_part,        true,  part_usage,        ARRAY_SIZE(part_usage),        true  },
 	{ "passmod",     cmd_passmod,     true,  passmod_usage,     ARRAY_SIZE(passmod_usage),     false },
 	{ "query",       cmd_query,       false, query_usage,       ARRAY_SIZE(query_usage),       false },
