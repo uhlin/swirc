@@ -436,7 +436,7 @@ set_ssl_off(void)
 bool
 ssl_is_enabled(void)
 {
-    return secure_connection;
+	return secure_connection;
 }
 
 /* usage: /connect [-tls] <server[:port]> */
