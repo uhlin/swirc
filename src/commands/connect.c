@@ -271,7 +271,7 @@ reconnect_end(void)
 static void
 turn_icb_mode_on(void)
 {
-    g_icb_mode = true;
+	g_icb_mode = true;
 }
 
 static bool
