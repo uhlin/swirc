@@ -113,12 +113,12 @@ static const char *libera_servers[] = {
 };
 
 static const char *quakenet_servers[] = {
-    "ServerCentral.IL.US.Quakenet.Org",
-    "irc.quakenet.org",
-    "portlane.se.quakenet.org",
-    "underworld1.no.quakenet.org",
-    "underworld2.no.quakenet.org",
-    NULL
+	"ServerCentral.IL.US.Quakenet.Org",
+	"irc.quakenet.org",
+	"portlane.se.quakenet.org",
+	"underworld1.no.quakenet.org",
+	"underworld2.no.quakenet.org",
+	NULL
 };
 
 static const char *undernet_servers[] = {
