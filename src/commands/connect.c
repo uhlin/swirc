@@ -84,17 +84,17 @@ static const char *efnet_servers[] = {
 };
 
 static const char *freenode_servers[] = {
-    "card.freenode.net",
-    "chat.freenode.net",
-    "chat.ipv6.freenode.net",
-    "cherryh.freenode.net",
-    "freenodeok2gncmy.onion",
-    "hobana.freenode.net",
-    "leguin.acc.umu.se",
-    "orwell.freenode.net",
-    "verne.freenode.net",
-    "weber.freenode.net",
-    NULL
+	"card.freenode.net",
+	"chat.freenode.net",
+	"chat.ipv6.freenode.net",
+	"cherryh.freenode.net",
+	"freenodeok2gncmy.onion",
+	"hobana.freenode.net",
+	"leguin.acc.umu.se",
+	"orwell.freenode.net",
+	"verne.freenode.net",
+	"weber.freenode.net",
+	NULL
 };
 
 static const char *ircnet_servers[] = {
