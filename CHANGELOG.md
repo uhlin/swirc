@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
   - `/j` (`/join`)
   - `/p` (`/part`)
 - Made improvements to the following files:
+  - `commands/connect.c`
+  - `events/welcome.cpp`
   - `dataClassify.c`
   - `nestHome.c`
 
