@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
   - `/j` (`/join`)
   - `/p` (`/part`)
 - Made improvements to the following files:
+  - `dataClassify.c`
   - `nestHome.c`
 
 ## [3.3.1] - 2021-09-03 ##
