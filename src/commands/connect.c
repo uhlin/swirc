@@ -277,21 +277,21 @@ turn_icb_mode_on(void)
 static bool
 assign_username(char **cp)
 {
-    static char *username;
+	static char	*username;
 
-    if (g_cmdline_opts->username) {
-	*cp = g_cmdline_opts->username;
-	return true;
-    } else if ((username = Config_mod("username")) != NULL &&
-	       !strings_match(username, "")) {
-	*cp = username;
-	return true;
-    } else if ((username = g_user) != NULL && !strings_match(username, "")) {
-	*cp = username;
-	return true;
-    }
-
-    return false;
+	if (g_cmdline_opts->username) {
+		*cp = g_cmdline_opts->username;
+		return true;
+	} else if ((username = Config_mod("username")) != NULL &&
+	    !strings_match(username, "")) {
+		*cp = username;
+		return true;
+	} else if ((username = g_user) != NULL &&
+	    !strings_match(username, "")) {
+		*cp = username;
+		return true;
+	}
+	return false;
 }
 
 static bool
