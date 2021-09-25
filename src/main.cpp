@@ -49,6 +49,7 @@
 #include "errHand.h"
 #include "i18n.h"
 #include "io-loop.h"
+#include "irc.h"
 #include "libUtils.h"
 #include "main.h"
 #include "nestHome.h"
@@ -277,7 +278,25 @@ case_icb()
 static void
 case_join()
 {
-    debug("case_join() called");
+    char *cp;
+    char *last = const_cast<char *>("");
+    static bool been_case = false;
+
+    if (been_case)
+	DUP_OPTION_ERR('j');
+
+    for (cp = g_option_arg;; cp = NULL) {
+	char *token;
+
+	if ((token = strtok_r(cp, ",", &last)) == NULL)
+	    break;
+	else if (strpbrk(token, g_forbidden_chan_name_chars) != NULL)
+	    err_quit("forbidden chan name chars");
+	else
+	    g_join_list.push_back(token);
+    }
+
+    been_case = true;
 }
 
 /**
