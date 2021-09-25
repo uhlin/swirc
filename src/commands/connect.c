@@ -60,9 +60,9 @@ static const char *afternet_servers[] = {
 };
 
 static const char *anonops_servers[] = {
-    "anonops532vcpz6z.onion",
-    "irc.anonops.com",
-    NULL
+	"anonops532vcpz6z.onion",
+	"irc.anonops.com",
+	NULL
 };
 
 static const char *blitzed_servers[] = {
