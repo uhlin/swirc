@@ -43,20 +43,21 @@
 static void
 autojoin()
 {
-    char *str;
-    std::vector<std::string>::iterator it;
+	std::vector<std::string>::iterator	it;
 
-    for (it = g_join_list.begin(); it != g_join_list.end(); ++it) {
-	if (!is_irc_channel(it->c_str()))
-	    it->insert(0, "#");
+	for (it = g_join_list.begin(); it != g_join_list.end(); ++it) {
+		char	*str;
 
-	str = sw_strdup(it->c_str());
+		if (!is_irc_channel(it->c_str()))
+			it->insert(0, "#");
 
-	if (window_by_label(str) == NULL)
-	    net_send("JOIN %s", strToLower(str));
+		str = sw_strdup(it->c_str());
 
-	free(str);
-    }
+		if (window_by_label(str) == NULL)
+			net_send("JOIN %s", strToLower(str));
+
+		free(str);
+	}
 }
 
 void
