@@ -55,8 +55,8 @@ static bool reconnecting = false;
 static bool secure_connection = false;
 
 static const char *afternet_servers[] = {
-    "irc.afternet.org",
-    NULL
+	"irc.afternet.org",
+	NULL
 };
 
 static const char *anonops_servers[] = {
