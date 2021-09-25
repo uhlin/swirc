@@ -71,16 +71,16 @@ static const char *blitzed_servers[] = {
 };
 
 static const char *efnet_servers[] = {
-    "efnet.port80.se",
-    "efnet.portlane.se",
-    "irc.choopa.net",
-    "irc.efnet.nl",
-    "irc.efnet.org",
-    "irc.inet.tele.dk",
-    "irc.mzima.net",
-    "irc.servercentral.net",
-    "irc.underworld.no",
-    NULL
+	"efnet.port80.se",
+	"efnet.portlane.se",
+	"irc.choopa.net",
+	"irc.efnet.nl",
+	"irc.efnet.org",
+	"irc.inet.tele.dk",
+	"irc.mzima.net",
+	"irc.servercentral.net",
+	"irc.underworld.no",
+	NULL
 };
 
 static const char *freenode_servers[] = {
