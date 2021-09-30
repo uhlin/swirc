@@ -128,12 +128,12 @@ cmd_part(const char *data)
 		const bool has_message =
 		    (message = strtok_r(NULL, "\n", &state)) != NULL;
 
-		if (strtok_r(NULL, "\n", &state) != NULL)
+		if (strtok_r(NULL, "\n", &state) != NULL) {
 			throw std::runtime_error("implicit trailing data");
-		else if (!is_irc_channel(channel) ||
-		    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL)
+		} else if (!is_irc_channel(channel) ||
+		    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL) {
 			throw std::runtime_error("bogus irc channel");
-		else if (has_message) {
+		} else if (has_message) {
 			if (net_send("PART %s :%s", strToLower(channel),
 			    message) < 0)
 				throw std::runtime_error("cannot send");
