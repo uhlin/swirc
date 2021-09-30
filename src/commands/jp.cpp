@@ -41,7 +41,7 @@
 #include "jp.h"
 
 #ifdef UNIT_TESTING
-#undef  ACTWINLABEL
+#undef ACTWINLABEL
 #define ACTWINLABEL "#channel"
 #endif
 
