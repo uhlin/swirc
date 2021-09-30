@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include <stdexcept>
+#include <string>
 
 #include "../config.h"
 #include "../dataClassify.h"
@@ -50,37 +51,49 @@
 void
 cmd_join(const char *data)
 {
-    char *channel, *key;
-    char *dcopy = sw_strdup(data);
-    char *state = "";
+	char	*dcopy = sw_strdup(data);
 
-    if (strings_match(dcopy, "") ||
-	(channel = strtok_r(dcopy, " ", &state)) == NULL) {
-	print_and_free("/join: missing arguments", dcopy);
-	return;
-    }
+	try {
+		char	*channel;
+		char	*key;
+		char	*state = const_cast<char *>("");
 
-    const bool has_channel_key = (key = strtok_r(NULL, " ", &state)) != NULL;
+		if (strings_match(dcopy, "") ||
+		    (channel = strtok_r(dcopy, " ", &state)) == NULL)
+			throw std::runtime_error("missing arguments");
 
-    if (strtok_r(NULL, " ", &state) != NULL) {
-	print_and_free("/join: implicit trailing data", dcopy);
-	return;
-    } else if (!is_irc_channel(channel) || strpbrk(channel + 1, ",") != NULL) {
-	print_and_free("/join: bogus irc channel", dcopy);
-	return;
-    } else if (has_channel_key && strchr(key, ',') != NULL) {
-	print_and_free("/join: commas aren't allowed in a key", dcopy);
-	return;
-    } else {
-	if (has_channel_key) {
-	    if (net_send("JOIN %s %s", strToLower(channel), key) < 0)
-		g_on_air = false;
-	} else {
-	    if (net_send("JOIN %s", strToLower(channel)) < 0)
-		g_on_air = false;
+		const bool has_channel_key =
+		    (key = strtok_r(NULL, " ", &state)) != NULL;
+
+		if (strtok_r(NULL, " ", &state) != NULL)
+			throw std::runtime_error("implicit trailing data");
+		else if (strpbrk(channel, g_forbidden_chan_name_chars) != NULL)
+			throw std::runtime_error("bogus irc channel");
+		else if (has_channel_key && strchr(key, ',') != NULL)
+			throw std::runtime_error("commas aren't allowed in a key");
+
+		(void) strToLower(channel);
+		std::string str(channel);
+
+		if (!is_irc_channel(str.c_str()))
+			(void) str.insert(0, "#");
+
+		if (has_channel_key) {
+			if (net_send("JOIN %s %s", str.c_str(), key) < 0)
+				throw std::runtime_error("cannot send");
+		} else {
+			if (net_send("JOIN %s", str.c_str()) < 0)
+				throw std::runtime_error("cannot send");
+		}
+	} catch (std::runtime_error& e) {
+		PRINTTEXT_CONTEXT	ctx;
+
+		printtext_context_init(&ctx, g_active_window,
+		    TYPE_SPEC1_FAILURE, true);
+		printtext(&ctx, "/join: %s", e.what());
 	}
+
 	free(dcopy);
-    }
 }
 
 /*
