@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
   - `events/welcome.cpp`
   - `dataClassify.c`
   - `nestHome.c`
+- Rewrote the `/join` and `/part` commands in C++
 
 ## [3.3.1] - 2021-09-03 ##
 - **Added** command line option `-R` (Disable TLS/SSL peer verification)
