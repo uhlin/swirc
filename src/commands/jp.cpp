@@ -1,5 +1,5 @@
 /* Join and Part commands
-   Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -28,6 +28,8 @@
    POSSIBILITY OF SUCH DAMAGE. */
 
 #include "common.h"
+
+#include <stdexcept>
 
 #include "../config.h"
 #include "../dataClassify.h"
@@ -83,41 +85,52 @@ cmd_join(const char *data)
 void
 cmd_part(const char *data)
 {
-    char *channel, *message;
-    char *dcopy = sw_strdup(data);
-    char *state = "";
+	char	*dcopy = sw_strdup(data);
 
-    (void) strFeed(dcopy, 1);
+	try {
+		char	*channel;
+		char	*message;
+		char	*state = const_cast<char *>("");
 
-    if (strings_match(dcopy, "") ||
-	(channel = strtok_r(dcopy, "\n", &state)) == NULL) {
-	if (is_irc_channel(ACTWINLABEL)) {
-	    if (net_send("PART %s :%s", ACTWINLABEL,
-			 Config("part_message")) < 0)
-		g_on_air = false;
-	} else {
-	    print_and_free("/part: missing arguments", NULL);
+		(void) strFeed(dcopy, 1);
+
+		if (strings_match(dcopy, "") ||
+		    (channel = strtok_r(dcopy, "\n", &state)) == NULL) {
+			if (is_irc_channel(ACTWINLABEL)) {
+				if (net_send("PART %s :%s", ACTWINLABEL,
+				    Config("part_message")) < 0)
+					throw std::runtime_error("cannot send");
+			} else {
+				throw std::runtime_error("missing arguments");
+			}
+
+			free(dcopy);
+			return;
+		}
+
+		const bool has_message =
+		    (message = strtok_r(NULL, "\n", &state)) != NULL;
+
+		if (strtok_r(NULL, "\n", &state) != NULL)
+			throw std::runtime_error("implicit trailing data");
+		else if (!is_irc_channel(channel) ||
+		    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL)
+			throw std::runtime_error("bogus irc channel");
+		else if (has_message) {
+			if (net_send("PART %s :%s", strToLower(channel),
+			    message) < 0)
+				throw std::runtime_error("cannot send");
+		} else {
+			if (net_send("PART %s", strToLower(channel)) < 0)
+				throw std::runtime_error("cannot send");
+		}
+	} catch (std::runtime_error& e) {
+		PRINTTEXT_CONTEXT	ctx;
+
+		printtext_context_init(&ctx, g_active_window,
+		    TYPE_SPEC1_FAILURE, true);
+		printtext(&ctx, "/part: %s", e.what());
 	}
-	free(dcopy);
-	return;
-    }
 
-    const bool has_message = (message = strtok_r(NULL, "\n", &state)) != NULL;
-
-    if (strtok_r(NULL, "\n", &state) != NULL) {
-	print_and_free("/part: implicit trailing data", dcopy);
-	return;
-    } else if (!is_irc_channel(channel) || strpbrk(channel + 1, ",") != NULL) {
-	print_and_free("/part: bogus irc channel", dcopy);
-	return;
-    } else {
-	if (has_message) {
-	    if (net_send("PART %s :%s", strToLower(channel), message) < 0)
-		g_on_air = false;
-	} else {
-	    if (net_send("PART %s", strToLower(channel)) < 0)
-		g_on_air = false;
-	}
 	free(dcopy);
-    }
 }
