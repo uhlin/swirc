@@ -1,6 +1,8 @@
 #ifndef CMD_SAY_H
 #define CMD_SAY_H
 
-void cmd_say(const char *data);
+__SWIRC_BEGIN_DECLS
+void	cmd_say(const char *);
+__SWIRC_END_DECLS
 
 #endif
