@@ -44,7 +44,9 @@
 #define ACTWINLABEL "#channel"
 #endif
 
-/* usage: /join <channel> [key] */
+/*
+ * usage: /join <channel> [key]
+ */
 void
 cmd_join(const char *data)
 {
@@ -81,7 +83,9 @@ cmd_join(const char *data)
     }
 }
 
-/* usage: /part [channel] [message] */
+/*
+ * usage: /part [channel] [message]
+ */
 void
 cmd_part(const char *data)
 {
