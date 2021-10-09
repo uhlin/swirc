@@ -88,42 +88,45 @@ cmd_ignore(const char *data)
 void
 cmd_unignore(const char *data)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    if (strings_match(data, "")) {
-	print_ignore_list();
-	return;
-    }
+	if (strings_match(data, "")) {
+		print_ignore_list();
+		return;
+	}
 
-    try {
-	char *ep = const_cast<char *>("");
-	char *regex;
-	long int no;
+	try {
+		char		*ep = const_cast<char *>("");
+		char		*regex;
+		long int	 no;
 
-	if (ignore_list.empty())
-	    throw std::runtime_error("ignore list empty");
+		if (ignore_list.empty())
+			throw std::runtime_error("ignore list empty");
 
-	errno = 0;
-	no = strtol(data, &ep, 10);
+		errno = 0;
+		no = strtol(data, &ep, 10);
 
-	if (data[0] == '\0' || *ep != '\0')
-	    throw std::runtime_error("not a number");
-	else if (errno == ERANGE && (no == LONG_MAX || no == LONG_MIN))
-	    throw std::runtime_error("out of range");
-	else if (no < 0 || static_cast<size_t>(no) > ignore_list.size() ||
-		 no > MAXIGNORES)
-	    throw std::runtime_error("out of range");
+		if (data[0] == '\0' || *ep != '\0')
+			throw std::runtime_error("not a number");
+		else if (errno == ERANGE && (no == LONG_MAX || no == LONG_MIN))
+			throw std::runtime_error("out of range");
+		else if (no < 0 ||
+		    static_cast<size_t>(no) > ignore_list.size() ||
+		    no > MAXIGNORES)
+			throw std::runtime_error("out of range");
 
-	regex = sw_strdup(ignore_list.at(no).get_str().c_str());
-	ignore_list.erase(ignore_list.begin() + no);
-	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
-	printtext(&ctx, "Deleted \"%s\" from ignore list.", regex);
-	free(regex);
-	print_ignore_list();
-    } catch (const std::runtime_error &e) {
-	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
-	printtext(&ctx, "%s", e.what());
-    }
+		regex = sw_strdup(ignore_list.at(no).get_str().c_str());
+		ignore_list.erase(ignore_list.begin() + no);
+		printtext_context_init(&ctx, g_active_window,
+		    TYPE_SPEC1_SUCCESS, true);
+		printtext(&ctx, "Deleted \"%s\" from ignore list.", regex);
+		free(regex);
+		print_ignore_list();
+	} catch (const std::runtime_error &e) {
+		printtext_context_init(&ctx, g_active_window,
+		    TYPE_SPEC1_FAILURE, true);
+		printtext(&ctx, "%s", e.what());
+	}
 }
 
 bool
