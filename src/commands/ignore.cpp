@@ -35,8 +35,8 @@ ignore::ignore(const char *_str)
     this->regex.assign(_str);
 }
 
-static const size_t regex_maxlen = 60;
-static std::vector<ignore> ignore_list;
+static const size_t		regex_maxlen = 60;
+static std::vector<ignore>	ignore_list;
 
 static void
 print_ignore_list()
