@@ -129,21 +129,21 @@ cmd_unignore(const char *data)
 bool
 is_valid_regex(const char *str, char **err_reason)
 {
-    if (strings_match(str, "")) {
-	*err_reason = sw_strdup("no regex");
-	return false;
-    } else if (strlen(str) > regex_maxlen) {
-	*err_reason = sw_strdup("regex too long");
-	return false;
-    }
+	if (strings_match(str, "")) {
+		*err_reason = sw_strdup("no regex");
+		return false;
+	} else if (strlen(str) > regex_maxlen) {
+		*err_reason = sw_strdup("regex too long");
+		return false;
+	}
 
-    try {
-	std::regex regex(str);
-    } catch (const std::regex_error &e) {
-	*err_reason = sw_strdup(e.what());
-	return false;
-    }
+	try {
+		std::regex	regex(str);
+	} catch (const std::regex_error& e) {
+		*err_reason = sw_strdup(e.what());
+		return false;
+	}
 
-    *err_reason = NULL;
-    return true;
+	*err_reason = NULL;
+	return true;
 }
