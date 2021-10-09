@@ -40,8 +40,6 @@
 
 #include "ignore.h"
 
-#define MAXIGNORES 30
-
 class ignore {
 	std::string	str;
 	std::regex	regex;

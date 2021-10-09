@@ -1,6 +1,8 @@
 #ifndef CMD_IGNORE_H
 #define CMD_IGNORE_H
 
+#define MAXIGNORES	30
+
 __SWIRC_BEGIN_DECLS
 void	cmd_ignore(const char *) PTR_ARGS_NONNULL;
 void	cmd_unignore(const char *) PTR_ARGS_NONNULL;
