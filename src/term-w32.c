@@ -12,25 +12,6 @@ is_term_resized(int rows, int cols)
     return is_termresized();
 }
 
-void
-term_set_title(const char *fmt, ...)
-{
-    va_list ap;
-    char title[900] = { '\0' };
-
-    va_start(ap, fmt);
-    vsnprintf_s(title, sizeof title, _TRUNCATE, fmt, ap);
-    va_end(ap);
-
-    SetConsoleTitle(title);
-}
-
-void
-term_restore_title(void)
-{
-    term_set_title("Windows Console");
-}
-
 struct winsize
 term_get_size(void)
 {
@@ -47,4 +28,23 @@ term_get_size(void)
     size.ws_col = (info.srWindow.Right - info.srWindow.Left) + 1;
 
     return size;
+}
+
+void
+term_restore_title(void)
+{
+    term_set_title("Windows Console");
+}
+
+void
+term_set_title(const char *fmt, ...)
+{
+    va_list ap;
+    char title[900] = { '\0' };
+
+    va_start(ap, fmt);
+    vsnprintf_s(title, sizeof title, _TRUNCATE, fmt, ap);
+    va_end(ap);
+
+    SetConsoleTitle(title);
 }
