@@ -31,8 +31,8 @@ public:
 
 ignore::ignore(const char *_str)
 {
-    this->str.assign(_str);
-    this->regex.assign(_str);
+	this->str.assign(_str);
+	this->regex.assign(_str);
 }
 
 static const size_t		regex_maxlen = 60;
