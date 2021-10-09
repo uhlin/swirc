@@ -574,6 +574,13 @@ static const char *unban_usage[] = {
     "",
 };
 
+static const char *unignore_usage[] = {
+    "usage: /unignore [#]",
+    "",
+    "Delete a regular expression from the ignore list.",
+    "",
+};
+
 static const char *version_usage[] = {
     "usage: /version <target>",
     "",

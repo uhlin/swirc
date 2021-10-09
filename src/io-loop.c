@@ -144,6 +144,7 @@ static struct cmds_tag {
 	{ "time",        cmd_time,        true,  time_usage,        ARRAY_SIZE(time_usage),        true  },
 	{ "topic",       cmd_topic,       true,  topic_usage,       ARRAY_SIZE(topic_usage),       false },
 	{ "unban",       cmd_unban,       true,  unban_usage,       ARRAY_SIZE(unban_usage),       true  },
+	{ "unignore",    cmd_unignore,    false, unignore_usage,    ARRAY_SIZE(unignore_usage),    false },
 	{ "version",     cmd_version,     true,  version_usage,     ARRAY_SIZE(version_usage),     true  },
 	{ "who",         cmd_who,         true,  who_usage,         ARRAY_SIZE(who_usage),         true  },
 	{ "whois",       cmd_whois,       true,  whois_usage,       ARRAY_SIZE(whois_usage),       true  },
