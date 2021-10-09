@@ -41,21 +41,21 @@ static std::vector<ignore> ignore_list;
 static void
 print_ignore_list()
 {
-    PRINTTEXT_CONTEXT ctx;
-    int no;
-    std::vector<ignore>::iterator it;
+	PRINTTEXT_CONTEXT ctx;
+	int no;
+	std::vector<ignore>::iterator it;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
-    printtext(&ctx, "List of ignores:");
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+	printtext(&ctx, "List of ignores:");
 
-    no = 0;
-    it = ignore_list.begin();
+	no = 0;
+	it = ignore_list.begin();
 
-    while (it != ignore_list.end()) {
-	printtext(&ctx, "%d: %s", no, it->get_str().c_str());
-	++ no;
-	++ it;
-    }
+	while (it != ignore_list.end()) {
+		printtext(&ctx, "%d: %s", no, it->get_str().c_str());
+		++ no;
+		++ it;
+	}
 }
 
 /*
