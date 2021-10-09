@@ -64,22 +64,23 @@ print_ignore_list()
 void
 cmd_ignore(const char *data)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char *err_reason = NULL;
+	PRINTTEXT_CONTEXT ctx;
+	char *err_reason = NULL;
 
-    if (strings_match(data, "")) {
-	print_ignore_list();
-	return;
-    } else if (!is_valid_regex(data, &err_reason)) {
-	print_and_free(err_reason, err_reason);
-	return;
-    }
+	if (strings_match(data, "")) {
+		print_ignore_list();
+		return;
+	} else if (!is_valid_regex(data, &err_reason)) {
+		print_and_free(err_reason, err_reason);
+		return;
+	}
 
-    ignore object(data);
-    ignore_list.push_back(object);
+	ignore object(data);
+	ignore_list.push_back(object);
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
-    printtext(&ctx, "Added \"%s\" to ignore list.", object.get_str().c_str());
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
+	printtext(&ctx, "Added \"%s\" to ignore list.",
+	    object.get_str().c_str());
 }
 
 /*
