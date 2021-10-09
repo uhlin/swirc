@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 - Added the following command aliases:
   - `/j` (`/join`)
   - `/p` (`/part`)
+- Added the following commands:
+  - `/ignore`
+  - `/unignore`
 - Made improvements to the following files:
   - `commands/connect.c`
   - `events/welcome.cpp`
