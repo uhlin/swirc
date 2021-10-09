@@ -14,19 +14,19 @@
 #define MAXIGNORES 30
 
 class ignore {
-    std::string str;
-    std::regex regex;
+	std::string	str;
+	std::regex	regex;
 
 public:
-    explicit ignore(const char *);
+	explicit ignore(const char *);
 
-    std::string &get_str(void) {
-	return this->str;
-    }
+	std::string& get_str(void) {
+		return this->str;
+	}
 
-    std::regex &get_regex(void) {
-	return this->regex;
-    }
+	std::regex& get_regex(void) {
+		return this->regex;
+	}
 };
 
 ignore::ignore(const char *_str)
