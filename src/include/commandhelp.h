@@ -185,14 +185,12 @@ static const char *help_usage[] = {
     "",
 };
 
-#if NOT_YET
 static const char *ignore_usage[] = {
-    "usage: /ignore ...",
+    "usage: /ignore [regex]",
     "",
-    "No help yet.",
+    "Ignores all nick!user@host that matches given regular expression.",
     "",
 };
-#endif
 
 static const char *ilist_usage[] = {
     "usage: /ilist [channel]",
