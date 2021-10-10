@@ -31,6 +31,8 @@
 
 #include <stdexcept>
 
+#include "../commands/ignore.h"
+
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
@@ -260,6 +262,10 @@ event_privmsg(struct irc_message_compo *compo)
 	    user = const_cast<char *>("<no user>");
 	if (host == NULL)
 	    host = const_cast<char *>("<no host>");
+
+	if (is_in_ignore_list(nick, user, host))
+	    return;
+
 	if (strFeed(params, 1) != 1)
 	    throw std::runtime_error("strFeed");
 
