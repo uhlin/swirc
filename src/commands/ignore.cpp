@@ -34,6 +34,7 @@
 #include <stdexcept>
 #include <string>
 
+#include "../errHand.h"
 #include "../libUtils.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -155,6 +156,30 @@ cmd_unignore(const char *data)
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ctx, "%s", e.what());
 	}
+}
+
+bool
+is_in_ignore_list(const char *nick, const char *user, const char *host)
+{
+	std::vector<ignore>::iterator	it;
+
+	if (nick == NULL || user == NULL || host == NULL || ignore_list.empty())
+		return false;
+
+	std::string nuh(nick);
+	nuh.append("!");
+	nuh.append(user).append("@").append(host);
+
+	for (it = ignore_list.begin(); it != ignore_list.end(); ++it) {
+		if (std::regex_match(nuh, it->get_regex())) {
+			debug("is_in_ignore_list: \"%s\" matches \"%s\": "
+			    "returning true...", it->get_str().c_str(),
+			    nuh.c_str());
+			return true;
+		}
+	}
+
+	return false;
 }
 
 bool
