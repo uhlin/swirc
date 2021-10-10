@@ -188,7 +188,8 @@ static const char *help_usage[] = {
 static const char *ignore_usage[] = {
     "usage: /ignore [regex]",
     "",
-    "Ignores all nick!user@host that matches given regular expression.",
+    "Ignores all nick!user@host that matches given regular expression, this",
+    "using the basic POSIX regular expression grammar.",
     "",
 };
 
