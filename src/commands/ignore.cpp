@@ -59,8 +59,8 @@ public:
 
 ignore::ignore(const char *_str)
 {
-	this->str.assign(_str, std::regex::basic);
-	this->regex.assign(_str);
+	this->str.assign(_str);
+	this->regex.assign(_str, std::regex::basic);
 }
 
 static const size_t		regex_maxlen = 60;
