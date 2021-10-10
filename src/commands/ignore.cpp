@@ -101,6 +101,9 @@ cmd_ignore(const char *data)
 	} else if (!is_valid_regex(data, &err_reason)) {
 		print_and_free(err_reason, err_reason);
 		return;
+	} else if (ignore_list.size() >= MAXIGNORES) {
+		print_and_free("too many ignores!", NULL);
+		return;
 	}
 
 	ignore object(data);
