@@ -31,6 +31,8 @@
 
 #include <stdexcept>
 
+#include "../commands/ignore.h"
+
 #include "../dataClassify.h"
 #include "../irc.h"
 #include "../network.h"
@@ -194,6 +196,9 @@ event_notice(struct irc_message_compo *compo)
 	    user = const_cast<char *>("<no user>");
 	if (host == NULL)
 	    host = const_cast<char *>("<no host>");
+
+	if (is_in_ignore_list(nick, user, host))
+	    return;
 
 	if (*msg == '\001') {
 	    /*
