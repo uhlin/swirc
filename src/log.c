@@ -134,19 +134,19 @@ log_get_path(const char *server_host, const char *label)
 void
 log_msg(const char *path, const char *text)
 {
-    if (path == NULL || text == NULL)
-	return;
+	FILE	*fp;
+	char	*text_copy;
 
-    FILE *fp = xfopen(path, "a");
+	if (path == NULL || text == NULL)
+		return;
 
-    if (fp != NULL) {
-	char *text_copy = sw_strdup(text);
-
-	(void) fprintf(fp, "%s %s\n", get_date(), squeeze_text_deco(text_copy));
-	(void) fclose(fp);
-
-	free(text_copy);
-    }
+	if ((fp = xfopen(path, "a")) != NULL) {
+		text_copy = sw_strdup(text);
+		(void) fprintf(fp, "%s %s\n", get_date(),
+		    squeeze_text_deco(text_copy));
+		(void) fclose(fp);
+		free(text_copy);
+	}
 }
 
 void
