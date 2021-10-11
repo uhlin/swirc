@@ -45,39 +45,40 @@ textBuf_get_element_by_pos(const TEXTBUF *buf, int pos)
 }
 
 int
-textBuf_ins_next(PTEXTBUF buf, PTEXTBUF_ELMT element,
-		 const char *text, int indent)
+textBuf_ins_next(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
+    int indent)
 {
-    PTEXTBUF_ELMT new_element;
+	PTEXTBUF_ELMT	new_element;
 
-    if (buf == NULL || text == NULL ||
-	(element == NULL && textBuf_size(buf) != 0)) {
-	return EINVAL;
-    }
+	if (buf == NULL || text == NULL ||
+	    (element == NULL && textBuf_size(buf) != 0))
+		return EINVAL;
 
-    new_element         = xcalloc(sizeof *new_element, 1);
-    new_element->text   = sw_strdup(text);
-    new_element->indent = indent;
+	new_element = xcalloc(sizeof *new_element, 1);
+	new_element->text = sw_strdup(text);
+	new_element->indent = indent;
 
-    if (textBuf_size(buf) == 0) {
-	buf->head       = new_element;
-	buf->head->prev = NULL;
-	buf->head->next = NULL;
-	buf->tail       = new_element;
-    } else {
-	sw_assert(element != NULL);
-	new_element->next = element->next;
-	new_element->prev = element;
-	if (element->next == NULL) {
-	    buf->tail = new_element;
+	if (textBuf_size(buf) == 0) {
+		buf->head = new_element;
+		buf->head->prev = NULL;
+		buf->head->next = NULL;
+		buf->tail = new_element;
 	} else {
-	    element->next->prev = new_element;
-	}
-	element->next = new_element;
-    }
+		sw_assert(element != NULL);
 
-    (buf->size)++;
-    return 0;
+		new_element->next = element->next;
+		new_element->prev = element;
+
+		if (element->next == NULL)
+			buf->tail = new_element;
+		else
+			element->next->prev = new_element;
+
+		element->next = new_element;
+	}
+
+	(buf->size)++;
+	return 0;
 }
 
 int
