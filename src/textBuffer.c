@@ -29,19 +29,23 @@ textBuf_new(void)
 PTEXTBUF_ELMT
 textBuf_get_element_by_pos(const TEXTBUF *buf, int pos)
 {
-    int			i;
-    PTEXTBUF_ELMT	element;
+	PTEXTBUF_ELMT element;
+	int i;
 
-    if (buf == NULL || pos < 0)
+	if (buf == NULL || pos < 0)
+		return NULL;
+
+	element = textBuf_head(buf);
+	i = 0;
+
+	while (element != NULL) {
+		if (i == pos)
+			return element;
+		element = element->next;
+		i++;
+	}
+
 	return NULL;
-
-    for (i = 0, element = textBuf_head(buf); element != NULL;
-	 i++, element = element->next) {
-	if (i == pos)
-	    return element;
-    }
-
-    return NULL;
 }
 
 int
