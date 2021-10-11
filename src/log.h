@@ -1,18 +1,12 @@
 #ifndef LOG_H
 #define LOG_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+__SWIRC_BEGIN_DECLS
+extern const char	g_log_filesuffix[];
 
-extern const char g_log_filesuffix[];
-
-char	*log_get_path(const char *server_host, const char *label);
-void	 log_msg(const char *path, const char *text);
+char	*log_get_path(const char *, const char *);
+void	 log_msg(const char *, const char *);
 void	 log_toggle_on_off(void);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif
