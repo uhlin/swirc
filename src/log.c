@@ -99,36 +99,38 @@ get_logtype(const char *label)
 char *
 log_get_path(const char *server_host, const char *label)
 {
-    if (server_host == NULL || label == NULL || g_log_dir == NULL)
-	return NULL;
+	char	*path;
 
-    char *path = sw_strdup(g_log_dir);
+	if (server_host == NULL || label == NULL || g_log_dir == NULL)
+		return NULL;
+
+	path = sw_strdup(g_log_dir);
 
 #if defined(UNIX)
-    realloc_strcat(&path, "/");
+	realloc_strcat(&path, "/");
 #elif defined(WIN32)
-    realloc_strcat(&path, "\\");
+	realloc_strcat(&path, "\\");
 #endif
 
-    realloc_strcat(&path, get_modified_server_host(server_host));
-    realloc_strcat(&path, "-");
-    realloc_strcat(&path, get_logtype(label));
-    realloc_strcat(&path, ".");
+	realloc_strcat(&path, get_modified_server_host(server_host));
+	realloc_strcat(&path, "-");
+	realloc_strcat(&path, get_logtype(label));
+	realloc_strcat(&path, ".");
 
-    switch (atoi(get_logtype(label))) {
-    case 1:
-	realloc_strcat(&path, "console");
-	break;
-    case 2:
-    case 3:
-	realloc_strcat(&path, label);
-	break;
-    default:
-	sw_assert_not_reached();
-    }
+	switch (atoi(get_logtype(label))) {
+	case 1:
+		realloc_strcat(&path, "console");
+		break;
+	case 2:
+	case 3:
+		realloc_strcat(&path, label);
+		break;
+	default:
+		sw_assert_not_reached();
+	}
 
-    realloc_strcat(&path, g_log_filesuffix);
-    return (strToLower(path));
+	realloc_strcat(&path, g_log_filesuffix);
+	return (strToLower(path));
 }
 
 void
