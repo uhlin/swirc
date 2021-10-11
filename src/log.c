@@ -152,22 +152,22 @@ log_msg(const char *path, const char *text)
 void
 log_toggle_on_off(void)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
 
-    if (g_active_window->logging) {
-	g_active_window->logging = false;
-	ctx.spec_type = TYPE_SPEC1_WARN;
-	printtext(&ctx, "Logging for window (refnum: %d) now off",
-		  g_active_window->refnum);
-    } else {
-	ctx.spec_type = TYPE_SPEC1_SUCCESS;
-	printtext(&ctx, "Logging for window (refnum: %d) now on",
-		  g_active_window->refnum);
-	g_active_window->logging = true;
-    }
+	if (g_active_window->logging) {
+		g_active_window->logging = false;
+		ctx.spec_type = TYPE_SPEC1_WARN;
+		printtext(&ctx, "Logging for window (refnum: %d) now off",
+		    g_active_window->refnum);
+	} else {
+		ctx.spec_type = TYPE_SPEC1_SUCCESS;
+		printtext(&ctx, "Logging for window (refnum: %d) now on",
+		    g_active_window->refnum);
+		g_active_window->logging = true;
+	}
 
-    statusbar_update_display_beta();
-    readline_top_panel();
+	statusbar_update_display_beta();
+	readline_top_panel();
 }
