@@ -10,13 +10,13 @@
 PTEXTBUF
 textBuf_new(void)
 {
-    PTEXTBUF buf = xcalloc(sizeof *buf, 1);
+	PTEXTBUF	buf = xcalloc(sizeof *buf, 1);
 
-    buf->size = 0;
-    buf->head = NULL;
-    buf->tail = NULL;
+	buf->size = 0;
+	buf->head = NULL;
+	buf->tail = NULL;
 
-    return buf;
+	return buf;
 }
 
 /**
