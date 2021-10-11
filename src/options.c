@@ -92,36 +92,37 @@ options(int argc, char *argv[], const char *optstring)
 int
 main(int argc, char *argv[])
 {
-    int opt;
-    const char optstring[] = "a:b:cd";
+	const char	optstring[] = "a:b:cd";
+	int		opt;
 
-    while ((opt = options(argc, argv, optstring)) != EOF) {
-	switch (opt) {
-	case 'a':
-	    printf("Catched -%c\ng_option_arg holds \"%s\"\n",
-		   opt, g_option_arg);
-	    break;
-	case 'b':
-	    printf("Catched -%c\ng_option_arg holds \"%s\"\n",
-		   opt, g_option_arg);
-	    break;
-	case 'c':
-	    printf("Catched -%c (no arg)\n", opt);
-	    break;
-	case 'd':
-	    printf("Catched -%c (no arg)\n", opt);
-	    break;
-	case UNRECOGNIZED_OPTION:
-	    printf("%s: -%c: unrecognized option\n", argv[0], g_option_save);
-	    return EXIT_FAILURE;
-	case OPTION_ARG_MISSING:
-	    printf("%s: -%c: option argument missing\n",
-		   argv[0], g_option_save);
-	    return EXIT_FAILURE;
+	while ((opt = options(argc, argv, optstring)) != EOF) {
+		switch (opt) {
+		case 'a':
+			printf("Catched -%c\ng_option_arg holds \"%s\"\n", opt,
+			    g_option_arg);
+			break;
+		case 'b':
+			printf("Catched -%c\ng_option_arg holds \"%s\"\n", opt,
+			    g_option_arg);
+			break;
+		case 'c':
+			printf("Catched -%c (no arg)\n", opt);
+			break;
+		case 'd':
+			printf("Catched -%c (no arg)\n", opt);
+			break;
+		case UNRECOGNIZED_OPTION:
+			printf("%s: -%c: unrecognized option\n", argv[0],
+			    g_option_save);
+			return EXIT_FAILURE;
+		case OPTION_ARG_MISSING:
+			printf("%s: -%c: option argument missing\n", argv[0],
+			    g_option_save);
+			return EXIT_FAILURE;
+		}
 	}
-    }
 
-    puts("Done processing, exiting.");
-    return EXIT_SUCCESS;
+	puts("Done processing, exiting.");
+	return EXIT_SUCCESS;
 }
 #endif
