@@ -43,49 +43,46 @@ char	*g_option_arg   = NULL;
 int
 options(int argc, char *argv[], const char *optstring)
 {
-    static char *nextchar = "";
-    int          opt;
-    const char  *p;		/* 2013-06-21 markus: added const (hack?) */
+	const char	*p;
+	int		 opt;
+	static char	*nextchar = "";
 
-    if (g_option_index >= argc ||
-	(!*nextchar && *(nextchar = argv[g_option_index]) != '-')) {
-	nextchar = "";
-	return EOF;
-    } else if (*nextchar == '-' && *++nextchar == '-') {
-	nextchar = "";
-	return EOF;
-    } else {
-	/* empty */;
-    }
-
-    g_option_save = opt = *nextchar++;
-
-    if ((p = strchr(optstring, opt)) == NULL) {
-	if (!*nextchar) {
-	    g_option_index++;
-	}
-	return UNRECOGNIZED_OPTION;
-    } else if (*++p != ':') {
-	if (!*nextchar) {
-	    g_option_index++;
-	}
-	g_option_arg = NULL;
-    } else {
-	if (*nextchar) {
-	    g_option_arg = nextchar;
-	} else {
-	    if (++g_option_index >= argc) {
+	if (g_option_index >= argc ||
+	    (!*nextchar && *(nextchar = argv[g_option_index]) != '-')) {
 		nextchar = "";
-		return OPTION_ARG_MISSING;
-	    } else {
-		g_option_arg = argv[g_option_index];
-	    }
+		return EOF;
+	} else if (*nextchar == '-' && *++nextchar == '-') {
+		nextchar = "";
+		return EOF;
 	}
-	nextchar = "";
-	g_option_index++;
-    }
 
-    return opt;
+	g_option_save = opt = *nextchar++;
+
+	if ((p = strchr(optstring, opt)) == NULL) {
+		if (!*nextchar)
+			g_option_index++;
+		return UNRECOGNIZED_OPTION;
+	} else if (*++p != ':') {
+		if (!*nextchar)
+			g_option_index++;
+		g_option_arg = NULL;
+	} else {
+		if (*nextchar) {
+			g_option_arg = nextchar;
+		} else {
+			if (++g_option_index >= argc) {
+				nextchar = "";
+				return OPTION_ARG_MISSING;
+			} else {
+				g_option_arg = argv[g_option_index];
+			}
+		}
+
+		nextchar = "";
+		g_option_index++;
+	}
+
+	return opt;
 }
 
 #if SELF_TEST
