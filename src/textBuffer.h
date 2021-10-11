@@ -2,16 +2,16 @@
 #define TEXTBUFFER_H
 
 typedef struct tagTEXTBUF_ELMT {
-    char	*text;
-    int		 indent;
-    struct tagTEXTBUF_ELMT *prev;
-    struct tagTEXTBUF_ELMT *next;
+	char	*text;
+	int	 indent;
+	struct tagTEXTBUF_ELMT	*prev;
+	struct tagTEXTBUF_ELMT	*next;
 } TEXTBUF_ELMT, *PTEXTBUF_ELMT;
 
 typedef struct tagTEXTBUF {
-    int			size;
-    PTEXTBUF_ELMT	head;
-    PTEXTBUF_ELMT	tail;
+	int		size;
+	PTEXTBUF_ELMT	head;
+	PTEXTBUF_ELMT	tail;
 } TEXTBUF, *PTEXTBUF;
 
 /*lint -sem(textBuf_get_element_by_pos, r_null) */
