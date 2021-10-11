@@ -77,13 +77,14 @@ get_date(void)
 static const char *
 get_modified_server_host(const char *orig)
 {
-    static char array[256] = { '\0' };
+	static char	array[256] = { '\0' };
 
-    memset(array, 0, ARRAY_SIZE(array));
-    snprintf(array, ARRAY_SIZE(array), "%s", orig);
-    squeeze(array, "-.");
+	if (snprintf(array, ARRAY_SIZE(array), "%s", orig) < 0)
+		(void) memset(array, 0, ARRAY_SIZE(array));
+	else
+		squeeze(array, "-.");
 
-    return (&array[0]);
+	return (&array[0]);
 }
 
 static const char *
