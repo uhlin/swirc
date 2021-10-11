@@ -36,9 +36,9 @@
 
 #define SELF_TEST 0
 
-int	 g_option_index = 1;
-int	 g_option_save  = -1;
-char	*g_option_arg   = NULL;
+int g_option_index = 1;
+int g_option_save = -1;
+char *g_option_arg = NULL;
 
 int
 options(int argc, char *argv[], const char *optstring)
