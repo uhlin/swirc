@@ -149,10 +149,10 @@ textBuf_remove(PTEXTBUF buf, PTEXTBUF_ELMT element)
 void
 textBuf_destroy(PTEXTBUF buf)
 {
-    while (textBuf_size(buf) > 0) {
-	if ((errno = textBuf_remove(buf, textBuf_tail(buf))) != 0)
-	    err_sys("textBuf_remove() returned %d", errno);
-    }
+	while (textBuf_size(buf) > 0) {
+		if ((errno = textBuf_remove(buf, textBuf_tail(buf))) != 0)
+			err_sys("textBuf_remove() returned %d", errno);
+	}
 
-    free(buf);
+	free(buf);
 }
