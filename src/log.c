@@ -89,11 +89,11 @@ get_modified_server_host(const char *orig)
 static const char *
 get_logtype(const char *label)
 {
-    if (strings_match_ignore_case(label, g_status_window_label))
-	return "1";
-    else if (is_irc_channel(label))
-	return "2";
-    return "3";
+	if (strings_match_ignore_case(label, g_status_window_label))
+		return "1";
+	else if (is_irc_channel(label))
+		return "2";
+	return "3";
 }
 
 char *
