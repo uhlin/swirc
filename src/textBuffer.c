@@ -119,31 +119,30 @@ textBuf_ins_prev(PTEXTBUF buf, PTEXTBUF_ELMT element,
 int
 textBuf_remove(PTEXTBUF buf, PTEXTBUF_ELMT element)
 {
-    if (buf == NULL || element == NULL || textBuf_size(buf) == 0) {
-	return EINVAL;
-    }
+	if (buf == NULL || element == NULL || textBuf_size(buf) == 0)
+		return EINVAL;
 
-    if (element == buf->head) {
-	buf->head = element->next;
-	if (buf->head == NULL) {
-	    buf->tail = NULL;
+	if (element == buf->head) {
+		buf->head = element->next;
+
+		if (buf->head == NULL)
+			buf->tail = NULL;
+		else
+			element->next->prev = NULL;
 	} else {
-	    element->next->prev = NULL;
-	}
-    } else {
-	element->prev->next = element->next;
-	if (element->next == NULL) {
-	    buf->tail = element->prev;
-	} else {
-	    element->next->prev = element->prev;
-	}
-    }
+		element->prev->next = element->next;
 
-    free(element->text);
-    free(element);
+		if (element->next == NULL)
+			buf->tail = element->prev;
+		else
+			element->next->prev = element->prev;
+	}
 
-    (buf->size)--;
-    return 0;
+	free(element->text);
+	free(element);
+
+	(buf->size)--;
+	return 0;
 }
 
 void
