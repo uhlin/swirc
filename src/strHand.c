@@ -145,23 +145,22 @@ sw_strdup(const char *string)
 char *
 trim(char *string)
 {
-    char *p = NULL;
+	char	*p = NULL;
 
-    if (isNull(string)) {
-	err_exit(EINVAL, "trim error");
-    } else if (isEmpty(string)) {
-	return string;
-    } else {
-	for (p = &string[strlen(string) - 1]; p >= &string[0]; p--) {
-	    if (!sw_isspace(*p)) {
-		break;
-	    }
+	if (isNull(string)) {
+		err_exit(EINVAL, "trim");
+	} else if (isEmpty(string)) {
+		return string;
+	} else {
+		for (p = &string[strlen(string) - 1]; p >= &string[0]; p--) {
+			if (!sw_isspace(*p))
+				break;
+		}
+
+		*(p + 1) = '\0';
 	}
 
-	*(p + 1) = '\0';
-    }
-
-    return string;
+	return string;
 }
 
 /**
