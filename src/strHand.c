@@ -44,9 +44,9 @@
 #include "strHand.h"
 
 #if defined(UNIX)
-#define PRINT_SZ	"%zu"
+#define PRINT_SIZE	"%zu"
 #elif defined(WIN32)
-#define PRINT_SZ	"%Iu"
+#define PRINT_SIZE	"%Iu"
 #endif
 
 /**
@@ -117,7 +117,7 @@ sw_strdup(const char *string)
 
 	if ((dest = malloc(size)) == NULL) {
 		err_exit(ENOMEM,
-		    "sw_strdup error (allocating " PRINT_SZ " bytes)",
+		    "sw_strdup error (allocating " PRINT_SIZE " bytes)",
 		    size);
 	}
 
