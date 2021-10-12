@@ -11,8 +11,8 @@
 __SWIRC_BEGIN_DECLS
 char	*strToLower(char *);
 char	*strToUpper(char *);
-char	*sw_strdup(const char *string);
-char	*trim(char *string);
+char	*sw_strdup(const char *);
+char	*trim(char *);
 const char *
 	 strColor(short int color) NO_SIDE_EFFECT;
 int	 strFeed(char *string, int count);
@@ -20,8 +20,8 @@ int	 sw_strcat(char *dest, const char *src, size_t);
 int	 sw_strcpy(char *dest, const char *src, size_t);
 int	 sw_wcscat(wchar_t *dest, const wchar_t *src, size_t);
 int	 sw_wcscpy(wchar_t *dest, const wchar_t *src, size_t);
-void	 squeeze(char *buffer, const char *rej);
-void	 sw_snprintf(char *dest, size_t, const char *fmt, ...) PRINTFLIKE(3);
+void	 squeeze(char *, const char *);
+void	 sw_snprintf(char *, size_t, const char *, ...) PRINTFLIKE(3);
 __SWIRC_END_DECLS
 
 /* Inline function definitions
