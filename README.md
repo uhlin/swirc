@@ -89,9 +89,25 @@ OS X works.
     $ ./configure
     $ make
 
-Installing it (under `/usr/local`):
+#### Configuration options ####
 
-    $ sudo make install
+The following options can be passed to the configure script:
+
+- `--with-libnotify`: Enable support for desktop notifications
+- `--without-libidn`: Build without GNU libidn
+- `--without-libintl`: No internationalization
+
+#### Install ####
+
+1. Installing it under `/usr/local`:
+
+        $ sudo make install
+
+2. Installing it under `/home/user` without the translations (in which
+   case you also should've passed `--without-libintl` to the configure
+   script):
+
+        $ PREFIX=/home/user make install-no-lc-msgs
 
 ### Building for Windows ###
 
