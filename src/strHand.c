@@ -58,23 +58,19 @@
 char *
 strToLower(char *s)
 {
-    size_t len = 0;
+	size_t	len = 0;
 
-    if (s == NULL) {
-	err_exit(EINVAL, "strToLower");
-    } else if (! (*s)) {
-	return s;
-    } else {
-	len = strlen(s);
-    }
-
-    for (char *p = &s[0]; p < &s[len]; p++) {
-	if (sw_isupper(*p)) {
-	    *p = tolower(*p);
+	if (s == NULL)
+		err_exit(EINVAL, "strToLower");
+	else if (! (*s))
+		return s;
+	else
+		len = strlen(s);
+	for (char *p = &s[0]; p < &s[len]; p++) {
+		if (sw_isupper(*p))
+			*p = tolower(*p);
 	}
-    }
-
-    return s;
+	return s;
 }
 
 /**
