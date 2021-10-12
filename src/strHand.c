@@ -115,25 +115,23 @@ strToUpper(char *s)
 char *
 sw_strdup(const char *string)
 {
-    size_t	 size = 0;
-    char	*dest = NULL;
+	char	*dest = NULL;
+	size_t	 size = 0;
 
-    if (isNull(string)) {
-	err_exit(EINVAL, "sw_strdup error");
-    } else {
-	size = strlen(string) + 1;
-    }
+	if (isNull(string))
+		err_exit(EINVAL, "sw_strdup error");
+	else
+		size = strlen(string) + 1;
 
-    if ((dest = malloc(size)) == NULL) {
-	err_exit(ENOMEM, "sw_strdup error (allocating " PRINT_SZ " bytes)",
-		 size);
-    }
+	if ((dest = malloc(size)) == NULL) {
+		err_exit(ENOMEM,
+		    "sw_strdup error (allocating " PRINT_SZ " bytes)",
+		    size);
+	}
 
-    if ((errno = sw_strcpy(dest, string, size)) != 0) {
-	err_sys("sw_strdup error");
-    }
-
-    return (dest);
+	if ((errno = sw_strcpy(dest, string, size)) != 0)
+		err_sys("sw_strdup error");
+	return dest;
 }
 
 /**
