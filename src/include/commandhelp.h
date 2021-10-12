@@ -198,6 +198,20 @@ static const char *ignore_usage[] = {
     "    2. $  Matches the ending position of the string, if it is the last",
     "          character of the regular expression.",
     "",
+    TXT_BOLD "EXAMPLES" TXT_BOLD,
+    "",
+    "Ignore nickname 'troll':",
+    "    /ignore ^troll!.*@.*$",
+    "",
+    "Ignore all users with username 'troll':",
+    "    /ignore ^.*!troll@.*$",
+    "",
+    "Ignore all users with hostname 'insecure.org':",
+    "    /ignore ^.*!.*@insecure\\.org$",
+    "",
+    "Ignore all users with a Chinese domain (.cn):",
+    "    /ignore ^.*!.*@.*\\.cn$",
+    "",
 };
 
 static const char *ilist_usage[] = {
