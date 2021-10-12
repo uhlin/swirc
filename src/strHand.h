@@ -36,16 +36,16 @@ __SWIRC_END_DECLS
 static SW_INLINE bool
 strings_match(const char *s1, const char *s2)
 {
-    return (strcmp(s1, s2) == 0);
+	return (strcmp(s1, s2) == 0);
 }
 
 static SW_INLINE bool
 strings_match_ignore_case(const char *s1, const char *s2)
 {
 #if defined(UNIX)
-    return (strcasecmp(s1, s2) == 0);
+	return (strcasecmp(s1, s2) == 0);
 #elif defined(WIN32)
-    return (_stricmp(s1, s2) == 0);
+	return (_stricmp(s1, s2) == 0);
 #endif
 }
 
