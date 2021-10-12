@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
   - `commands/connect.c`
   - `events/welcome.cpp`
   - `dataClassify.c`
+  - `log.c`
   - `nestHome.c`
 - Reformatted and reindented files
 - Rewrote the `/join` and `/part` commands in C++
