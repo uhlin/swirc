@@ -189,7 +189,14 @@ static const char *ignore_usage[] = {
     "usage: /ignore [regex]",
     "",
     "Ignores all nick!user@host that matches given regular expression, this",
-    "using the basic POSIX regular expression grammar.",
+    "using the basic POSIX regular expression grammar. This command isn't for",
+    "beginners and I advice you to be careful when using it. I highly",
+    "recommend the use of:",
+    "",
+    "    1. ^  Matches the starting position within the string, if it is the",
+    "          first character of the regular expression.",
+    "    2. $  Matches the ending position of the string, if it is the last",
+    "          character of the regular expression.",
     "",
 };
 
