@@ -173,26 +173,26 @@ trim(char *string)
 const char *
 strColor(short int color)
 {
-    switch (color) {
-    case COLOR_BLACK:
-	return ("Black");
-    case COLOR_RED:
-	return ("Red");
-    case COLOR_GREEN:
-	return ("Green");
-    case COLOR_YELLOW:
-	return ("Yellow");
-    case COLOR_BLUE:
-	return ("Blue");
-    case COLOR_MAGENTA:
-	return ("Magenta");
-    case COLOR_CYAN:
-	return ("Cyan");
-    case COLOR_WHITE:
-	return ("White");
-    }
+	switch (color) {
+	case COLOR_BLACK:
+		return ("Black");
+	case COLOR_RED:
+		return ("Red");
+	case COLOR_GREEN:
+		return ("Green");
+	case COLOR_YELLOW:
+		return ("Yellow");
+	case COLOR_BLUE:
+		return ("Blue");
+	case COLOR_MAGENTA:
+		return ("Magenta");
+	case COLOR_CYAN:
+		return ("Cyan");
+	case COLOR_WHITE:
+		return ("White");
+	}
 
-    return ("Unknown Color!");
+	return ("Unknown Color!");
 }
 
 /**
