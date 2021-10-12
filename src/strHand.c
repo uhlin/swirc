@@ -86,23 +86,19 @@ strToLower(char *s)
 char *
 strToUpper(char *s)
 {
-    size_t len = 0;
+	size_t	len = 0;
 
-    if (s == NULL) {
-	err_exit(EINVAL, "strToUpper");
-    } else if (! (*s)) {
-	return s;
-    } else {
-	len = strlen(s);
-    }
-
-    for (char *p = &s[0]; p < &s[len]; p++) {
-	if (sw_islower(*p)) {
-	    *p = toupper(*p);
+	if (s == NULL)
+		err_exit(EINVAL, "strToUpper");
+	else if (! (*s))
+		return s;
+	else
+		len = strlen(s);
+	for (char *p = &s[0]; p < &s[len]; p++) {
+		if (sw_islower(*p))
+			*p = toupper(*p);
 	}
-    }
-
-    return s;
+	return s;
 }
 
 /**
