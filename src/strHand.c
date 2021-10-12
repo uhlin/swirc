@@ -1,5 +1,5 @@
 /* String handling functions
-   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -252,21 +252,21 @@ squeeze(char *buffer, const char *rej)
  * Wrapper function for snprintf() that doesn't care about truncation.
  *
  * @param dest Destination to write to.
- * @param sz   Destination size.
+ * @param size Destination size.
  * @param fmt  Format control.
  * @return Void
  */
 void
-sw_snprintf(char *dest, size_t sz, const char *fmt, ...)
+sw_snprintf(char *dest, size_t size, const char *fmt, ...)
 {
-    int n_print = -1;
-    va_list ap;
+	int n_print;
+	va_list ap;
 
-    if (dest == NULL || sz == 0 || fmt == NULL)
-	err_exit(EINVAL, "sw_snprintf");
+	if (dest == NULL || size == 0 || fmt == NULL)
+		err_exit(EINVAL, "sw_snprintf");
 
-    va_start(ap, fmt);
-    if ((n_print = vsnprintf(dest, sz, fmt, ap)) < 0)
-	err_sys("sw_snprintf: vsnprintf() returned %d", n_print);
-    va_end(ap);
+	va_start(ap, fmt);
+	if ((n_print = vsnprintf(dest, size, fmt, ap)) < 0)
+		err_sys("sw_snprintf: vsnprintf() returned %d", n_print);
+	va_end(ap);
 }
