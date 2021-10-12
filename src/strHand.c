@@ -205,22 +205,17 @@ strColor(short int color)
 int
 strFeed(char *string, int count)
 {
-    int feeds_written = 0;
-    char *p = NULL;
+	char	*p = NULL;
+	int	 feeds_written = 0;
 
-    if (isNull(string) || isEmpty(string) || count <= 0) {
-	return feeds_written;
-    }
-
-    while (feeds_written < count) {
-	if ((p = strchr(string, ' ')) == NULL) {
-	    break;
+	if (isNull(string) || isEmpty(string) || count <= 0)
+		return feeds_written;
+	while (feeds_written < count) {
+		if ((p = strchr(string, ' ')) == NULL)
+			break;
+		*p = '\n', feeds_written++;
 	}
-
-	*p = '\n', feeds_written++;
-    }
-
-    return feeds_written;
+	return feeds_written;
 }
 
 /**
