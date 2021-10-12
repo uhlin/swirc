@@ -227,25 +227,22 @@ strFeed(char *string, int count)
  * Squeeze characters in a buffer.
  *
  * @param buffer Target buffer.
- * @param rej    String with characters to squeeze.
+ * @param reject String with characters to squeeze.
  * @return Void
  */
 void
-squeeze(char *buffer, const char *rej)
+squeeze(char *buffer, const char *reject)
 {
-    long int i, j;
+	long int	i, j;
 
-    if (isNull(buffer) || isEmpty(buffer)) {
-	return;
-    }
-
-    for (i = j = 0; buffer[i] != '\0'; i++) {
-	if (strchr(rej, buffer[i]) == NULL) {
-	    buffer[j++] = buffer[i];
+	if (isNull(buffer) || isEmpty(buffer) ||
+	    isNull(reject) || isEmpty(reject))
+		return;
+	for (i = j = 0; buffer[i] != '\0'; i++) {
+		if (strchr(reject, buffer[i]) == NULL)
+			buffer[j++] = buffer[i];
 	}
-    }
-
-    buffer[j] = '\0';
+	buffer[j] = '\0';
 }
 
 /**
