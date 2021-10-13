@@ -247,13 +247,14 @@ realloc_strcat(char **dest, const char *src)
 
 void
 write_setting(FILE *stream, const char *name, const char *value,
-	      const bool do_padding_using_tabs, const short int count)
+    const bool do_padding_using_tabs, const short int count)
 {
-    fputs(name, stream);
-    const char c = do_padding_using_tabs ? '\t' : ' ';
-    for (short int si = 0; si < count; si++)
-	fputc(c, stream);
-    fprintf(stream, "= \"%s\";\n", value);
+	const char	c = do_padding_using_tabs ? '\t' : ' ';
+
+	(void) fputs(name, stream);
+	for (short int si = 0; si < count; si++)
+		(void) fputc(c, stream);
+	(void) fprintf(stream, "= \"%s\";\n", value);
 }
 
 void
