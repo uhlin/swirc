@@ -73,20 +73,22 @@ fopen_exit_on_error(const char *path, const char *mode)
 FILE *
 xfopen(const char *path, const char *mode)
 {
-    FILE *fp = NULL;
+	FILE	*fp = NULL;
 
-    if (path == NULL || mode == NULL) {
-	errno = EINVAL;
-	return NULL;
-    }
+	if (path == NULL || mode == NULL) {
+		errno = EINVAL;
+		return NULL;
+	}
+
 #ifdef HAVE_BCI
-    if ((errno = fopen_s(&fp, path, mode)) != 0)
-	return NULL;
+	if ((errno = fopen_s(&fp, path, mode)) != 0)
+		return NULL;
 #else
-    if ((fp = fopen(path, mode)) == NULL)
-	return NULL;
+	if ((fp = fopen(path, mode)) == NULL)
+		return NULL;
 #endif
-    return fp;
+
+	return fp;
 }
 
 /* Check for vulnerabilities */
