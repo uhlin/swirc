@@ -196,12 +196,11 @@ size_to_int(const size_t value)
 size_t
 size_product(const size_t elt_count, const size_t elt_size)
 {
-    if (elt_size && elt_count > SIZE_MAX / elt_size) {
-	err_msg("Integer overflow");
-	abort();
-    }
-
-    return (elt_count * elt_size);
+	if (elt_size && elt_count > SIZE_MAX / elt_size) {
+		err_msg("size_product: integer overflow");
+		abort();
+	}
+	return (elt_count * elt_size);
 }
 
 size_t
