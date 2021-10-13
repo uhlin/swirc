@@ -45,8 +45,8 @@
 #define PRINT_SIZE	"%Iu"
 #endif
 
-const size_t g_conversion_failed = ((size_t) -1);
-const time_t g_time_error = ((time_t) -1);
+const size_t	g_conversion_failed = ((size_t) -1);
+const time_t	g_time_error = ((time_t) -1);
 
 FILE *
 fopen_exit_on_error(const char *path, const char *mode)
