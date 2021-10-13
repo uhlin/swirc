@@ -207,19 +207,22 @@ size_product(const size_t elt_count, const size_t elt_size)
 size_t
 xmbstowcs(wchar_t *pwcs, const char *s, size_t n)
 {
-    size_t bytes_convert = 0;
+	size_t	bytes_convert = 0;
 
-    if (s == NULL) {
-	errno = EINVAL;
-	return (g_conversion_failed);
-    }
+	if (s == NULL) {
+		errno = EINVAL;
+		return (g_conversion_failed);
+	}
+
 #if defined(UNIX)
-    bytes_convert = mbstowcs(pwcs, s, n);
-    return (bytes_convert);
+	bytes_convert = mbstowcs(pwcs, s, n);
+
+	return (bytes_convert);
 #elif defined(WIN32)
-    if ((errno = mbstowcs_s(&bytes_convert, pwcs, n + 1, s, n)) != 0)
-	return (g_conversion_failed);
-    return (bytes_convert);
+	if ((errno = mbstowcs_s(&bytes_convert, pwcs, n + 1, s, n)) != 0)
+		return (g_conversion_failed);
+
+	return (bytes_convert);
 #endif
 }
 
