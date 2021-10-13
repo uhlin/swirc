@@ -111,30 +111,28 @@ format_codes_are_ok(const char *fmt)
 const char *
 current_time(const char *fmt)
 {
-    static char		buffer[200] = "";
-    struct tm		items = { 0 };
-    time_t		seconds = 0;
+	static char	buffer[200] = { 0 };
+	struct tm	items = { 0 };
+	time_t		seconds = 0;
 
-    if (isNull(fmt) || isEmpty(fmt) || time(&seconds) == g_time_error) {
-	return "";
-    }
+	if (isNull(fmt) || isEmpty(fmt) || time(&seconds) == g_time_error)
+		return "";
 
 #if defined(UNIX)
-    if (localtime_r(&seconds, &items) == NULL) {
-	return "";
-    }
+	if (localtime_r(&seconds, &items) == NULL)
+		return "";
 #elif defined(WIN32)
-    if (localtime_s(&items, &seconds) != 0) {
-	return "";
-    }
+	if (localtime_s(&items, &seconds) != 0)
+		return "";
 #endif
 
-    if (!format_codes_are_ok(fmt)) {
-	err_msg("In current_time: Erroneous format codes. Aborting...");
-	abort();
-    }
+	if (!format_codes_are_ok(fmt)) {
+		err_msg("In current_time: Erroneous format codes. Aborting...");
+		abort();
+	}
 
-    return (strftime(buffer, sizeof buffer, fmt, &items) > 0 ? &buffer[0] : "");
+	return ((strftime(buffer, ARRAY_SIZE(buffer), fmt, &items) > 0)
+	    ? &buffer[0] : "");
 }
 
 const char *
