@@ -291,22 +291,22 @@ write_to_stream(FILE *stream, const char *fmt, ...)
 void *
 xcalloc(size_t elt_count, size_t elt_size)
 {
-    void *vp;
+	void	*vp;
 
-    if (elt_count == 0) {
-	err_exit(EINVAL, "xcalloc: invalid argument: element count is zero");
-    } else if (elt_size == 0) {
-	err_exit(EINVAL, "xcalloc: invalid argument: element size is zero");
-    } else if (SIZE_MAX / elt_count < elt_size) {
-	err_quit("xcalloc: integer overflow");
-    } else {
-	if ((vp = calloc(elt_count, elt_size)) == NULL)
-	    err_exit(ENOMEM,
-		"xcalloc: out of memory (allocating " PRINT_SIZE " bytes)",
-		(elt_count * elt_size));
-    }
-
-    return (vp);
+	if (elt_count == 0) {
+		err_exit(EINVAL, "xcalloc: invalid argument: "
+		    "element count is zero");
+	} else if (elt_size == 0) {
+		err_exit(EINVAL, "xcalloc: invalid argument: "
+		    "element size is zero");
+	} else if (SIZE_MAX / elt_count < elt_size) {
+		err_quit("xcalloc: integer overflow");
+	} else if ((vp = calloc(elt_count, elt_size)) == NULL) {
+		err_exit(ENOMEM, "xcalloc: "
+		    "out of memory (allocating " PRINT_SIZE " bytes)",
+		    (elt_count * elt_size));
+	}
+	return (vp);
 }
 
 void *
