@@ -172,12 +172,11 @@ int_diff(const int a, const int b)
 int
 int_sum(const int a, const int b)
 {
-    if ((b > 0 && a > INT_MAX - b) || (b < 0 && a < INT_MIN - b)) {
-	err_msg("int_sum: Integer overflow: a=%d b=%d", a, b);
-	abort();
-    }
-
-    return (a + b);
+	if ((b > 0 && a > INT_MAX - b) || (b < 0 && a < INT_MIN - b)) {
+		err_msg("int_sum: Integer overflow: a=%d b=%d", a, b);
+		abort();
+	}
+	return (a + b);
 }
 
 int
