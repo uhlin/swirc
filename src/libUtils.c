@@ -259,33 +259,35 @@ write_setting(FILE *stream, const char *name, const char *value,
 void
 write_to_stream(FILE *stream, const char *fmt, ...)
 {
-    va_list	ap;
-    int		n_print;
+	int n_print;
+	va_list ap;
 
-    va_start(ap, fmt);
-    errno = 0;
+	va_start(ap, fmt);
+	errno = 0;
 #ifdef HAVE_BCI
-    n_print = vfprintf_s(stream, fmt, ap);
+	n_print = vfprintf_s(stream, fmt, ap);
 #else
-    n_print = vfprintf(stream, fmt, ap);
+	n_print = vfprintf(stream, fmt, ap);
 #endif
-    va_end(ap);
+	va_end(ap);
 
-    if (n_print < 0) {
+	if (n_print < 0) {
 #ifdef HAVE_BCI
-	const char fn[] = "vfprintf_s()";
+		const char fn[] = "vfprintf_s()";
 #else
-	const char fn[] = "vfprintf()";
+		const char fn[] = "vfprintf()";
 #endif
 
-	if (errno != 0) {
-	    err_ret("write_to_stream: %s returned %d", fn, n_print);
-	} else {
-	    err_msg("write_to_stream: %s returned %d (error)", fn, n_print);
+		if (errno != 0) {
+			err_ret("write_to_stream: %s returned %d",
+			    fn, n_print);
+		} else {
+			err_msg("write_to_stream: %s returned %d (error)",
+			    fn, n_print);
+		}
+
+		abort();
 	}
-
-	abort();
-    }
 }
 
 void *
