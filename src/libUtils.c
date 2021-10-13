@@ -328,19 +328,18 @@ xmalloc(size_t size)
 void *
 xrealloc(void *ptr, size_t newSize)
 {
-    void *newPtr;
+	void	*newPtr;
 
-    if (ptr == NULL) {
-	err_exit(EINVAL, "xrealloc: invalid argument: "
-	    "a null pointer was passed");
-    } else if (newSize == 0) {
-	err_exit(EINVAL, "xrealloc: invalid argument: zero size  --  use free");
-    } else {
-	if ((newPtr = realloc(ptr, newSize)) == NULL)
-	    err_exit(errno,
-		"xrealloc: error changing memory block to " PRINT_SIZE " bytes",
-		newSize);
-    }
-
-    return (newPtr);
+	if (ptr == NULL) {
+		err_exit(EINVAL, "xrealloc: invalid argument: "
+		    "a null pointer was passed");
+	} else if (newSize == 0) {
+		err_exit(EINVAL, "xrealloc: invalid argument: zero size  --  "
+		    "use free");
+	} else if ((newPtr = realloc(ptr, newSize)) == NULL) {
+		err_exit(errno, "xrealloc: "
+		    "error changing memory block to " PRINT_SIZE " bytes",
+		    newSize);
+	}
+	return (newPtr);
 }
