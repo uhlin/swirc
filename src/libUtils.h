@@ -5,8 +5,8 @@
 #include <time.h>
 
 __SWIRC_BEGIN_DECLS
-extern const size_t g_conversion_failed;
-extern const time_t g_time_error;
+extern const size_t	g_conversion_failed;
+extern const time_t	g_time_error;
 __SWIRC_END_DECLS
 
 /*lint -function(fopen, xfopen) */
@@ -48,17 +48,17 @@ __SWIRC_END_DECLS
 static inline void
 free_not_null(void *ptr)
 {
-    if (ptr != NULL)
-	free(ptr);
+	if (ptr != NULL)
+		free(ptr);
 }
 
 static inline void
 free_and_null(char **ptr)
 {
-    if (ptr != NULL && *ptr != NULL) {
-	free(*ptr);
-	*ptr = NULL;
-    }
+	if (ptr != NULL && *ptr != NULL) {
+		free(*ptr);
+		*ptr = NULL;
+	}
 }
 
 #endif
