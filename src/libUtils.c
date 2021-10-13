@@ -160,12 +160,11 @@ getuser(void)
 int
 int_diff(const int a, const int b)
 {
-    if ((b > 0 && a < INT_MIN + b) || (b < 0 && a > INT_MAX + b)) {
-	err_msg("int_diff: Integer overflow: a=%d b=%d", a, b);
-	abort();
-    }
-
-    return (a - b);
+	if ((b > 0 && a < INT_MIN + b) || (b < 0 && a > INT_MAX + b)) {
+		err_msg("int_diff: Integer overflow: a=%d b=%d", a, b);
+		abort();
+	}
+	return (a - b);
 }
 
 /* Return the sum of 'a + b' */
