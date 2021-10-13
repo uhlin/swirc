@@ -312,17 +312,15 @@ xcalloc(size_t elt_count, size_t elt_size)
 void *
 xmalloc(size_t size)
 {
-    void *vp;
+	void	*vp;
 
-    if (size == 0) {
-	err_exit(EINVAL, "xmalloc: invalid argument -- zero size");
-    }
-
-    if ((vp = malloc(size)) == NULL) {
-	err_exit(ENOMEM, "xmalloc: error allocating " PRINT_SIZE " bytes", size);
-    }
-
-    return (vp);
+	if (size == 0) {
+		err_exit(EINVAL, "xmalloc: invalid argument -- zero size");
+	} else if ((vp = malloc(size)) == NULL) {
+		err_exit(ENOMEM, "xmalloc: "
+		    "error allocating " PRINT_SIZE " bytes", size);
+	}
+	return (vp);
 }
 
 void *
