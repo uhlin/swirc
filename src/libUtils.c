@@ -226,8 +226,8 @@ xmbstowcs(wchar_t *pwcs, const char *s, size_t n)
 void
 fclose_ensure_success(FILE *fp)
 {
-    if (fp != NULL && fclose(fp) != 0)
-	err_sys("fclose");
+	if (fp != NULL && fclose(fp) != 0)
+		err_sys("fclose");
 }
 
 void
