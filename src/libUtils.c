@@ -40,9 +40,9 @@
 #include "strHand.h"
 
 #if defined(UNIX)
-#define PRINT_SZ	"%zu"
+#define PRINT_SIZE	"%zu"
 #elif defined(WIN32)
-#define PRINT_SZ	"%Iu"
+#define PRINT_SIZE	"%Iu"
 #endif
 
 const size_t g_conversion_failed = ((size_t) -1);
@@ -302,7 +302,7 @@ xcalloc(size_t elt_count, size_t elt_size)
     } else {
 	if ((vp = calloc(elt_count, elt_size)) == NULL)
 	    err_exit(ENOMEM,
-		"xcalloc: out of memory (allocating " PRINT_SZ " bytes)",
+		"xcalloc: out of memory (allocating " PRINT_SIZE " bytes)",
 		(elt_count * elt_size));
     }
 
@@ -319,7 +319,7 @@ xmalloc(size_t size)
     }
 
     if ((vp = malloc(size)) == NULL) {
-	err_exit(ENOMEM, "xmalloc: error allocating " PRINT_SZ " bytes", size);
+	err_exit(ENOMEM, "xmalloc: error allocating " PRINT_SIZE " bytes", size);
     }
 
     return (vp);
@@ -338,7 +338,7 @@ xrealloc(void *ptr, size_t newSize)
     } else {
 	if ((newPtr = realloc(ptr, newSize)) == NULL)
 	    err_exit(errno,
-		"xrealloc: error changing memory block to " PRINT_SZ " bytes",
+		"xrealloc: error changing memory block to " PRINT_SIZE " bytes",
 		newSize);
     }
 
