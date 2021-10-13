@@ -93,19 +93,17 @@ xfopen(const char *path, const char *mode)
 static bool
 format_codes_are_ok(const char *fmt)
 {
-    const char	 legal_index[] = "aAbBcdHIjmMpSUwWxXyYzZ%";
-    const char	*ccp = NULL;
-    ptrdiff_t	 diff = 0;
+	const char	*cp = NULL;
+	const char	 legal_index[] = "aAbBcdHIjmMpSUwWxXyYzZ%";
+	ptrdiff_t	 diff = 0;
 
-    while (ccp = strchr(&fmt[diff], '%'), ccp != NULL) {
-	if (isEmpty(++ccp) || strchr(legal_index, *ccp) == NULL) {
-	    return false;
-	} else {
-	    diff = ++ccp - fmt;
+	while ((cp = strchr(&fmt[diff], '%')) != NULL) {
+		if (isEmpty(++cp) || strchr(legal_index, *cp) == NULL)
+			return false;
+		else
+			diff = (++cp - fmt);
 	}
-    }
-
-    return true;
+	return true;
 }
 
 const char *
