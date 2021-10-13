@@ -51,23 +51,20 @@ const time_t g_time_error = ((time_t) -1);
 FILE *
 fopen_exit_on_error(const char *path, const char *mode)
 {
-    FILE *fp;
+	FILE	*fp;
 
-    if (path == NULL || mode == NULL) {
-	err_exit(EINVAL, "fopen_exit_on_error");
-    }
+	if (path == NULL || mode == NULL)
+		err_exit(EINVAL, "fopen_exit_on_error");
 
 #ifdef HAVE_BCI
-    if ((errno = fopen_s(&fp, path, mode)) != 0) {
-	err_sys("fopen_s");
-    }
+	if ((errno = fopen_s(&fp, path, mode)) != 0)
+		err_sys("fopen_s");
 #else
-    if ((fp = fopen(path, mode)) == NULL) {
-	err_sys("fopen");
-    }
+	if ((fp = fopen(path, mode)) == NULL)
+		err_sys("fopen");
 #endif
 
-    return (fp);
+	return (fp);
 }
 
 FILE *
