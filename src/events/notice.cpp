@@ -174,6 +174,7 @@ event_notice(struct irc_message_compo *compo)
 			msg++;
 		if (strings_match_ignore_case(prefix, g_server_hostname)) {
 			struct notice_context ctx(prefix, dest, msg);
+
 			handle_notice_from_my_server(&ctx);
 			return;
 		}
