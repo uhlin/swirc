@@ -67,12 +67,13 @@ static bool shouldHighlightMessage_case2(const char *) PTR_ARGS_NONNULL;
 static void
 acknowledge_ctcp_request(const char *cmd, const struct special_msg_context *ctx)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
+	PRINTTEXT_CONTEXT	ptext_ctx;
 
-    printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC3, true);
-    printtext(&ptext_ctx, "%c%s%c %s%s@%s%s requested CTCP %c%s%c from %c%s%c",
-	BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
-	BOLD, cmd, BOLD, BOLD, ctx->dest, BOLD);
+	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC3, true);
+	printtext(&ptext_ctx, "%c%s%c %s%s@%s%s requested CTCP %c%s%c from "
+	    "%c%s%c",
+	    BOLD, ctx->nick, BOLD, LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
+	    BOLD, cmd, BOLD, BOLD, ctx->dest, BOLD);
 }
 
 static void
