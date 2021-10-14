@@ -50,8 +50,8 @@
 #include "../ToastsAPI.hpp"
 #elif defined(UNIX) && USE_LIBNOTIFY
 #include <libnotify/notify.h>
-#define SUMMARY_TEXT	"Swirc IRC client"
-#define SWIRC_ICON	"/usr/local/share/swirc/swirc-royal.png"
+#define SUMMARY_TEXT "Swirc IRC client"
+#define SWIRC_ICON "/usr/local/share/swirc/swirc-royal.png"
 #endif
 
 #define NICK_S1 Theme("nick_s1")
