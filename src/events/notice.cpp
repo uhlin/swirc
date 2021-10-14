@@ -102,18 +102,18 @@ handle_notice_from_my_server(const struct notice_context *ctx)
 
 static void
 output_ctcp_reply(const char *cmd, const struct special_msg_context *ctx,
-		  const char *msg)
+    const char *msg)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
+	PRINTTEXT_CONTEXT	ptext_ctx;
 
-    if (*msg == ':')
-	msg++;
+	if (*msg == ':')
+		msg++;
 
-    printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC2, true);
-    printtext(&ptext_ctx, "CTCP %c%s%c reply from %c%s%c %s%s@%s%s: %s",
-	BOLD, cmd, BOLD, BOLD, ctx->nick, BOLD,
-	LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
-	msg);
+	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC2, true);
+	printtext(&ptext_ctx, "CTCP %c%s%c reply from %c%s%c %s%s@%s%s: %s",
+	    BOLD, cmd, BOLD, BOLD, ctx->nick, BOLD,
+	    LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
+	    msg);
 }
 
 static void
