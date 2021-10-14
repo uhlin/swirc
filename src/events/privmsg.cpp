@@ -103,12 +103,12 @@ handle_special_msg(const struct special_msg_context *ctx)
 		if (net_send("NOTICE %s :"
 		    "\001VERSION Swirc %s by %s  --  %s\001", ctx->nick,
 		    g_swircVersion, g_swircAuthor, g_swircWebAddr) < 0)
-			g_on_air = false;
+			g_connection_lost = true;
 		acknowledge_ctcp_request("VERSION", ctx);
 	} else if (!strncmp(msg, "TIME", 5)) {
 		if (net_send("NOTICE %s :\001TIME %s\001", ctx->nick,
 		    current_time("%c")) < 0)
-			g_on_air = false;
+			g_connection_lost = true;
 		acknowledge_ctcp_request("TIME", ctx);
 	} else {
 		/* do nothing */;
