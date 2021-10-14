@@ -78,42 +78,42 @@ acknowledge_ctcp_request(const char *cmd, const struct special_msg_context *ctx)
 static void
 handle_special_msg(const struct special_msg_context *ctx)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
-    char *msg = sw_strdup(ctx->msg);
+	PRINTTEXT_CONTEXT ptext_ctx;
+	char *msg = sw_strdup(ctx->msg);
 
-    printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
-    squeeze(msg, "\001");
-    msg = trim(msg);
+	printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
+	squeeze(msg, "\001");
+	msg = trim(msg);
 
-    if (strings_match_ignore_case(ctx->dest, g_my_nickname)) {
-	if (!strncmp(msg, "ACTION ", 7) &&
-	    (ptext_ctx.window = window_by_label(ctx->nick)) == NULL)
-	    spawn_chat_window(ctx->nick, ctx->nick);
-	ptext_ctx.window = window_by_label(ctx->nick);
-    } else {
-	ptext_ctx.window = window_by_label(ctx->dest);
-    }
+	if (strings_match_ignore_case(ctx->dest, g_my_nickname)) {
+		if (!strncmp(msg, "ACTION ", 7) &&
+		    (ptext_ctx.window = window_by_label(ctx->nick)) == NULL)
+			spawn_chat_window(ctx->nick, ctx->nick);
+		ptext_ctx.window = window_by_label(ctx->nick);
+	} else {
+		ptext_ctx.window = window_by_label(ctx->dest);
+	}
 
-    if (! (ptext_ctx.window))
-	ptext_ctx.window = g_active_window;
+	if (! (ptext_ctx.window))
+		ptext_ctx.window = g_active_window;
 
-    if (!strncmp(msg, "ACTION ", 7)) {
-	printtext(&ptext_ctx, " - %s %s", ctx->nick, &msg[7]);
-    } else if (!strncmp(msg, "VERSION", 8)) {
-	if (net_send("NOTICE %s :\001VERSION Swirc %s by %s  --  %s\001",
-	    ctx->nick, g_swircVersion, g_swircAuthor, g_swircWebAddr) < 0)
-	    g_on_air = false;
-	acknowledge_ctcp_request("VERSION", ctx);
-    } else if (!strncmp(msg, "TIME", 5)) {
-	if (net_send("NOTICE %s :\001TIME %s\001",
-		     ctx->nick, current_time("%c")) < 0)
-	    g_on_air = false;
-	acknowledge_ctcp_request("TIME", ctx);
-    } else {
-	/* do nothing */;
-    }
-
-    free(msg);
+	if (!strncmp(msg, "ACTION ", 7)) {
+		printtext(&ptext_ctx, " - %s %s", ctx->nick, &msg[7]);
+	} else if (!strncmp(msg, "VERSION", 8)) {
+		if (net_send("NOTICE %s :"
+		    "\001VERSION Swirc %s by %s  --  %s\001", ctx->nick,
+		    g_swircVersion, g_swircAuthor, g_swircWebAddr) < 0)
+			g_on_air = false;
+		acknowledge_ctcp_request("VERSION", ctx);
+	} else if (!strncmp(msg, "TIME", 5)) {
+		if (net_send("NOTICE %s :\001TIME %s\001", ctx->nick,
+		    current_time("%c")) < 0)
+			g_on_air = false;
+		acknowledge_ctcp_request("TIME", ctx);
+	} else {
+		/* do nothing */;
+	}
+	free(msg);
 }
 
 static void
