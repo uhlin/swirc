@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include <stdexcept>
+#include <string>
 
 #include "../commands/ignore.h"
 
@@ -142,101 +143,112 @@ handle_special_msg(const struct special_msg_context *ctx)
 void
 event_notice(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
+	PRINTTEXT_CONTEXT	ptext_ctx;
 
-    try {
-	char *dest, *msg;
-	char *params = &compo->params[0];
-	char *prefix = compo->prefix ? &compo->prefix[0] : NULL;
-	char *state1, *state2;
+	try {
+		char	*dest = NULL;
+		char	*msg = NULL;
+		char	*params = &compo->params[0];
+		char	*prefix = (compo->prefix ? &compo->prefix[0] : NULL);
+		char	*state1 = const_cast<char *>("");
+		char	*state2 = const_cast<char *>("");
 
-	dest = msg = NULL;
-	state1 = state2 = const_cast<char *>("");
-	printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
+		printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
 
-	if (has_server_time(compo)) {
-	    set_timestamp(ptext_ctx.server_time, sizeof ptext_ctx.server_time,
-			  compo);
-	    ptext_ctx.has_server_time = true;
+		if (has_server_time(compo)) {
+			set_timestamp(ptext_ctx.server_time,
+			    ARRAY_SIZE(ptext_ctx.server_time), compo);
+			ptext_ctx.has_server_time = true;
+		}
+
+		if (atomic_load_bool(&g_connection_in_progress) ||
+		    g_server_hostname == NULL) {
+			handle_notice_while_connecting(compo);
+			return;
+		} else if (prefix == NULL)
+			throw std::runtime_error("no prefix!");
+		else if (strFeed(params, 1) != 1)
+			throw std::runtime_error("strFeed");
+		else if ((dest = strtok_r(params, "\n", &state1)) == NULL)
+			throw std::runtime_error("no destination");
+		else if ((msg = strtok_r(NULL, "\n", &state1)) == NULL)
+			throw std::runtime_error("no message");
+
+		if (*prefix == ':')
+			prefix++;
+		if (*msg == ':')
+			msg++;
+		if (strings_match_ignore_case(prefix, g_server_hostname)) {
+			struct notice_context ctx(prefix, dest, msg);
+			handle_notice_from_my_server(&ctx);
+			return;
+		}
+
+		char	*nick = strtok_r(prefix, "!@", &state2);
+		char	*user = strtok_r(NULL, "!@", &state2);
+		char	*host = strtok_r(NULL, "!@", &state2);
+
+		if (nick == NULL)
+			throw std::runtime_error("no nickname");
+		if (user == NULL)
+			user = const_cast<char *>("<no user>");
+		if (host == NULL)
+			host = const_cast<char *>("<no host>");
+		if (is_in_ignore_list(nick, user, host))
+			return;
+
+		if (*msg == '\001') {
+			/*
+			 * Special message
+			 */
+
+			struct special_msg_context msg_ctx(nick, user, host,
+			    dest, msg);
+
+			handle_special_msg(&msg_ctx);
+			return;
+		} else if ((ptext_ctx.window = window_by_label(dest)) != NULL &&
+		    is_irc_channel(dest)) {
+			/*
+			 * Output notice in IRC channel
+			 */
+
+			std::string	str(Theme("notice_lb"));
+
+			(void) str.append(NCOLOR1).append(nick).append(TXT_NORMAL);
+			(void) str.append(Theme("notice_sep"));
+			(void) str.append(NCOLOR2).append(dest).append(TXT_NORMAL);
+			(void) str.append(Theme("notice_rb"));
+
+			printtext(&ptext_ctx, "%s %s", str.c_str(), msg);
+		} else {
+			std::string	str(Theme("notice_lb"));
+
+			if (strings_match_ignore_case(dest, g_my_nickname)) {
+				if ((ptext_ctx.window = window_by_label(nick))
+				    == NULL)
+					ptext_ctx.window = g_active_window;
+			} else {
+				if ((ptext_ctx.window = window_by_label(dest))
+				    == NULL)
+					ptext_ctx.window = g_status_window;
+			}
+
+			(void) str.append(NCOLOR1);
+			(void) str.append(nick);
+			(void) str.append(TXT_NORMAL);
+			(void) str.append(INNER_B1);
+			(void) str.append(NCOLOR2);
+			(void) str.append(user).append("@").append(host);
+			(void) str.append(TXT_NORMAL);
+			(void) str.append(INNER_B2);
+			(void) str.append(Theme("notice_rb"));
+
+			printtext(&ptext_ctx, "%s %s", str.c_str(), msg);
+		}
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ptext_ctx, g_status_window,
+		    TYPE_SPEC1_WARN, true);
+		printtext(&ptext_ctx, "event_notice: error: %s", e.what());
 	}
-
-	if (atomic_load_bool(&g_connection_in_progress) ||
-	    g_server_hostname == NULL) {
-	    handle_notice_while_connecting(compo);
-	    return;
-	} else if (prefix == NULL) {
-	    throw std::runtime_error("no prefix!");
-	} else if (strFeed(params, 1) != 1) {
-	    throw std::runtime_error("strFeed");
-	} else if ((dest = strtok_r(params, "\n", &state1)) == NULL) {
-	    throw std::runtime_error("no destination");
-	} else if ((msg = strtok_r(NULL, "\n", &state1)) == NULL) {
-	    throw std::runtime_error("no message");
-	}
-
-	if (*prefix == ':')
-	    prefix++;
-	if (*msg == ':')
-	    msg++;
-
-	if (strings_match_ignore_case(prefix, g_server_hostname)) {
-	    struct notice_context ctx(prefix, dest, msg);
-
-	    handle_notice_from_my_server(&ctx);
-	    return;
-	}
-
-	char	*nick = strtok_r(prefix, "!@", &state2);
-	char	*user = strtok_r(NULL, "!@", &state2);
-	char	*host = strtok_r(NULL, "!@", &state2);
-
-	if (nick == NULL)
-	    throw std::runtime_error("no nickname");
-	if (user == NULL)
-	    user = const_cast<char *>("<no user>");
-	if (host == NULL)
-	    host = const_cast<char *>("<no host>");
-
-	if (is_in_ignore_list(nick, user, host))
-	    return;
-
-	if (*msg == '\001') {
-	    /*
-	     * Special message
-	     */
-	    struct special_msg_context msg_ctx(nick, user, host, dest, msg);
-
-	    handle_special_msg(&msg_ctx);
-	    return;
-	} else if ((ptext_ctx.window = window_by_label(dest)) != NULL &&
-		   is_irc_channel(dest)) {
-	    /*
-	     * Output notice in IRC channel
-	     */
-	    printtext(&ptext_ctx, "%s%s%s%c%s%s%s%c%s %s",
-		Theme("notice_lb"), NCOLOR1, nick, NORMAL, Theme("notice_sep"),
-		NCOLOR2, dest, NORMAL, Theme("notice_rb"), msg);
-	} else {
-	    if (strings_match_ignore_case(dest, g_my_nickname)) {
-		ptext_ctx.window = window_by_label(nick)
-		    ? window_by_label(nick)
-		    : g_active_window;
-	    } else {
-		ptext_ctx.window = window_by_label(dest)
-		    ? window_by_label(dest)
-		    : g_status_window;
-	    }
-
-	    printtext(&ptext_ctx, "%s%s%s%c%s%s%s@%s%c%s%s %s",
-		Theme("notice_lb"),
-		NCOLOR1, nick, NORMAL,
-		INNER_B1, NCOLOR2, user, host, NORMAL, INNER_B2,
-		Theme("notice_rb"),
-		msg);
-	}
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_WARN,
-	    true);
-	printtext(&ptext_ctx, "event_notice: error: %s", e.what());
-    }
 }
