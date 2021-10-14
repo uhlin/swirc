@@ -194,14 +194,14 @@ shouldHighlightMessage_case2(const char *msg)
 static wchar_t *
 get_converted_wcs(const char *s)
 {
-    const size_t sz1 = strlen(s) + 1;
-    const size_t sz2 = size_product(sizeof(wchar_t), sz1);
-    wchar_t *out = static_cast<wchar_t *>(xmalloc(sz2));
+	const size_t	 size1 = strlen(s) + 1;
+	const size_t	 size2 = size_product(sizeof(wchar_t), size1);
+	wchar_t		*out = static_cast<wchar_t *>(xmalloc(size2));
 
-    if (MultiByteToWideChar(CP_UTF8, 0, s, -1, out, size_to_int(sz1)) > 0)
+	if (MultiByteToWideChar(CP_UTF8, 0, s, -1, out, size_to_int(size1)) > 0)
+		return out;
+	(void) wmemset(out, 0L, size1);
 	return out;
-    wmemset(out, 0L, sz1);
-    return out;
 }
 
 static wchar_t *
