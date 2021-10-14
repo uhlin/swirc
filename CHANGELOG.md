@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
   - `/unignore`
 - Made improvements to the following files:
   - `commands/connect.c`
+  - `events/notice.cpp`
+  - `events/privmsg.cpp`
   - `events/welcome.cpp`
   - `dataClassify.c`
   - `log.c`
