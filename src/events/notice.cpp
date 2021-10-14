@@ -90,14 +90,15 @@ handle_notice_while_connecting(struct irc_message_compo *compo)
 static void
 handle_notice_from_my_server(const struct notice_context *ctx)
 {
-    if (g_my_nickname && strings_match_ignore_case(ctx->dest, g_my_nickname)) {
-	PRINTTEXT_CONTEXT ptext_ctx;
+	if (g_my_nickname && strings_match_ignore_case(ctx->dest,
+	    g_my_nickname)) {
+		PRINTTEXT_CONTEXT	ptext_ctx;
 
-	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC_NONE,
-	    true);
-	printtext(&ptext_ctx, "%s!%s%c %s",
-	    COLOR3, ctx->srv_name, NORMAL, ctx->msg);
-    }
+		printtext_context_init(&ptext_ctx, g_status_window,
+		    TYPE_SPEC_NONE, true);
+		printtext(&ptext_ctx, "%s!%s%c %s", COLOR3, ctx->srv_name,
+		    NORMAL, ctx->msg);
+	}
 }
 
 static void
