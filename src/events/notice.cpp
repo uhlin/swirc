@@ -119,20 +119,15 @@ output_ctcp_reply(const char *cmd, const struct special_msg_context *ctx,
 static void
 handle_special_msg(const struct special_msg_context *ctx)
 {
-    char *msg = sw_strdup(ctx->msg);
+	char	*msg = sw_strdup(ctx->msg);
 
-    squeeze(msg, "\001");
-    msg = trim(msg);
-
-    if (!strncmp(msg, "VERSION ", 8)) {
-	output_ctcp_reply("VERSION", ctx, &msg[8]);
-    } else if (!strncmp(msg, "TIME ", 5)) {
-	output_ctcp_reply("TIME", ctx, &msg[5]);
-    } else {
-	/* do nothing */;
-    }
-
-    free(msg);
+	squeeze(msg, "\001");
+	msg = trim(msg);
+	if (!strncmp(msg, "VERSION ", 8))
+		output_ctcp_reply("VERSION", ctx, &msg[8]);
+	else if (!strncmp(msg, "TIME ", 5))
+		output_ctcp_reply("TIME", ctx, &msg[5]);
+	free(msg);
 }
 
 /* event_notice
