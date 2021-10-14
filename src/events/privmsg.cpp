@@ -150,44 +150,44 @@ shouldHighlightMessage_case1(const char *msg)
 static bool
 shouldHighlightMessage_case2(const char *msg)
 {
-    bool result = false;
-    char *last = const_cast<char *>("");
-    char *nickname_aliases = sw_strdup(Config("nickname_aliases"));
+	bool	 result = false;
+	char	*last = const_cast<char *>("");
+	char	*nickname_aliases = sw_strdup(Config("nickname_aliases"));
 
-    for (char *cp = &nickname_aliases[0];; cp = NULL) {
-	char *token = NULL;
+	for (char *cp = &nickname_aliases[0];; cp = NULL) {
+		char	*token;
 
-	if ((token = strtok_r(cp, " ", &last)) == NULL) {
-	    result = false;
-	    break;
-	} else if (!is_valid_nickname(token)) {
+		if ((token = strtok_r(cp, " ", &last)) == NULL) {
+			result = false;
+			break;
+		} else if (!is_valid_nickname(token)) {
 #if RISK_FLOODED_LOGS
-	    err_log(0, "config option nickname_aliases "
-		"contains invalid nicknames");
+			err_log(0, "config option nickname_aliases contains "
+			    "invalid nicknames");
 #endif
-	    continue;
-	} else {
-	    char *s1 = strdup_printf("%s:", token);
-	    char *s2 = strdup_printf("%s,", token);
-	    char *s3 = strdup_printf("%s ", token);
+			continue;
+		} else {
+			char	*s1 = strdup_printf("%s:", token);
+			char	*s2 = strdup_printf("%s,", token);
+			char	*s3 = strdup_printf("%s ", token);
 
-	    if (!strncasecmp(msg, s1, strlen(s1)) ||
-		!strncasecmp(msg, s2, strlen(s2)) ||
-		!strncasecmp(msg, s3, strlen(s3)) ||
-		strings_match_ignore_case(msg, token))
-		result = true;
+			if (!strncasecmp(msg, s1, strlen(s1)) ||
+			    !strncasecmp(msg, s2, strlen(s2)) ||
+			    !strncasecmp(msg, s3, strlen(s3)) ||
+			    strings_match_ignore_case(msg, token))
+				result = true;
 
-	    free_and_null(&s1);
-	    free_and_null(&s2);
-	    free_and_null(&s3);
+			free_and_null(&s1);
+			free_and_null(&s2);
+			free_and_null(&s3);
 
-	    if (result)
-		break;
+			if (result)
+				break;
+		}
 	}
-    }
 
-    free_and_null(&nickname_aliases);
-    return result;
+	free_and_null(&nickname_aliases);
+	return result;
 }
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
