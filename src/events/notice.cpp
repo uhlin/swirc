@@ -75,16 +75,14 @@ notice_context::notice_context(char *srv_name, char *dest, char *msg)
 static void
 handle_notice_while_connecting(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
-    const char	*msg      = strchr(compo->params, ':');
-    const char	*srv_host = compo->prefix ? &compo->prefix[1] : "auth";
+	PRINTTEXT_CONTEXT ctx;
+	const char *msg = strchr(compo->params, ':');
+	const char *srv_host = (compo->prefix ? &compo->prefix[1] : "auth");
 
-    if (msg == NULL || strings_match(++msg, "")) {
-	return;
-    }
-
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
-    printtext(&ctx, "%s!%s%c %s", COLOR3, srv_host, NORMAL, msg);
+	if (msg == NULL || strings_match(++msg, ""))
+		return;
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
+	printtext(&ctx, "%s!%s%c %s", COLOR3, srv_host, NORMAL, msg);
 }
 
 static void
