@@ -205,24 +205,20 @@ get_converted_wcs(const char *s)
 }
 
 static wchar_t *
-get_message(
-    const wchar_t *s1,
-    const wchar_t *s2,
-    const wchar_t *s3,
-    const wchar_t *s4,
-    const wchar_t *s5)
+get_message(const wchar_t *s1, const wchar_t *s2, const wchar_t *s3,
+    const wchar_t *s4, const wchar_t *s5)
 {
-    static wchar_t message[1001];
+	static wchar_t	message[1001] = { '\0' };
 
-    wmemset(message, 0L, ARRAY_SIZE(message));
+	(void) wmemset(message, 0L, ARRAY_SIZE(message));
 
-    sw_wcscpy(message, s1, ARRAY_SIZE(message));
-    sw_wcscat(message, s2, ARRAY_SIZE(message));
-    sw_wcscat(message, s3, ARRAY_SIZE(message));
-    sw_wcscat(message, s4, ARRAY_SIZE(message));
-    sw_wcscat(message, s5, ARRAY_SIZE(message));
+	(void) sw_wcscpy(message, s1, ARRAY_SIZE(message));
+	(void) sw_wcscat(message, s2, ARRAY_SIZE(message));
+	(void) sw_wcscat(message, s3, ARRAY_SIZE(message));
+	(void) sw_wcscat(message, s4, ARRAY_SIZE(message));
+	(void) sw_wcscat(message, s5, ARRAY_SIZE(message));
 
-    return (&message[0]);
+	return (&message[0]);
 }
 #endif /* ----- WIN32 and TOAST_NOTIFICATIONS ----- */
 
