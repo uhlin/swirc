@@ -50,26 +50,26 @@
 #define NCOLOR2		Theme("notice_color2")
 
 struct notice_context {
-    char *srv_name;
-    char *dest;
-    char *msg;
+	char *srv_name;
+	char *dest;
+	char *msg;
 
-    notice_context();
-    notice_context(char *, char *, char *);
+	notice_context();
+	notice_context(char *, char *, char *);
 };
 
 notice_context::notice_context()
 {
-    this->srv_name = NULL;
-    this->dest = NULL;
-    this->msg = NULL;
+	this->srv_name = NULL;
+	this->dest = NULL;
+	this->msg = NULL;
 }
 
 notice_context::notice_context(char *srv_name, char *dest, char *msg)
 {
-    this->srv_name = srv_name;
-    this->dest = dest;
-    this->msg = msg;
+	this->srv_name = srv_name;
+	this->dest = dest;
+	this->msg = msg;
 }
 
 static void
