@@ -360,53 +360,63 @@ event_whois_host(struct irc_message_compo *compo)
 void
 event_whois_idle(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
-    try {
-	char *state = const_cast<char *>("");
-	if (strFeed(compo->params, 4) != 4)
-	    throw std::runtime_error("strFeed");
+	try {
+		char		*ep1 = const_cast<char *>("");
+		char		*ep2 = const_cast<char *>("");
+		char		*sec_idle_str;
+		char		*signon_time_str;
+		char		*state = const_cast<char *>("");
+		long int	 sec_idle;
+		long int	 signon_time;
 
-	(void) strtok_r(compo->params, "\n", &state);
-	(void) strtok_r(NULL, "\n", &state);
-	char *sec_idle_str    = strtok_r(NULL, "\n", &state);
-	char *signon_time_str = strtok_r(NULL, "\n", &state);
+		if (strFeed(compo->params, 4) != 4)
+			throw std::runtime_error("strFeed");
 
-	if (sec_idle_str == NULL || signon_time_str == NULL)
-	    throw std::runtime_error("unable to retrieve event components");
+		(void) strtok_r(compo->params, "\n", &state);
+		(void) strtok_r(NULL, "\n", &state);
 
-	errno = 0;
-	char *ep1 = const_cast<char *>("");
-	long int sec_idle = strtol(sec_idle_str, &ep1, 10);
-	if (sec_idle_str[0] == '\0' || *ep1 != '\0')
-	    throw std::runtime_error("sec idle: not a number");
-	else if (errno == ERANGE &&
-		 (sec_idle == LONG_MAX || sec_idle == LONG_MIN))
-	    throw std::runtime_error("sec idle: out of range");
+		if ((sec_idle_str = strtok_r(NULL, "\n", &state)) == NULL ||
+		    (signon_time_str = strtok_r(NULL, "\n", &state)) == NULL) {
+			throw std::runtime_error("unable to retrieve event "
+			    "components");
+		}
 
-	errno = 0;
-	char *ep2 = const_cast<char *>("");
-	long int signon_time = strtol(signon_time_str, &ep2, 10);
-	if (signon_time_str[0] == '\0' || *ep2 != '\0')
-	    throw std::runtime_error("signon time: not a number");
-	else if (errno == ERANGE &&
-		 (signon_time == LONG_MAX || signon_time == LONG_MIN))
-	    throw std::runtime_error("signon time: out of range");
+		errno = 0;
+		sec_idle = strtol(sec_idle_str, &ep1, 10);
 
-	time_idle ti(sec_idle, signon_time);
+		if (sec_idle_str[0] == '\0' || *ep1 != '\0')
+			throw std::runtime_error("sec idle: not a number");
+		else if (errno == ERANGE &&
+		    (sec_idle == LONG_MAX || sec_idle == LONG_MIN))
+			throw std::runtime_error("sec idle: out of range");
 
-	printtext(&ctx, "%s %ld days %ld hours %ld mins %ld secs %ssignon: %s%s",
-	    Theme("whois_idle"),
-	    ti.getDays(), ti.getHours(), ti.getMins(), ti.getSecs(),
-	    LEFT_BRKT, ti.getBuf(), RIGHT_BRKT);
-    } catch (const std::runtime_error &e) {
-	ctx.window = g_status_window;
-	ctx.spec_type = TYPE_SPEC1_WARN;
-	printtext(&ctx, "event_whois_idle(%s): error: %s",
-	    compo->command, e.what());
-    }
+		errno = 0;
+		signon_time = strtol(signon_time_str, &ep2, 10);
+
+		if (signon_time_str[0] == '\0' || *ep2 != '\0')
+			throw std::runtime_error("signon time: not a number");
+		else if (errno == ERANGE &&
+		    (signon_time == LONG_MAX || signon_time == LONG_MIN))
+			throw std::runtime_error("signon time: out of range");
+
+		time_idle ti(sec_idle, signon_time);
+
+		printtext(&ctx, "%s %ld days %ld hours %ld mins %ld secs "
+		    "%ssignon: %s%s",
+		    Theme("whois_idle"),
+		    ti.getDays(), ti.getHours(), ti.getMins(), ti.getSecs(),
+		    LEFT_BRKT, ti.getBuf(), RIGHT_BRKT);
+	} catch (const std::runtime_error& e) {
+		ctx.window	= g_status_window;
+		ctx.spec_type	= TYPE_SPEC1_WARN;
+
+		printtext(&ctx, "event_whois_idle(%s): error: %s",
+		    compo->command, e.what());
+	}
 }
 
 /* event_whois_ircOp: 313
