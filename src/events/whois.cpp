@@ -42,51 +42,55 @@
 #include "whois.h"
 
 class time_idle {
-    long int days;
-    long int hours;
-    long int mins;
-    long int secs;
-    char buf[200];
+	long int	days;
+	long int	hours;
+	long int	mins;
+	long int	secs;
+
+	char buf[200];
 
 public:
-    time_idle(long int sec_idle, long int signon_time) {
-	struct tm res = { 0 };
-	time_t elapsed = signon_time;
+	time_idle(long int, long int);
+
+	long int getDays(void) const {
+		return this->days;
+	}
+	long int getHours(void) const {
+		return this->hours;
+	}
+	long int getMins(void) const {
+		return this->mins;
+	}
+	long int getSecs(void) const {
+		return this->secs;
+	}
+
+	const char *getBuf(void) const {
+		return (&this->buf[0]);
+	}
+};
+
+time_idle::time_idle(long int sec_idle, long int signon_time)
+{
+	struct tm	res = { 0 };
+	time_t		elapsed = signon_time;
 
 #if defined(UNIX)
 	if (localtime_r(&elapsed, &res) == NULL)
+		throw std::runtime_error("cannot retrieve tm structure");
 #elif defined(WIN32)
 	if (localtime_s(&res, &elapsed) != 0)
-#endif
-	    {
 		throw std::runtime_error("cannot retrieve tm structure");
-	    }
+#endif
 
-	this->days  = sec_idle / 86400;
+	this->days = (sec_idle / 86400);
 	this->hours = (sec_idle / 3600) - (this->days * 24);
-	this->mins  = (sec_idle / 60) - (this->days * 1440) - (this->hours * 60);
-	this->secs  = sec_idle % 60;
+	this->mins = (sec_idle / 60) - (this->days * 1440) - (this->hours * 60);
+	this->secs = (sec_idle % 60);
 
 	if (strftime(this->buf, ARRAY_SIZE(this->buf), "%c", &res) == 0)
-	    throw std::runtime_error("cannot format date and time");
-    }
-
-    long int getDays(void) const {
-	return this->days;
-    }
-    long int getHours(void) const {
-	return this->hours;
-    }
-    long int getMins(void) const {
-	return this->mins;
-    }
-    long int getSecs(void) const {
-	return this->secs;
-    }
-    const char *getBuf(void) const {
-	return (&this->buf[0]);
-    }
-};
+		throw std::runtime_error("cannot format date and time");
+}
 
 /* event_whoReply: 352 (RPL_WHOREPLY)
 
