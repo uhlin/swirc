@@ -285,32 +285,33 @@ event_whois_channels(struct irc_message_compo *compo)
 void
 event_whois_conn(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
-    try {
-	char *msg = NULL;
-	char *state = const_cast<char *>("");
+	try {
+		char	*msg;
+		char	*state = const_cast<char *>("");
 
-	if (strFeed(compo->params, 2) != 2)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 2) != 2)
+			throw std::runtime_error("strFeed");
 
-	(void) strtok_r(compo->params, "\n", &state);
-	(void) strtok_r(NULL, "\n", &state);
+		(void) strtok_r(compo->params, "\n", &state);
+		(void) strtok_r(NULL, "\n", &state);
 
-	if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
-	    throw std::runtime_error("null msg");
-	if (*msg == ':')
-	    msg++;
-	if (*msg)
-	    printtext(&ctx, "%s %s", Theme("whois_conn"), msg);
-    } catch (const std::runtime_error &e) {
-	ctx.window = g_status_window;
-	ctx.spec_type = TYPE_SPEC1_WARN;
-	printtext(&ctx, "event_whois_conn(%s): error: %s",
-	    compo->command, e.what());
-    }
+		if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("null msg");
+		if (*msg == ':')
+			msg++;
+		if (*msg)
+			printtext(&ctx, "%s %s", Theme("whois_conn"), msg);
+	} catch (const std::runtime_error& e) {
+		ctx.window	= g_status_window;
+		ctx.spec_type	= TYPE_SPEC1_WARN;
+
+		printtext(&ctx, "event_whois_conn(%s): error: %s",
+		    compo->command, e.what());
+	}
 }
 
 /* event_whois_host: 338, 616
