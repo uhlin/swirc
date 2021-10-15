@@ -16,11 +16,24 @@ All notable changes to this project will be documented in this file.
   - `events/notice.cpp`
   - `events/privmsg.cpp`
   - `events/welcome.cpp`
+  - `events/whois.cpp`
   - `dataClassify.c`
   - `log.c`
   - `nestHome.c`
 - Reformatted and reindented files
 - Rewrote the `/join` and `/part` commands in C++
+- Updated the translations
+
+### Windows ###
+- The [PDC](https://pdcurses.org/) library has been rebuilt with the
+  option `UTF8=Y` which makes PDCurses ignore the system locale. So
+  for Windows computers running Swirc UTF-8 is now forced. This means
+  you should enable the option **Use Unicode UTF-8 for worldwide
+  language support**. In order to do so under Windows 10:
+  1. Language preferences
+  2. Administrative language settings
+  3. Change system locale
+  4. Check the option and click OK
 
 ## [3.3.1] - 2021-09-03 ##
 - **Added** command line option `-R` (Disable TLS/SSL peer verification)
