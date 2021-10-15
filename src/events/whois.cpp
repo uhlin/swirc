@@ -214,32 +214,38 @@ event_whois_away(struct irc_message_compo *compo)
 void
 event_whois_cert(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
-    try {
-	char *state = const_cast<char *>("");
+	try {
+		char	*msg;
+		char	*state = const_cast<char *>("");
+		char	*tnick;
 
-	if (strFeed(compo->params, 2) != 2)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 2) != 2)
+			throw std::runtime_error("strFeed");
 
-	(void) strtok_r(compo->params, "\n", &state);
-	char *tnick = strtok_r(NULL, "\n", &state);
-	char *msg   = strtok_r(NULL, "\n", &state);
+		(void) strtok_r(compo->params, "\n", &state);
 
-	if (tnick == NULL || msg == NULL)
-	    throw std::runtime_error("unable to retrieve event components");
-	if (*msg == ':')
-	    msg++;
-	if (*msg)
-	    printtext(&ctx, "%s %s %s", Theme("whois_cert"), tnick, msg);
-    } catch (const std::runtime_error &e) {
-	ctx.window = g_status_window;
-	ctx.spec_type = TYPE_SPEC1_WARN;
-	printtext(&ctx, "event_whois_cert(%s): error: %s",
-	    compo->command, e.what());
-    }
+		if ((tnick = strtok_r(NULL, "\n", &state)) == NULL ||
+		    (msg = strtok_r(NULL, "\n", &state)) == NULL) {
+			throw std::runtime_error("unable to retrieve event "
+			    "components");
+		}
+		if (*msg == ':')
+			msg++;
+		if (*msg) {
+			printtext(&ctx, "%s %s %s", Theme("whois_cert"), tnick,
+			    msg);
+		}
+	} catch (const std::runtime_error& e) {
+		ctx.window	= g_status_window;
+		ctx.spec_type	= TYPE_SPEC1_WARN;
+
+		printtext(&ctx, "event_whois_cert(%s): error: %s",
+		    compo->command, e.what());
+	}
 }
 
 /* event_whois_channels: 319
