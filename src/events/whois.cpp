@@ -140,35 +140,39 @@ event_whoReply(struct irc_message_compo *compo)
 void
 event_whois_acc(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
-    try {
-	char *state = const_cast<char *>("");
+	try {
+		char	*account_name;
+		char	*comment;
+		char	*state = const_cast<char *>("");
 
-	if (strFeed(compo->params, 3) != 3)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 3) != 3)
+			throw std::runtime_error("strFeed");
 
-	(void) strtok_r(compo->params, "\n", &state);
-	(void) strtok_r(NULL, "\n", &state);
-	char *account_name = strtok_r(NULL, "\n", &state);
-	char *comment      = strtok_r(NULL, "\n", &state);
+		(void) strtok_r(compo->params, "\n", &state);
+		(void) strtok_r(NULL, "\n", &state);
 
-	if (account_name == NULL || comment == NULL)
-	    throw std::runtime_error("unable to retrieve event components");
-	if (*comment == ':')
-	    comment++;
-	if (*comment) {
-	    printtext(&ctx, "%s %s %s",
-		Theme("whois_acc"), comment, account_name);
+		if ((account_name = strtok_r(NULL, "\n", &state)) == NULL ||
+		    (comment = strtok_r(NULL, "\n", &state)) == NULL) {
+			throw std::runtime_error("unable to retrieve event "
+			    "components");
+		}
+		if (*comment == ':')
+			comment++;
+		if (*comment) {
+			printtext(&ctx, "%s %s %s", Theme("whois_acc"), comment,
+			    account_name);
+		}
+	} catch (const std::runtime_error& e) {
+		ctx.window	= g_status_window;
+		ctx.spec_type	= TYPE_SPEC1_WARN;
+
+		printtext(&ctx, "event_whois_acc(%s): error: %s",
+		    compo->command, e.what());
 	}
-    } catch (const std::runtime_error &e) {
-	ctx.window = g_status_window;
-	ctx.spec_type = TYPE_SPEC1_WARN;
-	printtext(&ctx, "event_whois_acc(%s): error: %s",
-	    compo->command, e.what());
-    }
 }
 
 /* event_whois_away: 301
