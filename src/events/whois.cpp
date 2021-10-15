@@ -178,32 +178,35 @@ event_whois_acc(struct irc_message_compo *compo)
 void
 event_whois_away(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
-    try {
-	char *away_reason = NULL;
-	char *state = const_cast<char *>("");
+	try {
+		char	*away_reason;
+		char	*state = const_cast<char *>("");
 
-	if (strFeed(compo->params, 2) != 2)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 2) != 2)
+			throw std::runtime_error("strFeed");
 
-	(void) strtok_r(compo->params, "\n", &state);
-	(void) strtok_r(NULL, "\n", &state);
+		(void) strtok_r(compo->params, "\n", &state);
+		(void) strtok_r(NULL, "\n", &state);
 
-	if ((away_reason = strtok_r(NULL, "\n", &state)) == NULL)
-	    throw std::runtime_error("no away reason");
-	if (*away_reason == ':')
-	    away_reason++;
-	if (*away_reason)
-	    printtext(&ctx, "%s %s", Theme("whois_away"), away_reason);
-    } catch (const std::runtime_error &e) {
-	ctx.window = g_status_window;
-	ctx.spec_type = TYPE_SPEC1_WARN;
-	printtext(&ctx, "event_whois_away(%s): error: %s",
-	    compo->command, e.what());
-    }
+		if ((away_reason = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("no away reason");
+		if (*away_reason == ':')
+			away_reason++;
+		if (*away_reason) {
+			printtext(&ctx, "%s %s", Theme("whois_away"),
+			    away_reason);
+		}
+	} catch (const std::runtime_error& e) {
+		ctx.window	= g_status_window;
+		ctx.spec_type	= TYPE_SPEC1_WARN;
+
+		printtext(&ctx, "event_whois_away(%s): error: %s",
+		    compo->command, e.what());
+	}
 }
 
 /* event_whois_cert: 276
