@@ -67,7 +67,7 @@ msgstr "    -i                   Activer le mode Internet Citizen's Band\n"
 
 #: ../src/main.cpp:134
 msgid "    -j <join>            A comma-separated list of channels to join\n"
-msgstr "    -j <join>            Une liste de chaînes séparées par des virgules à rejoindre\n"
+msgstr "    -j <join>            Liste de salons à rejoinre (séparés par des virgules)\n"
 
 #: ../src/main.cpp:135
 msgid "    -n <nickname>        Online nickname\n"

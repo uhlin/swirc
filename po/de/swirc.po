@@ -66,7 +66,7 @@ msgstr "    -i                   Internet Citizen's Band aktivieren\n"
 
 #: ../src/main.cpp:134
 msgid "    -j <join>            A comma-separated list of channels to join\n"
-msgstr "    -j <join>            Een door komma's gescheiden lijst met kanalen om mee te doen\n"
+msgstr "    -j <join>            Kommata getrennte Liste von Kanälen zum joinen\n"
 
 #: ../src/main.cpp:135
 msgid "    -n <nickname>        Online nickname\n"
