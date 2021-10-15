@@ -489,38 +489,39 @@ event_whois_modes(struct irc_message_compo *compo)
 void
 event_whois_server(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
-    try {
-	char *state = const_cast<char *>("");
+	try {
+		char	*state = const_cast<char *>("");
 
-	if (strFeed(compo->params, 3) != 3)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 3) != 3)
+			throw std::runtime_error("strFeed");
 
-	(void) strtok_r(compo->params, "\n", &state);
-	(void) strtok_r(NULL, "\n", &state);
-	char *srv  = strtok_r(NULL, "\n", &state);
-	char *info = strtok_r(NULL, "\n", &state);
+		(void) strtok_r(compo->params, "\n", &state);
+		(void) strtok_r(NULL, "\n", &state);
+		char *srv = strtok_r(NULL, "\n", &state);
+		char *info = strtok_r(NULL, "\n", &state);
 
-	if (srv == NULL)
-	    throw std::runtime_error("no server");
-	else if (info == NULL)
-	    throw std::runtime_error("no info");
+		if (srv == NULL)
+			throw std::runtime_error("no server");
+		else if (info == NULL)
+			throw std::runtime_error("no info");
 
-	if (*info == ':')
-	    info++;
-	if (*info) {
-	    printtext(&ctx, "%s %s %s%s%s",
-		Theme("whois_server"), srv, LEFT_BRKT, info, RIGHT_BRKT);
+		if (*info == ':')
+			info++;
+		if (*info) {
+			printtext(&ctx, "%s %s %s%s%s", Theme("whois_server"),
+			    srv, LEFT_BRKT, info, RIGHT_BRKT);
+		}
+	} catch (const std::runtime_error& e) {
+		ctx.window	= g_status_window;
+		ctx.spec_type	= TYPE_SPEC1_WARN;
+
+		printtext(&ctx, "event_whois_server(%s): error: %s",
+		    compo->command, e.what());
 	}
-    } catch (const std::runtime_error &e) {
-	ctx.window = g_status_window;
-	ctx.spec_type = TYPE_SPEC1_WARN;
-	printtext(&ctx, "event_whois_server(%s): error: %s",
-	    compo->command, e.what());
-    }
 }
 
 /* event_whois_service: 307
