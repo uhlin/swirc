@@ -592,8 +592,9 @@ event_whois_ssl(struct irc_message_compo *compo)
 			    msg);
 		}
 	} catch (const std::runtime_error& e) {
-		ctx.window = g_status_window;
-		ctx.spec_type = TYPE_SPEC1_WARN;
+		ctx.window	= g_status_window;
+		ctx.spec_type	= TYPE_SPEC1_WARN;
+
 		printtext(&ctx, "event_whois_ssl(%s): error: %s",
 		    compo->command, e.what());
 	}
@@ -640,8 +641,9 @@ event_whois_user(struct irc_message_compo *compo)
 			    rl_name);
 		}
 	} catch (const std::runtime_error& e) {
-		ctx.window = g_status_window;
-		ctx.spec_type = TYPE_SPEC1_WARN;
+		ctx.window	= g_status_window;
+		ctx.spec_type	= TYPE_SPEC1_WARN;
+
 		printtext(&ctx, "event_whois_user(%s): error: %s",
 		    compo->command, e.what());
 	}
