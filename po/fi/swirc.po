@@ -49,7 +49,7 @@ msgstr "    -P                   Poista SASL todennus pysyvästi käytöstä\n"
 
 #: ../src/main.cpp:126
 msgid "    -R                   Disable TLS/SSL peer verification\n"
-msgstr "    -R                   Disable TLS/SSL peer verification\n"
+msgstr "    -R                   Poista käytöstä TLS/SSL vertaisvahvistus\n"
 
 #: ../src/main.cpp:131
 msgid "    -c <server[:port]>   Connect to IRC server\n"
