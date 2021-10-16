@@ -678,53 +678,53 @@ event_part(struct irc_message_compo *compo)
 void
 event_quit(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	char *message = *(compo->params) == ':'
-	    ? &compo->params[1]
-	    : &compo->params[0];
-	char *prefix = NULL;
-	char *state = const_cast<char *>("");
+	try {
+		char	*message;
+		char	*nick, *user, *host;
+		char	*prefix;
+		char	*state = const_cast<char *>("");
 
-	if (compo->prefix == NULL)
-	    throw std::runtime_error("no prefix");
-	prefix = & (compo->prefix[1]);
+		if (compo->prefix == NULL)
+			throw std::runtime_error("no prefix");
 
-	char *nick = strtok_r(prefix, "!@", &state);
-	char *user = strtok_r(NULL, "!@", &state);
-	char *host = strtok_r(NULL, "!@", &state);
+		message = (*(compo->params) == ':' ? &compo->params[1] :
+		    &compo->params[0]);
+		prefix = & (compo->prefix[1]);
 
-	if (nick == NULL)
-	    throw std::runtime_error("unable to get nickname");
-	if (user == NULL)
-	    user = const_cast<char *>("<no user>");
-	if (host == NULL)
-	    host = const_cast<char *>("<no host>");
+		if ((nick = strtok_r(prefix, "!@", &state)) == NULL)
+			throw std::runtime_error("unable to get nickname");
+		if ((user = strtok_r(NULL, "!@", &state)) == NULL)
+			user = const_cast<char *>("<no user>");
+		if ((host = strtok_r(NULL, "!@", &state)) == NULL)
+			host = const_cast<char *>("<no host>");
 
-	printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+		printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
-	for (int i = 1; i <= g_ntotal_windows; i++) {
-	    PIRC_WINDOW window = window_by_refnum(i);
+		for (int i = 1; i <= g_ntotal_windows; i++) {
+			PIRC_WINDOW	window;
 
-	    if (window && is_irc_channel(window->label) &&
-		event_names_htbl_remove(nick, window->label) == OK) {
-		const bool joins_parts_quits =
-		    config_bool("joins_parts_quits", true);
+			if ((window = window_by_refnum(i)) != NULL &&
+			    is_irc_channel(window->label) &&
+			    event_names_htbl_remove(nick, window->label) ==
+			    OK) {
+				if (config_bool("joins_parts_quits", true)) {
+					ctx.window = window;
 
-		if (joins_parts_quits) {
-		    ctx.window = window;
-
-		    printtext(&ctx, "%s%s%c %s%s@%s%s has quit %s%s%s",
-			COLOR2, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
-			LEFT_BRKT, message, RIGHT_BRKT);
+					printtext(&ctx, "%s%s%c %s%s@%s%s has "
+					    "quit %s%s%s",
+					    COLOR2, nick, NORMAL,
+					    LEFT_BRKT, user, host, RIGHT_BRKT,
+					    LEFT_BRKT, message, RIGHT_BRKT);
+				}
+			}
 		}
-	    }
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "event_quit: error: %s", e.what());
 	}
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_quit: error: %s", e.what());
-    }
 }
 
 /* event_topic: 332
