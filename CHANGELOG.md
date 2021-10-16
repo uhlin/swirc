@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Fixed unchecked return values
 - Made improvements to the following files:
   - `commands/connect.c`
+  - `events/channel.cpp`
   - `events/notice.cpp`
   - `events/privmsg.cpp`
   - `events/welcome.cpp`
