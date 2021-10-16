@@ -248,56 +248,56 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 void
 event_channelModeIs(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	char *cp = NULL;
-	char *state = const_cast<char *>("");
+	try {
+		char	*channel, *data;
+		char	*cp = NULL;
+		char	*state = const_cast<char *>("");
 
-	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+		printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
-	if (strFeed(compo->params, 2) != 2)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 2) != 2)
+			throw std::runtime_error("strFeed");
 
-	/* my nickname */
-	(void) strtok_r(compo->params, "\n", &state);
+		/* my nickname */
+		(void) strtok_r(compo->params, "\n", &state);
 
-	char	*channel = strtok_r(NULL, "\n", &state);
-	char	*data	 = strtok_r(NULL, "\n", &state);
+		if ((channel = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("no channel");
+		else if ((data = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("no data");
+		else if ((ctx.window = window_by_label(channel)) == NULL)
+			throw std::runtime_error("couldn't find channel window");
 
-	if (channel == NULL)
-	    throw std::runtime_error("no channel");
-	else if (data == NULL)
-	    throw std::runtime_error("no data");
-	else if ((ctx.window = window_by_label(channel)) == NULL)
-	    throw std::runtime_error("couldn't find channel window");
+		if (*data == ':') {
+			data++;
+		} else if ((cp = strstr(data, " :")) != NULL) {
+			*++cp = ' ';
+			(void) memmove(cp - 1, cp, strlen(cp) + 1);
+		}
 
-	if (*data == ':')
-	    data++;
-	else if ((cp = strstr(data, " :")) != NULL) {
-	    *++cp = ' ';
-	    (void) memmove(cp - 1, cp, strlen(cp) + 1);
+		/* -------------------------------------------------- */
+
+		if (sw_strcpy(ctx.window->chanmodes, trim(data),
+		    ARRAY_SIZE(ctx.window->chanmodes)) != 0) {
+			throw std::runtime_error("unable to store channel "
+			    "modes");
+		} else if (! (ctx.window->received_chanmodes)) {
+			printtext(&ctx, "mode/%s%s%s%c%s %s%s%s",
+			    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+			    LEFT_BRKT, data, RIGHT_BRKT);
+
+			ctx.window->received_chanmodes = true;
+		}
+
+		statusbar_update_display_beta();
+		readline_top_panel();
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "event_channelModeIs: error: %s", e.what());
 	}
-
-	/* -------------------------------------------------- */
-
-	errno = sw_strcpy(ctx.window->chanmodes, trim(data),
-	    sizeof(ctx.window->chanmodes));
-	if (errno)
-	    throw std::runtime_error("unable to store channel modes");
-	else if (! (ctx.window->received_chanmodes)) {
-	    printtext(&ctx, "mode/%s%s%s%c%s %s%s%s",
-		LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-		LEFT_BRKT, data, RIGHT_BRKT);
-	    ctx.window->received_chanmodes = true;
-	}
-
-	statusbar_update_display_beta();
-	readline_top_panel();
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_channelModeIs: error: %s", e.what());
-    }
 }
 
 /* event_channel_forward: 470 (undocumented)
