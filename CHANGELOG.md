@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Added the following commands:
   - `/ignore`
   - `/unignore`
+- Fixed unchecked return values
 - Made improvements to the following files:
   - `commands/connect.c`
   - `events/notice.cpp`
