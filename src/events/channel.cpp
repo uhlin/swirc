@@ -778,54 +778,55 @@ event_topic(struct irc_message_compo *compo)
 void
 event_topic_chg(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	char *prefix = NULL;
-	char *state1 = const_cast<char *>("");
-	char *state2 = const_cast<char *>("");
+	try {
+		char	*channel, *new_topic;
+		char	*nick, *user, *host;
+		char	*prefix = NULL;
+		char	*state1 = const_cast<char *>("");
+		char	*state2 = const_cast<char *>("");
 
-	if (compo->prefix == NULL)
-	    throw std::runtime_error("no prefix");
-	prefix = & (compo->prefix[1]);
+		if (compo->prefix == NULL)
+			throw std::runtime_error("no prefix");
 
-	char *nick = strtok_r(prefix, "!@", &state1);
-	char *user = strtok_r(NULL, "!@", &state1);
-	char *host = strtok_r(NULL, "!@", &state1);
+		prefix = & (compo->prefix[1]);
 
-	if (nick == NULL)
-	    throw std::runtime_error("no nickname");
+		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
+			throw std::runtime_error("no nickname");
 
-	/* unused */
-	(void) user;
-	(void) host;
+		user = strtok_r(NULL, "!@", &state1);
+		host = strtok_r(NULL, "!@", &state1);
 
-	if (strFeed(compo->params, 1) != 1)
-	    throw std::runtime_error("strFeed");
+		/* unused */
+		(void) user;
+		(void) host;
 
-	char *channel = strtok_r(compo->params, "\n", &state2);
-	char *new_topic = strtok_r(NULL, "\n", &state2);
+		if (strFeed(compo->params, 1) != 1)
+			throw std::runtime_error("strFeed");
 
-	if (channel == NULL)
-	    throw std::runtime_error("unable to get channel");
-	else if (new_topic == NULL)
-	    throw std::runtime_error("unable to get new topic");
-	else if (*new_topic == ':')
-	    new_topic++;
+		if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL)
+			throw std::runtime_error("unable to get channel");
+		else if ((new_topic = strtok_r(NULL, "\n", &state2)) == NULL)
+			throw std::runtime_error("unable to get new topic");
+		else if (*new_topic == ':')
+			new_topic++;
 
-	printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
+		printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
 
-	if ((ctx.window = window_by_label(channel)) == NULL)
-	    throw std::runtime_error("window lookup error");
+		if ((ctx.window = window_by_label(channel)) == NULL)
+			throw std::runtime_error("window lookup error");
 
-	new_window_title(channel, new_topic);
-
-	printtext(&ctx, "%c%s%c changed the topic of %c%s%c to: %s",
-	    BOLD, nick, BOLD, BOLD, channel, BOLD, new_topic);
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_topic_chg: error: %s", e.what());
-    }
+		new_window_title(channel, new_topic);
+		printtext(&ctx, "%c%s%c changed the topic of %c%s%c to: %s",
+		    BOLD, nick, BOLD,
+		    BOLD, channel, BOLD,
+		    new_topic);
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "event_topic_chg: error: %s", e.what());
+	}
 }
 
 /* event_topic_creator: 333
