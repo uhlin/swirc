@@ -311,36 +311,34 @@ event_channelModeIs(struct irc_message_compo *compo)
 void
 event_channel_forward(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	char *params = & (compo->params[0]);
-	char *state = const_cast<char *>("");
+	try {
+		char	*from_channel, *to_channel, *msg;
+		char	*params = & (compo->params[0]);
+		char	*state = const_cast<char *>("");
 
-	if (strFeed(params, 3) != 3)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(params, 3) != 3)
+			throw std::runtime_error("strFeed");
 
-	/* my nickname */
-	(void) strtok_r(params, "\n", &state);
+		/* my nickname */
+		(void) strtok_r(params, "\n", &state);
 
-	char	*from_channel = strtok_r(NULL, "\n", &state);
-	char	*to_channel   = strtok_r(NULL, "\n", &state);
-	char	*msg	      = strtok_r(NULL, "\n", &state);
+		if ((from_channel = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("no origin channel");
+		else if ((to_channel = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("no destination channel");
+		else if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("no message");
 
-	if (from_channel == NULL)
-	    throw std::runtime_error("no origin channel");
-	else if (to_channel == NULL)
-	    throw std::runtime_error("no destination channel");
-	else if (msg == NULL)
-	    throw std::runtime_error("no message");
-
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
-	printtext(&ctx, "Channel forwarding from %c%s%c to %c%s%c",
-	    BOLD, from_channel, BOLD, BOLD, to_channel, BOLD);
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_channel_forward: error: %s", e.what());
-    }
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+		printtext(&ctx, "Channel forwarding from %c%s%c to %c%s%c",
+		    BOLD, from_channel, BOLD, BOLD, to_channel, BOLD);
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "event_channel_forward: error: %s", e.what());
+	}
 }
 
 /* event_local_and_global_users: 265, 266
