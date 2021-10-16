@@ -368,57 +368,60 @@ event_local_and_global_users(struct irc_message_compo *compo)
 }
 
 /* event_nicknameInUse: 433
-   TODO: Investigate thread termination!
 
    Example:
      :irc.server.com 433 * <nick> :Nickname is already in use. */
 void
 event_nicknameInUse(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	char *nick = NULL;
-	char *params = & (compo->params[0]);
-	char *state = const_cast<char *>("");
+	try {
+		char	*nick = NULL;
+		char	*params = & (compo->params[0]);
+		char	*state = const_cast<char *>("");
 
-	if (strFeed(params, 2) != 2)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(params, 2) != 2)
+			throw std::runtime_error("strFeed");
 
-	/* unused */
-	(void) strtok_r(params, "\n", &state);
+		/* unused */
+		(void) strtok_r(params, "\n", &state);
 
-	if ((nick = strtok_r(NULL, "\n", &state)) == NULL)
-	    throw std::runtime_error("no nickname");
+		if ((nick = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("no nickname");
 
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
-	printtext(&ctx, "Nickname %c%s%c is already in use", BOLD, nick, BOLD);
+		printtext_context_init(&ctx, g_status_window,
+		    TYPE_SPEC1_FAILURE, true);
+		printtext(&ctx, "Nickname %c%s%c is already in use",
+		    BOLD, nick, BOLD);
 
-	if (!atomic_load_bool(&g_connection_in_progress))
-	    return;
+		if (!atomic_load_bool(&g_connection_in_progress))
+			return;
+		ctx.spec_type = TYPE_SPEC1;
 
-	/* -------------------------------------------------- */
+		if (g_alt_nick_tested) {
+			printtext(&ctx, "Alternative nickname already tested. "
+			    "Disconnecting...");
+			g_on_air = false;
+			event_welcome_signalit();
+		} else if (!g_alt_nick_tested && !isEmpty(Config("alt_nick"))) {
+			printtext(&ctx, "Attempting to use alt_nick (%s) "
+			    "instead...", Config("alt_nick"));
 
-	ctx.spec_type = TYPE_SPEC1;
-	if (g_alt_nick_tested) {
-	    printtext(&ctx, "Alternative nickname already tested. "
-		"Disconnecting...");
-	    g_on_air = false;
-	    event_welcome_signalit();
-	} else if (!g_alt_nick_tested && !isEmpty(Config("alt_nick"))) {
-	    printtext(&ctx, "Attempting to use alt_nick (%s) instead...",
-		      Config("alt_nick"));
-	    net_send("NICK %s", Config("alt_nick"));
-	    g_alt_nick_tested = true;
-	} else {
-	    printtext(&ctx, "Disconnecting...");
-	    g_on_air = false;
-	    event_welcome_signalit();
+			if (net_send("NICK %s", Config("alt_nick")) < 0)
+				throw std::runtime_error("cannot send");
+
+			g_alt_nick_tested = true;
+		} else {
+			printtext(&ctx, "Disconnecting...");
+			g_on_air = false;
+			event_welcome_signalit();
+		}
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "event_nicknameInUse: error: %s", e.what());
 	}
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_nicknameInUse: error: %s", e.what());
-    }
 }
 
 /* event_userModeIs: 221 (RPL_UMODEIS)
