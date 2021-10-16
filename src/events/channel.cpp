@@ -95,69 +95,70 @@ event_chan_hp(struct irc_message_compo *compo)
 void
 event_join(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	char *prefix = NULL;
-	char *state = const_cast<char *>("");
+	try {
+		char	*nick, *user, *host;
+		char	*prefix = NULL;
+		char	*state = const_cast<char *>("");
 
-	if (compo == NULL)
-	    throw std::runtime_error("no components");
-	else if (compo->prefix == NULL)
-	    throw std::runtime_error("no prefix");
-	prefix = & (compo->prefix[1]);
+		if (compo == NULL)
+			throw std::runtime_error("no components");
+		else if (compo->prefix == NULL)
+			throw std::runtime_error("no prefix");
 
-	char	*nick = strtok_r(prefix, "!@", &state);
-	char	*user = strtok_r(NULL, "!@", &state);
-	char	*host = strtok_r(NULL, "!@", &state);
+		prefix = & (compo->prefix[1]);
 
-	if (nick == NULL)
-	    throw std::runtime_error("no nickname");
-	if (user == NULL)
-	    user = const_cast<char *>("<no user>");
-	if (host == NULL)
-	    host = const_cast<char *>("<no host>");
+		if ((nick = strtok_r(prefix, "!@", &state)) == NULL)
+			throw std::runtime_error("no nickname");
+		if ((user = strtok_r(NULL, "!@", &state)) == NULL)
+			user = const_cast<char *>("<no user>");
+		if ((host = strtok_r(NULL, "!@", &state)) == NULL)
+			host = const_cast<char *>("<no host>");
 
-	const char *channel = *(compo->params) == ':'
-	    ? &compo->params[1]
-	    : &compo->params[0];
+		const char *channel = (*(compo->params) == ':' ?
+		    &compo->params[1] : &compo->params[0]);
 
-	if (!is_irc_channel(channel) ||
-	    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL)
-	    throw std::runtime_error("bogus irc channel");
+		if (!is_irc_channel(channel) ||
+		    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL) {
+			throw std::runtime_error("bogus irc channel");
+		} else if (strings_match_ignore_case(nick, g_my_nickname)) {
+			if (spawn_chat_window(channel, "No title.") != 0) {
+				throw std::runtime_error("cannot spawn "
+				    "chat window");
+			}
 
-	if (strings_match_ignore_case(nick, g_my_nickname)) {
-	    if (spawn_chat_window(channel, "No title.") != 0)
-		throw std::runtime_error("cannot spawn chat window");
-	    if (g_am_irc_op && config_bool("auto_op_yourself", true)) {
-		net_send("MODE %s +o %s", channel, nick);
-		net_send("SAMODE %s +o %s", channel, nick);
-	    }
-	} else if (event_names_htbl_insert(nick, channel) != OK) {
-	    throw std::runtime_error("unable to add user to channel list");
-	}
+			if (g_am_irc_op &&
+			    config_bool("auto_op_yourself", true) &&
+			    (net_send("MODE %s +o %s", channel, nick) < 0 ||
+			    net_send("SAMODE %s +o %s", channel, nick) < 0))
+				throw std::runtime_error("cannot send");
+		} else if (event_names_htbl_insert(nick, channel) != OK) {
+			throw std::runtime_error("unable to add user to "
+			    "channel list");
+		}
 
-	const bool joins_parts_quits =
-	    config_bool("joins_parts_quits", true);
+		if (config_bool("joins_parts_quits", true)) {
+			printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2,
+			    true);
 
-	if (joins_parts_quits) {
-	    printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+			if ((ctx.window = window_by_label(channel)) == NULL)
+				throw std::runtime_error("window lookup error");
 
-	    if ((ctx.window = window_by_label(channel)) == NULL)
-		throw std::runtime_error("window lookup error");
-
-	    printtext(&ctx, "%s%s%c %s%s@%s%s has joined %s%s%c",
-		COLOR1, nick, NORMAL, LEFT_BRKT, user, host, RIGHT_BRKT,
-		COLOR2, channel, NORMAL);
-	}
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
-	printtext(&ctx, "event_join: fatal: %s", e.what());
+			printtext(&ctx, "%s%s%c %s%s@%s%s has joined %s%s%c",
+			    COLOR1, nick, NORMAL,
+			    LEFT_BRKT, user, host, RIGHT_BRKT,
+			    COLOR2, channel, NORMAL);
+		}
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_active_window,
+		    TYPE_SPEC1_FAILURE, true);
+		printtext(&ctx, "event_join: fatal: %s", e.what());
 #if SHUTDOWN_IRC_CONNECTION_BEHAVIOR
-	printtext(&ctx, "Shutting down IRC connection...");
-	g_on_air = false;
+		printtext(&ctx, "Shutting down IRC connection...");
+		g_on_air = false;
 #endif
-    }
+	}
 }
 
 /* event_kick
