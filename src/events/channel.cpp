@@ -359,81 +359,89 @@ chg_status_for_voice(plus_minus_state_t pm_state,
 static void	maintain_channel_stats(const char *, const char *)
 		    PTR_ARGS_NONNULL;
 
-/* Example input: +vvv nick1 nick2 nick3 */
+/*
+ * Example input: +vvv nick1 nick2 nick3
+ */
 static void
 maintain_channel_stats(const char *channel, const char *input)
 {
-    char		*nicks[15]      = { NULL };
-    size_t		 ar_i           = 0;
-    const size_t	 ar_sz          = ARRAY_SIZE(nicks);
-    char		*input_copy     = sw_strdup(input);
-    char		*modes          = const_cast<char *>("");
-    size_t		 nicks_assigned = 0;
-    char		*state          = const_cast<char *>("");
-    plus_minus_state_t	 pm_state       = STATE_NEITHER_PM;
+	char			*input_copy;
+	char			*modes = const_cast<char *>("");
+	char			*nicks[15] = { NULL };
+	char			*state = const_cast<char *>("");
+	const size_t		 ar_sz = ARRAY_SIZE(nicks);
+	plus_minus_state_t	 pm_state = STATE_NEITHER_PM;
+	size_t			 ar_i = 0;
+	size_t			 nicks_assigned = 0;
 
-    if ((modes = strtok_r(input_copy, " ", &state)) == NULL) {
-	err_log(EINVAL, "maintain_channel_stats: strtok_r: no modes!");
-	free(input_copy);
-	return;
-    }
+	input_copy = sw_strdup(input);
 
-    for (nicks_assigned = 0;; nicks_assigned++) {
-	char *token = strtok_r(NULL, " ", &state);
-
-	if (token && nicks_assigned < ar_sz)
-	    nicks[nicks_assigned] = sw_strdup(token);
-	else
-	    break;
-    }
-
-    for (char *cp = modes; *cp && ar_i < nicks_assigned; cp++) {
-	switch (*cp) {
-	case '+':
-	    pm_state = STATE_PLUS;
-	    break;
-	case '-':
-	    pm_state = STATE_MINUS;
-	    break;
-	case 'I': /* set/remove an invitation mask */
-	case 'b': /* set/remove ban mask           */
-	case 'e': /* set/remove an exception mask  */
-	case 'k': /* set/remove the channel key    */
-	    ar_i++;
-	    break;
-	case 'j': /* join throttle */
-	case 'l': /* set/remove the user limit to channel */
-	    if (pm_state == STATE_PLUS)
-		ar_i++;
-	    break;
-	case 'q':
-	    chg_status_for_owner(pm_state, nicks[ar_i++], channel);
-	    break;
-	case 'a':
-	    chg_status_for_superop(pm_state, nicks[ar_i++], channel);
-	    break;
-	case 'o':
-	    chg_status_for_op(pm_state, nicks[ar_i++], channel);
-	    break;
-	case 'h':
-	    chg_status_for_halfop(pm_state, nicks[ar_i++], channel);
-	    break;
-	case 'v':
-	    chg_status_for_voice(pm_state, nicks[ar_i++], channel);
-	    break;
+	if ((modes = strtok_r(input_copy, " ", &state)) == NULL) {
+		err_log(EINVAL, "maintain_channel_stats");
+		free(input_copy);
+		return;
 	}
-    }
 
-    if (strspn(modes, "+-Ibeqaohv") != strlen(modes))
-	net_send("MODE %s", channel);
+	for (nicks_assigned = 0;; nicks_assigned++) {
+		char	*token;
 
-    free(input_copy);
+		if ((token = strtok_r(NULL, " ", &state)) != NULL &&
+		    nicks_assigned < ar_sz)
+			nicks[nicks_assigned] = sw_strdup(token);
+		else
+			break;
+	}
 
-    /* destroy the array */
-    for (char **ar_p = &nicks[0]; ar_p < &nicks[ar_sz]; ar_p++) {
-	free(*ar_p);
-	*ar_p = NULL;
-    }
+	for (char *cp = modes; *cp && ar_i < nicks_assigned; cp++) {
+		switch (*cp) {
+		case '+':
+			pm_state = STATE_PLUS;
+			break;
+		case '-':
+			pm_state = STATE_MINUS;
+			break;
+		case 'I': /* set/remove an invitation mask */
+		case 'b': /* set/remove ban mask           */
+		case 'e': /* set/remove an exception mask  */
+		case 'k': /* set/remove the channel key    */
+			ar_i++;
+			break;
+		case 'j': /* join throttle */
+		case 'l': /* set/remove the user limit to channel */
+			if (pm_state == STATE_PLUS)
+				ar_i++;
+			break;
+		case 'q':
+			chg_status_for_owner(pm_state, nicks[ar_i++], channel);
+			break;
+		case 'a':
+			chg_status_for_superop(pm_state, nicks[ar_i++], channel);
+			break;
+		case 'o':
+			chg_status_for_op(pm_state, nicks[ar_i++], channel);
+			break;
+		case 'h':
+			chg_status_for_halfop(pm_state, nicks[ar_i++], channel);
+			break;
+		case 'v':
+			chg_status_for_voice(pm_state, nicks[ar_i++], channel);
+			break;
+		}
+	}
+
+	if (strspn(modes, "+-Ibeqaohv") != strlen(modes) && net_send("MODE %s",
+	    channel) < 0)
+		err_log(ENOTCONN, "maintain_channel_stats: net_send");
+
+	free(input_copy);
+
+	/*
+	 * Destroy the array...
+	 */
+	for (char **ar_p = &nicks[0]; ar_p < &nicks[ar_sz]; ar_p++) {
+		free(*ar_p);
+		*ar_p = NULL;
+	}
 }
 
 /* event_mode
