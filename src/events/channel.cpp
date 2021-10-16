@@ -546,50 +546,55 @@ RemoveAndInsertNick(const char *old_nick, const char *new_nick,
 void
 event_nick(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	char *new_nick = *(compo->params) == ':'
-	    ? &compo->params[1]
-	    : &compo->params[0];
-	char *prefix = NULL;
-	char *state = const_cast<char *>("");
+	try {
+		char	*new_nick;
+		char	*nick, *user, *host;
+		char	*prefix = NULL;
+		char	*state = const_cast<char *>("");
 
-	if (compo->prefix == NULL)
-	    throw std::runtime_error("no prefix");
-	prefix = & (compo->prefix[1]);
+		if (compo->prefix == NULL)
+			throw std::runtime_error("no prefix");
 
-	char *nick = strtok_r(prefix, "!@", &state);
-	char *user = strtok_r(NULL, "!@", &state);
-	char *host = strtok_r(NULL, "!@", &state);
+		new_nick = (*(compo->params) == ':' ? &compo->params[1] :
+		    &compo->params[0]);
+		prefix = & (compo->prefix[1]);
 
-	if (nick == NULL)
-	    throw std::runtime_error("no nickname");
+		if ((nick = strtok_r(prefix, "!@", &state)) == NULL)
+			throw std::runtime_error("no nickname");
 
-	/* unused */
-	(void) user;
-	(void) host;
+		user = strtok_r(NULL, "!@", &state);
+		host = strtok_r(NULL, "!@", &state);
 
-	printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+		/* unused */
+		(void) user;
+		(void) host;
 
-	for (int i = 1; i <= g_ntotal_windows; i++) {
-	    PIRC_WINDOW window = window_by_refnum(i);
+		printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
-	    if (window && is_irc_channel(window->label) &&
-		RemoveAndInsertNick(nick, new_nick, window->label) == OK) {
-		ctx.window = window;
+		for (int i = 1; i <= g_ntotal_windows; i++) {
+			PIRC_WINDOW	window;
 
-		printtext(&ctx, "%s%s%c is now known as %s %s%s%c",
-		    COLOR2, nick, NORMAL, THE_SPEC2, COLOR1, new_nick, NORMAL);
-	    }
+			if ((window = window_by_refnum(i)) != NULL &&
+			    is_irc_channel(window->label) &&
+			    RemoveAndInsertNick(nick, new_nick, window->label)
+			    == OK) {
+				ctx.window = window;
+
+				printtext(&ctx, "%s%s%c is now known as %s "
+				    "%s%s%c", COLOR2, nick, NORMAL, THE_SPEC2,
+				    COLOR1, new_nick, NORMAL);
+			}
+		}
+
+		if (strings_match_ignore_case(nick, g_my_nickname))
+			irc_set_my_nickname(new_nick);
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "event_nick: error: %s", e.what());
 	}
-
-	if (strings_match_ignore_case(nick, g_my_nickname))
-	    irc_set_my_nickname(new_nick);
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_nick: error: %s", e.what());
-    }
 }
 
 /* event_part
