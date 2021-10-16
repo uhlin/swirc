@@ -291,25 +291,26 @@ chg_status_for_superop(plus_minus_state_t pm_state,
 }
 
 static void
-chg_status_for_op(plus_minus_state_t pm_state,
-		  const char *nick,
-		  const char *channel)
+chg_status_for_op(plus_minus_state_t pm_state, const char *nick,
+    const char *channel)
 {
-    switch (pm_state) {
-    case STATE_PLUS:
-	if (event_names_htbl_modify_op(nick, channel, true) != OK)
-	    err_log(0, "In chg_status_for_op: "
-		"error: event_names_htbl_modify_op");
-	break;
-    case STATE_MINUS:
-	if (event_names_htbl_modify_op(nick, channel, false) != OK)
-	    err_log(0, "In chg_status_for_op: "
-		"error: event_names_htbl_modify_op");
-	break;
-    case STATE_NEITHER_PM:
-    default:
-	sw_assert_not_reached();
-    }
+	switch (pm_state) {
+	case STATE_PLUS:
+		if (event_names_htbl_modify_op(nick, channel, true) != OK) {
+			err_log(0, "In chg_status_for_op: error: "
+			    "event_names_htbl_modify_op");
+		}
+		break;
+	case STATE_MINUS:
+		if (event_names_htbl_modify_op(nick, channel, false) != OK) {
+			err_log(0, "In chg_status_for_op: error: "
+			    "event_names_htbl_modify_op");
+		}
+		break;
+	case STATE_NEITHER_PM:
+	default:
+		sw_assert_not_reached();
+	}
 }
 
 static void
