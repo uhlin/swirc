@@ -56,36 +56,38 @@
 void
 event_chan_hp(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	char *state = const_cast<char *>("");
+	try {
+		char	*channel, *homepage;
+		char	*state = const_cast<char *>("");
 
-	if (strFeed(compo->params, 2) != 2)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 2) != 2)
+			throw std::runtime_error("strFeed");
 
-	/* unused */
-	(void) strtok_r(compo->params, "\n", &state);
+		/* unused */
+		(void) strtok_r(compo->params, "\n", &state);
 
-	char	*channel  = strtok_r(NULL, "\n", &state);
-	char	*homepage = strtok_r(NULL, "\n", &state);
+		if ((channel = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("unable to get channel");
+		else if ((homepage = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("unable to get homepage");
+		else if (*homepage == ':')
+			homepage++;
 
-	if (channel == NULL)
-	    throw std::runtime_error("unable to get channel");
-	else if (homepage == NULL)
-	    throw std::runtime_error("unable to get homepage");
-	else if (*homepage == ':')
-	    homepage++;
+		printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
 
-	printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
-	if ((ctx.window = window_by_label(channel)) == NULL)
-	    throw std::runtime_error("window lookup error");
-	printtext(&ctx, "Homepage for %s%s%s%c%s: %s",
-	    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT, homepage);
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_chan_hp: error: %s", e.what());
-    }
+		if ((ctx.window = window_by_label(channel)) == NULL)
+			throw std::runtime_error("window lookup error");
+
+		printtext(&ctx, "Homepage for %s%s%s%c%s: %s",
+		    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+		    homepage);
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "event_chan_hp: error: %s", e.what());
+	}
 }
 
 /* event_join
