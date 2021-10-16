@@ -356,15 +356,14 @@ event_channel_forward(struct irc_message_compo *compo)
 void
 event_local_and_global_users(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
-    const char *ccp = strchr(compo->params, ':');
+	PRINTTEXT_CONTEXT	 ctx;
+	const char		*cp;
 
-    if (ccp == NULL || strings_match(++ccp, "")) {
-	return;
-    }
-
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
-    printtext(&ctx, "%s", ccp);
+	if ((cp = strchr(compo->params, ':')) == NULL ||
+	    strings_match(++cp, ""))
+		return;
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+	printtext(&ctx, "%s", cp);
 }
 
 /* event_nicknameInUse: 433
