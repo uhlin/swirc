@@ -428,31 +428,33 @@ event_nicknameInUse(struct irc_message_compo *compo)
 void
 event_userModeIs(struct irc_message_compo *compo)
 {
-    try {
-	char *modes = NULL;
-	char *state = const_cast<char *>("");
+	try {
+		char	*modes = NULL;
+		char	*state = const_cast<char *>("");
 
-	if (strFeed(compo->params, 1) != 1)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 1) != 1)
+			throw std::runtime_error("strFeed");
 
-	/* my nickname */
-	(void) strtok_r(compo->params, "\n", &state);
+		/* my nickname */
+		(void) strtok_r(compo->params, "\n", &state);
 
-	if ((modes = strtok_r(NULL, "\n", &state)) == NULL)
-	    throw std::runtime_error("no modes");
-	else if (strings_match(modes, g_user_modes))
-	    return; /* no change */
-	else if (sw_strcpy(g_user_modes, modes, sizeof g_user_modes) != 0)
-	    throw std::runtime_error("unable to store user modes!");
+		if ((modes = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("no modes");
+		else if (strings_match(modes, g_user_modes))
+			return; /* no change */
+		else if (sw_strcpy(g_user_modes, modes,
+		    ARRAY_SIZE(g_user_modes)) != 0)
+			throw std::runtime_error("unable to store user modes!");
 
-	statusbar_update_display_beta();
-	readline_top_panel();
-    } catch (std::runtime_error &e) {
-	PRINTTEXT_CONTEXT ctx;
+		statusbar_update_display_beta();
+		readline_top_panel();
+	} catch (std::runtime_error& e) {
+		PRINTTEXT_CONTEXT	ctx;
 
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_userModeIs: error: %s", e.what());
-    }
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "event_userModeIs: error: %s", e.what());
+	}
 }
 
 /* event_youAreOper: 381 (RPL_YOUREOPER)
