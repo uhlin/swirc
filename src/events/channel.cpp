@@ -734,41 +734,39 @@ event_quit(struct irc_message_compo *compo)
 void
 event_topic(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	char *channel = NULL, *topic = NULL;
-	char *state = const_cast<char *>("");
+	try {
+		char	*channel, *topic;
+		char	*state = const_cast<char *>("");
 
-	if (strFeed(compo->params, 2) != 2)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 2) != 2)
+			throw std::runtime_error("strFeed");
 
-	/* unused */
-	(void) strtok_r(compo->params, "\n", &state);
+		/* unused */
+		(void) strtok_r(compo->params, "\n", &state);
 
-	channel = strtok_r(NULL, "\n", &state);
-	topic = strtok_r(NULL, "\n", &state);
+		if ((channel = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("unable to get channel");
+		else if ((topic = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("unable to get topic");
+		else if (*topic == ':')
+			topic++;
 
-	if (channel == NULL)
-	    throw std::runtime_error("unable to get channel");
-	else if (topic == NULL)
-	    throw std::runtime_error("unable to get topic");
-	else if (*topic == ':')
-	    topic++;
+		printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
 
-	printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
+		if ((ctx.window = window_by_label(channel)) == NULL)
+			throw std::runtime_error("window lookup error");
 
-	if ((ctx.window = window_by_label(channel)) == NULL)
-	    throw std::runtime_error("window lookup error");
-
-	printtext(&ctx, "Topic for %s%s%s%c%s: %s",
-	    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT, topic);
-
-	new_window_title(channel, topic);
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_topic: error: %s", e.what());
-    }
+		new_window_title(channel, topic);
+		printtext(&ctx, "Topic for %s%s%s%c%s: %s",
+		    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+		    topic);
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "event_topic: error: %s", e.what());
+	}
 }
 
 /* event_topic_chg
