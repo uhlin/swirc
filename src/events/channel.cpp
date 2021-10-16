@@ -167,76 +167,78 @@ event_join(struct irc_message_compo *compo)
 void
 event_kick(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	char *prefix = NULL;
-	char *state1 = const_cast<char *>("");
-	char *state2 = const_cast<char *>("");
+	try {
+		char	*channel, *victim, *reason;
+		char	*nick, *user, *host;
+		char	*prefix = NULL;
+		char	*state1 = const_cast<char *>("");
+		char	*state2 = const_cast<char *>("");
 
-	if (compo == NULL)
-	    throw std::runtime_error("no components");
-	else if (compo->prefix == NULL)
-	    throw std::runtime_error("no prefix");
-	prefix = & (compo->prefix[1]);
+		if (compo == NULL)
+			throw std::runtime_error("no components");
+		else if (compo->prefix == NULL)
+			throw std::runtime_error("no prefix");
 
-	char *nick = strtok_r(prefix, "!@", &state1);
-	char *user = strtok_r(NULL, "!@", &state1);
-	char *host = strtok_r(NULL, "!@", &state1);
+		prefix = & (compo->prefix[1]);
 
-	if (nick == NULL)
-	    throw std::runtime_error("no nickname");
-	if (user == NULL)
-	    user = const_cast<char *>("<no user>");
-	if (host == NULL)
-	    host = const_cast<char *>("<no host>");
+		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
+			throw std::runtime_error("no nickname");
+		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
+			user = const_cast<char *>("<no user>");
+		if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
+			host = const_cast<char *>("<no host>");
 
-	/* unused */
-	(void) user;
-	(void) host;
+		/* unused */
+		(void) user;
+		(void) host;
 
-	(void) strFeed(compo->params, 2);
+		(void) strFeed(compo->params, 2);
 
-	char	*channel = strtok_r(compo->params, "\n", &state2);
-	char	*victim	 = strtok_r(NULL, "\n", &state2);
-	char	*reason	 = strtok_r(NULL, "\n", &state2);
+		if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL)
+			throw std::runtime_error("no channel");
+		else if ((victim = strtok_r(NULL, "\n", &state2)) == NULL)
+			throw std::runtime_error("no victim");
 
-	if (channel == NULL)
-	    throw std::runtime_error("no channel");
-	else if (victim == NULL)
-	    throw std::runtime_error("no victim");
+		const bool has_reason = ((reason = strtok_r(NULL, "\n",
+		    &state2)) != NULL);
+		if (has_reason && *reason == ':')
+			reason++;
 
-	const bool has_reason = reason != NULL;
-	if (has_reason && *reason == ':')
-	    reason++;
+		if (strings_match_ignore_case(victim, g_my_nickname)) {
+			if (config_bool("kick_close_window", true) &&
+			    destroy_chat_window(channel) != 0) {
+				throw std::runtime_error("failed to destroy "
+				    "chat window");
+			} else {
+				PIRC_WINDOW	win;
 
-	if (strings_match_ignore_case(victim, g_my_nickname)) {
-	    if (config_bool("kick_close_window", true)) {
-		if (destroy_chat_window(channel) != 0)
-		    throw std::runtime_error("failed to destroy chat window");
-	    } else {
-		event_names_htbl_remove_all(window_by_label(channel));
-	    }
-	} else if (event_names_htbl_remove(victim, channel) != OK) {
-	    throw std::runtime_error("failed to remove victim from channel");
-	}
+				win = window_by_label(channel);
+				event_names_htbl_remove_all(win);
+			}
+		} else if (event_names_htbl_remove(victim, channel) != OK) {
+			throw std::runtime_error("failed to remove victim from "
+			    "channel");
+		}
 
-	printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+		printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
-	if ((ctx.window = window_by_label(channel)) == NULL)
-	    ctx.window = g_active_window;
+		if ((ctx.window = window_by_label(channel)) == NULL)
+			ctx.window = g_active_window;
 
-	printtext(&ctx, "%s was kicked from %s%s%c by %s%s%c %s%s%s",
-	    victim, COLOR2, channel, NORMAL, COLOR2, nick, NORMAL,
-	    LEFT_BRKT, has_reason ? reason : "", RIGHT_BRKT);
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
-	printtext(&ctx, "event_kick: fatal: %s", e.what());
+		printtext(&ctx, "%s was kicked from %s%s%c by %s%s%c %s%s%s",
+		    victim, COLOR2, channel, NORMAL, COLOR2, nick, NORMAL,
+		    LEFT_BRKT, (has_reason ? reason : ""), RIGHT_BRKT);
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_active_window,
+		    TYPE_SPEC1_FAILURE, true);
+		printtext(&ctx, "event_kick: fatal: %s", e.what());
 #if SHUTDOWN_IRC_CONNECTION_BEHAVIOR
-	printtext(&ctx, "Shutting down IRC connection...");
-	g_on_air = false;
+		printtext(&ctx, "Shutting down IRC connection...");
+		g_on_air = false;
 #endif
-    }
+	}
 }
 
 static void
