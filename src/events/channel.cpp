@@ -444,65 +444,73 @@ maintain_channel_stats(const char *channel, const char *input)
 void
 event_mode(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char *next_token_copy = NULL;
+	PRINTTEXT_CONTEXT ctx;
+	char *next_token_copy = NULL;
 
-    try {
-	char *cp = NULL;
-	char *nick = NULL;
-	char *prefix = NULL;
-	char *state1 = const_cast<char *>("");
-	char *state2 = const_cast<char *>("");
+	try {
+		char	*channel, *next_token;
+		char	*cp = NULL;
+		char	*nick = NULL;
+		char	*prefix = NULL;
+		char	*state1 = const_cast<char *>("");
+		char	*state2 = const_cast<char *>("");
 
-	if (compo->prefix == NULL)
-	    throw std::runtime_error("no prefix");
-	prefix = & (compo->prefix[1]);
+		if (compo->prefix == NULL)
+			throw std::runtime_error("no prefix");
 
-	if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
-	    throw std::runtime_error("unable to get nickname in prefix");
-	else if (strFeed(compo->params, 1) != 1)
-	    throw std::runtime_error("strFeed");
+		prefix = & (compo->prefix[1]);
 
-	char *channel = strtok_r(compo->params, "\n", &state2);
-	char *next_token = strtok_r(NULL, "\n", &state2);
+		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL) {
+			throw std::runtime_error("unable to get nickname in "
+			    "prefix");
+		} else if (strFeed(compo->params, 1) != 1) {
+			throw std::runtime_error("strFeed");
+		}
 
-	if (channel == NULL || next_token == NULL)
-	    throw std::runtime_error("insufficient data");
-	else if (*next_token == ':')
-	    next_token ++;
-	else if ((cp = strstr(next_token, " :")) != NULL) {
-	    *++cp = ' ';
-	    (void) memmove(cp - 1, cp, strlen(cp) + 1);
+		if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL ||
+		    (next_token = strtok_r(NULL, "\n", &state2)) == NULL) {
+			throw std::runtime_error("insufficient data");
+		} else if (*next_token == ':') {
+			next_token ++;
+		} else if ((cp = strstr(next_token, " :")) != NULL) {
+			*++cp = ' ';
+			(void) memmove(cp - 1, cp, strlen(cp) + 1);
+		}
+
+		next_token_copy = sw_strdup(next_token);
+		(void) trim(next_token_copy);
+
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+
+		if (strings_match_ignore_case(nick, channel)) {
+			/*
+			 * User mode
+			 */
+
+			printtext(&ctx, "Mode change %s%s%s for user %c%s%c",
+			    LEFT_BRKT, next_token_copy, RIGHT_BRKT,
+			    BOLD, nick, BOLD);
+
+			if (net_send("MODE %s", nick) < 0)
+				throw std::runtime_error("cannot send");
+		} else if (is_irc_channel(channel) &&
+		    (ctx.window = window_by_label(channel)) != NULL) {
+			printtext(&ctx, "mode/%s%s%s%c%s %s%s%s by %s%s%c",
+			    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+			    LEFT_BRKT, next_token_copy, RIGHT_BRKT,
+			    COLOR2, nick, NORMAL);
+
+			maintain_channel_stats(channel, next_token_copy);
+		} else {
+			throw std::runtime_error("unhandled else branch");
+		}
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "event_mode: error: %s", e.what());
 	}
 
-	next_token_copy = sw_strdup(next_token);
-	//squeeze(next_token_copy, ":");
-	trim(next_token_copy);
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
-
-	if (strings_match_ignore_case(nick, channel)) {
-	    /*
-	     * User mode
-	     */
-	    printtext(&ctx, "Mode change %s%s%s for user %c%s%c",
-		LEFT_BRKT, next_token_copy, RIGHT_BRKT, BOLD, nick, BOLD);
-	    net_send("MODE %s", nick);
-	} else if (is_irc_channel(channel) &&
-		   (ctx.window = window_by_label(channel)) != NULL) {
-	    printtext(&ctx, "mode/%s%s%s%c%s %s%s%s by %s%s%c",
-		LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-		LEFT_BRKT, next_token_copy, RIGHT_BRKT,
-		COLOR2, nick, NORMAL);
-	    maintain_channel_stats(channel, next_token_copy);
-	} else {
-	    throw std::runtime_error("unhandled else branch");
-	}
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_mode: error: %s", e.what());
-    }
-
-    free(next_token_copy);
+	free(next_token_copy);
 }
 
 static int
