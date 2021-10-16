@@ -462,13 +462,13 @@ event_userModeIs(struct irc_message_compo *compo)
 void
 event_youAreOper(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    (void) compo;
+	(void) compo;
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_SUCCESS, true);
-    printtext(&ctx, "You're now an IRC operator!");
-    printtext(&ctx, "    auto_op_yourself = %s",
-	config_bool("auto_op_yourself", true) ? "ON" : "OFF");
-    g_am_irc_op = true;
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_SUCCESS, true);
+	printtext(&ctx, "You're now an IRC operator!");
+	printtext(&ctx, "    auto_op_yourself = %s",
+	    (config_bool("auto_op_yourself", true) ? "ON" : "OFF"));
+	g_am_irc_op = true;
 }
