@@ -43,7 +43,7 @@ dist: $(DIST_DEPS)
 
 SIGNING_CERT=c:\certs\SwircDevelopmentTeam.pfx
 TIMESTAMP_URL=http://timestamp.comodoca.com/
-PRODUCT_VERSION=3.3.1
+PRODUCT_VERSION=3.3.2
 
 setupfile: dist Swirc.wxs
 	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v $(DEST)\libcurl.dll
