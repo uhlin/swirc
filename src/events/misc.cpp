@@ -343,6 +343,8 @@ event_channel_forward(struct irc_message_compo *compo)
 		else if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
 			throw std::runtime_error("no message");
 
+		(void) msg; /* unused */
+
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 		printtext(&ctx, "Channel forwarding from %c%s%c to %c%s%c",
 		    BOLD, from_channel, BOLD, BOLD, to_channel, BOLD);
