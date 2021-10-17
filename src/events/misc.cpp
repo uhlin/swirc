@@ -83,38 +83,41 @@ event_allaround_extract_find_colon(struct irc_message_compo *compo)
 void
 event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char *cp = NULL;
-    char *msg = NULL, *msg_copy = NULL;
-    char *state = const_cast<char *>("");
+	PRINTTEXT_CONTEXT ctx;
+	char *msg_copy = NULL;
 
-    try {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+	try {
+		char	*cp;
+		char	*msg;
+		char	*state = const_cast<char *>("");
 
-	if (strFeed(compo->params, 1) != 1)
-	    throw std::runtime_error("strFeed");
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
-	/* unused */
-	(void) strtok_r(compo->params, "\n", &state);
+		if (strFeed(compo->params, 1) != 1)
+			throw std::runtime_error("strFeed");
 
-	if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
-	    throw std::runtime_error("unable to get message");
+		/* unused */
+		(void) strtok_r(compo->params, "\n", &state);
 
-	msg_copy = sw_strdup(msg);
+		if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("unable to get message");
 
-	if ((cp = strchr(msg_copy, ':')) == NULL)
-	    throw std::runtime_error("no colon found!");
+		msg_copy = sw_strdup(msg);
 
-	cp++;
-	(void) memmove(cp - 1, cp, strlen(cp) + 1);
-	printtext(&ctx, "%s", msg_copy);
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "on processing event %s: error: %s",
-		  compo->command, e.what());
-    }
+		if ((cp = strchr(msg_copy, ':')) == NULL)
+			throw std::runtime_error("no colon found!");
 
-    free(msg_copy);
+		cp++;
+		(void) memmove(cp - 1, cp, strlen(cp) + 1);
+		printtext(&ctx, "%s", msg_copy);
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "on processing event %s: error: %s",
+		    compo->command, e.what());
+	}
+
+	free(msg_copy);
 }
 
 /* event_serverFeatures: 005 (RPL_ISUPPORT)
