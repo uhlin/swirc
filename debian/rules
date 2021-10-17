@@ -3,7 +3,7 @@
 # hardening=+bindnow
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 export DEB_BUILD_OPTIONS=nocheck
-export PREFIX=/usr
+export PREFIX=/usr/local
 
 %:
 	dh $@
