@@ -53,22 +53,24 @@
 void
 event_allaround_extract_find_colon(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char *cp = NULL;
+	PRINTTEXT_CONTEXT ctx;
+	char *cp;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 
-    if ((cp = strchr(compo->params, ':')) == NULL) {
-	printtext(&ctx, "on issuing event %s: no colon found", compo->command);
-	return;
-    }
+	if ((cp = strchr(compo->params, ':')) == NULL) {
+		printtext(&ctx, "on issuing event %s: no colon found",
+		    compo->command);
+		return;
+	}
 
 #if 0
-    if (!strings_match(compo->command, "444") &&
-	!strings_match(compo->command, "484"))
-	ctx.spec_type = TYPE_SPEC1;
+	if (!strings_match(compo->command, "444") &&
+	    !strings_match(compo->command, "484"))
+		ctx.spec_type = TYPE_SPEC1;
 #endif
-    printtext(&ctx, "%s", ++cp);
+
+	printtext(&ctx, "%s", ++cp);
 }
 
 /* This function isn't written for a specific event. It extracts the
