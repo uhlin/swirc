@@ -128,11 +128,19 @@ term_resize_all(void)
 	else
 		(void) atomic_swap_bool(&g_resizing_term, true);
 
+#if defined(UNIX)
 	rows = (int) size.ws_row;
 	cols = (int) size.ws_col;
 
 	if (resize_term(rows, cols) == ERR)
 		err_quit("term_resize_all: ERROR resize_term()");
+#elif defined(WIN32)
+	if (resize_term(0, 0) == ERR)
+		err_quit("term_resize_all: ERROR resize_term()");
+
+	rows = getmaxy(stdscr);
+	cols = getmaxx(stdscr);
+#endif
 
 	(void) erase();
 	(void) refresh();
