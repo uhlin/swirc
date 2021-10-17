@@ -147,7 +147,7 @@ getuser(void)
 	    sw_strcpy(buf, var_data, ARRAY_SIZE(buf)) != 0)
 		return "";
 
-	buf[strcspn(buf, " ")] = '\0';
+	buf[strcspn(buf, " \f\n\r\t\v")] = '\0';
 	return addrof(buf[0]);
 }
 
