@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - Made improvements to the following files:
   - `commands/connect.c`
   - `events/channel.cpp`
+  - `events/misc.cpp`
   - `events/notice.cpp`
   - `events/privmsg.cpp`
   - `events/welcome.cpp`
