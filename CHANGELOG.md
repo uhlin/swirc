@@ -2,16 +2,16 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added command line option `-j`
-- Added function `getuser()` and made use of it
-- Added null checks
-- Added the following command aliases:
+- **Added** command line option `-j`
+- **Added** function `getuser()` and made use of it
+- **Added** null checks
+- **Added** the following command aliases:
   - `/j` (`/join`)
   - `/p` (`/part`)
-- Added the following commands:
+- **Added** the following commands:
   - `/ignore`
   - `/unignore`
-- Fixed unchecked return values
+- **Fixed** unchecked return values
 - Made improvements to the following files:
   - `commands/connect.c`
   - `events/channel.cpp`
@@ -24,10 +24,11 @@ All notable changes to this project will be documented in this file.
   - `log.c`
   - `nestHome.c`
 - Reformatted and reindented files
-- Rewrote the `/join` and `/part` commands in C++
-- Updated the translations
+- **Rewrote** the `/join` and `/part` commands in C++
+- **Updated** the translations
 
 ### Windows ###
+- **Fixed** terminal resizing. (Increasing the size is ok.)
 - The [PDC](https://pdcurses.org/) library has been rebuilt with the
   option `UTF8=Y` which makes PDCurses ignore the system locale. So
   for Windows computers running Swirc UTF-8 is now forced. This means
