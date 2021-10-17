@@ -166,6 +166,8 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 			    "remaining");
 		}
 
+		(void) bytes_received; /* unused */
+
 		concatSize = strlen(recvbuf) + strlen(tmp) + 1;
 		concat = static_cast<char *>(xmalloc(concatSize));
 

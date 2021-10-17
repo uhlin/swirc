@@ -126,6 +126,8 @@ event_whoReply(struct irc_message_compo *compo)
 			    "components");
 		}
 
+		(void) server;
+
 		if (*hopcount == ':')
 			hopcount++;
 
