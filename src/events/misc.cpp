@@ -127,52 +127,57 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 void
 event_serverFeatures(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	char *cp = NULL;
-	char *msg = NULL, *msg_copy = NULL;
-	char *state = const_cast<char *>("");
+	try {
+		char	*cp = NULL;
+		char	*msg = NULL;
+		char	*msg_copy = NULL;
+		char	*state = const_cast<char *>("");
 
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
-	if (strFeed(compo->params, 1) != 1)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 1) != 1)
+			throw std::runtime_error("strFeed");
 
-	/* unused */
-	(void) strtok_r(compo->params, "\n", &state);
+		/* unused */
+		(void) strtok_r(compo->params, "\n", &state);
 
-	if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
-	    throw std::runtime_error("no message!");
-	if (*msg == ':')
-	    msg++;
-	if (*msg) {
-	    const char *ar[] = {
-		":are available on this server",
-		":are supported by this server",
-		":are supported on this server",
-	    };
+		if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
+			throw std::runtime_error("no message!");
+		if (*msg == ':')
+			msg++;
+		if (*msg) {
+			static const char *ar[] = {
+				":are available on this server",
+				":are supported by this server",
+				":are supported on this server",
+			};
 
-	    msg_copy = sw_strdup(msg);
+			msg_copy = sw_strdup(msg);
 
-	    for (const char **ar_p = &ar[0];
-		 ar_p < &ar[ARRAY_SIZE(ar)]; ar_p++) {
-		while ((cp = strstr(msg_copy, *ar_p)) != NULL) {
-		    /*
-		     * Delete the colon
-		     */
-		    cp++;
-		    (void) memmove(cp - 1, cp, strlen(cp) + 1);
+			for (const char **ar_p = &ar[0];
+			    ar_p < &ar[ARRAY_SIZE(ar)];
+			    ar_p++) {
+				while ((cp = strstr(msg_copy, *ar_p)) != NULL) {
+					/*
+					 * Delete the colon
+					 */
+
+					cp++;
+					(void) memmove(cp - 1, cp,
+					    strlen(cp) + 1);
+				}
+			}
+
+			printtext(&ctx, "%s", msg_copy);
+			free(msg_copy);
 		}
-	    }
-
-	    printtext(&ctx, "%s", msg_copy);
-	    free(msg_copy);
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "event_serverFeatures: error: %s", e.what());
 	}
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_serverFeatures: error: %s", e.what());
-    }
 }
 
 /* event_channelCreatedWhen: 329 (undocumented in the RFC)
