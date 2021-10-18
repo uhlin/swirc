@@ -10,6 +10,7 @@ reports/swirc-3.2.5.html
 reports/swirc-3.2.6.html
 reports/swirc-3.2.7.html
 reports/swirc-3.3.0.html
+reports/swirc-3.3.2.html
 style.css
 swirc.list
 "
