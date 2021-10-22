@@ -32,10 +32,10 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2020-04-28</em></small></p>
+<p><small><em>Updated: 2021-10-22</em></small></p>
 <h3>Program options</h3>
 <p>
-<kbd>usage: swirc [-46?CPdipv] [-c server[:port]] [-n nickname] [-r rl name] [-u username] [-x config]</kbd>
+<kbd>usage: swirc [-46?CPRdipv] [-c server[:port]] [-j join] [-n nickname] [-r rl name] [-u username] [-x config]</kbd>
 </p>
 <table class="po">
   <tr>
@@ -78,6 +78,10 @@ If specified, the effect is
     </td>
   </tr>
   <tr>
+    <td><b>-R</b></td>
+    <td>Disable TLS/SSL peer verification</td>
+  </tr>
+  <tr>
     <td><b>-c</b> &lt;server[:port]&gt;</td>
     <td>
 Connect to given server.
@@ -94,6 +98,10 @@ initiate a TLS/SSL connection.
   <tr>
     <td><b>-i</b></td>
     <td>Turn on Internet Citizen's Band mode</td>
+  </tr>
+  <tr>
+    <td><b>-j</b> &lt;join&gt;</td>
+    <td>A comma-separated list of channels to join</td>
   </tr>
   <tr>
     <td><b>-n</b> &lt;nickname&gt;</td>
@@ -140,6 +148,12 @@ is probably a better alternative.
   <tr><td><kbd><b>CTRL+g</b></kbd></td><td>Clear readline input</td></tr>
   <tr><td><kbd><b>CTRL+n</b></kbd></td><td>Next window</td></tr>
   <tr><td><kbd><b>CTRL+p</b></kbd></td><td>Previous window</td></tr>
+  <tr><td><kbd><b>PG UP</b></kbd></td><td>Scroll up</td></tr>
+  <tr><td><kbd><b>PG DOWN</b></kbd></td><td>Scroll down</td></tr>
+  <tr><td><kbd><b>Up arrow</b></kbd></td><td>History previous</td></tr>
+  <tr><td><kbd><b>Down arrow</b></kbd></td><td>History next</td></tr>
+  <tr><td><kbd><b>F3</b></kbd></td><td>Scroll nicklist up</td></tr>
+  <tr><td><kbd><b>F4</b></kbd></td><td>Scroll nicklist down</td></tr>
   <tr><td><kbd><b>F11</b></kbd></td><td>Close window</td></tr>
   <tr><td><kbd><b>F12</b></kbd></td><td>Close all private conversations</td></tr>
 </table>
