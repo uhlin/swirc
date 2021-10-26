@@ -729,5 +729,5 @@ icb_send_topic(const char *new_topic)
 void
 icb_send_who(const char *arg)
 {
-    sendpacket(NULL, "hw%s%s", ICB_FIELD_SEP, arg);
+	sendpacket(NULL, "hw%s%s", ICB_FIELD_SEP, arg);
 }
