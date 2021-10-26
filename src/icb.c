@@ -723,7 +723,7 @@ icb_send_pong(const char *arg)
 void
 icb_send_topic(const char *new_topic)
 {
-    sendpacket(NULL, "htopic%s%s", ICB_FIELD_SEP, new_topic);
+	sendpacket(NULL, "htopic%s%s", ICB_FIELD_SEP, new_topic);
 }
 
 void
