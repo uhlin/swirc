@@ -559,11 +559,11 @@ handle_ping_packet(const char *pktdata)
 static void
 unknown_packet_type(const int length, const char type, const char *pktdata)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
-    printtext(&ctx, "unknown_packet_type: '%c' (length: %d): %s", type, length,
-	pktdata);
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
+	printtext(&ctx, "unknown_packet_type: '%c' (length: %d): %s", type,
+	    length, pktdata);
 }
 
 void
