@@ -643,7 +643,7 @@ sendpacket(bool *was_truncated, const char *format, ...)
 void
 icb_send_beep(const char *arg)
 {
-    sendpacket(NULL, "hbeep%s%s", ICB_FIELD_SEP, arg);
+	sendpacket(NULL, "hbeep%s%s", ICB_FIELD_SEP, arg);
 }
 
 void
