@@ -655,7 +655,7 @@ icb_send_boot(const char *victim)
 void
 icb_send_group(const char *group)
 {
-    sendpacket(NULL, "hg%s%s", ICB_FIELD_SEP, group);
+	sendpacket(NULL, "hg%s%s", ICB_FIELD_SEP, group);
 }
 
 void
