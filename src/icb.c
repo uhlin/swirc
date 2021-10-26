@@ -649,7 +649,7 @@ icb_send_beep(const char *arg)
 void
 icb_send_boot(const char *victim)
 {
-    sendpacket(NULL, "hboot%s%s", ICB_FIELD_SEP, victim);
+	sendpacket(NULL, "hboot%s%s", ICB_FIELD_SEP, victim);
 }
 
 void
