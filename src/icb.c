@@ -714,10 +714,10 @@ icb_send_pm(const char *to_who, const char *text)
 void
 icb_send_pong(const char *arg)
 {
-    if (!isNull(arg) && !strings_match(arg, ""))
-	sendpacket(NULL, "m%s", arg);
-    else
-	sendpacket(NULL, "m");
+	if (arg != NULL && !strings_match(arg, ""))
+		sendpacket(NULL, "m%s", arg);
+	else
+		sendpacket(NULL, "m");
 }
 
 void
