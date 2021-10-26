@@ -673,12 +673,12 @@ icb_send_noop(void)
 void
 icb_send_open_msg(const char *text)
 {
-    bool was_truncated = false;
+	bool	was_truncated = false;
 
-    sendpacket(&was_truncated, "b%s", text);
+	sendpacket(&was_truncated, "b%s", text);
 
-    if (was_truncated)
-	err_log(ENOBUFS, "icb_send_open_msg: text truncated");
+	if (was_truncated)
+		err_log(ENOBUFS, "icb_send_open_msg: text truncated");
 }
 
 /*
