@@ -667,7 +667,7 @@ icb_send_name(const char *new_nick)
 void
 icb_send_noop(void)
 {
-    sendpacket(NULL, "n");
+	sendpacket(NULL, "n");
 }
 
 void
