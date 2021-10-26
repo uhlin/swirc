@@ -703,12 +703,12 @@ icb_send_ping(const char *arg)
 void
 icb_send_pm(const char *to_who, const char *text)
 {
-    bool was_truncated = false;
+	bool	was_truncated = false;
 
-    sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who, text);
+	sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who, text);
 
-    if (was_truncated)
-	err_log(ENOBUFS, "icb_send_pm: text truncated");
+	if (was_truncated)
+		err_log(ENOBUFS, "icb_send_pm: text truncated");
 }
 
 void
