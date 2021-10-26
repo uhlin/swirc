@@ -620,24 +620,26 @@ icb_process_event_eof_names(void)
 static void
 sendpacket(bool *was_truncated, const char *format, ...)
 {
-    char	 msg[ICB_MESSAGE_MAX] = { '\0' };
-    int		 ret = -1;
-    va_list	 ap;
+	char msg[ICB_MESSAGE_MAX] = { '\0' };
+	int ret;
+	va_list ap;
 
-    if (!isNull(was_truncated))
-	*was_truncated = false;
-
-    va_start(ap, format);
-    ret = vsnprintf(msg, ARRAY_SIZE(msg), format, ap);
-    va_end(ap);
-
-    if (ret < 0 || ((size_t) ret) >= ARRAY_SIZE(msg)) {
 	if (!isNull(was_truncated))
-	    *was_truncated = true;
-    }
+		*was_truncated = false;
 
-    const int msglen = (int) strlen(msg);
-    net_send("%c%s", msglen, msg);
+	va_start(ap, format);
+	ret = vsnprintf(msg, ARRAY_SIZE(msg), format, ap);
+	va_end(ap);
+
+	if (ret < 0 || ((size_t) ret) >= ARRAY_SIZE(msg)) {
+		if (!isNull(was_truncated))
+			*was_truncated = true;
+	}
+
+	const int msglen = (int) strlen(msg);
+
+	if (net_send("%c%s", msglen, msg) < 0)
+		err_log(ENOTCONN, "sendpacket: net_send");
 }
 
 void
