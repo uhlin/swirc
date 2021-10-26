@@ -569,44 +569,44 @@ unknown_packet_type(const int length, const char type, const char *pktdata)
 void
 icb_irc_proxy(const int length, const char type, const char *pktdata)
 {
-    switch (type) {
-    case 'a':
-	login_ok();
-	break;
-    case 'b':
-	handle_open_msg_packet(pktdata);
-	break;
-    case 'c':
-	handle_personal_msg_packet(pktdata);
-	break;
-    case 'd':
-	handle_status_msg_packet(pktdata);
-	break;
-    case 'e':
-	handle_error_msg_packet(pktdata);
-	break;
-    case 'f':
-	handle_important_msg_packet(pktdata);
-	break;
-    case 'g':
-	handle_exit_packet();
-	break;
-    case 'i':
-	handle_cmd_output_packet(pktdata);
-	break;
-    case 'j':
-	handle_proto_packet(pktdata);
-	break;
-    case 'k':
-	handle_beep_packet(pktdata);
-	break;
-    case 'l':
-	handle_ping_packet(pktdata);
-	break;
-    default:
-	unknown_packet_type(length, type, pktdata);
-	break;
-    }
+	switch (type) {
+	case 'a':
+		login_ok();
+		break;
+	case 'b':
+		handle_open_msg_packet(pktdata);
+		break;
+	case 'c':
+		handle_personal_msg_packet(pktdata);
+		break;
+	case 'd':
+		handle_status_msg_packet(pktdata);
+		break;
+	case 'e':
+		handle_error_msg_packet(pktdata);
+		break;
+	case 'f':
+		handle_important_msg_packet(pktdata);
+		break;
+	case 'g':
+		handle_exit_packet();
+		break;
+	case 'i':
+		handle_cmd_output_packet(pktdata);
+		break;
+	case 'j':
+		handle_proto_packet(pktdata);
+		break;
+	case 'k':
+		handle_beep_packet(pktdata);
+		break;
+	case 'l':
+		handle_ping_packet(pktdata);
+		break;
+	default:
+		unknown_packet_type(length, type, pktdata);
+		break;
+	}
 }
 
 void
