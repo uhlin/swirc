@@ -541,13 +541,14 @@ handle_proto_packet(const char *pktdata)
 static void
 handle_beep_packet(const char *pktdata)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    if (isNull(pktdata) || strings_match(pktdata, ""))
-	return;
+	if (pktdata == NULL || strings_match(pktdata, ""))
+		return;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_WARN, true);
-    printtext(&ctx, "You were beeped by %s%s%s", TXT_BOLD, pktdata, TXT_BOLD);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_WARN, true);
+	printtext(&ctx, "You were beeped by %s%s%s",
+	    TXT_BOLD, pktdata, TXT_BOLD);
 }
 
 static void
