@@ -694,10 +694,10 @@ icb_send_pass_mod(const char *to_who)
 void
 icb_send_ping(const char *arg)
 {
-    if (!isNull(arg) && !strings_match(arg, ""))
-	sendpacket(NULL, "l%s", arg);
-    else
-	sendpacket(NULL, "l");
+	if (arg != NULL && !strings_match(arg, ""))
+		sendpacket(NULL, "l%s", arg);
+	else
+		sendpacket(NULL, "l");
 }
 
 void
