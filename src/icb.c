@@ -553,7 +553,7 @@ handle_beep_packet(const char *pktdata)
 static void
 handle_ping_packet(const char *pktdata)
 {
-    icb_send_pong(pktdata);
+	icb_send_pong(pktdata);
 }
 
 static void
