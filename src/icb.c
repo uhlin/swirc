@@ -517,25 +517,28 @@ handle_cmd_output_packet(const char *pktdata)
 static void
 handle_proto_packet(const char *pktdata)
 {
-    char	*cp           = NULL;
-    char	*last         = "";
-    char	*pktdata_copy = sw_strdup(pktdata);
+	char	*cp;
+	char	*last = "";
+	char	*pktdata_copy = sw_strdup(pktdata);
 
-    if ((cp = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) != NULL)
-	(void) sw_strcpy(icb_protolevel, cp, ARRAY_SIZE(icb_protolevel));
-    if ((cp = strtok_r(NULL, ICB_FIELD_SEP, &last)) != NULL)
-	(void) sw_strcpy(icb_hostid, cp, ARRAY_SIZE(icb_hostid));
-    if ((cp = strtok_r(NULL, ICB_FIELD_SEP, &last)) != NULL)
-	(void) sw_strcpy(icb_serverid, cp, ARRAY_SIZE(icb_serverid));
+	if ((cp = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) == NULL ||
+	    sw_strcpy(icb_protolevel, cp, ARRAY_SIZE(icb_protolevel)) != 0)
+		goto err;
+	else if ((cp = strtok_r(NULL, ICB_FIELD_SEP, &last)) == NULL ||
+	    sw_strcpy(icb_hostid, cp, ARRAY_SIZE(icb_hostid)) != 0)
+		goto err;
+	else if ((cp = strtok_r(NULL, ICB_FIELD_SEP, &last)) == NULL ||
+	    sw_strcpy(icb_serverid, cp, ARRAY_SIZE(icb_serverid)) != 0)
+		goto err;
 
-    free_and_null(&pktdata_copy);
+	free(pktdata_copy);
+	return;
 
-    if (strings_match(icb_protolevel, "") || strings_match(icb_hostid, "") ||
-	strings_match(icb_serverid, "")) {
-	memset(icb_protolevel, 0, ARRAY_SIZE(icb_protolevel));
-	memset(icb_hostid, 0, ARRAY_SIZE(icb_hostid));
-	memset(icb_serverid, 0, ARRAY_SIZE(icb_serverid));
-    }
+  err:
+	free(pktdata_copy);
+	BZERO(icb_protolevel, ARRAY_SIZE(icb_protolevel));
+	BZERO(icb_hostid, ARRAY_SIZE(icb_hostid));
+	BZERO(icb_serverid, ARRAY_SIZE(icb_serverid));
 }
 
 static void
