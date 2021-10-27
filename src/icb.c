@@ -440,78 +440,90 @@ handle_exit_packet(void)
 }
 
 static void
-handle_cmd_output_packet(const char *pktdata)
+who_listing(char *cp)
 {
-    PIRC_WINDOW		 win = NULL;
-    PRINTTEXT_CONTEXT	 ctx;
-    char		*cp = NULL;
-    char		*last = "";
-    char		*pktdata_copy = sw_strdup(pktdata);
-
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
-
-    if (!strncmp(pktdata_copy, "co", 2)) {
-	/*
-	 * Generic command output
-	 */
-
-	squeeze(pktdata_copy, ICB_FIELD_SEP);
-	ctx.spec_type = TYPE_SPEC1;
-	printtext(&ctx, "%s", &pktdata_copy[2]);
-
-	if ((win = window_by_label(get_label())) != NULL &&
-	    ! (win->received_names)) {
-	    char str[ICB_PACKET_MAX] = { '\0' };
-
-	    snprintf(str, ARRAY_SIZE(str), "Group: %s", icb_group);
-
-	    if (!strncmp(&pktdata_copy[2], str, strlen(str)))
-		atomic_swap_bool(&g_icb_processing_names, true);
-	}
-    } else if (!strncmp(pktdata_copy, "wh", 2)) {
-	/* Tell client to output header for who listing output. Deprecated. */;
-    } else if (!strncmp(pktdata_copy, "wl", 2)) {
-	if ((win = window_by_label(get_label())) != NULL &&
-	    win->received_names)
-	    {
-		free_and_null(&pktdata_copy);
-		return;
-	    }
-
-	char *initial_token = strtok_r(&pktdata_copy[2], ICB_FIELD_SEP, &last);
-	char *nickname      = strtok_r(NULL, ICB_FIELD_SEP, &last);
+	PIRC_WINDOW	 win;
+	char		*initial_token, *nickname;
+	char		*last = "";
 #if 0
-	char *seconds_idle  = strtok_r(NULL, ICB_FIELD_SEP, &last);
-	char *response_time = strtok_r(NULL, ICB_FIELD_SEP, &last);
-	char *login_time    = strtok_r(NULL, ICB_FIELD_SEP, &last);
-	char *username      = strtok_r(NULL, ICB_FIELD_SEP, &last);
-	char *userhost      = strtok_r(NULL, ICB_FIELD_SEP, &last);
-	char *reg_status    = strtok_r(NULL, ICB_FIELD_SEP, &last);
+	char		*seconds_idle, *response_time, *login_time, *username,
+			*userhost, *reg_status;
 #endif
 
-	if (isNull(initial_token) || isNull(nickname)) {
-	    ctx.spec_type = TYPE_SPEC1_FAILURE;
-	    printtext(&ctx, "handle_cmd_output_packet: missing essential "
-		"initial token or nickname during who listing");
-	} else {
-	    const bool is_moderator = !strings_match(initial_token, " ");
-
-	    process_event(":%s 353 %s = #%s :%s%s\r\n", icb_hostid,
-		g_my_nickname, icb_group, is_moderator ? "@" : "", nickname);
+	if ((win = window_by_label(get_label())) != NULL &&
+	    win->received_names) {
+		return;
+	} else if ((initial_token = strtok_r(cp, ICB_FIELD_SEP, &last)) == NULL
+	    || (nickname = strtok_r(NULL, ICB_FIELD_SEP, &last)) == NULL) {
+		/*
+		 * Missing essential initial token or nickname during
+		 * who listing.
+		 */
+		err_log(EPROTO, "who_listing");
+		return;
 	}
-    } else {
-	/*
-	 * Unknown output type
-	 */
 
-	while ((cp = strpbrk(pktdata_copy, ICB_FIELD_SEP)) != NULL)
-	    *cp = 'X';
-	ctx.spec_type = TYPE_SPEC1_WARN;
-	printtext(&ctx, "handle_cmd_output_packet: unknown output type");
-	printtext(&ctx, "data: %s", pktdata_copy);
-    } /* if-then-else */
+	const bool is_moderator = !strings_match(initial_token, " ");
 
-    free_and_null(&pktdata_copy);
+	process_event(":%s 353 %s = #%s :%s%s\r\n", icb_hostid, g_my_nickname,
+	    icb_group, (is_moderator ? "@" : ""), nickname);
+}
+
+static void
+handle_cmd_output_packet(const char *pktdata)
+{
+	PIRC_WINDOW win = NULL;
+	PRINTTEXT_CONTEXT ctx;
+	char *pktdata_copy = sw_strdup(pktdata);
+
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
+
+	if (!strncmp(pktdata_copy, "co", 2)) {
+		/*
+		 * Generic command output
+		 */
+
+		squeeze(pktdata_copy, ICB_FIELD_SEP);
+		ctx.spec_type = TYPE_SPEC1;
+		printtext(&ctx, "%s", &pktdata_copy[2]);
+
+		if ((win = window_by_label(get_label())) != NULL &&
+		    !(win->received_names)) {
+			char	str[ICB_PACKET_MAX] = { '\0' };
+			int	ret;
+
+			if ((ret = snprintf(str, ARRAY_SIZE(str), "Group: %s",
+			    icb_group)) < 0 || ((size_t) ret) >=
+			    ARRAY_SIZE(str)) {
+				err_log(ENOBUFS, "generic command output");
+			} else if (!strncmp(&pktdata_copy[2], str,
+			    strlen(str))) {
+				(void) atomic_swap_bool(&g_icb_processing_names,
+				    true);
+			}
+		}
+	} else if (!strncmp(pktdata_copy, "wh", 2)) {
+		debug("Tell client to output header for who listing. "
+		    "Deprecated.");
+	} else if (!strncmp(pktdata_copy, "wl", 2)) {
+		who_listing(&pktdata_copy[2]);
+	} else {
+		/*
+		 * Unknown output type
+		 */
+
+		char *cp;
+
+		while ((cp = strpbrk(pktdata_copy, ICB_FIELD_SEP)) != NULL)
+			*cp = 'X';
+
+		ctx.spec_type = TYPE_SPEC1_WARN;
+		printtext(&ctx, "handle_cmd_output_packet: "
+		    "unknown output type");
+		printtext(&ctx, "data: %s", pktdata_copy);
+	} /* if-then-else */
+
+	free(pktdata_copy);
 }
 
 static void
