@@ -407,10 +407,10 @@ handle_status_msg_packet(const char *pktdata)
 static void
 handle_error_msg_packet(const char *pktdata)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
-    printtext(&ctx, "%s", pktdata);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+	printtext(&ctx, "%s", pktdata);
 }
 
 static void
