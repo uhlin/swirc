@@ -416,21 +416,21 @@ handle_error_msg_packet(const char *pktdata)
 static void
 handle_important_msg_packet(const char *pktdata)
 {
-    char	*category     = NULL;
-    char	*last         = "";
-    char	*msgtext      = NULL;
-    char	*pktdata_copy = sw_strdup(pktdata);
+	char	*category, *msgtext;
+	char	*last = "";
+	char	*pktdata_copy = sw_strdup(pktdata);
 
-    if ((category = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) == NULL ||
-	(msgtext = strtok_r(NULL, ICB_FIELD_SEP, &last)) == NULL) {
-	print_and_free("handle_important_msg_packet: too few tokens!",
-	    pktdata_copy);
-	return;
-    }
+	if ((category = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) == NULL ||
+	    (msgtext = strtok_r(NULL, ICB_FIELD_SEP, &last)) == NULL) {
+		print_and_free("handle_important_msg_packet: too few tokens!",
+		    pktdata_copy);
+		return;
+	}
 
-    process_event(":%s NOTICE %s :%s%s%s\r\n", icb_hostid, g_my_nickname,
-	TXT_BOLD, squeeze_text_deco(msgtext), TXT_BOLD);
-    free_and_null(&pktdata_copy);
+	process_event(":%s NOTICE %s :%s%s%s\r\n", icb_hostid, g_my_nickname,
+	    TXT_BOLD, squeeze_text_deco(msgtext), TXT_BOLD);
+
+	free(pktdata_copy);
 }
 
 static void
