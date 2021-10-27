@@ -11,6 +11,7 @@
 *.pot
 *.wixobj
 *.wixpdb
+*.zip
 _LINT.TMP
 curl-*
 libressl-*-windows
