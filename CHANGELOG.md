@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Fixed unchecked return values
+- Reformatted and reindented files
+
 ## [3.3.2] - 2021-10-17 ##
 - **Added** command line option `-j`
 - **Added** function `getuser()` and made use of it
