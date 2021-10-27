@@ -436,7 +436,7 @@ handle_important_msg_packet(const char *pktdata)
 static void
 handle_exit_packet(void)
 {
-    process_event("ERROR :Closing Link: Received exit packet\r\n");
+	process_event("ERROR :Closing Link: Received exit packet\r\n");
 }
 
 static void
