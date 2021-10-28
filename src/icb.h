@@ -5,6 +5,8 @@
 #define ICB_MESSAGE_MAX		253
 #define ICB_PACKET_MAX		255
 
+#define stat_msg(x) (#x ICB_FIELD_SEP)
+
 __SWIRC_BEGIN_DECLS
 extern volatile bool g_icb_processing_names;
 

@@ -307,101 +307,112 @@ deal_with_category_status(const char *data)
     }
 }
 
-static void
-handle_status_msg_packet(const char *pktdata)
-{
-    PRINTTEXT_CONTEXT	 ctx;
-    char		*cp           = NULL;
-    char		*last         = "";
-    char		*nick         = NULL,
-			*user         = NULL,
-			*host         = NULL;
-    char		*pktdata_copy = sw_strdup(pktdata);
-    const char		 sep[]        = " (@)";
-
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
-
-    if (!strncmp(pktdata_copy, "Boot" ICB_FIELD_SEP, 5)) {
-	ctx.window = window_by_label(get_label());
-	ctx.spec_type = TYPE_SPEC3;
-
-	if (!isNull(ctx.window))
-	    printtext(&ctx, "*** %s", &pktdata_copy[5]);
-    } else if (!strncmp(pktdata_copy, "Name" ICB_FIELD_SEP, 5)) {
-	deal_with_category_name(&pktdata_copy[5]);
-    } else if (!strncmp(pktdata_copy, "No-Pass" ICB_FIELD_SEP, 8)) {
-	ctx.spec_type = TYPE_SPEC1;
-	printtext(&ctx, "%s", &pktdata_copy[8]);
-    } else if (!strncmp(pktdata_copy, "Notify" ICB_FIELD_SEP, 7)) {
-	process_event(":%s NOTICE %s :%s\r\n", icb_hostid, g_my_nickname,
-	    &pktdata_copy[7]);
-
-	if (!isNull(icb_group))
-	    deal_with_category_pass(get_label(), &pktdata_copy[7]);
-    } else if (!strncmp(pktdata_copy, "Pass" ICB_FIELD_SEP, 5)) {
-	deal_with_category_pass(get_label(), &pktdata_copy[5]);
-    } else if (!strncmp(pktdata_copy, "Sign-on" ICB_FIELD_SEP, 8) ||
-	       !strncmp(pktdata_copy, "Arrive" ICB_FIELD_SEP, 7)) {
 /***************************************************
  *
  * Sign-on / Arrive
  *
  ***************************************************/
+static void
+sign_on_arrive(char *str, const char *sep)
+{
+	char	*last = "";
+	char	*nick, *user, *host;
 
-	const int offset =
-	    (!strncmp(pktdata_copy, "Sign-on" ICB_FIELD_SEP, 8) ? 8 : 7);
-
-	if ((nick = strtok_r(&pktdata_copy[offset], sep, &last)) == NULL) {
-	    ctx.spec_type = TYPE_SPEC1_FAILURE;
-	    printtext(&ctx, "handle_status_msg_packet: during sign-on: "
-		"no nick");
-	} else {
-	    user = strtok_r(NULL, sep, &last);
-	    host = strtok_r(NULL, sep, &last);
-
-	    process_event(":%s!%s@%s JOIN #%s\r\n", nick,
-		user ? user : "<no user>", host ? host : "<no host>",
-		icb_group);
+	if ((nick = strtok_r(str, sep, &last)) == NULL) {
+		err_log(EINVAL, "sign_on_arrive: no nickname");
+		return;
 	}
-    } else if (!strncmp(pktdata_copy, "Sign-off" ICB_FIELD_SEP, 9) ||
-	       !strncmp(pktdata_copy, "Depart" ICB_FIELD_SEP, 7)) {
+	if ((user = strtok_r(NULL, sep, &last)) == NULL)
+		user = "<no user>";
+	if ((host = strtok_r(NULL, sep, &last)) == NULL)
+		host = "<no host>";
+	process_event(":%s!%s@%s JOIN #%s\r\n", nick, user, host, icb_group);
+}
+
 /***************************************************
  *
  * Sign-off / Depart
  *
  ***************************************************/
+static void
+sign_off_depart(char *str, const char *sep)
+{
+	char	*last = "";
+	char	*nick;
 
-	const int offset =
-	    (!strncmp(pktdata_copy, "Sign-off" ICB_FIELD_SEP, 9) ? 9 : 7);
-
-	if (!strncmp(&pktdata_copy[offset], "Your group moderator", 20)) {
-	    ;
-	} else if ((nick = strtok_r(&pktdata_copy[offset],sep,&last)) == NULL) {
-	    ctx.spec_type = TYPE_SPEC1_FAILURE;
-	    printtext(&ctx, "handle_status_msg_packet: during sign-off: "
-		"no nick");
+	if (!strncmp(str, "Your group moderator", 20)) {
+		/* TODO: Investigate handling */;
+	} else if ((nick = strtok_r(str, sep, &last)) == NULL) {
+		err_log(EINVAL, "sign_off_depart: no nickname");
 	} else {
-	    user = strtok_r(NULL, sep, &last);
-	    host = strtok_r(NULL, sep, &last);
+		char	*user, *host;
 
-	    process_event(":%s!%s@%s PART #%s\r\n", nick,
-		user ? user : "<no user>", host ? host : "<no host>",
-		icb_group);
+		if ((user = strtok_r(NULL, sep, &last)) == NULL)
+			user = "";
+		if ((host = strtok_r(NULL, sep, &last)) == NULL)
+			host = "";
+		process_event(":%s!%s@%s PART #%s\r\n", nick, user, host,
+		    icb_group);
 	}
-    } else if (!strncmp(pktdata_copy, "Status" ICB_FIELD_SEP, 7)) {
-	deal_with_category_status(&pktdata_copy[7]);
-    } else if (!strncmp(pktdata_copy, "Topic" ICB_FIELD_SEP, 6)) {
-	deal_with_category_topic(get_label(), &pktdata_copy[6]);
-    } else {
-	while ((cp = strpbrk(pktdata_copy, ICB_FIELD_SEP)) != NULL)
-	    *cp = 'X';
-	ctx.spec_type = TYPE_SPEC1_WARN;
-	printtext(&ctx, "handle_status_msg_packet: "
-	    "unknown status message category");
-	printtext(&ctx, "packet data: %s", pktdata_copy);
-    } /* if-then-else */
+}
 
-    free_and_null(&pktdata_copy);
+static void
+handle_status_msg_packet(const char *pktdata)
+{
+	PRINTTEXT_CONTEXT ctx;
+	char *pktdata_copy = sw_strdup(pktdata);
+	int offset = 0;
+	static const char sep[] = " (@)";
+
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
+
+	if (!strncmp(pktdata_copy, stat_msg(Boot), 5)) {
+		ctx.window	= window_by_label(get_label());
+		ctx.spec_type	= TYPE_SPEC3;
+
+		if (ctx.window)
+			printtext(&ctx, "*** %s", &pktdata_copy[5]);
+	} else if (!strncmp(pktdata_copy, stat_msg(Name), 5)) {
+		deal_with_category_name(&pktdata_copy[5]);
+	} else if (!strncmp(pktdata_copy, stat_msg(No-Pass), 8)) {
+		ctx.spec_type = TYPE_SPEC1;
+		printtext(&ctx, "%s", &pktdata_copy[8]);
+	} else if (!strncmp(pktdata_copy, stat_msg(Notify), 7)) {
+		process_event(":%s NOTICE %s :%s\r\n", icb_hostid,
+		    g_my_nickname, &pktdata_copy[7]);
+
+		if (icb_group)
+			deal_with_category_pass(get_label(), &pktdata_copy[7]);
+	} else if (!strncmp(pktdata_copy, stat_msg(Pass), 5)) {
+		deal_with_category_pass(get_label(), &pktdata_copy[5]);
+	} else if (!strncmp(pktdata_copy, stat_msg(Sign-on), 8) ||
+	    !strncmp(pktdata_copy, stat_msg(Arrive), 7)) {
+		offset = (!strncmp(pktdata_copy, stat_msg(Sign-on), 8) ? 8 : 7);
+
+		sign_on_arrive(&pktdata_copy[offset], sep);
+	} else if (!strncmp(pktdata_copy, stat_msg(Sign-off), 9) ||
+	    !strncmp(pktdata_copy, stat_msg(Depart), 7)) {
+		offset = (!strncmp(pktdata_copy, stat_msg(Sign-off), 9)
+		    ? 9 : 7);
+
+		sign_off_depart(&pktdata_copy[offset], sep);
+	} else if (!strncmp(pktdata_copy, stat_msg(Status), 7)) {
+		deal_with_category_status(&pktdata_copy[7]);
+	} else if (!strncmp(pktdata_copy, stat_msg(Topic), 6)) {
+		deal_with_category_topic(get_label(), &pktdata_copy[6]);
+	} else {
+		char	*cp;
+
+		while ((cp = strpbrk(pktdata_copy, ICB_FIELD_SEP)) != NULL)
+			*cp = 'X';
+
+		ctx.spec_type = TYPE_SPEC1_WARN;
+		printtext(&ctx, "handle_status_msg_packet: unknown status "
+		    "message category");
+		printtext(&ctx, "packet data: %s", pktdata_copy);
+	} /* if-then-else */
+
+	free(pktdata_copy);
 }
 
 static void
