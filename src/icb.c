@@ -348,9 +348,9 @@ sign_off_depart(char *str, const char *sep)
 		char	*user, *host;
 
 		if ((user = strtok_r(NULL, sep, &last)) == NULL)
-			user = "";
+			user = "<no user>";
 		if ((host = strtok_r(NULL, sep, &last)) == NULL)
-			host = "";
+			host = "<no host>";
 		process_event(":%s!%s@%s PART #%s\r\n", nick, user, host,
 		    icb_group);
 	}
