@@ -251,39 +251,39 @@ deal_with_category_pass(const char *window_label, const char *data)
 static void
 deal_with_category_topic(const char *window_label, const char *data)
 {
-    PRINTTEXT_CONTEXT	 ctx;
-    char		 concat[ICB_PACKET_MAX] = "";
-    const char		*dataptr = &data[0];
-    const char		 changed[] = " changed the topic to \"";
+	PRINTTEXT_CONTEXT	 ctx;
+	char			 concat[ICB_PACKET_MAX] = { '\0' };
+	const char		*dataptr = &data[0];
+	const char		 changed[] = " changed the topic to \"";
 
-    printtext_context_init(&ctx, window_by_label(window_label), TYPE_SPEC1,
-	true);
+	printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
 
-    if (isNull(ctx.window))
-	return;
-    else if (strings_match(data, "The topic is not set."))
-	printtext(&ctx, "%s", data);
-    else if (!strncmp(data, "The topic is: ", 14)) {
-	dataptr += 14;
-	process_event(":%s 332 %s #%s :%s\r\n", icb_hostid, g_my_nickname,
-	    icb_group, dataptr);
-    } else if (strstr(data, changed)) {
-	char *nick = sw_strdup(data);
-	nick[strcspn(nick, " ")] = '\0';
-	PNAMES names = event_names_htbl_lookup(nick, window_label);
-	free(nick);
-	if (isNull(names) ||
-	    sw_strcpy(concat, names->nick, ARRAY_SIZE(concat)) != 0 ||
-	    sw_strcat(concat, changed, ARRAY_SIZE(concat)) != 0 ||
-	    strncmp(data, concat, strlen(concat)) != STRINGS_MATCH)
-	    return;
-	dataptr += strlen(concat);
-	char *cp = sw_strdup(dataptr);
-	if (cp[strlen(cp) - 1] == '\"')
-	    cp[strlen(cp) - 1] = '\0';
-	process_event(":%s TOPIC #%s :%s\r\n", names->nick, icb_group, cp);
-	free(cp);
-    }
+	if ((ctx.window = window_by_label(window_label)) == NULL) {
+		return;
+	} else if (strings_match(data, "The topic is not set.")) {
+		printtext(&ctx, "%s", data);
+	} else if (!strncmp(data, "The topic is: ", 14)) {
+		dataptr += 14;
+		process_event(":%s 332 %s #%s :%s\r\n", icb_hostid,
+		    g_my_nickname, icb_group, dataptr);
+	} else if (strstr(data, changed)) {
+		char *nick = sw_strdup(data);
+		nick[strcspn(nick, " ")] = '\0';
+		PNAMES names = event_names_htbl_lookup(nick, window_label);
+		free(nick);
+		if (names == NULL ||
+		    sw_strcpy(concat, names->nick, ARRAY_SIZE(concat)) != 0 ||
+		    sw_strcat(concat, changed, ARRAY_SIZE(concat)) != 0 ||
+		    strncmp(data, concat, strlen(concat)) != STRINGS_MATCH)
+			return;
+		dataptr += strlen(concat);
+		char *cp = sw_strdup(dataptr);
+		if (cp[strlen(cp) - 1] == '\"')
+			cp[strlen(cp) - 1] = '\0';
+		process_event(":%s TOPIC #%s :%s\r\n", names->nick, icb_group,
+		    cp);
+		free(cp);
+	}
 }
 
 static void
