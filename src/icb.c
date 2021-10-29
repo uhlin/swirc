@@ -90,47 +90,48 @@ process_event(const char *format, ...)
 static void
 login_ok(void)
 {
-    if (strings_match(icb_protolevel, "") || strings_match(icb_hostid, "") ||
-	strings_match(icb_serverid, "")) {
-	print_and_free("login_ok: empty protocol level, host id or server id",
-	    NULL);
-	g_on_air = false;
-	return;
-    }
+	if (strings_match(icb_protolevel, "") ||
+	    strings_match(icb_hostid, "") ||
+	    strings_match(icb_serverid, "")) {
+		print_and_free("login_ok: empty protocol level, host id or "
+		    "server id", NULL);
+		g_on_air = false;
+		return;
+	}
 
-    /*
-     * 001: RPL_WELCOME
-     */
-    process_event(":%s 001 %s :Welcome to ICB, %s!\r\n", icb_hostid,
-	g_my_nickname, g_my_nickname);
+	/*
+	 * 001: RPL_WELCOME
+	 */
+	process_event(":%s 001 %s :Welcome to ICB, %s!\r\n", icb_hostid,
+	    g_my_nickname, g_my_nickname);
 
-    /*
-     * 002: RPL_YOURHOST
-     */
-    process_event(":%s 002 %s :Your host is %s, running version %s\r\n",
-	icb_hostid, g_my_nickname, icb_serverid, icb_protolevel);
+	/*
+	 * 002: RPL_YOURHOST
+	 */
+	process_event(":%s 002 %s :Your host is %s, running version %s\r\n",
+	    icb_hostid, g_my_nickname, icb_serverid, icb_protolevel);
 
-    /*
-     * 375: RPL_MOTDSTART
-     */
-    process_event(":%s 375 %s :- %s Message Of The Day -\r\n", icb_hostid,
-	g_my_nickname, icb_serverid);
+	/*
+	 * 375: RPL_MOTDSTART
+	 */
+	process_event(":%s 375 %s :- %s Message Of The Day -\r\n", icb_hostid,
+	    g_my_nickname, icb_serverid);
 
-    /*
-     * 372: RPL_MOTD
-     */
-    process_event(
-	":%s 372 %s :-----------------------------\r\n"
-	":%s 372 %s :   Internet Citizen's Band   \r\n"
-	":%s 372 %s :-----------------------------\r\n",
-	icb_hostid, g_my_nickname,
-	icb_hostid, g_my_nickname,
-	icb_hostid, g_my_nickname);
+	/*
+	 * 372: RPL_MOTD
+	 */
+	process_event(
+	    ":%s 372 %s :-----------------------------\r\n"
+	    ":%s 372 %s :   Internet Citizen's Band   \r\n"
+	    ":%s 372 %s :-----------------------------\r\n",
+	    icb_hostid, g_my_nickname,
+	    icb_hostid, g_my_nickname,
+	    icb_hostid, g_my_nickname);
 
-    /*
-     * 376: RPL_ENDOFMOTD
-     */
-    process_event(":%s 376 %s :End of MOTD\r\n", icb_hostid, g_my_nickname);
+	/*
+	 * 376: RPL_ENDOFMOTD
+	 */
+	process_event(":%s 376 %s :End of MOTD\r\n", icb_hostid, g_my_nickname);
 }
 
 static void
