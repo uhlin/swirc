@@ -289,22 +289,24 @@ deal_with_category_topic(const char *window_label, const char *data)
 static void
 deal_with_category_status(const char *data)
 {
-    char	*cp      = NULL;
-    const char	*dataptr = &data[0];
+	char		*cp = NULL;
+	const char	*dataptr = &data[0];
 
-    if (!strncmp(dataptr, "You are now in group ", 21)) {
-	if (!isNull(icb_group))
-	    process_event(":%s PART #%s\r\n", g_my_nickname, icb_group);
-	dataptr += 21;
-	free_and_null(&icb_group);
-	icb_group = sw_strdup(dataptr);
-	const bool as_moderator =
-	    (cp = strstr(icb_group, " as moderator")) != NULL;
-	if (as_moderator)
-	    *cp = '\0';
-	process_event(":%s JOIN :#%s\r\n", g_my_nickname, icb_group);
-	icb_send_who(icb_group);
-    }
+	if (!strncmp(dataptr, "You are now in group ", 21)) {
+		if (icb_group) {
+			process_event(":%s PART #%s\r\n", g_my_nickname,
+			    icb_group);
+			free(icb_group);
+		}
+		dataptr += 21;
+		icb_group = sw_strdup(dataptr);
+		const bool as_moderator =
+		    (cp = strstr(icb_group, " as moderator")) != NULL;
+		if (as_moderator)
+			*cp = '\0';
+		process_event(":%s JOIN :#%s\r\n", g_my_nickname, icb_group);
+		icb_send_who(icb_group);
+	}
 }
 
 /***************************************************
