@@ -204,48 +204,53 @@ modpass(const char *data)
 static void
 deal_with_category_pass(const char *window_label, const char *data)
 {
-    bool	 by_server = false;
-    char	*nick      = NULL;
-    const char	*dataptr   = &data[0];
+	bool		 by_server = false;
+	char		*nick = NULL;
+	const char	*dataptr = &data[0];
 
-    if (!modpass(data))
-	return;
-    nick = sw_strdup(data);
-    nick[strcspn(nick, " ")] = '\0';
-    if (event_names_htbl_lookup(nick, window_label) == NULL) {
-	if (!strings_match(nick, "server"))
-	    goto err;
-	else
-	    by_server = true;
-    }
-    if (strstr(data, passed1)) {
-	dataptr += strlen(nick);
-	dataptr += strlen(passed1);
-	const char *new_mod = dataptr;
-	if (event_names_htbl_lookup(new_mod, window_label) == NULL)
-	    goto err;
-	else if (by_server) {
-	    process_event(":%s MODE #%s +o %s\r\n", &icb_hostid[0], icb_group,
-		new_mod);
-	} else {
-	    process_event(":%s MODE #%s -o+o %s %s\r\n", nick, icb_group, nick,
-		new_mod);
+	if (!modpass(data))
+		return;
+
+	nick = sw_strdup(data);
+	nick[strcspn(nick, " ")] = '\0';
+
+	if (event_names_htbl_lookup(nick, window_label) == NULL) {
+		if (!strings_match(nick, "server"))
+			goto err;
+		else
+			by_server = true;
 	}
-    } else if (strstr(data, passed2) != NULL ||
-	       strstr(data, passed3) != NULL) {
-	if (by_server) {
-	    process_event(":%s MODE #%s +o %s\r\n", &icb_hostid[0], icb_group,
-		g_my_nickname);
+
+	if (strstr(data, passed1)) {
+		dataptr += strlen(nick);
+		dataptr += strlen(passed1);
+
+		const char *new_mod = dataptr;
+
+		if (event_names_htbl_lookup(new_mod, window_label) == NULL) {
+			goto err;
+		} else if (by_server) {
+			process_event(":%s MODE #%s +o %s\r\n", &icb_hostid[0],
+			    icb_group, new_mod);
+		} else {
+			process_event(":%s MODE #%s -o+o %s %s\r\n", nick,
+			    icb_group, nick, new_mod);
+		}
+	} else if (strstr(data, passed2) != NULL || strstr(data, passed3) !=
+	    NULL) {
+		if (by_server) {
+			process_event(":%s MODE #%s +o %s\r\n", &icb_hostid[0],
+			    icb_group, g_my_nickname);
+		} else {
+			process_event(":%s MODE #%s -o+o %s %s\r\n", nick,
+			    icb_group, nick, g_my_nickname);
+		}
 	} else {
-	    process_event(":%s MODE #%s -o+o %s %s\r\n", nick, icb_group, nick,
-		g_my_nickname);
+		sw_assert_not_reached();
 	}
-    } else {
-	sw_assert_not_reached();
-    }
 
   err:
-    free(nick);
+	free(nick);
 }
 
 static void
