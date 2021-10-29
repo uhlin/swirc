@@ -74,17 +74,17 @@ get_label(void)
 static void
 process_event(const char *format, ...)
 {
-    char *event = NULL;
-    char *message_concat = NULL;
-    enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
-    va_list ap;
+	char *event;
+	char *message_concat = NULL;
+	enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
+	va_list ap;
 
-    va_start(ap, format);
-    event = strdup_vprintf(format, ap);
-    va_end(ap);
+	va_start(ap, format);
+	event = strdup_vprintf(format, ap);
+	va_end(ap);
 
-    irc_handle_interpret_events(event, &message_concat, &state);
-    free(event);
+	irc_handle_interpret_events(event, &message_concat, &state);
+	free(event);
 }
 
 static void
