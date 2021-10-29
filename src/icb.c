@@ -449,6 +449,8 @@ handle_important_msg_packet(const char *pktdata)
 		return;
 	}
 
+	(void) category; /* unused */
+
 	process_event(":%s NOTICE %s :%s%s%s\r\n", icb_hostid, g_my_nickname,
 	    TXT_BOLD, squeeze_text_deco(msgtext), TXT_BOLD);
 
