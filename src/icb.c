@@ -196,7 +196,7 @@ deal_with_category_name(const char *data)
 static bool
 modpass(const char *data)
 {
-    return (strstr(data, passed1) != NULL ||
+	return (strstr(data, passed1) != NULL ||
 	    strstr(data, passed2) != NULL ||
 	    strstr(data, passed3) != NULL);
 }
