@@ -180,17 +180,17 @@ handle_personal_msg_packet(const char *pktdata)
 static void
 deal_with_category_name(const char *data)
 {
-    const char	*dataptr   = &data[0];
-    const char	 changed[] = " changed nickname to ";
+	const char	*dataptr = &data[0];
+	const char	 changed[] = " changed nickname to ";
 
-    if (strstr(data, changed)) {
-	char *old_nick = sw_strdup(data);
-	old_nick[strcspn(old_nick, " ")] = '\0';
-	dataptr += strlen(old_nick);
-	dataptr += strlen(changed);
-	process_event(":%s NICK :%s\r\n", old_nick, dataptr);
-	free(old_nick);
-    }
+	if (strstr(data, changed)) {
+		char *old_nick = sw_strdup(data);
+		old_nick[strcspn(old_nick, " ")] = '\0';
+		dataptr += strlen(old_nick);
+		dataptr += strlen(changed);
+		process_event(":%s NICK :%s\r\n", old_nick, dataptr);
+		free(old_nick);
+	}
 }
 
 static bool
