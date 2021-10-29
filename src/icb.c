@@ -391,13 +391,13 @@ handle_status_msg_packet(const char *pktdata)
 	    !strncmp(pktdata_copy, stat_msg(Arrive), 7)) {
 		offset = (!strncmp(pktdata_copy, stat_msg(Sign-on), 8) ? 8 : 7);
 
-		sign_on_arrive(&pktdata_copy[offset], sep);
+		sign_on_arrive(&pktdata_copy[offset], &sep[0]);
 	} else if (!strncmp(pktdata_copy, stat_msg(Sign-off), 9) ||
 	    !strncmp(pktdata_copy, stat_msg(Depart), 7)) {
 		offset = (!strncmp(pktdata_copy, stat_msg(Sign-off), 9)
 		    ? 9 : 7);
 
-		sign_off_depart(&pktdata_copy[offset], sep);
+		sign_off_depart(&pktdata_copy[offset], &sep[0]);
 	} else if (!strncmp(pktdata_copy, stat_msg(Status), 7)) {
 		deal_with_category_status(&pktdata_copy[7]);
 	} else if (!strncmp(pktdata_copy, stat_msg(Topic), 6)) {
