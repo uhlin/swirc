@@ -62,13 +62,17 @@ static void	 sendpacket(bool *, const char *, ...) PRINTFLIKE(2);
 static const char *
 get_label(void)
 {
-    static char label[ICB_PACKET_MAX] = { '\0' };
+	int		ret;
+	static char	label[ICB_PACKET_MAX] = { '\0' };
 
-    memset(label, 0, ARRAY_SIZE(label));
+	if (icb_group == NULL ||
+	    (ret = snprintf(label, ARRAY_SIZE(label), "#%s", icb_group)) < 0 ||
+	    ((size_t) ret) >= ARRAY_SIZE(label)) {
+		debug("get_label: error: zeroing label...");
+		BZERO(label, ARRAY_SIZE(label));
+	}
 
-    if (!isNull(icb_group))
-	(void) snprintf(label, ARRAY_SIZE(label), "#%s", icb_group);
-    return (&label[0]);
+	return (&label[0]);
 }
 
 static void
