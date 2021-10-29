@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Fixed unchecked return values
+- Made improvements to the following files:
+  - `icb.c`
 - Reformatted and reindented files
 
 ## [3.3.2] - 2021-10-17 ##
