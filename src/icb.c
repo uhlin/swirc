@@ -44,17 +44,17 @@
 
 volatile bool g_icb_processing_names = false;
 
-static char	 icb_protolevel[ICB_PACKET_MAX] = { '\0' };
-static char	 icb_hostid[ICB_PACKET_MAX]     = { '\0' };
-static char	 icb_serverid[ICB_PACKET_MAX]   = { '\0' };
-static char	*icb_group = NULL;
+static char icb_protolevel[ICB_PACKET_MAX] = { '\0' };
+static char icb_hostid[ICB_PACKET_MAX] = { '\0' };
+static char icb_serverid[ICB_PACKET_MAX] = { '\0' };
+static char *icb_group = NULL;
 
-static const char	passed1[] = " has passed moderation to ";
-static const char	passed2[] = " just passed you moderation of group ";
-static const char	passed3[] = " just passed you moderation of ";
+static const char passed1[] = " has passed moderation to ";
+static const char passed2[] = " just passed you moderation of group ";
+static const char passed3[] = " just passed you moderation of ";
 
-static void	 process_event(const char *, ...) PRINTFLIKE(1);
-static void	 sendpacket(bool *, const char *, ...) PRINTFLIKE(2);
+static void process_event(const char *, ...) PRINTFLIKE(1);
+static void sendpacket(bool *, const char *, ...) PRINTFLIKE(2);
 
 /*lint -printf(1, process_event) */
 /*lint -printf(2, sendpacket) */
