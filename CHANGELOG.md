@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added event `531`. Undocumented in the RFC. (You cannot send CTCPs
+  to this user whilst they have the +T `u_noctcp` mode set.)
 - Fixed unchecked return values
 - Made improvements to the following files:
   - `icb.c`
