@@ -53,6 +53,8 @@ static const char	passed1[] = " has passed moderation to ";
 static const char	passed2[] = " just passed you moderation of group ";
 static const char	passed3[] = " just passed you moderation of ";
 
+static IDLE_MOD idle_mod = { 0 };
+
 static void	process_event(const char *, ...) PRINTFLIKE(1);
 static void	sendpacket(bool *, const char *, ...) PRINTFLIKE(2);
 
@@ -181,6 +183,20 @@ handle_personal_msg_packet(const char *pktdata)
 	free(pktdata_copy);
 }
 
+static bool
+parsing_ok_idle_mod(const char *nick, const char *group, const char *data)
+{
+	bool	 yesno;
+	char	*str;
+
+	str = strdup_printf("A piano suddenly falls on %s, dislodging "
+	    "moderatorship of %s.", nick, group);
+	yesno = strings_match(str, data);
+	free(str);
+
+	return yesno;
+}
+
 /*
  * "A piano suddenly falls on <nick>, dislodging moderatorship of
  * <group>."
@@ -188,7 +204,69 @@ handle_personal_msg_packet(const char *pktdata)
 static void
 deal_with_category_idle_mod(const char *data)
 {
-	(void) data;
+	char		*cp;
+	char		*group = NULL;
+	char		*nick = NULL;
+	const char	*dataptr = &data[0];
+	const char	*err_reason = "";
+
+	if (strncmp(data, "A piano suddenly falls on ", 26) != STRINGS_MATCH) {
+		err_reason = "unexpected leading string";
+		goto err;
+	}
+
+	dataptr += 26;
+	nick = sw_strdup(dataptr);
+
+	if ((cp = strstr(nick, ", dislodging moderatorship of ")) == NULL) {
+		err_reason = "cannot locate substring";
+		goto err;
+	} else {
+		*cp = '\0';
+	}
+
+	dataptr += strlen(nick);
+
+	if (strncmp(dataptr, ", dislodging moderatorship of ", 30) !=
+	    STRINGS_MATCH) {
+		err_reason = "string mismatch";
+		goto err;
+	} else {
+		dataptr += 30;
+	}
+
+	group = strdup_printf("#%s", dataptr);
+
+	if (group[strlen(group) - 1] == '.')
+		group[strlen(group) - 1] = '\0';
+	if (!strings_match_ignore_case(group, get_label())) {
+		err_reason = "group mismatch";
+		goto err;
+	} else if (sw_strcpy(idle_mod.nick, nick, ARRAY_SIZE(idle_mod.nick))
+	    != 0) {
+		err_reason = "cannot store nickname";
+		goto err;
+	} else if (sw_strcpy(idle_mod.group, group, ARRAY_SIZE(idle_mod.group))
+	    != 0) {
+		err_reason = "cannot store group";
+		goto err;
+	} else if (!parsing_ok_idle_mod(nick, group + 1, data)) {
+		err_reason = "parsing not ok!";
+		goto err;
+	}
+
+	process_event(":%s NOTICE %s :%s\r\n", icb_hostid, g_my_nickname, data);
+
+	free(nick);
+	free(group);
+	return;
+
+  err:
+	BZERO(idle_mod.nick, ARRAY_SIZE(idle_mod.nick));
+	BZERO(idle_mod.group, ARRAY_SIZE(idle_mod.group));
+	err_log(0, "deal_with_category_idle_mod: %s", err_reason);
+	free(nick);
+	free(group);
 }
 
 static void
@@ -267,13 +345,68 @@ deal_with_category_pass(const char *window_label, const char *data)
 	free(nick);
 }
 
+static bool
+parsing_ok_timeout(const char *new_mod, const char *data)
+{
+	bool	 yesno;
+	char	*str;
+
+	str = strdup_printf("%s is now mod.", new_mod);
+	yesno = strings_match(str, data);
+	free(str);
+
+	return yesno;
+}
+
 /*
  * "<nick> is now mod."
  */
 static void
 deal_with_category_timeout(const char *data)
 {
-	(void) data;
+	PNAMES		 names;
+	char		*cp;
+	char		*new_mod = NULL;
+	const char	*err_reason = "";
+
+	new_mod = sw_strdup(data);
+
+	if ((cp = strstr(new_mod, " is now mod.")) == NULL) {
+		err_reason = "cannot locate substring";
+		goto err;
+	} else {
+		*cp = '\0';
+	}
+
+	if (strings_match(idle_mod.nick, "") ||
+	    strings_match(idle_mod.group, "")) {
+		err_reason = "idle mod: empty nick/group";
+		goto err;
+	} else if ((names = event_names_htbl_lookup(idle_mod.nick,
+	    idle_mod.group)) == NULL) {
+		err_reason = "no such mod";
+		goto err;
+	} else if (!names->is_op) {
+		err_reason = "mod not mod";
+		goto err;
+	} else if (event_names_htbl_lookup(new_mod, idle_mod.group) == NULL) {
+		err_reason = "new mod non-existent";
+		goto err;
+	} else if (!parsing_ok_timeout(new_mod, data)) {
+		err_reason = "parsing not ok!";
+		goto err;
+	}
+
+	process_event(":%s NOTICE %s :%s\r\n", icb_hostid, g_my_nickname, data);
+	process_event(":%s MODE %s -o+o %s %s\r\n", icb_hostid, idle_mod.group,
+	    idle_mod.nick, new_mod);
+
+	free(new_mod);
+	return;
+
+  err:
+	err_log(0, "deal_with_category_timeout: %s", err_reason);
+	free(new_mod);
 }
 
 static void

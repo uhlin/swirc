@@ -7,6 +7,11 @@
 
 #define stat_msg(x) (#x ICB_FIELD_SEP)
 
+typedef struct tagIDLE_MOD {
+	char	nick[ICB_MESSAGE_MAX];
+	char	group[ICB_MESSAGE_MAX];
+} IDLE_MOD, *PIDLE_MOD;
+
 __SWIRC_BEGIN_DECLS
 extern volatile bool g_icb_processing_names;
 
