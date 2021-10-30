@@ -181,6 +181,16 @@ handle_personal_msg_packet(const char *pktdata)
 	free(pktdata_copy);
 }
 
+/*
+ * "A piano suddenly falls on <nick>, dislodging moderatorship of
+ * <group>."
+ */
+static void
+deal_with_category_idle_mod(const char *data)
+{
+	(void) data;
+}
+
 static void
 deal_with_category_name(const char *data)
 {
@@ -255,6 +265,15 @@ deal_with_category_pass(const char *window_label, const char *data)
 
   err:
 	free(nick);
+}
+
+/*
+ * "<nick> is now mod."
+ */
+static void
+deal_with_category_timeout(const char *data)
+{
+	(void) data;
 }
 
 static void
@@ -383,6 +402,8 @@ handle_status_msg_packet(const char *pktdata)
 
 		if (ctx.window)
 			printtext(&ctx, "*** %s", &pktdata_copy[5]);
+	} else if (!strncmp(pktdata_copy, stat_msg(Idle-Mod), 9)) {
+		deal_with_category_idle_mod(&pktdata_copy[9]);
 	} else if (!strncmp(pktdata_copy, stat_msg(Name), 5)) {
 		deal_with_category_name(&pktdata_copy[5]);
 	} else if (!strncmp(pktdata_copy, stat_msg(No-Pass), 8)) {
@@ -409,6 +430,8 @@ handle_status_msg_packet(const char *pktdata)
 		sign_off_depart(&pktdata_copy[offset], &sep[0]);
 	} else if (!strncmp(pktdata_copy, stat_msg(Status), 7)) {
 		deal_with_category_status(&pktdata_copy[7]);
+	} else if (!strncmp(pktdata_copy, stat_msg(Timeout), 8)) {
+		deal_with_category_timeout(&pktdata_copy[8]);
 	} else if (!strncmp(pktdata_copy, stat_msg(Topic), 6)) {
 		deal_with_category_topic(get_label(), &pktdata_copy[6]);
 	} else {
