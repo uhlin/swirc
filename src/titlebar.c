@@ -77,7 +77,7 @@ titlebar_init(void)
 void
 titlebar_deinit(void)
 {
-    term_remove_panel(titlebar_pan);
+	term_remove_panel(titlebar_pan);
 }
 
 void
