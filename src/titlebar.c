@@ -111,14 +111,15 @@ titlebar(const char *fmt, ...)
 void
 titlebar_recreate(int cols)
 {
-    struct term_window_size newsize = {
-	.rows	   = 1,
-	.cols      = cols,
-	.start_row = 0,
-	.start_col = 0,
-    };
+	struct term_window_size newsize = {
+		.rows = 1,
+		.cols = cols,
+		.start_row = 0,
+		.start_col = 0,
+	};
 
-    titlebar_pan = term_resize_panel(titlebar_pan, &newsize);
-    apply_titlebar_options(panel_window(titlebar_pan));
-    titlebar(" %s ", g_active_window->title ? g_active_window->title : "");
+	titlebar_pan = term_resize_panel(titlebar_pan, &newsize);
+	apply_titlebar_options(panel_window(titlebar_pan));
+	titlebar(" %s ", (g_active_window->title ? g_active_window->title
+	    : ""));
 }
