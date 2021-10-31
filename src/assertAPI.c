@@ -69,16 +69,17 @@ assert_doit(const char *fmt, ...)
 
 NORETURN void
 SWAssertFail(const char *file, long int line, const char *fn,
-	     const char *assertion)
+    const char *assertion)
 {
-    if (!file || *file == '\0')
-	file = descriptions[DNOFILE];
-    if (!fn || *fn == '\0')
-	fn = descriptions[DNOFN];
-    if (!assertion || *assertion == '\0')
-	assertion = descriptions[DNOASSERTION];
-    assert_doit("%s:%ld: %s: Assertion `%s' failed", file, line, fn, assertion);
-    abort();
+	if (file == NULL || *file == '\0')
+		file = descriptions[DNOFILE];
+	if (fn == NULL || *fn == '\0')
+		fn = descriptions[DNOFN];
+	if (assertion == NULL || *assertion == '\0')
+		assertion = descriptions[DNOASSERTION];
+	assert_doit("%s:%ld: %s: Assertion `%s' failed", file, line, fn,
+	    assertion);
+	abort();
 }
 
 NORETURN void
