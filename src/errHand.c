@@ -277,32 +277,33 @@ xstrerror(int errnum, char *strerrbuf, size_t buflen)
 static void
 debug_doit(const char *fmt, va_list ap)
 {
-    char	 out[1300] = { '\0' };
-    char	 path[1300] = { '\0' };
-    FILE	*fp = NULL;
+	FILE	*fp;
+	char	 out[1300] = { '\0' };
+	char	 path[1300] = { '\0' };
 
 #if defined(UNIX)
-    vsnprintf(out, ARRAY_SIZE(out), fmt, ap);
+	(void) vsnprintf(out, ARRAY_SIZE(out), fmt, ap);
 #elif defined(WIN32)
-    vsnprintf_s(out, ARRAY_SIZE(out), _TRUNCATE, fmt, ap);
+	(void) vsnprintf_s(out, ARRAY_SIZE(out), _TRUNCATE, fmt, ap);
 #endif
 
-    if (g_log_dir == NULL || sw_strcpy(path, g_log_dir, ARRAY_SIZE(path)) != 0)
-	return;
+	if (g_log_dir == NULL ||
+	    sw_strcpy(path, g_log_dir, ARRAY_SIZE(path)) != 0)
+		return;
 
 #if defined(UNIX)
-    if (sw_strcat(path, "/debug.log", ARRAY_SIZE(path)) != 0)
-	return;
+	if (sw_strcat(path, "/debug.log", ARRAY_SIZE(path)) != 0)
+		return;
 #elif defined(WIN32)
-    if (sw_strcat(path, "\\debug.log", ARRAY_SIZE(path)) != 0)
-	return;
+	if (sw_strcat(path, "\\debug.log", ARRAY_SIZE(path)) != 0)
+		return;
 #endif
 
-    if ((fp = xfopen(path, "a")) != NULL) {
-	(void) fprintf(fp, "%s %s[%ld]: %s\n",
-	    get_timestamp(), g_progname, g_pid, out);
-	(void) fclose(fp);
-    }
+	if ((fp = xfopen(path, "a")) != NULL) {
+		(void) fprintf(fp, "%s %s[%ld]: %s\n", get_timestamp(),
+		    g_progname, g_pid, out);
+		(void) fclose(fp);
+	}
 }
 
 void
