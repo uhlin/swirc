@@ -46,9 +46,8 @@ static PANEL *titlebar_pan = NULL;
 static void
 apply_titlebar_options(WINDOW *win)
 {
-    if (is_scrollok(win)) {
-	(void) scrollok(win, false);
-    }
+	if (is_scrollok(win))
+		(void) scrollok(win, false);
 }
 
 static short int
