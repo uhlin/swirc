@@ -161,44 +161,49 @@ statusbar_top_panel(void)
 void
 statusbar_update_display_beta(void)
 {
-#define WERASE(win)   ((void) werase(win))
-#define WBKGD(win, c) ((void) wbkgd(win, c))
-    WINDOW     *win    = panel_window(statusbar_pan);
-    chtype      blank  = ' ';
-    short int   pair_n = get_pair_num();
-    std::string lb(Theme("statusbar_leftBracket"));
-    std::string rb(Theme("statusbar_rightBracket"));
+	WINDOW			*win = panel_window(statusbar_pan);
+	char			*out_s;
+	const chtype		 blank = ' ';
+	const std::string	 lb(Theme("statusbar_leftBracket"));
+	const std::string	 rb(Theme("statusbar_rightBracket"));
+	short int		 pair_n = get_pair_num();
+	std::string		 str(Theme("statusbar_spec"));
 
-    if (term_is_too_small())
-	return;
+	if (term_is_too_small())
+		return;
 
-    WERASE(win);
-    WBKGD(win, blank | COLOR_PAIR(pair_n) | A_NORMAL);
-
-    std::string str(Theme("statusbar_spec"));
+	(void) werase(win);
+	(void) wbkgd(win, (blank | COLOR_PAIR(pair_n) | A_NORMAL));
 
 #ifndef _lint
-    str.append(" ");
-    str.append(lb);
-    str.append(std::to_string(g_active_window->refnum));
-    str.append("(").append(std::to_string(g_ntotal_windows)).append(")");
-    str.append(rb);
+	(void) str.append(" ");
+	(void) str.append(lb);
+	(void) str.append(std::to_string(g_active_window->refnum));
+	(void) str.append("(");
+	(void) str.append(std::to_string(g_ntotal_windows));
+	(void) str.append(")");
+	(void) str.append(rb);
 #endif
 
-    str.append(" ").append(lb).append(get_nick_and_server()).append(rb);
-    str.append(" ").append(lb).append(get_chanmodes()).append(rb);
+	(void) str.append(" ");
+	(void) str.append(lb).append(get_nick_and_server()).append(rb);
 
-    str.append(" ");
-    str.append(lb);
-    str.append("Log: ").append(g_active_window->logging ? "Yes" : "No");
-    str.append(rb);
+	(void) str.append(" ");
+	(void) str.append(lb).append(get_chanmodes()).append(rb);
 
-    str.append(" ");
-    str.append(g_active_window->scroll_mode ? "-- MORE --" : "");
+	(void) str.append(" ");
+	(void) str.append(lb);
+	(void) str.append("Log: ").append(g_active_window->logging ? "Yes"
+	    : "No");
+	(void) str.append(rb);
 
-    char *out_s = sw_strdup(str.c_str());
-    printtext_puts(win, g_no_colors ? squeeze_text_deco(out_s) : out_s, -1, -1,
-		   NULL);
-    free(out_s);
-    statusbar_top_panel();
+	(void) str.append(" ");
+	(void) str.append(g_active_window->scroll_mode ? "-- MORE --" : "");
+
+	out_s = sw_strdup(str.c_str());
+	printtext_puts(win, (g_no_colors ? squeeze_text_deco(out_s) : out_s),
+	    -1, -1, NULL);
+	free(out_s);
+
+	statusbar_top_panel();
 }
