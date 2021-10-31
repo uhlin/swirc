@@ -153,9 +153,8 @@ statusbar_recreate(int rows, int cols)
 void
 statusbar_top_panel(void)
 {
-    if (statusbar_pan) {
-	(void) top_panel(statusbar_pan);
-    }
+	if (statusbar_pan)
+		(void) top_panel(statusbar_pan);
 }
 
 void
