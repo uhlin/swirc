@@ -98,17 +98,15 @@ get_nick_and_server()
 static short int
 get_pair_num()
 {
-    short int fg, bg;
-    short int pair_n;
+	short int	fg, bg;
+	short int	pair_n;
 
-    fg = theme_color("statusbar_fg", COLOR_WHITE);
-    bg = theme_color("statusbar_bg", COLOR_BLACK);
+	fg = theme_color("statusbar_fg", COLOR_WHITE);
+	bg = theme_color("statusbar_bg", COLOR_BLACK);
 
-    if ((pair_n = color_pair_find(fg, bg)) != -1) {
-	return pair_n;
-    }
-
-    return 0;
+	if ((pair_n = color_pair_find(fg, bg)) != -1)
+		return pair_n;
+	return 0;
 }
 
 void
