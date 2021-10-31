@@ -258,18 +258,15 @@ errdesc_by_num(int num)
 const char *
 xstrerror(int errnum, char *strerrbuf, size_t buflen)
 {
-    BZERO(strerrbuf, buflen);
-
 #ifdef HAVE_BCI
-    if (errnum == 0 || strerror_s(strerrbuf, buflen, errnum) != 0)
+	if (errnum == 0 || strerror_s(strerrbuf, buflen, errnum) != 0)
+		return ("Unknown error!");
 #else
-    if (errnum == 0 || strerror_r(errnum, strerrbuf, buflen) != 0)
+	if (errnum == 0 || strerror_r(errnum, strerrbuf, buflen) != 0)
+		return ("Unknown error!");
 #endif
-	{
-	    return ("Unknown error!");
-	}
 
-    return (trim(strerrbuf));
+	return (trim(strerrbuf));
 }
 
 /* ----------------------------------------------------------------- */
