@@ -73,25 +73,26 @@ get_timestamp(void)
 static void
 write_to_error_log(const char *msg)
 {
-    char  path[1300] = "";
-    FILE *fp         = NULL;
+	FILE	*fp;
+	char	 path[1300] = { '\0' };
 
-    if (!msg || !g_log_dir || sw_strcpy(path, g_log_dir, sizeof path) != 0)
-	return;
+	if (msg == NULL || g_log_dir == NULL || sw_strcpy(path, g_log_dir,
+	    sizeof path) != 0)
+		return;
 
 #if defined(UNIX)
-    if (sw_strcat(path, "/error.log", sizeof path) != 0)
-	return;
+	if (sw_strcat(path, "/error.log", sizeof path) != 0)
+		return;
 #elif defined(WIN32)
-    if (sw_strcat(path, "\\error.log", sizeof path) != 0)
-	return;
+	if (sw_strcat(path, "\\error.log", sizeof path) != 0)
+		return;
 #endif
 
-    if ((fp = xfopen(path, "a")) != NULL) {
-	(void) fprintf(fp, "%s %s[%ld]: %s\n",
-	    get_timestamp(), g_progname, g_pid, msg);
-	(void) fclose(fp);
-    }
+	if ((fp = xfopen(path, "a")) != NULL) {
+		(void) fprintf(fp, "%s %s[%ld]: %s\n", get_timestamp(),
+		    g_progname, g_pid, msg);
+		(void) fclose(fp);
+	}
 }
 
 static void
