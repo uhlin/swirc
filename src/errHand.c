@@ -308,11 +308,11 @@ debug_doit(const char *fmt, va_list ap)
 void
 debug(const char *fmt, ...)
 {
-    if (g_debug_logging) {
-	va_list ap;
+	if (g_debug_logging) {
+		va_list ap;
 
-	va_start(ap, fmt);
-	debug_doit(fmt, ap);
-	va_end(ap);
-    }
+		va_start(ap, fmt);
+		debug_doit(fmt, ap);
+		va_end(ap);
+	}
 }
