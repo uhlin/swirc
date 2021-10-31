@@ -166,13 +166,13 @@ err_quit(const char *fmt, ...)
 NORETURN void
 err_sys(const char *fmt, ...)
 {
-    va_list ap;
+	va_list ap;
 
-    va_start(ap, fmt);
-    err_doit(true, errno, fmt, ap);
-    va_end(ap);
+	va_start(ap, fmt);
+	err_doit(true, errno, fmt, ap);
+	va_end(ap);
 
-    exit(EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
 
 void
