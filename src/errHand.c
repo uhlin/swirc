@@ -97,34 +97,34 @@ write_to_error_log(const char *msg)
 static void
 err_doit(bool output_to_stderr, int error, const char *fmt, va_list ap)
 {
-    char out[1300] = "";
-    char strerrbuf[MAXERROR] = "";
+	char	out[1300] = { '\0' };
+	char	strerrbuf[MAXERROR] = { '\0' };
 
 #if defined(UNIX)
-    (void) vsnprintf(out, sizeof out, fmt, ap);
+	(void) vsnprintf(out, sizeof out, fmt, ap);
 #elif defined(WIN32)
-    (void) vsnprintf_s(out, sizeof out, _TRUNCATE, fmt, ap);
+	(void) vsnprintf_s(out, sizeof out, _TRUNCATE, fmt, ap);
 #endif
 
-    if (error) {
-	(void) sw_strcat(out, ": ", sizeof out);
-	(void) sw_strcat(out, xstrerror(error, strerrbuf, MAXERROR),
-	    sizeof out);
-    }
+	if (error) {
+		(void) sw_strcat(out, ": ", sizeof out);
+		(void) sw_strcat(out, xstrerror(error, strerrbuf, MAXERROR),
+		    sizeof out);
+	}
 
-    write_to_error_log(out);
+	write_to_error_log(out);
 
-    if (output_to_stderr) {
-	escape_curses();
+	if (output_to_stderr) {
+		escape_curses();
 
-	(void) fputs(out, stderr);
-	(void) fputc('\n', stderr);
+		(void) fputs(out, stderr);
+		(void) fputc('\n', stderr);
 
 #ifdef WIN32
-	(void) MessageBox(NULL, out, "Fatal",
-	    (MB_OK | MB_ICONSTOP | MB_DEFBUTTON1));
+		(void) MessageBox(NULL, out, "Fatal", (MB_OK | MB_ICONSTOP |
+		    MB_DEFBUTTON1));
 #endif
-    }
+	}
 }
 
 NORETURN void
