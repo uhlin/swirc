@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 - Added new [Libera Chat](https://libera.chat/) servers
 - Fixed unchecked return values
 - Made improvements to the following files:
+  - `assertAPI.c`
+  - `errHand.c`
   - `icb.c`
     - Added status message `Idle-Mod`.
     - Added status message `Timeout`.
