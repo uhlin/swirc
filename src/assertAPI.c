@@ -49,22 +49,20 @@ static const char *descriptions[] = {
 static void
 assert_doit(const char *fmt, ...)
 {
-    va_list	ap;
-    char	out[1000] = "";
+	char out[1000] = { '\0' };
+	va_list ap;
 
-    va_start(ap, fmt);
-
+	va_start(ap, fmt);
 #if defined(UNIX)
-    vsnprintf(out, sizeof out, fmt, ap);
+	(void) vsnprintf(out, sizeof out, fmt, ap);
 #elif defined(WIN32)
-    vsnprintf_s(out, sizeof out, _TRUNCATE, fmt, ap);
+	(void) vsnprintf_s(out, sizeof out, _TRUNCATE, fmt, ap);
 #endif
+	va_end(ap);
 
-    va_end(ap);
-
-    escape_curses();
-    fputs(out, stderr);
-    fputc('\n', stderr);
+	escape_curses();
+	(void) fputs(out, stderr);
+	(void) fputc('\n', stderr);
 }
 
 NORETURN void
