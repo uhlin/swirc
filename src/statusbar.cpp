@@ -44,7 +44,7 @@
 #include "terminal.h"
 #include "theme.h"
 
-char g_user_modes[100] = "";
+char g_user_modes[100] = { '\0' };
 
 static PANEL *statusbar_pan = NULL;
 
