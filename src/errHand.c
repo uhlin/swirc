@@ -130,13 +130,13 @@ err_doit(bool output_to_stderr, int error, const char *fmt, va_list ap)
 NORETURN void
 err_dump(const char *fmt, ...)
 {
-    va_list ap;
+	va_list ap;
 
-    va_start(ap, fmt);
-    err_doit(true, errno, fmt, ap);
-    va_end(ap);
+	va_start(ap, fmt);
+	err_doit(true, errno, fmt, ap);
+	va_end(ap);
 
-    abort();
+	abort();
 }
 
 NORETURN void
