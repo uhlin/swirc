@@ -135,9 +135,8 @@ statusbar_show(void)
 void
 statusbar_hide(void)
 {
-    if (statusbar_pan) {
-	(void) hide_panel(statusbar_pan);
-    }
+	if (statusbar_pan)
+		(void) hide_panel(statusbar_pan);
 }
 
 void
