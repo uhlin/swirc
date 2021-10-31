@@ -39,9 +39,9 @@
 enum { DNOFILE, DNOFN, DNOASSERTION };
 
 static const char *descriptions[] = {
-    [DNOFILE]      = "<unknown file>",
-    [DNOFN]        = "<unknown function>",
-    [DNOASSERTION] = "<unknown assertion>",
+	[DNOFILE]	= "<unknown file>",
+	[DNOFN]		= "<unknown function>",
+	[DNOASSERTION]	= "<unknown assertion>",
 };
 
 /*lint -printf(1, assert_doit) */
