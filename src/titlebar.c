@@ -54,17 +54,15 @@ apply_titlebar_options(WINDOW *win)
 static short int
 get_pair_num(void)
 {
-    short int fg, bg;
-    short int pair_n;
+	short int	fg, bg;
+	short int	pair_n;
 
-    fg = theme_color("titlebar_fg", COLOR_BLACK);
-    bg = theme_color("titlebar_bg", COLOR_WHITE);
+	fg = theme_color("titlebar_fg", COLOR_BLACK);
+	bg = theme_color("titlebar_bg", COLOR_WHITE);
 
-    if ((pair_n = color_pair_find(fg, bg)) != -1) {
-	return pair_n;
-    }
-
-    return 0;
+	if ((pair_n = color_pair_find(fg, bg)) != -1)
+		return pair_n;
+	return 0;
 }
 
 void
