@@ -209,30 +209,28 @@ const char *
 errdesc_by_last_err(void)
 {
 #if defined(UNIX)
-    return ("Unknown error!");
-#elif defined(WIN32)
-    const DWORD dwFlags = (FORMAT_MESSAGE_FROM_SYSTEM |
-			   FORMAT_MESSAGE_IGNORE_INSERTS);
-    const DWORD dwMessageId = GetLastError();
-    const DWORD dwLanguageId = MAKELANGID(LANG_NEUTRAL, SUBLANG_SYS_DEFAULT);
-    TCHAR lpBuffer[MAXERROR];
-
-    BZERO(lpBuffer, ARRAY_SIZE(lpBuffer));
-
-    if (sizeof(TCHAR) != 1 ||
-	!FormatMessage(dwFlags, NULL, dwMessageId, dwLanguageId,
-	    addrof(lpBuffer[0]), ARRAY_SIZE(lpBuffer), NULL)) {
 	return ("Unknown error!");
-    }
+#elif defined(WIN32)
+	TCHAR		lpBuffer[MAXERROR];
+	const DWORD	dwFlags = (FORMAT_MESSAGE_FROM_SYSTEM |
+				   FORMAT_MESSAGE_IGNORE_INSERTS);
+	const DWORD	dwLanguageId = MAKELANGID(LANG_NEUTRAL,
+						  SUBLANG_SYS_DEFAULT);
+	const DWORD	dwMessageId = GetLastError();
+	static char	desc[MAXERROR];
 
-    sw_static_assert(sizeof(TCHAR) == 1, "TCHAR unexpectedly large. "
-	"UNICODE defined?");
+	BZERO(lpBuffer, ARRAY_SIZE(lpBuffer));
 
-    static char desc[MAXERROR];
+	if (sizeof(TCHAR) != 1 || !FormatMessage(dwFlags, NULL, dwMessageId,
+	    dwLanguageId, addrof(lpBuffer[0]), ARRAY_SIZE(lpBuffer), NULL))
+		return ("Unknown error!");
 
-    (void) memcpy(desc, lpBuffer, ARRAY_SIZE(desc));
+	sw_static_assert(sizeof(TCHAR) == 1, "TCHAR unexpectedly large. "
+	    "UNICODE defined?");
 
-    return addrof(desc[0]);
+	(void) memcpy(desc, lpBuffer, ARRAY_SIZE(desc));
+
+	return addrof(desc[0]);
 #endif
 }
 
