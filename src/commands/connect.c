@@ -109,6 +109,12 @@ static const char *ircnet_servers[] = {
 
 static const char *libera_servers[] = {
 	"irc.libera.chat",
+	"irc.au.libera.chat",
+	"irc.ea.libera.chat",
+	"irc.eu.libera.chat",
+	"irc.ipv4.libera.chat",
+	"irc.ipv6.libera.chat",
+	"irc.us.libera.chat",
 	NULL
 };
 
