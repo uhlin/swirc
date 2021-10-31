@@ -59,23 +59,24 @@ apply_statusbar_options(WINDOW *win)
 static std::string
 get_chanmodes()
 {
-    PIRC_WINDOW win;
-    std::string str("");
+	PIRC_WINDOW	win;
+	std::string	str("");
 
-    if ((win = g_active_window) != NULL) {
-	if (strings_match_ignore_case(win->label, g_status_window_label)) {
-	    str.append(Theme("slogan"));
-	} else if (is_irc_channel(win->label)) {
-	    str.append(win->label);
-	    str.append("(");
-	    str.append(win->chanmodes);
-	    str.append(")");
-	} else {
-	    str.append(win->label);
+	if ((win = g_active_window) != NULL) {
+		if (strings_match_ignore_case(win->label,
+		    g_status_window_label)) {
+			(void) str.append(Theme("slogan"));
+		} else if (is_irc_channel(win->label)) {
+			(void) str.append(win->label);
+			(void) str.append("(");
+			(void) str.append(win->chanmodes);
+			(void) str.append(")");
+		} else {
+			(void) str.append(win->label);
+		}
 	}
-    }
 
-    return str;
+	return str;
 }
 
 static std::string
