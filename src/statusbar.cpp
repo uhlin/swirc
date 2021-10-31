@@ -114,8 +114,8 @@ get_pair_num()
 void
 statusbar_init(void)
 {
-    statusbar_pan = term_new_panel(1, 0, LINES - 2, 0);
-    apply_statusbar_options(panel_window(statusbar_pan));
+	statusbar_pan = term_new_panel(1, 0, LINES - 2, 0);
+	apply_statusbar_options(panel_window(statusbar_pan));
 }
 
 void
