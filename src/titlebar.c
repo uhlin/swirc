@@ -41,7 +41,7 @@
 #include "theme.h"
 #include "titlebar.h"
 
-static PANEL *titlebar_pan = NULL;
+static PANEL	*titlebar_pan = NULL;
 
 static void
 apply_titlebar_options(WINDOW *win)
