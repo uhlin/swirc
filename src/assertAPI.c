@@ -84,15 +84,15 @@ SWAssertFail(const char *file, long int line, const char *fn,
 NORETURN void
 SWAssertPerrorFail(const char *file, long int line, const char *fn, int errnum)
 {
-    char strerrbuf[MAXERROR];
+	char	strerrbuf[MAXERROR] = { '\0' };
 
-    if (file == NULL || *file == '\0')
-	file = descriptions[DNOFILE];
-    if (fn == NULL || *fn == '\0')
-	fn = descriptions[DNOFN];
-    assert_doit("%s:%ld: %s: Unexpected error: %s",
-		file, line, fn, xstrerror(errnum, strerrbuf, MAXERROR));
-    abort();
+	if (file == NULL || *file == '\0')
+		file = descriptions[DNOFILE];
+	if (fn == NULL || *fn == '\0')
+		fn = descriptions[DNOFN];
+	assert_doit("%s:%ld: %s: Unexpected error: %s", file, line, fn,
+	    xstrerror(errnum, strerrbuf, MAXERROR));
+	abort();
 }
 
 NORETURN void
