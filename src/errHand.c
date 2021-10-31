@@ -154,13 +154,13 @@ err_exit(int error, const char *fmt, ...)
 NORETURN void
 err_quit(const char *fmt, ...)
 {
-    va_list ap;
+	va_list ap;
 
-    va_start(ap, fmt);
-    err_doit(true, 0, fmt, ap);
-    va_end(ap);
+	va_start(ap, fmt);
+	err_doit(true, 0, fmt, ap);
+	va_end(ap);
 
-    exit(EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
 
 NORETURN void
