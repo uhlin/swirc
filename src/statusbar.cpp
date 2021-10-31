@@ -127,9 +127,8 @@ statusbar_deinit(void)
 void
 statusbar_show(void)
 {
-    if (statusbar_pan) {
-	(void) show_panel(statusbar_pan);
-    }
+	if (statusbar_pan)
+		(void) show_panel(statusbar_pan);
 }
 
 void
