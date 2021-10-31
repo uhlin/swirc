@@ -70,8 +70,8 @@ get_pair_num(void)
 void
 titlebar_init(void)
 {
-    titlebar_pan = term_new_panel(1, 0, 0, 0);
-    apply_titlebar_options(panel_window(titlebar_pan));
+	titlebar_pan = term_new_panel(1, 0, 0, 0);
+	apply_titlebar_options(panel_window(titlebar_pan));
 }
 
 void
