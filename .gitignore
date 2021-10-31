@@ -12,6 +12,7 @@
 *.wixobj
 *.wixpdb
 *.zip
+.pc
 _LINT.TMP
 curl-*
 libressl-*-windows
