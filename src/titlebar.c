@@ -83,29 +83,28 @@ titlebar_deinit(void)
 void
 titlebar(const char *fmt, ...)
 {
-    va_list    ap;
-    char      *fmt_copy;
-    WINDOW    *win    = panel_window(titlebar_pan);
-    chtype     blank  = ' ';
-    short int  pair_n = get_pair_num();
+	WINDOW		*win = panel_window(titlebar_pan);
+	char		*fmt_copy;
+	const chtype	 blank = ' ';
+	short int	 pair_n = get_pair_num();
+	va_list		 ap;
 
-    if (term_is_too_small())
-	return;
+	if (term_is_too_small())
+		return;
 
-    va_start(ap, fmt);
-    fmt_copy = strdup_vprintf(fmt, ap);
-    va_end(ap);
+	va_start(ap, fmt);
+	fmt_copy = strdup_vprintf(fmt, ap);
+	va_end(ap);
 
-    (void) werase(win);
-    (void) wbkgd(win, blank | COLOR_PAIR(pair_n) | A_NORMAL);
+	(void) werase(win);
+	(void) wbkgd(win, blank | COLOR_PAIR(pair_n) | A_NORMAL);
 
-    if (strpbrk(fmt_copy, g_textdeco_chars) != NULL) {
-	printtext_puts(win, squeeze_text_deco(fmt_copy), -1, -1, NULL);
-    } else {
-	printtext_puts(win, fmt_copy, -1, -1, NULL);
-    }
+	if (strpbrk(fmt_copy, g_textdeco_chars) != NULL)
+		printtext_puts(win, squeeze_text_deco(fmt_copy), -1, -1, NULL);
+	else
+		printtext_puts(win, fmt_copy, -1, -1, NULL);
 
-    free(fmt_copy);
+	free(fmt_copy);
 }
 
 void
