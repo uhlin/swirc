@@ -239,20 +239,17 @@ errdesc_by_last_err(void)
 const char *
 errdesc_by_num(int num)
 {
-    static char desc[600];
-
-    BZERO(desc, sizeof desc);
+	static char	desc[600] = { '\0' };
 
 #ifdef HAVE_BCI
-    if (num == 0 || strerror_s(desc, sizeof desc, num) != 0)
+	if (num == 0 || strerror_s(desc, sizeof desc, num) != 0)
+		return ("Unknown error!");
 #else
-    if (num == 0 || strerror_r(num, desc, sizeof desc) != 0)
+	if (num == 0 || strerror_r(num, desc, sizeof desc) != 0)
+		return ("Unknown error!");
 #endif
-	{
-	    return ("Unknown error!");
-	}
 
-    return (trim(desc));
+	return (trim(desc));
 }
 
 const char *
