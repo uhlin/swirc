@@ -94,7 +94,7 @@ titlebar(const char *fmt, ...)
 	va_end(ap);
 
 	(void) werase(win);
-	(void) wbkgd(win, blank | COLOR_PAIR(pair_n) | A_NORMAL);
+	(void) wbkgd(win, (blank | COLOR_PAIR(pair_n) | A_NORMAL));
 
 	if (strpbrk(fmt_copy, g_textdeco_chars) != NULL)
 		printtext_puts(win, squeeze_text_deco(fmt_copy), -1, -1, NULL);
