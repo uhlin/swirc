@@ -47,27 +47,23 @@
 static const char *
 get_timestamp(void)
 {
-    static char		buffer[200] = "";
-    struct tm		items = { 0 };
-    time_t		seconds = 0;
+	static char	buffer[200] = { '\0' };
+	struct tm	items = { 0 };
+	time_t		seconds = 0;
 
-    if (time(&seconds) == g_time_error) {
-	return "";
-    }
+	if (time(&seconds) == g_time_error)
+		return "";
 
 #if defined(UNIX)
-    if (localtime_r(&seconds, &items) == NULL) {
-	return "";
-    }
+	if (localtime_r(&seconds, &items) == NULL)
+		return "";
 #elif defined(WIN32)
-    if (localtime_s(&items, &seconds) != 0) {
-	return "";
-    }
+	if (localtime_s(&items, &seconds) != 0)
+		return "";
 #endif
 
-    return ((strftime(buffer, sizeof buffer, "%c", &items) > 0)
-	    ? &buffer[0]
-	    : "");
+	return ((strftime(buffer, sizeof buffer, "%c", &items) > 0)
+	    ? &buffer[0] : "");
 }
 
 static void
