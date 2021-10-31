@@ -81,18 +81,19 @@ get_chanmodes()
 static std::string
 get_nick_and_server()
 {
-    std::string str("");
+	std::string	str("");
 
-    if (g_my_nickname && g_server_hostname) {
-	str.append(g_my_nickname);
-	str.append("(");
-	str.append(g_user_modes[0] == ':' ? &g_user_modes[1] : &g_user_modes[0]);
-	str.append(")");
-	str.append("@");
-	str.append(g_server_hostname);
-    }
+	if (g_my_nickname && g_server_hostname) {
+		(void) str.append(g_my_nickname);
+		(void) str.append("(");
+		(void) str.append(g_user_modes[0] == ':' ? &g_user_modes[1]
+		    : &g_user_modes[0]);
+		(void) str.append(")");
+		(void) str.append("@");
+		(void) str.append(g_server_hostname);
+	}
 
-    return str;
+	return str;
 }
 
 static short int
