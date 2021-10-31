@@ -198,11 +198,11 @@ err_msg(const char *fmt, ...)
 void
 err_ret(const char *fmt, ...)
 {
-    va_list ap;
+	va_list ap;
 
-    va_start(ap, fmt);
-    err_doit(true, errno, fmt, ap);
-    va_end(ap);
+	va_start(ap, fmt);
+	err_doit(true, errno, fmt, ap);
+	va_end(ap);
 }
 
 const char *
