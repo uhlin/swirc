@@ -143,11 +143,11 @@ statusbar_hide(void)
 void
 statusbar_recreate(int rows, int cols)
 {
-    struct term_window_size newsize(1, cols, rows - 2, 0);
+	struct term_window_size newsize(1, cols, rows - 2, 0);
 
-    statusbar_pan = term_resize_panel(statusbar_pan, &newsize);
-    apply_statusbar_options(panel_window(statusbar_pan));
-    statusbar_update_display_beta();
+	statusbar_pan = term_resize_panel(statusbar_pan, &newsize);
+	apply_statusbar_options(panel_window(statusbar_pan));
+	statusbar_update_display_beta();
 }
 
 void
