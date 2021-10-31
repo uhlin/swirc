@@ -51,9 +51,8 @@ static PANEL *statusbar_pan = NULL;
 static void
 apply_statusbar_options(WINDOW *win)
 {
-    if (is_scrollok(win)) {
-	(void) scrollok(win, false);
-    }
+	if (is_scrollok(win))
+		(void) scrollok(win, false);
 }
 
 static std::string
