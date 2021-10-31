@@ -178,11 +178,11 @@ err_sys(const char *fmt, ...)
 void
 err_log(int error, const char *fmt, ...)
 {
-    va_list ap;
+	va_list ap;
 
-    va_start(ap, fmt);
-    err_doit(false, error, fmt, ap);
-    va_end(ap);
+	va_start(ap, fmt);
+	err_doit(false, error, fmt, ap);
+	va_end(ap);
 }
 
 void
