@@ -44,6 +44,8 @@ static const char *descriptions[] = {
 	[DNOASSERTION]	= "<unknown assertion>",
 };
 
+static void	assert_doit(const char *, ...) PRINTFLIKE(1);
+
 /*lint -printf(1, assert_doit) */
 
 static void
