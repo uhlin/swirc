@@ -121,7 +121,7 @@ statusbar_init(void)
 void
 statusbar_deinit(void)
 {
-    term_remove_panel(statusbar_pan);
+	term_remove_panel(statusbar_pan);
 }
 
 void
