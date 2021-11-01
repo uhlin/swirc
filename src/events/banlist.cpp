@@ -41,6 +41,8 @@
 
 #include "banlist.h"
 
+#define TM_STRUCT_MSG "unable to retrieve tm structure"
+
 /* event_banlist: 367
 
    Examples:
@@ -55,94 +57,114 @@
 void
 event_banlist(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char *state1 = const_cast<char *>("");
-    char *state2 = const_cast<char *>("");
-    int feeds_written = 0;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
-    try {
-	if ((feeds_written = strFeed(compo->params, 4)) == 4) {
-	    char buf[500] = { 0 };
+	try {
+		char	*channel, *mask;
+		char	*state1 = const_cast<char *>("");
+		char	*state2 = const_cast<char *>("");
+		int	 feeds_written = 0;
 
-	    (void) strtok_r(compo->params, "\n", &state1); /* recipient */
+		if ((feeds_written = strFeed(compo->params, 4)) == 4) {
+			char		*issuer, *seconds;
+			char		*issuer_name, *issuer_userhost;
+			char		 buf[500] = { '\0' };
+			char		 tbuf[100] = { '\0' };
+			struct tm	 result = { 0 };
 
-	    char *channel = strtok_r(NULL, "\n", &state1);
-	    char *mask    = strtok_r(NULL, "\n", &state1);
-	    char *issuer  = strtok_r(NULL, "\n", &state1);
-	    char *seconds = strtok_r(NULL, "\n", &state1);
+			/* recipient */
+			(void) strtok_r(compo->params, "\n", &state1);
 
-	    if (channel == NULL)
-		throw std::runtime_error("unable to get channel");
-	    else if (mask == NULL)
-		throw std::runtime_error("unable to get mask");
-	    else if (issuer == NULL)
-		throw std::runtime_error("unable to get issuer");
-	    else if (seconds == NULL)
-		throw std::runtime_error("unable to get seconds");
-	    else if (sw_strcpy(buf, issuer, ARRAY_SIZE(buf)) != 0)
-		throw std::runtime_error("cannot copy issuer");
-	    else if (!is_numeric(seconds))
-		throw std::runtime_error("seconds not a number");
+			if ((channel = strtok_r(NULL, "\n", &state1)) == NULL) {
+				throw std::runtime_error("unable to get "
+				    "channel");
+			} else if ((mask = strtok_r(NULL, "\n", &state1)) ==
+			    NULL) {
+				throw std::runtime_error("unable to get mask");
+			} else if ((issuer = strtok_r(NULL, "\n", &state1)) ==
+			    NULL) {
+				throw std::runtime_error("unable to get "
+				    "issuer");
+			} else if ((seconds = strtok_r(NULL, "\n", &state1)) ==
+			    NULL) {
+				throw std::runtime_error("unable to get "
+				    "seconds");
+			} else if (sw_strcpy(buf, issuer, ARRAY_SIZE(buf))
+			    != 0) {
+				throw std::runtime_error("cannot copy issuer");
+			} else if (!is_numeric(seconds)) {
+				throw std::runtime_error("seconds not a "
+				    "number");
+			}
 
-	    if (window_by_label(channel))
-		ctx.window = window_by_label(channel);
+			if ((ctx.window = window_by_label(channel)) == NULL)
+				ctx.window = g_status_window;
+			if ((issuer_name = strtok_r(buf, "!", &state2)) ==
+			    NULL) {
+				throw std::runtime_error("unable to get issuer "
+				    "name");
+			}
+			issuer_userhost = strtok_r(NULL, "!", &state2);
 
-	    char *issuer_name     = strtok_r(buf, "!", &state2);
-	    char *issuer_userhost = strtok_r(NULL, "!", &state2);
+			const time_t date_of_issue = (time_t) strtol(seconds,
+			    NULL, 10);
 
-	    if (issuer_name == NULL)
-		throw std::runtime_error("unable to get issuer name");
-
-	    const time_t date_of_issue = (time_t) strtol(seconds, NULL, 10);
-	    struct tm result = { 0 };
-
-#define TM_STRUCT_MSG "unable to retrieve tm structure"
 #if defined(UNIX)
-	    if (localtime_r(&date_of_issue, &result) == NULL)
-		throw std::runtime_error("localtime_r: " TM_STRUCT_MSG);
+			if (localtime_r(&date_of_issue, &result) == NULL) {
+				throw std::runtime_error("localtime_r: "
+				    TM_STRUCT_MSG);
+			}
 #elif defined(WIN32)
-	    if (localtime_s(&result, &date_of_issue) != 0)
-		throw std::runtime_error("localtime_s: " TM_STRUCT_MSG);
+			if (localtime_s(&result, &date_of_issue) != 0) {
+				throw std::runtime_error("localtime_s: "
+				    TM_STRUCT_MSG);
+			}
 #endif
 
-	    char tbuf[100] = { '\0' };
+			if (strftime(tbuf, ARRAY_SIZE(tbuf), "%c", &result)
+			    == 0) {
+				throw std::runtime_error("strftime: "
+				    "zero return");
+			}
 
-	    if (strftime(tbuf, ARRAY_SIZE(tbuf), "%c", &result) == 0)
-		throw std::runtime_error("strftime: zero return");
+			printtext(&ctx, "%s%s%s%c%s: %s%s%c issued by %s%s%c "
+			    "%s%s%s %s%s%s",
+			    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+			    COLOR4, mask, NORMAL,
+			    COLOR2, issuer_name, NORMAL,
+			    LEFT_BRKT,
+			    (issuer_userhost ? issuer_userhost : ""),
+			    RIGHT_BRKT,
+			    LEFT_BRKT, trim(tbuf), RIGHT_BRKT);
+		} else if (feeds_written == 2) {
+			(void) strtok_r(compo->params, "\n", &state1);
 
-	    printtext(&ctx, "%s%s%s%c%s: %s%s%c issued by %s%s%c %s%s%s %s%s%s",
-		LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-		COLOR4, mask, NORMAL,
-		COLOR2, issuer_name, NORMAL,
-		LEFT_BRKT, issuer_userhost ? issuer_userhost : "", RIGHT_BRKT,
-		LEFT_BRKT, trim(tbuf), RIGHT_BRKT);
-	} else if (feeds_written == 2) {
-	    (void) strtok_r(compo->params, "\n", &state1); /* recipient */
-	    char *channel = strtok_r(NULL, "\n", &state1);
-	    char *mask    = strtok_r(NULL, "\n", &state1);
+			if ((channel = strtok_r(NULL, "\n", &state1)) == NULL) {
+				throw std::runtime_error("unable to get "
+				    "channel");
+			} else if ((mask = strtok_r(NULL, "\n", &state1)) ==
+			    NULL) {
+				throw std::runtime_error("unable to get mask");
+			}
 
-	    if (channel == NULL)
-		throw std::runtime_error("unable to get channel");
-	    else if (mask == NULL)
-		throw std::runtime_error("unable to get mask");
+			if ((ctx.window = window_by_label(channel)) == NULL)
+				ctx.window = g_status_window;
 
-	    if (window_by_label(channel))
-		ctx.window = window_by_label(channel);
+			printtext(&ctx, "%s%s%s%c%s: %s%s%c",
+			    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
+			    COLOR4, mask, NORMAL);
+		} else {
+			throw std::runtime_error("unexpected number of feeds "
+			    "written");
+		}
+	} catch (const std::runtime_error& e) {
+		ctx.spec_type = TYPE_SPEC1_FAILURE;
 
-	    printtext(&ctx, "%s%s%s%c%s: %s%s%c",
-		LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-		COLOR4, mask, NORMAL);
-	} else {
-	    throw std::runtime_error("unexpected number of feeds written");
+		printtext(&ctx, "event_banlist(%s): error: %s", compo->command,
+		    e.what());
 	}
-    } catch (const std::runtime_error &e) {
-	ctx.window    = g_status_window;
-	ctx.spec_type = TYPE_SPEC1_FAILURE;
-	printtext(&ctx, "event_banlist(%s): error: %s",
-	    compo->command, e.what());
-    }
 }
 
 /* event_eof_banlist: 368
