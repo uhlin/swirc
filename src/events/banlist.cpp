@@ -33,7 +33,6 @@
 #include <time.h>
 
 #include "../dataClassify.h"
-#include "../errHand.h"
 #include "../irc.h"
 #include "../printtext.h"
 #include "../strHand.h"
