@@ -1,5 +1,5 @@
 /* Event 367 (RPL_BANLIST) and 368 (RPL_ENDOFBANLIST)
-   Copyright (C) 2016-2018, 2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -156,33 +156,36 @@ event_banlist(struct irc_message_compo *compo)
 void
 event_eof_banlist(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
-    try {
-	char *state = const_cast<char *>("");
+	try {
+		char	*channel, *msg;
+		char	*state = const_cast<char *>("");
 
-	if (strFeed(compo->params, 2) != 2)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 2) != 2)
+			throw std::runtime_error("strFeed");
 
-	(void) strtok_r(compo->params, "\n", &state); /* recipient */
-	char *channel = strtok_r(NULL, "\n", &state);
-	char *msg     = strtok_r(NULL, "\n", &state);
+		(void) strtok_r(compo->params, "\n", &state); /* recipient */
 
-	if (channel == NULL || msg == NULL)
-	    throw std::runtime_error("unable to retrieve event components");
+		if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
+		    (msg = strtok_r(NULL, "\n", &state)) == NULL) {
+			throw std::runtime_error("unable to retrieve event "
+			    "components");
+		}
 
-	if (window_by_label(channel))
-	    ctx.window = window_by_label(channel);
-	if (*msg == ':')
-	    msg++;
-	if (*msg)
-	    printtext(&ctx, "%s", msg);
-    } catch (const std::runtime_error &e) {
-	ctx.window    = g_status_window;
-	ctx.spec_type = TYPE_SPEC1_FAILURE;
-	printtext(&ctx, "event_eof_banlist(%s): error: %s",
-	    compo->command, e.what());
-    }
+		if ((ctx.window = window_by_label(channel)) == NULL)
+			ctx.window = g_status_window;
+
+		if (*msg == ':')
+			msg++;
+		if (*msg)
+			printtext(&ctx, "%s", msg);
+	} catch (const std::runtime_error& e) {
+		ctx.spec_type = TYPE_SPEC1_FAILURE;
+
+		printtext(&ctx, "event_eof_banlist(%s): error: %s",
+		    compo->command, e.what());
+	}
 }
