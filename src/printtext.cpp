@@ -53,7 +53,6 @@
 #include "network.h"
 #include "printtext.h"
 #include "readline.h"
-#include "statusbar.h"
 #include "strHand.h"
 #include "strdup_printf.h"
 #include "terminal.h"
