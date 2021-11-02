@@ -33,6 +33,7 @@
 #include <time.h>
 
 #include "../dataClassify.h"
+#include "../errHand.h"
 #include "../irc.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -166,6 +167,29 @@ event_banlist(struct irc_message_compo *compo)
 	}
 }
 
+/*
+ * event_quietlist: 728 (Undocumented in the RFC)
+ *
+ * Examples:
+ *   :irc.server.com 728 <recipient> <channel> q <mask> irc.server.com <time>
+ */
+void
+event_quietlist(struct irc_message_compo *compo)
+{
+	try {
+		char	*cp;
+
+		if ((cp = strstr(compo->params, " q ")) == NULL)
+			throw std::runtime_error("cannot find substring");
+		else if (strings_match(&cp[3], ""))
+			throw std::runtime_error("parse error");
+		(void) memmove(cp, &cp[2], strlen(&cp[2]) + 1);
+		event_banlist(compo);
+	} catch (const std::runtime_error& e) {
+		err_log(0, "event_quietlist(%s): %s", compo->command, e.what());
+	}
+}
+
 /* event_eof_banlist: 368
 
    Examples:
@@ -208,5 +232,29 @@ event_eof_banlist(struct irc_message_compo *compo)
 
 		printtext(&ctx, "event_eof_banlist(%s): error: %s",
 		    compo->command, e.what());
+	}
+}
+
+/*
+ * event_eof_quietlist: 729 (Undocumented in the RFC)
+ *
+ * Examples:
+ *   :irc.server.com 729 <recipient> <channel> q :End of Channel Quiet List
+ */
+void
+event_eof_quietlist(struct irc_message_compo *compo)
+{
+	try {
+		char	*cp;
+
+		if ((cp = strstr(compo->params, " q ")) == NULL)
+			throw std::runtime_error("cannot find substring");
+		else if (strings_match(&cp[3], ""))
+			throw std::runtime_error("parse error");
+		(void) memmove(cp, &cp[2], strlen(&cp[2]) + 1);
+		event_eof_banlist(compo);
+	} catch (const std::runtime_error& e) {
+		err_log(0, "event_eof_quietlist(%s): %s", compo->command,
+		    e.what());
 	}
 }

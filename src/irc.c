@@ -242,6 +242,8 @@ static struct numeric_events_tag {
 	{ "698", "ERR_",                    ACTIVE_WINDOW,  4, NULL },
 	{ "716", "ERR_",                    ACTIVE_WINDOW,  2, NULL },
 	{ "717", "ERR_",                    ACTIVE_WINDOW,  2, NULL },
+	{ "728", "",                        NO_WINDOW,      0, event_quietlist },
+	{ "729", "",                        NO_WINDOW,      0, event_eof_quietlist },
 	{ "742", "ERR_",                    ACTIVE_WINDOW,  4, NULL },
 	{ "900", "RPL_LOGGEDIN",            STATUS_WINDOW,  3, NULL },
 	{ "901", "RPL_LOGGEDOUT",           STATUS_WINDOW,  2, NULL },

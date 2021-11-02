@@ -9,7 +9,10 @@
 
 __SWIRC_BEGIN_DECLS
 void	event_banlist(struct irc_message_compo *);
+void	event_quietlist(struct irc_message_compo *);
+
 void	event_eof_banlist(struct irc_message_compo *);
+void	event_eof_quietlist(struct irc_message_compo *);
 __SWIRC_END_DECLS
 
 #endif
