@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Added event `728` and `729`. Undocumented in the RFC. Channel Quiet
   List.
 - Added new [Libera Chat](https://libera.chat/) servers
+- Deleted unused includes
 - Fixed unchecked return values
 - Made improvements to the following files:
   - `assertAPI.c`
@@ -15,6 +16,10 @@ All notable changes to this project will be documented in this file.
     - Added status message `Idle-Mod`.
     - Added status message `Timeout`.
 - Reformatted and reindented files
+  - `commands/me.c`
+  - `events/banlist.cpp`
+  - `statusbar.cpp`
+  - `titlebar.c`
 
 ## [3.3.2] - 2021-10-17 ##
 - **Added** command line option `-j`
