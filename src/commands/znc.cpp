@@ -1,5 +1,5 @@
 /* commands/znc.cpp
-   Copyright (C) 2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -164,24 +164,31 @@ cmd_znc(const char *data)
 PTEXTBUF
 get_list_of_matching_znc_commands(const char *search_var)
 {
-    if (!got_hits(search_var))
-	return NULL;
+	PTEXTBUF	matches;
 
-    PTEXTBUF matches = textBuf_new();
+	if (!got_hits(search_var))
+		return NULL;
 
-    for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i ++) {
-	const char *cmd = znc_commands[i];
+	matches = textBuf_new();
 
-	if (!strncmp(search_var, cmd, strlen(search_var))) {
-	    if (textBuf_size(matches) == 0) {
-		if ((errno = textBuf_ins_next(matches, NULL, cmd, -1)) != 0)
-		    err_sys("get_list_of_matching_znc_commands: textBuf_ins_next");
-	    } else {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches), cmd, -1)) != 0)
-		    err_sys("get_list_of_matching_znc_commands: textBuf_ins_next");
-	    }
+	for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i ++) {
+		const char	*cmd = znc_commands[i];
+
+		if (!strncmp(search_var, cmd, strlen(search_var))) {
+			if (textBuf_size(matches) == 0) {
+				if ((errno = textBuf_ins_next(matches, NULL,
+				    cmd, -1)) != 0) {
+					err_sys("get_list_of_matching_znc_"
+					    "commands: textBuf_ins_next");
+				}
+			} else {
+				if ((errno = textBuf_ins_next(matches,
+				    textBuf_tail(matches), cmd, -1)) != 0)
+					err_sys("get_list_of_matching_znc_"
+					    "commands: textBuf_ins_next");
+			}
+		}
 	}
-    }
 
-    return matches;
+	return matches;
 }
