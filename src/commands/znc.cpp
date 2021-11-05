@@ -118,47 +118,54 @@ got_hits(const char *search_var)
 void
 cmd_znc(const char *data)
 {
-    if (strings_match(data, "")) {
-	print_and_free("/znc: missing arguments", NULL);
-	return;
-    }
+	bool	 written_linefeed = false;
+	char	*dcopy;
 
-    char *dcopy = sw_strdup(data);
-    bool written_linefeed = false;
-    if (*dcopy == '*')
-	written_linefeed = strFeed(dcopy, 1) == 1;
-    std::istringstream input(dcopy);
-    free_and_null(&dcopy);
-    std::vector<std::string> tokens;
-    std::string token;
-
-    try {
-	while (std::getline(input, token))
-	    tokens.push_back(token);
-
-	if (! (written_linefeed)) {
-	    if (tokens.size() != 1) {
-		throw std::runtime_error("bogus number of tokens "
-		    "(expected one)");
-	    }
-
-	    (void) net_send("PRIVMSG *status :%s", tokens.at(0).c_str());
-	    return;
-	} else if (tokens.size() != 2) {
-	    throw std::runtime_error("bogus number of tokens (expected two)");
-	} else if (tokens.at(0).at(0) != '*') {
-	    throw std::runtime_error("bogus module name");
+	if (strings_match(data, "")) {
+		print_and_free("/znc: missing arguments", NULL);
+		return;
 	}
-    } catch (const std::runtime_error &e) {
-	std::string s("/znc: ");
-	s.append(e.what());
-	print_and_free(s.c_str(), NULL);
-	return;
-    }
 
-    char *module = sw_strdup(tokens.at(0).c_str());
-    (void) net_send("PRIVMSG %s :%s", strToLower(module), tokens.at(1).c_str());
-    free_and_null(&module);
+	if (*(dcopy = sw_strdup(data)) == '*')
+		written_linefeed = (strFeed(dcopy, 1) == 1);
+	std::istringstream input(dcopy);
+	free(dcopy);
+
+	try {
+		char *module;
+		std::string token;
+		std::vector<std::string> tokens;
+
+		while (std::getline(input, token))
+			tokens.push_back(token);
+
+		if (!written_linefeed) {
+			if (tokens.size() != 1) {
+				throw std::runtime_error("bogus number of "
+				    "tokens (expected 1)");
+			} else if (net_send("PRIVMSG *status :%s",
+			    tokens.at(0).c_str()) < 0) {
+				throw std::runtime_error("cannot send");
+			}
+
+//			return;
+		} else if (tokens.size() != 2) {
+			throw std::runtime_error("bogus number of tokens "
+			    "(expected 2)");
+		} else if (tokens.at(0).at(0) != '*') {
+			throw std::runtime_error("bogus module name");
+		} else {
+			module = sw_strdup(tokens.at(0).c_str());
+			(void) net_send("PRIVMSG %s :%s", strToLower(module),
+			    tokens.at(1).c_str());
+			free(module);
+		}
+	} catch (const std::runtime_error& e) {
+		std::string s("/znc: ");
+		s.append(e.what());
+		print_and_free(s.c_str(), NULL);
+		return;
+	}
 }
 
 PTEXTBUF
