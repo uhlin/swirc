@@ -358,102 +358,95 @@ init_mode_for_channel_users(volatile struct readline_session_context *ctx)
 void
 readline_handle_tab(volatile struct readline_session_context *ctx)
 {
-    if (ctx->n_insert == 0 || ctx->insert_mode ||
-	buf_contains_disallowed_chars(ctx)) {
-	output_error("no magic");
-	readline_tab_comp_ctx_reset(ctx->tc);
-	return;
-    } else if (ctx->tc->isInCirculationModeForHelp) {
-	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
-	    output_error("no more matches");
-	    readline_tab_comp_ctx_reset(ctx->tc);
-	} else {
-	    ctx->tc->elmt = ctx->tc->elmt->next;
-	    auto_complete_help(ctx, ctx->tc->elmt->text);
+	if (ctx->n_insert == 0 || ctx->insert_mode ||
+	    buf_contains_disallowed_chars(ctx)) {
+		output_error("no magic");
+		readline_tab_comp_ctx_reset(ctx->tc);
+		return;
+	} else if (ctx->tc->isInCirculationModeForHelp) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+			output_error("no more matches");
+			readline_tab_comp_ctx_reset(ctx->tc);
+		} else {
+			ctx->tc->elmt = ctx->tc->elmt->next;
+			auto_complete_help(ctx, ctx->tc->elmt->text);
+		}
+		return;
+	} else if (ctx->tc->isInCirculationModeForQuery) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+			output_error("no more matches");
+			readline_tab_comp_ctx_reset(ctx->tc);
+		} else {
+			ctx->tc->elmt = ctx->tc->elmt->next;
+			auto_complete_query(ctx, ctx->tc->elmt->text);
+		}
+		return;
+	} else if (ctx->tc->isInCirculationModeForSettings) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+			output_error("no more matches");
+			readline_tab_comp_ctx_reset(ctx->tc);
+		} else {
+			ctx->tc->elmt = ctx->tc->elmt->next;
+			auto_complete_setting(ctx, ctx->tc->elmt->text);
+		}
+		return;
+	} else if (ctx->tc->isInCirculationModeForWhois) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+			output_error("no more matches");
+			readline_tab_comp_ctx_reset(ctx->tc);
+		} else {
+			ctx->tc->elmt = ctx->tc->elmt->next;
+			auto_complete_whois(ctx, ctx->tc->elmt->text);
+		}
+		return;
+	} else if (ctx->tc->isInCirculationModeForZncCmds) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+			output_error("no more matches");
+			readline_tab_comp_ctx_reset(ctx->tc);
+		} else {
+			ctx->tc->elmt = ctx->tc->elmt->next;
+			auto_complete_znc_cmd(ctx, ctx->tc->elmt->text);
+		}
+		return;
+	} else if (ctx->tc->isInCirculationModeForCmds) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+			output_error("no more matches");
+			readline_tab_comp_ctx_reset(ctx->tc);
+		} else {
+			ctx->tc->elmt = ctx->tc->elmt->next;
+			auto_complete_command(ctx, ctx->tc->elmt->text);
+		}
+		return;
+	} else if (ctx->tc->isInCirculationModeForChanUsers) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+			output_error("no more matches");
+			readline_tab_comp_ctx_reset(ctx->tc);
+		} else {
+			ctx->tc->elmt = ctx->tc->elmt->next;
+			auto_complete_channel_user(ctx, ctx->tc->elmt->text);
+		}
+		return;
 	}
 
-	return;
-    } else if (ctx->tc->isInCirculationModeForQuery) {
-	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
-	    output_error("no more matches");
-	    readline_tab_comp_ctx_reset(ctx->tc);
-	} else {
-	    ctx->tc->elmt = ctx->tc->elmt->next;
-	    auto_complete_query(ctx, ctx->tc->elmt->text);
+	if (store_search_var(ctx) == -1) {
+		output_error("cannot store search variable");
+		return;
 	}
 
-	return;
-    } else if (ctx->tc->isInCirculationModeForSettings) {
-	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
-	    output_error("no more matches");
-	    readline_tab_comp_ctx_reset(ctx->tc);
-	} else {
-	    ctx->tc->elmt = ctx->tc->elmt->next;
-	    auto_complete_setting(ctx, ctx->tc->elmt->text);
-	}
+	const bool is_command = (ctx->tc->search_var[0] == '/');
 
-	return;
-    } else if (ctx->tc->isInCirculationModeForWhois) {
-	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
-	    output_error("no more matches");
-	    readline_tab_comp_ctx_reset(ctx->tc);
-	} else {
-	    ctx->tc->elmt = ctx->tc->elmt->next;
-	    auto_complete_whois(ctx, ctx->tc->elmt->text);
-	}
-
-	return;
-    } else if (ctx->tc->isInCirculationModeForZncCmds) {
-	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
-	    output_error("no more matches");
-	    readline_tab_comp_ctx_reset(ctx->tc);
-	} else {
-	    ctx->tc->elmt = ctx->tc->elmt->next;
-	    auto_complete_znc_cmd(ctx, ctx->tc->elmt->text);
-	}
-
-	return;
-    } else if (ctx->tc->isInCirculationModeForCmds) {
-	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
-	    output_error("no more matches");
-	    readline_tab_comp_ctx_reset(ctx->tc);
-	} else {
-	    ctx->tc->elmt = ctx->tc->elmt->next;
-	    auto_complete_command(ctx, ctx->tc->elmt->text);
-	}
-
-	return;
-    } else if (ctx->tc->isInCirculationModeForChanUsers) {
-	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
-	    output_error("no more matches");
-	    readline_tab_comp_ctx_reset(ctx->tc);
-	} else {
-	    ctx->tc->elmt = ctx->tc->elmt->next;
-	    auto_complete_channel_user(ctx, ctx->tc->elmt->text);
-	}
-
-	return;
-    }
-
-    if (store_search_var(ctx) == -1) {
-	output_error("cannot store search variable");
-	return;
-    }
-
-    const bool is_command = (ctx->tc->search_var[0] == '/');
-
-    if (!strncmp(get_search_var(ctx), "/help ", 6))
-	init_mode_for_help(ctx);
-    else if (!strncmp(get_search_var(ctx), "/query ", 7))
-	init_mode_for_query(ctx);
-    else if (!strncmp(get_search_var(ctx), "/set ", 5))
-	init_mode_for_set(ctx);
-    else if (!strncmp(get_search_var(ctx), "/whois ", 7))
-	init_mode_for_whois(ctx);
-    else if (!strncmp(get_search_var(ctx), "/znc ", 5))
-	init_mode_for_znc_cmds(ctx);
-    else if (is_command)
-	init_mode_for_commands(ctx, ctx->n_insert > 1);
-    else if (is_irc_channel(ACTWINLABEL))
-	init_mode_for_channel_users(ctx);
+	if (!strncmp(get_search_var(ctx), "/help ", 6))
+		init_mode_for_help(ctx);
+	else if (!strncmp(get_search_var(ctx), "/query ", 7))
+		init_mode_for_query(ctx);
+	else if (!strncmp(get_search_var(ctx), "/set ", 5))
+		init_mode_for_set(ctx);
+	else if (!strncmp(get_search_var(ctx), "/whois ", 7))
+		init_mode_for_whois(ctx);
+	else if (!strncmp(get_search_var(ctx), "/znc ", 5))
+		init_mode_for_znc_cmds(ctx);
+	else if (is_command)
+		init_mode_for_commands(ctx, (ctx->n_insert > 1));
+	else if (is_irc_channel(ACTWINLABEL))
+		init_mode_for_channel_users(ctx);
 }
