@@ -310,16 +310,16 @@ init_mode_for_whois(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_znc_cmds(volatile struct readline_session_context *ctx)
 {
-    char *p = addrof(ctx->tc->search_var[5]);
+	char	*p = addrof(ctx->tc->search_var[5]);
 
-    if ((ctx->tc->matches = get_list_of_matching_znc_commands(p)) == NULL) {
-	output_error("no magic");
-	return;
-    }
+	if ((ctx->tc->matches = get_list_of_matching_znc_commands(p)) == NULL) {
+		output_error("no magic");
+		return;
+	}
 
-    ctx->tc->elmt = textBuf_head(ctx->tc->matches);
-    auto_complete_znc_cmd(ctx, ctx->tc->elmt->text);
-    ctx->tc->isInCirculationModeForZncCmds = true;
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_znc_cmd(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeForZncCmds = true;
 }
 
 static void
