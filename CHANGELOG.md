@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
     - Added status message `Timeout`.
 - Reformatted and reindented files
   - `commands/me.c`
+  - `commands/znc.cpp`
   - `events/banlist.cpp`
   - `statusbar.cpp`
   - `titlebar.c`
