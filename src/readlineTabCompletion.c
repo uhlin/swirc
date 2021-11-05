@@ -324,19 +324,19 @@ init_mode_for_znc_cmds(volatile struct readline_session_context *ctx)
 
 static void
 init_mode_for_commands(volatile struct readline_session_context *ctx,
-		       const bool n_insert_greater_than_one)
+    const bool n_insert_greater_than_one)
 {
-    char *p = addrof(ctx->tc->search_var[1]);
+	char	*p = addrof(ctx->tc->search_var[1]);
 
-    if (!n_insert_greater_than_one ||
-	(ctx->tc->matches = get_list_of_matching_commands(p)) == NULL) {
-	output_error("no magic");
-	return;
-    }
+	if (!n_insert_greater_than_one || (ctx->tc->matches =
+	    get_list_of_matching_commands(p)) == NULL) {
+		output_error("no magic");
+		return;
+	}
 
-    ctx->tc->elmt = textBuf_head(ctx->tc->matches);
-    auto_complete_command(ctx, ctx->tc->elmt->text);
-    ctx->tc->isInCirculationModeForCmds = true;
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_command(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeForCmds = true;
 }
 
 static void
