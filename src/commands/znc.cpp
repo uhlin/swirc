@@ -104,12 +104,12 @@ static const char *znc_commands[] = {
 static bool
 got_hits(const char *search_var)
 {
-    for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i ++) {
-	if (!strncmp(search_var, znc_commands[i], strlen(search_var)))
-	    return true;
-    }
+	for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i ++) {
+		if (!strncmp(search_var, znc_commands[i], strlen(search_var)))
+			return true;
+	}
 
-    return false;
+	return false;
 }
 
 /*
