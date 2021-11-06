@@ -253,22 +253,24 @@ init_mode_for_help(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_query(volatile struct readline_session_context *ctx)
 {
-    if (!is_irc_channel(ACTWINLABEL)) {
-	output_error("not in irc channel");
-	return;
-    }
+	char	*p;
 
-    char *p = addrof(ctx->tc->search_var[7]);
-    ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL, p);
+	if (!is_irc_channel(ACTWINLABEL)) {
+		output_error("not in irc channel");
+		return;
+	}
 
-    if (ctx->tc->matches == NULL) {
-	output_error("no magic");
-	return;
-    }
+	p = addrof(ctx->tc->search_var[7]);
 
-    ctx->tc->elmt = textBuf_head(ctx->tc->matches);
-    auto_complete_query(ctx, ctx->tc->elmt->text);
-    ctx->tc->isInCirculationModeForQuery = true;
+	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
+	    p)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_query(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeForQuery = true;
 }
 
 static void
