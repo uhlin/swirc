@@ -163,7 +163,7 @@ buf_contains_disallowed_chars(const volatile struct readline_session_context *ct
 static inline char *
 get_search_var(const volatile struct readline_session_context *ctx)
 {
-    return addrof(ctx->tc->search_var[0]);
+	return addrof(ctx->tc->search_var[0]);
 }
 
 static void
