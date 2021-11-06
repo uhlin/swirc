@@ -179,13 +179,13 @@ output_error(const char *msg)
 static int
 store_search_var(const volatile struct readline_session_context *ctx)
 {
-    char *s = readline_finalize_out_string_exported(ctx->buffer);
+	char *s = readline_finalize_out_string_exported(ctx->buffer);
 
-    const int store_res =
-	sw_strcpy(ctx->tc->search_var, s, ARRAY_SIZE(ctx->tc->search_var));
+	const int store_res = sw_strcpy(ctx->tc->search_var, s,
+	    ARRAY_SIZE(ctx->tc->search_var));
 
-    free(s);
-    return (store_res != 0 ? -1 : 0);
+	free(s);
+	return (store_res != 0 ? -1 : 0);
 }
 
 PTAB_COMPLETION
