@@ -210,10 +210,8 @@ readline_tab_comp_ctx_new(void)
 void
 readline_tab_comp_ctx_destroy(PTAB_COMPLETION ctx)
 {
-    if (ctx) {
-	if (!isNull(ctx->matches))
-	    textBuf_destroy(ctx->matches);
-    }
+	if (ctx != NULL && ctx->matches != NULL)
+		textBuf_destroy(ctx->matches);
 }
 
 void
