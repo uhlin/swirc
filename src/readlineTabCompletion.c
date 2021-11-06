@@ -238,16 +238,16 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 static void
 init_mode_for_help(volatile struct readline_session_context *ctx)
 {
-    char *p = addrof(ctx->tc->search_var[6]);
+	char	*p = addrof(ctx->tc->search_var[6]);
 
-    if ((ctx->tc->matches = get_list_of_matching_commands(p)) == NULL) {
-	output_error("no magic");
-	return;
-    }
+	if ((ctx->tc->matches = get_list_of_matching_commands(p)) == NULL) {
+		output_error("no magic");
+		return;
+	}
 
-    ctx->tc->elmt = textBuf_head(ctx->tc->matches);
-    auto_complete_help(ctx, ctx->tc->elmt->text);
-    ctx->tc->isInCirculationModeForHelp = true;
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_help(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeForHelp = true;
 }
 
 static void
