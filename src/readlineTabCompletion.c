@@ -344,10 +344,8 @@ init_mode_for_commands(volatile struct readline_session_context *ctx,
 static void
 init_mode_for_channel_users(volatile struct readline_session_context *ctx)
 {
-	ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
-	    get_search_var(ctx));
-
-	if (ctx->tc->matches == NULL) {
+	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
+	    get_search_var(ctx))) == NULL) {
 		output_error("no magic");
 		return;
 	}
