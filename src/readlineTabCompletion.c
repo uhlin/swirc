@@ -169,11 +169,11 @@ get_search_var(const volatile struct readline_session_context *ctx)
 static void
 output_error(const char *msg)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_WARN, true);
-    printtext(&ctx, "%s", msg);
-    term_beep();
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_WARN, true);
+	printtext(&ctx, "%s", msg);
+	term_beep();
 }
 
 static int
