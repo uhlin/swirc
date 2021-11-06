@@ -219,20 +219,23 @@ readline_tab_comp_ctx_destroy(PTAB_COMPLETION ctx)
 void
 readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 {
-    if (ctx) {
-	memset(ctx->search_var, 0, ARRAY_SIZE(ctx->search_var));
-	ctx->isInCirculationModeForHelp	     = false;
-	ctx->isInCirculationModeForQuery     = false;
-	ctx->isInCirculationModeForSettings  = false;
-	ctx->isInCirculationModeForWhois     = false;
-	ctx->isInCirculationModeForZncCmds   = false;
-	ctx->isInCirculationModeForCmds	     = false;
-	ctx->isInCirculationModeForChanUsers = false;
-	if (!isNull(ctx->matches))
-	    textBuf_destroy(ctx->matches);
-	ctx->matches = NULL;
-	ctx->elmt = NULL;
-    }
+	if (ctx) {
+		BZERO(ctx->search_var, ARRAY_SIZE(ctx->search_var));
+
+		ctx->isInCirculationModeForHelp		= false;
+		ctx->isInCirculationModeForQuery	= false;
+		ctx->isInCirculationModeForSettings	= false;
+		ctx->isInCirculationModeForWhois	= false;
+		ctx->isInCirculationModeForZncCmds	= false;
+		ctx->isInCirculationModeForCmds		= false;
+		ctx->isInCirculationModeForChanUsers	= false;
+
+		if (ctx->matches != NULL)
+			textBuf_destroy(ctx->matches);
+
+		ctx->matches = NULL;
+		ctx->elmt = NULL;
+	}
 }
 
 static void
