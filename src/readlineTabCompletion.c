@@ -191,20 +191,22 @@ store_search_var(const volatile struct readline_session_context *ctx)
 PTAB_COMPLETION
 readline_tab_comp_ctx_new(void)
 {
-    static TAB_COMPLETION ctx;
+	static TAB_COMPLETION	ctx;
 
-    memset(ctx.search_var, 0, ARRAY_SIZE(ctx.search_var));
-    ctx.isInCirculationModeForHelp	= false;
-    ctx.isInCirculationModeForQuery	= false;
-    ctx.isInCirculationModeForSettings	= false;
-    ctx.isInCirculationModeForWhois	= false;
-    ctx.isInCirculationModeForZncCmds	= false;
-    ctx.isInCirculationModeForCmds	= false;
-    ctx.isInCirculationModeForChanUsers = false;
-    ctx.matches = NULL;
-    ctx.elmt = NULL;
+	BZERO(ctx.search_var, ARRAY_SIZE(ctx.search_var));
 
-    return (&ctx);
+	ctx.isInCirculationModeForHelp		= false;
+	ctx.isInCirculationModeForQuery		= false;
+	ctx.isInCirculationModeForSettings	= false;
+	ctx.isInCirculationModeForWhois		= false;
+	ctx.isInCirculationModeForZncCmds	= false;
+	ctx.isInCirculationModeForCmds		= false;
+	ctx.isInCirculationModeForChanUsers	= false;
+
+	ctx.matches = NULL;
+	ctx.elmt = NULL;
+
+	return (&ctx);
 }
 
 void
