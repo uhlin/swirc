@@ -154,10 +154,10 @@ auto_complete_channel_user(volatile struct readline_session_context *ctx,
 static bool
 buf_contains_disallowed_chars(const volatile struct readline_session_context *ctx)
 {
-    char *s = readline_finalize_out_string_exported(ctx->buffer);
-    const bool yes_no = strpbrk(s, g_textdeco_chars) != NULL;
-    free(s);
-    return yes_no;
+	char *s = readline_finalize_out_string_exported(ctx->buffer);
+	const bool yes_no = (strpbrk(s, g_textdeco_chars) != NULL);
+	free(s);
+	return yes_no;
 }
 
 static inline char *
