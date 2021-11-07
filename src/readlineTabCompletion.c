@@ -141,14 +141,12 @@ static void
 auto_complete_channel_user(volatile struct readline_session_context *ctx,
     const char *s)
 {
-    while (ctx->n_insert != 0)
-	readline_handle_backspace(ctx);
-
-    for (size_t i = 0; i < strlen(s); i++)
-	readline_handle_key_exported(ctx, btowc(s[i]));
-
-    readline_handle_key_exported(ctx, btowc(':'));
-    readline_handle_key_exported(ctx, btowc(' '));
+	while (ctx->n_insert != 0)
+		readline_handle_backspace(ctx);
+	for (size_t i = 0; i < strlen(s); i++)
+		readline_handle_key_exported(ctx, btowc(s[i]));
+	readline_handle_key_exported(ctx, btowc(':'));
+	readline_handle_key_exported(ctx, btowc(' '));
 }
 
 static bool
