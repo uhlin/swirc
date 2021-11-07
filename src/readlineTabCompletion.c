@@ -96,16 +96,15 @@ static void
 auto_complete_whois(volatile struct readline_session_context *ctx,
     const char *s)
 {
-    const wchar_t cmd[] = L"/whois ";
-    size_t i = 0;
+	const wchar_t	cmd[] = L"/whois ";
+	size_t		i = 0;
 
-    while (ctx->n_insert != 0)
-	readline_handle_backspace(ctx);
-
-    for (i = 0; i < wcslen(cmd); i++)
-	readline_handle_key_exported(ctx, cmd[i]);
-    for (i = 0; i < strlen(s); i++)
-	readline_handle_key_exported(ctx, btowc(s[i]));
+	while (ctx->n_insert != 0)
+		readline_handle_backspace(ctx);
+	for (i = 0; i < wcslen(cmd); i++)
+		readline_handle_key_exported(ctx, cmd[i]);
+	for (i = 0; i < strlen(s); i++)
+		readline_handle_key_exported(ctx, btowc(s[i]));
 }
 
 static void
