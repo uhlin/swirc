@@ -128,13 +128,13 @@ static void
 auto_complete_command(volatile struct readline_session_context *ctx,
     const char *s)
 {
-    while (ctx->n_insert != 0)
-	readline_handle_backspace(ctx);
+	while (ctx->n_insert != 0)
+		readline_handle_backspace(ctx);
 
-    readline_handle_key_exported(ctx, btowc('/'));
+	readline_handle_key_exported(ctx, btowc('/'));
 
-    for (size_t i = 0; i < strlen(s); i++)
-	readline_handle_key_exported(ctx, btowc(s[i]));
+	for (size_t i = 0; i < strlen(s); i++)
+		readline_handle_key_exported(ctx, btowc(s[i]));
 }
 
 static void
