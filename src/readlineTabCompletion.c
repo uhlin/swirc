@@ -45,11 +45,10 @@
 #include "terminal.h"
 
 static void
-auto_complete_help(volatile struct readline_session_context *ctx,
+do_work(volatile struct readline_session_context *ctx, const wchar_t *cmd,
     const char *s)
 {
-	const wchar_t	cmd[] = L"/help ";
-	size_t		i = 0;
+	size_t	i;
 
 	while (ctx->n_insert != 0)
 		readline_handle_backspace(ctx);
@@ -57,66 +56,41 @@ auto_complete_help(volatile struct readline_session_context *ctx,
 		readline_handle_key_exported(ctx, cmd[i]);
 	for (i = 0; i < strlen(s); i++)
 		readline_handle_key_exported(ctx, btowc(s[i]));
+}
+
+static void
+auto_complete_help(volatile struct readline_session_context *ctx,
+    const char *s)
+{
+	do_work(ctx, L"/help ", s);
 }
 
 static void
 auto_complete_query(volatile struct readline_session_context *ctx,
     const char *s)
 {
-	const wchar_t	cmd[] = L"/query ";
-	size_t		i = 0;
-
-	while (ctx->n_insert != 0)
-		readline_handle_backspace(ctx);
-	for (i = 0; i < wcslen(cmd); i++)
-		readline_handle_key_exported(ctx, cmd[i]);
-	for (i = 0; i < strlen(s); i++)
-		readline_handle_key_exported(ctx, btowc(s[i]));
+	do_work(ctx, L"/query ", s);
 }
 
 static void
 auto_complete_setting(volatile struct readline_session_context *ctx,
     const char *s)
 {
-	const wchar_t	cmd[] = L"/set ";
-	size_t		i = 0;
-
-	while (ctx->n_insert != 0)
-		readline_handle_backspace(ctx);
-	for (i = 0; i < wcslen(cmd); i++)
-		readline_handle_key_exported(ctx, cmd[i]);
-	for (i = 0; i < strlen(s); i++)
-		readline_handle_key_exported(ctx, btowc(s[i]));
+	do_work(ctx, L"/set ", s);
 }
 
 static void
 auto_complete_whois(volatile struct readline_session_context *ctx,
     const char *s)
 {
-	const wchar_t	cmd[] = L"/whois ";
-	size_t		i = 0;
-
-	while (ctx->n_insert != 0)
-		readline_handle_backspace(ctx);
-	for (i = 0; i < wcslen(cmd); i++)
-		readline_handle_key_exported(ctx, cmd[i]);
-	for (i = 0; i < strlen(s); i++)
-		readline_handle_key_exported(ctx, btowc(s[i]));
+	do_work(ctx, L"/whois ", s);
 }
 
 static void
 auto_complete_znc_cmd(volatile struct readline_session_context *ctx,
     const char *s)
 {
-	const wchar_t	cmd[] = L"/znc ";
-	size_t		i = 0;
-
-	while (ctx->n_insert != 0)
-		readline_handle_backspace(ctx);
-	for (i = 0; i < wcslen(cmd); i++)
-		readline_handle_key_exported(ctx, cmd[i]);
-	for (i = 0; i < strlen(s); i++)
-		readline_handle_key_exported(ctx, btowc(s[i]));
+	do_work(ctx, L"/znc ", s);
 }
 
 static void
