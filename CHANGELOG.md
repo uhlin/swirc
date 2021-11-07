@@ -15,6 +15,8 @@ All notable changes to this project will be documented in this file.
   - `icb.c`
     - Added status message `Idle-Mod`.
     - Added status message `Timeout`.
+  - `readlineTabCompletion.c`
+    - Refactoring
 - Reformatted and reindented files
   - `commands/me.c`
   - `commands/squery.cpp`
