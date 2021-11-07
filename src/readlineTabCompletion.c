@@ -353,6 +353,13 @@ init_mode_for_channel_users(volatile struct readline_session_context *ctx)
 	ctx->tc->isInCirculationModeForChanUsers = true;
 }
 
+static char *
+next_text(PTAB_COMPLETION tc)
+{
+	tc->elmt = tc->elmt->next;
+	return tc->elmt->text;
+}
+
 static void
 no_more_matches(volatile struct readline_session_context *ctx)
 {
@@ -369,60 +376,46 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		readline_tab_comp_ctx_reset(ctx->tc);
 		return;
 	} else if (ctx->tc->isInCirculationModeForHelp) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
 			no_more_matches(ctx);
-		} else {
-			ctx->tc->elmt = ctx->tc->elmt->next;
-			auto_complete_help(ctx, ctx->tc->elmt->text);
-		}
+		else
+			auto_complete_help(ctx, next_text(ctx->tc));
 		return;
 	} else if (ctx->tc->isInCirculationModeForQuery) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
 			no_more_matches(ctx);
-		} else {
-			ctx->tc->elmt = ctx->tc->elmt->next;
-			auto_complete_query(ctx, ctx->tc->elmt->text);
-		}
+		else
+			auto_complete_query(ctx, next_text(ctx->tc));
 		return;
 	} else if (ctx->tc->isInCirculationModeForSettings) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
 			no_more_matches(ctx);
-		} else {
-			ctx->tc->elmt = ctx->tc->elmt->next;
-			auto_complete_setting(ctx, ctx->tc->elmt->text);
-		}
+		else
+			auto_complete_setting(ctx, next_text(ctx->tc));
 		return;
 	} else if (ctx->tc->isInCirculationModeForWhois) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
 			no_more_matches(ctx);
-		} else {
-			ctx->tc->elmt = ctx->tc->elmt->next;
-			auto_complete_whois(ctx, ctx->tc->elmt->text);
-		}
+		else
+			auto_complete_whois(ctx, next_text(ctx->tc));
 		return;
 	} else if (ctx->tc->isInCirculationModeForZncCmds) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
 			no_more_matches(ctx);
-		} else {
-			ctx->tc->elmt = ctx->tc->elmt->next;
-			auto_complete_znc_cmd(ctx, ctx->tc->elmt->text);
-		}
+		else
+			auto_complete_znc_cmd(ctx, next_text(ctx->tc));
 		return;
 	} else if (ctx->tc->isInCirculationModeForCmds) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
 			no_more_matches(ctx);
-		} else {
-			ctx->tc->elmt = ctx->tc->elmt->next;
-			auto_complete_command(ctx, ctx->tc->elmt->text);
-		}
+		else
+			auto_complete_command(ctx, next_text(ctx->tc));
 		return;
 	} else if (ctx->tc->isInCirculationModeForChanUsers) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches)) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
 			no_more_matches(ctx);
-		} else {
-			ctx->tc->elmt = ctx->tc->elmt->next;
-			auto_complete_channel_user(ctx, ctx->tc->elmt->text);
-		}
+		else
+			auto_complete_channel_user(ctx, next_text(ctx->tc));
 		return;
 	}
 
