@@ -2,8 +2,6 @@
 
 #include "common.h"
 
-#include <windows.h>
-
 #include "../config.h"
 #include "../errHand.h"
 #include "../libUtils.h"
