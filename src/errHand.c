@@ -36,6 +36,9 @@
 #include <windows.h>		/* MessageBox() */
 #endif
 
+#ifdef WIN32
+#include "assertAPI.h"
+#endif
 #include "curses-funcs.h"
 #include "errHand.h"
 #include "libUtils.h"
