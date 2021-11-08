@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
   List.
 - Added new [Libera Chat](https://libera.chat/) servers
 - Deleted unused includes
+- Fixed macro redefinitions
 - Fixed unchecked return values
 - Made improvements to the following files:
   - `assertAPI.c`
