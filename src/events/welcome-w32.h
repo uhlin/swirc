@@ -1,6 +1,8 @@
 #ifndef WELCOME_W32_H
 #define WELCOME_W32_H
 
+#include <windows.h> /* MAXDWORD */
+
 #ifndef MAXDWORD
 #define MAXDWORD 4294967295
 #endif
