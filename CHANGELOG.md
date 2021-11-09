@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
   - `commands/invite.c`
   - `commands/notice.cpp`
   - `commands/services.c`
+  - `events/wallops.cpp`
   - `assertAPI.c`
   - `errHand.c`
   - `icb.c`
