@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Fixed macro redefinitions
 - Fixed unchecked return values
 - Made improvements to the following files:
+  - `commands/notice.cpp`
   - `commands/services.c`
   - `assertAPI.c`
   - `errHand.c`
