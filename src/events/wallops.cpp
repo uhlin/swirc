@@ -101,7 +101,7 @@ event_wallops(struct irc_message_compo *compo)
 			 */
 			printtext(&ctx, "%s %s", str.c_str(), message);
 		}
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error& e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_wallops: %s", e.what());
