@@ -14,6 +14,7 @@
 *.zip
 .pc
 _LINT.TMP
+cov-int
 curl-*
 libressl-*-windows
 options.mk
