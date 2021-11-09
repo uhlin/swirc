@@ -1,5 +1,5 @@
 /* command /notice
-   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <string>
+
 #include "../dataClassify.h"
 #include "../network.h"
 #include "../printtext.h"
@@ -40,39 +42,44 @@
 #define B1 Theme("notice_inner_b1")
 #define B2 Theme("notice_inner_b2")
 
-/* usage: /notice <recipient> <message> */
+/*
+ * usage: /notice <recipient> <message>
+ */
 void
 cmd_notice(const char *data)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char *dcopy = sw_strdup(data);
-    char *recipient, *message;
-    char *state = "";
+	char	*dcopy = sw_strdup(data);
+	char	*recipient, *message;
+	char	*state = const_cast<char *>("");
 
-    if (strings_match(dcopy, "") ||
-	strFeed(dcopy, 1) != 1 ||
-	(recipient = strtok_r(dcopy, "\n", &state)) == NULL ||
-	(message = strtok_r(NULL, "\n", &state)) == NULL) {
-	print_and_free("/notice: missing arguments", dcopy);
-	return;
-    } else if (!is_valid_nickname(recipient) && !is_irc_channel(recipient)) {
-	print_and_free("/notice: neither a nickname or irc channel", dcopy);
-	return;
-    } else if (window_by_label(recipient) == NULL &&
-	       is_irc_channel(recipient)) {
-	print_and_free("/notice: not on that channel", dcopy);
-	return;
-    }
+	if (strings_match(dcopy, "") || strFeed(dcopy, 1) != 1 ||
+	    (recipient = strtok_r(dcopy, "\n", &state)) == NULL ||
+	    (message = strtok_r(NULL, "\n", &state)) == NULL) {
+		print_and_free("/notice: missing arguments", dcopy);
+		return;
+	} else if (!is_valid_nickname(recipient) &&
+	    !is_irc_channel(recipient)) {
+		print_and_free("/notice: neither a nickname or irc channel",
+		    dcopy);
+		return;
+	} else if (window_by_label(recipient) == NULL &&
+	    is_irc_channel(recipient)) {
+		print_and_free("/notice: not on that channel", dcopy);
+		return;
+	} else if (net_send("NOTICE %s :%s", recipient, message) > 0) {
+		PRINTTEXT_CONTEXT	ctx;
+		std::string		str(LEFT_BRKT);
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
+		(void) str.append(COLOR1).append("notice").append(TXT_NORMAL);
+		(void) str.append(B1);
+		(void) str.append(COLOR2).append(recipient).append(TXT_NORMAL);
+		(void) str.append(B2);
+		(void) str.append(RIGHT_BRKT);
 
-    if (net_send("NOTICE %s :%s", recipient, message) > 0) {
-	printtext(&ctx, "%s%s%s%c%s%s%s%c%s%s %s",
-	    LEFT_BRKT,
-	    COLOR1, "notice", NORMAL, B1, COLOR2, recipient, NORMAL, B2,
-	    RIGHT_BRKT,
-	    message);
-    }
+		printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE,
+		    true);
+		printtext(&ctx, "%s %s", str.c_str(), message);
+	}
 
-    free(dcopy);
+	free(dcopy);
 }
