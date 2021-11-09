@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include "../dataClassify.h"
+#include "../errHand.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -65,6 +66,9 @@ cmd_invite(const char *data)
 		printtext(&ctx, "Inviting %s%s%c to %s%s%s%c%s",
 		    COLOR1, targ_nick, NORMAL,
 		    LEFT_BRKT, COLOR2, channel, NORMAL, RIGHT_BRKT);
+	} else {
+		err_log(ENOTCONN, "/invite");
+		g_connection_lost = true;
 	}
 
 	free(dcopy);
