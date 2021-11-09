@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Fixed macro redefinitions
 - Fixed unchecked return values
 - Made improvements to the following files:
+  - `commands/invite.c`
   - `commands/notice.cpp`
   - `commands/services.c`
   - `assertAPI.c`
