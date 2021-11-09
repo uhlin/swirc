@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
     - Refactoring
 - Reformatted and reindented files
   - `commands/me.c`
+  - `commands/msg.c`
   - `commands/squery.cpp`
   - `commands/znc.cpp`
   - `events/banlist.cpp`
