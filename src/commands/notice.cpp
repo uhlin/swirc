@@ -39,8 +39,8 @@
 
 #include "notice.h"
 
-#define B1 Theme("notice_inner_b1")
-#define B2 Theme("notice_inner_b2")
+#define B1	Theme("notice_inner_b1")
+#define B2	Theme("notice_inner_b2")
 
 /*
  * usage: /notice <recipient> <message>
