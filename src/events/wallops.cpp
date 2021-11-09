@@ -72,6 +72,7 @@ event_wallops(struct irc_message_compo *compo)
 		if (strings_match_ignore_case(prefix, g_server_hostname)) {
 			printtext(&ctx, "%s!%s%c %s", COLOR3, "WALLOPS", NORMAL,
 			    message);
+			return;
 		} else {
 			char		*last = const_cast<char *>("");
 			char		*nick, *user, *host;
