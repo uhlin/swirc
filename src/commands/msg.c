@@ -1,5 +1,5 @@
 /* command /msg
-   Copyright (C) 2016, 2017 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -36,46 +36,49 @@
 
 #include "msg.h"
 
-/* usage: /msg <recipient> <message> */
+/*
+ * usage: /msg <recipient> <message>
+ */
 void
 cmd_msg(const char *data)
 {
-    char *dcopy = sw_strdup(data);
-    char *recipient, *message;
-    char *state = "";
+	char	*dcopy = sw_strdup(data);
+	char	*recipient, *message;
+	char	*state = "";
 
-    if (strings_match(dcopy, "") ||
-	strFeed(dcopy, 1) != 1 ||
-	(recipient = strtok_r(dcopy, "\n", &state)) == NULL ||
-	(message = strtok_r(NULL, "\n", &state)) == NULL) {
-	print_and_free("/msg: missing arguments", dcopy);
-	return;
-    } else if (!is_valid_nickname(recipient) && !is_irc_channel(recipient)) {
-	print_and_free("/msg: neither a nickname or irc channel", dcopy);
-	return;
-    } else if (strings_match_ignore_case(recipient, "ChanServ")) {
-	print_and_free("/msg: for safety reasons: "
-	    "consider using command /chanserv", dcopy);
-	return;
-    } else if (strings_match_ignore_case(recipient, "NickServ")) {
-	print_and_free("/msg: for safety reasons: "
-	    "consider using command /nickserv", dcopy);
-	return;
-    } else if (window_by_label(recipient) == NULL &&
-	       is_valid_nickname(recipient)) {
-	if (spawn_chat_window(recipient, recipient) != 0) {
-	    print_and_free("/msg: fatal: cannot spawn chat window!", dcopy);
-	    return;
+	if (strings_match(dcopy, "") || strFeed(dcopy, 1) != 1 ||
+	    (recipient = strtok_r(dcopy, "\n", &state)) == NULL ||
+	    (message = strtok_r(NULL, "\n", &state)) == NULL) {
+		print_and_free("/msg: missing arguments", dcopy);
+		return;
+	} else if (!is_valid_nickname(recipient) &&
+	    !is_irc_channel(recipient)) {
+		print_and_free("/msg: neither a nickname or irc channel",
+		    dcopy);
+		return;
+	} else if (strings_match_ignore_case(recipient, "ChanServ")) {
+		print_and_free("/msg: for safety reasons: "
+		    "consider using command /chanserv", dcopy);
+		return;
+	} else if (strings_match_ignore_case(recipient, "NickServ")) {
+		print_and_free("/msg: for safety reasons: "
+		    "consider using command /nickserv", dcopy);
+		return;
+	} else if (window_by_label(recipient) == NULL &&
+	    is_valid_nickname(recipient)) {
+		if (spawn_chat_window(recipient, recipient) != 0) {
+			print_and_free("/msg: fatal: cannot spawn chat window!",
+			    dcopy);
+			return;
+		}
+		transmit_user_input(recipient, message);
+		free(dcopy);
+	} else if (window_by_label(recipient) == NULL &&
+	    is_irc_channel(recipient)) {
+		print_and_free("/msg: not on that channel", dcopy);
+		return;
+	} else {
+		transmit_user_input(recipient, message);
+		free(dcopy);
 	}
-
-	transmit_user_input(recipient, message);
-	free(dcopy);
-    } else if (window_by_label(recipient) == NULL &&
-	       is_irc_channel(recipient)) {
-	print_and_free("/msg: not on that channel", dcopy);
-	return;
-    } else {
-	transmit_user_input(recipient, message);
-	free(dcopy);
-    }
 }
