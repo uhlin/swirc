@@ -38,43 +38,44 @@
 
 #include "services.h"
 
-/* usage: /chanserv <[service hostname | --]> <command> [...] */
+/*
+ * usage: /chanserv <[service hostname | --]> <command> [...]
+ */
 void
 cmd_chanserv(const char *data)
 {
-    char *dcopy = sw_strdup(data);
-    char *srv_host = NULL, *cmd = NULL;
-    char *state = "";
+	char	*dcopy = sw_strdup(data);
+	char	*srv_host, *cmd;
+	char	*state = "";
 
-    if (strings_match(dcopy, "") ||
-	strFeed(dcopy, 1) != 1 ||
-	(srv_host = strtok_r(dcopy, "\n", &state)) == NULL ||
-	(cmd = strtok_r(NULL, "\n", &state)) == NULL) {
-	print_and_free("/chanserv: missing arguments", dcopy);
-	return;
-    }
-
-    if (strings_match(srv_host, "--")) {
-	if (!is_valid_hostname(Config("chanserv_host"))) {
-	    print_and_free("/chanserv: in the config file: "
-		"bogus chanserv_host", dcopy);
-	    return;
+	if (strings_match(dcopy, "") || strFeed(dcopy, 1) != 1 ||
+	    (srv_host = strtok_r(dcopy, "\n", &state)) == NULL ||
+	    (cmd = strtok_r(NULL, "\n", &state)) == NULL) {
+		print_and_free("/chanserv: missing arguments", dcopy);
+		return;
+	} else if (strings_match(srv_host, "--")) {
+		if (!is_valid_hostname(Config("chanserv_host"))) {
+			print_and_free("/chanserv: in the config file: "
+			    "bogus 'chanserv_host'", dcopy);
+			return;
+		} else if (net_send("PRIVMSG ChanServ@%s :%s",
+		    Config("chanserv_host"), cmd) < 0) {
+			err_log(ENOTCONN, "/chanserv");
+			g_connection_lost = true;
+		}
+	} else {
+		if (!is_valid_hostname(srv_host)) {
+			print_and_free("/chanserv: bogus service hostname!",
+			    dcopy);
+			return;
+		} else if (net_send("PRIVMSG ChanServ@%s :%s",
+		    srv_host, cmd) < 0) {
+			err_log(ENOTCONN, "/chanserv");
+			g_connection_lost = true;
+		}
 	}
 
-	if (net_send("PRIVMSG ChanServ@%s :%s",
-		     Config("chanserv_host"), cmd) < 0)
-	    g_on_air = false;
-    } else {
-	if (!is_valid_hostname(srv_host)) {
-	    print_and_free("/chanserv: bogus service hostname!", dcopy);
-	    return;
-	}
-
-	if (net_send("PRIVMSG ChanServ@%s :%s", srv_host, cmd) < 0)
-	    g_on_air = false;
-    }
-
-    free(dcopy);
+	free(dcopy);
 }
 
 /*
