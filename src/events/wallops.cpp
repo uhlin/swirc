@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include <stdexcept>
+#include <string>
 
 #include "../irc.h"
 #include "../printtext.h"
@@ -51,47 +52,58 @@
 void
 event_wallops(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    try {
-	if (g_server_hostname == NULL)
-	    throw std::runtime_error("no server hostname");
+	try {
+		char	*prefix, *message;
 
-	char *prefix = compo->prefix;
-	char *message = compo->params;
+		if (g_server_hostname == NULL)
+			throw std::runtime_error("no server hostname");
+		if ((prefix = compo->prefix) == NULL)
+			throw std::runtime_error("no prefix");
+		if (*prefix == ':')
+			prefix++;
+		if (*(message = compo->params) == ':')
+			message++;
 
-	if (prefix == NULL)
-	    throw std::runtime_error("no prefix");
-	if (*prefix == ':')
-	    prefix++;
-	if (*message == ':')
-	    message++;
+		printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE,
+		    true);
 
-	printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
+		if (strings_match_ignore_case(prefix, g_server_hostname)) {
+			printtext(&ctx, "%s!%s%c %s", COLOR3, "WALLOPS", NORMAL,
+			    message);
+		} else {
+			char		*last = const_cast<char *>("");
+			char		*nick, *user, *host;
+			std::string	 str(Theme("notice_lb"));
 
-	if (strings_match_ignore_case(prefix, g_server_hostname)) {
-	    printtext(&ctx, "%s!%s%c %s", COLOR3, "WALLOPS", NORMAL, message);
-	} else {
-	    char *last = const_cast<char *>("");
-	    char *nick, *user, *host;
+			if ((nick = strtok_r(prefix, "!@", &last)) == NULL ||
+			    (user = strtok_r(NULL, "!@", &last)) == NULL ||
+			    (host = strtok_r(NULL, "!@", &last)) == NULL) {
+				throw std::runtime_error("no nick or "
+				    "user@host");
+			}
 
-	    if ((nick = strtok_r(prefix, "!@", &last)) == NULL ||
-		(user = strtok_r(NULL, "!@", &last)) == NULL ||
-		(host = strtok_r(NULL, "!@", &last)) == NULL)
-		throw std::runtime_error("no nick or user@host");
+			(void) str.append(NCOLOR1);
+			(void) str.append(nick);
+			(void) str.append(TXT_NORMAL);
 
-	    /*
-	     * NOTE: Current look is identical to notice
-	     */
-	    printtext(&ctx, "%s%s%s%c%s%s%s@%s%c%s%s %s",
-		Theme("notice_lb"),
-		NCOLOR1, nick, NORMAL,
-		INNER_B1, NCOLOR2, user, host, NORMAL, INNER_B2,
-		Theme("notice_rb"),
-		message);
+			(void) str.append(INNER_B1);
+			(void) str.append(NCOLOR2);
+			(void) str.append(user).append("@").append(host);
+			(void) str.append(TXT_NORMAL);
+			(void) str.append(INNER_B2);
+
+			(void) str.append(Theme("notice_rb"));
+
+			/*
+			 * NOTE: Current look is identical to notice
+			 */
+			printtext(&ctx, "%s %s", str.c_str(), message);
+		}
+	} catch (std::runtime_error& e) {
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
+		    true);
+		printtext(&ctx, "event_wallops: %s", e.what());
 	}
-    } catch (std::runtime_error &e) {
-	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-	printtext(&ctx, "event_wallops: %s", e.what());
-    }
 }
