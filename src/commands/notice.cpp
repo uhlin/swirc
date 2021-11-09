@@ -32,6 +32,7 @@
 #include <string>
 
 #include "../dataClassify.h"
+#include "../errHand.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -79,6 +80,9 @@ cmd_notice(const char *data)
 		printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE,
 		    true);
 		printtext(&ctx, "%s %s", str.c_str(), message);
+	} else {
+		err_log(ENOTCONN, "/notice");
+		g_connection_lost = true;
 	}
 
 	free(dcopy);
