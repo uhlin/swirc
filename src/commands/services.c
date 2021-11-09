@@ -1,5 +1,5 @@
 /* commands/services.c
-   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -31,6 +31,7 @@
 
 #include "../config.h"
 #include "../dataClassify.h"
+#include "../errHand.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -76,41 +77,42 @@ cmd_chanserv(const char *data)
     free(dcopy);
 }
 
-/* usage: /nickserv <[service hostname | --]> <command> [...] */
+/*
+ * usage: /nickserv <[service hostname | --]> <command> [...]
+ */
 void
 cmd_nickserv(const char *data)
 {
-    char *dcopy = sw_strdup(data);
-    char *srv_host = NULL, *cmd = NULL;
-    char *state = "";
+	char	*dcopy = sw_strdup(data);
+	char	*srv_host, *cmd;
+	char	*state = "";
 
-    if (strings_match(dcopy, "") ||
-	strFeed(dcopy, 1) != 1 ||
-	(srv_host = strtok_r(dcopy, "\n", &state)) == NULL ||
-	(cmd = strtok_r(NULL, "\n", &state)) == NULL) {
-	print_and_free("/nickserv: missing arguments", dcopy);
-	return;
-    }
-
-    if (strings_match(srv_host, "--")) {
-	if (!is_valid_hostname(Config("nickserv_host"))) {
-	    print_and_free("/nickserv: in the config file: "
-		"bogus nickserv_host", dcopy);
-	    return;
+	if (strings_match(dcopy, "") || strFeed(dcopy, 1) != 1 ||
+	    (srv_host = strtok_r(dcopy, "\n", &state)) == NULL ||
+	    (cmd = strtok_r(NULL, "\n", &state)) == NULL) {
+		print_and_free("/nickserv: missing arguments", dcopy);
+		return;
+	} else if (strings_match(srv_host, "--")) {
+		if (!is_valid_hostname(Config("nickserv_host"))) {
+			print_and_free("/nickserv: in the config file: "
+			    "bogus 'nickserv_host'", dcopy);
+			return;
+		} else if (net_send("PRIVMSG NickServ@%s :%s",
+		    Config("nickserv_host"), cmd) < 0) {
+			err_log(ENOTCONN, "/nickserv");
+			g_connection_lost = true;
+		}
+	} else {
+		if (!is_valid_hostname(srv_host)) {
+			print_and_free("/nickserv: bogus service hostname!",
+			    dcopy);
+			return;
+		} else if (net_send("PRIVMSG NickServ@%s :%s",
+		    srv_host, cmd) < 0) {
+			err_log(ENOTCONN, "/nickserv");
+			g_connection_lost = true;
+		}
 	}
 
-	if (net_send("PRIVMSG NickServ@%s :%s",
-		     Config("nickserv_host"), cmd) < 0)
-	    g_on_air = false;
-    } else {
-	if (!is_valid_hostname(srv_host)) {
-	    print_and_free("/nickserv: bogus service hostname!", dcopy);
-	    return;
-	}
-
-	if (net_send("PRIVMSG NickServ@%s :%s", srv_host, cmd) < 0)
-	    g_on_air = false;
-    }
-
-    free(dcopy);
+	free(dcopy);
 }
