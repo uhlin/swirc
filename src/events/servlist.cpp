@@ -32,7 +32,6 @@
 #include <stdexcept>
 #include <string>
 
-#include "../dataClassify.h"
 #include "../irc.h"
 #include "../printtext.h"
 #include "../strHand.h"
