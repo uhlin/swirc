@@ -1,5 +1,5 @@
 /* events/servlist.cpp
-   Copyright (C) 2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -92,5 +92,5 @@ event_servlist(struct irc_message_compo *compo)
 void
 event_servlistEnd(struct irc_message_compo *compo)
 {
-    irc_extract_msg(compo, g_active_window, 3, false);
+	irc_extract_msg(compo, g_active_window, 3, false);
 }
