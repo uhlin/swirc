@@ -28,6 +28,7 @@ All notable changes to this project will be documented in this file.
   - `commands/squery.cpp`
   - `commands/znc.cpp`
   - `events/banlist.cpp`
+  - `events/servlist.cpp`
   - `statusbar.cpp`
   - `titlebar.c`
 
