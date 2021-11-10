@@ -73,6 +73,11 @@ event_servlist(struct irc_message_compo *compo)
 			    "components");
 		}
 
+		/* for future use */
+		(void) server;
+		(void) type;
+		(void) hopcount;
+
 		if (*info == ':')
 			info++;
 
