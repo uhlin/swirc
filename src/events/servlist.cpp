@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include <stdexcept>
+#include <string>
 
 #include "../dataClassify.h"
 #include "../irc.h"
@@ -48,41 +49,47 @@
 void
 event_servlist(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
-    try {
-	char *state = const_cast<char *>("");
+	try {
+		char		*name, *server, *mask, *type, *hopcount, *info;
+		char		*state = const_cast<char *>("");
+		std::string	 str("");
 
-	if (strFeed(compo->params, 6) != 6)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 6) != 6)
+			throw std::runtime_error("strFeed");
 
-	(void) strtok_r(compo->params, "\n", &state); /* me */
-	char	*name	  = strtok_r(NULL, "\n", &state);
-	char	*server	  = strtok_r(NULL, "\n", &state);
-	char	*mask	  = strtok_r(NULL, "\n", &state);
-	char	*type	  = strtok_r(NULL, "\n", &state);
-	char	*hopcount = strtok_r(NULL, "\n", &state);
-	char	*info	  = strtok_r(NULL, "\n", &state);
+		(void) strtok_r(compo->params, "\n", &state); /* me */
 
-	if (isNull(name) || isNull(server) || isNull(mask) || isNull(type) ||
-	    isNull(hopcount) || isNull(info))
-	    throw std::runtime_error("unable to retrieve event components");
+		if ((name = strtok_r(NULL, "\n", &state)) == NULL ||
+		    (server = strtok_r(NULL, "\n", &state)) == NULL ||
+		    (mask = strtok_r(NULL, "\n", &state)) == NULL ||
+		    (type = strtok_r(NULL, "\n", &state)) == NULL ||
+		    (hopcount = strtok_r(NULL, "\n", &state)) == NULL ||
+		    (info = strtok_r(NULL, "\n", &state)) == NULL) {
+			throw std::runtime_error("unable to retrieve event "
+			    "components");
+		}
 
-	if (*info == ':')
-	    info++;
+		if (*info == ':')
+			info++;
 
-	printtext(&ctx, "%s%s%c%s%s%s: %s",
-	    COLOR1, name, NORMAL,
-	    Theme("notice_inner_b1"), mask, Theme("notice_inner_b2"),
-	    info);
-    } catch (const std::runtime_error &e) {
-	ctx.window    = g_status_window;
-	ctx.spec_type = TYPE_SPEC1_FAILURE;
-	printtext(&ctx, "event_servlist(%s): error: %s", compo->command,
-	    e.what());
-    }
+#define B1	Theme("notice_inner_b1")
+#define B2	Theme("notice_inner_b2")
+
+		(void) str.append(COLOR1).append(name).append(TXT_NORMAL);
+		(void) str.append(B1).append(mask).append(B2);
+
+		printtext(&ctx, "%s: %s", str.c_str(), info);
+	} catch (const std::runtime_error& e) {
+		ctx.window	= g_status_window;
+		ctx.spec_type	= TYPE_SPEC1_FAILURE;
+
+		printtext(&ctx, "event_servlist(%s): error: %s", compo->command,
+		    e.what());
+	}
 }
 
 /* event_servlistEnd: 235 (RPL_SERVLISTEND)
