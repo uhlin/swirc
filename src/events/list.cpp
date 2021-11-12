@@ -1,5 +1,5 @@
 /* event 321 (RPL_LISTSTART) and 322 (RPL_LIST)
-   Copyright (C) 2016-2018 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <string>
+
 #include "../irc.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -53,27 +55,33 @@ event_liststart(struct irc_message_compo *compo)
 void
 event_list(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char *state = "";
-    char *channel, *num_visible, *topic;
+	PRINTTEXT_CONTEXT	 ctx;
+	char			*channel, *num_visible, *topic;
+	char			*state = const_cast<char *>("");
+	std::string		 str("");
 
-    channel = num_visible = topic = NULL;
+	if (strFeed(compo->params, 3) != 3)
+		return;
 
-    if (strFeed(compo->params, 3) != 3)
-	return;
+	/*
+	 * my nick (not used)
+	 */
+	(void) strtok_r(compo->params, "\n", &state);
 
-    (void) strtok_r(compo->params, "\n", &state); /* my nick (not used) */
-    if ((channel     = strtok_r(NULL, "\n", &state)) == NULL ||
-	(num_visible = strtok_r(NULL, "\n", &state)) == NULL ||
-	(topic       = strtok_r(NULL, "\n", &state)) == NULL)
-	return;
+	if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
+	    (num_visible = strtok_r(NULL, "\n", &state)) == NULL ||
+	    (topic = strtok_r(NULL, "\n", &state)) == NULL)
+		return;
 
-    if (*topic == ':')
-	topic++;
+	if (*topic == ':')
+		topic++;
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC3, true);
-    printtext(&ctx, "%s%s%c%s%s%s: %s",
-	      COLOR1, channel, NORMAL,
-	      Theme("notice_inner_b1"), num_visible, Theme("notice_inner_b2"),
-	      topic);
+#define B1	Theme("notice_inner_b1")
+#define B2	Theme("notice_inner_b2")
+
+	(void) str.append(COLOR1).append(channel).append(TXT_NORMAL);
+	(void) str.append(B1).append(num_visible).append(B2);
+
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC3, true);
+	printtext(&ctx, "%s: %s", str.c_str(), topic);
 }
