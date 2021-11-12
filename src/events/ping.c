@@ -22,7 +22,7 @@ event_ping(struct irc_message_compo *compo)
 	if (strings_match(cp, "")) {
 		return;
 	} else if ((n_sent = net_send("PONG %s", cp)) == -1) {
-		g_on_air = false;
+		g_connection_lost = true;
 	} else if (n_sent > 0 && config_bool("show_ping_pong", true)) {
 		PRINTTEXT_CONTEXT	ctx;
 
