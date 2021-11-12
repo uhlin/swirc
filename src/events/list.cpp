@@ -31,6 +31,7 @@
 
 #include <string>
 
+#include "../errHand.h"
 #include "../irc.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -45,7 +46,7 @@
 void
 event_liststart(struct irc_message_compo *compo)
 {
-    (void) compo;
+	debug("Got event %s. (Not used)", compo->command);
 }
 
 /* event_list: 322
