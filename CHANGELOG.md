@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
     - Added status message `Timeout`.
   - `readlineTabCompletion.c`
     - Refactoring
+  - ...
 - Reformatted and reindented files
   - `commands/me.c`
   - `commands/msg.c`
@@ -31,6 +32,7 @@ All notable changes to this project will be documented in this file.
   - `events/servlist.cpp`
   - `statusbar.cpp`
   - `titlebar.c`
+  - ...
 
 ### Debian ###
 - Added patches
