@@ -1,6 +1,8 @@
 #ifndef STRING_HANDLING_H
 #define STRING_HANDLING_H
 
+#include <stdint.h> /* SIZE_MAX */
+
 #ifndef STRINGS_MATCH
 #define STRINGS_MATCH 0
 #endif
