@@ -28,4 +28,5 @@ TESTS=cmd_ban.run\
 	sw_wcscat.run\
 	sw_wcscpy.run\
 	trim.run\
-	write_to_stream.run
+	write_to_stream.run\
+	xstrnlen.run
