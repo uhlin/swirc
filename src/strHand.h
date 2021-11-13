@@ -20,6 +20,7 @@ int	 sw_strcat(char *dest, const char *src, size_t);
 int	 sw_strcpy(char *dest, const char *src, size_t);
 int	 sw_wcscat(wchar_t *dest, const wchar_t *src, size_t);
 int	 sw_wcscpy(wchar_t *dest, const wchar_t *src, size_t);
+size_t	 xstrnlen(const char *, size_t);
 void	 squeeze(char *, const char *);
 void	 sw_snprintf(char *, size_t, const char *, ...) PRINTFLIKE(3);
 __SWIRC_END_DECLS

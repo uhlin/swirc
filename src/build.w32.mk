@@ -38,6 +38,7 @@ OBJS=$(OBJS)\
 	$(SRC_DIR)strcat.obj\
 	$(SRC_DIR)strcpy.obj\
 	$(SRC_DIR)strdup_printf.obj\
+	$(SRC_DIR)strnlen.obj\
 	$(SRC_DIR)term-w32.obj\
 	$(SRC_DIR)terminal.obj\
 	$(SRC_DIR)textBuffer.obj\

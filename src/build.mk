@@ -35,6 +35,7 @@ OBJS+=$(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)strcat.o\
 	$(SRC_DIR)strcpy.o\
 	$(SRC_DIR)strdup_printf.o\
+	$(SRC_DIR)strnlen.o\
 	$(SRC_DIR)term-unix.o\
 	$(SRC_DIR)terminal.o\
 	$(SRC_DIR)textBuffer.o\
