@@ -24,12 +24,34 @@ noNullChar_test(void **state)
 	assert_true(ret == sizeof buf);
 }
 
+static void
+returnsCorrectLength_test1(void **state)
+{
+	const char str[] = "swirc";
+
+	ret = xstrnlen(str, sizeof str);
+	assert_true(ret == 5);
+	assert_true(ret == strlen(str));
+}
+
+static void
+returnsCorrectLength_test2(void **state)
+{
+	const char str[] = "swirc is nifty";
+
+	ret = xstrnlen(str, sizeof str);
+	assert_true(ret == 14);
+	assert_true(ret == strlen(str));
+}
+
 int
 main(void)
 {
 	const struct CMUnitTest tests[] = {
 		cmocka_unit_test(nullString_test),
 		cmocka_unit_test(noNullChar_test),
+		cmocka_unit_test(returnsCorrectLength_test1),
+		cmocka_unit_test(returnsCorrectLength_test2),
 	};
 
 	return cmocka_run_group_tests(tests, NULL, NULL);
