@@ -15,12 +15,16 @@
    PERFORMANCE OF THIS SOFTWARE. */
 
 #include <stddef.h>
+#include <string.h>
 
 size_t
 xstrnlen(const char *str, size_t maxlen)
 {
-	(void) str;
-	(void) maxlen;
+	const char *cp;
 
-	return 0;
+	if (str == NULL)
+		return 0;
+	else if ((cp = memchr(str, '\0', maxlen)) == NULL)
+		return maxlen;
+	return (cp - str);
 }
