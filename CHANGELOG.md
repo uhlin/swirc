@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
   to this user whilst they have the +T `u_noctcp` mode set.)
 - Added event `728` and `729`. Undocumented in the RFC. Channel Quiet
   List.
+- Added function `xstrnlen()`
 - Added new [Libera Chat](https://libera.chat/) servers
 - Deleted unused includes
 - Fixed macro redefinitions
