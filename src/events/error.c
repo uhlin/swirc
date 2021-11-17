@@ -3,7 +3,6 @@
 #include "common.h"
 
 #include "../irc.h"
-#include "../network.h"
 #include "../printtext.h"
 
 #include "error.h"
