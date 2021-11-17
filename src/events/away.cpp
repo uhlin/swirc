@@ -108,8 +108,7 @@ event_away(struct irc_message_compo *compo)
 void
 event_unaway(struct irc_message_compo *compo)
 {
-    irc_extract_msg(compo, g_active_window, 1, false);
-    //g_is_away = false;
+	irc_extract_msg(compo, g_active_window, 1, false);
 }
 
 /*
