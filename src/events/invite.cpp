@@ -46,12 +46,12 @@
 void
 event_inviting(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    (void) compo;
+	(void) compo;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
-    printtext(&ctx, "Invitation passed onto the end client");
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
+	printtext(&ctx, "Invitation passed onto the end client");
 }
 
 /* event_invite
