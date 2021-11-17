@@ -1,16 +1,10 @@
 #ifndef AWAY_H
 #define AWAY_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__SWIRC_BEGIN_DECLS
 void	event_away(struct irc_message_compo *);
 void	event_unaway(struct irc_message_compo *);
 void	event_nowAway(struct irc_message_compo *);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif
