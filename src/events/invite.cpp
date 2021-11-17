@@ -61,63 +61,60 @@ event_inviting(struct irc_message_compo *compo)
 void
 event_invite(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
-    try {
-	char *prefix = compo->prefix;
+	try {
+		char	*nick, *user, *host;
+		char	*prefix;
+		char	*state1 = const_cast<char *>("");
+		char	*state2 = const_cast<char *>("");
+		char	*target, *channel;
 
-	if (prefix == NULL)
-	    throw std::runtime_error("no prefix");
-	else if (*prefix == ':')
-	    prefix++;
+		if ((prefix = compo->prefix) == NULL)
+			throw std::runtime_error("no prefix");
+		else if (*prefix == ':')
+			prefix++;
 
-	char *state1 = const_cast<char *>("");
-	char *nick = strtok_r(prefix, "!@", &state1);
-	char *user = strtok_r(NULL, "!@", &state1);
-	char *host = strtok_r(NULL, "!@", &state1);
+		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
+			throw std::runtime_error("unable to get nick");
+		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
+			user = const_cast<char *>("<no user>");
+		if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
+			host = const_cast<char *>("<no host>");
 
-	if (nick == NULL)
-	    throw std::runtime_error("unable to get nick");
-	else if (user == NULL || host == NULL) {
-	    user = const_cast<char *>("<no user>");
-	    host = const_cast<char *>("<no host>");
+		if (strFeed(compo->params, 1) != 1)
+			throw std::runtime_error("strFeed");
+		else if ((target = strtok_r(compo->params, "\n", &state2)) ==
+		    NULL)
+			throw std::runtime_error("null target");
+		else if ((channel = strtok_r(NULL, "\n", &state2)) == NULL)
+			throw std::runtime_error("null channel");
+		else if (*channel == ':')
+			channel++;
+
+		if (!is_irc_channel(channel) || strpbrk(channel + 1,
+		    g_forbidden_chan_name_chars) != NULL) {
+			throw std::runtime_error("bogus irc channel");
+		} else if (strings_match_ignore_case(target, g_my_nickname)) {
+			printtext(&ctx, "%c%s%c %s%s@%s%s invites you to "
+			    "%c%s%c",
+			    BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT,
+			    BOLD, channel, BOLD);
+		} else {
+			/*
+			 * TODO: Write to the channels where the user
+			 * that's doing the invite is in
+			 */
+
+			printtext(&ctx, "%c%s%c %s%s@%s%s invites %c%s%c to "
+			    "%c%s%c",
+			    BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT,
+			    BOLD, target, BOLD, BOLD, channel, BOLD);
+		}
+	} catch (const std::runtime_error& e) {
+		ctx.spec_type = TYPE_SPEC1_WARN;
+		printtext(&ctx, "event_invite: error: %s", e.what());
 	}
-
-	if (strFeed(compo->params, 1) != 1)
-	    throw std::runtime_error("strFeed");
-
-	char *state2 = const_cast<char *>("");
-	char *target = strtok_r(compo->params, "\n", &state2);
-	char *channel = strtok_r(NULL, "\n", &state2);
-
-	if (target == NULL)
-	    throw std::runtime_error("null target");
-	else if (channel == NULL)
-	    throw std::runtime_error("null channel");
-	else if (*channel == ':')
-	    channel++;
-
-	if (!is_irc_channel(channel) ||
-	    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL)
-	    throw std::runtime_error("bogus irc channel");
-
-	if (strings_match_ignore_case(target, g_my_nickname)) {
-	    printtext(&ctx, "%c%s%c %s%s@%s%s invites you to %c%s%c",
-		      BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT,
-		      BOLD, channel, BOLD);
-	} else {
-	    /*
-	     * TODO: Write to the channels where the user that's doing
-	     * the invite is in
-	     */
-	    printtext(&ctx, "%c%s%c %s%s@%s%s invites %c%s%c to %c%s%c",
-		      BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT,
-		      BOLD, target, BOLD, BOLD, channel, BOLD);
-	}
-    } catch (const std::runtime_error &e) {
-	ctx.spec_type = TYPE_SPEC1_WARN;
-	printtext(&ctx, "event_invite: error: %s", e.what());
-    }
 }
