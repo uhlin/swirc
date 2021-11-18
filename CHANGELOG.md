@@ -30,6 +30,7 @@ All notable changes to this project will be documented in this file.
   - `commands/msg.c`
   - `commands/squery.cpp`
   - `commands/znc.cpp`
+  - `events/account.cpp`
   - `events/banlist.cpp`
   - `events/servlist.cpp`
   - `statusbar.cpp`
