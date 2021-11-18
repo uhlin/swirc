@@ -191,7 +191,7 @@ is_valid_regex(const char *str, char **err_reason)
 	if (strings_match(str, "")) {
 		*err_reason = sw_strdup("no regex");
 		return false;
-	} else if (strlen(str) > regex_maxlen) {
+	} else if (xstrnlen(str, (regex_maxlen + 1)) > regex_maxlen) {
 		*err_reason = sw_strdup("regex too long");
 		return false;
 	}
