@@ -32,6 +32,7 @@
 #include <string.h>
 
 #include "dataClassify.h"
+#include "strHand.h"
 
 static const size_t	nickname_len_max = 45;
 static const size_t	username_len_max = 100;
@@ -113,7 +114,7 @@ is_valid_nickname(const char *nickname)
 	    "-[\\]^_`{|}";
 
 	if (nickname == NULL || *nickname == '\0' ||
-	    strlen(nickname) > nickname_len_max)
+	    xstrnlen(nickname, nickname_len_max + 1) > nickname_len_max)
 		return false;
 
 	for (const char *ccp = &nickname[0]; *ccp != '\0'; ccp++) {
@@ -132,7 +133,7 @@ is_valid_username(const char *username)
 	    "$-./[\\]^_`{|}~";
 
 	if (username == NULL || *username == '\0' ||
-	    strlen(username) > username_len_max)
+	    xstrnlen(username, username_len_max + 1) > username_len_max)
 		return false;
 
 	for (const char *ccp = &username[0]; *ccp != '\0'; ccp++) {
@@ -147,7 +148,7 @@ bool
 is_valid_real_name(const char *real_name)
 {
 	if (real_name == NULL || *real_name == '\0' ||
-	    strlen(real_name) > real_name_len_max)
+	    xstrnlen(real_name, real_name_len_max + 1) > real_name_len_max)
 		return false;
 
 	for (const char *ccp = &real_name[0]; *ccp != '\0'; ccp++) {
@@ -165,7 +166,7 @@ is_valid_hostname(const char *hostname)
 	    "abcdefghijklmnopqrstuvwxyz.0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ:";
 
 	if (hostname == NULL || *hostname == '\0' ||
-	    strlen(hostname) > hostname_len_max)
+	    xstrnlen(hostname, hostname_len_max + 1) > hostname_len_max)
 		return false;
 
 	for (const char *ccp = &hostname[0]; *ccp != '\0'; ccp++) {
