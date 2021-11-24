@@ -121,23 +121,23 @@ get_encoded_msg(const char *source)
 int
 sasl_scram_sha_send_client_first_msg(void)
 {
-    char	*msg      = NULL;
-    const char	*username = Config("sasl_username");
+	char		*msg;
+	const char	*encoded_msg;
+	const char	*username = Config("sasl_username");
 
-    if (!is_valid_username(username))
-	return -1;
+	if (!is_valid_username(username))
+		return -1;
 
-    generate_and_store_nonce();
+	generate_and_store_nonce();
 
-    msg = strdup_printf("n,,n=%s,r=%s", username, nonce);
-    const char *encoded_msg = get_encoded_msg(msg);
-    free(msg);
+	msg = strdup_printf("n,,n=%s,r=%s", username, nonce);
+	encoded_msg = get_encoded_msg(msg);
+	free(msg);
 
-    if (strings_match(encoded_msg, "") ||
-	net_send("AUTHENTICATE %s", encoded_msg) < 0)
-	return -1;
-
-    return 0;
+	if (strings_match(encoded_msg, "") || net_send("AUTHENTICATE %s",
+	    encoded_msg) < 0)
+		return -1;
+	return 0;
 }
 
 /* C: c=biws,r=rOprNGfwEbeRWgbNEkqO%hvYDpWUa2RaTCAfuxFIlj)hNlF$k0,
