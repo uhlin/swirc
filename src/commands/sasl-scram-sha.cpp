@@ -332,19 +332,21 @@ get_client_final_msg_wo_proof()
 static unsigned char *
 get_auth_msg(const char *b64msg, size_t *auth_msg_len)
 {
-    char	*msg_bare       = get_client_first_msg_bare();
-    char	*serv_first_msg = get_decoded_msg(b64msg, NULL);
-    char	*msg_wo_proof   = get_client_final_msg_wo_proof();
+	char	*msg_bare, *msg_wo_proof, *serv_first_msg;
+	char	*out;
 
-    char *out = strdup_printf("%s,%s,%s",
-	msg_bare, serv_first_msg, msg_wo_proof);
+	msg_bare = get_client_first_msg_bare();
+	msg_wo_proof = get_client_final_msg_wo_proof();
+	serv_first_msg = get_decoded_msg(b64msg, NULL);
 
-    delete[] msg_bare;
-    delete[] serv_first_msg;
-    delete[] msg_wo_proof;
+	out = strdup_printf("%s,%s,%s", msg_bare, serv_first_msg, msg_wo_proof);
 
-    *auth_msg_len = strlen(out);
-    return reinterpret_cast<unsigned char *>(out);
+	delete[] msg_bare;
+	delete[] msg_wo_proof;
+	delete[] serv_first_msg;
+
+	*auth_msg_len = strlen(out);
+	return reinterpret_cast<unsigned char *>(out);
 }
 
 int
