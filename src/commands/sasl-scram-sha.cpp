@@ -168,25 +168,25 @@ sasl_scram_sha_send_client_final_msg(const char *proof)
 static char *
 get_decoded_msg(const char *source, int *outlen)
 {
-    char *decoded_msg = NULL;
-    int length_needed = b64_decode(source, NULL, 0);
+	char	*decoded_msg = NULL;
+	int	 length_needed = b64_decode(source, NULL, 0);
 
-    if (length_needed < 0)
-	return NULL;
-    if (outlen)
-	*outlen = length_needed;
+	if (length_needed < 0)
+		return NULL;
+	if (outlen)
+		*outlen = length_needed;
 
-    length_needed += 1;
-    decoded_msg = new char[length_needed];
-    decoded_msg[length_needed - 1] = '\0';
+	length_needed += 1;
+	decoded_msg = new char[length_needed];
+	decoded_msg[length_needed - 1] = '\0';
 
-    if (b64_decode(source, reinterpret_cast<uint8_t *>(decoded_msg),
-	length_needed) == -1) {
-	delete[] decoded_msg;
-	return NULL;
-    }
+	if (b64_decode(source, reinterpret_cast<uint8_t *>(decoded_msg),
+	    length_needed) == -1) {
+		delete[] decoded_msg;
+		return NULL;
+	}
 
-    return decoded_msg;
+	return decoded_msg;
 }
 
 /* S: r=rOprNGfwEbeRWgbNEkqO%hvYDpWUa2RaTCAfuxFIlj)hNlF$k0,
