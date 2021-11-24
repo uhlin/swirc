@@ -350,19 +350,24 @@ get_auth_msg(const char *b64msg, size_t *auth_msg_len)
 int
 sasl_scram_sha_handle_serv_first_msg(const char *msg)
 {
-    unsigned char *pass = NULL;
-    unsigned char *salt = NULL;
-    int iter = PKCS5_DEFAULT_ITER;
-    int passwdlen = 0;
-    int saltlen = 0;
+	char		 proof[EVP_MAX_MD_SIZE] = { '\0' };
+	int		 iter = PKCS5_DEFAULT_ITER;
+	int		 passwdlen = 0;
+	int		 saltlen = 0;
+	size_t		 auth_msg_len;
+	unsigned char	*auth_msg;
+	unsigned char	*pass = NULL;
+	unsigned char	*salt = NULL;
+	unsigned char	 stored_key[SHA256_DIGEST_LENGTH];
 
-    if (get_sfm_components(msg, &salt, &saltlen, &iter) == -1 ||
-	(pass = get_salted_password(salt, saltlen, iter, &passwdlen)) == NULL) {
+	if (get_sfm_components(msg, &salt, &saltlen, &iter) == -1 ||
+	    (pass = get_salted_password(salt, saltlen, iter, &passwdlen)) ==
+	    NULL) {
+		delete[] salt;
+		return -1;
+	}
+
 	delete[] salt;
-	return -1;
-    }
-
-    delete[] salt;
 
 /***************************************************
  *
@@ -371,26 +376,26 @@ sasl_scram_sha_handle_serv_first_msg(const char *msg)
  *
  */
 
-    struct digest_context client_key(pass, passwdlen,
-	reinterpret_cast<const unsigned char *>("Client Key"), 10);
-    struct digest_context server_key(pass, passwdlen,
-	reinterpret_cast<const unsigned char *>("Server Key"), 10);
+	struct digest_context client_key(pass, passwdlen,
+	    reinterpret_cast<const unsigned char *>("Client Key"), 10);
+	struct digest_context server_key(pass, passwdlen,
+	    reinterpret_cast<const unsigned char *>("Server Key"), 10);
 
-    if (get_digest(&client_key) == -1 ||
-	get_digest(&server_key) == -1) {
+	if (get_digest(&client_key) == -1 || get_digest(&server_key) == -1) {
+		delete[] pass;
+		return -1;
+	}
+
 	delete[] pass;
-	return -1;
-    }
 
-    delete[] pass;
-    unsigned char stored_key[SHA256_DIGEST_LENGTH];
+	/*
+	 * StoredKey: H(ClientKey)
+	 */
+	if (SHA256(client_key.md, client_key.md_len, stored_key) == NULL)
+		return -1;
 
-    /* StoredKey: H(ClientKey) */
-    if (SHA256(client_key.md, client_key.md_len, stored_key) == NULL)
-	return -1;
-
-    size_t auth_msg_len = 0;
-    unsigned char *auth_msg = get_auth_msg(msg, &auth_msg_len);
+	auth_msg_len = 0;
+	auth_msg = get_auth_msg(msg, &auth_msg_len);
 
 /***************************************************
  *
@@ -399,28 +404,31 @@ sasl_scram_sha_handle_serv_first_msg(const char *msg)
  *
  */
 
-    struct digest_context client_signature(stored_key, SHA256_DIGEST_LENGTH,
-	auth_msg, auth_msg_len);
-    struct digest_context server_signature(server_key.md, server_key.md_len,
-	auth_msg, auth_msg_len);
+	struct digest_context client_signature(stored_key, SHA256_DIGEST_LENGTH,
+	    auth_msg, auth_msg_len);
+	struct digest_context server_signature(server_key.md, server_key.md_len,
+	    auth_msg, auth_msg_len);
 
-    if (get_digest(&client_signature) == -1 ||
-	get_digest(&server_signature) == -1) {
+	if (get_digest(&client_signature) == -1 ||
+	    get_digest(&server_signature) == -1) {
+		free(auth_msg);
+		return -1;
+	}
+
 	free(auth_msg);
-	return -1;
-    }
 
-    free(auth_msg);
-    memcpy(signature_expected, server_signature.md, server_signature.md_len);
-    signature_expected_len = server_signature.md_len;
-    char proof[EVP_MAX_MD_SIZE] = { '\0' };
+	(void) memcpy(signature_expected, server_signature.md,
+	    server_signature.md_len);
+	signature_expected_len = server_signature.md_len;
 
-    /* ClientProof: ClientKey XOR ClientSignature */
-    for (unsigned int i = 0;
-	 i < MIN(client_key.md_len, client_signature.md_len); i++)
-	proof[i] = client_key.md[i] ^ client_signature.md[i];
+	/*
+	 * ClientProof: ClientKey XOR ClientSignature
+	 */
+	for (unsigned int i = 0; i < MIN(client_key.md_len,
+	    client_signature.md_len); i++)
+		proof[i] = client_key.md[i] ^ client_signature.md[i];
 
-    return sasl_scram_sha_send_client_final_msg(get_encoded_msg(proof));
+	return sasl_scram_sha_send_client_final_msg(get_encoded_msg(proof));
 }
 
 /*
