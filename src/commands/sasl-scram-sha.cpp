@@ -38,6 +38,7 @@
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
 
+#include "../assertAPI.h"
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
@@ -314,14 +315,18 @@ get_client_first_msg_bare()
 static char *
 get_client_final_msg_wo_proof()
 {
-    std::string str("c=biws,r=");
+	char		*msg_wo_proof;
+	size_t		 size;
+	std::string	 str("c=biws,r=");
 
-    str.append(complete_nonce);
+	(void) str.append(complete_nonce);
 
-    const size_t size = str.length() + 1;
-    char *msg_wo_proof = new char[size];
-    (void) sw_strcpy(msg_wo_proof, str.c_str(), size);
-    return msg_wo_proof;
+	size = str.length() + 1;
+	msg_wo_proof = new char[size];
+	errno = sw_strcpy(msg_wo_proof, str.c_str(), size);
+	sw_assert_perror(errno);
+
+	return msg_wo_proof;
 }
 
 /*
