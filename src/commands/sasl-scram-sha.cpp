@@ -106,15 +106,12 @@ generate_and_store_nonce()
 static const char *
 get_encoded_msg(const char *source)
 {
-    static char encoded_msg[4096];
+	static char	encoded_msg[4096] = { '\0' };
 
-    memset(encoded_msg, 0, ARRAY_SIZE(encoded_msg));
-
-    if (b64_encode(reinterpret_cast<const uint8_t *>(source), strlen(source),
-	encoded_msg, ARRAY_SIZE(encoded_msg)) == -1)
-	return "";
-
-    return &encoded_msg[0];
+	if (b64_encode(reinterpret_cast<const uint8_t *>(source),
+	    strlen(source), encoded_msg, ARRAY_SIZE(encoded_msg)) == -1)
+		return "";
+	return (&encoded_msg[0]);
 }
 
 /* C: n,,n=user,r=rOprNGfwEbeRWgbNEkqO */
