@@ -265,30 +265,36 @@ get_sfm_components(const char *msg, unsigned char **salt, int *saltlen,
  */
 static unsigned char *
 get_salted_password(const unsigned char *salt, int saltlen, int iter,
-		    int *outsize)
+    int *outsize)
 {
-    unsigned char *out = NULL;
+	unsigned char *out = NULL;
 
-    try {
-	if (*outsize = EVP_MD_size(EVP_sha256()), *outsize < 0)
-	    throw std::runtime_error("message digest size negative");
+	try {
+		const char *pass;
 
-	out = new unsigned char[*outsize];
-	const char *pass = config_get_normalized_sasl_password();
+		if (*outsize = EVP_MD_size(EVP_sha256()), *outsize < 0) {
+			throw std::runtime_error("message digest size "
+			    "negative");
+		}
 
-	if (pass == NULL)
-	    throw std::runtime_error("unable to get normalized sasl password");
-	else if (!PKCS5_PBKDF2_HMAC(pass, -1, salt, saltlen, iter, EVP_sha256(),
-	    *outsize, out))
-	    throw std::runtime_error("unable to get salted password");
-    } catch (std::runtime_error &e) {
-	*outsize = 0;
-	delete[] out;
-	err_log(0, "get_salted_password: %s", e.what());
-	return NULL;
-    }
+		out = new unsigned char[*outsize];
 
-    return out;
+		if ((pass = config_get_normalized_sasl_password()) == NULL) {
+			throw std::runtime_error("unable to get normalized "
+			    "sasl password");
+		} else if (!PKCS5_PBKDF2_HMAC(pass, -1, salt, saltlen, iter,
+		    EVP_sha256(), *outsize, out)) {
+			throw std::runtime_error("unable to get salted "
+			    "password");
+		}
+	} catch (const std::runtime_error& e) {
+		*outsize = 0;
+		delete[] out;
+		err_log(0, "get_salted_password: %s", e.what());
+		return NULL;
+	}
+
+	return out;
 }
 
 static int
