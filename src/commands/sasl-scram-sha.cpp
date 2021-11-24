@@ -145,24 +145,25 @@ sasl_scram_sha_send_client_first_msg(void)
 int
 sasl_scram_sha_send_client_final_msg(const char *proof)
 {
-    std::string str("c=biws,r=");
+	char		*cli_final_msg;
+	size_t		 size;
+	std::string	 str("c=biws,r=");
 
-    str.append(complete_nonce);
-    str.append(",p=");
-    str.append(proof);
+	(void) str.append(complete_nonce);
+	(void) str.append(",p=").append(proof);
 
-    const size_t size = str.length() + 1;
-    char *cli_final_msg = new char[size];
+	size = str.length() + 1;
+	cli_final_msg = new char[size];
 
-    if (sw_strcpy(cli_final_msg, str.c_str(), size) != 0 ||
-	net_send("AUTHENTICATE %s", get_encoded_msg(cli_final_msg)) < 0) {
+	if (sw_strcpy(cli_final_msg, str.c_str(), size) != 0 ||
+	    net_send("AUTHENTICATE %s", get_encoded_msg(cli_final_msg)) < 0) {
+		delete[] cli_final_msg;
+		return -1;
+	}
+
+	debug("sasl_scram_sha_send_client_final_msg: C: %s", cli_final_msg);
 	delete[] cli_final_msg;
-	return -1;
-    }
-
-    debug("sasl_scram_sha_send_client_final_msg: C: %s", cli_final_msg);
-    delete[] cli_final_msg;
-    return 0;
+	return 0;
 }
 
 static char *
