@@ -74,11 +74,11 @@ digest_context::digest_context(unsigned char *key, int key_len,
 
 volatile bool g_sasl_scram_sha_got_first_msg = false;
 
-static char	*complete_nonce = NULL;
-static char	 nonce[64] = { '\0' };
+static char *complete_nonce = NULL;
+static char nonce[64] = { '\0' };
 
-static unsigned char	 signature_expected[EVP_MAX_MD_SIZE] = { '\0' };
-static unsigned int	 signature_expected_len = 0;
+static unsigned char signature_expected[EVP_MAX_MD_SIZE] = { '\0' };
+static unsigned int signature_expected_len = 0;
 
 /*lint -sem(get_decoded_msg, r_null) */
 /*lint -sem(get_salted_password, r_null) */
