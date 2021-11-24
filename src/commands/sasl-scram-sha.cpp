@@ -49,6 +49,29 @@
 
 #include "sasl-scram-sha.h"
 
+struct digest_context {
+	unsigned char		*key;
+	int			 key_len;
+	const unsigned char	*d;
+	size_t			 n;
+	unsigned char		 md[EVP_MAX_MD_SIZE];
+	unsigned int		 md_len;
+
+	digest_context(unsigned char *key, int key_len, const unsigned char *d,
+	    size_t n);
+};
+
+digest_context::digest_context(unsigned char *key, int key_len,
+    const unsigned char *d, size_t n)
+{
+	this->key = key;
+	this->key_len = key_len;
+	this->d = d;
+	this->n = n;
+	BZERO(this->md, ARRAY_SIZE(this->md));
+	this->md_len = 0;
+}
+
 volatile bool g_sasl_scram_sha_got_first_msg = false;
 
 static char	*complete_nonce = NULL;
@@ -267,26 +290,6 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 
     return out;
 }
-
-struct digest_context {
-    unsigned char	*key;
-    int			 key_len;
-    const unsigned char	*d;
-    size_t		 n;
-    unsigned char	 md[EVP_MAX_MD_SIZE];
-    unsigned int	 md_len;
-
-    digest_context(unsigned char *key, int key_len, const unsigned char *d,
-		   size_t n)
-	{
-	    this->key = key;
-	    this->key_len = key_len;
-	    this->d = d;
-	    this->n = n;
-	    memset(this->md, 0, ARRAY_SIZE(this->md));
-	    this->md_len = 0;
-	}
-};
 
 static int
 get_digest(struct digest_context *ctx)
