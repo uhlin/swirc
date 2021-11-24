@@ -193,71 +193,74 @@ get_decoded_msg(const char *source, int *outlen)
       s=W22ZaJ0SNY7soEsUEjb6gQ==,i=4096 */
 static int
 get_sfm_components(const char *msg, unsigned char **salt, int *saltlen,
-		   int *iter)
+    int *iter)
 {
-    char	*decoded_msg = NULL;
-    bool	 ok = false;
+	bool	 ok = false;
+	char	*decoded_msg = NULL;
 
-    *salt = NULL;
-    *saltlen = 0;
-    *iter = PKCS5_DEFAULT_ITER;
-
-    try {
-	if ((decoded_msg = get_decoded_msg(msg, NULL)) == NULL)
-	    throw std::runtime_error("unable to get decoded message");
-
-	debug("get_sfm_components: S: %s", decoded_msg);
-	char *cp = decoded_msg;
-
-	if (strncmp(cp, "r=", 2) != STRINGS_MATCH)
-	    throw std::runtime_error("expected nonce");
-
-	cp += 2;
-
-	if (strncmp(cp, nonce, strlen(nonce)) != STRINGS_MATCH)
-	    throw std::runtime_error("nonce mismatch");
-
-	size_t n = strcspn(cp, ",");
-	cp[n] = '\0';
-	free(complete_nonce);
-	complete_nonce = sw_strdup(cp);
-	cp[n] = ',';
-
-	if ((cp = strstr(cp, ",s=")) == NULL)
-	    throw std::runtime_error("no base64-encoded salt");
-
-	cp += 3;
-	n = strcspn(cp, ",");
-	cp[n] = '\0';
-	char *b64salt = sw_strdup(cp);
-	cp[n] = ',';
-	*salt =
-	    reinterpret_cast<unsigned char *>(get_decoded_msg(b64salt, saltlen));
-	free(b64salt);
-
-	if (*salt == NULL)
-	    throw std::runtime_error("unable to decode salt");
-	else if ((cp = strstr(cp, ",i=")) == NULL)
-	    throw std::runtime_error("no iteration count");
-
-	cp += 3;
-
-	if (!is_numeric(cp))
-	    throw std::runtime_error("iteration count not numeric");
-
-	*iter = (int) strtol(cp, NULL, 10);
-	ok = true;
-    } catch (std::runtime_error &e) {
-	delete[] *salt;
 	*salt = NULL;
 	*saltlen = 0;
 	*iter = PKCS5_DEFAULT_ITER;
-	err_log(0, "get_sfm_components: %s", e.what());
-    }
 
-    if (decoded_msg)
-	delete[] decoded_msg;
-    return ok ? 0 : -1;
+	try {
+		if ((decoded_msg = get_decoded_msg(msg, NULL)) == NULL) {
+			throw std::runtime_error("unable to get decoded "
+			    "message");
+		}
+
+		debug("get_sfm_components: S: %s", decoded_msg);
+		char *cp = decoded_msg;
+
+		if (strncmp(cp, "r=", 2) != STRINGS_MATCH)
+			throw std::runtime_error("expected nonce");
+
+		cp += 2;
+
+		if (strncmp(cp, nonce, strlen(nonce)) != STRINGS_MATCH)
+			throw std::runtime_error("nonce mismatch");
+
+		size_t n = strcspn(cp, ",");
+		cp[n] = '\0';
+		free(complete_nonce);
+		complete_nonce = sw_strdup(cp);
+		cp[n] = ',';
+
+		if ((cp = strstr(cp, ",s=")) == NULL)
+			throw std::runtime_error("no base64-encoded salt");
+
+		cp += 3;
+		n = strcspn(cp, ",");
+		cp[n] = '\0';
+		char *b64salt = sw_strdup(cp);
+		cp[n] = ',';
+		*salt =
+		    reinterpret_cast<unsigned char *>(get_decoded_msg(b64salt,
+		    saltlen));
+		free(b64salt);
+
+		if (*salt == NULL)
+			throw std::runtime_error("unable to decode salt");
+		else if ((cp = strstr(cp, ",i=")) == NULL)
+			throw std::runtime_error("no iteration count");
+
+		cp += 3;
+
+		if (!is_numeric(cp))
+			throw std::runtime_error("iteration count not numeric");
+
+		*iter = (int) strtol(cp, NULL, 10);
+		ok = true;
+	} catch (const std::runtime_error& e) {
+		delete[] *salt;
+		*salt = NULL;
+		*saltlen = 0;
+		*iter = PKCS5_DEFAULT_ITER;
+		err_log(0, "get_sfm_components: %s", e.what());
+	}
+
+	if (decoded_msg)
+		delete[] decoded_msg;
+	return (ok ? 0 : -1);
 }
 
 /*
