@@ -291,10 +291,10 @@ struct digest_context {
 static int
 get_digest(struct digest_context *ctx)
 {
-    if (HMAC(EVP_sha256(), ctx->key, ctx->key_len, ctx->d, ctx->n, ctx->md,
-	     & (ctx->md_len)) == NULL)
-	return -1;
-    return 0;
+	if (HMAC(EVP_sha256(), ctx->key, ctx->key_len, ctx->d, ctx->n, ctx->md,
+	    & (ctx->md_len)) == NULL)
+		return -1;
+	return 0;
 }
 
 static char *
