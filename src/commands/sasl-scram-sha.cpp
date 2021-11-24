@@ -1,5 +1,5 @@
 /* SASL auth mechanism SCRAM-SHA-256
-   Copyright (C) 2019-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2021 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -429,37 +429,47 @@ sasl_scram_sha_handle_serv_first_msg(const char *msg)
 int
 sasl_scram_sha_handle_serv_final_msg(const char *msg)
 {
-    char		*decoded_msg  = NULL;
-    unsigned char	*signature    = NULL;
-    bool		 signature_ok = false;
+	bool	 signature_ok = false;
+	char	*decoded_msg = NULL;
 
-    try {
-	char *cp = NULL;
+	try {
+		char		*cp;
+		unsigned char	*signature;
 
-	if ((decoded_msg = get_decoded_msg(msg, NULL)) == NULL)
-	    throw std::runtime_error("unable to get decoded message");
-	else if (strncmp(decoded_msg, "v=", 2) != STRINGS_MATCH)
-	    throw std::runtime_error("expected server signature");
+		if ((decoded_msg = get_decoded_msg(msg, NULL)) == NULL) {
+			throw std::runtime_error("unable to get decoded "
+			    "message");
+		} else if (strncmp(decoded_msg, "v=", 2) != STRINGS_MATCH) {
+			throw std::runtime_error("expected server signature");
+		}
 
-	debug("sasl_scram_sha_handle_serv_final_msg: S: %s", decoded_msg);
-	cp = decoded_msg;
-	cp += 2;
-	signature = reinterpret_cast<unsigned char *>(get_decoded_msg(cp, NULL));
+		debug("sasl_scram_sha_handle_serv_final_msg: S: %s",
+		    decoded_msg);
 
-	if (signature == NULL)
-	    throw std::runtime_error("cannot decode server signature!");
+		cp = decoded_msg;
+		cp += 2;
 
-	signature_ok =
-	    memcmp(signature, signature_expected, signature_expected_len) == 0;
+		if ((signature =
+		    reinterpret_cast<unsigned char *>(get_decoded_msg(cp,
+		    NULL))) == NULL) {
+			throw std::runtime_error("cannot decode server "
+			    "signature!");
+		}
 
-	delete[] signature;
-    } catch (std::runtime_error &e) {
+		signature_ok = (memcmp(signature, signature_expected,
+		    signature_expected_len) == 0);
+
+		delete[] signature;
+	} catch (const std::runtime_error& e) {
+		delete[] decoded_msg;
+		err_log(0, "sasl_scram_sha_handle_serv_final_msg: %s",
+		    e.what());
+		return -1;
+	}
+
 	delete[] decoded_msg;
-	err_log(0, "sasl_scram_sha_handle_serv_final_msg: %s", e.what());
-	return -1;
-    }
 
-    delete[] decoded_msg;
-    free_and_null(&complete_nonce);
-    return signature_ok ? 0 : -1;
+	free_and_null(&complete_nonce);
+
+	return (signature_ok ? 0 : -1);
 }
