@@ -300,16 +300,19 @@ get_digest(struct digest_context *ctx)
 static char *
 get_client_first_msg_bare()
 {
-    std::string str("n=");
+	char		*msg_bare;
+	size_t		 size;
+	std::string	 str("n=");
 
-    str.append(Config("sasl_username"));
-    str.append(",r=");
-    str.append(nonce);
+	(void) str.append(Config("sasl_username"));
+	(void) str.append(",r=").append(nonce);
 
-    const size_t size = str.length() + 1;
-    char *msg_bare = new char[size];
-    (void) sw_strcpy(msg_bare, str.c_str(), size);
-    return msg_bare;
+	size = str.length() + 1;
+	msg_bare = new char[size];
+	errno = sw_strcpy(msg_bare, str.c_str(), size);
+	sw_assert_perror(errno);
+
+	return msg_bare;
 }
 
 static char *
