@@ -335,7 +335,7 @@ get_client_final_msg_wo_proof()
 	size_t		 size;
 	std::string	 str("c=biws,r=");
 
-	(void) str.append(complete_nonce);
+	(void) str.append(complete_nonce ? complete_nonce : "");
 
 	size = str.length() + 1;
 	msg_wo_proof = new char[size];
