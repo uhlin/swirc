@@ -57,8 +57,7 @@ struct digest_context {
 	unsigned char		 md[EVP_MAX_MD_SIZE];
 	unsigned int		 md_len;
 
-	digest_context(unsigned char *key, int key_len, const unsigned char *d,
-	    size_t n);
+	digest_context(unsigned char *, int, const unsigned char *, size_t);
 };
 
 digest_context::digest_context(unsigned char *key, int key_len,
