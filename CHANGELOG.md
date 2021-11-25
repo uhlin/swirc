@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
   List.
 - Added function `xstrnlen()` and made use of it
 - Added new [Libera Chat](https://libera.chat/) servers
+- Added null checks
 - Deleted unused includes
 - Fixed macro redefinitions
 - Fixed unchecked return values
