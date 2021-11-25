@@ -146,6 +146,9 @@ sasl_scram_sha_send_client_final_msg(const char *proof)
 	size_t		 size;
 	std::string	 str("c=biws,r=");
 
+	if (complete_nonce == NULL || proof == NULL)
+		return -1;
+
 	(void) str.append(complete_nonce);
 	(void) str.append(",p=").append(proof);
 
