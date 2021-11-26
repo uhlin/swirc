@@ -2,16 +2,16 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added event `531`. Undocumented in the RFC. (You cannot send CTCPs
-  to this user whilst they have the +T `u_noctcp` mode set.)
-- Added event `728` and `729`. Undocumented in the RFC. Channel Quiet
-  List.
-- Added function `xstrnlen()` and made use of it
-- Added new [Libera Chat](https://libera.chat/) servers
-- Added null checks
-- Deleted unused includes
-- Fixed macro redefinitions
-- Fixed unchecked return values
+- **Added** event `531`. Undocumented in the RFC. (You cannot send
+  CTCPs to this user whilst they have the +T `u_noctcp` mode set.)
+- **Added** event `728` and `729`. Undocumented in the RFC. Channel
+  Quiet List.
+- **Added** function `xstrnlen()` and made use of it
+- **Added** new [Libera Chat](https://libera.chat/) servers
+- **Added** null checks
+- **Deleted** unused includes
+- **Fixed** macro redefinitions
+- **Fixed** unchecked return values
 - Made improvements to the following files:
   - `commands/invite.c`
   - `commands/notice.cpp`
@@ -26,7 +26,7 @@ All notable changes to this project will be documented in this file.
   - `readlineTabCompletion.c`
     - Refactoring
   - ...
-- Reformatted and reindented files
+- Reformatted and reindented files:
   - `commands/me.c`
   - `commands/msg.c`
   - `commands/squery.cpp`
