@@ -25,8 +25,8 @@ E=@echo
 Q=@
 
 MACHINE=x64
-NAME_libcrypto=crypto-46
-NAME_libssl=ssl-48
+NAME_libcrypto=crypto-47
+NAME_libssl=ssl-50
 
 LDFLAGS=-LIBPATH:curl-$(CURL_VERSION)/$(MACHINE)\
 	-LIBPATH:libressl-$(LIBRESSL_VERSION)-windows/$(MACHINE)\
