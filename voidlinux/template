@@ -1,6 +1,6 @@
 # Template file for 'swirc'
 pkgname=swirc
-version=3.3.2
+version=3.3.3
 revision=1
 build_style=configure
 configure_args="$(vopt_with notify libnotify)"

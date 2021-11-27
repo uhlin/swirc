@@ -15,9 +15,9 @@ Copyright (C) 2018 Markus Uhlin. All rights reserved.
     Id="A3532170-8CC9-47BF-A0F6-5CB3F3341F12"
     Language="1033"
     Manufacturer="Swirc Development Team"
-    Name="Swirc 3.3.2"
+    Name="Swirc 3.3.3"
     UpgradeCode="4899E3ED-B314-4402-8E66-A2AB1B4632DE"
-    Version="3.3.2.0">
+    Version="3.3.3.0">
 	<Package Compressed="yes" InstallerVersion="400" Platform="x64" />
 
 	<Media Cabinet="swirc.cab" EmbedCab="yes" Id="1" />

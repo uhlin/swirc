@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.3.3] - 2021-11-27 ##
 - **Added** event `531`. Undocumented in the RFC. (You cannot send
   CTCPs to this user whilst they have the +T `u_noctcp` mode set.)
 - **Added** event `728` and `729`. Undocumented in the RFC. Channel
