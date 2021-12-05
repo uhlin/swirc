@@ -65,6 +65,7 @@
 #include "commands/nick.h"
 #include "commands/notice.h"
 #include "commands/op.h"
+#include "commands/rgui.h"
 #include "commands/sasl.h"
 #include "commands/say.h"
 #include "commands/services.h"
@@ -134,6 +135,7 @@ static struct cmds_tag {
 	{ "query",       cmd_query,       false, query_usage,       ARRAY_SIZE(query_usage),       false },
 	{ "quit",        cmd_quit,        false, quit_usage,        ARRAY_SIZE(quit_usage),        false },
 	{ "resize",      cmd_resize,      false, resize_usage,      ARRAY_SIZE(resize_usage),      false },
+	{ "rgui",        cmd_rgui,        false, rgui_usage,        ARRAY_SIZE(rgui_usage),        false },
 	{ "rules",       cmd_rules,       true,  rules_usage,       ARRAY_SIZE(rules_usage),       true  },
 	{ "sasl",        cmd_sasl,        false, sasl_usage,        ARRAY_SIZE(sasl_usage),        true  },
 	{ "say",         cmd_say,         true,  say_usage,         ARRAY_SIZE(say_usage),         false },

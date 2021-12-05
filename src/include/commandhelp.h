@@ -443,6 +443,13 @@ static const char *resize_usage[] = {
     "",
 };
 
+static const char *rgui_usage[] = {
+    "usage: /rgui ...",
+    "",
+    "No help yet.",
+    "",
+};
+
 static const char *rules_usage[] = {
     "usage: /rules",
     "",

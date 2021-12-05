@@ -14,6 +14,7 @@ OBJS=$(COMMANDS_DIR)ban.obj\
 	$(COMMANDS_DIR)nick.obj\
 	$(COMMANDS_DIR)notice.obj\
 	$(COMMANDS_DIR)op.obj\
+	$(COMMANDS_DIR)rgui.obj\
 	$(COMMANDS_DIR)sasl-scram-sha.obj\
 	$(COMMANDS_DIR)sasl.obj\
 	$(COMMANDS_DIR)say.obj\
