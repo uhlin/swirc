@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018-2021 Markus Uhlin. All rights reserved.
 .\"
-.Dd June 18, 2021
+.Dd December 7, 2021
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -227,6 +227,27 @@ For mechanism PLAIN and SCRAM-SHA-256.
 .\" ----------------------------------------
 .It Sy sasl_username Pq Em string
 SASL username
+.\" ----------------------------------------
+.\" SERVER CIPHER SUITE
+.\" ----------------------------------------
+.It Sy server_cipher_suite Pq Em string
+Server cipher suite.
+Which can have one of the following values:
+.Bl -bullet -compact
+.It
+secure
+.It
+compat
+.It
+legacy
+.It
+all
+.El
+.Pp
+The server cipher suite is used when you start a TLS server in
+.Xr swirc 1
+used for remote GUI connections.
+(Managed using the \fBrgui\fR command).
 .\" ----------------------------------------
 .\" SHOW PING PONG
 .\" ----------------------------------------
