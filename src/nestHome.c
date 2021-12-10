@@ -48,7 +48,7 @@
 #include "strdup_printf.h"
 #include "theme.h"
 
-char	*g_user = "";
+char	*g_user = NULL;
 
 char	*g_home_dir = NULL;
 char	*g_tmp_dir = NULL;
