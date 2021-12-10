@@ -190,9 +190,10 @@ get_list_of_matching_znc_commands(const char *search_var)
 				}
 			} else {
 				if ((errno = textBuf_ins_next(matches,
-				    textBuf_tail(matches), cmd, -1)) != 0)
+				    textBuf_tail(matches), cmd, -1)) != 0) {
 					err_sys("get_list_of_matching_znc_"
 					    "commands: textBuf_ins_next");
+				}
 			}
 		}
 	}
