@@ -52,10 +52,10 @@ static const char *root_ca_script_lines[] = {
 	SCR_SHEBANG,
 	SCR_COMMENT " Create the root CA",
 	"",
-	"openssl req -newkey rsa:2048 -sha1 -keyout rootkey.pem -out "
+	"openssl req -newkey rsa:2048 -sha256 -keyout rootkey.pem -out "
 	"rootreq.pem",
 	"",
-	"openssl x509 -req -in rootreq.pem -sha1 -extfile " EXTFILE
+	"openssl x509 -req -in rootreq.pem -sha256 -extfile " EXTFILE
 	" -extensions v3_ca -signkey rootkey.pem -out rootcert.pem",
 	"",
 	CAT_CMD " rootcert.pem > " ROOT_PEM,
@@ -69,10 +69,10 @@ static const char *server_ca_script_lines[] = {
 	SCR_SHEBANG,
 	SCR_COMMENT " Create the server CA (and sign it with the root CA)",
 	"",
-	"openssl req -newkey rsa:2048 -sha1 -keyout serverCAkey.pem -out "
+	"openssl req -newkey rsa:2048 -sha256 -keyout serverCAkey.pem -out "
 	"serverCAreq.pem",
 	"",
-	"openssl x509 -req -in serverCAreq.pem -sha1 -extfile " EXTFILE
+	"openssl x509 -req -in serverCAreq.pem -sha256 -extfile " EXTFILE
 	" -extensions v3_ca"
 	" -CA " ROOT_PEM
 	" -CAkey " ROOT_PEM
@@ -91,10 +91,10 @@ static const char *server_cert_script_lines[] = {
 	SCR_COMMENT " Create the server's certificate "
 	"(and sign it with the server CA)",
 	"",
-	"openssl req -newkey rsa:2048 -sha1 -keyout serverkey.pem -out "
+	"openssl req -newkey rsa:2048 -sha256 -keyout serverkey.pem -out "
 	"serverreq.pem",
 	"",
-	"openssl x509 -req -in serverreq.pem -sha1 -extfile " EXTFILE
+	"openssl x509 -req -in serverreq.pem -sha256 -extfile " EXTFILE
 	" -extensions usr_cert"
 	" -CA " SERVER_CA_PEM
 	" -CAkey " SERVER_CA_PEM
@@ -114,10 +114,10 @@ static const char *client_cert_script_lines[] = {
 	SCR_COMMENT " Create the client certificate "
 	"(and sign it with the root CA)",
 	"",
-	"openssl req -newkey rsa:2048 -sha1 -keyout clientkey.pem -out "
+	"openssl req -newkey rsa:2048 -sha256 -keyout clientkey.pem -out "
 	"clientreq.pem",
 	"",
-	"openssl x509 -req -in clientreq.pem -sha1 -extfile " EXTFILE
+	"openssl x509 -req -in clientreq.pem -sha256 -extfile " EXTFILE
 	" -extensions usr_cert"
 	" -CA " ROOT_PEM
 	" -CAkey " ROOT_PEM
