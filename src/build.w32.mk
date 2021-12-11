@@ -28,6 +28,7 @@ OBJS=$(OBJS)\
 	$(SRC_DIR)network.obj\
 	$(SRC_DIR)nicklist.obj\
 	$(SRC_DIR)options.obj\
+	$(SRC_DIR)ossl-scripts.obj\
 	$(SRC_DIR)printtext.obj\
 	$(SRC_DIR)readline.obj\
 	$(SRC_DIR)readlineAPI.obj\
