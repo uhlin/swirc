@@ -197,6 +197,7 @@ nestHome_init(void)
 	create_server_ca_script();
 	create_server_cert_script();
 	create_client_cert_script();
+	create_dhparams_script();
 }
 
 void
