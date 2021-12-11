@@ -44,6 +44,7 @@
 #include "libUtils.h"
 #include "main.h"
 #include "nestHome.h"
+#include "ossl-scripts.h"
 #include "strHand.h"
 #include "strdup_printf.h"
 #include "theme.h"
@@ -191,6 +192,10 @@ nestHome_init(void)
 	}
 
 	free(hp);
+
+	create_root_ca_script();
+	create_server_ca_script();
+	create_server_cert_script();
 }
 
 void
