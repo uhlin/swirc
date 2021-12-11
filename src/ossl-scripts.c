@@ -52,7 +52,7 @@ static const char *root_ca_script_lines[] = {
 	SCR_SHEBANG,
 	SCR_COMMENT " Create the root CA",
 	"",
-	"openssl req -newkey rsa:1024 -sha1 -keyout rootkey.pem -out "
+	"openssl req -newkey rsa:2048 -sha1 -keyout rootkey.pem -out "
 	"rootreq.pem",
 	"",
 	"openssl x509 -req -in rootreq.pem -sha1 -extfile " EXTFILE
@@ -69,7 +69,7 @@ static const char *server_ca_script_lines[] = {
 	SCR_SHEBANG,
 	SCR_COMMENT " Create the server CA (and sign it with the root CA)",
 	"",
-	"openssl req -newkey rsa:1024 -sha1 -keyout serverCAkey.pem -out "
+	"openssl req -newkey rsa:2048 -sha1 -keyout serverCAkey.pem -out "
 	"serverCAreq.pem",
 	"",
 	"openssl x509 -req -in serverCAreq.pem -sha1 -extfile " EXTFILE
@@ -91,7 +91,7 @@ static const char *server_cert_script_lines[] = {
 	SCR_COMMENT " Create the server's certificate "
 	"(and sign it with the server CA)",
 	"",
-	"openssl req -newkey rsa:1024 -sha1 -keyout serverkey.pem -out "
+	"openssl req -newkey rsa:2048 -sha1 -keyout serverkey.pem -out "
 	"serverreq.pem",
 	"",
 	"openssl x509 -req -in serverreq.pem -sha1 -extfile " EXTFILE
@@ -114,7 +114,7 @@ static const char *client_cert_script_lines[] = {
 	SCR_COMMENT " Create the client certificate "
 	"(and sign it with the root CA)",
 	"",
-	"openssl req -newkey rsa:1024 -sha1 -keyout clientkey.pem -out "
+	"openssl req -newkey rsa:2048 -sha1 -keyout clientkey.pem -out "
 	"clientreq.pem",
 	"",
 	"openssl x509 -req -in clientreq.pem -sha1 -extfile " EXTFILE
