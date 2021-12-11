@@ -130,6 +130,15 @@ static const char *client_cert_script_lines[] = {
 	"openssl x509 -subject -issuer -noout -in " CLIENT_PEM,
 };
 
+static const char dhparams_script_title[] = "5-dhparams";
+static const char *dhparams_script_lines[] = {
+	SCR_SHEBANG,
+	SCR_COMMENT " Create DH parameter files",
+	"",
+	"openssl dhparam -check -text -5 2048 -out " DH_PEM1,
+	"openssl dhparam -check -text -5 4096 -out " DH_PEM2,
+};
+
 /*lint +e786 */
 
 static void
@@ -204,4 +213,14 @@ create_client_cert_script(void)
 {
 	create_doit(client_cert_script_title, client_cert_script_lines,
 	    ARRAY_SIZE(client_cert_script_lines));
+}
+
+/*
+ * Create DH parameter files
+ */
+void
+create_dhparams_script(void)
+{
+	create_doit(dhparams_script_title, dhparams_script_lines,
+	    ARRAY_SIZE(dhparams_script_lines));
 }
