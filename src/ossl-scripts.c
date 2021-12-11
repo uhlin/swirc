@@ -133,7 +133,8 @@ static const char *client_cert_script_lines[] = {
 static const char dhparams_script_title[] = "5-dhparams";
 static const char *dhparams_script_lines[] = {
 	SCR_SHEBANG,
-	SCR_COMMENT " Create DH parameter files",
+	SCR_COMMENT " Create DH parameter files "
+	"(may take a long time)",
 	"",
 	"openssl dhparam -outform PEM -out " DH_PEM1 " -check -text -5 2048",
 	"openssl dhparam -outform PEM -out " DH_PEM2 " -check -text -5 4096",
