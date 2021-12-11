@@ -92,7 +92,7 @@ static const char *server_cert_script_lines[] = {
 	"(and sign it with the server CA)",
 	"",
 	"openssl req -newkey rsa:2048 -sha256 -keyout serverkey.pem -out "
-	"serverreq.pem",
+	"serverreq.pem -nodes",
 	"",
 	"openssl x509 -req -in serverreq.pem -sha256 -extfile " EXTFILE
 	" -extensions usr_cert"
@@ -115,7 +115,7 @@ static const char *client_cert_script_lines[] = {
 	"(and sign it with the root CA)",
 	"",
 	"openssl req -newkey rsa:2048 -sha256 -keyout clientkey.pem -out "
-	"clientreq.pem",
+	"clientreq.pem -nodes",
 	"",
 	"openssl x509 -req -in clientreq.pem -sha256 -extfile " EXTFILE
 	" -extensions usr_cert"
