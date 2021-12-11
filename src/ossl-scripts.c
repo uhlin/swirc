@@ -135,8 +135,8 @@ static const char *dhparams_script_lines[] = {
 	SCR_SHEBANG,
 	SCR_COMMENT " Create DH parameter files",
 	"",
-	"openssl dhparam -check -text -5 2048 -out " DH_PEM1,
-	"openssl dhparam -check -text -5 4096 -out " DH_PEM2,
+	"openssl dhparam -outform PEM -out " DH_PEM1 " -check -text -5 2048",
+	"openssl dhparam -outform PEM -out " DH_PEM2 " -check -text -5 4096",
 };
 
 /*lint +e786 */
