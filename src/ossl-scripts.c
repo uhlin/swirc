@@ -47,7 +47,7 @@
 
 /*lint -e786 */
 
-static const char root_ca_script_title[] = "1-root-ca";
+static const char  root_ca_script_title[] = "1-root-ca";
 static const char *root_ca_script_lines[] = {
 	SCR_SHEBANG,
 	SCR_COMMENT " Create the root CA",
@@ -64,7 +64,7 @@ static const char *root_ca_script_lines[] = {
 	"openssl x509 -subject -issuer -noout -in " ROOT_PEM,
 };
 
-static const char server_ca_script_title[] = "2-server-ca";
+static const char  server_ca_script_title[] = "2-server-ca";
 static const char *server_ca_script_lines[] = {
 	SCR_SHEBANG,
 	SCR_COMMENT " Create the server CA (and sign it with the root CA)",
@@ -85,7 +85,7 @@ static const char *server_ca_script_lines[] = {
 	"openssl x509 -subject -issuer -noout -in " SERVER_CA_PEM,
 };
 
-static const char server_cert_script_title[] = "3-server-cert";
+static const char  server_cert_script_title[] = "3-server-cert";
 static const char *server_cert_script_lines[] = {
 	SCR_SHEBANG,
 	SCR_COMMENT " Create the server's certificate "
@@ -108,7 +108,7 @@ static const char *server_cert_script_lines[] = {
 	"openssl x509 -subject -issuer -noout -in " SERVER_PEM,
 };
 
-static const char client_cert_script_title[] = "4-client-cert";
+static const char  client_cert_script_title[] = "4-client-cert";
 static const char *client_cert_script_lines[] = {
 	SCR_SHEBANG,
 	SCR_COMMENT " Create the client certificate "
@@ -130,7 +130,7 @@ static const char *client_cert_script_lines[] = {
 	"openssl x509 -subject -issuer -noout -in " CLIENT_PEM,
 };
 
-static const char dhparams_script_title[] = "5-dhparams";
+static const char  dhparams_script_title[] = "5-dhparams";
 static const char *dhparams_script_lines[] = {
 	SCR_SHEBANG,
 	SCR_COMMENT " Create DH parameter files "
