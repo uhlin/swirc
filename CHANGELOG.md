@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added command `/rgui`
 - Added config option `server_cipher_suite`
+- Added creation of OpenSSL scripts
 
 ## [3.3.3] - 2021-11-27 ##
 - **Added** event `531`. Undocumented in the RFC. (You cannot send
