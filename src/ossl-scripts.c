@@ -88,7 +88,7 @@ static const char *server_ca_script_lines[] = {
 static const char server_cert_script_title[] = "3-server-cert";
 static const char *server_cert_script_lines[] = {
 	SCR_SHEBANG,
-	SCR_COMMENT "Create the server's certificate "
+	SCR_COMMENT " Create the server's certificate "
 	"(and sign it with the server CA)",
 	"",
 	"openssl req -newkey rsa:1024 -sha1 -keyout serverkey.pem -out "
