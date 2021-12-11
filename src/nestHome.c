@@ -62,6 +62,16 @@ char	*g_config_file = NULL;
 char	*g_theme_file = NULL;
 
 static void
+create_openssl_scripts(void)
+{
+	create_root_ca_script();
+	create_server_ca_script();
+	create_server_cert_script();
+	create_client_cert_script();
+	create_dhparams_script();
+}
+
+static void
 make_requested_dir(const char *path)
 {
 	if (is_directory(path)) {
@@ -192,12 +202,7 @@ nestHome_init(void)
 	}
 
 	free(hp);
-
-	create_root_ca_script();
-	create_server_ca_script();
-	create_server_cert_script();
-	create_client_cert_script();
-	create_dhparams_script();
+	create_openssl_scripts();
 }
 
 void
