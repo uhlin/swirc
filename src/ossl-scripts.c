@@ -108,6 +108,28 @@ static const char *server_cert_script_lines[] = {
 	"openssl x509 -subject -issuer -noout -in " SERVER_PEM,
 };
 
+static const char client_cert_script_title[] = "4-client-cert";
+static const char *client_cert_script_lines[] = {
+	SCR_SHEBANG,
+	SCR_COMMENT " Create the client certificate "
+	"(and sign it with the root CA)",
+	"",
+	"openssl req -newkey rsa:1024 -sha1 -keyout clientkey.pem -out "
+	"clientreq.pem",
+	"",
+	"openssl x509 -req -in clientreq.pem -sha1 -extfile " EXTFILE
+	" -extensions usr_cert"
+	" -CA " ROOT_PEM
+	" -CAkey " ROOT_PEM
+	" -CAcreateserial -out clientcert.pem",
+	"",
+	CAT_CMD " clientcert.pem > " CLIENT_PEM,
+	CAT_CMD " clientkey.pem >> " CLIENT_PEM,
+	CAT_CMD " rootcert.pem >> " CLIENT_PEM,
+	"",
+	"openssl x509 -subject -issuer -noout -in " CLIENT_PEM,
+};
+
 /*lint +e786 */
 
 static void
@@ -172,4 +194,14 @@ create_server_cert_script(void)
 {
 	create_doit(server_cert_script_title, server_cert_script_lines,
 	    ARRAY_SIZE(server_cert_script_lines));
+}
+
+/*
+ * Create the client certificate (and sign it with the root CA)
+ */
+void
+create_client_cert_script(void)
+{
+	create_doit(client_cert_script_title, client_cert_script_lines,
+	    ARRAY_SIZE(client_cert_script_lines));
 }

@@ -19,6 +19,7 @@ __SWIRC_BEGIN_DECLS
 void	create_root_ca_script(void);
 void	create_server_ca_script(void);
 void	create_server_cert_script(void);
+void	create_client_cert_script(void);
 __SWIRC_END_DECLS
 
 #endif
