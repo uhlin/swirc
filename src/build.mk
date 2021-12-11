@@ -42,6 +42,8 @@ OBJS+=$(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)textBuffer.o\
 	$(SRC_DIR)theme.o\
 	$(SRC_DIR)titlebar.o\
+	$(SRC_DIR)tls-server-unix.o\
+	$(SRC_DIR)tls-server.o\
 	$(SRC_DIR)wcscat.o\
 	$(SRC_DIR)wcscpy.o\
 	$(SRC_DIR)window.o\
