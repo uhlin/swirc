@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added a TLS server
 - Added command `/rgui`
 - Added config option `server_cipher_suite`
 - Added creation of OpenSSL scripts
