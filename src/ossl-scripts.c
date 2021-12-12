@@ -153,8 +153,10 @@ create_doit(const char *title, const char *lines[], const size_t size)
 
 	path = strdup_printf("%s%s%s%s", g_home_dir, SLASH, title, SCR_SUFFIX);
 
-	if (file_exists(path) || (fp = xfopen(path, "w+")) == NULL)
-		goto err;
+	if (file_exists(path) || (fp = xfopen(path, "w+")) == NULL) {
+		free(path);
+		return;
+	}
 	for (size_t i = 0; i < size; i++)
 		(void) fprintf(fp, "%s\n", lines[i]);
 	(void) fclose(fp);
@@ -167,12 +169,6 @@ create_doit(const char *title, const char *lines[], const size_t size)
 		err_log(errno, "create_doit: chmod");
 #endif
 
-	free(path);
-	return;
-
-  err:
-	if (fp)
-		(void) fclose(fp);
 	free(path);
 }
 
