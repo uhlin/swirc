@@ -38,7 +38,7 @@
 
 typedef void __cdecl VoidCdecl;
 
-static const uintptr_t BEGINTHREAD_FAILED = static_cast<uintptr_t>(-1L);
+const uintptr_t g_beginthread_failed = static_cast<uintptr_t>(-1L);
 
 static VoidCdecl
 accept_thread(void *arg)
@@ -66,7 +66,7 @@ tls_server_begin(const int port)
 
 	i = port;
 
-	if (_beginthread(accept_thread, 0, &i) == BEGINTHREAD_FAILED)
+	if (_beginthread(accept_thread, 0, &i) == g_beginthread_failed)
 		err_sys("tls_server_begin: _beginthread");
 }
 
@@ -80,7 +80,7 @@ tls_server_end(void)
 void
 tls_server_com_with_client(SSL *ssl)
 {
-	if (_beginthread(com_with_client, 0, ssl) == BEGINTHREAD_FAILED)
+	if (_beginthread(com_with_client, 0, ssl) == g_beginthread_failed)
 		err_sys("tls_server_com_with_client: _beginthread");
 }
 

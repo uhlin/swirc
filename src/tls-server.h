@@ -3,6 +3,8 @@
 
 #include <openssl/ssl.h>
 
+#include <stdint.h> /* uintptr_t */
+
 #define ROOT_PEM	"root.pem"
 #define SERVER_CA_PEM	"serverCA.pem"
 #define SERVER_PEM	"server.pem"
@@ -32,6 +34,10 @@ BIO	*tls_server_get_accept_bio(const int);
 SSL_CTX	*tls_server_setup_context(void);
 
 /*lint -sem(tls_server_exit_thread, r_no) */
+
+#ifdef WIN32
+extern const uintptr_t g_beginthread_failed;
+#endif
 
 void		 tls_server_begin(const int);
 void		 tls_server_end(void);

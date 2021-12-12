@@ -40,6 +40,7 @@
 #include "network.h"
 #include "strHand.h"
 #include "strdup_printf.h"
+#include "tls-server.h" /* 'g_beginthread_failed' */
 
 #include "commands/connect.h" /* do_connect() */
 
@@ -47,8 +48,7 @@ typedef void __cdecl VoidCdecl;
 
 SOCKET g_socket = INVALID_SOCKET;
 
-static const uintptr_t	BEGINTHREAD_FAILED = (uintptr_t) -1L;
-static uintptr_t	listen_thread_id;
+static uintptr_t listen_thread_id;
 
 bool
 winsock_deinit(void)
@@ -139,7 +139,7 @@ net_do_connect_detached(const char *host, const char *port, const char *pass)
 
 	errno = 0;
 
-	if (_beginthread(do_connect_wrapper, 0, server) == BEGINTHREAD_FAILED)
+	if (_beginthread(do_connect_wrapper, 0, server) == g_beginthread_failed)
 		err_sys("net_do_connect_detached: _beginthread");
 }
 
@@ -171,7 +171,7 @@ void
 net_spawn_listen_thread(void)
 {
 	if ((listen_thread_id = _beginthread(listen_thread_fn, 0, NULL)) ==
-	    BEGINTHREAD_FAILED)
+	    g_beginthread_failed)
 		err_sys("net_spawn_listen_thread: _beginthread");
 }
 
