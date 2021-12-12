@@ -160,7 +160,6 @@ create_doit(const char *title, const char *lines[], const size_t size)
 	for (size_t i = 0; i < size; i++)
 		(void) fprintf(fp, "%s\n", lines[i]);
 	(void) fclose(fp);
-	fp = NULL;
 
 #ifdef UNIX
 	errno = 0;
