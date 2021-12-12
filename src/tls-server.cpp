@@ -73,8 +73,8 @@ get_filename(const char *filename)
 static int
 init_dhparams()
 {
-	char	*name1 = get_filename("dh2048.pem");
-	char	*name2 = get_filename("dh4096.pem");
+	char	*name1 = get_filename(DH_PEM1);
+	char	*name2 = get_filename(DH_PEM2);
 
 	try {
 		BIO *bio;
