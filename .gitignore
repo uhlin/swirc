@@ -9,6 +9,7 @@
 *.o
 *.obj
 *.pot
+*.tgz
 *.wixobj
 *.wixpdb
 *.zip
