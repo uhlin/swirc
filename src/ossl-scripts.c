@@ -137,7 +137,7 @@ static const char *dhparams_script_lines[] = {
 /*lint +e786 */
 
 static void
-create_doit(const char *title, const char *lines[], const size_t size)
+create_doit(const char *title, const char *const lines[], const size_t size)
 {
 	FILE	*fp = NULL;
 	char	*path;
