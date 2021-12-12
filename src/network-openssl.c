@@ -39,6 +39,7 @@
 #include "printtext.h"
 #include "strHand.h"
 #include "strdup_printf.h"
+#include "tls-server.h"
 
 #define CAFILE "trusted_roots.pem"
 #define CADIR NULL
@@ -55,11 +56,6 @@ static pthread_mutex_t	ssl_send_mutex;
 static init_once_t	ssl_send_init_done = ONCE_INITIALIZER;
 static HANDLE		ssl_send_mutex;
 #endif
-
-static const char suite_secure[] = "TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
-static const char suite_compat[] = "HIGH:!aNULL";
-static const char suite_legacy[] = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
-static const char suite_all[] = "ALL:!aNULL:!eNULL";
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
 static void
@@ -422,16 +418,16 @@ net_ssl_init(void)
 	const char *cs = Config("cipher_suite");
 
 	if (strings_match(cs, "secure") || strings_match(cs, "SECURE"))
-		set_ciphers(suite_secure);
+		set_ciphers(g_suite_secure);
 	else if (strings_match(cs, "compat") || strings_match(cs, "COMPAT"))
-		set_ciphers(suite_compat);
+		set_ciphers(g_suite_compat);
 	else if (strings_match(cs, "legacy") || strings_match(cs, "LEGACY"))
-		set_ciphers(suite_legacy);
+		set_ciphers(g_suite_legacy);
 	else if (strings_match(cs, "all") || strings_match(cs, "ALL") ||
 		 strings_match(cs, "insecure") || strings_match(cs, "INSECURE"))
-		set_ciphers(suite_all);
+		set_ciphers(g_suite_all);
 	else
-		set_ciphers(suite_compat);
+		set_ciphers(g_suite_compat);
 }
 
 void
