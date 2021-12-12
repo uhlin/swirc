@@ -46,12 +46,6 @@
 
 #include "sasl.h"
 
-#if defined(UNIX)
-#define SLASH "/"
-#elif defined(WIN32)
-#define SLASH "\\"
-#endif
-
 /*lint -sem(get_filepath, r_null) */
 static char *
 get_filepath(const bool is_public)

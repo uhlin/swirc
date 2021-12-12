@@ -31,6 +31,12 @@
 #include "fallbackattrs.h"
 #endif
 
+#if defined(UNIX)
+#define SLASH "/"
+#elif defined(WIN32)
+#define SLASH "\\"
+#endif
+
 #define ARRAY_SIZE(ar)	(sizeof(ar) / sizeof((ar)[0]))
 #define BZERO(b, len)	((void) memset(b, 0, len))
 #define STRING(x)	#x

@@ -511,12 +511,12 @@ main(int argc, char *argv[])
 #endif
 
 #if defined(UNIX)
-#define SLASH '/'
+#define SLASH_CHAR '/'
 #elif defined(WIN32)
-#define SLASH '\\'
+#define SLASH_CHAR '\\'
 #endif
 
-    char *cp = strrchr(argv[0], SLASH);
+    char *cp = strrchr(argv[0], SLASH_CHAR);
     if (cp == NULL)
 	g_progname = argv[0];
     else

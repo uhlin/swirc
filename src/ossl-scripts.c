@@ -39,12 +39,6 @@
 #include "strdup_printf.h"
 #include "tls-server.h"
 
-#if defined(UNIX)
-#define SLASH "/"
-#elif defined(WIN32)
-#define SLASH "\\"
-#endif
-
 /*lint -e786 */
 
 static const char  root_ca_script_title[] = "1-root-ca";

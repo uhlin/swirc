@@ -46,12 +46,6 @@
 #include "strdup_printf.h"
 #include "tls-server.h"
 
-#if defined(UNIX)
-#define SLASH "/"
-#elif defined(WIN32)
-#define SLASH "\\"
-#endif
-
 const char g_suite_secure[] = "TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE";
 const char g_suite_compat[] = "HIGH:!aNULL";
 const char g_suite_legacy[] = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
