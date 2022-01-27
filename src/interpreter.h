@@ -1,8 +1,14 @@
 #ifndef INTERPRETER_H
 #define INTERPRETER_H
 
-/* Set to 0 to turn off this feature. */
+#include <stdio.h> /* FILE */
+
+/*
+ * Set to 0 to turn off this feature.
+ */
 #define IGNORE_UNRECOGNIZED_IDENTIFIERS 1
+
+#define MAXLINE 3200
 
 enum setting_type {
 	TYPE_BOOLEAN,
@@ -23,6 +29,8 @@ struct Interpreter_in {
 
 __SWIRC_BEGIN_DECLS
 void	Interpreter(const struct Interpreter_in *);
+void	Interpreter_processAllLines(FILE *, const char *, Interpreter_vFunc,
+	    Interpreter_instFunc);
 __SWIRC_END_DECLS
 
 #include "dataClassify.h" /* sw_isspace() */

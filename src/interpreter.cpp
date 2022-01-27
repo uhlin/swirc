@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2021 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2012-2022 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -160,4 +160,36 @@ Interpreter(const struct Interpreter_in *in)
 	}
 
 	clean_up(id, arg);
+}
+
+void
+Interpreter_processAllLines(FILE *fp, const char *path, Interpreter_vFunc func1,
+    Interpreter_instFunc func2)
+{
+	char buf[MAXLINE] = { '\0' };
+	long int line_num = 0;
+
+	while (fgets(buf, sizeof buf, fp) != NULL) {
+		char *line;
+		const char *cp;
+		struct Interpreter_in in;
+
+		cp = &buf[0];
+		adv_while_isspace(&cp);
+		if (strings_match(cp, "") || *cp == '#') {
+			line_num++;
+			continue;
+		}
+
+		line = trim(sw_strdup(cp));
+
+		in.path			= const_cast<char *>(path);
+		in.line			= line;
+		in.line_num		= ++line_num;
+		in.validator_func	= func1;
+		in.install_func		= func2;
+		Interpreter(&in);
+
+		free(line);
+	}
 }
