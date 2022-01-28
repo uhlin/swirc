@@ -1,5 +1,5 @@
 /* Support for themes
-   Copyright (C) 2012-2020 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -454,40 +454,20 @@ init_missing_to_defs(void)
 void
 theme_readit(const char *path, const char *mode)
 {
-    FILE     *fp        = fopen_exit_on_error(path, mode);
-    char      buf[3200] = "";
-    long int  line_num  = 0;
+	FILE *fp;
 
-    while (BZERO(buf, sizeof buf), fgets(buf, sizeof buf, fp) != NULL) {
-	const char		*ccp = &buf[0];
-	char			*line;
-	struct Interpreter_in	 in;
+	fp = fopen_exit_on_error(path, mode);
 
-	adv_while_isspace(&ccp);
-	if (strings_match(ccp, "") || *ccp == '#') {
-	    line_num++;
-	    continue;
+	Interpreter_processAllLines(fp, path, is_recognized_item,
+	    theme_item_install);
+
+	if (feof(fp)) {
+		fclose_ensure_success(fp);
+		init_missing_to_defs();
+	} else if (ferror(fp)) {
+		err_quit("theme_readit: %s", g_fgets_nullret_err1);
+	} else {
+		err_msg("theme_readit: %s", g_fgets_nullret_err2);
+		abort();
 	}
-
-	line = trim(sw_strdup(ccp));
-	in.path           = (char *) path;
-	in.line           = line;
-	in.line_num       = ++line_num;
-	in.validator_func = is_recognized_item;
-	in.install_func   = theme_item_install;
-	Interpreter(&in);
-	free(line), line = NULL;
-    }
-
-    if (feof(fp)) {
-	fclose_ensure_success(fp);
-	init_missing_to_defs();
-    } else if (ferror(fp)) {
-	err_quit("theme_readit: error: "
-	    "fgets() returned null and the error indicator is set");
-    } else {
-	err_msg("theme_readit: error: "
-	    "fgets() returned null for an unknown reason");
-	abort();
-    }
 }
