@@ -412,19 +412,21 @@ theme_create(const char *path, const char *mode)
 void
 theme_do_save(const char *path, const char *mode)
 {
-    FILE *fp = fopen_exit_on_error(path, mode);
+	FILE *fp;
 
-    write_to_stream(fp, "# -*- mode: conf; -*-\n#\n"
-	"# Swirc %s  --  default theme\n", g_swircVersion);
-    write_to_stream(fp, "# Automatically generated at %s\n\n",
-		    current_time("%c"));
+	fp = fopen_exit_on_error(path, mode);
 
-    FOREACH_TDV() {
-	write_setting(fp, tdv_p->item_name, Theme(tdv_p->item_name), false,
-	    tdv_p->padding);
-    }
+	write_to_stream(fp, "# -*- mode: conf; -*-\n#\n# Swirc %s  --  "
+	    "default theme\n", g_swircVersion);
+	write_to_stream(fp, "# Automatically generated at %s\n\n",
+	    current_time("%c"));
 
-    fclose_ensure_success(fp);
+	FOREACH_TDV() {
+		write_setting(fp, tdv_p->item_name, Theme(tdv_p->item_name),
+		    false, tdv_p->padding);
+	}
+
+	fclose_ensure_success(fp);
 }
 
 static bool
