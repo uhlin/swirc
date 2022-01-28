@@ -15,6 +15,8 @@ __SWIRC_END_DECLS
 __SWIRC_BEGIN_DECLS
 FILE	*fopen_exit_on_error(const char *path, const char *mode);
 FILE	*xfopen(const char *path, const char *mode);
+bool	 getval_strtol(const char *str, const long int lo, const long int hi,
+	     long int *val) PTR_ARGS_NONNULL;
 const char *
 	 current_time(const char *fmt);
 const char *

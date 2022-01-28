@@ -1,5 +1,5 @@
 /* libUtils.c  --  Library Utilities
-   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -86,6 +86,26 @@ xfopen(const char *path, const char *mode)
 #endif
 
 	return fp;
+}
+
+bool
+getval_strtol(const char *str, const long int lo, const long int hi,
+    long int *val)
+{
+	if (!is_numeric(str)) {
+		*val = 0;
+		return false;
+	}
+
+	errno = 0;
+	*val = strtol(str, NULL, 10);
+
+	if (errno != 0 || (*val < lo || *val > hi)) {
+		*val = 0;
+		return false;
+	}
+
+	return true;
 }
 
 /* Check for vulnerabilities */
