@@ -445,10 +445,10 @@ is_recognized_item(const char *item_name)
 static void
 init_missing_to_defs(void)
 {
-    FOREACH_TDV() {
-	if (get_hash_table_entry(tdv_p->item_name) == NULL)
-	    hInstall(tdv_p->item_name, tdv_p->value);
-    }
+	FOREACH_TDV() {
+		if (get_hash_table_entry(tdv_p->item_name) == NULL)
+			hInstall(tdv_p->item_name, tdv_p->value);
+	}
 }
 
 void
