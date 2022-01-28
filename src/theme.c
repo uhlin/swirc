@@ -430,16 +430,15 @@ theme_do_save(const char *path, const char *mode)
 static bool
 is_recognized_item(const char *item_name)
 {
-    if (!item_name || *item_name == '\0') {
-	return (false);
-    }
+	if (item_name == NULL || strings_match(item_name, ""))
+		return false;
 
-    FOREACH_TDV() {
-	if (strings_match(item_name, tdv_p->item_name))
-	    return (true);
-    }
+	FOREACH_TDV() {
+		if (strings_match(item_name, tdv_p->item_name))
+			return true;
+	}
 
-    return (false);
+	return false;
 }
 
 static void
