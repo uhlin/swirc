@@ -359,36 +359,47 @@ theme_integer(struct integer_context *ctx)
 short int
 theme_color(const char *item_name, short int fallback_color)
 {
-    PTHEME_HTBL_ENTRY item;
+	PTHEME_HTBL_ENTRY item;
 
-    if (!item_name)
-	err_exit(EINVAL, "theme_color");
+	if (item_name == NULL)
+		err_exit(EINVAL, "theme_color");
 
-    for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
-	if (strings_match(item_name, item->name)) {
-	    if (strings_match_ignore_case(item->value, "black"))
-		return COLOR_BLACK;
-	    else if (strings_match_ignore_case(item->value, "red"))
-		return COLOR_RED;
-	    else if (strings_match_ignore_case(item->value, "green"))
-		return COLOR_GREEN;
-	    else if (strings_match_ignore_case(item->value, "yellow"))
-		return COLOR_YELLOW;
-	    else if (strings_match_ignore_case(item->value, "blue"))
-		return COLOR_BLUE;
-	    else if (strings_match_ignore_case(item->value, "magenta"))
-		return COLOR_MAGENTA;
-	    else if (strings_match_ignore_case(item->value, "cyan"))
-		return COLOR_CYAN;
-	    else if (strings_match_ignore_case(item->value, "white"))
-		return COLOR_WHITE;
-	    else break;
+	for (item = hash_table[hash(item_name)];
+	    item != NULL;
+	    item = item->next) {
+		if (strings_match(item_name, item->name)) {
+			if (strings_match_ignore_case(item->value,
+			    "black"))
+				return COLOR_BLACK;
+			else if (strings_match_ignore_case(item->value,
+			    "red"))
+				return COLOR_RED;
+			else if (strings_match_ignore_case(item->value,
+			    "green"))
+				return COLOR_GREEN;
+			else if (strings_match_ignore_case(item->value,
+			    "yellow"))
+				return COLOR_YELLOW;
+			else if (strings_match_ignore_case(item->value,
+			    "blue"))
+				return COLOR_BLUE;
+			else if (strings_match_ignore_case(item->value,
+			    "magenta"))
+				return COLOR_MAGENTA;
+			else if (strings_match_ignore_case(item->value,
+			    "cyan"))
+				return COLOR_CYAN;
+			else if (strings_match_ignore_case(item->value,
+			    "white"))
+				return COLOR_WHITE;
+			else
+				break;
+		}
 	}
-    }
 
-    err_log(EINVAL, "warning: item %s (color): falling back to the default",
+	err_log(EINVAL, "warning: item %s (color): falling back to the default",
 	    item_name);
-    return (fallback_color);
+	return fallback_color;
 }
 
 static void
