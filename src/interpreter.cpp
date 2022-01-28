@@ -22,6 +22,11 @@
 #include <iostream>
 #include <stdexcept>
 
+const char g_fgets_nullret_err1[] = "error: fgets() returned null and the "
+    "error indicator is set";
+const char g_fgets_nullret_err2[] = "error: fgets() returned null for an "
+    "unknown reason";
+
 static const size_t	identifier_maxSize = 50;
 static const size_t	argument_maxSize = 480;
 
