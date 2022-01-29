@@ -232,17 +232,19 @@ theme_bool(const char *item_name, bool fallback_default)
 char *
 Theme_mod(const char *item_name)
 {
-    PTHEME_HTBL_ENTRY item;
+	PTHEME_HTBL_ENTRY item;
 
-    if (!item_name)
-	return (NULL);
+	if (item_name == NULL)
+		return NULL;
 
-    for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
-	if (strings_match(item_name, item->name))
-	    return (item->value);
-    }
+	for (item = hash_table[hash(item_name)];
+	    item != NULL;
+	    item = item->next) {
+		if (strings_match(item_name, item->name))
+			return item->value;
+	}
 
-    return (NULL);
+	return NULL;
 }
 
 const char *
