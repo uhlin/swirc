@@ -611,22 +611,22 @@ set_value_for_setting(const char *setting, const char *value, const char **err_r
 static void
 try_to_set_value_for_setting(const char *setting, const char *value)
 {
-    PRINTTEXT_CONTEXT ctx;
-    const char *err_reason = "no error";
+	PRINTTEXT_CONTEXT	 ctx;
+	const char		*err_reason = "no error";
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
 
-    FOREACH_CDV() {
-	if (strings_match(setting, cdv_p->setting_name)) {
-	    if (!set_value_for_setting(setting, value, &err_reason))
-		print_and_free(err_reason, NULL);
-	    else
-		printtext(&ctx, "ok");
-	    return;
+	FOREACH_CDV() {
+		if (strings_match(setting, cdv_p->setting_name)) {
+			if (!set_value_for_setting(setting, value, &err_reason))
+				print_and_free(err_reason, NULL);
+			else
+				printtext(&ctx, "ok");
+			return;
+		}
 	}
-    }
 
-    print_and_free("/set: no such setting", NULL);
+	print_and_free("/set: no such setting", NULL);
 }
 
 /*
