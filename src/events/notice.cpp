@@ -1,5 +1,5 @@
 /* Handles event NOTICE
-   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -217,7 +217,7 @@ event_notice(struct irc_message_compo *compo)
 
 			printtext(&ptext_ctx, "%s %s", str.c_str(), msg);
 		} else {
-			std::string	str(Theme("notice_lb"));
+			char *str;
 
 			if (strings_match_ignore_case(dest, g_my_nickname)) {
 				if ((ptext_ctx.window = window_by_label(nick))
@@ -229,21 +229,33 @@ event_notice(struct irc_message_compo *compo)
 					ptext_ctx.window = g_status_window;
 			}
 
-			(void) str.append(NCOLOR1);
-			(void) str.append(nick);
-			(void) str.append(TXT_NORMAL);
-			(void) str.append(INNER_B1);
-			(void) str.append(NCOLOR2);
-			(void) str.append(user).append("@").append(host);
-			(void) str.append(TXT_NORMAL);
-			(void) str.append(INNER_B2);
-			(void) str.append(Theme("notice_rb"));
-
-			printtext(&ptext_ctx, "%s %s", str.c_str(), msg);
+			str = get_notice(nick, user, host);
+			printtext(&ptext_ctx, "%s %s", str, msg);
+			free(str);
 		}
 	} catch (std::runtime_error& e) {
 		printtext_context_init(&ptext_ctx, g_status_window,
 		    TYPE_SPEC1_WARN, true);
 		printtext(&ptext_ctx, "event_notice: error: %s", e.what());
 	}
+}
+
+char *
+get_notice(const char *nick, const char *user, const char *host)
+{
+	std::string str("");
+
+	if (nick == NULL || user == NULL || host == NULL)
+		return sw_strdup("");
+
+	(void) str.append(Theme("notice_lb"));
+	(void) str.append(NCOLOR1).append(nick).append(TXT_NORMAL);
+	(void) str.append(INNER_B1);
+	(void) str.append(NCOLOR2);
+	(void) str.append(user).append("@").append(host);
+	(void) str.append(TXT_NORMAL);
+	(void) str.append(INNER_B2);
+	(void) str.append(Theme("notice_rb"));
+
+	return sw_strdup(str.c_str());
 }

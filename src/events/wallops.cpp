@@ -1,5 +1,5 @@
 /* wallops.cpp
-   Copyright (C) 2018-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -37,6 +37,7 @@
 #include "../strHand.h"
 #include "../theme.h"
 
+#include "notice.h" /* get_notice() */
 #include "wallops.h"
 
 #define INNER_B1	Theme("notice_inner_b1")
@@ -74,9 +75,9 @@ event_wallops(struct irc_message_compo *compo)
 			    message);
 			return;
 		} else {
-			char		*last = const_cast<char *>("");
-			char		*nick, *user, *host;
-			std::string	 str(Theme("notice_lb"));
+			char	*last = const_cast<char *>("");
+			char	*nick, *user, *host;
+			char	*str;
 
 			if ((nick = strtok_r(prefix, "!@", &last)) == NULL ||
 			    (user = strtok_r(NULL, "!@", &last)) == NULL ||
@@ -85,22 +86,12 @@ event_wallops(struct irc_message_compo *compo)
 				    "user@host");
 			}
 
-			(void) str.append(NCOLOR1);
-			(void) str.append(nick);
-			(void) str.append(TXT_NORMAL);
-
-			(void) str.append(INNER_B1);
-			(void) str.append(NCOLOR2);
-			(void) str.append(user).append("@").append(host);
-			(void) str.append(TXT_NORMAL);
-			(void) str.append(INNER_B2);
-
-			(void) str.append(Theme("notice_rb"));
-
 			/*
 			 * NOTE: Current look is identical to notice
 			 */
-			printtext(&ctx, "%s %s", str.c_str(), message);
+			str = get_notice(nick, user, host);
+			printtext(&ctx, "%s %s", str, message);
+			free(str);
 		}
 	} catch (const std::runtime_error& e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
