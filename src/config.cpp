@@ -38,6 +38,8 @@
 #include "strHand.h"
 #include "theme.h"
 
+#include <string>
+
 #ifdef HAVE_LIBIDN
 #include <stringprep.h>
 #else
@@ -535,41 +537,47 @@ get_setting_type(const struct tagConfDefValues *cdv)
 #define B1 Theme("notice_inner_b1")
 #define B2 Theme("notice_inner_b2")
 
+static std::string
+get_string(const char *name, const char *type)
+{
+	std::string str(name);
+
+	(void) str.append(B1).append(type).append(B2);
+	(void) str.append(" ").append(Theme("notice_sep")).append(" ");
+	(void) str.append(Config(name));
+
+	return str;
+}
+
 static void
 output_values_for_all_settings(void)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC3, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC3, true);
 
-    FOREACH_CDV() {
-	printtext(&ctx, "%s%s%s%s %s %s",
-	    cdv_p->setting_name,
-	    B1, get_setting_type(cdv_p), B2,
-	    Theme("notice_sep"),
-	    Config(cdv_p->setting_name));
-    }
+	FOREACH_CDV() {
+		printtext(&ctx, "%s", get_string(cdv_p->setting_name,
+		    get_setting_type(cdv_p)).c_str());
+	}
 }
 
 static void
 output_value_for_specific_setting(const char *setting)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC3, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC3, true);
 
-    FOREACH_CDV() {
-	if (strings_match(setting, cdv_p->setting_name)) {
-	    printtext(&ctx, "%s%s%s%s %s %s",
-		cdv_p->setting_name,
-		B1, get_setting_type(cdv_p), B2,
-		Theme("notice_sep"),
-		Config(cdv_p->setting_name));
-	    return;
+	FOREACH_CDV() {
+		if (strings_match(setting, cdv_p->setting_name)) {
+			printtext(&ctx, "%s", get_string(cdv_p->setting_name,
+			    get_setting_type(cdv_p)).c_str());
+			return;
+		}
 	}
-    }
 
-    print_and_free("/set: no such setting", NULL);
+	print_and_free("/set: no such setting", NULL);
 }
 
 static bool
