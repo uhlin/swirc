@@ -233,7 +233,7 @@ event_notice(struct irc_message_compo *compo)
 			printtext(&ptext_ctx, "%s %s", str, msg);
 			free(str);
 		}
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error& e) {
 		printtext_context_init(&ptext_ctx, g_status_window,
 		    TYPE_SPEC1_WARN, true);
 		printtext(&ptext_ctx, "event_notice: error: %s", e.what());
