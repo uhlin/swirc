@@ -116,12 +116,13 @@ static struct tagConfDefValues {
 static bool
 got_hits(const char *search_var)
 {
-    FOREACH_CDV() {
-	if (!strncmp(search_var, cdv_p->setting_name, strlen(search_var)))
-	    return true;
-    }
+	FOREACH_CDV() {
+		if (!strncmp(search_var, cdv_p->setting_name,
+		    strlen(search_var)))
+			return true;
+	}
 
-    return false;
+	return false;
 }
 
 PTEXTBUF
