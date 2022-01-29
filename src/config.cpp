@@ -334,31 +334,28 @@ config_item_undef(const char *name)
 long int
 config_integer(struct integer_context *ctx)
 {
-    PCONF_HTBL_ENTRY item;
-    long int val;
+	PCONF_HTBL_ENTRY item;
+	long int val;
 
-    if (!ctx)
-	err_exit(EINVAL, "config_integer");
+	if (ctx == NULL)
+		err_exit(EINVAL, "config_integer");
 
-    for (item = hash_table[hash(ctx->setting_name)]; item; item = item->next) {
-	if (strings_match(ctx->setting_name, item->name)) {
-	    if (!is_numeric(item->value))
-		break;
-	    else {
-		errno = 0;
-		val   = strtol(item->value, NULL, 10);
-
-		if (errno != 0 || (val < ctx->lo_limit || val > ctx->hi_limit))
-		    break;
-		else
-		    return (val);
-	    }
+	for (item = hash_table[hash(ctx->setting_name)];
+	    item != NULL;
+	    item = item->next) {
+		if (strings_match(ctx->setting_name, item->name)) {
+			if (getval_strtol(item->value,
+			    ctx->lo_limit, ctx->hi_limit, &val))
+				return val;
+			else
+				break;
+		}
 	}
-    }
 
-    err_log(ERANGE, "warning: setting %s (%ld-%ld): fallback value is %ld",
-	ctx->setting_name, ctx->lo_limit, ctx->hi_limit, ctx->fallback_default);
-    return (ctx->fallback_default);
+	err_log(ERANGE, "warning: setting %s (%ld-%ld): fallback value is %ld",
+	    ctx->setting_name, ctx->lo_limit, ctx->hi_limit,
+	    ctx->fallback_default);
+	return ctx->fallback_default;
 }
 
 static void
