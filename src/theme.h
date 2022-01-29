@@ -20,7 +20,7 @@ char		*Theme_mod(const char *);
 const char	*Theme(const char *);
 int		 theme_item_install(const char *name, const char *value);
 int		 theme_item_undef(const char *name);
-long int	 theme_integer(struct integer_context *);
+long int	 theme_integer(const struct integer_context *);
 short int	 theme_color(const char *, short int);
 void		 theme_create(const char *path, const char *mode);
 void		 theme_do_save(const char *path, const char *mode);

@@ -360,7 +360,7 @@ theme_item_undef(const char *name)
 }
 
 long int
-theme_integer(struct integer_context *ctx)
+theme_integer(const struct integer_context *ctx)
 {
 	PTHEME_HTBL_ENTRY item;
 	long int val;
