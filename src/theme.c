@@ -143,9 +143,9 @@ static struct tagThemeDefValues {
 void
 theme_init(void)
 {
-    ENTRY_FOREACH() {
-	*entry_p = NULL;
-    }
+	ENTRY_FOREACH() {
+		*entry_p = NULL;
+	}
 }
 
 /* hash pjw */
