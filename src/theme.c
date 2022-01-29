@@ -188,14 +188,14 @@ hUndef(PTHEME_HTBL_ENTRY entry)
 void
 theme_deinit(void)
 {
-    PTHEME_HTBL_ENTRY p, tmp;
+	PTHEME_HTBL_ENTRY p, tmp;
 
-    ENTRY_FOREACH() {
-	for (p = *entry_p; p != NULL; p = tmp) {
-	    tmp = p->next;
-	    hUndef(p);
+	ENTRY_FOREACH() {
+		for (p = *entry_p; p != NULL; p = tmp) {
+			tmp = p->next;
+			hUndef(p);
+		}
 	}
-    }
 }
 
 /* -------------------------------------------------- */
