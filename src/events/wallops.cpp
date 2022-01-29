@@ -40,11 +40,6 @@
 #include "notice.h" /* get_notice() */
 #include "wallops.h"
 
-#define INNER_B1	Theme("notice_inner_b1")
-#define INNER_B2	Theme("notice_inner_b2")
-#define NCOLOR1		Theme("notice_color1")
-#define NCOLOR2		Theme("notice_color2")
-
 /* event_wallops
 
    Examples:
