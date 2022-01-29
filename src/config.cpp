@@ -675,14 +675,10 @@ get_reconnect_backoff_delay(void)
 long int
 get_reconnect_delay(void)
 {
-    struct integer_context ctx = {
-	.setting_name = "reconnect_delay",
-	.lo_limit = 0,
-	.hi_limit = 999,
-	.fallback_default = RECONNECT_DELAY_DEFAULT,
-    };
+	struct integer_context ctx("reconnect_delay", 0, 999,
+	    RECONNECT_DELAY_DEFAULT);
 
-    return (config_integer(&ctx));
+	return config_integer(&ctx);
 }
 
 long int
