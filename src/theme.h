@@ -4,9 +4,9 @@
 #include "integer-context.h"
 
 typedef struct tagTHEME_HTBL_ENTRY {
-    char *name;
-    char *value;
-    struct tagTHEME_HTBL_ENTRY *next;
+	char *name;
+	char *value;
+	struct tagTHEME_HTBL_ENTRY *next;
 } THEME_HTBL_ENTRY, *PTHEME_HTBL_ENTRY;
 
 __SWIRC_BEGIN_DECLS
