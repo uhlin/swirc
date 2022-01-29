@@ -573,7 +573,7 @@ output_value_for_specific_setting(const char *setting)
 }
 
 static bool
-set_value_for_setting(const char *setting, const char *value, char **err_reason)
+set_value_for_setting(const char *setting, const char *value, const char **err_reason)
 {
     FOREACH_CDV() {
 	if (strings_match(setting, cdv_p->setting_name)) {
@@ -612,7 +612,7 @@ static void
 try_to_set_value_for_setting(const char *setting, const char *value)
 {
     PRINTTEXT_CONTEXT ctx;
-    char *err_reason = "no error";
+    const char *err_reason = "no error";
 
     printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
 
