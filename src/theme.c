@@ -248,17 +248,19 @@ Theme_mod(const char *item_name)
 const char *
 Theme(const char *item_name)
 {
-    PTHEME_HTBL_ENTRY item;
+	PTHEME_HTBL_ENTRY item;
 
-    if (!item_name)
+	if (item_name == NULL)
+		return ("");
+
+	for (item = hash_table[hash(item_name)];
+	    item != NULL;
+	    item = item->next) {
+		if (strings_match(item_name, item->name))
+			return (item->value);
+	}
+
 	return ("");
-
-    for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
-	if (strings_match(item_name, item->name))
-	    return (item->value);
-    }
-
-    return ("");
 }
 
 /*lint -sem(get_hash_table_entry, r_null) */
