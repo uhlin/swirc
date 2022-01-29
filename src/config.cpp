@@ -199,14 +199,14 @@ hUndef(PCONF_HTBL_ENTRY entry)
 void
 config_deinit(void)
 {
-    PCONF_HTBL_ENTRY p, tmp;
+	PCONF_HTBL_ENTRY p, tmp;
 
-    ENTRY_FOREACH() {
-	for (p = *entry_p; p != NULL; p = tmp) {
-	    tmp = p->next;
-	    hUndef(p);
+	ENTRY_FOREACH() {
+		for (p = *entry_p; p != NULL; p = tmp) {
+			tmp = p->next;
+			hUndef(p);
+		}
 	}
-    }
 }
 
 /* -------------------------------------------------- */
