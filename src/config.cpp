@@ -486,10 +486,14 @@ config_get_normalized_sasl_username(void)
 
 	return (ret == STRINGPREP_OK ? &buf[0] : NULL);
 #else
+	/*
+	 * !HAVE_LIBIDN
+	 */
+
 	if (strings_match(Config("sasl_username"), ""))
 		return NULL;
 	return Config("sasl_username");
-#endif /* HAVE_LIBIDN */
+#endif
 }
 
 const char *
@@ -516,10 +520,14 @@ config_get_normalized_sasl_password(void)
 
 	return (ret == STRINGPREP_OK ? &buf[0] : NULL);
 #else
+	/*
+	 * !HAVE_LIBIDN
+	 */
+
 	if (strings_match(Config("sasl_password"), ""))
 		return NULL;
 	return Config("sasl_password");
-#endif /* HAVE_LIBIDN */
+#endif
 }
 
 /* -------------------------------------------------- */
