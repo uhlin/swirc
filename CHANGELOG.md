@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Added creation of OpenSSL scripts
 - Reduced code duplication
 - Reformatted and reindented files
+- `config.c` -> `config.cpp`
 
 ## [3.3.3] - 2021-11-27 ##
 - **Added** event `531`. Undocumented in the RFC. (You cannot send
