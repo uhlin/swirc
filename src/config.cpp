@@ -111,6 +111,8 @@ static struct tagConfDefValues {
 	{ "theme",                     TYPE_STRING,  4, "default" },
 };
 
+/* -------------------------------------------------- */
+
 /* hash pjw */
 static unsigned int
 hash(const char *setting_name)
@@ -380,8 +382,6 @@ get_list_of_matching_settings(const char *search_var)
 	return matches;
 }
 
-/* -------------------------------------------------- */
-
 void
 config_init(void)
 {
@@ -402,8 +402,6 @@ config_deinit(void)
 		}
 	}
 }
-
-/* -------------------------------------------------- */
 
 /* XXX dup */
 bool
