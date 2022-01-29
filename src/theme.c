@@ -138,14 +138,6 @@ static struct tagThemeDefValues {
 
 /* -------------------------------------------------- */
 
-void
-theme_init(void)
-{
-	ENTRY_FOREACH() {
-		*entry_p = NULL;
-	}
-}
-
 /* hash pjw */
 static unsigned int
 hash(const char *item_name)
@@ -167,6 +159,41 @@ hash(const char *item_name)
 	return (hashval % ARRAY_SIZE(hash_table));
 }
 
+/*lint -sem(get_hash_table_entry, r_null) */
+static PTHEME_HTBL_ENTRY
+get_hash_table_entry(const char *name)
+{
+	PTHEME_HTBL_ENTRY entry;
+
+	if (name == NULL)
+		return NULL;
+
+	for (entry = hash_table[hash(name)];
+	    entry != NULL;
+	    entry = entry->next) {
+		if (strings_match(name, entry->name))
+			return entry;
+	}
+
+	return NULL;
+}
+
+static void
+hInstall(const char *name, const char *value)
+{
+	PTHEME_HTBL_ENTRY item;
+	const bool has_no_value = (value == NULL || *value == '\0');
+	unsigned int hashval;
+
+	item        = xcalloc(sizeof *item, 1);
+	item->name  = sw_strdup(name);
+	item->value = sw_strdup(has_no_value ? "" : value);
+
+	hashval             = hash(name);
+	item->next          = hash_table[hashval];
+	hash_table[hashval] = item;
+}
+
 static void hUndef(PTHEME_HTBL_ENTRY) PTR_ARGS_NONNULL;
 
 static void
@@ -186,6 +213,46 @@ hUndef(PTHEME_HTBL_ENTRY entry)
 	free(entry);
 }
 
+static void
+init_missing_to_defs(void)
+{
+	FOREACH_TDV() {
+		if (get_hash_table_entry(tdv_p->item_name) == NULL)
+			hInstall(tdv_p->item_name, tdv_p->value);
+	}
+}
+
+static bool
+is_recognized_item(const char *item_name)
+{
+	if (item_name == NULL || strings_match(item_name, ""))
+		return false;
+
+	FOREACH_TDV() {
+		if (strings_match(item_name, tdv_p->item_name))
+			return true;
+	}
+
+	return false;
+}
+
+static void
+write_theme_header(FILE *fp)
+{
+	write_to_stream(fp, "# -*- mode: conf; -*-\n#\n# Swirc %s  --  "
+	    "default theme\n", g_swircVersion);
+	write_to_stream(fp, "# Automatically generated at %s\n\n",
+	    current_time("%c"));
+}
+
+void
+theme_init(void)
+{
+	ENTRY_FOREACH() {
+		*entry_p = NULL;
+	}
+}
+
 void
 theme_deinit(void)
 {
@@ -198,8 +265,6 @@ theme_deinit(void)
 		}
 	}
 }
-
-/* -------------------------------------------------- */
 
 bool
 theme_bool(const char *item_name, bool fallback_default)
@@ -265,41 +330,6 @@ Theme(const char *item_name)
 	}
 
 	return ("");
-}
-
-/*lint -sem(get_hash_table_entry, r_null) */
-static PTHEME_HTBL_ENTRY
-get_hash_table_entry(const char *name)
-{
-	PTHEME_HTBL_ENTRY entry;
-
-	if (name == NULL)
-		return NULL;
-
-	for (entry = hash_table[hash(name)];
-	    entry != NULL;
-	    entry = entry->next) {
-		if (strings_match(name, entry->name))
-			return entry;
-	}
-
-	return NULL;
-}
-
-static void
-hInstall(const char *name, const char *value)
-{
-	PTHEME_HTBL_ENTRY item;
-	const bool has_no_value = (value == NULL || *value == '\0');
-	unsigned int hashval;
-
-	item        = xcalloc(sizeof *item, 1);
-	item->name  = sw_strdup(name);
-	item->value = sw_strdup(has_no_value ? "" : value);
-
-	hashval             = hash(name);
-	item->next          = hash_table[hashval];
-	hash_table[hashval] = item;
 }
 
 int
@@ -402,15 +432,6 @@ theme_color(const char *item_name, short int fallback_color)
 	return fallback_color;
 }
 
-static void
-write_theme_header(FILE *fp)
-{
-	write_to_stream(fp, "# -*- mode: conf; -*-\n#\n# Swirc %s  --  "
-	    "default theme\n", g_swircVersion);
-	write_to_stream(fp, "# Automatically generated at %s\n\n",
-	    current_time("%c"));
-}
-
 void
 theme_create(const char *path, const char *mode)
 {
@@ -441,29 +462,6 @@ theme_do_save(const char *path, const char *mode)
 	}
 
 	fclose_ensure_success(fp);
-}
-
-static bool
-is_recognized_item(const char *item_name)
-{
-	if (item_name == NULL || strings_match(item_name, ""))
-		return false;
-
-	FOREACH_TDV() {
-		if (strings_match(item_name, tdv_p->item_name))
-			return true;
-	}
-
-	return false;
-}
-
-static void
-init_missing_to_defs(void)
-{
-	FOREACH_TDV() {
-		if (get_hash_table_entry(tdv_p->item_name) == NULL)
-			hInstall(tdv_p->item_name, tdv_p->value);
-	}
 }
 
 void
