@@ -1,5 +1,5 @@
 /* User configuration
-   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -294,7 +294,7 @@ hInstall(const char *name, const char *value)
     const bool has_no_value = (value == NULL || *value == '\0');
     unsigned int hashval;
 
-    item	= xcalloc(sizeof *item, 1);
+    item	= static_cast<PCONF_HTBL_ENTRY>(xcalloc(sizeof *item, 1));
     item->name	= sw_strdup(name);
     item->value	= sw_strdup(has_no_value ? "" : value);
 
@@ -478,7 +478,7 @@ config_get_normalized_sasl_username(void)
     }
 
     free(str);
-    Stringprep_profile_flags flags = 0;
+    Stringprep_profile_flags flags = static_cast<Stringprep_profile_flags>(0);
     const int ret =
 	stringprep(buf, ARRAY_SIZE(buf), flags, stringprep_saslprep);
     return (ret == STRINGPREP_OK ? &buf[0] : NULL);
@@ -507,7 +507,7 @@ config_get_normalized_sasl_password(void)
     }
 
     free(str);
-    Stringprep_profile_flags flags = 0;
+    Stringprep_profile_flags flags = static_cast<Stringprep_profile_flags>(0);
     const int ret =
 	stringprep(buf, ARRAY_SIZE(buf), flags, stringprep_saslprep);
     return (ret == STRINGPREP_OK ? &buf[0] : NULL);
