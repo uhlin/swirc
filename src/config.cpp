@@ -466,28 +466,29 @@ const char *
 config_get_normalized_sasl_username(void)
 {
 #ifdef HAVE_LIBIDN
-    static char buf[SASL_USERNAME_MAXLEN];
-    char *str = NULL;
+	Stringprep_profile_flags flags;
+	char *str = NULL;
+	int ret;
+	static char buf[SASL_USERNAME_MAXLEN] = { '\0' };
 
-    if (strings_match(Config("sasl_username"), ""))
-	return NULL;
+	if (strings_match(Config("sasl_username"), "")) {
+		return NULL;
+	} else if ((str = stringprep_locale_to_utf8(Config("sasl_username"))) ==
+	    NULL || sw_strcpy(buf, str, ARRAY_SIZE(buf)) != 0) {
+		free(str);
+		return NULL;
+	}
 
-    memset(buf, 0, ARRAY_SIZE(buf));
-    if ((str = stringprep_locale_to_utf8(Config("sasl_username"))) == NULL ||
-	sw_strcpy(buf, str, ARRAY_SIZE(buf)) != 0) {
 	free(str);
-	return NULL;
-    }
 
-    free(str);
-    Stringprep_profile_flags flags = static_cast<Stringprep_profile_flags>(0);
-    const int ret =
-	stringprep(buf, ARRAY_SIZE(buf), flags, stringprep_saslprep);
-    return (ret == STRINGPREP_OK ? &buf[0] : NULL);
+	flags = static_cast<Stringprep_profile_flags>(0);
+	ret = stringprep(buf, ARRAY_SIZE(buf), flags, stringprep_saslprep);
+
+	return (ret == STRINGPREP_OK ? &buf[0] : NULL);
 #else
-    if (strings_match(Config("sasl_username"), ""))
-	return NULL;
-    return Config("sasl_username");
+	if (strings_match(Config("sasl_username"), ""))
+		return NULL;
+	return Config("sasl_username");
 #endif /* HAVE_LIBIDN */
 }
 
