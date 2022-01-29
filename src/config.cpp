@@ -292,17 +292,17 @@ get_hash_table_entry(const char *name)
 static void
 hInstall(const char *name, const char *value)
 {
-    PCONF_HTBL_ENTRY item;
-    const bool has_no_value = (value == NULL || *value == '\0');
-    unsigned int hashval;
+	PCONF_HTBL_ENTRY item;
+	const bool has_no_value = (value == NULL || *value == '\0');
+	unsigned int hashval;
 
-    item	= static_cast<PCONF_HTBL_ENTRY>(xcalloc(sizeof *item, 1));
-    item->name	= sw_strdup(name);
-    item->value	= sw_strdup(has_no_value ? "" : value);
+	item        = static_cast<PCONF_HTBL_ENTRY>(xcalloc(sizeof *item, 1));
+	item->name  = sw_strdup(name);
+	item->value = sw_strdup(has_no_value ? "" : value);
 
-    hashval             = hash(name);
-    item->next          = hash_table[hashval];
-    hash_table[hashval] = item;
+	hashval             = hash(name);
+	item->next          = hash_table[hashval];
+	hash_table[hashval] = item;
 }
 
 int
