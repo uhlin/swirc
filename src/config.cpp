@@ -573,39 +573,40 @@ output_value_for_specific_setting(const char *setting)
 }
 
 static bool
-set_value_for_setting(const char *setting, const char *value, const char **err_reason)
+set_value_for_setting(const char *setting, const char *value,
+    const char **err_reason)
 {
-    FOREACH_CDV() {
-	if (strings_match(setting, cdv_p->setting_name)) {
-	    if (cdv_p->type == TYPE_BOOLEAN &&
-		!strings_match_ignore_case(value, "on")    &&
-		!strings_match_ignore_case(value, "true")  &&
-		!strings_match_ignore_case(value, "yes")   &&
-		!strings_match_ignore_case(value, "off")   &&
-		!strings_match_ignore_case(value, "false") &&
-		!strings_match_ignore_case(value, "no")) {
-		*err_reason =
-		    "booleans must be on, true, yes, off, false or no";
-		return false;
-	    } else if (cdv_p->type == TYPE_INTEGER &&
-		       !is_numeric(value)) {
-		*err_reason = "integer not all numeric";
-		return false;
-	    } else if (config_item_undef(setting) != 0) {
-		*err_reason = "config_item_undef";
-		return false;
-	    } else if (config_item_install(setting, value) != 0) {
-		*err_reason = "config_item_install";
-		return false;
-	    }
+	FOREACH_CDV() {
+		if (strings_match(setting, cdv_p->setting_name)) {
+			if (cdv_p->type == TYPE_BOOLEAN &&
+			    !strings_match_ignore_case(value, "on") &&
+			    !strings_match_ignore_case(value, "true") &&
+			    !strings_match_ignore_case(value, "yes") &&
+			    !strings_match_ignore_case(value, "off") &&
+			    !strings_match_ignore_case(value, "false") &&
+			    !strings_match_ignore_case(value, "no")) {
+				*err_reason = "booleans must be on, true, yes, "
+				    "off, false or no";
+				return false;
+			} else if (cdv_p->type == TYPE_INTEGER &&
+			    !is_numeric(value)) {
+				*err_reason = "integer not all numeric";
+				return false;
+			} else if (config_item_undef(setting) != 0) {
+				*err_reason = "config_item_undef";
+				return false;
+			} else if (config_item_install(setting, value) != 0) {
+				*err_reason = "config_item_install";
+				return false;
+			}
 
-	    config_do_save(g_config_file, "w");
-	    return true;
+			config_do_save(g_config_file, "w");
+			return true;
+		}
 	}
-    }
 
-    *err_reason = "no such setting";
-    return false;
+	*err_reason = "no such setting";
+	return false;
 }
 
 static void
