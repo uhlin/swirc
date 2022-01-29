@@ -47,13 +47,13 @@
 #endif
 
 #define ENTRY_FOREACH()\
-    for (PCONF_HTBL_ENTRY *entry_p = &hash_table[0];\
-	 entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
-	 entry_p++)
+	for (PCONF_HTBL_ENTRY *entry_p = &hash_table[0];\
+	    entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
+	    entry_p++)
 #define FOREACH_CDV()\
-    for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];\
-	 cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)];\
-	 cdv_p++)
+	for (struct tagConfDefValues *cdv_p = &ConfDefValues[0];\
+	    cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)];\
+	    cdv_p++)
 
 /* Objects with internal linkage
    ============================= */
