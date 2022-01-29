@@ -276,17 +276,19 @@ Config(const char *setting_name)
 static PCONF_HTBL_ENTRY
 get_hash_table_entry(const char *name)
 {
-    PCONF_HTBL_ENTRY entry;
+	PCONF_HTBL_ENTRY entry;
 
-    if (!name)
-	return (NULL);
+	if (name == NULL)
+		return NULL;
 
-    for (entry = hash_table[hash(name)]; entry != NULL; entry = entry->next) {
-	if (strings_match(name, entry->name))
-	    return (entry);
-    }
+	for (entry = hash_table[hash(name)];
+	    entry != NULL;
+	    entry = entry->next) {
+		if (strings_match(name, entry->name))
+			return entry;
+	}
 
-    return (NULL);
+	return NULL;
 }
 
 static void
