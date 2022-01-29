@@ -525,13 +525,13 @@ config_get_normalized_sasl_password(void)
 static const char *
 get_setting_type(const struct tagConfDefValues *cdv)
 {
-    if (cdv->type == TYPE_BOOLEAN)
-	return "bool";
-    else if (cdv->type == TYPE_INTEGER)
-	return "int";
-    else if (cdv->type == TYPE_STRING)
-	return "string";
-    return "unknown";
+	if (cdv->type == TYPE_BOOLEAN)
+		return "bool";
+	else if (cdv->type == TYPE_INTEGER)
+		return "int";
+	else if (cdv->type == TYPE_STRING)
+		return "string";
+	return "unknown";
 }
 
 #define B1 Theme("notice_inner_b1")
