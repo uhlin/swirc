@@ -10,9 +10,9 @@
 #define RECONNECT_RETRIES_DEFAULT       30
 
 typedef struct tagCONF_HTBL_ENTRY {
-    char *name;
-    char *value;
-    struct tagCONF_HTBL_ENTRY *next;
+	char *name;
+	char *value;
+	struct tagCONF_HTBL_ENTRY *next;
 } CONF_HTBL_ENTRY, *PCONF_HTBL_ENTRY;
 
 __SWIRC_BEGIN_DECLS
