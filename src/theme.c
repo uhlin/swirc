@@ -61,81 +61,79 @@
 static PTHEME_HTBL_ENTRY hash_table[300];
 
 static struct tagThemeDefValues {
-    char		*item_name;
-    enum setting_type	 type;
-    short int		 padding;
-    char		*value;
+	char			*item_name;
+	enum setting_type	 type;
+	short int		 padding;
+	char			*value;
 } ThemeDefValues[] = {
-    { "term_background",           TYPE_INTEGER, 9, "1" },
-    { "term_enable_colors",        TYPE_BOOLEAN, 6, "yes" },
+	{ "term_background",           TYPE_INTEGER, 9, "1" },
+	{ "term_enable_colors",        TYPE_BOOLEAN, 6, "yes" },
 #if defined(UNIX)
-    { "term_use_default_colors",   TYPE_BOOLEAN, 1, "yes" },
+	{ "term_use_default_colors",   TYPE_BOOLEAN, 1, "yes" },
 #elif defined(WIN32)
-    { "term_use_default_colors",   TYPE_BOOLEAN, 1, "no" },
+	{ "term_use_default_colors",   TYPE_BOOLEAN, 1, "no" },
 #endif
 
-    { "color3",                    TYPE_STRING,  1, "\00303" },
-    { "color4",                    TYPE_STRING,  1, "\00305" },
+	{ "color3",                    TYPE_STRING,  1, "\00303" },
+	{ "color4",                    TYPE_STRING,  1, "\00305" },
 
-    { "gfx_failure",               TYPE_STRING,  1, "[\0034*\017]" },
-    { "gfx_success",               TYPE_STRING,  1, "[\0039*\017]" },
-    { "gfx_warning",               TYPE_STRING,  1, "[\0038*\017]" },
+	{ "gfx_failure",               TYPE_STRING,  1, "[\0034*\017]" },
+	{ "gfx_success",               TYPE_STRING,  1, "[\0039*\017]" },
+	{ "gfx_warning",               TYPE_STRING,  1, "[\0038*\017]" },
 
-    { "left_bracket",              TYPE_STRING,  2, "\00314[\017" },
-    { "right_bracket",             TYPE_STRING,  1, "\00314]\017" },
+	{ "left_bracket",              TYPE_STRING,  2, "\00314[\017" },
+	{ "right_bracket",             TYPE_STRING,  1, "\00314]\017" },
 
-    { "logo_color",                TYPE_STRING,  1, "\00302" },
+	{ "logo_color",                TYPE_STRING,  1, "\00302" },
 
-    { "nick_s1",                   TYPE_STRING,  1, "\00314:\017" },
-    { "nick_s2",                   TYPE_STRING,  1, "\00314:\017" },
+	{ "nick_s1",                   TYPE_STRING,  1, "\00314:\017" },
+	{ "nick_s2",                   TYPE_STRING,  1, "\00314:\017" },
 
-    { "nicklist_nick_color",       TYPE_INTEGER, 6, "15" },
-    { "nicklist_privilege_color",  TYPE_INTEGER, 1, "3" },
-    { "nicklist_vline_color",      TYPE_INTEGER, 5, "2" },
+	{ "nicklist_nick_color",       TYPE_INTEGER, 6, "15" },
+	{ "nicklist_privilege_color",  TYPE_INTEGER, 1, "3" },
+	{ "nicklist_vline_color",      TYPE_INTEGER, 5, "2" },
 
-    { "notice_color1",             TYPE_STRING,  3, "\00313" },
-    { "notice_color2",             TYPE_STRING,  3, "\00306" },
-    { "notice_inner_b1",           TYPE_STRING,  1, "\00314(\017" },
-    { "notice_inner_b2",           TYPE_STRING,  1, "\00314)\017" },
-    { "notice_lb",                 TYPE_STRING,  7, "\00314-\017" },
-    { "notice_rb",                 TYPE_STRING,  7, "\00314-\017" },
-    { "notice_sep",                TYPE_STRING,  6, "\00314:\017" },
+	{ "notice_color1",             TYPE_STRING,  3, "\00313" },
+	{ "notice_color2",             TYPE_STRING,  3, "\00306" },
+	{ "notice_inner_b1",           TYPE_STRING,  1, "\00314(\017" },
+	{ "notice_inner_b2",           TYPE_STRING,  1, "\00314)\017" },
+	{ "notice_lb",                 TYPE_STRING,  7, "\00314-\017" },
+	{ "notice_rb",                 TYPE_STRING,  7, "\00314-\017" },
+	{ "notice_sep",                TYPE_STRING,  6, "\00314:\017" },
 
-    { "primary_color",             TYPE_STRING,  3, "\00312" },
-    { "secondary_color",           TYPE_STRING,  1, "\00300" },
+	{ "primary_color",             TYPE_STRING,  3, "\00312" },
+	{ "secondary_color",           TYPE_STRING,  1, "\00300" },
 
-    { "slogan",                    TYPE_STRING,  1,
-      "\0033,1The universal IRC client\017" },
+	{ "slogan",                    TYPE_STRING,  1, "\0033,1The universal IRC client\017" },
 
-    { "specifier1",                TYPE_STRING,  1, "\00314[\0030-\00314]\017" },
-    { "specifier2",                TYPE_STRING,  1, "\00314[\0030:\00314]\017" },
-    { "specifier3",                TYPE_STRING,  1, "\00314[\0030x\00314]\017" },
+	{ "specifier1",                TYPE_STRING,  1, "\00314[\0030-\00314]\017" },
+	{ "specifier2",                TYPE_STRING,  1, "\00314[\0030:\00314]\017" },
+	{ "specifier3",                TYPE_STRING,  1, "\00314[\0030x\00314]\017" },
 
-    { "statusbar_bg",              TYPE_STRING,  11, "black" },
-    { "statusbar_fg",              TYPE_STRING,  11, "white" },
-    { "statusbar_leftBracket",     TYPE_STRING,  2, "\00312,1[\017" },
-    { "statusbar_rightBracket",    TYPE_STRING,  1, "\00312,1]\017" },
-    { "statusbar_spec",            TYPE_STRING,  9, "[-]" },
+	{ "statusbar_bg",              TYPE_STRING,  11, "black" },
+	{ "statusbar_fg",              TYPE_STRING,  11, "white" },
+	{ "statusbar_leftBracket",     TYPE_STRING,  2, "\00312,1[\017" },
+	{ "statusbar_rightBracket",    TYPE_STRING,  1, "\00312,1]\017" },
+	{ "statusbar_spec",            TYPE_STRING,  9, "[-]" },
 
-    { "time_format",               TYPE_STRING,  1,
-      "\00314[\017%H:%M\00314]\017" },
+	{ "time_format",               TYPE_STRING,  1, "\00314[\017%H:%M\00314]\017" },
 
-    { "titlebar_bg",               TYPE_STRING,  1, "white" },
-    { "titlebar_fg",               TYPE_STRING,  1, "black" },
+	{ "titlebar_bg",               TYPE_STRING,  1, "white" },
+	{ "titlebar_fg",               TYPE_STRING,  1, "black" },
 
-    { "whois_acc",                 TYPE_STRING,  6, "\00314=\017> account  :" },
-    { "whois_away",                TYPE_STRING,  5, "\00314=\017> away     :" },
-    { "whois_cert",                TYPE_STRING,  5, "\00314=\017> cert     :" },
-    { "whois_channels",            TYPE_STRING,  1, "\00314=\017> channels :" },
-    { "whois_conn",                TYPE_STRING,  5, "\00314=\017> conn     :" },
-    { "whois_host",                TYPE_STRING,  5, "\00314=\017> host     :" },
-    { "whois_idle",                TYPE_STRING,  5, "\00314=\017> idle     :" },
-    { "whois_ircName",             TYPE_STRING,  2, "\00314=\017> ircname  :" },
-    { "whois_ircOp",               TYPE_STRING,  4, "\00314=\017> IRC op   :" },
-    { "whois_modes",               TYPE_STRING,  4, "\00314=\017> modes    :" },
-    { "whois_server",              TYPE_STRING,  3, "\00314=\017> server   :" },
-    { "whois_service",             TYPE_STRING,  2, "\00314=\017> service  :" },
-    { "whois_ssl",                 TYPE_STRING,  6, "\00314=\017> TLS/SSL  :" },
+	{ "whois_acc",                 TYPE_STRING,  6, "\00314=\017> account  :" },
+	{ "whois_away",                TYPE_STRING,  5, "\00314=\017> away     :" },
+	{ "whois_cert",                TYPE_STRING,  5, "\00314=\017> cert     :" },
+	{ "whois_channels",            TYPE_STRING,  1, "\00314=\017> channels :" },
+	{ "whois_conn",                TYPE_STRING,  5, "\00314=\017> conn     :" },
+	{ "whois_host",                TYPE_STRING,  5, "\00314=\017> host     :" },
+	{ "whois_idle",                TYPE_STRING,  5, "\00314=\017> idle     :" },
+	{ "whois_ircName",             TYPE_STRING,  2, "\00314=\017> ircname  :" },
+	{ "whois_ircOp",               TYPE_STRING,  4, "\00314=\017> IRC op   :" },
+	{ "whois_modes",               TYPE_STRING,  4, "\00314=\017> modes    :" },
+	{ "whois_server",              TYPE_STRING,  3, "\00314=\017> server   :" },
+	{ "whois_service",             TYPE_STRING,  2, "\00314=\017> service  :" },
+	{ "whois_ssl",                 TYPE_STRING,  6, "\00314=\017> TLS/SSL  :" },
 };
 
 /* -------------------------------------------------- */
