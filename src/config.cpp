@@ -688,14 +688,10 @@ get_reconnect_delay(void)
 long int
 get_reconnect_delay_max(void)
 {
-    struct integer_context ctx = {
-	.setting_name = "reconnect_delay_max",
-	.lo_limit = 0,
-	.hi_limit = 999,
-	.fallback_default = RECONNECT_DELAY_MAX_DEFAULT,
-    };
+	struct integer_context ctx("reconnect_delay_max", 0, 999,
+	    RECONNECT_DELAY_MAX_DEFAULT);
 
-    return (config_integer(&ctx));
+	return config_integer(&ctx);
 }
 
 long int
