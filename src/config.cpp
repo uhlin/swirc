@@ -629,32 +629,35 @@ try_to_set_value_for_setting(const char *setting, const char *value)
     print_and_free("/set: no such setting", NULL);
 }
 
-/* usage: /set [[setting] [value]] */
+/*
+ * usage: /set [[setting] [value]]
+ */
 void
 cmd_set(const char *data)
 {
-    char *dcopy = sw_strdup(data);
-    char *setting = NULL, *value = NULL;
-    char *state = "";
+	char *dcopy = sw_strdup(data);
+	char *setting, *value;
+	char *state = const_cast<char *>("");
 
-    if (strings_match(dcopy, "")) {
-	output_values_for_all_settings();
+	if (strings_match(dcopy, "")) {
+		output_values_for_all_settings();
+		free(dcopy);
+		return;
+	}
+
+	(void) strFeed(dcopy, 1);
+
+	if ((setting = strtok_r(dcopy, "\n", &state)) == NULL) {
+		print_and_free("/set: fatal error (shouldn't happen)", dcopy);
+		return;
+	} else if ((value = strtok_r(NULL, "\n", &state)) == NULL) {
+		output_value_for_specific_setting(setting);
+		free(dcopy);
+		return;
+	}
+
+	try_to_set_value_for_setting(setting, value);
 	free(dcopy);
-	return;
-    }
-    (void) strFeed(dcopy, 1);
-    setting = strtok_r(dcopy, "\n", &state);
-    value = strtok_r(NULL, "\n", &state);;
-    if (setting == NULL) {
-	print_and_free("/set: fatal error (shouldn't happen)", dcopy);
-	return;
-    } else if (value == NULL) {
-	output_value_for_specific_setting(setting);
-	free(dcopy);
-	return;
-    }
-    try_to_set_value_for_setting(setting, value);
-    free(dcopy);
 }
 
 /* -------------------------------------------------- */
