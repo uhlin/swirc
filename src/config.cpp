@@ -185,15 +185,18 @@ static void hUndef(PCONF_HTBL_ENTRY) PTR_ARGS_NONNULL;
 static void
 hUndef(PCONF_HTBL_ENTRY entry)
 {
-    PCONF_HTBL_ENTRY *indirect = & (hash_table[hash(entry->name)]);
+	PCONF_HTBL_ENTRY *indirect;
 
-    while (*indirect != entry)
-	indirect = & ((*indirect)->next);
-    *indirect = entry->next;
+	indirect = addrof(hash_table[hash(entry->name)]);
 
-    free(entry->name);
-    free(entry->value);
-    free(entry);
+	while (*indirect != entry)
+		indirect = addrof((*indirect)->next);
+
+	*indirect = entry->next;
+
+	free(entry->name);
+	free(entry->value);
+	free(entry);
 }
 
 void
