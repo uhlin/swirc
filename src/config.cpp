@@ -308,15 +308,13 @@ hInstall(const char *name, const char *value)
 int
 config_item_install(const char *name, const char *value)
 {
-    if (!name || !value) {
-	return (EINVAL);
-    } else if (get_hash_table_entry(name)) {
-	return (EBUSY);
-    } else {
-	hInstall(name, value);
-    }
-
-    return (0);
+	if (name == NULL || value == NULL)
+		return EINVAL;
+	else if (get_hash_table_entry(name))
+		return EBUSY;
+	else
+		hInstall(name, value);
+	return 0;
 }
 
 int
