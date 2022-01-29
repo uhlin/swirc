@@ -322,13 +322,13 @@ config_item_install(const char *name, const char *value)
 int
 config_item_undef(const char *name)
 {
-    PCONF_HTBL_ENTRY entry;
+	PCONF_HTBL_ENTRY entry;
 
-    if ((entry = get_hash_table_entry(name)) == NULL)
-	return (ENOENT);
+	if ((entry = get_hash_table_entry(name)) == NULL)
+		return ENOENT;
 
-    hUndef(entry);
-    return (0);
+	hUndef(entry);
+	return 0;
 }
 
 long int
