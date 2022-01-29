@@ -361,40 +361,45 @@ config_integer(struct integer_context *ctx)
     return (ctx->fallback_default);
 }
 
+static void
+write_config_header(FILE *fp)
+{
+	write_to_stream(fp, "# -*- mode: conf; -*-\n#\n# Swirc %s  --  "
+	    "default config\n", g_swircVersion);
+	write_to_stream(fp, "# Automatically generated at %s\n\n",
+	    current_time("%c"));
+}
+
 void
 config_create(const char *path, const char *mode)
 {
-    FILE *fp = fopen_exit_on_error(path, mode);
+	FILE	*fp;
 
-    write_to_stream(fp, "# -*- mode: conf; -*-\n#\n"
-	"# Swirc %s  --  default config\n", g_swircVersion);
-    write_to_stream(fp, "# Automatically generated at %s\n\n",
-		    current_time("%c"));
+	fp = fopen_exit_on_error(path, mode);
+	write_config_header(fp);
 
-    FOREACH_CDV() {
-	write_setting(fp, cdv_p->setting_name, cdv_p->value, true,
-	    cdv_p->padding);
-    }
+	FOREACH_CDV() {
+		write_setting(fp, cdv_p->setting_name, cdv_p->value, true,
+		    cdv_p->padding);
+	}
 
-    fclose_ensure_success(fp);
+	fclose_ensure_success(fp);
 }
 
 void
 config_do_save(const char *path, const char *mode)
 {
-    FILE *fp = fopen_exit_on_error(path, mode);
+	FILE	*fp;
 
-    write_to_stream(fp, "# -*- mode: conf; -*-\n#\n"
-	"# Swirc %s  --  default config\n", g_swircVersion);
-    write_to_stream(fp, "# Automatically generated at %s\n\n",
-		    current_time("%c"));
+	fp = fopen_exit_on_error(path, mode);
+	write_config_header(fp);
 
-    FOREACH_CDV() {
-	write_setting(fp, cdv_p->setting_name, Config(cdv_p->setting_name),
-	    true, cdv_p->padding);
-    }
+	FOREACH_CDV() {
+		write_setting(fp, cdv_p->setting_name,
+		    Config(cdv_p->setting_name), true, cdv_p->padding);
+	}
 
-    fclose_ensure_success(fp);
+	fclose_ensure_success(fp);
 }
 
 static bool
