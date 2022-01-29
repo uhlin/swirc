@@ -400,16 +400,15 @@ config_do_save(const char *path, const char *mode)
 static bool
 is_recognized_setting(const char *setting_name)
 {
-    if (!setting_name || *setting_name == '\0') {
-	return (false);
-    }
+	if (setting_name == NULL || strings_match(setting_name, ""))
+		return false;
 
-    FOREACH_CDV() {
-	if (strings_match(setting_name, cdv_p->setting_name))
-	    return (true);
-    }
+	FOREACH_CDV() {
+		if (strings_match(setting_name, cdv_p->setting_name))
+			return true;
+	}
 
-    return (false);
+	return false;
 }
 
 static void
