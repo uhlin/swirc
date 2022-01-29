@@ -59,54 +59,54 @@
 static PCONF_HTBL_ENTRY hash_table[300];
 
 static struct tagConfDefValues {
-    char		*setting_name;
-    enum setting_type	 type;
-    short int		 padding;
-    char		*value;
+	const char		*setting_name;
+	enum setting_type	 type;
+	short int		 padding;
+	const char		*value;
 } ConfDefValues[] = {
-    { "nickname",                  TYPE_STRING,  2, "" },
-    { "nickname_aliases",          TYPE_STRING,  1, "" },
-    { "alt_nick",                  TYPE_STRING,  2, "" },
-    { "username",                  TYPE_STRING,  2, "" },
-    { "real_name",                 TYPE_STRING,  2, "" },
+	{ "nickname",                  TYPE_STRING,  2, "" },
+	{ "nickname_aliases",          TYPE_STRING,  1, "" },
+	{ "alt_nick",                  TYPE_STRING,  2, "" },
+	{ "username",                  TYPE_STRING,  2, "" },
+	{ "real_name",                 TYPE_STRING,  2, "" },
 
-    { "sasl",                      TYPE_BOOLEAN, 2, "no" },
-    { "sasl_mechanism",            TYPE_STRING,  1, "PLAIN" },
-    { "sasl_username",             TYPE_STRING,  1, "" },
-    { "sasl_password",             TYPE_STRING,  1, "" },
+	{ "sasl",                      TYPE_BOOLEAN, 2, "no" },
+	{ "sasl_mechanism",            TYPE_STRING,  1, "PLAIN" },
+	{ "sasl_username",             TYPE_STRING,  1, "" },
+	{ "sasl_password",             TYPE_STRING,  1, "" },
 
-    { "chanserv_host",             TYPE_STRING,  1, "services." },
-    { "nickserv_host",             TYPE_STRING,  1, "services." },
+	{ "chanserv_host",             TYPE_STRING,  1, "services." },
+	{ "nickserv_host",             TYPE_STRING,  1, "services." },
 
-    { "account_notify",            TYPE_BOOLEAN, 2, "no" },
-    { "away_notify",               TYPE_BOOLEAN, 2, "no" },
-    { "invite_notify",             TYPE_BOOLEAN, 2, "no" },
-    { "ircv3_server_time",         TYPE_BOOLEAN, 1, "no" },
+	{ "account_notify",            TYPE_BOOLEAN, 2, "no" },
+	{ "away_notify",               TYPE_BOOLEAN, 2, "no" },
+	{ "invite_notify",             TYPE_BOOLEAN, 2, "no" },
+	{ "ircv3_server_time",         TYPE_BOOLEAN, 1, "no" },
 
-    { "part_message",              TYPE_STRING,  1, "" },
-    { "quit_message",              TYPE_STRING,  1, "Swirc IRC client" },
+	{ "part_message",              TYPE_STRING,  1, "" },
+	{ "quit_message",              TYPE_STRING,  1, "Swirc IRC client" },
 
-    { "reconnect_backoff_delay",   TYPE_INTEGER, 1, STRINGIFY(RECONNECT_BACKOFF_DELAY_DEFAULT) },
-    { "reconnect_delay",           TYPE_INTEGER, 2, STRINGIFY(RECONNECT_DELAY_DEFAULT) },
-    { "reconnect_delay_max",       TYPE_INTEGER, 1, STRINGIFY(RECONNECT_DELAY_MAX_DEFAULT) },
-    { "reconnect_retries",         TYPE_INTEGER, 1, STRINGIFY(RECONNECT_RETRIES_DEFAULT) },
+	{ "reconnect_backoff_delay",   TYPE_INTEGER, 1, STRINGIFY(RECONNECT_BACKOFF_DELAY_DEFAULT) },
+	{ "reconnect_delay",           TYPE_INTEGER, 2, STRINGIFY(RECONNECT_DELAY_DEFAULT) },
+	{ "reconnect_delay_max",       TYPE_INTEGER, 1, STRINGIFY(RECONNECT_DELAY_MAX_DEFAULT) },
+	{ "reconnect_retries",         TYPE_INTEGER, 1, STRINGIFY(RECONNECT_RETRIES_DEFAULT) },
 
-    { "auto_op_yourself",          TYPE_BOOLEAN, 2, "yes" },
-    { "beeps",                     TYPE_BOOLEAN, 4, "yes" },
-    { "cipher_suite",              TYPE_STRING,  3, "compat" },
-    { "cmd_hist_size",             TYPE_INTEGER, 3, "50" },
-    { "connection_timeout",        TYPE_INTEGER, 2, "45" },
-    { "hostname_checking",         TYPE_BOOLEAN, 2, "yes" },
-    { "joins_parts_quits",         TYPE_BOOLEAN, 2, "no" },
-    { "kick_close_window",         TYPE_BOOLEAN, 2, "yes" },
-    { "max_chat_windows",          TYPE_INTEGER, 2, "60" },
-    { "server_cipher_suite",       TYPE_STRING,  2, "compat" },
-    { "show_ping_pong",            TYPE_BOOLEAN, 3, "no" },
-    { "skip_motd",                 TYPE_BOOLEAN, 3, "no" },
-    { "ssl_verify_peer",           TYPE_BOOLEAN, 3, "yes" },
-    { "startup_greeting",          TYPE_BOOLEAN, 2, "yes" },
-    { "textbuffer_size_absolute",  TYPE_INTEGER, 1, "1500" },
-    { "theme",                     TYPE_STRING,  4, "default" },
+	{ "auto_op_yourself",          TYPE_BOOLEAN, 2, "yes" },
+	{ "beeps",                     TYPE_BOOLEAN, 4, "yes" },
+	{ "cipher_suite",              TYPE_STRING,  3, "compat" },
+	{ "cmd_hist_size",             TYPE_INTEGER, 3, "50" },
+	{ "connection_timeout",        TYPE_INTEGER, 2, "45" },
+	{ "hostname_checking",         TYPE_BOOLEAN, 2, "yes" },
+	{ "joins_parts_quits",         TYPE_BOOLEAN, 2, "no" },
+	{ "kick_close_window",         TYPE_BOOLEAN, 2, "yes" },
+	{ "max_chat_windows",          TYPE_INTEGER, 2, "60" },
+	{ "server_cipher_suite",       TYPE_STRING,  2, "compat" },
+	{ "show_ping_pong",            TYPE_BOOLEAN, 3, "no" },
+	{ "skip_motd",                 TYPE_BOOLEAN, 3, "no" },
+	{ "ssl_verify_peer",           TYPE_BOOLEAN, 3, "yes" },
+	{ "startup_greeting",          TYPE_BOOLEAN, 2, "yes" },
+	{ "textbuffer_size_absolute",  TYPE_INTEGER, 1, "1500" },
+	{ "theme",                     TYPE_STRING,  4, "default" },
 };
 
 /* -------------------------------------------------- */
