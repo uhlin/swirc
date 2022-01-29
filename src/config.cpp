@@ -111,7 +111,71 @@ static struct tagConfDefValues {
 	{ "theme",                     TYPE_STRING,  4, "default" },
 };
 
-/* -------------------------------------------------- */
+/* hash pjw */
+static unsigned int
+hash(const char *setting_name)
+{
+	char		c;
+	unsigned int	hashval = 0;
+	unsigned int	tmp;
+
+	while ((c = *setting_name++) != 0) {
+		hashval = (hashval << 4) + c;
+		tmp = hashval & 0xf0000000;
+
+		if (tmp) {
+			hashval ^= (tmp >> 24);
+			hashval ^= tmp;
+		}
+	}
+
+	return (hashval % ARRAY_SIZE(hash_table));
+}
+
+/*lint -sem(get_hash_table_entry, r_null) */
+static PCONF_HTBL_ENTRY
+get_hash_table_entry(const char *name)
+{
+	PCONF_HTBL_ENTRY entry;
+
+	if (name == NULL)
+		return NULL;
+
+	for (entry = hash_table[hash(name)];
+	    entry != NULL;
+	    entry = entry->next) {
+		if (strings_match(name, entry->name))
+			return entry;
+	}
+
+	return NULL;
+}
+
+static const char *
+get_setting_type(const struct tagConfDefValues *cdv)
+{
+	if (cdv->type == TYPE_BOOLEAN)
+		return "bool";
+	else if (cdv->type == TYPE_INTEGER)
+		return "int";
+	else if (cdv->type == TYPE_STRING)
+		return "string";
+	return "unknown";
+}
+
+static std::string
+get_string(const char *name, const char *type)
+{
+#define B1 Theme("notice_inner_b1")
+#define B2 Theme("notice_inner_b2")
+	std::string str(name);
+
+	(void) str.append(B1).append(type).append(B2);
+	(void) str.append(" ").append(Theme("notice_sep")).append(" ");
+	(void) str.append(Config(name));
+
+	return str;
+}
 
 static bool
 got_hits(const char *search_var)
@@ -124,6 +188,164 @@ got_hits(const char *search_var)
 
 	return false;
 }
+
+static void
+hInstall(const char *name, const char *value)
+{
+	PCONF_HTBL_ENTRY item;
+	const bool has_no_value = (value == NULL || *value == '\0');
+	unsigned int hashval;
+
+	item        = static_cast<PCONF_HTBL_ENTRY>(xcalloc(sizeof *item, 1));
+	item->name  = sw_strdup(name);
+	item->value = sw_strdup(has_no_value ? "" : value);
+
+	hashval             = hash(name);
+	item->next          = hash_table[hashval];
+	hash_table[hashval] = item;
+}
+
+static void hUndef(PCONF_HTBL_ENTRY) PTR_ARGS_NONNULL;
+
+static void
+hUndef(PCONF_HTBL_ENTRY entry)
+{
+	PCONF_HTBL_ENTRY *indirect;
+
+	indirect = addrof(hash_table[hash(entry->name)]);
+
+	while (*indirect != entry)
+		indirect = addrof((*indirect)->next);
+
+	*indirect = entry->next;
+
+	free(entry->name);
+	free(entry->value);
+	free(entry);
+}
+
+static void
+init_missing_to_defs(void)
+{
+	FOREACH_CDV() {
+		if (get_hash_table_entry(cdv_p->setting_name) == NULL)
+			hInstall(cdv_p->setting_name, cdv_p->value);
+	}
+}
+
+static bool
+is_recognized_setting(const char *setting_name)
+{
+	if (setting_name == NULL || strings_match(setting_name, ""))
+		return false;
+
+	FOREACH_CDV() {
+		if (strings_match(setting_name, cdv_p->setting_name))
+			return true;
+	}
+
+	return false;
+}
+
+static void
+output_value_for_specific_setting(const char *setting)
+{
+	PRINTTEXT_CONTEXT	ctx;
+
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC3, true);
+
+	FOREACH_CDV() {
+		if (strings_match(setting, cdv_p->setting_name)) {
+			printtext(&ctx, "%s", get_string(cdv_p->setting_name,
+			    get_setting_type(cdv_p)).c_str());
+			return;
+		}
+	}
+
+	print_and_free("/set: no such setting", NULL);
+}
+
+static void
+output_values_for_all_settings(void)
+{
+	PRINTTEXT_CONTEXT	ctx;
+
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC3, true);
+
+	FOREACH_CDV() {
+		printtext(&ctx, "%s", get_string(cdv_p->setting_name,
+		    get_setting_type(cdv_p)).c_str());
+	}
+}
+
+static bool
+set_value_for_setting(const char *setting, const char *value,
+    const char **err_reason)
+{
+	FOREACH_CDV() {
+		if (strings_match(setting, cdv_p->setting_name)) {
+			if (cdv_p->type == TYPE_BOOLEAN &&
+			    !strings_match_ignore_case(value, "on") &&
+			    !strings_match_ignore_case(value, "true") &&
+			    !strings_match_ignore_case(value, "yes") &&
+			    !strings_match_ignore_case(value, "off") &&
+			    !strings_match_ignore_case(value, "false") &&
+			    !strings_match_ignore_case(value, "no")) {
+				*err_reason = "booleans must be on, true, yes, "
+				    "off, false or no";
+				return false;
+			} else if (cdv_p->type == TYPE_INTEGER &&
+			    !is_numeric(value)) {
+				*err_reason = "integer not all numeric";
+				return false;
+			} else if (config_item_undef(setting) != 0) {
+				*err_reason = "config_item_undef";
+				return false;
+			} else if (config_item_install(setting, value) != 0) {
+				*err_reason = "config_item_install";
+				return false;
+			}
+
+			config_do_save(g_config_file, "w");
+			return true;
+		}
+	}
+
+	*err_reason = "no such setting";
+	return false;
+}
+
+static void
+try_to_set_value_for_setting(const char *setting, const char *value)
+{
+	PRINTTEXT_CONTEXT	 ctx;
+	const char		*err_reason = "no error";
+
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
+
+	FOREACH_CDV() {
+		if (strings_match(setting, cdv_p->setting_name)) {
+			if (!set_value_for_setting(setting, value, &err_reason))
+				print_and_free(err_reason, NULL);
+			else
+				printtext(&ctx, "ok");
+			return;
+		}
+	}
+
+	print_and_free("/set: no such setting", NULL);
+}
+
+static void
+write_config_header(FILE *fp)
+{
+	write_to_stream(fp, "# -*- mode: conf; -*-\n#\n# Swirc %s  --  "
+	    "default config\n", g_swircVersion);
+	write_to_stream(fp, "# Automatically generated at %s\n\n",
+	    current_time("%c"));
+}
+
+/* -------------------------------------------------- */
 
 PTEXTBUF
 get_list_of_matching_settings(const char *search_var)
@@ -166,46 +388,6 @@ config_init(void)
 	ENTRY_FOREACH() {
 		*entry_p = NULL;
 	}
-}
-
-/* hash pjw */
-static unsigned int
-hash(const char *setting_name)
-{
-	char		c;
-	unsigned int	hashval = 0;
-	unsigned int	tmp;
-
-	while ((c = *setting_name++) != 0) {
-		hashval = (hashval << 4) + c;
-		tmp = hashval & 0xf0000000;
-
-		if (tmp) {
-			hashval ^= (tmp >> 24);
-			hashval ^= tmp;
-		}
-	}
-
-	return (hashval % ARRAY_SIZE(hash_table));
-}
-
-static void hUndef(PCONF_HTBL_ENTRY) PTR_ARGS_NONNULL;
-
-static void
-hUndef(PCONF_HTBL_ENTRY entry)
-{
-	PCONF_HTBL_ENTRY *indirect;
-
-	indirect = addrof(hash_table[hash(entry->name)]);
-
-	while (*indirect != entry)
-		indirect = addrof((*indirect)->next);
-
-	*indirect = entry->next;
-
-	free(entry->name);
-	free(entry->value);
-	free(entry);
 }
 
 void
@@ -290,41 +472,6 @@ Config(const char *setting_name)
 	return "";
 }
 
-/*lint -sem(get_hash_table_entry, r_null) */
-static PCONF_HTBL_ENTRY
-get_hash_table_entry(const char *name)
-{
-	PCONF_HTBL_ENTRY entry;
-
-	if (name == NULL)
-		return NULL;
-
-	for (entry = hash_table[hash(name)];
-	    entry != NULL;
-	    entry = entry->next) {
-		if (strings_match(name, entry->name))
-			return entry;
-	}
-
-	return NULL;
-}
-
-static void
-hInstall(const char *name, const char *value)
-{
-	PCONF_HTBL_ENTRY item;
-	const bool has_no_value = (value == NULL || *value == '\0');
-	unsigned int hashval;
-
-	item        = static_cast<PCONF_HTBL_ENTRY>(xcalloc(sizeof *item, 1));
-	item->name  = sw_strdup(name);
-	item->value = sw_strdup(has_no_value ? "" : value);
-
-	hashval             = hash(name);
-	item->next          = hash_table[hashval];
-	hash_table[hashval] = item;
-}
-
 int
 config_item_install(const char *name, const char *value)
 {
@@ -376,15 +523,6 @@ config_integer(struct integer_context *ctx)
 	return ctx->fallback_default;
 }
 
-static void
-write_config_header(FILE *fp)
-{
-	write_to_stream(fp, "# -*- mode: conf; -*-\n#\n# Swirc %s  --  "
-	    "default config\n", g_swircVersion);
-	write_to_stream(fp, "# Automatically generated at %s\n\n",
-	    current_time("%c"));
-}
-
 void
 config_create(const char *path, const char *mode)
 {
@@ -415,29 +553,6 @@ config_do_save(const char *path, const char *mode)
 	}
 
 	fclose_ensure_success(fp);
-}
-
-static bool
-is_recognized_setting(const char *setting_name)
-{
-	if (setting_name == NULL || strings_match(setting_name, ""))
-		return false;
-
-	FOREACH_CDV() {
-		if (strings_match(setting_name, cdv_p->setting_name))
-			return true;
-	}
-
-	return false;
-}
-
-static void
-init_missing_to_defs(void)
-{
-	FOREACH_CDV() {
-		if (get_hash_table_entry(cdv_p->setting_name) == NULL)
-			hInstall(cdv_p->setting_name, cdv_p->value);
-	}
 }
 
 void
@@ -530,122 +645,6 @@ config_get_normalized_sasl_password(void)
 }
 
 /* -------------------------------------------------- */
-
-static const char *
-get_setting_type(const struct tagConfDefValues *cdv)
-{
-	if (cdv->type == TYPE_BOOLEAN)
-		return "bool";
-	else if (cdv->type == TYPE_INTEGER)
-		return "int";
-	else if (cdv->type == TYPE_STRING)
-		return "string";
-	return "unknown";
-}
-
-#define B1 Theme("notice_inner_b1")
-#define B2 Theme("notice_inner_b2")
-
-static std::string
-get_string(const char *name, const char *type)
-{
-	std::string str(name);
-
-	(void) str.append(B1).append(type).append(B2);
-	(void) str.append(" ").append(Theme("notice_sep")).append(" ");
-	(void) str.append(Config(name));
-
-	return str;
-}
-
-static void
-output_values_for_all_settings(void)
-{
-	PRINTTEXT_CONTEXT	ctx;
-
-	printtext_context_init(&ctx, g_active_window, TYPE_SPEC3, true);
-
-	FOREACH_CDV() {
-		printtext(&ctx, "%s", get_string(cdv_p->setting_name,
-		    get_setting_type(cdv_p)).c_str());
-	}
-}
-
-static void
-output_value_for_specific_setting(const char *setting)
-{
-	PRINTTEXT_CONTEXT	ctx;
-
-	printtext_context_init(&ctx, g_active_window, TYPE_SPEC3, true);
-
-	FOREACH_CDV() {
-		if (strings_match(setting, cdv_p->setting_name)) {
-			printtext(&ctx, "%s", get_string(cdv_p->setting_name,
-			    get_setting_type(cdv_p)).c_str());
-			return;
-		}
-	}
-
-	print_and_free("/set: no such setting", NULL);
-}
-
-static bool
-set_value_for_setting(const char *setting, const char *value,
-    const char **err_reason)
-{
-	FOREACH_CDV() {
-		if (strings_match(setting, cdv_p->setting_name)) {
-			if (cdv_p->type == TYPE_BOOLEAN &&
-			    !strings_match_ignore_case(value, "on") &&
-			    !strings_match_ignore_case(value, "true") &&
-			    !strings_match_ignore_case(value, "yes") &&
-			    !strings_match_ignore_case(value, "off") &&
-			    !strings_match_ignore_case(value, "false") &&
-			    !strings_match_ignore_case(value, "no")) {
-				*err_reason = "booleans must be on, true, yes, "
-				    "off, false or no";
-				return false;
-			} else if (cdv_p->type == TYPE_INTEGER &&
-			    !is_numeric(value)) {
-				*err_reason = "integer not all numeric";
-				return false;
-			} else if (config_item_undef(setting) != 0) {
-				*err_reason = "config_item_undef";
-				return false;
-			} else if (config_item_install(setting, value) != 0) {
-				*err_reason = "config_item_install";
-				return false;
-			}
-
-			config_do_save(g_config_file, "w");
-			return true;
-		}
-	}
-
-	*err_reason = "no such setting";
-	return false;
-}
-
-static void
-try_to_set_value_for_setting(const char *setting, const char *value)
-{
-	PRINTTEXT_CONTEXT	 ctx;
-	const char		*err_reason = "no error";
-
-	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
-
-	FOREACH_CDV() {
-		if (strings_match(setting, cdv_p->setting_name)) {
-			if (!set_value_for_setting(setting, value, &err_reason))
-				print_and_free(err_reason, NULL);
-			else
-				printtext(&ctx, "ok");
-			return;
-		}
-	}
-
-	print_and_free("/set: no such setting", NULL);
-}
 
 /*
  * usage: /set [[setting] [value]]
