@@ -415,10 +415,10 @@ is_recognized_setting(const char *setting_name)
 static void
 init_missing_to_defs(void)
 {
-    FOREACH_CDV() {
-	if (get_hash_table_entry(cdv_p->setting_name) == NULL)
-	    hInstall(cdv_p->setting_name, cdv_p->value);
-    }
+	FOREACH_CDV() {
+		if (get_hash_table_entry(cdv_p->setting_name) == NULL)
+			hInstall(cdv_p->setting_name, cdv_p->value);
+	}
 }
 
 void
