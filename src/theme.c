@@ -317,13 +317,12 @@ theme_item_install(const char *name, const char *value)
 int
 theme_item_undef(const char *name)
 {
-    PTHEME_HTBL_ENTRY entry;
+	PTHEME_HTBL_ENTRY entry;
 
-    if ((entry = get_hash_table_entry(name)) == NULL)
-	return (ENOENT);
-
-    hUndef(entry);
-    return (0);
+	if ((entry = get_hash_table_entry(name)) == NULL)
+		return ENOENT;
+	hUndef(entry);
+	return 0;
 }
 
 long int
