@@ -47,13 +47,13 @@
 #include "theme.h"
 
 #define ENTRY_FOREACH()\
-    for (PTHEME_HTBL_ENTRY *entry_p = &hash_table[0];\
-	 entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
-	 entry_p++)
+	for (PTHEME_HTBL_ENTRY *entry_p = &hash_table[0];\
+	    entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
+	    entry_p++)
 #define FOREACH_TDV()\
-    for (struct tagThemeDefValues *tdv_p = &ThemeDefValues[0];\
-	 tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)];\
-	 tdv_p++)
+	for (struct tagThemeDefValues *tdv_p = &ThemeDefValues[0];\
+	    tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)];\
+	    tdv_p++)
 
 /* Objects with internal linkage
    ============================= */
