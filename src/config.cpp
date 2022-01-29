@@ -701,12 +701,8 @@ get_reconnect_delay_max(void)
 long int
 get_reconnect_retries(void)
 {
-    struct integer_context ctx = {
-	.setting_name = "reconnect_retries",
-	.lo_limit = 0,
-	.hi_limit = 999,
-	.fallback_default = RECONNECT_RETRIES_DEFAULT,
-    };
+	struct integer_context ctx("reconnect_retries", 0, 999,
+	    RECONNECT_RETRIES_DEFAULT);
 
-    return (config_integer(&ctx));
+	return config_integer(&ctx);
 }
