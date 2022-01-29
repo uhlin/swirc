@@ -297,21 +297,17 @@ hInstall(const char *name, const char *value)
 int
 theme_item_install(const char *name, const char *value)
 {
-    if (!name || !value) {
-	return (EINVAL);
-    } else if (get_hash_table_entry(name)) {
-	return (EBUSY);
-    }
+	if (name == NULL || value == NULL)
+		return EINVAL;
+	else if (get_hash_table_entry(name))
+		return EBUSY;
 #if WIN32
-    else if (strings_match(name, "term_use_default_colors")) {
-	hInstall(name, "NO");
-    }
+	else if (strings_match(name, "term_use_default_colors"))
+		hInstall(name, "NO");
 #endif
-    else {
-	hInstall(name, value);
-    }
-
-    return (0);
+	else
+		hInstall(name, value);
+	return 0;
 }
 
 int
