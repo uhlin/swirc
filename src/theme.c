@@ -203,30 +203,31 @@ theme_deinit(void)
 bool
 theme_bool(const char *item_name, bool fallback_default)
 {
-    PTHEME_HTBL_ENTRY item;
+	PTHEME_HTBL_ENTRY item;
 
-    if (!item_name)
-	err_exit(EINVAL, "theme_bool");
+	if (item_name == NULL)
+		err_exit(EINVAL, "theme_bool");
 
-    for (item = hash_table[hash(item_name)]; item != NULL; item = item->next) {
-	if (strings_match(item_name, item->name)) {
-	    if (strings_match_ignore_case(item->value, "on") ||
-		strings_match_ignore_case(item->value, "true") ||
-		strings_match_ignore_case(item->value, "yes")) {
-		return (true);
-	    } else if (strings_match_ignore_case(item->value, "off") ||
-		       strings_match_ignore_case(item->value, "false") ||
-		       strings_match_ignore_case(item->value, "no")) {
-		return (false);
-	    } else {
-		break;
-	    }
+	for (item = hash_table[hash(item_name)];
+	    item != NULL;
+	    item = item->next) {
+		if (strings_match(item_name, item->name)) {
+			if (strings_match_ignore_case(item->value, "on") ||
+			    strings_match_ignore_case(item->value, "true") ||
+			    strings_match_ignore_case(item->value, "yes"))
+				return true;
+			else if (strings_match_ignore_case(item->value, "off")
+			    || strings_match_ignore_case(item->value, "false")
+			    || strings_match_ignore_case(item->value, "no"))
+				return false;
+			else
+				break;
+		}
 	}
-    }
 
-    err_log(EINVAL, "warning: item %s (bool): falling back to the default",
+	err_log(EINVAL, "warning: item %s (bool): falling back to the default",
 	    item_name);
-    return (fallback_default);
+	return fallback_default;
 }
 
 char *
