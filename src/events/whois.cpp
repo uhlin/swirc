@@ -1,5 +1,5 @@
 /* Whois events
-   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -32,6 +32,7 @@
 #include <climits>
 #include <ctime>
 #include <stdexcept>
+#include <string>
 
 #include "../irc.h"
 #include "../libUtils.h"
@@ -40,6 +41,8 @@
 #include "../theme.h"
 
 #include "whois.h"
+
+#define NO_MSG "no message"
 
 class time_idle {
 	long int	days;
@@ -90,6 +93,32 @@ time_idle::time_idle(long int sec_idle, long int signon_time)
 
 	if (strftime(this->buf, ARRAY_SIZE(this->buf), "%c", &res) == 0)
 		throw std::runtime_error("cannot format date and time");
+}
+
+static bool
+get_msg(char *params, std::string& str)
+{
+	char *msg;
+	char *state = const_cast<char *>("");
+
+	if (strFeed(params, 2) != 2) {
+		(void) str.assign("");
+		return false;
+	}
+
+	(void) strtok_r(params, "\n", &state);
+	(void) strtok_r(NULL, "\n", &state);
+
+	if ((msg = strtok_r(NULL, "\n", &state)) == NULL) {
+		(void) str.assign("");
+		return false;
+	}
+
+	if (*msg == ':')
+		msg++;
+
+	(void) str.assign(msg);
+	return true;
 }
 
 /* event_whoReply: 352 (RPL_WHOREPLY)
@@ -317,21 +346,14 @@ event_whois_conn(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*msg;
-		char	*state = const_cast<char *>("");
+		std::string msg("");
 
-		if (strFeed(compo->params, 2) != 2)
-			throw std::runtime_error("strFeed");
-
-		(void) strtok_r(compo->params, "\n", &state);
-		(void) strtok_r(NULL, "\n", &state);
-
-		if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
-			throw std::runtime_error("null msg");
-		if (*msg == ':')
-			msg++;
-		if (*msg)
-			printtext(&ctx, "%s %s", Theme("whois_conn"), msg);
+		if (!get_msg(compo->params, msg))
+			throw std::runtime_error(NO_MSG);
+		else if (!msg.empty()) {
+			printtext(&ctx, "%s %s", Theme("whois_conn"),
+			    msg.c_str());
+		}
 	} catch (const std::runtime_error& e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
@@ -460,21 +482,14 @@ event_whois_ircOp(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*msg;
-		char	*state = const_cast<char *>("");
+		std::string msg("");
 
-		if (strFeed(compo->params, 2) != 2)
-			throw std::runtime_error("strFeed");
-
-		(void) strtok_r(compo->params, "\n", &state);
-		(void) strtok_r(NULL, "\n", &state);
-
-		if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
-			throw std::runtime_error("no message");
-		if (*msg == ':')
-			msg++;
-		if (*msg)
-			printtext(&ctx, "%s %s", Theme("whois_ircOp"), msg);
+		if (!get_msg(compo->params, msg))
+			throw std::runtime_error(NO_MSG);
+		else if (!msg.empty()) {
+			printtext(&ctx, "%s %s", Theme("whois_ircOp"),
+			    msg.c_str());
+		}
 	} catch (const std::runtime_error& e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
@@ -499,21 +514,14 @@ event_whois_modes(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*msg;
-		char	*state = const_cast<char *>("");
+		std::string msg("");
 
-		if (strFeed(compo->params, 2) != 2)
-			throw std::runtime_error("strFeed");
-
-		(void) strtok_r(compo->params, "\n", &state);
-		(void) strtok_r(NULL, "\n", &state);
-
-		if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
-			throw std::runtime_error("no message");
-		if (*msg == ':')
-			msg++;
-		if (*msg)
-			printtext(&ctx, "%s %s", Theme("whois_modes"), msg);
+		if (!get_msg(compo->params, msg))
+			throw std::runtime_error(NO_MSG);
+		else if (!msg.empty()) {
+			printtext(&ctx, "%s %s", Theme("whois_modes"),
+			    msg.c_str());
+		}
 	} catch (const std::runtime_error& e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
@@ -577,21 +585,14 @@ event_whois_service(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*msg;
-		char	*state = const_cast<char *>("");
+		std::string msg("");
 
-		if (strFeed(compo->params, 2) != 2)
-			throw std::runtime_error("strFeed");
-
-		(void) strtok_r(compo->params, "\n", &state);
-		(void) strtok_r(NULL, "\n", &state);
-
-		if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
-			throw std::runtime_error("no message");
-		if (*msg == ':')
-			msg++;
-		if (*msg)
-			printtext(&ctx, "%s %s", Theme("whois_service"), msg);
+		if (!get_msg(compo->params, msg))
+			throw std::runtime_error(NO_MSG);
+		else if (!msg.empty()) {
+			printtext(&ctx, "%s %s", Theme("whois_service"),
+			    msg.c_str());
+		}
 	} catch (const std::runtime_error& e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
