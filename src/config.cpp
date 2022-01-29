@@ -211,33 +211,35 @@ config_deinit(void)
 
 /* -------------------------------------------------- */
 
+/* XXX dup */
 bool
 config_bool(const char *setting_name, bool fallback_default)
 {
-    PCONF_HTBL_ENTRY item;
+	PCONF_HTBL_ENTRY item;
 
-    if (!setting_name)
-	err_exit(EINVAL, "config_bool");
+	if (setting_name == NULL)
+		err_exit(EINVAL, "config_bool");
 
-    for (item = hash_table[hash(setting_name)]; item; item = item->next) {
-	if (strings_match(setting_name, item->name)) {
-	    if (strings_match_ignore_case(item->value, "on") ||
-		strings_match_ignore_case(item->value, "true") ||
-		strings_match_ignore_case(item->value, "yes")) {
-		return (true);
-	    } else if (strings_match_ignore_case(item->value, "off") ||
-		       strings_match_ignore_case(item->value, "false") ||
-		       strings_match_ignore_case(item->value, "no")) {
-		return (false);
-	    } else {
-		break;
-	    }
+	for (item = hash_table[hash(setting_name)];
+	    item != NULL;
+	    item = item->next) {
+		if (strings_match(setting_name, item->name)) {
+			if (strings_match_ignore_case(item->value, "on") ||
+			    strings_match_ignore_case(item->value, "true") ||
+			    strings_match_ignore_case(item->value, "yes"))
+				return true;
+			else if (strings_match_ignore_case(item->value, "off")
+			    || strings_match_ignore_case(item->value, "false")
+			    || strings_match_ignore_case(item->value, "no"))
+				return false;
+			else
+				break;
+		}
 	}
-    }
 
-    err_log(EINVAL, "warning: setting %s (bool): falling back to the default",
-	    setting_name);
-    return (fallback_default);
+	err_log(EINVAL, "warning: setting %s (bool): falling back to the "
+	    "default", setting_name);
+	return fallback_default;
 }
 
 char *
