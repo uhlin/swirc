@@ -58,7 +58,7 @@
 /* Objects with internal linkage
    ============================= */
 
-static PTHEME_HTBL_ENTRY hash_table[300];
+static PTHEME_HTBL_ENTRY hash_table[300] = { NULL };
 
 static struct tagThemeDefValues {
 	char			*item_name;
