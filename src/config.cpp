@@ -243,17 +243,19 @@ config_bool(const char *setting_name, bool fallback_default)
 char *
 Config_mod(const char *setting_name)
 {
-    PCONF_HTBL_ENTRY item;
+	PCONF_HTBL_ENTRY item;
 
-    if (!setting_name)
-	return (NULL);
+	if (setting_name == NULL)
+		return NULL;
 
-    for (item = hash_table[hash(setting_name)]; item; item = item->next) {
-	if (strings_match(setting_name, item->name))
-	    return (item->value);
-    }
+	for (item = hash_table[hash(setting_name)];
+	    item != NULL;
+	    item = item->next) {
+		if (strings_match(setting_name, item->name))
+			return item->value;
+	}
 
-    return (NULL);
+	return NULL;
 }
 
 const char *
