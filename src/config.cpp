@@ -662,14 +662,10 @@ cmd_set(const char *data)
 long int
 get_reconnect_backoff_delay(void)
 {
-    struct integer_context ctx = {
-	.setting_name = "reconnect_backoff_delay",
-	.lo_limit = 0,
-	.hi_limit = 99,
-	.fallback_default = RECONNECT_BACKOFF_DELAY_DEFAULT,
-    };
+	struct integer_context ctx("reconnect_backoff_delay", 0, 99,
+	    RECONNECT_BACKOFF_DELAY_DEFAULT);
 
-    return (config_integer(&ctx));
+	return config_integer(&ctx);
 }
 
 long int
