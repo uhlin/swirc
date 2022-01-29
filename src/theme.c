@@ -152,21 +152,21 @@ theme_init(void)
 static unsigned int
 hash(const char *item_name)
 {
-    char c;
-    unsigned int hashval = 0;
-    unsigned int tmp;
+	char		c;
+	unsigned int	hashval = 0;
+	unsigned int	tmp;
 
-    while ((c = *item_name++) != 0) {
-	hashval = (hashval << 4) + c;
-	tmp = hashval & 0xf0000000;
+	while ((c = *item_name++) != 0) {
+		hashval = (hashval << 4) + c;
+		tmp = hashval & 0xf0000000;
 
-	if (tmp) {
-	    hashval ^= (tmp >> 24);
-	    hashval ^= tmp;
+		if (tmp) {
+			hashval ^= (tmp >> 24);
+			hashval ^= tmp;
+		}
 	}
-    }
 
-    return (hashval % ARRAY_SIZE(hash_table));
+	return (hashval % ARRAY_SIZE(hash_table));
 }
 
 static void hUndef(PTHEME_HTBL_ENTRY) PTR_ARGS_NONNULL;
