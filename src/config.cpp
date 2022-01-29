@@ -58,7 +58,7 @@
 /* Objects with internal linkage
    ============================= */
 
-static PCONF_HTBL_ENTRY hash_table[300];
+static PCONF_HTBL_ENTRY hash_table[300] = { NULL };
 
 static struct tagConfDefValues {
 	const char		*setting_name;
