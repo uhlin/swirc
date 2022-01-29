@@ -154,9 +154,9 @@ get_list_of_matching_settings(const char *search_var)
 void
 config_init(void)
 {
-    ENTRY_FOREACH() {
-	*entry_p = NULL;
-    }
+	ENTRY_FOREACH() {
+		*entry_p = NULL;
+	}
 }
 
 /* hash pjw */
