@@ -495,7 +495,7 @@ config_item_undef(const char *name)
 }
 
 long int
-config_integer(struct integer_context *ctx)
+config_integer(const struct integer_context *ctx)
 {
 	PCONF_HTBL_ENTRY item;
 	long int val;
