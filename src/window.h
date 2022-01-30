@@ -27,36 +27,36 @@ typedef struct tagNAMES {
 } NAMES, *PNAMES;
 
 typedef struct tagIRC_WINDOW {
-    PANEL	*pan;
-    PNAMES	 names_hash[NAMES_HASH_TABLE_SIZE];
-    PTEXTBUF	 buf;
-    bool	 logging;
-    bool	 received_chancreated;
-    bool	 received_chanmodes;
-    bool	 received_names;
-    bool	 scroll_mode;
-    char	 chanmodes[256];
-    char	*label;		/* Should not be case-sensitive */
-    char	*title;
+	PANEL		*pan;
+	PNAMES		 names_hash[NAMES_HASH_TABLE_SIZE];
+	PTEXTBUF	 buf;
+	bool		 logging;
+	bool		 received_chancreated;
+	bool		 received_chanmodes;
+	bool		 received_names;
+	bool		 scroll_mode;
+	char		 chanmodes[256];
+	char		*label; /* Should not be case-sensitive */
+	char		*title;
 
-    int		 num_owners;
-    int		 num_superops;
-    int		 num_ops;
-    int		 num_halfops;
-    int		 num_voices;
-    int		 num_normal;
-    int		 num_total;
+	int	num_owners;
+	int	num_superops;
+	int	num_ops;
+	int	num_halfops;
+	int	num_voices;
+	int	num_normal;
+	int	num_total;
 
-    struct {
-	PANEL *pan;
-	int scroll_pos;
-	int width;
-    } nicklist;
+	struct {
+		PANEL	*pan;
+		int	 scroll_pos;
+		int	 width;
+	} nicklist;
 
-    int		 refnum;
-    int		 saved_size;
-    int		 scroll_count;
-    struct tagIRC_WINDOW *next;
+	int	refnum;
+	int	saved_size;
+	int	scroll_count;
+	struct tagIRC_WINDOW *next;
 } IRC_WINDOW, *PIRC_WINDOW;
 
 __SWIRC_BEGIN_DECLS
