@@ -63,10 +63,10 @@
 static PTHEME_HTBL_ENTRY hash_table[300] = { NULL };
 
 static struct tagThemeDefValues {
-	char			*item_name;
+	const char		*item_name;
 	enum setting_type	 type;
 	short int		 padding;
-	char			*value;
+	const char		*value;
 } ThemeDefValues[] = {
 	{ "term_background",           TYPE_INTEGER, 9, "1" },
 	{ "term_enable_colors",        TYPE_BOOLEAN, 6, "yes" },
