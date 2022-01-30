@@ -1,5 +1,5 @@
 /* Handles event PRIVMSG
-   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -336,28 +336,25 @@ event_privmsg(struct irc_message_compo *compo)
 			 */
 
 			PNAMES	n = NULL;
-			char	c = ' ';
+			char	c = '*';
 
 			if ((ctx.window = window_by_label(dest)) == NULL) {
 				throw std::runtime_error("bogus window label");
-			} else if ((n = event_names_htbl_lookup(nick, dest)) ==
+			} else if ((n = event_names_htbl_lookup(nick, dest)) !=
 			    NULL) {
-				throw std::runtime_error("hash table lookup "
-				    "error");
+				if (n->is_owner)
+					c = '~';
+				else if (n->is_superop)
+					c = '&';
+				else if (n->is_op)
+					c = '@';
+				else if (n->is_halfop)
+					c = '%';
+				else if (n->is_voice)
+					c = '+';
+				else
+					c = ' ';
 			}
-
-			if (n->is_owner)
-				c = '~';
-			else if (n->is_superop)
-				c = '&';
-			else if (n->is_op)
-				c = '@';
-			else if (n->is_halfop)
-				c = '%';
-			else if (n->is_voice)
-				c = '+';
-			else
-				c = ' ';
 
 			if (shouldHighlightMessage_case1(msg) ||
 			    shouldHighlightMessage_case2(msg)) {

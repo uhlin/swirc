@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 - Added creation of OpenSSL scripts
 - Added event 335 (`RPL_WHOISBOT`)
 - Added theme item `whois_bot`
+- Print PRIVMSGs to irc channels from users that aren't in them. (No
+  lookup error.)
 - Reduced code duplication
 - Reformatted and reindented files
 - `config.c` -> `config.cpp`
