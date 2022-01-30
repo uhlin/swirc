@@ -543,6 +543,7 @@ event_whois_server(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
+		char	*srv, *info;
 		char	*state = const_cast<char *>("");
 
 		if (strFeed(compo->params, 3) != 3)
@@ -550,12 +551,10 @@ event_whois_server(struct irc_message_compo *compo)
 
 		(void) strtok_r(compo->params, "\n", &state);
 		(void) strtok_r(NULL, "\n", &state);
-		char *srv = strtok_r(NULL, "\n", &state);
-		char *info = strtok_r(NULL, "\n", &state);
 
-		if (srv == NULL)
+		if ((srv = strtok_r(NULL, "\n", &state)) == NULL)
 			throw std::runtime_error("no server");
-		else if (info == NULL)
+		else if ((info = strtok_r(NULL, "\n", &state)) == NULL)
 			throw std::runtime_error("no info");
 
 		if (*info == ':')
