@@ -41,6 +41,7 @@
 #include "events/names.h"
 
 #include "assertAPI.h"
+#include "atomicops.h"
 #include "config.h"
 #if defined(WIN32) && defined(PDC_EXP_EXTRAS)
 #include "curses-funcs.h"	/* is_scrollok() etc */
@@ -87,6 +88,7 @@ PIRC_WINDOW	g_active_window = NULL;
 PIRC_WINDOW	g_status_window = NULL;
 const char	g_status_window_label[] = "(status)";
 int		g_ntotal_windows = 0;
+volatile bool	g_redrawing_window = false;
 
 /* Objects with internal linkage
    ============================= */
@@ -298,6 +300,7 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 	if (werase(pwin) != ERR)
 		(void) wnoutrefresh(pwin);
 	if (limit_output) {
+		(void) atomic_swap_bool(&g_redrawing_window, true);
 		(void) curs_set(0);
 		while (element != NULL && i < rows) {
 			printtext_puts(pwin, element->text, element->indent,
@@ -306,7 +309,9 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 			i += rep_count;
 		}
 		(void) curs_set(1);
+		(void) atomic_swap_bool(&g_redrawing_window, false);
 	} else {
+		(void) atomic_swap_bool(&g_redrawing_window, true);
 		(void) curs_set(0);
 		while (element != NULL && i < rows) {
 			printtext_puts(pwin, element->text, element->indent, -1,
@@ -315,6 +320,7 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 			++ i;
 		}
 		(void) curs_set(1);
+		(void) atomic_swap_bool(&g_redrawing_window, false);
 	}
 
 	statusbar_update_display_beta();

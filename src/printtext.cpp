@@ -1,5 +1,5 @@
 /* Prints and handles text
-   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -1517,7 +1517,8 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	free(wc_buf);
 	wc_buf = NULL;
 
-	if (!atomic_load_bool(&g_resizing_term)) {
+	if (!atomic_load_bool(&g_redrawing_window) &&
+	    !atomic_load_bool(&g_resizing_term)) {
 		update_panels();
 		(void) doupdate();
 	}
