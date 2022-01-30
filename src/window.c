@@ -1,5 +1,5 @@
 /* Window functions
-   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -104,6 +104,39 @@ apply_window_options(WINDOW *win)
 {
 	if (!is_scrollok(win))
 		(void) scrollok(win, true);
+}
+
+static int
+change_window(PIRC_WINDOW window)
+{
+	WINDOW *pwin;
+
+	if (window == NULL)
+		return ENOENT; /* window not found */
+	else if (window == g_active_window)
+		return 0; /* window already active */
+	else if (top_panel(window->pan) == ERR)
+		return EPERM;
+
+	if (window->nicklist.pan != NULL)
+		(void) top_panel(window->nicklist.pan);
+
+	g_active_window = window;
+	titlebar(" %s ", (window->title != NULL ? window->title : ""));
+	statusbar_update_display_beta();
+
+	if ((pwin = readline_get_active_pwin()) != NULL) {
+		char *prompt;
+
+		(void) werase(pwin);
+		prompt = get_prompt();
+		printtext_puts(pwin, prompt, -1, -1, NULL);
+		free(prompt);
+	}
+
+	readline_top_panel();
+
+	return 0;
 }
 
 static unsigned int
@@ -457,35 +490,7 @@ window_by_refnum(int refnum)
 int
 change_window_by_label(const char *label)
 {
-	PIRC_WINDOW window = NULL;
-
-	if ((window = window_by_label(label)) == NULL)
-		return ENOENT; /* window not found */
-	else if (window == g_active_window)
-		return 0; /* window already active */
-	else if (top_panel(window->pan) == ERR)
-		return EPERM;
-
-	if (window->nicklist.pan != NULL)
-		(void) top_panel(window->nicklist.pan);
-
-	WINDOW *pwin = readline_get_active_pwin();
-	char *prompt = NULL;
-
-	g_active_window = window;
-	titlebar(" %s ", (window->title != NULL ? window->title : ""));
-	statusbar_update_display_beta();
-
-	if (pwin) {
-		(void) werase(pwin);
-		prompt = get_prompt();
-		printtext_puts(pwin, prompt, -1, -1, NULL);
-		free(prompt);
-	}
-
-	readline_top_panel();
-
-	return 0;
+	return change_window(window_by_label(label));
 }
 
 /**
@@ -494,35 +499,7 @@ change_window_by_label(const char *label)
 int
 change_window_by_refnum(int refnum)
 {
-	PIRC_WINDOW window = NULL;
-
-	if ((window = window_by_refnum(refnum)) == NULL)
-		return ENOENT;
-	else if (window == g_active_window)
-		return 0;
-	else if (top_panel(window->pan) == ERR)
-		return EPERM;
-
-	if (window->nicklist.pan != NULL)
-		(void) top_panel(window->nicklist.pan);
-
-	WINDOW *pwin = readline_get_active_pwin();
-	char *prompt = NULL;
-
-	g_active_window = window;
-	titlebar(" %s ", (window->title != NULL ? window->title : ""));
-	statusbar_update_display_beta();
-
-	if (pwin) {
-		(void) werase(pwin);
-		prompt = get_prompt();
-		printtext_puts(pwin, prompt, -1, -1, NULL);
-		free(prompt);
-	}
-
-	readline_top_panel();
-
-	return 0;
+	return change_window(window_by_refnum(refnum));
 }
 
 /**
