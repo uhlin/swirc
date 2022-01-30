@@ -17,13 +17,13 @@
 #define NAMES_HASH_TABLE_SIZE 4500
 
 typedef struct tagNAMES {
-    char	*nick;
-    bool	 is_owner;
-    bool	 is_superop;
-    bool	 is_op;
-    bool	 is_halfop;
-    bool	 is_voice;
-    struct tagNAMES *next;
+	char	*nick;
+	bool	 is_owner;
+	bool	 is_superop;
+	bool	 is_op;
+	bool	 is_halfop;
+	bool	 is_voice;
+	struct tagNAMES *next;
 } NAMES, *PNAMES;
 
 typedef struct tagIRC_WINDOW {
