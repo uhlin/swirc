@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Added command `/rgui`
 - Added config option `server_cipher_suite`
 - Added creation of OpenSSL scripts
+- Added theme item `whois_bot`
 - Reduced code duplication
 - Reformatted and reindented files
 - `config.c` -> `config.cpp`

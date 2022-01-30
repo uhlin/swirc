@@ -125,6 +125,7 @@ static struct tagThemeDefValues {
 
 	{ "whois_acc",                 TYPE_STRING,  6, "\00314=\017> account  :" },
 	{ "whois_away",                TYPE_STRING,  5, "\00314=\017> away     :" },
+	{ "whois_bot",                 TYPE_STRING,  6, "\00314=\017> bot      :" },
 	{ "whois_cert",                TYPE_STRING,  5, "\00314=\017> cert     :" },
 	{ "whois_channels",            TYPE_STRING,  1, "\00314=\017> channels :" },
 	{ "whois_conn",                TYPE_STRING,  5, "\00314=\017> conn     :" },
