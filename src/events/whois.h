@@ -5,6 +5,7 @@ __SWIRC_BEGIN_DECLS
 void	event_whoReply(struct irc_message_compo *);
 void	event_whois_acc(struct irc_message_compo *);
 void	event_whois_away(struct irc_message_compo *);
+void	event_whois_bot(struct irc_message_compo *);
 void	event_whois_cert(struct irc_message_compo *);
 void	event_whois_channels(struct irc_message_compo *);
 void	event_whois_conn(struct irc_message_compo *);

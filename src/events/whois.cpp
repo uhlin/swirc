@@ -253,6 +253,35 @@ event_whois_away(struct irc_message_compo *compo)
 	}
 }
 
+/* event_whois_bot: 335 (RPL_WHOISBOT)
+
+   Example:
+     :irc.server.com 335 <nick> <target> :<message> */
+void
+event_whois_bot(struct irc_message_compo *compo)
+{
+	PRINTTEXT_CONTEXT	ctx;
+
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
+
+	try {
+		std::string msg("");
+
+		if (!get_msg(compo->params, msg))
+			throw std::runtime_error(NO_MSG);
+		else if (!msg.empty()) {
+			printtext(&ctx, "%s %s", Theme("whois_bot"),
+			    msg.c_str());
+		}
+	} catch (const std::runtime_error& e) {
+		ctx.window	= g_status_window;
+		ctx.spec_type	= TYPE_SPEC1_WARN;
+
+		printtext(&ctx, "event_whois_bot(%s): error: %s",
+		    compo->command, e.what());
+	}
+}
+
 /* event_whois_cert: 276
 
    Example:

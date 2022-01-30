@@ -1,5 +1,5 @@
 /* Handle and interpret IRC events
-   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -166,6 +166,7 @@ static struct numeric_events_tag {
 	{ "332", "RPL_TOPIC",               NO_WINDOW,      0, event_topic },
 	{ "333", "",                        NO_WINDOW,      0, event_topic_creator },
 	{ "334", "",                        STATUS_WINDOW,  1, NULL },
+	{ "335", "RPL_WHOISBOT",            NO_WINDOW,      0, event_whois_bot },
 	{ "338", "",                        NO_WINDOW,      0, event_whois_host },
 	{ "341", "RPL_INVITING",            NO_WINDOW,      0, event_inviting },
 	{ "346", "RPL_INVITELIST",          NO_WINDOW,      0, event_inviteList },
