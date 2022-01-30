@@ -60,9 +60,9 @@ typedef struct tagIRC_WINDOW {
 } IRC_WINDOW, *PIRC_WINDOW;
 
 __SWIRC_BEGIN_DECLS
-extern const char       g_status_window_label[];
-extern PIRC_WINDOW	g_status_window;
 extern PIRC_WINDOW	g_active_window;
+extern PIRC_WINDOW	g_status_window;
+extern const char       g_status_window_label[];
 extern int              g_ntotal_windows;
 
 void windowSystem_init(void);

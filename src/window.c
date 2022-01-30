@@ -83,9 +83,9 @@ struct hInstall_context {
 /* Objects with external linkage
    ============================= */
 
-const char	g_status_window_label[] = "(status)";
-PIRC_WINDOW	g_status_window = NULL;
 PIRC_WINDOW	g_active_window = NULL;
+PIRC_WINDOW	g_status_window = NULL;
+const char	g_status_window_label[] = "(status)";
 int		g_ntotal_windows = 0;
 
 /* Objects with internal linkage
