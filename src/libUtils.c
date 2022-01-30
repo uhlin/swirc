@@ -237,6 +237,27 @@ xmbstowcs(wchar_t *pwcs, const char *s, size_t n)
 #endif
 }
 
+unsigned int
+hash_pjw_g(const char *str, const size_t upper_bound)
+{
+	char c;
+	unsigned int hashval = 0;
+
+	while ((c = *str++) != 0) {
+		unsigned int tmp;
+
+		hashval = (hashval << 4) + c;
+		tmp = hashval & 0xf0000000;
+
+		if (tmp) {
+			hashval ^= (tmp >> 24);
+			hashval ^= tmp;
+		}
+	}
+
+	return (hashval % upper_bound);
+}
+
 void
 fclose_ensure_success(FILE *fp)
 {
