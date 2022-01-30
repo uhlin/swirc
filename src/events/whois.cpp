@@ -656,17 +656,18 @@ event_whois_user(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
+		char	*nick, *user, *host, *rl_name;
 		char	*state = const_cast<char *>("");
 
 		if (strFeed(compo->params, 5) != 5)
 			throw std::runtime_error("strFeed");
 
 		(void) strtok_r(compo->params, "\n", &state); /* <issuer> */
-		char *nick = strtok_r(NULL, "\n", &state);
-		char *user = strtok_r(NULL, "\n", &state);
-		char *host = strtok_r(NULL, "\n", &state);
+		nick = strtok_r(NULL, "\n", &state);
+		user = strtok_r(NULL, "\n", &state);
+		host = strtok_r(NULL, "\n", &state);
 		(void) strtok_r(NULL, "\n", &state);
-		char *rl_name = strtok_r(NULL, "\n", &state);
+		rl_name = strtok_r(NULL, "\n", &state);
 
 		if (nick == NULL || user == NULL || host == NULL || rl_name ==
 		    NULL) {
