@@ -55,6 +55,8 @@
 	    cdv_p < &ConfDefValues[ARRAY_SIZE(ConfDefValues)];\
 	    cdv_p++)
 
+#define hash(str) hash_pjw_g(str, ARRAY_SIZE(hash_table))
+
 /* Objects with internal linkage
    ============================= */
 
@@ -112,27 +114,6 @@ static struct tagConfDefValues {
 };
 
 /* -------------------------------------------------- */
-
-/* hash pjw */
-static unsigned int
-hash(const char *setting_name)
-{
-	char		c;
-	unsigned int	hashval = 0;
-	unsigned int	tmp;
-
-	while ((c = *setting_name++) != 0) {
-		hashval = (hashval << 4) + c;
-		tmp = hashval & 0xf0000000;
-
-		if (tmp) {
-			hashval ^= (tmp >> 24);
-			hashval ^= tmp;
-		}
-	}
-
-	return (hashval % ARRAY_SIZE(hash_table));
-}
 
 /*lint -sem(get_hash_table_entry, r_null) */
 static PCONF_HTBL_ENTRY

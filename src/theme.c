@@ -55,6 +55,8 @@
 	    tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)];\
 	    tdv_p++)
 
+#define hash(str) hash_pjw_g(str, ARRAY_SIZE(hash_table))
+
 /* Objects with internal linkage
    ============================= */
 
@@ -137,27 +139,6 @@ static struct tagThemeDefValues {
 };
 
 /* -------------------------------------------------- */
-
-/* hash pjw */
-static unsigned int
-hash(const char *item_name)
-{
-	char		c;
-	unsigned int	hashval = 0;
-	unsigned int	tmp;
-
-	while ((c = *item_name++) != 0) {
-		hashval = (hashval << 4) + c;
-		tmp = hashval & 0xf0000000;
-
-		if (tmp) {
-			hashval ^= (tmp >> 24);
-			hashval ^= tmp;
-		}
-	}
-
-	return (hashval % ARRAY_SIZE(hash_table));
-}
 
 /*lint -sem(get_hash_table_entry, r_null) */
 static PTHEME_HTBL_ENTRY
