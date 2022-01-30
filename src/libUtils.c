@@ -89,6 +89,26 @@ xfopen(const char *path, const char *mode)
 }
 
 bool
+bool_false(const char *str)
+{
+	if (strings_match_ignore_case(str, "off") ||
+	    strings_match_ignore_case(str, "false") ||
+	    strings_match_ignore_case(str, "no"))
+		return true;
+	return false;
+}
+
+bool
+bool_true(const char *str)
+{
+	if (strings_match_ignore_case(str, "on") ||
+	    strings_match_ignore_case(str, "true") ||
+	    strings_match_ignore_case(str, "yes"))
+		return true;
+	return false;
+}
+
+bool
 getval_strtol(const char *str, const long int lo, const long int hi,
     long int *val)
 {

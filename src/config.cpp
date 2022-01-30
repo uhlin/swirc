@@ -384,7 +384,6 @@ config_deinit(void)
 	}
 }
 
-/* XXX dup */
 bool
 config_bool(const char *setting_name, bool fallback_default)
 {
@@ -397,13 +396,9 @@ config_bool(const char *setting_name, bool fallback_default)
 	    item != NULL;
 	    item = item->next) {
 		if (strings_match(setting_name, item->name)) {
-			if (strings_match_ignore_case(item->value, "on") ||
-			    strings_match_ignore_case(item->value, "true") ||
-			    strings_match_ignore_case(item->value, "yes"))
+			if (bool_true(item->value))
 				return true;
-			else if (strings_match_ignore_case(item->value, "off")
-			    || strings_match_ignore_case(item->value, "false")
-			    || strings_match_ignore_case(item->value, "no"))
+			else if (bool_false(item->value))
 				return false;
 			else
 				break;
