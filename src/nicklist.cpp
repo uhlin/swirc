@@ -283,12 +283,12 @@ nicklist_new(PIRC_WINDOW win)
 int
 nicklist_destroy(PIRC_WINDOW win)
 {
-    if (win->nicklist.pan)
-	term_remove_panel(win->nicklist.pan);
-    win->nicklist.pan = NULL;
-    win->nicklist.scroll_pos = 0;
-    win->nicklist.width = 0;
-    return 0;
+	if (win->nicklist.pan)
+		term_remove_panel(win->nicklist.pan);
+	win->nicklist.pan = NULL;
+	win->nicklist.scroll_pos = 0;
+	win->nicklist.width = 0;
+	return 0;
 }
 
 int
