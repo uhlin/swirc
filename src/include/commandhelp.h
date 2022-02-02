@@ -29,9 +29,11 @@
    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
    POSSIBILITY OF SUCH DAMAGE. */
 
+typedef const char *usage_t[];
+
 //lint -e786
 
-static const char *away_usage[] = {
+static usage_t away_usage = {
     "usage: /away [reason]",
     "",
     "Marks yourself as away with reason. If reason is omitted you'll",
@@ -39,14 +41,14 @@ static const char *away_usage[] = {
     "",
 };
 
-static const char *ban_usage[] = {
+static usage_t ban_usage = {
     "usage: /ban <mask>",
     "",
     "Set a ban. The active window must be an IRC channel.",
     "",
 };
 
-static const char *banlist_usage[] = {
+static usage_t banlist_usage = {
     "usage: /banlist [channel]",
     "",
     "Outputs channel banlist. If channel is omitted and the active",
@@ -55,21 +57,21 @@ static const char *banlist_usage[] = {
     "",
 };
 
-static const char *beep_usage[] = {
+static usage_t beep_usage = {
     "usage: /beep <nickname>",
     "",
     "Send beeps.",
     "",
 };
 
-static const char *boot_usage[] = {
+static usage_t boot_usage = {
     "usage: /boot <victim>",
     "",
     "In ICB mode: kick a user out of the active group.",
     "",
 };
 
-static const char *chanserv_usage[] = {
+static usage_t chanserv_usage = {
     "usage: /chanserv <[service hostname | --]> <command> [...]",
     "",
     "Communicate with channel services. If the first argument is '--'",
@@ -78,7 +80,7 @@ static const char *chanserv_usage[] = {
     "",
 };
 
-static const char *cleartoasts_usage[] = {
+static usage_t cleartoasts_usage = {
     "usage: /cleartoasts",
     "",
     "On Windows Swirc sends toast notifications. By issuing this command all",
@@ -86,7 +88,7 @@ static const char *cleartoasts_usage[] = {
     "",
 };
 
-static const char *close_usage[] = {
+static usage_t close_usage = {
     "usage: /close",
     "",
     "Close the active window. It's not possible to close the status",
@@ -95,14 +97,14 @@ static const char *close_usage[] = {
     "",
 };
 
-static const char *colormap_usage[] = {
+static usage_t colormap_usage = {
     "usage: /colormap",
     "",
     "Output colors.",
     "",
 };
 
-static const char *connect_usage[] = {
+static usage_t connect_usage = {
     "usage: /connect [-tls] <server[:port]>",
     "",
     "Connect to given server. If the port is omitted port 6667 will be",
@@ -127,7 +129,7 @@ static const char *connect_usage[] = {
     "",
 };
 
-static const char *cycle_usage[] = {
+static usage_t cycle_usage = {
     "usage: /cycle [channel]",
     "",
     "Cycle a channel, i.e. part plus join. If channel is omitted and",
@@ -135,14 +137,14 @@ static const char *cycle_usage[] = {
     "",
 };
 
-static const char *deop_usage[] = {
+static usage_t deop_usage = {
     "usage: /deop <nick>",
     "",
     "Take channel operator privilege.",
     "",
 };
 
-static const char *disconnect_usage[] = {
+static usage_t disconnect_usage = {
     "usage: /disconnect [message]",
     "",
     "Disconnect from IRC, but don't quit the program. A disconnect",
@@ -150,7 +152,7 @@ static const char *disconnect_usage[] = {
     "",
 };
 
-static const char *echo_usage[] = {
+static usage_t echo_usage = {
     "usage: /echo <text>",
     "",
     "Echo text.",
@@ -162,7 +164,7 @@ static const char *echo_usage[] = {
     "",
 };
 
-static const char *exlist_usage[] = {
+static usage_t exlist_usage = {
     "usage: /exlist [channel]",
     "",
     "Outputs channel exception list. An exception mask (+e) overrides",
@@ -171,14 +173,14 @@ static const char *exlist_usage[] = {
     "",
 };
 
-static const char *group_usage[] = {
+static usage_t group_usage = {
     "usage: /group <name>",
     "",
     "Changes ICB group.",
     "",
 };
 
-static const char *help_usage[] = {
+static usage_t help_usage = {
     "usage: /help [command]",
     "",
     "Outputs help. If a command is present, it'll output help for that",
@@ -186,7 +188,7 @@ static const char *help_usage[] = {
     "",
 };
 
-static const char *ignore_usage[] = {
+static usage_t ignore_usage = {
     "usage: /ignore [regex]",
     "",
     "Ignores all nick!user@host that matches given regular expression, this",
@@ -215,7 +217,7 @@ static const char *ignore_usage[] = {
     "",
 };
 
-static const char *ilist_usage[] = {
+static usage_t ilist_usage = {
     "usage: /ilist [channel]",
     "",
     "Outputs channel invitation list. An invitation mask (+I)",
@@ -225,14 +227,14 @@ static const char *ilist_usage[] = {
     "",
 };
 
-static const char *invite_usage[] = {
+static usage_t invite_usage = {
     "usage: /invite <targ_nick> <channel>",
     "",
     "Invites targ_nick to channel.",
     "",
 };
 
-static const char *join_usage[] = {
+static usage_t join_usage = {
     "usage: /join <channel> [key]",
     "",
     "Joins a channel (optionally by using a key).",
@@ -247,7 +249,7 @@ static const char *join_usage[] = {
     "",
 };
 
-static const char *kick_usage[] = {
+static usage_t kick_usage = {
     "usage: /kick <nick1[,nick2][,nick3][...]> [reason]",
     "",
     "Kicks one or more users out of a channel as specified by a",
@@ -256,7 +258,7 @@ static const char *kick_usage[] = {
     "",
 };
 
-static const char *kickban_usage[] = {
+static usage_t kickban_usage = {
     "usage: /kickban <nick> <mask> [reason]",
     "",
     "Initially designate a channel ban specified by <mask> and kick",
@@ -265,14 +267,14 @@ static const char *kickban_usage[] = {
     "",
 };
 
-static const char *kill_usage[] = {
+static usage_t kill_usage = {
     "usage: /kill <nickname> <comment>",
     "",
     "Disconnect a user from the connected network.",
     "",
 };
 
-static const char *list_usage[] = {
+static usage_t list_usage = {
     "usage: /list [<max_users[,>min_users][,pattern][...]]",
     "",
     "List channels and their topics. Without any arguments the output",
@@ -281,7 +283,7 @@ static const char *list_usage[] = {
     "",
 };
 
-static const char *me_usage[] = {
+static usage_t me_usage = {
     "usage: /me <message>",
     "",
     "Action message. Used to simulate role playing on IRC. The active",
@@ -289,7 +291,7 @@ static const char *me_usage[] = {
     "",
 };
 
-static const char *mode_usage[] = {
+static usage_t mode_usage = {
     "usage: /mode <modes> [...]",
     "",
     "Alter modes.",
@@ -342,7 +344,7 @@ static const char *mode_usage[] = {
      */
 };
 
-static const char *msg_usage[] = {
+static usage_t msg_usage = {
     "usage: /msg <recipient> <message>",
     "",
     "Used to send private messages between users, as well as to send",
@@ -350,14 +352,14 @@ static const char *msg_usage[] = {
     "",
 };
 
-static const char *nick_usage[] = {
+static usage_t nick_usage = {
     "usage: /nick <new nickname>",
     "",
     "Set nickname.",
     "",
 };
 
-static const char *nickserv_usage[] = {
+static usage_t nickserv_usage = {
     "usage: /nickserv <[service hostname | --]> <command> [...]",
     "",
     "Communicate with nickname services.",
@@ -377,7 +379,7 @@ static const char *nickserv_usage[] = {
     "",
 };
 
-static const char *notice_usage[] = {
+static usage_t notice_usage = {
     "usage: /notice <recipient> <message>",
     "",
     "Used to send private messages between users, as well as to send",
@@ -385,21 +387,21 @@ static const char *notice_usage[] = {
     "",
 };
 
-static const char *op_usage[] = {
+static usage_t op_usage = {
     "usage: /op <nick>",
     "",
     "Give channel operator privilege.",
     "",
 };
 
-static const char *oper_usage[] = {
+static usage_t oper_usage = {
     "usage: /oper <name> <password>",
     "",
     "Identify as an IRC op.",
     "",
 };
 
-static const char *part_usage[] = {
+static usage_t part_usage = {
     "usage: /part [channel] [message]",
     "",
     "Parts a channel with an optional message. For a standard channel a",
@@ -415,7 +417,7 @@ static const char *part_usage[] = {
     "",
 };
 
-static const char *passmod_usage[] = {
+static usage_t passmod_usage = {
     "usage: /passmod <nickname>",
     "",
     "Pass moderation privilege.",
@@ -423,7 +425,7 @@ static const char *passmod_usage[] = {
     "",
 };
 
-static const char *query_usage[] = {
+static usage_t query_usage = {
     "usage: /query [nick]",
     "",
     "Start a query with nick. If nick is omitted, and provided that",
@@ -431,7 +433,7 @@ static const char *query_usage[] = {
     "",
 };
 
-static const char *quit_usage[] = {
+static usage_t quit_usage = {
     "usage: /quit [message]",
     "",
     "Disconnect from IRC and quit the program. A disconnect message is",
@@ -439,7 +441,7 @@ static const char *quit_usage[] = {
     "",
 };
 
-static const char *resize_usage[] = {
+static usage_t resize_usage = {
     "usage: /resize",
     "",
     "Resize the terminal. For example, Windows doesn't send SIGWINCH,",
@@ -448,14 +450,14 @@ static const char *resize_usage[] = {
     "",
 };
 
-static const char *rgui_usage[] = {
+static usage_t rgui_usage = {
     "usage: /rgui ...",
     "",
     "No help yet.",
     "",
 };
 
-static const char *rules_usage[] = {
+static usage_t rules_usage = {
     "usage: /rules",
     "",
     "Outputs network/server rules. Not all IRCd:s supports this",
@@ -463,7 +465,7 @@ static const char *rules_usage[] = {
     "",
 };
 
-static const char *sasl_usage[] = {
+static usage_t sasl_usage = {
     "usage: /sasl <operation> [...]",
     "",
     "Simple Authentication and Security Layer.",
@@ -501,7 +503,7 @@ static const char *sasl_usage[] = {
     "",
 };
 
-static const char *say_usage[] = {
+static usage_t say_usage = {
     "usage: /say <message>",
     "",
     "Say a message. This command can be used if you want say something",
@@ -509,7 +511,7 @@ static const char *say_usage[] = {
     "",
 };
 
-static const char *servlist_usage[] = {
+static usage_t servlist_usage = {
     "usage: /servlist [<mask> [<type>]]",
     "",
     "This command is used to list services currently connected to the network",
@@ -519,7 +521,7 @@ static const char *servlist_usage[] = {
     "",
 };
 
-static const char *set_usage[] = {
+static usage_t set_usage = {
     "usage: /set [[setting] [value]]",
     "",
     "Alter Swirc settings.",
@@ -563,7 +565,7 @@ static const char *set_usage[] = {
      */
 };
 
-static const char *squery_usage[] = {
+static usage_t squery_usage = {
     "usage: /squery <servicename> <text>",
     "",
     "This command is used similarly to '/msg'. The only difference is that the",
@@ -571,7 +573,7 @@ static const char *squery_usage[] = {
     "",
 };
 
-static const char *theme_usage[] = {
+static usage_t theme_usage = {
     "usage: /theme [install <name> | list-remote | set <name>]",
     "",
     "Management of themes on-the-fly.",
@@ -589,7 +591,7 @@ static const char *theme_usage[] = {
     "",
 };
 
-static const char *time_usage[] = {
+static usage_t time_usage = {
     "usage: /time <target>",
     "",
     "Send a CTCP TIME request to target, which is either a nickname or",
@@ -597,7 +599,7 @@ static const char *time_usage[] = {
     "",
 };
 
-static const char *topic_usage[] = {
+static usage_t topic_usage = {
     "usage: /topic [new topic]",
     "",
     "Set a new topic for a channel. If new topic is omitted, display",
@@ -605,21 +607,21 @@ static const char *topic_usage[] = {
     "",
 };
 
-static const char *unban_usage[] = {
+static usage_t unban_usage = {
     "usage: /unban <mask>",
     "",
     "Unset a ban. (The active window must be an IRC channel.)",
     "",
 };
 
-static const char *unignore_usage[] = {
+static usage_t unignore_usage = {
     "usage: /unignore [#]",
     "",
     "Delete a regular expression from the ignore list.",
     "",
 };
 
-static const char *version_usage[] = {
+static usage_t version_usage = {
     "usage: /version <target>",
     "",
     "Send a CTCP VERSION request to target, which is either a nickname",
@@ -627,7 +629,7 @@ static const char *version_usage[] = {
     "",
 };
 
-static const char *who_usage[] = {
+static usage_t who_usage = {
     "usage: /who <mask>",
     "",
     "Used by a client to generate a query which returns a list of",
@@ -647,7 +649,7 @@ static const char *who_usage[] = {
      */
 };
 
-static const char *whois_usage[] = {
+static usage_t whois_usage = {
     "usage: /whois <nick>",
     "",
     "Used to query information about particular user.",
@@ -655,7 +657,7 @@ static const char *whois_usage[] = {
     "",
 };
 
-static const char *znc_usage[] = {
+static usage_t znc_usage = {
     "usage: /znc [*module] <command>",
     "",
     "This command simplifies communication with ZNC (an IRC bouncer).",
