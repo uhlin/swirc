@@ -269,15 +269,14 @@ list_fits_no(PIRC_WINDOW win, WINDOW *nl_win, const int HEIGHT,
 int
 nicklist_new(PIRC_WINDOW win)
 {
-    const int width = nicklist_get_width(win);
+	const int width = nicklist_get_width(win);
 
-    win->nicklist.pan = NULL;
-    win->nicklist.scroll_pos = 0;
-    win->nicklist.width = width;
+	win->nicklist.pan		= NULL;
+	win->nicklist.scroll_pos	= 0;
+	win->nicklist.width		= width;
 
-    window_recreate_exported(win, LINES, COLS);
-
-    return 0;
+	window_recreate_exported(win, LINES, COLS);
+	return 0;
 }
 
 int
