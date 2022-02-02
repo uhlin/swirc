@@ -386,7 +386,6 @@ nicklist_scroll_up(PIRC_WINDOW win)
 		return;
 	}
 
-
 	win->nicklist.scroll_pos -= g_nicklist_scroll_amount;
 
 	if (nicklist_draw(win, LINES) != 0)
