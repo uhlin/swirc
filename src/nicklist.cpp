@@ -33,6 +33,7 @@
 #include <list>
 #include <string>
 
+#include "assertAPI.h"
 #include "dataClassify.h"
 #include "errHand.h"
 #include "libUtils.h"
@@ -200,6 +201,71 @@ printnick(WINDOW *win, const int row, const int col, const char *nick)
     (void) wattrset(win, A_NORMAL);
 }
 
+static void
+list_fits_yes(PIRC_WINDOW win, WINDOW *nl_win, const int HEIGHT,
+    std::list<std::string>& list)
+{
+	std::list<std::string>::iterator it;
+	int count;
+
+	(void) werase(nl_win);
+	win->nicklist.scroll_pos = 0;
+
+	it = list.begin();
+	count = 0;
+
+	while (it != list.end() && count < HEIGHT) {
+		printnick(nl_win, count, 0, it->c_str());
+		++it;
+		++count;
+	}
+
+	while (count < HEIGHT) {
+		printnick(nl_win, count, 0, NULL);
+		count++;
+	}
+
+	draw_hook();
+}
+
+static void
+list_fits_no(PIRC_WINDOW win, WINDOW *nl_win, const int HEIGHT,
+    std::list<std::string>& list)
+{
+	std::list<std::string>::iterator it;
+	int count;
+
+	(void) werase(nl_win);
+
+	if (win->nicklist.scroll_pos < 0) {
+		win->nicklist.scroll_pos = 0;
+	} else {
+		it = list.begin();
+		count = 0;
+
+		std::advance(it, win->nicklist.scroll_pos);
+
+		for (; it != list.end(); ++it)
+			count++;
+		if (count < HEIGHT)
+			win->nicklist.scroll_pos -= (HEIGHT - count);
+	}
+
+	it = list.begin();
+	count = 0;
+
+	if (win->nicklist.scroll_pos)
+		std::advance(it, win->nicklist.scroll_pos);
+
+	while (it != list.end() && count < HEIGHT) {
+		printnick(nl_win, count, 0, it->c_str());
+		++it;
+		++count;
+	}
+
+	draw_hook();
+}
+
 int
 nicklist_new(PIRC_WINDOW win)
 {
@@ -228,87 +294,39 @@ nicklist_destroy(PIRC_WINDOW win)
 int
 nicklist_draw(PIRC_WINDOW win, const int rows)
 {
-    if (win == NULL || rows < 0 || !win->received_names ||
-	win->nicklist.pan == NULL)
-	return -1;
-    else if (term_is_too_small()) {
-	(void) napms(30);
-	return -1;
-    }
+	WINDOW *nl_win;
 
-    WINDOW *nl_win = panel_window(win->nicklist.pan);
-    const int HEIGHT = rows - 3;
-    std::list<std::string> list = get_list(win, true);
-
-    if (nl_win == NULL || HEIGHT < 0 ||
-	list.size() != static_cast<unsigned int>(win->num_total))
-	return -1;
-
-    const bool list_fits = !(win->num_total > HEIGHT);
-    std::list<std::string>::iterator it;
-    int count;
-
-    if (list_fits) {
-	mutex_lock(&g_puts_mutex);
-	(void) werase(nl_win);
-	win->nicklist.scroll_pos = 0;
-
-	it = list.begin();
-	count = 0;
-
-	while (it != list.end() && count < HEIGHT) {
-	    printnick(nl_win, count, 0, it->c_str());
-
-	    ++it;
-	    ++count;
+	if (win == NULL || rows < 0 || !win->received_names ||
+	    win->nicklist.pan == NULL) {
+		return -1;
+	} else if (term_is_too_small()) {
+		(void) napms(30);
+		return -1;
 	}
 
-	while (count < HEIGHT) {
-	    printnick(nl_win, count, 0, NULL);
-	    count++;
+	const int HEIGHT = (rows - 3);
+	std::list<std::string> list(get_list(win, true));
+
+	if ((nl_win = panel_window(win->nicklist.pan)) == NULL || HEIGHT < 0 ||
+	    list.size() != static_cast<unsigned int>(win->num_total))
+		return -1;
+
+	const bool list_fits = !(win->num_total > HEIGHT);
+
+	if (list_fits) {
+		mutex_lock(&g_puts_mutex);
+		list_fits_yes(win, nl_win, HEIGHT, list);
+		mutex_unlock(&g_puts_mutex);
+		return 0;
+	} else {
+		mutex_lock(&g_puts_mutex);
+		list_fits_no(win, nl_win, HEIGHT, list);
+		mutex_unlock(&g_puts_mutex);
+		return 0;
 	}
 
-	draw_hook();
-	mutex_unlock(&g_puts_mutex);
-	return 0;
-    } else { /* !list_fits */
-	mutex_lock(&g_puts_mutex);
-	(void) werase(nl_win);
-
-	if (win->nicklist.scroll_pos < 0)
-	    win->nicklist.scroll_pos = 0;
-	else {
-	    it = list.begin();
-	    count = 0;
-
-	    std::advance(it, win->nicklist.scroll_pos);
-
-	    for (; it != list.end(); ++it)
-		count++;
-
-	    if (count < HEIGHT)
-		win->nicklist.scroll_pos -= (HEIGHT - count);
-	}
-
-	it = list.begin();
-	count = 0;
-
-	if (win->nicklist.scroll_pos)
-	    std::advance(it, win->nicklist.scroll_pos);
-
-	while (it != list.end() && count < HEIGHT) {
-	    printnick(nl_win, count, 0, it->c_str());
-
-	    ++it;
-	    ++count;
-	}
-
-	draw_hook();
-	mutex_unlock(&g_puts_mutex);
-	return 0;
-    }
-
-    /*NOTREACHED*/ return -1;
+	/*NOTREACHED*/ sw_assert_not_reached();
+	/*NOTREACHED*/ return -1;
 }
 
 int
