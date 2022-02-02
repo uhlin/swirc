@@ -314,20 +314,21 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 int
 nicklist_get_width(const PIRC_WINDOW window)
 {
-    size_t len = 0;
+	size_t len = 0;
 
-    for (size_t i = 0; i < ARRAY_SIZE(window->names_hash); i++) {
-	for (PNAMES names = window->names_hash[i]; names != NULL;
-	     names = names->next) {
-	    if (strlen(names->nick) > len)
-		len = strlen(names->nick);
+	for (size_t i = 0; i < ARRAY_SIZE(window->names_hash); i++) {
+		for (PNAMES names = window->names_hash[i];
+		    names != NULL;
+		    names = names->next) {
+			if (strlen(names->nick) > len)
+				len = strlen(names->nick);
+		}
 	}
-    }
 
-    if (len > g_nicklist_maxnick)
-	len = g_nicklist_maxnick;
-    len += 2; // +2 for ACS_VLINE and privilege (~&@%+)
-    return size_to_int(len);
+	if (len > g_nicklist_maxnick)
+		len = g_nicklist_maxnick;
+	len += 2; // +2 for ACS_VLINE and privilege (~&@%+)
+	return size_to_int(len);
 }
 
 void
