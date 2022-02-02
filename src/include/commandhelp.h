@@ -1,7 +1,7 @@
 #ifndef COMMAND_HELP_H
 #define COMMAND_HELP_H
 /* commandhelp.h
-   Copyright (C) 2018-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -234,8 +234,7 @@ static const char *invite_usage[] = {
 static const char *join_usage[] = {
     "usage: /join <channel> [key]",
     "",
-    "Joins a channel (optionally by using a key). For a standard",
-    "channel a leading hashtag (#) must be present.",
+    "Joins a channel (optionally by using a key).",
     "",
     TXT_BOLD "EXAMPLES" TXT_BOLD,
     "Join a channel with name freenode:",
@@ -398,9 +397,9 @@ static const char *oper_usage[] = {
 static const char *part_usage[] = {
     "usage: /part [channel] [message]",
     "",
-    "Parts a channel with an optional message. For a standard channel",
-    "a leading hashtag (#) must be present. If the command is called",
-    "without arguments it tries to part the current window which must",
+    "Parts a channel with an optional message. For a standard channel a",
+    "leading hash (#) must be present. If the command is called without",
+    "any arguments Swirc attempts to part the current window which must",
     "be an IRC channel.",
     "",
     TXT_BOLD "EXAMPLES" TXT_BOLD,
