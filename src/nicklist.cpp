@@ -350,18 +350,18 @@ nicklist_scroll_down(PIRC_WINDOW win)
 void
 nicklist_scroll_up(PIRC_WINDOW win)
 {
-    if (win == NULL || !is_irc_channel(win->label) || !win->received_names ||
-	win->nicklist.pan == NULL || win->nicklist.width <= 0 ||
-	term_is_too_small()) {
-	term_beep();
-	(void) napms(30);
-	return;
-    }
+	if (win == NULL || !is_irc_channel(win->label) ||
+	    !win->received_names || win->nicklist.pan == NULL ||
+	    win->nicklist.width <= 0 || term_is_too_small()) {
+		term_beep();
+		(void) napms(30);
+		return;
+	}
 
-    win->nicklist.scroll_pos -= g_nicklist_scroll_amount;
+	win->nicklist.scroll_pos -= g_nicklist_scroll_amount;
 
-    if (nicklist_draw(win, LINES) != 0)
-	debug("nicklist_scroll_up: nicklist_draw: error");
+	if (nicklist_draw(win, LINES) != 0)
+		debug("nicklist_scroll_up: nicklist_draw: error");
 }
 
 int
