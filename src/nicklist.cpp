@@ -48,6 +48,16 @@ const int	g_nicklist_maxnick = 16;
 const int	g_nicklist_scroll_amount = 10;
 
 static bool
+can_scroll(PIRC_WINDOW win)
+{
+	if (win == NULL || !is_irc_channel(win->label) ||
+	    !win->received_names || win->nicklist.pan == NULL ||
+	    win->nicklist.width <= 0 || term_is_too_small())
+		return false;
+	return true;
+}
+
+static bool
 cmp_fn(const std::string& nick1, const std::string& nick2)
 {
 	size_t i = 1;
@@ -355,9 +365,7 @@ nicklist_get_width(const PIRC_WINDOW window)
 void
 nicklist_scroll_down(PIRC_WINDOW win)
 {
-	if (win == NULL || !is_irc_channel(win->label) ||
-	    !win->received_names || win->nicklist.pan == NULL ||
-	    win->nicklist.width <= 0 || term_is_too_small()) {
+	if (!can_scroll(win)) {
 		term_beep();
 		(void) napms(30);
 		return;
@@ -372,13 +380,12 @@ nicklist_scroll_down(PIRC_WINDOW win)
 void
 nicklist_scroll_up(PIRC_WINDOW win)
 {
-	if (win == NULL || !is_irc_channel(win->label) ||
-	    !win->received_names || win->nicklist.pan == NULL ||
-	    win->nicklist.width <= 0 || term_is_too_small()) {
+	if (!can_scroll(win)) {
 		term_beep();
 		(void) napms(30);
 		return;
 	}
+
 
 	win->nicklist.scroll_pos -= g_nicklist_scroll_amount;
 
