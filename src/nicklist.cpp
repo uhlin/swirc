@@ -1,5 +1,5 @@
 /* nicklist.cpp
-   Copyright (C) 2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -367,13 +367,15 @@ nicklist_scroll_up(PIRC_WINDOW win)
 int
 nicklist_update(PIRC_WINDOW win)
 {
-    if (win == NULL || !is_irc_channel(win->label) || !win->received_names)
-	return -1;
+	if (win == NULL || !is_irc_channel(win->label) || !win->received_names)
+		return -1;
 
-    const bool width_changed = nicklist_get_width(win) != win->nicklist.width;
+	const bool width_changed = (nicklist_get_width(win) !=
+	    win->nicklist.width);
 
-    if (!width_changed)
-	return nicklist_draw(win, LINES);
-    window_recreate_exported(win, LINES, COLS);
-    return 0;
+	if (!width_changed)
+		return nicklist_draw(win, LINES);
+
+	window_recreate_exported(win, LINES, COLS);
+	return 0;
 }
