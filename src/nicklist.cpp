@@ -139,35 +139,37 @@ draw_hook()
 static std::list<std::string>
 get_list(const PIRC_WINDOW window, const bool sort)
 {
-    std::list<std::string> list;
+	std::list<std::string> list;
 
-    for (size_t i = 0; i < ARRAY_SIZE(window->names_hash); i++) {
-	for (PNAMES names = window->names_hash[i]; names != NULL;
-	     names = names->next) {
-	    char c;
+	for (size_t i = 0; i < ARRAY_SIZE(window->names_hash); i++) {
+		for (PNAMES names = window->names_hash[i];
+		    names != NULL;
+		    names = names->next) {
+			char c;
 
-	    if (names->is_owner)
-		c = '~';
-	    else if (names->is_superop)
-		c = '&';
-	    else if (names->is_op)
-		c = '@';
-	    else if (names->is_halfop)
-		c = '%';
-	    else if (names->is_voice)
-		c = '+';
-	    else
-		c = ' ';
-	    std::string str("");
-	    str.push_back(c);
-	    str.append(names->nick);
-	    list.push_back(str);
+			if (names->is_owner)
+				c = '~';
+			else if (names->is_superop)
+				c = '&';
+			else if (names->is_op)
+				c = '@';
+			else if (names->is_halfop)
+				c = '%';
+			else if (names->is_voice)
+				c = '+';
+			else
+				c = ' ';
+
+			std::string str("");
+			str.push_back(c);
+			str.append(names->nick);
+			list.push_back(str);
+		}
 	}
-    }
 
-    if (sort)
-	list.sort(cmp_fn);
-    return list;
+	if (sort)
+		list.sort(cmp_fn);
+	return list;
 }
 
 static void
