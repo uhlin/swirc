@@ -50,83 +50,86 @@ const int	g_nicklist_scroll_amount = 10;
 static bool
 cmp_fn(const std::string& nick1, const std::string& nick2)
 {
-    /*
-     * nick1
-     */
-    switch (nick1.at(0)) {
-    case '~':
-	if (nick2.at(0) == '&' || nick2.at(0) == '@' || nick2.at(0) == '%' ||
-	    nick2.at(0) == '+' || nick2.at(0) == ' ')
-	    return true;
-	break;
-    case '&':
-	if (nick2.at(0) == '@' || nick2.at(0) == '%' || nick2.at(0) == '+' ||
-	    nick2.at(0) == ' ')
-	    return true;
-	break;
-    case '@':
-	if (nick2.at(0) == '%' || nick2.at(0) == '+' || nick2.at(0) == ' ')
-	    return true;
-	break;
-    case '%':
-	if (nick2.at(0) == '+' || nick2.at(0) == ' ')
-	    return true;
-	break;
-    case '+':
-	if (nick2.at(0) == ' ')
-	    return true;
-	break;
-    case ' ':
-    default:
-	break;
-    }
+	size_t i = 1;
+	int c1, c2;
 
-    /*
-     * nick2
-     */
-    switch (nick2.at(0)) {
-    case '~':
-	if (nick1.at(0) == '&' || nick1.at(0) == '@' || nick1.at(0) == '%' ||
-	    nick1.at(0) == '+' || nick1.at(0) == ' ')
-	    return false;
-	break;
-    case '&':
-	if (nick1.at(0) == '@' || nick1.at(0) == '%' || nick1.at(0) == '+' ||
-	    nick1.at(0) == ' ')
-	    return false;
-	break;
-    case '@':
-	if (nick1.at(0) == '%' || nick1.at(0) == '+' || nick1.at(0) == ' ')
-	    return false;
-	break;
-    case '%':
-	if (nick1.at(0) == '+' || nick1.at(0) == ' ')
-	    return false;
-	break;
-    case '+':
-	if (nick1.at(0) == ' ')
-	    return false;
-	break;
-    case ' ':
-    default:
-	break;
-    }
+	/*
+	 * nick1
+	 */
+	switch (nick1.at(0)) {
+	case '~':
+		if (nick2.at(0) == '&' || nick2.at(0) == '@' ||
+		    nick2.at(0) == '%' || nick2.at(0) == '+' ||
+		    nick2.at(0) == ' ')
+			return true;
+		break;
+	case '&':
+		if (nick2.at(0) == '@' || nick2.at(0) == '%' ||
+		    nick2.at(0) == '+' || nick2.at(0) == ' ')
+			return true;
+		break;
+	case '@':
+		if (nick2.at(0) == '%' || nick2.at(0) == '+' ||
+		    nick2.at(0) == ' ')
+			return true;
+		break;
+	case '%':
+		if (nick2.at(0) == '+' || nick2.at(0) == ' ')
+			return true;
+		break;
+	case '+':
+		if (nick2.at(0) == ' ')
+			return true;
+		break;
+	case ' ':
+	default:
+		break;
+	}
 
-    size_t i = 1;
-    int c1, c2;
+	/*
+	 * nick2
+	 */
+	switch (nick2.at(0)) {
+	case '~':
+		if (nick1.at(0) == '&' || nick1.at(0) == '@' ||
+		    nick1.at(0) == '%' || nick1.at(0) == '+' ||
+		    nick1.at(0) == ' ')
+			return false;
+		break;
+	case '&':
+		if (nick1.at(0) == '@' || nick1.at(0) == '%' ||
+		    nick1.at(0) == '+' || nick1.at(0) == ' ')
+			return false;
+		break;
+	case '@':
+		if (nick1.at(0) == '%' || nick1.at(0) == '+' ||
+		    nick1.at(0) == ' ')
+			return false;
+		break;
+	case '%':
+		if (nick1.at(0) == '+' || nick1.at(0) == ' ')
+			return false;
+		break;
+	case '+':
+		if (nick1.at(0) == ' ')
+			return false;
+		break;
+	case ' ':
+	default:
+		break;
+	}
 
-    while (i < nick1.length() && i < nick2.length()) {
-	c1 = sw_isupper(nick1[i]) ? tolower(nick1[i]) : nick1[i];
-	c2 = sw_isupper(nick2[i]) ? tolower(nick2[i]) : nick2[i];
+	while (i < nick1.length() && i < nick2.length()) {
+		c1 = sw_isupper(nick1[i]) ? tolower(nick1[i]) : nick1[i];
+		c2 = sw_isupper(nick2[i]) ? tolower(nick2[i]) : nick2[i];
+		if (c1 < c2)
+			return true;
+		else if (c1 > c2)
+			return false;
+		i ++;
+	}
 
-	if (c1 < c2)
-	    return true;
-	else if (c1 > c2)
-	    return false;
-	i ++;
-    }
-
-    return (nick1.length() < nick2.length() ? true : false);
+	return (nick1.length() < nick2.length() ? true : false);
 }
 
 static void
