@@ -132,8 +132,8 @@ cmp_fn(const std::string& nick1, const std::string& nick2)
 static void
 draw_hook()
 {
-    statusbar_top_panel();
-    readline_top_panel();
+	statusbar_top_panel();
+	readline_top_panel();
 }
 
 static std::list<std::string>
