@@ -11,6 +11,7 @@ cmd_squery
 cmd_unban
 cmd_znc
 getuser
+icb_send_pm
 int_diff
 int_sum
 is_alphabetic

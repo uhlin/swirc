@@ -26,6 +26,10 @@ void	 icb_send_open_msg(const char *text);
 void	 icb_send_pass_mod(const char *to_who);
 void	 icb_send_ping(const char *arg);
 void	 icb_send_pm(const char *to_who, const char *text);
+#ifdef UNIT_TESTING
+void	 icb_send_pm_test1(void **state);
+void	 icb_send_pm_test2(void **state);
+#endif
 void	 icb_send_pong(const char *arg);
 void	 icb_send_topic(const char *new_topic);
 void	 icb_send_who(const char *arg);

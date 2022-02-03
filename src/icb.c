@@ -1,5 +1,5 @@
 /* ICB protocol handling
-   Copyright (C) 2019-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -28,6 +28,11 @@
    POSSIBILITY OF SUCH DAMAGE. */
 
 #include "common.h"
+
+#ifdef UNIT_TESTING
+#include <setjmp.h>
+#include <cmocka.h>
+#endif
 
 #include "assertAPI.h"
 #include "dataClassify.h"
@@ -908,6 +913,24 @@ icb_send_pm(const char *to_who, const char *text)
 	if (was_truncated)
 		err_log(ENOBUFS, "icb_send_pm: text truncated");
 }
+
+#ifdef UNIT_TESTING
+void
+icb_send_pm_test1(void **state)
+{
+	fail();
+}
+
+void
+icb_send_pm_test2(void **state)
+{
+	fail();
+}
+
+/*
+ * UNIT_TESTING
+ */
+#endif
 
 void
 icb_send_pong(const char *arg)
