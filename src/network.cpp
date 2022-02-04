@@ -88,7 +88,7 @@ struct reconnect_context {
 /*
  * net_send_fake() store the sent data into this buffer
  */
-char g_sent[512] = "";
+char g_sent[600] = "";
 
 NET_SEND_FN net_send = net_send_plain;
 NET_RECV_FN net_recv = net_recv_plain;

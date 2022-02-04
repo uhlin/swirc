@@ -55,7 +55,7 @@ __SWIRC_BEGIN_DECLS
 /*
  * net_send_fake() store the sent data into this buffer
  */
-extern char g_sent[512];
+extern char g_sent[600];
 
 extern NET_SEND_FN net_send;
 extern NET_RECV_FN net_recv;
