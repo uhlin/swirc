@@ -681,13 +681,13 @@ free_locale_info(struct locale_info *li)
 void
 cmdline_options_destroy(void)
 {
-    free_and_null(&g_cmdline_opts->server);
-    free_and_null(&g_cmdline_opts->port);
-    free_and_null(&g_cmdline_opts->nickname);
-    free_and_null(&g_cmdline_opts->username);
-    free_and_null(&g_cmdline_opts->rl_name);
-    free_and_null(&g_cmdline_opts->hostname);
-    free_and_null(&g_cmdline_opts->config_file);
+	free_and_null(&g_cmdline_opts->server);
+	free_and_null(&g_cmdline_opts->port);
+	free_and_null(&g_cmdline_opts->nickname);
+	free_and_null(&g_cmdline_opts->username);
+	free_and_null(&g_cmdline_opts->rl_name);
+	free_and_null(&g_cmdline_opts->hostname);
+	free_and_null(&g_cmdline_opts->config_file);
 
-    delete g_cmdline_opts;
+	delete g_cmdline_opts;
 }
