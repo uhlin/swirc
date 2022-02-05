@@ -15,6 +15,9 @@
 #define SCR_SUFFIX	".bat"
 #endif
 
+typedef const char title_t[];
+typedef const char *lines_t[];
+
 __SWIRC_BEGIN_DECLS
 void	create_root_ca_script(void);
 void	create_server_ca_script(void);
