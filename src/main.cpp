@@ -86,15 +86,15 @@ long int  g_pid = -1;
 
 std::vector<std::string> g_join_list;
 
-bool g_auto_connect         = false;
-bool g_bind_hostname        = false;
-bool g_change_color_defs    = true;
-bool g_connection_password  = false;
-bool g_debug_logging        = false;
-bool g_explicit_config_file = false;
-bool g_icb_mode             = false;
-bool g_sasl_authentication  = true;
-bool g_ssl_verify_peer      = true;
+bool	g_auto_connect		= false;
+bool	g_bind_hostname		= false;
+bool	g_change_color_defs	= true;
+bool	g_connection_password	= false;
+bool	g_debug_logging		= false;
+bool	g_explicit_config_file	= false;
+bool	g_icb_mode		= false;
+bool	g_sasl_authentication	= true;
+bool	g_ssl_verify_peer	= true;
 
 struct cmdline_opt_values *g_cmdline_opts = new cmdline_opt_values();
 
