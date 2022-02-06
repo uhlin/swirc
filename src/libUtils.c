@@ -258,6 +258,25 @@ xmbstowcs(wchar_t *pwcs, const char *s, size_t n)
 }
 
 unsigned int
+hash_djb_g(const char *str, const bool lc, const size_t upper_bound)
+{
+#define MAGIC_NUMBER 5381
+	char *str_copy, *cp;
+	char c;
+	unsigned int hashval;
+
+	str_copy	= (lc ? strToLower(sw_strdup(str)) : sw_strdup(str));
+	cp		= &str_copy[0];
+	hashval		= MAGIC_NUMBER;
+
+	while ((c = *cp++) != '\0')
+		hashval = ((hashval << 5) + hashval) + c;
+
+	free(str_copy);
+	return (hashval % upper_bound);
+}
+
+unsigned int
 hash_pjw_g(const char *str, const size_t upper_bound)
 {
 	char c;
