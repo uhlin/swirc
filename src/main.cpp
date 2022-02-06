@@ -192,16 +192,16 @@ view_version()
 static void
 print_help(const char *exe)
 {
-    char *MessageUsage = strdup_printf(_("Usage: %s [OPTION] ...\n"), exe);
-    const char **ppcc;
-    const size_t ar_sz = ARRAY_SIZE(OptionDesc);
+	char *MessageUsage;
 
-    PUTS(MessageUsage);
-    free(MessageUsage);
+	MessageUsage = strdup_printf(_("Usage: %s [OPTION] ...\n"), exe);
+	PUTS(MessageUsage);
+	free(MessageUsage);
 
-    for (ppcc = &OptionDesc[0]; ppcc < &OptionDesc[ar_sz]; ppcc++) {
-	PUTS(_(*ppcc));
-    }
+	for (const char **ppcc = &OptionDesc[0];
+	    ppcc < &OptionDesc[ARRAY_SIZE(OptionDesc)];
+	    ppcc++)
+		PUTS(_(*ppcc));
 }
 
 /**
