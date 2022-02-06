@@ -220,28 +220,23 @@ case_launched_by_toast_hook()
 static void
 case_connect()
 {
-    static bool	 been_case = false;
-    char	*token1, *token2;
-    char	*savp	   = const_cast<char *>("");
+	char *last = const_cast<char *>("");
+	char *token1, *token2;
+	static bool been_case = false;
 
-    if (been_case) {
-	DUP_OPTION_ERR('c');
-    }
+	if (been_case)
+		DUP_OPTION_ERR('c');
 
-    token1 = strtok_r(g_option_arg, ":", &savp); /* can't be NULL */
-    g_cmdline_opts->server = sw_strdup(token1);
+	token1 = strtok_r(g_option_arg, ":", &last);
+	sw_assert(token1 != NULL);
+	g_cmdline_opts->server = sw_strdup(token1);
 
-    if ((token2 = strtok_r(NULL, ":", &savp)) == NULL) {
-	const char irc_port_default[] = "6667";
+	if ((token2 = strtok_r(NULL, ":", &last)) == NULL)
+		g_cmdline_opts->port = sw_strdup("6667");
+	else
+		g_cmdline_opts->port = sw_strdup(token2);
 
-	g_cmdline_opts->port = sw_strdup(irc_port_default);
-    } else if (token2 != NULL) {
-	g_cmdline_opts->port = sw_strdup(token2);
-    } else {
-	sw_assert_not_reached();
-    }
-
-    g_auto_connect = been_case = true;
+	g_auto_connect = been_case = true;
 }
 
 /**
