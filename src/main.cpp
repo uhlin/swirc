@@ -146,44 +146,48 @@ static const char *OptionDesc[] = {
 static void
 view_version()
 {
-    char *MessageVersion = strdup_printf("Swirc %s\nCopyright (C) %s %s\n",
-	g_swircVersion, g_swircYear, g_swircAuthor);
+	char *MessageVersion;
 
-    PUTS(MessageVersion);
-    free(MessageVersion);
+	MessageVersion = strdup_printf("Swirc %s\nCopyright (C) %s %s. "
+	    "All rights reserved.\n",
+	    g_swircVersion,
+	    g_swircYear,
+	    g_swircAuthor);
+	PUTS(MessageVersion);
+	free(MessageVersion);
 
-    while (true) {
-	char answer[100];
-	int c;
+	while (true) {
+		char answer[100] = { '\0' };
+		int c;
 
-	PUTS("Output disclaimer? [y/N]: ");
-	(void) fflush(stdout);
+		PUTS("Output disclaimer? [y/N]: ");
+		(void) fflush(stdout);
 
-	BZERO(answer, sizeof answer);
+		if (fgets(answer, sizeof answer - 1, stdin) == NULL) {
+			PUTCHAR('\n');
+			continue;
+		} else if (strchr(answer, '\n') == NULL) {
+			/*
+			 * input too big
+			 */
 
-	if (fgets(answer, sizeof answer - 1, stdin) == NULL) {
-	    PUTCHAR('\n');
-	    continue;
-	} else if (strchr(answer, '\n') == NULL) {
-	    /* input too big */
-	    while (c = getchar(), c != '\n' && c != EOF)
-		/* discard */;
-	} else if (strings_match(trim(answer), "y") ||
-		   strings_match(answer, "Y")) {
-	    for (const char **ppcc = &SoftwareDisclaimer[0];
-		 ppcc < &SoftwareDisclaimer[ARRAY_SIZE(SoftwareDisclaimer)];
-		 ppcc++) {
-		PUTS(*ppcc);
-	    }
-
-	    break;
-	} else if (strings_match(answer, "") ||
-		   strings_match(answer, "n") || strings_match(answer, "N")) {
-	    break;
-	} else {
-	    continue;
+			while (c = getchar(), c != '\n' && c != EOF)
+				/* discard */;
+		} else if (strings_match(trim(answer), "y") ||
+		    strings_match(answer, "Y")) {
+			for (const char **ppcc = &SoftwareDisclaimer[0];
+			    ppcc < &SoftwareDisclaimer[ARRAY_SIZE(SoftwareDisclaimer)];
+			    ppcc++)
+				PUTS(*ppcc);
+			break;
+		} else if (strings_match(answer, "") ||
+		    strings_match(answer, "n") ||
+		    strings_match(answer, "N")) {
+			break;
+		} else {
+			continue;
+		}
 	}
-    }
 }
 
 /**
