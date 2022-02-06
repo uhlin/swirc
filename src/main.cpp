@@ -384,70 +384,72 @@ case_config()
 static void
 process_options(int argc, char *argv[], const char *optstring)
 {
-    int opt = EOF;
+	int	opt;
 
-    while ((opt = options(argc, argv, optstring)) != EOF) {
-	switch (opt) {
-	case '4':
-	    net_set_sock_addr_family_ipv4();
-	    break;
-	case '6':
-	    net_set_sock_addr_family_ipv6();
-	    break;
-	case 'C':
-	    g_change_color_defs = false;
-	    break;
-	case 'P':
-	    g_sasl_authentication = false;
-	    break;
-	case 'R':
-	    g_ssl_verify_peer = false;
-	    break;
-	case 'T':
-	    case_launched_by_toast_hook();
-	    break;
-	case 'c':
-	    case_connect();
-	    break;
-	case 'd':
-	    g_debug_logging = true;
-	    break;
-	case 'h':
-	    case_hostname();
-	    break;
-	case 'i':
-	    case_icb();
-	    break;
-	case 'j':
-	    case_join();
-	    break;
-	case 'n':
-	    case_nickname();
-	    break;
-	case 'p':
-	    case_password();
-	    break;
-	case 'r':
-	    case_rl_name();
-	    break;
-	case 'u':
-	    case_username();
-	    break;
-	case 'x':
-	    case_config();
-	    break;
-	case UNRECOGNIZED_OPTION:
-	    err_msg("%s: -%c: unrecognized option", argv[0], g_option_save);
-	    print_help(argv[0]);
-	    exit(EXIT_FAILURE);
-	case OPTION_ARG_MISSING:
-	    err_msg("%s: -%c: option argument missing", argv[0], g_option_save);
-	    /*FALLTHROUGH*/
-	default:
-	    print_help(argv[0]);
-	    exit(EXIT_FAILURE);
+	while ((opt = options(argc, argv, optstring)) != EOF) {
+		switch (opt) {
+		case '4':
+			net_set_sock_addr_family_ipv4();
+			break;
+		case '6':
+			net_set_sock_addr_family_ipv6();
+			break;
+		case 'C':
+			g_change_color_defs = false;
+			break;
+		case 'P':
+			g_sasl_authentication = false;
+			break;
+		case 'R':
+			g_ssl_verify_peer = false;
+			break;
+		case 'T':
+			case_launched_by_toast_hook();
+			break;
+		case 'c':
+			case_connect();
+			break;
+		case 'd':
+			g_debug_logging = true;
+			break;
+		case 'h':
+			case_hostname();
+			break;
+		case 'i':
+			case_icb();
+			break;
+		case 'j':
+			case_join();
+			break;
+		case 'n':
+			case_nickname();
+			break;
+		case 'p':
+			case_password();
+			break;
+		case 'r':
+			case_rl_name();
+			break;
+		case 'u':
+			case_username();
+			break;
+		case 'x':
+			case_config();
+			break;
+		case UNRECOGNIZED_OPTION:
+			err_msg("%s: -%c: unrecognized option", argv[0],
+			    g_option_save);
+			print_help(argv[0]);
+			exit(EXIT_FAILURE);
+		case OPTION_ARG_MISSING:
+			err_msg("%s: -%c: option argument missing", argv[0],
+			    g_option_save);
+			/* FALLTHROUGH */
+		default:
+			print_help(argv[0]);
+			exit(EXIT_FAILURE);
+		}
 	}
-    }
 }
 
 static unsigned int
