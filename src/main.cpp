@@ -368,14 +368,13 @@ case_username()
 static void
 case_config()
 {
-    static bool been_case = false;
+	static bool been_case = false;
 
-    if (been_case) {
-	DUP_OPTION_ERR('x');
-    }
+	if (been_case)
+		DUP_OPTION_ERR('x');
 
-    g_cmdline_opts->config_file = sw_strdup(g_option_arg);
-    g_explicit_config_file = been_case = true;
+	g_cmdline_opts->config_file = sw_strdup(g_option_arg);
+	g_explicit_config_file = been_case = true;
 }
 
 /**
