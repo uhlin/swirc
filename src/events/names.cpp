@@ -1,5 +1,5 @@
 /* Handle event names (353) and event EOF names (366)
-   Copyright (C) 2015-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -806,22 +806,21 @@ event_names(struct irc_message_compo *compo)
 void
 event_names_htbl_remove_all(PIRC_WINDOW window)
 {
-    PNAMES *entry_p;
-    PNAMES p, tmp;
+	PNAMES *entry_p;
+	PNAMES p, tmp;
 
-    if (isNull(window) || !is_irc_channel(window->label))
-	return;
-
-    for (entry_p = &window->names_hash[0];
-	 entry_p < &window->names_hash[NAMES_HASH_TABLE_SIZE];
-	 entry_p++) {
-	for (p = *entry_p; p != NULL; p = tmp) {
-	    tmp = p->next;
-	    hUndef(window, p);
+	if (window == NULL || !is_irc_channel(window->label))
+		return;
+	for (entry_p = &window->names_hash[0];
+	    entry_p < &window->names_hash[NAMES_HASH_TABLE_SIZE];
+	    entry_p++) {
+		for (p = *entry_p; p != NULL; p = tmp) {
+			tmp = p->next;
+			hUndef(window, p);
+		}
 	}
-    }
 
-    window->received_names = false;
-    reset_counters(window);
+	window->received_names = false;
+	reset_counters(window);
 }
 /* EOF */
