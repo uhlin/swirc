@@ -504,10 +504,12 @@ toast_notifications_init()
 int
 main(int argc, char *argv[])
 {
-#if __OpenBSD__
-    extern char *malloc_options;
+	char *cp;
 
-    malloc_options = const_cast<char *>("S");
+#if __OpenBSD__
+	extern char *malloc_options;
+
+	malloc_options = const_cast<char *>("S");
 #endif
 
 #if defined(UNIX)
@@ -516,126 +518,123 @@ main(int argc, char *argv[])
 #define SLASH_CHAR '\\'
 #endif
 
-    char *cp = strrchr(argv[0], SLASH_CHAR);
-    if (cp == NULL)
-	g_progname = argv[0];
-    else
-	g_progname = cp + 1;
+	if ((cp = strrchr(argv[0], SLASH_CHAR)) == NULL)
+		g_progname = argv[0];
+	else
+		g_progname = cp + 1;
 
 #if defined(UNIX)
-    sw_static_assert(sizeof(pid_t) <= sizeof(long int),
-	"pid type unexpectedly large");
+	sw_static_assert(sizeof(pid_t) <= sizeof(long int),
+	    "pid type unexpectedly large");
 
-    g_pid = getpid();
+	g_pid = getpid();
 #elif defined(WIN32)
-    g_pid = _getpid();
+	g_pid = _getpid();
 #endif
 
-    (void) setlocale(LC_ALL, "");
+	(void) setlocale(LC_ALL, "");
 
 #ifdef HAVE_LIBINTL_H
 #if defined(UNIX)
-    if (bindtextdomain("swirc", "/usr/local/share/locale") == NULL) {
-	err_ret("bindtextdomain");
-	return EXIT_FAILURE;
-    }
-#elif defined(WIN32)
-    if (bindtextdomain("swirc", getenv("CD")) == NULL) {
-	err_ret("bindtextdomain");
-	return EXIT_FAILURE;
-    }
-#endif
-    if (textdomain("swirc") == NULL) {
-	err_ret("textdomain");
-	return EXIT_FAILURE;
-    }
-#endif
-
-    if (!sighand_init()) {
-	err_msg("fatal: failed to initialize signal handling");
-	return EXIT_FAILURE;
-    }
-
-    if (argc == 2) {
-	if (strncmp(argv[1], "-v", 3) == 0 ||
-	    strncmp(argv[1], "-version", 9) == 0 ||
-	    strncmp(argv[1], "--version", 10) == 0) {
-	    view_version();
-	    return EXIT_SUCCESS;
-	} else if (strncmp(argv[1], "-?", 3) == 0 ||
-		   strncmp(argv[1], "-help", 6) == 0 ||
-		   strncmp(argv[1], "--help", 7) == 0) {
-	    print_help(argv[0]);
-	    return EXIT_SUCCESS;
-	} else {
-	    /* empty */;
+	if (bindtextdomain("swirc", "/usr/local/share/locale") == NULL) {
+		err_ret("bindtextdomain");
+		return EXIT_FAILURE;
 	}
-    }
+#elif defined(WIN32)
+	if (bindtextdomain("swirc", getenv("CD")) == NULL) {
+		err_ret("bindtextdomain");
+		return EXIT_FAILURE;
+	}
+#endif
+	if (textdomain("swirc") == NULL) {
+		err_ret("textdomain");
+		return EXIT_FAILURE;
+	}
+#endif
+
+	if (!sighand_init()) {
+		err_msg("fatal: failed to initialize signal handling");
+		return EXIT_FAILURE;
+	}
+
+	if (argc == 2) {
+		if (strncmp(argv[1], "-v", 3) == 0 ||
+		    strncmp(argv[1], "-version", 9) == 0 ||
+		    strncmp(argv[1], "--version", 10) == 0) {
+			view_version();
+			return EXIT_SUCCESS;
+		} else if (strncmp(argv[1], "-?", 3) == 0 ||
+		    strncmp(argv[1], "-help", 6) == 0 ||
+		    strncmp(argv[1], "--help", 7) == 0) {
+			print_help(argv[0]);
+			return EXIT_SUCCESS;
+		}
+	}
 
 #if UNIX
-    if (geteuid() == 0) {
-	err_msg("fatal: "
-	    "running the program with root privileges is prohibited");
-	return EXIT_FAILURE;
-    }
+	if (geteuid() == 0) {
+		err_msg("fatal: running the program with root privileges is "
+		    "forbidden");
+		return EXIT_FAILURE;
+	}
 #endif
 
-    process_options(argc, argv, "46CPRTc:dh:ij:n:pr:u:x:");
+	process_options(argc, argv, "46CPRTc:dh:ij:n:pr:u:x:");
 
-    srand(get_seed());
+	srand(get_seed());
 
-    term_init();
-    nestHome_init();
+	term_init();
+	nestHome_init();
 
-    if (curses_init() != OK) {
-	err_msg("Initialization of the Curses library not possible");
-	return EXIT_FAILURE;
-    }
+	if (curses_init() != OK) {
+		err_msg("Initialization of the Curses library not possible");
+		return EXIT_FAILURE;
+	}
 
-    titlebar_init();
-    statusbar_init();
-    windowSystem_init();
-    readline_init();
-    net_ssl_init();
+	titlebar_init();
+	statusbar_init();
+	windowSystem_init();
+	readline_init();
+	net_ssl_init();
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
-    toast_notifications_init();
+	toast_notifications_init();
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201811
-    const char cert_pem_path[] = "/etc/ssl/cert.pem";
+	chararray_t cert_pem_path = "/etc/ssl/cert.pem";
 
-    if (unveil(g_home_dir, "rwc") == -1 ||
-	unveil(cert_pem_path, "r") == -1) {
-	err_ret("unveil");
-	return EXIT_FAILURE;
-    }
+	if (unveil(g_home_dir, "rwc") == -1 ||
+	    unveil(cert_pem_path, "r") == -1) {
+		err_ret("unveil");
+		return EXIT_FAILURE;
+	}
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201605
-    if (pledge("cpath rpath wpath dns getpw inet stdio tty", NULL) == -1) {
-	err_ret("pledge");
-	return EXIT_FAILURE;
-    }
+	if (pledge("cpath rpath wpath dns getpw inet stdio tty", NULL) == -1) {
+		err_ret("pledge");
+		return EXIT_FAILURE;
+	}
 #endif
 
-    enter_io_loop();
+	enter_io_loop();
 
-    /*
-     * Reverse order...
-     */
-    net_ssl_deinit();
-    readline_deinit();
-    windowSystem_deinit();
-    statusbar_deinit();
-    titlebar_deinit();
-    escape_curses();
-    nestHome_deinit();
-    term_deinit();
+	/*
+	 * Reverse order...
+	 */
+	net_ssl_deinit();
+	readline_deinit();
+	windowSystem_deinit();
+	statusbar_deinit();
+	titlebar_deinit();
+	escape_curses();
+	nestHome_deinit();
+	term_deinit();
 
-    cmdline_options_destroy();
-    puts("- Exit Success! -");
-    return (EXIT_SUCCESS);
+	cmdline_options_destroy();
+	puts("- Exit Success! -");
+	return (EXIT_SUCCESS);
 }
 
 /**
