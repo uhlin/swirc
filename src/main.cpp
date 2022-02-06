@@ -667,7 +667,7 @@ free_locale_info(struct locale_info *li)
 	if (li) {
 		free(li->lang_and_territory);
 		free(li->codeset);
-		free(li);
+		delete li;
 	}
 }
 
