@@ -346,26 +346,29 @@ event_names_htbl_insert(const char *nick, const char *channel)
 int
 event_names_htbl_remove(const char *nick, const char *channel)
 {
-    PIRC_WINDOW window;
-    PNAMES	names;
+	PIRC_WINDOW	window;
+	PNAMES		names;
 
-    if (isNull(nick) || isEmpty(nick) ||
-	(window = window_by_label(channel)) == NULL) {
-	return ERR;
-    }
+	if (nick == NULL || strings_match(nick, "") ||
+	    (window = window_by_label(channel)) == NULL)
+		return ERR;
 
-    for (names = window->names_hash[hash(nick)];
-	 names != NULL;
-	 names = names->next) {
-	if (strings_match_ignore_case(nick, names->nick)) {
-	    hUndef(window, names);
-	    if (nicklist_update(window) != 0)
-		debug("event_names_htbl_remove: nicklist_update: error");
-	    return OK;
+	for (names = window->names_hash[hash(nick)];
+	    names != NULL;
+	    names = names->next) {
+		if (strings_match_ignore_case(nick, names->nick)) {
+			hUndef(window, names);
+
+			if (nicklist_update(window) != 0) {
+				debug("event_names_htbl_remove: "
+				    "nicklist_update: error");
+			}
+
+			return OK;
+		}
 	}
-    }
 
-    return ERR;
+	return ERR;
 }
 
 /* event_eof_names: 366
