@@ -250,14 +250,13 @@ case_connect()
 static void
 case_hostname()
 {
-    static bool been_case = false;
+	static bool been_case = false;
 
-    if (been_case) {
-	DUP_OPTION_ERR('h');
-    }
+	if (been_case)
+		DUP_OPTION_ERR('h');
 
-    g_cmdline_opts->hostname = sw_strdup(g_option_arg);
-    g_bind_hostname = been_case = true;
+	g_cmdline_opts->hostname = sw_strdup(g_option_arg);
+	g_bind_hostname = been_case = true;
 }
 
 /**
