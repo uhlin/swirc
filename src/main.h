@@ -11,24 +11,19 @@ struct locale_info {
 	char	*codeset;
 
 #ifdef __cplusplus
-	locale_info();
-	locale_info(char *, char *);
+	locale_info()
+	{
+		this->lang_and_territory = NULL;
+		this->codeset = NULL;
+	}
+
+	locale_info(char *str1, char *str2)
+	{
+		this->lang_and_territory = str1;
+		this->codeset = str2;
+	}
 #endif
 };
-
-#ifdef __cplusplus
-locale_info::locale_info()
-{
-	this->lang_and_territory = NULL;
-	this->codeset = NULL;
-}
-
-locale_info::locale_info(char *str1, char *str2)
-{
-	this->lang_and_territory = str1;
-	this->codeset = str2;
-}
-#endif
 
 struct cmdline_opt_values {
 	char	*server;
@@ -40,22 +35,18 @@ struct cmdline_opt_values {
 	char	*config_file;
 
 #ifdef __cplusplus
-	cmdline_opt_values();
+	cmdline_opt_values()
+	{
+		this->server		= NULL;
+		this->port		= NULL;
+		this->nickname		= NULL;
+		this->username		= NULL;
+		this->rl_name		= NULL;
+		this->hostname		= NULL;
+		this->config_file	= NULL;
+	}
 #endif
 };
-
-#ifdef __cplusplus
-cmdline_opt_values::cmdline_opt_values()
-{
-	this->server		= NULL;
-	this->port		= NULL;
-	this->nickname		= NULL;
-	this->username		= NULL;
-	this->rl_name		= NULL;
-	this->hostname		= NULL;
-	this->config_file	= NULL;
-}
-#endif
 
 typedef const char chararray_t[];
 typedef const char *stringarray_t[];
