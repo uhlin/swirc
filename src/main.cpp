@@ -644,23 +644,18 @@ main(int argc, char *argv[])
 struct locale_info *
 get_locale_info(int category)
 {
-    struct locale_info *li =
-	static_cast<struct locale_info *>(xcalloc(sizeof *li, 1));
-    char  buf[200] = { 0 };
-    char *tok      = NULL;
-    char *savp     = const_cast<char *>("");
+	char *last = const_cast<char *>("");
+	char *tok;
+	char buf[200] = { '\0' };
+	struct locale_info *li = new locale_info();
 
-    li->lang_and_territory = li->codeset = NULL;
-
-    if (sw_strcpy(buf, setlocale(category, NULL), sizeof buf) != 0)
+	if (sw_strcpy(buf, setlocale(category, NULL), ARRAY_SIZE(buf)) != 0)
+		return (li);
+	if ((tok = strtok_r(buf, ".", &last)) != NULL)
+		li->lang_and_territory = sw_strdup(tok);
+	if ((tok = strtok_r(NULL, ".", &last)) != NULL)
+		li->codeset = sw_strdup(tok);
 	return (li);
-
-    if ((tok = strtok_r(buf, ".", &savp)) != NULL)
-	li->lang_and_territory = sw_strdup(tok);
-    if ((tok = strtok_r(NULL, ".", &savp)) != NULL)
-	li->codeset = sw_strdup(tok);
-
-    return (li);
 }
 
 /**
