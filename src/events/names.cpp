@@ -447,76 +447,83 @@ event_eof_names(struct irc_message_compo *compo)
 void
 event_names(struct irc_message_compo *compo)
 {
-    char *names_copy = NULL;
+	char *names_copy = NULL;
 
-    try {
-	PIRC_WINDOW win = NULL;
-	char *state1 = const_cast<char *>("");
-	char *state2 = const_cast<char *>("");
+	try {
+		PIRC_WINDOW win = NULL;
+		char *chan_type, *channel, *names;
+		char *state1 = const_cast<char *>("");
+		char *state2 = const_cast<char *>("");
 
-	if (strFeed(compo->params, 3) != 3)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 3) != 3)
+			throw std::runtime_error("strFeed");
 
-	(void) strtok_r(compo->params, "\n", &state1); /* recipient */
-	char *chan_type = strtok_r(NULL, "\n", &state1);
-	char *channel   = strtok_r(NULL, "\n", &state1);
-	char *names     = strtok_r(NULL, "\n", &state1);
+		(void) strtok_r(compo->params, "\n", &state1); /* recipient */
 
-	if (isNull(chan_type))
-	    throw std::runtime_error("no channel type");
-	else if (isNull(channel))
-	    throw std::runtime_error("no channel");
-	else if (!is_irc_channel(channel) ||
-		 strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL)
-	    throw std::runtime_error("invalid channel");
-	else if (isNull(names))
-	    throw std::runtime_error("no names");
-	else if (strings_match(names_channel, "") &&
-	    sw_strcpy(names_channel, channel, ARRAY_SIZE(names_channel)) != 0)
-	    throw std::runtime_error("unable to store names channel");
-	else if (!strings_match_ignore_case(names_channel, channel)) {
-	    throw std::runtime_error("unable to parse names of two (or more) "
-		"channels simultaneously");
-	} else if ((win = window_by_label(channel)) == NULL) {
-	    throw std::runtime_error("window lookup error");
-	} else if (win->received_names) {
-	    err_log(0, "warning: server sent event 353 (RPL_NAMREPLY): "
-		"already received names for channel %s", channel);
-	    return;
-	} else {
-	    names_copy = sw_strdup(*names == ':' ? &names[1] : &names[0]);
+		chan_type	= strtok_r(NULL, "\n", &state1);
+		channel		= strtok_r(NULL, "\n", &state1);
+		names		= strtok_r(NULL, "\n", &state1);
+
+		if (chan_type == NULL) {
+			throw std::runtime_error("no channel type");
+		} else if (channel == NULL) {
+			throw std::runtime_error("no channel");
+		} else if (!is_irc_channel(channel) || strpbrk(channel + 1,
+		    g_forbidden_chan_name_chars) != NULL) {
+			throw std::runtime_error("invalid channel");
+		} else if (names == NULL) {
+			throw std::runtime_error("no names");
+		} else if (strings_match(names_channel, "") &&
+		    sw_strcpy(names_channel, channel, ARRAY_SIZE(names_channel))
+		    != 0) {
+			throw std::runtime_error("unable to "
+			    "store names channel");
+		} else if (!strings_match_ignore_case(names_channel, channel)) {
+			throw std::runtime_error("unable to parse names of two "
+			    "(or more) channels simultaneously");
+		} else if ((win = window_by_label(channel)) == NULL) {
+			throw std::runtime_error("window lookup error");
+		} else if (win->received_names) {
+			err_log(0, "warning: server sent event 353 "
+			    "(RPL_NAMREPLY): already received names for "
+			    "channel %s", channel);
+			return;
+		} else {
+			names_copy = sw_strdup(*names == ':' ? &names[1] :
+			    &names[0]);
+		}
+
+		for (char *cp = &names_copy[0];; cp = NULL) {
+			char *token, *nick;
+
+			if ((token = strtok_r(cp, " ", &state2)) == NULL)
+				break;
+
+			nick = ((*token == '~' || *token == '&' ||
+			    *token == '@' || *token == '%' || *token == '+') ?
+			    &token[1] : &token[0]);
+
+			struct hInstall_context ctx(channel, nick, *token);
+
+			if (hInstall(&ctx) != OK)
+				continue;
+		}
+	} catch (const std::runtime_error& e) {
+		PRINTTEXT_CONTEXT ptext_ctx;
+
+		printtext_context_init(&ptext_ctx, g_active_window,
+		    TYPE_SPEC1_FAILURE, true);
+		printtext(&ptext_ctx, "event_names: fatal: %s", e.what());
+
+		if (strstr(e.what(), "store names channel") ||
+		    strstr(e.what(), "parse names of two (or more)")) {
+			printtext(&ptext_ctx, "must shutdown irc connection "
+			    "immediately...");
+			net_kill_connection();
+		}
 	}
 
-	char *nick = NULL;
-	char *token = NULL;
-
-	for (char *cp = &names_copy[0];; cp = NULL) {
-	    if ((token = strtok_r(cp, " ", &state2)) == NULL)
-		break;
-
-	    nick = ((*token == '~' || *token == '&' || *token == '@' ||
-		     *token == '%' || *token == '+') ? &token[1] : &token[0]);
-
-	    struct hInstall_context ctx(channel, nick, *token);
-
-	    if (hInstall(&ctx) != OK)
-		continue;
-	}
-    } catch (const std::runtime_error &e) {
-	PRINTTEXT_CONTEXT ptext_ctx;
-
-	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_FAILURE,
-	    true);
-	printtext(&ptext_ctx, "event_names: fatal: %s", e.what());
-
-	if (strstr(e.what(), "store names channel") ||
-	    strstr(e.what(), "parse names of two (or more)")) {
-	    printtext(&ptext_ctx, "must shutdown irc connection immediately...");
-	    net_kill_connection();
-	}
-    }
-
-    free(names_copy);
+	free(names_copy);
 }
 
 void
