@@ -454,20 +454,20 @@ static unsigned int
 get_seed()
 {
 #if defined(UNIX)
-    struct timeval tv = { 0 };
+	struct timeval tv = { 0 };
 
-    errno = 0;
+	errno = 0;
 
-    if (gettimeofday(&tv, NULL) != 0)
-	err_dump("%s", "get_seed: gettimeofday");
+	if (gettimeofday(&tv, NULL) != 0)
+		err_dump("%s", "get_seed: gettimeofday");
 
-    return (getpid() ^ tv.tv_sec ^ tv.tv_usec);
+	return (getpid() ^ tv.tv_sec ^ tv.tv_usec);
 #elif defined(WIN32)
-    SYSTEMTIME st = { 0 };
+	SYSTEMTIME st = { 0 };
 
-    GetLocalTime(&st);
+	GetLocalTime(&st);
 
-    return (_getpid() ^ st.wSecond ^ st.wMilliseconds);
+	return (_getpid() ^ st.wSecond ^ st.wMilliseconds);
 #endif
 }
 
