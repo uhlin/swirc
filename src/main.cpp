@@ -336,14 +336,13 @@ case_password()
 static void
 case_rl_name()
 {
-    static bool been_case = false;
+	static bool been_case = false;
 
-    if (been_case) {
-	DUP_OPTION_ERR('r');
-    }
+	if (been_case)
+		DUP_OPTION_ERR('r');
 
-    g_cmdline_opts->rl_name = sw_strdup(g_option_arg);
-    been_case = true;
+	g_cmdline_opts->rl_name = sw_strdup(g_option_arg);
+	been_case = true;
 }
 
 /**
