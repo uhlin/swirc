@@ -321,13 +321,12 @@ case_nickname()
 static void
 case_password()
 {
-    static bool been_case = false;
+	static bool been_case = false;
 
-    if (been_case) {
-	DUP_OPTION_ERR('p');
-    }
+	if (been_case)
+		DUP_OPTION_ERR('p');
 
-    g_connection_password = been_case = true;
+	g_connection_password = been_case = true;
 }
 
 /**
