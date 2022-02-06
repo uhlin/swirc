@@ -61,10 +61,10 @@ typedef const char chararray_t[];
 typedef const char *stringarray_t[];
 
 __SWIRC_BEGIN_DECLS
-extern const char g_swircVersion[];
-extern const char g_swircYear[];
-extern const char g_swircAuthor[];
-extern const char g_swircWebAddr[];
+extern chararray_t	g_swircVersion;
+extern chararray_t	g_swircYear;
+extern chararray_t	g_swircAuthor;
+extern chararray_t	g_swircWebAddr;
 
 extern char *g_progname;
 extern long int g_pid;

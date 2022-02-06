@@ -76,10 +76,10 @@
 /* Things with external linkage
    ============================ */
 
-const char g_swircVersion[] = "v3.3.3";
-const char g_swircYear[]    = "2012-2022";
-const char g_swircAuthor[]  = "Markus Uhlin";
-const char g_swircWebAddr[] = "https://www.nifty-networks.net/swirc/";
+chararray_t	g_swircVersion	= "v3.3.3";
+chararray_t	g_swircYear	= "2012-2022";
+chararray_t	g_swircAuthor	= "Markus Uhlin";
+chararray_t	g_swircWebAddr	= "https://www.nifty-networks.net/swirc/";
 
 char *g_progname = const_cast<char *>("");
 long int g_pid = -1;
