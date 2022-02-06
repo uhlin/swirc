@@ -211,7 +211,7 @@ print_help(const char *exe)
 static void
 case_launched_by_toast_hook()
 {
-    debug("case_launched_by_toast_hook() called");
+	debug("case_launched_by_toast_hook() called");
 }
 
 /**
