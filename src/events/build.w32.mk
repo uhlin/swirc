@@ -11,6 +11,7 @@ OBJS=$(OBJS)\
 	$(EVENTS_DIR)list.obj\
 	$(EVENTS_DIR)misc.obj\
 	$(EVENTS_DIR)motd.obj\
+	$(EVENTS_DIR)names-htbl-modify.obj\
 	$(EVENTS_DIR)names.obj\
 	$(EVENTS_DIR)noop.obj\
 	$(EVENTS_DIR)notice.obj\

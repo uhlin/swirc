@@ -10,6 +10,7 @@ OBJS+=$(EVENTS_DIR)account.o\
 	$(EVENTS_DIR)list.o\
 	$(EVENTS_DIR)misc.o\
 	$(EVENTS_DIR)motd.o\
+	$(EVENTS_DIR)names-htbl-modify.o\
 	$(EVENTS_DIR)names.o\
 	$(EVENTS_DIR)noop.o\
 	$(EVENTS_DIR)notice.o\
