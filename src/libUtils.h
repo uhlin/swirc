@@ -31,7 +31,7 @@ size_t	 xmbstowcs(wchar_t *, const char *, size_t);
 unsigned int
 	 hash_djb_g(const char *str, const bool lc, const size_t upper_bound);
 unsigned int
-	 hash_pjw_g(const char *str, const size_t upper_bound);
+	 hash_pjw_g(const char *str, const bool lc, const size_t upper_bound);
 void	 fclose_ensure_success(FILE *);
 void	 realloc_strcat(char **dest, const char *src);
 void	 write_setting(FILE *stream, const char *name, const char *value,

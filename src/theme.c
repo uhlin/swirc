@@ -55,7 +55,7 @@
 	    tdv_p < &ThemeDefValues[ARRAY_SIZE(ThemeDefValues)];\
 	    tdv_p++)
 
-#define hash(str) hash_pjw_g(str, ARRAY_SIZE(hash_table))
+#define hash(str) hash_pjw_g(str, false, ARRAY_SIZE(hash_table))
 
 /* Objects with internal linkage
    ============================= */

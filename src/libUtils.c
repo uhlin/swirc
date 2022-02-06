@@ -277,16 +277,21 @@ hash_djb_g(const char *str, const bool lc, const size_t upper_bound)
 }
 
 unsigned int
-hash_pjw_g(const char *str, const size_t upper_bound)
+hash_pjw_g(const char *str, const bool lc, const size_t upper_bound)
 {
+	char *str_copy, *cp;
 	char c;
-	unsigned int hashval = 0;
+	unsigned int hashval;
 
-	while ((c = *str++) != 0) {
+	str_copy	= (lc ? strToLower(sw_strdup(str)) : sw_strdup(str));
+	cp		= &str_copy[0];
+	hashval		= 0;
+
+	while ((c = *cp++) != '\0') {
 		unsigned int tmp;
 
 		hashval = (hashval << 4) + c;
-		tmp = hashval & 0xf0000000;
+		tmp = (hashval & 0xf0000000);
 
 		if (tmp) {
 			hashval ^= (tmp >> 24);
@@ -294,6 +299,7 @@ hash_pjw_g(const char *str, const size_t upper_bound)
 		}
 	}
 
+	free(str_copy);
 	return (hashval % upper_bound);
 }
 
