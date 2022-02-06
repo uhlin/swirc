@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2021-10-15 19:05+0200\n"
+"POT-Creation-Date: 2022-02-06 23:17+0100\n"
 "PO-Revision-Date: 2021-08-23 19:29+0200\n"
 "Last-Translator: Solene <solene@openbsd.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -67,7 +67,9 @@ msgstr "    -i                   Activer le mode Internet Citizen's Band\n"
 
 #: ../src/main.cpp:134
 msgid "    -j <join>            A comma-separated list of channels to join\n"
-msgstr "    -j <join>            Liste de salons à rejoinre (séparés par des virgules)\n"
+msgstr ""
+"    -j <join>            Liste de salons à rejoinre (séparés par des "
+"virgules)\n"
 
 #: ../src/main.cpp:135
 msgid "    -n <nickname>        Online nickname\n"
@@ -96,7 +98,7 @@ msgstr "    -v, --version        Affiche la version de Swirc\n"
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Fichier de configuration\n"
 
-#: ../src/main.cpp:195
+#: ../src/main.cpp:201
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Usage: %s [OPTION] ...\n"
