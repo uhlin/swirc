@@ -266,13 +266,12 @@ case_hostname()
 static void
 case_icb()
 {
-    static bool been_case = false;
+	static bool been_case = false;
 
-    if (been_case) {
-	DUP_OPTION_ERR('i');
-    }
+	if (been_case)
+		DUP_OPTION_ERR('i');
 
-    g_icb_mode = been_case = true;
+	g_icb_mode = been_case = true;
 }
 
 static void
