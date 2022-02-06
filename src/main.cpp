@@ -81,8 +81,8 @@ const char g_swircYear[]    = "2012-2022";
 const char g_swircAuthor[]  = "Markus Uhlin";
 const char g_swircWebAddr[] = "https://www.nifty-networks.net/swirc/";
 
-char     *g_progname = const_cast<char *>("");
-long int  g_pid = -1;
+char *g_progname = const_cast<char *>("");
+long int g_pid = -1;
 
 std::vector<std::string> g_join_list;
 
