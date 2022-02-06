@@ -475,26 +475,28 @@ get_seed()
 static void
 toast_notifications_init()
 {
-    /*
-     * Initializes the COM library for use by the calling thread
-     */
-    (void) CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+	const wchar_t aumid[] = L"SwircDevelopmentTeam.Swirc";
+	const GUID clsid = __uuidof(NotificationActivator);
 
-    /*
-     * Register AUMID and COM server (for Desktop Bridge apps, this no-ops)
-     */
-    if (DesktopNotificationManagerCompat::RegisterAumidAndComServer(
-	    L"SwircDevelopmentTeam.Swirc",
-	    __uuidof(NotificationActivator)) != S_OK)
-	err_log(0, "Failed to register AUMID and COM server");
+	/*
+	 * Initializes the COM library for use by the calling thread
+	 */
+	(void) CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 
-    /*
-     * Register COM activator
-     */
-    if (DesktopNotificationManagerCompat::RegisterActivator() != S_OK)
-	err_log(0, "Failed to register COM activator");
+	/*
+	 * Register AUMID and COM server (for Desktop Bridge apps, this no-ops)
+	 */
+	if (DesktopNotificationManagerCompat::RegisterAumidAndComServer(aumid,
+	    clsid) != S_OK)
+		err_log(0, "Failed to register AUMID and COM server");
 
-    Toasts::SendTestNotification();
+	/*
+	 * Register COM activator
+	 */
+	if (DesktopNotificationManagerCompat::RegisterActivator() != S_OK)
+		err_log(0, "Failed to register COM activator");
+
+	Toasts::SendTestNotification();
 }
 #endif
 
