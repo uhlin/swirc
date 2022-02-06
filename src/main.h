@@ -57,6 +57,9 @@ cmdline_opt_values::cmdline_opt_values()
 }
 #endif
 
+typedef const char chararray_t[];
+typedef const char *stringarray_t[];
+
 __SWIRC_BEGIN_DECLS
 extern const char g_swircVersion[];
 extern const char g_swircYear[];
