@@ -9,7 +9,26 @@
 struct locale_info {
 	char	*lang_and_territory;
 	char	*codeset;
+
+#ifdef __cplusplus
+	locale_info();
+	locale_info(char *, char *);
+#endif
 };
+
+#ifdef __cplusplus
+locale_info::locale_info()
+{
+	this->lang_and_territory = NULL;
+	this->codeset = NULL;
+}
+
+locale_info::locale_info(char *str1, char *str2)
+{
+	this->lang_and_territory = str1;
+	this->codeset = str2;
+}
+#endif
 
 struct cmdline_opt_values {
 	char	*server;
