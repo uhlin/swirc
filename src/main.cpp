@@ -101,7 +101,7 @@ struct cmdline_opt_values *g_cmdline_opts = new cmdline_opt_values();
 /* Things with internal linkage
    ============================ */
 
-static const char *SoftwareDisclaimer[] = {
+static stringarray_t SoftwareDisclaimer = {
   "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n",
   "\"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\n",
   "LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\n",
@@ -116,7 +116,7 @@ static const char *SoftwareDisclaimer[] = {
   "DAMAGE.\n",
 };
 
-static const char *OptionDesc[] = {
+static stringarray_t OptionDesc = {
   N_("\nOptions:\n\n"),
   N_("    -4                   Use IPv4 addresses only\n"),
   N_("    -6                   Use IPv6 addresses only\n"),
