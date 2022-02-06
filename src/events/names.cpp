@@ -45,7 +45,7 @@
 
 #include "names.h"
 
-#define DJB2_HASHING_TECHNIQUE 1
+#define hash(str) hash_djb_g(str, true, NAMES_HASH_TABLE_SIZE)
 
 /****************************************************************
 *                                                               *
@@ -126,65 +126,6 @@ got_hits(const IRC_WINDOW *window, const char *search_var)
     }
 
     return false;
-}
-
-#if DJB2_HASHING_TECHNIQUE
-/*
- * DJB2
- */
-
-static inline unsigned int
-hash_djb2(const char *nick)
-{
-#define MAGIC_NUMBER 5381
-    char          c         = '\0';
-    char         *nick_copy = strToLower(sw_strdup(nick));
-    char         *nick_p    = &nick_copy[0];
-    unsigned int  hashval   = MAGIC_NUMBER;
-
-    while ((c = *nick_p++) != '\0')
-	hashval = ((hashval << 5) + hashval) + c;
-    free(nick_copy);
-    return (hashval % NAMES_HASH_TABLE_SIZE);
-}
-#else
-/*
- * P.J. Weinberger hashing
- */
-
-static inline unsigned int
-hash_pjw(const char *nick)
-{
-    char		 c;
-    char		*nick_copy = strToLower(sw_strdup(nick));
-    char		*nick_p	   = nick_copy;
-    unsigned int	 hashval   = 0;
-    unsigned int	 tmp;
-
-    while ((c = *nick_p++) != '\0') {
-	hashval = (hashval << 4) + c;
-	tmp = hashval & 0xf0000000;
-
-	if (tmp) {
-	    hashval ^= (tmp >> 24);
-	    hashval ^= tmp;
-	}
-    }
-
-    free(nick_copy);
-    return (hashval % NAMES_HASH_TABLE_SIZE);
-}
-#endif
-
-static unsigned int
-hash(const char *nick)
-{
-#if DJB2_HASHING_TECHNIQUE
-//#pragma message("Using DJB2 hashing technique")
-    return hash_djb2(nick);
-#else
-    return hash_pjw(nick);
-#endif
 }
 
 static inline bool
