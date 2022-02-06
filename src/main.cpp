@@ -352,14 +352,13 @@ case_rl_name()
 static void
 case_username()
 {
-    static bool been_case = false;
+	static bool been_case = false;
 
-    if (been_case) {
-	DUP_OPTION_ERR('u');
-    }
+	if (been_case)
+		DUP_OPTION_ERR('u');
 
-    g_cmdline_opts->username = sw_strdup(g_option_arg);
-    been_case = true;
+	g_cmdline_opts->username = sw_strdup(g_option_arg);
+	been_case = true;
 }
 
 /**
