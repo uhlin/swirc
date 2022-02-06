@@ -375,63 +375,66 @@ event_names_htbl_remove(const char *nick, const char *channel)
 void
 event_eof_names(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ptext_ctx;
+	PRINTTEXT_CONTEXT ptext_ctx;
 
-    try {
-	PIRC_WINDOW win = NULL;
-	char *state = const_cast<char *>("");
+	try {
+		PIRC_WINDOW win = NULL;
+		char *channel, *eof_msg;
+		char *state = const_cast<char *>("");
 
-	if (strFeed(compo->params, 2) != 2)
-	    throw std::runtime_error("strFeed");
+		if (strFeed(compo->params, 2) != 2)
+			throw std::runtime_error("strFeed");
 
-	(void) strtok_r(compo->params, "\n", &state);
-	char *channel = strtok_r(NULL, "\n", &state);
-	char *eof_msg = strtok_r(NULL, "\n", &state);
+		(void) strtok_r(compo->params, "\n", &state);
 
-	if (isNull(channel))
-	    throw std::runtime_error("null channel");
-	else if (!is_irc_channel(channel) ||
-		 strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL)
-	    throw std::runtime_error("invalid channel");
-	else if (isNull(eof_msg))
-	    throw std::runtime_error("null message");
-	else if (!strings_match_ignore_case(channel, names_channel)) {
-	    throw std::runtime_error("unable to parse names of two (or more) "
-		"channels simultaneously");
-	} else {
-	    BZERO(names_channel, sizeof names_channel);
+		channel = strtok_r(NULL, "\n", &state);
+		eof_msg = strtok_r(NULL, "\n", &state);
+
+		if (channel == NULL) {
+			throw std::runtime_error("null channel");
+		} else if (!is_irc_channel(channel) || strpbrk(channel + 1,
+		    g_forbidden_chan_name_chars) != NULL) {
+			throw std::runtime_error("invalid channel");
+		} else if (eof_msg == NULL) {
+			throw std::runtime_error("null message");
+		} else if (!strings_match_ignore_case(channel, names_channel)) {
+			throw std::runtime_error("unable to parse names of two "
+			    "(or more) channels simultaneously");
+		} else {
+			BZERO(names_channel, sizeof names_channel);
+		}
+
+		if ((win = window_by_label(channel)) == NULL) {
+			throw std::runtime_error("window lookup error");
+		} else if (win->received_names) {
+			err_log(0, "warning: server sent event 366 "
+			    "(RPL_ENDOFNAMES): already received names for "
+			    "channel %s", channel);
+			return;
+		} else {
+			win->received_names = true;
+		}
+
+		if (nicklist_new(win) != 0)
+			debug("event_eof_names: cannot create nicklist");
+		if (!g_icb_mode)
+			(void) net_send("MODE %s", channel);
+
+		printtext_context_init(&ptext_ctx, win, TYPE_SPEC3, true);
+		output_statistics(ptext_ctx, channel, win);
+		return;
+	} catch (const std::runtime_error& e) {
+		printtext_context_init(&ptext_ctx, g_active_window,
+		    TYPE_SPEC1_FAILURE, true);
+		printtext(&ptext_ctx, "event_eof_names: fatal: %s", e.what());
+
+		if (strstr(e.what(), "parse names of two (or more)") ||
+		    strings_match(e.what(), "window lookup error")) {
+			printtext(&ptext_ctx, "must shutdown irc connection "
+			    "immediately...");
+			net_kill_connection();
+		}
 	}
-
-	if ((win = window_by_label(channel)) == NULL)
-	    throw std::runtime_error("window lookup error");
-	else if (win->received_names) {
-	    err_log(0, "warning: server sent event 366 (RPL_ENDOFNAMES): "
-		"already received names for channel %s", channel);
-	    return;
-	} else {
-	    win->received_names = true;
-	}
-
-	if (nicklist_new(win) != 0)
-	    debug("event_eof_names: cannot create nicklist");
-	if (!g_icb_mode)
-	    (void) net_send("MODE %s", channel);
-
-	printtext_context_init(&ptext_ctx, win, TYPE_SPEC3, true);
-	output_statistics(ptext_ctx, channel, win);
-
-	return;
-    } catch (const std::runtime_error &e) {
-	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_FAILURE,
-	    true);
-	printtext(&ptext_ctx, "event_eof_names: fatal: %s", e.what());
-
-	if (strstr(e.what(), "parse names of two (or more)") ||
-	    strings_match(e.what(), "window lookup error")) {
-	    printtext(&ptext_ctx, "must shutdown irc connection immediately...");
-	    net_kill_connection();
-	}
-    }
 }
 
 /* event_names: 353
