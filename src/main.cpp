@@ -305,14 +305,13 @@ case_join()
 static void
 case_nickname()
 {
-    static bool been_case = false;
+	static bool been_case = false;
 
-    if (been_case) {
-	DUP_OPTION_ERR('n');
-    }
+	if (been_case)
+		DUP_OPTION_ERR('n');
 
-    g_cmdline_opts->nickname = sw_strdup(g_option_arg);
-    been_case = true;
+	g_cmdline_opts->nickname = sw_strdup(g_option_arg);
+	been_case = true;
 }
 
 /**
