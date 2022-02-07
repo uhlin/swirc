@@ -191,42 +191,41 @@ hInstall(const struct hInstall_context *ctx)
     return OK;
 }
 
-static void hUndef(PIRC_WINDOW, PNAMES) PTR_ARGS_NONNULL;
-
 static void
 hUndef(PIRC_WINDOW window, PNAMES entry)
 {
-    if (isNull(window) || isNull(entry) || isNull(entry->nick) ||
-	isEmpty(entry->nick))
-	return;
+	PNAMES *indirect;
 
-    PNAMES *indirect = & (window->names_hash[hash(entry->nick)]);
+	if (window == NULL || entry == NULL || entry->nick == NULL ||
+	    strings_match(entry->nick, ""))
+		return;
 
-    while (sw_assert(indirect != NULL), *indirect != entry)
-	indirect = & ((*indirect)->next);
+	indirect = addrof(window->names_hash[hash(entry->nick)]);
 
-    *indirect = entry->next;
+	while (*indirect != entry)
+		indirect = addrof((*indirect)->next);
 
-    free_and_null(&entry->nick);
+	*indirect = entry->next;
+	free(entry->nick);
 
-    if (entry->is_owner)
-	window->num_owners--;
-    else if (entry->is_superop)
-	window->num_superops--;
-    else if (entry->is_op)
-	window->num_ops--;
-    else if (entry->is_halfop)
-	window->num_halfops--;
-    else if (entry->is_voice)
-	window->num_voices--;
-    else
-	window->num_normal--;
+	if (entry->is_owner)
+		window->num_owners--;
+	else if (entry->is_superop)
+		window->num_superops--;
+	else if (entry->is_op)
+		window->num_ops--;
+	else if (entry->is_halfop)
+		window->num_halfops--;
+	else if (entry->is_voice)
+		window->num_voices--;
+	else
+		window->num_normal--;
 
-    window->num_total--;
-
-    free(entry);
+	window->num_total--;
+	free(entry);
 }
 
+/* XXX */
 static void
 output_statistics(PRINTTEXT_CONTEXT ctx, const char *channel,
     const IRC_WINDOW *window)
