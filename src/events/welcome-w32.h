@@ -8,6 +8,7 @@
 #endif
 
 __SWIRC_BEGIN_DECLS
+DWORD	dword_product(const DWORD elt_count, const DWORD elt_size);
 bool	event_welcome_is_signaled(void);
 void	event_welcome_cond_init(void);
 void	event_welcome_cond_destroy(void);

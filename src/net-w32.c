@@ -1,5 +1,5 @@
 /* Networking for WIN32
-   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -43,6 +43,8 @@
 #include "tls-server.h" /* 'g_beginthread_failed' */
 
 #include "commands/connect.h" /* do_connect() */
+
+#include "events/welcome-w32.h" /* dword_product() */
 
 typedef void __cdecl VoidCdecl;
 
@@ -176,11 +178,6 @@ net_spawn_listen_thread(void)
 }
 
 /* ---------------------------------------------------------------------- */
-
-/*
- * dword_product() is defined in events/welcome-w32.c
- */
-DWORD dword_product(const DWORD elt_count, const DWORD elt_size);
 
 void
 net_set_recv_timeout(const DWORD seconds)
