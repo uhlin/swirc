@@ -327,20 +327,19 @@ event_names_htbl_lookup(const char *nick, const char *channel)
 int
 event_names_htbl_insert(const char *nick, const char *channel)
 {
-    if (isNull(nick) || isEmpty(nick)) {
-	return ERR;
-    }
+	if (nick == NULL || strings_match(nick, ""))
+		return ERR;
 
-    struct hInstall_context ctx; // calls constructor
+	struct hInstall_context ctx; /* calls constructor */
 
-    ctx.channel = const_cast<char *>(channel);
-    ctx.nick = const_cast<char *>(nick);
+	ctx.channel	= const_cast<char *>(channel);
+	ctx.nick	= const_cast<char *>(nick);
 
-    if (hInstall(&ctx) == ERR)
-	return ERR;
-    if (nicklist_update(window_by_label(channel)) != 0)
-	debug("event_names_htbl_insert: nicklist_update: error");
-    return OK;
+	if (hInstall(&ctx) == ERR)
+		return ERR;
+	if (nicklist_update(window_by_label(channel)) != 0)
+		debug("event_names_htbl_insert: nicklist_update: error");
+	return OK;
 }
 
 int
