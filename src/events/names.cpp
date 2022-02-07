@@ -105,13 +105,17 @@ static char names_channel[1000] = "";
 static void
 add_match(PTEXTBUF matches, const char *user)
 {
-    if (textBuf_size(matches) == 0) {
-	if ((errno = textBuf_ins_next(matches, NULL, user, -1)) != 0)
-	    err_sys("get_list_of_matching_channel_users: textBuf_ins_next");
-    } else {
-	if ((errno = textBuf_ins_next(matches, textBuf_tail(matches), user, -1)) != 0)
-	    err_sys("get_list_of_matching_channel_users: textBuf_ins_next");
-    }
+	chararray_t msg = "get_list_of_matching_channel_users: "
+	    "textBuf_ins_next";
+
+	if (textBuf_size(matches) == 0) {
+		if ((errno = textBuf_ins_next(matches, NULL, user, -1)) != 0)
+			err_sys("%s", msg);
+	} else {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
+		    user, -1)) != 0)
+			err_sys("%s", msg);
+	}
 }
 
 static bool
