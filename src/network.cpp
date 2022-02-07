@@ -1,5 +1,5 @@
 /* Platform independent networking routines
-   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -66,16 +66,17 @@
 ****************************************************************/
 
 struct reconnect_context {
-	long int backoff_delay;
-	long int delay;
-	long int delay_max;
-	long int retries;
+	long int	backoff_delay;
+	long int	delay;
+	long int	delay_max;
+	long int	retries;
 
-	reconnect_context() {
-		this->backoff_delay = 0;
-		this->delay         = 0;
-		this->delay_max     = 0;
-		this->retries       = 0;
+	reconnect_context()
+	{
+		this->backoff_delay	= 0;
+		this->delay		= 0;
+		this->delay_max		= 0;
+		this->retries		= 0;
 	}
 };
 
