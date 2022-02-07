@@ -144,51 +144,52 @@ already_is_in_names_hash(const char *nick, PIRC_WINDOW window)
 static int
 hInstall(const struct hInstall_context *ctx)
 {
-    PIRC_WINDOW window_entry = NULL;
-    PNAMES names_entry = NULL;
+	PIRC_WINDOW	window;
+	PNAMES		names;
+	unsigned int	hashval;
 
-    if (isNull(ctx) || isNull(ctx->channel))
-	return ERR;
-    else if ((window_entry = window_by_label(ctx->channel)) == NULL) {
-	debug("events/names.cpp: hInstall: cannot find window labelled \"%s\"",
-	    ctx->channel);
-	return ERR;
-    } else if (isNull(ctx->nick) || isEmpty(ctx->nick)) {
-	debug("events/names.cpp: hInstall: no nickname (channel=%s)",
-	    ctx->channel);
-	return ERR;
-    } else if (already_is_in_names_hash(ctx->nick, window_entry)) {
-	debug("events/names.cpp: hInstall: busy nickname: "
-	    "\"%s\" (channel=%s)", ctx->nick, ctx->channel);
-	return ERR;
-    }
+	if (ctx == NULL || ctx->channel == NULL) {
+		return ERR;
+	} else if ((window = window_by_label(ctx->channel)) == NULL) {
+		debug("events/names.cpp: hInstall: cannot find window "
+		    "labelled \"%s\"", ctx->channel);
+		return ERR;
+	} else if (ctx->nick == NULL || strings_match(ctx->nick, "")) {
+		debug("events/names.cpp: hInstall: no nickname (channel=%s)",
+		    ctx->channel);
+		return ERR;
+	} else if (already_is_in_names_hash(ctx->nick, window)) {
+		debug("events/names.cpp: hInstall: busy nickname: "
+		    "\"%s\" (channel=%s)", ctx->nick, ctx->channel);
+		return ERR;
+	}
 
-    names_entry = static_cast<PNAMES>(xcalloc(sizeof *names_entry, 1));
-    names_entry->nick       = sw_strdup(ctx->nick);
-    names_entry->is_owner   = ctx->is_owner;
-    names_entry->is_superop = ctx->is_superop;
-    names_entry->is_op      = ctx->is_op;
-    names_entry->is_halfop  = ctx->is_halfop;
-    names_entry->is_voice   = ctx->is_voice;
+	names = static_cast<PNAMES>(xcalloc(sizeof *names, 1));
+	names->nick		= sw_strdup(ctx->nick);
+	names->is_owner		= ctx->is_owner;
+	names->is_superop	= ctx->is_superop;
+	names->is_op		= ctx->is_op;
+	names->is_halfop	= ctx->is_halfop;
+	names->is_voice		= ctx->is_voice;
 
-    const unsigned int hashval = hash(ctx->nick);
-    names_entry->next = window_entry->names_hash[hashval];
-    window_entry->names_hash[hashval] = names_entry;
+	hashval = hash(ctx->nick);
+	names->next = window->names_hash[hashval];
+	window->names_hash[hashval] = names;
 
-    if (ctx->is_owner)
-	window_entry->num_owners++;
-    else if (ctx->is_superop)
-	window_entry->num_superops++;
-    else if (ctx->is_op)
-	window_entry->num_ops++;
-    else if (ctx->is_halfop)
-	window_entry->num_halfops++;
-    else if (ctx->is_voice)
-	window_entry->num_voices++;
-    else
-	window_entry->num_normal++;
-    window_entry->num_total++;
-    return OK;
+	if (ctx->is_owner)
+		window->num_owners++;
+	else if (ctx->is_superop)
+		window->num_superops++;
+	else if (ctx->is_op)
+		window->num_ops++;
+	else if (ctx->is_halfop)
+		window->num_halfops++;
+	else if (ctx->is_voice)
+		window->num_voices++;
+	else
+		window->num_normal++;
+	window->num_total++;
+	return OK;
 }
 
 static void
