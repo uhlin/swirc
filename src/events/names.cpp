@@ -40,6 +40,7 @@
 #include "../nicklist.h"
 #include "../printtext.h"
 #include "../strHand.h"
+#include "../strdup_printf.h"
 #include "../theme.h"
 
 #include "names.h"
@@ -232,28 +233,50 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
 	free(entry);
 }
 
-/* XXX */
+static char *
+get_bold_int(const int i)
+{
+	return strdup_printf("%c%d%c", BOLD, i, BOLD);
+}
+
 static void
 output_statistics(PRINTTEXT_CONTEXT ctx, const char *channel,
     const IRC_WINDOW *window)
 {
-    ctx.spec_type = TYPE_SPEC1;
-    printtext(&ctx, "%s%s%s%c%s: Total of %c%d%c nicks "
-	"%s%c%d%c ops, %c%d%c halfops, %c%d%c voices, %c%d%c normal%s",
-	LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-	BOLD, window->num_total, BOLD,
-	LEFT_BRKT,
-	BOLD, window->num_ops, BOLD, BOLD, window->num_halfops, BOLD,
-	BOLD, window->num_voices, BOLD, BOLD, window->num_normal, BOLD,
-	RIGHT_BRKT);
-    if (window->num_owners)
-	printtext(&ctx, "-- Additionally: %c%d%c channel owner%s",
-	    BOLD, window->num_owners, BOLD,
-	    (window->num_owners > 1 ? "s" : ""));
-    if (window->num_superops)
-	printtext(&ctx, "-- Additionally: %c%d%c superop%s",
-	    BOLD, window->num_superops, BOLD,
-	    (window->num_superops > 1 ? "s" : ""));
+	char *str;
+	char *num_total;
+	char *num_ops, *num_halfops, *num_voices, *num_normal;
+
+	str = strdup_printf("%s%s%s%c%s", LEFT_BRKT, COLOR1, channel, NORMAL,
+	    RIGHT_BRKT);
+	num_total	= get_bold_int(window->num_total);
+	num_ops		= get_bold_int(window->num_ops);
+	num_halfops	= get_bold_int(window->num_halfops);
+	num_voices	= get_bold_int(window->num_voices);
+	num_normal	= get_bold_int(window->num_normal);
+
+	ctx.spec_type = TYPE_SPEC1;
+	printtext(&ctx, "%s: Total of %s nicks "
+	    "%s%s ops, %s halfops, %s voices, %s normal%s", str, num_total,
+	    LEFT_BRKT, num_ops, num_halfops, num_voices, num_normal,
+	    RIGHT_BRKT);
+	free(str);
+	free(num_total);
+	free(num_ops);
+	free(num_halfops);
+	free(num_voices);
+	free(num_normal);
+
+	if (window->num_owners) {
+		printtext(&ctx, "-- Additionally: %c%d%c channel owner%s",
+		    BOLD, window->num_owners, BOLD,
+		    (window->num_owners > 1 ? "s" : ""));
+	}
+	if (window->num_superops) {
+		printtext(&ctx, "-- Additionally: %c%d%c superop%s",
+		    BOLD, window->num_superops, BOLD,
+		    (window->num_superops > 1 ? "s" : ""));
+	}
 }
 
 static void
