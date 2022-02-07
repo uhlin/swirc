@@ -94,7 +94,7 @@ hInstall_context::hInstall_context(char *channel, char *nick, const char c)
 *                                                               *
 ****************************************************************/
 
-static char names_channel[1000] = "";
+static char names_channel[1000] = { '\0' };
 
 /****************************************************************
 *                                                               *
