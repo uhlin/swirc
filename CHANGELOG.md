@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Defined and made use of `usage_t`
 - Improved scrolling
 - Made refactoring to multiple files
+- Moved the names hash table modify API
 - Print PRIVMSGs to irc channels from users that aren't in them. (No
   lookup error.)
 - Reduced code duplication
