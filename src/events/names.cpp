@@ -290,7 +290,7 @@ get_list_of_matching_channel_users(const char *chan, const char *search_var)
 void
 event_names_init(void)
 {
-    BZERO(names_channel, sizeof names_channel);
+	BZERO(names_channel, sizeof names_channel);
 }
 
 /**
