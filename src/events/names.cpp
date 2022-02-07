@@ -117,15 +117,17 @@ add_match(PTEXTBUF matches, const char *user)
 static bool
 got_hits(const IRC_WINDOW *window, const char *search_var)
 {
-    for (size_t n = 0; n < ARRAY_SIZE(window->names_hash); n++) {
-	for (PNAMES names = window->names_hash[n]; names != NULL;
-	     names = names->next) {
-	    if (!strncmp(search_var, names->nick, strlen(search_var)))
-		return true;
+	for (size_t n = 0; n < ARRAY_SIZE(window->names_hash); n++) {
+		for (PNAMES names = window->names_hash[n];
+		    names != NULL;
+		    names = names->next) {
+			if (!strncmp(search_var, names->nick,
+			    strlen(search_var)))
+				return true;
+		}
 	}
-    }
 
-    return false;
+	return false;
 }
 
 static inline bool
