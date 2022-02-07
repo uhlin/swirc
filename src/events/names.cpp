@@ -253,13 +253,13 @@ output_statistics(PRINTTEXT_CONTEXT ctx, const char *channel,
 static void
 reset_counters(PIRC_WINDOW window)
 {
-    window->num_owners   = 0;
-    window->num_superops = 0;
-    window->num_ops      = 0;
-    window->num_halfops  = 0;
-    window->num_voices   = 0;
-    window->num_normal   = 0;
-    window->num_total    = 0;
+	window->num_owners	= 0;
+	window->num_superops	= 0;
+	window->num_ops		= 0;
+	window->num_halfops	= 0;
+	window->num_voices	= 0;
+	window->num_normal	= 0;
+	window->num_total	= 0;
 }
 
 PTEXTBUF
