@@ -1,5 +1,6 @@
 edit_main_cpp () {
-	local _expr="s/g_swircVersion\[\] = \"v.*\"/g_swircVersion\[\] = \"v$VERSION\"/"
+	local t="$(echo x | tr 'x' '\t')"
+	local _expr="s/g_swircVersion$t= \"v.*\"/g_swircVersion$t= \"v$VERSION\"/"
 
 	printf "  - Editing %s..." "$1"
 
