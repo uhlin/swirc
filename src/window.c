@@ -68,8 +68,11 @@
 	for (PIRC_WINDOW window = *entry_p;\
 	     window != NULL;\
 	     window = window->next)
+
 #define IS_AT_TOP \
 	(window->saved_size > 0 && window->saved_size == window->scroll_count)
+
+#define hash(str) hash_djb_g(str, true, ARRAY_SIZE(hash_table))
 
 /* Structure definitions
    ===================== */
@@ -139,29 +142,6 @@ change_window(PIRC_WINDOW window)
 	readline_top_panel();
 
 	return 0;
-}
-
-static unsigned int
-hash(const char *label)
-{
-	char c;
-	char *label_copy = strToLower(sw_strdup(label));
-	char *label_p = label_copy;
-	unsigned int hashval = 0;
-	unsigned int tmp;
-
-	while ((c = *label_p++) != '\0') {
-		hashval = (hashval << 4) + c;
-		tmp = hashval & 0xf0000000;
-
-		if (tmp) {
-			hashval ^= (tmp >> 24);
-			hashval ^= tmp;
-		}
-	}
-
-	free(label_copy);
-	return (hashval % ARRAY_SIZE(hash_table));
 }
 
 /**
