@@ -305,23 +305,21 @@ event_names_deinit(void)
 PNAMES
 event_names_htbl_lookup(const char *nick, const char *channel)
 {
-    PIRC_WINDOW window;
-    PNAMES	names;
+	PIRC_WINDOW	window;
+	PNAMES		names;
 
-    if (isNull(nick) || isEmpty(nick) ||
-	(window = window_by_label(channel)) == NULL) {
-	return NULL;
-    }
+	if (nick == NULL || strings_match(nick, "") ||
+	    (window = window_by_label(channel)) == NULL)
+		return NULL;
 
-    for (names = window->names_hash[hash(nick)];
-	 names != NULL;
-	 names = names->next) {
-	if (strings_match_ignore_case(nick, names->nick)) {
-	    return names;
+	for (names = window->names_hash[hash(nick)];
+	    names != NULL;
+	    names = names->next) {
+		if (strings_match_ignore_case(nick, names->nick))
+			return names;
 	}
-    }
 
-    return NULL;
+	return NULL;
 }
 
 int
