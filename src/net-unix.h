@@ -14,11 +14,12 @@ struct network_recv_context {
 
 #ifdef __cplusplus
 	network_recv_context(int sock, int flags, time_t sec,
-	    suseconds_t microsec) {
-		this->sock     = sock;
-		this->flags    = flags;
-		this->sec      = sec;
-		this->microsec = microsec;
+	    suseconds_t microsec)
+	{
+		this->sock	= sock;
+		this->flags	= flags;
+		this->sec	= sec;
+		this->microsec	= microsec;
 	}
 #endif
 };

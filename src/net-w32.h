@@ -11,11 +11,12 @@ struct network_recv_context {
 
 #ifdef __cplusplus
 	network_recv_context(SOCKET sock, int flags, long int sec,
-	    long int microsec) {
-		this->sock     = sock;
-		this->flags    = flags;
-		this->sec      = sec;
-		this->microsec = microsec;
+	    long int microsec)
+	{
+		this->sock	= sock;
+		this->flags	= flags;
+		this->sec	= sec;
+		this->microsec	= microsec;
 	}
 #endif
 };
