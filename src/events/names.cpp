@@ -54,38 +54,39 @@
 ****************************************************************/
 
 struct hInstall_context {
-    char	*channel;
-    char	*nick;
-    bool	 is_owner;
-    bool	 is_superop;
-    bool	 is_op;
-    bool	 is_halfop;
-    bool	 is_voice;
+	char	*channel;
+	char	*nick;
 
-    hInstall_context();
-    hInstall_context(char *, char *, const char);
+	bool	 is_owner;
+	bool	 is_superop;
+	bool	 is_op;
+	bool	 is_halfop;
+	bool	 is_voice;
+
+	hInstall_context();
+	hInstall_context(char *, char *, const char);
 };
 
 hInstall_context::hInstall_context()
 {
-    this->channel = NULL;
-    this->nick = NULL;
-    this->is_owner   = false;
-    this->is_superop = false;
-    this->is_op      = false;
-    this->is_halfop  = false;
-    this->is_voice   = false;
+	this->channel = NULL;
+	this->nick = NULL;
+	this->is_owner		= false;
+	this->is_superop	= false;
+	this->is_op		= false;
+	this->is_halfop		= false;
+	this->is_voice		= false;
 }
 
 hInstall_context::hInstall_context(char *channel, char *nick, const char c)
 {
-    this->channel = channel;
-    this->nick = nick;
-    this->is_owner   = (c == '~');
-    this->is_superop = (c == '&');
-    this->is_op      = (c == '@');
-    this->is_halfop  = (c == '%');
-    this->is_voice   = (c == '+');
+	this->channel = channel;
+	this->nick = nick;
+	this->is_owner		= (c == '~');
+	this->is_superop	= (c == '&');
+	this->is_op		= (c == '@');
+	this->is_halfop		= (c == '%');
+	this->is_voice		= (c == '+');
 }
 
 /****************************************************************
