@@ -265,23 +265,26 @@ reset_counters(PIRC_WINDOW window)
 PTEXTBUF
 get_list_of_matching_channel_users(const char *chan, const char *search_var)
 {
-    PIRC_WINDOW window = NULL;
+	PIRC_WINDOW	window;
+	PTEXTBUF	matches;
 
-    if ((window = window_by_label(chan)) == NULL ||
-	!got_hits(window, search_var))
-	return NULL;
+	if ((window = window_by_label(chan)) == NULL || !got_hits(window,
+	    search_var))
+		return NULL;
 
-    PTEXTBUF matches = textBuf_new();
+	matches = textBuf_new();
 
-    for (size_t n = 0; n < ARRAY_SIZE(window->names_hash); n++) {
-	for (PNAMES names = window->names_hash[n]; names != NULL;
-	     names = names->next) {
-	    if (!strncmp(search_var, names->nick, strlen(search_var)))
-		add_match(matches, names->nick);
+	for (size_t n = 0; n < ARRAY_SIZE(window->names_hash); n++) {
+		for (PNAMES names = window->names_hash[n];
+		    names != NULL;
+		    names = names->next) {
+			if (!strncmp(search_var, names->nick,
+			    strlen(search_var)))
+				add_match(matches, names->nick);
+		}
 	}
-    }
 
-    return matches;
+	return matches;
 }
 
 /**
