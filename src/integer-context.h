@@ -8,6 +8,14 @@ struct integer_context {
 	long int	 fallback_default; /* If the range is exceeded  --  use this value */
 
 #ifdef __cplusplus
+	integer_context()
+	{
+		this->setting_name = NULL;
+		this->lo_limit = 0;
+		this->hi_limit = 0;
+		this->fallback_default = 0;
+	}
+
 	integer_context(const char *setting_name,
 	    long int lo_limit, long int hi_limit, long int fallback_default)
 	{
