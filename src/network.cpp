@@ -91,17 +91,17 @@ struct reconnect_context {
  */
 char g_sent[600] = "";
 
-NET_SEND_FN net_send = net_send_plain;
-NET_RECV_FN net_recv = net_recv_plain;
+NET_SEND_FN	net_send = net_send_plain;
+NET_RECV_FN	net_recv = net_recv_plain;
 
-volatile bool g_connection_in_progress = false;
-volatile bool g_connection_lost = false;
-volatile bool g_irc_listening = false;
-volatile bool g_on_air = false;
+volatile bool	g_connection_in_progress = false;
+volatile bool	g_connection_lost = false;
+volatile bool	g_irc_listening = false;
+volatile bool	g_on_air = false;
 
-char g_last_server[1024] = { 0 };
-char g_last_port[32] = { 0 };
-char g_last_pass[256] = { 0 };
+char	g_last_server[1024] = { 0 };
+char	g_last_port[32] = { 0 };
+char	g_last_pass[256] = { 0 };
 
 /****************************************************************
 *                                                               *
