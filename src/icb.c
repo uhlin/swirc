@@ -955,7 +955,36 @@ icb_send_pm_test1(void **state)
 void
 icb_send_pm_test2(void **state)
 {
-	fail();
+	bool was_truncated = false;
+	chararray_t text =
+	    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+	    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+	    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+	    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+	    "ccc";
+	chararray_t to_who = "max";
+	size_t offset = 0;
+
+	sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who,
+	    &text[offset]);
+	assert_true(!strncmp(&text[offset], "AAA", 3));
+	assert_true(was_truncated);
+	mod_offset(&offset, to_who);
+
+	sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who,
+	    &text[offset]);
+	assert_true(!strncmp(&text[offset], "BBB", 3));
+	assert_true(was_truncated);
+	mod_offset(&offset, to_who);
+
+	sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who,
+	    &text[offset]);
+	assert_string_equal(&text[offset], "ccc");
+	assert_false(was_truncated);
 }
 
 /*
