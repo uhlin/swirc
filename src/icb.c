@@ -877,12 +877,17 @@ icb_send_noop(void)
 void
 icb_send_open_msg(const char *text)
 {
-	bool	was_truncated = false;
+	bool	was_truncated = true;
+	size_t	offset = 0;
 
-	sendpacket(&was_truncated, "b%s", text);
+	while (was_truncated) {
+		sendpacket(&was_truncated, "b%s", &text[offset]);
 
-	if (was_truncated)
-		err_log(ENOBUFS, "icb_send_open_msg: text truncated");
+		if (was_truncated) {
+			offset += ICB_MESSAGE_MAX;
+			offset -= 1;
+		}
+	}
 }
 
 /*
