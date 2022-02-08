@@ -40,6 +40,7 @@
 #include "icb.h"
 #include "irc.h"
 #include "libUtils.h"
+#include "main.h"
 #include "network.h"
 #include "printtext.h"
 #include "strHand.h"
@@ -903,22 +904,52 @@ icb_send_ping(const char *arg)
 		sendpacket(NULL, "l");
 }
 
+static void
+mod_offset(size_t *offset, const char *to_who)
+{
+	*offset += ICB_MESSAGE_MAX;
+	*offset -= 2;
+	*offset -= strlen(ICB_FIELD_SEP);
+	*offset -= strlen(to_who);
+	*offset -= 1;
+}
+
 void
 icb_send_pm(const char *to_who, const char *text)
 {
-	bool	was_truncated = false;
+	bool	was_truncated = true;
+	size_t	offset = 0;
 
-	sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who, text);
-
-	if (was_truncated)
-		err_log(ENOBUFS, "icb_send_pm: text truncated");
+	while (was_truncated) {
+		sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who,
+		    &text[offset]);
+		if (was_truncated)
+			mod_offset(&offset, to_who);
+	}
 }
 
 #ifdef UNIT_TESTING
 void
 icb_send_pm_test1(void **state)
 {
-	fail();
+	bool was_truncated = false;
+	chararray_t text =
+	    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	    "xxx";
+	chararray_t to_who = "t";
+	size_t offset = 0;
+
+	sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who,
+	    &text[offset]);
+	assert_true(was_truncated);
+	mod_offset(&offset, to_who);
+	sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who,
+	    &text[offset]);
+	assert_false(was_truncated);
+	assert_string_equal(&text[offset], "xxx");
 }
 
 void
