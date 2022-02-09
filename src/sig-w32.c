@@ -17,30 +17,31 @@ clean_up(void)
 static void
 signal_handler(int signum)
 {
-    struct sigmsg_tag {
-	int	 num;
-	char	*num_str;
-	char	*msg;
-    } sigmsg[] = {
-	{ SIGABRT, "SIGABRT", "Abnormal termination"   },
-	{ SIGFPE,  "SIGFPE",  "Floating-point error"   },
-	{ SIGILL,  "SIGILL",  "Illegal instruction"    },
-	{ SIGSEGV, "SIGSEGV", "Illegal storage access" },
-	{ SIGTERM, "SIGTERM", "Termination request"    },
-    };
+	struct sigmsg_tag {
+		int num;
+		char *num_str;
+		char *msg;
+	} sigmsg[] = {
+		{ SIGABRT, "SIGABRT", "Abnormal termination"   },
+		{ SIGFPE,  "SIGFPE",  "Floating-point error"   },
+		{ SIGILL,  "SIGILL",  "Illegal instruction"    },
+		{ SIGSEGV, "SIGSEGV", "Illegal storage access" },
+		{ SIGTERM, "SIGTERM", "Termination request"    },
+	};
 
-    clean_up();
+	clean_up();
 
-    for (struct sigmsg_tag *ssp = &sigmsg[0]; ssp < &sigmsg[ARRAY_SIZE(sigmsg)];
-	 ssp++) {
-	if (ssp->num == signum) {
-	    err_msg("[-] FATAL: Received signal %d (%s)\n    %s",
-		    ssp->num, ssp->num_str, ssp->msg);
-	    break;
+	for (struct sigmsg_tag *ssp = &sigmsg[0];
+	    ssp < &sigmsg[ARRAY_SIZE(sigmsg)];
+	    ssp++) {
+		if (ssp->num == signum) {
+			err_msg("[-] FATAL: Received signal %d (%s)\n    %s",
+			    ssp->num, ssp->num_str, ssp->msg);
+			break;
+		}
 	}
-    }
 
-    _exit(EXIT_FAILURE);
+	_exit(EXIT_FAILURE);
 }
 
 void
