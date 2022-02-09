@@ -19,8 +19,8 @@ signal_handler(int signum)
 {
 	struct sigmsg_tag {
 		int num;
-		char *num_str;
-		char *msg;
+		const char *num_str;
+		const char *msg;
 	} sigmsg[] = {
 		{ SIGABRT, "SIGABRT", "Abnormal termination"   },
 		{ SIGFPE,  "SIGFPE",  "Floating-point error"   },
