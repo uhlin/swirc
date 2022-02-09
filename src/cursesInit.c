@@ -121,18 +121,19 @@ init_extended_colors(short int *pair_n)
 static int
 init_more_pairs(short int *pair_n)
 {
-    if (theme_bool("term_use_default_colors", true)) {
-	for (const short int *psi = &ext_colors[0]; psi < &ext_colors[numExtended]; psi++) {
-	    if (init_pair(++ (*pair_n), *psi, -1) == ERR)
-		return ERR;
+	if (theme_bool("term_use_default_colors", true)) {
+		for (const short int *psi = &ext_colors[0];
+		    psi < &ext_colors[numExtended];
+		    psi++) {
+			if (init_pair(++ (*pair_n), *psi, -1) == ERR)
+				return ERR;
+		}
 	}
-    }
 
-    if (init_fg_on_bg_case1(pair_n) == ERR ||
-	init_fg_on_bg_case2(pair_n) == ERR)
-	return ERR;
-
-    return init_extended_colors(pair_n);
+	if (init_fg_on_bg_case1(pair_n) == ERR ||
+	    init_fg_on_bg_case2(pair_n) == ERR)
+		return ERR;
+	return init_extended_colors(pair_n);
 }
 
 /**
