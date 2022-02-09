@@ -1,5 +1,5 @@
 /* Initialization of the Ncurses library
-   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -223,37 +223,35 @@ init_color_pairs(void)
 int
 curses_init(void)
 {
-    (void) wrefresh(initscr());
+	(void) wrefresh(initscr());
 
-    g_cursesMode  = true;
-    g_endwin_fn   = endwin;
-    g_doupdate_fn = doupdate;
+	g_cursesMode	= true;
+	g_endwin_fn	= endwin;
+	g_doupdate_fn	= doupdate;
 
-    if (!theme_bool("term_enable_colors", true) || !has_colors() ||
-	start_color() == ERR) {
-	g_no_colors = true;
-    } else {
-	if (theme_bool("term_use_default_colors", true) &&
-	    use_default_colors() != OK) {
-	    err_msg("use_default_colors() ran unsuccessful!\n"
-		"Troubleshooting: set option term_use_default_colors to NO.");
-	    return ERR;
+	if (!theme_bool("term_enable_colors", true) || !has_colors() ||
+	    start_color() == ERR) {
+		g_no_colors = true;
+	} else {
+		if (theme_bool("term_use_default_colors", true) &&
+		    use_default_colors() != OK) {
+			err_msg("use_default_colors() ran unsuccessful!\n"
+			    "Troubleshooting: "
+			    "set option term_use_default_colors to NO.");
+			return ERR;
+		}
 	}
-    }
 
-    if (cbreak() == ERR) {
-	err_msg("Could not enter terminal cbreak mode");
-	return ERR;
-    }
+	if (cbreak() == ERR) {
+		err_msg("Could not enter terminal cbreak mode");
+		return ERR;
+	}
+	if (noecho() == ERR) {
+		err_msg("Unable to turn echoing off!");
+		return ERR;
+	}
 
-    if (noecho() == ERR) {
-	err_msg("Unable to turn echoing off!");
-	return ERR;
-    }
-
-    if (!g_no_colors && (g_initialized_pairs = init_color_pairs()) < 0) {
-	return ERR;
-    }
-
-    return OK;
+	if (!g_no_colors && (g_initialized_pairs = init_color_pairs()) < 0)
+		return ERR;
+	return OK;
 }
