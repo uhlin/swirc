@@ -72,6 +72,12 @@ static const short int ext_colors[] = {
 static const size_t	numColors = ARRAY_SIZE(colors);
 static const size_t	numExtended = ARRAY_SIZE(ext_colors);
 
+static inline size_t
+get_num_colors(void)
+{
+	return (COLORS >= 16 && can_change_color() ? numColors : 8);
+}
+
 static int
 init_fg_on_bg_case1(short int *pair_n)
 {
@@ -175,7 +181,7 @@ init_color_pairs(void)
 	 */
 	if (theme_bool("term_use_default_colors", true)) {
 		for (const short int *psi = &colors[0];
-		    psi < &colors[COLORS >= 16 && can_change_color() ? numColors : 8];
+		    psi < &colors[get_num_colors()];
 		    psi++) {
 			if (init_pair(++pair_n, *psi, -1) == ERR) {
 				err_msg("Could not initialize pair %hd",
