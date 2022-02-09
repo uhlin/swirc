@@ -1,4 +1,4 @@
-/* Copyright (C) 2012-2021 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2012-2022 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -97,38 +97,38 @@ block_signals(void)
 bool
 sighand_init(void)
 {
-    sigset_t set;
-    struct sigaction act = { 0 };
+	sigset_t set;
+	struct sigaction act = { 0 };
 
-    (void) sigfillset(&set);
-    (void) sigfillset(&act.sa_mask);
-    act.sa_flags = 0;
+	(void) sigfillset(&set);
+	(void) sigfillset(&act.sa_mask);
+	act.sa_flags = 0;
 
-    if (pthread_sigmask(SIG_SETMASK, &set, NULL) != 0) {
-	err_ret("sighand_init: SIG_SETMASK");
-	return false;
-    }
-
-    for (struct sig_message_tag *ssp = &sig_message[0];
-	 ssp < &sig_message[ARRAY_SIZE(sig_message)]; ssp++) {
-	if (ssp->ignore) {
-	    act.sa_handler = SIG_IGN;
-	} else {
-	    act.sa_handler = signal_handler;
+	if (pthread_sigmask(SIG_SETMASK, &set, NULL) != 0) {
+		err_ret("sighand_init: SIG_SETMASK");
+		return false;
 	}
-	if (sigaction(ssp->num, &act, NULL) != 0) {
-	    err_ret("sighand_init: sigaction failed on signal %d (%s)",
-		    ssp->num, ssp->num_str);
-	    return false;
+
+	for (struct sig_message_tag *ssp = &sig_message[0];
+	    ssp < &sig_message[ARRAY_SIZE(sig_message)];
+	    ssp++) {
+		if (ssp->ignore)
+			act.sa_handler = SIG_IGN;
+		else
+			act.sa_handler = signal_handler;
+		if (sigaction(ssp->num, &act, NULL) != 0) {
+			err_ret("sighand_init: sigaction failed on signal %d "
+			    "(%s)", ssp->num, ssp->num_str);
+			return false;
+		}
 	}
-    }
 
-    (void) sigemptyset(&set);
+	(void) sigemptyset(&set);
 
-    if (pthread_sigmask(SIG_SETMASK, &set, NULL) != 0) {
-	err_ret("sighand_init: SIG_SETMASK");
-	return false;
-    }
+	if (pthread_sigmask(SIG_SETMASK, &set, NULL) != 0) {
+		err_ret("sighand_init: SIG_SETMASK");
+		return false;
+	}
 
-    return true;
+	return true;
 }
