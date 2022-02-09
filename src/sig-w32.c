@@ -11,7 +11,7 @@
 static void
 clean_up(void)
 {
-    term_restore_title();
+	term_restore_title();
 }
 
 static void
