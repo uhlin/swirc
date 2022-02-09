@@ -105,17 +105,17 @@ static int
 init_extended_colors(short int *pair_n)
 {
 #if LINUX
-    FOREACH_FOREGROUND_EXTENDED() {
-	FOREACH_BACKGROUND_EXTENDED() {
-	    if (*fg != *bg && init_pair(++ (*pair_n), *fg, *bg) == ERR)
-		return ERR;
+	FOREACH_FOREGROUND_EXTENDED() {
+		FOREACH_BACKGROUND_EXTENDED() {
+			if (*fg != *bg && init_pair(++ (*pair_n), *fg, *bg) ==
+			    ERR)
+				return ERR;
+		}
 	}
-    }
 #else
-    (void) pair_n;
+	(void) pair_n;
 #endif
-
-    return OK;
+	return OK;
 }
 
 static int
