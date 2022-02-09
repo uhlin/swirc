@@ -36,7 +36,7 @@ static struct sig_message_tag {
 static void
 clean_up(void)
 {
-    term_restore_title();
+	term_restore_title();
 }
 
 static void
