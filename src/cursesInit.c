@@ -40,18 +40,23 @@ bool g_no_colors = false;
 short int g_initialized_pairs = -1;
 
 static const short int colors[] = {
-    COLOR_BLACK, COLOR_RED, COLOR_GREEN, COLOR_YELLOW,
-    COLOR_BLUE, COLOR_MAGENTA, COLOR_CYAN, COLOR_WHITE,
-
+	COLOR_BLACK,
+	COLOR_RED,
+	COLOR_GREEN,
+	COLOR_YELLOW,
+	COLOR_BLUE,
+	COLOR_MAGENTA,
+	COLOR_CYAN,
+	COLOR_WHITE,
 #if 0
-    LIGHT_RED,
-    LIGHT_GREEN,
-    LIGHT_CYAN,
-    LIGHT_BLUE,
-    PINK,
+	LIGHT_RED,
+	LIGHT_GREEN,
+	LIGHT_CYAN,
+	LIGHT_BLUE,
+	PINK,
 #endif
-    GREY,
-    LIGHT_GREY,
+	GREY,
+	LIGHT_GREY,
 };
 
 static const short int ext_colors[] = {
