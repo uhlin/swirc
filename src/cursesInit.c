@@ -36,8 +36,8 @@
 #include "strHand.h"
 #include "theme.h"
 
-bool g_no_colors = false;
-short int g_initialized_pairs = -1;
+bool		g_no_colors = false;
+short int	g_initialized_pairs = -1;
 
 static const short int colors[] = {
 	COLOR_BLACK,
