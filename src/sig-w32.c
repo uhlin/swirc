@@ -46,7 +46,7 @@ signal_handler(int signum)
 void
 block_signals(void)
 {
-    debug("block_signals() called");
+	debug("block_signals() called");
 }
 
 bool
