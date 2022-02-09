@@ -64,8 +64,8 @@ static const short int ext_colors[] = {
     16,  233, 235, 237, 239, 241, 244, 247, 250, 254, 231       /* 88-98 */
 };
 
-static const size_t numColors = ARRAY_SIZE(colors);
-static const size_t numExtended = ARRAY_SIZE(ext_colors);
+static const size_t	numColors = ARRAY_SIZE(colors);
+static const size_t	numExtended = ARRAY_SIZE(ext_colors);
 
 static int
 init_fg_on_bg_case1(short int *pair_n)
