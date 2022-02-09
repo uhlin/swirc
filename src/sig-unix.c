@@ -42,39 +42,41 @@ clean_up(void)
 static void
 signal_handler(int signum)
 {
-    struct timespec ts = {
-	.tv_sec = 0,
-	.tv_nsec = 250000000,
-    };
+	struct timespec ts = {
+		.tv_sec = 0,
+		.tv_nsec = 250000000,
+	};
 
-    switch (signum) {
-    case SIGWINCH:
-	if (nanosleep(&ts, NULL) == 0 &&
-	    !atomic_load_bool(&g_connection_in_progress))
-	    (void) unget_wch(MY_KEY_RESIZE);
-	return;
-    default:
-	clean_up();
+	switch (signum) {
+	case SIGWINCH:
+		if (nanosleep(&ts, NULL) == 0 &&
+		    !atomic_load_bool(&g_connection_in_progress))
+			(void) unget_wch(MY_KEY_RESIZE);
+		return;
+	default:
+		clean_up();
 
-	for (struct sig_message_tag *ssp = &sig_message[0];
-	     ssp < &sig_message[ARRAY_SIZE(sig_message)]; ssp++) {
-	    if (ssp->num == signum) {
+		for (struct sig_message_tag *ssp = &sig_message[0];
+		    ssp < &sig_message[ARRAY_SIZE(sig_message)];
+		    ssp++) {
+			if (ssp->num == signum) {
 #if USE_STRSIGNAL
-		err_msg("[-] FATAL: Received signal %d (%s)\n    %s", ssp->num,
-		    ssp->num_str,
-		    (strsignal(ssp->num) ? strsignal(ssp->num) : ssp->msg));
+				err_msg("[-] FATAL: Received signal %d (%s)\n"
+				    "    %s", ssp->num, ssp->num_str,
+				    (strsignal(ssp->num) ? strsignal(ssp->num) :
+				    ssp->msg));
 #else
-		err_msg("[-] FATAL: Received signal %d (%s)\n    %s", ssp->num,
-		    ssp->num_str, ssp->msg);
+				err_msg("[-] FATAL: Received signal %d (%s)\n"
+				    "    %s", ssp->num, ssp->num_str, ssp->msg);
 #endif
+				break;
+			}
+		}
+
 		break;
-	    }
 	}
 
-	break;
-    }
-
-    _Exit(EXIT_FAILURE);
+	_Exit(EXIT_FAILURE);
 }
 
 void
