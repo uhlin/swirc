@@ -1,4 +1,4 @@
-/* Copyright (C) 2012-2021 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2012-2022 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -52,30 +52,29 @@ block_signals(void)
 bool
 sighand_init(void)
 {
-    if (signal(SIGABRT, signal_handler) == SIG_ERR) {
-	err_ret("SIGABRT error");
-	return (false);
-    }
-    if (signal(SIGFPE, signal_handler) == SIG_ERR) {
-	err_ret("SIGFPE error");
-	return (false);
-    }
-    if (signal(SIGILL, signal_handler) == SIG_ERR) {
-	err_ret("SIGILL error");
-	return (false);
-    }
-    if (signal(SIGINT, SIG_IGN) == SIG_ERR) { /* CTRL+C signal */
-	err_ret("SIGINT error");
-	return (false);
-    }
-    if (signal(SIGSEGV, signal_handler) == SIG_ERR) {
-	err_ret("SIGSEGV error");
-	return (false);
-    }
-    if (signal(SIGTERM, signal_handler) == SIG_ERR) {
-	err_ret("SIGTERM error");
-	return (false);
-    }
-
-    return (true);
+	if (signal(SIGABRT, signal_handler) == SIG_ERR) {
+		err_ret("SIGABRT error");
+		return false;
+	}
+	if (signal(SIGFPE, signal_handler) == SIG_ERR) {
+		err_ret("SIGFPE error");
+		return false;
+	}
+	if (signal(SIGILL, signal_handler) == SIG_ERR) {
+		err_ret("SIGILL error");
+		return false;
+	}
+	if (signal(SIGINT, SIG_IGN) == SIG_ERR) { /* CTRL+C signal */
+		err_ret("SIGINT error");
+		return false;
+	}
+	if (signal(SIGSEGV, signal_handler) == SIG_ERR) {
+		err_ret("SIGSEGV error");
+		return false;
+	}
+	if (signal(SIGTERM, signal_handler) == SIG_ERR) {
+		err_ret("SIGTERM error");
+		return false;
+	}
+	return true;
 }
