@@ -13,9 +13,9 @@
 
 static struct sig_message_tag {
 	int num;
-	char *num_str;
+	const char *num_str;
 	bool ignore;
-	char *msg;
+	const char *msg;
 } sig_message[] = {
 	{ SIGABRT,  "SIGABRT",  false, "Abnormal termination"           },
 	{ SIGBUS,   "SIGBUS",   false, "Bus error (bad memory access)"  },
