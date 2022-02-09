@@ -71,17 +71,16 @@ static int
 init_fg_on_bg_case1(short int *pair_n)
 {
 #if LINUX
-    FOREACH_FOREGROUND_EXTENDED() {
-	FOREACH_BACKGROUND_ANSI() {
-	    if (init_pair(++ (*pair_n), *fg, *bg) == ERR)
-		return ERR;
+	FOREACH_FOREGROUND_EXTENDED() {
+		FOREACH_BACKGROUND_ANSI() {
+			if (init_pair(++ (*pair_n), *fg, *bg) == ERR)
+				return ERR;
+		}
 	}
-    }
 #else
-    (void) pair_n;
+	(void) pair_n;
 #endif
-
-    return OK;
+	return OK;
 }
 
 static int
