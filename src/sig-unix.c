@@ -12,25 +12,25 @@
 #include "terminal.h"
 
 static struct sig_message_tag {
-    int		 num;
-    char	*num_str;
-    bool	 ignore;
-    char	*msg;
+	int num;
+	char *num_str;
+	bool ignore;
+	char *msg;
 } sig_message[] = {
-    { SIGABRT,  "SIGABRT",  false, "Abnormal termination"           },
-    { SIGBUS,   "SIGBUS",   false, "Bus error (bad memory access)"  },
-    { SIGFPE,   "SIGFPE",   false, "Floating point exception"       },
-    { SIGILL,   "SIGILL",   false, "Illegal Instruction"            },
-    { SIGSEGV,  "SIGSEGV",  false, "Invalid memory reference"       },
-    { SIGSYS,   "SIGSYS",   false, "Bad argument to routine"        },
-    { SIGTERM,  "SIGTERM",  false, "Termination signal"             },
-    { SIGWINCH, "SIGWINCH", false, "Window resize signal"           },
-    { SIGXCPU,  "SIGXCPU",  false, "CPU time limit exceeded"        },
-    { SIGXFSZ,  "SIGXFSZ",  false, "File size limit exceeded"       },
-    { SIGHUP,   "SIGHUP",   true,  "Terminal line hangup"           },
-    { SIGINT,   "SIGINT",   true,  "Interrupt program"              },
-    { SIGPIPE,  "SIGPIPE",  true,  "Write on a pipe with no reader" },
-    { SIGQUIT,  "SIGQUIT",  true,  "Quit program"                   },
+	{ SIGABRT,  "SIGABRT",  false, "Abnormal termination"           },
+	{ SIGBUS,   "SIGBUS",   false, "Bus error (bad memory access)"  },
+	{ SIGFPE,   "SIGFPE",   false, "Floating point exception"       },
+	{ SIGILL,   "SIGILL",   false, "Illegal Instruction"            },
+	{ SIGSEGV,  "SIGSEGV",  false, "Invalid memory reference"       },
+	{ SIGSYS,   "SIGSYS",   false, "Bad argument to routine"        },
+	{ SIGTERM,  "SIGTERM",  false, "Termination signal"             },
+	{ SIGWINCH, "SIGWINCH", false, "Window resize signal"           },
+	{ SIGXCPU,  "SIGXCPU",  false, "CPU time limit exceeded"        },
+	{ SIGXFSZ,  "SIGXFSZ",  false, "File size limit exceeded"       },
+	{ SIGHUP,   "SIGHUP",   true,  "Terminal line hangup"           },
+	{ SIGINT,   "SIGINT",   true,  "Interrupt program"              },
+	{ SIGPIPE,  "SIGPIPE",  true,  "Write on a pipe with no reader" },
+	{ SIGQUIT,  "SIGQUIT",  true,  "Quit program"                   },
 };
 
 static void
