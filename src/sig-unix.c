@@ -12,10 +12,10 @@
 #include "terminal.h"
 
 static struct sig_message_tag {
-	int num;
-	const char *num_str;
-	bool ignore;
-	const char *msg;
+	int		 num;
+	const char	*num_str;
+	bool		 ignore;
+	const char	*msg;
 } sig_message[] = {
 	{ SIGABRT,  "SIGABRT",  false, "Abnormal termination"           },
 	{ SIGBUS,   "SIGBUS",   false, "Bus error (bad memory access)"  },
