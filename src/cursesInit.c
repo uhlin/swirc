@@ -144,77 +144,90 @@ init_more_pairs(short int *pair_n)
 static short int
 init_color_pairs(void)
 {
-    short int pair_n = 0;
+	short int pair_n = 0;
 
-    if (COLORS >= 16 && can_change_color()) {
-	if (init_color(GREY, 498,498,498) == ERR)
-	    err_log(0, "init_color_pairs: init_color: GREY error");
-	if (init_color(LIGHT_GREY, 824,824,824) == ERR)
-	    err_log(0, "init_color_pairs: init_color: LIGHT_GREY error");
-	initcolors();
-    }
+	if (COLORS >= 16 && can_change_color()) {
+		if (init_color(GREY, 498,498,498) == ERR) {
+			err_log(0, "init_color_pairs: init_color: "
+			    "GREY error");
+		}
+		if (init_color(LIGHT_GREY, 824,824,824) == ERR) {
+			err_log(0, "init_color_pairs: init_color: "
+			    "LIGHT_GREY error");
+		}
+		initcolors();
+	}
 
-    /* Initialize black on black */
-    if (init_pair(++pair_n, colors[0], colors[0]) == ERR) {
-	err_msg("Could not initialize pair %hd", pair_n);
-	return -1;
-    }
-
-    /* Initialize a color on the default background of the terminal */
-    if (theme_bool("term_use_default_colors", true)) {
-	for (const short int *psi = &colors[0];
-	     psi < &colors[COLORS >= 16 && can_change_color() ? numColors : 8];
-	     psi++) {
-	    if (init_pair(++pair_n, *psi, -1) == ERR) {
+	/*
+	 * Initialize black on black
+	 */
+	if (init_pair(++pair_n, colors[0], colors[0]) == ERR) {
 		err_msg("Could not initialize pair %hd", pair_n);
 		return -1;
-	    }
 	}
-    }
 
-    FOREACH_FOREGROUND_ANSI() {
-	FOREACH_BACKGROUND_ANSI() {
-	    if (*fg != *bg && init_pair(++pair_n, *fg, *bg) == ERR) {
-		if (pair_n == 64) {
-		    /* The pair number is 64. The terminal that is
-		     * being used most likely lack support for pairs
-		     * >= 64. However: don't return -1 to indicate an
-		     * error. */
-		    return 63;
-		} else {
-		    char *fg_name = sw_strdup(strColor(*fg));
-		    char *bg_name = sw_strdup(strColor(*bg));
-
-		    err_msg("Could not initialize pair %hd (%s, %s)",
-			    pair_n, fg_name, bg_name);
-
-		    free(fg_name);
-		    free(bg_name);
-		    return -1;
+	/*
+	 * Initialize a color on the default background of the terminal
+	 */
+	if (theme_bool("term_use_default_colors", true)) {
+		for (const short int *psi = &colors[0];
+		    psi < &colors[COLORS >= 16 && can_change_color() ? numColors : 8];
+		    psi++) {
+			if (init_pair(++pair_n, *psi, -1) == ERR) {
+				err_msg("Could not initialize pair %hd",
+				    pair_n);
+				return -1;
+			}
 		}
-	    }
 	}
-    }
 
-    for (size_t n = 1; n < numColors; n++) {
-	if (init_pair(++pair_n, colors[n], colors[n]) == ERR)
-	    return (pair_n - 1);
-    }
+	FOREACH_FOREGROUND_ANSI() {
+		FOREACH_BACKGROUND_ANSI() {
+			if (*fg != *bg && init_pair(++pair_n, *fg, *bg) ==
+			    ERR) {
+				if (pair_n == 64) {
+					/* The pair number is 64. The
+					 * terminal that is being used
+					 * most likely lack support
+					 * for pairs >= 64. However:
+					 * don't return -1 to indicate
+					 * an error. */
+					return 63;
+				} else {
+					char *fg_name, *bg_name;
 
-    if (COLORS >= 256) {
+					fg_name = sw_strdup(strColor(*fg));
+					bg_name = sw_strdup(strColor(*bg));
+					err_msg("Could not initialize pair %hd "
+					    "(%s, %s)", pair_n,
+					    fg_name, bg_name);
+					free(fg_name);
+					free(bg_name);
+					return -1;
+				}
+			}
+		}
+	}
+
+	for (size_t n = 1; n < numColors; n++) {
+		if (init_pair(++pair_n, colors[n], colors[n]) == ERR)
+			return (pair_n - 1);
+	}
+
+	if (COLORS >= 256) {
 #if UNIX
-	if (init_more_pairs(&pair_n) == ERR)
-	    return (pair_n - 1);
+		if (init_more_pairs(&pair_n) == ERR)
+			return (pair_n - 1);
 #elif WIN32
-	FOREACH_FOREGROUND_EXTENDED() {
-	    if (init_pair(++pair_n, *fg, COLOR_BLACK) == ERR)
-		return (pair_n - 1);
-	}
+		FOREACH_FOREGROUND_EXTENDED() {
+			if (init_pair(++pair_n, *fg, COLOR_BLACK) == ERR)
+				return (pair_n - 1);
+		}
 #endif
-    }
+	}
 
-    debug("init_color_pairs: all ok: %hd initialized pairs", pair_n);
-    return pair_n;
+	debug("init_color_pairs: all ok: %hd initialized pairs", pair_n);
+	return pair_n;
 }
 
 /**
