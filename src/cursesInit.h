@@ -24,6 +24,8 @@
 	     bg < &colors[COLORS >= 16 && can_change_color() ? numColors : 8];\
 	     bg++)
 
+typedef const short int colorarray_t[];
+
 __SWIRC_BEGIN_DECLS
 extern bool		g_no_colors;
 extern short int	g_initialized_pairs;

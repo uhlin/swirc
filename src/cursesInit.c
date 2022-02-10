@@ -39,7 +39,7 @@
 bool		g_no_colors = false;
 short int	g_initialized_pairs = -1;
 
-static const short int colors[] = {
+static colorarray_t colors = {
 	COLOR_BLACK,
 	COLOR_RED,
 	COLOR_GREEN,
@@ -59,7 +59,7 @@ static const short int colors[] = {
 	LIGHT_GREY,
 };
 
-static const short int ext_colors[] = {
+static colorarray_t ext_colors = {
 	52,   94, 100,  58,  22,  29,  23,  24,  17,  54,  53,  89, /* 16-27 */
 	88,  130, 142,  64,  28,  35,  30,  25,  18,  91,  90, 125, /* 28-39 */
 	124, 166, 184, 106,  34,  49,  37,  33,  19, 129, 127, 161, /* 40-51 */
