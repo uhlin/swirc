@@ -250,8 +250,6 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *msg)
 
 	free(body);
 	g_object_unref(G_OBJECT(notification));
-//	body = NULL;
-//	notification = NULL;
 #endif
 
 	if (ctx->window != g_active_window)
@@ -311,8 +309,6 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *dest,
 
 		free(body);
 		g_object_unref(G_OBJECT(notification));
-//		body = NULL;
-//		notification = NULL;
 #endif
 	} else {
 		/*
@@ -398,7 +394,6 @@ event_privmsg(struct irc_message_compo *compo)
 			 * Dest is an IRC channel
 			 */
 
-			/* XXX */
 			if (window_by_label(dest) == NULL &&
 			    spawn_chat_window(dest, "No title.") != 0)
 				throw std::runtime_error("spawn_chat_window");
