@@ -224,6 +224,107 @@ get_message(const wchar_t *s1, const wchar_t *s2, const wchar_t *s3,
 }
 #endif /* ----- WIN32 and TOAST_NOTIFICATIONS ----- */
 
+static void
+handle_private_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *msg)
+{
+	if ((ctx->window = window_by_label(nick)) == NULL)
+		throw std::runtime_error("window lookup error");
+
+	printtext(ctx, "%s%s%s%c%s %s", NICK_S1, COLOR2, nick, NORMAL, NICK_S2,
+	    msg);
+
+#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
+	wchar_t *wNick = get_converted_wcs(nick);
+	wchar_t *wMsg = get_converted_wcs(msg);
+
+	Toasts::SendBasicToast(get_message(L"[PM]", L" <", wNick, L"> ", wMsg));
+
+	free(wNick);
+	free(wMsg);
+#elif defined(UNIX) && USE_LIBNOTIFY
+	char *body = strdup_printf("[PM] &lt;%s&gt; %s", nick, msg);
+	NotifyNotification *notification = notify_notification_new(SUMMARY_TEXT,
+	    body, SWIRC_ICON);
+
+	notify_notification_show(notification, NULL);
+
+	free(body);
+	g_object_unref(G_OBJECT(notification));
+//	body = NULL;
+//	notification = NULL;
+#endif
+
+	if (ctx->window != g_active_window)
+		broadcast_window_activity(ctx->window);
+}
+
+static void
+handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *dest,
+    const char *msg)
+{
+	PNAMES	n = NULL;
+	char	c = '!';
+
+	if ((ctx->window = window_by_label(dest)) == NULL) {
+		throw std::runtime_error("bogus window label");
+	} else if ((n = event_names_htbl_lookup(nick, dest)) != NULL) {
+		if (n->is_owner)
+			c = '~';
+		else if (n->is_superop)
+			c = '&';
+		else if (n->is_op)
+			c = '@';
+		else if (n->is_halfop)
+			c = '%';
+		else if (n->is_voice)
+			c = '+';
+		else
+			c = ' ';
+	}
+
+	if (shouldHighlightMessage_case1(msg) ||
+	    shouldHighlightMessage_case2(msg)) {
+		printtext(ctx, "%s%c%s%s%c%s %s",
+		    NICK_S1, c, COLOR4, nick, NORMAL, NICK_S2,
+		    msg);
+
+		if (ctx->window != g_active_window)
+			broadcast_window_activity(ctx->window);
+
+#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
+		wchar_t *wNick = get_converted_wcs(nick);
+		wchar_t *wDest = get_converted_wcs(dest);
+		wchar_t *wMsg = get_converted_wcs(msg);
+
+		Toasts::SendBasicToast(get_message(wNick, L" @ ", wDest, L": ",
+		    wMsg));
+
+		free(wNick);
+		free(wDest);
+		free(wMsg);
+#elif defined(UNIX) && USE_LIBNOTIFY
+		char *body = strdup_printf("%s @ %s: %s", nick, dest, msg);
+		NotifyNotification *notification =
+		    notify_notification_new(SUMMARY_TEXT, body, SWIRC_ICON);
+
+		notify_notification_show(notification, NULL);
+
+		free(body);
+		g_object_unref(G_OBJECT(notification));
+//		body = NULL;
+//		notification = NULL;
+#endif
+	} else {
+		/*
+		 * Normal message with no highlighting
+		 */
+
+		printtext(ctx, "%s%c%s%s%c%s %s",
+		    NICK_S1, c, COLOR2, nick, NORMAL, NICK_S2,
+		    msg);
+	}
+}
+
 /* event_privmsg
 
    Examples:
@@ -298,106 +399,13 @@ event_privmsg(struct irc_message_compo *compo)
 		}
 
 		if (strings_match_ignore_case(dest, g_my_nickname)) {
-			if ((ctx.window = window_by_label(nick)) == NULL)
-				throw std::runtime_error("window lookup error");
-
-			printtext(&ctx, "%s%s%s%c%s %s",
-			    NICK_S1, COLOR2, nick, NORMAL, NICK_S2,
-			    msg);
-
-#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
-			wchar_t *wNick = get_converted_wcs(nick);
-			wchar_t *wMsg = get_converted_wcs(msg);
-
-			Toasts::SendBasicToast(get_message(L"[PM]",
-			    L" <", wNick, L"> ", wMsg));
-
-			free(wNick);
-			free(wMsg);
-#elif defined(UNIX) && USE_LIBNOTIFY
-			char *body = strdup_printf("[PM] &lt;%s&gt; %s",
-			    nick, msg);
-			NotifyNotification *notification =
-			    notify_notification_new(SUMMARY_TEXT, body,
-			    SWIRC_ICON);
-
-			notify_notification_show(notification, NULL);
-			free(body);
-			g_object_unref(G_OBJECT(notification));
-			body = NULL;
-			notification = NULL;
-#endif
-
-			if (ctx.window != g_active_window)
-				broadcast_window_activity(ctx.window);
+			handle_private_msgs(&ctx, nick, msg);
 		} else {
 			/*
 			 * Dest is an IRC channel
 			 */
 
-			PNAMES	n = NULL;
-			char	c = '*';
-
-			if ((ctx.window = window_by_label(dest)) == NULL) {
-				throw std::runtime_error("bogus window label");
-			} else if ((n = event_names_htbl_lookup(nick, dest)) !=
-			    NULL) {
-				if (n->is_owner)
-					c = '~';
-				else if (n->is_superop)
-					c = '&';
-				else if (n->is_op)
-					c = '@';
-				else if (n->is_halfop)
-					c = '%';
-				else if (n->is_voice)
-					c = '+';
-				else
-					c = ' ';
-			}
-
-			if (shouldHighlightMessage_case1(msg) ||
-			    shouldHighlightMessage_case2(msg)) {
-				printtext(&ctx, "%s%c%s%s%c%s %s",
-				    NICK_S1, c, COLOR4, nick, NORMAL, NICK_S2,
-				    msg);
-
-				if (ctx.window != g_active_window)
-					broadcast_window_activity(ctx.window);
-
-#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
-				wchar_t *wNick = get_converted_wcs(nick);
-				wchar_t *wDest = get_converted_wcs(dest);
-				wchar_t *wMsg = get_converted_wcs(msg);
-
-				Toasts::SendBasicToast(get_message(wNick,
-				    L" @ ", wDest, L": ", wMsg));
-
-				free(wNick);
-				free(wDest);
-				free(wMsg);
-#elif defined(UNIX) && USE_LIBNOTIFY
-				char *body = strdup_printf("%s @ %s: %s",
-				    nick, dest, msg);
-				NotifyNotification *notification =
-				    notify_notification_new(SUMMARY_TEXT, body,
-				    SWIRC_ICON);
-
-				notify_notification_show(notification, NULL);
-				free(body);
-				g_object_unref(G_OBJECT(notification));
-				body = NULL;
-				notification = NULL;
-#endif
-			} else {
-				/*
-				 * Normal message with no highlighting
-				 */
-
-				printtext(&ctx, "%s%c%s%s%c%s %s",
-				    NICK_S1, c, COLOR2, nick, NORMAL, NICK_S2,
-				    msg);
-			}
+			handle_chan_msgs(&ctx, nick, dest, msg);
 		}
 	} catch (std::runtime_error& e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
