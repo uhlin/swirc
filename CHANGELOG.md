@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Added event 335 (`RPL_WHOISBOT`)
 - Added theme item `whois_bot`
 - Defined and made use of `usage_t`
+- Handle PRIVMSGs from "my" server
 - Handle truncation of ICB messages, i.e. allow longer messages than
   `ICB_MESSAGE_MAX`.
 - Improved scrolling

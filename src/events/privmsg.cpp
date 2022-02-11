@@ -225,6 +225,18 @@ get_message(const wchar_t *s1, const wchar_t *s2, const wchar_t *s3,
 #endif /* ----- WIN32 and TOAST_NOTIFICATIONS ----- */
 
 static void
+handle_msgs_from_my_server(PPRINTTEXT_CONTEXT ctx, const char *dest,
+    const char *msg)
+{
+	if (g_my_nickname && strings_match_ignore_case(dest, g_my_nickname))
+		ctx->window = g_active_window;
+	else if ((ctx->window = window_by_label(dest)) == NULL)
+		ctx->window = g_active_window;
+	printtext(ctx, "%s!%s%s %s", COLOR3, g_server_hostname, TXT_NORMAL,
+	    msg);
+}
+
+static void
 handle_private_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *msg)
 {
 	if ((ctx->window = window_by_label(nick)) == NULL)
@@ -360,6 +372,12 @@ event_privmsg(struct irc_message_compo *compo)
 			throw std::runtime_error("no message");
 		else if (*msg == ':')
 			msg++;
+
+		if (g_server_hostname &&
+		    strings_match_ignore_case(prefix, g_server_hostname)) {
+			handle_msgs_from_my_server(&ctx, dest, msg);
+			return;
+		}
 
 		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
 			throw std::runtime_error("no nickname");
