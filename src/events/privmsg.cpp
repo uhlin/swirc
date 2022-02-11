@@ -351,6 +351,15 @@ event_privmsg(struct irc_message_compo *compo)
 		else if (*prefix == ':')
 			prefix++;
 
+		if (strFeed(compo->params, 1) != 1)
+			throw std::runtime_error("strFeed");
+		if ((dest = strtok_r(compo->params, "\n", &state2)) == NULL)
+			throw std::runtime_error("no destination");
+		else if ((msg = strtok_r(NULL, "\n", &state2)) == NULL)
+			throw std::runtime_error("no message");
+		else if (*msg == ':')
+			msg++;
+
 		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
 			throw std::runtime_error("no nickname");
 		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
@@ -359,15 +368,6 @@ event_privmsg(struct irc_message_compo *compo)
 			host = const_cast<char *>("<no host>");
 		if (is_in_ignore_list(nick, user, host))
 			return;
-		if (strFeed(compo->params, 1) != 1)
-			throw std::runtime_error("strFeed");
-
-		if ((dest = strtok_r(compo->params, "\n", &state2)) == NULL)
-			throw std::runtime_error("no destination");
-		else if ((msg = strtok_r(NULL, "\n", &state2)) == NULL)
-			throw std::runtime_error("no message");
-		else if (*msg == ':')
-			msg++;
 
 		if (*msg == '\001') {
 			struct special_msg_context msg_ctx(nick, user, host,
