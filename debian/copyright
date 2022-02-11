@@ -75,7 +75,7 @@ License: ISC
 
 Files: src/interpreter.cpp
        src/network-openssl.c
-Copyright: 2012-2021 Markus Uhlin
+Copyright: 2012-2022 Markus Uhlin
 License: ISC
 
 Files: debian/*
