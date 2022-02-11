@@ -392,19 +392,16 @@ event_privmsg(struct irc_message_compo *compo)
 			if (window_by_label(nick) == NULL &&
 			    spawn_chat_window(nick, nick) != 0)
 				throw std::runtime_error("spawn_chat_window");
-		} else {
-			if (window_by_label(dest) == NULL &&
-			    spawn_chat_window(dest, "No title.") != 0)
-				throw std::runtime_error("spawn_chat_window");
-		}
-
-		if (strings_match_ignore_case(dest, g_my_nickname)) {
 			handle_private_msgs(&ctx, nick, msg);
 		} else {
 			/*
 			 * Dest is an IRC channel
 			 */
 
+			/* XXX */
+			if (window_by_label(dest) == NULL &&
+			    spawn_chat_window(dest, "No title.") != 0)
+				throw std::runtime_error("spawn_chat_window");
 			handle_chan_msgs(&ctx, nick, dest, msg);
 		}
 	} catch (const std::runtime_error& e) {
