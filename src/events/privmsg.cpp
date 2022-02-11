@@ -335,6 +335,7 @@ event_privmsg(struct irc_message_compo *compo)
 	try {
 		char *dest, *msg;
 		char *nick, *user, *host;
+		char *prefix;
 		char *state1 = const_cast<char *>("");
 		char *state2 = const_cast<char *>("");
 
