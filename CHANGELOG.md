@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 - Added creation of OpenSSL scripts
 - Added event 335 (`RPL_WHOISBOT`)
 - Added theme item `whois_bot`
+- Defined `SLASH` once
+- Defined and made use of `g_beginthread_failed`
 - Defined and made use of `usage_t`
 - Handle PRIVMSGs from "my" server
 - Handle truncation of ICB messages, i.e. allow longer messages than
