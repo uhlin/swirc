@@ -6,10 +6,10 @@
 #include "term-unix.h"
 
 static const char *known_brands[] = {
-    "xterm",
-    "xterm-256color",
-    "rxvt-unicode",
-    "rxvt-unicode-256color",
+	"xterm",
+	"xterm-256color",
+	"rxvt-unicode",
+	"rxvt-unicode-256color",
 };
 
 void
