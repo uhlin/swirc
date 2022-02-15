@@ -37,6 +37,9 @@
 #define SLASH "\\"
 #endif
 
+#define UNUSED_PARAM(p) ((void) (p))
+#define UNUSED_VAR(v) ((void) (v))
+
 #define ARRAY_SIZE(ar)	(sizeof(ar) / sizeof((ar)[0]))
 #define BZERO(b, len)	((void) memset(b, 0, len))
 #define STRING(x)	#x
