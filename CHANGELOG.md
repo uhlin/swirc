@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Added event 335 (`RPL_WHOISBOT`)
 - Added global hashfunctions
 - Added theme item `whois_bot`
+- Converted `config.c` -> `config.cpp`
 - Defined `SLASH` once
 - Defined and made use of:
   - `UNUSED_PARAM()`
@@ -26,7 +27,6 @@ All notable changes to this project will be documented in this file.
   lookup error.)
 - Reduced code duplication
 - Reformatted and reindented files
-- `config.c` -> `config.cpp`
 
 ## [3.3.3] - 2021-11-27 ##
 - **Added** event `531`. Undocumented in the RFC. (You cannot send
