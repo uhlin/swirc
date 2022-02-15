@@ -2,10 +2,11 @@
 
 #include "common.h"
 #include "errHand.h"
+#include "main.h"
 #include "strHand.h"
 #include "term-unix.h"
 
-static const char *known_brands[] = {
+static stringarray_t known_brands = {
 	"xterm",
 	"xterm-256color",
 	"rxvt-unicode",
