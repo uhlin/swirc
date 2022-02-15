@@ -1,4 +1,4 @@
-/* Copyright (C) 2012-2021 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2012-2022 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 #include "errHand.h"
@@ -54,10 +54,9 @@ term_restore_title(void)
 struct winsize
 term_get_size(void)
 {
-    struct winsize size = { 0 };
+	struct winsize size = { 0 };
 
-    if (ioctl(fileno(stdin), TIOCGWINSZ, &size) == -1)
-	err_sys("term_get_size: ioctl: TIOCGWINSZ");
-
-    return size;
+	if (ioctl(fileno(stdin), TIOCGWINSZ, &size) == -1)
+		err_sys("term_get_size: ioctl: TIOCGWINSZ");
+	return size;
 }
