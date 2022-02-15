@@ -140,12 +140,11 @@ event_notice(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ptext_ctx;
 
 	try {
-		char	*dest = NULL;
-		char	*msg = NULL;
-		char	*params = &compo->params[0];
-		char	*prefix = (compo->prefix ? &compo->prefix[0] : NULL);
-		char	*state1 = const_cast<char *>("");
-		char	*state2 = const_cast<char *>("");
+		char *dest, *msg;
+		char *nick, *user, *host;
+		char *prefix;
+		char *state1 = const_cast<char *>("");
+		char *state2 = const_cast<char *>("");
 
 		printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
 
@@ -159,11 +158,11 @@ event_notice(struct irc_message_compo *compo)
 		    g_server_hostname == NULL) {
 			handle_notice_while_connecting(compo);
 			return;
-		} else if (prefix == NULL)
+		} else if ((prefix = compo->prefix) == NULL)
 			throw std::runtime_error("no prefix!");
-		else if (strFeed(params, 1) != 1)
+		else if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
-		else if ((dest = strtok_r(params, "\n", &state1)) == NULL)
+		else if ((dest = strtok_r(compo->params, "\n", &state1)) == NULL)
 			throw std::runtime_error("no destination");
 		else if ((msg = strtok_r(NULL, "\n", &state1)) == NULL)
 			throw std::runtime_error("no message");
@@ -179,15 +178,11 @@ event_notice(struct irc_message_compo *compo)
 			return;
 		}
 
-		char	*nick = strtok_r(prefix, "!@", &state2);
-		char	*user = strtok_r(NULL, "!@", &state2);
-		char	*host = strtok_r(NULL, "!@", &state2);
-
-		if (nick == NULL)
+		if ((nick = strtok_r(prefix, "!@", &state2)) == NULL)
 			throw std::runtime_error("no nickname");
-		if (user == NULL)
+		if ((user = strtok_r(NULL, "!@", &state2)) == NULL)
 			user = const_cast<char *>("<no user>");
-		if (host == NULL)
+		if ((host = strtok_r(NULL, "!@", &state2)) == NULL)
 			host = const_cast<char *>("<no host>");
 		if (is_in_ignore_list(nick, user, host))
 			return;
