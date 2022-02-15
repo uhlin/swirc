@@ -25,14 +25,14 @@ __SWIRC_END_DECLS
 #elif WIN32
 #include "pdcurses/panel.h"
 #else
-#error "Cannot determine panel header file!"
+#error Cannot determine panel header file!
 #endif
 
 static SW_INLINE void
 term_set_attr(WINDOW *win, attr_t at)
 {
-    if (win != NULL)
-	win->_attrs = at;
+	if (win != NULL)
+		win->_attrs = at;
 }
 
 #endif
