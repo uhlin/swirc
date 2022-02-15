@@ -1,4 +1,4 @@
-/* Copyright (c) 2016-2021 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2016-2022 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -365,8 +365,8 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 			}
 		}
 
-		(void) bufptr;
-		(void) buflen;
+		UNUSED_VAR(bufptr);
+		UNUSED_VAR(buflen);
 	} while (false); /* buflen > 0 && SSL_pending(ssl) */
 
 	return bytes_received;
