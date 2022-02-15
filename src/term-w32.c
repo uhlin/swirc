@@ -33,7 +33,7 @@ term_get_size(void)
 void
 term_restore_title(void)
 {
-    term_set_title("Windows Console");
+	term_set_title("Windows Console");
 }
 
 void
