@@ -7,9 +7,9 @@
 bool
 is_term_resized(int rows, int cols)
 {
-    (void) rows;
-    (void) cols;
-    return is_termresized();
+	(void) rows;
+	(void) cols;
+	return is_termresized();
 }
 
 struct winsize
