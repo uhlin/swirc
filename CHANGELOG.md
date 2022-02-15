@@ -7,10 +7,15 @@ All notable changes to this project will be documented in this file.
 - Added config option `server_cipher_suite`
 - Added creation of OpenSSL scripts
 - Added event 335 (`RPL_WHOISBOT`)
+- Added global hashfunctions
 - Added theme item `whois_bot`
 - Defined `SLASH` once
-- Defined and made use of `g_beginthread_failed`
-- Defined and made use of `usage_t`
+- Defined and made use of:
+  - `UNUSED_PARAM()`
+  - `UNUSED_VAR()`
+  - `colorarray_t`
+  - `g_beginthread_failed`
+  - `usage_t`
 - Handle PRIVMSGs from "my" server
 - Handle truncation of ICB messages, i.e. allow longer messages than
   `ICB_MESSAGE_MAX`.
