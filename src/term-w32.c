@@ -15,19 +15,19 @@ is_term_resized(int rows, int cols)
 struct winsize
 term_get_size(void)
 {
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_SCREEN_BUFFER_INFO info;
-    struct winsize size;
+	CONSOLE_SCREEN_BUFFER_INFO info;
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	struct winsize size = { 0 };
 
-    if (!GetConsoleScreenBufferInfo(hOut, &info)) {
-	err_quit("term_get_size: GetConsoleScreenBufferInfo: %s",
-		 errdesc_by_last_err());
-    }
+	if (!GetConsoleScreenBufferInfo(hOut, &info)) {
+		err_quit("term_get_size: GetConsoleScreenBufferInfo: %s",
+		    errdesc_by_last_err());
+	}
 
-    size.ws_row = (info.srWindow.Bottom - info.srWindow.Top) + 1;
-    size.ws_col = (info.srWindow.Right - info.srWindow.Left) + 1;
+	size.ws_row = (info.srWindow.Bottom - info.srWindow.Top) + 1;
+	size.ws_col = (info.srWindow.Right - info.srWindow.Left) + 1;
 
-    return size;
+	return size;
 }
 
 void
