@@ -15,34 +15,35 @@ static const char *known_brands[] = {
 void
 term_set_title(const char *fmt, ...)
 {
-    char	*var_data = NULL;
-    char	 term_brand[80] = { '\0' };
+	char	*var_data;
+	char	 term_brand[100] = { '\0' };
 
-    if ((var_data = getenv("TERM")) == NULL ||
-	sw_strcpy(term_brand, var_data, sizeof term_brand) != 0)
-	return;
-
-    for (const char **ppcc = &known_brands[0];
-	 ppcc < &known_brands[ARRAY_SIZE(known_brands)];
-	 ppcc++) {
-
-	if (strings_match(*ppcc, term_brand)) {
-	    char	os_cmd[1100] = { '\0' };
-	    va_list	ap;
-
-	    (void) sw_strcpy(os_cmd, "\033]2;", sizeof os_cmd);
-	    va_start(ap, fmt);
-	    (void) vsnprintf(&os_cmd[strlen(os_cmd)],
-		sizeof os_cmd - strlen(os_cmd), fmt, ap);
-	    va_end(ap);
-	    if (sw_strcat(os_cmd, "\a", sizeof os_cmd) != 0)
+	if ((var_data = getenv("TERM")) == NULL || sw_strcpy(term_brand,
+	    var_data, sizeof term_brand) != 0)
 		return;
-	    (void) fputs(os_cmd, stdout);
-	    (void) fflush(stdout);
-	    return;
-	}
 
-    } /* for */
+	for (const char **ppcc = &known_brands[0];
+	    ppcc < &known_brands[ARRAY_SIZE(known_brands)];
+	    ppcc++) {
+
+		if (strings_match(*ppcc, term_brand)) {
+			char cmd[600] = { '\0' };
+			va_list ap;
+
+			(void) sw_strcpy(cmd, "\033]2;", sizeof cmd);
+			va_start(ap, fmt);
+			(void) vsnprintf(&cmd[strlen(cmd)],
+			    (sizeof cmd - strlen(cmd)), fmt, ap);
+			va_end(ap);
+			if (sw_strcat(cmd, "\a", sizeof cmd) != 0)
+				return;
+			(void) fputs(cmd, stdout);
+			(void) fflush(stdout);
+
+			return;
+		}
+
+	} /* for */
 }
 
 void
