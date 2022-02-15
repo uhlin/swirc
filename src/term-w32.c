@@ -7,8 +7,8 @@
 bool
 is_term_resized(int rows, int cols)
 {
-	(void) rows;
-	(void) cols;
+	UNUSED_PARAM(rows);
+	UNUSED_PARAM(cols);
 	return is_termresized();
 }
 
