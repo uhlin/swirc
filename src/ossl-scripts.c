@@ -44,7 +44,7 @@
 static title_t root_ca_script_title = "1-root-ca";
 static lines_t root_ca_script_lines = {
 	SCR_SHEBANG,
-	SCR_COMMENT " Create the root CA",
+	SCR_COMMENT "Create the root CA",
 	"",
 	"openssl req -newkey rsa:2048 -sha256 -keyout rootkey.pem -out "
 	"rootreq.pem",
@@ -61,7 +61,7 @@ static lines_t root_ca_script_lines = {
 static title_t server_ca_script_title = "2-server-ca";
 static lines_t server_ca_script_lines = {
 	SCR_SHEBANG,
-	SCR_COMMENT " Create the server CA (and sign it with the root CA)",
+	SCR_COMMENT "Create the server CA (and sign it with the root CA)",
 	"",
 	"openssl req -newkey rsa:2048 -sha256 -keyout serverCAkey.pem -out "
 	"serverCAreq.pem",
@@ -82,7 +82,7 @@ static lines_t server_ca_script_lines = {
 static title_t server_cert_script_title = "3-server-cert";
 static lines_t server_cert_script_lines = {
 	SCR_SHEBANG,
-	SCR_COMMENT " Create the server's certificate "
+	SCR_COMMENT "Create the server's certificate "
 	"(and sign it with the server CA)",
 	"",
 	"openssl req -newkey rsa:2048 -sha256 -keyout serverkey.pem -out "
@@ -105,7 +105,7 @@ static lines_t server_cert_script_lines = {
 static title_t client_cert_script_title = "4-client-cert";
 static lines_t client_cert_script_lines = {
 	SCR_SHEBANG,
-	SCR_COMMENT " Create the client certificate "
+	SCR_COMMENT "Create the client certificate "
 	"(and sign it with the root CA)",
 	"",
 	"openssl req -newkey rsa:2048 -sha256 -keyout clientkey.pem -out "
@@ -127,7 +127,7 @@ static lines_t client_cert_script_lines = {
 static title_t dhparams_script_title = "5-dhparams";
 static lines_t dhparams_script_lines = {
 	SCR_SHEBANG,
-	SCR_COMMENT " Create DH parameter files "
+	SCR_COMMENT "Create DH parameter files "
 	"(may take a long time)",
 	"",
 	"openssl dhparam -outform PEM -out " DH_PEM1 " -check -text -5 2048",
