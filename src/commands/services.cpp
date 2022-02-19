@@ -1,5 +1,5 @@
-/* commands/services.c
-   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
+/* Communicate with IRC services
+   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
