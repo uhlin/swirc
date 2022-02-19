@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include "../dataClassify.h"
+#include "../errHand.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -68,8 +69,10 @@ cmd_kick(const char *data)
 	}
 
 	if (net_send("KICK %s %s :%s", ACTWINLABEL, nicks, (has_reason ? reason
-	    : "")) < 0)
+	    : "")) < 0) {
+		err_log(ENOTCONN, "/kick");
 		g_connection_lost = true;
+	}
 	free(dcopy);
 }
 
@@ -112,8 +115,10 @@ cmd_kickban(const char *data)
 	}
 
 	if (net_send("MODE %s +b %s", ACTWINLABEL, mask) < 0 ||
-	    net_send("KICK %s %s :%s", ACTWINLABEL, nick, (has_reason ? reason :
-	    "")) < 0)
+	    net_send("KICK %s %s :%s", ACTWINLABEL, nick, (has_reason ? reason
+	    : "")) < 0) {
+		err_log(ENOTCONN, "/kickban");
 		g_connection_lost = true;
+	}
 	free(dcopy);
 }
