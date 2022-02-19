@@ -1,5 +1,5 @@
 /* Command /kick + /kickban
-   Copyright (C) 2016-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -78,39 +78,41 @@ cmd_kick(const char *data)
 void
 cmd_kickban(const char *data)
 {
-    char	*dcopy	= sw_strdup(data);
-    char	*reason = NULL;
-    char	*state	= "";
+	char	*dcopy = sw_strdup(data);
+	char	*nick, *mask;
+	char	*reason = "";
+	char	*state = "";
 
-    if (strings_match(dcopy, "")) {
-	print_and_free("/kickban: missing arguments", dcopy);
-	return;
-    }
+	if (strings_match(dcopy, "")) {
+		print_and_free("/kickban: missing arguments", dcopy);
+		return;
+	}
 
-    (void) strFeed(dcopy, 2);
+	(void) strFeed(dcopy, 2);
 
-    char *nick = strtok_r(dcopy, "\n", &state);
-    char *mask = strtok_r(NULL, "\n", &state);
+	nick = strtok_r(dcopy, "\n", &state);
+	mask = strtok_r(NULL, "\n", &state);
 
-    const bool has_reason = (reason = strtok_r(NULL, "\n", &state)) != NULL;
+	const bool has_reason = (reason = strtok_r(NULL, "\n", &state)) != NULL;
 
-    if (nick == NULL) {
-	print_and_free("/kickban: no nickname", dcopy);
-	return;
-    } else if (!is_valid_nickname(nick)) {
-	print_and_free("/kickban: invalid nickname", dcopy);
-	return;
-    } else if (mask == NULL) {
-	print_and_free("/kickban: no mask", dcopy);
-	return;
-    } else if (!is_irc_channel(ACTWINLABEL)) {
-	print_and_free("/kickban: active window isn't an irc channel", dcopy);
-	return;
-    }
+	if (nick == NULL) {
+		print_and_free("/kickban: no nickname", dcopy);
+		return;
+	} else if (!is_valid_nickname(nick)) {
+		print_and_free("/kickban: invalid nickname", dcopy);
+		return;
+	} else if (mask == NULL) {
+		print_and_free("/kickban: no mask", dcopy);
+		return;
+	} else if (!is_irc_channel(ACTWINLABEL)) {
+		print_and_free("/kickban: active window isn't an irc channel",
+		    dcopy);
+		return;
+	}
 
-    if (net_send("MODE %s +b %s", ACTWINLABEL, mask) < 0 ||
-	net_send("KICK %s %s :%s", ACTWINLABEL, nick, has_reason?reason:"") < 0)
-	g_on_air = false;
-
-    free(dcopy);
+	if (net_send("MODE %s +b %s", ACTWINLABEL, mask) < 0 ||
+	    net_send("KICK %s %s :%s", ACTWINLABEL, nick, (has_reason ? reason :
+	    "")) < 0)
+		g_connection_lost = true;
+	free(dcopy);
 }
