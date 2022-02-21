@@ -1,14 +1,8 @@
 #ifndef CMD_CLEARTOASTS_H
 #define CMD_CLEARTOASTS_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void cmd_cleartoasts(const char *);
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_BEGIN_DECLS
+void	cmd_cleartoasts(const char *);
+__SWIRC_END_DECLS
 
 #endif
