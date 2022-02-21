@@ -48,7 +48,7 @@ const int	g_nicklist_maxnick = 16;
 const int	g_nicklist_scroll_amount = 10;
 
 static bool
-can_scroll(PIRC_WINDOW win)
+can_scroll(const IRC_WINDOW *win)
 {
 	if (win == NULL || !is_irc_channel(win->label) ||
 	    !win->received_names || win->nicklist.pan == NULL ||
@@ -150,7 +150,7 @@ draw_hook()
 }
 
 static std::list<std::string>
-get_list(const PIRC_WINDOW window, const bool sort)
+get_list(const IRC_WINDOW *window, const bool sort)
 {
 	std::list<std::string> list;
 
