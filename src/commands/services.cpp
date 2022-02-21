@@ -49,13 +49,13 @@ public:
 	explicit irc_service_cmd(const char *);
 
 	const std::string &
-	get_srv_host(void)
+	get_srv_host(void) const
 	{
 		return this->srv_host;
 	}
 
 	const char *
-	get_msg(void)
+	get_msg(void) const
 	{
 		return this->msg.c_str();
 	}
