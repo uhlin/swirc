@@ -36,13 +36,14 @@
 
 #include "../errHand.h"
 #include "../libUtils.h"
+#include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
 
 #include "znc.h"
 
-static const char *znc_commands[] = {
+static stringarray_t znc_commands = {
 	"Version",
 	"ListMods",
 	"ListAvailMods",
