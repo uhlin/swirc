@@ -55,20 +55,33 @@ class time_idle {
 public:
 	time_idle(long int, long int);
 
-	long int getDays(void) const {
+	long int
+	getDays(void) const
+	{
 		return this->days;
 	}
-	long int getHours(void) const {
+
+	long int
+	getHours(void) const
+	{
 		return this->hours;
 	}
-	long int getMins(void) const {
+
+	long int
+	getMins(void) const
+	{
 		return this->mins;
 	}
-	long int getSecs(void) const {
+
+	long int
+	getSecs(void) const
+	{
 		return this->secs;
 	}
 
-	const char *getBuf(void) const {
+	const char *
+	getBuf(void) const
+	{
 		return (&this->buf[0]);
 	}
 };
