@@ -1,5 +1,5 @@
 /* Join and Part commands
-   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -85,7 +85,7 @@ cmd_join(const char *data)
 			if (net_send("JOIN %s", str.c_str()) < 0)
 				throw std::runtime_error("cannot send");
 		}
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		PRINTTEXT_CONTEXT	ctx;
 
 		printtext_context_init(&ctx, g_active_window,
@@ -141,7 +141,7 @@ cmd_part(const char *data)
 			if (net_send("PART %s", strToLower(channel)) < 0)
 				throw std::runtime_error("cannot send");
 		}
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		PRINTTEXT_CONTEXT	ctx;
 
 		printtext_context_init(&ctx, g_active_window,

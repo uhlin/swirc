@@ -1,5 +1,5 @@
 /* Miscellaneous events
-   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -112,7 +112,7 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 		cp++;
 		(void) memmove(cp - 1, cp, strlen(cp) + 1);
 		printtext(&ctx, "%s", msg_copy);
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "on processing event %s: error: %s",
@@ -178,7 +178,7 @@ event_serverFeatures(struct irc_message_compo *compo)
 			printtext(&ctx, "%s", msg_copy);
 			free(msg_copy);
 		}
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_serverFeatures: error: %s", e.what());
@@ -244,7 +244,7 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 		    trim(tbuf));
 
 		ctx.window->received_chancreated = true;
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_channelCreatedWhen: error: %s",
@@ -305,7 +305,7 @@ event_channelModeIs(struct irc_message_compo *compo)
 
 		statusbar_update_display_beta();
 		readline_top_panel();
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_channelModeIs: error: %s", e.what());
@@ -348,7 +348,7 @@ event_channel_forward(struct irc_message_compo *compo)
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 		printtext(&ctx, "Channel forwarding from %c%s%c to %c%s%c",
 		    BOLD, from_channel, BOLD, BOLD, to_channel, BOLD);
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_channel_forward: error: %s", e.what());
@@ -428,7 +428,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
 			g_on_air = false;
 			event_welcome_signalit();
 		}
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_nicknameInUse: error: %s", e.what());
@@ -462,7 +462,7 @@ event_userModeIs(struct irc_message_compo *compo)
 
 		statusbar_update_display_beta();
 		readline_top_panel();
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		PRINTTEXT_CONTEXT	ctx;
 
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,

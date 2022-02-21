@@ -1,5 +1,5 @@
 /* Channel related events
-   Copyright (C) 2015-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -83,7 +83,7 @@ event_chan_hp(struct irc_message_compo *compo)
 		printtext(&ctx, "Homepage for %s%s%s%c%s: %s",
 		    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 		    homepage);
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_chan_hp: error: %s", e.what());
@@ -152,7 +152,7 @@ event_join(struct irc_message_compo *compo)
 			    LEFT_BRKT, user, host, RIGHT_BRKT,
 			    COLOR2, channel, NORMAL);
 		}
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ctx, "event_join: fatal: %s", e.what());
@@ -233,7 +233,7 @@ event_kick(struct irc_message_compo *compo)
 		printtext(&ctx, "%s was kicked from %s%s%c by %s%s%c %s%s%s",
 		    victim, COLOR2, channel, NORMAL, COLOR2, nick, NORMAL,
 		    LEFT_BRKT, (has_reason ? reason : ""), RIGHT_BRKT);
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ctx, "event_kick: fatal: %s", e.what());
@@ -524,7 +524,7 @@ event_mode(struct irc_message_compo *compo)
 		} else {
 			throw std::runtime_error("unhandled else branch");
 		}
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_mode: error: %s", e.what());
@@ -624,7 +624,7 @@ event_nick(struct irc_message_compo *compo)
 
 		if (strings_match_ignore_case(nick, g_my_nickname))
 			irc_set_my_nickname(new_nick);
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_nick: error: %s", e.what());
@@ -701,7 +701,7 @@ event_part(struct irc_message_compo *compo)
 			    COLOR2, channel, NORMAL,
 			    LEFT_BRKT, message, RIGHT_BRKT);
 		}
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ctx, "event_part: fatal: %s", e.what());
@@ -761,7 +761,7 @@ event_quit(struct irc_message_compo *compo)
 				}
 			}
 		}
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_quit: error: %s", e.what());
@@ -803,7 +803,7 @@ event_topic(struct irc_message_compo *compo)
 		printtext(&ctx, "Topic for %s%s%s%c%s: %s",
 		    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 		    topic);
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_topic: error: %s", e.what());
@@ -861,7 +861,7 @@ event_topic_chg(struct irc_message_compo *compo)
 		    BOLD, nick, BOLD,
 		    BOLD, channel, BOLD,
 		    new_topic);
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_topic_chg: error: %s", e.what());
@@ -937,7 +937,7 @@ event_topic_creator(struct irc_message_compo *compo)
 			    BOLD, nick, BOLD,
 			    LEFT_BRKT, trim(tbuf), RIGHT_BRKT);
 		}
-	} catch (std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
 		printtext(&ctx, "event_topic_creator: error: %s", e.what());
