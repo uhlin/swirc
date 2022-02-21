@@ -49,13 +49,13 @@ public:
 	explicit ignore(const char *);
 
 	const std::string &
-	get_str(void)
+	get_str(void) const
 	{
 		return this->str;
 	}
 
 	const std::regex &
-	get_regex(void)
+	get_regex(void) const
 	{
 		return this->regex;
 	}
