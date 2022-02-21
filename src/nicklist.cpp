@@ -378,7 +378,7 @@ nicklist_get_width(const PIRC_WINDOW window)
 
 	if (len > g_nicklist_maxnick)
 		len = g_nicklist_maxnick;
-	len += 2; // +2 for ACS_VLINE and privilege (~&@%+)
+	len += 2; /* +2 for 'ACS_VLINE' and privilege (~&@%+) */
 	return size_to_int(len);
 }
 
