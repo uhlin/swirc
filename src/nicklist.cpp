@@ -58,7 +58,7 @@ can_scroll(PIRC_WINDOW win)
 }
 
 static bool
-cmp_fn(const std::string& nick1, const std::string& nick2)
+cmp_fn(const std::string &nick1, const std::string &nick2)
 {
 	size_t i = 1;
 	int c1, c2;
@@ -217,7 +217,7 @@ printnick(WINDOW *win, const int row, const int col, const char *nick)
 
 static void
 list_fits_yes(PIRC_WINDOW win, WINDOW *nl_win, const int HEIGHT,
-    std::list<std::string>& list)
+    std::list<std::string> &list)
 {
 	std::list<std::string>::iterator it;
 	int count;
@@ -244,7 +244,7 @@ list_fits_yes(PIRC_WINDOW win, WINDOW *nl_win, const int HEIGHT,
 
 static void
 list_fits_no(PIRC_WINDOW win, WINDOW *nl_win, const int HEIGHT,
-    std::list<std::string>& list)
+    std::list<std::string> &list)
 {
 	std::list<std::string>::iterator it;
 	int count;

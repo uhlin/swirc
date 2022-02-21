@@ -117,7 +117,7 @@ init_dhparams()
 }
 
 static void
-set_server_ciphers(SSL_CTX *ctx, const char *list, bool& ok)
+set_server_ciphers(SSL_CTX *ctx, const char *list, bool &ok)
 {
 	if (!SSL_CTX_set_cipher_list(ctx, list))
 		ok = false;
