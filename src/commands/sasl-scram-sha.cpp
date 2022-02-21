@@ -1,5 +1,5 @@
 /* SASL auth mechanism SCRAM-SHA-256
-   Copyright (C) 2019-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -250,7 +250,7 @@ get_sfm_components(const char *msg, unsigned char **salt, int *saltlen,
 
 		*iter = (int) strtol(cp, NULL, 10);
 		ok = true;
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		delete[] *salt;
 		*salt = NULL;
 		*saltlen = 0;
@@ -290,7 +290,7 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 			throw std::runtime_error("unable to get salted "
 			    "password");
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		*outsize = 0;
 		delete[] out;
 		err_log(0, "get_salted_password: %s", e.what());
@@ -490,7 +490,7 @@ sasl_scram_sha_handle_serv_final_msg(const char *msg)
 		    signature_expected_len) == 0);
 
 		delete[] signature;
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		delete[] decoded_msg;
 		err_log(0, "sasl_scram_sha_handle_serv_final_msg: %s",
 		    e.what());

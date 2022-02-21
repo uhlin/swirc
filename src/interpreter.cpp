@@ -149,7 +149,7 @@ Interpreter(const struct Interpreter_in *in)
 		} else if ((errno = in->install_func(id, arg)) != 0) {
 			throw std::runtime_error("install error");
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		std::cerr << '\t' << in->line << '\n';
 
 		if (strings_match(e.what(), "install error")) {

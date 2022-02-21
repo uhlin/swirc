@@ -1,5 +1,5 @@
 /* commands/znc.cpp
-   Copyright (C) 2020-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -160,7 +160,7 @@ cmd_znc(const char *data)
 			    tokens.at(1).c_str());
 			free(module);
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		std::string s("/znc: ");
 		s.append(e.what());
 		print_and_free(s.c_str(), NULL);

@@ -1,5 +1,5 @@
 /* TLS server
-   Copyright (C) 2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -104,7 +104,7 @@ init_dhparams()
 			throw std::runtime_error("failed to read dh parameters "
 			    "(4096)");
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		err_log(errno, "init_dhparams: %s", e.what());
 		free(name1);
 		free(name2);
@@ -206,7 +206,7 @@ tls_server_accept_new_connections(const int port)
 		} else if ((abio = tls_server_get_accept_bio(port)) == NULL) {
 			throw std::runtime_error("Operation failed");
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		SSL_CTX_free(ctx);
 		printtext(&ptext_ctx, "%s", e.what());
 		(void) atomic_swap_bool(&g_accepting_new_connections, false);
@@ -286,7 +286,7 @@ tls_server_get_accept_bio(const int port)
 			throw std::runtime_error("Error creating accept socket "
 			    "or bind an address to it");
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		PRINTTEXT_CONTEXT ctx;
 
 		BIO_vfree(bio);

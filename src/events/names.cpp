@@ -455,7 +455,7 @@ event_eof_names(struct irc_message_compo *compo)
 		printtext_context_init(&ptext_ctx, win, TYPE_SPEC3, true);
 		output_statistics(ptext_ctx, channel, win);
 		return;
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ptext_ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ptext_ctx, "event_eof_names: fatal: %s", e.what());
@@ -543,7 +543,7 @@ event_names(struct irc_message_compo *compo)
 			if (hInstall(&ctx) != OK)
 				continue;
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		PRINTTEXT_CONTEXT ptext_ctx;
 
 		printtext_context_init(&ptext_ctx, g_active_window,

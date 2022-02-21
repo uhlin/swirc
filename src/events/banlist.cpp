@@ -168,7 +168,7 @@ event_banlist(struct irc_message_compo *compo)
 			throw std::runtime_error("unexpected number of feeds "
 			    "written");
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.spec_type = TYPE_SPEC1_FAILURE;
 
 		printtext(&ctx, "event_banlist(%s): error: %s", compo->command,
@@ -194,7 +194,7 @@ event_quietlist(struct irc_message_compo *compo)
 			throw std::runtime_error("parse error");
 		(void) memmove(cp, &cp[2], strlen(&cp[2]) + 1);
 		event_banlist(compo);
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		err_log(0, "event_quietlist(%s): %s", compo->command, e.what());
 	}
 }
@@ -236,7 +236,7 @@ event_eof_banlist(struct irc_message_compo *compo)
 			msg++;
 		if (*msg)
 			printtext(&ctx, "%s", msg);
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.spec_type = TYPE_SPEC1_FAILURE;
 
 		printtext(&ctx, "event_eof_banlist(%s): error: %s",
@@ -262,7 +262,7 @@ event_eof_quietlist(struct irc_message_compo *compo)
 			throw std::runtime_error("parse error");
 		(void) memmove(cp, &cp[2], strlen(&cp[2]) + 1);
 		event_eof_banlist(compo);
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		err_log(0, "event_eof_quietlist(%s): %s", compo->command,
 		    e.what());
 	}

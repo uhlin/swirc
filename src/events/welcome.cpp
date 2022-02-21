@@ -108,7 +108,7 @@ event_welcome(struct irc_message_compo *compo)
 
 		if (!g_icb_mode)
 			autojoin();
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window,
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ctx, "event_welcome: fatal: %s", e.what());

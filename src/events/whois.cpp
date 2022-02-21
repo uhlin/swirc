@@ -165,7 +165,7 @@ event_whoReply(struct irc_message_compo *compo)
 		    COLOR2, nick, NORMAL,
 		    symbol, hopcount, user, host,
 		    LEFT_BRKT, COLOR2, rl_name, NORMAL, RIGHT_BRKT);
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.spec_type = TYPE_SPEC1_FAILURE;
 
 		printtext(&ctx, "event_whoReply(%s): error: %s", compo->command,
@@ -206,7 +206,7 @@ event_whois_acc(struct irc_message_compo *compo)
 			printtext(&ctx, "%s %s %s", Theme("whois_acc"), comment,
 			    account_name);
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -244,7 +244,7 @@ event_whois_away(struct irc_message_compo *compo)
 			printtext(&ctx, "%s %s", Theme("whois_away"),
 			    away_reason);
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -273,7 +273,7 @@ event_whois_bot(struct irc_message_compo *compo)
 			printtext(&ctx, "%s %s", Theme("whois_bot"),
 			    msg.c_str());
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -315,7 +315,7 @@ event_whois_cert(struct irc_message_compo *compo)
 			printtext(&ctx, "%s %s %s", Theme("whois_cert"), tnick,
 			    msg);
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -353,7 +353,7 @@ event_whois_channels(struct irc_message_compo *compo)
 			printtext(&ctx, "%s %s", Theme("whois_channels"),
 			    chan_list);
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -383,7 +383,7 @@ event_whois_conn(struct irc_message_compo *compo)
 			printtext(&ctx, "%s %s", Theme("whois_conn"),
 			    msg.c_str());
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -423,7 +423,7 @@ event_whois_host(struct irc_message_compo *compo)
 		squeeze(str_copy, ":");
 		printtext(&ctx, "%s %s", Theme("whois_host"), str_copy);
 		free(str_copy);
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -490,7 +490,7 @@ event_whois_idle(struct irc_message_compo *compo)
 		    Theme("whois_idle"),
 		    ti.getDays(), ti.getHours(), ti.getMins(), ti.getSecs(),
 		    LEFT_BRKT, ti.getBuf(), RIGHT_BRKT);
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -519,7 +519,7 @@ event_whois_ircOp(struct irc_message_compo *compo)
 			printtext(&ctx, "%s %s", Theme("whois_ircOp"),
 			    msg.c_str());
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -551,7 +551,7 @@ event_whois_modes(struct irc_message_compo *compo)
 			printtext(&ctx, "%s %s", Theme("whois_modes"),
 			    msg.c_str());
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -592,7 +592,7 @@ event_whois_server(struct irc_message_compo *compo)
 			printtext(&ctx, "%s %s %s%s%s", Theme("whois_server"),
 			    srv, LEFT_BRKT, info, RIGHT_BRKT);
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -621,7 +621,7 @@ event_whois_service(struct irc_message_compo *compo)
 			printtext(&ctx, "%s %s", Theme("whois_service"),
 			    msg.c_str());
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -663,7 +663,7 @@ event_whois_ssl(struct irc_message_compo *compo)
 			printtext(&ctx, "%s %s %s", Theme("whois_ssl"), tnick,
 			    msg);
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
@@ -713,7 +713,7 @@ event_whois_user(struct irc_message_compo *compo)
 			printtext(&ctx, "%s %s", Theme("whois_ircName"),
 			    rl_name);
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 

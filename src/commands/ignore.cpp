@@ -1,5 +1,5 @@
 /* Ignore commands
-   Copyright (C) 2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -154,7 +154,7 @@ cmd_unignore(const char *data)
 		printtext(&ctx, "Deleted \"%s\" from ignore list.", regex);
 		free(regex);
 		print_ignore_list();
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ctx, "%s", e.what());

@@ -1,5 +1,5 @@
 /* events/invite.cpp
-   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -113,7 +113,7 @@ event_invite(struct irc_message_compo *compo)
 			    BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT,
 			    BOLD, target, BOLD, BOLD, channel, BOLD);
 		}
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.spec_type = TYPE_SPEC1_WARN;
 		printtext(&ctx, "event_invite: error: %s", e.what());
 	}

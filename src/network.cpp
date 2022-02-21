@@ -181,7 +181,7 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 		free(tmp);
 		free(concat);
 		return OK;
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		err_log(0, "get_and_handle_remaining_bytes: %s", e.what());
 		free(tmp);
 		free(concat);
@@ -427,7 +427,7 @@ net_connect(const struct network_connect_context *ctx,
 		}
 
 		event_welcome_cond_destroy();
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
 		printtext(&ptext_ctx, "%s", e.what());
 

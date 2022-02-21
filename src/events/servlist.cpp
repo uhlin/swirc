@@ -1,5 +1,5 @@
 /* events/servlist.cpp
-   Copyright (C) 2020-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -87,7 +87,7 @@ event_servlist(struct irc_message_compo *compo)
 		(void) str.append(B1).append(mask).append(B2);
 
 		printtext(&ctx, "%s: %s", str.c_str(), info);
-	} catch (const std::runtime_error& e) {
+	} catch (const std::runtime_error &e) {
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_FAILURE;
 
