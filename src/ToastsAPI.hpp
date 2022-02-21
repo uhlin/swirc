@@ -17,20 +17,19 @@
 #include "NotificationActivator.hpp"
 
 namespace Toasts {
-    HRESULT	ClearToasts(void);
+	HRESULT ClearToasts(void);
 #if 0
-    HRESULT	CreateToastXml(IXmlDocument **);
-    HRESULT	DisplayToast(void);
+	HRESULT CreateToastXml(IXmlDocument **);
+	HRESULT DisplayToast(void);
 #endif
-    HRESULT	SendBasicToast(PCWSTR);
+	HRESULT SendBasicToast(PCWSTR);
 #ifdef HAVE_ATLSTR_H
-    HRESULT	SetImageSrc(PCWSTR imagePath, IXmlDocument *);
+	HRESULT SetImageSrc(PCWSTR, IXmlDocument *);
 #endif
-    HRESULT	SetNodeValueString(HSTRING, IXmlNode *, IXmlDocument *);
-    HRESULT	SetTextValues(const PCWSTR *textValues, UINT32 textValuesCount,
-    		    IXmlDocument *);
-    HRESULT	ShowToast(IXmlDocument *);
-    void	SendTestNotification(void);
+	HRESULT SetNodeValueString(HSTRING, IXmlNode *, IXmlDocument *);
+	HRESULT SetTextValues(const PCWSTR *, UINT32, IXmlDocument *);
+	HRESULT ShowToast(IXmlDocument *);
+	void SendTestNotification(void);
 }
 
 #endif
