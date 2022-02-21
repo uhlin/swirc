@@ -42,8 +42,8 @@
 #include "services.h"
 
 class irc_service_cmd {
-	std::string srv_host;
-	std::string msg;
+	std::string	srv_host;
+	std::string	msg;
 
 public:
 	explicit irc_service_cmd(const char *);
