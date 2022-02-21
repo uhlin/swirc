@@ -48,13 +48,13 @@ class ignore {
 public:
 	explicit ignore(const char *);
 
-	std::string &
+	const std::string &
 	get_str(void)
 	{
 		return this->str;
 	}
 
-	std::regex &
+	const std::regex &
 	get_regex(void)
 	{
 		return this->regex;
