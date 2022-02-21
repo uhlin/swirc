@@ -198,7 +198,7 @@ is_valid_regex(const char *str, char **err_reason)
 
 	try {
 		std::regex	regex(str, std::regex::basic);
-	} catch (const std::regex_error& e) {
+	} catch (const std::regex_error &e) {
 		*err_reason = sw_strdup(e.what());
 		return false;
 	}

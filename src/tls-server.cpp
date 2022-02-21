@@ -376,7 +376,7 @@ tls_server_setup_context(void)
 
 		if (!assignment_ok)
 			throw std::runtime_error("no valid ciphers");
-	} catch (const std::runtime_error& ex) {
+	} catch (const std::runtime_error &ex) {
 		const unsigned long int err = ERR_peek_last_error();
 
 		if (err)
