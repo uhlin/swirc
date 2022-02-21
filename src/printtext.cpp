@@ -987,7 +987,7 @@ get_processed_out_message(
 /**
  * Helper function for squeeze_text_deco().
  */
-static SW_INLINE void
+static void
 handle_foo_situation(char **buffer, long int *i, long int *j,
 		     const char *reject)
 {
