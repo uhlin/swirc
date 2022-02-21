@@ -108,6 +108,11 @@ run_command(const char *slashcmd, const char *srv_name,
 
 		(void) str.append(": ").append(e.what());
 		print_and_free(str.c_str(), NULL);
+
+		if (strings_match(e.what(), "cannot send")) {
+			err_log(ENOTCONN, "%s", slashcmd);
+			g_connection_lost = true;
+		}
 	}
 }
 
