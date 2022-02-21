@@ -29,6 +29,9 @@
 
 #include "common.h"
 
+#include <stdexcept>
+#include <string>
+
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
@@ -38,44 +41,83 @@
 
 #include "services.h"
 
+class irc_service_cmd {
+	std::string srv_host;
+	std::string msg;
+
+public:
+	explicit irc_service_cmd(const char *);
+
+	const std::string &
+	get_srv_host(void)
+	{
+		return this->srv_host;
+	}
+
+	const char *
+	get_msg(void)
+	{
+		return this->msg.c_str();
+	}
+};
+
+irc_service_cmd::irc_service_cmd(const char *data)
+{
+	char *dcopy;
+	char *last = const_cast<char *>("");
+	char *token1, *token2;
+
+	if (strings_match(data, ""))
+		throw std::runtime_error("no data");
+
+	dcopy = sw_strdup(data);
+	(void) strFeed(dcopy, 1);
+
+	if ((token1 = strtok_r(dcopy, "\n", &last)) != NULL)
+		(void) this->srv_host.assign(token1);
+	if ((token2 = strtok_r(NULL, "\n", &last)) != NULL)
+		(void) this->msg.assign(token2);
+	free(dcopy);
+
+	if (token1 == NULL || token2 == NULL)
+		throw std::runtime_error("too few tokens");
+}
+
+static void
+run_command(const char *slashcmd, const char *srv_name,
+    const char *host_setting, const char *data)
+{
+	try {
+		irc_service_cmd sc(data);
+
+		if (sc.get_srv_host().compare("--") == 0) {
+			if (!is_valid_hostname(Config(host_setting)))
+				throw std::runtime_error("invalid host");
+			else if (net_send("PRIVMSG %s@%s :%s", srv_name,
+			    Config(host_setting), sc.get_msg()) < 0)
+				throw std::runtime_error("cannot send");
+		} else {
+			if (!is_valid_hostname(sc.get_srv_host().c_str()))
+				throw std::runtime_error("invalid host");
+			else if (net_send("PRIVMSG %s@%s :%s", srv_name,
+			    sc.get_srv_host().c_str(), sc.get_msg()) < 0)
+				throw std::runtime_error("cannot send");
+		}
+	} catch (const std::runtime_error &e) {
+		std::string str(slashcmd);
+
+		(void) str.append(": ").append(e.what());
+		print_and_free(str.c_str(), NULL);
+	}
+}
+
 /*
  * usage: /chanserv <[service hostname | --]> <command> [...]
  */
 void
 cmd_chanserv(const char *data)
 {
-	char	*dcopy = sw_strdup(data);
-	char	*srv_host, *cmd;
-	char	*state = "";
-
-	if (strings_match(dcopy, "") || strFeed(dcopy, 1) != 1 ||
-	    (srv_host = strtok_r(dcopy, "\n", &state)) == NULL ||
-	    (cmd = strtok_r(NULL, "\n", &state)) == NULL) {
-		print_and_free("/chanserv: missing arguments", dcopy);
-		return;
-	} else if (strings_match(srv_host, "--")) {
-		if (!is_valid_hostname(Config("chanserv_host"))) {
-			print_and_free("/chanserv: in the config file: "
-			    "bogus 'chanserv_host'", dcopy);
-			return;
-		} else if (net_send("PRIVMSG ChanServ@%s :%s",
-		    Config("chanserv_host"), cmd) < 0) {
-			err_log(ENOTCONN, "/chanserv");
-			g_connection_lost = true;
-		}
-	} else {
-		if (!is_valid_hostname(srv_host)) {
-			print_and_free("/chanserv: bogus service hostname!",
-			    dcopy);
-			return;
-		} else if (net_send("PRIVMSG ChanServ@%s :%s",
-		    srv_host, cmd) < 0) {
-			err_log(ENOTCONN, "/chanserv");
-			g_connection_lost = true;
-		}
-	}
-
-	free(dcopy);
+	run_command("/chanserv", "ChanServ", "chanserv_host", data);
 }
 
 /*
@@ -84,36 +126,5 @@ cmd_chanserv(const char *data)
 void
 cmd_nickserv(const char *data)
 {
-	char	*dcopy = sw_strdup(data);
-	char	*srv_host, *cmd;
-	char	*state = "";
-
-	if (strings_match(dcopy, "") || strFeed(dcopy, 1) != 1 ||
-	    (srv_host = strtok_r(dcopy, "\n", &state)) == NULL ||
-	    (cmd = strtok_r(NULL, "\n", &state)) == NULL) {
-		print_and_free("/nickserv: missing arguments", dcopy);
-		return;
-	} else if (strings_match(srv_host, "--")) {
-		if (!is_valid_hostname(Config("nickserv_host"))) {
-			print_and_free("/nickserv: in the config file: "
-			    "bogus 'nickserv_host'", dcopy);
-			return;
-		} else if (net_send("PRIVMSG NickServ@%s :%s",
-		    Config("nickserv_host"), cmd) < 0) {
-			err_log(ENOTCONN, "/nickserv");
-			g_connection_lost = true;
-		}
-	} else {
-		if (!is_valid_hostname(srv_host)) {
-			print_and_free("/nickserv: bogus service hostname!",
-			    dcopy);
-			return;
-		} else if (net_send("PRIVMSG NickServ@%s :%s",
-		    srv_host, cmd) < 0) {
-			err_log(ENOTCONN, "/nickserv");
-			g_connection_lost = true;
-		}
-	}
-
-	free(dcopy);
+	run_command("/nickserv", "NickServ", "nickserv_host", data);
 }
