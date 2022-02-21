@@ -186,33 +186,53 @@ get_list(const PIRC_WINDOW window, const bool sort)
 }
 
 static void
-printnick(WINDOW *win, const int row, const int col, const char *nick)
+addvline(WINDOW *win, short int bg)
+{
+	bool state = false;
+	struct integer_context color("nicklist_vline_color", 0, 99, 0);
+
+	printtext_set_color(win, &state, static_cast<short int>
+	    (theme_integer(&color)), bg);
+	(void) waddch(win, ACS_VLINE);
+}
+
+static void
+addnick(WINDOW *win, short int bg, const char *nick)
 {
 	bool state1 = false;
 	bool state2 = false;
-	bool state3 = false;
+	struct integer_context color1("nicklist_privilege_color", 0, 99, 0);
+	struct integer_context color2("nicklist_nick_color", 0, 99, 0);
+
+	printtext_set_color(win, &state1, static_cast<short int>
+	    (theme_integer(&color1)), bg);
+	(void) waddch(win, *nick);
+
+	printtext_set_color(win, &state2, static_cast<short int>
+	    (theme_integer(&color2)), bg);
+	(void) waddstr(win, nick + 1);
+}
+
+static void
+resetattrs(WINDOW *win)
+{
+	(void) wattrset(win, A_NORMAL);
+}
+
+static void
+printnick(WINDOW *win, const int row, const int col, const char *nick)
+{
 	short int bg;
-	struct integer_context color1("nicklist_vline_color", 0, 99, 0);
-	struct integer_context color2("nicklist_privilege_color", 0, 99, 0);
-	struct integer_context color3("nicklist_nick_color", 0, 99, 0);
 	struct integer_context term_bg("term_background", 0, 15, 1);
 
-	bg = (theme_bool("term_use_default_colors", true) ? -1 :
-	    static_cast<short int>(theme_integer(&term_bg)));
+	bg = (theme_bool("term_use_default_colors", true) ? -1 : static_cast
+	    <short int>(theme_integer(&term_bg)));
 
 	(void) wmove(win, row, col);
-	printtext_set_color(win, &state1,
-	    static_cast<short int>(theme_integer(&color1)), bg);
-	(void) waddch(win, ACS_VLINE);
-	if (nick) {
-		printtext_set_color(win, &state2,
-		    static_cast<short int>(theme_integer(&color2)), bg);
-		(void) waddch(win, *nick);
-		printtext_set_color(win, &state3,
-		    static_cast<short int>(theme_integer(&color3)), bg);
-		(void) waddstr(win, nick + 1);
-	}
-	(void) wattrset(win, A_NORMAL);
+	addvline(win, bg);
+	if (nick)
+		addnick(win, bg, nick);
+	resetattrs(win);
 }
 
 static void
