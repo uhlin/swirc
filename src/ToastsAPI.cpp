@@ -233,25 +233,28 @@ Toasts::SetTextValues(
 HRESULT
 Toasts::ShowToast(IXmlDocument *xml)
 {
-    /*
-     * Create the notifier
-     * (Classic Win32 apps MUST use the compat method to create the notifier)
-     */
-    ComPtr<IToastNotifier> notifier;
-    RETURN_IF_FAILED(
-	DesktopNotificationManagerCompat::CreateToastNotifier(&notifier));
+	ComPtr<IToastNotifier>		notifier;
+	ComPtr<IToastNotification>	toast;
 
-    /*
-     * And create the notification itself...
-     */
-    ComPtr<IToastNotification> toast;
-    RETURN_IF_FAILED(
-	DesktopNotificationManagerCompat::CreateToastNotification(xml, &toast));
+	/*
+	 * Create the notifier
+	 *
+	 * (Classic Win32 apps MUST use the compat method to create
+	 * the notifier)
+	 */
+	RETURN_IF_FAILED(DesktopNotificationManagerCompat::CreateToastNotifier
+	    (&notifier));
 
-    /*
-     * And show it!
-     */
-    return notifier->Show(toast.Get());
+	/*
+	 * And create the notification itself...
+	 */
+	RETURN_IF_FAILED(DesktopNotificationManagerCompat::
+	    CreateToastNotification(xml, &toast));
+
+	/*
+	 * And show it!
+	 */
+	return notifier->Show(toast.Get());
 }
 
 static const wchar_t *
