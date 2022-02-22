@@ -174,19 +174,17 @@ Toasts::SetImageSrc(PCWSTR imagePath, IXmlDocument *toastXml)
 #endif
 
 HRESULT
-Toasts::SetNodeValueString(
-    HSTRING inputString,
-    IXmlNode *node,
+Toasts::SetNodeValueString(HSTRING inputString, IXmlNode *node,
     IXmlDocument *xml)
 {
-    ComPtr<IXmlText> inputText;
-    RETURN_IF_FAILED(xml->CreateTextNode(inputString, &inputText));
+	ComPtr<IXmlText>	inputText;
+	ComPtr<IXmlNode>	inputTextNode;
+	ComPtr<IXmlNode>	appendedChild;
 
-    ComPtr<IXmlNode> inputTextNode;
-    RETURN_IF_FAILED(inputText.As(&inputTextNode));
+	RETURN_IF_FAILED(xml->CreateTextNode(inputString, &inputText));
+	RETURN_IF_FAILED(inputText.As(&inputTextNode));
 
-    ComPtr<IXmlNode> appendedChild;
-    return node->AppendChild(inputTextNode.Get(), &appendedChild);
+	return node->AppendChild(inputTextNode.Get(), &appendedChild);
 }
 
 /**
