@@ -550,19 +550,18 @@ config_readit(const char *path, const char *mode)
 	}
 }
 
-const char *
-config_get_normalized_sasl_username(void)
-{
 #ifdef HAVE_LIBIDN
+static const char *
+get_sasl(const char *what, char *buf, size_t bufsize)
+{
 	Stringprep_profile_flags flags;
 	char *str = NULL;
 	int ret;
-	static char buf[SASL_USERNAME_MAXLEN] = { '\0' };
 
-	if (strings_match(Config("sasl_username"), "")) {
+	if (strings_match(Config(what), "")) {
 		return NULL;
-	} else if ((str = stringprep_locale_to_utf8(Config("sasl_username"))) ==
-	    NULL || sw_strcpy(buf, str, ARRAY_SIZE(buf)) != 0) {
+	} else if ((str = stringprep_locale_to_utf8(Config(what))) == NULL ||
+	    sw_strcpy(buf, str, bufsize) != 0) {
 		free(str);
 		return NULL;
 	}
@@ -570,9 +569,18 @@ config_get_normalized_sasl_username(void)
 	free(str);
 
 	flags = static_cast<Stringprep_profile_flags>(0);
-	ret = stringprep(buf, ARRAY_SIZE(buf), flags, stringprep_saslprep);
+	ret = stringprep(buf, bufsize, flags, stringprep_saslprep);
 
-	return (ret == STRINGPREP_OK ? &buf[0] : NULL);
+	return (ret == STRINGPREP_OK ? buf : NULL);
+}
+#endif
+
+const char *
+config_get_normalized_sasl_username(void)
+{
+#ifdef HAVE_LIBIDN
+	static char buf[SASL_USERNAME_MAXLEN] = { '\0' };
+	return get_sasl("sasl_username", &buf[0], ARRAY_SIZE(buf));
 #else
 	/*
 	 * !HAVE_LIBIDN
@@ -588,25 +596,8 @@ const char *
 config_get_normalized_sasl_password(void)
 {
 #ifdef HAVE_LIBIDN
-	Stringprep_profile_flags flags;
-	char *str = NULL;
-	int ret;
 	static char buf[SASL_PASSWORD_MAXLEN] = { '\0' };
-
-	if (strings_match(Config("sasl_password"), "")) {
-		return NULL;
-	} else if ((str = stringprep_locale_to_utf8(Config("sasl_password"))) ==
-	    NULL || sw_strcpy(buf, str, ARRAY_SIZE(buf)) != 0) {
-		free(str);
-		return NULL;
-	}
-
-	free(str);
-
-	flags = static_cast<Stringprep_profile_flags>(0);
-	ret = stringprep(buf, ARRAY_SIZE(buf), flags, stringprep_saslprep);
-
-	return (ret == STRINGPREP_OK ? &buf[0] : NULL);
+	return get_sasl("sasl_password", &buf[0], ARRAY_SIZE(buf));
 #else
 	/*
 	 * !HAVE_LIBIDN
