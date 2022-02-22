@@ -318,14 +318,14 @@ DesktopNotificationHistoryCompat::GetHistory(
 HRESULT
 DesktopNotificationHistoryCompat::Remove(const wchar_t *tag)
 {
-    if (m_aumid.empty()) {
-	return m_history->Remove(HStringReference(tag).Get());
-    } else {
-	return m_history->RemoveGroupedTagWithId(
-	    HStringReference(tag).Get(),
-	    HStringReference(L"").Get(),
-	    HStringReference(m_aumid.c_str()).Get());
-    }
+	if (m_aumid.empty()) {
+		return m_history->Remove(HStringReference(tag).Get());
+	} else {
+		return m_history->RemoveGroupedTagWithId
+		    (HStringReference(tag).Get(),
+		    HStringReference(L"").Get(),
+		    HStringReference(m_aumid.c_str()).Get());
+	}
 }
 
 HRESULT
