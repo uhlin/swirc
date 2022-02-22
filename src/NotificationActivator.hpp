@@ -3,6 +3,10 @@
 
 #include "ToastActivator.h"
 
+#ifndef UNUSED_PARAM
+#define UNUSED_PARAM(p) ((void) (p))
+#endif
+
 using namespace ABI::Windows::Data::Xml::Dom;
 using namespace ABI::Windows::UI::Notifications;
 using namespace Microsoft::WRL::Wrappers;
@@ -26,6 +30,10 @@ public:
 		/*
 		 * TODO: Handle activation
 		 */
+		UNUSED_PARAM(appUserModelId);
+		UNUSED_PARAM(invokedArgs);
+		UNUSED_PARAM(data);
+		UNUSED_PARAM(dataCount);
 		return S_OK;
 	}
 };
