@@ -298,21 +298,19 @@ DesktopNotificationHistoryCompat::Clear()
 }
 
 HRESULT
-DesktopNotificationHistoryCompat::GetHistory(
-    ABI::Windows::Foundation::Collections::
-    IVectorView<ToastNotification *> **toasts)
+DesktopNotificationHistoryCompat::GetHistory(ABI::Windows::Foundation::
+    Collections::IVectorView<ToastNotification *> **toasts)
 {
-    ComPtr<IToastNotificationHistory2> history2;
+	ComPtr<IToastNotificationHistory2> history2;
 
-    RETURN_IF_FAILED(m_history.As(&history2));
+	RETURN_IF_FAILED(m_history.As(&history2));
 
-    if (m_aumid.empty()) {
-	return history2->GetHistory(toasts);
-    } else {
-	return history2->GetHistoryWithId(
-	    HStringReference(m_aumid.c_str()).Get(),
-	    toasts);
-    }
+	if (m_aumid.empty()) {
+		return history2->GetHistory(toasts);
+	} else {
+		return history2->GetHistoryWithId
+		    (HStringReference(m_aumid.c_str()).Get(), toasts);
+	}
 }
 
 HRESULT
