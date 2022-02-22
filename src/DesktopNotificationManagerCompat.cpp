@@ -29,254 +29,256 @@ using namespace Microsoft::WRL::Wrappers;
 using namespace Microsoft::WRL;
 
 namespace DesktopNotificationManagerCompat {
-    HRESULT EnsureRegistered();
-    HRESULT RegisterComServer(GUID clsid, const wchar_t exePath[]);
-    bool IsRunningAsUwp();
+	HRESULT     EnsureRegistered();
+	HRESULT     RegisterComServer(GUID clsid, const wchar_t exePath[]);
+	bool        IsRunningAsUwp();
 
-    bool s_hasCheckedIsRunningAsUwp = false;
-    bool s_isRunningAsUwp = false;
-    bool s_registeredActivator = false;
-    bool s_registeredAumidAndComServer = false;
-    std::wstring s_aumid;
+	bool s_hasCheckedIsRunningAsUwp		= false;
+	bool s_isRunningAsUwp			= false;
+	bool s_registeredActivator		= false;
+	bool s_registeredAumidAndComServer	= false;
 
-    HRESULT RegisterAumidAndComServer(const wchar_t *aumid, GUID clsid) {
-	if (IsRunningAsUwp()) {
-	    /*
-	     * Clear the AUMID since Desktop Bridge doesn't use it,
-	     * and then we're done. Desktop Bridge apps are registered
-	     * with platform through their manifest. Their
-	     * LocalServer32 key is also registered through their
-	     * manifest.
-	     */
-	    s_aumid = L"";
-	    s_registeredAumidAndComServer = true;
+	std::wstring s_aumid;
 
-	    return S_OK;
-	}
+	HRESULT
+	RegisterAumidAndComServer(const wchar_t *aumid, GUID clsid)
+	{
+		if (IsRunningAsUwp()) {
+			/*
+			 * Clear the AUMID since Desktop Bridge
+			 * doesn't use it, and then we're
+			 * done. Desktop Bridge apps are registered
+			 * with platform through their manifest. Their
+			 * LocalServer32 key is also registered
+			 * through their manifest.
+			 */
+			s_aumid = L"";
+			s_registeredAumidAndComServer = true;
+			return S_OK;
+		}
 
-	/*
-	 * Copy the aumid
-	 */
-	s_aumid = std::wstring(aumid);
-
-	/*
-	 * Get the EXE path
-	 */
-	wchar_t exePath[MAX_PATH];
-	DWORD charWritten =
-	    ::GetModuleFileName(nullptr, exePath, ARRAYSIZE(exePath));
-	RETURN_IF_FAILED(charWritten > 0
-			 ? S_OK
-			 : HRESULT_FROM_WIN32(::GetLastError()));
-
-	/*
-	 * Register the COM server
-	 */
-	RETURN_IF_FAILED(RegisterComServer(clsid, exePath));
-
-	s_registeredAumidAndComServer = true;
-	return S_OK;
-    }
-
-    HRESULT RegisterActivator() {
-	/*
-	 * Module<OutOfProc> needs a callback registered before it can
-	 * be used. Since we don't care about when it shuts down,
-	 * we'll pass an empty lambda here.
-	 */
-	Module<OutOfProc>::Create([] {});
-
-	/*
-	 * If a local server process only hosts the COM object then
-	 * COM expects the COM server host to shutdown when the
-	 * references drop to zero. Since the user might still be
-	 * using the program after activating the notification, we
-	 * don't want to shutdown immediately. Incrementing the object
-	 * count tells COM that we aren't done yet.
-	 */
-	Module<OutOfProc>::GetModule().IncrementObjectCount();
-
-	RETURN_IF_FAILED(Module<OutOfProc>::GetModule().RegisterObjects());
-
-	s_registeredActivator = true;
-	return S_OK;
-    }
-
-    HRESULT RegisterComServer(GUID clsid, const wchar_t exePath[]) {
-	/* Turn the GUID into a string */
-	OLECHAR *clsidOlechar;
-	StringFromCLSID(clsid, &clsidOlechar);
-	std::wstring clsidStr(clsidOlechar);
-	::CoTaskMemFree(clsidOlechar);
-
-	/**
-	 * Create the subkey
-	 *
-	 * Something like:
-	 *     SOFTWARE\Classes\CLSID\{23A5B06E-20BB-4E7E-A0AC-6982ED6A6041}\
-	 *     LocalServer32
-	 */
-	std::wstring subKey =
-	    LR"(SOFTWARE\Classes\CLSID\)" + clsidStr + LR"(\LocalServer32)";
-
-	/* Include -ToastActivated launch args on the exe */
-	std::wstring exePathStr(exePath);
-	exePathStr = L"\"" + exePathStr + L"\" " + TOAST_ACTIVATED_LAUNCH_ARG;
-
-	/**
-	 * We don't need to worry about overflow here as
-	 * ::GetModuleFileName won't return anything bigger than the
-	 * max file system path (much fewer than max of DWORD).
-	 */
-	DWORD dataSize =
-	    static_cast<DWORD>((exePathStr.length() + 1) * sizeof(WCHAR));
-
-	/*
-	 * Register the EXE for the COM server
-	 */
-	return HRESULT_FROM_WIN32(::RegSetKeyValue(
-	    HKEY_CURRENT_USER,
-	    subKey.c_str(),
-	    nullptr,
-	    REG_SZ,
-	    reinterpret_cast<const BYTE *>(exePathStr.c_str()),
-	    dataSize));
-    }
-
-    HRESULT CreateToastNotifier(IToastNotifier **notifier) {
-	RETURN_IF_FAILED(EnsureRegistered());
-
-	ComPtr<IToastNotificationManagerStatics> toastStatics;
-	RETURN_IF_FAILED(Windows::Foundation::GetActivationFactory(
-	    HStringReference(
-		RuntimeClass_Windows_UI_Notifications_ToastNotificationManager)
-	    .Get(),
-	    &toastStatics));
-
-	if (s_aumid.empty()) {
-	    return toastStatics->CreateToastNotifier(notifier);
-	} else {
-	    return toastStatics->CreateToastNotifierWithId(
-		HStringReference(s_aumid.c_str()).Get(),
-		notifier);
-	}
-    }
-
-    HRESULT
-    CreateXmlDocumentFromString(const wchar_t *xmlString, IXmlDocument **doc)
-    {
-	ComPtr<IXmlDocument> answer;
-	RETURN_IF_FAILED(Windows::Foundation::ActivateInstance(
-	    HStringReference(RuntimeClass_Windows_Data_Xml_Dom_XmlDocument)
-	    .Get(),
-	    &answer));
-
-	ComPtr<IXmlDocumentIO> docIO;
-	RETURN_IF_FAILED(answer.As(&docIO));
-
-	/* Load the XML string */
-	RETURN_IF_FAILED(docIO->LoadXml(HStringReference(xmlString).Get()));
-
-	return answer.CopyTo(doc);
-    }
-
-    HRESULT
-    CreateToastNotification(
-	IXmlDocument *content,
-	IToastNotification **notification)
-    {
-	ComPtr<IToastNotificationFactory> factory;
-
-	RETURN_IF_FAILED(Windows::Foundation::GetActivationFactory(
-	    HStringReference(
-		RuntimeClass_Windows_UI_Notifications_ToastNotification)
-	    .Get(),
-	    &factory));
-
-	return factory->CreateToastNotification(content, notification);
-    }
-
-    HRESULT
-    get_History(std::unique_ptr<DesktopNotificationHistoryCompat> *history)
-    {
-	RETURN_IF_FAILED(EnsureRegistered());
-
-	ComPtr<IToastNotificationManagerStatics> toastStatics;
-	RETURN_IF_FAILED(Windows::Foundation::GetActivationFactory(
-	    HStringReference(
-		RuntimeClass_Windows_UI_Notifications_ToastNotificationManager)
-	    .Get(),
-	    &toastStatics));
-
-	ComPtr<IToastNotificationManagerStatics2> toastStatics2;
-	RETURN_IF_FAILED(toastStatics.As(&toastStatics2));
-
-	ComPtr<IToastNotificationHistory> nativeHistory;
-	RETURN_IF_FAILED(toastStatics2->get_History(&nativeHistory));
-
-	*history = std::unique_ptr<DesktopNotificationHistoryCompat>
-	    (new DesktopNotificationHistoryCompat(s_aumid.c_str(),
-						  nativeHistory));
-
-	return S_OK;
-    }
-
-    bool CanUseHttpImages() {
-	return IsRunningAsUwp();
-    }
-
-    HRESULT EnsureRegistered() {
-	/*
-	 * If not registered AUMID yet
-	 */
-	if (!s_registeredAumidAndComServer) {
-	    if (IsRunningAsUwp()) {
-		/* Implicitly registered, all good! */
-		s_registeredAumidAndComServer = true;
-	    } else {
 		/*
-		 * Otherwise, incorrect usage, must call
-		 * RegisterAumidAndComServer first
+		 * Copy the aumid
 		 */
+		s_aumid = std::wstring(aumid);
 
-		return E_ILLEGAL_METHOD_CALL;
-	    }
+		/*
+		 * Get the EXE path
+		 */
+		wchar_t exePath[MAX_PATH];
+		DWORD   charWritten = ::GetModuleFileName(nullptr, exePath,
+		    ARRAYSIZE(exePath));
+		RETURN_IF_FAILED(charWritten > 0 ? S_OK :
+		    HRESULT_FROM_WIN32(::GetLastError()));
+
+		/*
+		 * Register the COM server
+		 */
+		RETURN_IF_FAILED(RegisterComServer(clsid, exePath));
+
+		s_registeredAumidAndComServer = true;
+		return S_OK;
 	}
 
-	/*
-	 * If not registered activator yet
-	 */
-	if (!s_registeredActivator) {
-	    /*
-	     * Incorrect usage, must call RegisterActivator first
-	     */
+	HRESULT
+	RegisterActivator()
+	{
+		/*
+		 * Module<OutOfProc> needs a callback registered
+		 * before it can be used. Since we don't care about
+		 * when it shuts down, we'll pass an empty lambda
+		 * here.
+		 */
+		Module<OutOfProc>::Create([] {});
 
-	    return E_ILLEGAL_METHOD_CALL;
+		/*
+		 * If a local server process only hosts the COM object
+		 * then COM expects the COM server host to shutdown
+		 * when the references drop to zero. Since the user
+		 * might still be using the program after activating
+		 * the notification, we don't want to shutdown
+		 * immediately. Incrementing the object count tells
+		 * COM that we aren't done yet.
+		 */
+		Module<OutOfProc>::GetModule().IncrementObjectCount();
+		RETURN_IF_FAILED(Module<OutOfProc>::
+		    GetModule().RegisterObjects());
+
+		s_registeredActivator = true;
+		return S_OK;
 	}
 
-	return S_OK;
-    }
+	HRESULT
+	RegisterComServer(GUID clsid, const wchar_t exePath[])
+	{
+		/* Turn the GUID into a string */
+		OLECHAR *clsidOlechar;
+		StringFromCLSID(clsid, &clsidOlechar);
+		std::wstring clsidStr(clsidOlechar);
+		::CoTaskMemFree(clsidOlechar);
 
-    bool IsRunningAsUwp() {
-	if (!s_hasCheckedIsRunningAsUwp) {
-	    /*
-	     * https://stackoverflow.com/questions/39609643/determine-if-
-	     * c-application-is-running-as-a-uwp-app-in-desktop-bridge-project
-	     */
+		/**
+		 * Create the subkey
+		 *
+		 * Something like:
+		 *     SOFTWARE\Classes\CLSID\
+		 *     {23A5B06E-20BB-4E7E-A0AC-6982ED6A6041}\LocalServer32
+		 */
+		std::wstring subKey = LR"(SOFTWARE\Classes\CLSID\)" + clsidStr +
+		    LR"(\LocalServer32)";
+		std::wstring exePathStr(exePath);
+		exePathStr = L"\"" + exePathStr + L"\" " +
+		    TOAST_ACTIVATED_LAUNCH_ARG;
 
-	    UINT32 length;
-	    wchar_t packageFamilyName[PACKAGE_FAMILY_NAME_MAX_LENGTH + 1];
-	    LONG result = GetPackageFamilyName(
-		GetCurrentProcess(),
-		&length,
-		packageFamilyName);
+		/**
+		 * We don't need to worry about overflow here as
+		 * ::GetModuleFileName won't return anything bigger
+		 * than the max file system path (much fewer than max
+		 * of DWORD).
+		 */
+		DWORD dataSize = static_cast<DWORD>
+		    ((exePathStr.length() + 1) * sizeof(WCHAR));
 
-	    s_isRunningAsUwp = result == ERROR_SUCCESS;
-	    s_hasCheckedIsRunningAsUwp = true;
+		/*
+		 * Register the EXE for the COM server
+		 */
+		return HRESULT_FROM_WIN32(::RegSetKeyValue(HKEY_CURRENT_USER,
+		    subKey.c_str(), nullptr, REG_SZ,
+		    reinterpret_cast<const BYTE *>(exePathStr.c_str()),
+		    dataSize));
 	}
 
-	return s_isRunningAsUwp;
-    }
+	HRESULT
+	CreateToastNotifier(IToastNotifier **notifier)
+	{
+		ComPtr<IToastNotificationManagerStatics> toastStatics;
+
+		RETURN_IF_FAILED(EnsureRegistered());
+		RETURN_IF_FAILED(Windows::Foundation::GetActivationFactory
+		    (HStringReference
+		    (RuntimeClass_Windows_UI_Notifications_ToastNotificationManager).Get(),
+		    &toastStatics));
+
+		if (s_aumid.empty()) {
+			return toastStatics->CreateToastNotifier(notifier);
+		} else {
+			return toastStatics->CreateToastNotifierWithId
+			    (HStringReference(s_aumid.c_str()).Get(), notifier);
+		}
+	}
+
+	HRESULT
+	CreateXmlDocumentFromString(const wchar_t *xmlString,
+	    IXmlDocument **doc)
+	{
+		ComPtr<IXmlDocument>	answer;
+		ComPtr<IXmlDocumentIO>	docIO;
+
+		RETURN_IF_FAILED(Windows::Foundation::ActivateInstance
+		    (HStringReference(RuntimeClass_Windows_Data_Xml_Dom_XmlDocument).Get(),
+		    &answer));
+		RETURN_IF_FAILED(answer.As(&docIO));
+		RETURN_IF_FAILED(docIO->LoadXml(HStringReference(xmlString).Get()));
+		return answer.CopyTo(doc);
+	}
+
+	HRESULT
+	CreateToastNotification(IXmlDocument *content,
+	    IToastNotification **notification)
+	{
+		ComPtr<IToastNotificationFactory> factory;
+
+		RETURN_IF_FAILED(Windows::Foundation::GetActivationFactory
+		    (HStringReference
+		    (RuntimeClass_Windows_UI_Notifications_ToastNotification).Get(),
+		    &factory));
+
+		return factory->CreateToastNotification(content, notification);
+	}
+
+	HRESULT
+	get_History(std::unique_ptr<DesktopNotificationHistoryCompat> *history)
+	{
+		ComPtr<IToastNotificationManagerStatics>	toastStatics;
+		ComPtr<IToastNotificationManagerStatics2>	toastStatics2;
+		ComPtr<IToastNotificationHistory>		nativeHistory;
+
+		RETURN_IF_FAILED(EnsureRegistered());
+		RETURN_IF_FAILED(Windows::Foundation::GetActivationFactory
+		    (HStringReference
+		    (RuntimeClass_Windows_UI_Notifications_ToastNotificationManager).Get(),
+		    &toastStatics));
+		RETURN_IF_FAILED(toastStatics.As(&toastStatics2));
+		RETURN_IF_FAILED(toastStatics2->get_History(&nativeHistory));
+		*history = std::unique_ptr<DesktopNotificationHistoryCompat>
+		    (new DesktopNotificationHistoryCompat(s_aumid.c_str(),
+		    nativeHistory));
+		return S_OK;
+	}
+
+	bool
+	CanUseHttpImages()
+	{
+		return IsRunningAsUwp();
+	}
+
+	HRESULT
+	EnsureRegistered()
+	{
+		/*
+		 * If not registered AUMID yet
+		 */
+		if (!s_registeredAumidAndComServer) {
+			if (IsRunningAsUwp()) {
+				/*
+				 * Implicitly registered, all good!
+				 */
+				s_registeredAumidAndComServer = true;
+			} else {
+				/*
+				 * Otherwise, incorrect usage, must
+				 * call RegisterAumidAndComServer
+				 * first.
+				 */
+				return E_ILLEGAL_METHOD_CALL;
+			}
+		}
+
+		/*
+		 * If not registered activator yet
+		 */
+		if (!s_registeredActivator) {
+			/*
+			 * Incorrect usage, must call
+			 * RegisterActivator first.
+			 */
+			return E_ILLEGAL_METHOD_CALL;
+		}
+
+		return S_OK;
+	}
+
+	bool
+	IsRunningAsUwp()
+	{
+		if (!s_hasCheckedIsRunningAsUwp) {
+			/*
+			 * https://stackoverflow.com/questions/39609643/
+			 * determine-if-c-application-is-running-as-a-uwp-app-
+			 * in-desktop-bridge-project
+			 */
+			UINT32  length;
+			wchar_t packageFamilyName
+			    [PACKAGE_FAMILY_NAME_MAX_LENGTH + 1] = { 0L };
+
+			s_isRunningAsUwp =
+			    (GetPackageFamilyName(GetCurrentProcess(), &length,
+			    packageFamilyName) == ERROR_SUCCESS);
+			s_hasCheckedIsRunningAsUwp = true;
+		}
+
+		return s_isRunningAsUwp;
+	}
 }
 
 DesktopNotificationHistoryCompat::DesktopNotificationHistoryCompat
