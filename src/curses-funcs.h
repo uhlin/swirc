@@ -18,10 +18,7 @@ extern bool		g_cursesMode;
 extern PTR_TO_ENDWIN	g_endwin_fn;
 extern PTR_TO_DOUPDATE	g_doupdate_fn;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__SWIRC_BEGIN_DECLS
 void	escape_curses(void);
 void	resume_curses(void);
 
@@ -38,9 +35,6 @@ bool	is_syncok   (const WINDOW *);
 bool	is_keypad   (const WINDOW *);
 #endif
 #endif
-
-#ifdef __cplusplus
-}
-#endif
+__SWIRC_END_DECLS
 
 #endif
