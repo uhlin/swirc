@@ -65,8 +65,8 @@ namespace DesktopNotificationManagerCompat {
 		/*
 		 * Get the EXE path
 		 */
-		wchar_t exePath[MAX_PATH];
-		DWORD   charWritten = ::GetModuleFileName(nullptr, exePath,
+		wchar_t  exePath[MAX_PATH] = { 0L };
+		DWORD    charWritten = ::GetModuleFileName(nullptr, exePath,
 		    ARRAYSIZE(exePath));
 		RETURN_IF_FAILED(charWritten > 0 ? S_OK :
 		    HRESULT_FROM_WIN32(::GetLastError()));
