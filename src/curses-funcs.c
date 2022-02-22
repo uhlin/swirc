@@ -1,5 +1,5 @@
 /* Additional functions for the Ncurses library
-   Copyright (C) 2012-2019 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -34,57 +34,64 @@ bool            g_cursesMode  = false;
 PTR_TO_ENDWIN   g_endwin_fn   = NULL;
 PTR_TO_DOUPDATE g_doupdate_fn = NULL;
 
-void escape_curses(void)
+void
+escape_curses(void)
 {
-    if (g_cursesMode && g_endwin_fn != NULL && g_endwin_fn() != ERR) {
-	g_cursesMode = false;
-    }
+	if (g_cursesMode && g_endwin_fn != NULL && g_endwin_fn() != ERR)
+		g_cursesMode = false;
 }
 
-void resume_curses(void)
+void
+resume_curses(void)
 {
-    if (!g_cursesMode && g_doupdate_fn != NULL && g_doupdate_fn() != ERR) {
-	g_cursesMode = true;
-    }
+	if (!g_cursesMode && g_doupdate_fn != NULL && g_doupdate_fn() != ERR)
+		g_cursesMode = true;
 }
 
 #if defined(WIN32) && defined(PDC_EXP_EXTRAS)
-bool is_cleared(const WINDOW *win)
+bool
+is_cleared(const WINDOW *win)
 {
-    return (win != NULL && win->_clear);
+	return (win != NULL && win->_clear);
 }
 
 #if PDC_BUILD < 3900
-bool is_leaveok(const WINDOW *win)
+bool
+is_leaveok(const WINDOW *win)
 {
-    return (win != NULL && win->_leaveit);
+	return (win != NULL && win->_leaveit);
 }
 #endif
 
-bool is_scrollok(const WINDOW *win)
+bool
+is_scrollok(const WINDOW *win)
 {
-    return (win != NULL && win->_scroll);
+	return (win != NULL && win->_scroll);
 }
 
-bool is_nodelay(const WINDOW *win)
+bool
+is_nodelay(const WINDOW *win)
 {
-    return (win != NULL && win->_nodelay);
+	return (win != NULL && win->_nodelay);
 }
 
-bool is_immedok(const WINDOW *win)
+bool
+is_immedok(const WINDOW *win)
 {
-    return (win != NULL && win->_immed);
+	return (win != NULL && win->_immed);
 }
 
-bool is_syncok(const WINDOW *win)
+bool
+is_syncok(const WINDOW *win)
 {
-    return (win != NULL && win->_sync);
+	return (win != NULL && win->_sync);
 }
 
 #if PDC_BUILD < 3900
-bool is_keypad(const WINDOW *win)
+bool
+is_keypad(const WINDOW *win)
 {
-    return (win != NULL && win->_use_keypad);
+	return (win != NULL && win->_use_keypad);
 }
 #endif
 #endif
