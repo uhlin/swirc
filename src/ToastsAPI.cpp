@@ -193,38 +193,33 @@ Toasts::SetNodeValueString(
  * Set the values of each of the text nodes
  */
 HRESULT
-Toasts::SetTextValues(
-    const PCWSTR *textValues,
-    UINT32 textValuesCount,
+Toasts::SetTextValues(const PCWSTR *textValues, UINT32 textValuesCount,
     IXmlDocument *toastXml)
 {
-    ComPtr<IXmlNodeList> nodeList;
+	ComPtr<IXmlNodeList> nodeList;
+	UINT32 nodeListLength;
 
-    RETURN_IF_FAILED(
-	toastXml->GetElementsByTagName(HStringReference(L"text").Get(),
-				       &nodeList));
+	RETURN_IF_FAILED(toastXml->GetElementsByTagName
+	    (HStringReference(L"text").Get(), &nodeList));
+	RETURN_IF_FAILED(nodeList->get_Length(&nodeListLength));
 
-    UINT32 nodeListLength;
-    RETURN_IF_FAILED(nodeList->get_Length(&nodeListLength));
+	/*
+	 * If a template was chosen with fewer text elements, also
+	 * change the amount of strings passed to this method.
+	 */
 
-    /*
-     * If a template was chosen with fewer text elements, also change
-     * the amount of strings passed to this method.
-     */
+	RETURN_IF_FAILED(textValuesCount <= nodeListLength ? S_OK :
+	    E_INVALIDARG);
 
-    RETURN_IF_FAILED(textValuesCount <= nodeListLength ? S_OK : E_INVALIDARG);
+	for (UINT32 i = 0; i < textValuesCount; i++) {
+		ComPtr<IXmlNode> textNode;
 
-    for (UINT32 i = 0; i < textValuesCount; i++) {
-	ComPtr<IXmlNode> textNode;
+		RETURN_IF_FAILED(nodeList->Item(i, &textNode));
+		RETURN_IF_FAILED(SetNodeValueString(HStringReference
+		    (textValues[i]).Get(), textNode.Get(), toastXml));
+	}
 
-	RETURN_IF_FAILED(nodeList->Item(i, &textNode));
-	RETURN_IF_FAILED(SetNodeValueString(
-			     HStringReference(textValues[i]).Get(),
-			     textNode.Get(),
-			     toastXml));
-    }
-
-    return S_OK;
+	return S_OK;
 }
 
 /**
