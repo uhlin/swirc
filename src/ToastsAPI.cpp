@@ -254,43 +254,51 @@ Toasts::ShowToast(IXmlDocument *xml)
     return notifier->Show(toast.Get());
 }
 
+static const wchar_t *
+get_toast()
+{
+	static const wchar_t toast[] =
+	    L"<toast>"
+	    L"<visual>"
+	    L"<binding template='ToastGeneric'>"
+	    L"<text>The universal IRC client</text>"
+	    L"</binding>"
+	    L"</visual>"
+	    L"</toast>";
+
+	return (&toast[0]);
+}
+
 void
 Toasts::SendTestNotification(void)
 {
-    ComPtr<IToastNotification> toast;
-    ComPtr<IToastNotifier> notifier;
-    HRESULT hr;
-    IXmlDocument *doc;
+	ComPtr<IToastNotification> toast;
+	ComPtr<IToastNotifier> notifier;
+	HRESULT hr;
+	IXmlDocument *doc;
 
-    hr = DesktopNotificationManagerCompat::CreateXmlDocumentFromString(
-	L"<toast>"
-	L"<visual>"
-	L"<binding template='ToastGeneric'>"
-	L"<text>The universal IRC client</text>"
-	L"</binding>"
-	L"</visual>"
-	L"</toast>",
-	&doc);
-    if (FAILED(hr)) {
-	err_log(0, "In SendTestNotification: "
-	    "CreateXmlDocumentFromString failed");
-	return;
-    }
+	hr = DesktopNotificationManagerCompat::CreateXmlDocumentFromString
+	    (get_toast(), &doc);
+	if (FAILED(hr)) {
+		err_log(0, "CreateXmlDocumentFromString");
+		return;
+	}
 
-    hr = DesktopNotificationManagerCompat::CreateToastNotifier(&notifier);
-    if (FAILED(hr)) {
-	err_log(0, "In SendTestNotification: CreateToastNotifier failed");
-	return;
-    }
+	hr = DesktopNotificationManagerCompat::CreateToastNotifier(&notifier);
+	if (FAILED(hr)) {
+		err_log(0, "CreateToastNotifier");
+		return;
+	}
 
-    hr = DesktopNotificationManagerCompat::CreateToastNotification(doc, &toast);
-    if (FAILED(hr)) {
-	err_log(0, "In SendTestNotification: CreateToastNotification failed");
-	return;
-    }
+	hr = DesktopNotificationManagerCompat::CreateToastNotification(doc,
+	    &toast);
+	if (FAILED(hr)) {
+		err_log(0, "CreateToastNotification");
+		return;
+	}
 
-    /*
-     * And show it!
-     */
-    (void) notifier->Show(toast.Get());
+	/*
+	 * And show it!
+	 */
+	(void) notifier->Show(toast.Get());
 }
