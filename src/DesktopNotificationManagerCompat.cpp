@@ -290,11 +290,12 @@ DesktopNotificationHistoryCompat::DesktopNotificationHistoryCompat(
 HRESULT
 DesktopNotificationHistoryCompat::Clear()
 {
-    if (m_aumid.empty()) {
-	return m_history->Clear();
-    } else {
-	return m_history->ClearWithId(HStringReference(m_aumid.c_str()).Get());
-    }
+	if (m_aumid.empty()) {
+		return m_history->Clear();
+	} else {
+		return m_history->ClearWithId
+		    (HStringReference(m_aumid.c_str()).Get());
+	}
 }
 
 HRESULT
