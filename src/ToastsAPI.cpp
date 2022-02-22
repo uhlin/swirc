@@ -111,31 +111,37 @@ Toasts::DisplayToast(void)
 }
 #endif
 
-HRESULT
-Toasts::SendBasicToast(PCWSTR message)
+static const wchar_t *
+get_basic_toast()
 {
-    ComPtr<IXmlDocument> doc;
-
-    RETURN_IF_FAILED(
-	DesktopNotificationManagerCompat::CreateXmlDocumentFromString(
+	static const wchar_t str[] =
 	    L"<toast>"
 	    L"<visual>"
 	    L"<binding template=\"ToastGeneric\">"
 	    L"<text></text>"
 	    L"</binding>"
 	    L"</visual>"
-	    L"</toast>",
-	    &doc));
+	    L"</toast>";
 
-    PCWSTR textValues[] = {
-	message
-    };
+	return (&str[0]);
+}
 
-    RETURN_IF_FAILED(SetTextValues(textValues,
-				   ARRAYSIZE(textValues),
-				   doc.Get()));
+HRESULT
+Toasts::SendBasicToast(PCWSTR message)
+{
+	ComPtr<IXmlDocument> doc;
 
-    return ShowToast(doc.Get());
+	RETURN_IF_FAILED(DesktopNotificationManagerCompat::
+	    CreateXmlDocumentFromString(get_basic_toast(), &doc));
+
+	PCWSTR textValues[] = {
+		message
+	};
+
+	RETURN_IF_FAILED(SetTextValues(textValues, ARRAYSIZE(textValues),
+	    doc.Get()));
+
+	return ShowToast(doc.Get());
 }
 
 /**
