@@ -145,31 +145,27 @@ Toasts::SendBasicToast(PCWSTR message)
 HRESULT
 Toasts::SetImageSrc(PCWSTR imagePath, IXmlDocument *toastXml)
 {
-    wchar_t imageSrcUri[MAX_PATH];
-    DWORD size = ARRAYSIZE(imageSrcUri);
+	wchar_t imageSrcUri[MAX_PATH] = { 0L };
+	DWORD size = ARRAYSIZE(imageSrcUri);
 
-    RETURN_IF_FAILED(::UrlCreateFromPath(imagePath, imageSrcUri, &size, 0));
+	RETURN_IF_FAILED(::UrlCreateFromPath(imagePath, imageSrcUri, &size, 0));
 
-    ComPtr<IXmlNodeList> nodeList;
-    RETURN_IF_FAILED(
-	toastXml->GetElementsByTagName(HStringReference(L"image").Get(),
-				       &nodeList));
+	ComPtr<IXmlNodeList> nodeList;
+	RETURN_IF_FAILED(toastXml->GetElementsByTagName
+	    (HStringReference(L"image").Get(), &nodeList));
 
-    ComPtr<IXmlNode> imageNode;
-    RETURN_IF_FAILED(nodeList->Item(0, &imageNode));
+	ComPtr<IXmlNode> imageNode;
+	RETURN_IF_FAILED(nodeList->Item(0, &imageNode));
 
-    ComPtr<IXmlNamedNodeMap> attributes;
-    RETURN_IF_FAILED(imageNode->get_Attributes(&attributes));
+	ComPtr<IXmlNamedNodeMap> attributes;
+	RETURN_IF_FAILED(imageNode->get_Attributes(&attributes));
 
-    ComPtr<IXmlNode> srcAttribute;
-    RETURN_IF_FAILED(
-	attributes->GetNamedItem(HStringReference(L"src").Get(),
-				 &srcAttribute));
+	ComPtr<IXmlNode> srcAttribute;
+	RETURN_IF_FAILED(attributes->GetNamedItem
+	    (HStringReference(L"src").Get(), &srcAttribute));
 
-    return SetNodeValueString(
-	HStringReference(imageSrcUri).Get(),
-	srcAttribute.Get(),
-	toastXml);
+	return SetNodeValueString(HStringReference(imageSrcUri).Get(),
+	    srcAttribute.Get(), toastXml);
 }
 #endif
 
