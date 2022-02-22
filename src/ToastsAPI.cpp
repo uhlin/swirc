@@ -41,18 +41,21 @@
 HRESULT
 Toasts::ClearToasts(void)
 {
-    std::unique_ptr<DesktopNotificationHistoryCompat> history;
+	std::unique_ptr<DesktopNotificationHistoryCompat> history;
 
-    /*
-     * Get the history object
-     * (Classic Win32 apps MUST use the compat method to obtain history)
-     */
-    RETURN_IF_FAILED(DesktopNotificationManagerCompat::get_History(&history));
+	/*
+	 * Get the history object
+	 *
+	 * (Classic Win32 apps MUST use the compat method to obtain
+	 * history)
+	 */
+	RETURN_IF_FAILED(DesktopNotificationManagerCompat::get_History
+	    (&history));
 
-    /*
-     * And clear the toasts...
-     */
-    return history->Clear();
+	/*
+	 * And clear the toasts...
+	 */
+	return history->Clear();
 }
 
 /**
