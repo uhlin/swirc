@@ -85,55 +85,57 @@ namespace DesktopNotificationManagerCompat {
 
 class DesktopNotificationHistoryCompat {
 public:
+	/**
+	 * Removes all notifications sent by this app from action
+	 * center.
+	 */
+	HRESULT Clear();
 
-    /**
-     * Removes all notifications sent by this app from action center.
-     */
-    HRESULT Clear();
+	/**
+	 * Gets all notifications sent by this app that are currently
+	 * still in Action Center.
+	 */
+	HRESULT GetHistory(ABI::Windows::Foundation::Collections::IVectorView
+	    <ToastNotification *> **);
 
-    /**
-     * Gets all notifications sent by this app that are currently
-     * still in Action Center.
-     */
-    HRESULT GetHistory(
-	ABI::Windows::Foundation::Collections::
-	IVectorView<ToastNotification *> **history);
+	/**
+	 * Removes an individual toast, with the specified tag label,
+	 * from action center.
+	 *
+	 * @param tag The tag label of the toast notification to be
+	 *            removed.
+	 */
+	HRESULT Remove(const wchar_t *tag);
 
-    /**
-     * Removes an individual toast, with the specified tag label, from
-     * action center.
-     *
-     * @param tag The tag label of the toast notification to be removed.
-     */
-    HRESULT Remove(const wchar_t *tag);
+	/**
+	 * Removes a toast notification from the action using the
+	 * notification's tag and group labels.
+	 *
+	 * @param tag The tag label of the toast notification to be
+	 *            removed.
+	 * @param group The group label of the toast notification to
+	 *              be removed.
+	 */
+	HRESULT RemoveGroupedTag(const wchar_t *tag, const wchar_t *group);
 
-    /**
-     * Removes a toast notification from the action using the
-     * notification's tag and group labels.
-     *
-     * @param tag The tag label of the toast notification to be removed.
-     * @param group The group label of the toast notification to be removed.
-     */
-    HRESULT RemoveGroupedTag(const wchar_t *tag, const wchar_t *group);
+	/**
+	 * Removes a group of toast notifications, identified by the
+	 * specified group label, from action center.
+	 *
+	 * @param group The group label of the toast notifications to
+	 *              be removed.
+	 */
+	HRESULT RemoveGroup(const wchar_t *group);
 
-    /**
-     * Removes a group of toast notifications, identified by the
-     * specified group label, from action center.
-     *
-     * @param group The group label of the toast notifications to be removed.
-     */
-    HRESULT RemoveGroup(const wchar_t *group);
-
-    /**
-     * Do not call this.  Instead, call
-     * DesktopNotificationManagerCompat.get_History() to obtain an
-     * instance.
-     */
-    DesktopNotificationHistoryCompat(
-	const wchar_t *aumid,
-	Microsoft::WRL::ComPtr<IToastNotificationHistory> history);
+	/**
+	 * Do not call this. Instead, call:
+	 * 'DesktopNotificationManagerCompat::get_History()',
+	 * to obtain an instance.
+	 */
+	DesktopNotificationHistoryCompat(const wchar_t *, Microsoft::WRL::ComPtr
+	    <IToastNotificationHistory>);
 
 private:
-    std::wstring m_aumid;
-    Microsoft::WRL::ComPtr<IToastNotificationHistory> m_history = nullptr;
+	std::wstring m_aumid;
+	Microsoft::WRL::ComPtr<IToastNotificationHistory> m_history = nullptr;
 };
