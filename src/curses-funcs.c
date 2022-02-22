@@ -30,8 +30,8 @@
 #include "common.h"
 #include "curses-funcs.h"
 
-bool            g_cursesMode  = false;
-PTR_TO_ENDWIN   g_endwin_fn   = NULL;
+bool g_cursesMode = false;
+PTR_TO_ENDWIN g_endwin_fn = NULL;
 PTR_TO_DOUPDATE g_doupdate_fn = NULL;
 
 void
