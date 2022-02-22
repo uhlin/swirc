@@ -17,7 +17,7 @@ class DECLSPEC_UUID("62337340-CB78-4AE9-A524-685424C52DC7")
     NotificationActivator WrlSealed WrlFinal : public RuntimeClass
     <RuntimeClassFlags<ClassicCom>, INotificationActivationCallback>
 {
-  public:
+public:
 	virtual HRESULT STDMETHODCALLTYPE
 	Activate(LPCWSTR appUserModelId, LPCWSTR invokedArgs,
 	    const NOTIFICATION_USER_INPUT_DATA *data, ULONG dataCount)
