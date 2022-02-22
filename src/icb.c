@@ -909,14 +909,20 @@ icb_send_ping(const char *arg)
 		sendpacket(NULL, "l");
 }
 
-static void
+static bool
 mod_offset(size_t *offset, const char *to_who)
 {
+	static const size_t minimum_msgsize = 30;
+
 	*offset += ICB_MESSAGE_MAX;
 	*offset -= 2;
 	*offset -= strlen(ICB_FIELD_SEP);
 	*offset -= strlen(to_who);
 	*offset -= 1;
+
+	if (*offset < minimum_msgsize)
+		return false;
+	return true;
 }
 
 void
@@ -928,8 +934,16 @@ icb_send_pm(const char *to_who, const char *text)
 	while (was_truncated) {
 		sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who,
 		    &text[offset]);
-		if (was_truncated)
-			mod_offset(&offset, to_who);
+		if (was_truncated && !mod_offset(&offset, to_who)) {
+			PRINTTEXT_CONTEXT ctx;
+
+			printtext_context_init(&ctx, g_active_window,
+			    TYPE_SPEC1_FAILURE, true);
+			printtext(&ctx, "icb_send_pm: too long receiver: "
+			    "did not complete transfer");
+			err_log(ECANCELED, "icb_send_pm: too long receiver");
+			break;
+		}
 	}
 }
 
@@ -950,7 +964,7 @@ icb_send_pm_test1(void **state)
 	sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who,
 	    &text[offset]);
 	assert_true(was_truncated);
-	mod_offset(&offset, to_who);
+	assert_true(mod_offset(&offset, to_who));
 	sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who,
 	    &text[offset]);
 	assert_false(was_truncated);
@@ -978,13 +992,13 @@ icb_send_pm_test2(void **state)
 	    &text[offset]);
 	assert_true(!strncmp(&text[offset], "AAA", 3));
 	assert_true(was_truncated);
-	mod_offset(&offset, to_who);
+	assert_true(mod_offset(&offset, to_who));
 
 	sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who,
 	    &text[offset]);
 	assert_true(!strncmp(&text[offset], "BBB", 3));
 	assert_true(was_truncated);
-	mod_offset(&offset, to_who);
+	assert_true(mod_offset(&offset, to_who));
 
 	sendpacket(&was_truncated, "hm%s%s %s", ICB_FIELD_SEP, to_who,
 	    &text[offset]);
