@@ -97,17 +97,17 @@ Toasts::CreateToastXml(IXmlDocument **toastXml)
 HRESULT
 Toasts::DisplayToast(void)
 {
-    ComPtr<IXmlDocument> toastXml;
+	ComPtr<IXmlDocument> toastXml;
 
-    /*
-     * Create the toast content
-     */
-    RETURN_IF_FAILED(CreateToastXml(&toastXml));
+	/*
+	 * Create the toast content
+	 */
+	RETURN_IF_FAILED(CreateToastXml(&toastXml));
 
-    /*
-     * And show it...
-     */
-    return ShowToast(toastXml.Get());
+	/*
+	 * And show it...
+	 */
+	return ShowToast(toastXml.Get());
 }
 #endif
 
