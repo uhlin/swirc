@@ -12,9 +12,9 @@
  */
 
 #pragma once
-#include <string>
 #include <memory>
-#include <Windows.h>
+#include <string>
+#include <windows.h>
 #include <windows.ui.notifications.h>
 #include <wrl.h>
 #define TOAST_ACTIVATED_LAUNCH_ARG L"-T"
