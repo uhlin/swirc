@@ -27,27 +27,27 @@
 #define TEMP_SEND_TIMEOUT	4
 
 struct server {
-    char *host;
-    char *port;
-    char *pass;
+	char	*host;
+	char	*port;
+	char	*pass;
 };
 
 struct network_connect_context {
-    char *server;
-    char *port;
-    char *password;
-    char *username;
-    char *rl_name;
-    char *nickname;
+	char	*server;
+	char	*port;
+	char	*password;
+	char	*username;
+	char	*rl_name;
+	char	*nickname;
 };
 
 typedef PTR_ARGS_NONNULL int (*NET_SEND_FN)(const char *, ...) PRINTFLIKE(1);
 typedef PTR_ARGS_NONNULL int (*NET_RECV_FN)(struct network_recv_context *, char *, int);
 
 typedef enum {
-    CONNECTION_ESTABLISHED,
-    CONNECTION_FAILED,
-    SHOULD_RETRY_TO_CONNECT
+	CONNECTION_ESTABLISHED,
+	CONNECTION_FAILED,
+	SHOULD_RETRY_TO_CONNECT
 } conn_res_t;
 
 __SWIRC_BEGIN_DECLS
