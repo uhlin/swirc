@@ -8,7 +8,7 @@
 #elif WIN32
 #include "pdcurses/curses.h"
 #else
-#error "Cannot determine curses header file!"
+#error Cannot determine curses header file!
 #endif
 
 typedef int (*PTR_TO_ENDWIN)(void);
