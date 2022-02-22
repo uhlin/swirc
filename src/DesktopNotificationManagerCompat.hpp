@@ -24,63 +24,64 @@ using namespace ABI::Windows::UI::Notifications;
 class DesktopNotificationHistoryCompat;
 
 namespace DesktopNotificationManagerCompat {
-    /**
-     * If not running under the Desktop Bridge, you must call this
-     * method to register your AUMID with the Compat library and to
-     * register your COM CLSID and EXE in LocalServer32 registry. Feel
-     * free to call this regardless, and we will no-op if running
-     * under Desktop Bridge. Call this upon application startup,
-     * before calling any other APIs.
-     *
-     * @param aumid An AUMID that uniquely identifies your application.
-     * @param clsid The CLSID of your NotificationActivator class.
-     */
-    HRESULT RegisterAumidAndComServer(const wchar_t *aumid, GUID clsid);
+	/**
+	 * If not running under the Desktop Bridge, you must call this
+	 * method to register your AUMID with the Compat library and
+	 * to register your COM CLSID and EXE in LocalServer32
+	 * registry. Feel free to call this regardless, and we will
+	 * no-op if running under Desktop Bridge. Call this upon
+	 * application startup, before calling any other APIs.
+	 *
+	 * @param aumid An AUMID that uniquely identifies your
+	 *              application.
+	 * @param clsid The CLSID of your NotificationActivator class.
+	 */
+	HRESULT RegisterAumidAndComServer(const wchar_t *aumid, GUID clsid);
 
-    /**
-     * Registers your module to handle COM activations. Call this upon
-     * application startup.
-     */
-    HRESULT RegisterActivator();
+	/**
+	 * Registers your module to handle COM activations. Call this
+	 * upon application startup.
+	 */
+	HRESULT RegisterActivator();
 
-    /**
-     * Creates a toast notifier. You must have called
-     * RegisterActivator first (and also RegisterAumidAndComServer if
-     * you're a classic Win32 app), or this will throw an exception.
-     */
-    HRESULT CreateToastNotifier(IToastNotifier **notifier);
+	/**
+	 * Creates a toast notifier. You must have called
+	 * RegisterActivator first (and also RegisterAumidAndComServer
+	 * if you're a classic Win32 app), or this will throw an
+	 * exception.
+	 */
+	HRESULT CreateToastNotifier(IToastNotifier **);
 
-    /**
-     * Creates an XmlDocument initialized with the specified
-     * string. This is simply a convenience helper method.
-     */
-    HRESULT CreateXmlDocumentFromString(
-	const wchar_t *xmlString,
-	ABI::Windows::Data::Xml::Dom::IXmlDocument **doc);
+	/**
+	 * Creates an XmlDocument initialized with the specified
+	 * string. This is simply a convenience helper method.
+	 */
+	HRESULT CreateXmlDocumentFromString(const wchar_t *,
+	    ABI::Windows::Data::Xml::Dom::IXmlDocument **);
 
-    /**
-     * Creates a toast notification. This is simply a convenience
-     * helper method.
-     */
-    HRESULT CreateToastNotification(
-	ABI::Windows::Data::Xml::Dom::IXmlDocument *content,
-	IToastNotification **notification);
+	/**
+	 * Creates a toast notification. This is simply a convenience
+	 * helper method.
+	 */
+	HRESULT CreateToastNotification(ABI::Windows::Data::Xml::Dom::
+	    IXmlDocument *, IToastNotification **);
 
-    /**
-     * Gets the DesktopNotificationHistoryCompat object.
-     *
-     * You must have called RegisterActivator first (and also
-     * RegisterAumidAndComServer if you're a classic Win32 app), or
-     * this will throw an exception.
-     */
-    HRESULT get_History(
-	std::unique_ptr<DesktopNotificationHistoryCompat> *history);
+	/**
+	 * Gets the DesktopNotificationHistoryCompat object.
+	 *
+	 * You must have called RegisterActivator first (and also
+	 * RegisterAumidAndComServer if you're a classic Win32 app),
+	 * or this will throw an exception.
+	 */
+	HRESULT get_History(std::unique_ptr<DesktopNotificationHistoryCompat>
+	    *history);
 
-    /**
-     * Gets a boolean representing whether http images can be used
-     * within toasts. This is true if running under Desktop Bridge.
-     */
-    bool CanUseHttpImages();
+	/**
+	 * Gets a boolean representing whether http images can be used
+	 * within toasts. This is true if running under Desktop
+	 * Bridge.
+	 */
+	bool CanUseHttpImages();
 }
 
 class DesktopNotificationHistoryCompat {
