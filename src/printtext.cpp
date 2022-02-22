@@ -276,6 +276,8 @@ append_newline(wchar_t **wc_buf)
 static void
 case_blink(WINDOW *win, bool *is_blink)
 {
+	UNUSED_PARAM(win);
+
 	if (! (*is_blink)) {
 		//WATTR_ON(win, A_BLINK);
 		*is_blink = true;
