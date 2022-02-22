@@ -348,11 +348,11 @@ DesktopNotificationHistoryCompat::RemoveGroupedTag(
 HRESULT
 DesktopNotificationHistoryCompat::RemoveGroup(const wchar_t *group)
 {
-    if (m_aumid.empty()) {
-	return m_history->RemoveGroup(HStringReference(group).Get());
-    } else {
-	return m_history->RemoveGroupWithId(
-	    HStringReference(group).Get(),
-	    HStringReference(m_aumid.c_str()).Get());
-    }
+	if (m_aumid.empty()) {
+		return m_history->RemoveGroup(HStringReference(group).Get());
+	} else {
+		return m_history->RemoveGroupWithId
+		    (HStringReference(group).Get(),
+		    HStringReference(m_aumid.c_str()).Get());
+	}
 }
