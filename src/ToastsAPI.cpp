@@ -62,10 +62,8 @@ Toasts::ClearToasts(void)
 HRESULT
 Toasts::CreateToastXml(IXmlDocument **toastXml)
 {
-    ComPtr<IXmlDocument> doc;
-
-    RETURN_IF_FAILED(
-	DesktopNotificationManagerCompat::CreateXmlDocumentFromString(
+	ComPtr<IXmlDocument> doc;
+	const wchar_t toast[] =
 	    L"<toast>"
 	    L"<visual>"
 	    L"<binding template=\"ToastGeneric\">"
@@ -74,18 +72,20 @@ Toasts::CreateToastXml(IXmlDocument **toastXml)
 	    L"<text></text>"
 	    L"</binding>"
 	    L"</visual>"
-	    L"</toast>",
-	    &doc));
+	    L"</toast>";
 
-    PCWSTR textValues[] = {
-	L"Foo",
-	L"Bar",
-	L"Baz"
-    };
+	RETURN_IF_FAILED(DesktopNotificationManagerCompat::
+	    CreateXmlDocumentFromString(&toast[0], &doc));
 
-    SetTextValues(textValues, ARRAYSIZE(textValues), doc.Get());
+	PCWSTR textValues[] = {
+		L"The",
+		L"universal",
+		L"IRC",
+		L"client!",
+	};
 
-    return doc.CopyTo(toastXml);
+	SetTextValues(textValues, ARRAYSIZE(textValues), doc.Get());
+	return doc.CopyTo(toastXml);
 }
 #endif
 
