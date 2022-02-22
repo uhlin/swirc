@@ -329,20 +329,18 @@ DesktopNotificationHistoryCompat::Remove(const wchar_t *tag)
 }
 
 HRESULT
-DesktopNotificationHistoryCompat::RemoveGroupedTag(
-    const wchar_t *tag,
+DesktopNotificationHistoryCompat::RemoveGroupedTag(const wchar_t *tag,
     const wchar_t *group)
 {
-    if (m_aumid.empty()) {
-	return m_history->RemoveGroupedTag(
-	    HStringReference(tag).Get(),
-	    HStringReference(group).Get());
-    } else {
-	return m_history->RemoveGroupedTagWithId(
-	    HStringReference(tag).Get(),
-	    HStringReference(group).Get(),
-	    HStringReference(m_aumid.c_str()).Get());
-    }
+	if (m_aumid.empty()) {
+		return m_history->RemoveGroupedTag(HStringReference(tag).Get(),
+		    HStringReference(group).Get());
+	} else {
+		return m_history->RemoveGroupedTagWithId
+		    (HStringReference(tag).Get(),
+		    HStringReference(group).Get(),
+		    HStringReference(m_aumid.c_str()).Get());
+	}
 }
 
 HRESULT
