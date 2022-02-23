@@ -1,5 +1,6 @@
 *.log
 !tests/fuzz/*.log
+tests/fuzz/ircfuzz.log
 
 *.cab
 *.dll
