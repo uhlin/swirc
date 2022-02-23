@@ -139,7 +139,7 @@ def choose_submsg():
     submsgs = [
         'CDCC LIST',
         'CDCC SEND',
-        'CDCC XMIT'
+        'CDCC XMIT',
         'CLIENTINFO',
         'DCC CHAT',
         'DCC OFFER',
@@ -151,7 +151,7 @@ def choose_submsg():
         'USERINFO',
         'VERSION',
         'XDCC LIST',
-        'XDCC SEND',
+        'XDCC SEND'
     ]
     return random.choice(submsgs)
 
