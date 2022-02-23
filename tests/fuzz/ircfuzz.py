@@ -136,7 +136,24 @@ def choose_command():
 
 
 def choose_submsg():
-    return random.choice(['DCC SEND', 'DCC CHAT', 'DCC XMIT', 'DCC OFFER', 'XDCC LIST', 'XDCC SEND', 'FINGER', 'VERSION', 'USERINFO', 'CLIENTINFO', 'TIME', 'PING', 'CDCC SEND', 'CDCC LIST', 'CDCC XMIT'])
+    submsgs = [
+        'CDCC LIST',
+        'CDCC SEND',
+        'CDCC XMIT'
+        'CLIENTINFO',
+        'DCC CHAT',
+        'DCC OFFER',
+        'DCC SEND',
+        'DCC XMIT',
+        'FINGER',
+        'PING',
+        'TIME',
+        'USERINFO',
+        'VERSION',
+        'XDCC LIST',
+        'XDCC SEND',
+    ]
+    return random.choice(submsgs)
 
 
 def choose_params(cmd):
