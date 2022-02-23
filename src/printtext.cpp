@@ -990,16 +990,14 @@ get_processed_out_message(
  * Helper function for squeeze_text_deco().
  */
 static void
-handle_foo_situation(char **buffer, long int *i, long int *j,
-		     const char *reject)
+handle_foo_situation(char *buffer, long int &i, long int &j, const char *reject)
 {
-	if (!(*buffer)[*i]) {
+	if (!buffer[i])
 		return;
-	} else if ((*buffer)[*i] == COLOR) {
-		(*i)--;
-	} else if (strchr(reject, (*buffer)[*i]) == NULL) {
-		(*buffer)[(*j)++] = (*buffer)[*i];
-	}
+	else if (buffer[i] == COLOR)
+		i--;
+	else if (strchr(reject, buffer[i]) == NULL)
+		buffer[j++] = buffer[i];
 }
 
 /**
@@ -1289,7 +1287,7 @@ squeeze_text_deco(char *buffer)
 			 * check for ^CN
 			 */
 			if (!sw_isdigit(buffer[++i])) {
-				handle_foo_situation(&buffer, &i, &j, reject);
+				handle_foo_situation(buffer, i, j, reject);
 				break;
 			}
 
@@ -1297,7 +1295,7 @@ squeeze_text_deco(char *buffer)
 			 * check for ^CNN or ^CN,
 			 */
 			if (!sw_isdigit(buffer[++i]) && buffer[i] != ',') {
-				handle_foo_situation(&buffer, &i, &j, reject);
+				handle_foo_situation(buffer, i, j, reject);
 				break;
 			}
 
@@ -1312,10 +1310,10 @@ squeeze_text_deco(char *buffer)
 				/* ^CN,N */;
 			} else if (has_comma && !sw_isdigit(buffer[i])) {
 				i--;
-				handle_foo_situation(&buffer, &i, &j, reject);
+				handle_foo_situation(buffer, i, j, reject);
 				break;
 			} else {
-				handle_foo_situation(&buffer, &i, &j, reject);
+				handle_foo_situation(buffer, i, j, reject);
 				break;
 			}
 
@@ -1327,7 +1325,7 @@ squeeze_text_deco(char *buffer)
 			if (buffer[i] == ',') { /* ^CNN, */
 				if (!sw_isdigit(buffer[++i])) {
 					i--;
-					handle_foo_situation(&buffer, &i, &j,
+					handle_foo_situation(buffer, i, j,
 					    reject);
 					break;
 				}
@@ -1335,7 +1333,7 @@ squeeze_text_deco(char *buffer)
 				sw_assert(sw_isdigit(buffer[i]));
 				if (sw_isdigit(buffer[++i])) /* we have ^CN,NN? */
 					break;
-				handle_foo_situation(&buffer, &i, &j, reject);
+				handle_foo_situation(buffer, i, j, reject);
 				break;
 			}
 
@@ -1343,7 +1341,7 @@ squeeze_text_deco(char *buffer)
 			 * check for ^CNN,NN
 			 */
 			if (!sw_isdigit(buffer[++i])) {
-				handle_foo_situation(&buffer, &i, &j, reject);
+				handle_foo_situation(buffer, i, j, reject);
 				break;
 			}
 
