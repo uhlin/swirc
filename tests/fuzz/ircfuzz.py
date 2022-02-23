@@ -106,11 +106,33 @@ def choose_nick():
     return choose_params('WALLOPS')[0]
 
 
-numericals = [bytes(i).zfill(3) for i in range(1, 395)]
-
-
 def choose_command():
-    return random.choice(numericals + ['001', '002', '003', '004', '005', '302', '303', '301', '305', '306', '311', '312', 'ACTION', 'AWAY', 'CTCP', 'INVITE', 'JOIN', 'LIST', 'MODE', 'NAMES', 'NCTCP', 'NICK', 'NOTICE', 'OPER', 'PASS', 'PRIVMSG', 'SETNAME', 'SQUERY', 'TOPIC', 'WALLOPS', 'WHO']*100)
+    bytes_array = [bytes(i).zfill(3) for i in range(1, 395)]
+    irc_cmds = [
+        '001', '002', '003', '004', '005',
+        '301', '302', '303', '305', '306',
+        '311', '312',
+        'ACTION',
+        'AWAY',
+        'CTCP',
+        'INVITE',
+        'JOIN',
+        'LIST',
+        'MODE',
+        'NAMES',
+        'NCTCP',
+        'NICK',
+        'NOTICE',
+        'OPER',
+        'PASS',
+        'PRIVMSG',
+        'SETNAME',
+        'SQUERY',
+        'TOPIC',
+        'WALLOPS',
+        'WHO'
+    ]
+    return random.choice(bytes_array + irc_cmds * 100)
 
 
 def choose_submsg():
