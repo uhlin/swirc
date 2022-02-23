@@ -1,5 +1,5 @@
 /* Read user input
-   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -57,6 +57,8 @@
 *  -------------- Objects with external linkage --------------  *
 *                                                               *
 ****************************************************************/
+
+PREADLINE_POS g_readline_pos = NULL;
 
 bool		g_readline_loop = false;
 bool		g_resize_requested = false;
@@ -738,6 +740,10 @@ process(volatile struct readline_session_context *ctx)
 void
 readline_init(void)
 {
+	g_readline_pos = xcalloc(sizeof *g_readline_pos, 1);
+	g_readline_pos->x = -1;
+	g_readline_pos->y = -1;
+
 	readline_pan1 = term_new_panel(1, 0, LINES - 1, 0);
 	readline_pan2 = term_new_panel(1, 0, LINES - 1, 0);
 
@@ -751,6 +757,9 @@ readline_init(void)
 void
 readline_deinit(void)
 {
+	free(g_readline_pos);
+	g_readline_pos = NULL;
+
 	term_remove_panel(readline_pan1);
 	term_remove_panel(readline_pan2);
 }

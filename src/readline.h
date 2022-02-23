@@ -39,6 +39,11 @@ enum { /* custom, additional keys */
 
 #define WINDOWS_KEY_ENTER 459
 
+typedef struct tagREADLINE_POS {
+	int x;
+	int y;
+} READLINE_POS, *PREADLINE_POS;
+
 typedef struct tagTAB_COMPLETION {
 	char search_var[64];
 	bool isInCirculationModeForHelp;
@@ -65,6 +70,8 @@ struct readline_session_context {
 };
 
 __SWIRC_BEGIN_DECLS
+extern PREADLINE_POS g_readline_pos;
+
 extern bool	g_readline_loop;
 extern bool	g_resize_requested;
 extern jmp_buf	g_readline_loc_info;
