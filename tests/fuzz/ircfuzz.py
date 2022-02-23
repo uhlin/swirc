@@ -61,17 +61,45 @@ print('Socket bind complete')
 s.listen(10)
 print('Socket now listening')
 
-param_cnt = {'001': 0, '002': 0, '003': 0, '004': 0, '005': 0, '302': 0,
-        '303': 0, '301': 1, '305': 0, '306': 0, '311': 0, '312': 0,
-        'ACTION': 0, 'AWAY': random.choice([0, 1]), 'CTCP': random.choice([3, 4]),
-        'INVITE': 2, 'JOIN': random.choice([1, 2]), 'KICK': random.choice([2, 3]),
-        'KILL': 2, 'LIST': random.choice([0, 1]), 'MODE': random.choice([2, 3]),
-        'NAMES': random.choice([0, 1, 2]), 'NCTCP': random.choice([2, 3]),
-        'NICK': random.choice([1, 2]), 'NOTICE': 2, 'OPER': 2,
-        'PART': random.choice([1, 2]), 'PASS': 1, 'PONG': random.choice([1, 2]),
-        'PRIVMSG': 2, 'QUIT': random.choice([0, 1]), 'SETNAME': 1,
-        'SILENCE': random.choice([0, 1]), 'SQUERY': 2, 'TOPIC': random.choice([1, 2]),
-        'WALLOPS': 1, 'WHO': random.choice([0, 1])}
+param_cnt = {
+    '001': 0,
+    '002': 0,
+    '003': 0,
+    '004': 0,
+    '005': 0,
+    '301': 1,
+    '302': 0,
+    '303': 0,
+    '305': 0,
+    '306': 0,
+    '311': 0,
+    '312': 0,
+    'ACTION': 0,
+    'AWAY': random.choice([0, 1]),
+    'CTCP': random.choice([3, 4]),
+    'INVITE': 2,
+    'JOIN': random.choice([1, 2]),
+    'KICK': random.choice([2, 3]),
+    'KILL': 2,
+    'LIST': random.choice([0, 1]),
+    'MODE': random.choice([2, 3]),
+    'NAMES': random.choice([0, 1, 2]),
+    'NCTCP': random.choice([2, 3]),
+    'NICK': random.choice([1, 2]),
+    'NOTICE': 2,
+    'OPER': 2,
+    'PART': random.choice([1, 2]),
+    'PASS': 1,
+    'PONG': random.choice([1, 2]),
+    'PRIVMSG': 2,
+    'QUIT': random.choice([0, 1]),
+    'SETNAME': 1,
+    'SILENCE': random.choice([0, 1]),
+    'SQUERY': 2,
+    'TOPIC': random.choice([1, 2]),
+    'WALLOPS': 1,
+    'WHO': random.choice([0, 1])
+}
 
 
 def choose_nick():
