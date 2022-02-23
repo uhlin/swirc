@@ -20,13 +20,13 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-from _thread import *
 import os
 import random
 import socket
 import string
 import sys
 import time
+from _thread import *
 
 
 # change my_nick to reflect the client's nick
