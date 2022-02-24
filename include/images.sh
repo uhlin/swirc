@@ -1,4 +1,6 @@
 IMAGES="
+GitHub-Mark-120px-plus.png
+GitHub-Mark-Light-120px-plus.png
 blue-globe.ico
 blue-globe.png
 debian128X128.png
@@ -10,6 +12,7 @@ sp100clean.png
 swirc-royal-110x110.png
 swirc-royal.ico
 swirc-royal.png
+ubuntu128X128.png
 void128X128.png
 windows128X128.png
 "
