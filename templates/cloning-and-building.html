@@ -28,7 +28,7 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2019-11-23</em></small></p>
+<p><small><em>Updated: 2022-02-24</em></small></p>
 <h3>Cloning</h3>
 <p>
 To clone the repository use
@@ -61,6 +61,18 @@ is installed, issue:
 <p class="snippet">
 <kbd>$ brew install libressl</kbd>
 </p>
+<h5>FreeBSD</h5>
+<p class="snippet">
+<kbd># pkg install curl libidn</kbd>
+</p>
+<h5>NetBSD</h5>
+<p class="snippet">
+<kbd># pkgin install curl libidn ncursesw</kbd>
+</p>
+<h5>Void GNU/Linux</h5>
+<p class="snippet">
+<kbd># xbps-install -S libcurl-devel libressl-devel ncurses-devel libidn-devel</kbd>
+</p>
 <h4>Building for the UNIX environment</h4>
 <p>
 On the BSDs and GNU/Linux the configure script will per default
@@ -78,9 +90,27 @@ OS X works.
 <kbd>$ ./configure</kbd><br>
 <kbd>$ make</kbd>
 </p>
-<p>Installing it (under <kbd>/usr/local</kbd>):</p>
+<h5>Configuration options</h5>
+<p>The following options can be passed to the configure script:</p>
+<ul>
+<li><kbd>--with-libnotify</kbd>: Enable support for desktop notifications</li>
+<li><kbd>--without-libidn</kbd>: Build without GNU libidn</li>
+<li><kbd>--without-libintl</kbd>: No internationalization</li>
+</ul>
+<h5>Install</h5>
+<p>Installing it under <kbd>/usr/local</kbd>:</p>
 <p class="snippet">
 <kbd>$ sudo make install</kbd>
+</p>
+<p>
+Installing it under
+<kbd>/home/user</kbd>
+without the translations
+(in which case you also should've passed <kbd>--without-libintl</kbd>
+to the configure script):
+</p>
+<p class="snippet">
+<kbd>$ PREFIX=/home/user make install-no-lc-msgs</kbd>
 </p>
 <h4>Building for Windows</h4>
 <p>
