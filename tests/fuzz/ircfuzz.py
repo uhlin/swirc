@@ -190,7 +190,7 @@ def fuzz():
     # prefix = ':127.0.0.1 '
     command = choose_command()
     params = ' '.join(choose_params(command))
-    for i in range(random.randint(0, 5)):
+    for _ in range(random.randint(0, 5)):
         if channels:
             channel = random.choice(channels)
             channels.remove(channel)
