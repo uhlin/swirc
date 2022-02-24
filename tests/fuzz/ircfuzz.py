@@ -195,7 +195,7 @@ def fuzz():
     prefix = ''
     if random.choice([True, True, True, False]):
         prefix = ':%s ' % choose_nick()
-    #prefix = ':127.0.0.1 '
+    # prefix = ':127.0.0.1 '
     command = choose_command()
     params = ' '.join(choose_params(command))
     for i in range(random.randint(0, 5)):
@@ -204,8 +204,20 @@ def fuzz():
             channels.remove(channel)
             sendall(':%s PART %s\r\n' % (my_nick, channel))
     if random.choice([0, 1, 2, 3, 4, 5, 6]) >= 4:
-        return '%s%s %s :\x01%s %s%s%s' % (prefix, 'PRIVMSG', choose_nick(), choose_submsg(), params[:100] if len(params) > 100 else params, random.choice(['\x01', '']), random.choice(['\r\n', '\n', '']))
-    return '%s%s %s %s%s' % (prefix, command, choose_nick(), params[:100] if len(params) > 100 else params, random.choice(['\r\n', '\n', '']))
+        return ('%s%s %s :\x01%s %s%s%s' %
+            (prefix,
+             'PRIVMSG',
+             choose_nick(),
+             choose_submsg(),
+             params[:100] if len(params) > 100 else params,
+             random.choice(['\x01', '']),
+             random.choice(['\r\n', '\n', ''])))
+    return ('%s%s %s %s%s' %
+        (prefix,
+         command,
+         choose_nick(),
+         params[:100] if len(params) > 100 else params,
+         random.choice(['\r\n', '\n', ''])))
 
 
 def send(to_send):
