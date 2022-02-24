@@ -29,9 +29,8 @@ import time
 from _thread import *
 
 
-# change my_nick to reflect the client's nick
 MY_NICK = 'joseph'
-server_ip = '127.0.0.1'
+SERVER_IP = '127.0.0.1'
 channels = []
 
 
@@ -232,19 +231,19 @@ def sendall(to_send):
 
 def clientthread(conn):
     data = conn.recv(1024)
-    send(':%s 001 %s :a\r\n' % (server_ip, MY_NICK))
-    send(':%s 002 %s :a\r\n' % (server_ip, MY_NICK))
-    send(':%s 003 %s :a\r\n' % (server_ip, MY_NICK))
-    send(':%s 004 %s :a\r\n' % (server_ip, MY_NICK))
-    send(':%s 005 %s :a\r\n' % (server_ip, MY_NICK))
-    send(':%s 251 %s :a\r\n' % (server_ip, MY_NICK))
-    send(':%s 252 %s :a\r\n' % (server_ip, MY_NICK))
-    send(':%s 253 %s :a\r\n' % (server_ip, MY_NICK))
-    send(':%s 254 %s :a\r\n' % (server_ip, MY_NICK))
-    send(':%s 255 %s :a\r\n' % (server_ip, MY_NICK))
-    send(':%s 375 %s :a\r\n' % (server_ip, MY_NICK))
-    send(':%s 372 %s :a\r\n' % (server_ip, MY_NICK))
-    send(':%s 376 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 001 %s :a\r\n' % (SERVER_IP, MY_NICK))
+    send(':%s 002 %s :a\r\n' % (SERVER_IP, MY_NICK))
+    send(':%s 003 %s :a\r\n' % (SERVER_IP, MY_NICK))
+    send(':%s 004 %s :a\r\n' % (SERVER_IP, MY_NICK))
+    send(':%s 005 %s :a\r\n' % (SERVER_IP, MY_NICK))
+    send(':%s 251 %s :a\r\n' % (SERVER_IP, MY_NICK))
+    send(':%s 252 %s :a\r\n' % (SERVER_IP, MY_NICK))
+    send(':%s 253 %s :a\r\n' % (SERVER_IP, MY_NICK))
+    send(':%s 254 %s :a\r\n' % (SERVER_IP, MY_NICK))
+    send(':%s 255 %s :a\r\n' % (SERVER_IP, MY_NICK))
+    send(':%s 375 %s :a\r\n' % (SERVER_IP, MY_NICK))
+    send(':%s 372 %s :a\r\n' % (SERVER_IP, MY_NICK))
+    send(':%s 376 %s :a\r\n' % (SERVER_IP, MY_NICK))
 
     # Client might not like it if we jump straight into fuzzing
     # So we can potentially insert a short delay
