@@ -36,7 +36,7 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2019-11-23</em></small></p>
+<p><small><em>Updated: 2022-02-24</em></small></p>
 <h3>Configuration options in swirc.conf</h3>
 <p>
 <span class="note">NOTE</span>
@@ -156,11 +156,7 @@ ChanServ hostname
 	<li>secure</li>
 	<li>compat</li>
 	<li>legacy</li>
-	<li>
-insecure
-(which should've been named all because it will never be used because
-of its name)
-	</li>
+	<li>all</li>
       </ul>
     </td>
   </tr>
@@ -238,7 +234,10 @@ users are invited to channels
   </tr>
   <tr>
     <td class="desc">
-Enable or disable IRCv3 server time extension
+Enable or disable IRCv3 server time extension.
+The server time extension is particularly useful if you're using an
+IRC bouncer like
+<a href="https://znc.in/">ZNC</a>.
     </td>
   </tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -512,6 +511,31 @@ SASL username
     </td>
   </tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =================== -->
+<!-- SERVER CIPHER SUITE -->
+<!-- =================== -->
+  <tr>
+    <td>
+      <strong>server_cipher_suite</strong>
+      (<span class="opttype">string</span>)
+    </td>
+  </tr>
+  <tr>
+    <td class="desc">
+      Server cipher suite.
+      Which can have one of the following values:
+      <ul>
+	<li>secure</li>
+	<li>compat</li>
+	<li>legacy</li>
+	<li>all</li>
+      </ul>
+      The server cipher suite is used when you start a TLS server in
+      <strong>swirc</strong>
+      used for remote GUI connections.
+    </td>
+  </tr>
+<!--<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>-->
 <!-- ============== -->
 <!-- SHOW PING PONG -->
 <!-- ============== -->
