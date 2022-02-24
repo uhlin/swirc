@@ -180,7 +180,7 @@ def choose_params(cmd):
         if random.randint(0, 20) > 16:
             if len(param) > 10:
                 pos = random.randint(len(param) - 9, len(param) - 1)
-                param = param[:pos] + '\t' + param[pos + 1:]
+                params[i] = params[i][:pos] + '\t' + params[i][pos + 1:]
     return params
 
 def fuzz():
