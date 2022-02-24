@@ -28,16 +28,13 @@ import sys
 import time
 from _thread import *
 
-
 MY_NICK = 'joseph'
 SERVER_IP = '127.0.0.1'
 channels = []
 
-
 def get_random_ascii(length):
     return ''.join(random.choices(string.ascii_uppercase + string.digits,
         k=length))
-
 
 HOST = ''
 PORT = 6667
@@ -101,10 +98,8 @@ param_cnt = {
     'WHO': random.choice([0, 1])
 }
 
-
 def choose_nick():
     return choose_params('WALLOPS')[0]
-
 
 def choose_command():
     bytes_array = [bytes(i).zfill(3) for i in range(1, 395)]
@@ -134,7 +129,6 @@ def choose_command():
     ]
     return random.choice(bytes_array + irc_cmds * 100)
 
-
 def choose_submsg():
     submsgs = [
         'CDCC LIST',
@@ -154,7 +148,6 @@ def choose_submsg():
         'XDCC SEND'
     ]
     return random.choice(submsgs)
-
 
 def choose_params(cmd):
     params = []
@@ -190,7 +183,6 @@ def choose_params(cmd):
                 params[i] = params[i][:pos] + '\t' + params[i][pos + 1:]
     return params
 
-
 def fuzz():
     prefix = ''
     if random.choice([True, True, True, False]):
@@ -219,16 +211,13 @@ def fuzz():
          params[:100] if len(params) > 100 else params,
          random.choice(['\r\n', '\n', ''])))
 
-
 def send(to_send):
     log.write(to_send.encode('utf-8'))
     conn.send(to_send.encode('utf-8'))
 
-
 def sendall(to_send):
     log.write(to_send.encode('utf-8'))
     conn.sendall(to_send.encode('utf-8'))
-
 
 def clientthread(conn):
     conn.recv(1024)
@@ -258,7 +247,6 @@ def clientthread(conn):
 
     conn.close()
     print('Socket broken')
-
 
 while True:
     try:
