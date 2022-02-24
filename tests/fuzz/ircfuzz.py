@@ -176,11 +176,11 @@ def choose_params(cmd):
         params.append(random.choice(elements))
     if params and random.choice([True, False]):
         params[-1] = ':' + params[-1]
-    for i in range(len(params)):
+    for i, param in enumerate(params):
         if random.randint(0, 20) > 16:
-            if len(params[i]) > 10:
-                pos = random.randint(len(params[i]) - 9, len(params[i]) - 1)
-                params[i] = params[i][:pos] + '\t' + params[i][pos + 1:]
+            if len(param) > 10:
+                pos = random.randint(len(param) - 9, len(param) - 1)
+                param = param[:pos] + '\t' + param[pos + 1:]
     return params
 
 def fuzz():
