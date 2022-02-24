@@ -160,21 +160,34 @@ def choose_params(cmd):
     params = []
     if cmd not in param_cnt:
         param_cnt[cmd] = 0
-    for i in range(random.randint(param_cnt[cmd], param_cnt[cmd]+random.randint(0, 4))+1):
-        params.append(random.choice([''+get_random_ascii(random.randint(0, 2)),
-            ''+get_random_ascii(random.randint(0, 2)), 'a', '', 'c', 'd', my_nick,
-            'p'*(random.randint(0, 2)), ''+get_random_ascii(random.randint(0, 5)),
-            ''+get_random_ascii(random.randint(0, 5)), ''+get_random_ascii(random.randint(0, 3)),
-            ''+get_random_ascii(random.randint(0, 3)),
-            ''+get_random_ascii(random.randint(0, 1))*(2**random.randint(0, 6)+random.randint(-1000, 1000)),
-            'http://'+get_random_ascii(random.randint(0, 2))+'.com/'+get_random_ascii(random.randint(0, 2))]))
+    for i in range(random.randint(param_cnt[cmd], param_cnt[cmd] +
+            random.randint(0, 4)) + 1):
+        elements = [
+            '' + get_random_ascii(random.randint(0, 2)),
+            '' + get_random_ascii(random.randint(0, 2)),
+            'a',
+            '',
+            'c',
+            'd',
+            my_nick,
+            'p' * (random.randint(0, 2)),
+            '' + get_random_ascii(random.randint(0, 5)),
+            '' + get_random_ascii(random.randint(0, 5)),
+            '' + get_random_ascii(random.randint(0, 3)),
+            '' + get_random_ascii(random.randint(0, 3)),
+            '' + get_random_ascii(random.randint(0, 1)) *
+            (2 ** random.randint(0, 6) + random.randint(-1000, 1000)),
+            'http://' + get_random_ascii(random.randint(0, 2)) + '.com/' +
+            get_random_ascii(random.randint(0, 2))
+        ]
+        params.append(random.choice(elements))
     if params and random.choice([True, False]):
         params[-1] = ':' + params[-1]
     for i in range(len(params)):
-        if (random.randint(0, 20) > 16):
+        if random.randint(0, 20) > 16:
             if len(params[i]) > 10:
-                pos = random.randint(len(params[i])-9, len(params[i])-1)
-                params[i] = params[i][:pos] + '\t' + params[i][pos+1:]
+                pos = random.randint(len(params[i]) - 9, len(params[i]) - 1)
+                params[i] = params[i][:pos] + '\t' + params[i][pos + 1:]
     return params
 
 
