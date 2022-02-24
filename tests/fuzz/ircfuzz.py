@@ -35,7 +35,8 @@ channels = []
 
 
 def get_random_ascii(length):
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+    return ''.join(random.choices(string.ascii_uppercase + string.digits,
+        k=length))
 
 
 HOST = ''
