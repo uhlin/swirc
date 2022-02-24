@@ -231,7 +231,8 @@ def sendall(to_send):
 
 
 def clientthread(conn):
-    data = conn.recv(1024)
+    conn.recv(1024)
+
     send(':%s 001 %s :a\r\n' % (SERVER_IP, MY_NICK))
     send(':%s 002 %s :a\r\n' % (SERVER_IP, MY_NICK))
     send(':%s 003 %s :a\r\n' % (SERVER_IP, MY_NICK))
@@ -246,17 +247,10 @@ def clientthread(conn):
     send(':%s 372 %s :a\r\n' % (SERVER_IP, MY_NICK))
     send(':%s 376 %s :a\r\n' % (SERVER_IP, MY_NICK))
 
-    # Client might not like it if we jump straight into fuzzing
-    # So we can potentially insert a short delay
-    #time.sleep(0)
-
     while True:
         try:
-            # Some clients don't like too fast a rate
             time.sleep(0.02)
-            reply = fuzz()
-
-            sendall(reply)
+            sendall(fuzz())
         except socket.error as e:
             break
         except Exception as e:
