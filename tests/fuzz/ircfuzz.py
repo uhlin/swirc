@@ -30,7 +30,7 @@ from _thread import *
 
 
 # change my_nick to reflect the client's nick
-my_nick = 'joseph'
+MY_NICK = 'joseph'
 server_ip = '127.0.0.1'
 channels = []
 
@@ -169,7 +169,7 @@ def choose_params(cmd):
             '',
             'c',
             'd',
-            my_nick,
+            MY_NICK,
             'p' * (random.randint(0, 2)),
             '' + get_random_ascii(random.randint(0, 5)),
             '' + get_random_ascii(random.randint(0, 5)),
@@ -202,7 +202,7 @@ def fuzz():
         if channels:
             channel = random.choice(channels)
             channels.remove(channel)
-            sendall(':%s PART %s\r\n' % (my_nick, channel))
+            sendall(':%s PART %s\r\n' % (MY_NICK, channel))
     if random.choice([0, 1, 2, 3, 4, 5, 6]) >= 4:
         return ('%s%s %s :\x01%s %s%s%s' %
             (prefix,
@@ -232,19 +232,19 @@ def sendall(to_send):
 
 def clientthread(conn):
     data = conn.recv(1024)
-    send(':%s 001 %s :a\r\n' % (server_ip, my_nick))
-    send(':%s 002 %s :a\r\n' % (server_ip, my_nick))
-    send(':%s 003 %s :a\r\n' % (server_ip, my_nick))
-    send(':%s 004 %s :a\r\n' % (server_ip, my_nick))
-    send(':%s 005 %s :a\r\n' % (server_ip, my_nick))
-    send(':%s 251 %s :a\r\n' % (server_ip, my_nick))
-    send(':%s 252 %s :a\r\n' % (server_ip, my_nick))
-    send(':%s 253 %s :a\r\n' % (server_ip, my_nick))
-    send(':%s 254 %s :a\r\n' % (server_ip, my_nick))
-    send(':%s 255 %s :a\r\n' % (server_ip, my_nick))
-    send(':%s 375 %s :a\r\n' % (server_ip, my_nick))
-    send(':%s 372 %s :a\r\n' % (server_ip, my_nick))
-    send(':%s 376 %s :a\r\n' % (server_ip, my_nick))
+    send(':%s 001 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 002 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 003 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 004 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 005 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 251 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 252 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 253 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 254 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 255 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 375 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 372 %s :a\r\n' % (server_ip, MY_NICK))
+    send(':%s 376 %s :a\r\n' % (server_ip, MY_NICK))
 
     # Client might not like it if we jump straight into fuzzing
     # So we can potentially insert a short delay
