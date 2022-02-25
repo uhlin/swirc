@@ -153,10 +153,10 @@ def choose_params(cmd):
         elements = [
             '' + get_random_ascii(random.randint(0, 2)),
             '' + get_random_ascii(random.randint(0, 2)),
-            'a',
+            '#a',
             '',
-            'c',
-            'd',
+            '#c',
+            '#d',
             MY_NICK,
             'p' * (random.randint(0, 2)),
             '' + get_random_ascii(random.randint(0, 5)),
