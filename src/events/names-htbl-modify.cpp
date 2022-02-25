@@ -39,8 +39,7 @@
 #define hash(str) hash_djb_g(str, true, NAMES_HASH_TABLE_SIZE)
 
 int
-event_names_htbl_modify_owner(const char *nick, const char *channel,
-    bool is_owner)
+names_htbl_modify::owner(const char *nick, const char *channel, bool is_owner)
 {
 	PIRC_WINDOW	window;
 	PNAMES		names;
@@ -98,7 +97,7 @@ event_names_htbl_modify_owner(const char *nick, const char *channel,
 }
 
 int
-event_names_htbl_modify_superop(const char *nick, const char *channel,
+names_htbl_modify::superop(const char *nick, const char *channel,
     bool is_superop)
 {
 	PIRC_WINDOW	window;
@@ -156,7 +155,7 @@ event_names_htbl_modify_superop(const char *nick, const char *channel,
 }
 
 int
-event_names_htbl_modify_op(const char *nick, const char *channel, bool is_op)
+names_htbl_modify::op(const char *nick, const char *channel, bool is_op)
 {
 	PIRC_WINDOW	window;
 	PNAMES		names;
@@ -209,8 +208,7 @@ event_names_htbl_modify_op(const char *nick, const char *channel, bool is_op)
 }
 
 int
-event_names_htbl_modify_halfop(const char *nick, const char *channel,
-    bool is_halfop)
+names_htbl_modify::halfop(const char *nick, const char *channel, bool is_halfop)
 {
 	PIRC_WINDOW	window;
 	PNAMES		names;
@@ -260,8 +258,7 @@ event_names_htbl_modify_halfop(const char *nick, const char *channel,
 }
 
 int
-event_names_htbl_modify_voice(const char *nick, const char *channel,
-    bool is_voice)
+names_htbl_modify::voice(const char *nick, const char *channel, bool is_voice)
 {
 	PIRC_WINDOW	window;
 	PNAMES		names;
