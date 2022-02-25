@@ -49,6 +49,9 @@
 #define SHUTDOWN_IRC_CONNECTION_BEHAVIOR 0
 #define TM_STRUCT_MSG "unable to retrieve tm structure"
 
+#define log_unwanted_pm_state() \
+	err_log(EINVAL, "%s: error: neither +/-", __func__)
+
 /* event_chan_hp: 328
 
    Example:
@@ -266,7 +269,8 @@ chg_status_for_owner(plus_minus_state_t pm_state, const char *nick,
 		break;
 	case STATE_NEITHER_PM:
 	default:
-		sw_assert_not_reached();
+		log_unwanted_pm_state();
+		break;
 	}
 }
 
@@ -285,7 +289,8 @@ chg_status_for_superop(plus_minus_state_t pm_state, const char *nick,
 		break;
 	case STATE_NEITHER_PM:
 	default:
-		sw_assert_not_reached();
+		log_unwanted_pm_state();
+		break;
 	}
 }
 
@@ -304,7 +309,8 @@ chg_status_for_op(plus_minus_state_t pm_state, const char *nick,
 		break;
 	case STATE_NEITHER_PM:
 	default:
-		sw_assert_not_reached();
+		log_unwanted_pm_state();
+		break;
 	}
 }
 
@@ -323,7 +329,8 @@ chg_status_for_halfop(plus_minus_state_t pm_state, const char *nick,
 		break;
 	case STATE_NEITHER_PM:
 	default:
-		sw_assert_not_reached();
+		log_unwanted_pm_state();
+		break;
 	}
 }
 
@@ -342,7 +349,8 @@ chg_status_for_voice(plus_minus_state_t pm_state, const char *nick,
 		break;
 	case STATE_NEITHER_PM:
 	default:
-		sw_assert_not_reached();
+		log_unwanted_pm_state();
+		break;
 	}
 }
 
