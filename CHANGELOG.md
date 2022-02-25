@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Added event 335 (`RPL_WHOISBOT`)
 - Added global hashfunctions
 - Added theme item `whois_bot`
+- Changed the statusbar to display readline stats
 - Converted
   - `commands/services.c` -> `commands/services.cpp`
   - `config.c` -> `config.cpp`
