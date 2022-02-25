@@ -28,7 +28,7 @@ import sys
 import time
 from _thread import *
 
-MY_NICK = 'joseph'
+MY_NICK = 'maxxe'
 SERVER_IP = '127.0.0.1'
 channels = []
 
