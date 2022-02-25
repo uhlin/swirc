@@ -1,5 +1,5 @@
 /* Swirc statusbar
-   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -39,6 +39,7 @@
 #include "dataClassify.h"
 #include "irc.h"
 #include "printtext.h"
+#include "readline.h"
 #include "statusbar.h"
 #include "strHand.h"
 #include "terminal.h"
@@ -108,6 +109,20 @@ get_pair_num()
 	if ((pair_n = color_pair_find(fg, bg)) != -1)
 		return pair_n;
 	return 0;
+}
+
+static std::string
+get_readline_pos()
+{
+	std::string	str("");
+
+	if (g_readline_pos) {
+		str.append(std::to_string(g_readline_pos->x));
+		str.push_back(',');
+		str.append(std::to_string(g_readline_pos->y));
+	}
+
+	return str;
 }
 
 void
@@ -180,6 +195,9 @@ statusbar_update_display_beta(void)
 	(void) str.append(")");
 	(void) str.append(rb);
 #endif
+
+	(void) str.append(" ");
+	(void) str.append(lb).append(get_readline_pos()).append(rb);
 
 	(void) str.append(" ");
 	(void) str.append(lb).append(get_nick_and_server()).append(rb);

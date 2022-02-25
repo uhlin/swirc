@@ -47,6 +47,7 @@
 #include "readline.h"
 #include "readlineAPI.h"
 #include "readlineTabCompletion.h"
+#include "statusbar.h"
 #include "strHand.h"
 #include "terminal.h"
 
@@ -560,6 +561,16 @@ process(volatile struct readline_session_context *ctx)
 
 		ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
 		ctx->no_bufspc = (ctx->n_insert + 1 >= readline_bufsize);
+
+		if (*buf_p == L'\0' && g_readline_pos != NULL) {
+			if (g_readline_pos->x != ctx->bufpos ||
+			    g_readline_pos->y != ctx->n_insert) {
+				g_readline_pos->x = ctx->bufpos;
+				g_readline_pos->y = ctx->n_insert;
+				statusbar_update_display_beta();
+				readline_top_panel();
+			}
+		}
 
 		if (*buf_p != L'\0') {
 			wc = *buf_p++;
