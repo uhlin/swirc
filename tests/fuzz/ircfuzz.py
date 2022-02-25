@@ -30,7 +30,7 @@ from _thread import *
 
 MY_NICK = 'maxxe'
 SERVER_IP = '127.0.0.1'
-channels = []
+channels = ['#libera', '#linux', '#swirc', '#test']
 
 def get_random_ascii(length):
     return ''.join(random.choices(string.ascii_uppercase + string.digits,
