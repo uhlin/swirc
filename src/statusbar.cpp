@@ -117,9 +117,13 @@ get_readline_pos()
 	std::string	str("");
 
 	if (g_readline_pos) {
-		str.append(std::to_string(g_readline_pos->x));
-		str.push_back(',');
-		str.append(std::to_string(g_readline_pos->y));
+		if (g_readline_pos->x == g_readline_pos->y) {
+			str.append(std::to_string(g_readline_pos->x));
+		} else {
+			str.append(std::to_string(g_readline_pos->x));
+			str.push_back(',');
+			str.append(std::to_string(g_readline_pos->y));
+		}
 	}
 
 	return str;
