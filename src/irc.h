@@ -39,6 +39,7 @@ extern const char g_forbidden_chan_name_chars[];
 extern bool	 g_alt_nick_tested;
 extern bool	 g_am_irc_op;
 extern bool	 g_is_away;
+extern bool	 g_received_welcome;
 
 extern char	*g_my_nickname;
 extern char	*g_server_hostname;

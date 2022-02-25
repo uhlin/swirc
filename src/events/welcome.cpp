@@ -32,6 +32,7 @@
 #include <stdexcept>
 
 #include "../dataClassify.h"
+#include "../errHand.h"
 #include "../irc.h"
 #include "../main.h"
 #include "../network.h"
@@ -64,6 +65,12 @@ void
 event_welcome(struct irc_message_compo *compo)
 {
 	PRINTTEXT_CONTEXT	ctx;
+
+	if (g_received_welcome) {
+		err_log(EPROTO, "event_welcome(%s): fatal: "
+		    "already received welcome!", compo->command);
+		return;
+	}
 
 	try {
 		char	*msg = NULL;
@@ -105,6 +112,7 @@ event_welcome(struct irc_message_compo *compo)
 		printtext(&ctx, "%s", msg);
 
 		event_welcome_signalit();
+		g_received_welcome = true;
 
 		if (!g_icb_mode)
 			autojoin();

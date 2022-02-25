@@ -76,6 +76,7 @@ const char g_forbidden_chan_name_chars[] = " \007,";
 bool	 g_alt_nick_tested = false;
 bool	 g_am_irc_op = false;
 bool	 g_is_away = false;
+bool	 g_received_welcome = false;
 
 char	*g_my_nickname = NULL;
 char	*g_server_hostname = NULL;
@@ -292,6 +293,7 @@ irc_deinit(void)
 	g_alt_nick_tested = false;
 	g_am_irc_op = false;
 	g_is_away = false;
+	g_received_welcome = false;
 
 	free_and_null(&g_my_nickname);
 	free_and_null(&g_server_hostname);
