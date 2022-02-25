@@ -8,7 +8,9 @@ All notable changes to this project will be documented in this file.
 - Added creation of OpenSSL scripts
 - Added event 335 (`RPL_WHOISBOT`)
 - Added global hashfunctions
-- Added theme item `whois_bot`
+- Added theme item:
+  - `nicklist_my_nick_color`
+  - `whois_bot`
 - Changed the statusbar to display readline stats
 - Converted
   - `commands/services.c` -> `commands/services.cpp`
