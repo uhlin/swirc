@@ -38,14 +38,23 @@
 
 #define hash(str) hash_djb_g(str, true, NAMES_HASH_TABLE_SIZE)
 
+static int
+check_args(const char *nick, const char *channel, PIRC_WINDOW &window)
+{
+	if (nick == NULL || strings_match(nick, "") ||
+	    (window = window_by_label(channel)) == NULL ||
+	    !window->received_names) /* XXX */
+		return ERR;
+	return OK;
+}
+
 int
 names_htbl_modify::owner(const char *nick, const char *channel, bool is_owner)
 {
 	PIRC_WINDOW	window;
 	PNAMES		names;
 
-	if (nick == NULL || strings_match(nick, "") ||
-	    (window = window_by_label(channel)) == NULL)
+	if (check_args(nick, channel, window) == ERR)
 		return ERR;
 
 	for (names = window->names_hash[hash(nick)];
@@ -103,8 +112,7 @@ names_htbl_modify::superop(const char *nick, const char *channel,
 	PIRC_WINDOW	window;
 	PNAMES		names;
 
-	if (nick == NULL || strings_match(nick, "") ||
-	    (window = window_by_label(channel)) == NULL)
+	if (check_args(nick, channel, window) == ERR)
 		return ERR;
 
 	for (names = window->names_hash[hash(nick)];
@@ -160,8 +168,7 @@ names_htbl_modify::op(const char *nick, const char *channel, bool is_op)
 	PIRC_WINDOW	window;
 	PNAMES		names;
 
-	if (nick == NULL || strings_match(nick, "") ||
-	    (window = window_by_label(channel)) == NULL)
+	if (check_args(nick, channel, window) == ERR)
 		return ERR;
 
 	for (names = window->names_hash[hash(nick)];
@@ -213,8 +220,7 @@ names_htbl_modify::halfop(const char *nick, const char *channel, bool is_halfop)
 	PIRC_WINDOW	window;
 	PNAMES		names;
 
-	if (nick == NULL || strings_match(nick, "") ||
-	    (window = window_by_label(channel)) == NULL)
+	if (check_args(nick, channel, window) == ERR)
 		return ERR;
 
 	for (names = window->names_hash[hash(nick)];
@@ -263,8 +269,7 @@ names_htbl_modify::voice(const char *nick, const char *channel, bool is_voice)
 	PIRC_WINDOW	window;
 	PNAMES		names;
 
-	if (nick == NULL || strings_match(nick, "") ||
-	    (window = window_by_label(channel)) == NULL)
+	if (check_args(nick, channel, window) == ERR)
 		return ERR;
 
 	for (names = window->names_hash[hash(nick)];
