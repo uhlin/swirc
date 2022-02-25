@@ -21,7 +21,9 @@ All notable changes to this project will be documented in this file.
   - `UNUSED_VAR()`
   - `colorarray_t`
   - `g_beginthread_failed`
+  - `g_received_welcome`
   - `usage_t`
+- Fixed bugs discovered with protocol fuzzing
 - Handle PRIVMSGs from "my" server
 - Handle truncation of ICB messages, i.e. allow longer messages than
   `ICB_MESSAGE_MAX`.
