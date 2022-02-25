@@ -91,6 +91,7 @@ static struct tagThemeDefValues {
 	{ "nick_s1",                   TYPE_STRING,  1, "\00314:\017" },
 	{ "nick_s2",                   TYPE_STRING,  1, "\00314:\017" },
 
+	{ "nicklist_my_nick_color",    TYPE_INTEGER, 3, "14" },
 	{ "nicklist_nick_color",       TYPE_INTEGER, 6, "15" },
 	{ "nicklist_privilege_color",  TYPE_INTEGER, 1, "3" },
 	{ "nicklist_vline_color",      TYPE_INTEGER, 5, "2" },
