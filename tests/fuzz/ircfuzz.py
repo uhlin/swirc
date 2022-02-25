@@ -145,7 +145,7 @@ def choose_params(cmd):
     params = []
     if cmd not in param_cnt:
         param_cnt[cmd] = 0
-    for i in range(random.randint(param_cnt[cmd], param_cnt[cmd] +
+    for _ in range(random.randint(param_cnt[cmd], param_cnt[cmd] +
             random.randint(0, 4)) + 1):
         elements = [
             '' + get_random_ascii(random.randint(0, 2)),
