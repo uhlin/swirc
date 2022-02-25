@@ -119,7 +119,8 @@ event_welcome(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window,
 		    TYPE_SPEC1_FAILURE, true);
-		printtext(&ctx, "event_welcome: fatal: %s", e.what());
+		printtext(&ctx, "event_welcome(%s): fatal: %s", compo->command,
+		    e.what());
 		g_on_air = false;
 		event_welcome_signalit();
 	}
