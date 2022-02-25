@@ -201,11 +201,11 @@ addnick(WINDOW *win, short int bg, const char *nick)
 {
 	bool state1 = false;
 	bool state2 = false;
-	struct integer_context color1("nicklist_privilege_color", 0, 99, 0);
+	struct integer_context priv_color("nicklist_privilege_color", 0, 99, 0);
 	struct integer_context color2("nicklist_nick_color", 0, 99, 0);
 
 	printtext_set_color(win, &state1, static_cast<short int>
-	    (theme_integer(&color1)), bg);
+	    (theme_integer(&priv_color)), bg);
 	(void) waddch(win, *nick);
 
 	printtext_set_color(win, &state2, static_cast<short int>
