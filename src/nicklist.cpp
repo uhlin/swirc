@@ -36,11 +36,13 @@
 #include "assertAPI.h"
 #include "dataClassify.h"
 #include "errHand.h"
+#include "irc.h"
 #include "libUtils.h"
 #include "nicklist.h"
 #include "printtext.h"
 #include "readline.h"
 #include "statusbar.h"
+#include "strHand.h"
 #include "terminal.h"
 #include "theme.h"
 
@@ -201,16 +203,25 @@ addnick(WINDOW *win, short int bg, const char *nick)
 {
 	bool state1 = false;
 	bool state2 = false;
+	const char *cp;
 	struct integer_context priv_color("nicklist_privilege_color", 0, 99, 0);
-	struct integer_context nick_color("nicklist_nick_color", 0, 99, 0);
+	struct integer_context *nick_color;
 
 	printtext_set_color(win, &state1, static_cast<short int>
 	    (theme_integer(&priv_color)), bg);
 	(void) waddch(win, *nick);
 
+	cp = &nick[1];
+	if (g_my_nickname && strings_match_ignore_case(cp, g_my_nickname))
+		nick_color = new integer_context("nicklist_my_nick_color",
+		    0, 99, 0);
+	else
+		nick_color = new integer_context("nicklist_nick_color",
+		    0, 99, 0);
 	printtext_set_color(win, &state2, static_cast<short int>
-	    (theme_integer(&nick_color)), bg);
-	(void) waddstr(win, nick + 1);
+	    (theme_integer(nick_color)), bg);
+	delete nick_color;
+	(void) waddstr(win, cp);
 }
 
 static void
