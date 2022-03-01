@@ -1,4 +1,4 @@
-/* Copyright (c) 2014 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2014, 2022 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -20,16 +20,15 @@
 
 /* sw_strcpy()  --  copy a string
    Returns 0 on success; and an error number on failure. */
-int sw_strcpy(char *dest, const char *src, size_t size)
+int
+sw_strcpy(char *dest, const char *src, size_t size)
 {
-    if (dest == NULL || src == NULL || size == 0) {
-	return (EINVAL);
-    } else if (strlen(src) >= size) {
-	return (ERANGE);
-    } else {
+	if (dest == NULL || src == NULL || size == 0)
+		return EINVAL;
+	else if (strlen(src) >= size)
+		return ERANGE;
 	while ((*dest++ = *src++)) {
-	    ;
+		;
 	}
-    }
-    return (0);
+	return 0;
 }

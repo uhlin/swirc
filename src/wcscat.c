@@ -1,4 +1,4 @@
-/* Copyright (c) 2014 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2014, 2022 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -22,19 +22,17 @@
    Returns 0 on success; and an error number on failure.
 
    NOTE: 'size' is the full size of the destination buffer */
-int sw_wcscat(wchar_t *dest, const wchar_t *src, size_t size)
+int
+sw_wcscat(wchar_t *dest, const wchar_t *src, size_t size)
 {
-    if (dest == NULL || src == NULL || size == 0) {
-	return (EINVAL);
-    } else if (wcslen(dest) + wcslen(src) >= size) {
-	return (ERANGE);
-    } else {
-	while (*dest) {
-	    dest++;
-	}
+	if (dest == NULL || src == NULL || size == 0)
+		return EINVAL;
+	else if (wcslen(dest) + wcslen(src) >= size)
+		return ERANGE;
+	while (*dest)
+		dest++;
 	while ((*dest++ = *src++)) {
-	    ;
+		;
 	}
-    }
-    return (0);
+	return 0;
 }
