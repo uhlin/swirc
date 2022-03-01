@@ -130,8 +130,8 @@ cmd_colormap(const char *data)
 
 	ctx.spec_type = TYPE_SPEC1;
 
-	for (std::vector<std::string>::size_type i = 0; i < out.size(); i++)
-		printtext(&ctx, "%s", out[i].c_str());
+	for (const std::string &str : out)
+		printtext(&ctx, "%s", str.c_str());
 
 	print_function_key(&ctx, "F5", "Blink");
 	print_function_key(&ctx, "F6", "Bold");
