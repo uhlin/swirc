@@ -22,7 +22,8 @@ XGTFLAGS = --add-comments\
 	--output=$(PKG).pot\
 	--sort-output
 
-INPUTFILES = $(SRC_DIR)main.cpp
+INPUTFILES = $(SRC_DIR)main.cpp\
+	$(SRC_DIR)sig-w32.c
 
 POFILES = de/$(PKG).po\
 	fi/$(PKG).po\
