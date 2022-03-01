@@ -5,6 +5,7 @@
 #include <signal.h>
 
 #include "errHand.h"
+#include "i18n.h"
 #include "sig.h"
 #include "terminal.h"
 
@@ -22,11 +23,11 @@ signal_handler(int signum)
 		const char *num_str;
 		const char *msg;
 	} sigmsg[] = {
-		{ SIGABRT, "SIGABRT", "Abnormal termination"   },
-		{ SIGFPE,  "SIGFPE",  "Floating-point error"   },
-		{ SIGILL,  "SIGILL",  "Illegal instruction"    },
-		{ SIGSEGV, "SIGSEGV", "Illegal storage access" },
-		{ SIGTERM, "SIGTERM", "Termination request"    },
+		{ SIGABRT, "SIGABRT", N_("Abnormal termination")   },
+		{ SIGFPE,  "SIGFPE",  N_("Floating-point error")   },
+		{ SIGILL,  "SIGILL",  N_("Illegal instruction")    },
+		{ SIGSEGV, "SIGSEGV", N_("Illegal storage access") },
+		{ SIGTERM, "SIGTERM", N_("Termination request")    },
 	};
 
 	clean_up();
@@ -36,7 +37,7 @@ signal_handler(int signum)
 	    ssp++) {
 		if (ssp->num == signum) {
 			err_msg("[-] FATAL: Received signal %d (%s)\n    %s",
-			    ssp->num, ssp->num_str, ssp->msg);
+			    ssp->num, ssp->num_str, _(ssp->msg));
 			break;
 		}
 	}
