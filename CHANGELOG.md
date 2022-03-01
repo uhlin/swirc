@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Added theme item:
   - `nicklist_my_nick_color`
   - `whois_bot`
+- Added translations
 - Changed the statusbar to display readline stats
 - Converted
   - `commands/services.c` -> `commands/services.cpp`
