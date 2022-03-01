@@ -14,7 +14,16 @@ struct term_window_size {
 	int start_col;
 
 #ifdef __cplusplus
-	term_window_size(int rows, int cols, int start_row, int start_col) {
+	term_window_size()
+	{
+		this->rows = 0;
+		this->cols = 0;
+		this->start_row = 0;
+		this->start_col = 0;
+	}
+
+	term_window_size(int rows, int cols, int start_row, int start_col)
+	{
 		this->rows = rows;
 		this->cols = cols;
 		this->start_row = start_row;
