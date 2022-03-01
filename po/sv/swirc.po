@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-02-06 23:17+0100\n"
+"POT-Creation-Date: 2022-03-01 22:03+0100\n"
 "PO-Revision-Date: 2021-08-22 01:10+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -94,6 +94,26 @@ msgstr "    -v, --version        Visa Swirc version\n"
 #: ../src/main.cpp:140
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsfil\n"
+
+#: ../src/sig-w32.c:26
+msgid "Abnormal termination"
+msgstr ""
+
+#: ../src/sig-w32.c:27
+msgid "Floating-point error"
+msgstr ""
+
+#: ../src/sig-w32.c:28
+msgid "Illegal instruction"
+msgstr ""
+
+#: ../src/sig-w32.c:29
+msgid "Illegal storage access"
+msgstr ""
+
+#: ../src/sig-w32.c:30
+msgid "Termination request"
+msgstr ""
 
 #: ../src/main.cpp:201
 #, c-format
