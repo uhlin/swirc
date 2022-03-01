@@ -10,7 +10,7 @@ struct integer_context {
 #ifdef __cplusplus
 	integer_context()
 	{
-		this->setting_name = NULL;
+		this->setting_name = "";
 		this->lo_limit = 0;
 		this->hi_limit = 0;
 		this->fallback_default = 0;
