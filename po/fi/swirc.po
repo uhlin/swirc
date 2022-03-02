@@ -96,23 +96,23 @@ msgstr "    -x <config>          Config tiedosto\n"
 
 #: ../src/sig-w32.c:26
 msgid "Abnormal termination"
-msgstr ""
+msgstr "Keskeytetty"
 
 #: ../src/sig-w32.c:27
 msgid "Floating-point error"
-msgstr ""
+msgstr "Liukulukupoikkeus"
 
 #: ../src/sig-w32.c:28
 msgid "Illegal instruction"
-msgstr ""
+msgstr "Virheellinen käsky"
 
 #: ../src/sig-w32.c:29
 msgid "Illegal storage access"
-msgstr ""
+msgstr "Muistialueen ylitys"
 
 #: ../src/sig-w32.c:30
 msgid "Termination request"
-msgstr ""
+msgstr "Päätetty"
 
 #: ../src/main.cpp:201
 #, c-format

@@ -97,7 +97,7 @@ msgstr "    -x <config>          Konfigurationsfil\n"
 
 #: ../src/sig-w32.c:26
 msgid "Abnormal termination"
-msgstr "Onormal avslutning"
+msgstr "Avbruten"
 
 #: ../src/sig-w32.c:27
 msgid "Floating-point error"
@@ -105,15 +105,15 @@ msgstr "Flyttalsfel"
 
 #: ../src/sig-w32.c:28
 msgid "Illegal instruction"
-msgstr "Olaglig instruktion"
+msgstr "Otillåten instruktion"
 
 #: ../src/sig-w32.c:29
 msgid "Illegal storage access"
-msgstr "Segmenteringsöverträdelse"
+msgstr "Segmenteringsfel"
 
 #: ../src/sig-w32.c:30
 msgid "Termination request"
-msgstr "Mjukvaruavslutningssignal"
+msgstr "Avslutad"
 
 #: ../src/main.cpp:201
 #, c-format

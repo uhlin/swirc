@@ -100,23 +100,23 @@ msgstr "    -x <config>          Fichier de configuration\n"
 
 #: ../src/sig-w32.c:26
 msgid "Abnormal termination"
-msgstr ""
+msgstr "Abandon"
 
 #: ../src/sig-w32.c:27
 msgid "Floating-point error"
-msgstr ""
+msgstr "Exception en point flottant"
 
 #: ../src/sig-w32.c:28
 msgid "Illegal instruction"
-msgstr ""
+msgstr "Instruction non permise"
 
 #: ../src/sig-w32.c:29
 msgid "Illegal storage access"
-msgstr ""
+msgstr "Erreur de segmentation"
 
 #: ../src/sig-w32.c:30
 msgid "Termination request"
-msgstr ""
+msgstr "Complété"
 
 #: ../src/main.cpp:201
 #, c-format

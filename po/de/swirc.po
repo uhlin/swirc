@@ -97,23 +97,23 @@ msgstr "    -x <config>          Konfigurationsdatei\n"
 
 #: ../src/sig-w32.c:26
 msgid "Abnormal termination"
-msgstr ""
+msgstr "Abgebrochen"
 
 #: ../src/sig-w32.c:27
 msgid "Floating-point error"
-msgstr ""
+msgstr "Gleitkomma-Ausnahme"
 
 #: ../src/sig-w32.c:28
 msgid "Illegal instruction"
-msgstr ""
+msgstr "Ungültiger Maschinenbefehl"
 
 #: ../src/sig-w32.c:29
 msgid "Illegal storage access"
-msgstr ""
+msgstr "Speicherzugriffsfehler"
 
 #: ../src/sig-w32.c:30
 msgid "Termination request"
-msgstr ""
+msgstr "Beendet"
 
 #: ../src/main.cpp:201
 #, c-format
