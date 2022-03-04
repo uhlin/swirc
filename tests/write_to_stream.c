@@ -14,8 +14,8 @@ static char	file[25] = { '\0' };
 static void
 canWriteToStream_test1(void **state)
 {
-	FILE	*fp;
-	int	 fd;
+	FILE	*fp = NULL;
+	int	 fd = -1;
 
 	if (sw_strcpy(file, "/tmp/swirc.ut.XXXXXXXXXX", ARRAY_SIZE(file)) !=
 	    0) {
