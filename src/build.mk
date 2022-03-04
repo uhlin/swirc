@@ -1,7 +1,7 @@
-SRC_DIR:=src/
-TGTS+=swirc
+SRC_DIR := src/
+TGTS += swirc
 
-OBJS+=$(SRC_DIR)assertAPI.o\
+OBJS += $(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)b64_decode.o\
 	$(SRC_DIR)b64_encode.o\
 	$(SRC_DIR)config.o\

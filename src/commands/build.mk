@@ -1,5 +1,5 @@
-COMMANDS_DIR:=src/commands/
-OBJS=$(COMMANDS_DIR)ban.o\
+COMMANDS_DIR := src/commands/
+OBJS = $(COMMANDS_DIR)ban.o\
 	$(COMMANDS_DIR)cleartoasts.o\
 	$(COMMANDS_DIR)colormap.o\
 	$(COMMANDS_DIR)connect.o\
@@ -25,5 +25,5 @@ OBJS=$(COMMANDS_DIR)ban.o\
 	$(COMMANDS_DIR)topic.o\
 	$(COMMANDS_DIR)znc.o
 
-CFLAGS+=-I $(COMMANDS_DIR)
-CXXFLAGS+=-I $(COMMANDS_DIR)
+CFLAGS += -I $(COMMANDS_DIR)
+CXXFLAGS += -I $(COMMANDS_DIR)

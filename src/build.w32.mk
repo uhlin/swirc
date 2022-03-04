@@ -1,7 +1,7 @@
-SRC_DIR=src/
-TGTS=$(TGTS) swirc.exe
+SRC_DIR = src/
+TGTS = $(TGTS) swirc.exe
 
-OBJS=$(OBJS)\
+OBJS = $(OBJS)\
 	$(SRC_DIR)DesktopNotificationManagerCompat.obj\
 	$(SRC_DIR)ToastsAPI.obj\
 	$(SRC_DIR)assertAPI.obj\

@@ -1,5 +1,5 @@
-EVENTS_DIR=src/events/
-OBJS=$(OBJS)\
+EVENTS_DIR = src/events/
+OBJS = $(OBJS)\
 	$(EVENTS_DIR)account.obj\
 	$(EVENTS_DIR)auth.obj\
 	$(EVENTS_DIR)away.obj\
@@ -24,4 +24,4 @@ OBJS=$(OBJS)\
 	$(EVENTS_DIR)welcome.obj\
 	$(EVENTS_DIR)whois.obj
 
-CFLAGS=$(CFLAGS) -I $(EVENTS_DIR)
+CFLAGS = $(CFLAGS) -I $(EVENTS_DIR)

@@ -1,5 +1,5 @@
-EVENTS_DIR:=src/events/
-OBJS+=$(EVENTS_DIR)account.o\
+EVENTS_DIR := src/events/
+OBJS += $(EVENTS_DIR)account.o\
 	$(EVENTS_DIR)auth.o\
 	$(EVENTS_DIR)away.o\
 	$(EVENTS_DIR)banlist.o\
@@ -23,5 +23,5 @@ OBJS+=$(EVENTS_DIR)account.o\
 	$(EVENTS_DIR)welcome.o\
 	$(EVENTS_DIR)whois.o
 
-CFLAGS+=-I $(EVENTS_DIR)
-CXXFLAGS+=-I $(EVENTS_DIR)
+CFLAGS += -I $(EVENTS_DIR)
+CXXFLAGS += -I $(EVENTS_DIR)
