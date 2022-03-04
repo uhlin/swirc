@@ -21,6 +21,7 @@ canWriteFormatted_test1(void **state)
 	    month, day, year);
 	assert_string_equal(dest, "Initial version of Swirc (v1.0b) "
 	    "was released July 30 2016");
+	UNUSED_PARAM(state);
 }
 
 static void
@@ -34,6 +35,7 @@ canWriteFormatted_test2(void **state)
 	sw_snprintf(dest, ARRAY_SIZE(dest), "%zu->%zu->%zu",
 	    size1, size2, size3);
 	assert_string_equal(dest, "1001->1002->1003");
+	UNUSED_PARAM(state);
 }
 
 int
