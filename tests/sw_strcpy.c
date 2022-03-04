@@ -11,7 +11,7 @@ static int	ret = 0;
 static void
 handlesInvalidArguments_test1(void **state)
 {
-	ret = sw_strcpy(NULL, "some string", sizeof buf);
+	ret = sw_strcpy(NULL, "some string", ARRAY_SIZE(buf));
 	assert_int_equal(ret, EINVAL);
 	assert_string_equal(buf, "");
 	UNUSED_PARAM(state);
@@ -20,7 +20,7 @@ handlesInvalidArguments_test1(void **state)
 static void
 handlesInvalidArguments_test2(void **state)
 {
-	ret = sw_strcpy(buf, NULL, sizeof buf);
+	ret = sw_strcpy(buf, NULL, ARRAY_SIZE(buf));
 	assert_int_equal(ret, EINVAL);
 	assert_string_equal(buf, "");
 	UNUSED_PARAM(state);
@@ -38,7 +38,7 @@ handlesInvalidArguments_test3(void **state)
 static void
 doesBoundsChecking_test1(void **state)
 {
-	ret = sw_strcpy(buf, "some string!", sizeof buf);
+	ret = sw_strcpy(buf, "some string!", ARRAY_SIZE(buf));
 	assert_int_equal(ret, ERANGE);
 	assert_string_equal(buf, "");
 	UNUSED_PARAM(state);
@@ -47,7 +47,7 @@ doesBoundsChecking_test1(void **state)
 static void
 doesBoundsChecking_test2(void **state)
 {
-	ret = sw_strcpy(buf, "some string...", sizeof buf);
+	ret = sw_strcpy(buf, "some string...", ARRAY_SIZE(buf));
 	assert_int_equal(ret, ERANGE);
 	assert_string_equal(buf, "");
 	UNUSED_PARAM(state);
@@ -56,7 +56,7 @@ doesBoundsChecking_test2(void **state)
 static void
 canCopy_test1(void **state)
 {
-	ret = sw_strcpy(buf, "some string", sizeof buf);
+	ret = sw_strcpy(buf, "some string", ARRAY_SIZE(buf));
 	assert_int_equal(ret, 0);
 	assert_string_equal(buf, "some string");
 	UNUSED_PARAM(state);

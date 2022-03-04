@@ -11,7 +11,7 @@ static int	ret = 0;
 static void
 handlesInvalidArguments_test1(void **state)
 {
-	ret = sw_strcat(NULL, "bar", sizeof buf);
+	ret = sw_strcat(NULL, "bar", ARRAY_SIZE(buf));
 	assert_int_equal(ret, EINVAL);
 	assert_string_equal(buf, "foo");
 	UNUSED_PARAM(state);
@@ -20,7 +20,7 @@ handlesInvalidArguments_test1(void **state)
 static void
 handlesInvalidArguments_test2(void **state)
 {
-	ret = sw_strcat(buf, NULL, sizeof buf);
+	ret = sw_strcat(buf, NULL, ARRAY_SIZE(buf));
 	assert_int_equal(ret, EINVAL);
 	assert_string_equal(buf, "foo");
 	UNUSED_PARAM(state);
@@ -38,7 +38,7 @@ handlesInvalidArguments_test3(void **state)
 static void
 doesBoundsChecking_test1(void **state)
 {
-	ret = sw_strcat(buf, "bar!", sizeof buf);
+	ret = sw_strcat(buf, "bar!", ARRAY_SIZE(buf));
 	assert_int_equal(ret, ERANGE);
 	assert_string_equal(buf, "foo");
 	UNUSED_PARAM(state);
@@ -47,7 +47,7 @@ doesBoundsChecking_test1(void **state)
 static void
 doesBoundsChecking_test2(void **state)
 {
-	ret = sw_strcat(buf, "barbaz", sizeof buf);
+	ret = sw_strcat(buf, "barbaz", ARRAY_SIZE(buf));
 	assert_int_equal(ret, ERANGE);
 	assert_string_equal(buf, "foo");
 	UNUSED_PARAM(state);
@@ -56,7 +56,7 @@ doesBoundsChecking_test2(void **state)
 static void
 canConcatenate_test1(void **state)
 {
-	ret = sw_strcat(buf, "...", sizeof buf);
+	ret = sw_strcat(buf, "...", ARRAY_SIZE(buf));
 	assert_int_equal(ret, 0);
 	assert_string_equal(buf, "foo...");
 	UNUSED_PARAM(state);
