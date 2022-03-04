@@ -2,14 +2,14 @@
 
 !include options.w32.mk
 
-BUILD_LOG=build.log
+BUILD_LOG = build.log
 
-CFLAGS=$(CFLAGS)\
+CFLAGS = $(CFLAGS)\
 	-Icurl-$(CURL_VERSION)/include\
 	-Ilibressl-$(LIBRESSL_VERSION)-windows/include\
 	-Isrc/include
 
-DEST=c:\out\swirc-$(MACHINE)
+DEST = c:\out\swirc-$(MACHINE)
 
 all: main
 
@@ -27,7 +27,7 @@ main: $(TGTS)
 	$(E) ^ ^ CXX^ ^ ^ ^ ^ $@
 	$(Q) $(CXX) $(CXXFLAGS) -c -Fo$*.obj $< 1>>$(BUILD_LOG)
 
-DIST_DEPS=swirc.exe\
+DIST_DEPS = swirc.exe\
 	"curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll"\
 	"pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll"\
 	"src\trusted_roots.pem"

@@ -1,5 +1,5 @@
-CC=cl
-CFLAGS=-DHAVE_ATLSTR_H=1\
+CC = cl
+CFLAGS = -DHAVE_ATLSTR_H=1\
 	-DNDEBUG=1\
 	-DPDC_EXP_EXTRAS=1\
 	-DTOAST_NOTIFICATIONS=1\
@@ -10,31 +10,31 @@ CFLAGS=-DHAVE_ATLSTR_H=1\
 	-W3\
 	-nologo
 
-CXX=$(CC)
-CXXFLAGS=$(CFLAGS)\
+CXX = $(CC)
+CXXFLAGS = $(CFLAGS)\
 	-DUNICODE=1\
 	-EHsc\
 	-ZW
 
 # Versions
-CURL_VERSION=7.77.0
-LIBRESSL_VERSION=3.4.2
-PDCURSES_VERSION=3.9
+CURL_VERSION = 7.77.0
+LIBRESSL_VERSION = 3.4.2
+PDCURSES_VERSION = 3.9
 
 # E and Q
-E=@echo
-Q=@
+E = @echo
+Q = @
 
-MACHINE=x64
-NAME_libcrypto=crypto-47
-NAME_libssl=ssl-50
+MACHINE = x64
+NAME_libcrypto = crypto-47
+NAME_libssl = ssl-50
 
-LDFLAGS=-LIBPATH:curl-$(CURL_VERSION)/$(MACHINE)\
+LDFLAGS = -LIBPATH:curl-$(CURL_VERSION)/$(MACHINE)\
 	-LIBPATH:libressl-$(LIBRESSL_VERSION)-windows/$(MACHINE)\
 	-LIBPATH:pdcurses-$(PDCURSES_VERSION)/$(MACHINE)\
 	-NODEFAULTLIB:MSVCRTD
 
-LDLIBS=$(NAME_libcrypto).lib\
+LDLIBS = $(NAME_libcrypto).lib\
 	$(NAME_libssl).lib\
 	advapi32.lib\
 	bcrypt.lib\
@@ -45,5 +45,5 @@ LDLIBS=$(NAME_libcrypto).lib\
 	user32.lib\
 	ws2_32.lib
 
-RM=@del /q
-# TEMPFILES=*.obj
+RM = @del /q
+# TEMPFILES = *.obj

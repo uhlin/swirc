@@ -1,7 +1,7 @@
 include options.mk
 
-CFLAGS+=-Isrc/include
-CXXFLAGS+=-Isrc/include
+CFLAGS += -Isrc/include
+CXXFLAGS += -Isrc/include
 
 all: main
 
