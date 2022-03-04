@@ -16,6 +16,7 @@ canDuplicateString_test1(void **state)
 
 	assert_string_equal(string_copy, string);
 	free(string_copy);
+	UNUSED_PARAM(state);
 }
 
 static void
@@ -26,6 +27,7 @@ canDuplicateString_test2(void **state)
 
 	assert_string_equal(string_copy, string);
 	free(string_copy);
+	UNUSED_PARAM(state);
 }
 
 int
