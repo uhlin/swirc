@@ -8,8 +8,8 @@
 #include "libUtils.h"
 #include "strHand.h"
 
-static char data[50] = "";
-static char file[25] = "";
+static char	data[100] = { '\0' };
+static char	file[25] = { '\0' };
 
 static void
 canWriteToStream_test1(void **state)
