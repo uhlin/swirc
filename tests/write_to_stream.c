@@ -23,8 +23,8 @@ canWriteToStream_test1(void **state)
 	} else if ((fd = mkstemp(file)) == -1 || (fp = fdopen(fd, "w")) ==
 	    NULL) {
 		if (fd != -1) {
-			unlink(file);
-			close(fd);
+			(void) unlink(file);
+			(void) close(fd);
 		}
 		fail();
 	}
