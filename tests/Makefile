@@ -1,23 +1,23 @@
-ROOT=../
-COMMANDS_DIR:=$(ROOT)src/commands/
-EVENTS_DIR:=$(ROOT)src/events/
-SRC_DIR:=$(ROOT)src/
+ROOT = ../
+COMMANDS_DIR := $(ROOT)src/commands/
+EVENTS_DIR := $(ROOT)src/events/
+SRC_DIR := $(ROOT)src/
 
-TEST_LOGFILE?=/tmp/run.log
+TEST_LOGFILE ?= /tmp/run.log
 
 include $(ROOT)options.mk
 
-CFLAGS+=-DUNIT_TESTING=1\
+CFLAGS += -DUNIT_TESTING=1\
 	-I$(SRC_DIR)\
 	-I$(SRC_DIR)include\
 	-I/usr/local/include
 
-CXXFLAGS+=-DUNIT_TESTING=1\
+CXXFLAGS += -DUNIT_TESTING=1\
 	-I$(SRC_DIR)\
 	-I$(SRC_DIR)include\
 	-I/usr/local/include
 
-LDLIBS+=-lcmocka
+LDLIBS += -lcmocka
 
 all: main
 

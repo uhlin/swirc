@@ -1,4 +1,4 @@
-TESTS=cmd_ban.run\
+TESTS = cmd_ban.run\
 	cmd_deop.run\
 	cmd_kick.run\
 	cmd_op.run\
