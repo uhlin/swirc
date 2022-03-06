@@ -9,8 +9,8 @@
 static int
 setup(void **state)
 {
-	(void) state;
 	net_send = net_send_fake;
+	UNUSED_PARAM(state);
 	return 0;
 }
 
