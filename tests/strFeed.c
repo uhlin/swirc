@@ -14,6 +14,7 @@ canFeedString_test1(void **state)
 	if (strFeed(str, 4) != 4)
 		fail();
 	assert_string_equal(str, expected);
+	UNUSED_PARAM(state);
 }
 
 static void
@@ -25,6 +26,7 @@ canFeedString_test2(void **state)
 	if (strFeed(str, 3) != 3)
 		fail();
 	assert_string_equal(str, expected);
+	UNUSED_PARAM(state);
 }
 
 static void
@@ -36,6 +38,7 @@ canFeedString_test3(void **state)
 	if (strFeed(str, 2) != 2)
 		fail();
 	assert_string_equal(str, expected);
+	UNUSED_PARAM(state);
 }
 
 static void
@@ -47,6 +50,7 @@ canFeedString_test4(void **state)
 	if (strFeed(str, 1) != 1)
 		fail();
 	assert_string_equal(str, expected);
+	UNUSED_PARAM(state);
 }
 
 static void
@@ -58,6 +62,7 @@ canFeedString_test5(void **state)
 	if (strFeed(str, 5) != 5)
 		fail();
 	assert_string_equal(str, expected);
+	UNUSED_PARAM(state);
 }
 
 static void
@@ -69,6 +74,7 @@ canFeedString_test6(void **state)
 	if (strFeed(str, 10) != 10)
 		fail();
 	assert_string_equal(str, expected);
+	UNUSED_PARAM(state);
 }
 
 static void
@@ -80,6 +86,7 @@ leavesStringUnchanged_test1(void **state)
 	if (strFeed(str, 5) != 0)
 		fail();
 	assert_string_equal(str, expected);
+	UNUSED_PARAM(state);
 }
 
 static void
@@ -91,6 +98,7 @@ leavesStringUnchanged_test2(void **state)
 	if (strFeed(str, 10) != 0)
 		fail();
 	assert_string_equal(str, expected);
+	UNUSED_PARAM(state);
 }
 
 static void
@@ -103,6 +111,7 @@ leavesStringUnchanged_test3(void **state)
 	if (strFeed(str, 26) != 0)
 		fail();
 	assert_string_equal(str, expected);
+	UNUSED_PARAM(state);
 }
 
 int
