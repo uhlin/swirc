@@ -1,5 +1,5 @@
 /* Input output loop
-   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -466,8 +466,10 @@ get_list_of_matching_commands(const char *search_var)
 char *
 get_prompt(void)
 {
-	const char	AFK[] = "(away)";
-	const size_t	minimum_cols = sizeof "#abc...: ";
+	char		*prompt;
+	const char	 AFK[] = "(away)";
+	const size_t	 minimum_cols = sizeof "#abc...: ";
+	int		 ret;
 
 	if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label) ||
 	    COLS < size_to_int(minimum_cols))
@@ -477,9 +479,6 @@ get_prompt(void)
 
 	if (prompt_maxlen < minimum_cols)
 		return sw_strdup("");
-
-	char *prompt;
-	int ret;
 
 	prompt = xmalloc(prompt_maxlen);
 	ret = snprintf(prompt, prompt_maxlen, "%s%s%c ", ACTWINLABEL,
