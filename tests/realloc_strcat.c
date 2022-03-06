@@ -12,62 +12,64 @@
 static void
 canConcatenate_test1(void **state)
 {
-    char *string = sw_strdup("X");
+	char	*string;
 
-    realloc_strcat(&string, "Y");
-    assert_string_equal(string, "XY");
-
-    realloc_strcat(&string, "Z");
-    assert_string_equal(string, "XYZ");
-
-    free(string);
+	string = sw_strdup("X");
+	realloc_strcat(&string, "Y");
+	assert_string_equal(string, "XY");
+	realloc_strcat(&string, "Z");
+	assert_string_equal(string, "XYZ");
+	free(string);
+	UNUSED_PARAM(state);
 }
 
 static void
 canConcatenate_test2(void **state)
 {
-    char *string = sw_strdup("FOO");
+	char	*string;
 
-    realloc_strcat(&string, "BAR");
-    assert_string_equal(string, "FOOBAR");
-
-    realloc_strcat(&string, "BAZ");
-    assert_string_equal(string, "FOOBARBAZ");
-
-    free(string);
+	string = sw_strdup("FOO");
+	realloc_strcat(&string, "BAR");
+	assert_string_equal(string, "FOOBAR");
+	realloc_strcat(&string, "BAZ");
+	assert_string_equal(string, "FOOBARBAZ");
+	free(string);
+	UNUSED_PARAM(state);
 }
 
 static void
 canConcatenate_test3(void **state)
 {
-    char *string = sw_strdup("");
+	char	*string;
 
-    realloc_strcat(&string, "abc");
-    assert_string_equal(string, "abc");
-
-    free(string);
+	string = sw_strdup("");
+	realloc_strcat(&string, "abc");
+	assert_string_equal(string, "abc");
+	free(string);
+	UNUSED_PARAM(state);
 }
 
 static void
 zeroLengthDestAndSrc_test(void **state)
 {
-    char *string = sw_strdup("");
+	char	*string;
 
-    realloc_strcat(&string, "");
-    assert_string_equal(string, "");
-
-    free(string);
+	string = sw_strdup("");
+	realloc_strcat(&string, "");
+	assert_string_equal(string, "");
+	free(string);
+	UNUSED_PARAM(state);
 }
 
 int
 main(void)
 {
-    const struct CMUnitTest tests[] = {
-	cmocka_unit_test(canConcatenate_test1),
-	cmocka_unit_test(canConcatenate_test2),
-	cmocka_unit_test(canConcatenate_test3),
-	cmocka_unit_test(zeroLengthDestAndSrc_test),
-    };
+	const struct CMUnitTest tests[] = {
+		cmocka_unit_test(canConcatenate_test1),
+		cmocka_unit_test(canConcatenate_test2),
+		cmocka_unit_test(canConcatenate_test3),
+		cmocka_unit_test(zeroLengthDestAndSrc_test),
+	};
 
-    return cmocka_run_group_tests(tests, NULL, NULL);
+	return cmocka_run_group_tests(tests, NULL, NULL);
 }
