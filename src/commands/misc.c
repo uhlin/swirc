@@ -423,11 +423,11 @@ cmd_rules(const char *data)
 static void
 confirm_ctcp_sent(const char *cmd, const char *target)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
-    printtext(&ctx, "CTCP %c%s%c request sent to %c%s%c",
-	      BOLD, cmd, BOLD, BOLD, target, BOLD);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
+	printtext(&ctx, "CTCP %c%s%c request sent to %c%s%c", BOLD, cmd, BOLD,
+	    BOLD, target, BOLD);
 }
 
 /*
