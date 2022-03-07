@@ -444,18 +444,18 @@ cmd_time(const char *data)
     }
 }
 
-/* usage: /version <target> */
+/*
+ * usage: /version <target>
+ */
 void
 cmd_version(const char *data)
 {
-    if (strings_match(data, "")) {
-	output_error("/version: missing arguments");
-    } else if (!is_valid_nickname(data) && !is_irc_channel(data)) {
-	output_error("/version: neither a nickname or irc channel");
-    } else {
-	if (net_send("PRIVMSG %s :\001VERSION\001", data) > 0)
-	    confirm_ctcp_sent("VERSION", data);
-    }
+	if (strings_match(data, ""))
+		output_error("/version: missing arguments");
+	else if (!is_valid_nickname(data) && !is_irc_channel(data))
+		output_error("/version: neither a nickname or irc channel");
+	else if (net_send("PRIVMSG %s :\001VERSION\001", data) > 0)
+		confirm_ctcp_sent("VERSION", data);
 }
 
 /*
