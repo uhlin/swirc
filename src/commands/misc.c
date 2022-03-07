@@ -397,27 +397,28 @@ cmd_quit(const char *data)
     g_io_loop = false;
 }
 
-/* usage: /resize */
+/*
+ * usage: /resize
+ */
 void
 cmd_resize(const char *data)
 {
-    if (!strings_match(data, "")) {
-	output_error("/resize: implicit trailing data");
-    } else {
-	term_resize_all();
-    }
+	if (!strings_match(data, ""))
+		output_error("/resize: implicit trailing data");
+	else
+		term_resize_all();
 }
 
-/* usage: /rules */
+/*
+ * usage: /rules
+ */
 void
 cmd_rules(const char *data)
 {
-    if (!strings_match(data, "")) {
-	output_error("/rules: implicit trailing data");
-    } else {
-	if (net_send("RULES") < 0)
-	    g_on_air = false;
-    }
+	if (!strings_match(data, ""))
+		output_error("/rules: implicit trailing data");
+	else if (net_send("RULES") < 0)
+		g_connection_lost = true;
 }
 
 static void
