@@ -273,14 +273,16 @@ cmd_ilist(const char *data)
     }
 }
 
-/* usage: /kill <nickname> <comment> */
+/*
+ * usage: /kill <nickname> <comment>
+ */
 void
 cmd_kill(const char *data)
 {
-    if (strings_match(data, ""))
-	output_error("/kill: missing arguments");
-    else
-	(void) net_send("KILL %s", data);
+	if (strings_match(data, ""))
+		output_error("/kill: missing arguments");
+	else
+		(void) net_send("KILL %s", data);
 }
 
 /*
