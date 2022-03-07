@@ -337,37 +337,39 @@ cmd_passmod(const char *data)
 	icb_send_pass_mod(data);
 }
 
-/* usage: /query [nick] */
+/*
+ * usage: /query [nick]
+ */
 void
 cmd_query(const char *data)
 {
-    if (strings_match(data, "")) {
-	if (is_valid_nickname(g_active_window->label)) {
-	    switch (destroy_chat_window(g_active_window->label)) {
-	    case EINVAL:
-		err_exit(EINVAL, "destroy_chat_window");
-	    case ENOENT:
-		output_error("/query: cannot find window!");
-		break;
-	    }
+	if (strings_match(data, "")) {
+		if (is_valid_nickname(g_active_window->label)) {
+			switch (destroy_chat_window(g_active_window->label)) {
+			case EINVAL:
+				err_exit(EINVAL, "destroy_chat_window");
+			case ENOENT:
+				output_error("/query: cannot find window!");
+				break;
+			}
+		} else {
+			output_error("/query: missing arguments");
+		}
+	} else if (!is_valid_nickname(data)) {
+		output_error("/query: bogus nickname");
 	} else {
-	    output_error("/query: missing arguments");
-	}
-    } else if (!is_valid_nickname(data)) {
-	output_error("/query: bogus nickname");
-    } else {
-	/* -------------------------------------------------- */
+		/* -------------------------------------------------- */
 
-	switch (spawn_chat_window(data, data)) {
-	case EINVAL:
-	    err_exit(EINVAL, "spawn_chat_window");
-	case ENOSPC:
-	    output_error("/query: too many windows open!");
-	    break;
-	}
+		switch (spawn_chat_window(data, data)) {
+		case EINVAL:
+			err_exit(EINVAL, "spawn_chat_window");
+		case ENOSPC:
+			output_error("/query: too many windows open!");
+			break;
+		}
 
-	/* -------------------------------------------------- */
-    }
+		/* -------------------------------------------------- */
+	}
 }
 
 /*
