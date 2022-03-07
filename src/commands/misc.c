@@ -370,31 +370,32 @@ cmd_query(const char *data)
     }
 }
 
-/* usage: /quit [message] */
+/*
+ * usage: /quit [message]
+ */
 void
 cmd_quit(const char *data)
 {
-    const bool has_message = !strings_match(data, "");
+	const bool has_message = !strings_match(data, "");
 
-    if (g_on_air) {
-	g_disconnect_wanted = true;
-	g_connection_lost = g_on_air = false;
+	if (g_on_air) {
+		g_disconnect_wanted = true;
+		g_connection_lost = g_on_air = false;
 
-	if (g_icb_mode)
-	    /* empty */;
-	else if (has_message)
-	    (void) net_send("QUIT :%s", data);
-	else
-	    (void) net_send("QUIT :%s", Config("quit_message"));
+		if (g_icb_mode)
+			/* empty */;
+		else if (has_message)
+			(void) net_send("QUIT :%s", data);
+		else
+			(void) net_send("QUIT :%s", Config("quit_message"));
 
-	if (atomic_load_bool(&g_connection_in_progress))
-	    event_welcome_signalit();
+		if (atomic_load_bool(&g_connection_in_progress))
+			event_welcome_signalit();
+		while (atomic_load_bool(&g_irc_listening))
+			(void) napms(1);
+	}
 
-	while (atomic_load_bool(&g_irc_listening))
-	    (void) napms(1);
-    }
-
-    g_io_loop = false;
+	g_io_loop = false;
 }
 
 /*
