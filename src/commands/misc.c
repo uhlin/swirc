@@ -283,24 +283,30 @@ cmd_kill(const char *data)
 	(void) net_send("KILL %s", data);
 }
 
-/* usage: /list [<max_users[,>min_users][,pattern][...]] */
+/*
+ * usage: /list [<max_users[,>min_users][,pattern][...]]
+ */
 void
 cmd_list(const char *data)
 {
-    const bool has_params = !strings_match(data, "");
+	const bool	has_params = !strings_match(data, "");
 
-    if (g_icb_mode) {
-	icb_send_who("-g");
-	return;
-    }
+	if (g_icb_mode) {
+		icb_send_who("-g");
+		return;
+	}
 
-    if (has_params) {
-	if (net_send("LIST %s", data) < 0)
-	    g_on_air = false;
-    } else {
-	if (net_send("LIST") < 0)
-	    g_on_air = false;
-    }
+	if (has_params) {
+		if (net_send("LIST %s", data) < 0) {
+			err_log(ENOTCONN, "/list");
+			g_connection_lost = true;
+		}
+	} else {
+		if (net_send("LIST") < 0) {
+			err_log(ENOTCONN, "/list");
+			g_connection_lost = true;
+		}
+	}
 }
 
 /*
