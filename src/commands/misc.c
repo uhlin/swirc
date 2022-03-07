@@ -1,5 +1,5 @@
-/* commands/misc.c
-   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
+/* Miscellaneous commands
+   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -473,16 +473,16 @@ cmd_who(const char *data)
     }
 }
 
-/* usage: /whois <nick> */
+/*
+ * usage: /whois <nick>
+ */
 void
 cmd_whois(const char *data)
 {
-    if (strings_match(data, "")) {
-	output_error("/whois: missing arguments");
-    } else if (!is_valid_nickname(data)) {
-	output_error("/whois: bogus nickname");
-    } else {
-	if (net_send("WHOIS %s %s", data, data) < 0)
-	    g_on_air = false;
-    }
+	if (strings_match(data, ""))
+		output_error("/whois: missing arguments");
+	else if (!is_valid_nickname(data))
+		output_error("/whois: bogus nickname");
+	else if (net_send("WHOIS %s %s", data, data) < 0)
+		g_connection_lost = true;
 }
