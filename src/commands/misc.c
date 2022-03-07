@@ -458,19 +458,21 @@ cmd_version(const char *data)
     }
 }
 
-/* usage: /who <mask> */
+/*
+ * usage: /who <mask>
+ */
 void
 cmd_who(const char *data)
 {
-    const bool has_mask = !strings_match(data, "");
+	const bool has_mask = !strings_match(data, "");
 
-    if (has_mask) {
-	if (net_send("WHO %s", data) < 0)
-	    g_on_air = false;
-    } else {
-	if (net_send("WHO") < 0)
-	    g_on_air = false;
-    }
+	if (has_mask) {
+		if (net_send("WHO %s", data) < 0)
+			g_connection_lost = true;
+	} else {
+		if (net_send("WHO") < 0)
+			g_connection_lost = true;
+	}
 }
 
 /*
