@@ -303,38 +303,40 @@ cmd_list(const char *data)
     }
 }
 
-/* usage: /mode <modes> [...] */
+/*
+ * usage: /mode <modes> [...]
+ */
 void
 cmd_mode(const char *data)
 {
-    if (strings_match(data, "")) {
-	output_error("/mode: missing arguments");
-    } else {
-	if (net_send("MODE %s", data) < 0)
-	    g_on_air = false;
-    }
+	if (strings_match(data, ""))
+		output_error("/mode: missing arguments");
+	else if (net_send("MODE %s", data) < 0)
+		g_connection_lost = true;
 }
 
-/* usage: /oper <name> <password> */
+/*
+ * usage: /oper <name> <password>
+ */
 void
 cmd_oper(const char *data)
 {
-    if (strings_match(data, "")) {
-	output_error("/oper: missing arguments");
-    } else {
-	if (net_send("OPER %s", data) < 0)
-	    g_on_air = false;
-    }
+	if (strings_match(data, ""))
+		output_error("/oper: missing arguments");
+	else if (net_send("OPER %s", data) < 0)
+		g_connection_lost = true;
 }
 
-/* usage: /passmod <nickname> */
+/*
+ * usage: /passmod <nickname>
+ */
 void
 cmd_passmod(const char *data)
 {
-    if (!g_icb_mode)
-	return;
-    if (!strings_match(data, ""))
-	icb_send_pass_mod(data);
+	if (!g_icb_mode)
+		return;
+	if (!strings_match(data, ""))
+		icb_send_pass_mod(data);
 }
 
 /*
