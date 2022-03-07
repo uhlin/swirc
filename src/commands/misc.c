@@ -430,18 +430,18 @@ confirm_ctcp_sent(const char *cmd, const char *target)
 	      BOLD, cmd, BOLD, BOLD, target, BOLD);
 }
 
-/* usage: /time <target> */
+/*
+ * usage: /time <target>
+ */
 void
 cmd_time(const char *data)
 {
-    if (strings_match(data, "")) {
-	output_error("/time: missing arguments");
-    } else if (!is_valid_nickname(data) && !is_irc_channel(data)) {
-	output_error("/time: neither a nickname or irc channel");
-    } else {
-	if (net_send("PRIVMSG %s :\001TIME\001", data) > 0)
-	    confirm_ctcp_sent("TIME", data);
-    }
+	if (strings_match(data, ""))
+		output_error("/time: missing arguments");
+	else if (!is_valid_nickname(data) && !is_irc_channel(data))
+		output_error("/time: neither a nickname or irc channel");
+	else if (net_send("PRIVMSG %s :\001TIME\001", data) > 0)
+		confirm_ctcp_sent("TIME", data);
 }
 
 /*
