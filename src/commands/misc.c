@@ -458,6 +458,8 @@ cmd_version(const char *data)
 		output_error("/version: neither a nickname or irc channel");
 	else if (net_send("PRIVMSG %s :\001VERSION\001", data) > 0)
 		confirm_ctcp_sent("VERSION", data);
+	else
+		err_log(ENOTCONN, "/version");
 }
 
 /*
