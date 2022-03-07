@@ -442,6 +442,8 @@ cmd_time(const char *data)
 		output_error("/time: neither a nickname or irc channel");
 	else if (net_send("PRIVMSG %s :\001TIME\001", data) > 0)
 		confirm_ctcp_sent("TIME", data);
+	else
+		err_log(ENOTCONN, "/time");
 }
 
 /*
