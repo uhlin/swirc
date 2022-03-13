@@ -221,25 +221,27 @@ cmd_cycle(const char *data)
     }
 }
 
-/* usage: /exlist [channel] */
+/*
+ * usage: /exlist [channel]
+ */
 void
 cmd_exlist(const char *data)
 {
-    if (strings_match(data, "")) {
+	if (strings_match(data, "")) {
 
-	if (is_irc_channel(g_active_window->label)) {
-	    if (net_send("MODE %s +e", g_active_window->label) < 0)
-		g_on_air = false;
+		if (is_irc_channel(g_active_window->label)) {
+			if (net_send("MODE %s +e", g_active_window->label) < 0)
+				output_error("/exlist: cannot send");
+		} else {
+			output_error("/exlist: missing arguments");
+		}
+
+	} else if (!is_irc_channel(data)) {
+		output_error("/exlist: bogus irc channel");
 	} else {
-	    output_error("/exlist: missing arguments");
+		if (net_send("MODE %s +e", data) < 0)
+			output_error("/exlist: cannot send");
 	}
-
-    } else if (!is_irc_channel(data)) {
-	output_error("/exlist: bogus irc channel");
-    } else {
-	if (net_send("MODE %s +e", data) < 0)
-	    g_on_air = false;
-    }
 }
 
 /*
