@@ -187,19 +187,19 @@ has_channel_key(const char *channel, char **key)
 static void
 do_part_and_join(const char *_channel)
 {
-    char *channel = sw_strdup(_channel);
-    char *key = NULL;
+	char	*channel = sw_strdup(_channel);
+	char	*key = NULL;
 
-    if (has_channel_key(channel, &key)) {
-	(void) net_send("PART %s", channel);
-	(void) net_send("JOIN %s %s", channel, key);
-    } else {
-	(void) net_send("PART %s", channel);
-	(void) net_send("JOIN %s", channel);
-    }
+	if (has_channel_key(channel, &key)) {
+		(void) net_send("PART %s", channel);
+		(void) net_send("JOIN %s %s", channel, key);
+	} else {
+		(void) net_send("PART %s", channel);
+		(void) net_send("JOIN %s", channel);
+	}
 
-    free(channel);
-    free(key);
+	free(channel);
+	free(key);
 }
 
 /*
