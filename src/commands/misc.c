@@ -252,25 +252,27 @@ cmd_group(const char *data)
 	icb_send_group(data);
 }
 
-/* usage: /ilist [channel] */
+/*
+ * usage: /ilist [channel]
+ */
 void
 cmd_ilist(const char *data)
 {
-    if (strings_match(data, "")) {
+	if (strings_match(data, "")) {
 
-	if (is_irc_channel(g_active_window->label)) {
-	    if (net_send("MODE %s +I", g_active_window->label) < 0)
-		g_on_air = false;
+		if (is_irc_channel(g_active_window->label)) {
+			if (net_send("MODE %s +I", g_active_window->label) < 0)
+				output_error("/ilist: cannot send");
+		} else {
+			output_error("/ilist: missing arguments");
+		}
+
+	} else if (!is_irc_channel(data)) {
+		output_error("/ilist: bogus irc channel");
 	} else {
-	    output_error("/ilist: missing arguments");
+		if (net_send("MODE %s +I", data) < 0)
+			output_error("/ilist: cannot send");
 	}
-
-    } else if (!is_irc_channel(data)) {
-	output_error("/ilist: bogus irc channel");
-    } else {
-	if (net_send("MODE %s +I", data) < 0)
-	    g_on_air = false;
-    }
 }
 
 /*
