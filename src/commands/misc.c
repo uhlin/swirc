@@ -363,6 +363,8 @@ cmd_query(const char *data)
 			case ENOENT:
 				output_error("/query: cannot find window!");
 				break;
+			default:
+				break;
 			}
 		} else {
 			output_error("/query: missing arguments");
@@ -377,6 +379,8 @@ cmd_query(const char *data)
 			err_exit(EINVAL, "spawn_chat_window");
 		case ENOSPC:
 			output_error("/query: too many windows open!");
+			break;
+		default:
 			break;
 		}
 
