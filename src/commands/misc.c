@@ -202,23 +202,25 @@ do_part_and_join(const char *_channel)
     free(key);
 }
 
-/* usage: /cycle [channel] */
+/*
+ * usage: /cycle [channel]
+ */
 void
 cmd_cycle(const char *data)
 {
-    if (strings_match(data, "")) {
+	if (strings_match(data, "")) {
 
-	if (is_irc_channel(g_active_window->label)) {
-	    do_part_and_join(g_active_window->label);
+		if (is_irc_channel(g_active_window->label)) {
+			do_part_and_join(g_active_window->label);
+		} else {
+			output_error("/cycle: missing arguments");
+		}
+
+	} else if (!is_irc_channel(data)) {
+		output_error("/cycle: bogus irc channel");
 	} else {
-	    output_error("/cycle: missing arguments");
+		do_part_and_join(data);
 	}
-
-    } else if (!is_irc_channel(data)) {
-	output_error("/cycle: bogus irc channel");
-    } else {
-	do_part_and_join(data);
-    }
 }
 
 /*
