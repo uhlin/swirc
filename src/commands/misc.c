@@ -360,6 +360,8 @@ cmd_query(const char *data)
 			switch (destroy_chat_window(g_active_window->label)) {
 			case EINVAL:
 				err_exit(EINVAL, "destroy_chat_window");
+				/* NOTREACHED */
+				break;
 			case ENOENT:
 				output_error("/query: cannot find window!");
 				break;
@@ -377,6 +379,8 @@ cmd_query(const char *data)
 		switch (spawn_chat_window(data, data)) {
 		case EINVAL:
 			err_exit(EINVAL, "spawn_chat_window");
+			/* NOTREACHED */
+			break;
 		case ENOSPC:
 			output_error("/query: too many windows open!");
 			break;
