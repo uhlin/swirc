@@ -242,14 +242,16 @@ cmd_exlist(const char *data)
     }
 }
 
-/* usage: /group <name> */
+/*
+ * usage: /group <name>
+ */
 void
 cmd_group(const char *data)
 {
-    if (!g_icb_mode)
-	return;
-    if (!strings_match(data, ""))
-	icb_send_group(data);
+	if (!g_icb_mode)
+		return;
+	if (!strings_match(data, ""))
+		icb_send_group(data);
 }
 
 /*
