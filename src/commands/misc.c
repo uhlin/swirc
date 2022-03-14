@@ -102,24 +102,28 @@ cmd_banlist(const char *data)
     }
 }
 
-/* usage: /beep <nickname> */
+/*
+ * usage: /beep <nickname>
+ */
 void
 cmd_beep(const char *data)
 {
-    if (!g_icb_mode)
-	return;
-    if (!strings_match(data, ""))
-	icb_send_beep(data);
+	if (!g_icb_mode)
+		return;
+	if (!strings_match(data, ""))
+		icb_send_beep(data);
 }
 
-/* usage: /boot <victim> */
+/*
+ * usage: /boot <victim>
+ */
 void
 cmd_boot(const char *data)
 {
-    if (!g_icb_mode)
-	return;
-    if (!strings_match(data, ""))
-	icb_send_boot(data);
+	if (!g_icb_mode)
+		return;
+	if (!strings_match(data, ""))
+		icb_send_boot(data);
 }
 
 /*
