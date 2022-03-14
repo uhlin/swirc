@@ -142,7 +142,7 @@ cmd_close(const char *data)
 	else if (is_irc_channel(g_active_window->label) && g_on_air)
 		output_error("/close: cannot close window (connected)");
 	else
-		destroy_chat_window(g_active_window->label);
+		(void) destroy_chat_window(g_active_window->label);
 }
 
 static bool
