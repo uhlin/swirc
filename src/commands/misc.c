@@ -60,23 +60,26 @@ output_error(const char *message)
     printtext(&ctx, "%s", message);
 }
 
-/* usage: /away [reason] */
+/*
+ * usage: /away [reason]
+ */
 void
 cmd_away(const char *data)
 {
-    const bool has_reason = !strings_match(data, "");
+	chararray_t	msg = "/away: cannot send";
+	const bool	has_reason = !strings_match(data, "");
 
-    if (has_reason) {
-	if (net_send("AWAY :%s", data) < 0)
-	    g_on_air = false;
-	else
-	    g_is_away = true;
-    } else {
-	if (net_send("AWAY") < 0)
-	    g_on_air = false;
-	else
-	    g_is_away = false;
-    }
+	if (has_reason) {
+		if (net_send("AWAY :%s", data) < 0)
+			output_error(msg);
+		else
+			g_is_away = true;
+	} else {
+		if (net_send("AWAY") < 0)
+			output_error(msg);
+		else
+			g_is_away = false;
+	}
 }
 
 /*
