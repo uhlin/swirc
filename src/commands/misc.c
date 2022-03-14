@@ -139,49 +139,50 @@ cmd_close(const char *data)
 static bool
 has_channel_key(const char *channel, char **key)
 {
-    PIRC_WINDOW win = NULL;
-    char *chanmodes_copy = NULL;
-    char *last = "";
-    char *params[4] = { NULL };
-    size_t assigned_params = 0;
+	PIRC_WINDOW	 win;
+	char		*chanmodes_copy = NULL;
+	char		*last = "";
+	char		*modes;
+	char		*params[4] = { NULL };
+	size_t		 assigned_params = 0;
 
-    if ((win = window_by_label(channel)) == NULL)
-	goto no;
+	if ((win = window_by_label(channel)) == NULL)
+		goto no;
 
-    chanmodes_copy = sw_strdup(win->chanmodes);
-    char *modes = strtok_r(chanmodes_copy, " ", &last);
+	chanmodes_copy = sw_strdup(win->chanmodes);
 
-    if (modes == NULL || strchr(modes, 'k') == NULL)
-	goto no;
+	if ((modes = strtok_r(chanmodes_copy, " ", &last)) == NULL ||
+	    strchr(modes, 'k') == NULL)
+		goto no;
 
-    squeeze(modes,
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZ+abcde"
-	"ghi"
-	"mnopqrstuvwxyz");
+	squeeze(modes,
+	    "ABCDEFGHIJKLMNOPQRSTUVWXYZ+abcde"
+	    "ghi"
+	    "mnopqrstuvwxyz");
 
-    while (assigned_params < ARRAY_SIZE(params)) {
-	char *token = strtok_r(NULL, " ", &last);
+	while (assigned_params < ARRAY_SIZE(params)) {
+		char *token;
 
-	if (!token)
-	    break;
-	params[assigned_params] = token;
-	assigned_params++;
-    }
+		if ((token = strtok_r(NULL, " ", &last)) == NULL)
+			break;
+		params[assigned_params] = token;
+		assigned_params++;
+	}
 
-    const size_t spanned = strcspn(modes, "k");
+	const size_t spanned = strcspn(modes, "k");
 
-    if (assigned_params != strlen(modes) || spanned >= ARRAY_SIZE(params) ||
-	params[spanned] == NULL)
-	goto no;
+	if (assigned_params != strlen(modes) || spanned >= ARRAY_SIZE(params) ||
+	    params[spanned] == NULL)
+		goto no;
 
-    *key = sw_strdup(params[spanned]);
-    free(chanmodes_copy);
-    return true;
+	*key = sw_strdup(params[spanned]);
+	free(chanmodes_copy);
+	return true;
 
   no:
-    *key = NULL;
-    free(chanmodes_copy);
-    return false;
+	*key = NULL;
+	free(chanmodes_copy);
+	return false;
 }
 
 static void
