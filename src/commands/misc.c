@@ -122,18 +122,20 @@ cmd_boot(const char *data)
 	icb_send_boot(data);
 }
 
-/* usage: /close */
+/*
+ * usage: /close
+ */
 void
 cmd_close(const char *data)
 {
-    if (!strings_match(data, ""))
-	output_error("/close: implicit trailing data");
-    else if (g_active_window == g_status_window)
-	output_error("/close: cannot close status window");
-    else if (is_irc_channel(g_active_window->label) && g_on_air)
-	output_error("/close: cannot close window (connected)");
-    else
-	destroy_chat_window(g_active_window->label);
+	if (!strings_match(data, ""))
+		output_error("/close: implicit trailing data");
+	else if (g_active_window == g_status_window)
+		output_error("/close: cannot close status window");
+	else if (is_irc_channel(g_active_window->label) && g_on_air)
+		output_error("/close: cannot close window (connected)");
+	else
+		destroy_chat_window(g_active_window->label);
 }
 
 static bool
