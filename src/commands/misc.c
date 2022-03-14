@@ -155,6 +155,11 @@ has_channel_key(const char *channel, char **key)
 	    strchr(modes, 'k') == NULL)
 		goto no;
 
+	/*
+	 * We only want the modes that takes a value. For example 'l'
+	 * (user limit), and of course 'k' (channel key). The rest we
+	 * squeeze...
+	 */
 	squeeze(modes,
 	    "ABCDEFGHIJKLMNOPQRSTUVWXYZ+abcde"
 	    "ghi"
