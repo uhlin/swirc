@@ -54,10 +54,10 @@
 static void
 output_error(const char *message)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
-    printtext(&ctx, "%s", message);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+	printtext(&ctx, "%s", message);
 }
 
 /*
