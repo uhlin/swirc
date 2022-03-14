@@ -487,14 +487,14 @@ new_session(const char *prompt)
 	char *prompt_copy = sw_strdup(prompt);
 	struct readline_session_context *ctx = xcalloc(sizeof *ctx, 1);
 
+	ctx->act         = panel_window(readline_pan1);
 	ctx->buffer      = xcalloc(readline_bufsize + 1, sizeof(wchar_t));
 	ctx->bufpos      = 0;
-	ctx->n_insert    = 0;
 	ctx->insert_mode = false;
+	ctx->n_insert    = 0;
 	ctx->no_bufspc   = false;
 	ctx->prompt      = sw_strdup(prompt);
 	ctx->prompt_size = (int) strlen(squeeze_text_deco(prompt_copy));
-	ctx->act         = panel_window(readline_pan1);
 	ctx->tc          = readline_tab_comp_ctx_new();
 
 	free(prompt_copy);
