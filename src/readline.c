@@ -469,14 +469,19 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc)
 static void
 handle_mouse(void)
 {
-	MEVENT mouse;
+	MEVENT	mouse;
 
 	if (getmouse(&mouse) != OK)
 		return;
 	else if (mouse.bstate & BUTTON4_PRESSED)
 		window_scroll_up(g_active_window, 1);
+#ifdef BUTTON5_PRESSED
 	else if (mouse.bstate & BUTTON5_PRESSED)
 		window_scroll_down(g_active_window, 1);
+#else
+	else if (mouse.bstate == 0x8000000)
+		window_scroll_down(g_active_window, 1);
+#endif
 }
 
 static inline bool
