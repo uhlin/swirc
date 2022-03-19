@@ -657,7 +657,7 @@ window_recreate_exported(PIRC_WINDOW window, int rows, int cols)
  * Scroll down
  */
 void
-window_scroll_down(PIRC_WINDOW window)
+window_scroll_down(PIRC_WINDOW window, const int amount)
 {
 	const int HEIGHT = LINES - 3;
 
@@ -666,7 +666,7 @@ window_scroll_down(PIRC_WINDOW window)
 		return;
 	}
 
-	window->scroll_count -= g_scroll_amount;
+	window->scroll_count -= amount;
 
 	if (! (window->scroll_count > HEIGHT)) {
 		window->saved_size = 0;
@@ -686,7 +686,7 @@ window_scroll_down(PIRC_WINDOW window)
  * Scroll up
  */
 void
-window_scroll_up(PIRC_WINDOW window)
+window_scroll_up(PIRC_WINDOW window, const int amount)
 {
 	const int MIN_SIZE = LINES - 3;
 
@@ -707,7 +707,7 @@ window_scroll_up(PIRC_WINDOW window)
 		if (window->scroll_count == 0) /* first page up */
 			window->scroll_count += MIN_SIZE;
 
-		window->scroll_count += g_scroll_amount;
+		window->scroll_count += amount;
 
 		if (window->scroll_count > window->saved_size)
 			window->scroll_count = window->saved_size;
