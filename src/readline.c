@@ -466,6 +466,19 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc)
 	mutex_unlock(&g_puts_mutex);
 }
 
+static void
+handle_mouse(void)
+{
+	MEVENT mouse;
+
+	if (getmouse(&mouse) != OK)
+		return;
+	else if (mouse.bstate & BUTTON4_PRESSED)
+		window_scroll_up(g_active_window, 1);
+	else if (mouse.bstate & BUTTON5_PRESSED)
+		window_scroll_down(g_active_window, 1);
+}
+
 static inline bool
 isInCirculationMode(const TAB_COMPLETION *tc)
 {
@@ -702,6 +715,9 @@ process(volatile struct readline_session_context *ctx)
 				readline_tab_comp_ctx_reset(ctx->tc);
 			break;
 		} /* ---------- KEY_DC ---------- */
+		case KEY_MOUSE:
+			handle_mouse();
+			break;
 		case KEY_NPAGE:
 			window_scroll_down(g_active_window, g_scroll_amount);
 			break;
@@ -760,6 +776,8 @@ readline_init(void)
 
 	apply_readline_options(panel_window(readline_pan1));
 	apply_readline_options(panel_window(readline_pan2));
+
+	(void) mousemask(ALL_MOUSE_EVENTS, NULL);
 }
 
 /**
