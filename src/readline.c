@@ -782,11 +782,7 @@ readline_init(void)
 	apply_readline_options(panel_window(readline_pan1));
 	apply_readline_options(panel_window(readline_pan2));
 
-#ifdef BUTTON5_PRESSED
-	(void) mousemask((BUTTON4_PRESSED | BUTTON5_PRESSED), NULL);
-#else
 	(void) mousemask(ALL_MOUSE_EVENTS, NULL);
-#endif
 }
 
 /**
