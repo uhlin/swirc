@@ -9,3 +9,6 @@
 - [Staffan Thomén](https://github.com/sthomen)
   - **New build system for the UNIX environment**
   - Portability issues for NetBSD
+- [Stefan Wallin](https://github.com/StefanWallin)
+  - Strategically
+  - Feedback
