@@ -90,6 +90,7 @@ struct hInstall_context {
 PIRC_WINDOW	g_active_window = NULL;
 PIRC_WINDOW	g_status_window = NULL;
 const char	g_status_window_label[] = "(status)";
+const int	g_scroll_amount = 6;
 int		g_ntotal_windows = 0;
 volatile bool	g_redrawing_window = false;
 
@@ -97,7 +98,6 @@ volatile bool	g_redrawing_window = false;
    ============================= */
 
 static PIRC_WINDOW hash_table[200] = { NULL };
-static const int scroll_amount = 6;
 
 /* -------------------------------------------------- */
 
@@ -666,7 +666,7 @@ window_scroll_down(PIRC_WINDOW window)
 		return;
 	}
 
-	window->scroll_count -= scroll_amount;
+	window->scroll_count -= g_scroll_amount;
 
 	if (! (window->scroll_count > HEIGHT)) {
 		window->saved_size = 0;
@@ -707,7 +707,7 @@ window_scroll_up(PIRC_WINDOW window)
 		if (window->scroll_count == 0) /* first page up */
 			window->scroll_count += MIN_SIZE;
 
-		window->scroll_count += scroll_amount;
+		window->scroll_count += g_scroll_amount;
 
 		if (window->scroll_count > window->saved_size)
 			window->scroll_count = window->saved_size;

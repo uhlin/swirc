@@ -63,6 +63,7 @@ __SWIRC_BEGIN_DECLS
 extern PIRC_WINDOW	g_active_window;
 extern PIRC_WINDOW	g_status_window;
 extern const char       g_status_window_label[];
+extern const int	g_scroll_amount;
 extern int              g_ntotal_windows;
 extern volatile bool	g_redrawing_window;
 
