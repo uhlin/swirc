@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Added creation of OpenSSL scripts
 - Added event 335 (`RPL_WHOISBOT`)
 - Added global hashfunctions
+- Added scrolling using the mouse
 - Added theme item:
   - `nicklist_my_nick_color`
   - `whois_bot`
