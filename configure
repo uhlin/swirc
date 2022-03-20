@@ -19,8 +19,22 @@ _with_libnotify=0
 _without_libidn=0
 _without_libintl=0
 
+print_help () {
+	echo ""
+	echo "Configuration options:"
+	echo ""
+	echo "  --with-libnotify   Enable support for desktop notifications"
+	echo "  --without-libidn   Build without GNU libidn"
+	echo "  --without-libintl  No internationalization"
+	echo ""
+}
+
 for arg in "$@"; do
 	case "$arg" in
+	"--help" | "-?" | "-h")
+		print_help
+		exit 0
+		;;
 	"--with-libnotify")
 		_with_libnotify=1
 		;;
