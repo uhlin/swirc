@@ -2,7 +2,7 @@
 
 # Swirc configure script
 #
-# Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
+# Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
 
 MAKE_DEF_FILE=options.mk
 
@@ -14,6 +14,26 @@ MAKE_DEF_FILE=options.mk
 . "posixshell/os_LINUX_suncc.sh"
 . "posixshell/os_MAC.sh"
 . "posixshell/os_NETBSD.sh"
+
+_with_libnotify=0
+_without_libidn=0
+_without_libintl=0
+
+for arg in "$@"; do
+	case "$arg" in
+	"--with-libnotify")
+		_with_libnotify=1
+		;;
+	"--without-libidn")
+		_without_libidn=1
+		;;
+	"--without-libintl")
+		_without_libintl=1
+		;;
+	*)
+		;;
+	esac
+done
 
 cat <<EOF >$MAKE_DEF_FILE
 E=@echo
@@ -45,26 +65,6 @@ case "$(uname -s)" in
 	exit 1
 	;;
 esac
-
-_with_libnotify=0
-_without_libidn=0
-_without_libintl=0
-
-for arg in "$@"; do
-	case "$arg" in
-	"--with-libnotify")
-		_with_libnotify=1
-		;;
-	"--without-libidn")
-		_without_libidn=1
-		;;
-	"--without-libintl")
-		_without_libintl=1
-		;;
-	*)
-		;;
-	esac
-done
 
 if [ $_with_libnotify -eq 1 ]; then
 	link_with_libnotify
