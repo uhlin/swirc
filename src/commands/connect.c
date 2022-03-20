@@ -1,5 +1,5 @@
 /* Connect and Disconnect commands
-   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -54,23 +54,23 @@ static bool	quit_reconnecting = false;
 static bool	reconnecting = false;
 static bool	secure_connection = false;
 
-static const char *afternet_servers[] = {
+static stringarray_t afternet_servers = {
 	"irc.afternet.org",
 	NULL
 };
 
-static const char *anonops_servers[] = {
+static stringarray_t anonops_servers = {
 	"anonops532vcpz6z.onion",
 	"irc.anonops.com",
 	NULL
 };
 
-static const char *blitzed_servers[] = {
+static stringarray_t blitzed_servers = {
 	"irc.blitzed.org",
 	NULL
 };
 
-static const char *efnet_servers[] = {
+static stringarray_t efnet_servers = {
 	"efnet.port80.se",
 	"efnet.portlane.se",
 	"irc.choopa.net",
@@ -83,7 +83,7 @@ static const char *efnet_servers[] = {
 	NULL
 };
 
-static const char *freenode_servers[] = {
+static stringarray_t freenode_servers = {
 	"card.freenode.net",
 	"chat.freenode.net",
 	"chat.ipv6.freenode.net",
@@ -97,7 +97,7 @@ static const char *freenode_servers[] = {
 	NULL
 };
 
-static const char *ircnet_servers[] = {
+static stringarray_t ircnet_servers = {
 	"eris.us.ircnet.net",
 	"irc.atw-inter.net",
 	"irc.nlnog.net",
@@ -107,7 +107,7 @@ static const char *ircnet_servers[] = {
 	NULL
 };
 
-static const char *libera_servers[] = {
+static stringarray_t libera_servers = {
 	"irc.libera.chat",
 	"irc.au.libera.chat",
 	"irc.ea.libera.chat",
@@ -118,7 +118,7 @@ static const char *libera_servers[] = {
 	NULL
 };
 
-static const char *quakenet_servers[] = {
+static stringarray_t quakenet_servers = {
 	"ServerCentral.IL.US.Quakenet.Org",
 	"irc.quakenet.org",
 	"portlane.se.quakenet.org",
@@ -127,14 +127,14 @@ static const char *quakenet_servers[] = {
 	NULL
 };
 
-static const char *undernet_servers[] = {
+static stringarray_t undernet_servers = {
 	"Ashburn.Va.Us.UnderNet.org",
 	"irc.undernet.org",
 	"undernet.rethemhosting.net",
 	NULL
 };
 
-static const char *test_servers[] = {
+static stringarray_t test_servers = {
 	"default.icb.net",
 	"internetcitizens.band",
 	"misc-services.exbit.io",
