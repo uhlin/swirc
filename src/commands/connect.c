@@ -216,7 +216,7 @@ get_password(void)
 }
 
 static const char *
-get_server(const char *ar[], const char *msg)
+get_server(stringarray_t const ar, const char *msg)
 {
 	char	ans[20] = { '\0' };
 	int	c = EOF;
