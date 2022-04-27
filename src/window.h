@@ -16,6 +16,11 @@
 #define ACTWINLABEL g_active_window->label
 #define NAMES_HASH_TABLE_SIZE 4500
 
+typedef enum {
+	PLUS	= '+',
+	MINUS	= '-'
+} plus_minus_t;
+
 typedef struct tagNAMES {
 	char	*nick;
 	bool	 is_owner;
