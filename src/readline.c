@@ -724,10 +724,10 @@ process(volatile struct readline_session_context *ctx)
 			handle_mouse();
 			break;
 		case KEY_NPAGE:
-			window_scroll_down(g_active_window, g_scroll_amount);
+			window_scroll_down(g_active_window, -1);
 			break;
 		case KEY_PPAGE:
-			window_scroll_up(g_active_window, g_scroll_amount);
+			window_scroll_up(g_active_window, -1);
 			break;
 		case '\t':
 			readline_handle_tab(ctx);
