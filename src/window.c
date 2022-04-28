@@ -744,11 +744,12 @@ window_scroll_down(PIRC_WINDOW window, const int amount)
 		return;
 	}
 
-	if (amount <= 0)
+	if (amount <= 0) {
 		window->scroll_count -= get_dynamic_scroll_amount(window,
 		    MINUS);
-	else
+	} else {
 		window->scroll_count -= amount;
+	}
 
 	if (! (window->scroll_count > HEIGHT)) {
 		window->saved_size = 0;
@@ -783,9 +784,12 @@ window_scroll_up(PIRC_WINDOW window, const int amount)
 		window->scroll_mode = true;
 	}
 
-	if (window->scroll_count > window->saved_size) /* past top */
+	if (window->scroll_count > window->saved_size) {
+		/*
+		 * past top
+		 */
 		window->scroll_count = window->saved_size;
-	else {
+	} else {
 		if (window->scroll_count == 0) {
 			/*
 			 * first page up
@@ -794,19 +798,20 @@ window_scroll_up(PIRC_WINDOW window, const int amount)
 			window->scroll_count += first_page_up(window);
 		}
 
-		if (amount <= 0)
+		if (amount <= 0) {
 			window->scroll_count +=
 			    get_dynamic_scroll_amount(window, PLUS);
-		else
+		} else {
 			window->scroll_count += amount;
+		}
 
 		if (window->scroll_count > window->saved_size)
 			window->scroll_count = window->saved_size;
 	}
 
-	if (IS_AT_TOP)
+	if (IS_AT_TOP) {
 		window_redraw(window, MIN_SIZE, 0, true);
-	else {
+	} else {
 		window_redraw(window, MIN_SIZE,
 		    (window->saved_size - window->scroll_count),
 		    false);
