@@ -144,6 +144,84 @@ change_window(PIRC_WINDOW window)
 	return 0;
 }
 
+static int
+first_page_up(PIRC_WINDOW window)
+{
+	PTEXTBUF_ELMT	 element;
+	WINDOW		*tmp;
+	const int	 goal = (LINES - 3);
+	int		 elt_count = 0;
+	int		 i = 0;
+	int		 rep_count;
+
+	element = textBuf_tail(window->buf);
+
+	if ((tmp = dupwin(panel_window(window->pan))) == NULL)
+		err_exit(ENOMEM, "dupwin");
+
+	(void) atomic_swap_bool(&g_redrawing_window, true);
+	(void) curs_set(0);
+	while (element != NULL && i < goal) {
+		printtext_puts(tmp, element->text, element->indent, -1,
+		    &rep_count);
+		element = element->prev;
+		elt_count ++;
+		i += rep_count;
+	} /* while */
+	(void) curs_set(1);
+	(void) atomic_swap_bool(&g_redrawing_window, false);
+
+	if (delwin(tmp) == ERR)
+		err_exit(EINVAL, "delwin");
+	return elt_count;
+}
+
+static int
+get_dynamic_scroll_amount(PIRC_WINDOW window, plus_minus_t pm)
+{
+	PTEXTBUF_ELMT	 element;
+	WINDOW		*tmp;
+	const int	 overlap = 3;
+	int		 amount = 0;
+	int		 goal = (LINES - 3);
+	int		 i = 0;
+	int		 pos;
+	int		 rep_count;
+
+	goal -= overlap;
+	pos = int_diff(window->saved_size, window->scroll_count);
+
+	if ((element = textBuf_get_element_by_pos(window->buf, pos)) == NULL) {
+		debug("error getting element by position");
+		return g_scroll_amount;
+	} else if ((tmp = dupwin(panel_window(window->pan))) == NULL) {
+		err_exit(ENOMEM, "dupwin");
+	}
+
+	(void) atomic_swap_bool(&g_redrawing_window, true);
+	(void) curs_set(0);
+	while (element != NULL && i < goal) {
+		printtext_puts(tmp, element->text, element->indent, -1,
+		    &rep_count);
+		if (pm == PLUS)
+			element = element->prev;
+		else if (pm == MINUS)
+			element = element->next;
+		else
+			sw_assert_not_reached();
+		amount ++;
+		i += rep_count;
+	} /* while */
+	(void) curs_set(1);
+	(void) atomic_swap_bool(&g_redrawing_window, false);
+
+	if (delwin(tmp) == ERR)
+		err_exit(EINVAL, "delwin");
+	if (i > goal)
+		amount -= 1;
+	return amount;
+}
+
 /**
  * spawn_chat_window() helper
  */
@@ -666,7 +744,11 @@ window_scroll_down(PIRC_WINDOW window, const int amount)
 		return;
 	}
 
-	window->scroll_count -= amount;
+	if (amount <= 0)
+		window->scroll_count -= get_dynamic_scroll_amount(window,
+		    MINUS);
+	else
+		window->scroll_count -= amount;
 
 	if (! (window->scroll_count > HEIGHT)) {
 		window->saved_size = 0;
@@ -704,10 +786,19 @@ window_scroll_up(PIRC_WINDOW window, const int amount)
 	if (window->scroll_count > window->saved_size) /* past top */
 		window->scroll_count = window->saved_size;
 	else {
-		if (window->scroll_count == 0) /* first page up */
-			window->scroll_count += MIN_SIZE;
+		if (window->scroll_count == 0) {
+			/*
+			 * first page up
+			 */
+//			window->scroll_count += MIN_SIZE;
+			window->scroll_count += first_page_up(window);
+		}
 
-		window->scroll_count += amount;
+		if (amount <= 0)
+			window->scroll_count +=
+			    get_dynamic_scroll_amount(window, PLUS);
+		else
+			window->scroll_count += amount;
 
 		if (window->scroll_count > window->saved_size)
 			window->scroll_count = window->saved_size;
