@@ -779,7 +779,7 @@ window_scroll_up(PIRC_WINDOW window, const int amount)
 		return;
 	}
 
-	if (! (window->scroll_mode)) {
+	if (!window->scroll_mode) {
 		window->saved_size = textBuf_size(window->buf);
 		window->scroll_mode = true;
 	}
