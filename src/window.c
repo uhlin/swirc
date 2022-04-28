@@ -762,7 +762,7 @@ window_scroll_down(PIRC_WINDOW window, const int amount)
 
 	window_redraw(window, HEIGHT,
 	    (window->saved_size - window->scroll_count),
-	    false);
+	    true);
 }
 
 /**
@@ -814,7 +814,7 @@ window_scroll_up(PIRC_WINDOW window, const int amount)
 	} else {
 		window_redraw(window, MIN_SIZE,
 		    (window->saved_size - window->scroll_count),
-		    false);
+		    true);
 	}
 }
 
