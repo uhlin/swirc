@@ -2,8 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added a TLS server
-- Added command `/rgui`
+- Added a TLS server (to be used in a future version)
 - Added config option `server_cipher_suite`
 - Added creation of OpenSSL scripts
 - Added event 335 (`RPL_WHOISBOT`)
