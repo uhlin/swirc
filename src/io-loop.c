@@ -135,7 +135,9 @@ static struct cmds_tag {
 	{ "query",       cmd_query,       false, query_usage,       ARRAY_SIZE(query_usage),       false },
 	{ "quit",        cmd_quit,        false, quit_usage,        ARRAY_SIZE(quit_usage),        false },
 	{ "resize",      cmd_resize,      false, resize_usage,      ARRAY_SIZE(resize_usage),      false },
+#if NOT_YET
 	{ "rgui",        cmd_rgui,        false, rgui_usage,        ARRAY_SIZE(rgui_usage),        false },
+#endif
 	{ "rules",       cmd_rules,       true,  rules_usage,       ARRAY_SIZE(rules_usage),       true  },
 	{ "sasl",        cmd_sasl,        false, sasl_usage,        ARRAY_SIZE(sasl_usage),        true  },
 	{ "say",         cmd_say,         true,  say_usage,         ARRAY_SIZE(say_usage),         false },
