@@ -19,7 +19,7 @@ CXXFLAGS = $(CFLAGS)\
 
 # Versions
 CURL_VERSION = 7.77.0
-LIBRESSL_VERSION = 3.4.2
+LIBRESSL_VERSION = 3.5.2
 PDCURSES_VERSION = 3.9
 
 # E and Q
@@ -27,8 +27,8 @@ E = @echo
 Q = @
 
 MACHINE = x64
-NAME_libcrypto = crypto-47
-NAME_libssl = ssl-50
+NAME_libcrypto = crypto-49
+NAME_libssl = ssl-52
 
 LDFLAGS = -LIBPATH:curl-$(CURL_VERSION)/$(MACHINE)\
 	-LIBPATH:libressl-$(LIBRESSL_VERSION)-windows/$(MACHINE)\
