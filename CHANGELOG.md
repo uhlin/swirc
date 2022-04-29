@@ -36,6 +36,10 @@ All notable changes to this project will be documented in this file.
 - Reduced code duplication
 - Reformatted and reindented files
 
+### Windows ###
+- [Curl](https://curl.se/) 7.83.0
+- [LibreSSL](https://www.libressl.org/) 3.5.2
+
 ## [3.3.3] - 2021-11-27 ##
 - **Added** event `531`. Undocumented in the RFC. (You cannot send
   CTCPs to this user whilst they have the +T `u_noctcp` mode set.)
