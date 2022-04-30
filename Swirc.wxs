@@ -58,6 +58,12 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 			    KeyPath="yes"
 			    Source="c:\out\swirc-x64\libcurl.dll" />
 		</Component>
+		<Component Guid="*" Id="libintl" Win64="yes">
+			<File
+			    Id="libintl"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\libintl-8.dll" />
+		</Component>
 		<Component Guid="*" Id="pdcurses.dll" Win64="yes">
 			<File
 			    Id="pdcurses.dll"
@@ -126,6 +132,7 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 
 	<Feature Id="MainApplication" Title="Main Application" Level="1">
 		<ComponentRef Id="libcurl.dll" />
+		<ComponentRef Id="libintl" />
 		<ComponentRef Id="pdcurses.dll" />
 		<ComponentRef Id="swirc.exe" />
 		<ComponentRef Id="trusted_roots.pem" />
