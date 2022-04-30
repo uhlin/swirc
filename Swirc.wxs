@@ -52,21 +52,21 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 	</DirectoryRef>
 
 	<DirectoryRef Id="APPLICATIONROOTDIRECTORY">
-		<Component Guid="*" Id="libcurl.dll" Win64="yes">
+		<Component Guid="*" Id="libcurl_dll" Win64="yes">
 			<File
-			    Id="libcurl.dll"
+			    Id="libcurl_dll_file"
 			    KeyPath="yes"
 			    Source="c:\out\swirc-x64\libcurl.dll" />
 		</Component>
-		<Component Guid="*" Id="libintl" Win64="yes">
+		<Component Guid="*" Id="libintl_dll" Win64="yes">
 			<File
-			    Id="libintl"
+			    Id="libintl_dll_file"
 			    KeyPath="yes"
 			    Source="c:\out\swirc-x64\libintl-8.dll" />
 		</Component>
-		<Component Guid="*" Id="pdcurses.dll" Win64="yes">
+		<Component Guid="*" Id="pdcurses_dll" Win64="yes">
 			<File
-			    Id="pdcurses.dll"
+			    Id="pdcurses_dll_file"
 			    KeyPath="yes"
 			    Source="c:\out\swirc-x64\pdcurses.dll" />
 		</Component>
@@ -131,9 +131,9 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 	</DirectoryRef>
 
 	<Feature Id="MainApplication" Title="Main Application" Level="1">
-		<ComponentRef Id="libcurl.dll" />
-		<ComponentRef Id="libintl" />
-		<ComponentRef Id="pdcurses.dll" />
+		<ComponentRef Id="libcurl_dll" />
+		<ComponentRef Id="libintl_dll" />
+		<ComponentRef Id="pdcurses_dll" />
 		<ComponentRef Id="swirc.exe" />
 		<ComponentRef Id="trusted_roots.pem" />
 
