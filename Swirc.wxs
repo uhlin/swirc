@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-*****************************************************
+**********************************************************
 
 Swirc.wxs
 
-Copyright (C) 2018 Markus Uhlin. All rights reserved.
+Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 
-*****************************************************
+**********************************************************
 -->
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
