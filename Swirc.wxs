@@ -70,16 +70,16 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 			    KeyPath="yes"
 			    Source="c:\out\swirc-x64\pdcurses.dll" />
 		</Component>
-		<Component Guid="*" Id="swirc.exe" Win64="yes">
+		<Component Guid="*" Id="swirc_exe" Win64="yes">
 			<File
 			    Checksum="yes"
-			    Id="swirc.exe"
+			    Id="swirc_exe_file"
 			    KeyPath="yes"
 			    Source="c:\out\swirc-x64\swirc.exe" />
 		</Component>
-		<Component Guid="*" Id="trusted_roots.pem" Win64="yes">
+		<Component Guid="*" Id="trusted_roots_pem" Win64="yes">
 			<File
-			    Id="trusted_roots.pem"
+			    Id="trusted_roots_pem_file"
 			    KeyPath="yes"
 			    Source="c:\out\swirc-x64\trusted_roots.pem" />
 		</Component>
@@ -95,7 +95,7 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 			    Description="Curses IRC client"
 			    Id="ApplicationStartMenuShortcut"
 			    Name="Swirc"
-			    Target="[#swirc.exe]"
+			    Target="[#swirc_exe_file]"
 			    WorkingDirectory="APPLICATIONROOTDIRECTORY">
 				<!-- ===== -->
 				<!-- AUMID -->
@@ -134,8 +134,8 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 		<ComponentRef Id="libcurl_dll" />
 		<ComponentRef Id="libintl_dll" />
 		<ComponentRef Id="pdcurses_dll" />
-		<ComponentRef Id="swirc.exe" />
-		<ComponentRef Id="trusted_roots.pem" />
+		<ComponentRef Id="swirc_exe" />
+		<ComponentRef Id="trusted_roots_pem" />
 
 		<!-- Tell WiX to install the shortcut -->
 		<ComponentRef Id="ApplicationShortcut" />
