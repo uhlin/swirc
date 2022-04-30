@@ -537,10 +537,24 @@ main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 #elif defined(WIN32)
-	if (bindtextdomain("swirc", getenv("CD")) == NULL) {
+	char	*pgm = NULL,
+		*str = NULL;
+
+	if (_get_pgmptr(&pgm) == 0) {
+		str = sw_strdup(pgm);
+		if ((cp = strstr(str, "\\swirc.exe")) == NULL) {
+			err_msg("renamed executable");
+			return EXIT_FAILURE;
+		}
+		*cp = '\0';
+		while ((cp = strchr(str, SLASH_CHAR)) != NULL)
+			*cp = '/';
+	}
+	if (bindtextdomain("swirc", str ? str : "") == NULL) {
 		err_ret("bindtextdomain");
 		return EXIT_FAILURE;
 	}
+	free(str);
 #endif
 	if (textdomain("swirc") == NULL) {
 		err_ret("textdomain");
