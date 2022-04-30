@@ -2,29 +2,29 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added a TLS server (to be used in a future version)
-- Added config option `server_cipher_suite`
-- Added creation of OpenSSL scripts
-- Added event 335 (`RPL_WHOISBOT`)
-- Added global hashfunctions
-- Added scrolling using the mouse
-- Added theme item:
+- **Added** a TLS server (to be used in a future version)
+- **Added** config option `server_cipher_suite`
+- **Added** creation of OpenSSL scripts
+- **Added** event 335 (`RPL_WHOISBOT`)
+- **Added** global hashfunctions
+- **Added** scrolling using the mouse
+- **Added** theme item:
   - `nicklist_my_nick_color`
   - `whois_bot`
-- Added translations
-- Changed the statusbar to display readline stats
-- Converted
+- **Added** translations
+- **Changed** the statusbar to display readline stats
+- **Converted**
   - `commands/services.c` -> `commands/services.cpp`
   - `config.c` -> `config.cpp`
-- Defined `SLASH` once
-- Defined and made use of:
+- **Defined** `SLASH` once
+- **Defined** and made use of:
   - `UNUSED_PARAM()`
   - `UNUSED_VAR()`
   - `colorarray_t`
   - `g_beginthread_failed`
   - `g_received_welcome`
   - `usage_t`
-- Fixed bugs discovered with protocol fuzzing
+- **Fixed** bugs discovered with protocol fuzzing
 - Handle PRIVMSGs from "my" server
 - Handle truncation of ICB messages, i.e. allow longer messages than
   `ICB_MESSAGE_MAX`.
@@ -37,7 +37,7 @@ All notable changes to this project will be documented in this file.
 - Reformatted and reindented files
 
 ### Windows ###
-- Added GNU LibIntl 0.19.8.1 which is part of
+- **Added** GNU LibIntl 0.19.8.1 which is part of
   [gettext](https://www.gnu.org/software/gettext/)
 - [Curl](https://curl.se/) 7.83.0
 - [LibreSSL](https://www.libressl.org/) 3.5.2
