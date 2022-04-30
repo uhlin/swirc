@@ -37,6 +37,8 @@ All notable changes to this project will be documented in this file.
 - Reformatted and reindented files
 
 ### Windows ###
+- Added GNU LibIntl 0.19.8.1 which is part of
+  [gettext](https://www.gnu.org/software/gettext/)
 - [Curl](https://curl.se/) 7.83.0
 - [LibreSSL](https://www.libressl.org/) 3.5.2
 
