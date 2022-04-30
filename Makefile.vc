@@ -12,6 +12,9 @@ CFLAGS = $(CFLAGS)\
 
 DEST = c:\out\swirc-$(MACHINE)
 
+# Locale location
+LOCLOC = LC_MESSAGES\swirc.mo
+
 all: main
 
 !include src/commands/build.w32.mk
@@ -36,6 +39,10 @@ DIST_DEPS = swirc.exe\
 
 dist: $(DIST_DEPS)
 	mkdir $(DEST)
+	mkdir $(DEST)\de\LC_MESSAGES
+	mkdir $(DEST)\fi\LC_MESSAGES
+	mkdir $(DEST)\fr\LC_MESSAGES
+	mkdir $(DEST)\sv\LC_MESSAGES
 	copy "curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll" $(DEST)
 	copy "intl-$(INTL_VERSION)\$(MACHINE)\$(NAME_libintl).dll" $(DEST)
 #	copy "libressl-$(LIBRESSL_VERSION)-windows\$(MACHINE)\$(NAME_libcrypto).dll" $(DEST)
@@ -43,6 +50,10 @@ dist: $(DIST_DEPS)
 	copy "pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll" $(DEST)
 	copy "src\trusted_roots.pem" $(DEST)
 	copy "swirc.exe" $(DEST)
+	copy swirc-locales-$(LOCALES_SNAP)\de\$(LOCLOC) $(DEST)\de\LC_MESSAGES
+	copy swirc-locales-$(LOCALES_SNAP)\fi\$(LOCLOC) $(DEST)\fi\LC_MESSAGES
+	copy swirc-locales-$(LOCALES_SNAP)\fr\$(LOCLOC) $(DEST)\fr\LC_MESSAGES
+	copy swirc-locales-$(LOCALES_SNAP)\sv\$(LOCLOC) $(DEST)\sv\LC_MESSAGES
 
 SIGNING_CERT=c:\certs\SwircDevelopmentTeam.pfx
 TIMESTAMP_URL=http://timestamp.comodoca.com/
@@ -71,8 +82,10 @@ clean:
 	$(RM) intl-$(INTL_VERSION).cab
 	$(RM) libressl-$(LIBRESSL_VERSION)-windows.cab
 	$(RM) pdcurses-$(PDCURSES_VERSION).cab
+	$(RM) swirc-locales-$(LOCALES_SNAP).cab
 	$(RM) swirc.res
 	rmdir /s /q curl-$(CURL_VERSION)
 	rmdir /s /q intl-$(INTL_VERSION)
 	rmdir /s /q libressl-$(LIBRESSL_VERSION)-windows
 	rmdir /s /q pdcurses-$(PDCURSES_VERSION)
+	rmdir /s /q swirc-locales-$(LOCALES_SNAP)

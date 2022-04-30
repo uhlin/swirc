@@ -63,3 +63,4 @@ fetch_and_expand:
 	expand intl-$(INTL_VERSION).cab "-F:*" .
 	expand libressl-$(LIBRESSL_VERSION)-windows.cab "-F:*" .
 	expand pdcurses-$(PDCURSES_VERSION).cab "-F:*" .
+	expand swirc-locales-$(LOCALES_SNAP).cab "-F:*" .
