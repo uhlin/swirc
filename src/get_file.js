@@ -15,5 +15,6 @@ function get_file(url, name)
 
 get_file("https://curl.haxx.se/ca/cacert.pem", "src/trusted_roots.pem");
 get_file("https://www.nifty-networks.net/swirc/curl-7.83.0.cab", "curl-7.83.0.cab");
+get_file("https://www.nifty-networks.net/swirc/intl-0.19.8.1.cab", "intl-0.19.8.1.cab");
 get_file("https://www.nifty-networks.net/swirc/libressl-3.5.2-windows.cab", "libressl-3.5.2-windows.cab");
 get_file("https://www.nifty-networks.net/swirc/pdcurses-3.9.cab", "pdcurses-3.9.cab");

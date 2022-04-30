@@ -20,6 +20,7 @@ CXXFLAGS = $(CFLAGS)\
 
 # Versions
 CURL_VERSION = 7.83.0
+INTL_VERSION = 0.19.8.1
 LIBRESSL_VERSION = 3.5.2
 PDCURSES_VERSION = 3.9
 
@@ -29,14 +30,17 @@ Q = @
 
 MACHINE = x64
 NAME_libcrypto = crypto-49
+NAME_libintl = libintl-8
 NAME_libssl = ssl-52
 
 LDFLAGS = -LIBPATH:curl-$(CURL_VERSION)/$(MACHINE)\
+	-LIBPATH:intl-$(INTL_VERSION)/$(MACHINE)\
 	-LIBPATH:libressl-$(LIBRESSL_VERSION)-windows/$(MACHINE)\
 	-LIBPATH:pdcurses-$(PDCURSES_VERSION)/$(MACHINE)\
 	-NODEFAULTLIB:MSVCRTD
 
 LDLIBS = $(NAME_libcrypto).lib\
+	$(NAME_libintl).lib\
 	$(NAME_libssl).lib\
 	advapi32.lib\
 	bcrypt.lib\

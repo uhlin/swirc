@@ -60,5 +60,6 @@ swirc.exe: fetch_and_expand $(OBJS)
 fetch_and_expand:
 	cscript $(SRC_DIR)get_file.js
 	expand curl-$(CURL_VERSION).cab "-F:*" .
+	expand intl-$(INTL_VERSION).cab "-F:*" .
 	expand libressl-$(LIBRESSL_VERSION)-windows.cab "-F:*" .
 	expand pdcurses-$(PDCURSES_VERSION).cab "-F:*" .
