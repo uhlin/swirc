@@ -59,6 +59,14 @@ static stringarray_t afternet_servers = {
 	NULL
 };
 
+static stringarray_t alphachat_servers = {
+	"irc-ca1.alphachat.net",
+	"irc-de1.alphachat.net",
+	"irc-us1.alphachat.net",
+	"irc-us2.alphachat.net",
+	NULL
+};
+
 static stringarray_t anonops_servers = {
 	"anonops532vcpz6z.onion",
 	"irc.anonops.com",
@@ -520,6 +528,10 @@ cmd_connect(const char *data)
 		if (strings_match_ignore_case(server, "afternet"))
 			IRC_CONNECT(get_server(afternet_servers,
 			    "AfterNET IRC network"),
+			    port);
+		else if (strings_match_ignore_case(server, "alphachat"))
+			IRC_CONNECT(get_server(alphachat_servers,
+			    "AlphaChat - www.alphachat.net"),
 			    port);
 		else if (strings_match_ignore_case(server, "anonops"))
 			IRC_CONNECT(get_server(anonops_servers,

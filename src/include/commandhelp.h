@@ -118,6 +118,7 @@ static usage_t connect_usage = {
     "Preconfigured network names are:",
     "",
     "    - afternet",
+    "    - alphachat",
     "    - anonops",
     "    - blitzed",
     "    - efnet",
