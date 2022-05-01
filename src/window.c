@@ -283,8 +283,9 @@ static void hUndef(PIRC_WINDOW) PTR_ARGS_NONNULL;
 static void
 hUndef(PIRC_WINDOW entry)
 {
-	PIRC_WINDOW *indirect = addrof(hash_table[hash(entry->label)]);
+	PIRC_WINDOW *indirect;
 
+	indirect = addrof(hash_table[hash(entry->label)]);
 	while (*indirect != entry)
 		indirect = addrof((*indirect)->next);
 	*indirect = entry->next;
