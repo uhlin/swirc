@@ -18,6 +18,7 @@ tests/fuzz/ircfuzz.log
 _LINT.TMP
 cov-int
 curl-*
+idn-*
 intl-*
 libressl-*-windows
 options.mk
