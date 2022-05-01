@@ -550,7 +550,7 @@ main(int argc, char *argv[])
 		while ((cp = strchr(str, SLASH_CHAR)) != NULL)
 			*cp = '/';
 	}
-	if (bindtextdomain("swirc", str ? str : "") == NULL) {
+	if (bindtextdomain("swirc", (str ? str : "")) == NULL) {
 		err_ret("bindtextdomain");
 		return EXIT_FAILURE;
 	}
