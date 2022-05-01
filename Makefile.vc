@@ -6,6 +6,7 @@ BUILD_LOG = build.log
 
 CFLAGS = $(CFLAGS)\
 	-Icurl-$(CURL_VERSION)/include\
+	-Iidn-$(IDN_VERSION)/include\
 	-Iintl-$(INTL_VERSION)/include\
 	-Ilibressl-$(LIBRESSL_VERSION)-windows/include\
 	-Isrc/include
@@ -33,6 +34,7 @@ main: $(TGTS)
 
 DIST_DEPS = swirc.exe\
 	"curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll"\
+	"idn-$(IDN_VERSION)\$(MACHINE)\$(NAME_libidn).dll"\
 	"intl-$(INTL_VERSION)\$(MACHINE)\$(NAME_libintl).dll"\
 	"pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll"\
 	"src\trusted_roots.pem"
@@ -44,6 +46,7 @@ dist: $(DIST_DEPS)
 	mkdir $(DEST)\fr\LC_MESSAGES
 	mkdir $(DEST)\sv\LC_MESSAGES
 	copy "curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll" $(DEST)
+	copy "idn-$(IDN_VERSION)\$(MACHINE)\$(NAME_libidn).dll" $(DEST)
 	copy "intl-$(INTL_VERSION)\$(MACHINE)\$(NAME_libintl).dll" $(DEST)
 #	copy "libressl-$(LIBRESSL_VERSION)-windows\$(MACHINE)\$(NAME_libcrypto).dll" $(DEST)
 #	copy "libressl-$(LIBRESSL_VERSION)-windows\$(MACHINE)\$(NAME_libssl).dll" $(DEST)
@@ -61,6 +64,7 @@ PRODUCT_VERSION=3.3.3
 
 setupfile: dist Swirc.wxs
 	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\libcurl.dll"
+	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\$(NAME_libidn).dll"
 	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\$(NAME_libintl).dll"
 	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\pdcurses.dll"
 	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\swirc.exe"
@@ -79,12 +83,14 @@ clean:
 	$(RM) $(TGTS)
 	$(RM) Swirc.wixobj
 	$(RM) curl-$(CURL_VERSION).cab
+	$(RM) idn-$(IDN_VERSION).cab
 	$(RM) intl-$(INTL_VERSION).cab
 	$(RM) libressl-$(LIBRESSL_VERSION)-windows.cab
 	$(RM) pdcurses-$(PDCURSES_VERSION).cab
 	$(RM) swirc-locales-$(LOCALES_SNAP).cab
 	$(RM) swirc.res
 	rmdir /s /q curl-$(CURL_VERSION)
+	rmdir /s /q idn-$(IDN_VERSION)
 	rmdir /s /q intl-$(INTL_VERSION)
 	rmdir /s /q libressl-$(LIBRESSL_VERSION)-windows
 	rmdir /s /q pdcurses-$(PDCURSES_VERSION)
