@@ -52,6 +52,11 @@
 #define strtok_r	strtok_s
 #endif
 
+#if defined(WIN32) && !defined(_SSIZE_T_DEFINED)
+#define _SSIZE_T_DEFINED 1
+typedef long int ssize_t;
+#endif
+
 #ifdef __cplusplus
 #define __SWIRC_BEGIN_DECLS	extern "C" {
 #define __SWIRC_END_DECLS	}
