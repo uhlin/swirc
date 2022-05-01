@@ -217,7 +217,7 @@ get_dynamic_scroll_amount(PIRC_WINDOW window, plus_minus_t pm)
 
 	if (delwin(tmp) == ERR)
 		err_exit(EINVAL, "delwin");
-	if (i > goal)
+	if (i > goal && amount > 1)
 		amount -= 1;
 	return amount;
 }
