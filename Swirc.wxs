@@ -29,7 +29,23 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 		<Directory Id="ProgramFiles64Folder">
 			<Directory
 			    Id="APPLICATIONROOTDIRECTORY"
-			    Name="Swirc" />
+			    Name="Swirc">
+				<Directory Id="de_lang" Name="de">
+				<Directory Id="de_lc_msgs" Name="LC_MESSAGES" />
+				</Directory>
+
+				<Directory Id="fi_lang" Name="fi">
+				<Directory Id="fi_lc_msgs" Name="LC_MESSAGES" />
+				</Directory>
+
+				<Directory Id="fr_lang" Name="fr">
+				<Directory Id="fr_lc_msgs" Name="LC_MESSAGES" />
+				</Directory>
+
+				<Directory Id="sv_lang" Name="sv">
+				<Directory Id="sv_lc_msgs" Name="LC_MESSAGES" />
+				</Directory>
+			</Directory>
 		</Directory>
 
 		<!-- ============================== -->
@@ -49,6 +65,39 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 		    Id="VCRedist"
 		    Language="0"
 		    SourceFile="C:\MergeModules\Microsoft_VC142_CRT_x64.msm" />
+	</DirectoryRef>
+
+	<DirectoryRef Id="de_lc_msgs">
+		<Component Guid="*" Id="de_lc_msgs_compo" Win64="yes">
+			<File
+			    Id="de_lc_msgs_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\de\LC_MESSAGES\swirc.mo" />
+		</Component>
+	</DirectoryRef>
+	<DirectoryRef Id="fi_lc_msgs">
+		<Component Guid="*" Id="fi_lc_msgs_compo" Win64="yes">
+			<File
+			    Id="fi_lc_msgs_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\fi\LC_MESSAGES\swirc.mo" />
+		</Component>
+	</DirectoryRef>
+	<DirectoryRef Id="fr_lc_msgs">
+		<Component Guid="*" Id="fr_lc_msgs_compo" Win64="yes">
+			<File
+			    Id="fr_lc_msgs_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\fr\LC_MESSAGES\swirc.mo" />
+		</Component>
+	</DirectoryRef>
+	<DirectoryRef Id="sv_lc_msgs">
+		<Component Guid="*" Id="sv_lc_msgs_compo" Win64="yes">
+			<File
+			    Id="sv_lc_msgs_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\sv\LC_MESSAGES\swirc.mo" />
+		</Component>
 	</DirectoryRef>
 
 	<DirectoryRef Id="APPLICATIONROOTDIRECTORY">
@@ -131,6 +180,11 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 	</DirectoryRef>
 
 	<Feature Id="MainApplication" Title="Main Application" Level="1">
+		<ComponentRef Id="de_lc_msgs_compo" />
+		<ComponentRef Id="fi_lc_msgs_compo" />
+		<ComponentRef Id="fr_lc_msgs_compo" />
+		<ComponentRef Id="sv_lc_msgs_compo" />
+
 		<ComponentRef Id="libcurl_dll" />
 		<ComponentRef Id="libintl_dll" />
 		<ComponentRef Id="pdcurses_dll" />
