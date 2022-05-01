@@ -525,52 +525,53 @@ cmd_connect(const char *data)
 		print_and_free("/connect: bogus port number", dcopy);
 		return;
 	} else {
-		if (strings_match_ignore_case(server, "afternet"))
+		if (strings_match_ignore_case(server, "afternet")) {
 			IRC_CONNECT(get_server(afternet_servers,
 			    "AfterNET IRC network"),
 			    port);
-		else if (strings_match_ignore_case(server, "alphachat"))
+		} else if (strings_match_ignore_case(server, "alphachat")) {
 			IRC_CONNECT(get_server(alphachat_servers,
 			    "AlphaChat - www.alphachat.net"),
 			    port);
-		else if (strings_match_ignore_case(server, "anonops"))
+		} else if (strings_match_ignore_case(server, "anonops")) {
 			IRC_CONNECT(get_server(anonops_servers,
 			    "AnonOps IRC network"),
 			    port);
-		else if (strings_match_ignore_case(server, "blitzed"))
+		} else if (strings_match_ignore_case(server, "blitzed")) {
 			IRC_CONNECT(get_server(blitzed_servers,
 			    "Blitzed IRC network"),
 			    port);
-		else if (strings_match_ignore_case(server, "efnet"))
+		} else if (strings_match_ignore_case(server, "efnet")) {
 			IRC_CONNECT(get_server(efnet_servers,
 			    "EFnet servers"),
 			    port);
-		else if (strings_match_ignore_case(server, "freenode"))
+		} else if (strings_match_ignore_case(server, "freenode")) {
 			IRC_CONNECT(get_server(freenode_servers,
 			    "freenode servers"),
 			    port);
-		else if (strings_match_ignore_case(server, "ircnet"))
+		} else if (strings_match_ignore_case(server, "ircnet")) {
 			IRC_CONNECT(get_server(ircnet_servers,
 			    "IRCnet servers"),
 			    port);
-		else if (strings_match_ignore_case(server, "libera"))
+		} else if (strings_match_ignore_case(server, "libera")) {
 			IRC_CONNECT(get_server(libera_servers,
 			    "Libera Chat"),
 			    port);
-		else if (strings_match_ignore_case(server, "quakenet"))
+		} else if (strings_match_ignore_case(server, "quakenet")) {
 			IRC_CONNECT(get_server(quakenet_servers,
 			    "QuakeNet servers"),
 			    port);
-		else if (strings_match_ignore_case(server, "undernet"))
+		} else if (strings_match_ignore_case(server, "undernet")) {
 			IRC_CONNECT(get_server(undernet_servers,
 			    "undernet servers"),
 			    port);
-		else if (strings_match_ignore_case(server, "test"))
+		} else if (strings_match_ignore_case(server, "test")) {
 			IRC_CONNECT(get_server(test_servers,
 			    "test servers"),
 			    port);
-		else
+		} else {
 			IRC_CONNECT(server, port);
+		}
 
 		free(dcopy);
 	}
