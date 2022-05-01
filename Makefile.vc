@@ -60,10 +60,10 @@ TIMESTAMP_URL=http://timestamp.comodoca.com/
 PRODUCT_VERSION=3.3.3
 
 setupfile: dist Swirc.wxs
-	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v $(DEST)\libcurl.dll
-	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v $(DEST)\$(NAME_libintl).dll
-	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v $(DEST)\pdcurses.dll
-	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v $(DEST)\swirc.exe
+	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\libcurl.dll"
+	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\$(NAME_libintl).dll"
+	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\pdcurses.dll"
+	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\swirc.exe"
 	candle Swirc.wxs
 	light "-cultures:en-us" -ext WixUIExtension -out "Swirc-$(PRODUCT_VERSION).msi" Swirc.wixobj
 	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "Swirc-$(PRODUCT_VERSION).msi"
