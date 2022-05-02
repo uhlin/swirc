@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - **Added** a TLS server (to be used in a future version)
 - **Added** config option `server_cipher_suite`
+- **Added** config option `mouse` (defaults to **no**)
 - **Added** creation of OpenSSL scripts
 - **Added** event 335 (`RPL_WHOISBOT`)
 - **Added** global hashfunctions
