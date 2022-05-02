@@ -128,6 +128,7 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 		<Component Guid="*" Id="swirc_exe" Win64="yes">
 			<File
 			    Checksum="yes"
+			    DefaultLanguage="0"
 			    Id="swirc_exe_file"
 			    KeyPath="yes"
 			    Source="c:\out\swirc-x64\swirc.exe" />
