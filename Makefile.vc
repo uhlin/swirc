@@ -58,19 +58,20 @@ dist: $(DIST_DEPS)
 	copy swirc-locales-$(LOCALES_SNAP)\fr\$(LOCLOC) $(DEST)\fr\LC_MESSAGES
 	copy swirc-locales-$(LOCALES_SNAP)\sv\$(LOCLOC) $(DEST)\sv\LC_MESSAGES
 
+SIGNING_ALG=SHA256
 SIGNING_CERT=c:\certs\SwircDevelopmentTeam.pfx
-TIMESTAMP_URL=http://timestamp.comodoca.com/
+TIMESTAMP_URL=http://timestamp.sectigo.com
 PRODUCT_VERSION=3.3.3
 
 setupfile: dist Swirc.wxs
-	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\libcurl.dll"
-	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\$(NAME_libidn).dll"
-	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\$(NAME_libintl).dll"
-	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\pdcurses.dll"
-	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "$(DEST)\swirc.exe"
+	signtool sign -f $(SIGNING_CERT) -tr $(TIMESTAMP_URL) -td $(SIGNING_ALG) -v "$(DEST)\libcurl.dll"
+	signtool sign -f $(SIGNING_CERT) -tr $(TIMESTAMP_URL) -td $(SIGNING_ALG) -v "$(DEST)\$(NAME_libidn).dll"
+	signtool sign -f $(SIGNING_CERT) -tr $(TIMESTAMP_URL) -td $(SIGNING_ALG) -v "$(DEST)\$(NAME_libintl).dll"
+	signtool sign -f $(SIGNING_CERT) -tr $(TIMESTAMP_URL) -td $(SIGNING_ALG) -v "$(DEST)\pdcurses.dll"
+	signtool sign -f $(SIGNING_CERT) -tr $(TIMESTAMP_URL) -td $(SIGNING_ALG) -v "$(DEST)\swirc.exe"
 	candle Swirc.wxs
 	light "-cultures:en-us" -ext WixUIExtension -out "Swirc-$(PRODUCT_VERSION).msi" Swirc.wixobj
-	signtool sign -f $(SIGNING_CERT) -t $(TIMESTAMP_URL) -v "Swirc-$(PRODUCT_VERSION).msi"
+	signtool sign -f $(SIGNING_CERT) -tr $(TIMESTAMP_URL) -td $(SIGNING_ALG) -v "Swirc-$(PRODUCT_VERSION).msi"
 
 clean:
 	$(RM) "*.msi"
