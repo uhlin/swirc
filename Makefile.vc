@@ -16,6 +16,8 @@ DEST = c:\out\swirc-$(MACHINE)
 # Locale location
 LOCLOC = LC_MESSAGES\swirc.mo
 
+PRODUCT_VERSION = 3.3.3
+
 all: main
 
 !include src/commands/build.w32.mk
@@ -61,7 +63,6 @@ dist: $(DIST_DEPS)
 SIGNING_ALG=SHA256
 SIGNING_CERT=c:\certs\SwircDevelopmentTeam.pfx
 TIMESTAMP_URL=http://timestamp.sectigo.com
-PRODUCT_VERSION=3.3.3
 
 setupfile: dist Swirc.wxs
 	signtool sign -f $(SIGNING_CERT) -tr $(TIMESTAMP_URL) -td $(SIGNING_ALG) -v "$(DEST)\libcurl.dll"
