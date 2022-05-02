@@ -34,6 +34,7 @@
 
 #include "assertAPI.h"
 #include "atomicops.h"
+#include "config.h"
 #if defined(WIN32) && defined(PDC_EXP_EXTRAS)
 #include "curses-funcs.h" /* is_scrollok() etc */
 #endif
