@@ -721,7 +721,8 @@ process(volatile struct readline_session_context *ctx)
 			break;
 		} /* ---------- KEY_DC ---------- */
 		case KEY_MOUSE:
-			handle_mouse();
+			if (config_bool("mouse", false))
+				handle_mouse();
 			break;
 		case KEY_NPAGE:
 			window_scroll_down(g_active_window, -1);
@@ -782,7 +783,8 @@ readline_init(void)
 	apply_readline_options(panel_window(readline_pan1));
 	apply_readline_options(panel_window(readline_pan2));
 
-	(void) mousemask(ALL_MOUSE_EVENTS, NULL);
+	if (config_bool("mouse", false))
+		(void) mousemask(ALL_MOUSE_EVENTS, NULL);
 }
 
 /**
