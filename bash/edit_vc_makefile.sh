@@ -1,5 +1,5 @@
 edit_vc_makefile () {
-	local _expr="s/PRODUCT_VERSION=.*/PRODUCT_VERSION=$VERSION/"
+	local _expr="s/PRODUCT_VERSION = .*/PRODUCT_VERSION = $VERSION/"
 
 	printf "  - Editing %s..." "$1"
 
