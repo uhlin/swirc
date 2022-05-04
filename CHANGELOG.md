@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.3.4] - 2022-05-04 ##
 - **Added** a TLS server (to be used in a future version)
 - **Added** config option `mouse` (defaults to **no**)
 - **Added** config option `server_cipher_suite`
