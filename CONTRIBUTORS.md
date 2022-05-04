@@ -1,5 +1,7 @@
 # CONTRIBUTORS #
 
+- [Emanuel Berg](https://dataswamp.org/~incal/)
+  - Feedback and ideas.
 - Michael Ortmann
   - Bug report
 - [Sebastian Nielsen](https://github.com/sebastiannielsen)
