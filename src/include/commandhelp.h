@@ -51,7 +51,9 @@ static usage_t away_usage = {
 static usage_t ban_usage = {
   N_("usage: /ban <mask>"),
   "",
-  N_("Set a ban. The active window must be an IRC channel."),
+  N_("Sets a channel ban which rejects all users whose nick!user@host"),
+  N_("matches the provided mask from joining the channel. Wildcards are okay"),
+  N_("and the active window must be an IRC channel."),
   "",
 };
 
