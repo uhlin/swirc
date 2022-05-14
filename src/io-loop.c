@@ -415,22 +415,22 @@ swirc_greeting(void)
 	}
 
 	printtext(&ctx, " ");
-	printtext(&ctx, "    Swirc %s by %s", g_swircVersion, g_swircAuthor);
-	printtext(&ctx, "    Compiled on %s%s %s%s",
+	printtext(&ctx, _("    Swirc %s by %s"), g_swircVersion, g_swircAuthor);
+	printtext(&ctx, _("    Compiled on %s%s %s%s"),
 	    LEFT_BRKT, __DATE__, __TIME__, RIGHT_BRKT);
 	if (g_initialized_pairs < 0)
 		g_initialized_pairs = 0;
 	printtext(&ctx, " ");
-	printtext(&ctx, "Program settings are stored in %s%s%s",
+	printtext(&ctx, _("Program settings are stored in %s%s%s"),
 	    LEFT_BRKT, g_home_dir, RIGHT_BRKT);
-	printtext(&ctx, "%c%hd%c color pairs have been initialized",
+	printtext(&ctx, _("%c%hd%c color pairs have been initialized"),
 	    BOLD, g_initialized_pairs, BOLD);
-	printtext(&ctx, "Type /help for a list of commands; "
-	    "or /help <command>");
-	printtext(&ctx, "for help of a specific command");
-	printtext(&ctx, "Type F1 for keys");
+	printtext(&ctx, _("Type /help for a list of commands; "
+	    "or /help <command>"));
+	printtext(&ctx, _("for help of a specific command"));
+	printtext(&ctx, _("Type F1 for keys"));
 	if (get_error_log_size(&log_size_kb)) {
-		printtext(&ctx, "Error log size %s%.1f KB%s",
+		printtext(&ctx, _("Error log size %s%.1f KB%s"),
 		    LEFT_BRKT, log_size_kb, RIGHT_BRKT);
 	}
 	printtext(&ctx, " ");
