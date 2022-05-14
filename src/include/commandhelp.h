@@ -67,10 +67,10 @@ static usage_t banlist_usage = {
 };
 
 static usage_t beep_usage = {
-    "usage: /beep <nickname>",
-    "",
-    "Send beeps.",
-    "",
+  N_("usage: /beep <nickname>"),
+  "",
+  N_("Send beeps. (ICB only)"),
+  "",
 };
 
 static usage_t boot_usage = {
