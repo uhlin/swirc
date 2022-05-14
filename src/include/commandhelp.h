@@ -98,12 +98,12 @@ static usage_t cleartoasts_usage = {
 };
 
 static usage_t close_usage = {
-    "usage: /close",
-    "",
-    "Close the active window. It's not possible to close the status",
-    "window. And while connected it's not possible to close a channel;",
-    "in that case instead use /part.",
-    "",
+  N_("usage: /close"),
+  "",
+  N_("Closes the active window. It's not possible to close the status"),
+  N_("window. And while connected it's not possible to close a channel, in"),
+  N_("that case instead use '/part'."),
+  "",
 };
 
 static usage_t colormap_usage = {
