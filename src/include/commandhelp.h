@@ -90,11 +90,11 @@ static usage_t chanserv_usage = {
 };
 
 static usage_t cleartoasts_usage = {
-    "usage: /cleartoasts",
-    "",
-    "On Windows Swirc sends toast notifications. By issuing this command all",
-    "notifications associated with Swirc will be cleared.",
-    "",
+  N_("usage: /cleartoasts"),
+  "",
+  N_("On Windows Swirc sends toast notifications. By issuing this command"),
+  N_("all notifications associated with Swirc will be cleared."),
+  "",
 };
 
 static usage_t close_usage = {
