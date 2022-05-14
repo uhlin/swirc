@@ -74,10 +74,10 @@ static usage_t beep_usage = {
 };
 
 static usage_t boot_usage = {
-    "usage: /boot <victim>",
-    "",
-    "In ICB mode: kick a user out of the active group.",
-    "",
+  N_("usage: /boot <victim>"),
+  "",
+  N_("Kick a user out of your group. (ICB only)"),
+  "",
 };
 
 static usage_t chanserv_usage = {
