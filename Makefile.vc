@@ -79,6 +79,7 @@ setupfile: dist Swirc.wxs
 	signtool sign $(SIGNTOOL_FLAGS) "Swirc-$(PRODUCT_VERSION).msi"
 
 clean:
+	$(E) ^ ^ CLEAN
 	$(RM) "*.msi"
 	$(RM) "*.wixpdb"
 	$(RM) "src\*.obj"
@@ -95,9 +96,21 @@ clean:
 	$(RM) pdcurses-$(PDCURSES_VERSION).cab
 	$(RM) swirc-locales-$(LOCALES_SNAP).cab
 	$(RM) swirc.res
-	rmdir /s /q curl-$(CURL_VERSION)
-	rmdir /s /q idn-$(IDN_VERSION)
-	rmdir /s /q intl-$(INTL_VERSION)
-	rmdir /s /q libressl-$(LIBRESSL_VERSION)-windows
-	rmdir /s /q pdcurses-$(PDCURSES_VERSION)
-	rmdir /s /q swirc-locales-$(LOCALES_SNAP)
+!	if exists(curl-$(CURL_VERSION))
+		rmdir /s /q curl-$(CURL_VERSION)
+!	endif
+!	if exists(idn-$(IDN_VERSION))
+		rmdir /s /q idn-$(IDN_VERSION)
+!	endif
+!	if exists(intl-$(INTL_VERSION))
+		rmdir /s /q intl-$(INTL_VERSION)
+!	endif
+!	if exists(libressl-$(LIBRESSL_VERSION)-windows)
+		rmdir /s /q libressl-$(LIBRESSL_VERSION)-windows
+!	endif
+!	if exists(pdcurses-$(PDCURSES_VERSION))
+		rmdir /s /q pdcurses-$(PDCURSES_VERSION)
+!	endif
+!	if exists(swirc-locales-$(LOCALES_SNAP))
+		rmdir /s /q swirc-locales-$(LOCALES_SNAP)
+!	endif
