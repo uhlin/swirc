@@ -35,12 +35,17 @@ typedef const char *usage_t[];
 
 //lint -e786
 
+/*
+ * set-fill-column: 70
+ * Run esc+q on the text from the outside of the array
+ */
+
 static usage_t away_usage = {
-    "usage: /away [reason]",
-    "",
-    "Marks yourself as away with reason. If reason is omitted you'll",
-    "be marked as no longer away.",
-    "",
+  N_("usage: /away [reason]"),
+  "",
+  N_("Marks yourself as being away (with a reason). If the reason is omitted"),
+  N_("you will be marked as no longer being away."),
+  "",
 };
 
 static usage_t ban_usage = {
