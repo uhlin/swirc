@@ -365,7 +365,7 @@ output_help_for_command(const char *command)
 			const size_t size = sp->size;
 
 			while (lines < & (sp->usage[size])) {
-				printtext(&ctx, "%s", *lines);
+				printtext(&ctx, "%s", _(*lines));
 				++lines;
 			}
 
