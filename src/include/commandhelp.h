@@ -49,10 +49,10 @@ static usage_t away_usage = {
 };
 
 static usage_t ban_usage = {
-    "usage: /ban <mask>",
-    "",
-    "Set a ban. The active window must be an IRC channel.",
-    "",
+  N_("usage: /ban <mask>"),
+  "",
+  N_("Set a ban. The active window must be an IRC channel."),
+  "",
 };
 
 static usage_t banlist_usage = {
