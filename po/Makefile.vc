@@ -1,0 +1,28 @@
+# -*- mode: makefile; -*-
+
+ROOT = ../
+COMMANDS_DIR = $(ROOT)src/commands/
+EVENTS_DIR = $(ROOT)src/events/
+SRC_DIR = $(ROOT)src/
+
+!include $(ROOT)options.w32.mk
+!include common.mk
+
+all: main
+
+!include targets/merge.mk
+
+main: $(PKG).pot $(POFILES) $(MOFILES)
+
+$(PKG).pot:
+	$(Q) $(XGETTEXT) $(XGTFLAGS) $(INPUTFILES)
+
+!include targets/lang/de.mk
+!include targets/lang/fi.mk
+!include targets/lang/fr.mk
+!include targets/lang/sv.mk
+
+clean:
+	$(E) ^ ^ CLEAN
+	$(RM) $(PKG).pot
+	$(RM) $(MOFILES)
