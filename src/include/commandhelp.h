@@ -142,11 +142,12 @@ static usage_t connect_usage = {
 };
 
 static usage_t cycle_usage = {
-    "usage: /cycle [channel]",
-    "",
-    "Cycle a channel, i.e. part plus join. If channel is omitted and",
-    "the active window is an IRC channel, it'll cycle that channel.",
-    "",
+  N_("usage: /cycle [channel]"),
+  "",
+  N_("Cycle a channel, i.e. '/part' plus '/join'. If the channel argument is"),
+  N_("omitted and the active window is an IRC channel, the client will cycle"),
+  N_("that channel."),
+  "",
 };
 
 static usage_t deop_usage = {
