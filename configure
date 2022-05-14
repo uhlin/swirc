@@ -50,9 +50,10 @@ for arg in "$@"; do
 done
 
 cat <<EOF >$MAKE_DEF_FILE
-E=@echo
-Q=@
-RM:=@rm -f
+E = @echo
+Q = @
+RM = @rm -f
+SLASH_SYM = /
 EOF
 
 case "$(uname -s)" in

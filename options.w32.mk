@@ -58,4 +58,4 @@ LDLIBS = $(NAME_libcrypto).lib\
 	ws2_32.lib
 
 RM = @del /q
-# TEMPFILES = *.obj
+SLASH_SYM = ^\
