@@ -2,7 +2,7 @@ PKG = swirc
 
 MSGMERGE = msgmerge
 MMFLAGS = --backup=none\
-	--sort-output\
+	--sort-by-file\
 	--update
 
 XGETTEXT = xgettext
@@ -15,7 +15,7 @@ XGTFLAGS = --add-comments\
 	--keyword=_\
 	--msgid-bugs-address="https://github.com/uhlin/swirc/issues"\
 	--output=$(PKG).pot\
-	--sort-output
+	--sort-by-file
 
 INPUTFILES = $(SRC_DIR)include/commandhelp.h\
 	$(SRC_DIR)io-loop.c\
