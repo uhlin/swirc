@@ -107,10 +107,10 @@ static usage_t close_usage = {
 };
 
 static usage_t colormap_usage = {
-    "usage: /colormap",
-    "",
-    "Output colors.",
-    "",
+  N_("usage: /colormap"),
+  "",
+  N_("Outputs information about colors."),
+  "",
 };
 
 static usage_t connect_usage = {
