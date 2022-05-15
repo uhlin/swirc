@@ -195,11 +195,11 @@ static usage_t group_usage = {
 };
 
 static usage_t help_usage = {
-    "usage: /help [command]",
-    "",
-    "Outputs help. If a command is present, it'll output help for that",
-    "command.",
-    "",
+  N_("usage: /help [command]"),
+  "",
+  N_("Outputs help. If a command is given the program will output help for"),
+  N_("that particular command."),
+  "",
 };
 
 static usage_t ignore_usage = {
