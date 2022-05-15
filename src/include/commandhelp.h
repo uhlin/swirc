@@ -158,11 +158,11 @@ static usage_t deop_usage = {
 };
 
 static usage_t disconnect_usage = {
-    "usage: /disconnect [message]",
-    "",
-    "Disconnect from IRC, but don't quit the program. A disconnect",
-    "message is optional.",
-    "",
+  N_("usage: /disconnect [message]"),
+  "",
+  N_("Disconnect from IRC, but don't quit the program. A disconnect message"),
+  N_("is optional."),
+  "",
 };
 
 static usage_t echo_usage = {
