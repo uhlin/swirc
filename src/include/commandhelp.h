@@ -242,10 +242,10 @@ static usage_t ilist_usage = {
 };
 
 static usage_t invite_usage = {
-    "usage: /invite <targ_nick> <channel>",
-    "",
-    "Invites targ_nick to channel.",
-    "",
+  N_("usage: /invite <targ_nick> <channel>"),
+  "",
+  N_("Invites 'targ_nick' to a channel."),
+  "",
 };
 
 static usage_t join_usage = {
