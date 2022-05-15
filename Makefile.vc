@@ -42,6 +42,9 @@ DIST_DEPS = swirc.exe\
 	"src\trusted_roots.pem"
 
 dist: $(DIST_DEPS)
+!	if exists($(DEST))
+		rmdir /s /q $(DEST)
+!	endif
 	mkdir $(DEST)
 	mkdir $(DEST)\de\LC_MESSAGES
 	mkdir $(DEST)\fi\LC_MESSAGES
