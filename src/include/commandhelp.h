@@ -188,10 +188,10 @@ static usage_t exlist_usage = {
 };
 
 static usage_t group_usage = {
-    "usage: /group <name>",
-    "",
-    "Changes ICB group.",
-    "",
+  N_("usage: /group <name>"),
+  "",
+  N_("Changes ICB group."),
+  "",
 };
 
 static usage_t help_usage = {
