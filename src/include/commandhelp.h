@@ -172,8 +172,8 @@ static usage_t echo_usage = {
   "",
   (TXT_BOLD "EXAMPLE" TXT_BOLD),
   "",
-  "Echo 'Hello World':",
-  "    /echo Hello World",
+  N_("Echo 'Hello World':"),
+  N_("    /echo Hello World"),
   "",
 };
 
