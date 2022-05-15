@@ -232,13 +232,13 @@ static usage_t ignore_usage = {
 };
 
 static usage_t ilist_usage = {
-    "usage: /ilist [channel]",
-    "",
-    "Outputs channel invitation list. An invitation mask (+I)",
-    "overrides the invite-only flag (+i). If channel is omitted and",
-    "the active window is an IRC channel, it'll output the invitation",
-    "list for that channel.",
-    "",
+  N_("usage: /ilist [channel]"),
+  "",
+  N_("Outputs a channel's invitation list. An invitation mask (+I) overrides"),
+  N_("the invite-only flag (+i). If the channel argument is omitted and the"),
+  N_("active window is an IRC channel, the client will output the invitation"),
+  N_("list for that channel."),
+  "",
 };
 
 static usage_t invite_usage = {
