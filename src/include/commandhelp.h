@@ -166,15 +166,15 @@ static usage_t disconnect_usage = {
 };
 
 static usage_t echo_usage = {
-    "usage: /echo <text>",
-    "",
-    "Echo text.",
-    "",
-    TXT_BOLD "EXAMPLE" TXT_BOLD,
-    "",
-    "Echo " TXT_UNDERLINE "Hello World!" TXT_UNDERLINE ":",
-    "    /echo Hello World!",
-    "",
+  N_("usage: /echo <text>"),
+  "",
+  N_("Writes text to the current window without sending anything."),
+  "",
+  (TXT_BOLD "EXAMPLE" TXT_BOLD),
+  "",
+  "Echo 'Hello World':",
+  "    /echo Hello World",
+  "",
 };
 
 static usage_t exlist_usage = {
