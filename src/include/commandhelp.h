@@ -151,10 +151,10 @@ static usage_t cycle_usage = {
 };
 
 static usage_t deop_usage = {
-    "usage: /deop <nick>",
-    "",
-    "Take channel operator privilege.",
-    "",
+  N_("usage: /deop <nick>"),
+  "",
+  N_("Remove the channel operator privilege from another user."),
+  "",
 };
 
 static usage_t disconnect_usage = {
