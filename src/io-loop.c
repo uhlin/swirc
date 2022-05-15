@@ -428,10 +428,10 @@ swirc_greeting(void)
 	    LEFT_BRKT, g_home_dir, RIGHT_BRKT);
 	printtext(&ctx, _("%c%hd%c color pairs have been initialized"),
 	    BOLD, g_initialized_pairs, BOLD);
-	printtext(&ctx, _("Type /help for a list of commands; "
+	printtext(&ctx, "%s", _("Type /help for a list of commands; "
 	    "or /help <command>"));
-	printtext(&ctx, _("for help of a specific command"));
-	printtext(&ctx, _("Type F1 for keys"));
+	printtext(&ctx, "%s", _("for help of a specific command"));
+	printtext(&ctx, "%s", _("Type F1 for keys"));
 	if (get_error_log_size(&log_size_kb)) {
 		printtext(&ctx, _("Error log size %s%.1f KB%s"),
 		    LEFT_BRKT, log_size_kb, RIGHT_BRKT);
