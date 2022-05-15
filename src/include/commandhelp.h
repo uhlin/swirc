@@ -178,12 +178,13 @@ static usage_t echo_usage = {
 };
 
 static usage_t exlist_usage = {
-    "usage: /exlist [channel]",
-    "",
-    "Outputs channel exception list. An exception mask (+e) overrides",
-    "a ban mask. If channel is omitted and the active window is an IRC",
-    "channel, it'll output the exception list for that channel.",
-    "",
+  N_("usage: /exlist [channel]"),
+  "",
+  N_("Outputs a channel's exception list. An exception mask (+e) overrides a"),
+  N_("ban mask. If the channel argument is omitted and the active window is"),
+  N_("an IRC channel, the client will output the exception list for that"),
+  N_("channel."),
+  "",
 };
 
 static usage_t group_usage = {
