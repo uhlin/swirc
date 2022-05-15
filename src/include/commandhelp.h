@@ -60,7 +60,7 @@ static usage_t ban_usage = {
 static usage_t banlist_usage = {
   N_("usage: /banlist [channel]"),
   "",
-  N_("Outputs a channels' banlist. If the channel argument is left empty and"),
+  N_("Outputs a channel's banlist. If the channel argument is left empty and"),
   N_("the active window is an IRC channel, Swirc will output the banlist for"),
   N_("that channel."),
   "",
