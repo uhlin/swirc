@@ -249,18 +249,18 @@ static usage_t invite_usage = {
 };
 
 static usage_t join_usage = {
-    "usage: /join <channel> [key]",
-    "",
-    "Joins a channel (optionally by using a key).",
-    "",
-    TXT_BOLD "EXAMPLES" TXT_BOLD,
-    "",
-    "Join a channel with name freenode:",
-    "    /join #freenode",
-    "",
-    "Join a key protected channel:",
-    "    /join #secret KeyToJoin",
-    "",
+  N_("usage: /join <channel> [key]"),
+  "",
+  N_("Joins a channel (optionally by using a key)."),
+  "",
+  (TXT_BOLD "EXAMPLES" TXT_BOLD),
+  "",
+  N_("Join a channel with name 'libera':"),
+  "    /join #libera",
+  "",
+  N_("Join a key-protected channel:"),
+  "    /join #secret KeyToJoin",
+  "",
 };
 
 static usage_t kick_usage = {
