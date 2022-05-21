@@ -101,11 +101,23 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 	</DirectoryRef>
 
 	<DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+		<Component Guid="*" Id="libcharset_dll" Win64="yes">
+			<File
+			    Id="libcharset_dll_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\libcharset-1.dll" />
+		</Component>
 		<Component Guid="*" Id="libcurl_dll" Win64="yes">
 			<File
 			    Id="libcurl_dll_file"
 			    KeyPath="yes"
 			    Source="c:\out\swirc-x64\libcurl.dll" />
+		</Component>
+		<Component Guid="*" Id="libiconv_dll" Win64="yes">
+			<File
+			    Id="libiconv_dll_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\libiconv-2.dll" />
 		</Component>
 		<Component Guid="*" Id="libidn_dll" Win64="yes">
 			<File
@@ -192,7 +204,9 @@ Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
 		<ComponentRef Id="fr_lc_msgs_compo" />
 		<ComponentRef Id="sv_lc_msgs_compo" />
 
+		<ComponentRef Id="libcharset_dll" />
 		<ComponentRef Id="libcurl_dll" />
+		<ComponentRef Id="libiconv_dll" />
 		<ComponentRef Id="libidn_dll" />
 		<ComponentRef Id="libintl_dll" />
 		<ComponentRef Id="pdcurses_dll" />
