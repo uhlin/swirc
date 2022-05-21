@@ -787,8 +787,6 @@ readline_init(void)
 
 	if (config_bool("mouse", false))
 		(void) mousemask(ALL_MOUSE_EVENTS, NULL);
-
-	(void) setlocale(LC_ALL, ""); // XXX
 }
 
 /**

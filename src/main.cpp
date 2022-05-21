@@ -84,6 +84,9 @@ chararray_t	g_swircWebAddr	= "https://www.nifty-networks.net/swirc/";
 char *g_progname = const_cast<char *>("");
 long int g_pid = -1;
 
+SETLOCALE_FN xsetlocale = NULL;
+char g_locale[200] = { '\0' };
+
 std::vector<std::string> g_join_list;
 
 bool	g_auto_connect		= false;
@@ -528,7 +531,19 @@ main(int argc, char *argv[])
 	g_pid = _getpid();
 #endif
 
-	(void) setlocale(LC_ALL, "");
+#ifdef setlocale
+#undef setlocale
+#endif
+	xsetlocale = setlocale;
+	if (sw_strcpy(g_locale, xsetlocale(LC_ALL, ""), ARRAY_SIZE(g_locale)) ==
+	    0) {
+		xsetlocale = libintl_setlocale;
+		if (xsetlocale(LC_ALL, g_locale) == NULL) {
+			err_msg("error setting character encoding '%s' for "
+			    "libintl", g_locale);
+			return EXIT_FAILURE;
+		}
+	}
 
 #ifdef HAVE_LIBINTL_H
 #if defined(UNIX)
