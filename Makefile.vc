@@ -6,8 +6,7 @@ BUILD_LOG = build.log
 
 CFLAGS = $(CFLAGS)\
 	-Icurl-$(CURL_VERSION)/include\
-	-Iidn-$(IDN_VERSION)/include\
-	-Iintl-$(INTL_VERSION)/include\
+	-Ignu-bundle-$(GNU_BUNDLE_DATE)/include\
 	-Ilibressl-$(LIBRESSL_VERSION)-windows/include\
 	-Isrc/include
 
@@ -36,8 +35,10 @@ main: $(TGTS)
 
 DIST_DEPS = swirc.exe\
 	"curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll"\
-	"idn-$(IDN_VERSION)\$(MACHINE)\$(NAME_libidn).dll"\
-	"intl-$(INTL_VERSION)\$(MACHINE)\$(NAME_libintl).dll"\
+	"gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libcharset).dll"\
+	"gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libiconv).dll"\
+	"gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libidn).dll"\
+	"gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libintl).dll"\
 	"pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll"\
 	"src\trusted_roots.pem"
 
@@ -51,8 +52,10 @@ dist: $(DIST_DEPS)
 	mkdir $(DEST)\fr\LC_MESSAGES
 	mkdir $(DEST)\sv\LC_MESSAGES
 	copy "curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll" $(DEST)
-	copy "idn-$(IDN_VERSION)\$(MACHINE)\$(NAME_libidn).dll" $(DEST)
-	copy "intl-$(INTL_VERSION)\$(MACHINE)\$(NAME_libintl).dll" $(DEST)
+	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libcharset).dll" $(DEST)
+	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libiconv).dll" $(DEST)
+	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libidn).dll" $(DEST)
+	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libintl).dll" $(DEST)
 	copy "pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll" $(DEST)
 	copy "src\trusted_roots.pem" $(DEST)
 	copy "swirc.exe" $(DEST)
@@ -69,9 +72,11 @@ SIGNTOOL_FLAGS = -f "c:\certs\SwircDevelopmentTeam.pfx"\
 	-v
 
 setupfile: dist Swirc.wxs
-	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\libcurl.dll"
+	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libcharset).dll"
+	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libiconv).dll"
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libidn).dll"
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libintl).dll"
+	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\libcurl.dll"
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\pdcurses.dll"
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\swirc.exe"
 	candle Swirc.wxs
@@ -93,8 +98,7 @@ clean:
 	$(RM) $(TGTS)
 	$(RM) Swirc.wixobj
 	$(RM) curl-$(CURL_VERSION).cab
-	$(RM) idn-$(IDN_VERSION).cab
-	$(RM) intl-$(INTL_VERSION).cab
+	$(RM) gnu-bundle-$(GNU_BUNDLE_DATE).cab
 	$(RM) libressl-$(LIBRESSL_VERSION)-windows.cab
 	$(RM) pdcurses-$(PDCURSES_VERSION).cab
 	$(RM) swirc-locales-$(LOCALES_SNAP).cab
@@ -102,11 +106,8 @@ clean:
 !	if exists(curl-$(CURL_VERSION))
 		rmdir /s /q curl-$(CURL_VERSION)
 !	endif
-!	if exists(idn-$(IDN_VERSION))
-		rmdir /s /q idn-$(IDN_VERSION)
-!	endif
-!	if exists(intl-$(INTL_VERSION))
-		rmdir /s /q intl-$(INTL_VERSION)
+!	if exists(gnu-bundle-$(GNU_BUNDLE_DATE))
+		rmdir /s /q gnu-bundle-$(GNU_BUNDLE_DATE)
 !	endif
 !	if exists(libressl-$(LIBRESSL_VERSION)-windows)
 		rmdir /s /q libressl-$(LIBRESSL_VERSION)-windows

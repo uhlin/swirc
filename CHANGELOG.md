@@ -1,6 +1,16 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+
+### Windows ###
+- Added a GNU bundle containing:
+  1. [gettext runtime](https://www.gnu.org/software/gettext/) 0.21
+  2. [libiconv](https://www.gnu.org/software/libiconv/) 1.17
+  3. [libidn](https://www.gnu.org/software/libidn/) 1.38
+- Fixed missing DLL file `libiconv-2.dll`. I had it in my PATH so I
+  didn't notice it.
+
 ## [3.3.4] - 2022-05-04 ##
 - **Added** a TLS server (to be used in a future version)
 - **Added** config option `mouse` (defaults to **no**)
