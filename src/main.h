@@ -52,6 +52,8 @@ typedef char *(*SETLOCALE_FN)(int, const char *);
 typedef const char chararray_t[];
 typedef const char *stringarray_t[];
 
+/*lint -sem(xsetlocale, r_null) */
+
 __SWIRC_BEGIN_DECLS
 extern chararray_t	g_swircVersion;
 extern chararray_t	g_swircYear;
