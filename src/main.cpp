@@ -528,6 +528,8 @@ main(int argc, char *argv[])
 	g_pid = _getpid();
 #endif
 
+	(void) setlocale(LC_ALL, "");
+
 #ifdef HAVE_LIBINTL_H
 #if defined(UNIX)
 	if (bindtextdomain("swirc", "/usr/local/share/locale") == NULL) {
@@ -565,8 +567,6 @@ main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 #endif
-
-	(void) setlocale(LC_ALL, "");
 
 	if (!sighand_init()) {
 		err_msg("fatal: failed to initialize signal handling");
