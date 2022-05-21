@@ -554,6 +554,12 @@ main(int argc, char *argv[])
 	}
 	free(str);
 #endif
+	// XXX
+	if (bind_textdomain_codeset("swirc", "UTF-8") == NULL) {
+		err_ret("bind_textdomain_codeset");
+		return EXIT_FAILURE;
+	}
+
 	if (textdomain("swirc") == NULL) {
 		err_ret("textdomain");
 		return EXIT_FAILURE;
