@@ -41,6 +41,7 @@
 #include <string>
 
 #ifdef HAVE_LIBIDN
+#include <idn-free.h>
 #include <stringprep.h>
 #else
 #pragma message("No GNU libidn")
@@ -563,11 +564,11 @@ get_sasl(const char *what, char *buf, size_t bufsize)
 		return NULL;
 	} else if ((str = stringprep_locale_to_utf8(Config(what))) == NULL ||
 	    sw_strcpy(buf, str, bufsize) != 0) {
-		free(str);
+		idn_free(str);
 		return NULL;
 	}
 
-	free(str);
+	idn_free(str);
 
 	flags = static_cast<Stringprep_profile_flags>(0);
 	ret = stringprep(buf, bufsize, flags, stringprep_saslprep);
