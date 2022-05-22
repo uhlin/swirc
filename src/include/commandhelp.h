@@ -357,11 +357,11 @@ static usage_t mode_usage = {
 };
 
 static usage_t msg_usage = {
-    "usage: /msg <recipient> <message>",
-    "",
-    "Used to send private messages between users, as well as to send",
-    "messages to channels.",
-    "",
+  N_("usage: /msg <recipient> <message>"),
+  "",
+  N_("Used to send private messages between users, as well as to send"),
+  N_("messages to channels."),
+  "",
 };
 
 static usage_t nick_usage = {
