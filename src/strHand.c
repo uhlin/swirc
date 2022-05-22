@@ -1,5 +1,5 @@
 /* String handling functions
-   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -36,7 +36,7 @@
 #elif WIN32
 #include "pdcurses/curses.h"
 #else
-#error "Cannot determine curses header file!"
+#error Cannot determine Curses header file!
 #endif
 
 #include "dataClassify.h"
