@@ -302,11 +302,10 @@ static usage_t list_usage = {
 };
 
 static usage_t me_usage = {
-    "usage: /me <message>",
-    "",
-    "Action message. Used to simulate role playing on IRC. The active",
-    "window must be an IRC channel.",
-    "",
+  N_("usage: /me <message>"),
+  "",
+  N_("Send an 'action' message. (Used to simulate role playing on IRC.)"),
+  "",
 };
 
 static usage_t mode_usage = {
