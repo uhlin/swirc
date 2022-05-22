@@ -557,6 +557,7 @@ static const char *
 get_sasl(const char *what, char *buf, size_t bufsize)
 {
 	Stringprep_profile_flags flags;
+	char *sp_out = NULL;
 	char *str = NULL;
 	int ret;
 
@@ -568,12 +569,22 @@ get_sasl(const char *what, char *buf, size_t bufsize)
 		return NULL;
 	}
 
-	idn_free(str);
-
 	flags = static_cast<Stringprep_profile_flags>(0);
-	ret = stringprep(buf, bufsize, flags, stringprep_saslprep);
 
-	return (ret == STRINGPREP_OK ? buf : NULL);
+	if ((ret = stringprep_profile(str, &sp_out, "SASLprep", flags)) ==
+	    STRINGPREP_OK && sw_strcpy(buf, sp_out, bufsize) == 0) {
+		idn_free(sp_out);
+		idn_free(str);
+		return buf;
+	}
+	if (ret != STRINGPREP_OK) {
+		err_log(0, "get_sasl: stringprep_profile: %s "
+		    "(using fallback solution...)", stringprep_strerror
+		    (static_cast<Stringprep_rc>(ret)));
+	}
+	idn_free(sp_out);
+	idn_free(str);
+	return buf;
 }
 #endif
 

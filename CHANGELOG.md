@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Fixed SASLprep by switching to usage of `stringprep_profile()`. Prep
+  now works on Windows too!
 
 ### Windows ###
 - Added a GNU bundle containing:
