@@ -282,10 +282,11 @@ static usage_t kickban_usage = {
 };
 
 static usage_t kill_usage = {
-    "usage: /kill <nickname> <comment>",
-    "",
-    "Disconnect a user from the connected network.",
-    "",
+  N_("usage: /kill <nickname> <comment>"),
+  "",
+  N_("Disconnect a user from the connected network."),
+  N_("(Requires IRC op privilege.)"),
+  "",
 };
 
 static usage_t list_usage = {
