@@ -264,12 +264,12 @@ static usage_t join_usage = {
 };
 
 static usage_t kick_usage = {
-    "usage: /kick <nick1[,nick2][,nick3][...]> [reason]",
-    "",
-    "Kicks one or more users out of a channel as specified by a",
-    "comma-separated list, and optionally with a reason. The active",
-    "window must be an IRC channel.",
-    "",
+  N_("usage: /kick <nick1[,nick2][,nick3][...]> [reason]"),
+  "",
+  N_("Kicks one or more users out of a channel (specified by a comma-"),
+  N_("separated list) and optionally with a reason. The active window must"),
+  N_("be an IRC channel."),
+  "",
 };
 
 static usage_t kickban_usage = {
