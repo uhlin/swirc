@@ -365,10 +365,10 @@ static usage_t msg_usage = {
 };
 
 static usage_t nick_usage = {
-    "usage: /nick <new nickname>",
-    "",
-    "Set nickname.",
-    "",
+  N_("usage: /nick <new nickname>"),
+  "",
+  N_("Sets your nickname."),
+  "",
 };
 
 static usage_t nickserv_usage = {
