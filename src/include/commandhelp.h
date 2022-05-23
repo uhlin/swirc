@@ -392,11 +392,11 @@ static usage_t nickserv_usage = {
 };
 
 static usage_t notice_usage = {
-    "usage: /notice <recipient> <message>",
-    "",
-    "Used to send private messages between users, as well as to send",
-    "messages to channels. (In notice form).",
-    "",
+  N_("usage: /notice <recipient> <message>"),
+  "",
+  N_("Used to send private messages between users, as well as to send"),
+  N_("messages to channels. (In notice form.)"),
+  "",
 };
 
 static usage_t op_usage = {
