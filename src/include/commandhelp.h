@@ -400,10 +400,10 @@ static usage_t notice_usage = {
 };
 
 static usage_t op_usage = {
-    "usage: /op <nick>",
-    "",
-    "Give channel operator privilege.",
-    "",
+  N_("usage: /op <nick>"),
+  "",
+  N_("Gives the channel operator privilege to another user."),
+  "",
 };
 
 static usage_t oper_usage = {
