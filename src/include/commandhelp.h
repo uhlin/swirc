@@ -407,10 +407,10 @@ static usage_t op_usage = {
 };
 
 static usage_t oper_usage = {
-    "usage: /oper <name> <password>",
-    "",
-    "Identify as an IRC op.",
-    "",
+  N_("usage: /oper <name> <password>"),
+  "",
+  N_("Identifies yourself as an IRC operator."),
+  "",
 };
 
 static usage_t part_usage = {
