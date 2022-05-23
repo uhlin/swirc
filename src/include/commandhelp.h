@@ -85,7 +85,11 @@ static usage_t chanserv_usage = {
   "",
   N_("Communicate with your IRC network's channel service. If the initial"),
   N_("argument equals to '--', then the value of setting 'chanserv_host' is"),
-  N_("used as a service hostname. See also '/nickserv'."),
+  N_("used as a service hostname."),
+  "",
+  (TXT_BOLD "SEE ALSO" TXT_BOLD),
+  "",
+  "    /nickserv",
   "",
 };
 
