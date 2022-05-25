@@ -456,12 +456,12 @@ static usage_t quit_usage = {
 };
 
 static usage_t resize_usage = {
-    "usage: /resize",
-    "",
-    "Resize the terminal. For example, Windows doesn't send SIGWINCH,",
-    "instead this command can be used. First resize the window then",
-    "issue this command.",
-    "",
+  N_("usage: /resize"),
+  "",
+  N_("Resize the terminal. For example, Windows doesn't send 'SIGWINCH',"),
+  N_("instead this command can be used. First resize the window then run"),
+  N_("this command."),
+  "",
 };
 
 #if NOT_YET
