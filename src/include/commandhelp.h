@@ -448,11 +448,11 @@ static usage_t query_usage = {
 };
 
 static usage_t quit_usage = {
-    "usage: /quit [message]",
-    "",
-    "Disconnect from IRC and quit the program. A disconnect message is",
-    "optional.",
-    "",
+  N_("usage: /quit [message]"),
+  "",
+  N_("Disconnect from IRC and quit the program. A disconnect message is"),
+  N_("optional."),
+  "",
 };
 
 static usage_t resize_usage = {
