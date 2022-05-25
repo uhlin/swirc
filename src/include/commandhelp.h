@@ -520,11 +520,11 @@ static usage_t sasl_usage = {
 };
 
 static usage_t say_usage = {
-    "usage: /say <message>",
-    "",
-    "Say a message. This command can be used if you want say something",
-    "with a leading command-character, i.e. a slash.",
-    "",
+  N_("usage: /say <message>"),
+  "",
+  N_("Say a message. This command can be used if you want say something with"),
+  N_("a leading command-character, i.e. a slash."),
+  "",
 };
 
 static usage_t servlist_usage = {
