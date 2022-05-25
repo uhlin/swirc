@@ -474,11 +474,11 @@ static usage_t rgui_usage = {
 #endif
 
 static usage_t rules_usage = {
-    "usage: /rules",
-    "",
-    "Outputs network/server rules. Not all IRCd:s supports this",
-    "command.",
-    "",
+  N_("usage: /rules"),
+  "",
+  N_("Outputs network/server rules. Not all IRC server software supports"),
+  N_("this command. (It's actually quite rare.)"),
+  "",
 };
 
 static usage_t sasl_usage = {
