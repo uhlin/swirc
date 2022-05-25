@@ -525,6 +525,10 @@ static usage_t say_usage = {
   N_("Say a message. This command can be used if you want say something with"),
   N_("a leading command-character, i.e. a slash."),
   "",
+  (TXT_BOLD "EXAMPLE" TXT_BOLD),
+  "",
+  N_("    /say // A single line comment in C++"),
+  "",
 };
 
 static usage_t servlist_usage = {
