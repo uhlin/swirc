@@ -418,19 +418,17 @@ static usage_t oper_usage = {
 };
 
 static usage_t part_usage = {
-    "usage: /part [channel] [message]",
-    "",
-    "Parts a channel with an optional message. For a standard channel a",
-    "leading hash (#) must be present. If the command is called without",
-    "any arguments Swirc attempts to part the current window which must",
-    "be an IRC channel.",
-    "",
-    TXT_BOLD "EXAMPLES" TXT_BOLD,
-    "",
-    "  Part channel #chatzone with message "
-    TXT_UNDERLINE "bye" TXT_UNDERLINE ":",
-    "    /part #chatzone bye",
-    "",
+  N_("usage: /part [channel] [message]"),
+  "",
+  N_("Leaves a channel (optionally with a message). If the command is called"),
+  N_("without any arguments and the current window is an IRC channel, that"),
+  N_("channel will be the target."),
+  "",
+  (TXT_BOLD "EXAMPLES" TXT_BOLD),
+  "",
+  N_("  Part channel #chatzone with message 'bye':"),
+  N_("    /part #chatzone bye"),
+  "",
 };
 
 static usage_t passmod_usage = {
