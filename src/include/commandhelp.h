@@ -439,11 +439,12 @@ static usage_t passmod_usage = {
 };
 
 static usage_t query_usage = {
-    "usage: /query [nick]",
-    "",
-    "Start a query with nick. If nick is omitted, and provided that",
-    "the active window is a query, close the query.",
-    "",
+  N_("usage: /query [nick]"),
+  "",
+  N_("Starts a private conversation with 'nick'. If 'nick' is omitted and"),
+  N_("the active window is a private conversation, the action will be to"),
+  N_("close it."),
+  "",
 };
 
 static usage_t quit_usage = {
