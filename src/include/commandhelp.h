@@ -432,11 +432,10 @@ static usage_t part_usage = {
 };
 
 static usage_t passmod_usage = {
-    "usage: /passmod <nickname>",
-    "",
-    "Pass moderation privilege.",
-    "In IRC mode this is a no operation.",
-    "",
+  N_("usage: /passmod <nickname>"),
+  "",
+  N_("Pass the ICB moderation privilege to another group member."),
+  "",
 };
 
 static usage_t query_usage = {
