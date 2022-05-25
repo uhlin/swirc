@@ -466,10 +466,10 @@ static usage_t resize_usage = {
 
 #if NOT_YET
 static usage_t rgui_usage = {
-    "usage: /rgui ...",
-    "",
-    "No help yet.",
-    "",
+  "usage: /rgui ...",
+  "",
+  "No help yet.",
+  "",
 };
 #endif
 
