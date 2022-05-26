@@ -544,47 +544,36 @@ static usage_t servlist_usage = {
 };
 
 static usage_t set_usage = {
-    "usage: /set [[setting] [value]]",
-    "",
-    "Alter Swirc settings.",
-    "",
-    TXT_BOLD "SETTING TYPES" TXT_BOLD,
-    "",
-    TXT_BOLD "bool" TXT_BOLD "      "
-    "Bools are case insensitive and can have one of the",
-    "          "
-    "following values:",
-    "          "
-    "- on, true or yes",
-    "          "
-    "- off, false or no",
-    "",
-    TXT_BOLD "int" TXT_BOLD "       "
-    "Integers. Swirc implements a min/max value for each",
-    "          "
-    "integer in order to keep its value safe. The error log",
-    "          "
-    "will tell if the restrictions for an integer aren't",
-    "          "
-    "within limits and, if so, that a preprogrammed fallback",
-    "          "
-    "value is being used instead.",
-    "",
-    TXT_BOLD "string" TXT_BOLD "    "
-    "A sequence of characters",
-    "",
-    TXT_BOLD "EXAMPLES" TXT_BOLD,
-    "",
-    "  Output current values of all settings:",
-    "    /set (without any arguments)",
-    "",
-    "  Turn beeps on/off:",
-    "    /set beeps on",
-    "    /set beeps off",
-    "",
-    /*
-     * TODO: Sync with cmds.html
-     */
+  N_("usage: /set [[setting] [value]]"),
+  "",
+  N_("Alter Swirc settings."),
+  "",
+  (TXT_BOLD "SETTING TYPES" TXT_BOLD),
+  "",
+  (TXT_BOLD "bool" TXT_BOLD),
+  N_("    Bools are case insensitive and can have one of the following\n"
+     "    values:"),
+  N_("    - on, true or yes"),
+  N_("    - off, false or no"),
+  "",
+  (TXT_BOLD "int" TXT_BOLD),
+  N_("    Integers. Swirc implements a min/max value for each integer in"),
+  N_("    order to keep its value safe. The error log will tell if the"),
+  N_("    restrictions for an integer aren't within limits and, if so, that"),
+  N_("    a preprogrammed fallback value is being used instead."),
+  "",
+  (TXT_BOLD "string" TXT_BOLD),
+  N_("    A sequence of characters"),
+  "",
+  (TXT_BOLD "EXAMPLES" TXT_BOLD),
+  "",
+  N_("  Output current values of all settings:"),
+  N_("    /set (without any arguments)"),
+  "",
+  N_("  Turn beeps on/off:"),
+  "    /set beeps on",
+  "    /set beeps off",
+  "",
 };
 
 static usage_t squery_usage = {
