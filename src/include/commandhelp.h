@@ -611,11 +611,12 @@ static usage_t time_usage = {
 };
 
 static usage_t topic_usage = {
-    "usage: /topic [new topic]",
-    "",
-    "Set a new topic for a channel. If new topic is omitted, display",
-    "the current topic. Active window must be an IRC channel.",
-    "",
+  N_("usage: /topic [new topic]"),
+  "",
+  N_("Sets a new topic for a channel. If 'new topic' is omitted the action"),
+  N_("will be to display the current topic. (The active window must be an"),
+  N_("IRC channel.)"),
+  "",
 };
 
 static usage_t unban_usage = {
