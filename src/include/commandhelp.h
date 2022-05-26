@@ -585,21 +585,21 @@ static usage_t squery_usage = {
 };
 
 static usage_t theme_usage = {
-    "usage: /theme [install <name> | list-remote | set <name>]",
-    "",
-    "Management of themes on-the-fly.",
-    "",
-    TXT_BOLD "EXAMPLES" TXT_BOLD,
-    "",
-    "    Install theme named 'bx':",
-    "        /theme install bx",
-    "",
-    "    List available themes:",
-    "        /theme list-remote",
-    "",
-    "    Activate installed theme:",
-    "        /theme set bx",
-    "",
+  N_("usage: /theme [install <name> | list-remote | set <name>]"),
+  "",
+  N_("Management of themes on-the-fly."),
+  "",
+  (TXT_BOLD "EXAMPLES" TXT_BOLD),
+  "",
+  N_("    Install a theme named 'bx':"),
+  "        /theme install bx",
+  "",
+  N_("    List all available themes:"),
+  "        /theme list-remote",
+  "",
+  N_("    Activate an installed theme with name 'bx':"),
+  "        /theme set bx",
+  "",
 };
 
 static usage_t time_usage = {
