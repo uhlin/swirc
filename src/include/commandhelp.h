@@ -643,11 +643,11 @@ static usage_t unignore_usage = {
 };
 
 static usage_t version_usage = {
-    "usage: /version <target>",
-    "",
-    "Send a CTCP VERSION request to target, which is either a nickname",
-    "or an IRC channel.",
-    "",
+  N_("usage: /version <target>"),
+  "",
+  N_("Send a CTCP VERSION request to 'target', which is either a nickname or"),
+  N_("an IRC channel."),
+  "",
 };
 
 static usage_t who_usage = {
