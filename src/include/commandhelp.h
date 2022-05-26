@@ -651,23 +651,19 @@ static usage_t version_usage = {
 };
 
 static usage_t who_usage = {
-    "usage: /who <mask>",
-    "",
-    "Used by a client to generate a query which returns a list of",
-    "information which 'matches' the mask parameter given by the",
-    "client.",
-    "",
-    TXT_BOLD "EXAMPLES" TXT_BOLD,
-    "",
-    "  Show all staff:",
-    "    /who freenode/staff/*",
-    "",
-    "  Show ppl with a german domain:",
-    "    /who *.de",
-    "",
-    /*
-     * TODO: Sync with cmds.html
-     */
+  N_("usage: /who <mask>"),
+  "",
+  N_("Generates a query which returns a list of information which matches"),
+  N_("the provided 'mask'."),
+  "",
+  (TXT_BOLD "EXAMPLES" TXT_BOLD),
+  "",
+  N_("  Show the Libera Chat crew:"),
+  "    /who libera/staff/*",
+  "",
+  N_("  Show users with a German domain name:"),
+  "    /who *.de",
+  "",
 };
 
 static usage_t whois_usage = {
