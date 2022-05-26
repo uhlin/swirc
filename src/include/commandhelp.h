@@ -632,10 +632,10 @@ static usage_t unban_usage = {
 };
 
 static usage_t unignore_usage = {
-    "usage: /unignore [#]",
-    "",
-    "Delete a regular expression from the ignore list.",
-    "",
+  N_("usage: /unignore [#]"),
+  "",
+  N_("Deletes a regular expression from the ignore list."),
+  "",
 };
 
 static usage_t version_usage = {
