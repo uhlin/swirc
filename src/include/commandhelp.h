@@ -674,18 +674,19 @@ static usage_t whois_usage = {
 };
 
 static usage_t znc_usage = {
-    "usage: /znc [*module] <command>",
-    "",
-    "This command simplifies communication with ZNC (an IRC bouncer).",
-    "",
-    TXT_BOLD "EXAMPLES" TXT_BOLD,
-    "",
-    "  Output ZNC version:",
-    "    /znc version",
-    "",
-    "  Same as above:",
-    "    /znc *status version",
-    "",
+  N_("usage: /znc [*module] <command>"),
+  "",
+  N_("Simplifies the communication with ZNC which is a popular"),
+  N_("'IRC bouncer'."),
+  "",
+  (TXT_BOLD "EXAMPLES" TXT_BOLD),
+  "",
+  N_("  Output your ZNC version:"),
+  "    /znc version",
+  "",
+  N_("  Identical to the previous example:"),
+  "    /znc *status version",
+  "",
 };
 
 //lint +e786
