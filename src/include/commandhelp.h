@@ -636,6 +636,10 @@ static usage_t unignore_usage = {
   "",
   N_("Deletes a regular expression from the ignore list."),
   "",
+  (TXT_BOLD "SEE ALSO" TXT_BOLD),
+  "",
+  "    /ignore",
+  "",
 };
 
 static usage_t version_usage = {
