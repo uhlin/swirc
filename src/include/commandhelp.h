@@ -603,11 +603,11 @@ static usage_t theme_usage = {
 };
 
 static usage_t time_usage = {
-    "usage: /time <target>",
-    "",
-    "Send a CTCP TIME request to target, which is either a nickname or",
-    "an IRC channel.",
-    "",
+  N_("usage: /time <target>"),
+  "",
+  N_("Send a CTCP TIME request to 'target', which is either a nickname or an"),
+  N_("IRC channel."),
+  "",
 };
 
 static usage_t topic_usage = {
