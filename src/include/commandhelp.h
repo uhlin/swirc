@@ -624,6 +624,11 @@ static usage_t unban_usage = {
   "",
   N_("Removes a channel ban. (The active window must be an IRC channel.)"),
   "",
+  (TXT_BOLD "SEE ALSO" TXT_BOLD),
+  "",
+  "    /ban",
+  "    /banlist",
+  "",
 };
 
 static usage_t unignore_usage = {
