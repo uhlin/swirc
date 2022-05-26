@@ -620,10 +620,10 @@ static usage_t topic_usage = {
 };
 
 static usage_t unban_usage = {
-    "usage: /unban <mask>",
-    "",
-    "Unset a ban. (The active window must be an IRC channel.)",
-    "",
+  N_("usage: /unban <mask>"),
+  "",
+  N_("Removes a channel ban. (The active window must be an IRC channel.)"),
+  "",
 };
 
 static usage_t unignore_usage = {
