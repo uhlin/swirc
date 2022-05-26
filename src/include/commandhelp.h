@@ -577,11 +577,11 @@ static usage_t set_usage = {
 };
 
 static usage_t squery_usage = {
-    "usage: /squery <servicename> <text>",
-    "",
-    "This command is used similarly to '/msg'. The only difference is that the",
-    "recipient MUST be a service.",
-    "",
+  N_("usage: /squery <servicename> <text>"),
+  "",
+  N_("This command is used similarly to '/msg'. The only difference is that"),
+  N_("the recipient MUST be a service."),
+  "",
 };
 
 static usage_t theme_usage = {
