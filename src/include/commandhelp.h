@@ -667,11 +667,10 @@ static usage_t who_usage = {
 };
 
 static usage_t whois_usage = {
-    "usage: /whois <nick>",
-    "",
-    "Used to query information about particular user.",
-    "(Specified by nick)",
-    "",
+  N_("usage: /whois <nick>"),
+  "",
+  N_("Asks after information about another user."),
+  "",
 };
 
 static usage_t znc_usage = {
