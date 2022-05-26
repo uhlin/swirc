@@ -61,8 +61,8 @@ static usage_t banlist_usage = {
   N_("usage: /banlist [channel]"),
   "",
   N_("Outputs a channel's banlist. If the channel argument is left empty and"),
-  N_("the active window is an IRC channel, Swirc will output the banlist for"),
-  N_("that channel."),
+  N_("the active window is an IRC channel, Swirc will output the banlist for\n"
+     "that channel."),
   "",
 };
 
@@ -149,8 +149,8 @@ static usage_t cycle_usage = {
   N_("usage: /cycle [channel]"),
   "",
   N_("Cycle a channel, i.e. '/part' plus '/join'. If the channel argument is"),
-  N_("omitted and the active window is an IRC channel, the client will cycle"),
-  N_("that channel."),
+  N_("omitted and the active window is an IRC channel, the client will cycle\n"
+     "that channel."),
   "",
 };
 
@@ -363,8 +363,8 @@ static usage_t mode_usage = {
 static usage_t msg_usage = {
   N_("usage: /msg <recipient> <message>"),
   "",
-  N_("Used to send private messages between users, as well as to send"),
-  N_("messages to channels."),
+  N_("Used to send private messages between users, as well as to send\n"
+     "messages to channels."),
   "",
 };
 
@@ -398,8 +398,8 @@ static usage_t nickserv_usage = {
 static usage_t notice_usage = {
   N_("usage: /notice <recipient> <message>"),
   "",
-  N_("Used to send private messages between users, as well as to send"),
-  N_("messages to channels. (In notice form.)"),
+  N_("Used to send private messages between users, as well as to send\n"
+     "messages to channels. (In notice form.)"),
   "",
 };
 
