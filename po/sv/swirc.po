@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-05-26 18:40+0200\n"
-"PO-Revision-Date: 2022-05-27 17:40+0200\n"
+"PO-Revision-Date: 2022-05-27 23:59+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -79,31 +79,31 @@ msgstr "Kasta ut en användare från din grupp. (Endast ICB)"
 
 #: ../src/include/commandhelp.h:84
 msgid "usage: /chanserv <[service hostname | --]> <command> [...]"
-msgstr ""
+msgstr "användning: /chanserv <[tjänstens värdnamn | --]> <kommando> [...]"
 
 #: ../src/include/commandhelp.h:86
 msgid "Communicate with your IRC network's channel service. If the initial"
-msgstr ""
+msgstr "Kommunicera med ditt IRC-nätverks kanaltjänst. Om det initiala"
 
 #: ../src/include/commandhelp.h:87
 msgid "argument equals to '--', then the value of setting 'chanserv_host' is"
-msgstr ""
+msgstr "argumentet är lika med '--' används värdet för inställningen 'chanserv_host'"
 
 #: ../src/include/commandhelp.h:88
 msgid "used as a service hostname."
-msgstr ""
+msgstr "som ett tjänstvärdnamn."
 
 #: ../src/include/commandhelp.h:97
 msgid "usage: /cleartoasts"
-msgstr ""
+msgstr "användning: /cleartoasts"
 
 #: ../src/include/commandhelp.h:99
 msgid "On Windows Swirc sends toast notifications. By issuing this command"
-msgstr ""
+msgstr "På Windows skickar Swirc toastaviseringar. Genom att utfärda detta kommando"
 
 #: ../src/include/commandhelp.h:100
 msgid "all notifications associated with Swirc will be cleared."
-msgstr ""
+msgstr "kommer alla meddelanden associerade med Swirc att raderas."
 
 #: ../src/include/commandhelp.h:105
 msgid "usage: /close"
