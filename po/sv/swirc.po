@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-05-26 18:40+0200\n"
-"PO-Revision-Date: 2021-08-22 01:10+0200\n"
+"PO-Revision-Date: 2022-05-27 14:54+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -19,31 +19,31 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:44
 msgid "usage: /away [reason]"
-msgstr ""
+msgstr "användning: /away [anledning]"
 
 #: ../src/include/commandhelp.h:46
 msgid "Marks yourself as being away (with a reason). If the reason is omitted"
-msgstr ""
+msgstr "Markerar dig själv som borta (med en anledning). Om orsaken utelämnas"
 
 #: ../src/include/commandhelp.h:47
 msgid "you will be marked as no longer being away."
-msgstr ""
+msgstr "kommer du att markeras som att du inte längre är borta."
 
 #: ../src/include/commandhelp.h:52
 msgid "usage: /ban <mask>"
-msgstr ""
+msgstr "användning: /ban <mask>"
 
 #: ../src/include/commandhelp.h:54
 msgid "Sets a channel ban which rejects all users whose 'nick!user@host'"
-msgstr ""
+msgstr "Ställer in ett kanalförbud som avvisar alla användare vars 'nick!user@host'"
 
 #: ../src/include/commandhelp.h:55
 msgid "matches the provided mask from joining the channel. Wildcards are okay"
-msgstr ""
+msgstr "matchar den angivna masken från att gå med i kanalen. Jokertecken är okej"
 
 #: ../src/include/commandhelp.h:56
 msgid "and the active window must be an IRC channel."
-msgstr ""
+msgstr "och det aktiva fönstret måste vara en IRC kanal."
 
 #: ../src/include/commandhelp.h:61
 msgid "usage: /banlist [channel]"
