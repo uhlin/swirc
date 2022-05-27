@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-05-26 18:40+0200\n"
-"PO-Revision-Date: 2022-05-27 17:05+0200\n"
+"PO-Revision-Date: 2022-05-27 17:40+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -63,19 +63,19 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:70
 msgid "usage: /beep <nickname>"
-msgstr ""
+msgstr "användning: /beep <smeknamn>"
 
 #: ../src/include/commandhelp.h:72
 msgid "Send beeps. (ICB only)"
-msgstr ""
+msgstr "Skicka pip. (Endast ICB)"
 
 #: ../src/include/commandhelp.h:77
 msgid "usage: /boot <victim>"
-msgstr ""
+msgstr "användning: /boot <offer>"
 
 #: ../src/include/commandhelp.h:79
 msgid "Kick a user out of your group. (ICB only)"
-msgstr ""
+msgstr "Kasta ut en användare från din grupp. (Endast ICB)"
 
 #: ../src/include/commandhelp.h:84
 msgid "usage: /chanserv <[service hostname | --]> <command> [...]"
