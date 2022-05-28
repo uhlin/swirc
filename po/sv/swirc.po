@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-05-28 21:28+0200\n"
-"PO-Revision-Date: 2022-05-28 22:13+0200\n"
+"PO-Revision-Date: 2022-05-28 22:29+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -192,11 +192,11 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:158
 msgid "usage: /deop <nick>"
-msgstr ""
+msgstr "användning: /deop <nick>"
 
 #: ../src/include/commandhelp.h:160
 msgid "Remove the channel operator privilege from another user."
-msgstr ""
+msgstr "Ta bort kanaloperatörsprivilegiet från en annan användare."
 
 #: ../src/include/commandhelp.h:165
 msgid "usage: /disconnect [message]"
