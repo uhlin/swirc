@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-05-26 18:40+0200\n"
-"PO-Revision-Date: 2022-05-28 12:03+0200\n"
+"POT-Creation-Date: 2022-05-28 21:02+0200\n"
+"PO-Revision-Date: 2022-05-28 21:04+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -35,11 +35,13 @@ msgstr "användning: /ban <mask>"
 
 #: ../src/include/commandhelp.h:54
 msgid "Sets a channel ban which rejects all users whose 'nick!user@host'"
-msgstr "Ställer in ett kanalförbud som avvisar alla användare vars 'nick!user@host'"
+msgstr ""
+"Ställer in ett kanalförbud som avvisar alla användare vars 'nick!user@host'"
 
 #: ../src/include/commandhelp.h:55
 msgid "matches the provided mask from joining the channel. Wildcards are okay"
-msgstr "matchar den angivna masken från att gå med i kanalen. Jokertecken är okej"
+msgstr ""
+"matchar den angivna masken från att gå med i kanalen. Jokertecken är okej"
 
 #: ../src/include/commandhelp.h:56
 msgid "and the active window must be an IRC channel."
@@ -58,7 +60,8 @@ msgid ""
 "the active window is an IRC channel, Swirc will output the banlist for\n"
 "that channel."
 msgstr ""
-"det aktiva fönstret är en IRC kanal, kommer Swirc att mata ut bannlistan för\n"
+"det aktiva fönstret är en IRC kanal, kommer Swirc att mata ut bannlistan "
+"för\n"
 "den kanalen."
 
 #: ../src/include/commandhelp.h:70
@@ -87,7 +90,8 @@ msgstr "Kommunicera med ditt IRC-nätverks kanaltjänst. Om det initiala"
 
 #: ../src/include/commandhelp.h:87
 msgid "argument equals to '--', then the value of setting 'chanserv_host' is"
-msgstr "argumentet är lika med '--' används värdet för inställningen 'chanserv_host'"
+msgstr ""
+"argumentet är lika med '--' används värdet för inställningen 'chanserv_host'"
 
 #: ../src/include/commandhelp.h:88
 msgid "used as a service hostname."
@@ -98,8 +102,9 @@ msgid "usage: /cleartoasts"
 msgstr "användning: /cleartoasts"
 
 #: ../src/include/commandhelp.h:99
-msgid "On Windows Swirc sends toast notifications. By issuing this command"
-msgstr "På Windows skickar Swirc toastaviseringar. Genom att utfärda detta kommando"
+msgid "On Windows Swirc sends toast notifications. By running this command"
+msgstr ""
+"På Windows skickar Swirc toastaviseringar. Genom att köra det här kommandot"
 
 #: ../src/include/commandhelp.h:100
 msgid "all notifications associated with Swirc will be cleared."

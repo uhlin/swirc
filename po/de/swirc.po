@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-05-26 18:40+0200\n"
+"POT-Creation-Date: 2022-05-28 21:02+0200\n"
 "PO-Revision-Date: 2021-08-22 01:10+0200\n"
 "Last-Translator: Michi <michi+git@dataswamp.org>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -96,7 +96,7 @@ msgid "usage: /cleartoasts"
 msgstr ""
 
 #: ../src/include/commandhelp.h:99
-msgid "On Windows Swirc sends toast notifications. By issuing this command"
+msgid "On Windows Swirc sends toast notifications. By running this command"
 msgstr ""
 
 #: ../src/include/commandhelp.h:100
