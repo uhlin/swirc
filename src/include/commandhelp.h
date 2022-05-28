@@ -125,7 +125,7 @@ static usage_t connect_usage = {
   N_("If the port is omitted port 6667 will be chosen. And if the port is"),
   N_("7326 ICB mode is turned on automatically. Further, if the port is 6697"),
   N_("Swirc attempts to initiate a TLS/SSL connection, as well as if '-tls'"),
-  N_("is present."),
+  N_("is entered."),
   "",
   N_("It is possible to connect to a certain IRC network by only entering"),
   N_("the network name. For example: '/connect -tls libera', will connect to"),

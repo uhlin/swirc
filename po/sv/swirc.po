@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-05-28 21:02+0200\n"
+"POT-Creation-Date: 2022-05-28 21:28+0200\n"
 "PO-Revision-Date: 2022-05-28 21:04+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -155,7 +155,7 @@ msgid "Swirc attempts to initiate a TLS/SSL connection, as well as if '-tls'"
 msgstr ""
 
 #: ../src/include/commandhelp.h:128
-msgid "is present."
+msgid "is entered."
 msgstr ""
 
 #: ../src/include/commandhelp.h:130
