@@ -136,43 +136,43 @@ msgstr "Matar ut information om färger."
 
 #: ../src/include/commandhelp.h:121
 msgid "usage: /connect [-tls] <server[:port]>"
-msgstr ""
+msgstr "användning: /connect [-tls] <server[:port]>"
 
 #: ../src/include/commandhelp.h:123
 msgid "Connect to given server."
-msgstr ""
+msgstr "Anslut till given server."
 
 #: ../src/include/commandhelp.h:125
 msgid "If the port is omitted port 6667 will be chosen. And if the port is"
-msgstr ""
+msgstr "Om porten utelämnas kommer port 6667 att väljas. Och om porten är"
 
 #: ../src/include/commandhelp.h:126
 msgid "7326 ICB mode is turned on automatically. Further, if the port is 6697"
-msgstr ""
+msgstr "7326 slås ICB läget på automatiskt. Vidare, om porten är 6697"
 
 #: ../src/include/commandhelp.h:127
 msgid "Swirc attempts to initiate a TLS/SSL connection, as well as if '-tls'"
-msgstr ""
+msgstr "försöker Swirc initiera en TLS/SSL anslutning, samt om '-tls'"
 
 #: ../src/include/commandhelp.h:128
 msgid "is entered."
-msgstr ""
+msgstr "anges."
 
 #: ../src/include/commandhelp.h:130
 msgid "It is possible to connect to a certain IRC network by only entering"
-msgstr ""
+msgstr "Det är möjligt att ansluta till ett visst IRC nätverk genom att endast ange"
 
 #: ../src/include/commandhelp.h:131
 msgid "the network name. For example: '/connect -tls libera', will connect to"
-msgstr ""
+msgstr "nätverksnamnet. Till exempel: '/connect -tls libera', kommer att ansluta till"
 
 #: ../src/include/commandhelp.h:132
 msgid "Libera Chat using an encrypted connection. Preprogrammed network names"
-msgstr ""
+msgstr "Libera Chat med en krypterad anslutning. Förprogrammerade nätverksnamn"
 
 #: ../src/include/commandhelp.h:133
 msgid "are:"
-msgstr ""
+msgstr "är:"
 
 #: ../src/include/commandhelp.h:149
 msgid "usage: /cycle [channel]"
