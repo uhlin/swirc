@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-05-26 18:40+0200\n"
-"PO-Revision-Date: 2022-05-27 23:59+0200\n"
+"PO-Revision-Date: 2022-05-28 12:03+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -107,27 +107,27 @@ msgstr "kommer alla meddelanden associerade med Swirc att raderas."
 
 #: ../src/include/commandhelp.h:105
 msgid "usage: /close"
-msgstr ""
+msgstr "användning: /close"
 
 #: ../src/include/commandhelp.h:107
 msgid "Closes the active window. It's not possible to close the status"
-msgstr ""
+msgstr "Stänger det aktiva fönstret. Det går inte att stänga statusfönstret."
 
 #: ../src/include/commandhelp.h:108
 msgid "window. And while connected it's not possible to close a channel, in"
-msgstr ""
+msgstr "Och när du är ansluten är det inte möjligt att stänga en kanal, använd"
 
 #: ../src/include/commandhelp.h:109
 msgid "that case instead use '/part'."
-msgstr ""
+msgstr "i så fall istället '/part'."
 
 #: ../src/include/commandhelp.h:114
 msgid "usage: /colormap"
-msgstr ""
+msgstr "användning: /colormap"
 
 #: ../src/include/commandhelp.h:116
 msgid "Outputs information about colors."
-msgstr ""
+msgstr "Matar ut information om färger."
 
 #: ../src/include/commandhelp.h:121
 msgid "usage: /connect [-tls] <server[:port]>"
