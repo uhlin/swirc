@@ -2,8 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added new translations
 - Fixed SASLprep by switching to usage of `stringprep_profile()`. Prep
   now works on Windows too!
+- Improved the contents of `/help`
 
 ### Windows ###
 - Added a GNU bundle containing:
