@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-05-28 21:28+0200\n"
-"PO-Revision-Date: 2022-05-28 22:29+0200\n"
+"PO-Revision-Date: 2022-05-28 23:17+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -200,30 +200,30 @@ msgstr "Ta bort kanaloperatörsprivilegiet från en annan användare."
 
 #: ../src/include/commandhelp.h:165
 msgid "usage: /disconnect [message]"
-msgstr ""
+msgstr "användning: /disconnect [meddelande]"
 
 #: ../src/include/commandhelp.h:167
 msgid "Disconnect from IRC, but don't quit the program. A disconnect message"
-msgstr ""
+msgstr "Koppla från IRC, men avsluta inte programmet. Ett frånkopplingsmeddelande"
 
 #: ../src/include/commandhelp.h:168
 msgid "is optional."
-msgstr ""
+msgstr "är valfritt."
 
 #: ../src/include/commandhelp.h:173
 msgid "usage: /echo <text>"
-msgstr ""
+msgstr "användning: /echo <text>"
 
 #: ../src/include/commandhelp.h:175
 msgid "Writes text to the current window without sending anything."
-msgstr ""
+msgstr "Skriver text till det aktuella fönstret utan att skicka något."
 
 #: ../src/include/commandhelp.h:179
-msgid "Echo 'Hello World':"
+msgid "Echo 'Hej Världen':"
 msgstr ""
 
 #: ../src/include/commandhelp.h:180
-msgid "    /echo Hello World"
+msgid "    /echo Hej Världen"
 msgstr ""
 
 #: ../src/include/commandhelp.h:185
