@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-05-28 21:28+0200\n"
+"POT-Creation-Date: 2022-05-29 15:21+0200\n"
 "PO-Revision-Date: 2022-05-28 23:17+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -160,11 +160,13 @@ msgstr "anges."
 
 #: ../src/include/commandhelp.h:130
 msgid "It is possible to connect to a certain IRC network by only entering"
-msgstr "Det är möjligt att ansluta till ett visst IRC nätverk genom att endast ange"
+msgstr ""
+"Det är möjligt att ansluta till ett visst IRC nätverk genom att endast ange"
 
 #: ../src/include/commandhelp.h:131
 msgid "the network name. For example: '/connect -tls libera', will connect to"
-msgstr "nätverksnamnet. Till exempel: '/connect -tls libera', kommer att ansluta till"
+msgstr ""
+"nätverksnamnet. Till exempel: '/connect -tls libera', kommer att ansluta till"
 
 #: ../src/include/commandhelp.h:132
 msgid "Libera Chat using an encrypted connection. Preprogrammed network names"
@@ -187,7 +189,8 @@ msgid ""
 "omitted and the active window is an IRC channel, the client will cycle\n"
 "that channel."
 msgstr ""
-"utelämnas och det aktiva fönstret är en IRC kanal, kommer klienten att cykla\n"
+"utelämnas och det aktiva fönstret är en IRC kanal, kommer klienten att "
+"cykla\n"
 "den kanalen."
 
 #: ../src/include/commandhelp.h:158
@@ -204,7 +207,8 @@ msgstr "användning: /disconnect [meddelande]"
 
 #: ../src/include/commandhelp.h:167
 msgid "Disconnect from IRC, but don't quit the program. A disconnect message"
-msgstr "Koppla från IRC, men avsluta inte programmet. Ett frånkopplingsmeddelande"
+msgstr ""
+"Koppla från IRC, men avsluta inte programmet. Ett frånkopplingsmeddelande"
 
 #: ../src/include/commandhelp.h:168
 msgid "is optional."
@@ -219,11 +223,11 @@ msgid "Writes text to the current window without sending anything."
 msgstr "Skriver text till det aktuella fönstret utan att skicka något."
 
 #: ../src/include/commandhelp.h:179
-msgid "Echo 'Hej Världen':"
+msgid "Echo 'Hello World':"
 msgstr ""
 
 #: ../src/include/commandhelp.h:180
-msgid "    /echo Hej Världen"
+msgid "    /echo Hello World"
 msgstr ""
 
 #: ../src/include/commandhelp.h:185
