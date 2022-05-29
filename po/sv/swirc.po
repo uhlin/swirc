@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-05-29 15:21+0200\n"
-"PO-Revision-Date: 2022-05-28 23:17+0200\n"
+"PO-Revision-Date: 2022-05-29 15:31+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -224,31 +224,31 @@ msgstr "Skriver text till det aktuella fönstret utan att skicka något."
 
 #: ../src/include/commandhelp.h:179
 msgid "Echo 'Hello World':"
-msgstr ""
+msgstr "Echo 'Hej Världen':"
 
 #: ../src/include/commandhelp.h:180
 msgid "    /echo Hello World"
-msgstr ""
+msgstr "    /echo Hej Världen"
 
 #: ../src/include/commandhelp.h:185
 msgid "usage: /exlist [channel]"
-msgstr ""
+msgstr "användning: /exlist [kanal]"
 
 #: ../src/include/commandhelp.h:187
 msgid "Outputs a channel's exception list. An exception mask (+e) overrides a"
-msgstr ""
+msgstr "Matar ut en kanals undantagslista. En undantagsmask (+e) åsidosätter en"
 
 #: ../src/include/commandhelp.h:188
 msgid "ban mask. If the channel argument is omitted and the active window is"
-msgstr ""
+msgstr "förbudsmask. Om kanalargumentet utelämnas och det aktiva fönstret är"
 
 #: ../src/include/commandhelp.h:189
 msgid "an IRC channel, the client will output the exception list for that"
-msgstr ""
+msgstr "en IRC kanal, kommer klienten att mata ut undantagslistan för den"
 
 #: ../src/include/commandhelp.h:190
 msgid "channel."
-msgstr ""
+msgstr "kanalen."
 
 #: ../src/include/commandhelp.h:195
 msgid "usage: /group <name>"
