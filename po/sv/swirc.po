@@ -252,11 +252,11 @@ msgstr "kanalen."
 
 #: ../src/include/commandhelp.h:195
 msgid "usage: /group <name>"
-msgstr ""
+msgstr "användning: /group <namn>"
 
 #: ../src/include/commandhelp.h:197
 msgid "Changes ICB group."
-msgstr ""
+msgstr "Byter ICB grupp."
 
 #: ../src/include/commandhelp.h:202
 msgid "usage: /help [command]"
