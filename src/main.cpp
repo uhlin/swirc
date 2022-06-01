@@ -537,12 +537,16 @@ main(int argc, char *argv[])
 	xsetlocale = setlocale;
 	if (sw_strcpy(g_locale, xsetlocale(LC_ALL, ""), ARRAY_SIZE(g_locale)) ==
 	    0) {
+#ifdef HAVE_LIBINTL_SETLOCALE
 		xsetlocale = libintl_setlocale;
 		if (xsetlocale(LC_ALL, g_locale) == NULL) {
 			err_msg("error setting character encoding '%s' for "
 			    "libintl", g_locale);
 			return EXIT_FAILURE;
 		}
+#else
+		debug("set locale ok");
+#endif
 	}
 
 #ifdef HAVE_LIBINTL_H
