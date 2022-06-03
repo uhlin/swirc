@@ -58,7 +58,6 @@ check_intl_setlocale () {
 	_out="${_tmpfile}.out"
 	cat <<EOF >"$_srcfile"
 #include <libintl.h>
-#include <locale.h>
 
 #ifdef setlocale
 #undef setlocale
