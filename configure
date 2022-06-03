@@ -8,6 +8,7 @@ MAKE_DEF_FILE=options.mk
 
 . "posixshell/fix_cflags.sh"
 . "posixshell/link_with_gnu_libidn.sh"
+. "posixshell/link_with_gnu_libintl.sh"
 . "posixshell/link_with_libnotify.sh"
 . "posixshell/os_BSD.sh"
 . "posixshell/os_LINUX.sh"
@@ -90,19 +91,7 @@ if [ $_without_libidn -eq 0 ]; then
 fi
 
 if [ $_without_libintl -eq 0 ]; then
-	cat <<EOF >>$MAKE_DEF_FILE
-CFLAGS += -DHAVE_LIBINTL_H=1
-CXXFLAGS += -DHAVE_LIBINTL_H=1
-EOF
-	case "$(uname -s)" in
-	"Darwin" | "FreeBSD" | "NetBSD" | "OpenBSD")
-		cat <<EOF >>$MAKE_DEF_FILE
-LDLIBS += -lintl
-EOF
-		;;
-	*)
-		;;
-	esac
+	link_with_gnu_libintl
 #	${MAKE:-make} -Cpo clean
 	${MAKE:-make} -Cpo
 fi
