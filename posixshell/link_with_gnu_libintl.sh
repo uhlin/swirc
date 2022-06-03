@@ -60,6 +60,10 @@ check_intl_setlocale () {
 #include <libintl.h>
 #include <locale.h>
 
+#ifdef setlocale
+#undef setlocale
+#endif
+
 int
 main(void)
 {
