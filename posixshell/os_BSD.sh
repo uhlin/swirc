@@ -29,6 +29,6 @@ EOF
 		CC=cc
 	fi
 	if [ -z ${CFLAGS+x} ]; then
-		CFLAGS=""
+		CFLAGS="-I/usr/local/include"
 	fi
 }
