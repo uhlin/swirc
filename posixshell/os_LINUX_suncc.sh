@@ -30,4 +30,14 @@ LDLIBS=-lcrypto\\
 	-lpthread\\
 	-lssl
 EOF
+
+	if [ -z ${CC+x} ]; then
+		CC=suncc
+	fi
+	if [ -z ${CFLAGS+x} ]; then
+		CFLAGS=""
+	fi
+	if [ -z ${LDFLAGS+x} ]; then
+		LDFLAGS=""
+	fi
 }
