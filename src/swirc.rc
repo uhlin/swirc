@@ -29,6 +29,10 @@ BEGIN
 			VALUE "ProductVersion",   VER_STR
 		END
 	END
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x0409, 1200
+	END
 END
 
 1 ICON "swirc-royal.ico"
