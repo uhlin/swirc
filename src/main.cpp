@@ -47,6 +47,7 @@
 #include "curses-funcs.h"
 #include "cursesInit.h"
 #include "errHand.h"
+#include "filePred.h"
 #include "i18n.h"
 #include "io-loop.h"
 #include "irc.h"
@@ -637,12 +638,31 @@ main(int argc, char *argv[])
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201811
-	chararray_t cert_pem_path = "/etc/ssl/cert.pem";
+	struct whitelist_tag {
+		const char *path;
+		const char *permissions;
+	} whitelist[] = {
+		{ "/etc/ssl/cert.pem", "r" },
+		{ "/usr/local/share/locale/de/LC_MESSAGES/swirc.mo", "r" },
+		{ "/usr/local/share/locale/fi/LC_MESSAGES/swirc.mo", "r" },
+		{ "/usr/local/share/locale/fr/LC_MESSAGES/swirc.mo", "r" },
+		{ "/usr/local/share/locale/sv/LC_MESSAGES/swirc.mo", "r" },
+	};
 
-	if (unveil(g_home_dir, "rwc") == -1 ||
-	    unveil(cert_pem_path, "r") == -1) {
+	if (unveil(g_home_dir, "rwc") == -1) {
 		err_ret("unveil");
 		return EXIT_FAILURE;
+	}
+
+	for (struct whitelist_tag *wl_p = addrof(whitelist[0]);
+	    wl_p < &whitelist[ARRAY_SIZE(whitelist)];
+	    wl_p++) {
+		if (file_exists(wl_p->path) && unveil(wl_p->path,
+		    wl_p->permissions) == -1) {
+			err_ret("unveil(%s, %s)", wl_p->path,
+			    wl_p->permissions);
+			return EXIT_FAILURE;
+		}
 	}
 #endif
 
