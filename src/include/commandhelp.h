@@ -201,8 +201,8 @@ static usage_t group_usage = {
 static usage_t help_usage = {
   N_("usage: /help [command]"),
   "",
-  N_("Outputs help. If a command is given the program will output help for"),
-  N_("that particular command."),
+  N_("Outputs a list of all available commands."),
+  N_("(Or help for a specific command.)"),
   "",
 };
 
