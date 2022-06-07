@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-08 01:15+0200\n"
-"PO-Revision-Date: 2022-05-29 15:31+0200\n"
+"PO-Revision-Date: 2022-06-08 01:20+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -261,15 +261,15 @@ msgstr "Byter ICB grupp."
 
 #: ../src/include/commandhelp.h:202
 msgid "usage: /help [command]"
-msgstr ""
+msgstr "användning: /help [kommando]"
 
 #: ../src/include/commandhelp.h:204
 msgid "Outputs a list of all available commands."
-msgstr ""
+msgstr "Matar ut en lista över alla tillgängliga kommandon."
 
 #: ../src/include/commandhelp.h:205
 msgid "(Or help for a specific command.)"
-msgstr ""
+msgstr "(Eller hjälp för ett specifikt kommando.)"
 
 #: ../src/include/commandhelp.h:210
 msgid "usage: /ignore [regex]"
