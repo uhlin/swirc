@@ -1,5 +1,6 @@
 COMMANDS_DIR := src/commands/
 OBJS = $(COMMANDS_DIR)ban.o\
+	$(COMMANDS_DIR)cap.o\
 	$(COMMANDS_DIR)cleartoasts.o\
 	$(COMMANDS_DIR)colormap.o\
 	$(COMMANDS_DIR)connect.o\

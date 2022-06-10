@@ -51,6 +51,7 @@
 #include "theme.h"
 
 #include "commands/ban.h"
+#include "commands/cap.h"
 #include "commands/cleartoasts.h"
 #include "commands/colormap.h"
 #include "commands/connect.h"
@@ -98,6 +99,7 @@ static struct cmds_tag {
 	{ "banlist",     cmd_banlist,     true,  banlist_usage,     ARRAY_SIZE(banlist_usage),     true  },
 	{ "beep",        cmd_beep,        true,  beep_usage,        ARRAY_SIZE(beep_usage),        false },
 	{ "boot",        cmd_boot,        true,  boot_usage,        ARRAY_SIZE(boot_usage),        false },
+	{ "cap",         cmd_cap,         true,  cap_usage,         ARRAY_SIZE(cap_usage),         true  },
 	{ "chanserv",    cmd_chanserv,    true,  chanserv_usage,    ARRAY_SIZE(chanserv_usage),    true  },
 	{ "cleartoasts", cmd_cleartoasts, false, cleartoasts_usage, ARRAY_SIZE(cleartoasts_usage), false },
 	{ "close",       cmd_close,       false, close_usage,       ARRAY_SIZE(close_usage),       false },

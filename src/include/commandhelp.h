@@ -93,6 +93,13 @@ static usage_t chanserv_usage = {
   "",
 };
 
+static usage_t cap_usage = {
+  "usage: /cap ...",
+  "",
+  "No help yet.",
+  "",
+};
+
 static usage_t cleartoasts_usage = {
   N_("usage: /cleartoasts"),
   "",
