@@ -357,19 +357,19 @@ msgstr "Bjuder in 'smeknamn' till en kanal."
 
 #: ../src/include/commandhelp.h:263
 msgid "usage: /join <channel> [key]"
-msgstr ""
+msgstr "användning: /join <kanal> [nyckel]"
 
 #: ../src/include/commandhelp.h:265
 msgid "Joins a channel (optionally by using a key)."
-msgstr ""
+msgstr "Går med i en kanal (valfritt genom att använda en nyckel)."
 
 #: ../src/include/commandhelp.h:269
 msgid "Join a channel with name 'libera':"
-msgstr ""
+msgstr "Gå med i en kanal med namnet 'libera':"
 
 #: ../src/include/commandhelp.h:272
 msgid "Join a key-protected channel:"
-msgstr ""
+msgstr "Gå med i en nyckelskyddad kanal:"
 
 #: ../src/include/commandhelp.h:278
 msgid "usage: /kick <nick1[,nick2][,nick3][...]> [reason]"
