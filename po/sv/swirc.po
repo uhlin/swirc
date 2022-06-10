@@ -349,11 +349,11 @@ msgstr "listan för den kanalen."
 
 #: ../src/include/commandhelp.h:256
 msgid "usage: /invite <targ_nick> <channel>"
-msgstr ""
+msgstr "användning: /invite <smeknamn> <kanal>"
 
 #: ../src/include/commandhelp.h:258
 msgid "Invites 'targ_nick' to a channel."
-msgstr ""
+msgstr "Bjuder in 'smeknamn' till en kanal."
 
 #: ../src/include/commandhelp.h:263
 msgid "usage: /join <channel> [key]"
