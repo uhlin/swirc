@@ -273,7 +273,7 @@ msgstr "(Eller hjälp för ett specifikt kommando.)"
 
 #: ../src/include/commandhelp.h:217
 msgid "usage: /ignore [regex]"
-msgstr "användning: /ignore [regex]"
+msgstr "användning: /ignore [reguljärt uttryck]"
 
 #: ../src/include/commandhelp.h:219
 msgid "Ignores all 'nick!user@host' that matches the given regular"
