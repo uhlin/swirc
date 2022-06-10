@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-10 18:13+0200\n"
-"PO-Revision-Date: 2022-06-10 18:13+0200\n"
+"PO-Revision-Date: 2022-06-10 18:25+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -329,23 +329,23 @@ msgstr "Ignorera alla användare med en kinesisk domän (.cn):"
 
 #: ../src/include/commandhelp.h:246
 msgid "usage: /ilist [channel]"
-msgstr ""
+msgstr "användning: /ilist [kanal]"
 
 #: ../src/include/commandhelp.h:248
 msgid "Outputs a channel's invitation list. An invitation mask (+I) overrides"
-msgstr ""
+msgstr "Matar ut en kanals inbjudningslista. En inbjudningsmask (+I) åsidosätter"
 
 #: ../src/include/commandhelp.h:249
 msgid "the invite-only flag (+i). If the channel argument is omitted and the"
-msgstr ""
+msgstr "flaggan endast för inbjudan (+i). Om kanalargumentet utelämnas och det"
 
 #: ../src/include/commandhelp.h:250
 msgid "active window is an IRC channel, the client will output the invitation"
-msgstr ""
+msgstr "aktiva fönstret är en IRC kanal, kommer klienten att mata ut inbjudnings-"
 
 #: ../src/include/commandhelp.h:251
 msgid "list for that channel."
-msgstr ""
+msgstr "listan för den kanalen."
 
 #: ../src/include/commandhelp.h:256
 msgid "usage: /invite <targ_nick> <channel>"
