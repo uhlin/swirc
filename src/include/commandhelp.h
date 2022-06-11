@@ -350,7 +350,7 @@ static usage_t mode_usage = {
   "",
   (TXT_BOLD "EXAMPLES" TXT_BOLD),
   "",
-  N_("    Give channel operator privilege to 'Companion' on #foo:"),
+  N_("    Give channel operator privilege to 'Companion' in #foo:"),
   "      /mode #foo +o Companion",
   "",
   N_("    Restrict messaging to channel #linux:"),
