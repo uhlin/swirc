@@ -341,7 +341,7 @@ static usage_t mode_usage = {
   "",
   N_("    b - set/remove a ban mask"),
   N_("    e - set/remove an exception mask to override a ban mask"),
-  N_("    I - set/remove an invitation mask to override an invite-only flag"),
+  N_("    I - set/remove an invitation mask to override the invite-only flag"),
   "",
   (TXT_BOLD "USER MODES" TXT_BOLD),
   "",
