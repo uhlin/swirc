@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-11 23:44+0200\n"
-"PO-Revision-Date: 2022-06-11 23:32+0200\n"
+"PO-Revision-Date: 2022-06-11 23:56+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -511,14 +511,13 @@ msgstr ""
 "    e - ställ in/ta bort en undantagsmask för att åsidosätta en förbudsmask"
 
 #: ../src/include/commandhelp.h:344
-#, fuzzy
 msgid "    I - set/remove an invitation mask to override the invite-only flag"
 msgstr ""
-"    e - ställ in/ta bort en undantagsmask för att åsidosätta en förbudsmask"
+"    I - ställ in/ta bort en inbjudningsmask för att åsidosätta flaggan endast för inbjudan"
 
 #: ../src/include/commandhelp.h:348
 msgid "    i - marks a user as invisible"
-msgstr ""
+msgstr "    i - markerar en användare som osynlig"
 
 #: ../src/include/commandhelp.h:349
 msgid "    w - user receives wallops"
