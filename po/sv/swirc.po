@@ -419,27 +419,27 @@ msgstr "(Kräver IRC op-behörighet.)"
 
 #: ../src/include/commandhelp.h:304
 msgid "usage: /list [<max_users[,>min_users][,pattern][...]]"
-msgstr ""
+msgstr "användning: /list [<max_users[,>min_users][,mönster][...]]"
 
 #: ../src/include/commandhelp.h:306
 msgid "Lists channels and their topics. Without any arguments the list is"
-msgstr ""
+msgstr "Listar kanaler och deras ämnen. Utan några argument är listan"
 
 #: ../src/include/commandhelp.h:307
 msgid "HUGE. For example, '/list >1500' will only list channels that have"
-msgstr ""
+msgstr "ENORM. Till exempel kommer '/list >1500' bara att lista kanaler som har"
 
 #: ../src/include/commandhelp.h:308
 msgid "more than 1500 users."
-msgstr ""
+msgstr "fler än 1500 användare."
 
 #: ../src/include/commandhelp.h:310
 msgid "Depending on the IRC server software used by your network the usage"
-msgstr ""
+msgstr "Beroende på vilken IRC serverprogramvara som används av ditt nätverk kan användningen"
 
 #: ../src/include/commandhelp.h:311
 msgid "may differ."
-msgstr ""
+msgstr "variera."
 
 #: ../src/include/commandhelp.h:316
 msgid "usage: /me <message>"
