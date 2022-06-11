@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-11 12:25+0200\n"
-"PO-Revision-Date: 2022-06-11 11:48+0200\n"
+"PO-Revision-Date: 2022-06-11 12:36+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -393,7 +393,7 @@ msgstr "vara en IRC kanal."
 
 #: ../src/include/commandhelp.h:287
 msgid "usage: /kickban <nick> <mask> [reason]"
-msgstr ""
+msgstr "användning: /kickban <nick> <mask> [anledning]"
 
 #: ../src/include/commandhelp.h:289
 msgid ""
@@ -401,6 +401,9 @@ msgid ""
 "channel. A reason is optional and the active window must be an IRC\n"
 "channel."
 msgstr ""
+"Ställ in ett kanalförbud med given 'mask' och sparka ut användaren\n"
+"'nick' från en kanal. En anledning är valfri och det aktiva fönstret\n"
+"måste vara en IRC kanal."
 
 #: ../src/include/commandhelp.h:296
 msgid "usage: /kill <nickname> <comment>"
