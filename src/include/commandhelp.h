@@ -286,9 +286,9 @@ static usage_t kick_usage = {
 static usage_t kickban_usage = {
   N_("usage: /kickban <nick> <mask> [reason]"),
   "",
-  N_("Initially set a channel ban by given 'mask' and kick user 'nick' out"),
-  N_("of a channel, optionally with a reason."),
-  N_("(The active window must be an IRC channel.)"),
+  N_("Set a channel ban with given 'mask' and kick the user 'nick' out of a\n"
+     "channel. A reason is optional and the active window must be an IRC\n"
+     "channel."),
   "",
 };
 
