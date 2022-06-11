@@ -558,11 +558,11 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:379
 msgid "usage: /nick <new nickname>"
-msgstr ""
+msgstr "användning: /nick <nytt smeknamn>"
 
 #: ../src/include/commandhelp.h:381
 msgid "Sets your nickname."
-msgstr ""
+msgstr "Ställer in ditt smeknamn."
 
 #: ../src/include/commandhelp.h:386
 msgid "usage: /nickserv <[service hostname | --]> <command> [...]"
