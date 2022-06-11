@@ -277,8 +277,8 @@ static usage_t join_usage = {
 static usage_t kick_usage = {
   N_("usage: /kick <nick1[,nick2][,nick3][...]> [reason]"),
   "",
-  N_("Kicks one or more users out of a channel (specified by a comma-"),
-  N_("separated list) and optionally with a reason. The active window must"),
+  N_("Kicks one or more users out of a channel. The users are given in a"),
+  N_("comma-separated list. A reason is optional and the active window must"),
   N_("be an IRC channel."),
   "",
 };
