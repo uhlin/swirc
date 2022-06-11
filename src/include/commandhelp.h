@@ -389,7 +389,7 @@ static usage_t nickserv_usage = {
   "",
   N_("If the initial argument equals to '--', then the:"),
   "",
-  N_("    1) Value of option 'nickserv_host' is used as service hostname."),
+  N_("    1) Value of setting 'nickserv_host' is used as service hostname."),
   N_("    2) Command call won't be added to the command history provided"),
   N_("       that the second argument is 'identify'."),
   "",
