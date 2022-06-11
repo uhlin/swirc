@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-11 13:22+0200\n"
-"PO-Revision-Date: 2022-06-11 12:36+0200\n"
+"PO-Revision-Date: 2022-06-11 13:52+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -443,11 +443,11 @@ msgstr "variera."
 
 #: ../src/include/commandhelp.h:316
 msgid "usage: /me <message>"
-msgstr ""
+msgstr "användning: /me <meddelande>"
 
 #: ../src/include/commandhelp.h:318
 msgid "Send an 'action' message. (Used to simulate role playing on IRC.)"
-msgstr ""
+msgstr "Skicka ett 'action'-meddelande. (Används för att simulera rollspel på IRC.)"
 
 #: ../src/include/commandhelp.h:323
 msgid "usage: /mode <modes> [...]"
