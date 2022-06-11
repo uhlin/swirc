@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-12 00:36+0200\n"
-"PO-Revision-Date: 2022-06-12 01:02+0200\n"
+"PO-Revision-Date: 2022-06-12 01:31+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -566,11 +566,11 @@ msgstr "Ställer in ditt smeknamn."
 
 #: ../src/include/commandhelp.h:386
 msgid "usage: /nickserv <[service hostname | --]> <command> [...]"
-msgstr ""
+msgstr "användning: /nickserv <[tjänstens värdnamn | --]> <kommando> [...]"
 
 #: ../src/include/commandhelp.h:388
 msgid "Communicate with your IRC network's nickname service."
-msgstr ""
+msgstr "Kommunicera med ditt IRC nätverks smeknamnstjänst."
 
 #: ../src/include/commandhelp.h:390
 msgid "If the initial argument equals to '--', then the:"
