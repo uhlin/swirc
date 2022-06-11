@@ -303,7 +303,7 @@ static usage_t kill_usage = {
 static usage_t list_usage = {
   N_("usage: /list [<max_users[,>min_users][,pattern][...]]"),
   "",
-  N_("Lists channels and their topics. Without any arguments the output is"),
+  N_("Lists channels and their topics. Without any arguments the list is"),
   N_("HUGE. For example, '/list >1500' will only list channels that have"),
   N_("more than 1500 users."),
   "",
