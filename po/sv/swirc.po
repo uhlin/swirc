@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-11 11:41+0200\n"
-"PO-Revision-Date: 2022-06-10 18:25+0200\n"
+"PO-Revision-Date: 2022-06-11 11:48+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -375,19 +375,19 @@ msgstr "Gå med i en nyckelskyddad kanal:"
 
 #: ../src/include/commandhelp.h:278
 msgid "usage: /kick <nick1[,nick2][,nick3][...]> [reason]"
-msgstr ""
+msgstr "användning: /kick <nick1[,nick2][,nick3][...]> [anledning]"
 
 #: ../src/include/commandhelp.h:280
 msgid "Kicks one or more users out of a channel. The users are given in a"
-msgstr ""
+msgstr "Sparkar ut en eller flera användare från en kanal. Användarna anges i en"
 
 #: ../src/include/commandhelp.h:281
 msgid "comma-separated list. A reason is optional and the active window must"
-msgstr ""
+msgstr "kommaseparerad lista. En anledning är valfri och det aktiva fönstret måste"
 
 #: ../src/include/commandhelp.h:282
 msgid "be an IRC channel."
-msgstr ""
+msgstr "vara en IRC kanal."
 
 #: ../src/include/commandhelp.h:287
 msgid "usage: /kickban <nick> <mask> [reason]"
