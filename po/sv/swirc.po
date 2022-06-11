@@ -407,15 +407,15 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:296
 msgid "usage: /kill <nickname> <comment>"
-msgstr ""
+msgstr "användning: /kill <smeknamn> <kommentar>"
 
 #: ../src/include/commandhelp.h:298
 msgid "Disconnect a user from the connected network."
-msgstr ""
+msgstr "Koppla bort en användare från det anslutna nätverket."
 
 #: ../src/include/commandhelp.h:299
 msgid "(Requires IRC op privilege.)"
-msgstr ""
+msgstr "(Kräver IRC op-behörighet.)"
 
 #: ../src/include/commandhelp.h:304
 msgid "usage: /list [<max_users[,>min_users][,pattern][...]]"
