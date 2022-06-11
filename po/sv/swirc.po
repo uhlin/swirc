@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-12 00:04+0200\n"
+"POT-Creation-Date: 2022-06-12 00:36+0200\n"
 "PO-Revision-Date: 2022-06-12 00:08+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -525,8 +525,9 @@ msgid "    w - the user receives wallops messages"
 msgstr "    w - användaren får wallops-meddelanden"
 
 #: ../src/include/commandhelp.h:353
-msgid "    Give channel operator privilege to 'Companion' on #foo:"
-msgstr ""
+#, fuzzy
+msgid "    Give channel operator privilege to 'Companion' in #foo:"
+msgstr "    o - ge/ta kanaloperatörsprivilegiet"
 
 #: ../src/include/commandhelp.h:356
 msgid "    Restrict messaging to channel #linux:"
