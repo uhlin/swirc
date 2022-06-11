@@ -346,7 +346,7 @@ static usage_t mode_usage = {
   (TXT_BOLD "USER MODES" TXT_BOLD),
   "",
   N_("    i - marks a user as invisible"),
-  N_("    w - user receives wallops"),
+  N_("    w - the user receives wallops messages"),
   "",
   (TXT_BOLD "EXAMPLES" TXT_BOLD),
   "",
