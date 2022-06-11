@@ -487,19 +487,19 @@ msgstr "    s - hemlig kanal"
 
 #: ../src/include/commandhelp.h:337
 msgid "    t - topic settable by channel operators only"
-msgstr ""
+msgstr "    t - ämne kan endast ställas in av kanaloperatörer"
 
 #: ../src/include/commandhelp.h:339
 msgid "    k - set/remove the channel key (password)"
-msgstr ""
+msgstr "    k - ställ in/ta bort kanalnyckeln (lösenordet)"
 
 #: ../src/include/commandhelp.h:340
 msgid "    l - set/remove the channel user limit"
-msgstr ""
+msgstr "    l - ställ in/ta bort kanalanvändargränsen"
 
 #: ../src/include/commandhelp.h:342
 msgid "    b - set/remove a ban mask"
-msgstr ""
+msgstr "    b - ställ in/ta bort en förbudsmask"
 
 #: ../src/include/commandhelp.h:343
 msgid "    e - set/remove an exception mask to override a ban mask"
