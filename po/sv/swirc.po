@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-11 13:22+0200\n"
-"PO-Revision-Date: 2022-06-11 13:52+0200\n"
+"PO-Revision-Date: 2022-06-11 18:11+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -451,39 +451,39 @@ msgstr "Skicka ett 'action'-meddelande. (Används för att simulera rollspel på
 
 #: ../src/include/commandhelp.h:323
 msgid "usage: /mode <modes> [...]"
-msgstr ""
+msgstr "användning: /mode <lägen> [...]"
 
 #: ../src/include/commandhelp.h:325
 msgid "Alter modes."
-msgstr ""
+msgstr "Ändra lägen."
 
 #: ../src/include/commandhelp.h:329
 msgid "    o - give/take the channel operator privilege"
-msgstr ""
+msgstr "    o - ge/ta kanaloperatörsprivilegiet"
 
 #: ../src/include/commandhelp.h:330
 msgid "    v - give/take the channel voice privilege"
-msgstr ""
+msgstr "    v - ge/ta kanal-röst-privilegiet"
 
 #: ../src/include/commandhelp.h:332
 msgid "    i - invite-only channel"
-msgstr ""
+msgstr "    i - invite-only kanal"
 
 #: ../src/include/commandhelp.h:333
 msgid "    m - moderated channel"
-msgstr ""
+msgstr "    m - modererad kanal"
 
 #: ../src/include/commandhelp.h:334
 msgid "    n - no messages to a channel from clients on the outside"
-msgstr ""
+msgstr "    n - inga meddelanden till en kanal från klienter på utsidan"
 
 #: ../src/include/commandhelp.h:335
 msgid "    p - private channel"
-msgstr ""
+msgstr "    p - privat kanal"
 
 #: ../src/include/commandhelp.h:336
 msgid "    s - secret channel"
-msgstr ""
+msgstr "    s - hemlig kanal"
 
 #: ../src/include/commandhelp.h:337
 msgid "    t - topic settable by channel operators only"
