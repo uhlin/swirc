@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-12 00:36+0200\n"
-"PO-Revision-Date: 2022-06-12 00:08+0200\n"
+"PO-Revision-Date: 2022-06-12 00:46+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -525,25 +525,24 @@ msgid "    w - the user receives wallops messages"
 msgstr "    w - användaren får wallops-meddelanden"
 
 #: ../src/include/commandhelp.h:353
-#, fuzzy
 msgid "    Give channel operator privilege to 'Companion' in #foo:"
-msgstr "    o - ge/ta kanaloperatörsprivilegiet"
+msgstr "    Ge kanaloperatörsprivilegium till 'Companion' i #foo:"
 
 #: ../src/include/commandhelp.h:356
 msgid "    Restrict messaging to channel #linux:"
-msgstr ""
+msgstr "    Begränsa meddelanden till kanal #linux:"
 
 #: ../src/include/commandhelp.h:359
 msgid "    Limit user count for #freenode to 10:"
-msgstr ""
+msgstr "    Begränsa antalet användare för #freenode till 10:"
 
 #: ../src/include/commandhelp.h:362
 msgid "    Deny all users with hostname spammers.net from joining #chatzone:"
-msgstr ""
+msgstr "    Neka alla användare med värdnamnet spammers.net från att gå med i #chatzone:"
 
 #: ../src/include/commandhelp.h:365
 msgid "    Turn on reception of WALLOPS messages:"
-msgstr ""
+msgstr "    Slå på mottagning av WALLOPS meddelanden:"
 
 #: ../src/include/commandhelp.h:371
 msgid "usage: /msg <recipient> <message>"
