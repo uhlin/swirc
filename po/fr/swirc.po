@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-11 11:41+0200\n"
+"POT-Creation-Date: 2022-06-11 12:25+0200\n"
 "PO-Revision-Date: 2021-08-23 19:29+0200\n"
 "Last-Translator: Solene <solene@openbsd.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -374,15 +374,10 @@ msgid "usage: /kickban <nick> <mask> [reason]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:289
-msgid "Initially set a channel ban by given 'mask' and kick user 'nick' out"
-msgstr ""
-
-#: ../src/include/commandhelp.h:290
-msgid "of a channel, optionally with a reason."
-msgstr ""
-
-#: ../src/include/commandhelp.h:291
-msgid "(The active window must be an IRC channel.)"
+msgid ""
+"Set a channel ban with given 'mask' and kick the user 'nick' out of a\n"
+"channel. A reason is optional and the active window must be an IRC\n"
+"channel."
 msgstr ""
 
 #: ../src/include/commandhelp.h:296

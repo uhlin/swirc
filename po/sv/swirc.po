@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-11 11:41+0200\n"
+"POT-Creation-Date: 2022-06-11 12:25+0200\n"
 "PO-Revision-Date: 2022-06-11 11:48+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -379,11 +379,13 @@ msgstr "användning: /kick <nick1[,nick2][,nick3][...]> [anledning]"
 
 #: ../src/include/commandhelp.h:280
 msgid "Kicks one or more users out of a channel. The users are given in a"
-msgstr "Sparkar ut en eller flera användare från en kanal. Användarna anges i en"
+msgstr ""
+"Sparkar ut en eller flera användare från en kanal. Användarna anges i en"
 
 #: ../src/include/commandhelp.h:281
 msgid "comma-separated list. A reason is optional and the active window must"
-msgstr "kommaseparerad lista. En anledning är valfri och det aktiva fönstret måste"
+msgstr ""
+"kommaseparerad lista. En anledning är valfri och det aktiva fönstret måste"
 
 #: ../src/include/commandhelp.h:282
 msgid "be an IRC channel."
@@ -394,15 +396,10 @@ msgid "usage: /kickban <nick> <mask> [reason]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:289
-msgid "Initially set a channel ban by given 'mask' and kick user 'nick' out"
-msgstr ""
-
-#: ../src/include/commandhelp.h:290
-msgid "of a channel, optionally with a reason."
-msgstr ""
-
-#: ../src/include/commandhelp.h:291
-msgid "(The active window must be an IRC channel.)"
+msgid ""
+"Set a channel ban with given 'mask' and kick the user 'nick' out of a\n"
+"channel. A reason is optional and the active window must be an IRC\n"
+"channel."
 msgstr ""
 
 #: ../src/include/commandhelp.h:296
