@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-12 13:10+0200\n"
+"POT-Creation-Date: 2022-06-12 14:08+0200\n"
 "PO-Revision-Date: 2022-06-12 13:27+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -580,7 +580,8 @@ msgstr "Om det initiala argumentet är lika med '--' så kommer:"
 
 #: ../src/include/commandhelp.h:392
 msgid "    1) Value of setting 'nickserv_host' will be used as service"
-msgstr "    1) Värdet för inställningen 'nickserv_host' att användas som tjänstens"
+msgstr ""
+"    1) Värdet för inställningen 'nickserv_host' att användas som tjänstens"
 
 #: ../src/include/commandhelp.h:393
 msgid "       hostname."
@@ -588,7 +589,8 @@ msgstr "       värdnamn."
 
 #: ../src/include/commandhelp.h:394
 msgid "    2) Command call won't be added to the command history provided"
-msgstr "    2) Kommandoanropet inte att läggas till kommandohistoriken förutsatt"
+msgstr ""
+"    2) Kommandoanropet inte att läggas till kommandohistoriken förutsatt"
 
 #: ../src/include/commandhelp.h:395
 msgid "       that the second argument is 'identify'."
@@ -603,7 +605,7 @@ msgid "hostname of NickServ. FYI at the AnonOps IRC network the visible"
 msgstr ""
 
 #: ../src/include/commandhelp.h:399
-msgid "hostname of NickServ is anonops.in (at the time of writing this)"
+msgid "hostname of NickServ is anonops.in (when this text was written)"
 msgstr ""
 
 #: ../src/include/commandhelp.h:400

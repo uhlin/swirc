@@ -396,7 +396,7 @@ static usage_t nickserv_usage = {
   "",
   N_("The correct service hostname is not always the same as the visible"),
   N_("hostname of NickServ. FYI at the AnonOps IRC network the visible"),
-  N_("hostname of NickServ is anonops.in (at the time of writing this)"),
+  N_("hostname of NickServ is anonops.in (when this text was written)"),
   N_("but you should use 'services.anonops.com'. As a fallback:"),
   N_("'/query NickServ' can be used in order to communicate with the"),
   N_("service."),
