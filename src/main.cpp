@@ -657,8 +657,10 @@ main(int argc, char *argv[])
 	for (struct whitelist_tag *wl_p = addrof(whitelist[0]);
 	    wl_p < &whitelist[ARRAY_SIZE(whitelist)];
 	    wl_p++) {
-		if (file_exists(wl_p->path) && unveil(wl_p->path,
-		    wl_p->permissions) == -1) {
+		errno = 0;
+
+		if (unveil(wl_p->path, wl_p->permissions) == -1 &&
+		    errno != ENOENT) {
 			err_ret("unveil(%s, %s)", wl_p->path,
 			    wl_p->permissions);
 			return EXIT_FAILURE;
