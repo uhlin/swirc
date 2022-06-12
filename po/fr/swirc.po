@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-12 14:08+0200\n"
+"POT-Creation-Date: 2022-06-12 20:13+0200\n"
 "PO-Revision-Date: 2021-08-23 19:29+0200\n"
 "Last-Translator: Solene <solene@openbsd.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -559,27 +559,17 @@ msgid "       that the second argument is 'identify'."
 msgstr ""
 
 #: ../src/include/commandhelp.h:397
-msgid "The correct service hostname is not always the same as the visible"
-msgstr ""
-
-#: ../src/include/commandhelp.h:398
-msgid "hostname of NickServ. FYI at the AnonOps IRC network the visible"
-msgstr ""
-
-#: ../src/include/commandhelp.h:399
-msgid "hostname of NickServ is anonops.in (when this text was written)"
-msgstr ""
-
-#: ../src/include/commandhelp.h:400
-msgid "but you should use 'services.anonops.com'. As a fallback:"
+msgid ""
+"The correct service hostname is not always the same as the visible\n"
+"hostname of NickServ. FYI at the AnonOps IRC network the visible\n"
+"hostname of NickServ is anonops.in (when this text was written)\n"
+"but you should use 'services.anonops.com'. As a fallback:"
 msgstr ""
 
 #: ../src/include/commandhelp.h:401
-msgid "'/query NickServ' can be used in order to communicate with the"
-msgstr ""
-
-#: ../src/include/commandhelp.h:402
-msgid "service."
+msgid ""
+"'/query NickServ' can be used in order to communicate with the\n"
+"service."
 msgstr ""
 
 #: ../src/include/commandhelp.h:407
