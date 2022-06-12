@@ -394,12 +394,12 @@ static usage_t nickserv_usage = {
   N_("    2) Command call won't be added to the command history provided"),
   N_("       that the second argument is 'identify'."),
   "",
-  N_("The correct service hostname is not always the same as the visible"),
-  N_("hostname of NickServ. FYI at the AnonOps IRC network the visible"),
-  N_("hostname of NickServ is anonops.in (when this text was written)"),
-  N_("but you should use 'services.anonops.com'. As a fallback:"),
-  N_("'/query NickServ' can be used in order to communicate with the"),
-  N_("service."),
+  N_("The correct service hostname is not always the same as the visible\n"
+     "hostname of NickServ. FYI at the AnonOps IRC network the visible\n"
+     "hostname of NickServ is anonops.in (when this text was written)\n"
+     "but you should use 'services.anonops.com'. As a fallback:"),
+  N_("'/query NickServ' can be used in order to communicate with the\n"
+     "service."),
   "",
 };
 
