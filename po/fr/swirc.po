@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-12 00:36+0200\n"
+"POT-Creation-Date: 2022-06-12 01:57+0200\n"
 "PO-Revision-Date: 2021-08-23 19:29+0200\n"
 "Last-Translator: Solene <solene@openbsd.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -543,7 +543,7 @@ msgid "If the initial argument equals to '--', then the:"
 msgstr ""
 
 #: ../src/include/commandhelp.h:392
-msgid "    1) Value of option 'nickserv_host' is used as service hostname."
+msgid "    1) Value of setting 'nickserv_host' is used as service hostname."
 msgstr ""
 
 #: ../src/include/commandhelp.h:393

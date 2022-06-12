@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-12 00:36+0200\n"
+"POT-Creation-Date: 2022-06-12 01:57+0200\n"
 "PO-Revision-Date: 2022-06-12 01:31+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -538,7 +538,9 @@ msgstr "    Begränsa antalet användare för #freenode till 10:"
 
 #: ../src/include/commandhelp.h:362
 msgid "    Deny all users with hostname spammers.net from joining #chatzone:"
-msgstr "    Neka alla användare med värdnamnet spammers.net från att gå med i #chatzone:"
+msgstr ""
+"    Neka alla användare med värdnamnet spammers.net från att gå med i "
+"#chatzone:"
 
 #: ../src/include/commandhelp.h:365
 msgid "    Turn on reception of WALLOPS messages:"
@@ -577,7 +579,7 @@ msgid "If the initial argument equals to '--', then the:"
 msgstr ""
 
 #: ../src/include/commandhelp.h:392
-msgid "    1) Value of option 'nickserv_host' is used as service hostname."
+msgid "    1) Value of setting 'nickserv_host' is used as service hostname."
 msgstr ""
 
 #: ../src/include/commandhelp.h:393
