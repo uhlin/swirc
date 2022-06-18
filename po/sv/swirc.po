@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 21:56+0200\n"
-"PO-Revision-Date: 2022-06-18 21:40+0200\n"
+"PO-Revision-Date: 2022-06-18 22:03+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -903,7 +903,7 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:622
 msgid "usage: /topic [new topic]"
-msgstr ""
+msgstr "användning: /topic [nytt ämne]"
 
 #: ../src/include/commandhelp.h:624
 msgid ""
@@ -911,6 +911,9 @@ msgid ""
 "will be to display the current topic. (The active window must be an\n"
 "IRC channel.)"
 msgstr ""
+"Ställer in ett nytt ämne för en kanal. Om 'nytt ämne' utelämnas kommer\n"
+"åtgärden att vara att visa det aktuella ämnet. (Det aktiva fönstret\n"
+"måste vara en IRC kanal.)"
 
 #: ../src/include/commandhelp.h:631
 msgid "usage: /unban <mask>"
