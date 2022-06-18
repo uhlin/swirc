@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 21:56+0200\n"
+"POT-Creation-Date: 2022-06-18 23:10+0200\n"
 "PO-Revision-Date: 2022-06-18 22:49+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -938,11 +938,9 @@ msgid "usage: /version <target>"
 msgstr ""
 
 #: ../src/include/commandhelp.h:656
-msgid "Send a CTCP VERSION request to 'target', which is either a nickname or"
-msgstr ""
-
-#: ../src/include/commandhelp.h:657
-msgid "an IRC channel."
+msgid ""
+"Send a CTCP VERSION request to 'target', which is either a nickname or\n"
+"an IRC channel."
 msgstr ""
 
 #: ../src/include/commandhelp.h:662
@@ -950,11 +948,9 @@ msgid "usage: /who <mask>"
 msgstr ""
 
 #: ../src/include/commandhelp.h:664
-msgid "Generates a query which returns a list of information which matches"
-msgstr ""
-
-#: ../src/include/commandhelp.h:665
-msgid "the provided 'mask'."
+msgid ""
+"Generates a query which returns a list of information which matches\n"
+"the provided 'mask'."
 msgstr ""
 
 #: ../src/include/commandhelp.h:669
