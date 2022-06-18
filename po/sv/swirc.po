@@ -678,19 +678,19 @@ msgstr "Överlämna ICB modereringsprivilegiet till en annan gruppmedlem."
 
 #: ../src/include/commandhelp.h:450
 msgid "usage: /query [nick]"
-msgstr ""
+msgstr "användning: /query [nick]"
 
 #: ../src/include/commandhelp.h:452
 msgid "Starts a private conversation with 'nick'. If 'nick' is omitted and"
-msgstr ""
+msgstr "Startar en privat konversation med 'nick'. Om 'nick' utelämnas och"
 
 #: ../src/include/commandhelp.h:453
 msgid "the active window is a private conversation, the action will be to"
-msgstr ""
+msgstr "det aktiva fönstret är en privat konversation, kommer åtgärden att vara att"
 
 #: ../src/include/commandhelp.h:454
 msgid "close it."
-msgstr ""
+msgstr "stänga den."
 
 #: ../src/include/commandhelp.h:459
 msgid "usage: /quit [message]"
