@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 23:10+0200\n"
-"PO-Revision-Date: 2022-06-18 22:49+0200\n"
+"PO-Revision-Date: 2022-06-18 23:20+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -935,23 +935,27 @@ msgstr "Tar bort ett reguljärt uttryck från ignoreringslistan."
 
 #: ../src/include/commandhelp.h:654
 msgid "usage: /version <target>"
-msgstr ""
+msgstr "användning: /version <mål>"
 
 #: ../src/include/commandhelp.h:656
 msgid ""
 "Send a CTCP VERSION request to 'target', which is either a nickname or\n"
 "an IRC channel."
 msgstr ""
+"Skicka en CTCP VERSION förfrågan till 'mål', vilket antingen är ett\n"
+"smeknamn eller en IRC kanal."
 
 #: ../src/include/commandhelp.h:662
 msgid "usage: /who <mask>"
-msgstr ""
+msgstr "användning: /who <mask>"
 
 #: ../src/include/commandhelp.h:664
 msgid ""
 "Generates a query which returns a list of information which matches\n"
 "the provided 'mask'."
 msgstr ""
+"Genererar en fråga som returnerar en lista med information som matchar\n"
+"den angivna 'masken'."
 
 #: ../src/include/commandhelp.h:669
 msgid "  Show the Libera Chat crew:"
