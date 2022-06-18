@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-12 20:13+0200\n"
-"PO-Revision-Date: 2022-06-18 11:47+0200\n"
+"PO-Revision-Date: 2022-06-18 11:57+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -629,19 +629,19 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:415
 msgid "usage: /op <nick>"
-msgstr ""
+msgstr "användning: /op <smeknamn>"
 
 #: ../src/include/commandhelp.h:417
 msgid "Gives the channel operator privilege to another user."
-msgstr ""
+msgstr "Ger kanaloperatörsprivilegiet till en annan användare."
 
 #: ../src/include/commandhelp.h:422
 msgid "usage: /oper <name> <password>"
-msgstr ""
+msgstr "användning: /oper <namn> <lösenord>"
 
 #: ../src/include/commandhelp.h:424
 msgid "Identifies yourself as an IRC operator."
-msgstr ""
+msgstr "Identifierar dig själv som IRC operatör."
 
 #: ../src/include/commandhelp.h:429
 msgid "usage: /part [channel] [message]"
