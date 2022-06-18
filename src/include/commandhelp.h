@@ -434,7 +434,7 @@ static usage_t part_usage = {
   "",
   (TXT_BOLD "EXAMPLES" TXT_BOLD),
   "",
-  N_("  Part channel #chatzone with message 'bye':"),
+  N_("  Leave channel #chatzone with message 'bye':"),
   N_("    /part #chatzone bye"),
   "",
 };
