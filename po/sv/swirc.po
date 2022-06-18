@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 15:55+0200\n"
-"PO-Revision-Date: 2022-06-18 16:01+0200\n"
+"PO-Revision-Date: 2022-06-18 16:16+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -832,23 +832,23 @@ msgstr "    - off, false eller no"
 
 #: ../src/include/commandhelp.h:568
 msgid "    Integers. Swirc implements a min/max value for each integer in"
-msgstr ""
+msgstr "    Heltal. Swirc implementerar ett min/max-värde för varje heltal för"
 
 #: ../src/include/commandhelp.h:569
 msgid "    order to keep its value safe. The error log will tell if the"
-msgstr ""
+msgstr "    att hålla dess värde säkert. Felloggen kommer att berätta om"
 
 #: ../src/include/commandhelp.h:570
 msgid "    restrictions for an integer aren't within limits and, if so, that"
-msgstr ""
+msgstr "    begränsningarna för ett heltal inte är inom gränserna och i så fall att"
 
 #: ../src/include/commandhelp.h:571
 msgid "    a preprogrammed fallback value is being used instead."
-msgstr ""
+msgstr "    ett förprogrammerat reservvärde används istället."
 
 #: ../src/include/commandhelp.h:574
 msgid "    An arbitrary sequence of characters"
-msgstr ""
+msgstr "    En godtycklig sekvens av tecken"
 
 #: ../src/include/commandhelp.h:578
 msgid "  Output current values of all settings:"
