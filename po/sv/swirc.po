@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 16:26+0200\n"
-"PO-Revision-Date: 2022-06-18 16:34+0200\n"
+"POT-Creation-Date: 2022-06-18 19:51+0200\n"
+"PO-Revision-Date: 2022-06-18 19:56+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -276,24 +276,17 @@ msgid "usage: /ignore [regex]"
 msgstr "användning: /ignore [reguljärt uttryck]"
 
 #: ../src/include/commandhelp.h:219
-msgid "Ignores all 'nick!user@host' that matches the given regular"
-msgstr "Ignorerar alla 'nick!user@host' som matchar det givna reguljära"
-
-#: ../src/include/commandhelp.h:220
-msgid "expression, this by using the POSIX basic regular expression"
+msgid ""
+"Ignores all 'nick!user@host' that matches the given regular\n"
+"expression, this by using the POSIX basic regular expression\n"
+"grammar. This command isn't to be used by beginners and I advice you\n"
+"to be careful when using it. I highly recommend the use of:"
 msgstr ""
-"uttrycket, detta genom att använda POSIXs grundläggande reguljära uttrycks-"
-
-#: ../src/include/commandhelp.h:221
-msgid "grammar. This command isn't to be used by beginners and I advice you"
-msgstr ""
-"grammatik. Det här kommandot ska inte användas av nybörjare och jag råder dig"
-
-#: ../src/include/commandhelp.h:222
-msgid "to be careful when using it. I highly recommend the use of:"
-msgstr ""
-"att vara försiktig när du använder det. Jag rekommenderar starkt "
-"användningen av:"
+"Ignorerar alla 'nick!user@host' som matchar det givna reguljära\n"
+"uttrycket, detta genom att använda POSIXs grundläggande reguljära\n"
+"uttrycksgrammatik. Det här kommandot ska inte användas av nybörjare\n"
+"och jag råder dig att vara försiktig när du använder det.\n"
+"Jag rekommenderar starkt användningen av:"
 
 #: ../src/include/commandhelp.h:224
 msgid "    1. ^  Matches the starting position within the string, if it is"
@@ -869,7 +862,8 @@ msgstr "användning: /squery <tjänstens namn> <text>"
 
 #: ../src/include/commandhelp.h:590
 msgid "This command is used similarly to '/msg'. The only difference is that"
-msgstr "Detta kommando används på samma sätt som '/msg'. Den enda skillnaden är att"
+msgstr ""
+"Detta kommando används på samma sätt som '/msg'. Den enda skillnaden är att"
 
 #: ../src/include/commandhelp.h:591
 msgid "the recipient MUST be a service."

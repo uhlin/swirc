@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 16:26+0200\n"
+"POT-Creation-Date: 2022-06-18 19:51+0200\n"
 "PO-Revision-Date: 2021-08-23 19:29+0200\n"
 "Last-Translator: Solene <solene@openbsd.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -262,19 +262,11 @@ msgid "usage: /ignore [regex]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:219
-msgid "Ignores all 'nick!user@host' that matches the given regular"
-msgstr ""
-
-#: ../src/include/commandhelp.h:220
-msgid "expression, this by using the POSIX basic regular expression"
-msgstr ""
-
-#: ../src/include/commandhelp.h:221
-msgid "grammar. This command isn't to be used by beginners and I advice you"
-msgstr ""
-
-#: ../src/include/commandhelp.h:222
-msgid "to be careful when using it. I highly recommend the use of:"
+msgid ""
+"Ignores all 'nick!user@host' that matches the given regular\n"
+"expression, this by using the POSIX basic regular expression\n"
+"grammar. This command isn't to be used by beginners and I advice you\n"
+"to be careful when using it. I highly recommend the use of:"
 msgstr ""
 
 #: ../src/include/commandhelp.h:224

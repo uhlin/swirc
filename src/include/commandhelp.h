@@ -216,10 +216,10 @@ static usage_t help_usage = {
 static usage_t ignore_usage = {
   N_("usage: /ignore [regex]"),
   "",
-  N_("Ignores all 'nick!user@host' that matches the given regular"),
-  N_("expression, this by using the POSIX basic regular expression"),
-  N_("grammar. This command isn't to be used by beginners and I advice you"),
-  N_("to be careful when using it. I highly recommend the use of:"),
+  N_("Ignores all 'nick!user@host' that matches the given regular\n"
+     "expression, this by using the POSIX basic regular expression\n"
+     "grammar. This command isn't to be used by beginners and I advice you\n"
+     "to be careful when using it. I highly recommend the use of:"),
   "",
   N_("    1. ^  Matches the starting position within the string, if it is"),
   N_("          the first character of the regular expression."),
