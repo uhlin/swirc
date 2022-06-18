@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 19:51+0200\n"
-"PO-Revision-Date: 2022-06-18 19:56+0200\n"
+"PO-Revision-Date: 2022-06-18 20:12+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -871,23 +871,23 @@ msgstr "mottagaren MÅSTE vara en tjänst."
 
 #: ../src/include/commandhelp.h:596
 msgid "usage: /theme [install <name> | list-remote | set <name>]"
-msgstr ""
+msgstr "användning: /theme [install <namn> | list-remote | set <namn>]"
 
 #: ../src/include/commandhelp.h:598
 msgid "Management of themes on-the-fly."
-msgstr ""
+msgstr "Hantering av teman."
 
 #: ../src/include/commandhelp.h:602
 msgid "    Install a theme named 'bx':"
-msgstr ""
+msgstr "    Installera ett tema som heter 'bx':"
 
 #: ../src/include/commandhelp.h:605
 msgid "    List all available themes:"
-msgstr ""
+msgstr "    Lista alla tillgängliga teman:"
 
 #: ../src/include/commandhelp.h:608
 msgid "    Activate an installed theme with name 'bx':"
-msgstr ""
+msgstr "    Aktivera ett installerat tema med namnet 'bx':"
 
 #: ../src/include/commandhelp.h:614
 msgid "usage: /time <target>"
