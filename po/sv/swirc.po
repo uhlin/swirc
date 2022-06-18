@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 12:12+0200\n"
-"PO-Revision-Date: 2022-06-18 12:22+0200\n"
+"PO-Revision-Date: 2022-06-18 12:44+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -694,15 +694,15 @@ msgstr "stänga den."
 
 #: ../src/include/commandhelp.h:459
 msgid "usage: /quit [message]"
-msgstr ""
+msgstr "användning: /quit [meddelande]"
 
 #: ../src/include/commandhelp.h:461
 msgid "Disconnect from IRC and quit the program. A disconnect message is"
-msgstr ""
+msgstr "Koppla från IRC och avsluta programmet. Ett frånkopplingsmeddelande är"
 
 #: ../src/include/commandhelp.h:462
 msgid "optional."
-msgstr ""
+msgstr "valfritt."
 
 #: ../src/include/commandhelp.h:467
 msgid "usage: /resize"
