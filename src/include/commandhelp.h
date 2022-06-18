@@ -684,8 +684,8 @@ static usage_t whois_usage = {
 static usage_t znc_usage = {
   N_("usage: /znc [*module] <command>"),
   "",
-  N_("Simplifies the communication with ZNC which is a popular"),
-  N_("'IRC bouncer'."),
+  N_("Simplifies the communication with ZNC which is a popular\n"
+     "'IRC bouncer'."),
   "",
   (TXT_BOLD "EXAMPLES" TXT_BOLD),
   "",
