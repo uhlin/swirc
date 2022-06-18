@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 21:32+0200\n"
+"POT-Creation-Date: 2022-06-18 21:56+0200\n"
 "PO-Revision-Date: 2021-08-23 19:29+0200\n"
 "Last-Translator: Solene <solene@openbsd.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -847,15 +847,10 @@ msgid "usage: /topic [new topic]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:624
-msgid "Sets a new topic for a channel. If 'new topic' is omitted the action"
-msgstr ""
-
-#: ../src/include/commandhelp.h:625
-msgid "will be to display the current topic. (The active window must be an"
-msgstr ""
-
-#: ../src/include/commandhelp.h:626
-msgid "IRC channel.)"
+msgid ""
+"Sets a new topic for a channel. If 'new topic' is omitted the action\n"
+"will be to display the current topic. (The active window must be an\n"
+"IRC channel.)"
 msgstr ""
 
 #: ../src/include/commandhelp.h:631

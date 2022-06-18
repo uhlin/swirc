@@ -621,9 +621,9 @@ static usage_t time_usage = {
 static usage_t topic_usage = {
   N_("usage: /topic [new topic]"),
   "",
-  N_("Sets a new topic for a channel. If 'new topic' is omitted the action"),
-  N_("will be to display the current topic. (The active window must be an"),
-  N_("IRC channel.)"),
+  N_("Sets a new topic for a channel. If 'new topic' is omitted the action\n"
+     "will be to display the current topic. (The active window must be an\n"
+     "IRC channel.)"),
   "",
 };
 
