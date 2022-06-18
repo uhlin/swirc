@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 23:10+0200\n"
+"POT-Creation-Date: 2022-06-18 23:31+0200\n"
 "PO-Revision-Date: 2022-06-18 23:25+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -978,11 +978,9 @@ msgid "usage: /znc [*module] <command>"
 msgstr ""
 
 #: ../src/include/commandhelp.h:687
-msgid "Simplifies the communication with ZNC which is a popular"
-msgstr ""
-
-#: ../src/include/commandhelp.h:688
-msgid "'IRC bouncer'."
+msgid ""
+"Simplifies the communication with ZNC which is a popular\n"
+"'IRC bouncer'."
 msgstr ""
 
 #: ../src/include/commandhelp.h:692
