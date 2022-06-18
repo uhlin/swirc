@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 12:12+0200\n"
-"PO-Revision-Date: 2022-06-18 11:57+0200\n"
+"PO-Revision-Date: 2022-06-18 12:22+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -661,21 +661,20 @@ msgid "channel will be the target."
 msgstr "kanalen att vara målet."
 
 #: ../src/include/commandhelp.h:437
-#, fuzzy
 msgid "  Leave channel #chatzone with message 'bye':"
-msgstr "Gå med i en kanal med namnet 'libera':"
+msgstr "  Lämna kanal #chatzone med meddelandet 'Hej då':"
 
 #: ../src/include/commandhelp.h:438
 msgid "    /part #chatzone bye"
-msgstr ""
+msgstr "    /part #chatzone Hej då"
 
 #: ../src/include/commandhelp.h:443
 msgid "usage: /passmod <nickname>"
-msgstr ""
+msgstr "användning: /passmod <smeknamn>"
 
 #: ../src/include/commandhelp.h:445
 msgid "Pass the ICB moderation privilege to another group member."
-msgstr ""
+msgstr "Överlämna ICB modereringsprivilegiet till en annan gruppmedlem."
 
 #: ../src/include/commandhelp.h:450
 msgid "usage: /query [nick]"
