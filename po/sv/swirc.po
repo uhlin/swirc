@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 21:32+0200\n"
-"PO-Revision-Date: 2022-06-18 20:12+0200\n"
+"PO-Revision-Date: 2022-06-18 21:40+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -891,13 +891,15 @@ msgstr "    Aktivera ett installerat tema med namnet 'bx':"
 
 #: ../src/include/commandhelp.h:614
 msgid "usage: /time <target>"
-msgstr ""
+msgstr "användning: /time <mål>"
 
 #: ../src/include/commandhelp.h:616
 msgid ""
 "Send a CTCP TIME request to 'target', which is either a nickname or an\n"
 "IRC channel."
 msgstr ""
+"Skicka en CTCP TIME förfrågan till 'mål', som antingen är ett smeknamn\n"
+"eller en IRC kanal."
 
 #: ../src/include/commandhelp.h:622
 msgid "usage: /topic [new topic]"
