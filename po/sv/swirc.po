@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 12:12+0200\n"
-"PO-Revision-Date: 2022-06-18 13:04+0200\n"
+"PO-Revision-Date: 2022-06-18 13:12+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -722,15 +722,15 @@ msgstr "det här kommandot."
 
 #: ../src/include/commandhelp.h:485
 msgid "usage: /rules"
-msgstr ""
+msgstr "användning: /rules"
 
 #: ../src/include/commandhelp.h:487
 msgid "Outputs network/server rules. Not all IRC server software supports"
-msgstr ""
+msgstr "Matar ut nätverks-/serverregler. Inte all IRC serverprogramvara stödjer"
 
 #: ../src/include/commandhelp.h:488
 msgid "this command. (It's actually quite rare.)"
-msgstr ""
+msgstr "detta kommando. (Det är faktiskt ganska sällsynt.)"
 
 #: ../src/include/commandhelp.h:493
 msgid "usage: /sasl <operation> [...]"
