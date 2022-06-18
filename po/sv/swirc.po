@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 23:31+0200\n"
-"PO-Revision-Date: 2022-06-18 23:25+0200\n"
+"PO-Revision-Date: 2022-06-18 23:49+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -975,49 +975,49 @@ msgstr "Frågar efter information om en annan användare."
 
 #: ../src/include/commandhelp.h:685
 msgid "usage: /znc [*module] <command>"
-msgstr ""
+msgstr "användning: /znc [*modul] <kommando>"
 
 #: ../src/include/commandhelp.h:687
 msgid ""
 "Simplifies the communication with ZNC which is a popular\n"
 "'IRC bouncer'."
-msgstr ""
+msgstr "Förenklar kommunikationen med ZNC som är en populär 'IRC studsare'."
 
 #: ../src/include/commandhelp.h:692
 msgid "  Output your ZNC version:"
-msgstr ""
+msgstr "  Mata ut din ZNC version:"
 
 #: ../src/include/commandhelp.h:695
 msgid "  Identical to the previous example:"
-msgstr ""
+msgstr "  Identiskt med föregående exempel:"
 
 #: ../src/io-loop.c:423
 #, c-format
 msgid "    Swirc %s by %s"
-msgstr ""
+msgstr "    Swirc %s av %s"
 
 #: ../src/io-loop.c:424
 #, c-format
 msgid "    Compiled on %s%s %s%s"
-msgstr ""
+msgstr "    Kompilerad %s%s %s%s"
 
 #: ../src/io-loop.c:429
 #, c-format
 msgid "Program settings are stored in %s%s%s"
-msgstr ""
+msgstr "Programinställningar lagras i %s%s%s"
 
 #: ../src/io-loop.c:431
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
-msgstr ""
+msgstr "%c%hd%c färgpar har initierats"
 
 #: ../src/io-loop.c:433
 msgid "Type /help for a list of commands; or /help <command>"
-msgstr ""
+msgstr "Skriv /help för en lista med kommandon; eller /help <kommando>"
 
 #: ../src/io-loop.c:435
 msgid "for help of a specific command"
-msgstr ""
+msgstr "för hjälp av ett specifikt kommando"
 
 #: ../src/io-loop.c:436
 msgid "Type F1 for keys"
