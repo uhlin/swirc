@@ -43,17 +43,17 @@ typedef const char *usage_t[];
 static usage_t away_usage = {
   N_("usage: /away [reason]"),
   "",
-  N_("Marks yourself as being away (with a reason). If the reason is omitted"),
-  N_("you will be marked as no longer being away."),
+  N_("Marks yourself as being away (with a reason). If the reason is omitted\n"
+     "you will be marked as no longer being away."),
   "",
 };
 
 static usage_t ban_usage = {
   N_("usage: /ban <mask>"),
   "",
-  N_("Sets a channel ban which rejects all users whose 'nick!user@host'"),
-  N_("matches the provided mask from joining the channel. Wildcards are okay"),
-  N_("and the active window must be an IRC channel."),
+  N_("Sets a channel ban which rejects all users whose 'nick!user@host'\n"
+     "matches the provided mask from joining the channel. Wildcards are okay\n"
+     "and the active window must be an IRC channel."),
   "",
 };
 
