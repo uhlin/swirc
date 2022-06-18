@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 14:57+0200\n"
-"PO-Revision-Date: 2022-06-18 15:00+0200\n"
+"PO-Revision-Date: 2022-06-18 15:09+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -780,15 +780,15 @@ msgstr "  Identifiering med mekanism 'plain':"
 
 #: ../src/include/commandhelp.h:531
 msgid "usage: /say <message>"
-msgstr ""
+msgstr "användning: /say <meddelande>"
 
 #: ../src/include/commandhelp.h:533
 msgid "Say a message. This command can be used if you want say something with"
-msgstr ""
+msgstr "Säg ett meddelande. Detta kommando kan användas om du vill säga något"
 
 #: ../src/include/commandhelp.h:534
 msgid "a leading command-character, i.e. a slash."
-msgstr ""
+msgstr "med ett ledande kommandotecken, dvs ett snedstreck."
 
 #: ../src/include/commandhelp.h:538
 msgid "    /say // A single line comment in C++"
