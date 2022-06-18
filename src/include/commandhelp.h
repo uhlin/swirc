@@ -60,8 +60,8 @@ static usage_t ban_usage = {
 static usage_t banlist_usage = {
   N_("usage: /banlist [channel]"),
   "",
-  N_("Outputs a channel's banlist. If the channel argument is left empty and"),
-  N_("the active window is an IRC channel, Swirc will output the banlist for\n"
+  N_("Outputs a channel's banlist. If the channel argument is left empty and\n"
+     "the active window is an IRC channel, Swirc will output the banlist for\n"
      "that channel."),
   "",
 };
@@ -155,8 +155,8 @@ static usage_t connect_usage = {
 static usage_t cycle_usage = {
   N_("usage: /cycle [channel]"),
   "",
-  N_("Cycle a channel, i.e. '/part' plus '/join'. If the channel argument is"),
-  N_("omitted and the active window is an IRC channel, the client will cycle\n"
+  N_("Cycle a channel, i.e. '/part' plus '/join'. If the channel argument is\n"
+     "omitted and the active window is an IRC channel, the client will cycle\n"
      "that channel."),
   "",
 };
