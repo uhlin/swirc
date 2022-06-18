@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 23:31+0200\n"
-"PO-Revision-Date: 2022-06-18 23:49+0200\n"
+"PO-Revision-Date: 2022-06-18 23:55+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1021,12 +1021,12 @@ msgstr "för hjälp av ett specifikt kommando"
 
 #: ../src/io-loop.c:436
 msgid "Type F1 for keys"
-msgstr ""
+msgstr "Skriv F1 för tangenter"
 
 #: ../src/io-loop.c:438
 #, c-format
 msgid "Error log size %s%.1f KB%s"
-msgstr ""
+msgstr "Storlek på fellogg %s%.1f KB%s"
 
 #: ../src/main.cpp:124
 msgid ""
