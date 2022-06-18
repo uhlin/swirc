@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 01:25+0200\n"
+"POT-Creation-Date: 2022-06-19 01:49+0200\n"
 "PO-Revision-Date: 2021-08-23 19:29+0200\n"
 "Last-Translator: Solene <solene@openbsd.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -22,11 +22,9 @@ msgid "usage: /away [reason]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:46
-msgid "Marks yourself as being away (with a reason). If the reason is omitted"
-msgstr ""
-
-#: ../src/include/commandhelp.h:47
-msgid "you will be marked as no longer being away."
+msgid ""
+"Marks yourself as being away (with a reason). If the reason is omitted\n"
+"you will be marked as no longer being away."
 msgstr ""
 
 #: ../src/include/commandhelp.h:52
@@ -34,15 +32,10 @@ msgid "usage: /ban <mask>"
 msgstr ""
 
 #: ../src/include/commandhelp.h:54
-msgid "Sets a channel ban which rejects all users whose 'nick!user@host'"
-msgstr ""
-
-#: ../src/include/commandhelp.h:55
-msgid "matches the provided mask from joining the channel. Wildcards are okay"
-msgstr ""
-
-#: ../src/include/commandhelp.h:56
-msgid "and the active window must be an IRC channel."
+msgid ""
+"Sets a channel ban which rejects all users whose 'nick!user@host'\n"
+"matches the provided mask from joining the channel. Wildcards are okay\n"
+"and the active window must be an IRC channel."
 msgstr ""
 
 #: ../src/include/commandhelp.h:61

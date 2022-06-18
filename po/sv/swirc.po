@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 01:25+0200\n"
-"PO-Revision-Date: 2022-06-19 01:35+0200\n"
+"POT-Creation-Date: 2022-06-19 01:49+0200\n"
+"PO-Revision-Date: 2022-06-19 01:58+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,30 +22,27 @@ msgid "usage: /away [reason]"
 msgstr "användning: /away [anledning]"
 
 #: ../src/include/commandhelp.h:46
-msgid "Marks yourself as being away (with a reason). If the reason is omitted"
-msgstr "Markerar dig själv som borta (med en anledning). Om orsaken utelämnas"
-
-#: ../src/include/commandhelp.h:47
-msgid "you will be marked as no longer being away."
-msgstr "kommer du att markeras som att du inte längre är borta."
+msgid ""
+"Marks yourself as being away (with a reason). If the reason is omitted\n"
+"you will be marked as no longer being away."
+msgstr ""
+"Markerar dig själv som borta (med anledning). Om orsaken utelämnas\n"
+"kommer du att markeras som att du inte längre är borta."
 
 #: ../src/include/commandhelp.h:52
 msgid "usage: /ban <mask>"
 msgstr "användning: /ban <mask>"
 
 #: ../src/include/commandhelp.h:54
-msgid "Sets a channel ban which rejects all users whose 'nick!user@host'"
+msgid ""
+"Sets a channel ban which rejects all users whose 'nick!user@host'\n"
+"matches the provided mask from joining the channel. Wildcards are okay\n"
+"and the active window must be an IRC channel."
 msgstr ""
-"Ställer in ett kanalförbud som avvisar alla användare vars 'nick!user@host'"
-
-#: ../src/include/commandhelp.h:55
-msgid "matches the provided mask from joining the channel. Wildcards are okay"
-msgstr ""
-"matchar den angivna masken från att gå med i kanalen. Jokertecken är okej"
-
-#: ../src/include/commandhelp.h:56
-msgid "and the active window must be an IRC channel."
-msgstr "och det aktiva fönstret måste vara en IRC kanal."
+"Ställer in ett kanalförbud som avvisar alla användare vars\n"
+"'nick!user@host' matchar den angivna masken från att gå med i\n"
+"kanalen. Jokertecken är okej och det aktiva fönstret måste vara en\n"
+"IRC kanal."
 
 #: ../src/include/commandhelp.h:61
 msgid "usage: /banlist [channel]"
