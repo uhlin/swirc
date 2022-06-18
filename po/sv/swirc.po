@@ -645,19 +645,19 @@ msgstr "Identifierar dig själv som IRC operatör."
 
 #: ../src/include/commandhelp.h:429
 msgid "usage: /part [channel] [message]"
-msgstr ""
+msgstr "användning: /part [kanal] [meddelande]"
 
 #: ../src/include/commandhelp.h:431
 msgid "Leaves a channel (optionally with a message). If the command is called"
-msgstr ""
+msgstr "Lämnar en kanal (valfritt med ett meddelande). Om kommandot anropas"
 
 #: ../src/include/commandhelp.h:432
 msgid "without any arguments and the current window is an IRC channel, that"
-msgstr ""
+msgstr "utan några argument och det aktuella fönstret är en IRC kanal, kommer den"
 
 #: ../src/include/commandhelp.h:433
 msgid "channel will be the target."
-msgstr ""
+msgstr "kanalen att vara målet."
 
 #: ../src/include/commandhelp.h:437
 msgid "  Part channel #chatzone with message 'bye':"
