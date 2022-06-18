@@ -129,15 +129,15 @@ static usage_t connect_usage = {
   "",
   N_("Connect to given server."),
   "",
-  N_("If the port is omitted port 6667 will be chosen. And if the port is"),
-  N_("7326 ICB mode is turned on automatically. Further, if the port is 6697"),
-  N_("Swirc attempts to initiate a TLS/SSL connection, as well as if '-tls'"),
-  N_("is entered."),
+  N_("If the port is omitted port 6667 will be chosen. And if the port is\n"
+     "7326 ICB mode is turned on automatically. Further, if the port is 6697\n"
+     "Swirc attempts to initiate a TLS/SSL connection, as well as if '-tls'\n"
+     "is entered."),
   "",
-  N_("It is possible to connect to a certain IRC network by only entering"),
-  N_("the network name. For example: '/connect -tls libera', will connect to"),
-  N_("Libera Chat using an encrypted connection. Preprogrammed network names"),
-  N_("are:"),
+  N_("It is possible to connect to a certain IRC network by only entering\n"
+     "the network name. For example: '/connect -tls libera', will connect to\n"
+     "Libera Chat using an encrypted connection. Preprogrammed network names\n"
+     "are:"),
   "",
   "    - afternet",
   "    - alphachat",
