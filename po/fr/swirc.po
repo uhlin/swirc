@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 12:12+0200\n"
+"POT-Creation-Date: 2022-06-18 13:39+0200\n"
 "PO-Revision-Date: 2021-08-23 19:29+0200\n"
 "Last-Translator: Solene <solene@openbsd.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -699,7 +699,7 @@ msgid "Operation can be either:"
 msgstr ""
 
 #: ../src/include/commandhelp.h:505
-msgid "SASL is a method that allows identification to NickServ during the"
+msgid "SASL is a method that lets you identify with NickServ during the"
 msgstr ""
 
 #: ../src/include/commandhelp.h:506

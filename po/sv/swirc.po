@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 12:12+0200\n"
+"POT-Creation-Date: 2022-06-18 13:39+0200\n"
 "PO-Revision-Date: 2022-06-18 13:22+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -686,7 +686,8 @@ msgstr "Startar en privat konversation med 'nick'. Om 'nick' utelämnas och"
 
 #: ../src/include/commandhelp.h:453
 msgid "the active window is a private conversation, the action will be to"
-msgstr "det aktiva fönstret är en privat konversation, kommer åtgärden att vara att"
+msgstr ""
+"det aktiva fönstret är en privat konversation, kommer åtgärden att vara att"
 
 #: ../src/include/commandhelp.h:454
 msgid "close it."
@@ -710,11 +711,14 @@ msgstr "användning: /resize"
 
 #: ../src/include/commandhelp.h:469
 msgid "Resize the terminal. For example, Windows doesn't send 'SIGWINCH',"
-msgstr "Ändra storlek på terminalen. Till exempel, Windows skickar inte 'SIGWINCH',"
+msgstr ""
+"Ändra storlek på terminalen. Till exempel, Windows skickar inte 'SIGWINCH',"
 
 #: ../src/include/commandhelp.h:470
 msgid "instead this command can be used. First resize the window then run"
-msgstr "istället kan detta kommando användas. Ändra först storleken på fönstret och kör sedan"
+msgstr ""
+"istället kan detta kommando användas. Ändra först storleken på fönstret och "
+"kör sedan"
 
 #: ../src/include/commandhelp.h:471
 msgid "this command."
@@ -726,7 +730,8 @@ msgstr "användning: /rules"
 
 #: ../src/include/commandhelp.h:487
 msgid "Outputs network/server rules. Not all IRC server software supports"
-msgstr "Matar ut nätverks-/serverregler. Inte all IRC serverprogramvara stödjer"
+msgstr ""
+"Matar ut nätverks-/serverregler. Inte all IRC serverprogramvara stödjer"
 
 #: ../src/include/commandhelp.h:488
 msgid "this command. (It's actually quite rare.)"
@@ -745,7 +750,7 @@ msgid "Operation can be either:"
 msgstr "Operation kan vara antingen:"
 
 #: ../src/include/commandhelp.h:505
-msgid "SASL is a method that allows identification to NickServ during the"
+msgid "SASL is a method that lets you identify with NickServ during the"
 msgstr ""
 
 #: ../src/include/commandhelp.h:506

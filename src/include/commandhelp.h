@@ -502,7 +502,7 @@ static usage_t sasl_usage = {
   "    password <pass>",
   "    set [on | off]",
   "",
-  N_("SASL is a method that allows identification to NickServ during the"),
+  N_("SASL is a method that lets you identify with NickServ during the"),
   N_("connection process eliminating the need to do it manually."),
   N_("(To use SASL you must register your nickname.)"),
   "",
