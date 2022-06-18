@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-12 20:13+0200\n"
-"PO-Revision-Date: 2022-06-12 20:53+0200\n"
+"PO-Revision-Date: 2022-06-18 11:47+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -617,13 +617,15 @@ msgstr "'/query NickServ' kan användas för att kommunicera med tjänsten."
 
 #: ../src/include/commandhelp.h:407
 msgid "usage: /notice <recipient> <message>"
-msgstr ""
+msgstr "användning: /notice <mottagare> <meddelande>"
 
 #: ../src/include/commandhelp.h:409
 msgid ""
 "Used to send private messages between users, as well as to send\n"
 "messages to channels. (In notice form.)"
 msgstr ""
+"Används för att skicka privata meddelanden mellan användare, samt för\n"
+"att skicka meddelanden till kanaler. (I notisform.)"
 
 #: ../src/include/commandhelp.h:415
 msgid "usage: /op <nick>"
