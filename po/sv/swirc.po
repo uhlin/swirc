@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 15:11+0200\n"
-"PO-Revision-Date: 2022-06-18 15:09+0200\n"
+"PO-Revision-Date: 2022-06-18 15:21+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -792,27 +792,27 @@ msgstr "med ett ledande kommandotecken, dvs ett snedstreck."
 
 #: ../src/include/commandhelp.h:538
 msgid "    /say // A single-line comment in C++"
-msgstr ""
+msgstr "    /say // En enradskommentar i C++"
 
 #: ../src/include/commandhelp.h:543
 msgid "usage: /servlist [<mask> [<type>]]"
-msgstr ""
+msgstr "användning: /servlist [<mask> [<typ>]]"
 
 #: ../src/include/commandhelp.h:545
 msgid "Lists services currently connected to your IRC network. Arguments,"
-msgstr ""
+msgstr "Listar tjänster som för närvarande är anslutna till ditt IRC nätverk. Argument,"
 
 #: ../src/include/commandhelp.h:546
 msgid "if given, can be used to restrict the output result."
-msgstr ""
+msgstr "om de ges, kan användas för att begränsa resultatet."
 
 #: ../src/include/commandhelp.h:555
 msgid "usage: /set [[setting] [value]]"
-msgstr ""
+msgstr "användning: /set [[inställning] [värde]]"
 
 #: ../src/include/commandhelp.h:557
 msgid "Alter Swirc settings."
-msgstr ""
+msgstr "Ändra Swirc-inställningar."
 
 #: ../src/include/commandhelp.h:562
 msgid "    Bools are case insensitive and can have one of the following"
