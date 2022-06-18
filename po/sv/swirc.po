@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 15:55+0200\n"
-"PO-Revision-Date: 2022-06-18 15:21+0200\n"
+"PO-Revision-Date: 2022-06-18 16:01+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -820,15 +820,15 @@ msgstr "Ändra Swirc-inställningar."
 msgid ""
 "    Bools are case insensitive and can have one of the following\n"
 "    values:"
-msgstr ""
+msgstr "    Bools är skiftlägesokänsliga och kan ha ett av följande värden:"
 
 #: ../src/include/commandhelp.h:564
 msgid "    - on, true or yes"
-msgstr ""
+msgstr "    - on, true eller yes"
 
 #: ../src/include/commandhelp.h:565
 msgid "    - off, false or no"
-msgstr ""
+msgstr "    - off, false eller no"
 
 #: ../src/include/commandhelp.h:568
 msgid "    Integers. Swirc implements a min/max value for each integer in"
