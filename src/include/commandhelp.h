@@ -653,16 +653,16 @@ static usage_t unignore_usage = {
 static usage_t version_usage = {
   N_("usage: /version <target>"),
   "",
-  N_("Send a CTCP VERSION request to 'target', which is either a nickname or"),
-  N_("an IRC channel."),
+  N_("Send a CTCP VERSION request to 'target', which is either a nickname or\n"
+     "an IRC channel."),
   "",
 };
 
 static usage_t who_usage = {
   N_("usage: /who <mask>"),
   "",
-  N_("Generates a query which returns a list of information which matches"),
-  N_("the provided 'mask'."),
+  N_("Generates a query which returns a list of information which matches\n"
+     "the provided 'mask'."),
   "",
   (TXT_BOLD "EXAMPLES" TXT_BOLD),
   "",
