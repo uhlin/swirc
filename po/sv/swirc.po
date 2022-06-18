@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 12:12+0200\n"
-"PO-Revision-Date: 2022-06-18 13:12+0200\n"
+"PO-Revision-Date: 2022-06-18 13:22+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -734,15 +734,15 @@ msgstr "detta kommando. (Det är faktiskt ganska sällsynt.)"
 
 #: ../src/include/commandhelp.h:493
 msgid "usage: /sasl <operation> [...]"
-msgstr ""
+msgstr "användning: /sasl <operation> [...]"
 
 #: ../src/include/commandhelp.h:495
 msgid "Simple Authentication and Security Layer."
-msgstr ""
+msgstr "Enkelt autentiserings- och säkerhetslager. (SASL)"
 
 #: ../src/include/commandhelp.h:496
 msgid "Operation can be either:"
-msgstr ""
+msgstr "Operation kan vara antingen:"
 
 #: ../src/include/commandhelp.h:505
 msgid "SASL is a method that allows identification to NickServ during the"
