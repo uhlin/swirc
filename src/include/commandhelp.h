@@ -535,7 +535,7 @@ static usage_t say_usage = {
   "",
   (TXT_BOLD "EXAMPLE" TXT_BOLD),
   "",
-  N_("    /say // A single line comment in C++"),
+  N_("    /say // A single-line comment in C++"),
   "",
 };
 

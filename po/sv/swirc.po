@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 14:57+0200\n"
+"POT-Creation-Date: 2022-06-18 15:11+0200\n"
 "PO-Revision-Date: 2022-06-18 15:09+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -791,7 +791,7 @@ msgid "a leading command-character, i.e. a slash."
 msgstr "med ett ledande kommandotecken, dvs ett snedstreck."
 
 #: ../src/include/commandhelp.h:538
-msgid "    /say // A single line comment in C++"
+msgid "    /say // A single-line comment in C++"
 msgstr ""
 
 #: ../src/include/commandhelp.h:543
