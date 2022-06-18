@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 15:11+0200\n"
+"POT-Creation-Date: 2022-06-18 15:55+0200\n"
 "PO-Revision-Date: 2022-06-18 15:21+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -800,7 +800,9 @@ msgstr "användning: /servlist [<mask> [<typ>]]"
 
 #: ../src/include/commandhelp.h:545
 msgid "Lists services currently connected to your IRC network. Arguments,"
-msgstr "Listar tjänster som för närvarande är anslutna till ditt IRC nätverk. Argument,"
+msgstr ""
+"Listar tjänster som för närvarande är anslutna till ditt IRC nätverk. "
+"Argument,"
 
 #: ../src/include/commandhelp.h:546
 msgid "if given, can be used to restrict the output result."
@@ -815,11 +817,9 @@ msgid "Alter Swirc settings."
 msgstr "Ändra Swirc-inställningar."
 
 #: ../src/include/commandhelp.h:562
-msgid "    Bools are case insensitive and can have one of the following"
-msgstr ""
-
-#: ../src/include/commandhelp.h:563
-msgid "    values:"
+msgid ""
+"    Bools are case insensitive and can have one of the following\n"
+"    values:"
 msgstr ""
 
 #: ../src/include/commandhelp.h:564

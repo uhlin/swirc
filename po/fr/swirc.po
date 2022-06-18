@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 15:11+0200\n"
+"POT-Creation-Date: 2022-06-18 15:55+0200\n"
 "PO-Revision-Date: 2021-08-23 19:29+0200\n"
 "Last-Translator: Solene <solene@openbsd.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -763,11 +763,9 @@ msgid "Alter Swirc settings."
 msgstr ""
 
 #: ../src/include/commandhelp.h:562
-msgid "    Bools are case insensitive and can have one of the following"
-msgstr ""
-
-#: ../src/include/commandhelp.h:563
-msgid "    values:"
+msgid ""
+"    Bools are case insensitive and can have one of the following\n"
+"    values:"
 msgstr ""
 
 #: ../src/include/commandhelp.h:564

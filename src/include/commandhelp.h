@@ -559,8 +559,8 @@ static usage_t set_usage = {
   (TXT_BOLD "SETTING TYPES" TXT_BOLD),
   "",
   (TXT_BOLD "bool" TXT_BOLD),
-  N_("    Bools are case insensitive and can have one of the following"),
-  N_("    values:"),
+  N_("    Bools are case insensitive and can have one of the following\n"
+     "    values:"),
   N_("    - on, true or yes"),
   N_("    - off, false or no"),
   "",
