@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 13:39+0200\n"
-"PO-Revision-Date: 2022-06-18 14:52+0200\n"
+"POT-Creation-Date: 2022-06-18 14:57+0200\n"
+"PO-Revision-Date: 2022-06-18 15:00+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -755,7 +755,8 @@ msgstr "SASL är en metod som låter dig identifiera dig med NickServ under"
 
 #: ../src/include/commandhelp.h:506
 msgid "connection process eliminating the need to do it manually."
-msgstr "anslutningsprocessen, vilket eliminerar behovet av att göra det manuellt."
+msgstr ""
+"anslutningsprocessen, vilket eliminerar behovet av att göra det manuellt."
 
 #: ../src/include/commandhelp.h:507
 msgid "(To use SASL you must register your nickname.)"
@@ -774,8 +775,8 @@ msgid "  mechanism is Libera Chat.)"
 msgstr "  mekanism är Libera Chat.)"
 
 #: ../src/include/commandhelp.h:522
-msgid "  Identification using mechanism plain:"
-msgstr ""
+msgid "  Identification using mechanism 'plain':"
+msgstr "  Identifiering med mekanism 'plain':"
 
 #: ../src/include/commandhelp.h:531
 msgid "usage: /say <message>"

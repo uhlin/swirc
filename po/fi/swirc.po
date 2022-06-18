@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 13:39+0200\n"
+"POT-Creation-Date: 2022-06-18 14:57+0200\n"
 "PO-Revision-Date: 2021-08-22 22:22+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -723,7 +723,7 @@ msgid "  mechanism is Libera Chat.)"
 msgstr ""
 
 #: ../src/include/commandhelp.h:522
-msgid "  Identification using mechanism plain:"
+msgid "  Identification using mechanism 'plain':"
 msgstr ""
 
 #: ../src/include/commandhelp.h:531
