@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 23:10+0200\n"
-"PO-Revision-Date: 2022-06-18 23:20+0200\n"
+"PO-Revision-Date: 2022-06-18 23:25+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -959,19 +959,19 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:669
 msgid "  Show the Libera Chat crew:"
-msgstr ""
+msgstr "  Visa Libera Chat teamet:"
 
 #: ../src/include/commandhelp.h:672
 msgid "  Show users with a German domain name:"
-msgstr ""
+msgstr "  Visa användare med ett tyskt domännamn:"
 
 #: ../src/include/commandhelp.h:678
 msgid "usage: /whois <nick>"
-msgstr ""
+msgstr "användning: /whois <smeknamn>"
 
 #: ../src/include/commandhelp.h:680
 msgid "Asks after information about another user."
-msgstr ""
+msgstr "Frågar efter information om en annan användare."
 
 #: ../src/include/commandhelp.h:685
 msgid "usage: /znc [*module] <command>"
