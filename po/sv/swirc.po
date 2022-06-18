@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 12:12+0200\n"
-"PO-Revision-Date: 2022-06-18 12:44+0200\n"
+"PO-Revision-Date: 2022-06-18 13:04+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -706,19 +706,19 @@ msgstr "valfritt."
 
 #: ../src/include/commandhelp.h:467
 msgid "usage: /resize"
-msgstr ""
+msgstr "användning: /resize"
 
 #: ../src/include/commandhelp.h:469
 msgid "Resize the terminal. For example, Windows doesn't send 'SIGWINCH',"
-msgstr ""
+msgstr "Ändra storlek på terminalen. Till exempel, Windows skickar inte 'SIGWINCH',"
 
 #: ../src/include/commandhelp.h:470
 msgid "instead this command can be used. First resize the window then run"
-msgstr ""
+msgstr "istället kan detta kommando användas. Ändra först storleken på fönstret och kör sedan"
 
 #: ../src/include/commandhelp.h:471
 msgid "this command."
-msgstr ""
+msgstr "det här kommandot."
 
 #: ../src/include/commandhelp.h:485
 msgid "usage: /rules"
