@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 23:31+0200\n"
-"PO-Revision-Date: 2022-06-18 23:55+0200\n"
+"POT-Creation-Date: 2022-06-19 01:04+0200\n"
+"PO-Revision-Date: 2022-06-19 01:12+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -52,17 +52,14 @@ msgid "usage: /banlist [channel]"
 msgstr "användning: /banlist [kanal]"
 
 #: ../src/include/commandhelp.h:63
-msgid "Outputs a channel's banlist. If the channel argument is left empty and"
-msgstr "Matar ut en kanals bannlista. Om kanalargumentet lämnas tomt och"
-
-#: ../src/include/commandhelp.h:64
 msgid ""
+"Outputs a channel's banlist. If the channel argument is left empty and\n"
 "the active window is an IRC channel, Swirc will output the banlist for\n"
 "that channel."
 msgstr ""
-"det aktiva fönstret är en IRC kanal, kommer Swirc att mata ut bannlistan "
-"för\n"
-"den kanalen."
+"Matar ut en kanals bannlista. Om kanalargumentet lämnas tomt och det\n"
+"aktiva fönstret är en IRC kanal, kommer Swirc att mata ut bannlistan\n"
+"för den kanalen."
 
 #: ../src/include/commandhelp.h:70
 msgid "usage: /beep <nickname>"
@@ -181,17 +178,14 @@ msgid "usage: /cycle [channel]"
 msgstr "användning: /cycle [kanal]"
 
 #: ../src/include/commandhelp.h:158
-msgid "Cycle a channel, i.e. '/part' plus '/join'. If the channel argument is"
-msgstr "Cykla en kanal, d.v.s. '/part' plus '/join'. Om kanalargumentet"
-
-#: ../src/include/commandhelp.h:159
 msgid ""
+"Cycle a channel, i.e. '/part' plus '/join'. If the channel argument is\n"
 "omitted and the active window is an IRC channel, the client will cycle\n"
 "that channel."
 msgstr ""
-"utelämnas och det aktiva fönstret är en IRC kanal, kommer klienten att "
-"cykla\n"
-"den kanalen."
+"Cykla en kanal, d.v.s. '/part' plus '/join'. Om kanalargumentet\n"
+"utelämnas och det aktiva fönstret är en IRC kanal, kommer klienten att\n"
+"cykla den kanalen."
 
 #: ../src/include/commandhelp.h:165
 msgid "usage: /deop <nick>"

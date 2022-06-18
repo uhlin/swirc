@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 23:31+0200\n"
+"POT-Creation-Date: 2022-06-19 01:04+0200\n"
 "PO-Revision-Date: 2021-08-22 22:22+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -50,11 +50,8 @@ msgid "usage: /banlist [channel]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:63
-msgid "Outputs a channel's banlist. If the channel argument is left empty and"
-msgstr ""
-
-#: ../src/include/commandhelp.h:64
 msgid ""
+"Outputs a channel's banlist. If the channel argument is left empty and\n"
 "the active window is an IRC channel, Swirc will output the banlist for\n"
 "that channel."
 msgstr ""
@@ -172,11 +169,8 @@ msgid "usage: /cycle [channel]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:158
-msgid "Cycle a channel, i.e. '/part' plus '/join'. If the channel argument is"
-msgstr ""
-
-#: ../src/include/commandhelp.h:159
 msgid ""
+"Cycle a channel, i.e. '/part' plus '/join'. If the channel argument is\n"
 "omitted and the active window is an IRC channel, the client will cycle\n"
 "that channel."
 msgstr ""
