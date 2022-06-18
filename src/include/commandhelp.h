@@ -575,7 +575,7 @@ static usage_t set_usage = {
   "",
   (TXT_BOLD "EXAMPLES" TXT_BOLD),
   "",
-  N_("  Output current values of all settings:"),
+  N_("  Output the current values of all settings:"),
   N_("    /set (without any arguments)"),
   "",
   N_("  Turn beeps on/off:"),

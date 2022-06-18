@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 15:55+0200\n"
+"POT-Creation-Date: 2022-06-18 16:26+0200\n"
 "PO-Revision-Date: 2021-08-22 22:22+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -797,7 +797,7 @@ msgid "    An arbitrary sequence of characters"
 msgstr ""
 
 #: ../src/include/commandhelp.h:578
-msgid "  Output current values of all settings:"
+msgid "  Output the current values of all settings:"
 msgstr ""
 
 #: ../src/include/commandhelp.h:579
