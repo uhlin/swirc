@@ -613,8 +613,8 @@ static usage_t theme_usage = {
 static usage_t time_usage = {
   N_("usage: /time <target>"),
   "",
-  N_("Send a CTCP TIME request to 'target', which is either a nickname or an"),
-  N_("IRC channel."),
+  N_("Send a CTCP TIME request to 'target', which is either a nickname or an\n"
+     "IRC channel."),
   "",
 };
 

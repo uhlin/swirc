@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-18 19:51+0200\n"
+"POT-Creation-Date: 2022-06-18 21:32+0200\n"
 "PO-Revision-Date: 2021-08-22 01:10+0200\n"
 "Last-Translator: Michi <michi+git@dataswamp.org>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -837,11 +837,9 @@ msgid "usage: /time <target>"
 msgstr ""
 
 #: ../src/include/commandhelp.h:616
-msgid "Send a CTCP TIME request to 'target', which is either a nickname or an"
-msgstr ""
-
-#: ../src/include/commandhelp.h:617
-msgid "IRC channel."
+msgid ""
+"Send a CTCP TIME request to 'target', which is either a nickname or an\n"
+"IRC channel."
 msgstr ""
 
 #: ../src/include/commandhelp.h:622
