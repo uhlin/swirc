@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-18 16:26+0200\n"
-"PO-Revision-Date: 2022-06-18 16:16+0200\n"
+"PO-Revision-Date: 2022-06-18 16:34+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -853,15 +853,15 @@ msgstr "    En godtycklig sekvens av tecken"
 
 #: ../src/include/commandhelp.h:578
 msgid "  Output the current values of all settings:"
-msgstr ""
+msgstr "  Mata ut de aktuella värdena för alla inställningar:"
 
 #: ../src/include/commandhelp.h:579
 msgid "    /set (without any arguments)"
-msgstr ""
+msgstr "    /set (utan några argument)"
 
 #: ../src/include/commandhelp.h:581
 msgid "  Turn beeps on/off:"
-msgstr ""
+msgstr "  Slå pip på/av:"
 
 #: ../src/include/commandhelp.h:588
 msgid "usage: /squery <servicename> <text>"
