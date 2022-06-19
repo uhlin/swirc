@@ -171,8 +171,8 @@ static usage_t deop_usage = {
 static usage_t disconnect_usage = {
   N_("usage: /disconnect [message]"),
   "",
-  N_("Disconnect from IRC, but don't quit the program. A disconnect message"),
-  N_("is optional."),
+  N_("Disconnect from IRC, but don't quit the program. A disconnect message\n"
+     "is optional."),
   "",
 };
 
@@ -191,10 +191,10 @@ static usage_t echo_usage = {
 static usage_t exlist_usage = {
   N_("usage: /exlist [channel]"),
   "",
-  N_("Outputs a channel's exception list. An exception mask (+e) overrides a"),
-  N_("ban mask. If the channel argument is omitted and the active window is"),
-  N_("an IRC channel, the client will output the exception list for that"),
-  N_("channel."),
+  N_("Outputs a channel's exception list. An exception mask (+e) overrides a\n"
+     "ban mask. If the channel argument is omitted and the active window is\n"
+     "an IRC channel, the client will output the exception list for that\n"
+     "channel."),
   "",
 };
 
