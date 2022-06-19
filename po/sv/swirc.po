@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 14:28+0200\n"
-"PO-Revision-Date: 2022-06-19 14:39+0200\n"
+"POT-Creation-Date: 2022-06-19 14:53+0200\n"
+"PO-Revision-Date: 2022-06-19 14:57+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -701,12 +701,12 @@ msgid "  Identification using mechanism ecdsa-nist256p-challenge:"
 msgstr "  Identifiering med mekanism ecdsa-nist256p-challenge:"
 
 #: ../src/include/commandhelp.h:519
-msgid "  (The only IRC network that I know of that is supporting this"
-msgstr "  (Det enda IRC nätverket som jag känner till som stödjer denna"
-
-#: ../src/include/commandhelp.h:520
-msgid "  mechanism is Libera Chat.)"
-msgstr "  mekanism är Libera Chat.)"
+msgid ""
+"  (The only IRC network that I know of that is supporting this\n"
+"  mechanism is Libera Chat.)"
+msgstr ""
+"  (Det enda IRC nätverket som jag känner till som stödjer denna\n"
+"  mekanism är Libera Chat.)"
 
 #: ../src/include/commandhelp.h:522
 msgid "  Identification using mechanism 'plain':"
