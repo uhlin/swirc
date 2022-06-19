@@ -303,12 +303,12 @@ static usage_t kill_usage = {
 static usage_t list_usage = {
   N_("usage: /list [<max_users[,>min_users][,pattern][...]]"),
   "",
-  N_("Lists channels and their topics. Without any arguments the list is"),
-  N_("HUGE. For example, '/list >1500' will only list channels that have"),
-  N_("more than 1500 users."),
+  N_("Lists channels and their topics. Without any arguments the list is\n"
+     "HUGE. For example, '/list >1500' will only list channels that have\n"
+     "more than 1500 users."),
   "",
-  N_("Depending on the IRC server software used by your network the usage"),
-  N_("may differ."),
+  N_("Depending on the IRC server software used by your network the usage\n"
+     "may differ."),
   "",
 };
 
@@ -428,9 +428,9 @@ static usage_t oper_usage = {
 static usage_t part_usage = {
   N_("usage: /part [channel] [message]"),
   "",
-  N_("Leaves a channel (optionally with a message). If the command is called"),
-  N_("without any arguments and the current window is an IRC channel, that"),
-  N_("channel will be the target."),
+  N_("Leaves a channel (optionally with a message). If the command is called\n"
+     "without any arguments and the current window is an IRC channel, that\n"
+     "channel will be the target."),
   "",
   (TXT_BOLD "EXAMPLES" TXT_BOLD),
   "",
@@ -449,9 +449,9 @@ static usage_t passmod_usage = {
 static usage_t query_usage = {
   N_("usage: /query [nick]"),
   "",
-  N_("Starts a private conversation with 'nick'. If 'nick' is omitted and"),
-  N_("the active window is a private conversation, the action will be to"),
-  N_("close it."),
+  N_("Starts a private conversation with 'nick'. If 'nick' is omitted and\n"
+     "the active window is a private conversation, the action will be to\n"
+     "close it."),
   "",
 };
 
