@@ -516,8 +516,8 @@ static usage_t sasl_usage = {
   "    5) /sasl username <your nickserv username>",
   "    6) /sasl password dummy",
   "    7) /sasl set on",
-  N_("  (The only IRC network that I know of that is supporting this"),
-  N_("  mechanism is Libera Chat.)"),
+  N_("  (The only IRC network that I know of that is supporting this\n"
+     "  mechanism is Libera Chat.)"),
   "",
   N_("  Identification using mechanism 'plain':"),
   "    1) /sasl mechanism plain",
