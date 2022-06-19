@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 14:10+0200\n"
+"POT-Creation-Date: 2022-06-19 14:28+0200\n"
 "PO-Revision-Date: 2021-08-22 01:10+0200\n"
 "Last-Translator: Michi <michi+git@dataswamp.org>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -601,11 +601,9 @@ msgid "Operation can be either:"
 msgstr ""
 
 #: ../src/include/commandhelp.h:505
-msgid "SASL is a method that lets you identify with NickServ during the"
-msgstr ""
-
-#: ../src/include/commandhelp.h:506
-msgid "connection process eliminating the need to do it manually."
+msgid ""
+"SASL is a method that lets you identify with NickServ during the\n"
+"connection process eliminating the need to do it manually."
 msgstr ""
 
 #: ../src/include/commandhelp.h:507
@@ -633,11 +631,9 @@ msgid "usage: /say <message>"
 msgstr ""
 
 #: ../src/include/commandhelp.h:533
-msgid "Say a message. This command can be used if you want say something with"
-msgstr ""
-
-#: ../src/include/commandhelp.h:534
-msgid "a leading command-character, i.e. a slash."
+msgid ""
+"Say a message. This command can be used if you want say something with\n"
+"a leading command-character, i.e. a slash."
 msgstr ""
 
 #: ../src/include/commandhelp.h:538
@@ -649,11 +645,9 @@ msgid "usage: /servlist [<mask> [<type>]]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:545
-msgid "Lists services currently connected to your IRC network. Arguments,"
-msgstr ""
-
-#: ../src/include/commandhelp.h:546
-msgid "if given, can be used to restrict the output result."
+msgid ""
+"Lists services currently connected to your IRC network. Arguments,\n"
+"if given, can be used to restrict the output result."
 msgstr ""
 
 #: ../src/include/commandhelp.h:555
@@ -679,19 +673,11 @@ msgid "    - off, false or no"
 msgstr ""
 
 #: ../src/include/commandhelp.h:568
-msgid "    Integers. Swirc implements a min/max value for each integer in"
-msgstr ""
-
-#: ../src/include/commandhelp.h:569
-msgid "    order to keep its value safe. The error log will tell if the"
-msgstr ""
-
-#: ../src/include/commandhelp.h:570
-msgid "    restrictions for an integer aren't within limits and, if so, that"
-msgstr ""
-
-#: ../src/include/commandhelp.h:571
-msgid "    a preprogrammed fallback value is being used instead."
+msgid ""
+"    Integers. Swirc implements a min/max value for each integer in\n"
+"    order to keep its value safe. The error log will tell if the\n"
+"    restrictions for an integer aren't within limits and, if so, that\n"
+"    a preprogrammed fallback value is being used instead."
 msgstr ""
 
 #: ../src/include/commandhelp.h:574
@@ -715,11 +701,9 @@ msgid "usage: /squery <servicename> <text>"
 msgstr ""
 
 #: ../src/include/commandhelp.h:590
-msgid "This command is used similarly to '/msg'. The only difference is that"
-msgstr ""
-
-#: ../src/include/commandhelp.h:591
-msgid "the recipient MUST be a service."
+msgid ""
+"This command is used similarly to '/msg'. The only difference is that\n"
+"the recipient MUST be a service."
 msgstr ""
 
 #: ../src/include/commandhelp.h:596

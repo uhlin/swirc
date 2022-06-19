@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 14:10+0200\n"
-"PO-Revision-Date: 2022-06-19 14:05+0200\n"
+"POT-Creation-Date: 2022-06-19 14:28+0200\n"
+"PO-Revision-Date: 2022-06-19 14:39+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -684,13 +684,13 @@ msgid "Operation can be either:"
 msgstr "Operation kan vara antingen:"
 
 #: ../src/include/commandhelp.h:505
-msgid "SASL is a method that lets you identify with NickServ during the"
-msgstr "SASL är en metod som låter dig identifiera dig med NickServ under"
-
-#: ../src/include/commandhelp.h:506
-msgid "connection process eliminating the need to do it manually."
+msgid ""
+"SASL is a method that lets you identify with NickServ during the\n"
+"connection process eliminating the need to do it manually."
 msgstr ""
-"anslutningsprocessen, vilket eliminerar behovet av att göra det manuellt."
+"SASL är en metod som låter dig identifiera dig med NickServ under\n"
+"anslutningsprocessen, vilket eliminerar behovet av att göra det\n"
+"manuellt."
 
 #: ../src/include/commandhelp.h:507
 msgid "(To use SASL you must register your nickname.)"
@@ -717,12 +717,12 @@ msgid "usage: /say <message>"
 msgstr "användning: /say <meddelande>"
 
 #: ../src/include/commandhelp.h:533
-msgid "Say a message. This command can be used if you want say something with"
-msgstr "Säg ett meddelande. Detta kommando kan användas om du vill säga något"
-
-#: ../src/include/commandhelp.h:534
-msgid "a leading command-character, i.e. a slash."
-msgstr "med ett ledande kommandotecken, dvs ett snedstreck."
+msgid ""
+"Say a message. This command can be used if you want say something with\n"
+"a leading command-character, i.e. a slash."
+msgstr ""
+"Säg ett meddelande. Detta kommando kan användas om du vill säga något\n"
+"med ett ledande kommandotecken, dvs ett snedstreck."
 
 #: ../src/include/commandhelp.h:538
 msgid "    /say // A single-line comment in C++"
@@ -733,14 +733,13 @@ msgid "usage: /servlist [<mask> [<type>]]"
 msgstr "användning: /servlist [<mask> [<typ>]]"
 
 #: ../src/include/commandhelp.h:545
-msgid "Lists services currently connected to your IRC network. Arguments,"
+msgid ""
+"Lists services currently connected to your IRC network. Arguments,\n"
+"if given, can be used to restrict the output result."
 msgstr ""
-"Listar tjänster som för närvarande är anslutna till ditt IRC nätverk. "
-"Argument,"
-
-#: ../src/include/commandhelp.h:546
-msgid "if given, can be used to restrict the output result."
-msgstr "om de ges, kan användas för att begränsa resultatet."
+"Listar tjänster som för närvarande är anslutna till ditt\n"
+"IRC nätverk. Argument, om de ges, kan användas för att begränsa\n"
+"resultatet."
 
 #: ../src/include/commandhelp.h:555
 msgid "usage: /set [[setting] [value]]"
@@ -765,21 +764,16 @@ msgid "    - off, false or no"
 msgstr "    - off, false eller no"
 
 #: ../src/include/commandhelp.h:568
-msgid "    Integers. Swirc implements a min/max value for each integer in"
-msgstr "    Heltal. Swirc implementerar ett min/max-värde för varje heltal för"
-
-#: ../src/include/commandhelp.h:569
-msgid "    order to keep its value safe. The error log will tell if the"
-msgstr "    att hålla dess värde säkert. Felloggen kommer att berätta om"
-
-#: ../src/include/commandhelp.h:570
-msgid "    restrictions for an integer aren't within limits and, if so, that"
+msgid ""
+"    Integers. Swirc implements a min/max value for each integer in\n"
+"    order to keep its value safe. The error log will tell if the\n"
+"    restrictions for an integer aren't within limits and, if so, that\n"
+"    a preprogrammed fallback value is being used instead."
 msgstr ""
-"    begränsningarna för ett heltal inte är inom gränserna och i så fall att"
-
-#: ../src/include/commandhelp.h:571
-msgid "    a preprogrammed fallback value is being used instead."
-msgstr "    ett förprogrammerat reservvärde används istället."
+"    Heltal. Swirc implementerar ett min/max-värde för varje heltal för\n"
+"    att hålla dess värde säkert. Felloggen kommer att berätta om\n"
+"    begränsningarna för ett heltal inte är inom gränserna och i så\n"
+"    fall att ett förprogrammerat reservvärde används istället."
 
 #: ../src/include/commandhelp.h:574
 msgid "    An arbitrary sequence of characters"
@@ -802,13 +796,12 @@ msgid "usage: /squery <servicename> <text>"
 msgstr "användning: /squery <tjänstens namn> <text>"
 
 #: ../src/include/commandhelp.h:590
-msgid "This command is used similarly to '/msg'. The only difference is that"
+msgid ""
+"This command is used similarly to '/msg'. The only difference is that\n"
+"the recipient MUST be a service."
 msgstr ""
-"Detta kommando används på samma sätt som '/msg'. Den enda skillnaden är att"
-
-#: ../src/include/commandhelp.h:591
-msgid "the recipient MUST be a service."
-msgstr "mottagaren MÅSTE vara en tjänst."
+"Detta kommando används på samma sätt som '/msg'. Den enda skillnaden\n"
+"är att mottagaren MÅSTE vara en tjänst."
 
 #: ../src/include/commandhelp.h:596
 msgid "usage: /theme [install <name> | list-remote | set <name>]"
