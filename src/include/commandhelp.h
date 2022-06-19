@@ -565,10 +565,10 @@ static usage_t set_usage = {
   N_("    - off, false or no"),
   "",
   (TXT_BOLD "int" TXT_BOLD),
-  N_("    Integers. Swirc implements a min/max value for each integer in"),
-  N_("    order to keep its value safe. The error log will tell if the"),
-  N_("    restrictions for an integer aren't within limits and, if so, that"),
-  N_("    a preprogrammed fallback value is being used instead."),
+  N_("    Integers. Swirc implements a min/max value for each integer in\n"
+     "    order to keep its value safe. The error log will tell if the\n"
+     "    restrictions for an integer aren't within limits and, if so, that\n"
+     "    a preprogrammed fallback value is being used instead."),
   "",
   (TXT_BOLD "string" TXT_BOLD),
   N_("    An arbitrary sequence of characters"),
