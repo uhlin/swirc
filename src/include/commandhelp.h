@@ -458,17 +458,17 @@ static usage_t query_usage = {
 static usage_t quit_usage = {
   N_("usage: /quit [message]"),
   "",
-  N_("Disconnect from IRC and quit the program. A disconnect message is"),
-  N_("optional."),
+  N_("Disconnect from IRC and quit the program. A disconnect message is\n"
+     "optional."),
   "",
 };
 
 static usage_t resize_usage = {
   N_("usage: /resize"),
   "",
-  N_("Resize the terminal. For example, Windows doesn't send 'SIGWINCH',"),
-  N_("instead this command can be used. First resize the window then run"),
-  N_("this command."),
+  N_("Resize the terminal. For example, Windows doesn't send 'SIGWINCH',\n"
+     "instead this command can be used. First resize the window then run\n"
+     "this command."),
   "",
 };
 
@@ -484,8 +484,8 @@ static usage_t rgui_usage = {
 static usage_t rules_usage = {
   N_("usage: /rules"),
   "",
-  N_("Outputs network/server rules. Not all IRC server software supports"),
-  N_("this command. (It's actually quite rare.)"),
+  N_("Outputs network/server rules. Not all IRC server software supports\n"
+     "this command. (It's actually quite rare.)"),
   "",
 };
 
