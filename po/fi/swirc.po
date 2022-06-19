@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 01:49+0200\n"
+"POT-Creation-Date: 2022-06-19 02:22+0200\n"
 "PO-Revision-Date: 2021-08-22 22:22+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -70,15 +70,10 @@ msgid "usage: /chanserv <[service hostname | --]> <command> [...]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:86
-msgid "Communicate with your IRC network's channel service. If the initial"
-msgstr ""
-
-#: ../src/include/commandhelp.h:87
-msgid "argument equals to '--', then the value of setting 'chanserv_host' is"
-msgstr ""
-
-#: ../src/include/commandhelp.h:88
-msgid "used as a service hostname."
+msgid ""
+"Communicate with your IRC network's channel service. If the initial\n"
+"argument equals to '--', then the value of setting 'chanserv_host' is\n"
+"used as a service hostname."
 msgstr ""
 
 #: ../src/include/commandhelp.h:104
@@ -86,11 +81,9 @@ msgid "usage: /cleartoasts"
 msgstr ""
 
 #: ../src/include/commandhelp.h:106
-msgid "On Windows Swirc sends toast notifications. By running this command"
-msgstr ""
-
-#: ../src/include/commandhelp.h:107
-msgid "all notifications associated with Swirc will be cleared."
+msgid ""
+"On Windows Swirc sends toast notifications. By running this command\n"
+"all notifications associated with Swirc will be cleared."
 msgstr ""
 
 #: ../src/include/commandhelp.h:112
@@ -98,15 +91,10 @@ msgid "usage: /close"
 msgstr ""
 
 #: ../src/include/commandhelp.h:114
-msgid "Closes the active window. It's not possible to close the status"
-msgstr ""
-
-#: ../src/include/commandhelp.h:115
-msgid "window. And while connected it's not possible to close a channel, in"
-msgstr ""
-
-#: ../src/include/commandhelp.h:116
-msgid "that case instead use '/part'."
+msgid ""
+"Closes the active window. It's not possible to close the status\n"
+"window. And while connected it's not possible to close a channel, in\n"
+"that case instead use '/part'."
 msgstr ""
 
 #: ../src/include/commandhelp.h:121
