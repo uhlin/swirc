@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 13:39+0200\n"
+"POT-Creation-Date: 2022-06-19 13:53+0200\n"
 "PO-Revision-Date: 2021-08-23 19:29+0200\n"
 "Last-Translator: Solene <solene@openbsd.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -325,23 +325,16 @@ msgid "usage: /list [<max_users[,>min_users][,pattern][...]]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:306
-msgid "Lists channels and their topics. Without any arguments the list is"
-msgstr ""
-
-#: ../src/include/commandhelp.h:307
-msgid "HUGE. For example, '/list >1500' will only list channels that have"
-msgstr ""
-
-#: ../src/include/commandhelp.h:308
-msgid "more than 1500 users."
+msgid ""
+"Lists channels and their topics. Without any arguments the list is\n"
+"HUGE. For example, '/list >1500' will only list channels that have\n"
+"more than 1500 users."
 msgstr ""
 
 #: ../src/include/commandhelp.h:310
-msgid "Depending on the IRC server software used by your network the usage"
-msgstr ""
-
-#: ../src/include/commandhelp.h:311
-msgid "may differ."
+msgid ""
+"Depending on the IRC server software used by your network the usage\n"
+"may differ."
 msgstr ""
 
 #: ../src/include/commandhelp.h:316
@@ -531,15 +524,10 @@ msgid "usage: /part [channel] [message]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:431
-msgid "Leaves a channel (optionally with a message). If the command is called"
-msgstr ""
-
-#: ../src/include/commandhelp.h:432
-msgid "without any arguments and the current window is an IRC channel, that"
-msgstr ""
-
-#: ../src/include/commandhelp.h:433
-msgid "channel will be the target."
+msgid ""
+"Leaves a channel (optionally with a message). If the command is called\n"
+"without any arguments and the current window is an IRC channel, that\n"
+"channel will be the target."
 msgstr ""
 
 #: ../src/include/commandhelp.h:437
@@ -563,15 +551,10 @@ msgid "usage: /query [nick]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:452
-msgid "Starts a private conversation with 'nick'. If 'nick' is omitted and"
-msgstr ""
-
-#: ../src/include/commandhelp.h:453
-msgid "the active window is a private conversation, the action will be to"
-msgstr ""
-
-#: ../src/include/commandhelp.h:454
-msgid "close it."
+msgid ""
+"Starts a private conversation with 'nick'. If 'nick' is omitted and\n"
+"the active window is a private conversation, the action will be to\n"
+"close it."
 msgstr ""
 
 #: ../src/include/commandhelp.h:459

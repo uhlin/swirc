@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 13:39+0200\n"
-"PO-Revision-Date: 2022-06-19 13:46+0200\n"
+"POT-Creation-Date: 2022-06-19 13:53+0200\n"
+"PO-Revision-Date: 2022-06-19 14:05+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -373,27 +373,22 @@ msgid "usage: /list [<max_users[,>min_users][,pattern][...]]"
 msgstr "användning: /list [<max_users[,>min_users][,mönster][...]]"
 
 #: ../src/include/commandhelp.h:306
-msgid "Lists channels and their topics. Without any arguments the list is"
-msgstr "Listar kanaler och deras ämnen. Utan några argument är listan"
-
-#: ../src/include/commandhelp.h:307
-msgid "HUGE. For example, '/list >1500' will only list channels that have"
+msgid ""
+"Lists channels and their topics. Without any arguments the list is\n"
+"HUGE. For example, '/list >1500' will only list channels that have\n"
+"more than 1500 users."
 msgstr ""
-"ENORM. Till exempel kommer '/list >1500' bara att lista kanaler som har"
-
-#: ../src/include/commandhelp.h:308
-msgid "more than 1500 users."
-msgstr "fler än 1500 användare."
+"Listar kanaler och deras ämnen. Utan några argument är listan\n"
+"ENORM. Till exempel kommer '/list >1500' bara att lista kanaler som\n"
+"har fler än 1500 användare."
 
 #: ../src/include/commandhelp.h:310
-msgid "Depending on the IRC server software used by your network the usage"
+msgid ""
+"Depending on the IRC server software used by your network the usage\n"
+"may differ."
 msgstr ""
-"Beroende på vilken IRC serverprogramvara som används av ditt nätverk kan "
-"användningen"
-
-#: ../src/include/commandhelp.h:311
-msgid "may differ."
-msgstr "variera."
+"Beroende på vilken IRC serverprogramvara som används av ditt nätverk\n"
+"kan användningen variera."
 
 #: ../src/include/commandhelp.h:316
 msgid "usage: /me <message>"
@@ -599,17 +594,14 @@ msgid "usage: /part [channel] [message]"
 msgstr "användning: /part [kanal] [meddelande]"
 
 #: ../src/include/commandhelp.h:431
-msgid "Leaves a channel (optionally with a message). If the command is called"
-msgstr "Lämnar en kanal (valfritt med ett meddelande). Om kommandot anropas"
-
-#: ../src/include/commandhelp.h:432
-msgid "without any arguments and the current window is an IRC channel, that"
+msgid ""
+"Leaves a channel (optionally with a message). If the command is called\n"
+"without any arguments and the current window is an IRC channel, that\n"
+"channel will be the target."
 msgstr ""
-"utan några argument och det aktuella fönstret är en IRC kanal, kommer den"
-
-#: ../src/include/commandhelp.h:433
-msgid "channel will be the target."
-msgstr "kanalen att vara målet."
+"Lämnar en kanal (valfritt med ett meddelande). Om kommandot anropas\n"
+"utan några argument och det aktuella fönstret är en IRC kanal, kommer\n"
+"den kanalen att vara målet."
 
 #: ../src/include/commandhelp.h:437
 msgid "  Leave channel #chatzone with message 'bye':"
@@ -632,17 +624,14 @@ msgid "usage: /query [nick]"
 msgstr "användning: /query [nick]"
 
 #: ../src/include/commandhelp.h:452
-msgid "Starts a private conversation with 'nick'. If 'nick' is omitted and"
-msgstr "Startar en privat konversation med 'nick'. Om 'nick' utelämnas och"
-
-#: ../src/include/commandhelp.h:453
-msgid "the active window is a private conversation, the action will be to"
+msgid ""
+"Starts a private conversation with 'nick'. If 'nick' is omitted and\n"
+"the active window is a private conversation, the action will be to\n"
+"close it."
 msgstr ""
-"det aktiva fönstret är en privat konversation, kommer åtgärden att vara att"
-
-#: ../src/include/commandhelp.h:454
-msgid "close it."
-msgstr "stänga den."
+"Startar en privat konversation med 'nick'. Om 'nick' utelämnas och det\n"
+"aktiva fönstret är en privat konversation, kommer åtgärden att vara\n"
+"att stänga den."
 
 #: ../src/include/commandhelp.h:459
 msgid "usage: /quit [message]"
