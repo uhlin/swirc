@@ -818,44 +818,44 @@ msgstr ""
 #: ../src/io-loop.c:423
 #, c-format
 msgid "    Swirc %s by %s"
-msgstr ""
+msgstr "    Swirc %s, kirjoittanut %s"
 
 #: ../src/io-loop.c:424
 #, c-format
 msgid "    Compiled on %s%s %s%s"
-msgstr ""
+msgstr "    Kokoonpantu %s%s %s%s"
 
 #: ../src/io-loop.c:430
 #, c-format
 msgid "Current language %s%s%s"
-msgstr ""
+msgstr "Nykyinen kieli %s%s%s"
 
 #: ../src/io-loop.c:433
 #, c-format
 msgid "Program settings are stored in %s%s%s"
-msgstr ""
+msgstr "Ohjelman asetukset tallennetaan kansioon %s%s%s"
 
 #: ../src/io-loop.c:435
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
-msgstr ""
+msgstr "%c%hd%c väriparia on alustettu"
 
 #: ../src/io-loop.c:437
 msgid "Type /help for a list of commands; or /help <command>"
-msgstr ""
+msgstr "Kirjoita /help nähdäksesi komentoluettelon; tai /help <komento>"
 
 #: ../src/io-loop.c:439
 msgid "for help of a specific command"
-msgstr ""
+msgstr "saadaksesi apua tietyn komennon suorittamiseen"
 
 #: ../src/io-loop.c:440
 msgid "Type F1 for keys"
-msgstr ""
+msgstr "Kirjoita F1 näppäimistön näppäimiä varten"
 
 #: ../src/io-loop.c:442
 #, c-format
 msgid "Error log size %s%.1f KB%s"
-msgstr ""
+msgstr "Virhelokin koko %s%.1f KB%s"
 
 #: ../src/main.cpp:124
 msgid ""
