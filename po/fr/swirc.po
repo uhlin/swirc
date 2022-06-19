@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 13:17+0200\n"
+"POT-Creation-Date: 2022-06-19 13:39+0200\n"
 "PO-Revision-Date: 2021-08-23 19:29+0200\n"
 "Last-Translator: Solene <solene@openbsd.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -255,19 +255,11 @@ msgid "usage: /ilist [channel]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:248
-msgid "Outputs a channel's invitation list. An invitation mask (+I) overrides"
-msgstr ""
-
-#: ../src/include/commandhelp.h:249
-msgid "the invite-only flag (+i). If the channel argument is omitted and the"
-msgstr ""
-
-#: ../src/include/commandhelp.h:250
-msgid "active window is an IRC channel, the client will output the invitation"
-msgstr ""
-
-#: ../src/include/commandhelp.h:251
-msgid "list for that channel."
+msgid ""
+"Outputs a channel's invitation list. An invitation mask (+I) overrides\n"
+"the invite-only flag (+i). If the channel argument is omitted and the\n"
+"active window is an IRC channel, the client will output the invitation\n"
+"list for that channel."
 msgstr ""
 
 #: ../src/include/commandhelp.h:256
@@ -299,15 +291,10 @@ msgid "usage: /kick <nick1[,nick2][,nick3][...]> [reason]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:280
-msgid "Kicks one or more users out of a channel. The users are given in a"
-msgstr ""
-
-#: ../src/include/commandhelp.h:281
-msgid "comma-separated list. A reason is optional and the active window must"
-msgstr ""
-
-#: ../src/include/commandhelp.h:282
-msgid "be an IRC channel."
+msgid ""
+"Kicks one or more users out of a channel. The users are given in a\n"
+"comma-separated list. A reason is optional and the active window must\n"
+"be an IRC channel."
 msgstr ""
 
 #: ../src/include/commandhelp.h:287

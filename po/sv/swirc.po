@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 13:17+0200\n"
-"PO-Revision-Date: 2022-06-19 13:27+0200\n"
+"POT-Creation-Date: 2022-06-19 13:39+0200\n"
+"PO-Revision-Date: 2022-06-19 13:46+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -293,22 +293,16 @@ msgid "usage: /ilist [channel]"
 msgstr "användning: /ilist [kanal]"
 
 #: ../src/include/commandhelp.h:248
-msgid "Outputs a channel's invitation list. An invitation mask (+I) overrides"
+msgid ""
+"Outputs a channel's invitation list. An invitation mask (+I) overrides\n"
+"the invite-only flag (+i). If the channel argument is omitted and the\n"
+"active window is an IRC channel, the client will output the invitation\n"
+"list for that channel."
 msgstr ""
-"Matar ut en kanals inbjudningslista. En inbjudningsmask (+I) åsidosätter"
-
-#: ../src/include/commandhelp.h:249
-msgid "the invite-only flag (+i). If the channel argument is omitted and the"
-msgstr "flaggan endast för inbjudan (+i). Om kanalargumentet utelämnas och det"
-
-#: ../src/include/commandhelp.h:250
-msgid "active window is an IRC channel, the client will output the invitation"
-msgstr ""
-"aktiva fönstret är en IRC kanal, kommer klienten att mata ut inbjudnings-"
-
-#: ../src/include/commandhelp.h:251
-msgid "list for that channel."
-msgstr "listan för den kanalen."
+"Matar ut en kanals inbjudningslista. En inbjudningsmask (+I)\n"
+"åsidosätter flaggan endast för inbjudan (+i). Om kanalargumentet\n"
+"utelämnas och det aktiva fönstret är en IRC kanal, kommer klienten att\n"
+"mata ut inbjudningslistan för den kanalen."
 
 #: ../src/include/commandhelp.h:256
 msgid "usage: /invite <targ_nick> <channel>"
@@ -339,18 +333,14 @@ msgid "usage: /kick <nick1[,nick2][,nick3][...]> [reason]"
 msgstr "användning: /kick <nick1[,nick2][,nick3][...]> [anledning]"
 
 #: ../src/include/commandhelp.h:280
-msgid "Kicks one or more users out of a channel. The users are given in a"
+msgid ""
+"Kicks one or more users out of a channel. The users are given in a\n"
+"comma-separated list. A reason is optional and the active window must\n"
+"be an IRC channel."
 msgstr ""
-"Sparkar ut en eller flera användare från en kanal. Användarna anges i en"
-
-#: ../src/include/commandhelp.h:281
-msgid "comma-separated list. A reason is optional and the active window must"
-msgstr ""
-"kommaseparerad lista. En anledning är valfri och det aktiva fönstret måste"
-
-#: ../src/include/commandhelp.h:282
-msgid "be an IRC channel."
-msgstr "vara en IRC kanal."
+"Sparkar ut en eller flera användare från en kanal. Användarna anges i\n"
+"en kommaseparerad lista. En anledning är valfri och det aktiva\n"
+"fönstret måste vara en IRC kanal."
 
 #: ../src/include/commandhelp.h:287
 msgid "usage: /kickban <nick> <mask> [reason]"
