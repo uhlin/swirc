@@ -426,6 +426,10 @@ swirc_greeting(void)
 	if (g_initialized_pairs < 0)
 		g_initialized_pairs = 0;
 	printtext(&ctx, " ");
+	if (!strings_match(g_locale, "")) {
+		printtext(&ctx, _("Current language %s%s%s"),
+		    LEFT_BRKT, g_locale, RIGHT_BRKT);
+	}
 	printtext(&ctx, _("Program settings are stored in %s%s%s"),
 	    LEFT_BRKT, g_home_dir, RIGHT_BRKT);
 	printtext(&ctx, _("%c%hd%c color pairs have been initialized"),
