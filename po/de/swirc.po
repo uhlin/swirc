@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 14:53+0200\n"
+"POT-Creation-Date: 2022-06-19 19:45+0200\n"
 "PO-Revision-Date: 2021-08-22 01:10+0200\n"
 "Last-Translator: Michi <michi+git@dataswamp.org>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -825,29 +825,34 @@ msgstr ""
 msgid "    Compiled on %s%s %s%s"
 msgstr ""
 
-#: ../src/io-loop.c:429
+#: ../src/io-loop.c:430
+#, c-format
+msgid "Current language %s%s%s"
+msgstr ""
+
+#: ../src/io-loop.c:433
 #, c-format
 msgid "Program settings are stored in %s%s%s"
 msgstr ""
 
-#: ../src/io-loop.c:431
+#: ../src/io-loop.c:435
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
 msgstr ""
 
-#: ../src/io-loop.c:433
+#: ../src/io-loop.c:437
 msgid "Type /help for a list of commands; or /help <command>"
 msgstr ""
 
-#: ../src/io-loop.c:435
+#: ../src/io-loop.c:439
 msgid "for help of a specific command"
 msgstr ""
 
-#: ../src/io-loop.c:436
+#: ../src/io-loop.c:440
 msgid "Type F1 for keys"
 msgstr ""
 
-#: ../src/io-loop.c:438
+#: ../src/io-loop.c:442
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr ""
