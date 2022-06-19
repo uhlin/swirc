@@ -502,8 +502,8 @@ static usage_t sasl_usage = {
   "    password <pass>",
   "    set [on | off]",
   "",
-  N_("SASL is a method that lets you identify with NickServ during the"),
-  N_("connection process eliminating the need to do it manually."),
+  N_("SASL is a method that lets you identify with NickServ during the\n"
+     "connection process eliminating the need to do it manually."),
   N_("(To use SASL you must register your nickname.)"),
   "",
   (TXT_BOLD "EXAMPLES" TXT_BOLD),
@@ -530,8 +530,8 @@ static usage_t sasl_usage = {
 static usage_t say_usage = {
   N_("usage: /say <message>"),
   "",
-  N_("Say a message. This command can be used if you want say something with"),
-  N_("a leading command-character, i.e. a slash."),
+  N_("Say a message. This command can be used if you want say something with\n"
+     "a leading command-character, i.e. a slash."),
   "",
   (TXT_BOLD "EXAMPLE" TXT_BOLD),
   "",
@@ -542,8 +542,8 @@ static usage_t say_usage = {
 static usage_t servlist_usage = {
   N_("usage: /servlist [<mask> [<type>]]"),
   "",
-  N_("Lists services currently connected to your IRC network. Arguments,"),
-  N_("if given, can be used to restrict the output result."),
+  N_("Lists services currently connected to your IRC network. Arguments,\n"
+     "if given, can be used to restrict the output result."),
   "",
   (TXT_BOLD "SEE ALSO" TXT_BOLD),
   "",
@@ -587,8 +587,8 @@ static usage_t set_usage = {
 static usage_t squery_usage = {
   N_("usage: /squery <servicename> <text>"),
   "",
-  N_("This command is used similarly to '/msg'. The only difference is that"),
-  N_("the recipient MUST be a service."),
+  N_("This command is used similarly to '/msg'. The only difference is that\n"
+     "the recipient MUST be a service."),
   "",
 };
 
