@@ -83,9 +83,9 @@ static usage_t boot_usage = {
 static usage_t chanserv_usage = {
   N_("usage: /chanserv <[service hostname | --]> <command> [...]"),
   "",
-  N_("Communicate with your IRC network's channel service. If the initial"),
-  N_("argument equals to '--', then the value of setting 'chanserv_host' is"),
-  N_("used as a service hostname."),
+  N_("Communicate with your IRC network's channel service. If the initial\n"
+     "argument equals to '--', then the value of setting 'chanserv_host' is\n"
+     "used as a service hostname."),
   "",
   (TXT_BOLD "SEE ALSO" TXT_BOLD),
   "",
@@ -103,17 +103,17 @@ static usage_t cap_usage = {
 static usage_t cleartoasts_usage = {
   N_("usage: /cleartoasts"),
   "",
-  N_("On Windows Swirc sends toast notifications. By running this command"),
-  N_("all notifications associated with Swirc will be cleared."),
+  N_("On Windows Swirc sends toast notifications. By running this command\n"
+     "all notifications associated with Swirc will be cleared."),
   "",
 };
 
 static usage_t close_usage = {
   N_("usage: /close"),
   "",
-  N_("Closes the active window. It's not possible to close the status"),
-  N_("window. And while connected it's not possible to close a channel, in"),
-  N_("that case instead use '/part'."),
+  N_("Closes the active window. It's not possible to close the status\n"
+     "window. And while connected it's not possible to close a channel, in\n"
+     "that case instead use '/part'."),
   "",
 };
 
