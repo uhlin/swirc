@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 13:53+0200\n"
+"POT-Creation-Date: 2022-06-19 14:10+0200\n"
 "PO-Revision-Date: 2021-08-23 19:29+0200\n"
 "Last-Translator: Solene <solene@openbsd.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -562,11 +562,9 @@ msgid "usage: /quit [message]"
 msgstr ""
 
 #: ../src/include/commandhelp.h:461
-msgid "Disconnect from IRC and quit the program. A disconnect message is"
-msgstr ""
-
-#: ../src/include/commandhelp.h:462
-msgid "optional."
+msgid ""
+"Disconnect from IRC and quit the program. A disconnect message is\n"
+"optional."
 msgstr ""
 
 #: ../src/include/commandhelp.h:467
@@ -574,15 +572,10 @@ msgid "usage: /resize"
 msgstr ""
 
 #: ../src/include/commandhelp.h:469
-msgid "Resize the terminal. For example, Windows doesn't send 'SIGWINCH',"
-msgstr ""
-
-#: ../src/include/commandhelp.h:470
-msgid "instead this command can be used. First resize the window then run"
-msgstr ""
-
-#: ../src/include/commandhelp.h:471
-msgid "this command."
+msgid ""
+"Resize the terminal. For example, Windows doesn't send 'SIGWINCH',\n"
+"instead this command can be used. First resize the window then run\n"
+"this command."
 msgstr ""
 
 #: ../src/include/commandhelp.h:485
@@ -590,11 +583,9 @@ msgid "usage: /rules"
 msgstr ""
 
 #: ../src/include/commandhelp.h:487
-msgid "Outputs network/server rules. Not all IRC server software supports"
-msgstr ""
-
-#: ../src/include/commandhelp.h:488
-msgid "this command. (It's actually quite rare.)"
+msgid ""
+"Outputs network/server rules. Not all IRC server software supports\n"
+"this command. (It's actually quite rare.)"
 msgstr ""
 
 #: ../src/include/commandhelp.h:493

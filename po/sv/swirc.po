@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 13:53+0200\n"
+"POT-Creation-Date: 2022-06-19 14:10+0200\n"
 "PO-Revision-Date: 2022-06-19 14:05+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -638,44 +638,38 @@ msgid "usage: /quit [message]"
 msgstr "användning: /quit [meddelande]"
 
 #: ../src/include/commandhelp.h:461
-msgid "Disconnect from IRC and quit the program. A disconnect message is"
-msgstr "Koppla från IRC och avsluta programmet. Ett frånkopplingsmeddelande är"
-
-#: ../src/include/commandhelp.h:462
-msgid "optional."
-msgstr "valfritt."
+msgid ""
+"Disconnect from IRC and quit the program. A disconnect message is\n"
+"optional."
+msgstr ""
+"Koppla från IRC och avsluta programmet. Ett frånkopplingsmeddelande är\n"
+"valfritt."
 
 #: ../src/include/commandhelp.h:467
 msgid "usage: /resize"
 msgstr "användning: /resize"
 
 #: ../src/include/commandhelp.h:469
-msgid "Resize the terminal. For example, Windows doesn't send 'SIGWINCH',"
+msgid ""
+"Resize the terminal. For example, Windows doesn't send 'SIGWINCH',\n"
+"instead this command can be used. First resize the window then run\n"
+"this command."
 msgstr ""
-"Ändra storlek på terminalen. Till exempel, Windows skickar inte 'SIGWINCH',"
-
-#: ../src/include/commandhelp.h:470
-msgid "instead this command can be used. First resize the window then run"
-msgstr ""
-"istället kan detta kommando användas. Ändra först storleken på fönstret och "
-"kör sedan"
-
-#: ../src/include/commandhelp.h:471
-msgid "this command."
-msgstr "det här kommandot."
+"Ändra storlek på terminalen. Till exempel, Windows skickar inte\n"
+"'SIGWINCH', istället kan detta kommando användas. Ändra först\n"
+"storleken på fönstret och kör sedan det här kommandot."
 
 #: ../src/include/commandhelp.h:485
 msgid "usage: /rules"
 msgstr "användning: /rules"
 
 #: ../src/include/commandhelp.h:487
-msgid "Outputs network/server rules. Not all IRC server software supports"
+msgid ""
+"Outputs network/server rules. Not all IRC server software supports\n"
+"this command. (It's actually quite rare.)"
 msgstr ""
-"Matar ut nätverks-/serverregler. Inte all IRC serverprogramvara stödjer"
-
-#: ../src/include/commandhelp.h:488
-msgid "this command. (It's actually quite rare.)"
-msgstr "detta kommando. (Det är faktiskt ganska sällsynt.)"
+"Matar ut nätverks-/serverregler. Inte all IRC serverprogramvara\n"
+"stödjer detta kommando. (Det är faktiskt ganska sällsynt.)"
 
 #: ../src/include/commandhelp.h:493
 msgid "usage: /sasl <operation> [...]"
