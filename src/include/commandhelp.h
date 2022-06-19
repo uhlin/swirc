@@ -245,10 +245,10 @@ static usage_t ignore_usage = {
 static usage_t ilist_usage = {
   N_("usage: /ilist [channel]"),
   "",
-  N_("Outputs a channel's invitation list. An invitation mask (+I) overrides"),
-  N_("the invite-only flag (+i). If the channel argument is omitted and the"),
-  N_("active window is an IRC channel, the client will output the invitation"),
-  N_("list for that channel."),
+  N_("Outputs a channel's invitation list. An invitation mask (+I) overrides\n"
+     "the invite-only flag (+i). If the channel argument is omitted and the\n"
+     "active window is an IRC channel, the client will output the invitation\n"
+     "list for that channel."),
   "",
 };
 
@@ -277,9 +277,9 @@ static usage_t join_usage = {
 static usage_t kick_usage = {
   N_("usage: /kick <nick1[,nick2][,nick3][...]> [reason]"),
   "",
-  N_("Kicks one or more users out of a channel. The users are given in a"),
-  N_("comma-separated list. A reason is optional and the active window must"),
-  N_("be an IRC channel."),
+  N_("Kicks one or more users out of a channel. The users are given in a\n"
+     "comma-separated list. A reason is optional and the active window must\n"
+     "be an IRC channel."),
   "",
 };
 
