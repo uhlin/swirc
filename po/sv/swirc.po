@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2022-06-19 02:22+0200\n"
-"PO-Revision-Date: 2022-06-19 02:33+0200\n"
+"POT-Creation-Date: 2022-06-19 13:17+0200\n"
+"PO-Revision-Date: 2022-06-19 13:27+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -180,13 +180,12 @@ msgid "usage: /disconnect [message]"
 msgstr "användning: /disconnect [meddelande]"
 
 #: ../src/include/commandhelp.h:174
-msgid "Disconnect from IRC, but don't quit the program. A disconnect message"
+msgid ""
+"Disconnect from IRC, but don't quit the program. A disconnect message\n"
+"is optional."
 msgstr ""
-"Koppla från IRC, men avsluta inte programmet. Ett frånkopplingsmeddelande"
-
-#: ../src/include/commandhelp.h:175
-msgid "is optional."
-msgstr "är valfritt."
+"Koppla från IRC, men avsluta inte programmet. Ett frånkopplings-\n"
+"meddelande är valfritt."
 
 #: ../src/include/commandhelp.h:180
 msgid "usage: /echo <text>"
@@ -209,21 +208,16 @@ msgid "usage: /exlist [channel]"
 msgstr "användning: /exlist [kanal]"
 
 #: ../src/include/commandhelp.h:194
-msgid "Outputs a channel's exception list. An exception mask (+e) overrides a"
+msgid ""
+"Outputs a channel's exception list. An exception mask (+e) overrides a\n"
+"ban mask. If the channel argument is omitted and the active window is\n"
+"an IRC channel, the client will output the exception list for that\n"
+"channel."
 msgstr ""
-"Matar ut en kanals undantagslista. En undantagsmask (+e) åsidosätter en"
-
-#: ../src/include/commandhelp.h:195
-msgid "ban mask. If the channel argument is omitted and the active window is"
-msgstr "förbudsmask. Om kanalargumentet utelämnas och det aktiva fönstret är"
-
-#: ../src/include/commandhelp.h:196
-msgid "an IRC channel, the client will output the exception list for that"
-msgstr "en IRC kanal, kommer klienten att mata ut undantagslistan för den"
-
-#: ../src/include/commandhelp.h:197
-msgid "channel."
-msgstr "kanalen."
+"Matar ut en kanals undantagslista. En undantagsmask (+e) åsidosätter\n"
+"en förbudsmask. Om kanalargumentet utelämnas och det aktiva fönstret\n"
+"är en IRC kanal, kommer klienten att mata ut undantagslistan för den\n"
+"kanalen."
 
 #: ../src/include/commandhelp.h:202
 msgid "usage: /group <name>"
