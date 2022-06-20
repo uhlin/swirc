@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 - Fixed SASLprep by switching to usage of `stringprep_profile()`. Prep
   now works on Windows too!
 - Improved the contents of `/help`
+  - Completed translating everything to Swedish
+- Made the dot mo files available for read operations with `unveil()`
 
 ### Windows ###
 - Added a GNU bundle containing:
