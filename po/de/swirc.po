@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-19 19:45+0200\n"
-"PO-Revision-Date: 2021-08-22 01:10+0200\n"
-"Last-Translator: Michi <michi+git@dataswamp.org>\n"
+"PO-Revision-Date: 2022-06-20 02:23+0200\n"
+"Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -818,44 +818,44 @@ msgstr ""
 #: ../src/io-loop.c:423
 #, c-format
 msgid "    Swirc %s by %s"
-msgstr ""
+msgstr "    Swirc %s von %s"
 
 #: ../src/io-loop.c:424
 #, c-format
 msgid "    Compiled on %s%s %s%s"
-msgstr ""
+msgstr "    Kompiliert %s%s %s%s"
 
 #: ../src/io-loop.c:430
 #, c-format
 msgid "Current language %s%s%s"
-msgstr ""
+msgstr "Aktuelle Sprache %s%s%s"
 
 #: ../src/io-loop.c:433
 #, c-format
 msgid "Program settings are stored in %s%s%s"
-msgstr ""
+msgstr "Programmeinstellungen werden in %s%s%s gespeichert"
 
 #: ../src/io-loop.c:435
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
-msgstr ""
+msgstr "Es wurden %c%hd%c Farbpaare initialisiert"
 
 #: ../src/io-loop.c:437
 msgid "Type /help for a list of commands; or /help <command>"
-msgstr ""
+msgstr "Geben Sie /help für eine Liste von Befehlen ein; oder /help <Befehl>"
 
 #: ../src/io-loop.c:439
 msgid "for help of a specific command"
-msgstr ""
+msgstr "für Hilfe zu einem bestimmten Befehl"
 
 #: ../src/io-loop.c:440
 msgid "Type F1 for keys"
-msgstr ""
+msgstr "Geben Sie F1 für Tastaturtasten ein"
 
 #: ../src/io-loop.c:442
 #, c-format
 msgid "Error log size %s%.1f KB%s"
-msgstr ""
+msgstr "Größe des Fehlerprotokolls %s%.1f KB%s"
 
 #: ../src/main.cpp:124
 msgid ""
