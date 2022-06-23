@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018-2022 Markus Uhlin. All rights reserved.
 .\"
-.Dd May 26, 2022
+.Dd June 23, 2022
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -144,6 +144,17 @@ Max chat windows that can be open simultaneously
 .\" ----------------------------------------
 .It Sy mouse Pq Em bool
 Use the mouse?
+.\" ----------------------------------------
+.\" MOUSE EVENTS
+.\" ----------------------------------------
+.It Sy mouse_events Pq Em string
+Which mouse events shall be reported?
+.Bl -bullet -compact
+.It
+all
+.It
+wheel (default)
+.El
 .\" ----------------------------------------
 .\" NICKNAME
 .\" ----------------------------------------

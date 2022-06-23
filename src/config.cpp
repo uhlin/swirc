@@ -106,6 +106,7 @@ static struct tagConfDefValues {
 	{ "kick_close_window",         TYPE_BOOLEAN, 2, "yes" },
 	{ "max_chat_windows",          TYPE_INTEGER, 2, "60" },
 	{ "mouse",                     TYPE_BOOLEAN, 4, "no" },
+	{ "mouse_events",              TYPE_STRING,  3, "wheel" },
 	{ "server_cipher_suite",       TYPE_STRING,  2, "compat" },
 	{ "show_ping_pong",            TYPE_BOOLEAN, 3, "no" },
 	{ "skip_motd",                 TYPE_BOOLEAN, 3, "no" },

@@ -769,6 +769,16 @@ process(volatile struct readline_session_context *ctx)
 	return out;
 }
 
+static void
+report_wheel_events(void)
+{
+#ifdef BUTTON5_PRESSED
+	(void) mousemask((BUTTON4_PRESSED | BUTTON5_PRESSED), NULL);
+#else
+	(void) mousemask(BUTTON4_PRESSED, NULL);
+#endif
+}
+
 /**
  * Initialize readline (done before usage)
  */
@@ -785,8 +795,17 @@ readline_init(void)
 	apply_readline_options(panel_window(readline_pan1));
 	apply_readline_options(panel_window(readline_pan2));
 
-	if (config_bool("mouse", false))
-		(void) mousemask(ALL_MOUSE_EVENTS, NULL);
+	if (config_bool("mouse", false)) {
+		const char *str = Config("mouse_events");
+
+		if (strings_match(str, "all") || strings_match(str, "ALL"))
+			(void) mousemask(ALL_MOUSE_EVENTS, NULL);
+		else if (strings_match(str, "wheel") || strings_match(str,
+		    "WHEEL"))
+			report_wheel_events();
+		else
+			err_log(EINVAL, "readline_init: 'mouse_events'");
+	}
 }
 
 /**
