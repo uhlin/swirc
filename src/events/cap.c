@@ -201,15 +201,15 @@ event_cap(struct irc_message_compo *compo)
 		ctx.window = g_active_window;
 		ctx.spec_type = TYPE_SPEC1;
 
-		printtext(&ctx, "Capabilities supported by the server:");
-		printtext(&ctx, "%s", caplist);
+//		printtext(&ctx, "Capabilities supported by the server:");
+		printtext(&ctx, "  - %s", caplist);
 	} else if (strings_match(cmd, "LIST")) {
 		ctx.window = g_active_window;
 		ctx.spec_type = TYPE_SPEC1;
 
-		printtext(&ctx, "Capabilities associated with "
-		    "the active connection:");
-		printtext(&ctx, "%s", caplist);
+//		printtext(&ctx, "Capabilities associated with "
+//		    "the active connection:");
+		printtext(&ctx, "  - %s", caplist);
 	} else if (strings_match(cmd, "ACK") || strings_match(cmd, "NAK")) {
 		handle_ack_and_nak(&ctx, compo, cmd, caplist, &continue_capneg);
 		if (continue_capneg)
