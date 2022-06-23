@@ -77,10 +77,10 @@ ACK(const char *feature)
 static void
 NAK(const char *feature)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
-    printtext(&ctx, "%s rejected", feature);
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
+	printtext(&ctx, "%s rejected", feature);
 }
 
 static bool
