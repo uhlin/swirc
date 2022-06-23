@@ -42,19 +42,15 @@
 bool
 is_sasl_mechanism_supported(const char *mechanism)
 {
-    if (!mechanism)
+	if (mechanism == NULL)
+		return false;
+	else if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE"))
+		return true;
+	else if (strings_match(mechanism, "PLAIN"))
+		return true;
+	else if (strings_match(mechanism, "SCRAM-SHA-256"))
+		return true;
 	return false;
-    else if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE"))
-	return true;
-    else if (strings_match(mechanism, "PLAIN"))
-	return true;
-    else if (strings_match(mechanism, "SCRAM-SHA-256"))
-	return true;
-    else
-	return false;
-
-    /*NOTREACHED*/ sw_assert_not_reached();
-    /*NOTREACHED*/ return false;
 }
 
 const char *
