@@ -50,8 +50,11 @@ cmd_cap(const char *data)
 		if (net_send("CAP LS") < 0 || net_send("CAP LIST") < 0)
 			err_log(ENOTCONN, "/cap");
 	} else if (strings_match(data, "ls") || strings_match(data, "LS")) {
+		printtext(&ctx, "Capabilities supported by the server:");
 		(void) net_send("CAP LS 302");
 	} else if (strings_match(data, "list") || strings_match(data, "LIST")) {
+		printtext(&ctx, "Capabilities associated with "
+		    "the active connection:");
 		(void) net_send("CAP LIST");
 	} else {
 		ctx.spec_type = TYPE_SPEC1_FAILURE;
