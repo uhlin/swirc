@@ -60,9 +60,9 @@ is_sasl_mechanism_supported(const char *mechanism)
 const char *
 get_sasl_mechanism(void)
 {
-    const char *mechanism = Config("sasl_mechanism");
+	const char *mechanism = Config("sasl_mechanism");
 
-    return (strings_match(mechanism, "") ? "PLAIN" : mechanism);
+	return (strings_match(mechanism, "") ? "PLAIN" : mechanism);
 }
 
 static void
