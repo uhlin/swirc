@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
   now works on Windows too!
 - Improved the contents of `/help`
   - Completed translating everything to Swedish
+- Made improvements to `events/cap.c`
 - Made the dot mo files available for read operations with `unveil()`
 
 ### Windows ###
