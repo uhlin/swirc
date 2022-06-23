@@ -68,10 +68,10 @@ get_sasl_mechanism(void)
 static void
 ACK(const char *feature)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_SUCCESS, true);
-    printtext(&ctx, "%s accepted", feature);
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_SUCCESS, true);
+	printtext(&ctx, "%s accepted", feature);
 }
 
 static void
