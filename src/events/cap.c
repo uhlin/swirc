@@ -1,5 +1,5 @@
 /* IRCv3 Client Capability Negotiation
-   Copyright (C) 2017-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -113,6 +113,61 @@ shouldContinueCapabilityNegotiation_case4(void)
     return (sasl_is_enabled());
 }
 
+static void
+handle_ack_and_nak(PPRINTTEXT_CONTEXT ctx, struct irc_message_compo *compo,
+    const char *cmd, const char *caplist, bool *continue_capneg)
+{
+	if (strings_match(caplist, "account-notify")) {
+		if (strings_match(cmd, "ACK"))
+			ACK("Account notify");
+		else
+			NAK("Account notify");
+		*continue_capneg = shouldContinueCapabilityNegotiation_case1();
+	} else if (strings_match(caplist, "away-notify")) {
+		if (strings_match(cmd, "ACK"))
+			ACK("Away notify");
+		else
+			NAK("Away notify");
+		*continue_capneg = shouldContinueCapabilityNegotiation_case2();
+	} else if (strings_match(caplist, "invite-notify")) {
+		if (strings_match(cmd, "ACK"))
+			ACK("Invite notify");
+		else
+			NAK("Invite notify");
+		*continue_capneg = shouldContinueCapabilityNegotiation_case3();
+	} else if (strings_match(caplist, "server-time")) {
+		if (strings_match(cmd, "ACK"))
+			ACK("Server time");
+		else
+			NAK("Server time");
+		*continue_capneg = shouldContinueCapabilityNegotiation_case4();
+	} else if (strings_match(caplist, "sasl")) {
+		if (strings_match(cmd, "ACK")) {
+			const char *mechanism;
+
+			ACK("SASL authentication");
+
+			mechanism = get_sasl_mechanism();
+
+			if (!is_sasl_mechanism_supported(mechanism)) {
+				err_log(ENOSYS, "Unsupported SASL mechanism"
+				    ": '%s'", mechanism);
+				return;
+			}
+
+			(void) net_send("AUTHENTICATE %s", mechanism);
+		} else {
+			NAK("SASL authentication");
+		}
+	} else {
+		printtext(ctx, "Unknown acknowledgement during capability "
+		    "negotiation...");
+		printtext(ctx, "params = %s", compo->params);
+		printtext(ctx, "prefix = %s", (compo->prefix ? compo->prefix :
+		    "none"));
+	}
+}
+
 /**
  * event_cap()
  *
@@ -125,105 +180,41 @@ shouldContinueCapabilityNegotiation_case4(void)
 void
 event_cap(struct irc_message_compo *compo)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char *last = "";
+	PRINTTEXT_CONTEXT ctx;
+	bool continue_capneg = false;
+	char *cmd, *caplist;
+	char *last = "";
 
-    if (strFeed(compo->params, 2) != 2) {
-	err_log(0, "event_cap: strFeed() != 2");
-	return;
-    }
-
-    /* client identifier */
-    (void) strtok_r(compo->params, "\n", &last);
-
-    char	*cmd	 = strtok_r(NULL, "\n", &last);
-    char	*caplist = strtok_r(NULL, "\n", &last);
-
-    if (cmd == NULL || caplist == NULL)
-	return;
-
-    printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
-    if (*caplist == ':')
-	caplist++;
-    trim(caplist);
-
-    if (strings_match(cmd, "LS")) {
-	/* list the capabilities supported by the server */;
-    } else if (strings_match(cmd, "LIST")) {
-	/* list the capabilities associated with the active connection */;
-    } else if (strings_match(cmd, "ACK") || strings_match(cmd, "NAK")) {
-	if (strings_match(caplist, "account-notify")) {
-	    /* -------------- */
-	    /* Account notify */
-	    /* -------------- */
-
-	    if (strings_match(cmd, "ACK"))
-		ACK("Account notify");
-	    else
-		NAK("Account notify");
-	    if (shouldContinueCapabilityNegotiation_case1())
+	if (strFeed(compo->params, 2) != 2) {
+		err_log(0, "event_cap: strFeed() != 2");
 		return;
-	} else if (strings_match(caplist, "away-notify")) {
-	    /* ----------- */
-	    /* Away notify */
-	    /* ----------- */
-
-	    if (strings_match(cmd, "ACK"))
-		ACK("Away notify");
-	    else
-		NAK("Away notify");
-	    if (shouldContinueCapabilityNegotiation_case2())
-		return;
-	} else if (strings_match(caplist, "invite-notify")) {
-	    /* ------------- */
-	    /* Invite notify */
-	    /* ------------- */
-
-	    if (strings_match(cmd, "ACK"))
-		ACK("Invite notify");
-	    else
-		NAK("Invite notify");
-	    if (shouldContinueCapabilityNegotiation_case3())
-		return;
-	} else if (strings_match(caplist, "server-time")) {
-	    /* ----------- */
-	    /* Server time */
-	    /* ----------- */
-
-	    if (strings_match(cmd, "ACK"))
-		ACK("Server time");
-	    else
-		NAK("Server time");
-	    if (shouldContinueCapabilityNegotiation_case4())
-		return;
-	} else if (strings_match(caplist, "sasl")) {
-	    /* ------------------- */
-	    /* SASL authentication */
-	    /* ------------------- */
-
-	    if (strings_match(cmd, "ACK")) {
-		const char *mechanism = get_sasl_mechanism();
-
-		ACK("SASL authentication");
-
-		if (is_sasl_mechanism_supported(mechanism)) {
-		    net_send("AUTHENTICATE %s", mechanism);
-		    return;
-		}
-	    } else {
-		NAK("SASL authentication");
-	    }
-	} else {
-	    printtext(&ctx, "Unknown acknowledgement "
-		"during capability negotiation...");
-	    printtext(&ctx, "params = %s", compo->params);
-	    printtext(&ctx, "prefix = %s",
-		compo->prefix ? compo->prefix : "none");
 	}
-    } else {
-	/* TODO: Take an action */;
-    }
 
-    net_send("CAP END");
-    printtext(&ctx, "Ended IRCv3 Client Capability Negotiation");
+	/* client identifier */
+	(void) strtok_r(compo->params, "\n", &last);
+
+	if ((cmd = strtok_r(NULL, "\n", &last)) == NULL ||
+	    (caplist = strtok_r(NULL, "\n", &last)) == NULL)
+		return;
+
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN, true);
+
+	if (*caplist == ':')
+		caplist++;
+	(void) trim(caplist);
+
+	if (strings_match(cmd, "LS")) {
+		/* list the capabilities supported by the server */;
+	} else if (strings_match(cmd, "LIST")) {
+		/* list the capabilities associated with the active connection */;
+	} else if (strings_match(cmd, "ACK") || strings_match(cmd, "NAK")) {
+		handle_ack_and_nak(&ctx, compo, cmd, caplist, &continue_capneg);
+		if (continue_capneg)
+			return;
+		(void) net_send("CAP END");
+		printtext(&ctx, "Ended IRCv3 Client Capability Negotiation");
+	} else {
+		printtext(&ctx, "Unknown command: %s "
+		    "(during capability negotiation)", cmd);
+	}
 }
