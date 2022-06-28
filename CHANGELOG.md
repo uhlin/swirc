@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Added config option `mouse_events`
 - Added new translations
 - Changed the startup screen to show the current language
+- Fixed C style casts in C++
 - Fixed SASLprep by switching to usage of `stringprep_profile()`. Prep
   now works on Windows too!
 - Improved the contents of `/help`

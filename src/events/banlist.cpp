@@ -99,7 +99,8 @@ feeds_written_4(PPRINTTEXT_CONTEXT ctx, char *params)
 	if ((issuer_userhost = strtok_r(NULL, "!", &state2)) == NULL)
 		issuer_userhost = const_cast<char *>("");
 
-	const time_t date_of_issue = (time_t) strtol(seconds, NULL, 10);
+	const time_t date_of_issue = static_cast<time_t>(strtol(seconds, NULL,
+	    10));
 
 #if defined(UNIX)
 	if (localtime_r(&date_of_issue, &result) == NULL)

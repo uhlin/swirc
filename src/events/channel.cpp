@@ -895,7 +895,8 @@ event_topic_creator(struct irc_message_compo *compo)
 		else if (!is_numeric(time_str))
 			throw std::runtime_error("expected numeric string");
 
-		const time_t timestamp = (time_t) strtol(time_str, NULL, 10);
+		const time_t timestamp = static_cast<time_t>(strtol(time_str,
+		    NULL, 10));
 
 #if defined(UNIX)
 		if (localtime_r(&timestamp, &result) == NULL)

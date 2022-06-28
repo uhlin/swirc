@@ -225,8 +225,8 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 		else if (ctx.window->received_chancreated)
 			return;
 
-		const time_t date_of_creation =
-		    (time_t) strtol(seconds, NULL, 10);
+		const time_t date_of_creation = static_cast<time_t>
+		    (strtol(seconds, NULL, 10));
 
 #if defined(UNIX)
 		if (localtime_r(&date_of_creation, &result) == NULL)
