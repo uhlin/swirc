@@ -94,9 +94,10 @@ static usage_t chanserv_usage = {
 };
 
 static usage_t cap_usage = {
-  "usage: /cap ...",
+  N_("usage: /cap [ls | list]"),
   "",
-  "No help yet.",
+  N_("Lists the (IRCv3) capabilities supported by the server and/or the\n"
+     "capabilities associated with the active connection."),
   "",
 };
 
