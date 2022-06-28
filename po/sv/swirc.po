@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-06-28 17:31+0200\n"
-"PO-Revision-Date: 2022-06-19 14:57+0200\n"
+"PO-Revision-Date: 2022-06-28 17:49+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -89,15 +89,16 @@ msgstr ""
 "'chanserv_host' som ett tjänstvärdnamn."
 
 #: ../src/include/commandhelp.h:97
-#, fuzzy
 msgid "usage: /cap [ls | list]"
-msgstr "användning: /close"
+msgstr "användning: /cap [ls | list]"
 
 #: ../src/include/commandhelp.h:99
 msgid ""
 "Lists the (IRCv3) capabilities supported by the server and/or the\n"
 "capabilities associated with the active connection."
 msgstr ""
+"Listar (IRCv3) funktioner som stöds av servern och/eller funktioner\n"
+"som är associerade med den aktiva anslutningen."
 
 #: ../src/include/commandhelp.h:105
 msgid "usage: /cleartoasts"
