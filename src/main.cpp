@@ -47,7 +47,6 @@
 #include "curses-funcs.h"
 #include "cursesInit.h"
 #include "errHand.h"
-#include "filePred.h"
 #include "i18n.h"
 #include "io-loop.h"
 #include "irc.h"
