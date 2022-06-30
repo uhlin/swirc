@@ -34,7 +34,7 @@ static const size_t	argument_maxSize = 480;
  * Copy identifier
  */
 static char *
-copy_identifier(const char *&id)
+copy_identifier(const char *&id) noexcept
 {
 	size_t	 count = identifier_maxSize;
 	char	*dest_buf = new char[count + 1];
@@ -57,7 +57,7 @@ copy_identifier(const char *&id)
  */
 /*lint -sem(copy_argument, r_null) */
 static char *
-copy_argument(const char *&arg)
+copy_argument(const char *&arg) noexcept
 {
 	bool	 inside_arg = true;
 	size_t	 count = argument_maxSize;
