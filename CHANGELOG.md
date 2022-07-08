@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 - Added command `/cap`
 - Added config option `mouse_events`
 - Added new translations
-- Added usage of `noexcept` and a terminate handler
+- Added usage of `noexcept` and installed a terminate handler
 - Changed the startup screen to show the current language
 - Fixed C style casts in C++
 - Fixed SASLprep by switching to usage of `stringprep_profile()`. Prep
