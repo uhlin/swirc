@@ -43,6 +43,8 @@
 #include <process.h> /* _getpid() */
 #endif
 
+#include <exception>
+
 #include "assertAPI.h"
 #include "curses-funcs.h"
 #include "cursesInit.h"
@@ -142,6 +144,13 @@ static stringarray_t OptionDesc = {
   N_("    -v, --version        Output Swirc version\n"),
   N_("    -x <config>          Config file\n"),
 };
+
+static void
+swirc_terminate()
+{
+	err_msg("Unhandled exception!");
+	abort();
+}
 
 /**
  * View Swirc version
@@ -591,6 +600,8 @@ main(int argc, char *argv[])
 		err_msg("fatal: failed to initialize signal handling");
 		return EXIT_FAILURE;
 	}
+
+	(void) std::set_terminate(swirc_terminate);
 
 	if (argc == 2) {
 		if (strncmp(argv[1], "-v", 3) == 0 ||
