@@ -199,7 +199,7 @@ addvline(WINDOW *win, short int bg)
 }
 
 static void
-addnick(WINDOW *win, short int bg, const char *nick)
+addnick(WINDOW *win, short int bg, const char *nick) noexcept
 {
 	bool state1 = false;
 	bool state2 = false;

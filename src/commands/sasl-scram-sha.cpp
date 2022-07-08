@@ -166,7 +166,7 @@ sasl_scram_sha_send_client_final_msg(const char *proof)
 }
 
 static char *
-get_decoded_msg(const char *source, int *outlen)
+get_decoded_msg(const char *source, int *outlen) noexcept
 {
 	char	*decoded_msg = NULL;
 	int	 length_needed = b64_decode(source, NULL, 0);
@@ -310,7 +310,7 @@ get_digest(struct digest_context *ctx)
 }
 
 static char *
-get_client_first_msg_bare()
+get_client_first_msg_bare() noexcept
 {
 	char		*msg_bare;
 	size_t		 size;
@@ -328,7 +328,7 @@ get_client_first_msg_bare()
 }
 
 static char *
-get_client_final_msg_wo_proof()
+get_client_final_msg_wo_proof() noexcept
 {
 	char		*msg_wo_proof;
 	size_t		 size;
