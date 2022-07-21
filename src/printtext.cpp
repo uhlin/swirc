@@ -1096,6 +1096,8 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 	} catch (const std::bad_alloc &e) {
 		err_exit(ENOMEM, "try_convert_buf_with_cs: %s", e.what());
 		/* NOTREACHED */
+	} catch (...) {
+		sw_assert_not_reached();
 	}
 
 	return NULL;

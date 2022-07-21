@@ -298,6 +298,8 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 	} catch (const std::bad_alloc &e) {
 		err_exit(ENOMEM, "get_salted_password: %s", e.what());
 		/* NOTREACHED */
+	} catch (...) {
+		sw_assert_not_reached();
 	}
 
 	return out;
