@@ -295,6 +295,9 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 		delete[] out;
 		err_log(0, "get_salted_password: %s", e.what());
 		return NULL;
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "get_salted_password: %s", e.what());
+		/* NOTREACHED */
 	}
 
 	return out;
