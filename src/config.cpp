@@ -264,6 +264,13 @@ output_values_for_all_settings(void)
 	}
 }
 
+static void
+set_value_for_setting_ok_hook(const char *setting, const char *value)
+{
+	UNUSED_PARAM(setting);
+	UNUSED_PARAM(value);
+}
+
 static bool
 set_value_for_setting(const char *setting, const char *value,
     const char **err_reason)
@@ -293,6 +300,7 @@ set_value_for_setting(const char *setting, const char *value,
 			}
 
 			config_do_save(g_config_file, "w");
+			set_value_for_setting_ok_hook(setting, value);
 			return true;
 		}
 	}
