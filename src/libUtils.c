@@ -145,6 +145,12 @@ getval_strtol(const char *str, const long int lo, const long int hi,
 	return true;
 }
 
+bool
+time_format_ok(const char *fmt)
+{
+	return format_codes_are_ok(fmt);
+}
+
 const char *
 current_time(const char *fmt)
 {

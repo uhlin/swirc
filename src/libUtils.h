@@ -19,6 +19,7 @@ bool	 bool_false(const char *str);
 bool	 bool_true(const char *str);
 bool	 getval_strtol(const char *str, const long int lo, const long int hi,
 	     long int *val) PTR_ARGS_NONNULL;
+bool	 time_format_ok(const char *);
 const char *
 	 current_time(const char *fmt);
 const char *
