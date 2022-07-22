@@ -35,6 +35,7 @@
 #include "../commands/ignore.h"
 
 #include "../dataClassify.h"
+#include "../errHand.h"
 #include "../irc.h"
 #include "../network.h"
 #include "../printtext.h"

@@ -32,6 +32,7 @@
 #include <stdexcept>
 #include <string>
 
+#include "../errHand.h"
 #include "../irc.h"
 #include "../printtext.h"
 #include "../strHand.h"
