@@ -322,6 +322,8 @@ theme_item_install(const char *name, const char *value)
 	else if (strings_match(name, "term_use_default_colors"))
 		hInstall(name, "NO");
 #endif
+	else if (strings_match(name, "time_format") && !time_format_ok(value))
+		hInstall(name, "");
 	else
 		hInstall(name, value);
 	return 0;
