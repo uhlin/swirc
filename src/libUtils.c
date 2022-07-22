@@ -48,6 +48,23 @@
 const size_t	g_conversion_failed = ((size_t) -1);
 const time_t	g_time_error = ((time_t) -1);
 
+/* Check for vulnerabilities */
+static bool
+format_codes_are_ok(const char *fmt)
+{
+	const char	*cp = NULL;
+	const char	 legal_index[] = "aAbBcdHIjmMpSUwWxXyYzZ%";
+	ptrdiff_t	 diff = 0;
+
+	while ((cp = strchr(&fmt[diff], '%')) != NULL) {
+		if (isEmpty(++cp) || strchr(legal_index, *cp) == NULL)
+			return false;
+		else
+			diff = (++cp - fmt);
+	}
+	return true;
+}
+
 FILE *
 fopen_exit_on_error(const char *path, const char *mode)
 {
@@ -125,23 +142,6 @@ getval_strtol(const char *str, const long int lo, const long int hi,
 		return false;
 	}
 
-	return true;
-}
-
-/* Check for vulnerabilities */
-static bool
-format_codes_are_ok(const char *fmt)
-{
-	const char	*cp = NULL;
-	const char	 legal_index[] = "aAbBcdHIjmMpSUwWxXyYzZ%";
-	ptrdiff_t	 diff = 0;
-
-	while ((cp = strchr(&fmt[diff], '%')) != NULL) {
-		if (isEmpty(++cp) || strchr(legal_index, *cp) == NULL)
-			return false;
-		else
-			diff = (++cp - fmt);
-	}
 	return true;
 }
 
