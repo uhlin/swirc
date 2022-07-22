@@ -174,6 +174,12 @@ event_banlist(struct irc_message_compo *compo)
 
 		printtext(&ctx, "event_banlist(%s): error: %s", compo->command,
 		    e.what());
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "event_banlist(%s): error: %s", compo->command,
+		    e.what());
+	} catch (...) {
+		err_log(0, "event_banlist(%s): error: unknown exception",
+		    compo->command);
 	}
 }
 

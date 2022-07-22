@@ -232,6 +232,10 @@ event_notice(struct irc_message_compo *compo)
 		printtext_context_init(&ptext_ctx, g_status_window,
 		    TYPE_SPEC1_WARN, true);
 		printtext(&ptext_ctx, "event_notice: error: %s", e.what());
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "event_notice: error: %s", e.what());
+	} catch (...) {
+		err_log(0, "event_notice: error: unknown exception");
 	}
 }
 
