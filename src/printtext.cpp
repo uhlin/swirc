@@ -1504,6 +1504,8 @@ void
 printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	       int *rep_count)
 {
+	char *tmpbuf = NULL;
+	const char *tmpbuf_p = NULL;
 	int insert_count = 0;
 	int line_count = 0;
 	struct text_decoration_bools booleans; // calls constructor
@@ -1525,7 +1527,10 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 		return;
 
 	mutex_lock(&g_puts_mutex);
-	wc_buf = perform_convert_buffer(&buf);
+	tmpbuf = get_buffer(buf);
+	tmpbuf_p = addrof(tmpbuf[0]);
+	wc_buf = perform_convert_buffer(&tmpbuf_p);
+	free(tmpbuf);
 
 	if (is_scrollok(pwin))
 		append_newline(&wc_buf);
