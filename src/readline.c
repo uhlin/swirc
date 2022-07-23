@@ -41,6 +41,7 @@
 #endif
 #include "dataClassify.h"
 #include "errHand.h"
+#include "i18n.h"
 #include "io-loop.h"
 #include "libUtils.h"
 #include "log.h"
@@ -531,25 +532,25 @@ output_help(void)
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
 
-	printtext(&ctx, "--------------- Keys ---------------");
+	printtext(&ctx, "%s", _("--------------- Keys ---------------"));
 	printtext(&ctx, " ");
-	printtext(&ctx, "CTRL+a     Move to beginning of line");
-	printtext(&ctx, "CTRL+e     Move to end of line");
-	printtext(&ctx, "CTRL+b     Move cursor backward");
-	printtext(&ctx, "CTRL+f     Move cursor forward");
-	printtext(&ctx, "CTRL+d     Delete");
-	printtext(&ctx, "CTRL+g     Clear readline input");
-	printtext(&ctx, "CTRL+l     Toggle logging on/off");
-	printtext(&ctx, "CTRL+n     Next window");
-	printtext(&ctx, "CTRL+p     Previous window");
-	printtext(&ctx, "PG UP      Scroll up");
-	printtext(&ctx, "PG DOWN    Scroll down");
-	printtext(&ctx, "Up arrow   History previous");
-	printtext(&ctx, "Down arrow History next");
-	printtext(&ctx, "F3         Scroll nicklist up");
-	printtext(&ctx, "F4         Scroll nicklist down");
-	printtext(&ctx, "F11        Close window");
-	printtext(&ctx, "F12        Close all private conversations");
+	printtext(&ctx, "%s", _("CTRL+a     Move to beginning of line"));
+	printtext(&ctx, "%s", _("CTRL+e     Move to end of line"));
+	printtext(&ctx, "%s", _("CTRL+b     Move cursor backward"));
+	printtext(&ctx, "%s", _("CTRL+f     Move cursor forward"));
+	printtext(&ctx, "%s", _("CTRL+d     Delete"));
+	printtext(&ctx, "%s", _("CTRL+g     Clear readline input"));
+	printtext(&ctx, "%s", _("CTRL+l     Toggle logging on/off"));
+	printtext(&ctx, "%s", _("CTRL+n     Next window"));
+	printtext(&ctx, "%s", _("CTRL+p     Previous window"));
+	printtext(&ctx, "%s", _("PG UP      Scroll up"));
+	printtext(&ctx, "%s", _("PG DOWN    Scroll down"));
+	printtext(&ctx, "%s", _("Up arrow   History previous"));
+	printtext(&ctx, "%s", _("Down arrow History next"));
+	printtext(&ctx, "%s", _("F3         Scroll nicklist up"));
+	printtext(&ctx, "%s", _("F4         Scroll nicklist down"));
+	printtext(&ctx, "%s", _("F11        Close window"));
+	printtext(&ctx, "%s", _("F12        Close all private conversations"));
 	printtext(&ctx, " ");
 }
 
