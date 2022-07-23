@@ -716,7 +716,7 @@ get_locale_info(int category)
 	char buf[200] = { '\0' };
 	struct locale_info *li = new locale_info();
 
-	if (sw_strcpy(buf, setlocale(category, NULL), ARRAY_SIZE(buf)) != 0)
+	if (sw_strcpy(buf, xsetlocale(category, NULL), ARRAY_SIZE(buf)) != 0)
 		return (li);
 	if ((tok = strtok_r(buf, ".", &last)) != NULL)
 		li->lang_and_territory = sw_strdup(tok);

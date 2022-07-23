@@ -1062,10 +1062,10 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 		    codeset);
 		out = static_cast<wchar_t *>(xcalloc(size, sizeof *out));
 
-		if (setlocale(LC_CTYPE, tmp_locale) == NULL ||
+		if (xsetlocale(LC_CTYPE, tmp_locale) == NULL ||
 		    (bytes_convert = xmbstowcs(out, buf, size - 1)) ==
 		    g_conversion_failed) {
-			if (setlocale(LC_CTYPE, original_locale) == NULL) {
+			if (xsetlocale(LC_CTYPE, original_locale) == NULL) {
 				err_log(EPERM, "try_convert_buf_with_cs: "
 				    "cannot restore original locale (%s)",
 				    original_locale);
@@ -1076,7 +1076,7 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 
 		if (bytes_convert == (size - 1))
 			out[size - 1] = 0L;
-		if (setlocale(LC_CTYPE, original_locale) == NULL) {
+		if (xsetlocale(LC_CTYPE, original_locale) == NULL) {
 			err_log(EPERM, "try_convert_buf_with_cs: "
 			    "cannot restore original locale (%s)",
 			    original_locale);
