@@ -1444,6 +1444,7 @@ get_buffer(const char *orig)
 	if (!config_bool("iconv_conversion", true))
 		return sw_strdup(orig);
 	std::list<std::string> fromcode = {
+		"UTF-8",
 		"ISO-8859-1",
 		"ISO-8859-15"
 	};
