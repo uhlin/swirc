@@ -31,7 +31,13 @@
 
 #include <clocale>
 #include <cwctype>
+#include <list>
 #include <stdexcept>
+#include <string>
+
+#ifdef HAVE_LIBICONV
+#include <iconv.h>
+#endif
 
 #include "assertAPI.h"
 #include "atomicops.h"
