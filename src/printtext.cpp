@@ -1470,8 +1470,7 @@ get_buffer(const char *orig)
 			free(out);
 			(void) iconv_close(cd);
 			continue;
-		} else if (inbytes == 0) {
-			sw_assert_perror(errno);
+		} else if (inbytes == 0 && errno == 0) {
 			out[outsize - outbytes] = '\0';
 			free(orig_copy);
 			(void) iconv_close(cd);
