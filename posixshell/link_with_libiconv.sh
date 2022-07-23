@@ -32,7 +32,7 @@ EOF
 	if [ "$(uname -s)" = "Linux" ]; then
 		_libs=""
 	else
-		_libs=""
+		_libs="-liconv"
 	fi
 	$CC $CFLAGS "$_srcfile" -o "$_out" $LDFLAGS $_libs >/dev/null 2>&1
 	if [ $? -eq 0 ]; then
