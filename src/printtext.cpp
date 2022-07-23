@@ -1436,6 +1436,57 @@ printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
 	va_end(ap);
 }
 
+static char *
+get_buffer(const char *orig)
+{
+#define UTF8_MAXBYTE 4
+#ifdef HAVE_LIBICONV
+	if (!config_bool("iconv_conversion", true))
+		return sw_strdup(orig);
+	std::list<std::string> fromcode = {
+		"ISO-8859-1",
+		"ISO-8859-15"
+	};
+	for (const std::string &x : fromcode) {
+		char *in, *orig_copy, *out, *out_p;
+		iconv_t cd;
+		size_t inbytes, outbytes, outsize;
+
+		if ((cd = iconv_open("UTF-8", x.c_str())) == reinterpret_cast
+		    <iconv_t>(-1))
+			continue;
+		orig_copy = sw_strdup(orig);
+		in = addrof(orig_copy[0]);
+		inbytes = strlen(in);
+		outbytes = outsize = size_product(inbytes, UTF8_MAXBYTE);
+		out = static_cast<char *>(xmalloc(outbytes + 1));
+		out_p = addrof(out[0]);
+		errno = 0;
+		if (iconv(cd, &in, &inbytes, &out_p, &outbytes) == static_cast
+		    <size_t>(-1)) {
+			free(orig_copy);
+			free(out);
+			(void) iconv_close(cd);
+			continue;
+		} else if (inbytes == 0) {
+			sw_assert_perror(errno);
+			out[outsize - outbytes] = '\0';
+			free(orig_copy);
+			(void) iconv_close(cd);
+			debug("get_buffer: iconv succeeded!");
+			return static_cast<char *>(xrealloc(out,
+			    strlen(out) + 1));
+		}
+		free(orig_copy);
+		free(out);
+		(void) iconv_close(cd);
+	}
+	return sw_strdup(orig);
+#else
+	return sw_strdup(orig);
+#endif
+}
+
 /**
  * Output data to window
  *
