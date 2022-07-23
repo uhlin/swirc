@@ -20,6 +20,7 @@ XGTFLAGS = --add-comments\
 INPUTFILES = $(SRC_DIR)include/commandhelp.h\
 	$(SRC_DIR)io-loop.c\
 	$(SRC_DIR)main.cpp\
+	$(SRC_DIR)readline.c\
 	$(SRC_DIR)sig-w32.c
 
 POFILES = de/$(PKG).po\
