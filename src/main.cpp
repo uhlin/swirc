@@ -557,6 +557,7 @@ main(int argc, char *argv[])
 		debug("set locale ok");
 #endif
 	}
+	xsetlocale = setlocale;
 
 #ifdef HAVE_LIBINTL_H
 #if defined(UNIX)
