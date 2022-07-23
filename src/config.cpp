@@ -28,6 +28,7 @@
    POSSIBILITY OF SUCH DAMAGE. */
 
 #include "common.h"
+
 #include "config.h"
 #include "errHand.h"
 #include "interpreter.h"
@@ -35,6 +36,7 @@
 #include "main.h"
 #include "nestHome.h"
 #include "printtext.h"
+#include "readline.h"
 #include "strHand.h"
 #include "theme.h"
 
@@ -267,7 +269,9 @@ output_values_for_all_settings(void)
 static void
 set_value_for_setting_ok_hook(const char *setting, const char *value)
 {
-	UNUSED_PARAM(setting);
+	if (strings_match(setting, "mouse") ||
+	    strings_match(setting, "mouse_events"))
+		readline_mouse_init();
 	UNUSED_PARAM(value);
 }
 
