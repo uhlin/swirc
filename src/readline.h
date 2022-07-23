@@ -91,6 +91,7 @@ char	*readline_finalize_out_string_exported(const wchar_t *);
 void	 readline_handle_backspace(volatile struct readline_session_context *);
 void	 readline_handle_key_exported(volatile struct readline_session_context *,
 	     wint_t);
+void	 readline_mouse_init(void);
 void	 readline_recreate(int rows, int cols);
 void	 readline_top_panel(void);
 __SWIRC_END_DECLS

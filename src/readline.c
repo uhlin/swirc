@@ -795,17 +795,7 @@ readline_init(void)
 	apply_readline_options(panel_window(readline_pan1));
 	apply_readline_options(panel_window(readline_pan2));
 
-	if (config_bool("mouse", false)) {
-		const char *str = Config("mouse_events");
-
-		if (strings_match(str, "all") || strings_match(str, "ALL"))
-			(void) mousemask(ALL_MOUSE_EVENTS, NULL);
-		else if (strings_match(str, "wheel") || strings_match(str,
-		    "WHEEL"))
-			report_wheel_events();
-		else
-			err_log(EINVAL, "readline_init: 'mouse_events'");
-	}
+	readline_mouse_init();
 }
 
 /**
@@ -876,6 +866,24 @@ readline_handle_key_exported(volatile struct readline_session_context *ctx,
     wint_t wc)
 {
 	handle_key(ctx, wc);
+}
+
+void
+readline_mouse_init(void)
+{
+	if (config_bool("mouse", false)) {
+		const char *str = Config("mouse_events");
+
+		if (strings_match(str, "all") || strings_match(str, "ALL"))
+			(void) mousemask(ALL_MOUSE_EVENTS, NULL);
+		else if (strings_match(str, "wheel") || strings_match(str,
+		    "WHEEL"))
+			report_wheel_events();
+		else
+			err_log(EINVAL, "readline_mouse_init: 'mouse_events'");
+	} else {
+		(void) mousemask(0, NULL);
+	}
 }
 
 /**
