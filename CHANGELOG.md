@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added command `/cap`
+- Added config option `iconv_conversion` (bool)
 - Added config option `mouse_events`
 - Added new translations
 - Added usage of `noexcept` and installed a terminate handler
