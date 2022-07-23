@@ -1460,6 +1460,7 @@ get_buffer(const char *orig)
 		inbytes = strlen(in);
 		outbytes = outsize = size_product(inbytes, UTF8_MAXBYTE);
 		out = static_cast<char *>(xmalloc(outbytes + 1));
+		out[outbytes] = '\0';
 		out_p = addrof(out[0]);
 		errno = 0;
 		if (iconv(cd, &in, &inbytes, &out_p, &outbytes) == static_cast
