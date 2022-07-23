@@ -9,6 +9,7 @@ MAKE_DEF_FILE=options.mk
 . "posixshell/fix_cflags.sh"
 . "posixshell/link_with_gnu_libidn.sh"
 . "posixshell/link_with_gnu_libintl.sh"
+. "posixshell/link_with_libiconv.sh"
 . "posixshell/link_with_libnotify.sh"
 . "posixshell/os_BSD.sh"
 . "posixshell/os_LINUX.sh"
@@ -17,6 +18,7 @@ MAKE_DEF_FILE=options.mk
 . "posixshell/os_NETBSD.sh"
 
 _with_libnotify=0
+_without_libiconv=0
 _without_libidn=0
 _without_libintl=0
 
@@ -25,6 +27,7 @@ print_help () {
 	echo "Configuration options:"
 	echo ""
 	echo "  --with-libnotify   Enable support for desktop notifications"
+	echo "  --without-libiconv Build without GNU libiconv"
 	echo "  --without-libidn   Build without GNU libidn"
 	echo "  --without-libintl  No internationalization"
 	echo ""
@@ -38,6 +41,9 @@ for arg in "$@"; do
 		;;
 	"--with-libnotify")
 		_with_libnotify=1
+		;;
+	"--without-libiconv")
+		_without_libiconv=1
 		;;
 	"--without-libidn")
 		_without_libidn=1
@@ -84,6 +90,10 @@ esac
 
 if [ $_with_libnotify -eq 1 ]; then
 	link_with_libnotify
+fi
+
+if [ $_without_libiconv -eq 0 ]; then
+	link_with_libiconv
 fi
 
 if [ $_without_libidn -eq 0 ]; then
