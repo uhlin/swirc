@@ -1474,7 +1474,8 @@ get_buffer(const char *orig)
 			out[outsize - outbytes] = '\0';
 			free(orig_copy);
 			(void) iconv_close(cd);
-			debug("get_buffer: iconv succeeded!");
+			debug("get_buffer: iconv succeeded: fromcode: %s",
+			    x.c_str());
 			return static_cast<char *>(xrealloc(out,
 			    strlen(out) + 1));
 		}
