@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2022-07-23 11:34+0200\n"
-"PO-Revision-Date: 2022-06-28 17:49+0200\n"
+"PO-Revision-Date: 2022-07-23 12:08+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1064,75 +1064,75 @@ msgstr "Användning: %s [FLAGGA] ...\n"
 
 #: ../src/readline.c:535
 msgid "--------------- Keys ---------------"
-msgstr ""
+msgstr "--------------- Tangenter ---------------"
 
 #: ../src/readline.c:537
 msgid "CTRL+a     Move to beginning of line"
-msgstr ""
+msgstr "CTRL+a     Flytta till början av raden"
 
 #: ../src/readline.c:538
 msgid "CTRL+e     Move to end of line"
-msgstr ""
+msgstr "CTRL+e     Flytta till slutet av raden"
 
 #: ../src/readline.c:539
 msgid "CTRL+b     Move cursor backward"
-msgstr ""
+msgstr "CTRL+b     Flytta markören bakåt"
 
 #: ../src/readline.c:540
 msgid "CTRL+f     Move cursor forward"
-msgstr ""
+msgstr "CTRL+f     Flytta markören framåt"
 
 #: ../src/readline.c:541
 msgid "CTRL+d     Delete"
-msgstr ""
+msgstr "CTRL+d     Ta bort"
 
 #: ../src/readline.c:542
 msgid "CTRL+g     Clear readline input"
-msgstr ""
+msgstr "CTRL+g     Töm inmatning"
 
 #: ../src/readline.c:543
 msgid "CTRL+l     Toggle logging on/off"
-msgstr ""
+msgstr "CTRL+l     Växla loggning av/på"
 
 #: ../src/readline.c:544
 msgid "CTRL+n     Next window"
-msgstr ""
+msgstr "CTRL+n     Nästa fönster"
 
 #: ../src/readline.c:545
 msgid "CTRL+p     Previous window"
-msgstr ""
+msgstr "CTRL+p     Föregående fönster"
 
 #: ../src/readline.c:546
 msgid "PG UP      Scroll up"
-msgstr ""
+msgstr "PG UP      Scrolla upp"
 
 #: ../src/readline.c:547
 msgid "PG DOWN    Scroll down"
-msgstr ""
+msgstr "PG DOWN    Scrolla ned"
 
 #: ../src/readline.c:548
 msgid "Up arrow   History previous"
-msgstr ""
+msgstr "Up arrow   Föregående kommando"
 
 #: ../src/readline.c:549
 msgid "Down arrow History next"
-msgstr ""
+msgstr "Down arrow Nästa kommando"
 
 #: ../src/readline.c:550
 msgid "F3         Scroll nicklist up"
-msgstr ""
+msgstr "F3         Scrolla nicklistan upp"
 
 #: ../src/readline.c:551
 msgid "F4         Scroll nicklist down"
-msgstr ""
+msgstr "F4         Scrolla nicklistan ned"
 
 #: ../src/readline.c:552
 msgid "F11        Close window"
-msgstr ""
+msgstr "F11        Stäng fönster"
 
 #: ../src/readline.c:553
 msgid "F12        Close all private conversations"
-msgstr ""
+msgstr "F12        Stäng alla privata konversationer"
 
 #: ../src/sig-w32.c:26
 msgid "Abnormal termination"
