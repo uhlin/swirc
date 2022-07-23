@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Fixed unhandled exceptions
 - Improved the contents of `/help`
   - Completed translating everything to Swedish
+- Made config option `mouse` change take affect at once
 - Made improvements to `events/cap.c`
 - Made small optimizations
 - Made the dot mo files available for read operations with `unveil()`
