@@ -94,6 +94,7 @@ OS X works.
 The following options can be passed to the configure script:
 
 - `--with-libnotify`: Enable support for desktop notifications
+- `--without-libiconv`: Build without GNU libiconv
 - `--without-libidn`: Build without GNU libidn
 - `--without-libintl`: No internationalization
 
