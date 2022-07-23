@@ -41,6 +41,15 @@ EOF
 CFLAGS += -DHAVE_LIBICONV=1
 CXXFLAGS += -DHAVE_LIBICONV=1
 EOF
+		case "$(uname -s)" in
+		"Darwin" | "FreeBSD" | "NetBSD" | "OpenBSD")
+			cat <<EOF >>$MAKE_DEF_FILE
+LDLIBS += -liconv
+EOF
+			;;
+		*)
+			;;
+		esac
 	else
 		echo "no"
 	fi
