@@ -1439,8 +1439,8 @@ printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
 static char *
 get_buffer(const char *orig)
 {
-#define UTF8_MAXBYTE 4
 #ifdef HAVE_LIBICONV
+#define UTF8_MAXBYTE 4
 	if (!config_bool("iconv_conversion", true))
 		return sw_strdup(orig);
 	std::list<std::string> fromcode = {
