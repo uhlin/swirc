@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Made improvements to `events/cap.c`
 - Made small optimizations
 - Made the dot mo files available for read operations with `unveil()`
+- Updated the TODO :-)
 
 ### Windows ###
 - Added a GNU bundle containing:
