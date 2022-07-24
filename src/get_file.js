@@ -18,4 +18,4 @@ get_file("https://www.nifty-networks.net/swirc/curl-7.83.0.cab", "curl-7.83.0.ca
 get_file("https://www.nifty-networks.net/swirc/gnu-bundle-202205.cab", "gnu-bundle-202205.cab");
 get_file("https://www.nifty-networks.net/swirc/libressl-3.5.2-windows.cab", "libressl-3.5.2-windows.cab");
 get_file("https://www.nifty-networks.net/swirc/pdcurses-3.9.cab", "pdcurses-3.9.cab");
-get_file("https://www.nifty-networks.net/swirc/swirc-locales-20220430.cab", "swirc-locales-20220430.cab");
+get_file("https://www.nifty-networks.net/swirc/swirc-locales-20220724.cab", "swirc-locales-20220724.cab");
