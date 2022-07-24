@@ -149,6 +149,7 @@ handle_ack_and_nak(PPRINTTEXT_CONTEXT ctx, struct irc_message_compo *compo,
 				return;
 			}
 
+			*continue_capneg = true;
 			(void) net_send("AUTHENTICATE %s", mechanism);
 		} else {
 			NAK("SASL authentication");
