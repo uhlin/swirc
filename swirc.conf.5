@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018-2022 Markus Uhlin. All rights reserved.
 .\"
-.Dd June 23, 2022
+.Dd July 24, 2022
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -109,6 +109,15 @@ Connection timeout in seconds
 .\" ----------------------------------------
 .It Sy hostname_checking Pq Em bool
 Enable or disable TLS/SSL hostname verification
+.\" ----------------------------------------
+.\" ICONV CONVERSION
+.\" ----------------------------------------
+.It Sy iconv_conversion Pq Em bool
+Perform character conversion using GNU libiconv?
+If having this option set to 'on' causes troubles or if you don't need
+it, it can safely be switched off.
+Switching it off boosts the performance of the printtext module
+significantly.
 .\" ----------------------------------------
 .\" INVITE NOTIFY
 .\" ----------------------------------------
