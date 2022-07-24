@@ -1445,11 +1445,13 @@ get_buffer(const char *orig)
 #define UTF8_MAXBYTE 4
 	if (!config_bool("iconv_conversion", false))
 		return sw_strdup(orig);
-	std::list<std::string> fromcode = {
-		"UTF-8",
-		"ISO-8859-1",
-		"ISO-8859-15"
-	};
+
+	std::list<std::string> fromcode;
+
+	fromcode.push_back("UTF-8");
+	fromcode.push_back("ISO-8859-1");
+	fromcode.push_back("ISO-8859-15");
+
 	for (const std::string &x : fromcode) {
 		char *in, *orig_copy, *out, *out_p;
 		iconv_t cd;
