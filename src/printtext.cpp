@@ -1485,6 +1485,9 @@ get_buffer(const char *orig)
 	}
 	return sw_strdup(orig);
 #else
+	/*
+	 * !HAVE_LIBICONV
+	 */
 	return sw_strdup(orig);
 #endif
 }
