@@ -1436,6 +1436,8 @@ printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
 	va_end(ap);
 }
 
+static char *get_buffer(const char *) PTR_ARGS_NONNULL;
+
 static char *
 get_buffer(const char *orig)
 {
