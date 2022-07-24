@@ -104,7 +104,7 @@ static struct tagConfDefValues {
 	{ "cmd_hist_size",             TYPE_INTEGER, 3, "50" },
 	{ "connection_timeout",        TYPE_INTEGER, 2, "45" },
 	{ "hostname_checking",         TYPE_BOOLEAN, 2, "yes" },
-	{ "iconv_conversion",          TYPE_BOOLEAN, 2, "yes" },
+	{ "iconv_conversion",          TYPE_BOOLEAN, 2, "no" },
 	{ "joins_parts_quits",         TYPE_BOOLEAN, 2, "no" },
 	{ "kick_close_window",         TYPE_BOOLEAN, 2, "yes" },
 	{ "max_chat_windows",          TYPE_INTEGER, 2, "60" },

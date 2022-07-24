@@ -1443,7 +1443,7 @@ get_buffer(const char *orig)
 {
 #ifdef HAVE_LIBICONV
 #define UTF8_MAXBYTE 4
-	if (!config_bool("iconv_conversion", true))
+	if (!config_bool("iconv_conversion", false))
 		return sw_strdup(orig);
 	std::list<std::string> fromcode = {
 		"UTF-8",
