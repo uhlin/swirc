@@ -55,11 +55,15 @@ convert_wc(wchar_t wc)
 
 	BZERO(&ps, sizeof(mbstate_t));
 #ifdef HAVE_BCI
-	if ((errno = wcrtomb_s(&bytes_written, mbs, size, wc, &ps)) != 0)
+	if ((errno = wcrtomb_s(&bytes_written, mbs, size, wc, &ps)) != 0) {
+		free(mbs);
 		readline_error(errno, "wcrtomb_s");
+	}
 #else
-	if ((bytes_written = wcrtomb(mbs, wc, &ps)) == g_conversion_failed)
+	if ((bytes_written = wcrtomb(mbs, wc, &ps)) == g_conversion_failed) {
+		free(mbs);
 		readline_error(errno, "wcrtomb");
+	}
 #endif
 	(void) bytes_written;
 	return xrealloc(mbs, strlen(mbs) + 1);
