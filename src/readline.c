@@ -389,7 +389,7 @@ static char *
 finalize_out_string(const wchar_t *buf)
 {
 	const size_t	 size = size_product(wcslen(buf) + 1, MB_LEN_MAX);
-	char		*out = xmalloc(size);
+	char		*out = xcalloc(size, 1);
 	size_t		 bytes_convert;
 
 	errno = 0;
@@ -413,7 +413,7 @@ static char *
 finalize_out_string(const wchar_t *buf)
 {
 	const int size = size_to_int(size_product(wcslen(buf) + 1, MB_LEN_MAX));
-	char *out = xmalloc(size);
+	char *out = xcalloc(size, 1);
 
 	errno = 0;
 
