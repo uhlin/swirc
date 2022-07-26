@@ -153,7 +153,7 @@ write_cmdprompt(WINDOW *win, const char *prompt, int size)
 		readline_error(0, "write_cmdprompt: werase");
 
 	printtext_puts(win, prompt, -1, -1, NULL);
-	(void) size; /* unused. provided for compatibility. */
+	UNUSED_PARAM(size);
 }
 
 /**

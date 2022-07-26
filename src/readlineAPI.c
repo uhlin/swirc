@@ -54,6 +54,7 @@ convert_wc(wchar_t wc)
 	size_t		 bytes_written;
 
 	BZERO(&ps, sizeof(mbstate_t));
+
 #ifdef HAVE_BCI
 	if ((errno = wcrtomb_s(&bytes_written, mbs, size, wc, &ps)) != 0) {
 		free(mbs);
@@ -65,7 +66,8 @@ convert_wc(wchar_t wc)
 		readline_error(errno, "wcrtomb");
 	}
 #endif
-	(void) bytes_written;
+
+	UNUSED_VAR(bytes_written);
 	return xrealloc(mbs, strlen(mbs) + 1);
 }
 
