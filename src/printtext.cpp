@@ -341,7 +341,7 @@ convert_wc(wchar_t wc)
 #endif
 
 	(void) bytes_written; /* not used. provided for compatibility. */
-	return mbs;
+	return static_cast<unsigned char *>(xrealloc(mbs, strlen(mbs) + 1));
 }
 
 typedef enum {

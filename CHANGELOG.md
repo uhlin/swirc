@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Fixed SASLprep by switching to usage of `stringprep_profile()`. Prep
   now works on Windows too!
 - Fixed unhandled exceptions
+- Improved memory handling
 - Improved the contents of `/help`
   - Completed translating everything to Swedish
 - Made config option `mouse` change take affect at once

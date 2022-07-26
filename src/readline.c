@@ -398,12 +398,12 @@ finalize_out_string(const wchar_t *buf)
 	    g_conversion_failed) {
 		err_log(errno, "finalize_out_string: wcstombs");
 		BZERO(out, size);
-		return out;
+		return xrealloc(out, 1);
 	} else if (bytes_convert == (size - 1)) {
 		out[size - 1] = '\0';
 	}
 
-	return out;
+	return xrealloc(out, strlen(out) + 1);
 }
 #elif defined(WIN32)
 /* ----- */
@@ -418,11 +418,11 @@ finalize_out_string(const wchar_t *buf)
 	errno = 0;
 
 	if (WideCharToMultiByte(CP_UTF8, 0, buf, -1, out, size, NULL, NULL) > 0)
-		return out;
+		return xrealloc(out, strlen(out) + 1);
 
 	err_log(errno, "finalize_out_string: WideCharToMultiByte");
 	BZERO(out, size);
-	return out;
+	return xrealloc(out, 1);
 }
 #endif
 
