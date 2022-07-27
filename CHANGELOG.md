@@ -2,24 +2,24 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added command `/cap`
-- Added config option `iconv_conversion` (bool)
-- Added config option `mouse_events`
-- Added new translations
-- Added usage of `noexcept` and installed a terminate handler
-- Changed the startup screen to show the current language
-- Fixed C style casts in C++
-- Fixed SASLprep by switching to usage of `stringprep_profile()`. Prep
+- **Added** command `/cap`
+- **Added** config option `iconv_conversion` (bool)
+- **Added** config option `mouse_events`
+- **Added** new translations
+- **Added** usage of `noexcept` and installed a terminate handler
+- **Changed** the startup screen to show the current language
+- **Fixed** C style casts in C++
+- **Fixed** SASLprep by switching to usage of `stringprep_profile()`. Prep
   now works on Windows too!
-- Fixed memory leaks
-- Fixed unhandled exceptions
+- **Fixed** memory leaks
+- **Fixed** unhandled exceptions
 - Improved memory handling
 - Improved the contents of `/help`
   - Completed translating everything to Swedish
-- Made config option `mouse` change take affect at once
-- Made improvements to `events/cap.c`
-- Made small optimizations
-- Made the dot mo files available for read operations with `unveil()`
+- **Made** config option `mouse` change take affect at once
+- **Made** improvements to `events/cap.c`
+- **Made** small optimizations
+- **Made** the dot mo files available for read operations with `unveil()`
 - Updated the TODO :-)
 
 ### Windows ###
