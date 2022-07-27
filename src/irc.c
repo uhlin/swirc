@@ -709,7 +709,7 @@ irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 
 		cp = NULL;
 		loop_count++;
-	} /* for */
+	} /* while */
 
 	free(last_token);
 }
