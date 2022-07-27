@@ -341,7 +341,9 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
 		return;
 	}
 
-	for (i = 0, cp = &compo->params[0];; i++, cp = NULL) {
+	i = 0;
+	cp = &compo->params[0];
+	while (true) {
 		char *token;
 
 		if ((token = strtok_r(cp, "\n", &state)) == NULL) {
@@ -359,6 +361,8 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
 				return;
 			}
 		}
+		i++;
+		cp = NULL;
 	}
 }
 
@@ -456,7 +460,10 @@ SortMsgCompo(const char *protocol_message)
 		return NULL;
 	}
 
-	for (loop_run = 0, cp = &remaining_data[0];; loop_run++, cp = NULL) {
+	loop_run = 0;
+	cp = &remaining_data[0];
+
+	while (true) {
 		char *token;
 
 		if ((token = strtok_r(cp, "\n", &state)) == NULL)
@@ -486,6 +493,9 @@ SortMsgCompo(const char *protocol_message)
 
 		if (compo->command != NULL && compo->params != NULL)
 			break;
+
+		loop_run++;
+		cp = NULL;
 	}
 
 	free(remaining_data);
@@ -662,7 +672,10 @@ irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 	if (!terminated_recvchunk)
 		last_token = get_last_token(recvbuffer); /* Must be freed */
 
-	for (cp = &recvbuffer[0], loop_count = 0;; cp = NULL, loop_count++) {
+	cp = &recvbuffer[0];
+	loop_count = 0;
+
+	while (true) {
 		char *token;
 
 		if ((token = strtok_r(cp, separators, &tokstate)) == NULL) {
@@ -693,6 +706,9 @@ irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 		}
 
 		ProcessProtoMsg(token);
+
+		cp = NULL;
+		loop_count++;
 	} /* for */
 
 	free(last_token);
