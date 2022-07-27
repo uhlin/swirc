@@ -1,5 +1,5 @@
 edit_ports_makefile () {
-	local _expr="4s/swirc-.*/swirc-$VERSION/"
+	local _expr="2s/swirc-.*/swirc-$VERSION/"
 
 	printf "  - Editing %s..." "$1"
 
