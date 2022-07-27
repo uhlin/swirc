@@ -1,7 +1,8 @@
 edit_debian_changelog () {
 	local author="Markus Uhlin"
 	local email="markus.uhlin@bredband.net"
-	local timestamp="$(date -R)"
+#	local timestamp="$(date -R)"
+	local timestamp="$(date "+%a, %e %b %Y %H:%M:%S %z")"
 	local tmpFile1="$(mktemp)"
 	local tmpFile2="$(mktemp)"
 
