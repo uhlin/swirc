@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.3.5] - 2022-07-28 ##
 - **Added** command `/cap`
 - **Added** config option `iconv_conversion` (bool)
 - **Added** config option `mouse_events`
