@@ -19,6 +19,10 @@ BUILD_DEPENDS =		devel/gettext,-tools
 LIB_DEPENDS =		devel/gettext,-runtime \
 			devel/libidn \
 			net/curl
+
+CONFIGURE_ENV +=	CFLAGS="-I${LOCALBASE}/include" \
+			CXXFLAGS="-I${LOCALBASE}/include" \
+			LDFLAGS="-L${LOCALBASE}/lib"
 CONFIGURE_STYLE =	simple
 
 TEST_DEPENDS =		devel/cmocka
