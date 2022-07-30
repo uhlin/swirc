@@ -1,5 +1,6 @@
 COMMENT =	curses icb and irc client
 DISTNAME =	swirc-3.3.5
+REVISION =	0
 CATEGORIES =	net
 HOMEPAGE =	https://www.nifty-networks.net/swirc/
 
@@ -14,16 +15,21 @@ WANTLIB =		${COMPILER_LIBCXX} c crypto curl curses iconv idn intl \
 
 MASTER_SITES =		https://www.nifty-networks.net/swirc/releases/
 EXTRACT_SUFX =		.tgz
+
+# C++17
 COMPILER =		base-clang ports-gcc
+
 BUILD_DEPENDS =		devel/gettext,-tools
 LIB_DEPENDS =		devel/gettext,-runtime \
 			devel/libidn \
 			net/curl
 
-CONFIGURE_ENV +=	CFLAGS="-I${LOCALBASE}/include" \
-			CXXFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib"
+CFLAGS +=		-I${LOCALBASE}/include
+LDFLAGS +=		-L${LOCALBASE}/lib
+
 CONFIGURE_STYLE =	simple
+CONFIGURE_ENV +=	CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" \
+			LDFLAGS="${LDFLAGS}"
 
 TEST_DEPENDS =		devel/cmocka
 TEST_TARGET =		check
@@ -32,5 +38,8 @@ MAKE_FLAGS =		DEST_CONFMAN=${WRKINST}${PREFIX}/man/man5 \
 			DEST_MANUAL=${WRKINST}${PREFIX}/man/man1 \
 			INSTALL_DEPS=swirc src/swirc.1 swirc.conf.5 \
 			PREFIX="${PREFIX}" CC="${CC}" CXX="${CXX}"
+
+# show the commands being executed
+MAKE_FLAGS +=		E=@true Q=''
 
 .include <bsd.port.mk>
