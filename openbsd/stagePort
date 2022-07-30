@@ -3,7 +3,7 @@
 SWIRC_PATH=/usr/ports/net/swirc
 
 install_patches () {
-	_patches="patch-posixshell_os_BSD_sh"
+	local _patches="patch-posixshell_os_BSD_sh"
 
 	for p in $_patches; do
 		install -m 0644 "patches/$p" $SWIRC_PATH/patches
