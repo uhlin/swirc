@@ -33,6 +33,7 @@
 #include <string.h>
 #include <time.h>
 
+#include "assertAPI.h"
 #include "curses-funcs.h"
 #include "dataClassify.h"
 #include "errHand.h"
@@ -157,12 +158,36 @@ time_format_ok(const char *fmt)
 char
 rot13_byte(char b)
 {
+	char bs[2];
+	size_t x;
+	static const size_t upper_bound = 26;
+
+	sw_static_assert(ARRAY_SIZE(g_alphabet_upcase) == 27,
+	    "g_alphabet_upcase: sizes mismatch");
+	sw_static_assert(ARRAY_SIZE(g_alphabet_downcase) == 27,
+	    "g_alphabet_downcase: sizes mismatch");
+
+	if (b >= 'A' && b <= 'Z') {
+		bs[0] = b;
+		bs[1] = '\0';
+		x = strcspn(addrof(g_alphabet_upcase[0]), addrof(bs[0]));
+		x += 13;
+		return g_alphabet_upcase[x % upper_bound];
+	} else if (b >= 'a' && b <= 'z') {
+		bs[0] = b;
+		bs[1] = '\0';
+		x = strcspn(addrof(g_alphabet_downcase[0]), addrof(bs[0]));
+		x += 13;
+		return g_alphabet_downcase[x % upper_bound];
+	}
 	return b;
 }
 
 char *
 rot13_str(char *str)
 {
+	for (char *cp = addrof(str[0]); *cp != '\0'; cp++)
+		*cp = rot13_byte(*cp);
 	return str;
 }
 
