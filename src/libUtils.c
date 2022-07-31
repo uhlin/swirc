@@ -154,6 +154,18 @@ time_format_ok(const char *fmt)
 	return format_codes_are_ok(fmt);
 }
 
+char
+rot13_byte(char b)
+{
+	return b;
+}
+
+char *
+rot13_str(char *str)
+{
+	return str;
+}
+
 const char *
 current_time(const char *fmt)
 {
