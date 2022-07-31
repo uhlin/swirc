@@ -5,6 +5,9 @@
 #include <time.h>
 
 __SWIRC_BEGIN_DECLS
+extern const char	g_alphabet_upcase[];
+extern const char	g_alphabet_downcase[];
+
 extern const size_t	g_conversion_failed;
 extern const time_t	g_time_error;
 __SWIRC_END_DECLS

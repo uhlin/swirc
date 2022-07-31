@@ -45,6 +45,9 @@
 #define PRINT_SIZE	"%Iu"
 #endif
 
+const char	g_alphabet_upcase[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const char	g_alphabet_downcase[] = "abcdefghijklmnopqrstuvwxyz";
+
 const size_t	g_conversion_failed = ((size_t) -1);
 const time_t	g_time_error = ((time_t) -1);
 
