@@ -14,6 +14,7 @@ TESTS = cmd_ban.run\
 	is_alphabetic.run\
 	is_numeric.run\
 	realloc_strcat.run\
+	rot13.run\
 	size_product.run\
 	squeeze.run\
 	squeeze_text_deco.run\
