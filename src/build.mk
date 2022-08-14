@@ -5,6 +5,7 @@ OBJS += $(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)b64_decode.o\
 	$(SRC_DIR)b64_encode.o\
 	$(SRC_DIR)config.o\
+	$(SRC_DIR)crypt.o\
 	$(SRC_DIR)curses-funcs.o\
 	$(SRC_DIR)cursesInit.o\
 	$(SRC_DIR)dataClassify.o\

@@ -8,6 +8,7 @@ OBJS = $(OBJS)\
 	$(SRC_DIR)b64_decode.obj\
 	$(SRC_DIR)b64_encode.obj\
 	$(SRC_DIR)config.obj\
+	$(SRC_DIR)crypt.obj\
 	$(SRC_DIR)curses-funcs.obj\
 	$(SRC_DIR)cursesInit.obj\
 	$(SRC_DIR)dataClassify.obj\
