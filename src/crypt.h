@@ -16,6 +16,7 @@ typedef struct tagCRYPT_CTX {
 __SWIRC_BEGIN_DECLS
 char *crypt_decrypt_str(const cryptstr_t, const cryptstr_t, const bool);
 char *crypt_encrypt_str(const cryptstr_t, const cryptstr_t, const bool);
+int crypt_get_base64_decode_length(const char *);
 int crypt_get_base64_encode_length(const int);
 int crypt_get_key_and_iv(const cryptstr_t password, PCRYPT_CTX);
 int crypt_strlen(const cryptstr_t);

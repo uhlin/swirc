@@ -125,6 +125,12 @@ crypt_encrypt_str(const cryptstr_t str, const cryptstr_t password,
 }
 
 int
+crypt_get_base64_decode_length(const char *str)
+{
+	return b64_decode(str, NULL, 0) + 1;
+}
+
+int
 crypt_get_base64_encode_length(const int n)
 {
 	double	d;
