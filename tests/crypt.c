@@ -11,8 +11,8 @@
 static void
 canEncrypt_test1(void **state)
 {
-	const cryptstr_t str = "Text to encrypt";
-	const cryptstr_t password = "Insecure123";
+	const cryptstr_t str = (cryptstr_t) "Text to encrypt";
+	const cryptstr_t password = (cryptstr_t) "Insecure123";
 	char *ret;
 
 	if ((ret = crypt_encrypt_str(str, password, false)) == NULL)
