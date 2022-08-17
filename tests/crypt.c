@@ -15,7 +15,7 @@ canEncrypt_test1(void **state)
 	const cryptstr_t password = "Insecure123";
 	char *ret;
 
-	if (crypt_encrypt_str(str, password, false) == NULL)
+	if ((ret = crypt_encrypt_str(str, password, false)) == NULL)
 		fail();
 	print_message("ret: %s", ret);
 	free(ret);
