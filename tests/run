@@ -10,6 +10,7 @@ cmd_servlist
 cmd_squery
 cmd_unban
 cmd_znc
+crypt
 getuser
 icb_send_pm
 int_diff
