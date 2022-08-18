@@ -4,6 +4,7 @@
 #include <openssl/evp.h>
 
 typedef unsigned char cryptarray_t[];
+typedef const unsigned char *cryptstr_const_t;
 typedef unsigned char *cryptstr_t;
 
 typedef struct tagCRYPT_CTX {
