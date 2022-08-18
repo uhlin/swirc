@@ -11,11 +11,12 @@
 static void
 canEncrypt_test1(void **state)
 {
-	const cryptstr_t str = (cryptstr_t) "Text to encrypt";
-	const cryptstr_t password = (cryptstr_t) "Insecure123";
+	cryptarray_t str = "Text to encrypt";
+	cryptarray_t password = "Insecure123";
 	char *ret;
 
-	if ((ret = crypt_encrypt_str(str, password, false)) == NULL)
+	if ((ret = crypt_encrypt_str(addrof(str[0]), addrof(password[0]),
+	    false)) == NULL)
 		fail();
 	print_message("ret: %s", ret);
 	free(ret);
