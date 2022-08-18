@@ -39,7 +39,7 @@
 #include "strHand.h"
 
 char *
-crypt_decrypt_str(const cryptstr_t str, const cryptstr_t password,
+crypt_decrypt_str(cryptstr_const_t str, cryptstr_const_t password,
     const bool rot13)
 {
 	UNUSED_PARAM(str);
@@ -49,7 +49,7 @@ crypt_decrypt_str(const cryptstr_t str, const cryptstr_t password,
 }
 
 char *
-crypt_encrypt_str(const cryptstr_t str, const cryptstr_t password,
+crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
     const bool rot13)
 {
 	CRYPT_CTX	 crypt_ctx;
@@ -142,7 +142,7 @@ crypt_get_base64_encode_length(const int n)
 }
 
 int
-crypt_get_key_and_iv(const cryptstr_t password, PCRYPT_CTX ctx)
+crypt_get_key_and_iv(cryptstr_const_t password, PCRYPT_CTX ctx)
 {
 	if (password == NULL || ctx == NULL)
 		return -1;
@@ -152,7 +152,7 @@ crypt_get_key_and_iv(const cryptstr_t password, PCRYPT_CTX ctx)
 }
 
 int
-crypt_strlen(const cryptstr_t str)
+crypt_strlen(cryptstr_const_t str)
 {
 	return size_to_int(strlen(reinterpret_cast<const char *>(str)));
 }
