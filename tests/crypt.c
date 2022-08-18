@@ -11,8 +11,8 @@
 static void
 canEncrypt_test1(void **state)
 {
-	cryptarray_t str = "Text to encrypt";
-	cryptarray_t password = "Insecure123";
+	const cryptarray_t str = "Text to encrypt";
+	const cryptarray_t password = "Insecure123";
 	char *ret;
 
 	if ((ret = crypt_encrypt_str(addrof(str[0]), addrof(password[0]),
