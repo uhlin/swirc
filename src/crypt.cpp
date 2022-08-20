@@ -39,8 +39,7 @@
 #include "strHand.h"
 
 char *
-crypt_decrypt_str(cryptstr_const_t str, cryptstr_const_t password,
-    const bool rot13)
+crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 {
 	UNUSED_PARAM(str);
 	UNUSED_PARAM(password);
