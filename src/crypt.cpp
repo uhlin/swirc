@@ -128,7 +128,7 @@ crypt_get_base64_decode_length(const char *str)
 {
 	if (str == NULL)
 		return 0;
-	return b64_decode(str, NULL, 0) + 1;
+	return b64_decode(str, NULL, 0);
 }
 
 int
