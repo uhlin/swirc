@@ -38,6 +38,17 @@
 #include "libUtils.h"
 #include "strHand.h"
 
+static void
+clean_up(EVP_CIPHER_CTX *ctx1, PCRYPT_CTX ctx2)
+{
+	if (ctx1)
+		EVP_CIPHER_CTX_free(ctx1);
+	if (ctx2) {
+		OPENSSL_cleanse(ctx2->key, sizeof ctx2->key);
+		OPENSSL_cleanse(ctx2->iv, sizeof ctx2->iv);
+	}
+}
+
 /**
  * Decrypts a string. The storage is allocated on the heap and must be free()'d.
  *
@@ -123,10 +134,7 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 		/* FALLTHROUGH */
 	}
 
-	OPENSSL_cleanse(crypt_ctx.key, sizeof crypt_ctx.key);
-	OPENSSL_cleanse(crypt_ctx.iv, sizeof crypt_ctx.iv);
-	if (cipher_ctx)
-		EVP_CIPHER_CTX_free(cipher_ctx);
+	clean_up(cipher_ctx, &crypt_ctx);
 	free(str_copy);
 	if (decdat != NULL && decdat_size > 0)
 		OPENSSL_cleanse(decdat, decdat_size);
@@ -209,10 +217,7 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 		/* FALLTHROUGH */
 	}
 
-	OPENSSL_cleanse(crypt_ctx.key, sizeof crypt_ctx.key);
-	OPENSSL_cleanse(crypt_ctx.iv, sizeof crypt_ctx.iv);
-	if (cipher_ctx)
-		EVP_CIPHER_CTX_free(cipher_ctx);
+	clean_up(cipher_ctx, &crypt_ctx);
 	if (encdat != NULL && encdat_size > 0) {
 		OPENSSL_cleanse(encdat, encdat_size);
 		free(encdat);
