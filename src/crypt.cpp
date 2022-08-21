@@ -38,6 +38,15 @@
 #include "libUtils.h"
 #include "strHand.h"
 
+/**
+ * Decrypts a string
+ *
+ * @param[in]  str       The string to be decrypted which must be null-
+ *                       terminated and encoded with base64 (and possibly with a
+ *                       rot13 layer)
+ * @param[in]  password  Decryption password
+ * @param[in]  rot13     Shall rot13 be ran on the string initially, yes/no?
+ */
 char *
 crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 {
@@ -128,6 +137,13 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 	return reinterpret_cast<char *>(out_str);
 }
 
+/**
+ * Encrypts a string
+ *
+ * @param[in]  str       Null-terminated plaintext
+ * @param[in]  password  Encryption password
+ * @param[in]  rot13     Shall rot13 be used?
+ */
 char *
 crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
     const bool rot13)
