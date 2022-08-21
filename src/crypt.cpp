@@ -170,14 +170,14 @@ char *
 crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
     const bool rot13)
 {
-	CRYPT_CTX	 crypt_ctx;
-	EVP_CIPHER_CTX	*cipher_ctx = NULL;
-	bool		 error = false;
-	char		*b64str = NULL;
-	cryptstr_t	 encdat = NULL;
-	int		 encdat_len = 0,
-			 encdat_size = 0;
-	int		 rem_bytes = 0;
+	CRYPT_CTX	 crypt_ctx;		/* Key and IV                */
+	EVP_CIPHER_CTX	*cipher_ctx = NULL;	/* Cipher context            */
+	bool		 error = false;		/* True if an error occurred */
+	char		*b64str = NULL;		/* Base64 string             */
+	cryptstr_t	 encdat = NULL;		/* Encrypted data            */
+	int		 encdat_len = 0,	/* Encrypted data length     */
+			 encdat_size = 0;	/* 'encdat' size             */
+	int		 rem_bytes = 0;		/* Remaining bytes           */
 
 	try {
 		int size = 0;
