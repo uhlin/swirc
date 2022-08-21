@@ -78,11 +78,12 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 	cryptstr_t	 out_str = NULL;	/* Returned on success       */
 	int		 decdat_len = 0,	/* Decrypted data length     */
 			 decdat_size = 0;	/* 'decdat' size             */
-	int		 decode_len = 0,	/* 'decoded_str' size        */
-			 decode_ret = -1;	/* Retval of b64_decode()    */
 	int		 rem_bytes = 0;		/* Remaining bytes           */
 
 	try {
+		int	 decode_len = 0,	/* 'decoded_str' size     */
+			 decode_ret = -1;	/* Retval of b64_decode() */
+
 		if (str == NULL || password == NULL)
 			throw std::runtime_error("invalid args");
 
@@ -177,9 +178,10 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 	int		 encdat_len = 0,
 			 encdat_size = 0;
 	int		 rem_bytes = 0;
-	int		 size = 0;
 
 	try {
+		int size = 0;
+
 		if (str == NULL || password == NULL) {
 			throw std::runtime_error("invalid args");
 		} else if (crypt_get_key_and_iv(password, &crypt_ctx) == -1) {
