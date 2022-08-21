@@ -102,7 +102,8 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 		EVP_CIPHER_CTX_free(cipher_ctx);
 		cipher_ctx = NULL;
 
-		out_str = static_cast<cryptstr_t>(xmalloc(decdat_len + 1));
+		out_str = static_cast<cryptstr_t>(xmalloc(int_sum(decdat_len,
+		    1)));
 		out_str[decdat_len] = '\0';
 		memcpy(out_str, decdat, decdat_len);
 	} catch (const std::runtime_error &e) {
