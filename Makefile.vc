@@ -103,6 +103,9 @@ clean:
 	$(RM) pdcurses-$(PDCURSES_VERSION).cab
 	$(RM) swirc-locales-$(LOCALES_SNAP).cab
 	$(RM) swirc.res
+!	if exists(cppcheck-data)
+		rmdir /s /q cppcheck-data
+!	endif
 !	if exists(curl-$(CURL_VERSION))
 		rmdir /s /q curl-$(CURL_VERSION)
 !	endif
