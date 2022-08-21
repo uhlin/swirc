@@ -49,6 +49,12 @@ clean_up(EVP_CIPHER_CTX *ctx1, PCRYPT_CTX ctx2)
 	}
 }
 
+static EVP_CIPHER *
+get_encrypt_alg()
+{
+	return EVP_chacha20();
+}
+
 /**
  * Decrypts a string. The storage is allocated on the heap and must be free()'d.
  *
@@ -101,8 +107,8 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 		} else if ((cipher_ctx = EVP_CIPHER_CTX_new()) == NULL) {
 			err_exit(ENOMEM, "crypt_decrypt_str: "
 			    "EVP_CIPHER_CTX_new");
-		} else if (!EVP_DecryptInit_ex(cipher_ctx, EVP_chacha20(), NULL,
-		    addrof(crypt_ctx.key[0]), addrof(crypt_ctx.iv[0]))) {
+		} else if (!EVP_DecryptInit_ex(cipher_ctx, get_encrypt_alg(),
+		    NULL, addrof(crypt_ctx.key[0]), addrof(crypt_ctx.iv[0]))) {
 			throw std::runtime_error("evp decrypt initialization "
 			    "failed");
 		}
@@ -181,8 +187,8 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 		} else if ((cipher_ctx = EVP_CIPHER_CTX_new()) == NULL) {
 			err_exit(ENOMEM, "crypt_encrypt_str: "
 			    "EVP_CIPHER_CTX_new");
-		} else if (!EVP_EncryptInit_ex(cipher_ctx, EVP_chacha20(), NULL,
-		    addrof(crypt_ctx.key[0]), addrof(crypt_ctx.iv[0]))) {
+		} else if (!EVP_EncryptInit_ex(cipher_ctx, get_encrypt_alg(),
+		    NULL, addrof(crypt_ctx.key[0]), addrof(crypt_ctx.iv[0]))) {
 			throw std::runtime_error("evp encrypt initialization "
 			    "failed");
 		}
@@ -255,7 +261,7 @@ crypt_get_key_and_iv(cryptstr_const_t password, PCRYPT_CTX ctx)
 {
 	if (password == NULL || ctx == NULL)
 		return -1;
-	return (EVP_BytesToKey(EVP_chacha20(), EVP_sha256(), NULL, password,
+	return (EVP_BytesToKey(get_encrypt_alg(), EVP_sha256(), NULL, password,
 	    crypt_strlen(password), PKCS5_DEFAULT_ITER, addrof(ctx->key[0]),
 	    addrof(ctx->iv[0])) > 0 ? 0 : -1);
 }
