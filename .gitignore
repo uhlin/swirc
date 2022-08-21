@@ -17,6 +17,7 @@ tests/fuzz/ircfuzz.log
 .pc
 _LINT.TMP
 cov-int
+cppcheck-data
 curl-*
 gnu-bundle-*
 libressl-*-windows
