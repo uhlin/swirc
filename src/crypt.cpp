@@ -77,6 +77,9 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 	int		 rem_bytes = 0;		/* Remaining bytes           */
 
 	try {
+		if (str == NULL || password == NULL)
+			throw std::runtime_error("invalid args");
+
 		str_copy = sw_strdup(str);
 
 		if (rot13)
@@ -171,7 +174,9 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 	int		 size = 0;
 
 	try {
-		if (crypt_get_key_and_iv(password, &crypt_ctx) == -1) {
+		if (str == NULL || password == NULL) {
+			throw std::runtime_error("invalid args");
+		} else if (crypt_get_key_and_iv(password, &crypt_ctx) == -1) {
 			throw std::runtime_error("unable to get key/iv");
 		} else if ((cipher_ctx = EVP_CIPHER_CTX_new()) == NULL) {
 			err_exit(ENOMEM, "crypt_encrypt_str: "
