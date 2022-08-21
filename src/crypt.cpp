@@ -52,7 +52,7 @@ clean_up(EVP_CIPHER_CTX *ctx1, PCRYPT_CTX ctx2)
 static const EVP_CIPHER *
 get_encrypt_alg()
 {
-	return EVP_chacha20();
+	return EVP_aes_256_cbc();
 }
 
 /**
