@@ -218,10 +218,9 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 	}
 
 	clean_up(cipher_ctx, &crypt_ctx);
-	if (encdat != NULL && encdat_size > 0) {
+	if (encdat != NULL && encdat_size > 0)
 		OPENSSL_cleanse(encdat, encdat_size);
-		free(encdat);
-	}
+	free(encdat);
 	if (error) {
 		free(b64str);
 		return NULL;
