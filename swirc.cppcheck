@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="1">
+    <builddir>cppcheck-data</builddir>
+    <platform>win64</platform>
+    <analyze-all-vs-configs>false</analyze-all-vs-configs>
+    <check-headers>true</check-headers>
+    <check-unused-templates>true</check-unused-templates>
+    <max-ctu-depth>2</max-ctu-depth>
+    <max-template-recursion>100</max-template-recursion>
+    <includedir>
+        <dir name="src/include/"/>
+        <dir name="src/commands/"/>
+        <dir name="src/events/"/>
+        <dir name="src/"/>
+    </includedir>
+    <defines>
+        <define name="HAVE_ATLSTR_H=1"/>
+        <define name="HAVE_LIBICONV=1"/>
+        <define name="HAVE_LIBIDN=1"/>
+        <define name="HAVE_LIBINTL_H=1"/>
+        <define name="HAVE_LIBINTL_SETLOCALE=1"/>
+        <define name="PDC_EXP_EXTRAS=1"/>
+        <define name="PDC_NCMOUSE=1"/>
+        <define name="TOAST_NOTIFICATIONS=1"/>
+        <define name="WIN32=1"/>
+        <define name="WIN32_LEAN_AND_MEAN=1"/>
+    </defines>
+    <paths>
+        <dir name="src/commands"/>
+        <dir name="src/events"/>
+        <dir name="src"/>
+    </paths>
+    <libraries>
+        <library>errHand</library>
+        <library>libcurl</library>
+        <library>openssl</library>
+        <library>windows</library>
+    </libraries>
+</project>
