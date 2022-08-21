@@ -41,10 +41,90 @@
 char *
 crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 {
-	UNUSED_PARAM(str);
-	UNUSED_PARAM(password);
-	UNUSED_PARAM(rot13);
-	return NULL;
+	CRYPT_CTX	 crypt_ctx;		/* Key and IV                */
+	EVP_CIPHER_CTX	*cipher_ctx = NULL;	/* Cipher context            */
+	bool		 error = false;		/* True if an error occurred */
+	char		*str_copy = NULL;	/* Non-const copy of 'str'   */
+	cryptstr_t	 decdat = NULL;		/* Decrypted data            */
+	cryptstr_t	 decoded_str = NULL;	/* Base64 decoded string     */
+	cryptstr_t	 out_str = NULL;	/* Returned on success       */
+	int		 decdat_len = 0,	/* Decrypted data length     */
+			 decdat_size = 0;	/* 'decdat' size             */
+	int		 decode_len = 0,	/* 'decoded_str' size        */
+			 decode_ret = -1;	/* Retval of b64_decode()    */
+	int		 rem_bytes = 0;		/* Remaining bytes           */
+
+	try {
+		str_copy = sw_strdup(str);
+
+		if (rot13)
+			(void) rot13_str(str_copy);
+		if ((decode_len = crypt_get_base64_decode_length(str_copy)) <=
+		    0)
+			throw std::runtime_error("length error");
+
+		decoded_str = static_cast<cryptstr_t>(xmalloc(decode_len));
+
+		if ((decode_ret = b64_decode(str, decoded_str, decode_len)) ==
+		    -1 || decode_ret != decode_len)
+			throw std::runtime_error("base 64 error");
+
+		free_and_null(&str_copy);
+
+		if (crypt_get_key_and_iv(password, &crypt_ctx) == -1) {
+			throw std::runtime_error("unable to get key/iv");
+		} else if ((cipher_ctx = EVP_CIPHER_CTX_new()) == NULL) {
+			err_exit(ENOMEM, "crypt_decrypt_str: "
+			    "EVP_CIPHER_CTX_new");
+		} else if (!EVP_DecryptInit_ex(cipher_ctx, EVP_chacha20(), NULL,
+		    addrof(crypt_ctx.key[0]), addrof(crypt_ctx.iv[0]))) {
+			throw std::runtime_error("evp decrypt initialization "
+			    "failed");
+		}
+
+		decdat_size = decode_len +
+		    EVP_CIPHER_CTX_block_size(cipher_ctx);
+		decdat = static_cast<cryptstr_t>(xmalloc(decdat_size));
+
+		if (!EVP_DecryptUpdate(cipher_ctx, decdat, &decdat_len,
+		    decoded_str, decode_len)) {
+			throw std::runtime_error("decryption failed!");
+		} else if (!EVP_DecryptFinal_ex(cipher_ctx,
+		    addrof(decdat[decdat_len]), &rem_bytes)) {
+			throw std::runtime_error("decryption finalization "
+			    "failed!");
+		}
+
+		decdat_len += rem_bytes;
+		debug("decdat_len: %d", decdat_len);
+		debug("decdat_size: %d", decdat_size);
+
+		EVP_CIPHER_CTX_free(cipher_ctx);
+		cipher_ctx = NULL;
+
+		out_str = static_cast<cryptstr_t>(xmalloc(decdat_len + 1));
+		out_str[decdat_len] = '\0';
+		memcpy(out_str, decdat, decdat_len);
+	} catch (const std::runtime_error &e) {
+		error = true;
+		err_log(0, "crypt_decrypt_str: %s", e.what());
+		/* FALLTHROUGH */
+	}
+
+	OPENSSL_cleanse(crypt_ctx.key, sizeof crypt_ctx.key);
+	OPENSSL_cleanse(crypt_ctx.iv, sizeof crypt_ctx.iv);
+	if (cipher_ctx)
+		EVP_CIPHER_CTX_free(cipher_ctx);
+	free(str_copy);
+	if (decdat != NULL && decdat_size > 0)
+		OPENSSL_cleanse(decdat, decdat_size);
+	free(decdat);
+	free(decoded_str);
+	if (error) {
+		free(out_str);
+		return NULL;
+	}
+	return reinterpret_cast<char *>(out_str);
 }
 
 char *
