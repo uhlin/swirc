@@ -141,7 +141,9 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 	} catch (const std::runtime_error &e) {
 		error = true;
 		err_log(0, "crypt_decrypt_str: %s", e.what());
-		/* FALLTHROUGH */
+	} catch (...) {
+		error = true;
+		err_log(0, "crypt_decrypt_str: %s", "unknown exception!");
 	}
 
 	clean_up(cipher_ctx, &crypt_ctx);
@@ -227,7 +229,9 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 	} catch (const std::runtime_error &e) {
 		error = true;
 		err_log(0, "crypt_encrypt_str: %s", e.what());
-		/* FALLTHROUGH */
+	} catch (...) {
+		error = true;
+		err_log(0, "crypt_encrypt_str: %s", "unknown exception!");
 	}
 
 	clean_up(cipher_ctx, &crypt_ctx);
