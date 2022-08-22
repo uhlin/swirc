@@ -29,7 +29,7 @@
 
 #include "common.h"
 
-#include <cmath>
+//#include <cmath>
 #include <stdexcept>
 
 #include "base64.h"
@@ -95,11 +95,13 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 		    0)
 			throw std::runtime_error("length error");
 
-		decoded_str = static_cast<cryptstr_t>(xmalloc(decode_len));
+		decoded_str = static_cast<cryptstr_t>(xcalloc(decode_len, 1));
 
-		if ((decode_ret = b64_decode(str, decoded_str, decode_len)) ==
-		    -1 || decode_ret != decode_len)
+		if ((decode_ret = b64_decode(str_copy, decoded_str, decode_len))
+		    == -1)
 			throw std::runtime_error("base 64 error");
+//		XXX
+//		decode_ret != decode_len
 
 		free_and_null(&str_copy);
 
@@ -116,7 +118,7 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 
 		decdat_size = decode_len +
 		    EVP_CIPHER_CTX_block_size(cipher_ctx);
-		decdat = static_cast<cryptstr_t>(xmalloc(decdat_size));
+		decdat = static_cast<cryptstr_t>(xcalloc(decdat_size, 1));
 
 		if (!EVP_DecryptUpdate(cipher_ctx, decdat, &decdat_len,
 		    decoded_str, decode_len)) {
@@ -202,11 +204,8 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 		encdat = static_cast<cryptstr_t>(xmalloc(encdat_size));
 
 		if (!EVP_EncryptUpdate(cipher_ctx, encdat, &encdat_len, str,
-		    crypt_strlen(str))) {
+		    crypt_strlen(str) + 1)) {
 			throw std::runtime_error("encryption failed!");
-		} else if (encdat_len >= encdat_size) {
-			errno = EOVERFLOW;
-			err_dump("crypt_encrypt_str");
 		} else if (!EVP_EncryptFinal_ex(cipher_ctx,
 		    addrof(encdat[encdat_len]), &rem_bytes)) {
 			throw std::runtime_error("encryption finalization "
@@ -250,16 +249,14 @@ crypt_get_base64_decode_length(const char *str)
 {
 	if (str == NULL)
 		return 0;
-	return b64_decode(str, NULL, 0);
+	return b64_decode(str, NULL, 0) + 1;
 }
 
+// unsigned?
 int
 crypt_get_base64_encode_length(const int n)
 {
-	double	d;
-
-	d = static_cast<double>(n);
-	return static_cast<int>(ceil(4.0 * d / 3.0)) + 1;
+	return (((4 * n / 3) + 3) & ~3) + 1;
 }
 
 int
