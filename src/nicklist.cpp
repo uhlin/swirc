@@ -63,7 +63,6 @@ static bool
 cmp_fn(const std::string &nick1, const std::string &nick2)
 {
 	size_t i = 1;
-	int c1, c2;
 
 	/*
 	 * nick1
@@ -132,6 +131,8 @@ cmp_fn(const std::string &nick1, const std::string &nick2)
 	}
 
 	while (i < nick1.length() && i < nick2.length()) {
+		int c1, c2;
+
 		c1 = sw_isupper(nick1[i]) ? tolower(nick1[i]) : nick1[i];
 		c2 = sw_isupper(nick2[i]) ? tolower(nick2[i]) : nick2[i];
 		if (c1 < c2)
