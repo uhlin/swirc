@@ -415,7 +415,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
 			    "Disconnecting...");
 			g_on_air = false;
 			event_welcome_signalit();
-		} else if (!g_alt_nick_tested && !isEmpty(Config("alt_nick"))) {
+		} else if (!isEmpty(Config("alt_nick"))) {
 			printtext(&ctx, "Attempting to use alt_nick (%s) "
 			    "instead...", Config("alt_nick"));
 
