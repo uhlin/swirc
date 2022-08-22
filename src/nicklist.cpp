@@ -62,8 +62,6 @@ can_scroll(const IRC_WINDOW *win)
 static bool
 cmp_fn(const std::string &nick1, const std::string &nick2)
 {
-	size_t i = 1;
-
 	/*
 	 * nick1
 	 */
@@ -130,7 +128,7 @@ cmp_fn(const std::string &nick1, const std::string &nick2)
 		break;
 	}
 
-	while (i < nick1.length() && i < nick2.length()) {
+	for (size_t i = 1; i < nick1.length() && i < nick2.length(); i++) {
 		int c1, c2;
 
 		c1 = sw_isupper(nick1[i]) ? tolower(nick1[i]) : nick1[i];
@@ -139,7 +137,6 @@ cmp_fn(const std::string &nick1, const std::string &nick2)
 			return true;
 		else if (c1 > c2)
 			return false;
-		i ++;
 	}
 
 	return (nick1.length() < nick2.length() ? true : false);
