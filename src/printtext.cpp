@@ -829,6 +829,9 @@ get_mb_strlen(const char *s)
 	size_t idx = 0;
 	size_t len = 0;
 
+	if (s == NULL)
+		return 0;
+
 	while (true) {
 		const size_t ret = mbrlen(&s[idx], MB_CUR_MAX, NULL);
 
