@@ -130,8 +130,8 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 		}
 
 		decdat_len += rem_bytes;
-		debug("decdat_len: %d", decdat_len);
-		debug("decdat_size: %d", decdat_size);
+		debug("crypt_decrypt_str: decdat_len:  %d", decdat_len);
+		debug("crypt_decrypt_str: decdat_size: %d", decdat_size);
 
 		EVP_CIPHER_CTX_free(cipher_ctx);
 		cipher_ctx = NULL;
