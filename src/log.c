@@ -1,5 +1,5 @@
 /* IRC logs i.e. not logs for system messages
-   Copyright (C) 2020-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -131,13 +131,14 @@ log_get_path(const char *server_host, const char *label)
 void
 log_msg(const char *path, const char *text)
 {
-	FILE	*fp;
-	char	*text_copy;
+	FILE *fp;
 
 	if (path == NULL || text == NULL)
 		return;
 
 	if ((fp = xfopen(path, "a")) != NULL) {
+		char *text_copy;
+
 		text_copy = sw_strdup(text);
 		(void) fprintf(fp, "%s %s\n", get_date(),
 		    squeeze_text_deco(text_copy));
