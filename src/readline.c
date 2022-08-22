@@ -229,8 +229,7 @@ magic_swap_panels(volatile struct readline_session_context *ctx, bool fwd)
 static void
 case_key_backspace(volatile struct readline_session_context *ctx)
 {
-	int		 ret[3];
-	wchar_t		*ptr;
+	int ret[3];
 
 	if (ctx->bufpos == 0) {
 		term_beep();
@@ -239,6 +238,8 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 	if (loLim_isset(ctx->act, ctx->prompt_size))
 		magic_swap_panels(ctx, false);
 	if (ctx->insert_mode) {
+		wchar_t *ptr;
+
 		ptr = &ctx->buffer[ctx->bufpos--];
 		(void) wmemmove(ptr - 1, ptr, wcslen(ptr));
 		ctx->buffer[--ctx->n_insert] = 0L;
