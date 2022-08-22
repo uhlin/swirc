@@ -219,7 +219,8 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 		EVP_CIPHER_CTX_free(cipher_ctx);
 		cipher_ctx = NULL;
 
-		size = crypt_get_base64_encode_length(encdat_len);
+		if ((size = crypt_get_base64_encode_length(encdat_len)) <= 0)
+			throw std::runtime_error("base64 length error");
 		b64str = static_cast<char *>(xmalloc(size));
 		b64str[size - 1] = '\0';
 
