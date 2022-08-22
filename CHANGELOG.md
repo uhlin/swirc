@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added cryptographic functions
+- Made small improvements
+  - Fixed redundant checks
+  - Reduced scope of variables
+  - ...
 
 ## [3.3.5] - 2022-07-28 ##
 - **Added** command `/cap`
