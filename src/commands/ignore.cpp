@@ -161,11 +161,11 @@ cmd_unignore(const char *data)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
-		printtext(&ctx, "%s", e.what());
+		printtext(&ctx, "/unignore: %s", e.what());
 	} catch (const std::out_of_range &e) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
-		printtext(&ctx, "%s", e.what());
+		printtext(&ctx, "/unignore: %s", e.what());
 	} catch (...) {
 		err_log(0, "/unignore: %s", "unknown exception!");
 	}
