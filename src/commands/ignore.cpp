@@ -147,7 +147,7 @@ cmd_unignore(const char *data)
 		else if (errno == ERANGE && (no == LONG_MAX || no == LONG_MIN))
 			throw std::runtime_error("out of range");
 		else if (no < 0 ||
-		    static_cast<size_t>(no) > ignore_list.size() ||
+		    static_cast<size_t>(no) >= ignore_list.size() ||
 		    no > MAXIGNORES)
 			throw std::runtime_error("out of range");
 
