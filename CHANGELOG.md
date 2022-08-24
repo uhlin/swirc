@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added cryptographic functions
+- Fixed insufficient out of range check, off-by-one, in command
+  `/unignore`.
 - Made small improvements
   - Fixed redundant checks
   - Reduced scope of variables
