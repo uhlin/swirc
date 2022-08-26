@@ -448,6 +448,9 @@ process_options(int argc, char *argv[], const char *optstring)
 		case OPTION_ARG_MISSING:
 			err_msg("%s: -%c: option argument missing", argv[0],
 			    g_option_save);
+#if defined(__cplusplus) && __cplusplus >= 201703L
+			[[fallthrough]];
+#endif
 			/* FALLTHROUGH */
 		default:
 			print_help(argv[0]);
