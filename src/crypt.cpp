@@ -100,9 +100,8 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 		if ((decode_ret = b64_decode(str_copy, decoded_str, decode_len))
 		    == -1)
 			throw std::runtime_error("base 64 error");
-//		XXX
-//		decode_ret != decode_len
 
+		debug("decode_ret = %d", decode_ret);
 		free_and_null(&str_copy);
 
 		if (crypt_get_key_and_iv(password, &crypt_ctx) == -1) {
