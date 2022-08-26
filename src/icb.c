@@ -77,7 +77,7 @@ get_label(void)
 	    (ret = snprintf(label, ARRAY_SIZE(label), "#%s", icb_group)) < 0 ||
 	    ((size_t) ret) >= ARRAY_SIZE(label)) {
 		debug("get_label: error: zeroing label...");
-		BZERO(label, ARRAY_SIZE(label));
+		BZERO(label, sizeof label);
 	}
 
 	return (&label[0]);
@@ -268,8 +268,8 @@ deal_with_category_idle_mod(const char *data)
 	return;
 
   err:
-	BZERO(idle_mod.nick, ARRAY_SIZE(idle_mod.nick));
-	BZERO(idle_mod.group, ARRAY_SIZE(idle_mod.group));
+	BZERO(idle_mod.nick, sizeof idle_mod.nick);
+	BZERO(idle_mod.group, sizeof idle_mod.group);
 	err_log(0, "deal_with_category_idle_mod: %s", err_reason);
 	free(nick);
 	free(group);
@@ -734,9 +734,9 @@ handle_proto_packet(const char *pktdata)
 
   err:
 	free(pktdata_copy);
-	BZERO(icb_protolevel, ARRAY_SIZE(icb_protolevel));
-	BZERO(icb_hostid, ARRAY_SIZE(icb_hostid));
-	BZERO(icb_serverid, ARRAY_SIZE(icb_serverid));
+	BZERO(icb_protolevel, sizeof icb_protolevel);
+	BZERO(icb_hostid, sizeof icb_hostid);
+	BZERO(icb_serverid, sizeof icb_serverid);
 }
 
 static void

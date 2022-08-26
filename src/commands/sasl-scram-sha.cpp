@@ -67,7 +67,7 @@ digest_context::digest_context(unsigned char *key, int key_len,
 	this->key_len = key_len;
 	this->d = d;
 	this->n = n;
-	BZERO(this->md, ARRAY_SIZE(this->md));
+	BZERO(this->md, sizeof this->md);
 	this->md_len = 0;
 }
 

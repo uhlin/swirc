@@ -1,5 +1,5 @@
 /* errHand.c  --  Error handling routines
-   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -218,7 +218,7 @@ errdesc_by_last_err(void)
 	const DWORD	dwMessageId = GetLastError();
 	static char	desc[MAXERROR];
 
-	BZERO(lpBuffer, ARRAY_SIZE(lpBuffer));
+	BZERO(lpBuffer, sizeof lpBuffer);
 
 	if (sizeof(TCHAR) != 1 || !FormatMessage(dwFlags, NULL, dwMessageId,
 	    dwLanguageId, addrof(lpBuffer[0]), ARRAY_SIZE(lpBuffer), NULL))

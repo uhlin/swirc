@@ -246,7 +246,7 @@ hInstall(const struct hInstall_context *ctx)
 	entry->received_chanmodes   = false;
 	entry->received_names       = false;
 	entry->scroll_mode          = false;
-	BZERO(entry->chanmodes, ARRAY_SIZE(entry->chanmodes));
+	BZERO(entry->chanmodes, sizeof entry->chanmodes);
 
 	entry->label = sw_strdup(ctx->label);
 	entry->title = ((ctx->title == NULL || strings_match(ctx->title, ""))
@@ -704,7 +704,7 @@ window_foreach_destroy_names(void)
 				 * should be moved too.
 				 */
 				BZERO(window->chanmodes,
-				    ARRAY_SIZE(window->chanmodes));
+				    sizeof window->chanmodes);
 				window->received_chanmodes = false;
 				window->received_chancreated = false;
 			}

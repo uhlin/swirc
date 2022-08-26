@@ -1,5 +1,5 @@
 /* Readline tab completion
-   Copyright (C) 2020-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -160,7 +160,7 @@ readline_tab_comp_ctx_new(void)
 {
 	static TAB_COMPLETION	ctx;
 
-	BZERO(ctx.search_var, ARRAY_SIZE(ctx.search_var));
+	BZERO(ctx.search_var, sizeof ctx.search_var);
 
 	ctx.isInCirculationModeForHelp		= false;
 	ctx.isInCirculationModeForQuery		= false;
@@ -187,7 +187,7 @@ void
 readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 {
 	if (ctx) {
-		BZERO(ctx->search_var, ARRAY_SIZE(ctx->search_var));
+		BZERO(ctx->search_var, sizeof ctx->search_var);
 
 		ctx->isInCirculationModeForHelp		= false;
 		ctx->isInCirculationModeForQuery	= false;

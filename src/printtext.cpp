@@ -1247,7 +1247,7 @@ printtext_context_new(PIRC_WINDOW window, enum message_specifier_type spec_type,
 	ctx->spec_type  = spec_type;
 	ctx->include_ts = include_ts;
 
-	BZERO(ctx->server_time, ARRAY_SIZE(ctx->server_time));
+	BZERO(ctx->server_time, sizeof ctx->server_time);
 	ctx->has_server_time = false;
 
 	return ctx;
