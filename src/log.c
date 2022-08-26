@@ -74,7 +74,7 @@ get_modified_server_host(const char *orig)
 	static char	array[256] = { '\0' };
 
 	if (snprintf(array, ARRAY_SIZE(array), "%s", orig) < 0)
-		(void) memset(array, 0, ARRAY_SIZE(array));
+		BZERO(array, sizeof array);
 	else
 		squeeze(array, "-.");
 
