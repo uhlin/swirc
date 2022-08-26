@@ -75,6 +75,37 @@ canEncryptAndDecrypt_test2(void **state)
 #undef TEXT
 }
 
+static void
+canEncryptAndDecrypt_test3(void **state)
+{
+#define TEXT "Swirc isn't only an IRC client - " \
+    "it has support for the ICB protocol too - " \
+    "which makes it just as much an ICB client " \
+    "as an IRC client"
+	const cryptarray_t str = TEXT;
+	const cryptarray_t password = "><><987 ENC PASS.!.";
+	char *ret1, *ret2;
+
+	ret1 = ret2 = NULL;
+
+	if ((ret1 = crypt_encrypt_str(addrof(str[0]), addrof(password[0]),
+	    true)) == NULL)
+		fail();
+
+	print_message("%s\n", ret1);
+
+	if ((ret2 = crypt_decrypt_str(ret1, addrof(password[0]), true)) == NULL)
+		fail();
+
+	assert_string_equal(ret2, TEXT);
+
+	free(ret1);
+	free(ret2);
+
+	UNUSED_PARAM(state);
+#undef TEXT
+}
+
 int
 main(void)
 {
@@ -82,6 +113,7 @@ main(void)
 		cmocka_unit_test(canEncrypt_test1),
 		cmocka_unit_test(canEncryptAndDecrypt_test1),
 		cmocka_unit_test(canEncryptAndDecrypt_test2),
+		cmocka_unit_test(canEncryptAndDecrypt_test3),
 	};
 
 	return cmocka_run_group_tests(tests, NULL, NULL);
