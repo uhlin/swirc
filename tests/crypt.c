@@ -18,7 +18,7 @@ canEncrypt_test1(void **state)
 	if ((ret = crypt_encrypt_str(addrof(str[0]), addrof(password[0]),
 	    false)) == NULL)
 		fail();
-	print_message("ret: %s", ret);
+	print_message("ret: %s\n", ret);
 	free(ret);
 	UNUSED_PARAM(state);
 }
