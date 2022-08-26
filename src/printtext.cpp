@@ -1106,7 +1106,6 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 		free(original_locale);
 		free(tmp_locale);
 		free(out);
-		/* FALLTHROUGH */
 	} catch (const std::bad_alloc &e) {
 		err_exit(ENOMEM, "try_convert_buf_with_cs: %s", e.what());
 		/* NOTREACHED */
