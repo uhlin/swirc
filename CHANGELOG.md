@@ -6,8 +6,10 @@ All notable changes to this project will be documented in this file.
 - Fixed insufficient out of range check, off-by-one, in command
   `/unignore`.
 - Made small improvements
+  - Added usage of `PATH_MAX`
   - Fixed redundant checks
   - Reduced scope of variables
+  - Switched to usage of 'sizeof' in `BZERO()` calls
   - ...
 
 ## [3.3.5] - 2022-07-28 ##
