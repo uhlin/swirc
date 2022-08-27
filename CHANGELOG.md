@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Fixed insufficient out of range check, off-by-one, in command
   `/unignore`.
 - Made small improvements
+  - Added usage of C++17 fallthrough attr
   - Added usage of `PATH_MAX`
   - Fixed redundant checks
   - Reduced scope of variables
