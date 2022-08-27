@@ -231,10 +231,11 @@ const char *
 path_to_home(void)
 {
 	char *var_data;
+	const char var[] =
 #if defined(UNIX)
-	const char var[] = "HOME";
+	    "HOME";
 #elif defined(WIN32)
-	const char var[] = "APPDATA";
+	    "APPDATA";
 #endif
 	static char buf[PATH_MAX] = { '\0' };
 
