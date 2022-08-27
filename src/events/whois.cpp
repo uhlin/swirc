@@ -109,7 +109,7 @@ time_idle::time_idle(long int sec_idle, long int signon_time)
 }
 
 static bool
-get_msg(char *params, std::string& str)
+get_msg(char *params, std::string &str)
 {
 	char *msg;
 	char *state = const_cast<char *>("");
