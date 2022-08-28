@@ -1,5 +1,5 @@
-/* commands/sasl.c
-   Copyright (C) 2017-2021 Markus Uhlin. All rights reserved.
+/* commands/sasl.cpp
+   Copyright (C) 2017-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -32,11 +32,15 @@
 
 #include <openssl/pem.h>
 
+#include <stdexcept>
+
 #include "../irc.h"
 #include "../events/cap.h"
 
 #include "../assertAPI.h"
 #include "../config.h"
+#include "../crypt.h"
+#include "../errHand.h"
 #include "../filePred.h"
 #include "../libUtils.h"
 #include "../nestHome.h"
@@ -372,60 +376,78 @@ sign_decoded_data(EC_KEY *key, const uint8_t *data, int datalen, uint8_t **sig,
 char *
 solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
 {
-    EC_KEY       *key       = NULL;
-    FILE         *fp        = NULL;
-    char         *path      = get_filepath(false);
-    int           datalen   = -1;
-    uint8_t      *sig       = NULL;
-    uint8_t       buf[2000] = { '\0' };
-    unsigned int  siglen    = 0;
+	EC_KEY		*key = NULL;
+	FILE		*fp = NULL;
+	char		*out = NULL;
+	uint8_t		*decoded_chl = NULL;
+	uint8_t		*sig = NULL;
 
-    if ((key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1)) == NULL) {
-	*err_reason = "EC_KEY_new_by_curve_name failed";
-	return NULL;
-    } else {
-	EC_KEY_set_conv_form(key, POINT_CONVERSION_COMPRESSED);
-    }
+	try {
+		char		*path = NULL;
+		int		 decode_len,
+				 encode_len;
+		int		 decode_ret = -1;
+		unsigned int	 siglen = 0;
 
-    if (!path) {
-	*err_reason = "unable to get file path";
-	goto err;
-    } else if (!file_exists(path)) {
-	*err_reason = "unable to locate private key";
-	goto err;
-    } else if ((fp = xfopen(path, "r")) == NULL) {
-	*err_reason = "xfopen failed";
-	goto err;
-    } else if (PEM_read_ECPrivateKey(fp, &key, NULL, NULL) == NULL) {
-	*err_reason = "PEM_read_ECPrivateKey failed";
-	goto err;
-    } else if (!EC_KEY_check_key(key)) {
-	*err_reason = "EC_KEY_check_key failed";
-	goto err;
-    } else if ((datalen = b64_decode(challenge, buf, sizeof buf)) == -1) {
-	*err_reason = "b64_decode failed";
-	goto err;
-    } else if (!sign_decoded_data(key, buf, datalen, &sig, &siglen)) {
-	*err_reason = "sign_decoded_data failed";
-	goto err;
-    } else if (BZERO(buf, sizeof buf),
-	       b64_encode(sig, siglen, (char *) buf, sizeof buf) == -1) {
-	*err_reason = "b64_encode failed";
-	goto err;
-    }
+		if ((key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1)) ==
+		    NULL)
+			throw std::runtime_error("unable to construct ec key");
+		else
+			EC_KEY_set_conv_form(key, POINT_CONVERSION_COMPRESSED);
 
-    *err_reason = "";
-    EC_KEY_free(key);
-    fclose(fp);
-    free(sig);
-    return (sw_strdup((char *) buf));
+		if ((path = get_filepath(false)) == NULL)
+			throw std::runtime_error("unable to get file path");
+		else if (!file_exists(path))
+			throw std::runtime_error("unable to find private key");
+		else if ((fp = xfopen(path, "r")) == NULL)
+			throw std::runtime_error("unable to open private key");
+		else if (PEM_read_ECPrivateKey(fp, &key, NULL, NULL) == NULL)
+			throw std::runtime_error("unable to read private key");
+		else if (!EC_KEY_check_key(key))
+			throw std::runtime_error("bogus key");
+		else if ((decode_len =
+		    crypt_get_base64_decode_length(challenge)) <= 0)
+			throw std::runtime_error("decode length error");
 
-  err:
-    if (key)
-	EC_KEY_free(key);
-    if (fp)
-	fclose(fp);
-    if (sig)
+		decoded_chl = static_cast<uint8_t *>(xmalloc(decode_len));
+		decoded_chl[decode_len - 1] = '\0';
+
+		if ((decode_ret = b64_decode(challenge, decoded_chl, static_cast
+		    <size_t>(decode_len))) == -1)
+			throw std::runtime_error("decoding error");
+		else if (!sign_decoded_data(key, decoded_chl, decode_ret, &sig,
+		    &siglen))
+			throw std::runtime_error("signing error");
+		else if ((encode_len = crypt_get_base64_encode_length
+		    (static_cast<int>(siglen))) <= 0)
+			throw std::runtime_error("encode length error");
+
+		out = static_cast<char *>(xmalloc(encode_len));
+		out[encode_len - 1] = '\0';
+
+		if (b64_encode(sig, siglen, out, static_cast<size_t>
+		    (encode_len)) == -1)
+			throw std::runtime_error("encoding error");
+	} catch (const std::runtime_error &e) {
+		if (key)
+			EC_KEY_free(key);
+		if (fp != NULL && fclose(fp) != 0)
+			err_log(errno, "solve_ecdsa_nist256p_challenge: "
+			    "fclose");
+		free(out);
+		free(decoded_chl);
+		free(sig);
+		*err_reason = sw_strdup(e.what());
+		return NULL;
+	}
+
+	if (key)
+		EC_KEY_free(key);
+	if (fp != NULL && fclose(fp) != 0)
+		err_log(errno, "solve_ecdsa_nist256p_challenge: "
+		    "fclose");
+	free(decoded_chl);
 	free(sig);
-    return NULL;
+	*err_reason = NULL;
+	return out;
 }
