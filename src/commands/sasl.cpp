@@ -258,13 +258,13 @@ set_mechanism(char *mechanism)
 static void
 set_username(char *username)
 {
-    if (!modify_setting("sasl_username", username)) {
-	output_message(true, "set username failed");
-	return;
-    } else {
-	output_message(false, "set username ok");
-	save_to_config();
-    }
+	if (!modify_setting("sasl_username", username)) {
+		output_message(true, "set username failed");
+		return;
+	} else {
+		output_message(false, "set username ok");
+		save_to_config();
+	}
 }
 
 static void
