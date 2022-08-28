@@ -128,9 +128,9 @@ sasl_keygen(const bool force)
 static int
 public_key_length(EC_KEY *key)
 {
-    if (!key)
-	return -1;
-    return (i2o_ECPublicKey(key, NULL));
+	if (key == NULL)
+		return -1;
+	return (i2o_ECPublicKey(key, NULL));
 }
 
 /*lint -sem(public_key_blob, r_null) */
