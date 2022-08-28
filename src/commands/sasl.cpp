@@ -78,11 +78,11 @@ get_filepath(const bool is_public)
 static void
 output_message(const bool is_error, const char *message)
 {
-    PRINTTEXT_CONTEXT ctx;
+	PRINTTEXT_CONTEXT	ctx;
 
-    printtext_context_init(&ctx, g_active_window,
-	is_error ? TYPE_SPEC1_FAILURE : TYPE_SPEC1_SUCCESS, true);
-    printtext(&ctx, "%s", message);
+	printtext_context_init(&ctx, g_active_window, (is_error ?
+	    TYPE_SPEC1_FAILURE : TYPE_SPEC1_SUCCESS), true);
+	printtext(&ctx, "%s", message);
 }
 
 static void
