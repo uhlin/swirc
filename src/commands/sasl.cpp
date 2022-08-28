@@ -137,19 +137,22 @@ public_key_length(EC_KEY *key)
 static unsigned char *
 public_key_blob(EC_KEY *key)
 {
-    int length = -1;
-    unsigned char *out = NULL, *out_p = NULL;
+	int		 length;
+	unsigned char	*out, *out_p;
 
-    if (key == NULL || (length = public_key_length(key)) <= 0)
-	return NULL;
-    out = xmalloc(length);
-    out_p = &out[0];
-    if (i2o_ECPublicKey(key, &out_p) < 0) {
-	free(out);
-	return NULL;
-    }
-    /*out_p = &out[0]*/
-    return (out);
+	if (key == NULL || (length = public_key_length(key)) <= 0)
+		return NULL;
+
+	out = static_cast<unsigned char *>(xmalloc(length));
+	out[length - 1] = '\0';
+	out_p = &out[0];
+
+	if (i2o_ECPublicKey(key, &out_p) < 0) {
+		free(out);
+		return NULL;
+	}
+
+	return out;
 }
 
 static void
