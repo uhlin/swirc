@@ -273,7 +273,7 @@ set_mechanism(char *mechanism)
 }
 
 static void
-set_username(char *username)
+set_username(const char *username)
 {
 	if (!modify_setting("sasl_username", username)) {
 		output_message(true, "set username failed");
@@ -285,7 +285,7 @@ set_username(char *username)
 }
 
 static void
-set_password(char *password)
+set_password(const char *password)
 {
 	if (!modify_setting("sasl_password", password)) {
 		output_message(true, "set password failed");
