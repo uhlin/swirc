@@ -38,7 +38,6 @@
 #include "../irc.h"
 #include "../events/cap.h"
 
-#include "../assertAPI.h"
 #include "../config.h"
 #include "../crypt.h"
 #include "../errHand.h"
