@@ -97,8 +97,8 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 
 		decoded_str = static_cast<cryptstr_t>(xcalloc(decode_len, 1));
 
-		if ((decode_ret = b64_decode(str_copy, decoded_str, decode_len))
-		    == -1)
+		if ((decode_ret = b64_decode(str_copy, decoded_str, static_cast
+		    <size_t>(decode_len))) == -1)
 			throw std::runtime_error("base 64 error");
 
 		debug("decode_ret = %d", decode_ret);
@@ -138,7 +138,7 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 		out_str = static_cast<cryptstr_t>(xmalloc(int_sum(decdat_len,
 		    1)));
 		out_str[decdat_len] = '\0';
-		memcpy(out_str, decdat, decdat_len);
+		memcpy(out_str, decdat, static_cast<size_t>(decdat_len));
 	} catch (const std::runtime_error &e) {
 		error = true;
 		err_log(0, "crypt_decrypt_str: %s", e.what());
@@ -150,7 +150,7 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 	clean_up(cipher_ctx, &crypt_ctx);
 	free(str_copy);
 	if (decdat != NULL && decdat_size > 0)
-		OPENSSL_cleanse(decdat, decdat_size);
+		OPENSSL_cleanse(decdat, static_cast<size_t>(decdat_size));
 	free(decdat);
 	free(decoded_str);
 	if (error) {
@@ -223,7 +223,8 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 		b64str = static_cast<char *>(xmalloc(size));
 		b64str[size - 1] = '\0';
 
-		if (b64_encode(encdat, encdat_len, b64str, size) == -1)
+		if (b64_encode(encdat, encdat_len, b64str, static_cast<size_t>
+		    (size)) == -1)
 			throw std::runtime_error("base64 error");
 	} catch (const std::runtime_error &e) {
 		error = true;
@@ -235,7 +236,7 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 
 	clean_up(cipher_ctx, &crypt_ctx);
 	if (encdat != NULL && encdat_size > 0)
-		OPENSSL_cleanse(encdat, encdat_size);
+		OPENSSL_cleanse(encdat, static_cast<size_t>(encdat_size));
 	free(encdat);
 	if (error) {
 		free(b64str);
