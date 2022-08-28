@@ -383,6 +383,7 @@ sign_decoded_data(EC_KEY *key, const uint8_t *data, int datalen, uint8_t **sig,
 	}
 
 	*sig = static_cast<uint8_t *>(xmalloc(len));
+	(*sig)[len - 1] = '\0';
 
 	if (!ECDSA_sign(0, data, datalen, *sig, &len, key)) {
 		free(*sig);
