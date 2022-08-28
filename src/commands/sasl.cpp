@@ -464,6 +464,10 @@ solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
 		clean_up(key, fp, out, decoded_chl, sig);
 		*err_reason = sw_strdup(e.what());
 		return NULL;
+	} catch (...) {
+		clean_up(key, fp, out, decoded_chl, sig);
+		*err_reason = sw_strdup("unknown exception was thrown!");
+		return NULL;
 	}
 
 	clean_up(key, fp, NULL, decoded_chl, sig);
