@@ -88,41 +88,43 @@ output_message(const bool is_error, const char *message)
 static void
 sasl_keygen(const bool force)
 {
-    EC_KEY *key  = NULL;
-    FILE   *fp   = NULL;
-    char   *path = get_filepath(false);
+	EC_KEY	*key = NULL;
+	FILE	*fp = NULL;
 
-    if (!path) {
-	output_message(true, "unable to get file path");
-	return;
-    } else if (file_exists(path) && !force) {
-	output_message(true, "file exists! add --force to overwrite it");
-	return;
-    } else if ((key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1)) == NULL) {
-	output_message(true, "EC_KEY_new_by_curve_name failed");
-	return;
-    } else {
-	EC_KEY_set_conv_form(key, POINT_CONVERSION_COMPRESSED);
-    }
+	try {
+		char	*path;
 
-    if (!EC_KEY_generate_key(key)) {
-	output_message(true, "EC_KEY_generate_key failed");
-	goto err;
-    } else if ((fp = xfopen(path, "w")) == NULL) {
-	output_message(true, "xfopen failed");
-	goto err;
-    } else if (!PEM_write_ECPrivateKey(fp, key, NULL, NULL, 0, NULL, NULL)) {
-	output_message(true, "PEM_write_ECPrivateKey failed");
-	goto err;
-    }
+		if ((path = get_filepath(false)) == NULL) {
+			throw std::runtime_error("unable to get file path");
+		} else if (file_exists(path) && !force) {
+			throw std::runtime_error("file exists! add --force to "
+			    "overwrite it");
+		} else if ((key = EC_KEY_new_by_curve_name
+		    (NID_X9_62_prime256v1)) == NULL) {
+			throw std::runtime_error("unable to construct ec key");
+		} else {
+			EC_KEY_set_conv_form(key, POINT_CONVERSION_COMPRESSED);
+		}
 
-    output_message(false, "key generation successful");
+		if (!EC_KEY_generate_key(key))
+			throw std::runtime_error("key generation failed");
+		else if ((fp = xfopen(path, "w")) == NULL)
+			throw std::runtime_error("unable to open file");
+		else if (!PEM_write_ECPrivateKey(fp, key, NULL, NULL, 0, NULL,
+		    NULL))
+			throw std::runtime_error("unable to write private key");
 
-  err:
-    if (key)
-	EC_KEY_free(key);
-    if (fp)
-	fclose(fp);
+		output_message(false, "key generation successful");
+	} catch (const std::runtime_error &e) {
+		output_message(true, e.what());
+	} catch (...) {
+		output_message(true, "unknown exception was thrown!");
+	}
+
+	if (key)
+		EC_KEY_free(key);
+	if (fp)
+		(void) fclose(fp);
 }
 
 static int
