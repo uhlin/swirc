@@ -212,10 +212,10 @@ sasl_pubkey(void)
 static bool
 modify_setting(const char *setting_name, const char *new_value)
 {
-    if (config_item_undef(setting_name) != 0 ||
-	config_item_install(setting_name, new_value) != 0)
-	return false;
-    return true;
+	if (config_item_undef(setting_name) != 0 ||
+	    config_item_install(setting_name, new_value) != 0)
+		return false;
+	return true;
 }
 
 static void
