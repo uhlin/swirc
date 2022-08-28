@@ -197,8 +197,8 @@ sasl_pubkey(void)
 		encoded_blob = static_cast<char *>(xmalloc(encode_len));
 		encoded_blob[encode_len - 1] = '\0';
 
-		if ((encode_ret = b64_encode(blob, length, encoded_blob,
-		    encode_len)) == -1)
+		if ((encode_ret = b64_encode(blob, static_cast<size_t>(length),
+		    encoded_blob, static_cast<size_t>(encode_len))) == -1)
 			throw std::runtime_error("encoding error");
 		UNUSED_VAR(encode_ret);
 
