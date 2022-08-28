@@ -5,16 +5,16 @@ All notable changes to this project will be documented in this file.
 - **Added** cryptographic functions
 - **Changed** the program behavior to **not** create core dump files if
   `NDEBUG` is defined at compile time.
-- Fixed insufficient out of range check, off-by-one, in command
+- **Fixed** insufficient out of range check, off-by-one, in command
   `/unignore`.
 - Made small improvements
-  - Added usage of C++17 fallthrough attr
-  - Added usage of `PATH_MAX`
-  - Fixed redundant checks
+  - **Added** usage of C++17 fallthrough attr
+  - **Added** usage of `PATH_MAX`
+  - **Fixed** redundant checks
   - Reduced scope of variables
   - Switched to usage of 'sizeof' in `BZERO()` calls
   - ...
-- Rewrote `commands/sasl.c` in C++
+- **Rewrote** `commands/sasl.c` in C++
 
 ## [3.3.5] - 2022-07-28 ##
 - **Added** command `/cap`
