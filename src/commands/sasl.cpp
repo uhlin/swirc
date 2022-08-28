@@ -59,20 +59,16 @@
 static char *
 get_filepath(const bool is_public)
 {
-    static char path[2300] = { '\0' };
+	static char	path[PATH_MAX] = { '\0' };
 
-    if (sw_strcpy(path, g_home_dir, sizeof path) != 0)
-	return NULL;
-    else if (sw_strcat(path, SLASH, sizeof path) != 0)
-	return NULL;
-    else if (sw_strcat(path, (is_public ? "ec_key.pub" : "ec_key"),
-		       sizeof path) != 0)
-	return NULL;
-    else
+	if (sw_strcpy(path, g_home_dir, sizeof path) != 0)
+		return NULL;
+	else if (sw_strcat(path, SLASH, sizeof path) != 0)
+		return NULL;
+	else if (sw_strcat(path, (is_public ? "ec_key.pub" : "ec_key"),
+	    sizeof path) != 0)
+		return NULL;
 	return (&path[0]);
-
-    /*NOTREACHED*/ sw_assert_not_reached();
-    /*NOTREACHED*/ return NULL;
 }
 
 static void
