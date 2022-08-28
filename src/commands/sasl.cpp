@@ -282,21 +282,23 @@ set_password(char *password)
 static void
 set_state(char *state)
 {
-    (void) strToLower(state);
+	(void) strToLower(state);
 
-    if (!strings_match(state, "on") && !strings_match(state, "off")) {
-	output_message(true, "what? on or off?");
-	return;
-    } else if (!modify_setting("sasl", state)) {
-	output_message(true, "set sasl on/off failed");
-	return;
-    } else {
-	char *msg = strdup_printf("SASL authentication is now %s",
-	    strings_match(state, "on") ? "ON" : "OFF");
-	output_message(false, msg);
-	free(msg);
-	save_to_config();
-    }
+	if (!strings_match(state, "on") && !strings_match(state, "off")) {
+		output_message(true, "what? on or off?");
+		return;
+	} else if (!modify_setting("sasl", state)) {
+		output_message(true, "set sasl on/off failed");
+		return;
+	} else {
+		char	*msg;
+
+		msg = strdup_printf("SASL authentication is now %s",
+		    (strings_match(state, "on") ? "ON" : "OFF"));
+		output_message(false, msg);
+		free(msg);
+		save_to_config();
+	}
 }
 
 /* usage: /sasl <operation> [...]
