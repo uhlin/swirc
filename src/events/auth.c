@@ -1,5 +1,5 @@
 /* events/auth.c
-   Copyright (C) 2017-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -108,12 +108,13 @@ build_auth_message(char **msg)
 static void
 handle_ecdsa_nist256p_challenge(const char *challenge)
 {
-	char	*err_reason = "";
+	char	*err_reason = NULL;
 	char	*solution;
 
 	if ((solution = solve_ecdsa_nist256p_challenge(challenge,
 	    &err_reason)) == NULL) {
 		err_log(0, "solve_ecdsa_nist256p_challenge: %s", err_reason);
+		free(err_reason);
 		abort_authentication();
 		return;
 	}
