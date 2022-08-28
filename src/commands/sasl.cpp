@@ -241,18 +241,18 @@ save_to_config(void)
 static void
 set_mechanism(char *mechanism)
 {
-    (void) strToUpper(mechanism);
+	(void) strToUpper(mechanism);
 
-    if (!is_sasl_mechanism_supported(mechanism)) {
-	output_message(true, "sasl mechanism unknown");
-	return;
-    } else if (!modify_setting("sasl_mechanism", mechanism)) {
-	output_message(true, "set mechanism failed");
-	return;
-    } else {
-	output_message(false, "ok");
-	save_to_config();
-    }
+	if (!is_sasl_mechanism_supported(mechanism)) {
+		output_message(true, "sasl mechanism unknown");
+		return;
+	} else if (!modify_setting("sasl_mechanism", mechanism)) {
+		output_message(true, "set mechanism failed");
+		return;
+	} else {
+		output_message(false, "ok");
+		save_to_config();
+	}
 }
 
 static void
