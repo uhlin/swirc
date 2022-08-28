@@ -270,13 +270,13 @@ set_username(char *username)
 static void
 set_password(char *password)
 {
-    if (!modify_setting("sasl_password", password)) {
-	output_message(true, "set password failed");
-	return;
-    } else {
-	output_message(false, "set password ok");
-	save_to_config();
-    }
+	if (!modify_setting("sasl_password", password)) {
+		output_message(true, "set password failed");
+		return;
+	} else {
+		output_message(false, "set password ok");
+		save_to_config();
+	}
 }
 
 static void
