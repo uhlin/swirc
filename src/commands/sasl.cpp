@@ -350,27 +350,28 @@ cmd_sasl(const char *data)
 
 static bool
 sign_decoded_data(EC_KEY *key, const uint8_t *data, int datalen, uint8_t **sig,
-		  unsigned int *siglen)
+    unsigned int *siglen)
 {
-    unsigned int len = 0;
+	unsigned int	len = 0;
 
-    if (!key || (len = (unsigned int) ECDSA_size(key)) == 0) {
-	*sig = NULL;
-	*siglen = 0;
-	return false;
-    }
+	if (key == NULL ||
+	    (len = static_cast<unsigned int>(ECDSA_size(key))) == 0) {
+		*sig = NULL;
+		*siglen = 0;
+		return false;
+	}
 
-    *sig = xmalloc(len);
+	*sig = static_cast<uint8_t *>(xmalloc(len));
 
-    if (!ECDSA_sign(0, data, datalen, *sig, &len, key)) {
-	free(*sig);
-	*sig = NULL;
-	*siglen = 0;
-	return false;
-    }
+	if (!ECDSA_sign(0, data, datalen, *sig, &len, key)) {
+		free(*sig);
+		*sig = NULL;
+		*siglen = 0;
+		return false;
+	}
 
-    *siglen = len;
-    return true;
+	*siglen = len;
+	return true;
 }
 
 char *
