@@ -32,6 +32,10 @@
 #if __OpenBSD__
 #include <sys/param.h>
 #endif
+#if UNIX
+#include <sys/resource.h>
+#include <sys/time.h>
+#endif
 
 #include <locale.h>
 
@@ -642,6 +646,19 @@ main(int argc, char *argv[])
 	windowSystem_init();
 	readline_init();
 	net_ssl_init();
+
+#if defined(UNIX) && defined(NDEBUG)
+	struct rlimit rlim = { 0 };
+
+	if (getrlimit(RLIMIT_CORE, &rlim) == 0) {
+		rlim.rlim_cur = 0;
+		rlim.rlim_max = 0;
+		if (setrlimit(RLIMIT_CORE, &rlim) == 0)
+			debug("Core dumps are now forbidden");
+	}
+#else
+#pragma message("Omitted code to forbid core dumps")
+#endif
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 	toast_notifications_init();
