@@ -32,6 +32,7 @@
 
 #include <openssl/pem.h>
 
+#include <climits>
 #include <stdexcept>
 
 #include "../irc.h"
@@ -49,6 +50,10 @@
 #include "../strdup_printf.h"
 
 #include "sasl.h"
+
+#ifndef PATH_MAX
+#define PATH_MAX 1024
+#endif
 
 /*lint -sem(get_filepath, r_null) */
 static char *
@@ -216,26 +221,26 @@ modify_setting(const char *setting_name, const char *new_value)
 static void
 save_to_config(void)
 {
-    char path[2300] = { '\0' };
-    size_t len = 0;
+	char	 path[PATH_MAX] = { '\0' };
+	size_t	 len = 0;
 
-    if (g_home_dir == NULL)
-	return;
+	if (g_home_dir == NULL)
+		return;
 
-    len += strlen(g_home_dir);
-    len += strlen(SLASH);
-    len += strlen("swirc");
-    len += strlen(g_config_filesuffix);
+	len += strlen(g_home_dir);
+	len += strlen(SLASH);
+	len += strlen("swirc");
+	len += strlen(g_config_filesuffix);
 
-    if (len >= sizeof path)
-	return;
+	if (len >= sizeof path)
+		return;
 
-    (void) sw_strcpy(path, g_home_dir, sizeof path);
-    (void) sw_strcat(path, SLASH,      sizeof path);
-    (void) sw_strcat(path, "swirc",    sizeof path);
-    (void) sw_strcat(path, g_config_filesuffix, sizeof path);
+	(void) sw_strcpy(path, g_home_dir, sizeof path);
+	(void) sw_strcat(path, SLASH, sizeof path);
+	(void) sw_strcat(path, "swirc", sizeof path);
+	(void) sw_strcat(path, g_config_filesuffix, sizeof path);
 
-    config_do_save(path, "w");
+	config_do_save(path, "w");
 }
 
 static void
