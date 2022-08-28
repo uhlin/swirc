@@ -232,8 +232,10 @@ save_to_config(void)
 	len += strlen("swirc");
 	len += strlen(g_config_filesuffix);
 
-	if (len >= sizeof path)
+	if (len >= sizeof path) {
+		err_log(ENAMETOOLONG, "save_to_config");
 		return;
+	}
 
 	(void) sw_strcpy(path, g_home_dir, sizeof path);
 	(void) sw_strcat(path, SLASH, sizeof path);
