@@ -393,6 +393,18 @@ sign_decoded_data(EC_KEY *key, const uint8_t *data, int datalen, uint8_t **sig,
 	return true;
 }
 
+static void
+clean_up(EC_KEY *key, FILE *fp, char *out, uint8_t *decoded_chl, uint8_t *sig)
+{
+	if (key)
+		EC_KEY_free(key);
+	if (fp != NULL && fclose(fp) != 0)
+		err_log(errno, "solve_ecdsa_nist256p_challenge: fclose");
+	free(out);
+	free(decoded_chl);
+	free(sig);
+}
+
 char *
 solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
 {
@@ -449,25 +461,12 @@ solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
 		    (encode_len)) == -1)
 			throw std::runtime_error("encoding error");
 	} catch (const std::runtime_error &e) {
-		if (key)
-			EC_KEY_free(key);
-		if (fp != NULL && fclose(fp) != 0)
-			err_log(errno, "solve_ecdsa_nist256p_challenge: "
-			    "fclose");
-		free(out);
-		free(decoded_chl);
-		free(sig);
+		clean_up(key, fp, out, decoded_chl, sig);
 		*err_reason = sw_strdup(e.what());
 		return NULL;
 	}
 
-	if (key)
-		EC_KEY_free(key);
-	if (fp != NULL && fclose(fp) != 0)
-		err_log(errno, "solve_ecdsa_nist256p_challenge: "
-		    "fclose");
-	free(decoded_chl);
-	free(sig);
+	clean_up(key, fp, NULL, decoded_chl, sig);
 	*err_reason = NULL;
 	return out;
 }
