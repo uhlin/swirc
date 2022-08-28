@@ -3,7 +3,9 @@
 
 /*lint -sem(solve_ecdsa_nist256p_challenge, r_null) */
 
+__SWIRC_BEGIN_DECLS
 char	*solve_ecdsa_nist256p_challenge(const char *, char **);
 void	 cmd_sasl(const char *);
+__SWIRC_END_DECLS
 
 #endif
