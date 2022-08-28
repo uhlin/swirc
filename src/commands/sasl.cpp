@@ -155,57 +155,66 @@ public_key_blob(EC_KEY *key)
 static void
 sasl_pubkey(void)
 {
-    EC_KEY        *key       = NULL;
-    FILE          *fp        = NULL;
-    char          *path      = get_filepath(false);
-    char           buf[2000] = { '\0' };
-    int            length    = -1;
-    unsigned char *blob      = NULL;
+	EC_KEY		*key = NULL;
+	FILE		*fp = NULL;
+	char		*encoded_blob = NULL;
+	unsigned char	*blob = NULL;
 
-    if ((key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1)) == NULL) {
-	output_message(true, "pubkey: EC_KEY_new_by_curve_name failed");
-	return;
-    } else {
-	EC_KEY_set_conv_form(key, POINT_CONVERSION_COMPRESSED);
-    }
+	try {
+		char	*msg, *path;
+		int	 encode_len,
+			 encode_ret;
+		int	 length = -1;
 
-    if (!path) {
-	output_message(true, "pubkey: unable to get file path");
-	goto err;
-    } else if (!file_exists(path)) {
-	output_message(true, "pubkey: unable to locate private key "
-	    "(doesn't exist  --  use keygen)");
-	goto err;
-    } else if ((fp = xfopen(path, "r")) == NULL) {
-	output_message(true, "pubkey: xfopen failed");
-	goto err;
-    } else if (PEM_read_ECPrivateKey(fp, &key, NULL, NULL) == NULL) {
-	output_message(true, "pubkey: PEM_read_ECPrivateKey failed");
-	goto err;
-    } else if (/*EC_KEY_set_conv_form()*/ !EC_KEY_check_key(key)) {
-	output_message(true, "pubkey: EC_KEY_check_key failed");
-	goto err;
-    } else if ((length = public_key_length(key)) <= 0) {
-	output_message(true, "pubkey: public_key_length failed");
-	goto err;
-    } else if ((blob = public_key_blob(key)) == NULL) {
-	output_message(true, "pubkey: public_key_blob failed");
-	goto err;
-    } else if (b64_encode(blob, length, buf, sizeof buf) == -1) {
-	output_message(true, "pubkey: b64_encode failed");
-	goto err;
-    }
+		if ((key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1)) ==
+		    NULL)
+			throw std::runtime_error("unable to construct ec key");
+		else
+			EC_KEY_set_conv_form(key, POINT_CONVERSION_COMPRESSED);
 
-    char *msg = strdup_printf("public key is: %s", buf);
-    output_message(false, msg);
-    free(msg);
+		if ((path = get_filepath(false)) == NULL) {
+			throw std::runtime_error("unable to get file path");
+		} else if (!file_exists(path)) {
+			throw std::runtime_error("unable to find private key "
+			    "(doesn't exist  --  use keygen)");
+		} else if ((fp = xfopen(path, "r")) == NULL) {
+			throw std::runtime_error("unable to open private key");
+		} else if (PEM_read_ECPrivateKey(fp, &key, NULL, NULL) ==
+		    NULL) {
+			throw std::runtime_error("unable to read private key");
+		} else if (!EC_KEY_check_key(key)) {
+			throw std::runtime_error("bogus key");
+		} else if ((length = public_key_length(key)) <= 0) {
+			throw std::runtime_error("public key length error");
+		} else if ((blob = public_key_blob(key)) == NULL) {
+			throw std::runtime_error("public key blob error");
+		} else if ((encode_len = crypt_get_base64_encode_length(length))
+		    <= 0) {
+			throw std::runtime_error("encode length error");
+		}
 
-  err:
-    if (key)
-	EC_KEY_free(key);
-    if (fp)
-	fclose(fp);
-    if (blob)
+		encoded_blob = static_cast<char *>(xmalloc(encode_len));
+		encoded_blob[encode_len - 1] = '\0';
+
+		if ((encode_ret = b64_encode(blob, length, encoded_blob,
+		    encode_len)) == -1)
+			throw std::runtime_error("encoding error");
+		UNUSED_VAR(encode_ret);
+
+		msg = strdup_printf("public key is: %s", encoded_blob);
+		output_message(false, msg);
+		free(msg);
+	} catch (const std::runtime_error &e) {
+		output_message(true, e.what());
+	} catch (...) {
+		output_message(true, "unknown exception was thrown!");
+	}
+
+	if (key)
+		EC_KEY_free(key);
+	if (fp != NULL)
+		(void) fclose(fp);
+	free(encoded_blob);
 	free(blob);
 }
 
