@@ -310,10 +310,10 @@ set_state(char *state)
 void
 cmd_sasl(const char *data)
 {
-    char mechanism[31] = { '\0' };
-    char username[101] = { '\0' };
-    char password[301] = { '\0' };
-    char state[11]     = { '\0' };
+	char mechanism[31] = { '\0' };
+	char username[101] = { '\0' };
+	char password[301] = { '\0' };
+	char state[11] = { '\0' };
 
 /*
  * sscanf() is safe in this context
@@ -322,23 +322,23 @@ cmd_sasl(const char *data)
 #pragma warning(disable: 4996)
 #endif
 
-    if (strings_match(data, "keygen") || strings_match(data, "KEYGEN"))
-	sasl_keygen(false);
-    else if (strings_match(data, "keygen --force") ||
-	     strings_match(data, "KEYGEN --force"))
-	sasl_keygen(true);
-    else if (strings_match(data, "pubkey") || strings_match(data, "PUBKEY"))
-	sasl_pubkey();
-    else if (sscanf(data, "mechanism %30s", mechanism) == 1)
-	set_mechanism(mechanism);
-    else if (sscanf(data, "username %100s", username) == 1)
-	set_username(username);
-    else if (sscanf(data, "password %300s", password) == 1)
-	set_password(password);
-    else if (sscanf(data, "set %10s", state) == 1)
-	set_state(state);
-    else
-	output_message(true, "bogus operation");
+	if (strings_match(data, "keygen") || strings_match(data, "KEYGEN"))
+		sasl_keygen(false);
+	else if (strings_match(data, "keygen --force") ||
+		 strings_match(data, "KEYGEN --force"))
+		sasl_keygen(true);
+	else if (strings_match(data, "pubkey") || strings_match(data, "PUBKEY"))
+		sasl_pubkey();
+	else if (sscanf(data, "mechanism %30s", mechanism) == 1)
+		set_mechanism(mechanism);
+	else if (sscanf(data, "username %100s", username) == 1)
+		set_username(username);
+	else if (sscanf(data, "password %300s", password) == 1)
+		set_password(password);
+	else if (sscanf(data, "set %10s", state) == 1)
+		set_state(state);
+	else
+		output_message(true, "bogus operation");
 
 /*
  * Reset warning behavior to its default value
