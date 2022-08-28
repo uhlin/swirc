@@ -2,7 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added cryptographic functions
+- **Added** cryptographic functions
+- **Changed** the program behavior to **not** create core dump files if
+  `NDEBUG` is defined at compile time.
 - Fixed insufficient out of range check, off-by-one, in command
   `/unignore`.
 - Made small improvements
