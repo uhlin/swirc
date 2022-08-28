@@ -39,7 +39,7 @@
 #include "strHand.h"
 
 static void
-clean_up(EVP_CIPHER_CTX *ctx1, PCRYPT_CTX ctx2)
+clean_up(EVP_CIPHER_CTX *ctx1, PCRYPT_CTX ctx2, cryptstr_t str, size_t size)
 {
 	if (ctx1)
 		EVP_CIPHER_CTX_free(ctx1);
@@ -47,6 +47,9 @@ clean_up(EVP_CIPHER_CTX *ctx1, PCRYPT_CTX ctx2)
 		OPENSSL_cleanse(ctx2->key, sizeof ctx2->key);
 		OPENSSL_cleanse(ctx2->iv, sizeof ctx2->iv);
 	}
+	if (str != NULL && size > 0)
+		OPENSSL_cleanse(str, size);
+	free(str);
 }
 
 static const EVP_CIPHER *
@@ -147,16 +150,17 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 		err_log(0, "crypt_decrypt_str: %s", "unknown exception!");
 	}
 
-	clean_up(cipher_ctx, &crypt_ctx);
+	clean_up(cipher_ctx, &crypt_ctx, decdat, static_cast<size_t>
+	    (decdat_size));
+
 	free(str_copy);
-	if (decdat != NULL && decdat_size > 0)
-		OPENSSL_cleanse(decdat, static_cast<size_t>(decdat_size));
-	free(decdat);
 	free(decoded_str);
+
 	if (error) {
 		free(out_str);
 		return NULL;
 	}
+
 	return reinterpret_cast<char *>(out_str);
 }
 
@@ -234,14 +238,14 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 		err_log(0, "crypt_encrypt_str: %s", "unknown exception!");
 	}
 
-	clean_up(cipher_ctx, &crypt_ctx);
-	if (encdat != NULL && encdat_size > 0)
-		OPENSSL_cleanse(encdat, static_cast<size_t>(encdat_size));
-	free(encdat);
+	clean_up(cipher_ctx, &crypt_ctx, encdat, static_cast<size_t>
+	    (encdat_size));
+
 	if (error) {
 		free(b64str);
 		return NULL;
 	}
+
 	return (rot13 ? rot13_str(b64str) : b64str);
 }
 
