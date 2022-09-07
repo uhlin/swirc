@@ -7,6 +7,27 @@
 #include "strHand.h"
 #include "textBuffer.h"
 
+static int
+check_args(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text)
+{
+	if (buf == NULL || text == NULL || (element == NULL &&
+	    textBuf_size(buf) != 0))
+		return -1;
+	return 0;
+}
+
+static PTEXTBUF_ELMT
+get_new_elmt(const char *text, int indent)
+{
+	PTEXTBUF_ELMT	new_element;
+
+	new_element = xcalloc(sizeof *new_element, 1);
+	new_element->text = sw_strdup(text);
+	new_element->indent = indent;
+
+	return new_element;
+}
+
 PTEXTBUF
 textBuf_new(void)
 {
@@ -54,13 +75,10 @@ textBuf_ins_next(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
 {
 	PTEXTBUF_ELMT	new_element;
 
-	if (buf == NULL || text == NULL ||
-	    (element == NULL && textBuf_size(buf) != 0))
+	if (check_args(buf, element, text) == -1)
 		return EINVAL;
 
-	new_element = xcalloc(sizeof *new_element, 1);
-	new_element->text = sw_strdup(text);
-	new_element->indent = indent;
+	new_element = get_new_elmt(text, indent);
 
 	if (textBuf_size(buf) == 0) {
 		buf->head = new_element;
@@ -91,13 +109,10 @@ textBuf_ins_prev(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
 {
 	PTEXTBUF_ELMT	new_element;
 
-	if (buf == NULL || text == NULL ||
-	    (element == NULL && textBuf_size(buf) != 0))
+	if (check_args(buf, element, text) == -1)
 		return EINVAL;
 
-	new_element = xcalloc(sizeof *new_element, 1);
-	new_element->text = sw_strdup(text);
-	new_element->indent = indent;
+	new_element = get_new_elmt(text, indent);
 
 	if (textBuf_size(buf) == 0) {
 		buf->head = new_element;
