@@ -28,6 +28,15 @@ get_new_elmt(const char *text, int indent)
 	return new_element;
 }
 
+static void
+init_buf(PTEXTBUF buf, PTEXTBUF_ELMT new_element)
+{
+	buf->head = new_element;
+	buf->head->prev = NULL;
+	buf->head->next = NULL;
+	buf->tail = new_element;
+}
+
 PTEXTBUF
 textBuf_new(void)
 {
@@ -81,10 +90,7 @@ textBuf_ins_next(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
 	new_element = get_new_elmt(text, indent);
 
 	if (textBuf_size(buf) == 0) {
-		buf->head = new_element;
-		buf->head->prev = NULL;
-		buf->head->next = NULL;
-		buf->tail = new_element;
+		init_buf(buf, new_element);
 	} else {
 		sw_assert(element != NULL);
 
@@ -115,10 +121,7 @@ textBuf_ins_prev(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
 	new_element = get_new_elmt(text, indent);
 
 	if (textBuf_size(buf) == 0) {
-		buf->head = new_element;
-		buf->head->prev = NULL;
-		buf->head->next = NULL;
-		buf->tail = new_element;
+		init_buf(buf, new_element);
 	} else {
 		sw_assert(element != NULL);
 
