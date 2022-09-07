@@ -66,12 +66,14 @@ void	printtext_context_init(PPRINTTEXT_CONTEXT, PIRC_WINDOW,
 	    enum message_specifier_type, bool include_ts);
 
 /*lint -printf(2, printtext) */
+/*lint -printf(2, printtext_print) */
 
 char	*squeeze_text_deco(char *);
 short int
 	 color_pair_find(short int foreground, short int background);
 void	 print_and_free(const char *msg, char *);
 void	 printtext(PPRINTTEXT_CONTEXT, const char *, ...) PRINTFLIKE(2);
+void	 printtext_print(const char *what, const char *, ...) PRINTFLIKE(2);
 void	 printtext_puts(WINDOW *, const char *buf, int indent, int, int *);
 void	 printtext_set_color(WINDOW *, bool *, short int, short int);
 void	 set_timestamp(char *dest, size_t destsize,

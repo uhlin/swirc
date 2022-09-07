@@ -1443,6 +1443,35 @@ printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
 	va_end(ap);
 }
 
+void
+printtext_print(const char *what, const char *fmt, ...)
+{
+	PPRINTTEXT_CONTEXT ctx;
+	va_list ap;
+
+	if (fmt == NULL)
+		err_exit(EINVAL, "printtext_print");
+	else if (g_active_window == NULL)
+		return;
+
+	ctx = printtext_context_new(g_active_window, TYPE_SPEC1, true);
+
+	if (what == NULL)
+		/* null */;
+	else if (strings_match(what, "err"))
+		ctx->spec_type = TYPE_SPEC1_FAILURE;
+	else if (strings_match(what, "success"))
+		ctx->spec_type = TYPE_SPEC1_SUCCESS;
+	else if (strings_match(what, "warn"))
+		ctx->spec_type = TYPE_SPEC1_WARN;
+
+	va_start(ap, fmt);
+	vprinttext(ctx, fmt, ap);
+	va_end(ap);
+
+	printtext_context_destroy(ctx);
+}
+
 static char *get_buffer(const char *) PTR_ARGS_NONNULL;
 
 static char *
