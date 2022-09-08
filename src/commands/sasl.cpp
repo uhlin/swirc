@@ -54,6 +54,9 @@
 #define PATH_MAX 1024
 #endif
 
+const char	g_encrypted_pass_sym = '#';
+const char	g_unencrypted_pass_sym = '?';
+
 /*lint -sem(get_filepath, r_null) */
 static char *
 get_filepath(const bool is_public)
