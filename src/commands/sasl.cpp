@@ -34,6 +34,7 @@
 
 #include <climits>
 #include <stdexcept>
+#include <string>
 
 #include "../irc.h"
 #include "../events/cap.h"
@@ -289,7 +290,12 @@ set_username(const char *username)
 static void
 set_password(const char *password)
 {
-	if (!modify_setting("sasl_password", password)) {
+	std::string str("");
+
+	str.push_back(g_unencrypted_pass_sym);
+	str.append(password);
+
+	if (!modify_setting("sasl_password", str.c_str())) {
 		output_message(true, "set password failed");
 		return;
 	} else {
