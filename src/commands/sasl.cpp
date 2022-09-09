@@ -345,7 +345,10 @@ set_passwd_s(const char *data)
 		save_to_config();
 	} catch (const std::runtime_error &e) {
 		error = true;
-		printtext_print("err", "set_passwd_s: %s", e.what());
+		printtext_print("err", "%s", e.what());
+	} catch (...) {
+		error = true;
+		printtext_print("err", "%s", "unknown exception was thrown!");
 	}
 
 	if (!error)
