@@ -305,6 +305,12 @@ set_password(const char *password)
 }
 
 static void
+set_passwd_s(const char *data)
+{
+	printtext_print(NULL, "set_passwd_s: data = %s", data);
+}
+
+static void
 set_state(char *state)
 {
 	(void) strToLower(state);
@@ -333,6 +339,7 @@ set_state(char *state)
    mechanism [ecdsa-nist256p-challenge | plain | scram-sha-256]
    username <name>
    password <pass>
+   passwd_s <sasl pass> <encryption pass>
    set [on | off] */
 void
 cmd_sasl(const char *data)
@@ -362,6 +369,8 @@ cmd_sasl(const char *data)
 		set_username(username);
 	else if (sscanf(data, "password %300s", password) == 1)
 		set_password(password);
+	else if (!strncmp(data, "passwd_s ", 9))
+		set_passwd_s(addrof(data[9]));
 	else if (sscanf(data, "set %10s", state) == 1)
 		set_state(state);
 	else
