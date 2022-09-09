@@ -249,6 +249,14 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 	return (rot13 ? rot13_str(b64str) : b64str);
 }
 
+void
+crypt_freezero(void *vp, size_t len)
+{
+	if (vp != NULL && len > 0)
+		OPENSSL_cleanse(vp, len);
+	free(vp);
+}
+
 int
 crypt_get_base64_decode_length(const char *str)
 {
