@@ -55,6 +55,7 @@
 #define PATH_MAX 1024
 #endif
 
+const char	g_decrypted_pass_sym = '%';
 const char	g_encrypted_pass_sym = '#';
 const char	g_unencrypted_pass_sym = '?';
 

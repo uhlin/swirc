@@ -4,6 +4,7 @@
 /*lint -sem(solve_ecdsa_nist256p_challenge, r_null) */
 
 __SWIRC_BEGIN_DECLS
+extern const char	g_decrypted_pass_sym;
 extern const char	g_encrypted_pass_sym;
 extern const char	g_unencrypted_pass_sym;
 
