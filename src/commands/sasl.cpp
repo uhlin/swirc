@@ -307,7 +307,52 @@ set_password(const char *password)
 static void
 set_passwd_s(const char *data)
 {
-	printtext_print(NULL, "set_passwd_s: data = %s", data);
+	bool	 error = false;
+	char	*cout = NULL;
+	char	*data_copy = NULL;
+	char	*val = NULL;
+	size_t	 data_len = 0;
+
+	try {
+		char		*last = const_cast<char *>("");
+		char		*sasl_pass, *encryption_pass;
+		cryptstr_t	 str1, str2;
+
+		if (data == NULL || strings_match(data, ""))
+			throw std::runtime_error("no data");
+
+		data_copy = sw_strdup(data);
+		data_len = strlen(data);
+
+		if ((sasl_pass = strtok_r(data_copy, " ", &last)) == NULL ||
+		    (encryption_pass = strtok_r(NULL, " ", &last)) == NULL)
+			throw std::runtime_error("too few args");
+		else if (strtok_r(NULL, " ", &last) != NULL)
+			throw std::runtime_error("too many args");
+
+		str1 = reinterpret_cast<cryptstr_t>(sasl_pass);
+		str2 = reinterpret_cast<cryptstr_t>(encryption_pass);
+
+		if ((cout = crypt_encrypt_str(str1, str2, true)) == NULL)
+			throw std::runtime_error("encryption failed");
+
+		val = strdup_printf("%c%s", g_encrypted_pass_sym, cout);
+		free_and_null(&cout);
+
+		if (!modify_setting("sasl_password", val))
+			throw std::runtime_error("unable to modify setting");
+		save_to_config();
+	} catch (const std::runtime_error &e) {
+		error = true;
+		printtext_print("err", "set_passwd_s: %s", e.what());
+	}
+
+	if (!error)
+		printtext_print("success", "sasl_password = %s",
+		    Config("sasl_password"));
+	crypt_freezero(data_copy, data_len);
+	free(cout);
+	free(val);
 }
 
 static void
