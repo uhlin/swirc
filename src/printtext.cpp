@@ -1293,8 +1293,12 @@ squeeze_text_deco(char *buffer)
 	    TXT_NORMAL
 	    TXT_REVERSE
 	    TXT_UNDERLINE;
-	long int	i, j;
-	bool		has_comma;
+	long int i, j;
+#if defined(__cplusplus) && __cplusplus >= 201703L
+	[[maybe_unused]] bool has_comma;
+#else
+	bool has_comma;
+#endif
 
 	if (buffer == NULL)
 		err_exit(EINVAL, "squeeze_text_deco");
