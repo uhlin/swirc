@@ -1344,6 +1344,7 @@ squeeze_text_deco(char *buffer)
 			}
 
 			sw_assert(has_comma);
+			UNUSED_VAR(has_comma);
 
 			/*
 			 * check for ^CNN,N or ^CN,NN
