@@ -36,6 +36,8 @@ void		 config_create(const char *path, const char *mode);
 void		 config_do_save(const char *path, const char *mode);
 void		 config_readit(const char *path, const char *mode);
 
+char get_sasl_passwd_type(void);
+
 #define SASL_USERNAME_MAXLEN 480
 #define SASL_PASSWORD_MAXLEN 480
 

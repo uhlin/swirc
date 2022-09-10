@@ -49,6 +49,8 @@
 #pragma message("No GNU libidn")
 #endif
 
+#include "commands/sasl.h"
+
 #define ENTRY_FOREACH()\
 	for (PCONF_HTBL_ENTRY *entry_p = &hash_table[0];\
 	    entry_p < &hash_table[ARRAY_SIZE(hash_table)];\
@@ -564,6 +566,29 @@ config_readit(const char *path, const char *mode)
 		err_msg("config_readit: %s", g_fgets_nullret_err2);
 		abort();
 	}
+}
+
+char
+get_sasl_passwd_type(void)
+{
+	PCONF_HTBL_ENTRY	item;
+	static const char	setting_name[] = "sasl_password";
+
+	for (item = hash_table[hash(setting_name)];
+	    item != NULL;
+	    item = item->next) {
+		if (strings_match(setting_name, item->name)) {
+			if (*(item->value) == g_decrypted_pass_sym ||
+			    *(item->value) == g_encrypted_pass_sym ||
+			    *(item->value) == g_unencrypted_pass_sym)
+				return *(item->value);
+			else
+				break;
+		}
+	}
+
+	// XXX: may want to return something else
+	return g_unencrypted_pass_sym;
 }
 
 #ifdef HAVE_LIBIDN
