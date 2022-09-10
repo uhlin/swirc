@@ -255,9 +255,9 @@ nestHome_init(void)
 		sw_assert_not_reached();
 	}
 
-	if (sasl_is_enabled() && *(cp = Config("sasl_password")) ==
+	if (sasl_is_enabled() && get_sasl_passwd_type() ==
 	    g_encrypted_pass_sym) {
-		cp += 1;
+		cp = Config("sasl_password");
 		if (!strings_match(cp, ""))
 			prompt_for_decryption(cp);
 	}
