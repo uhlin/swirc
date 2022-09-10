@@ -501,6 +501,7 @@ static usage_t sasl_usage = {
   "    mechanism [ecdsa-nist256p-challenge | plain | scram-sha-256]",
   "    username <name>",
   "    password <pass>",
+  "    passwd_s <sasl pass> <encryption pass>",
   "    set [on | off]",
   "",
   N_("SASL is a method that lets you identify with NickServ during the\n"
