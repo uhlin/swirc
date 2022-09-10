@@ -59,6 +59,10 @@ const char	g_decrypted_pass_sym = '%';
 const char	g_encrypted_pass_sym = '#';
 const char	g_unencrypted_pass_sym = '?';
 
+const char g_sasl_pass_allowed_chars[] =
+    "!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
+    "abcdefghijklmnopqrstuvwxyz{|}~";
+
 /*lint -sem(get_filepath, r_null) */
 static char *
 get_filepath(const bool is_public)

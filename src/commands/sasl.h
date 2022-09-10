@@ -8,6 +8,8 @@ extern const char	g_decrypted_pass_sym;
 extern const char	g_encrypted_pass_sym;
 extern const char	g_unencrypted_pass_sym;
 
+extern const char g_sasl_pass_allowed_chars[];
+
 char	*solve_ecdsa_nist256p_challenge(const char *, char **);
 void	 cmd_sasl(const char *);
 __SWIRC_END_DECLS
