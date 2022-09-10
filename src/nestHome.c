@@ -44,6 +44,7 @@
 
 #include "assertAPI.h"
 #include "config.h"
+#include "crypt.h"
 #include "dataClassify.h"
 #include "errHand.h"
 #include "filePred.h"
@@ -54,6 +55,8 @@
 #include "strHand.h"
 #include "strdup_printf.h"
 #include "theme.h"
+
+#include "commands/sasl.h"
 
 char	*g_user = NULL;
 
@@ -105,6 +108,76 @@ modify_setting(const char *setting_name, const char *new_value)
 	(void) config_item_install(setting_name, new_value);
 }
 
+static bool
+passwd_ok_check(const char *str)
+{
+	for (const char *cp = str; *cp != '\0'; cp++) {
+		if (strchr(g_sasl_pass_allowed_chars, *cp) == NULL)
+			return false;
+	}
+	return true;
+}
+
+static void
+prompt_for_decryption(const char *str)
+{
+	char *dc_out = NULL;
+
+	puts("Please decrypt your SASL password...");
+	puts("(1 attempt)");
+
+	while (true) {
+		bool	 fgets_error;
+		char	*value;
+		char	 pass[400] = { '\0' };
+
+		printf("Decryption pass (will echo): ");
+		fflush(stdout);
+
+		fgets_error = fgets(pass, sizeof pass, stdin) == NULL;
+
+		if (fgets_error) {
+			continue;
+		} else if (strchr(pass, '\n') == NULL) {
+			int	c;
+
+			puts("Input too big");
+
+			while (c = getchar(), c != '\n' && c != EOF)
+				/* discard */;
+
+			continue;
+		}
+
+		pass[strcspn(pass, "\n")] = '\0';
+
+		if (strings_match(pass, "")) {
+			continue;
+		} else if ((dc_out = crypt_decrypt_str(str, (cryptstr_t)
+		    addrof(pass[0]), true)) == NULL) {
+			puts("Decryption failed");
+			break;
+		} else if (!passwd_ok_check(dc_out)) {
+			puts("Wrong pass");
+			break;
+		}
+
+		puts("Pass seems reasonable");
+		value = strdup_printf("%c%s", g_decrypted_pass_sym, dc_out);
+		modify_setting("sasl_password", value);
+		crypt_freezero(value, strlen(value));
+		crypt_freezero(dc_out, strlen(dc_out));
+		dc_out = NULL;
+
+		break;
+	}
+
+	free(dc_out);
+
+	puts("Press <RETURN>");
+	getchar();
+}
+
 static void
 save_cmdline_opts(const char *path)
 {
@@ -123,6 +196,7 @@ nestHome_init(void)
 {
 #define EXPLICIT_CONFIG g_cmdline_opts->config_file
 	char *hp = path_to_home() ? sw_strdup(path_to_home()) : NULL;
+	const char *cp;
 
 	if (isNull(hp))
 		err_quit("Can't resolve homepath!");
@@ -178,6 +252,12 @@ nestHome_init(void)
 			save_cmdline_opts(g_config_file);
 	} else {
 		sw_assert_not_reached();
+	}
+
+	if (*(cp = Config("sasl_password")) == g_encrypted_pass_sym) {
+		cp += 1;
+		if (!strings_match(cp, ""))
+			prompt_for_decryption(cp);
 	}
 
 #if defined(UNIX)
