@@ -457,8 +457,16 @@ Config(const char *setting_name)
 	for (item = hash_table[hash(setting_name)];
 	    item != NULL;
 	    item = item->next) {
-		if (strings_match(setting_name, item->name))
-			return item->value;
+		if (strings_match(setting_name, item->name)) {
+			if (!strings_match(setting_name, "sasl_password"))
+				return item->value;
+			else if (*(item->value) == g_decrypted_pass_sym ||
+			    *(item->value) == g_encrypted_pass_sym ||
+			    *(item->value) == g_unencrypted_pass_sym)
+				return addrof(item->value[1]);
+			else
+				return "";
+		}
 	}
 
 	return "";
