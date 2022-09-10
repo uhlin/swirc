@@ -51,6 +51,7 @@
 #include "libUtils.h"
 #include "main.h"
 #include "nestHome.h"
+#include "network.h"
 #include "ossl-scripts.h"
 #include "strHand.h"
 #include "strdup_printf.h"
@@ -254,7 +255,8 @@ nestHome_init(void)
 		sw_assert_not_reached();
 	}
 
-	if (*(cp = Config("sasl_password")) == g_encrypted_pass_sym) {
+	if (sasl_is_enabled() && *(cp = Config("sasl_password")) ==
+	    g_encrypted_pass_sym) {
 		cp += 1;
 		if (!strings_match(cp, ""))
 			prompt_for_decryption(cp);
