@@ -175,7 +175,7 @@ prompt_for_decryption(const char *str)
 	free(dc_out);
 
 	puts("Press <RETURN>");
-	getchar();
+	(void) getchar();
 }
 
 static void
