@@ -63,6 +63,9 @@ const char g_sasl_pass_allowed_chars[] =
     "!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
     "abcdefghijklmnopqrstuvwxyz{|}~";
 
+static const size_t	password_min = 4;
+static const size_t	password_max = 200;
+
 /*lint -sem(get_filepath, r_null) */
 static char *
 get_filepath(const bool is_public)
@@ -309,6 +312,36 @@ set_password(const char *password)
 	}
 }
 
+static bool
+passwd_ok_check(const char *str, std::string &err_reason)
+{
+	if (str == NULL) {
+		err_reason.assign("is null");
+		return false;
+	} else if (strings_match(str, "")) {
+		err_reason.assign("is empty");
+		return false;
+	}
+
+	for (const char *cp = str; *cp != '\0'; cp++) {
+		if (strchr(g_sasl_pass_allowed_chars, *cp) == NULL) {
+			err_reason.assign("contains forbidden chars");
+			return false;
+		}
+	}
+
+	if (strlen(str) < password_min) {
+		err_reason.assign("is too short");
+		return false;
+	} else if (strlen(str) > password_max) {
+		err_reason.assign("is too long");
+		return false;
+	}
+
+	err_reason.assign("");
+	return true;
+}
+
 static void
 set_passwd_s(const char *data)
 {
@@ -322,6 +355,8 @@ set_passwd_s(const char *data)
 		char		*last = const_cast<char *>("");
 		char		*sasl_pass, *encryption_pass;
 		cryptstr_t	 str1, str2;
+		std::string	 err_reason("");
+		std::string	 msg("");
 
 		if (data == NULL || strings_match(data, ""))
 			throw std::runtime_error("no data");
@@ -330,10 +365,17 @@ set_passwd_s(const char *data)
 		data_len = strlen(data);
 
 		if ((sasl_pass = strtok_r(data_copy, " ", &last)) == NULL ||
-		    (encryption_pass = strtok_r(NULL, " ", &last)) == NULL)
+		    (encryption_pass = strtok_r(NULL, " ", &last)) == NULL) {
 			throw std::runtime_error("too few args");
-		else if (strtok_r(NULL, " ", &last) != NULL)
+		} else if (strtok_r(NULL, " ", &last) != NULL) {
 			throw std::runtime_error("too many args");
+		} else if (!passwd_ok_check(sasl_pass, err_reason)) {
+			msg.assign("SASL pass: ").append(err_reason);
+			throw std::runtime_error(msg.c_str());
+		} else if (!passwd_ok_check(encryption_pass, err_reason)) {
+			msg.assign("Encryption pass: ").append(err_reason);
+			throw std::runtime_error(msg.c_str());
+		}
 
 		str1 = reinterpret_cast<cryptstr_t>(sasl_pass);
 		str2 = reinterpret_cast<cryptstr_t>(encryption_pass);
