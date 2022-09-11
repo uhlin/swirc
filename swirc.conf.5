@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018-2022 Markus Uhlin. All rights reserved.
 .\"
-.Dd July 24, 2022
+.Dd September 11, 2022
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -246,7 +246,18 @@ Be sure to write them in all uppercase!
 .\" ----------------------------------------
 .It Sy sasl_password Pq Em string
 SASL password.
-For mechanism PLAIN and SCRAM-SHA-256.
+(For mechanism PLAIN and SCRAM-SHA-256.)
+.Pp
+It is recommended to set this setting using the interactive \fBsasl\fR
+command.
+However, if the initial character is a question mark
+.Pq Sq \&?
+it symbolizes that the password is in plain text/unencrypted; while a
+hash mark
+.Pq Sq #
+symbolizes that the password is encrypted.
+The initial character must be either of them and is not interpreted as
+a part of the password.
 .\" ----------------------------------------
 .\" SASL USERNAME
 .\" ----------------------------------------
