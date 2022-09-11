@@ -703,28 +703,27 @@ config_get_normalized_sasl_password(void)
 void
 cmd_set(const char *data)
 {
-	char *dcopy = sw_strdup(data);
-	char *setting, *value;
-	char *state = const_cast<char *>("");
+	char	*dcopy;
+	char	*setting, *value;
+	char	*state = const_cast<char *>("");
 
-	if (strings_match(dcopy, "")) {
+	if (strings_match(data, "")) {
 		output_values_for_all_settings();
-		free(dcopy);
 		return;
 	}
 
+	dcopy = sw_strdup(data);
 	(void) strFeed(dcopy, 1);
 
-	if ((setting = strtok_r(dcopy, "\n", &state)) == NULL) {
-		print_and_free("/set: fatal error (shouldn't happen)", dcopy);
-		return;
-	} else if ((value = strtok_r(NULL, "\n", &state)) == NULL) {
+	if ((setting = strtok_r(dcopy, "\n", &state)) == NULL)
+		printtext_print("err", "fatal error (shouldn't happen)");
+	else if ((value = strtok_r(NULL, "\n", &state)) == NULL)
 		output_value_for_specific_setting(setting);
-		free(dcopy);
-		return;
-	}
+	else if (strings_match(setting, "sasl_password"))
+		printtext_print("err", "please use /sasl");
+	else
+		try_to_set_value_for_setting(setting, value);
 
-	try_to_set_value_for_setting(setting, value);
 	free(dcopy);
 }
 
