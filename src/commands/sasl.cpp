@@ -63,7 +63,7 @@ const char g_sasl_pass_allowed_chars[] =
     "!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
     "abcdefghijklmnopqrstuvwxyz{|}~";
 
-static const size_t	password_min = 4;
+static const size_t	password_min = 8;
 static const size_t	password_max = 200;
 
 /*lint -sem(get_filepath, r_null) */
