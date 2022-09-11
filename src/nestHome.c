@@ -48,6 +48,7 @@
 #include "dataClassify.h"
 #include "errHand.h"
 #include "filePred.h"
+#include "irc.h"
 #include "libUtils.h"
 #include "main.h"
 #include "nestHome.h"
@@ -58,6 +59,8 @@
 #include "theme.h"
 
 #include "commands/sasl.h"
+
+#include "events/cap.h"
 
 char	*g_encrypted_sasl_pass = NULL;
 char	*g_user = NULL;
@@ -203,7 +206,7 @@ nestHome_init(void)
 {
 #define EXPLICIT_CONFIG g_cmdline_opts->config_file
 	char *hp = path_to_home() ? sw_strdup(path_to_home()) : NULL;
-	const char *cp;
+	const char *cp, *mech;
 
 	if (isNull(hp))
 		err_quit("Can't resolve homepath!");
@@ -261,8 +264,11 @@ nestHome_init(void)
 		sw_assert_not_reached();
 	}
 
-	if (sasl_is_enabled() && get_sasl_passwd_type() ==
-	    g_encrypted_pass_sym) {
+	mech = Config("sasl_mechanism");
+	if (sasl_is_enabled() &&
+	    is_sasl_mechanism_supported(mech) &&
+	    !strings_match(mech, "ECDSA-NIST256P-CHALLENGE") &&
+	    get_sasl_passwd_type() == g_encrypted_pass_sym) {
 		cp = Config("sasl_password");
 		if (!strings_match(cp, ""))
 			prompt_for_decryption(cp);
