@@ -164,17 +164,17 @@ prompt_for_decryption(const char *str)
 			break;
 		}
 
+		/*
+		 * Save a copy of the encrypted SASL pass
+		 */
+		g_encrypted_sasl_pass = sw_strdup(str);
+
 		puts("Pass seems reasonable");
 		value = strdup_printf("%c%s", g_decrypted_pass_sym, dc_out);
 		modify_setting("sasl_password", value);
 		crypt_freezero(value, strlen(value));
 		crypt_freezero(dc_out, strlen(dc_out));
 		dc_out = NULL;
-
-		/*
-		 * Save a copy of the encrypted SASL pass
-		 */
-		g_encrypted_sasl_pass = sw_strdup(str);
 
 		break;
 	}
