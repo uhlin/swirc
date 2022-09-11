@@ -548,8 +548,30 @@ config_do_save(const char *path, const char *mode)
 	write_config_header(fp);
 
 	FOREACH_CDV() {
-		write_setting(fp, cdv_p->setting_name,
-		    Config(cdv_p->setting_name), true, cdv_p->padding);
+		if (!strings_match(cdv_p->setting_name, "sasl_password")) {
+			write_setting(fp, cdv_p->setting_name, Config
+			    (cdv_p->setting_name), true, cdv_p->padding);
+		} else {
+			char		c;
+			std::string	str("");
+
+			if ((c = get_sasl_passwd_type()) ==
+			    g_decrypted_pass_sym) {
+				/*
+				 * Don't save the decrypted SASL pass
+				 */
+
+				str.push_back(g_encrypted_pass_sym);
+				str.append(g_encrypted_sasl_pass ?
+				    g_encrypted_sasl_pass : "");
+			} else {
+				str.push_back(c);
+				str.append(Config(cdv_p->setting_name));
+			}
+
+			write_setting(fp, cdv_p->setting_name, str.c_str(),
+			    true, cdv_p->padding);
+		}
 	}
 
 	fclose_ensure_success(fp);
