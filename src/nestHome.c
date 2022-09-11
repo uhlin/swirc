@@ -264,6 +264,13 @@ nestHome_init(void)
 		sw_assert_not_reached();
 	}
 
+	if (get_sasl_passwd_type() == g_decrypted_pass_sym) {
+		err_msg("warning!");
+		err_msg("decrypted SASL password found in read config  --  "
+		    "cannot continue!");
+		abort();
+	}
+
 	mech = Config("sasl_mechanism");
 	if (sasl_is_enabled() &&
 	    is_sasl_mechanism_supported(mech) &&
