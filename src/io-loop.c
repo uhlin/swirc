@@ -173,7 +173,9 @@ add_to_history(const char *string)
 
 	if (config_integer(&intctx) == 0 ||
 	    !strncasecmp(string, "/nickserv -- identify", 21) ||
-	    !strncasecmp(string, "/ns -- identify", 15))
+	    !strncasecmp(string, "/ns -- identify", 15) ||
+	    !strncasecmp(string, "/sasl password ", 15) ||
+	    !strncasecmp(string, "/sasl passwd_s ", 15))
 		return;
 	if (tbszp1 > config_integer(&intctx)) {
 		/*
