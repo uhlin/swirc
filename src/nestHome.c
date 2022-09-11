@@ -59,6 +59,7 @@
 
 #include "commands/sasl.h"
 
+char	*g_encrypted_sasl_pass = NULL;
 char	*g_user = NULL;
 
 char	*g_home_dir = NULL;
@@ -169,6 +170,11 @@ prompt_for_decryption(const char *str)
 		crypt_freezero(value, strlen(value));
 		crypt_freezero(dc_out, strlen(dc_out));
 		dc_out = NULL;
+
+		/*
+		 * Save a copy of the encrypted SASL pass
+		 */
+		g_encrypted_sasl_pass = sw_strdup(str);
 
 		break;
 	}
@@ -296,6 +302,7 @@ nestHome_init(void)
 void
 nestHome_deinit(void)
 {
+	free_and_null(&g_encrypted_sasl_pass);
 	free_and_null(&g_user);
 
 	free_and_null(&g_home_dir);
