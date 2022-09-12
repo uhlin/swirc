@@ -31,6 +31,7 @@
 #include "common.h"
 
 #include "../config.h"
+#include "../crypt.h"
 #include "../errHand.h"
 #include "../irc.h"
 #include "../libUtils.h"
@@ -169,7 +170,7 @@ event_authenticate(struct irc_message_compo *compo)
 			}
 
 			(void) net_send("AUTHENTICATE %s", msg);
-			free(msg);
+			crypt_freezero(msg, xstrnlen(msg, 1000));
 		} else if (strings_match(mechanism, "SCRAM-SHA-256")) {
 			if (sasl_scram_sha_send_client_first_msg() == -1)
 				abort_authentication();
