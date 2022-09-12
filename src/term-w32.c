@@ -48,3 +48,9 @@ term_set_title(const char *fmt, ...)
 
 	SetConsoleTitle(title);
 }
+
+void
+term_toggle_echo(on_off_t state)
+{
+	UNUSED_PARAM(state);
+}

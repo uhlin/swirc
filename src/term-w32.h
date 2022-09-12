@@ -8,6 +8,8 @@ struct winsize {
 	SHORT	ws_col;
 };
 
+typedef enum { ON, OFF } on_off_t;
+
 /*lint -printf(1, term_set_title) */
 
 __SWIRC_BEGIN_DECLS
@@ -15,6 +17,7 @@ bool		is_term_resized(int, int);
 struct winsize	term_get_size(void);
 void		term_restore_title(void);
 void		term_set_title(const char *, ...);
+void		term_toggle_echo(on_off_t);
 __SWIRC_END_DECLS
 
 /* Inline function definitions

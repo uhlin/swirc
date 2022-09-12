@@ -62,3 +62,9 @@ term_set_title(const char *fmt, ...)
 
 	} /* for */
 }
+
+void
+term_toggle_echo(on_off_t state)
+{
+	UNUSED_PARAM(state);
+}
