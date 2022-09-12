@@ -106,12 +106,10 @@ static stringarray_t freenode_servers = {
 };
 
 static stringarray_t ircnet_servers = {
-	"eris.us.ircnet.net",
-	"irc.atw-inter.net",
-	"irc.nlnog.net",
-	"irc.portlane.se",
-	"open.ircnet.net",
-	"ssl.irc.atw-inter.net",
+	"open.ircnet.io",
+	"ssl.ircnet.io",
+	"irc.cloak.ircnet.io",
+	"ssl.cloak.ircnet.io",
 	NULL
 };
 
