@@ -1,6 +1,11 @@
 /* Copyright (C) 2012-2022 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
+
+#include <termios.h>
+#include <unistd.h>
+
+#include "assertAPI.h"
 #include "errHand.h"
 #include "main.h"
 #include "strHand.h"
@@ -66,5 +71,32 @@ term_set_title(const char *fmt, ...)
 void
 term_toggle_echo(on_off_t state)
 {
-	UNUSED_PARAM(state);
+	struct termios attrs = { 0 };
+
+	errno = 0;
+
+	if (tcgetattr(STDIN_FILENO, &attrs) == -1) {
+		err_log(errno, "term_toggle_echo: tcgetattr");
+		return;
+	}
+
+	switch (state) {
+	case ON:
+		if (!(attrs.c_lflag & ECHO)) {
+			attrs.c_lflag |= ECHO;
+			if (tcsetattr(STDIN_FILENO, TCSANOW, &attrs) != 0)
+				err_log(errno, "term_toggle_echo: tcsetattr");
+		}
+		break;
+	case OFF:
+		if (attrs.c_lflag & ECHO) {
+			attrs.c_lflag &= ~ECHO;
+			if (tcsetattr(STDIN_FILENO, TCSANOW, &attrs) != 0)
+				err_log(errno, "term_toggle_echo: tcsetattr");
+		}
+		break;
+	default:
+		sw_assert_not_reached();
+		break;
+	}
 }
