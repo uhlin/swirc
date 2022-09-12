@@ -56,6 +56,7 @@
 #include "ossl-scripts.h"
 #include "strHand.h"
 #include "strdup_printf.h"
+#include "terminal.h"
 #include "theme.h"
 
 #include "commands/sasl.h"
@@ -136,10 +137,14 @@ prompt_for_decryption(const char *str)
 		char	*value;
 		char	 pass[400] = { '\0' };
 
-		printf("Decryption pass (will echo): ");
+		printf("Password: ");
 		fflush(stdout);
 
+		term_toggle_echo(OFF);
 		fgets_error = fgets(pass, sizeof pass, stdin) == NULL;
+		term_toggle_echo(ON);
+
+		putchar('\n');
 
 		if (fgets_error) {
 			continue;
