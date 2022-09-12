@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
   - Switched to usage of 'sizeof' in `BZERO()` calls
   - ...
 - **Rewrote** `commands/sasl.c` in C++
+- **Updated** preprogrammed IRC servers
 
 ## [3.3.5] - 2022-07-28 ##
 - **Added** command `/cap`
