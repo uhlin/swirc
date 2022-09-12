@@ -44,6 +44,7 @@
 #include "../errHand.h"
 #include "../filePred.h"
 #include "../libUtils.h"
+#include "../main.h"
 #include "../nestHome.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -65,6 +66,19 @@ const char g_sasl_pass_allowed_chars[] =
 
 static const size_t	password_min = 8;
 static const size_t	password_max = 200;
+
+static stringarray_t sasl_cmds = {
+	"keygen",
+	"pubkey",
+	"mechanism ",
+	"mechanism ecdsa-nist256p-challenge",
+	"mechanism plain",
+	"mechanism scram-sha-256",
+	"username ",
+	"password ",
+	"passwd_s ",
+	"set ",
+};
 
 /*lint -sem(get_filepath, r_null) */
 static char *
@@ -505,6 +519,48 @@ sign_decoded_data(EC_KEY *key, const uint8_t *data, int datalen, uint8_t **sig,
 	*siglen = len;
 	return true;
 }
+
+static bool
+got_hits(const char *search_var)
+{
+	for (size_t i = 0; i < ARRAY_SIZE(sasl_cmds); i++) {
+		if (!strncmp(search_var, sasl_cmds[i], strlen(search_var)))
+			return true;
+	}
+
+	return false;
+}
+
+PTEXTBUF
+get_list_of_matching_sasl_cmds(const char *search_var)
+{
+#define MSG "get_list_of_matching_sasl_cmds: textBuf_ins_next"
+	PTEXTBUF	matches;
+
+	if (!got_hits(search_var))
+		return NULL;
+
+	matches = textBuf_new();
+
+	for (size_t i = 0; i < ARRAY_SIZE(sasl_cmds); i++) {
+		const char	*cmd = sasl_cmds[i];
+
+		if (!strncmp(search_var, cmd, strlen(search_var))) {
+			if (textBuf_size(matches) == 0) {
+				if ((errno = textBuf_ins_next(matches, NULL,
+				    cmd, -1)) != 0)
+					err_sys(MSG);
+			} else {
+				if ((errno = textBuf_ins_next(matches,
+				    textBuf_tail(matches), cmd, -1)) != 0)
+					err_sys(MSG);
+			}
+		}
+	}
+
+	return matches;
+}
+
 
 static void
 clean_up(EC_KEY *key, FILE *fp, char *out, uint8_t *decoded_chl, uint8_t *sig)
