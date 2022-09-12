@@ -78,6 +78,8 @@ static stringarray_t sasl_cmds = {
 	"password ",
 	"passwd_s ",
 	"set ",
+	"set on",
+	"set off",
 };
 
 /*lint -sem(get_filepath, r_null) */
