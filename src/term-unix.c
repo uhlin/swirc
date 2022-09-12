@@ -13,6 +13,22 @@ static stringarray_t known_brands = {
 	"rxvt-unicode-256color",
 };
 
+struct winsize
+term_get_size(void)
+{
+	struct winsize size = { 0 };
+
+	if (ioctl(fileno(stdin), TIOCGWINSZ, &size) == -1)
+		err_sys("term_get_size: ioctl: TIOCGWINSZ");
+	return size;
+}
+
+void
+term_restore_title(void)
+{
+	term_set_title("Terminal");
+}
+
 void
 term_set_title(const char *fmt, ...)
 {
@@ -45,20 +61,4 @@ term_set_title(const char *fmt, ...)
 		}
 
 	} /* for */
-}
-
-void
-term_restore_title(void)
-{
-	term_set_title("Terminal");
-}
-
-struct winsize
-term_get_size(void)
-{
-	struct winsize size = { 0 };
-
-	if (ioctl(fileno(stdin), TIOCGWINSZ, &size) == -1)
-		err_sys("term_get_size: ioctl: TIOCGWINSZ");
-	return size;
 }
