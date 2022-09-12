@@ -103,6 +103,23 @@ def choose_command():
         '353',
         '366',
 
+        # events/misc.cpp
+        # event_allaround_extract_remove_colon()
+        '042',
+        '252',
+        '253',
+        '254',
+        '396',
+
+        # events/misc.cpp
+        '221',
+        '265',
+        '266',
+        '324',
+        '329',
+        '433',
+        '470',
+
         'ACCOUNT',
         'AUTHENTICATE',
         'AWAY',
