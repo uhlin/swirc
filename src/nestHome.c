@@ -36,6 +36,8 @@
 #include <direct.h> /* _mkdir() */
 #endif
 
+#include <openssl/crypto.h>
+
 #include <limits.h>
 
 #ifndef PATH_MAX
@@ -171,6 +173,8 @@ prompt_for_decryption(const char *str)
 			puts("Wrong pass");
 			break;
 		}
+
+		OPENSSL_cleanse(addrof(pass[0]), sizeof pass);
 
 		/*
 		 * Save a copy of the encrypted SASL pass
