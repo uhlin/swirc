@@ -68,6 +68,20 @@ param_cnt = {
     '353': random.choice([4, 5, 6, 7, 8, 9, 10]),
     '366': 3,
 
+    '042': random.choice([1, 2, 3]),
+    '252': random.choice([1, 2, 3]),
+    '253': random.choice([1, 2, 3]),
+    '254': random.choice([1, 2, 3]),
+    '396': random.choice([1, 2, 3]),
+
+    '221': random.choice([1, 2]),
+    '265': random.choice([1, 2, 3, 4]),
+    '266': random.choice([1, 2, 3, 4]),
+    '324': random.choice([2, 3, 4]),
+    '329': random.choice([2, 3]),
+    '433': random.choice([2, 3]),
+    '470': random.choice([2, 3, 4]),
+
     'ACCOUNT': 1,
     'AUTHENTICATE': 1,
     'AWAY': random.choice([0, 1]),
