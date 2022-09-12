@@ -45,16 +45,16 @@ typedef struct tagREADLINE_POS {
 } READLINE_POS, *PREADLINE_POS;
 
 typedef struct tagTAB_COMPLETION {
-	char search_var[64];
-	bool isInCirculationModeForHelp;
-	bool isInCirculationModeForQuery;
-	bool isInCirculationModeForSettings;
-	bool isInCirculationModeForWhois;
-	bool isInCirculationModeForZncCmds;
-	bool isInCirculationModeForCmds;
-	bool isInCirculationModeForChanUsers;
-	PTEXTBUF matches;
-	PTEXTBUF_ELMT elmt;
+	char	search_var[64];
+	bool	isInCirculationModeForHelp;
+	bool	isInCirculationModeForQuery;
+	bool	isInCirculationModeForSettings;
+	bool	isInCirculationModeForWhois;
+	bool	isInCirculationModeForZncCmds;
+	bool	isInCirculationModeForCmds;
+	bool	isInCirculationModeForChanUsers;
+	PTEXTBUF	matches;
+	PTEXTBUF_ELMT	elmt;
 } TAB_COMPLETION, *PTAB_COMPLETION;
 
 struct readline_session_context {
