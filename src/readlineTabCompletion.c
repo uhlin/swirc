@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include "commands/sasl.h"
 #include "commands/znc.h"
 
 /* names.h wants this header before itself */
@@ -70,6 +71,13 @@ auto_complete_query(volatile struct readline_session_context *ctx,
     const char *s)
 {
 	do_work(ctx, L"/query ", s);
+}
+
+static void
+auto_complete_sasl(volatile struct readline_session_context *ctx,
+    const char *s)
+{
+	do_work(ctx, L"/sasl ", s);
 }
 
 static void
@@ -164,6 +172,7 @@ readline_tab_comp_ctx_new(void)
 
 	ctx.isInCirculationModeForHelp		= false;
 	ctx.isInCirculationModeForQuery		= false;
+	ctx.isInCirculationModeForSasl		= false;
 	ctx.isInCirculationModeForSettings	= false;
 	ctx.isInCirculationModeForWhois		= false;
 	ctx.isInCirculationModeForZncCmds	= false;
@@ -191,6 +200,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 
 		ctx->isInCirculationModeForHelp		= false;
 		ctx->isInCirculationModeForQuery	= false;
+		ctx->isInCirculationModeForSasl		= false;
 		ctx->isInCirculationModeForSettings	= false;
 		ctx->isInCirculationModeForWhois	= false;
 		ctx->isInCirculationModeForZncCmds	= false;
@@ -241,6 +251,23 @@ init_mode_for_query(volatile struct readline_session_context *ctx)
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_query(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeForQuery = true;
+}
+
+static void
+init_mode_for_sasl(volatile struct readline_session_context *ctx)
+{
+	char	*p;
+
+	p = addrof(ctx->tc->search_var[6]);
+
+	if ((ctx->tc->matches = get_list_of_matching_sasl_cmds(p)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_sasl(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeForSasl = true;
 }
 
 static void
@@ -361,6 +388,12 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		else
 			auto_complete_query(ctx, next_text(ctx->tc));
 		return;
+	} else if (ctx->tc->isInCirculationModeForSasl) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
+			no_more_matches(ctx);
+		else
+			auto_complete_sasl(ctx, next_text(ctx->tc));
+		return;
 	} else if (ctx->tc->isInCirculationModeForSettings) {
 		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
 			no_more_matches(ctx);
@@ -404,6 +437,8 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		init_mode_for_help(ctx);
 	else if (!strncmp(get_search_var(ctx), "/query ", 7))
 		init_mode_for_query(ctx);
+	else if (!strncmp(get_search_var(ctx), "/sasl ", 6))
+		init_mode_for_sasl(ctx);
 	else if (!strncmp(get_search_var(ctx), "/set ", 5))
 		init_mode_for_set(ctx);
 	else if (!strncmp(get_search_var(ctx), "/whois ", 7))

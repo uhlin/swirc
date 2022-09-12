@@ -493,6 +493,7 @@ isInCirculationMode(const TAB_COMPLETION *tc)
 {
 	return (tc->isInCirculationModeForHelp ||
 	    tc->isInCirculationModeForQuery ||
+	    tc->isInCirculationModeForSasl ||
 	    tc->isInCirculationModeForSettings ||
 	    tc->isInCirculationModeForWhois ||
 	    tc->isInCirculationModeForZncCmds ||

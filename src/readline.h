@@ -48,6 +48,7 @@ typedef struct tagTAB_COMPLETION {
 	char	search_var[64];
 	bool	isInCirculationModeForHelp;
 	bool	isInCirculationModeForQuery;
+	bool	isInCirculationModeForSasl;
 	bool	isInCirculationModeForSettings;
 	bool	isInCirculationModeForWhois;
 	bool	isInCirculationModeForZncCmds;
