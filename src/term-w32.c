@@ -1,6 +1,8 @@
 /* Copyright (C) 2012-2022 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
+
+#include "assertAPI.h"
 #include "errHand.h"
 #include "term-w32.h"
 
@@ -52,5 +54,41 @@ term_set_title(const char *fmt, ...)
 void
 term_toggle_echo(on_off_t state)
 {
-	UNUSED_PARAM(state);
+	DWORD	modes;
+	HANDLE	stdin_handle;
+
+	if ((stdin_handle = GetStdHandle(STD_INPUT_HANDLE)) ==
+	    INVALID_HANDLE_VALUE) {
+		err_log(0, "term_toggle_echo: GetStdHandle: %s",
+		    errdesc_by_last_err());
+		return;
+	} else if (!GetConsoleMode(stdin_handle, &modes)) {
+		err_log(0, "term_toggle_echo: GetConsoleMode: %s",
+		    errdesc_by_last_err());
+		return;
+	}
+
+	switch (state) {
+	case ON:
+		if (!(modes & ENABLE_ECHO_INPUT)) {
+			modes |= ENABLE_ECHO_INPUT;
+			if (!SetConsoleMode(stdin_handle, modes)) {
+				err_log(0, "term_toggle_echo: SetConsoleMode",
+				    errdesc_by_last_err());
+			}
+		}
+		break;
+	case OFF:
+		if (modes & ENABLE_ECHO_INPUT) {
+			modes &= ~ENABLE_ECHO_INPUT;
+			if (!SetConsoleMode(stdin_handle, modes)) {
+				err_log(0, "term_toggle_echo: SetConsoleMode",
+				    errdesc_by_last_err());
+			}
+		}
+		break;
+	default:
+		sw_assert_not_reached();
+		break;
+	}
 }
