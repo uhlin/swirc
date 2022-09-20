@@ -290,6 +290,8 @@ nestHome_init(void)
 			prompt_for_decryption(cp);
 	}
 
+	config_lock_hash_table();
+
 #if defined(UNIX)
 	g_theme_file = strdup_printf("%s/.swirc/%s%s", hp, Config("theme"),
 	    g_theme_filesuffix);
