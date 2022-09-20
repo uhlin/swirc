@@ -24,6 +24,9 @@ PTEXTBUF get_list_of_matching_settings(const char *);
 void	config_init(void);
 void	config_deinit(void);
 
+void	config_lock_hash_table(void);
+void	config_unlock_hash_table(void);
+
 /*lint -sem(Config_mod, r_null) */
 
 bool		 config_bool(const char *, bool);

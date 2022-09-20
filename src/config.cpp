@@ -29,6 +29,10 @@
 
 #include "common.h"
 
+#if UNIX
+#include <sys/mman.h>
+#endif
+
 #include "config.h"
 #include "errHand.h"
 #include "interpreter.h"
@@ -404,6 +408,26 @@ config_deinit(void)
 			hUndef(p);
 		}
 	}
+}
+
+void
+config_lock_hash_table(void)
+{
+#if defined(UNIX)
+	if (mlock(addrof(hash_table[0]), sizeof hash_table) == -1)
+		err_log(errno, "config_lock_hash_table: mlock");
+#elif defined(WIN32)
+	if (!VirtualLock(addrof(hash_table[0]), sizeof hash_table)) {
+		err_log(0, "config_lock_hash_table: VirtualLock",
+		    errdesc_by_last_err());
+	}
+#endif
+}
+
+void
+config_unlock_hash_table(void)
+{
+	debug("config_unlock_hash_table() called  --  a noop");
 }
 
 bool
