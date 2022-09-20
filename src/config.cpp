@@ -418,7 +418,7 @@ config_lock_hash_table(void)
 		err_log(errno, "config_lock_hash_table: mlock");
 #elif defined(WIN32)
 	if (!VirtualLock(addrof(hash_table[0]), sizeof hash_table)) {
-		err_log(0, "config_lock_hash_table: VirtualLock",
+		err_log(0, "config_lock_hash_table: VirtualLock: %s",
 		    errdesc_by_last_err());
 	}
 #endif
