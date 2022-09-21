@@ -10,9 +10,9 @@
 	    (g_connection_password ? get_password() : NULL))
 
 typedef struct tagIRC_SERVER {
-	char	host[256];
-	char	port[6];
-	char	desc[101];
+	const char	*host;
+	const char	*port;
+	const char	*desc;
 } IRC_SERVER, *PIRC_SERVER;
 
 typedef const struct tagIRC_SERVER servarray_const_t[];
