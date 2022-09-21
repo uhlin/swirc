@@ -113,6 +113,23 @@ static stringarray_t ircnet_servers = {
 	NULL
 };
 
+static servarray_t ircnow_servers = {
+	{ "irc.bsdforall.org",   "6697", "IPv4 TLS" },
+	{ "irc.ircforever.org",  "6697", "IPv4 TLS" },
+	{ "irc.ircnow.org",      "6667", "IPv4 PLAIN" },
+	{ "irc.ircnow.org",      "6697", "IPv4 TLS" },
+	{ "irc.nastycode.com",   "6697", "IPv4 TLS" },
+	{ "irc.shelltalk.net",   "6697", "IPv4 TLS" },
+	{ "irc.thunderirc.net",  "6697", "IPv4 TLS" },
+	{ "irc6.bsdforall.org",  "6697", "IPv6 TLS" },
+	{ "irc6.ircforever.org", "6697", "IPv6 TLS" },
+	{ "irc6.ircnow.org",     "6667", "IPv6 PLAIN" },
+	{ "irc6.ircnow.org",     "6697", "IPv6 TLS" },
+	{ "irc6.nastycode.com",  "6697", "IPv6 TLS" },
+	{ "irc6.shelltalk.net",  "6697", "IPv6 TLS" },
+	{ "irc6.thunderirc.net", "6697", "IPv6 TLS" },
+};
+
 static stringarray_t libera_servers = {
 	"irc.libera.chat",
 	"irc.au.libera.chat",
