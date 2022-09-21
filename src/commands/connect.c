@@ -128,6 +128,7 @@ static servarray_t ircnow_servers = {
 	{ "irc6.nastycode.com",  "6697", "IPv6 TLS" },
 	{ "irc6.shelltalk.net",  "6697", "IPv6 TLS" },
 	{ "irc6.thunderirc.net", "6697", "IPv6 TLS" },
+	{ NULL,                  NULL,   NULL },
 };
 
 static stringarray_t libera_servers = {
