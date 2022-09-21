@@ -9,6 +9,12 @@
 	net_do_connect_detached((m_server), (m_port),\
 	    (g_connection_password ? get_password() : NULL))
 
+typedef struct tagIRC_SERVER {
+	char	host[256];
+	char	port[6];
+	char	desc[101];
+} IRC_SERVER, *PIRC_SERVER;
+
 __SWIRC_BEGIN_DECLS
 extern bool g_disconnect_wanted;
 
