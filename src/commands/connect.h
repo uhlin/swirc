@@ -16,6 +16,8 @@ typedef struct tagIRC_SERVER {
 } IRC_SERVER, *PIRC_SERVER;
 
 typedef const struct tagIRC_SERVER servarray_const_t[];
+typedef const struct tagIRC_SERVER *servarray_const_ptr_t;
+
 typedef IRC_SERVER servarray_t[];
 
 __SWIRC_BEGIN_DECLS
