@@ -124,7 +124,8 @@ cmd_ignore(const char *data)
 void
 cmd_unignore(const char *data)
 {
-	PRINTTEXT_CONTEXT	ctx;
+	PRINTTEXT_CONTEXT ctx;
+	char *regex = NULL;
 
 	if (strings_match(data, "")) {
 		print_ignore_list();
@@ -133,7 +134,6 @@ cmd_unignore(const char *data)
 
 	try {
 		char		*ep = const_cast<char *>("");
-		char		*regex;
 		long int	 no;
 
 		if (ignore_list.empty())
@@ -157,7 +157,9 @@ cmd_unignore(const char *data)
 		    TYPE_SPEC1_SUCCESS, true);
 		printtext(&ctx, "Deleted \"%s\" from ignore list.", regex);
 		free(regex);
+		regex = NULL;
 		print_ignore_list();
+		return;
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
@@ -169,6 +171,8 @@ cmd_unignore(const char *data)
 	} catch (...) {
 		err_log(0, "/unignore: %s", "unknown exception!");
 	}
+
+	free(regex);
 }
 
 bool
