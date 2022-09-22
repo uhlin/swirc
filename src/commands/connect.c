@@ -105,12 +105,17 @@ static stringarray_t freenode_servers = {
 	NULL
 };
 
-static stringarray_t ircnet_servers = {
-	"open.ircnet.io",
-	"ssl.ircnet.io",
-	"irc.cloak.ircnet.io",
-	"ssl.cloak.ircnet.io",
-	NULL
+static IRC_SERVER ircnet_servers[] = {
+	{ "open.ircnet.io",       "6667", "All open servers" },
+	{ "ssl.ircnet.ovh",       "6697", "SSL/TLS support" },
+	{ "irc.cloak.ircnet.ovh", "6667", "Cloak support" },
+	{ "ssl.cloak.ircnet.ovh", "6697", "Cloak and SSL/TLS support" },
+
+	{ "eu.irc6.net",    "6667", "IPv6 PLAIN" },
+	{ "irc.cs.hut.fi",  "6667", "Helsinki Univ of Tech, CS Lab IRC server" },
+	{ "irc.psychz.net", "6667", "US Open Server, Provided by Psychz Networks" },
+	{ "irc.swipnet.se", "8080", "Tele2/SWIPNET" },
+	{ NULL,             NULL,   NULL },
 };
 
 static IRC_SERVER ircnow_servers[] = {
@@ -626,9 +631,9 @@ cmd_connect(const char *data)
 			    "freenode servers"),
 			    port);
 		} else if (strings_match_ignore_case(server, "ircnet")) {
-			IRC_CONNECT(get_server(ircnet_servers,
-			    "IRCnet servers"),
-			    port);
+			srvptr = get_server_v2(&ircnet_servers[0],
+			    ARRAY_SIZE(ircnet_servers), "IRCnet servers");
+			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "ircnow")) {
 			srvptr = get_server_v2(&ircnow_servers[0],
 			    ARRAY_SIZE(ircnow_servers), "IRCNow: "
