@@ -697,6 +697,16 @@ do_indent(WINDOW *win, const int indent, int *insert_count)
 	(void) wattrset(win, attrs);
 }
 
+static void
+new_row(WINDOW *win, int *insert_count, int *rep_count)
+{
+	WADDCH(win, '\n');
+	*insert_count = 0;
+
+	if (rep_count != NULL)
+		(*rep_count) ++;
+}
+
 /**
  * Start on a new row?
  */
@@ -738,15 +748,14 @@ case_default(const struct case_default_context *ctx, int *rep_count,
 	const bool care_about_max_lines = (ctx->max_lines > 0);
 
 	if (ctx->wc == L'\n') {
-		WADDCH(ctx->win, '\n');
-		*insert_count = 0;
-		if (rep_count != NULL)
-			(*rep_count) ++;
+		new_row(ctx->win, insert_count, rep_count);
+
 		if (care_about_max_lines &&
 		    !(++ (*line_count) < ctx->max_lines)) {
 			free(mbs);
 			return;
 		}
+
 		if (!ctx->nextchar_empty && care_about_indent)
 			do_indent(ctx->win, ctx->indent, insert_count);
 	} else if (!start_on_a_new_row((*insert_count) + ctx->diff + 1,
@@ -757,17 +766,18 @@ case_default(const struct case_default_context *ctx, int *rep_count,
 		/*
 		 * Start on a new row
 		 */
-		WADDCH(ctx->win, '\n');
-		*insert_count = 0;
-		if (rep_count != NULL)
-			(*rep_count) ++;
+
+		new_row(ctx->win, insert_count, rep_count);
+
 		if (care_about_max_lines &&
 		    !(++ (*line_count) < ctx->max_lines)) {
 			free(mbs);
 			return;
 		}
+
 		if (care_about_indent)
 			do_indent(ctx->win, ctx->indent, insert_count);
+
 		if (ctx->wc != L' ') {
 			addmbs(ctx->win, mbs);
 			(*insert_count) ++;
