@@ -147,6 +147,7 @@ static usage_t connect_usage = {
   "    - efnet",
   "    - freenode",
   "    - ircnet",
+  "    - ircnow",
   "    - libera",
   "    - quakenet",
   "    - undernet",

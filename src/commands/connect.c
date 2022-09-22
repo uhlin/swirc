@@ -599,6 +599,8 @@ cmd_connect(const char *data)
 		print_and_free("/connect: bogus port number", dcopy);
 		return;
 	} else {
+		static PIRC_SERVER srvptr;
+
 		if (strings_match_ignore_case(server, "afternet")) {
 			IRC_CONNECT(get_server(afternet_servers,
 			    "AfterNET IRC network"),
@@ -627,6 +629,11 @@ cmd_connect(const char *data)
 			IRC_CONNECT(get_server(ircnet_servers,
 			    "IRCnet servers"),
 			    port);
+		} else if (strings_match_ignore_case(server, "ircnow")) {
+			srvptr = get_server_v2(&ircnow_servers[0],
+			    ARRAY_SIZE(ircnow_servers), "IRCNow: "
+			    "The Users' Network");
+			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "libera")) {
 			IRC_CONNECT(get_server(libera_servers,
 			    "Libera Chat"),
