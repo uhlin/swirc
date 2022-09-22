@@ -21,6 +21,8 @@ All notable changes to this project will be documented in this file.
   - ...
 - **Rewrote** `commands/sasl.c` in C++
 - **Updated** preprogrammed IRC servers
+  - Added [IRCNow](https://ircnow.org/)
+  - Added port numbers and server descriptions
 
 ## [3.3.5] - 2022-07-28 ##
 - **Added** command `/cap`
