@@ -113,7 +113,7 @@ static stringarray_t ircnet_servers = {
 	NULL
 };
 
-static servarray_t ircnow_servers = {
+static IRC_SERVER ircnow_servers[] = {
 	{ "irc.bsdforall.org",   "6697", "IPv4 TLS" },
 	{ "irc.ircforever.org",  "6697", "IPv4 TLS" },
 	{ "irc.ircnow.org",      "6667", "IPv4 PLAIN" },
