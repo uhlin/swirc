@@ -747,7 +747,7 @@ case_default(const struct case_default_context *ctx, int *rep_count,
 			free(mbs);
 			return;
 		}
-		if (! (ctx->nextchar_empty) && care_about_indent)
+		if (!ctx->nextchar_empty && care_about_indent)
 			do_indent(ctx->win, ctx->indent, insert_count);
 	} else if (!start_on_a_new_row((*insert_count) + ctx->diff + 1,
 		    ctx->win)) {
