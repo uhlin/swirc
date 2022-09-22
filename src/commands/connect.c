@@ -136,15 +136,18 @@ static IRC_SERVER ircnow_servers[] = {
 	{ NULL,                  NULL,   NULL },
 };
 
-static stringarray_t libera_servers = {
-	"irc.libera.chat",
-	"irc.au.libera.chat",
-	"irc.ea.libera.chat",
-	"irc.eu.libera.chat",
-	"irc.ipv4.libera.chat",
-	"irc.ipv6.libera.chat",
-	"irc.us.libera.chat",
-	NULL
+static IRC_SERVER libera_servers[] = {
+	{ "irc.libera.chat",      "6667", "Default PLAIN" },
+	{ "irc.libera.chat",      "6697", "Default TLS" },
+	{ "irc.eu.libera.chat",   "6697", "Europe" },
+	{ "irc.us.libera.chat",   "6697", "US & Canada" },
+	{ "irc.au.libera.chat",   "6697", "Australia and New Zealand" },
+	{ "irc.ea.libera.chat",   "6697", "East Asia"},
+	{ "irc.ipv4.libera.chat", "8000", "IPv4 PLAIN" },
+	{ "irc.ipv4.libera.chat", "6697", "IPv4 TLS" },
+	{ "irc.ipv6.libera.chat", "8000", "IPv6 PLAIN" },
+	{ "irc.ipv6.libera.chat", "6697", "IPv6 TLS" },
+	{ NULL,                   NULL,   NULL },
 };
 
 static stringarray_t quakenet_servers = {
@@ -640,9 +643,9 @@ cmd_connect(const char *data)
 			    "The Users' Network");
 			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "libera")) {
-			IRC_CONNECT(get_server(libera_servers,
-			    "Libera Chat"),
-			    port);
+			srvptr = get_server_v2(&libera_servers[0],
+			    ARRAY_SIZE(libera_servers), "Libera Chat");
+			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "quakenet")) {
 			IRC_CONNECT(get_server(quakenet_servers,
 			    "QuakeNet servers"),
