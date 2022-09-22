@@ -427,7 +427,15 @@ config_lock_hash_table(void)
 void
 config_unlock_hash_table(void)
 {
-	debug("config_unlock_hash_table() called  --  a noop");
+#if defined(UNIX)
+	if (munlock(addrof(hash_table[0]), sizeof hash_table) == -1)
+		err_log(errno, "config_unlock_hash_table: munlock");
+#elif defined(WIN32)
+	if (!VirtualUnlock(addrof(hash_table[0]), sizeof hash_table)) {
+		err_log(0, "config_unlock_hash_table: VirtualUnlock: %s",
+		    errdesc_by_last_err());
+	}
+#endif
 }
 
 bool
