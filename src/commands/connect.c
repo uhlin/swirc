@@ -142,13 +142,16 @@ static IRC_SERVER libera_servers[] = {
 	{ NULL,                   NULL,   NULL },
 };
 
-static stringarray_t quakenet_servers = {
-	"ServerCentral.IL.US.Quakenet.Org",
-	"irc.quakenet.org",
-	"portlane.se.quakenet.org",
-	"underworld1.no.quakenet.org",
-	"underworld2.no.quakenet.org",
-	NULL
+static IRC_SERVER quakenet_servers[] = {
+	{ "adrift.sg.quakenet.org",      "6667", "Adrift" },
+	{ "datapacket.hk.quakenet.org",  "6667", "DataPacket" },
+	{ "euroserv.fr.quakenet.org",    "6667", "Euroserv" },
+	{ "hostsailor.ro.quakenet.org",  "6667", "HostSailor" },
+	{ "irc.ipv6.quakenet.org",       "6667", "IPv6 PLAIN" },
+	{ "port80c.se.quakenet.org",     "6667", "" },
+	{ "stockholm.se.quakenet.org",   "6667", "Stockholm" },
+	{ "underworld2.no.quakenet.org", "6667", "Underworld" },
+	{ NULL,                          NULL,   NULL },
 };
 
 static stringarray_t undernet_servers = {
@@ -640,9 +643,10 @@ cmd_connect(const char *data)
 			    ARRAY_SIZE(libera_servers), "Libera Chat");
 			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "quakenet")) {
-			IRC_CONNECT(get_server(quakenet_servers,
-			    "QuakeNet servers"),
-			    port);
+			srvptr = get_server_v2(&quakenet_servers[0],
+			    ARRAY_SIZE(quakenet_servers), "QuakeNet IRC "
+			    "network");
+			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "undernet")) {
 			IRC_CONNECT(get_server(undernet_servers,
 			    "undernet servers"),
