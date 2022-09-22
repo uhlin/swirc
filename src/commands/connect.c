@@ -91,18 +91,10 @@ static stringarray_t efnet_servers = {
 	NULL
 };
 
-static stringarray_t freenode_servers = {
-	"card.freenode.net",
-	"chat.freenode.net",
-	"chat.ipv6.freenode.net",
-	"cherryh.freenode.net",
-	"freenodeok2gncmy.onion",
-	"hobana.freenode.net",
-	"leguin.acc.umu.se",
-	"orwell.freenode.net",
-	"verne.freenode.net",
-	"weber.freenode.net",
-	NULL
+static IRC_SERVER freenode_servers[] = {
+	{ "chat.freenode.net", "6667", "Default PLAIN" },
+	{ "chat.freenode.net", "6697", "Default TLS" },
+	{ NULL,                NULL,   NULL },
 };
 
 static IRC_SERVER ircnet_servers[] = {
@@ -630,9 +622,10 @@ cmd_connect(const char *data)
 			    "EFnet servers"),
 			    port);
 		} else if (strings_match_ignore_case(server, "freenode")) {
-			IRC_CONNECT(get_server(freenode_servers,
-			    "freenode servers"),
-			    port);
+			srvptr = get_server_v2(&freenode_servers[0],
+			    ARRAY_SIZE(freenode_servers), "Freenode IRC "
+			    "network");
+			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "ircnet")) {
 			srvptr = get_server_v2(&ircnet_servers[0],
 			    ARRAY_SIZE(ircnet_servers), "IRCnet servers");
