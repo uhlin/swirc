@@ -18,8 +18,6 @@ typedef struct tagIRC_SERVER {
 typedef const struct tagIRC_SERVER servarray_const_t[];
 typedef const struct tagIRC_SERVER *servarray_const_ptr_t;
 
-typedef IRC_SERVER servarray_t[];
-
 __SWIRC_BEGIN_DECLS
 extern bool g_disconnect_wanted;
 
