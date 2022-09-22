@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
   - Reduced scope of variables
   - Switched to usage of 'sizeof' in `BZERO()` calls
   - ...
+- Prevented the config hash table from being paged to the swap area.
 - **Rewrote** `commands/sasl.c` in C++
 - **Updated** preprogrammed IRC servers
   - Added [IRCNow](https://ircnow.org/)
