@@ -22,8 +22,8 @@ All notable changes to this project will be documented in this file.
 - Prevented the config hash table from being paged to the swap area.
 - **Rewrote** `commands/sasl.c` in C++
 - **Updated** preprogrammed IRC servers
-  - Added [IRCNow](https://ircnow.org/)
-  - Added port numbers and server descriptions
+  - **Added** port numbers and server descriptions
+  - **Added** the [IRCNow](https://ircnow.org/) network
 
 ## [3.3.5] - 2022-07-28 ##
 - **Added** command `/cap`
