@@ -293,6 +293,64 @@ get_server(stringarray_t const ar, const char *msg)
 	return (ar[srvno]);
 }
 
+static PIRC_SERVER
+get_server_v2(PIRC_SERVER ptr, const size_t size, const char *hdr)
+{
+	PIRC_SERVER srv;
+	char ans[20] = { '\0' };
+	int i, srvno;
+
+	escape_curses();
+	puts(hdr);
+	srv = ptr;
+	i = 0;
+	while (srv->host != NULL) {
+		printf("    (%d) %-30s %s %s\n", i, srv->host, srv->port,
+		    srv->desc);
+		srv++;
+		i++;
+	}
+	if (i > 0)
+		i -= 1;
+	srvno = 0;
+	while (true) {
+		printf("Your choice (0-%d): ", i);
+		fflush(stdout);
+
+/*
+ * sscanf() is safe in this context
+ */
+#if WIN32
+#pragma warning(disable: 4996)
+#endif
+		if (fgets(ans, sizeof ans, stdin) == NULL) {
+			;
+		} else if (strchr(ans, '\n') == NULL) {
+			int c;
+
+			puts("input too big");
+
+			while (c = getchar(), c != '\n' && c != EOF)
+				/* discard */;
+		} else if (sscanf(ans, "%d", &srvno) != 1 || srvno < 0 ||
+		    srvno > i) {
+			;
+		} else {
+			break;
+		}
+/*
+ * Reset warning behavior to its default value
+ */
+#if WIN32
+#pragma warning(default: 4996)
+#endif
+	} /* while */
+
+	UNUSED_PARAM(size);
+	resume_curses();
+	return ptr + srvno;
+}
+
 static void
 reconnect_begin(void)
 {
