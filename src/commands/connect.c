@@ -154,11 +154,10 @@ static IRC_SERVER quakenet_servers[] = {
 	{ NULL,                          NULL,   NULL },
 };
 
-static stringarray_t undernet_servers = {
-	"Ashburn.Va.Us.UnderNet.org",
-	"irc.undernet.org",
-	"undernet.rethemhosting.net",
-	NULL
+static IRC_SERVER undernet_servers[] = {
+	{ "irc.undernet.org",  "6667", "IPv4 WorldWide" },
+	{ "irc6.undernet.org", "6667", "IPv6 WorldWide" },
+	{ NULL,                NULL,   NULL },
 };
 
 static stringarray_t test_servers = {
@@ -648,9 +647,10 @@ cmd_connect(const char *data)
 			    "network");
 			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "undernet")) {
-			IRC_CONNECT(get_server(undernet_servers,
-			    "undernet servers"),
-			    port);
+			srvptr = get_server_v2(&undernet_servers[0],
+			    ARRAY_SIZE(undernet_servers), "Undernet IRC "
+			    "Network");
+			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "test")) {
 			IRC_CONNECT(get_server(test_servers,
 			    "test servers"),
