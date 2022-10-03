@@ -57,6 +57,10 @@
 typedef long int ssize_t;
 #endif
 
+#if defined(WIN32) && !defined(__func__)
+#define __func__ __FUNCTION__
+#endif
+
 #ifdef __cplusplus
 #define __SWIRC_BEGIN_DECLS	extern "C" {
 #define __SWIRC_END_DECLS	}
