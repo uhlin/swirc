@@ -54,9 +54,10 @@ static bool	quit_reconnecting = false;
 static bool	reconnecting = false;
 static bool	secure_connection = false;
 
-static stringarray_t afternet_servers = {
-	"irc.afternet.org",
-	NULL
+static IRC_SERVER afternet_servers[] = {
+	{ "irc.afternet.org", "6667", "Default PLAIN" },
+	{ "irc.afternet.org", "6697", "Default TLS" },
+	{ NULL,               NULL,   NULL },
 };
 
 static stringarray_t alphachat_servers = {
@@ -615,9 +616,10 @@ cmd_connect(const char *data)
 		g_connection_lost = g_on_air = false;
 
 		if (strings_match_ignore_case(server, "afternet")) {
-			IRC_CONNECT(get_server(afternet_servers,
-			    "AfterNET IRC network"),
-			    port);
+			srvptr = get_server_v2(&afternet_servers[0],
+			    ARRAY_SIZE(afternet_servers), "AfterNET IRC network"
+			    " - www.afternet.org");
+			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "alphachat")) {
 			IRC_CONNECT(get_server(alphachat_servers,
 			    "AlphaChat - www.alphachat.net"),
