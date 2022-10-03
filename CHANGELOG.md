@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 - **Added** tab completion for `/sasl`
 - **Changed** the program behavior to **not** create core dump files if
   `NDEBUG` is defined at compile time.
+- **Fixed** a bug so if a connection attempt fails it's possible to
+  reconnect again after `/disconnect`.
 - **Fixed** code duplication
 - **Fixed** insufficient out of range check, off-by-one, in command
   `/unignore`.
