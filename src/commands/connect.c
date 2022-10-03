@@ -600,6 +600,9 @@ cmd_connect(const char *data)
 	} else {
 		static PIRC_SERVER srvptr;
 
+		g_disconnect_wanted = false;
+		g_connection_lost = g_on_air = false;
+
 		if (strings_match_ignore_case(server, "afternet")) {
 			IRC_CONNECT(get_server(afternet_servers,
 			    "AfterNET IRC network"),
