@@ -2,6 +2,8 @@
 #define CMD_CONNECT_H
 
 #define ICB_PORT	"7326"
+#define ICB_SSL_PORT	"7327"
+
 #define IRC_PORT	"6667"
 #define IRC_SSL_PORT	"6697"
 
