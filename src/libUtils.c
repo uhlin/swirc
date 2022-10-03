@@ -440,10 +440,10 @@ xmalloc(size_t size)
 	void	*vp;
 
 	if (size == 0) {
-		err_exit(EINVAL, "xmalloc: invalid argument -- zero size");
+		err_exit(EINVAL, "%s: invalid argument -- zero size", __func__);
 	} else if ((vp = malloc(size)) == NULL) {
-		err_exit(ENOMEM, "xmalloc: "
-		    "error allocating " PRINT_SIZE " bytes", size);
+		err_exit(ENOMEM, "%s: error allocating " PRINT_SIZE " bytes",
+		    __func__, size);
 	}
 	return (vp);
 }
