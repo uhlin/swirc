@@ -396,10 +396,11 @@ write_to_stream(FILE *stream, const char *fmt, ...)
 	va_end(ap);
 
 	if (n_print < 0) {
+		static const char fn[] =
 #ifdef HAVE_BCI
-		const char fn[] = "vfprintf_s()";
+		    "vfprintf_s()";
 #else
-		const char fn[] = "vfprintf()";
+		    "vfprintf()";
 #endif
 
 		if (errno != 0) {
