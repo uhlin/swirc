@@ -91,22 +91,6 @@ is_irc_channel(const char *name)
 }
 
 bool
-is_valid_uMode(const char *modes)
-{
-	const char legal_index[] = "aiwroOs";
-
-	if (modes == NULL || *modes == '\0')
-		return false;
-
-	for (const char *p = &modes[0]; *p != '\0'; p++) {
-		if (strchr(legal_index, *p) == NULL)
-			return false;
-	}
-
-	return true;
-}
-
-bool
 is_valid_nickname(const char *nickname)
 {
 	static const char legal_index[] =

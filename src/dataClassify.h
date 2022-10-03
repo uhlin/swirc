@@ -6,7 +6,6 @@ bool	is_alphabetic(const char *);
 bool	is_numeric(const char *);
 bool	is_whiteSpace(const char *);
 bool	is_irc_channel(const char *);
-bool	is_valid_uMode(const char *);
 bool	is_valid_nickname(const char *);
 bool	is_valid_username(const char *);
 bool	is_valid_real_name(const char *);
