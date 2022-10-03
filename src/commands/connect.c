@@ -163,18 +163,18 @@ static IRC_SERVER test_servers[] = {
 static bool
 shouldConnectUsingPassword(void)
 {
-	char	answer[20] = { '\0' };
-	int	c = EOF;
+	char answer[20] = { '\0' };
 
-	while (BZERO(answer, sizeof answer), true) {
-		(void) printf("Connect using password? [Y/n]: ");
-		(void) fflush(stdout);
+	while (true) {
+		printf("Connect using password? [Y/n]: ");
+		fflush(stdout);
 
 		if (fgets(answer, sizeof answer, stdin) == NULL) {
-			(void) putchar('\n');
-			continue;
+			;
 		} else if (strchr(answer, '\n') == NULL) {
-			(void) puts("input too big");
+			int c;
+
+			puts("input too big");
 
 			while (c = getchar(), c != '\n' && c != EOF)
 				/* discard */;
@@ -185,7 +185,7 @@ shouldConnectUsingPassword(void)
 		    strings_match(answer, "N")) {
 			return false;
 		} else {
-			continue;
+			;
 		}
 	}
 
