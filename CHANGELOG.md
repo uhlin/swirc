@@ -19,6 +19,8 @@ All notable changes to this project will be documented in this file.
 - Made small improvements
   - **Added** usage of C++17 fallthrough attr
   - **Added** usage of `PATH_MAX`
+  - **Added** usage of `__func__` instead of hardcoding it (for example in
+    error messages)
   - **Fixed** redundant checks
   - Reduced scope of variables
   - Switched to usage of 'sizeof' in `BZERO()` calls
