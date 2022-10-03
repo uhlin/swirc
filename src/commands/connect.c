@@ -66,10 +66,9 @@ static IRC_SERVER alphachat_servers[] = {
 	{ NULL,                NULL,   NULL },
 };
 
-static stringarray_t anonops_servers = {
-	"anonops532vcpz6z.onion",
-	"irc.anonops.com",
-	NULL
+static IRC_SERVER anonops_servers[] = {
+	{ "irc.anonops.com", "6697", "Main server" },
+	{ NULL,              NULL,   NULL },
 };
 
 static stringarray_t efnet_servers = {
@@ -624,9 +623,9 @@ cmd_connect(const char *data)
 			    "www.alphachat.net");
 			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "anonops")) {
-			IRC_CONNECT(get_server(anonops_servers,
-			    "AnonOps IRC network"),
-			    port);
+			srvptr = get_server_v2(&anonops_servers[0],
+			    ARRAY_SIZE(anonops_servers), "AnonOps IRC network");
+			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "efnet")) {
 			IRC_CONNECT(get_server(efnet_servers,
 			    "EFnet servers"),
