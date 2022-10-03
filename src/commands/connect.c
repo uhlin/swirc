@@ -71,17 +71,13 @@ static IRC_SERVER anonops_servers[] = {
 	{ NULL,              NULL,   NULL },
 };
 
-static stringarray_t efnet_servers = {
-	"efnet.port80.se",
-	"efnet.portlane.se",
-	"irc.choopa.net",
-	"irc.efnet.nl",
-	"irc.efnet.org",
-	"irc.inet.tele.dk",
-	"irc.mzima.net",
-	"irc.servercentral.net",
-	"irc.underworld.no",
-	NULL
+static IRC_SERVER efnet_servers[] = {
+	{ "efnet.port80.se",   "6697", "TLS" },
+	{ "irc.efnet.nl",      "6697", "TLS" },
+	{ "irc.efnet.org",     "6667", "PLAIN" },
+	{ "irc.mzima.net",     "6697", "TLS" },
+	{ "irc.underworld.no", "6697", "TLS" },
+	{ NULL,                NULL,   NULL },
 };
 
 static IRC_SERVER freenode_servers[] = {
@@ -627,9 +623,9 @@ cmd_connect(const char *data)
 			    ARRAY_SIZE(anonops_servers), "AnonOps IRC network");
 			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "efnet")) {
-			IRC_CONNECT(get_server(efnet_servers,
-			    "EFnet servers"),
-			    port);
+			srvptr = get_server_v2(&efnet_servers[0],
+			    ARRAY_SIZE(efnet_servers), "Eris Free network");
+			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "freenode")) {
 			srvptr = get_server_v2(&freenode_servers[0],
 			    ARRAY_SIZE(freenode_servers), "Freenode IRC "
