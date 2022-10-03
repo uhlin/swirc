@@ -111,18 +111,17 @@ sw_strdup(const char *string)
 	size_t	 size = 0;
 
 	if (isNull(string))
-		err_exit(EINVAL, "sw_strdup error");
+		err_exit(EINVAL, "%s error", __func__);
 	else
 		size = strlen(string) + 1;
 
 	if ((dest = malloc(size)) == NULL) {
-		err_exit(ENOMEM,
-		    "sw_strdup error (allocating " PRINT_SIZE " bytes)",
-		    size);
+		err_exit(ENOMEM, "%s error (allocating " PRINT_SIZE " bytes)",
+		    __func__, size);
 	}
 
 	if ((errno = sw_strcpy(dest, string, size)) != 0)
-		err_sys("sw_strdup error");
+		err_sys("%s error", __func__);
 	return dest;
 }
 
@@ -244,10 +243,10 @@ sw_snprintf(char *dest, size_t size, const char *fmt, ...)
 	va_list ap;
 
 	if (dest == NULL || size == 0 || fmt == NULL)
-		err_exit(EINVAL, "sw_snprintf");
+		err_exit(EINVAL, "%s", __func__);
 
 	va_start(ap, fmt);
 	if ((n_print = vsnprintf(dest, size, fmt, ap)) < 0)
-		err_sys("sw_snprintf: vsnprintf() returned %d", n_print);
+		err_sys("%s: vsnprintf() returned %d", __func__, n_print);
 	va_end(ap);
 }
