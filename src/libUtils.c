@@ -56,9 +56,9 @@ const time_t	g_time_error = ((time_t) -1);
 static bool
 format_codes_are_ok(const char *fmt)
 {
-	const char	*cp = NULL;
-	const char	 legal_index[] = "aAbBcdHIjmMpSUwWxXyYzZ%";
-	ptrdiff_t	 diff = 0;
+	const char *cp = NULL;
+	ptrdiff_t diff = 0;
+	static const char legal_index[] = "aAbBcdHIjmMpSUwWxXyYzZ%";
 
 	while ((cp = strchr(&fmt[diff], '%')) != NULL) {
 		if (isEmpty(++cp) || strchr(legal_index, *cp) == NULL)
@@ -217,12 +217,13 @@ const char *
 getuser(void)
 {
 	char *var_data;
-#if defined(UNIX)
-	const char var[] = "USER";
-#elif defined(WIN32)
-	const char var[] = "USERNAME";
-#endif
 	static char buf[100] = { '\0' };
+	static const char var[] =
+#if defined(UNIX)
+	    "USER";
+#elif defined(WIN32)
+	    "USERNAME";
+#endif
 
 	if ((var_data = getenv(var)) == NULL ||
 	    sw_strcpy(buf, var_data, ARRAY_SIZE(buf)) != 0)
