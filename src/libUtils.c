@@ -209,16 +209,6 @@ current_time(const char *fmt)
 		return "";
 #endif
 
-#if 0
-	/*
-	 * XXX: Checked once elsewhere
-	 */
-	if (!format_codes_are_ok(fmt)) {
-		err_msg("In current_time: Erroneous format codes. Aborting...");
-		abort();
-	}
-#endif
-
 	return ((strftime(buffer, ARRAY_SIZE(buffer), fmt, &items) > 0)
 	    ? &buffer[0] : "");
 }
