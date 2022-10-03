@@ -369,6 +369,12 @@ turn_icb_mode_on(void)
 	g_icb_mode = true;
 }
 
+static void
+turn_icb_mode_off(void)
+{
+	g_icb_mode = false;
+}
+
 static bool
 assign_username(char **cp)
 {
@@ -482,9 +488,14 @@ do_connect(const char *server, const char *port, const char *pass)
 		 * to reflect the delay. */
 		long int	sleep_time_seconds = 10;
 
-		if (!g_icb_mode && strings_match(conn_ctx.port, ICB_PORT))
+		if (strings_match(conn_ctx.port, ICB_PORT) ||
+		    strings_match(conn_ctx.port, ICB_SSL_PORT))
 			turn_icb_mode_on();
-		else if (!ssl_is_enabled() &&
+		else if (strings_match(conn_ctx.port, IRC_PORT) ||
+		    strings_match(conn_ctx.port, IRC_SSL_PORT))
+			turn_icb_mode_off();
+
+		if (strings_match(conn_ctx.port, ICB_SSL_PORT) ||
 		    strings_match(conn_ctx.port, IRC_SSL_PORT))
 			set_ssl_on();
 
