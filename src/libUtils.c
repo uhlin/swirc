@@ -238,7 +238,7 @@ int
 int_diff(const int a, const int b)
 {
 	if ((b > 0 && a < INT_MIN + b) || (b < 0 && a > INT_MAX + b)) {
-		err_msg("int_diff: Integer overflow: a=%d b=%d", a, b);
+		err_msg("%s: Integer overflow: a=%d b=%d", __func__, a, b);
 		abort();
 	}
 	return (a - b);
@@ -249,7 +249,7 @@ int
 int_sum(const int a, const int b)
 {
 	if ((b > 0 && a > INT_MAX - b) || (b < 0 && a < INT_MIN - b)) {
-		err_msg("int_sum: Integer overflow: a=%d b=%d", a, b);
+		err_msg("%s: Integer overflow: a=%d b=%d", __func__, a, b);
 		abort();
 	}
 	return (a + b);
@@ -260,7 +260,7 @@ size_to_int(const size_t value)
 {
 	if (value > INT_MAX) {
 		errno = ERANGE;
-		err_dump("fatal: size_to_int: loss of data");
+		err_dump("fatal: %s: loss of data", __func__);
 	}
 	return ((int) value);
 }
@@ -271,7 +271,7 @@ size_t
 size_product(const size_t elt_count, const size_t elt_size)
 {
 	if (elt_size && elt_count > SIZE_MAX / elt_size) {
-		err_msg("size_product: integer overflow");
+		err_msg("%s: integer overflow", __func__);
 		abort();
 	}
 	return (elt_count * elt_size);
@@ -403,11 +403,10 @@ write_to_stream(FILE *stream, const char *fmt, ...)
 #endif
 
 		if (errno != 0) {
-			err_ret("write_to_stream: %s returned %d",
-			    fn, n_print);
+			err_ret("%s: %s returned %d", __func__, fn, n_print);
 		} else {
-			err_msg("write_to_stream: %s returned %d (error)",
-			    fn, n_print);
+			err_msg("%s: %s returned %d (error)", __func__, fn,
+			    n_print);
 		}
 
 		abort();
