@@ -485,7 +485,7 @@ do_connect(const char *server, const char *port, const char *pass)
 		if (!g_icb_mode && strings_match(conn_ctx.port, ICB_PORT))
 			turn_icb_mode_on();
 		else if (!ssl_is_enabled() &&
-		    strings_match(conn_ctx.port, SSL_PORT))
+		    strings_match(conn_ctx.port, IRC_SSL_PORT))
 			set_ssl_on();
 
 		reconnect_begin();
@@ -564,7 +564,7 @@ cmd_connect(const char *data)
 
 		if ((port = strtok_r(NULL, "\n:", &state)) == NULL) {
 			if (ssl_is_enabled())
-				port = SSL_PORT;
+				port = IRC_SSL_PORT;
 			else
 				port = IRC_PORT;
 		}
