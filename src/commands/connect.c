@@ -60,12 +60,10 @@ static IRC_SERVER afternet_servers[] = {
 	{ NULL,               NULL,   NULL },
 };
 
-static stringarray_t alphachat_servers = {
-	"irc-ca1.alphachat.net",
-	"irc-de1.alphachat.net",
-	"irc-us1.alphachat.net",
-	"irc-us2.alphachat.net",
-	NULL
+static IRC_SERVER alphachat_servers[] = {
+	{ "irc.alphachat.net", "6667", "Default PLAIN" },
+	{ "irc.alphachat.net", "6697", "Default TLS" },
+	{ NULL,                NULL,   NULL },
 };
 
 static stringarray_t anonops_servers = {
@@ -621,9 +619,10 @@ cmd_connect(const char *data)
 			    " - www.afternet.org");
 			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "alphachat")) {
-			IRC_CONNECT(get_server(alphachat_servers,
-			    "AlphaChat - www.alphachat.net"),
-			    port);
+			srvptr = get_server_v2(&alphachat_servers[0],
+			    ARRAY_SIZE(alphachat_servers), "AlphaChat - "
+			    "www.alphachat.net");
+			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "anonops")) {
 			IRC_CONNECT(get_server(anonops_servers,
 			    "AnonOps IRC network"),
