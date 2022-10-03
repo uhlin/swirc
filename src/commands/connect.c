@@ -160,13 +160,15 @@ static IRC_SERVER undernet_servers[] = {
 	{ NULL,                NULL,   NULL },
 };
 
-static stringarray_t test_servers = {
-	"default.icb.net",
-	"internetcitizens.band",
-	"misc-services.exbit.io",
-	"testnet.inspircd.org",
-	"testnet.oragono.io",
-	NULL
+static IRC_SERVER test_servers[] = {
+	{ "default.icb.net",       "7326", "Chime ICB server" },
+	{ "internetcitizens.band", "7326", "Fuchsschwanz ICB server PLAIN" },
+	{ "internetcitizens.band", "7327", "Fuchsschwanz ICB server TLS" },
+	{ "testnet.ergo.chat",     "6667", "Testnet for the Ergo IRC server PLAIN" },
+	{ "testnet.ergo.chat",     "6697", "Testnet for the Ergo IRC server TLS" },
+	{ "testnet.inspircd.org",  "6667", "InspIRCd Test Network PLAIN" },
+	{ "testnet.inspircd.org",  "6697", "InspIRCd Test Network TLS" },
+	{ NULL,                    NULL,   NULL },
 };
 
 static bool
@@ -652,9 +654,10 @@ cmd_connect(const char *data)
 			    "Network");
 			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "test")) {
-			IRC_CONNECT(get_server(test_servers,
-			    "test servers"),
-			    port);
+			srvptr = get_server_v2(&test_servers[0],
+			    ARRAY_SIZE(test_servers), "Test servers; "
+			    "both ICB and IRC");
+			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else {
 			IRC_CONNECT(server, port);
 		}
