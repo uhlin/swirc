@@ -419,16 +419,16 @@ xcalloc(size_t elt_count, size_t elt_size)
 	void	*vp;
 
 	if (elt_count == 0) {
-		err_exit(EINVAL, "xcalloc: invalid argument: "
-		    "element count is zero");
+		err_exit(EINVAL, "%s: invalid argument: element count is zero",
+		    __func__);
 	} else if (elt_size == 0) {
-		err_exit(EINVAL, "xcalloc: invalid argument: "
-		    "element size is zero");
+		err_exit(EINVAL, "%s: invalid argument: element size is zero",
+		    __func__);
 	} else if (SIZE_MAX / elt_count < elt_size) {
-		err_quit("xcalloc: integer overflow");
+		err_quit("%s: integer overflow", __func__);
 	} else if ((vp = calloc(elt_count, elt_size)) == NULL) {
-		err_exit(ENOMEM, "xcalloc: "
-		    "out of memory (allocating " PRINT_SIZE " bytes)",
+		err_exit(ENOMEM, "%s: out of memory "
+		    "(allocating " PRINT_SIZE " bytes)", __func__,
 		    (elt_count * elt_size));
 	}
 	return (vp);
