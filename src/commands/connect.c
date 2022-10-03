@@ -232,60 +232,6 @@ get_password(void)
 	return (&pass[0]);
 }
 
-static const char *
-get_server(stringarray_t const ar, const char *msg)
-{
-	char	ans[20] = { '\0' };
-	int	c = EOF;
-	int	i = 0;
-	int	srvno = 0;
-
-	escape_curses();
-
-	(void) puts(msg);
-
-	for (; ar[i] != NULL; i++)
-		(void) printf("    (%d) %s\n", i, ar[i]);
-
-	if (i > 0)
-		i--;
-
-	while (BZERO(ans, sizeof ans), true) {
-		(void) printf("Your choice (0-%d): ", i);
-		(void) fflush(stdout);
-
-/*
- * sscanf() is safe in this context
- */
-#if WIN32
-#pragma warning(disable: 4996)
-#endif
-		if (fgets(ans, sizeof ans, stdin) == NULL) {
-			(void) putchar('\n');
-			continue;
-		} else if (strchr(ans, '\n') == NULL) {
-			(void) puts("input too big");
-
-			while (c = getchar(), c != '\n' && c != EOF)
-				/* discard */;
-		} else if (sscanf(ans, "%d", &srvno) != 1 || srvno < 0 ||
-		    srvno > i) {
-			;
-		} else {
-			break;
-		}
-/*
- * Reset warning behavior to its default value
- */
-#if WIN32
-#pragma warning(default: 4996)
-#endif
-	}
-
-	resume_curses();
-	return (ar[srvno]);
-}
-
 static PIRC_SERVER
 get_server_v2(PIRC_SERVER ptr, const size_t size, const char *hdr)
 {
