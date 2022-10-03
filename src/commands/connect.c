@@ -73,11 +73,6 @@ static stringarray_t anonops_servers = {
 	NULL
 };
 
-static stringarray_t blitzed_servers = {
-	"irc.blitzed.org",
-	NULL
-};
-
 static stringarray_t efnet_servers = {
 	"efnet.port80.se",
 	"efnet.portlane.se",
@@ -616,10 +611,6 @@ cmd_connect(const char *data)
 		} else if (strings_match_ignore_case(server, "anonops")) {
 			IRC_CONNECT(get_server(anonops_servers,
 			    "AnonOps IRC network"),
-			    port);
-		} else if (strings_match_ignore_case(server, "blitzed")) {
-			IRC_CONNECT(get_server(blitzed_servers,
-			    "Blitzed IRC network"),
 			    port);
 		} else if (strings_match_ignore_case(server, "efnet")) {
 			IRC_CONNECT(get_server(efnet_servers,

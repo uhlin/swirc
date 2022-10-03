@@ -143,7 +143,6 @@ static usage_t connect_usage = {
   "    - afternet",
   "    - alphachat",
   "    - anonops",
-  "    - blitzed",
   "    - efnet",
   "    - freenode",
   "    - ircnet",

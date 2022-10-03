@@ -24,6 +24,7 @@ All notable changes to this project will be documented in this file.
 - **Updated** preprogrammed IRC servers
   - **Added** port numbers and server descriptions
   - **Added** the [IRCNow](https://ircnow.org/) network
+  - **Deleted** the [Blitzed](http://blitzed.org/) network
 
 ## [3.3.5] - 2022-07-28 ##
 - **Added** command `/cap`
