@@ -45,6 +45,7 @@
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
+#include "../terminal.h"
 
 #include "connect.h"
 
@@ -196,7 +197,6 @@ shouldConnectUsingPassword(void)
 static char *
 get_password(void)
 {
-	int c = EOF;
 	static char pass[400] = { '\0' };
 
 	escape_curses();
@@ -207,22 +207,28 @@ get_password(void)
 	}
 
 	while (true) {
-		(void) printf("Password (will echo): ");
-		(void) fflush(stdout);
+		bool fgets_error;
 
-		const bool fgets_error =
-		    (fgets(pass, ARRAY_SIZE(pass), stdin) == NULL);
+		printf("Server password (will not echo): ");
+		fflush(stdout);
+
+		term_toggle_echo(OFF);
+		fgets_error = (fgets(pass, sizeof pass, stdin) == NULL);
+		term_toggle_echo(ON);
+
+		putchar('\n');
 
 		if (fgets_error) {
-			(void) putchar('\n');
-			continue;
+			;
 		} else if (strchr(pass, '\n') == NULL) {
-			(void) puts("input too big");
+			int c;
+
+			puts("input too big");
 
 			while (c = getchar(), c != '\n' && c != EOF)
 				/* discard */;
 		} else if (strings_match(trim(pass), "")) {
-			continue;
+			;
 		} else {
 			break;
 		}
