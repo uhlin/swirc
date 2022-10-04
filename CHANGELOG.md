@@ -6,7 +6,10 @@ All notable changes to this project will be documented in this file.
 - **Added** subcommand `passwd_s` to `/sasl` which can be used to
   securely store encrypted SASL passwords in `swirc.conf`. The
   encryption technique practice the use of **AES** and **SHA**.
-- **Added** tab completion for `/sasl`
+- **Added** tab completion for
+  - `/msg`
+  - `/notice`
+  - `/sasl`
 - **Changed** the program behavior to
   - jump between ICB and IRC mode depending on the port number
   - **not** create core dump files if `NDEBUG` is defined at compile time
