@@ -7,12 +7,10 @@ All notable changes to this project will be documented in this file.
   securely store encrypted SASL passwords in `swirc.conf`. The
   encryption technique practice the use of **AES** and **SHA**.
 - **Added** tab completion for `/sasl`
-- **Changed** the program behavior to jump between ICB and IRC mode
-  depending on the port number.
-- **Changed** the program behavior to **not** create core dump files if
-  `NDEBUG` is defined at compile time.
-- **Changed** the program behavior to **not** echo the server password on
-  input (command line flag `-p`).
+- **Changed** the program behavior to
+  - jump between ICB and IRC mode depending on the port number
+  - **not** create core dump files if `NDEBUG` is defined at compile time
+  - **not** echo the server password on input (command line flag `-p`)
 - **Fixed** a bug so if a connection attempt fails it's possible to
   reconnect again after `/disconnect`.
 - **Fixed** code duplication
