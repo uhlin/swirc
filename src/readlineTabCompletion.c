@@ -74,6 +74,13 @@ auto_complete_msg(volatile struct readline_session_context *ctx,
 }
 
 static void
+auto_complete_notice(volatile struct readline_session_context *ctx,
+    const char *s)
+{
+	do_work(ctx, L"/notice ", s);
+}
+
+static void
 auto_complete_query(volatile struct readline_session_context *ctx,
     const char *s)
 {
@@ -179,6 +186,7 @@ readline_tab_comp_ctx_new(void)
 
 	ctx.isInCirculationModeForHelp		= false;
 	ctx.isInCirculationModeForMsg		= false;
+	ctx.isInCirculationModeForNotice	= false;
 	ctx.isInCirculationModeForQuery		= false;
 	ctx.isInCirculationModeForSasl		= false;
 	ctx.isInCirculationModeForSettings	= false;
@@ -208,6 +216,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 
 		ctx->isInCirculationModeForHelp		= false;
 		ctx->isInCirculationModeForMsg		= false;
+		ctx->isInCirculationModeForNotice	= false;
 		ctx->isInCirculationModeForQuery	= false;
 		ctx->isInCirculationModeForSasl		= false;
 		ctx->isInCirculationModeForSettings	= false;
@@ -260,6 +269,29 @@ init_mode_for_msg(volatile struct readline_session_context *ctx)
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_msg(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeForMsg = true;
+}
+
+static void
+init_mode_for_notice(volatile struct readline_session_context *ctx)
+{
+	char	*p;
+
+	if (!is_irc_channel(ACTWINLABEL)) {
+		output_error("not in irc channel");
+		return;
+	}
+
+	p = addrof(ctx->tc->search_var[8]);
+
+	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
+	    p)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_notice(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeForNotice = true;
 }
 
 static void
@@ -420,6 +452,12 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		else
 			auto_complete_msg(ctx, next_text(ctx->tc));
 		return;
+	} else if (ctx->tc->isInCirculationModeForNotice) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
+			no_more_matches(ctx);
+		else
+			auto_complete_notice(ctx, next_text(ctx->tc));
+		return;
 	} else if (ctx->tc->isInCirculationModeForQuery) {
 		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
 			no_more_matches(ctx);
@@ -475,6 +513,8 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		init_mode_for_help(ctx);
 	else if (!strncmp(get_search_var(ctx), "/msg ", 5))
 		init_mode_for_msg(ctx);
+	else if (!strncmp(get_search_var(ctx), "/notice ", 8))
+		init_mode_for_notice(ctx);
 	else if (!strncmp(get_search_var(ctx), "/query ", 7))
 		init_mode_for_query(ctx);
 	else if (!strncmp(get_search_var(ctx), "/sasl ", 6))
