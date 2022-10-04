@@ -180,8 +180,7 @@ view_version()
 		(void) fflush(stdout);
 
 		if (fgets(answer, sizeof answer - 1, stdin) == NULL) {
-			PUTCHAR('\n');
-			continue;
+			err_sys("%s: fgets", __func__);
 		} else if (strchr(answer, '\n') == NULL) {
 			/*
 			 * input too big

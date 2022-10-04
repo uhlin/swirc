@@ -138,18 +138,21 @@ prompt_for_decryption(const char *str)
 		bool	 fgets_error;
 		char	*value;
 		char	 pass[400] = { '\0' };
+		int	 errno_save;
 
 		printf("Password: ");
 		fflush(stdout);
 
 		term_toggle_echo(OFF);
+		errno = 0;
 		fgets_error = fgets(pass, sizeof pass, stdin) == NULL;
+		errno_save = errno;
 		term_toggle_echo(ON);
 
 		putchar('\n');
 
 		if (fgets_error) {
-			continue;
+			err_exit(errno_save, "%s: fgets", __func__);
 		} else if (strchr(pass, '\n') == NULL) {
 			int	c;
 
