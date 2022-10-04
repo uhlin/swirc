@@ -38,6 +38,7 @@
 #include "../config.h"
 #include "../curses-funcs.h"
 #include "../dataClassify.h"
+#include "../errHand.h"
 #include "../io-loop.h"
 #include "../libUtils.h"
 #include "../main.h"
@@ -171,7 +172,7 @@ shouldConnectUsingPassword(void)
 		fflush(stdout);
 
 		if (fgets(answer, sizeof answer, stdin) == NULL) {
-			;
+			err_sys("%s: fgets", __func__);
 		} else if (strchr(answer, '\n') == NULL) {
 			int c;
 
@@ -207,19 +208,22 @@ get_password(void)
 	}
 
 	while (true) {
-		bool fgets_error;
+		bool	fgets_error;
+		int	errno_save;
 
 		printf("Server password (will not echo): ");
 		fflush(stdout);
 
 		term_toggle_echo(OFF);
+		errno = 0;
 		fgets_error = (fgets(pass, sizeof pass, stdin) == NULL);
+		errno_save = errno;
 		term_toggle_echo(ON);
 
 		putchar('\n');
 
 		if (fgets_error) {
-			;
+			err_exit(errno_save, "%s: fgets", __func__);
 		} else if (strchr(pass, '\n') == NULL) {
 			int c;
 
@@ -269,7 +273,7 @@ get_server_v2(PIRC_SERVER ptr, const size_t size, const char *hdr)
 #pragma warning(disable: 4996)
 #endif
 		if (fgets(ans, sizeof ans, stdin) == NULL) {
-			;
+			err_sys("%s: fgets", __func__);
 		} else if (strchr(ans, '\n') == NULL) {
 			int c;
 
