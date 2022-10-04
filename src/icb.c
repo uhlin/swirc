@@ -278,8 +278,8 @@ deal_with_category_idle_mod(const char *data)
 static void
 deal_with_category_name(const char *data)
 {
-	const char	*dataptr = &data[0];
-	const char	 changed[] = " changed nickname to ";
+	const char		*dataptr = &data[0];
+	static const char	 changed[] = " changed nickname to ";
 
 	if (strstr(data, changed)) {
 		char *old_nick = sw_strdup(data);
@@ -421,7 +421,7 @@ deal_with_category_topic(const char *window_label, const char *data)
 	PRINTTEXT_CONTEXT	 ctx;
 	char			 concat[ICB_PACKET_MAX] = { '\0' };
 	const char		*dataptr = &data[0];
-	const char		 changed[] = " changed the topic to \"";
+	static const char	 changed[] = " changed the topic to \"";
 
 	printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
 
