@@ -492,6 +492,7 @@ static inline bool
 isInCirculationMode(const TAB_COMPLETION *tc)
 {
 	return (tc->isInCirculationModeForHelp ||
+	    tc->isInCirculationModeForMsg ||
 	    tc->isInCirculationModeForQuery ||
 	    tc->isInCirculationModeForSasl ||
 	    tc->isInCirculationModeForSettings ||
