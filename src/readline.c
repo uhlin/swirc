@@ -427,11 +427,27 @@ finalize_out_string(const wchar_t *buf)
 }
 #endif
 
+static inline bool
+isInCirculationMode(const TAB_COMPLETION *tc)
+{
+	return (tc->isInCirculationModeForHelp ||
+	    tc->isInCirculationModeForMsg ||
+	    tc->isInCirculationModeForNotice ||
+	    tc->isInCirculationModeForQuery ||
+	    tc->isInCirculationModeForSasl ||
+	    tc->isInCirculationModeForSettings ||
+	    tc->isInCirculationModeForWhois ||
+	    tc->isInCirculationModeForZncCmds ||
+	    tc->isInCirculationModeForCmds ||
+	    tc->isInCirculationModeForChanUsers);
+}
+
 /**
  * Regular handling of a key-press.
  */
 static void
-handle_key(volatile struct readline_session_context *ctx, wint_t wc)
+handle_key(volatile struct readline_session_context *ctx, wint_t wc,
+    bool check_reset)
 {
 	if (ctx->no_bufspc) {
 		term_beep();
@@ -465,9 +481,15 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc)
 		ctx->n_insert++;
 		readline_waddch(ctx->act, wc);
 	}
+
 	mutex_lock(&g_puts_mutex);
 	(void) wrefresh(ctx->act);
 	mutex_unlock(&g_puts_mutex);
+
+	if (check_reset) {
+		if (isInCirculationMode(ctx->tc))
+			readline_tab_comp_ctx_reset(ctx->tc);
+	}
 }
 
 static void
@@ -486,21 +508,6 @@ handle_mouse(void)
 	else if (mouse.bstate == 0x8000000)
 		window_scroll_down(g_active_window, 1);
 #endif
-}
-
-static inline bool
-isInCirculationMode(const TAB_COMPLETION *tc)
-{
-	return (tc->isInCirculationModeForHelp ||
-	    tc->isInCirculationModeForMsg ||
-	    tc->isInCirculationModeForNotice ||
-	    tc->isInCirculationModeForQuery ||
-	    tc->isInCirculationModeForSasl ||
-	    tc->isInCirculationModeForSettings ||
-	    tc->isInCirculationModeForWhois ||
-	    tc->isInCirculationModeForZncCmds ||
-	    tc->isInCirculationModeForCmds ||
-	    tc->isInCirculationModeForChanUsers);
 }
 
 /**
@@ -689,27 +696,27 @@ process(volatile struct readline_session_context *ctx)
 			break;
 		case KEY_F(5):
 		case BLINK:
-			handle_key(ctx, btowc(BLINK));
+			handle_key(ctx, btowc(BLINK), true);
 			break;
 		case KEY_F(6):
 		case BOLD_ALIAS:
-			handle_key(ctx, btowc(BOLD));
+			handle_key(ctx, btowc(BOLD), true);
 			break;
 		case KEY_F(7):
 		case COLOR:
-			handle_key(ctx, btowc(COLOR));
+			handle_key(ctx, btowc(COLOR), true);
 			break;
 		case KEY_F(8):
 		case NORMAL:
-			handle_key(ctx, btowc(NORMAL));
+			handle_key(ctx, btowc(NORMAL), true);
 			break;
 		case KEY_F(9):
 		case REVERSE:
-			handle_key(ctx, btowc(REVERSE));
+			handle_key(ctx, btowc(REVERSE), true);
 			break;
 		case KEY_F(10):
 		case UNDERLINE:
-			handle_key(ctx, btowc(UNDERLINE));
+			handle_key(ctx, btowc(UNDERLINE), true);
 			break;
 		case KEY_F(11):
 			cmd_close("");
@@ -755,7 +762,7 @@ process(volatile struct readline_session_context *ctx)
 			return NULL;
 		default:
 			if (iswprint(wc))
-				handle_key(ctx, wc);
+				handle_key(ctx, wc, true);
 			break;
 		}
 	} while (g_readline_loop);
@@ -870,7 +877,7 @@ void
 readline_handle_key_exported(volatile struct readline_session_context *ctx,
     wint_t wc)
 {
-	handle_key(ctx, wc);
+	handle_key(ctx, wc, false);
 }
 
 void
