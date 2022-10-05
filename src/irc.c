@@ -280,7 +280,7 @@ irc_init(void)
 	else if ((nickname = g_user) != NULL && !strings_match(nickname, ""))
 		irc_set_my_nickname(nickname);
 	else
-		err_quit("irc_init: no nickname");
+		err_quit("%s: no nickname", __func__);
 	event_names_init();
 }
 
@@ -336,7 +336,7 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
 
 		printtext_context_init(&ctx, g_status_window,
 		    TYPE_SPEC1_FAILURE, true);
-		printtext(&ctx, "In irc_extract_msg: strFeed(..., %d) != %d",
+		printtext(&ctx, "In %s: strFeed(..., %d) != %d", __func__,
 		    ext_bits, ext_bits);
 		return;
 	}
@@ -625,8 +625,8 @@ get_last_token(const char *buffer)
 	const char *last_token;
 
 	if ((last_token = strrchr(buffer, '\n')) == NULL) {
-		err_msg("get_last_token error. "
-		    "(this is a bug and shouldn't happen!)");
+		err_msg("%s error. (this is a bug and shouldn't happen!)",
+		    __func__);
 		abort();
 	}
 
@@ -647,7 +647,7 @@ irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 	static const char separators[] = "\r\n";
 
 	if (recvbuffer == NULL || message_concat == NULL || state == NULL)
-		err_exit(EINVAL, "irc_handle_interpret_events");
+		err_exit(EINVAL, "%s", __func__);
 	else if (strings_match(recvbuffer, "") ||
 		 strpbrk(recvbuffer, separators) == NULL)
 		return;
@@ -721,7 +721,7 @@ void
 irc_set_my_nickname(const char *nick)
 {
 	if (nick == NULL || strings_match(nick, ""))
-		err_exit(EINVAL, "irc_set_my_nickname");
+		err_exit(EINVAL, "%s", __func__);
 
 	free(g_my_nickname);
 	g_my_nickname = sw_strdup(nick);
@@ -737,7 +737,7 @@ void
 irc_set_server_hostname(const char *srv_host)
 {
 	if (srv_host == NULL || strings_match(srv_host, ""))
-		err_exit(EINVAL, "irc_set_server_hostname");
+		err_exit(EINVAL, "%s", __func__);
 	free(g_server_hostname);
 	g_server_hostname = sw_strdup(srv_host);
 }
