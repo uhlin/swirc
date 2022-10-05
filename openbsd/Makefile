@@ -1,5 +1,5 @@
 COMMENT =	curses icb and irc client
-DISTNAME =	swirc-3.3.5
+DISTNAME =	swirc-3.3.6
 REVISION =	0
 CATEGORIES =	net
 HOMEPAGE =	https://www.nifty-networks.net/swirc/

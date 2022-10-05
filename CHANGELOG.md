@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.3.6] - 2022-10-05 ##
 - **Added** cryptographic functions
 - **Added** subcommand `passwd_s` to `/sasl` which can be used to
   securely store encrypted SASL passwords in `swirc.conf`. The
