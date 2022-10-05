@@ -268,7 +268,7 @@ append_newline(wchar_t **wc_buf)
 	*wc_buf = static_cast<wchar_t *>(xrealloc(*wc_buf, newsize));
 
 	if ((errno = sw_wcscat(*wc_buf, L"\n", newsize)) != 0)
-		err_sys("printtext: append_newline");
+		err_sys("%s", __func__);
 }
 
 /**
@@ -333,13 +333,13 @@ convert_wc(wchar_t wc)
 #ifdef HAVE_BCI
 	if ((errno = wcrtomb_s(&bytes_written, reinterpret_cast<char *>(mbs),
 	    size, wc, &ps)) != 0) {
-		err_log(errno, "printtext: convert_wc: wcrtomb_s");
+		err_log(errno, "printtext: %s: wcrtomb_s", __func__);
 		BZERO(mbs, size);
 	}
 #else
 	if ((bytes_written = wcrtomb(reinterpret_cast<char *>(mbs), wc, &ps)) ==
 	    g_conversion_failed) {
-		err_log(EILSEQ, "printtext: convert_wc: wcrtomb");
+		err_log(EILSEQ, "printtext: %s: wcrtomb", __func__);
 		BZERO(mbs, size);
 	}
 #endif
@@ -1087,9 +1087,8 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 		    (bytes_convert = xmbstowcs(out, buf, size - 1)) ==
 		    g_conversion_failed) {
 			if (xsetlocale(LC_CTYPE, original_locale) == NULL) {
-				err_log(EPERM, "try_convert_buf_with_cs: "
-				    "cannot restore original locale (%s)",
-				    original_locale);
+				err_log(EPERM, "%s: cannot restore original "
+				    "locale (%s)", __func__, original_locale);
 			}
 
 			throw std::runtime_error("conversion failed");
@@ -1098,9 +1097,8 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 		if (bytes_convert == (size - 1))
 			out[size - 1] = 0L;
 		if (xsetlocale(LC_CTYPE, original_locale) == NULL) {
-			err_log(EPERM, "try_convert_buf_with_cs: "
-			    "cannot restore original locale (%s)",
-			    original_locale);
+			err_log(EPERM, "%s: cannot restore original "
+			    "locale (%s)", __func__, original_locale);
 		}
 
 		free_locale_info(li);
@@ -1108,13 +1106,13 @@ try_convert_buf_with_cs(const char *buf, const char *codeset)
 		free(tmp_locale);
 		return out;
 	} catch (const std::runtime_error &e) {
-		debug("try_convert_buf_with_cs: %s", e.what());
+		debug("%s: %s", __func__, e.what());
 		free_locale_info(li);
 		free(original_locale);
 		free(tmp_locale);
 		free(out);
 	} catch (const std::bad_alloc &e) {
-		err_exit(ENOMEM, "try_convert_buf_with_cs: %s", e.what());
+		err_exit(ENOMEM, "%s: %s", __func__, e.what());
 		/* NOTREACHED */
 	} catch (...) {
 		sw_assert_not_reached();
@@ -1195,7 +1193,7 @@ perform_convert_buffer(const char **in_buf)
 	out[size - 1] = 0L;
 
 	if (chars_lost)
-		err_log(EILSEQ, "In perform_convert_buffer: characters lost");
+		err_log(EILSEQ, "In %s: characters lost", __func__);
 	return out;
 }
 
@@ -1273,7 +1271,7 @@ printtext_context_init(
 	bool include_ts)
 {
 	if (ctx == NULL) {
-		err_log(EINVAL, "printtext_context_init");
+		err_log(EINVAL, "%s", __func__);
 		return;
 	}
 
@@ -1308,7 +1306,7 @@ squeeze_text_deco(char *buffer)
 #endif
 
 	if (buffer == NULL)
-		err_exit(EINVAL, "squeeze_text_deco");
+		err_exit(EINVAL, "%s", __func__);
 	else if (strings_match(buffer, ""))
 		return buffer;
 
@@ -1423,7 +1421,7 @@ void
 print_and_free(const char *msg, char *cp)
 {
 	if (msg == NULL)
-		err_exit(EINVAL, "print_and_free");
+		err_exit(EINVAL, "%s", __func__);
 
 #ifdef UNIT_TESTING
 	(void) fprintf(stderr, "** %s **\r\n", msg);
@@ -1462,7 +1460,7 @@ printtext_print(const char *what, const char *fmt, ...)
 	va_list ap;
 
 	if (fmt == NULL)
-		err_exit(EINVAL, "printtext_print");
+		err_exit(EINVAL, "%s", __func__);
 	else if (g_active_window == NULL)
 		return;
 
@@ -1526,7 +1524,7 @@ get_buffer(const char *orig)
 			out[outsize - outbytes] = '\0';
 			free(orig_copy);
 			(void) iconv_close(cd);
-			debug("get_buffer: iconv succeeded: fromcode: %s",
+			debug("%s: iconv succeeded: fromcode: %s", __func__,
 			    x.c_str());
 			return static_cast<char *>(xrealloc(out,
 			    strlen(out) + 1));
@@ -1570,16 +1568,16 @@ printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 
 #if defined(UNIX)
 	if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0)
-		err_sys("printtext_puts: pthread_once");
+		err_sys("%s: pthread_once", __func__);
 #elif defined(WIN32)
 	if ((errno = init_once(&puts_init_done, puts_mutex_init)) != 0)
-		err_sys("printtext_puts: init_once");
+		err_sys("%s: init_once", __func__);
 #endif
 
 	if (rep_count)
 		*rep_count = 0;
 	if (pwin == NULL || buf == NULL)
-		err_exit(EINVAL, "printtext_puts");
+		err_exit(EINVAL, "%s", __func__);
 	else if (strings_match(buf, "") || term_is_too_small())
 		return;
 
@@ -1669,7 +1667,7 @@ set_timestamp(char *dest, size_t destsize,
 	    B1, compo->hour, SEP, compo->minute, SEP, compo->second, B2);
 
 	if (ret < 0 || static_cast<size_t>(ret) >= destsize)
-		debug("set_timestamp: snprintf: error");
+		debug("%s: snprintf: error", __func__);
 }
 
 /**
@@ -1692,11 +1690,11 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 #if defined(UNIX)
 	if ((errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init))
 	    != 0)
-		err_sys("vprinttext: pthread_once");
+		err_sys("%s: pthread_once", __func__);
 #elif defined(WIN32)
 	if ((errno = init_once(&vprinttext_init_done, vprinttext_mutex_init))
 	    != 0)
-		err_sys("vprinttext: init_once");
+		err_sys("%s: init_once", __func__);
 #endif
 
 	mutex_lock(&vprinttext_mutex);
@@ -1710,18 +1708,18 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 		 */
 		if ((errno = textBuf_remove(ctx->window->buf,
 		    textBuf_head(ctx->window->buf))) != 0)
-			err_sys("vprinttext: textBuf_remove");
+			err_sys("%s: textBuf_remove", __func__);
 	}
 
 	if (textBuf_size(ctx->window->buf) == 0) {
 		if ((errno = textBuf_ins_next(ctx->window->buf, NULL,
 		    pout->text, pout->indent)) != 0)
-			err_sys("vprinttext: textBuf_ins_next");
+			err_sys("%s: textBuf_ins_next", __func__);
 	} else {
 		if ((errno = textBuf_ins_next(ctx->window->buf,
 		    textBuf_tail(ctx->window->buf), pout->text,
 		    pout->indent)) != 0)
-			err_sys("vprinttext: textBuf_ins_next");
+			err_sys("%s: textBuf_ins_next", __func__);
 	}
 
 	const bool shouldOutData = !(ctx->window->scroll_mode);
