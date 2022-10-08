@@ -6,6 +6,7 @@
 
 MAKE_DEF_FILE=options.mk
 
+. "posixshell/check_strcasestr.sh"
 . "posixshell/fix_cflags.sh"
 . "posixshell/link_with_gnu_libidn.sh"
 . "posixshell/link_with_gnu_libintl.sh"
@@ -87,6 +88,8 @@ case "$(uname -s)" in
 	exit 1
 	;;
 esac
+
+check_strcasestr
 
 if [ $_with_libnotify -eq 1 ]; then
 	link_with_libnotify
