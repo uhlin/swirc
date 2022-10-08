@@ -37,6 +37,7 @@ OBJS = $(OBJS)\
 	$(SRC_DIR)sig-w32.obj\
 	$(SRC_DIR)statusbar.obj\
 	$(SRC_DIR)strHand.obj\
+	$(SRC_DIR)strcasestr.obj\
 	$(SRC_DIR)strcat.obj\
 	$(SRC_DIR)strcpy.obj\
 	$(SRC_DIR)strdup_printf.obj\

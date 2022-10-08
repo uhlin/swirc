@@ -8,6 +8,7 @@
 #endif
 
 /*lint -sem(strColor, pure) */
+/*lint -sem(strcasestr, r_null) */
 /*lint -printf(3, sw_snprintf) */
 
 __SWIRC_BEGIN_DECLS
@@ -18,6 +19,9 @@ char	*trim(char *);
 const char *
 	 strColor(short int color) NO_SIDE_EFFECT;
 int	 strFeed(char *string, int count);
+#if defined(HAVE_STRCASESTR) && HAVE_STRCASESTR == 0
+char	*strcasestr(const char *, const char *);
+#endif
 int	 sw_strcat(char *dest, const char *src, size_t);
 int	 sw_strcpy(char *dest, const char *src, size_t);
 int	 sw_wcscat(wchar_t *dest, const wchar_t *src, size_t);

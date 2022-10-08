@@ -34,6 +34,7 @@ OBJS += $(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)sig-unix.o\
 	$(SRC_DIR)statusbar.o\
 	$(SRC_DIR)strHand.o\
+	$(SRC_DIR)strcasestr.o\
 	$(SRC_DIR)strcat.o\
 	$(SRC_DIR)strcpy.o\
 	$(SRC_DIR)strdup_printf.o\
