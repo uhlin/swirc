@@ -576,7 +576,6 @@ main(int argc, char *argv[])
 		*str = NULL;
 
 	if (_get_pgmptr(&pgm) == 0) {
-		debug("_get_pgmptr: %s", pgm);
 		str = sw_strdup(pgm);
 		if ((cp = strstr(str, "\\swirc.exe")) == NULL) {
 			err_msg("renamed executable");
@@ -635,6 +634,11 @@ main(int argc, char *argv[])
 
 	term_init();
 	nestHome_init();
+
+#if WIN32
+	if (pgm)
+		debug("_get_pgmptr: %s", pgm);
+#endif
 
 	if (curses_init() != OK) {
 		err_msg("Initialization of the Curses library not possible");
