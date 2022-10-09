@@ -34,6 +34,9 @@ __SWIRC_END_DECLS
 /* Inline function definitions
    =========================== */
 
+#if defined(LINUX) && !defined(_GNU_SOURCE)
+#define _GNU_SOURCE
+#endif
 #include <string.h>
 
 #ifdef UNIX
