@@ -577,7 +577,7 @@ main(int argc, char *argv[])
 
 	if (_get_pgmptr(&pgm) == 0) {
 		str = sw_strdup(pgm);
-		if ((cp = strstr(str, "\\swirc.exe")) == NULL) {
+		if ((cp = strcasestr(str, "\\swirc.exe")) == NULL) {
 			err_msg("renamed executable");
 			return EXIT_FAILURE;
 		}
