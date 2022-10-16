@@ -575,7 +575,8 @@ main(int argc, char *argv[])
 	char	*pgm = NULL,
 		*str = NULL;
 
-	if (_get_pgmptr(&pgm) == 0) {
+	if (_get_pgmptr(&pgm) == 0 && pgm != NULL && !strings_match(pgm, "") &&
+	    !strings_match(&pgm[strspn(pgm, " \t")], "")) {
 		str = sw_strdup(pgm);
 		if ((cp = strcasestr(str, "\\swirc.exe")) == NULL) {
 			err_msg("renamed executable");
@@ -637,7 +638,7 @@ main(int argc, char *argv[])
 
 #if WIN32
 	if (pgm)
-		debug("_get_pgmptr: %s", pgm);
+		debug("_get_pgmptr: \"%s\"", pgm);
 #endif
 
 	if (curses_init() != OK) {
