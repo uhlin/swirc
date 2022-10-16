@@ -16,6 +16,7 @@ DEST = c:\out\swirc-$(MACHINE)
 LOCLOC = LC_MESSAGES\swirc.mo
 
 PRODUCT_VERSION = 3.3.6
+REVISION =
 
 all: main
 
@@ -82,9 +83,10 @@ setupfile: dist Swirc.wxs
 	candle Swirc.wxs
 	light "-cultures:en-us"\
 	    -ext WixUIExtension\
-	    -out "Swirc-$(PRODUCT_VERSION).msi"\
+	    -out "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"\
 	    Swirc.wixobj
-	signtool sign $(SIGNTOOL_FLAGS) "Swirc-$(PRODUCT_VERSION).msi"
+	signtool sign $(SIGNTOOL_FLAGS)\
+	    "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"
 
 clean:
 	$(E) ^ ^ CLEAN
