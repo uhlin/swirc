@@ -1,6 +1,14 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+
+### Windows ###
+- **Fixed** a bug that made Swirc fail to start with error `renamed
+  executable`. This was due to that `_get_pgmptr()` signaled success
+  but stored an empty string, which only occurred on some Windows
+  setups.
+
 ## [3.3.6] - 2022-10-05 ##
 - **Added** cryptographic functions
 - **Added** subcommand `passwd_s` to `/sasl` which can be used to
