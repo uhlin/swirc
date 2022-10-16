@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 - **Fixed** a bug that made Swirc fail to start with error `renamed
   executable`. This was due to that `_get_pgmptr()` signaled success
   but stored an empty string, which only occurred on some Windows
-  setups.
+  setups. (Reported by [cpkio](https://github.com/cpkio) - thanks!)
 
 ## [3.3.6] - 2022-10-05 ##
 - **Added** cryptographic functions
