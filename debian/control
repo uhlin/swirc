@@ -1,7 +1,7 @@
 Source: swirc
+Maintainer: Markus Uhlin <markus.uhlin@bredband.net>
 Section: net
 Priority: optional
-Maintainer: Markus Uhlin <markus.uhlin@bredband.net>
 Build-Depends:
   debhelper (>= 13~),
   debhelper-compat (= 13),
@@ -12,11 +12,11 @@ Build-Depends:
   libncursesw5-dev,
   libssl-dev,
   quilt
-Rules-Requires-Root: no
 Standards-Version: 4.6.1.0
 Homepage: https://www.nifty-networks.net/swirc/
 Vcs-Browser: https://github.com/uhlin/swirc
 Vcs-Git: https://github.com/uhlin/swirc.git
+Rules-Requires-Root: no
 
 Package: swirc
 Architecture: any
