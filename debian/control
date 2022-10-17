@@ -3,12 +3,13 @@ Section: net
 Priority: optional
 Maintainer: Markus Uhlin <markus.uhlin@bredband.net>
 Build-Depends:
-  debhelper (>= 9),
-  autotools-dev,
+  debhelper (>= 13~),
+  gettext,
   libcurl4-gnutls-dev | libcurl4-nss-dev | libcurl4-openssl-dev,
   libidn11-dev,
   libncursesw5-dev,
-  libssl-dev
+  libssl-dev,
+  quilt
 Standards-Version: 3.9.8
 Homepage: https://www.nifty-networks.net/swirc/
 
