@@ -10,6 +10,7 @@ Build-Depends:
   libncursesw5-dev,
   libssl-dev,
   quilt
+Rules-Requires-Root: no
 Standards-Version: 4.6.1.0
 Homepage: https://www.nifty-networks.net/swirc/
 
