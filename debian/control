@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: Markus Uhlin <markus.uhlin@bredband.net>
 Build-Depends:
   debhelper (>= 13~),
+  debhelper-compat (= 13),
   gettext,
   libcmocka-dev,
   libcurl4-gnutls-dev | libcurl4-nss-dev | libcurl4-openssl-dev,
