@@ -10,7 +10,7 @@ Build-Depends:
   libncursesw5-dev,
   libssl-dev,
   quilt
-Standards-Version: 3.9.8
+Standards-Version: 4.6.1.0
 Homepage: https://www.nifty-networks.net/swirc/
 
 Package: swirc
