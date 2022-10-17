@@ -14,5 +14,6 @@ override_dh_auto_clean:
 override_dh_auto_configure:
 	./configure
 
+# Don't automatically run the tests. (It has a reason.)
 override_dh_auto_test:
 	true
