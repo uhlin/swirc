@@ -1,5 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: swirc
+Upstream-Contact: Markus Uhlin <markus.uhlin@bredband.net>
 Source: https://github.com/uhlin/swirc
 
 Files: *
