@@ -1,6 +1,7 @@
 .gitattributes export-ignore
 .gitignore export-ignore
 bash/ export-ignore
+debian/ export-ignore
 doc/rfc2811.txt export-ignore
 doc/rfc2812.txt export-ignore
 maketgz export-ignore
