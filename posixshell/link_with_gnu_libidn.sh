@@ -1,3 +1,10 @@
+#######################################################
+#
+# Link with GNU libidn
+#
+# Copyright (c) 2022 Markus Uhlin. All rights reserved.
+#
+
 link_with_gnu_libidn () {
 	local _tmpfile _srcfile _out _libs
 
