@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added code to the following scripts:
+  - `posixshell/link_with_gnu_libidn.sh`
+  - `posixshell/link_with_libnotify.sh`
 
 ### Windows ###
 - **Fixed** a bug that made Swirc fail to start with error `renamed
