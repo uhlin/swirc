@@ -1,3 +1,10 @@
+#######################################################
+#
+# Link with LibNotify
+#
+# Copyright (c) 2022 Markus Uhlin. All rights reserved.
+#
+
 link_with_libnotify () {
 	local _tmpfile _srcfile _out
 	local _includes _libs
