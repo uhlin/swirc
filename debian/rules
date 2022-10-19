@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+export DEB_GAIN_ROOT_CMD='sudo -nE --'
+export PREFIX=/usr
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	./configure
+	make clean
+
+override_dh_auto_configure:
+	./configure
+
+# Don't automatically run the tests. (It has a reason.)
+override_dh_auto_test:
+	true
