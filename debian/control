@@ -20,7 +20,7 @@ Rules-Requires-Root: no
 
 Package: swirc
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}
 Description: Curses ICB and IRC client
  Swirc is a BSD licensed, console based and lightweight ICB and IRC
  client written in C/C++, whose goals are to be portable and secure.
