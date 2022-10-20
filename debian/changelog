@@ -1,0 +1,5 @@
+swirc (3.3.6-1) unstable; urgency=medium
+
+  * Initial import. (Closes: #1021993)
+
+ -- Markus Uhlin <markus.uhlin@bredband.net>  Fri, 21 Oct 2022 00:41:12 +0200
