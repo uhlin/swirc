@@ -1,0 +1,10 @@
+*.debian.tar.xz
+*.orig.tar.xz
+build/
+swirc*.buildinfo
+swirc*.changes
+swirc*.deb
+swirc*.dsc
+swirc-*.tgz
+swirc-*.tgz.sig
+swirc-*/
