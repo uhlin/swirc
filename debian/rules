@@ -2,4 +2,48 @@
 
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 export DEB_GAIN_ROOT_CMD='sudo -nE --'
+export DESTDIR=debian/tmp
 export PREFIX=/usr
+
+# For the DEB_{SOURCE,VERSION} or SOURCE_DATE_EPOCH variables
+include /usr/share/dpkg/pkg-info.mk
+
+DESTDIR = debian/tmp
+PREFIX = /usr
+
+clean:
+	rm -rf $(DESTDIR)
+
+build: build-arch build-indep
+
+binary: binary-arch binary-indep
+
+build-arch:
+	./configure
+	@make
+
+binary-arch: build-arch
+	rm -rf $(DESTDIR)
+	install -d $(DESTDIR)$(PREFIX)/share/doc/swirc
+	install -d $(DESTDIR)/DEBIAN
+	gzip -cn9 debian/changelog >changelog.Debian.gz
+	install -m 644 changelog.Debian.gz $(DESTDIR)$(PREFIX)/share/doc/swirc
+	install -m 644 debian/copyright $(DESTDIR)$(PREFIX)/share/doc/swirc
+	make install
+	gzip -n9 $(DESTDIR)$(PREFIX)/share/man/man1/swirc.1
+	gzip -n9 $(DESTDIR)$(PREFIX)/share/man/man5/swirc.conf.5
+	chmod 644 $(DESTDIR)$(PREFIX)/share/man/man1/swirc.1.gz
+	chmod 644 $(DESTDIR)$(PREFIX)/share/man/man5/swirc.conf.5.gz
+	chmod 644 $(DESTDIR)$(PREFIX)/share/swirc/swirc-royal.png
+	strip --remove-section=.comment --remove-section=.note \
+	    $(DESTDIR)$(PREFIX)/bin/swirc
+	dpkg-shlibdeps $(DESTDIR)$(PREFIX)/bin/swirc
+	dpkg-gencontrol
+	dpkg-deb --build $(DESTDIR) \
+	    ../swirc_$(DEB_VERSION)_$(DEB_TARGET_ARCH).deb
+
+build-indep:
+	@true
+
+binary-indep:
+	@true
