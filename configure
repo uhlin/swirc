@@ -91,19 +91,19 @@ esac
 
 check_strcasestr
 
-if [ $_with_libnotify -eq 1 ]; then
+if [ ${_with_libnotify} -eq 1 ]; then
 	link_with_libnotify
 fi
 
-if [ $_without_libiconv -eq 0 ]; then
+if [ ${_without_libiconv} -eq 0 ]; then
 	link_with_libiconv
 fi
 
-if [ $_without_libidn -eq 0 ]; then
+if [ ${_without_libidn} -eq 0 ]; then
 	link_with_gnu_libidn
 fi
 
-if [ $_without_libintl -eq 0 ]; then
+if [ ${_without_libintl} -eq 0 ]; then
 	link_with_gnu_libintl
 #	${MAKE:-make} -Cpo clean
 	${MAKE:-make} -Cpo

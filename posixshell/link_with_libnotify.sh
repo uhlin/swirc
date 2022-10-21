@@ -45,12 +45,12 @@ EOF
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE
 CFLAGS += -DUSE_LIBNOTIFY=1
-CFLAGS += $_includes
+CFLAGS += ${_includes}
 
 CXXFLAGS += -DUSE_LIBNOTIFY=1
-CXXFLAGS += $_includes
+CXXFLAGS += ${_includes}
 
-LDLIBS += $_libs
+LDLIBS += ${_libs}
 EOF
 	else
 		echo "no"

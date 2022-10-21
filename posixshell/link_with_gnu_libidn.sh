@@ -43,7 +43,7 @@ EOF
 CFLAGS += -DHAVE_LIBIDN=1
 CXXFLAGS += -DHAVE_LIBIDN=1
 
-LDLIBS += $_libs
+LDLIBS += ${_libs}
 EOF
 	else
 		echo "no"
