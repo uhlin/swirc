@@ -534,10 +534,8 @@ void
 printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 {
 	attr_t attr = 0xff;
-	const short int num_colorMap_entries =
-	    static_cast<short int>(COLORS >= 256
-				   ? ARRAY_SIZE(ptext_colorMap)
-				   : 16);
+	const short int num_colorMap_entries = static_cast<short int>
+	    (COLORS >= 256 ? ARRAY_SIZE(ptext_colorMap) : 16);
 	short int fg, bg, resolved_pair;
 
 	sw_assert(num1 >= 0);
