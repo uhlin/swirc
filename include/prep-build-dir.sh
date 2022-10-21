@@ -66,6 +66,15 @@ prep_build_dir()
 	test -f swirc-${UPSTREAM_VER}/SwircUIBanner1.bmp && \
 	    rm -fv swirc-${UPSTREAM_VER}/SwircUIBanner1.bmp
 
+	echo -n "installing gen-md5.sh..."
+	install -m 755 gen-md5.sh swirc-${UPSTREAM_VER}
+	if [ -f swirc-${UPSTREAM_VER}/gen-md5.sh ]; then
+		echo "ok"
+	else
+		echo "error"
+		exit 1
+	fi
+
 	echo -n "creating swirc_${VERSION}.orig.tar.xz..."
 	tar -cJf swirc_${VERSION}.orig.tar.xz swirc-${UPSTREAM_VER}
 	if [ -f swirc_${VERSION}.orig.tar.xz ]; then
