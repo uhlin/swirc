@@ -541,7 +541,10 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 	sw_assert(num1 >= 0);
 
 	fg = ptext_colorMap[num1 % num_colorMap_entries].color;
-	bg = (num2 < 0 ? -1 : ptext_colorMap[num2 % num_colorMap_entries].color);
+	if (num2 < 0)
+		bg = -1;
+	else
+		bg = ptext_colorMap[num2 % num_colorMap_entries].color;
 
 	if (COLORS >= 16 && can_change_color()) {
 		map_color(&fg, num1, num_colorMap_entries, &attr);
