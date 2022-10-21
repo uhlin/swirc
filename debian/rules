@@ -37,6 +37,7 @@ binary-arch: build-arch
 	chmod 644 $(DESTDIR)$(PREFIX)/share/swirc/swirc-royal.png
 	strip --remove-section=.comment --remove-section=.note \
 	    $(DESTDIR)$(PREFIX)/bin/swirc
+	../gen-md5.sh
 	dpkg-shlibdeps $(DESTDIR)$(PREFIX)/bin/swirc
 	dpkg-gencontrol
 	dpkg-deb --build $(DESTDIR) \
