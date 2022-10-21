@@ -63,6 +63,9 @@ prep_build_dir()
 		rm -frv swirc-${UPSTREAM_VER}/debian
 	fi
 
+	test -f swirc-${UPSTREAM_VER}/SwircUIBanner1.bmp && \
+	    rm -fv swirc-${UPSTREAM_VER}/SwircUIBanner1.bmp
+
 	echo -n "creating swirc_${VERSION}.orig.tar.xz..."
 	tar -cJf swirc_${VERSION}.orig.tar.xz swirc-${UPSTREAM_VER}
 	if [ -f swirc_${VERSION}.orig.tar.xz ]; then
