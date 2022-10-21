@@ -548,7 +548,8 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 
 	if (COLORS >= 16 && can_change_color()) {
 		map_color(&fg, num1, num_colorMap_entries, &attr);
-		map_color(&bg, num2, num_colorMap_entries, &attr);
+		if (num2 >= 0)
+			map_color(&bg, num2, num_colorMap_entries, &attr);
 	}
 
 	if (attr != A_NORMAL)
