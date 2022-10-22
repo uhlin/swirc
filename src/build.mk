@@ -51,7 +51,10 @@ OBJS += $(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)window.o\
 	$(SRC_DIR)x509_check_host.o
 
-swirc: $(OBJS)
+gen-hdr:
+	$(Q) ./gen-hdr.sh "$(PREFIX)"
+
+swirc: gen-hdr $(OBJS)
 	$(E) "  LINK    " $@
 	$(Q) $(CXX) $(CXXFLAGS) -o $@ $(OBJS) $(LDFLAGS) $(LDLIBS)
 	$(Q) strip $@
