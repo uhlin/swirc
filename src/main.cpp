@@ -40,6 +40,7 @@
 #include <locale.h>
 
 #if UNIX
+#include <swircpaths.h>
 #include <unistd.h> /* geteuid() pledge() */
 #endif
 
@@ -567,7 +568,7 @@ main(int argc, char *argv[])
 
 #ifdef HAVE_LIBINTL_H
 #if defined(UNIX)
-	if (bindtextdomain("swirc", "/usr/local/share/locale") == NULL) {
+	if (bindtextdomain("swirc", SWIRC_BTD_PATH) == NULL) {
 		err_ret("bindtextdomain");
 		return EXIT_FAILURE;
 	}
@@ -675,10 +676,10 @@ main(int argc, char *argv[])
 		const char *permissions;
 	} whitelist[] = {
 		{ "/etc/ssl/cert.pem", "r" },
-		{ "/usr/local/share/locale/de/LC_MESSAGES/swirc.mo", "r" },
-		{ "/usr/local/share/locale/fi/LC_MESSAGES/swirc.mo", "r" },
-		{ "/usr/local/share/locale/fr/LC_MESSAGES/swirc.mo", "r" },
-		{ "/usr/local/share/locale/sv/LC_MESSAGES/swirc.mo", "r" },
+		{ LC_MSGS_DE, "r" },
+		{ LC_MSGS_FI, "r" },
+		{ LC_MSGS_FR, "r" },
+		{ LC_MSGS_SV, "r" },
 	};
 
 	if (unveil(g_home_dir, "rwc") == -1) {
