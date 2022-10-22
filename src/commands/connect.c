@@ -133,6 +133,12 @@ static IRC_SERVER libera_servers[] = {
 	{ NULL,                   NULL,   NULL },
 };
 
+static IRC_SERVER oftc_servers[] = {
+	{ "irc.oftc.net", "6667", "Default PLAIN" },
+	{ "irc.oftc.net", "6697", "Default TLS" },
+	{ NULL,           NULL,   NULL },
+};
+
 static IRC_SERVER quakenet_servers[] = {
 	{ "adrift.sg.quakenet.org",      "6667", "Adrift" },
 	{ "datapacket.hk.quakenet.org",  "6667", "DataPacket" },
@@ -599,6 +605,11 @@ cmd_connect(const char *data)
 		} else if (strings_match_ignore_case(server, "libera")) {
 			srvptr = get_server_v2(&libera_servers[0],
 			    ARRAY_SIZE(libera_servers), "Libera Chat");
+			IRC_CONNECT(srvptr->host, srvptr->port);
+		} else if (strings_match_ignore_case(server, "oftc")) {
+			srvptr = get_server_v2(&oftc_servers[0],
+			    ARRAY_SIZE(oftc_servers), "The Open and Free "
+			    "Technology Community");
 			IRC_CONNECT(srvptr->host, srvptr->port);
 		} else if (strings_match_ignore_case(server, "quakenet")) {
 			srvptr = get_server_v2(&quakenet_servers[0],

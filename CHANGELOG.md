@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 - **Added** code to the following scripts:
   - `posixshell/link_with_gnu_libidn.sh`
   - `posixshell/link_with_libnotify.sh`
+- **Added** preprogrammed IRC network [OFTC](https://www.oftc.net/)
 - **Fixed** a case of a possibly negative array subscript
 
 ### Windows ###

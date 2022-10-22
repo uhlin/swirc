@@ -148,6 +148,7 @@ static usage_t connect_usage = {
   "    - ircnet",
   "    - ircnow",
   "    - libera",
+  "    - oftc",
   "    - quakenet",
   "    - undernet",
   "",
