@@ -1,5 +1,6 @@
-swirc (3.3.7-1) unstable; urgency=medium
+swirc (3.3.7.1-1) unstable; urgency=medium
 
   * Initial import. (Closes: #1021993)
+  * Doesn't include the 'doc/' folder
 
- -- Markus Uhlin <markus.uhlin@bredband.net>  Sat, 22 Oct 2022 16:02:38 +0200
+ -- Markus Uhlin <markus.uhlin@bredband.net>  Sat, 22 Oct 2022 23:12:26 +0200
