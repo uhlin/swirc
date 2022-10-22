@@ -8,8 +8,6 @@ LC_MSGS = po/de/swirc.mo\
 	po/fr/swirc.mo\
 	po/sv/swirc.mo
 
-PREFIX ?= /usr/local
-
 # Don't provide a default value for DESTDIR. It should be empty.
 DESTDIR ?=
 

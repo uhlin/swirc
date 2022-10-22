@@ -3,6 +3,8 @@ include options.mk
 CFLAGS += -Isrc/include
 CXXFLAGS += -Isrc/include
 
+PREFIX ?= /usr/local
+
 all: main
 
 include src/commands/build.mk
