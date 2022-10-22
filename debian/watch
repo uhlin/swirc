@@ -1,3 +1,4 @@
 version=4
-https://www.nifty-networks.net/swirc/source-code.html \
-    releases/@PACKAGE@@ANY_VERSION@@ARCHIVE_EXT@
+opts="pgpsigurlmangle=s/$/.sig/" \
+    https://www.nifty-networks.net/swirc/source-code.html \
+    releases/swirc-(\d.*)\.tgz
