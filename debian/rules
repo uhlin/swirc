@@ -2,11 +2,7 @@
 
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 export DEB_GAIN_ROOT_CMD='sudo -nE --'
-# export DESTDIR=debian/tmp
 export PREFIX=/usr
-
-# For the DEB_{SOURCE,VERSION} or SOURCE_DATE_EPOCH variables
-# include /usr/share/dpkg/pkg-info.mk
 
 override_dh_auto_clean:
 	./configure
