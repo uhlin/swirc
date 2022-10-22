@@ -9,7 +9,7 @@ check_tools()
 {
 	local _tools
 
-	_tools="curl"
+	_tools="curl gpg"
 
 	for _tool in ${_tools}; do
 		echo -n "checking for ${_tool}..."
