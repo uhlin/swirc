@@ -34,7 +34,8 @@ EOF
 	else
 		_libs="-liconv"
 	fi
-	$CC $CFLAGS "$_srcfile" -o "$_out" $LDFLAGS $_libs >/dev/null 2>&1
+	${CC} ${CFLAGS} "$_srcfile" -o "$_out" ${LDFLAGS} ${_libs} \
+	    >/dev/null 2>&1
 	if [ $? -eq 0 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE

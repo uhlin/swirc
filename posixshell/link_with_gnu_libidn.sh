@@ -36,7 +36,8 @@ EOF
 		exit 1
 	fi
 	echo -n "checking for gnu libidn..."
-	$CC $CFLAGS -Werror "$_srcfile" -o "$_out" $LDFLAGS $_libs >/dev/null 2>&1
+	${CC} ${CFLAGS} -Werror "$_srcfile" -o "$_out" ${LDFLAGS} ${_libs} \
+	    >/dev/null 2>&1
 	if [ $? -eq 0 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE
