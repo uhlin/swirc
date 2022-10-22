@@ -34,6 +34,7 @@ include install.mk
 clean:
 	$(E) "  CLEAN"
 	$(RM) $(OBJS)
+	$(RM) $(SRC_DIR)include/swircpaths.h
 	$(RM) $(TGTS)
 	$(RM) -R swirc.analyze
 	$(RM) swirc.html
