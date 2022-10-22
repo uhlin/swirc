@@ -17,5 +17,5 @@ clean_up
 prep_build_dir
 
 cd ${BUILD_DIR} || exit 1
-fakeroot -- dpkg-buildpackage --build=$BUILD --no-sign "$@"
+dpkg-buildpackage --build=$BUILD --no-sign "$@"
 cd ..
