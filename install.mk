@@ -1,4 +1,4 @@
-INSTALL := install
+INSTALL = install
 INSTALL_DEPS = src/swirc.1\
 	swirc\
 	swirc-royal.png\
