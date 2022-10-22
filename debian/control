@@ -10,6 +10,7 @@ Build-Depends:
   libcurl4-gnutls-dev | libcurl4-nss-dev | libcurl4-openssl-dev,
   libidn11-dev,
   libncursesw5-dev,
+  libnotify-dev,
   libssl-dev,
   quilt
 Standards-Version: 4.6.1.0

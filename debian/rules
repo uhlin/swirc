@@ -5,11 +5,11 @@ export DEB_GAIN_ROOT_CMD='sudo -nE --'
 export PREFIX=/usr
 
 override_dh_auto_clean:
-	./configure
+	./configure --with-libnotify
 	@make clean
 
 override_dh_auto_configure:
-	./configure
+	./configure --with-libnotify
 
 # Don't automatically run the tests
 override_dh_auto_test:
