@@ -72,6 +72,9 @@ prep_build_dir()
 		exit 1
 	fi
 
+	gpg -o swirc_${VERSION}.orig.tar.xz.sig -a -b \
+	    swirc_${VERSION}.orig.tar.xz
+
 	echo -n "creating dir: ${BUILD_DIR}..."
 	mkdir ${BUILD_DIR}
 	if [ -d ${BUILD_DIR} ]; then
