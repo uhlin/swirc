@@ -29,5 +29,6 @@ swirc.exe
 swirc.html
 swirc.res
 swirc.static.html
+swircpaths.h
 tests/*.run
 trusted_roots.pem
