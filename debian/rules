@@ -7,3 +7,17 @@ export PREFIX=/usr
 
 # For the DEB_{SOURCE,VERSION} or SOURCE_DATE_EPOCH variables
 # include /usr/share/dpkg/pkg-info.mk
+
+override_dh_auto_clean:
+	./configure
+	@make clean
+
+override_dh_auto_configure:
+	./configure
+
+# Don't automatically run the tests
+override_dh_auto_test:
+	@true
+
+%:
+	dh $@ --without autoreconf
