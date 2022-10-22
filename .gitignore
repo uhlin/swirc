@@ -1,5 +1,8 @@
 *.debian.tar.xz
+*.mentors.upload
 *.orig.tar.xz
+*.orig.tar.xz.asc
+*.orig.tar.xz.sig
 build/
 swirc*.buildinfo
 swirc*.changes
