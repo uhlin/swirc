@@ -51,7 +51,6 @@
 #elif defined(UNIX) && USE_LIBNOTIFY
 #include <libnotify/notify.h>
 #define SUMMARY_TEXT "Swirc IRC client"
-#define SWIRC_ICON "/usr/local/share/swirc/swirc-royal.png"
 #endif
 
 #define NICK_S1 Theme("nick_s1")
@@ -60,6 +59,9 @@
 #include "names.h"
 #include "privmsg.h"
 #include "special-msg-context.hpp"
+#if UNIX
+#include "swircpaths.h"
+#endif
 
 static bool	shouldHighlightMessage_case1(const char *) PTR_ARGS_NONNULL;
 static bool	shouldHighlightMessage_case2(const char *) PTR_ARGS_NONNULL;
@@ -256,7 +258,7 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *msg)
 #elif defined(UNIX) && USE_LIBNOTIFY
 	char *body = strdup_printf("[PM] &lt;%s&gt; %s", nick, msg);
 	NotifyNotification *notification = notify_notification_new(SUMMARY_TEXT,
-	    body, SWIRC_ICON);
+	    body, SWIRC_ICON_PATH);
 
 	notify_notification_show(notification, NULL);
 
@@ -315,7 +317,7 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *dest,
 #elif defined(UNIX) && USE_LIBNOTIFY
 		char *body = strdup_printf("%s @ %s: %s", nick, dest, msg);
 		NotifyNotification *notification =
-		    notify_notification_new(SUMMARY_TEXT, body, SWIRC_ICON);
+		    notify_notification_new(SUMMARY_TEXT, body, SWIRC_ICON_PATH);
 
 		notify_notification_show(notification, NULL);
 
