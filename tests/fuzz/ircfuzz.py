@@ -134,6 +134,20 @@ def choose_command():
         '433',
         '470',
 
+        # events/whois.cpp
+        # TODO: Add param count?
+        '275', '671',
+        '276',
+        '307',
+        '313',
+        '317',
+        '319',
+        '330',
+        '335',
+        '338', '616',
+        '378',
+        '379', '310', '615',
+
         'ACCOUNT',
         'AUTHENTICATE',
         'AWAY',
