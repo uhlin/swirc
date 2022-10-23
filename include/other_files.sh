@@ -3,6 +3,7 @@ mu170225.asc
 mu180520.asc
 mu190523.asc
 navbar.css
+popup.css
 reports/swirc-3.2.2.html
 reports/swirc-3.2.3.html
 reports/swirc-3.2.4.html
