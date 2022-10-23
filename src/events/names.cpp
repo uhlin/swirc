@@ -460,12 +460,17 @@ event_eof_names(struct irc_message_compo *compo)
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ptext_ctx, "event_eof_names: fatal: %s", e.what());
 
+#if IRCFUZZ_MODE
+#pragma message("warning: fuzz mode is ON (not to be used in production)")
+#pragma message("...omitted code...")
+#else
 		if (strstr(e.what(), "parse names of two (or more)") ||
 		    strings_match(e.what(), "window lookup error")) {
 			printtext(&ptext_ctx, "must shutdown irc connection "
 			    "immediately...");
 			net_kill_connection();
 		}
+#endif
 	}
 }
 
@@ -550,12 +555,17 @@ event_names(struct irc_message_compo *compo)
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ptext_ctx, "event_names: fatal: %s", e.what());
 
+#if IRCFUZZ_MODE
+#pragma message("warning: fuzz mode is ON (not to be used in production)")
+#pragma message("...omitted code...")
+#else
 		if (strstr(e.what(), "store names channel") ||
 		    strstr(e.what(), "parse names of two (or more)")) {
 			printtext(&ptext_ctx, "must shutdown irc connection "
 			    "immediately...");
 			net_kill_connection();
 		}
+#endif
 	}
 
 	free(names_copy);
