@@ -1,6 +1,9 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Added event 415 `ERR_BADMASK`
+
 ## [3.3.7] - 2022-10-22 ##
 - **Added** code to the following scripts:
   - `posixshell/link_with_gnu_libidn.sh`
