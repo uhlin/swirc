@@ -196,6 +196,8 @@ static struct numeric_events_tag {
 	{ "407", "ERR_TOOMANYTARGETS",      ACTIVE_WINDOW,  2, NULL },
 	{ "408", "ERR_NOSUCHSERVICE",       ACTIVE_WINDOW,  2, NULL },
 	{ "412", "ERR_NOTEXTTOSEND",        ACTIVE_WINDOW,  1, NULL },
+	{ "413", "ERR_NOTOPLEVEL",          ACTIVE_WINDOW,  2, NULL },
+	{ "414", "ERR_WILDTOPLEVEL",        ACTIVE_WINDOW,  2, NULL },
 	{ "415", "ERR_BADMASK",             ACTIVE_WINDOW,  2, NULL },
 	{ "416", "ERR_",                    ACTIVE_WINDOW,  2, NULL },
 	{ "421", "ERR_UNKNOWNCOMMAND",      ACTIVE_WINDOW,  2, NULL },
