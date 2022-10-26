@@ -18,6 +18,7 @@ MAKE_DEF_FILE=options.mk
 . "posixshell/os_MAC.sh"
 . "posixshell/os_NETBSD.sh"
 
+_fuzz_mode=0
 _with_libnotify=0
 _without_libiconv=0
 _without_libidn=0
@@ -36,6 +37,9 @@ print_help () {
 
 for arg in "$@"; do
 	case "$arg" in
+	"--fuzz-mode")
+		_fuzz_mode=1
+		;;
 	"--help" | "-?" | "-h")
 		print_help
 		exit 0
@@ -90,6 +94,13 @@ case "$(uname -s)" in
 esac
 
 check_strcasestr
+
+if [ ${_fuzz_mode} -eq 1 ]; then
+	cat <<EOF >>$MAKE_DEF_FILE
+CFLAGS += -DIRCFUZZ_MODE=1
+CXXFLAGS += -DIRCFUZZ_MODE=1
+EOF
+fi
 
 if [ ${_with_libnotify} -eq 1 ]; then
 	link_with_libnotify
