@@ -76,7 +76,7 @@ get_label(void)
 	if (icb_group == NULL ||
 	    (ret = snprintf(label, ARRAY_SIZE(label), "#%s", icb_group)) < 0 ||
 	    ((size_t) ret) >= ARRAY_SIZE(label)) {
-		debug("get_label: error: zeroing label...");
+		debug("%s: error: zeroing label...", __func__);
 		BZERO(label, sizeof label);
 	}
 
@@ -270,7 +270,7 @@ deal_with_category_idle_mod(const char *data)
   err:
 	BZERO(idle_mod.nick, sizeof idle_mod.nick);
 	BZERO(idle_mod.group, sizeof idle_mod.group);
-	err_log(0, "deal_with_category_idle_mod: %s", err_reason);
+	err_log(0, "%s: %s", __func__, err_reason);
 	free(nick);
 	free(group);
 }
@@ -411,7 +411,7 @@ deal_with_category_timeout(const char *data)
 	return;
 
   err:
-	err_log(0, "deal_with_category_timeout: %s", err_reason);
+	err_log(0, "%s: %s", __func__, err_reason);
 	free(new_mod);
 }
 
@@ -488,7 +488,7 @@ sign_on_arrive(char *str, const char *sep)
 	char	*nick, *user, *host;
 
 	if ((nick = strtok_r(str, sep, &last)) == NULL) {
-		err_log(EINVAL, "sign_on_arrive: no nickname");
+		err_log(EINVAL, "%s: no nickname", __func__);
 		return;
 	}
 	if ((user = strtok_r(NULL, sep, &last)) == NULL)
@@ -512,7 +512,7 @@ sign_off_depart(char *str, const char *sep)
 	if (!strncmp(str, "Your group moderator", 20)) {
 		/* TODO: Investigate handling */;
 	} else if ((nick = strtok_r(str, sep, &last)) == NULL) {
-		err_log(EINVAL, "sign_off_depart: no nickname");
+		err_log(EINVAL, "%s: no nickname", __func__);
 	} else {
 		char	*user, *host;
 
@@ -580,8 +580,8 @@ handle_status_msg_packet(const char *pktdata)
 			*cp = 'X';
 
 		ctx.spec_type = TYPE_SPEC1_WARN;
-		printtext(&ctx, "handle_status_msg_packet: unknown status "
-		    "message category");
+		printtext(&ctx, "%s: unknown status message category",
+		    __func__);
 		printtext(&ctx, "packet data: %s", pktdata_copy);
 	} /* if-then-else */
 
@@ -645,7 +645,7 @@ who_listing(char *cp)
 		 * Missing essential initial token or nickname during
 		 * who listing.
 		 */
-		err_log(EPROTO, "who_listing");
+		err_log(EPROTO, "%s", __func__);
 		return;
 	}
 
@@ -704,8 +704,7 @@ handle_cmd_output_packet(const char *pktdata)
 			*cp = 'X';
 
 		ctx.spec_type = TYPE_SPEC1_WARN;
-		printtext(&ctx, "handle_cmd_output_packet: "
-		    "unknown output type");
+		printtext(&ctx, "%s: unknown output type", __func__);
 		printtext(&ctx, "data: %s", pktdata_copy);
 	} /* if-then-else */
 
@@ -764,8 +763,8 @@ unknown_packet_type(const int length, const char type, const char *pktdata)
 	PRINTTEXT_CONTEXT	ctx;
 
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
-	printtext(&ctx, "unknown_packet_type: '%c' (length: %d): %s", type,
-	    length, pktdata);
+	printtext(&ctx, "%s: '%c' (length: %d): %s", __func__, type, length,
+	    pktdata);
 }
 
 void
@@ -841,7 +840,7 @@ sendpacket(bool *was_truncated, const char *format, ...)
 	const int msglen = (int) strlen(msg);
 
 	if (net_send("%c%s", msglen, msg) < 0)
-		err_log(ENOTCONN, "sendpacket: net_send");
+		err_log(ENOTCONN, "%s: net_send", __func__);
 }
 
 void
@@ -939,9 +938,9 @@ icb_send_pm(const char *to_who, const char *text)
 
 			printtext_context_init(&ctx, g_active_window,
 			    TYPE_SPEC1_FAILURE, true);
-			printtext(&ctx, "icb_send_pm: too long receiver: "
-			    "did not complete transfer");
-			err_log(ECANCELED, "icb_send_pm: too long receiver");
+			printtext(&ctx, "%s: too long receiver: "
+			    "did not complete transfer", __func__);
+			err_log(ECANCELED, "%s: too long receiver", __func__);
 			break;
 		}
 	}
