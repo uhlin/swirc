@@ -388,8 +388,8 @@ handle_extension(size_t *bytes, const char *protocol_message,
 #pragma warning(disable: 4996)
 #endif
 	if (ret < 0) {
-		print_and_free("handle_extension: print formatted error",
-		    substring);
+		printf_and_free(substring, "%s: print formatted error",
+		    __func__);
 		return -1;
 	} else if (!strncmp(substring, "@time=", 6)) {
 		if (sscanf(substring, "@time=%d-%d-%dT%d:%d:%d.%dZ",
@@ -400,13 +400,13 @@ handle_extension(size_t *bytes, const char *protocol_message,
 		    & (compo->minute),
 		    & (compo->second),
 		    & (compo->precision)) != 7) {
-			print_and_free("handle_extension: server time error",
-			    substring);
+			printf_and_free(substring, "%s: server time error",
+			    __func__);
 			return -1;
 		}
 	} else {
-		print_and_free("handle_extension: unsupported extension",
-		    substring);
+		printf_and_free(substring, "%s: unsupported extension",
+		    __func__);
 		return -1;
 	}
 /*
@@ -458,8 +458,8 @@ SortMsgCompo(const char *protocol_message)
 	if (strFeed(remaining_data, requested_feeds) != requested_feeds &&
 	    strstr(remaining_data, "\nAWAY") == NULL) {
 		free(compo);
-		print_and_free("In SortMsgCompo: strFeed: "
-		    "requested feeds mismatch feeds written", remaining_data);
+		printf_and_free(remaining_data, "In %s: strFeed: "
+		    "requested feeds mismatch feeds written", __func__);
 		return NULL;
 	}
 
