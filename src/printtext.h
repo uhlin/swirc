@@ -65,6 +65,7 @@ void	printtext_context_destroy(PPRINTTEXT_CONTEXT);
 void	printtext_context_init(PPRINTTEXT_CONTEXT, PIRC_WINDOW,
 	    enum message_specifier_type, bool include_ts);
 
+/*lint -printf(2, printf_and_free) */
 /*lint -printf(2, printtext) */
 /*lint -printf(2, printtext_print) */
 
@@ -72,6 +73,7 @@ char	*squeeze_text_deco(char *);
 short int
 	 color_pair_find(short int foreground, short int background);
 void	 print_and_free(const char *msg, char *);
+void	 printf_and_free(char *, const char *, ...) PRINTFLIKE(2);
 void	 printtext(PPRINTTEXT_CONTEXT, const char *, ...) PRINTFLIKE(2);
 void	 printtext_print(const char *what, const char *, ...) PRINTFLIKE(2);
 void	 printtext_puts(WINDOW *, const char *buf, int indent, int, int *);

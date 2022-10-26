@@ -1438,6 +1438,22 @@ print_and_free(const char *msg, char *cp)
 #endif
 }
 
+void
+printf_and_free(char *cp, const char *fmt, ...)
+{
+	PPRINTTEXT_CONTEXT ctx;
+	va_list ap;
+
+	free(cp);
+	ctx = printtext_context_new(g_active_window, TYPE_SPEC1_FAILURE, true);
+
+	va_start(ap, fmt);
+	vprinttext(ctx, fmt, ap);
+	va_end(ap);
+
+	printtext_context_destroy(ctx);
+}
+
 /**
  * Swirc messenger
  *
