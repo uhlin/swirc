@@ -2,7 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added event 415 `ERR_BADMASK`
+- Added the following events:
+  - 413 (`ERR_NOTOPLEVEL`)
+  - 414 (`ERR_WILDTOPLEVEL`)
+  - 415 (`ERR_BADMASK`)
 
 ## [3.3.7] - 2022-10-22 ##
 - **Added** code to the following scripts:
