@@ -105,8 +105,8 @@ login_ok(void)
 	if (strings_match(icb_protolevel, "") ||
 	    strings_match(icb_hostid, "") ||
 	    strings_match(icb_serverid, "")) {
-		print_and_free("login_ok: empty protocol level, host id or "
-		    "server id", NULL);
+		printf_and_free(NULL, "%s: empty protocol level, host id or "
+		    "server id", __func__);
 		g_on_air = false;
 		return;
 	}
@@ -155,12 +155,10 @@ handle_open_msg_packet(const char *pktdata)
 
 	if ((nickname = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) == NULL ||
 	    (message = strtok_r(NULL, ICB_FIELD_SEP, &last)) == NULL) {
-		print_and_free("handle_open_msg_packet: too few tokens!",
-		    pktdata_copy);
+		printf_and_free(pktdata_copy, "%s: too few tokens", __func__);
 		return;
 	} else if (icb_group == NULL) {
-		print_and_free("handle_open_msg_packet: not in a group",
-		    pktdata_copy);
+		printf_and_free(pktdata_copy, "%s: not in a group", __func__);
 		return;
 	}
 
@@ -178,8 +176,7 @@ handle_personal_msg_packet(const char *pktdata)
 
 	if ((nickname = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) == NULL ||
 	    (message = strtok_r(NULL, ICB_FIELD_SEP, &last)) == NULL) {
-		print_and_free("handle_personal_msg_packet: too few tokens!",
-		    pktdata_copy);
+		printf_and_free(pktdata_copy, "%s: too few tokens", __func__);
 		return;
 	}
 
@@ -606,8 +603,7 @@ handle_important_msg_packet(const char *pktdata)
 
 	if ((category = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) == NULL ||
 	    (msgtext = strtok_r(NULL, ICB_FIELD_SEP, &last)) == NULL) {
-		print_and_free("handle_important_msg_packet: too few tokens!",
-		    pktdata_copy);
+		printf_and_free(pktdata_copy, "%s: too few tokens", __func__);
 		return;
 	}
 
