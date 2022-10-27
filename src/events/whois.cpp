@@ -173,11 +173,22 @@ event_whoReply(struct irc_message_compo *compo)
 		if (*hopcount == ':')
 			hopcount++;
 
-		printtext(&ctx, "%s%s%s%c%s: %s%s%c %s %s %s@%s %s%s%s%c%s",
-		    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
-		    COLOR2, nick, NORMAL,
-		    symbol, hopcount, user, host,
-		    LEFT_BRKT, COLOR2, rl_name, NORMAL, RIGHT_BRKT);
+		std::string	str1("");
+		std::string	str2("");
+		std::string	str3("");
+
+		str1.append(LEFT_BRKT);
+		str1.append(COLOR1).append(channel).append(TXT_NORMAL);
+		str1.append(RIGHT_BRKT);
+
+		str2.append(COLOR2).append(nick).append(TXT_NORMAL);
+
+		str3.append(LEFT_BRKT);
+		str3.append(COLOR2).append(rl_name).append(TXT_NORMAL);
+		str3.append(RIGHT_BRKT);
+
+		printtext(&ctx, "%s: %s %s %s %s@%s %s", str1.c_str(),
+		    str2.c_str(), symbol, hopcount, user, host, str3.c_str());
 	} catch (const std::runtime_error &e) {
 		ctx.spec_type = TYPE_SPEC1_FAILURE;
 
