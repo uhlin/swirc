@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018-2022 Markus Uhlin. All rights reserved.
 .\"
-.Dd September 11, 2022
+.Dd October 27, 2022
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -59,6 +59,15 @@ default nickname is busy.
 .It Sy auto_op_yourself Pq Em bool
 Automatically op yourself on channel join when you're identified as an
 IRC operator
+.\" ----------------------------------------
+.\" AWAYMSGS IN PRIVCONV
+.\" ----------------------------------------
+.It Sy awaymsgs_in_privconv Pq Em bool
+Output away messages in private conversations?
+Away messages are often displayed each time you message the user who's
+marked as being away which can be annoying if the user isn't really
+away, i.e. he/she just forgot to unset the status.
+This setting defaults to YES.
 .\" ----------------------------------------
 .\" AWAY NOTIFY
 .\" ----------------------------------------
