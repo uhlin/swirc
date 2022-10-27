@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
   - 414 (`ERR_WILDTOPLEVEL`)
   - 415 (`ERR_BADMASK`)
 - Added usage of `__func__`
+- Fixed display of IPv6 addresses in event 338
 - Made const arrays static const
 - Reduced VA args in printtext calls
 
