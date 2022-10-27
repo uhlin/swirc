@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
   - 414 (`ERR_WILDTOPLEVEL`)
   - 415 (`ERR_BADMASK`)
 - Added usage of `__func__`
+- Made const arrays static const
 
 ## [3.3.7] - 2022-10-22 ##
 - **Added** code to the following scripts:
