@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added and made use of `printf_and_free()`
+- Added config option `awaymsgs_in_privconv`
 - Added the following events:
   - 413 (`ERR_NOTOPLEVEL`)
   - 414 (`ERR_WILDTOPLEVEL`)
