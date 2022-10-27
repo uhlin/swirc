@@ -192,7 +192,7 @@ event_whoReply(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		ctx.spec_type = TYPE_SPEC1_FAILURE;
 
-		printtext(&ctx, "event_whoReply(%s): error: %s", compo->command,
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
 		    e.what());
 	}
 }
