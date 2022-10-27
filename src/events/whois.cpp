@@ -34,6 +34,7 @@
 #include <stdexcept>
 #include <string>
 
+#include "../errHand.h"
 #include "../irc.h"
 #include "../libUtils.h"
 #include "../printtext.h"
@@ -194,6 +195,12 @@ event_whoReply(struct irc_message_compo *compo)
 
 		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
 		    e.what());
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "%s(%s): error: %s", __func__, compo->command,
+		    e.what());
+	} catch (...) {
+		err_log(0, "%s(%s): error: %s", __func__, compo->command,
+		    "unknown exception");
 	}
 }
 
