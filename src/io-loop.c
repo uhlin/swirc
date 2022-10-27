@@ -388,7 +388,7 @@ static void
 swirc_greeting(void)
 {
 	PRINTTEXT_CONTEXT ctx;
-	const char *logo[] = {
+	static const char *logo[] = {
 #define USE_LARRY3D_LOGO 1
 #if USE_LARRY3D_LOGO
 		"                     __                              ",
@@ -481,10 +481,10 @@ get_list_of_matching_commands(const char *search_var)
 char *
 get_prompt(void)
 {
-	char		*prompt;
-	const char	 AFK[] = "(away)";
-	const size_t	 minimum_cols = sizeof "#abc...: ";
-	int		 ret;
+	char			*prompt;
+	int			 ret;
+	static const char	 AFK[] = "(away)";
+	static const size_t	 minimum_cols = sizeof "#abc...: ";
 
 	if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label) ||
 	    COLS < size_to_int(minimum_cols))
