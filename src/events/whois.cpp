@@ -34,6 +34,8 @@
 #include <stdexcept>
 #include <string>
 
+#include "../config.h"
+#include "../dataClassify.h"
 #include "../errHand.h"
 #include "../irc.h"
 #include "../libUtils.h"
@@ -132,6 +134,15 @@ get_msg(char *params, std::string &str)
 		msg++;
 
 	(void) str.assign(msg);
+	return true;
+}
+
+static bool
+is_privconv()
+{
+	if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label) ||
+	    is_irc_channel(ACTWINLABEL))
+		return false;
 	return true;
 }
 
@@ -271,7 +282,8 @@ event_whois_away(struct irc_message_compo *compo)
 			throw std::runtime_error("no away reason");
 		if (*away_reason == ':')
 			away_reason++;
-		if (*away_reason) {
+		if (!is_privconv() || config_bool("awaymsgs_in_privconv",
+		    true)) {
 			printtext(&ctx, "%s %s", Theme("whois_away"),
 			    away_reason);
 		}
