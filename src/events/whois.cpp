@@ -675,16 +675,16 @@ event_whois_ssl(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
+		char	*tnick, *msg;
 		char	*state = const_cast<char *>("");
 
 		if (strFeed(compo->params, 2) != 2)
 			throw std::runtime_error("strFeed");
 
 		(void) strtok_r(compo->params, "\n", &state);
-		char *tnick = strtok_r(NULL, "\n", &state);
-		char *msg = strtok_r(NULL, "\n", &state);
 
-		if (tnick == NULL || msg == NULL) {
+		if ((tnick = strtok_r(NULL, "\n", &state)) == NULL ||
+		    (msg = strtok_r(NULL, "\n", &state)) == NULL) {
 			throw std::runtime_error("unable to retrieve event "
 			    "components");
 		}
