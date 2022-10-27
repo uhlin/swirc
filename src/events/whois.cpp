@@ -432,7 +432,7 @@ event_whois_host(struct irc_message_compo *compo)
 	try {
 		char	*state = const_cast<char *>("");
 		char	*str;
-		char	*str_copy;
+		char	*str_copy, *cp;
 
 		if (strFeed(compo->params, 2) != 2)
 			throw std::runtime_error("strFeed");
@@ -442,9 +442,17 @@ event_whois_host(struct irc_message_compo *compo)
 
 		if ((str = strtok_r(NULL, "\n", &state)) == NULL)
 			throw std::runtime_error("null string");
+		else if (*str == ':')
+			str++;
 
 		str_copy = sw_strdup(str);
-		squeeze(str_copy, ":");
+
+		if ((cp = strstr(str_copy, ":actually using host")) != NULL &&
+		    strlen(cp) == 20) {
+			cp++;
+			memmove(cp - 1, cp, strlen(cp) + 1);
+		}
+
 		printtext(&ctx, "%s %s", Theme("whois_host"), str_copy);
 		free(str_copy);
 	} catch (const std::runtime_error &e) {
