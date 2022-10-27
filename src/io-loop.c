@@ -184,16 +184,16 @@ add_to_history(const char *string)
 
 		if ((errno = textBuf_remove(history, textBuf_head(history))) !=
 		    0)
-			err_sys("add_to_history: textBuf_remove");
+			err_sys("%s: textBuf_remove", __func__);
 	}
 
 	if (textBuf_size(history) == 0) {
 		if ((errno = textBuf_ins_next(history, NULL, string, -1)) != 0)
-			err_sys("add_to_history: textBuf_ins_next");
+			err_sys("%s: textBuf_ins_next", __func__);
 	} else {
 		if ((errno = textBuf_ins_next(history, textBuf_tail(history),
 		    string, -1)) != 0)
-			err_sys("add_to_history: textBuf_ins_next");
+			err_sys("%s: textBuf_ins_next", __func__);
 	}
 }
 
@@ -461,14 +461,16 @@ get_list_of_matching_commands(const char *search_var)
 		if (!strncmp(search_var, sp->cmd, strlen(search_var))) {
 			if (textBuf_size(matches) == 0) {
 				if ((errno = textBuf_ins_next(matches, NULL,
-				    sp->cmd, -1)) != 0)
-					err_sys("get_list_of_matching_commands"
-					    ": textBuf_ins_next");
+				    sp->cmd, -1)) != 0) {
+					err_sys("%s: textBuf_ins_next",
+					    __func__);
+				}
 			} else {
 				if ((errno = textBuf_ins_next(matches,
-				    textBuf_tail(matches), sp->cmd, -1)) != 0)
-					err_sys("get_list_of_matching_commands"
-					    ": textBuf_ins_next");
+				    textBuf_tail(matches), sp->cmd, -1)) != 0) {
+					err_sys("%s: textBuf_ins_next",
+					    __func__);
+				}
 			}
 		}
 	}
@@ -538,7 +540,7 @@ enter_io_loop(void)
 		    g_cmdline_opts->server, g_cmdline_opts->port);
 
 		if (ret < 0 || ((size_t) ret) >= ARRAY_SIZE(buf)) {
-			err_log(EOVERFLOW, "enter_io_loop: snprintf");
+			err_log(EOVERFLOW, "%s: snprintf", __func__);
 		} else {
 			/*
 			 * napms: let i/o finish
@@ -604,8 +606,7 @@ transmit_user_input(const char *winlabel, const char *input)
 	    true);
 
 	if (ctx.window == NULL) {
-		err_log(0, "transmit_user_input: window %s not found",
-		    winlabel);
+		err_log(0, "%s: window %s not found", __func__, winlabel);
 		return;
 	}
 
@@ -634,8 +635,7 @@ transmit_user_input(const char *winlabel, const char *input)
 
 		if ((n = event_names_htbl_lookup(g_my_nickname, winlabel)) ==
 		    NULL) {
-			err_log(0, "transmit_user_input: "
-			    "hash table lookup error");
+			err_log(0, "%s: hash table lookup error", __func__);
 			return;
 		}
 
