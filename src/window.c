@@ -157,7 +157,7 @@ first_page_up(PIRC_WINDOW window)
 	element = textBuf_tail(window->buf);
 
 	if ((tmp = dupwin(panel_window(window->pan))) == NULL)
-		err_exit(ENOMEM, "dupwin");
+		err_exit(ENOMEM, "%s: dupwin", __func__);
 
 	(void) atomic_swap_bool(&g_redrawing_window, true);
 	(void) curs_set(0);
@@ -172,7 +172,7 @@ first_page_up(PIRC_WINDOW window)
 	(void) atomic_swap_bool(&g_redrawing_window, false);
 
 	if (delwin(tmp) == ERR)
-		err_exit(EINVAL, "delwin");
+		err_exit(EINVAL, "%s: delwin", __func__);
 	return elt_count;
 }
 
@@ -195,7 +195,7 @@ get_dynamic_scroll_amount(PIRC_WINDOW window, plus_minus_t pm)
 		debug("error getting element by position");
 		return g_scroll_amount;
 	} else if ((tmp = dupwin(panel_window(window->pan))) == NULL) {
-		err_exit(ENOMEM, "dupwin");
+		err_exit(ENOMEM, "%s: dupwin", __func__);
 	}
 
 	(void) atomic_swap_bool(&g_redrawing_window, true);
@@ -216,7 +216,7 @@ get_dynamic_scroll_amount(PIRC_WINDOW window, plus_minus_t pm)
 	(void) atomic_swap_bool(&g_redrawing_window, false);
 
 	if (delwin(tmp) == ERR)
-		err_exit(EINVAL, "delwin");
+		err_exit(EINVAL, "%s: delwin", __func__);
 	if (i > goal && amount > 1)
 		amount -= 1;
 	return amount;
@@ -298,7 +298,7 @@ hUndef(PIRC_WINDOW entry)
 	free(entry->title);
 
 	if (nicklist_destroy(entry) != 0)
-		debug("hUndef: nicklist_destroy: error");
+		debug("%s: nicklist_destroy: error", __func__);
 
 	free(entry);
 	g_ntotal_windows--;
@@ -445,7 +445,7 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
 		apply_window_options(panel_window(window->pan));
 
 		if (nicklist_draw(window, rows) != 0)
-			debug("window_recreate: nicklist_draw: error");
+			debug("%s: nicklist_draw: error", __func__);
 	}
 
 	/*
@@ -474,7 +474,7 @@ windowSystem_init(void)
 {
 #if defined(UNIX) && USE_LIBNOTIFY
 	if (!notify_init("Swirc IRC client"))
-		err_log(0, "windowSystem_init: notify_init: error");
+		err_log(0, "%s: notify_init: error", __func__);
 #endif
 
 	FOREACH_HASH_TABLE_ENTRY() {
@@ -485,7 +485,7 @@ windowSystem_init(void)
 	g_ntotal_windows = 0;
 
 	if ((errno = spawn_chat_window(g_status_window_label, "")) != 0)
-		err_sys("windowSystem_init: spawn_chat_window");
+		err_sys("%s: spawn_chat_window", __func__);
 	else if ((g_status_window = window_by_label(g_status_window_label)) ==
 		 NULL) {
 		err_quit("Unable to locate the status window\n"
