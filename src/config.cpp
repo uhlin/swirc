@@ -105,6 +105,7 @@ static struct tagConfDefValues {
 	{ "reconnect_retries",         TYPE_INTEGER, 1, STRINGIFY(RECONNECT_RETRIES_DEFAULT) },
 
 	{ "auto_op_yourself",          TYPE_BOOLEAN, 2, "yes" },
+	{ "awaymsgs_in_privconv",      TYPE_BOOLEAN, 2, "yes" },
 	{ "beeps",                     TYPE_BOOLEAN, 4, "yes" },
 	{ "cipher_suite",              TYPE_STRING,  3, "compat" },
 	{ "cmd_hist_size",             TYPE_INTEGER, 3, "50" },
