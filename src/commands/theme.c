@@ -66,19 +66,15 @@ static void set_theme(const char *) PTR_ARGS_NONNULL;
 static bool
 is_instruction_ok(const char *instruction)
 {
-    if (!instruction)
+	if (instruction == NULL)
+		return false;
+	else if (strings_match(instruction, "install"))
+		return true;
+	else if (strings_match(instruction, "list-remote"))
+		return true;
+	else if (strings_match(instruction, "set"))
+		return true;
 	return false;
-    else if (strings_match(instruction, "install"))
-	return true;
-    else if (strings_match(instruction, "list-remote"))
-	return true;
-    else if (strings_match(instruction, "set"))
-	return true;
-    else
-	return false;
-
-    /*NOTREACHED*/ sw_assert_not_reached();
-    /*NOTREACHED*/ return false;
 }
 
 static void
