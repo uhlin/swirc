@@ -141,7 +141,6 @@ char	g_last_pass[256] = { 0 };
 
 static const int RECVBUF_SIZE = 2048;
 static int socket_address_family = AF_UNSPEC;
-static long int retry = 0;
 static struct reconnect_context reconn_ctx;
 
 /****************************************************************
@@ -458,8 +457,9 @@ net_connect(const struct network_connect_context *ctx,
 		winsock_deinit();
 #endif
 
-		if (retry++ < reconn_ctx.retries) {
-			const bool is_initial_reconnect_attempt = (retry == 1);
+		if (reconn_ctx.retry++ < reconn_ctx.retries) {
+			const bool is_initial_reconnect_attempt =
+			    (reconn_ctx.retry == 1);
 
 			if (is_initial_reconnect_attempt)
 				*sleep_time_seconds = reconn_ctx.delay;
@@ -545,7 +545,6 @@ void
 net_connect_clean_up(void)
 {
 	reconn_ctx.init();
-	retry = 0;
 	atomic_swap_bool(&g_connection_in_progress, false);
 }
 
