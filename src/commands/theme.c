@@ -52,6 +52,10 @@
 /* this is not '../theme.h' */
 #include "theme.h"
 
+#ifndef PATH_MAX
+#define PATH_MAX 1024
+#endif
+
 static THEME_INFO theme_info_array[MAX_NO_THEMES];
 
 static void free_theme_info(PTHEME_INFO) PTR_ARGS_NONNULL;
@@ -367,50 +371,52 @@ list_remote(void)
 static void
 set_theme(const char *name)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char buf[2300] = "";
+	PRINTTEXT_CONTEXT ctx;
+	char buf[PATH_MAX] = { '\0' };
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 
-    if ((errno = sw_strcpy(buf, g_home_dir, sizeof buf)) != 0 ||
-	(errno = sw_strcat(buf, SLASH, sizeof buf)) != 0 ||
-	(errno = sw_strcat(buf, name, sizeof buf)) != 0 ||
-	(errno = sw_strcat(buf, g_theme_filesuffix, sizeof buf)) != 0) {
-	printtext(&ctx, "error building name path (errno=%d)", errno);
-	return;
-    } else if (!is_regular_file(buf)) {
-	printtext(&ctx, "non-existent");
-	return;
-    }
+	if ((errno = sw_strcpy(buf, g_home_dir, sizeof buf)) != 0 ||
+	    (errno = sw_strcat(buf, SLASH, sizeof buf)) != 0 ||
+	    (errno = sw_strcat(buf, name, sizeof buf)) != 0 ||
+	    (errno = sw_strcat(buf, g_theme_filesuffix, sizeof buf)) != 0) {
+		printtext(&ctx, "error building name path (errno=%d)", errno);
+		return;
+	} else if (!is_regular_file(buf)) {
+		printtext(&ctx, "non-existent");
+		return;
+	}
 
-    theme_deinit();
-    theme_init();
-    theme_readit(buf, "r");
-    titlebar(" %s ", g_active_window->title ? g_active_window->title : "");
-    statusbar_update_display_beta();
+	theme_deinit();
+	theme_init();
+	theme_readit(buf, "r");
 
-    ctx.spec_type = TYPE_SPEC1_SUCCESS;
-    printtext(&ctx, "theme activated");
+	titlebar(" %s ", (g_active_window->title ? g_active_window->title :
+	    ""));
+	statusbar_update_display_beta();
 
-    if ((errno = config_item_undef("theme")) != 0)
-	err_log(errno, "set_theme: config_item_undef");
-    if ((errno = config_item_install("theme", name)) != 0)
-	err_log(errno, "set_theme: config_item_install");
+	ctx.spec_type = TYPE_SPEC1_SUCCESS;
+	printtext(&ctx, "theme activated");
 
-    BZERO(buf, sizeof buf);
+	if ((errno = config_item_undef("theme")) != 0)
+		err_log(errno, "%s: config_item_undef", __func__);
+	if ((errno = config_item_install("theme", name)) != 0)
+		err_log(errno, "%s: config_item_install", __func__);
 
-    if ((errno = sw_strcpy(buf, g_home_dir, sizeof buf)) != 0 ||
-	(errno = sw_strcat(buf, SLASH, sizeof buf)) != 0 ||
-	(errno = sw_strcat(buf, "swirc", sizeof buf)) != 0 ||
-	(errno = sw_strcat(buf, g_config_filesuffix, sizeof buf)) != 0) {
-	ctx.spec_type = TYPE_SPEC1_FAILURE;
-	printtext(&ctx, "error building path to swirc%s (errno=%d)",
-	    g_config_filesuffix, errno);
-	printtext(&ctx, "error saving swirc%s", g_config_filesuffix);
-	return;
-    }
+	BZERO(buf, sizeof buf);
 
-    config_do_save(buf, "w");
+	if ((errno = sw_strcpy(buf, g_home_dir, sizeof buf)) != 0 ||
+	    (errno = sw_strcat(buf, SLASH, sizeof buf)) != 0 ||
+	    (errno = sw_strcat(buf, "swirc", sizeof buf)) != 0 ||
+	    (errno = sw_strcat(buf, g_config_filesuffix, sizeof buf)) != 0) {
+		ctx.spec_type = TYPE_SPEC1_FAILURE;
+		printtext(&ctx, "error building path to swirc%s (errno=%d)",
+		    g_config_filesuffix, errno);
+		printtext(&ctx, "error saving swirc%s", g_config_filesuffix);
+		return;
+	}
+
+	config_do_save(buf, "w");
 }
 
 /*
