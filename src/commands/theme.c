@@ -110,11 +110,11 @@ free_theme_info(PTHEME_INFO info)
 static void
 theme_info_array_deinit(void)
 {
-    PTHEME_INFO ar_p;
+	PTHEME_INFO ar_p;
 
-    THEME_INFO_FOREACH(ar_p) {
-	free_theme_info(ar_p);
-    }
+	THEME_INFO_FOREACH(ar_p) {
+		free_theme_info(ar_p);
+	}
 }
 
 static size_t
