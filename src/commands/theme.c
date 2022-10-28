@@ -350,22 +350,25 @@ list_remote(void)
 {
 #define B1 Theme("notice_inner_b1")
 #define B2 Theme("notice_inner_b2")
-    PRINTTEXT_CONTEXT ctx;
-    PTHEME_INFO ar_p = NULL;
+	PRINTTEXT_CONTEXT	ctx;
+	PTHEME_INFO		ar_p = NULL;
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
 
-    THEME_INFO_FOREACH(ar_p) {
-	if (ar_p->filename) {
-	    printtext(&ctx, "----- %s%s%c %cv%s%c %s%s%s%c%s -----",
-		COLOR1, ar_p->filename, NORMAL,
-		UNDERLINE, ar_p->version, NORMAL,
-		B1, COLOR4, ar_p->comment, NORMAL, B2);
-	    printtext(&ctx, "%sAuthor%c: %s", COLOR2, NORMAL, ar_p->author);
-	    printtext(&ctx, "%sE-mail%c: %s", COLOR2, NORMAL, ar_p->email);
-	    printtext(&ctx, "%sAdded%c:  %s", COLOR2, NORMAL, ar_p->timestamp);
+	THEME_INFO_FOREACH(ar_p) {
+		if (ar_p->filename) {
+			printtext(&ctx, "----- %s%s%c %cv%s%c %s%s%s%c%s -----",
+			    COLOR1, ar_p->filename, NORMAL,
+			    UNDERLINE, ar_p->version, NORMAL,
+			    B1, COLOR4, ar_p->comment, NORMAL, B2);
+			printtext(&ctx, "%sAuthor%c: %s", COLOR2, NORMAL,
+			    ar_p->author);
+			printtext(&ctx, "%sE-mail%c: %s", COLOR2, NORMAL,
+			    ar_p->email);
+			printtext(&ctx, "%sAdded%c:  %s", COLOR2, NORMAL,
+			    ar_p->timestamp);
+		}
 	}
-    }
 }
 
 static void
