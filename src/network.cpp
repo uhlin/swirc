@@ -71,6 +71,7 @@ public:
 	long int	delay;
 	long int	delay_max;
 	long int	retries;
+	long int	retry;
 
 	reconnect_context()
 	{
@@ -78,6 +79,7 @@ public:
 		this->delay		= 0;
 		this->delay_max		= 0;
 		this->retries		= 0;
+		this->retry		= 0;
 
 		this->initialized = false;
 	}
@@ -89,6 +91,7 @@ public:
 		this->delay		= get_reconnect_delay();
 		this->delay_max		= get_reconnect_delay_max();
 		this->retries		= get_reconnect_retries();
+		this->retry		= 0;
 	}
 
 	bool
