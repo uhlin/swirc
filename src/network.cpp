@@ -344,7 +344,6 @@ net_connect(const struct network_connect_context *ctx,
     long int *sleep_time_seconds)
 {
 	PRINTTEXT_CONTEXT ptext_ctx;
-	static bool reconn_initialized = false;
 	struct addrinfo *res = NULL, *rp = NULL;
 
 	if (ctx == NULL || sleep_time_seconds == NULL)
@@ -354,9 +353,9 @@ net_connect(const struct network_connect_context *ctx,
 	else
 		(void) atomic_swap_bool(&g_connection_in_progress, true);
 
-	if (!atomic_load_bool(&reconn_initialized)) {
+	if (!reconn_ctx.is_initialized()) {
 		reconn_ctx.init();
-		(void) atomic_swap_bool(&reconn_initialized, true);
+		reconn_ctx.set_init(true);
 	}
 
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1, true);
