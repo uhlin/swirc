@@ -203,26 +203,26 @@ get_next_line_from_file(FILE *fp, char **line)
 static bool
 add_to_array(PTHEME_INFO info)
 {
-    PTHEME_INFO ar_p;
+	PTHEME_INFO	ar_p;
 
-    if (!info)
-	return false;
+	if (info == NULL)
+		return false;
 
-    THEME_INFO_FOREACH(ar_p) {
-	if (ar_p->filename == NULL) {
-	    ar_p->filename  = sw_strdup(info->filename);
-	    ar_p->version   = sw_strdup(info->version);
-	    ar_p->author    = sw_strdup(info->author);
-	    ar_p->email	    = sw_strdup(info->email);
-	    ar_p->timestamp = sw_strdup(info->timestamp);
-	    ar_p->comment   = sw_strdup(info->comment);
-	    free_theme_info(info);
-	    return true;
+	THEME_INFO_FOREACH(ar_p) {
+		if (ar_p->filename == NULL) {
+			ar_p->filename	= sw_strdup(info->filename);
+			ar_p->version	= sw_strdup(info->version);
+			ar_p->author	= sw_strdup(info->author);
+			ar_p->email	= sw_strdup(info->email);
+			ar_p->timestamp	= sw_strdup(info->timestamp);
+			ar_p->comment	= sw_strdup(info->comment);
+			free_theme_info(info);
+			return true;
+		}
 	}
-    }
 
-    sw_assert_not_reached();
-    return false;
+	sw_assert_not_reached();
+	return false;
 }
 
 /*lint -sem(tokenize, r_null) */
