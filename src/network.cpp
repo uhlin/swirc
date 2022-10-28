@@ -95,6 +95,12 @@ public:
 	}
 
 	bool
+	is_initial_attempt(void)
+	{
+		return (this->retry <= 1);
+	}
+
+	bool
 	is_initialized(void)
 	{
 		return atomic_load_bool(&this->initialized);
