@@ -464,10 +464,7 @@ net_connect(const struct network_connect_context *ctx,
 #endif
 
 		if (reconn_ctx.retry++ < reconn_ctx.retries) {
-			const bool is_initial_reconnect_attempt =
-			    (reconn_ctx.retry == 1);
-
-			if (is_initial_reconnect_attempt)
+			if (reconn_ctx.is_initial_attempt())
 				*sleep_time_seconds = reconn_ctx.delay;
 			else
 				*sleep_time_seconds += reconn_ctx.backoff_delay;
