@@ -99,12 +99,12 @@ theme_info_array_init(void)
 static void
 free_theme_info(PTHEME_INFO info)
 {
-    free_and_null(&info->filename);
-    free_and_null(&info->version);
-    free_and_null(&info->author);
-    free_and_null(&info->email);
-    free_and_null(&info->timestamp);
-    free_and_null(&info->comment);
+	free_and_null(&info->filename);
+	free_and_null(&info->version);
+	free_and_null(&info->author);
+	free_and_null(&info->email);
+	free_and_null(&info->timestamp);
+	free_and_null(&info->comment);
 }
 
 static void
