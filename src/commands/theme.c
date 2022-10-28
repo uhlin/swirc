@@ -126,59 +126,58 @@ write_data(void *ptr, size_t size, size_t nmemb, void *stream)
 static void
 url_to_file(const char *url, const char *path)
 {
-    CURL	*curl_handle = NULL;
-    CURLcode	 ret = CURLE_OK;
-    FILE	*pagefile = NULL;
-    const char	*failed_op = "";
+	CURL		*curl_handle = NULL;
+	CURLcode	 ret = CURLE_OK;
+	FILE		*pagefile = NULL;
+	const char	*failed_op = "";
 
-    errno = 0;
+	errno = 0;
 
-    if ((ret = curl_global_init(CURL_GLOBAL_ALL)) != CURLE_OK) {
-	failed_op = "curl_global_init";
-	goto err;
-    } else if ((curl_handle = curl_easy_init()) == NULL) {
-	failed_op = "curl_easy_init";
-	goto err;
-    } else if ((ret = curl_easy_setopt(curl_handle, CURLOPT_URL, url)) !=
-	       CURLE_OK) {
-	failed_op = "curl_easy_setopt: CURLOPT_URL";
-	goto err;
-    } else if ((ret = curl_easy_setopt(curl_handle, CURLOPT_VERBOSE, 0L)) !=
-	       CURLE_OK) {
-	failed_op = "curl_easy_setopt: CURLOPT_VERBOSE";
-	goto err;
-    } else if ((ret = curl_easy_setopt(curl_handle, CURLOPT_NOPROGRESS, 1L)) !=
-	       CURLE_OK) {
-	failed_op = "curl_easy_setopt: CURLOPT_NOPROGRESS";
-	goto err;
-    } else if ((ret = curl_easy_setopt(curl_handle,
-				       CURLOPT_WRITEFUNCTION,
-				       write_data)) != CURLE_OK) {
-	failed_op = "curl_easy_setopt: CURLOPT_WRITEFUNCTION";
-	goto err;
-    } else if ((pagefile = xfopen(path, "w")) == NULL) {
-	failed_op = "xfopen";
-	goto err;
-    } else if ((ret = curl_easy_setopt(curl_handle,
-				       CURLOPT_WRITEDATA,
-				       pagefile)) != CURLE_OK) {
-	failed_op = "curl_easy_setopt: CURLOPT_WRITEDATA";
-	goto err;
-    } else if ((ret = curl_easy_perform(curl_handle)) != CURLE_OK) {
-	failed_op = "curl_easy_perform";
-	goto err;
-    }
+	if ((ret = curl_global_init(CURL_GLOBAL_ALL)) != CURLE_OK) {
+		failed_op = "curl_global_init";
+		goto err;
+	} else if ((curl_handle = curl_easy_init()) == NULL) {
+		failed_op = "curl_easy_init";
+		goto err;
+	} else if ((ret = curl_easy_setopt(curl_handle, CURLOPT_URL, url)) !=
+	    CURLE_OK) {
+		failed_op = "curl_easy_setopt: CURLOPT_URL";
+		goto err;
+	} else if ((ret = curl_easy_setopt(curl_handle, CURLOPT_VERBOSE, 0L)) !=
+	    CURLE_OK) {
+		failed_op = "curl_easy_setopt: CURLOPT_VERBOSE";
+		goto err;
+	} else if ((ret = curl_easy_setopt(curl_handle, CURLOPT_NOPROGRESS, 1L))
+	    != CURLE_OK) {
+		failed_op = "curl_easy_setopt: CURLOPT_NOPROGRESS";
+		goto err;
+	} else if ((ret = curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION,
+	    write_data)) != CURLE_OK) {
+		failed_op = "curl_easy_setopt: CURLOPT_WRITEFUNCTION";
+		goto err;
+	} else if ((pagefile = xfopen(path, "w")) == NULL) {
+		failed_op = "xfopen";
+		goto err;
+	} else if ((ret = curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA,
+	    pagefile)) != CURLE_OK) {
+		failed_op = "curl_easy_setopt: CURLOPT_WRITEDATA";
+		goto err;
+	} else if ((ret = curl_easy_perform(curl_handle)) != CURLE_OK) {
+		failed_op = "curl_easy_perform";
+		goto err;
+	}
 
-    curl_easy_cleanup(curl_handle);
-    fclose(pagefile);
-    return;
+	curl_easy_cleanup(curl_handle);
+	fclose(pagefile);
+	return;
 
   err:
-    if (curl_handle)
-	curl_easy_cleanup(curl_handle);
-    if (pagefile)
-	fclose(pagefile);
-    err_log(errno, "url_to_file: %s: %s", failed_op, curl_easy_strerror(ret));
+	if (curl_handle)
+		curl_easy_cleanup(curl_handle);
+	if (pagefile)
+		fclose(pagefile);
+	err_log(errno, "%s: %s: %s", __func__, failed_op,
+	    curl_easy_strerror(ret));
 }
 
 static bool
