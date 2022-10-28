@@ -261,37 +261,37 @@ tokenize(const char *string)
 static read_result_t
 read_db(const char *path, int *themes_read)
 {
-    FILE *fp = NULL;
-    char *line = NULL;
-    read_result_t res = READ_INCOMPLETE;
+	FILE		*fp = NULL;
+	char		*line = NULL;
+	read_result_t	 res = READ_INCOMPLETE;
 
-    if (!path || (fp = xfopen(path, "r")) == NULL)
-	return FOPEN_FAILED;
+	if (path == NULL || (fp = xfopen(path, "r")) == NULL)
+		return FOPEN_FAILED;
 
-    while (get_next_line_from_file(fp, &line)) {
-	const char *cp = trim(&line[0]);
+	while (get_next_line_from_file(fp, &line)) {
+		const char *cp = trim(&line[0]);
 
-	adv_while_isspace(&cp);
+		adv_while_isspace(&cp);
 
-	if (strings_match(cp, "") || *cp == '#')
-	    continue;
+		if (strings_match(cp, "") || *cp == '#')
+			continue;
 
-	if (!add_to_array(tokenize(cp))) {
-	    fclose(fp);
-	    free(line);
-	    return PARSE_ERROR;
+		if (!add_to_array(tokenize(cp))) {
+			fclose(fp);
+			free(line);
+			return PARSE_ERROR;
+		}
+
+		if (themes_read)
+			(*themes_read)++;
 	}
 
-	if (themes_read)
-	    (*themes_read)++;
-    }
+	res = (feof(fp) ? READ_DB_OK : READ_INCOMPLETE);
 
-    res = (feof(fp) ? READ_DB_OK : READ_INCOMPLETE);
+	fclose(fp);
+	free(line);
 
-    fclose(fp);
-    free(line);
-
-    return res;
+	return res;
 }
 
 static void
