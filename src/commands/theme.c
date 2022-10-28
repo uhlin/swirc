@@ -229,33 +229,32 @@ add_to_array(PTHEME_INFO info)
 static PTHEME_INFO
 tokenize(const char *string)
 {
-    char *s_copy = sw_strdup(string);
-    char *state = "";
-    const char delim[] = ":";
-    static THEME_INFO info = { NULL };
+	char			*filename, *version, *author, *email,
+				*timestamp, *comment;
+	char			*state = "";
+	char			*str_copy = sw_strdup(string);
+	static THEME_INFO	 info = { NULL };
+	static const char	 delim[] = ":";
 
-    char	*filename  = strtok_r(s_copy, delim, &state);
-    char	*version   = strtok_r(NULL, delim, &state);
-    char	*author	   = strtok_r(NULL, delim, &state);
-    char	*email	   = strtok_r(NULL, delim, &state);
-    char	*timestamp = strtok_r(NULL, delim, &state);
-    char	*comment   = strtok_r(NULL, delim, &state);
+	if ((filename = strtok_r(str_copy, delim, &state)) == NULL ||
+	    (version = strtok_r(NULL, delim, &state)) == NULL ||
+	    (author = strtok_r(NULL, delim, &state)) == NULL ||
+	    (email = strtok_r(NULL, delim, &state)) == NULL ||
+	    (timestamp = strtok_r(NULL, delim, &state)) == NULL ||
+	    (comment = strtok_r(NULL, delim, &state)) == NULL) {
+		free(str_copy);
+		return NULL;
+	}
 
-    if (filename == NULL || version == NULL || author == NULL ||
-	email == NULL || timestamp == NULL || comment == NULL) {
-	free(s_copy);
-	return NULL;
-    }
+	info.filename	= sw_strdup(filename);
+	info.version	= sw_strdup(version);
+	info.author	= sw_strdup(author);
+	info.email	= sw_strdup(email);
+	info.timestamp	= sw_strdup(timestamp);
+	info.comment	= sw_strdup(comment);
 
-    info.filename  = sw_strdup(filename);
-    info.version   = sw_strdup(version);
-    info.author	   = sw_strdup(author);
-    info.email	   = sw_strdup(email);
-    info.timestamp = sw_strdup(timestamp);
-    info.comment   = sw_strdup(comment);
-
-    free(s_copy);
-    return (&info);
+	free(str_copy);
+	return (&info);
 }
 
 static read_result_t
