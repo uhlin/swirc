@@ -413,71 +413,76 @@ set_theme(const char *name)
     config_do_save(buf, "w");
 }
 
-/* usage: /theme [install | list-remote | set] [name] */
+/*
+ * usage: /theme [install | list-remote | set] [name]
+ */
 void
 cmd_theme(const char *data)
 {
-    char *dcopy = sw_strdup(data);
-    char *instruction, *name;
-    char *state = "";
-    int themes_read = 0;
+	char			*db_path, *instruction, *name, *url;
+	char			*dcopy = sw_strdup(data);
+	char			*state = "";
+	int			 themes_read = 0;
+	static const char	 cmd[] = "/theme";
 
-    if (strings_match(dcopy, "") ||
-	(instruction = strtok_r(dcopy, " ", &state)) == NULL) {
-	print_and_free("/theme: missing arguments", dcopy);
-	return;
-    }
+	if (strings_match(dcopy, "") || (instruction = strtok_r(dcopy, " ",
+	    &state)) == NULL) {
+		printf_and_free(dcopy, "%s: missing arguments", cmd);
+		return;
+	}
 
-    const bool has_second_arg = (name = strtok_r(NULL, " ", &state)) != NULL;
+	const bool has_second_arg = (name = strtok_r(NULL, " ", &state)) !=
+	    NULL;
 
-    if (strtok_r(NULL, " ", &state) != NULL) {
-	print_and_free("/theme: implicit trailing data", dcopy);
-	return;
-    } else if (!is_instruction_ok(instruction)) {
-	print_and_free("/theme: bogus instruction!", dcopy);
-	return;
-    } else if (!has_second_arg && (strings_match(instruction, "install") ||
-				   strings_match(instruction, "set"))) {
-	print_and_free("/theme: missing arguments", dcopy);
-	return;
-    }
+	if (strtok_r(NULL, " ", &state) != NULL) {
+		printf_and_free(dcopy, "%s: implicit trailing data", cmd);
+		return;
+	} else if (!is_instruction_ok(instruction)) {
+		printf_and_free(dcopy, "%s: bogus instruction!", cmd);
+		return;
+	} else if (!has_second_arg && (strings_match(instruction, "install") ||
+	    strings_match(instruction, "set"))) {
+		printf_and_free(dcopy, "%s: missing arguments", cmd);
+		return;
+	}
 
-    char *url     = strdup_printf("%s%s", g_swircWebAddr, "themes/themes");
-    char *db_path = strdup_printf("%s" SLASH "%s", g_tmp_dir, "themes");
+	url = strdup_printf("%s%s", g_swircWebAddr, "themes/themes");
+	db_path = strdup_printf("%s" SLASH "%s", g_tmp_dir, "themes");
 
-    theme_info_array_init();
-    url_to_file(url, db_path);
+	theme_info_array_init();
+	url_to_file(url, db_path);
 
-    switch (read_db(db_path, &themes_read)) {
-    case FOPEN_FAILED:
-	print_and_free("/theme: cannot open database", dcopy);
+	switch (read_db(db_path, &themes_read)) {
+	case FOPEN_FAILED:
+		printf_and_free(dcopy, "%s: cannot open database", cmd);
+		clean_up(url, db_path);
+		return;
+	case PARSE_ERROR:
+		printf_and_free(dcopy, "%s: failed to read database", cmd);
+		clean_up(url, db_path);
+		return;
+	case READ_INCOMPLETE:
+		printf_and_free(dcopy, "%s: end-of-file indicator not set",
+		    cmd);
+		clean_up(url, db_path);
+		return;
+	case READ_DB_OK:
+	default:
+		break;
+	}
+
+	if (strings_match(instruction, "install")) {
+		if (theme_is_in_db(name))
+			install_theme(name);
+	} else if (strings_match(instruction, "list-remote")) {
+		list_remote();
+	} else if (strings_match(instruction, "set")) {
+		if (strings_match(name, "default") || theme_is_in_db(name))
+			set_theme(name);
+	} else {
+		sw_assert_not_reached();
+	}
+
+	free(dcopy);
 	clean_up(url, db_path);
-	return;
-    case PARSE_ERROR:
-	print_and_free("/theme: failed to read database", dcopy);
-	clean_up(url, db_path);
-	return;
-    case READ_INCOMPLETE:
-	print_and_free("/theme: end-of-file indicator not set", dcopy);
-	clean_up(url, db_path);
-	return;
-    case READ_DB_OK:
-    default:
-	break;
-    }
-
-    if (strings_match(instruction, "install")) {
-	if (theme_is_in_db(name))
-	    install_theme(name);
-    } else if (strings_match(instruction, "list-remote")) {
-	list_remote();
-    } else if (strings_match(instruction, "set")) {
-	if (strings_match(name, "default") || theme_is_in_db(name))
-	    set_theme(name);
-    } else {
-	sw_assert_not_reached();
-    }
-
-    free(dcopy);
-    clean_up(url, db_path);
 }
