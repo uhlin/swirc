@@ -184,20 +184,20 @@ url_to_file(const char *url, const char *path)
 static bool
 get_next_line_from_file(FILE *fp, char **line)
 {
-    const int LINE_MAX_LEN = 2048;
+	const int LINE_MAX_LEN = 2048;
 
-    if (fp == NULL || line == NULL)
-	err_exit(EINVAL, "get_next_line_from_file");
+	if (fp == NULL || line == NULL)
+		err_exit(EINVAL, "%s", __func__);
 
-    if (*line) {
-	free(*line);
-	*line = NULL;
-    }
+	if (*line) {
+		free(*line);
+		*line = NULL;
+	}
 
-    if ((*line = malloc(LINE_MAX_LEN)) == NULL)
-	err_exit(ENOMEM, "get_next_line_from_file");
+	if ((*line = malloc(LINE_MAX_LEN)) == NULL)
+		err_exit(ENOMEM, "%s", __func__);
 
-    return (fgets(*line, LINE_MAX_LEN, fp) ? true : false);
+	return (fgets(*line, LINE_MAX_LEN, fp) ? true : false);
 }
 
 static bool
