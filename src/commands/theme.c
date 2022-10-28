@@ -120,7 +120,7 @@ theme_info_array_deinit(void)
 static size_t
 write_data(void *ptr, size_t size, size_t nmemb, void *stream)
 {
-    return fwrite(ptr, size, nmemb, (FILE *) stream);
+	return fwrite(ptr, size, nmemb, ((FILE *) stream));
 }
 
 static void
