@@ -84,16 +84,16 @@ is_instruction_ok(const char *instruction)
 static void
 theme_info_array_init(void)
 {
-    PTHEME_INFO ar_p;
+	PTHEME_INFO	ar_p;
 
-    THEME_INFO_FOREACH(ar_p) {
-	ar_p->filename	= NULL;
-	ar_p->version	= NULL;
-	ar_p->author	= NULL;
-	ar_p->email	= NULL;
-	ar_p->timestamp = NULL;
-	ar_p->comment	= NULL;
-    }
+	THEME_INFO_FOREACH(ar_p) {
+		ar_p->filename	= NULL;
+		ar_p->version	= NULL;
+		ar_p->author	= NULL;
+		ar_p->email	= NULL;
+		ar_p->timestamp	= NULL;
+		ar_p->comment	= NULL;
+	}
 }
 
 static void
