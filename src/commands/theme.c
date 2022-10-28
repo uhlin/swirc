@@ -328,21 +328,25 @@ theme_is_in_db(const char *name)
 static void
 install_theme(const char *name)
 {
-    PRINTTEXT_CONTEXT ctx;
-    char *url = strdup_printf("%s%s%s%s",
-	g_swircWebAddr, "themes/", name, g_theme_filesuffix);
-    char *dest = strdup_printf("%s" SLASH "%s%s",
-	g_home_dir, name, g_theme_filesuffix);
+	PRINTTEXT_CONTEXT	 ctx;
+	char			*url, *dest;
 
-    url_to_file(url, dest);
-    printtext_context_init(&ctx, g_active_window,
-	file_exists(dest) ? TYPE_SPEC1_SUCCESS : TYPE_SPEC1_FAILURE, true);
-    if (ctx.spec_type == TYPE_SPEC1_SUCCESS)
-	printtext(&ctx, "theme installed (use 'set' to activate it)");
-    else
-	printtext(&ctx, "failed to install theme :-(");
-    free(url);
-    free(dest);
+	url = strdup_printf("%s%s%s%s", g_swircWebAddr, "themes/", name,
+	    g_theme_filesuffix);
+	dest = strdup_printf("%s" SLASH "%s%s", g_home_dir, name,
+	    g_theme_filesuffix);
+
+	url_to_file(url, dest);
+	printtext_context_init(&ctx, g_active_window, (file_exists(dest) ?
+	    TYPE_SPEC1_SUCCESS : TYPE_SPEC1_FAILURE), true);
+
+	if (ctx.spec_type == TYPE_SPEC1_SUCCESS)
+		printtext(&ctx, "theme installed (use 'set' to activate it)");
+	else
+		printtext(&ctx, "failed to install theme :-(");
+
+	free(url);
+	free(dest);
 }
 
 static void
