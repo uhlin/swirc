@@ -78,6 +78,15 @@ struct reconnect_context {
 		this->delay_max		= 0;
 		this->retries		= 0;
 	}
+
+	void
+	init(void)
+	{
+		this->backoff_delay	= get_reconnect_backoff_delay();
+		this->delay		= get_reconnect_delay();
+		this->delay_max		= get_reconnect_delay_max();
+		this->retries		= get_reconnect_retries();
+	}
 };
 
 /****************************************************************
@@ -188,17 +197,6 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 	}
 
 	return ERR;
-}
-
-static void
-reconnect_context_reinit(struct reconnect_context *ctx)
-{
-	if (ctx) {
-		ctx->backoff_delay = get_reconnect_backoff_delay();
-		ctx->delay         = get_reconnect_delay();
-		ctx->delay_max     = get_reconnect_delay_max();
-		ctx->retries       = get_reconnect_retries();
-	}
 }
 
 static void
@@ -339,10 +337,7 @@ net_connect(const struct network_connect_context *ctx,
 		(void) atomic_swap_bool(&g_connection_in_progress, true);
 
 	if (!atomic_load_bool(&reconn_initialized)) {
-		reconn_ctx.backoff_delay = get_reconnect_backoff_delay();
-		reconn_ctx.delay         = get_reconnect_delay();
-		reconn_ctx.delay_max     = get_reconnect_delay_max();
-		reconn_ctx.retries       = get_reconnect_retries();
+		reconn_ctx.init();
 		(void) atomic_swap_bool(&reconn_initialized, true);
 	}
 
@@ -529,7 +524,7 @@ server_new(const char *host, const char *port, const char *pass)
 void
 net_connect_clean_up(void)
 {
-	reconnect_context_reinit(&reconn_ctx);
+	reconn_ctx.init();
 	retry = 0;
 	atomic_swap_bool(&g_connection_in_progress, false);
 }
