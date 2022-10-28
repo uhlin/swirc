@@ -211,7 +211,7 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 		free(concat);
 		return OK;
 	} catch (const std::runtime_error &e) {
-		err_log(0, "get_and_handle_remaining_bytes: %s", e.what());
+		err_log(0, "%s: %s", __func__, e.what());
 		free(tmp);
 		free(concat);
 	}
@@ -265,7 +265,7 @@ send_icb_login_packet(const struct network_connect_context *ctx)
 	    (ctx->password ? ctx->password : ""), ICB_FIELD_SEP);
 
 	if (ret < 0 || static_cast<size_t>(ret) >= ARRAY_SIZE(msg)) {
-		err_log(ENOBUFS, "send_icb_login_packet");
+		err_log(ENOBUFS, "%s", __func__);
 		return;
 	}
 
@@ -273,7 +273,7 @@ send_icb_login_packet(const struct network_connect_context *ctx)
 	irc_set_my_nickname(ctx->nickname);
 
 	if (net_send("%c%s", msglen, msg) < 0)
-		err_log(ENOTCONN, "send_icb_login_packet");
+		err_log(ENOTCONN, "%s", __func__);
 }
 
 static void
@@ -349,7 +349,7 @@ net_connect(const struct network_connect_context *ctx,
 	struct addrinfo *res = NULL, *rp = NULL;
 
 	if (ctx == NULL || sleep_time_seconds == NULL)
-		err_exit(EINVAL, "net_connect");
+		err_exit(EINVAL, "%s", __func__);
 	else if (atomic_load_bool(&g_connection_in_progress))
 		return CONNECTION_FAILED;
 	else
@@ -595,7 +595,7 @@ net_irc_listen(bool *connection_lost)
 
 			if (ret < 0 || static_cast<size_t>(ret) >=
 			    ARRAY_SIZE(array)) {
-				err_log(ENOBUFS, "net_irc_listen");
+				err_log(ENOBUFS, "%s", __func__);
 				g_connection_lost = true;
 				break;
 			}
@@ -613,7 +613,7 @@ net_irc_listen(bool *connection_lost)
 
 				if (get_and_handle_remaining_bytes(bytes_rem,
 				    &ctx, recvbuf, length) == ERR) {
-					err_log(EPROTO, "net_irc_listen");
+					err_log(EPROTO, "%s", __func__);
 					g_connection_lost = true;
 					break;
 				}
@@ -675,10 +675,10 @@ net_kill_connection(void)
 
 #if defined(UNIX)
 	if (shutdown(g_socket, SHUT_RDWR) == -1)
-		err_log(errno, "net_kill_connection: shutdown");
+		err_log(errno, "%s: shutdown", __func__);
 #elif defined(WIN32)
 	if (shutdown(g_socket, SD_BOTH) != 0)
-		err_log(errno, "net_kill_connection: shutdown");
+		err_log(errno, "%s: shutdown", __func__);
 #endif
 }
 
