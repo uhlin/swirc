@@ -297,16 +297,14 @@ read_db(const char *path, int *themes_read)
 static void
 clean_up(char *url, char *path)
 {
-    if (url)
-	free(url);
-
-    if (path) {
-	if (remove(path) != 0)
-	    err_log(errno, "failed to remove: %s", path);
-	free(path);
-    }
-
-    theme_info_array_deinit();
+	if (url)
+		free(url);
+	if (path) {
+		if (remove(path) != 0)
+			err_log(errno, "failed to remove: %s", path);
+		free(path);
+	}
+	theme_info_array_deinit();
 }
 
 static bool
