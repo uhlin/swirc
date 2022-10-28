@@ -66,6 +66,7 @@
 ****************************************************************/
 
 struct reconnect_context {
+public:
 	long int	backoff_delay;
 	long int	delay;
 	long int	delay_max;
@@ -77,6 +78,8 @@ struct reconnect_context {
 		this->delay		= 0;
 		this->delay_max		= 0;
 		this->retries		= 0;
+
+		this->initialized = false;
 	}
 
 	void
@@ -87,6 +90,21 @@ struct reconnect_context {
 		this->delay_max		= get_reconnect_delay_max();
 		this->retries		= get_reconnect_retries();
 	}
+
+	bool
+	is_initialized(void)
+	{
+		return atomic_load_bool(&this->initialized);
+	}
+
+	void
+	set_init(bool yesno)
+	{
+		(void) atomic_swap_bool(&this->initialized, yesno);
+	}
+
+private:
+	volatile bool initialized;
 };
 
 /****************************************************************
