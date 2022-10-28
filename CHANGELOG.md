@@ -11,6 +11,9 @@ All notable changes to this project will be documented in this file.
 - Added usage of `__func__`
 - Fixed display of IPv6 addresses in event 338
 - Made const arrays static const
+- Made improvements to the following files:
+  - `commands/theme.c`
+  - `network.cpp`
 - Reduced VA args in printtext calls
 
 ## [3.3.7] - 2022-10-22 ##
