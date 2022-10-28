@@ -312,17 +312,18 @@ clean_up(char *url, char *path)
 static bool
 theme_is_in_db(const char *name)
 {
-    PRINTTEXT_CONTEXT ctx;
-    PTHEME_INFO ar_p = NULL;
+	PRINTTEXT_CONTEXT	ctx;
+	PTHEME_INFO		ar_p = NULL;
 
-    THEME_INFO_FOREACH(ar_p) {
-	if (ar_p->filename && name && strings_match(ar_p->filename, name))
-	    return true;
-    }
+	THEME_INFO_FOREACH(ar_p) {
+		if (ar_p->filename && name && strings_match(ar_p->filename,
+		    name))
+			return true;
+	}
 
-    printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
-    printtext(&ctx, "theme not in database");
-    return false;
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
+	printtext(&ctx, "theme not in database");
+	return false;
 }
 
 static void
