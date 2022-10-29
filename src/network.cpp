@@ -530,6 +530,12 @@ net_connect(const struct network_connect_context *ctx,
 		handle_conn_err(&ptext_ctx, e.what(), sleep_time_seconds,
 		    conn_res);
 		return conn_res;
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "%s: %s", __func__, e.what());
+	} catch (...) {
+		handle_conn_err(&ptext_ctx, "unknown exception",
+		    sleep_time_seconds, conn_res);
+		return conn_res;
 	}
 
 	save_last_server(ctx->server, ctx->port, (ctx->password ? ctx->password
