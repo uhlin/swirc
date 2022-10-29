@@ -34,6 +34,8 @@
 #undef curl_easy_setopt
 #endif
 
+#include <limits.h>
+
 #include "../assertAPI.h"
 #include "../config.h"
 #include "../errHand.h"
