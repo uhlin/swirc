@@ -95,7 +95,7 @@ public:
 	}
 
 	bool
-	is_initial_attempt(void)
+	is_initial_attempt(void) const
 	{
 		return (this->retry <= 1);
 	}
