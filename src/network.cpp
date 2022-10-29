@@ -160,6 +160,24 @@ static void	 send_icb_login_packet(const struct network_connect_context *)
 static void	 send_reg_cmds(const struct network_connect_context *)
 		     PTR_ARGS_NONNULL;
 
+static void
+check_conn_fail()
+{
+	if (!g_on_air || (ssl_is_enabled() && net_ssl_begin() == -1))
+		throw std::runtime_error("Failed to establish a connection");
+}
+
+static void
+check_hostname(const char *host, PPRINTTEXT_CONTEXT ctx)
+{
+	if (ssl_is_enabled() && config_bool("hostname_checking", true)) {
+		if (net_ssl_check_hostname(host, 0) != OK)
+			throw std::runtime_error("Hostname checking failed!");
+		else
+			printtext(ctx, "Hostname checking OK!");
+	}
+}
+
 static int
 conn_check()
 {
@@ -176,6 +194,38 @@ conn_check()
 	}
 
 	return 0;
+}
+
+static void
+connect_hook(void)
+{
+	g_sasl_scram_sha_got_first_msg = false;
+}
+
+static void
+establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
+{
+	for (struct addrinfo *rp = res; rp; rp = rp->ai_next) {
+		if ((g_socket = socket(rp->ai_family, rp->ai_socktype,
+		    rp->ai_protocol)) == INVALID_SOCKET)
+			continue;
+
+		net_set_recv_timeout(TEMP_RECV_TIMEOUT);
+		net_set_send_timeout(TEMP_SEND_TIMEOUT);
+
+		if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) == 0) {
+			printtext(ctx, "Connected!");
+
+			g_on_air = true;
+
+			net_set_recv_timeout(DEFAULT_RECV_TIMEOUT);
+			net_set_send_timeout(DEFAULT_SEND_TIMEOUT);
+			break;
+		} else {
+			CLOSE_GLOBAL_SOCKET();
+			g_socket = INVALID_SOCKET;
+		}
+	} /* for */
 }
 
 static int
@@ -223,6 +273,75 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 	}
 
 	return ERR;
+}
+
+static void
+get_ip_addresses(struct addrinfo *&res, const char *server, const char *port,
+    PPRINTTEXT_CONTEXT ctx)
+{
+	if ((res = net_addr_resolve(server, port)) == NULL) {
+		throw std::runtime_error("Unable to get a list of IP "
+		    "addresses");
+	} else {
+		printtext(ctx, "Get a list of IP addresses completed");
+	}
+}
+
+static void
+handle_conn_err(PPRINTTEXT_CONTEXT ptext_ctx, const char *what,
+    long int *sleep_time_seconds, conn_res_t &conn_res)
+{
+	ptext_ctx->spec_type = TYPE_SPEC1_FAILURE;
+	printtext(ptext_ctx, "%s", what);
+
+	if (g_on_air)
+		g_on_air = false;
+
+	net_ssl_end();
+
+	if (g_socket != INVALID_SOCKET) {
+		CLOSE_GLOBAL_SOCKET();
+		g_socket = INVALID_SOCKET;
+	}
+
+#ifdef WIN32
+	winsock_deinit();
+#endif
+
+	if (reconn_ctx.retry++ < reconn_ctx.retries) {
+		if (reconn_ctx.is_initial_attempt())
+			*sleep_time_seconds = reconn_ctx.delay;
+		else
+			*sleep_time_seconds += reconn_ctx.backoff_delay;
+
+		/* --------------------------------------------- */
+
+		if (*sleep_time_seconds > reconn_ctx.delay_max)
+			*sleep_time_seconds = reconn_ctx.delay_max;
+
+		(void) atomic_swap_bool(&g_connection_in_progress, false);
+		conn_res = SHOULD_RETRY_TO_CONNECT;
+		return;
+	}
+
+	net_connect_clean_up();
+	conn_res = CONNECTION_FAILED;
+}
+
+static void
+save_last_server(const char *server, const char *port, const char *password)
+{
+	int ret;
+
+	if ((ret = snprintf(g_last_server, sizeof g_last_server, "%s", server)) < 0 ||
+	    static_cast<size_t>(ret) >= sizeof g_last_server)
+		err_log(EOVERFLOW, "%s: cannot save server", __func__);
+	if ((ret = snprintf(g_last_port, sizeof g_last_port, "%s", port)) < 0 ||
+	    static_cast<size_t>(ret) >= sizeof g_last_port)
+		err_log(EOVERFLOW, "%s: cannot save port", __func__);
+	if ((ret = snprintf(g_last_pass, sizeof g_last_pass, "%s", password)) < 0 ||
+	    static_cast<size_t>(ret) >= sizeof g_last_pass)
+		err_log(EOVERFLOW, "%s: cannot save password", __func__);
 }
 
 static void
@@ -345,127 +464,6 @@ sasl_is_enabled(void)
 	if (!g_sasl_authentication)
 		return false;
 	return config_bool("sasl", false);
-}
-
-// TODO: sort functions with file-scope visibility?
-
-static void
-connect_hook(void)
-{
-	g_sasl_scram_sha_got_first_msg = false;
-}
-
-static void
-get_ip_addresses(struct addrinfo *&res, const char *server, const char *port,
-    PPRINTTEXT_CONTEXT ctx)
-{
-	if ((res = net_addr_resolve(server, port)) == NULL) {
-		throw std::runtime_error("Unable to get a list of IP "
-		    "addresses");
-	} else {
-		printtext(ctx, "Get a list of IP addresses completed");
-	}
-}
-
-static void
-establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
-{
-	for (struct addrinfo *rp = res; rp; rp = rp->ai_next) {
-		if ((g_socket = socket(rp->ai_family, rp->ai_socktype,
-		    rp->ai_protocol)) == INVALID_SOCKET)
-			continue;
-
-		net_set_recv_timeout(TEMP_RECV_TIMEOUT);
-		net_set_send_timeout(TEMP_SEND_TIMEOUT);
-
-		if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) == 0) {
-			printtext(ctx, "Connected!");
-
-			g_on_air = true;
-
-			net_set_recv_timeout(DEFAULT_RECV_TIMEOUT);
-			net_set_send_timeout(DEFAULT_SEND_TIMEOUT);
-			break;
-		} else {
-			CLOSE_GLOBAL_SOCKET();
-			g_socket = INVALID_SOCKET;
-		}
-	} /* for */
-}
-
-static void
-check_conn_fail()
-{
-	if (!g_on_air || (ssl_is_enabled() && net_ssl_begin() == -1))
-		throw std::runtime_error("Failed to establish a connection");
-}
-
-static void
-check_hostname(const char *host, PPRINTTEXT_CONTEXT ctx)
-{
-	if (ssl_is_enabled() && config_bool("hostname_checking", true)) {
-		if (net_ssl_check_hostname(host, 0) != OK)
-			throw std::runtime_error("Hostname checking failed!");
-		else
-			printtext(ctx, "Hostname checking OK!");
-	}
-}
-
-static void
-handle_conn_err(PPRINTTEXT_CONTEXT ptext_ctx, const char *what,
-    long int *sleep_time_seconds, conn_res_t &conn_res)
-{
-	ptext_ctx->spec_type = TYPE_SPEC1_FAILURE;
-	printtext(ptext_ctx, "%s", what);
-
-	if (g_on_air)
-		g_on_air = false;
-
-	net_ssl_end();
-
-	if (g_socket != INVALID_SOCKET) {
-		CLOSE_GLOBAL_SOCKET();
-		g_socket = INVALID_SOCKET;
-	}
-
-#ifdef WIN32
-	winsock_deinit();
-#endif
-
-	if (reconn_ctx.retry++ < reconn_ctx.retries) {
-		if (reconn_ctx.is_initial_attempt())
-			*sleep_time_seconds = reconn_ctx.delay;
-		else
-			*sleep_time_seconds += reconn_ctx.backoff_delay;
-
-		/* --------------------------------------------- */
-
-		if (*sleep_time_seconds > reconn_ctx.delay_max)
-			*sleep_time_seconds = reconn_ctx.delay_max;
-
-		(void) atomic_swap_bool(&g_connection_in_progress, false);
-		conn_res = SHOULD_RETRY_TO_CONNECT;
-		return;
-	}
-
-	net_connect_clean_up();
-	conn_res = CONNECTION_FAILED;
-}
-
-static void
-save_last_server(const char *server, const char *port, const char *password)
-{
-	int ret;
-
-	if ((ret = snprintf(g_last_server, sizeof g_last_server, "%s", server)) < 0 ||
-	    static_cast<size_t>(ret) >= sizeof g_last_server)
-		err_log(EOVERFLOW, "%s: cannot save server", __func__);
-	if ((ret = snprintf(g_last_port, sizeof g_last_port, "%s", port)) < 0 ||
-	    static_cast<size_t>(ret) >= sizeof g_last_port)
-		err_log(EOVERFLOW, "%s: cannot save port", __func__);
-	if ((ret = snprintf(g_last_pass, sizeof g_last_pass, "%s", password)) < 0 ||
-	    static_cast<size_t>(ret) >= sizeof g_last_pass)
-		err_log(EOVERFLOW, "%s: cannot save password", __func__);
 }
 
 conn_res_t
