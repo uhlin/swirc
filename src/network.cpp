@@ -411,12 +411,54 @@ check_hostname(const char *host, PPRINTTEXT_CONTEXT ctx)
 	}
 }
 
+static void
+handle_conn_err(PPRINTTEXT_CONTEXT ptext_ctx, const char *what,
+    long int *sleep_time_seconds, conn_res_t &conn_res)
+{
+	ptext_ctx->spec_type = TYPE_SPEC1_FAILURE;
+	printtext(ptext_ctx, "%s", what);
+
+	if (g_on_air)
+		g_on_air = false;
+
+	net_ssl_end();
+
+	if (g_socket != INVALID_SOCKET) {
+		CLOSE_GLOBAL_SOCKET();
+		g_socket = INVALID_SOCKET;
+	}
+
+#ifdef WIN32
+	winsock_deinit();
+#endif
+
+	if (reconn_ctx.retry++ < reconn_ctx.retries) {
+		if (reconn_ctx.is_initial_attempt())
+			*sleep_time_seconds = reconn_ctx.delay;
+		else
+			*sleep_time_seconds += reconn_ctx.backoff_delay;
+
+		/* --------------------------------------------- */
+
+		if (*sleep_time_seconds > reconn_ctx.delay_max)
+			*sleep_time_seconds = reconn_ctx.delay_max;
+
+		(void) atomic_swap_bool(&g_connection_in_progress, false);
+		conn_res = SHOULD_RETRY_TO_CONNECT;
+		return;
+	}
+
+	net_connect_clean_up();
+	conn_res = CONNECTION_FAILED;
+}
+
 conn_res_t
 net_connect(const struct network_connect_context *ctx,
     long int *sleep_time_seconds)
 {
-	PRINTTEXT_CONTEXT ptext_ctx;
-	struct addrinfo *res = NULL;
+	PRINTTEXT_CONTEXT	 ptext_ctx;
+	conn_res_t		 conn_res = CONNECTION_FAILED;
+	struct addrinfo		*res = NULL;
 
 	if (ctx == NULL || sleep_time_seconds == NULL)
 		err_exit(EINVAL, "%s", __func__);
@@ -471,39 +513,9 @@ net_connect(const struct network_connect_context *ctx,
 
 		event_welcome_cond_destroy();
 	} catch (const std::runtime_error &e) {
-		ptext_ctx.spec_type = TYPE_SPEC1_FAILURE;
-		printtext(&ptext_ctx, "%s", e.what());
-
-		/* XXX */
-		if (g_on_air)
-			g_on_air = false;
-		net_ssl_end();
-		if (g_socket != INVALID_SOCKET) {
-			CLOSE_GLOBAL_SOCKET();
-			g_socket = INVALID_SOCKET;
-		}
-#ifdef WIN32
-		winsock_deinit();
-#endif
-
-		if (reconn_ctx.retry++ < reconn_ctx.retries) {
-			if (reconn_ctx.is_initial_attempt())
-				*sleep_time_seconds = reconn_ctx.delay;
-			else
-				*sleep_time_seconds += reconn_ctx.backoff_delay;
-
-			/* --------------------------------------------- */
-
-			if (*sleep_time_seconds > reconn_ctx.delay_max)
-				*sleep_time_seconds = reconn_ctx.delay_max;
-
-			(void) atomic_swap_bool(&g_connection_in_progress,
-			    false);
-			return SHOULD_RETRY_TO_CONNECT;
-		}
-
-		net_connect_clean_up();
-		return CONNECTION_FAILED;
+		handle_conn_err(&ptext_ctx, e.what(), sleep_time_seconds,
+		    conn_res);
+		return conn_res;
 	}
 
 	(void) snprintf(g_last_server, ARRAY_SIZE(g_last_server), "%s",
