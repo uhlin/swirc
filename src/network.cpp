@@ -379,15 +379,17 @@ select_send_and_recv_funcs()
 static void
 send_icb_login_packet(const struct network_connect_context *ctx)
 {
-	char	msg[ICB_MESSAGE_MAX] = { '\0' };
-	int	msglen, ret;
+	char		msg[ICB_MESSAGE_MAX] = { '\0' };
+	int		msglen, ret;
+	std::string	str("a");
 
-	ret = snprintf(msg, ARRAY_SIZE(msg), "a%s%s%s%s%s%s%s%s%s%s",
-	    ctx->username, ICB_FIELD_SEP,
-	    ctx->nickname, ICB_FIELD_SEP,
-	    "1", ICB_FIELD_SEP,
-	    "login", ICB_FIELD_SEP,
-	    (ctx->password ? ctx->password : ""), ICB_FIELD_SEP);
+	str.append(ctx->username).append(ICB_FIELD_SEP);
+	str.append(ctx->nickname).append(ICB_FIELD_SEP);
+	str.append("1").append(ICB_FIELD_SEP);
+	str.append("login").append(ICB_FIELD_SEP);
+	str.append(ctx->password ? ctx->password : "").append(ICB_FIELD_SEP);
+
+	ret = snprintf(msg, ARRAY_SIZE(msg), "%s", str.c_str());
 
 	if (ret < 0 || static_cast<size_t>(ret) >= ARRAY_SIZE(msg)) {
 		err_log(ENOBUFS, "%s", __func__);
