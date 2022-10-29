@@ -65,7 +65,7 @@
 *                                                               *
 ****************************************************************/
 
-struct reconnect_context {
+class reconnect_context {
 public:
 	long int	backoff_delay;
 	long int	delay;
@@ -145,9 +145,9 @@ char	g_last_pass[256] = { 0 };
 *                                                               *
 ****************************************************************/
 
+static class reconnect_context reconn_ctx;
 static const int RECVBUF_SIZE = 2048;
 static int socket_address_family = AF_UNSPEC;
-static struct reconnect_context reconn_ctx;
 
 /****************************************************************
 *                                                               *
