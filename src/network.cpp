@@ -393,6 +393,13 @@ establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
 	} /* for */
 }
 
+static void
+check_conn_fail()
+{
+	if (!g_on_air || (ssl_is_enabled() && net_ssl_begin() == -1))
+		throw std::runtime_error("Failed to establish a connection");
+}
+
 conn_res_t
 net_connect(const struct network_connect_context *ctx,
     long int *sleep_time_seconds)
@@ -435,11 +442,7 @@ net_connect(const struct network_connect_context *ctx,
 			freeaddrinfo(res);
 
 		select_send_and_recv_funcs();
-
-		if (!g_on_air || (ssl_is_enabled() && net_ssl_begin() == -1)) {
-			throw std::runtime_error("Failed to establish a "
-			    "connection");
-		}
+		check_conn_fail();
 
 		if (ssl_is_enabled() &&
 		    config_bool("hostname_checking", true)) {
