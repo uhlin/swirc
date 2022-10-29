@@ -452,6 +452,22 @@ handle_conn_err(PPRINTTEXT_CONTEXT ptext_ctx, const char *what,
 	conn_res = CONNECTION_FAILED;
 }
 
+static void
+save_last_server(const char *server, const char *port, const char *password)
+{
+	int ret;
+
+	if ((ret = snprintf(g_last_server, sizeof g_last_server, "%s", server)) < 0 ||
+	    static_cast<size_t>(ret) >= sizeof g_last_server)
+		err_log(EOVERFLOW, "%s: cannot save server", __func__);
+	if ((ret = snprintf(g_last_port, sizeof g_last_port, "%s", port)) < 0 ||
+	    static_cast<size_t>(ret) >= sizeof g_last_port)
+		err_log(EOVERFLOW, "%s: cannot save port", __func__);
+	if ((ret = snprintf(g_last_pass, sizeof g_last_pass, "%s", password)) < 0 ||
+	    static_cast<size_t>(ret) >= sizeof g_last_pass)
+		err_log(EOVERFLOW, "%s: cannot save password", __func__);
+}
+
 conn_res_t
 net_connect(const struct network_connect_context *ctx,
     long int *sleep_time_seconds)
@@ -518,11 +534,8 @@ net_connect(const struct network_connect_context *ctx,
 		return conn_res;
 	}
 
-	(void) snprintf(g_last_server, ARRAY_SIZE(g_last_server), "%s",
-	    ctx->server);
-	(void) snprintf(g_last_port, ARRAY_SIZE(g_last_port), "%s", ctx->port);
-	(void) snprintf(g_last_pass, ARRAY_SIZE(g_last_pass), "%s",
-	    (ctx->password ? ctx->password : ""));
+	save_last_server(ctx->server, ctx->port, (ctx->password ? ctx->password
+	    : ""));
 
 	if (!g_icb_mode)
 		window_foreach_rejoin_all_channels();
