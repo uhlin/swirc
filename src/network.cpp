@@ -347,12 +347,58 @@ sasl_is_enabled(void)
 	return config_bool("sasl", false);
 }
 
+// TODO: sort functions with file-scope visibility?
+
+static void
+connect_hook(void)
+{
+	g_sasl_scram_sha_got_first_msg = false;
+}
+
+static void
+get_ip_addresses(struct addrinfo *&res, const char *server, const char *port,
+    PPRINTTEXT_CONTEXT ctx)
+{
+	if ((res = net_addr_resolve(server, port)) == NULL) {
+		throw std::runtime_error("Unable to get a list of IP "
+		    "addresses");
+	} else {
+		printtext(ctx, "Get a list of IP addresses completed");
+	}
+}
+
+static void
+establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
+{
+	for (struct addrinfo *rp = res; rp; rp = rp->ai_next) {
+		if ((g_socket = socket(rp->ai_family, rp->ai_socktype,
+		    rp->ai_protocol)) == INVALID_SOCKET)
+			continue;
+
+		net_set_recv_timeout(TEMP_RECV_TIMEOUT);
+		net_set_send_timeout(TEMP_SEND_TIMEOUT);
+
+		if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) == 0) {
+			printtext(ctx, "Connected!");
+
+			g_on_air = true;
+
+			net_set_recv_timeout(DEFAULT_RECV_TIMEOUT);
+			net_set_send_timeout(DEFAULT_SEND_TIMEOUT);
+			break;
+		} else {
+			CLOSE_GLOBAL_SOCKET();
+			g_socket = INVALID_SOCKET;
+		}
+	} /* for */
+}
+
 conn_res_t
 net_connect(const struct network_connect_context *ctx,
     long int *sleep_time_seconds)
 {
 	PRINTTEXT_CONTEXT ptext_ctx;
-	struct addrinfo *res = NULL, *rp = NULL;
+	struct addrinfo *res = NULL;
 
 	if (ctx == NULL || sleep_time_seconds == NULL)
 		err_exit(EINVAL, "%s", __func__);
@@ -368,7 +414,7 @@ net_connect(const struct network_connect_context *ctx,
 
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1, true);
 	printtext(&ptext_ctx, "Connecting to %s (%s)", ctx->server, ctx->port);
-	g_sasl_scram_sha_got_first_msg = false;
+	connect_hook();
 
 	try {
 		ptext_ctx.spec_type = TYPE_SPEC1_SUCCESS;
@@ -382,36 +428,8 @@ net_connect(const struct network_connect_context *ctx,
 		}
 #endif
 
-		if ((res = net_addr_resolve(ctx->server, ctx->port)) == NULL) {
-			throw std::runtime_error("Unable to get a list of "
-			    "IP addresses");
-		} else {
-			printtext(&ptext_ctx, "Get a list of IP addresses "
-			    "completed");
-		}
-
-		for (rp = res; rp; rp = rp->ai_next) {
-			if ((g_socket = socket(rp->ai_family, rp->ai_socktype,
-			    rp->ai_protocol)) == INVALID_SOCKET)
-				continue;
-
-			net_set_recv_timeout(TEMP_RECV_TIMEOUT);
-			net_set_send_timeout(TEMP_SEND_TIMEOUT);
-
-			if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) ==
-			    0) {
-				printtext(&ptext_ctx, "Connected!");
-
-				g_on_air = true;
-
-				net_set_recv_timeout(DEFAULT_RECV_TIMEOUT);
-				net_set_send_timeout(DEFAULT_SEND_TIMEOUT);
-				break;
-			} else {
-				CLOSE_GLOBAL_SOCKET();
-				g_socket = INVALID_SOCKET;
-			}
-		} /* for */
+		get_ip_addresses(res, ctx->server, ctx->port, &ptext_ctx);
+		establish_conn(res, &ptext_ctx);
 
 		if (res)
 			freeaddrinfo(res);
