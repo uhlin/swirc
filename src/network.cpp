@@ -400,6 +400,17 @@ check_conn_fail()
 		throw std::runtime_error("Failed to establish a connection");
 }
 
+static void
+check_hostname(const char *host, PPRINTTEXT_CONTEXT ctx)
+{
+	if (ssl_is_enabled() && config_bool("hostname_checking", true)) {
+		if (net_ssl_check_hostname(host, 0) != OK)
+			throw std::runtime_error("Hostname checking failed!");
+		else
+			printtext(ctx, "Hostname checking OK!");
+	}
+}
+
 conn_res_t
 net_connect(const struct network_connect_context *ctx,
     long int *sleep_time_seconds)
@@ -443,16 +454,7 @@ net_connect(const struct network_connect_context *ctx,
 
 		select_send_and_recv_funcs();
 		check_conn_fail();
-
-		if (ssl_is_enabled() &&
-		    config_bool("hostname_checking", true)) {
-			if (net_ssl_check_hostname(ctx->server, 0) != OK) {
-				throw std::runtime_error("Hostname checking "
-				    "failed!");
-			} else {
-				printtext(&ptext_ctx, "Hostname checking OK!");
-			}
-		}
+		check_hostname(ctx->server, &ptext_ctx);
 
 		event_welcome_cond_init();
 		net_spawn_listen_thread();
