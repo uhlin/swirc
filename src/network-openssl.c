@@ -62,8 +62,8 @@ static void
 create_ssl_context_obj(void)
 {
 	if ((ssl_ctx = SSL_CTX_new(TLS_client_method())) == NULL) {
-		err_exit(ENOMEM, "create_ssl_context_obj: "
-		    "Unable to create a new SSL_CTX object");
+		err_exit(ENOMEM, "%s: Unable to create a new SSL_CTX object",
+		    __func__);
 	}
 
 	(void) SSL_CTX_set_mode(ssl_ctx, SSL_MODE_ENABLE_PARTIAL_WRITE);
@@ -77,8 +77,8 @@ create_ssl_context_obj(void)
 	//(void) SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_TLSv1_1);
 
 	if (!SSL_CTX_set_min_proto_version(ssl_ctx, TLS1_2_VERSION)) {
-		err_log(0, "create_ssl_context_obj: error setting minimum "
-		    "supported protocol version");
+		err_log(0, "%s: error setting minimum supported "
+		    "protocol version", __func__);
 	}
 }
 #else
@@ -90,8 +90,8 @@ static void
 create_ssl_context_obj_insecure(void)
 {
 	if ((ssl_ctx = SSL_CTX_new(SSLv23_client_method())) == NULL) {
-		err_exit(ENOMEM, "create_ssl_context_obj_insecure: "
-		    "Unable to create a new SSL_CTX object");
+		err_exit(ENOMEM, "%s: Unable to create a new SSL_CTX object",
+		    __func__);
 	}
 
 	(void) SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_SSLv2);
@@ -108,7 +108,7 @@ set_ciphers(const char *list)
 
 		printtext_context_init(&ptext_ctx, g_status_window,
 		    TYPE_SPEC1_WARN, true);
-		printtext(&ptext_ctx, "set_ciphers: bogus cipher list: %s",
+		printtext(&ptext_ctx, "%s: bogus cipher list: %s", __func__,
 		    xstrerror(EINVAL, strerrbuf, MAXERROR));
 	}
 }
@@ -160,8 +160,8 @@ net_ssl_begin(void)
 		err_reason = "SSL object nonnull";
 		goto err;
 	} else if ((ssl = SSL_new(ssl_ctx)) == NULL) {
-		err_exit(ENOMEM, "net_ssl_begin: Unable to create a new "
-		    "SSL object");
+		err_exit(ENOMEM, "%s: Unable to create a new SSL object",
+		    __func__);
 	} else {
 		(void) atomic_swap_bool(&ssl_object_is_null, false);
 	}
@@ -184,7 +184,7 @@ net_ssl_begin(void)
   err:
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
 	    true);
-	printtext(&ptext_ctx, "net_ssl_begin: %s", err_reason);
+	printtext(&ptext_ctx, "%s: %s", __func__, err_reason);
 	return -1;
 }
 
@@ -196,14 +196,14 @@ net_ssl_end(void)
 #if SHUTDOWN_CONN
 		switch (SSL_shutdown(ssl)) {
 		case 0:
-			debug("net_ssl_end: SSL_shutdown: not yet finished");
+			debug("%s: SSL_shutdown: not yet finished", __func__);
 			(void) SSL_shutdown(ssl);
 			break;
 		case 1:
 			/* success! */
 			break;
 		default:
-			err_log(0, "net_ssl_end: SSL_shutdown: error");
+			err_log(0, "%s: SSL_shutdown: error", __func__);
 			break;
 		}
 #endif
@@ -242,10 +242,10 @@ net_ssl_send(const char *fmt, ...)
 #if defined(UNIX)
 	if ((errno = pthread_once(&ssl_send_init_done, ssl_send_mutex_init)) !=
 	    0)
-		err_sys("net_ssl_send: pthread_once");
+		err_sys("%s: pthread_once", __func__);
 #elif defined(WIN32)
 	if ((errno = init_once(&ssl_send_init_done, ssl_send_mutex_init)) != 0)
-		err_sys("net_ssl_send: init_once");
+		err_sys("%s: init_once", __func__);
 #endif
 
 	mutex_lock(&ssl_send_mutex);
@@ -284,7 +284,7 @@ net_ssl_send(const char *fmt, ...)
 
 		if (ret > 0) {
 			if (BIO_flush(SSL_get_wbio(ssl)) != 1)
-				debug("net_ssl_send: error flushing write bio");
+				debug("%s: error flushing write bio", __func__);
 			n_sent += ret;
 			bufptr += ret;
 			buflen -= ret;
@@ -295,7 +295,7 @@ net_ssl_send(const char *fmt, ...)
 				break;
 			case SSL_ERROR_WANT_READ:
 			case SSL_ERROR_WANT_WRITE:
-				debug("net_ssl_send: want read / want write");
+				debug("%s: want read / want write", __func__);
 				continue;
 			}
 
@@ -347,7 +347,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 
 		if (ret > 0) {
 			if (BIO_flush(SSL_get_rbio(ssl)) != 1)
-				debug("net_ssl_recv: error flushing read bio");
+				debug("%s: error flushing read bio", __func__);
 			bytes_received += ret;
 			bufptr += ret;
 			buflen -= ret;
@@ -358,7 +358,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 				break;
 			case SSL_ERROR_WANT_READ:
 			case SSL_ERROR_WANT_WRITE:
-				debug("net_ssl_recv: want read / want write");
+				debug("%s: want read / want write", __func__);
 				break;
 			default:
 				return -1;
@@ -385,9 +385,8 @@ net_ssl_init(void)
 	(void) SSL_library_init();
 
 	if (RAND_load_file("/dev/urandom", 1024) <= 0) {
-		printtext(&ptext_ctx, "net_ssl_init: "
-		    "Error seeding the PRNG! (%s)",
-		    xstrerror(ENOSYS, strerrbuf, MAXERROR));
+		printtext(&ptext_ctx, "%s: Error seeding the PRNG! (%s)",
+		    __func__, xstrerror(ENOSYS, strerrbuf, MAXERROR));
 	}
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -400,19 +399,19 @@ net_ssl_init(void)
 	if (g_ssl_verify_peer && config_bool("ssl_verify_peer", true)) {
 #ifdef WIN32
 		if (!SSL_CTX_load_verify_locations(ssl_ctx, CAFILE, CADIR)) {
-			printtext(&ptext_ctx, "net_ssl_init: Error loading "
-			    "CA file and/or directory");
+			printtext(&ptext_ctx, "%s: Error loading CA file "
+			    "and/or directory", __func__);
 		}
 #endif
 		if (!SSL_CTX_set_default_verify_paths(ssl_ctx)) {
-			printtext(&ptext_ctx, "net_ssl_init: Error loading "
-			    "default CA file and/or directory");
+			printtext(&ptext_ctx, "%s: Error loading default CA "
+			    "file and/or directory", __func__);
 		}
 		SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, verify_callback);
 		SSL_CTX_set_verify_depth(ssl_ctx, 4);
 	} else {
-		printtext(&ptext_ctx, "net_ssl_init: "
-		    "Certificate verification is disabled: Option set to NO?");
+		printtext(&ptext_ctx, "%s: Certificate verification is "
+		    "disabled: Option set to NO?", __func__);
 	}
 
 	const char *cs = Config("cipher_suite");
