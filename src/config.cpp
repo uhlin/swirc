@@ -83,6 +83,10 @@ static struct tagConfDefValues {
 	{ "username",                  TYPE_STRING,  2, "" },
 	{ "real_name",                 TYPE_STRING,  2, "" },
 
+	{ "identd",                    TYPE_BOOLEAN, 3, "no" },
+	{ "identd_fakenames",          TYPE_BOOLEAN, 1, "no" },
+	{ "identd_port",               TYPE_INTEGER, 2, "113" },
+
 	{ "sasl",                      TYPE_BOOLEAN, 2, "no" },
 	{ "sasl_mechanism",            TYPE_STRING,  1, "PLAIN" },
 	{ "sasl_username",             TYPE_STRING,  1, "" },
