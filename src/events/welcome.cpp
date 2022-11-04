@@ -31,8 +31,10 @@
 
 #include <stdexcept>
 
+#include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
+#include "../identd.hpp"
 #include "../irc.h"
 #include "../main.h"
 #include "../network.h"
@@ -77,6 +79,9 @@ event_welcome(struct irc_message_compo *compo)
 		char	*nick = NULL;
 		char	*srv_host = NULL;
 		char	*state = const_cast<char *>("");
+
+		if (config_bool("identd", false))
+			identd::stop();
 
 		if (compo->prefix == NULL)
 			throw std::runtime_error("no prefix!");
