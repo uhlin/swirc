@@ -140,6 +140,21 @@ void
 identd::stop(void)
 {
 	printtext_print("warn", "%s: stopping daemon...", identd::name);
+
 	identd::listening = false;
 	identd::loop = false;
+
+	if (identd::sock != INVALID_SOCKET) {
+		errno = 0;
+
+#if defined(UNIX)
+		if (shutdown(identd::sock, SHUT_RDWR) != 0)
+			err_log(errno, "%s: shutdown", identd::name);
+#elif defined(WIN32)
+		if (shutdown(identd::sock, SD_BOTH) != 0) {
+			err_log(errno, "%s: shutdown (error code = %d)",
+			    identd::name, WSAGetLastError());
+		}
+#endif
+	}
 }
