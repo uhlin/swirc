@@ -43,6 +43,10 @@
 
 #include <cstring>
 
+#ifndef INET_ADDRSTRLEN
+#define INET_ADDRSTRLEN 16
+#endif
+
 #ifndef INVALID_SOCKET
 #define INVALID_SOCKET -1
 #endif
