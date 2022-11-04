@@ -45,6 +45,7 @@
 #include "dataClassify.h"
 #include "errHand.h"
 #include "icb.h"
+#include "identd.hpp"
 #include "irc.h"
 #include "libUtils.h"
 #include "main.h"
@@ -475,6 +476,7 @@ net_connect(const struct network_connect_context *ctx,
 	PRINTTEXT_CONTEXT	 ptext_ctx;
 	conn_res_t		 conn_res = CONNECTION_FAILED;
 	struct addrinfo		*res = NULL;
+	struct integer_context	 intctx("identd_port", 113, 65535, 113);
 
 	if (ctx == NULL || sleep_time_seconds == NULL)
 		err_exit(EINVAL, "%s", __func__);
@@ -504,6 +506,8 @@ net_connect(const struct network_connect_context *ctx,
 		}
 #endif
 
+		if (config_bool("identd", false))
+			identd::start(config_integer(&intctx));
 		get_ip_addresses(res, ctx->server, ctx->port, &ptext_ctx);
 		establish_conn(res, &ptext_ctx);
 
