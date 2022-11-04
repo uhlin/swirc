@@ -65,7 +65,7 @@ public:
 		memset(&this->addr, 0, sizeof this->addr);
 	}
 
-	ident_client(const SOCKET clisock, const struct sockaddr_in cliaddr)
+	ident_client(const SOCKET clisock, const struct sockaddr_in &cliaddr)
 	{
 		this->sock = clisock;
 		this->addr = cliaddr;
