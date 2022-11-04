@@ -110,6 +110,8 @@ identd::listen_on_port(const int port)
 
 		identd::com_with_client(new ident_client(clisock, cliaddr));
 	}
+
+	printtext_print("warn", "%s: stopped listening", identd::name);
 }
 
 void
