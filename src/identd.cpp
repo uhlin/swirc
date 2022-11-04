@@ -124,8 +124,10 @@ identd::listen_on_port(const int port)
 		socklen_t		len = sizeof cliaddr;
 
 		if ((clisock = accept(identd::sock, reinterpret_cast
-		    <struct sockaddr *>(&cliaddr), &len)) < 0)
+		    <struct sockaddr *>(&cliaddr), &len)) < 0) {
+			(void) napms(222);
 			continue;
+		}
 
 		identd::com_with_client(new ident_client(clisock, cliaddr));
 	}
