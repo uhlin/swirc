@@ -30,8 +30,12 @@
    POSSIBILITY OF SUCH DAMAGE. */
 
 #if defined(UNIX)
+#include <sys/socket.h>
+#include <sys/types.h>
+
 #include <arpa/inet.h>
 #include <netinet/in.h>
+
 #include <unistd.h>
 #elif defined(WIN32)
 #include <ws2tcpip.h>

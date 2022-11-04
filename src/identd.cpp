@@ -29,11 +29,6 @@
 
 #include "common.h"
 
-#if UNIX
-#include <sys/socket.h>
-#include <sys/types.h>
-#endif
-
 #include <stdexcept>
 
 #include "identd.hpp"
