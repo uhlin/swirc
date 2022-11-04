@@ -31,6 +31,7 @@
 
 #include <stdexcept>
 
+#include "errHand.h"
 #include "identd.hpp"
 #include "printtext.h"
 
@@ -38,6 +39,26 @@ SOCKET		 identd::sock = INVALID_SOCKET;
 bool		 identd::listening = false;
 bool		 identd::loop = false;
 const char	*identd::name = "identd";
+
+static void
+clean_up_socket(SOCKET &sock)
+{
+	if (sock != INVALID_SOCKET) {
+		errno = 0;
+
+#if defined(UNIX)
+		if (close(sock) != 0)
+			err_log(errno, "%s: close", __func__);
+#elif defined(WIN32)
+		if (closesocket(sock) != 0) {
+			err_log(errno, "%s: closesocket (error code = %d)",
+			    __func__, WSAGetLastError());
+		}
+#endif
+
+		sock = INVALID_SOCKET;
+	}
+}
 
 void
 identd::enter_loop(ident_client *cli)
@@ -87,9 +108,7 @@ identd::listen_on_port(const int port)
 			    "connections on a socket");
 		}
 	} catch (const std::runtime_error &e) {
-		if (identd::sock != INVALID_SOCKET)
-			xclosesocket(identd::sock);
-		identd::sock = INVALID_SOCKET;
+		clean_up_socket(identd::sock);
 		printtext_print("err", "%s: %s", __func__, e.what());
 		return;
 	}
@@ -111,6 +130,7 @@ identd::listen_on_port(const int port)
 		identd::com_with_client(new ident_client(clisock, cliaddr));
 	}
 
+	clean_up_socket(identd::sock);
 	printtext_print("warn", "%s: stopped listening", identd::name);
 }
 
