@@ -6,10 +6,10 @@ All notable changes to this project will be documented in this file.
 - Added and made use of `printf_and_free()`
 - Added exception handling
 - Added the following config options:
-  - `awaymsgs_in_privconv`
-  - `identd`
-  - `identd_fakenames`
-  - `identd_port`
+  - `awaymsgs_in_privconv` (bool)
+  - `identd` (bool)
+  - `identd_fakenames` (bool)
+  - `identd_port` (int)
 - Added the following events:
   - 413 (`ERR_NOTOPLEVEL`)
   - 414 (`ERR_WILDTOPLEVEL`)
