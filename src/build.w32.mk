@@ -15,6 +15,8 @@ OBJS = $(OBJS)\
 	$(SRC_DIR)errHand.obj\
 	$(SRC_DIR)filePred.obj\
 	$(SRC_DIR)icb.obj\
+	$(SRC_DIR)identd-w32.obj\
+	$(SRC_DIR)identd.obj\
 	$(SRC_DIR)init_once.obj\
 	$(SRC_DIR)initcolors.obj\
 	$(SRC_DIR)interpreter.obj\
