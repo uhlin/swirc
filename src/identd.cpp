@@ -97,6 +97,7 @@ identd::listen_on_port(const int port)
 	printtext_print("success", "%s: listening on port %d", identd::name,
 	    port);
 	identd::listening = true;
+	identd::loop = true;
 
 	while (identd::listening) {
 		SOCKET			clisock;
