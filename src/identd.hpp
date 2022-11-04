@@ -78,11 +78,12 @@ public:
 	const char *
 	get_ip(void)
 	{
-		static char *cp;
+		static char buf[INET_ADDRSTRLEN];
 
-		if ((cp = inet_ntoa(this->addr.sin_addr)) == NULL)
+		if (inet_ntop(AF_INET, &this->addr.sin_addr, &buf[0],
+		    sizeof buf) == NULL)
 			return "";
-		return cp;
+		return &buf[0];
 	}
 
 	SOCKET
