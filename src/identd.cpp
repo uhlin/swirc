@@ -29,13 +29,18 @@
 
 #include "common.h"
 
+#include <inttypes.h>
 #include <stdexcept>
 
+#include "config.h"
 #include "dataClassify.h"
 #include "errHand.h"
 #include "identd.hpp"
+#include "libUtils.h"
 #include "network.h"
 #include "printtext.h"
+#include "strHand.h"
+#include "strdup_printf.h"
 
 SOCKET		 identd::sock = INVALID_SOCKET;
 bool		 identd::listening = false;
