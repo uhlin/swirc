@@ -111,7 +111,7 @@ handle_ident_query(const char *server_port, const char *client_port,
 	    g_last_port))
 		identd::send_response(server_port, client_port, cli);
 	else
-		identd::send_err_response(server_port, client_port, cli);
+		identd::send_err_resp(server_port, client_port, cli);
 	free(port);
 }
 
@@ -236,7 +236,7 @@ identd::listen_on_port(const int port)
 }
 
 void
-identd::send_err_response(const char *server_port, const char *client_port,
+identd::send_err_resp(const char *server_port, const char *client_port,
     ident_client *cli)
 {
 	char	*str;
