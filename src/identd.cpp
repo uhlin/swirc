@@ -67,6 +67,26 @@ clean_up_socket(SOCKET &sock)
 	}
 }
 
+static char *
+get_servport(void)
+{
+#if defined(UNIX)
+#define FOO_TYPE socklen_t
+#elif defined(WIN32)
+#define FOO_TYPE int
+#endif
+	FOO_TYPE len;
+	struct sockaddr_in addr;
+
+	len = sizeof addr;
+	memset(&addr, 0, len);
+
+	if (g_socket == INVALID_SOCKET || getsockname(g_socket, reinterpret_cast
+	    <struct sockaddr *>(&addr), &len) != 0)
+		return NULL;
+	return strdup_printf("%" PRIu16, ntohs(addr.sin_port));
+}
+
 static const char *
 get_username(void)
 {
@@ -83,9 +103,16 @@ static void
 handle_ident_query(const char *server_port, const char *client_port,
     ident_client *cli)
 {
-	printtext_print(NULL, "%s: server port: %s", identd::name, server_port);
-	printtext_print(NULL, "%s: client port: %s", identd::name, client_port);
-	UNUSED_PARAM(cli);
+	char *port;
+
+	if ((port = get_servport()) == NULL)
+		err_log(0, "%s: get_servport() error", __func__);
+	else if (strings_match(port, server_port) && strings_match(client_port,
+	    g_last_port))
+		identd::send_response(server_port, client_port, cli);
+	else
+		identd::send_err_response(server_port, client_port, cli);
+	free(port);
 }
 
 static bool
