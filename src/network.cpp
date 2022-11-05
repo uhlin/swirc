@@ -506,6 +506,8 @@ net_connect(const struct network_connect_context *ctx,
 		}
 #endif
 
+		save_last_server(ctx->server, ctx->port, (ctx->password ?
+		    ctx->password : ""));
 		if (config_bool("identd", false))
 			identd::start(config_integer(&intctx));
 		get_ip_addresses(res, ctx->server, ctx->port, &ptext_ctx);
@@ -543,9 +545,6 @@ net_connect(const struct network_connect_context *ctx,
 		    sleep_time_seconds, conn_res);
 		return conn_res;
 	}
-
-	save_last_server(ctx->server, ctx->port, (ctx->password ? ctx->password
-	    : ""));
 
 	if (!g_icb_mode)
 		window_foreach_rejoin_all_channels();
