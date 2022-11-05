@@ -67,6 +67,18 @@ clean_up_socket(SOCKET &sock)
 	}
 }
 
+static const char *
+get_username(void)
+{
+	return "noname";
+}
+
+static const char *
+get_username_fake(void)
+{
+	return "noname";
+}
+
 static void
 handle_ident_query(const char *server_port, const char *client_port,
     ident_client *cli)
@@ -194,6 +206,51 @@ identd::listen_on_port(const int port)
 
 	clean_up_socket(identd::sock);
 	printtext_print("warn", "%s: stopped listening", identd::name);
+}
+
+void
+identd::send_err_response(const char *server_port, const char *client_port,
+    ident_client *cli)
+{
+	char	*str;
+	int	 len;
+
+	str = strdup_printf("%s , %s : ERROR : NO-USER\r\n", server_port,
+	    client_port);
+	len = size_to_int(strlen(str));
+	errno = 0;
+
+	if (send(cli->get_sock(), str, len, 0) <= 0)
+		err_log(errno, "%s: cannot send", __func__);
+	free(str);
+}
+
+void
+identd::send_response(const char *server_port, const char *client_port,
+    ident_client *cli)
+{
+#if defined(UNIX)
+#define OPSYS "UNIX"
+#elif defined(WIN32)
+#define OPSYS "WIN32"
+#endif
+	char	*str;
+	int	 len;
+
+	if (config_bool("identd_fakenames", false)) {
+		str = strdup_printf("%s , %s : USERID : %s : %s\r\n",
+		    server_port, client_port, OPSYS, get_username_fake());
+	} else {
+		str = strdup_printf("%s , %s : USERID : %s : %s\r\n",
+		    server_port, client_port, OPSYS, get_username());
+	}
+
+	len = size_to_int(strlen(str));
+	errno = 0;
+
+	if (send(cli->get_sock(), str, len, 0) <= 0)
+		err_log(errno, "%s: cannot send", __func__);
+	free(str);
 }
 
 void

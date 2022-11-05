@@ -116,6 +116,8 @@ namespace identd
 	NORETURN void
 		exit_thread(void);
 	void	listen_on_port(const int);
+	void	send_err_response(const char *, const char *, ident_client *);
+	void	send_response(const char *, const char *, ident_client *);
 }
 
 #endif
