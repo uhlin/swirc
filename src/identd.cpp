@@ -70,12 +70,7 @@ clean_up_socket(SOCKET &sock)
 static char *
 get_servport(void)
 {
-#if defined(UNIX)
-#define FOO_TYPE socklen_t
-#elif defined(WIN32)
-#define FOO_TYPE int
-#endif
-	FOO_TYPE len;
+	socklen_t len;
 	struct sockaddr_in addr;
 
 	len = sizeof addr;
