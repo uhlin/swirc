@@ -4,7 +4,9 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
+#ifndef INVALID_SOCKET
 #define INVALID_SOCKET -1
+#endif
 
 struct network_recv_context {
 	int		sock;
