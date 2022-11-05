@@ -193,6 +193,8 @@ identd::listen_on_port(const int port)
 			    "for communication");
 		}
 
+		identd::set_reuseaddr(identd::sock);
+
 		memset(&service, 0, sizeof service);
 		service.sin_family = AF_INET;
 		service.sin_port = htons(port);
