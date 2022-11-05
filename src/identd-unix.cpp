@@ -81,6 +81,17 @@ identd::exit_thread(void)
 }
 
 void
+identd::set_reuseaddr(SOCKET sock)
+{
+	int val = 1;
+
+	errno = 0;
+
+	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(int)) != 0)
+		err_log(errno, "%s: setsockopt error", __func__);
+}
+
+void
 identd::start(const int port)
 {
 	pthread_t	tid;

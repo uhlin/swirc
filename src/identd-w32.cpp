@@ -72,6 +72,18 @@ identd::exit_thread(void)
 }
 
 void
+identd::set_reuseaddr(SOCKET sock)
+{
+	BOOL val = TRUE;
+
+	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<char *>
+	    (&val), sizeof(BOOL)) != 0) {
+		err_log(0, "%s: setsockopt error (code = %d)", __func__,
+		    WSAGetLastError());
+	}
+}
+
+void
 identd::start(const int port)
 {
 	static int i;
