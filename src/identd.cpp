@@ -62,6 +62,15 @@ clean_up_socket(SOCKET &sock)
 	}
 }
 
+static void
+handle_ident_query(const char *server_port, const char *client_port,
+    ident_client *cli)
+{
+	printtext_print(NULL, "%s: server port: %s", identd::name, server_port);
+	printtext_print(NULL, "%s: client port: %s", identd::name, client_port);
+	UNUSED_PARAM(cli);
+}
+
 static bool
 query_chars_ok(const char *recvbuf, const int bytes_received)
 {
@@ -115,10 +124,7 @@ identd::enter_loop(ident_client *cli)
 				break;
 			}
 
-			printtext_print(NULL, "%s: server port: %s",
-			    identd::name, server_port);
-			printtext_print(NULL, "%s: client port: %s",
-			    identd::name, client_port);
+			handle_ident_query(server_port, client_port, cli);
 			break;
 		}
 	}
