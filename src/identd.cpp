@@ -31,8 +31,10 @@
 
 #include <stdexcept>
 
+#include "dataClassify.h"
 #include "errHand.h"
 #include "identd.hpp"
+#include "network.h"
 #include "printtext.h"
 
 SOCKET		 identd::sock = INVALID_SOCKET;
@@ -60,18 +62,65 @@ clean_up_socket(SOCKET &sock)
 	}
 }
 
+static bool
+query_chars_ok(const char *recvbuf, const int bytes_received)
+{
+	static const char legal_index[] = "\r\n ,0123456789";
+
+	for (int i = 0; i < bytes_received; i++) {
+		if (strchr(legal_index, recvbuf[i]) == NULL)
+			return false;
+	}
+
+	return true;
+}
+
 void
 identd::enter_loop(ident_client *cli)
 {
+	char recvbuf[20] = { '\0' };
+	int bytes_received;
+	struct network_recv_context ctx(cli->get_sock(), 0, 3, 0);
+
 	printtext_print("success", "%s: %s connected", identd::name,
 	    cli->get_ip());
 
 	while (identd::loop) {
-		/*
-		 * TODO: Add code
-		 */
+		if ((bytes_received = net_recv_plain(&ctx, &recvbuf[0],
+		    sizeof recvbuf - 1)) < 0) {
+			break;
+		} else if (bytes_received > 0) {
+			char *last = const_cast<char *>("");
+			char *server_port, *client_port;
+			static const char sep[] = "\r\n ,";
 
-		(void) napms(300);
+			if (!query_chars_ok(recvbuf, bytes_received)) {
+				printtext_print("err", "%s: forbidden chars in "
+				    "query", identd::name);
+				break;
+			}
+
+			recvbuf[bytes_received] = '\0';
+
+			server_port = strtok_r(&recvbuf[0], sep, &last);
+			client_port = strtok_r(NULL, sep, &last);
+
+			if (server_port == NULL || client_port == NULL ||
+			    strtok_r(NULL, sep, &last) != NULL ||
+			    !is_numeric(server_port) ||
+			    !is_numeric(client_port) ||
+			    *server_port == '0' || *client_port == '0') {
+				printtext_print("err", "%s: invalid query",
+				    identd::name);
+				break;
+			}
+
+			printtext_print(NULL, "%s: server port: %s",
+			    identd::name, server_port);
+			printtext_print(NULL, "%s: client port: %s",
+			    identd::name, client_port);
+			break;
+		}
 	}
 
 	if (cli->get_sock() != INVALID_SOCKET)
