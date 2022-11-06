@@ -120,12 +120,12 @@ get_username(void)
 static const char *
 get_username_fake(void)
 {
-#ifndef _lint
 	static const char legal_index[] =
 	    "0123456789"
 	    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	    "abcdefghijklmnopqrstuvwxyz";
 
+#ifndef _lint
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<size_t> dist(0, strlen(legal_index) - 1);
