@@ -34,7 +34,7 @@
 #endif
 
 #include <inttypes.h>
-#ifndef _lint
+#if !defined(BSD) && !defined(WIN32)
 #include <random>
 #endif
 #include <stdexcept>
@@ -125,16 +125,17 @@ get_username_fake(void)
 	    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	    "abcdefghijklmnopqrstuvwxyz";
 
-#ifndef _lint
+#if defined(BSD) || defined(WIN32)
+#else
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<size_t> dist(0, strlen(legal_index) - 1);
 
 	for (size_t i = 0; i < ARRAY_SIZE(identd::fakename); i++)
 		identd::fakename[i] = legal_index[dist(gen)];
-	identd::fakename[ARRAY_SIZE(identd::fakename) - 1] = '\0';
 #endif
 
+	identd::fakename[ARRAY_SIZE(identd::fakename) - 1] = '\0';
 	debug("%s: \"%s\"", __func__, &identd::fakename[0]);
 	return &identd::fakename[0];
 }
