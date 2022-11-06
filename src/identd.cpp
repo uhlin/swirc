@@ -40,7 +40,9 @@
 #include <stdexcept>
 
 #if WIN32
+extern "C" {
 #include "compat/stdlib.h" /* arc4random_uniform() */
+}
 #endif
 
 #include "config.h"
