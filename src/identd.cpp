@@ -71,6 +71,16 @@ clean_up_socket(SOCKET &sock)
 	}
 }
 
+static inline int
+get_maxfdp1(void)
+{
+#if defined(UNIX)
+	return (identd::sock + 1);
+#elif defined(WIN32)
+	return -1;
+#endif
+}
+
 static char *
 get_servport(void)
 {
