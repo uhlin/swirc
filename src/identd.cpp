@@ -228,10 +228,31 @@ identd::listen_on_port(const int port)
 
 	while (identd::listening) {
 		SOCKET			clisock;
+		fd_set			readset;
+		socklen_t		len = sizeof(struct sockaddr_in);
 		struct sockaddr_in	cliaddr;
-		socklen_t		len = sizeof cliaddr;
+		struct timeval		tv = { 0 };
 
-		if ((clisock = accept(identd::sock, reinterpret_cast
+		FD_ZERO(&readset);
+		FD_SET(identd::sock, &readset);
+
+		errno = 0;
+
+		tv.tv_sec	= 3;
+		tv.tv_usec	= 111;
+
+		if (select(get_maxfdp1(), &readset, NULL, NULL, &tv) ==
+		    SOCKET_ERROR) {
+			if (errno == EINTR)
+				continue;
+			break;
+		} else if (!FD_ISSET(identd::sock, &readset)) {
+			/*
+			 * No connection to accept()
+			 */
+
+			continue;
+		} else if ((clisock = accept(identd::sock, reinterpret_cast
 		    <struct sockaddr *>(&cliaddr), &len)) < 0) {
 			(void) napms(222);
 			continue;
