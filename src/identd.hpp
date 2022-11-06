@@ -84,7 +84,7 @@ public:
 	}
 
 	const char *
-	get_ip(void)
+	get_ip(void) const
 	{
 		static char buf[INET_ADDRSTRLEN];
 
@@ -95,7 +95,7 @@ public:
 	}
 
 	SOCKET
-	get_sock(void)
+	get_sock(void) const
 	{
 		return this->sock;
 	}
