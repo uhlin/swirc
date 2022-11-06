@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018-2022 Markus Uhlin. All rights reserved.
 .\"
-.Dd October 27, 2022
+.Dd November 6, 2022
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -127,6 +127,40 @@ If having this option set to 'on' causes troubles or if you don't need
 it, it can safely be switched off.
 Switching it off boosts the performance of the printtext module
 significantly.
+.\" ----------------------------------------
+.\" IDENTD
+.\" ----------------------------------------
+.It Sy identd Pq Em bool
+Use the built-in ident protocol daemon/server?
+It's automatically started and stopped during the connection process
+if this option is enabled.
+During the connection process to an IRC server the IRC server often
+attempts to send an ident query to port 113 on your computer.
+You might have seen something like:
+.Bd -literal -offset indent
+*** Processing connection to irc.server.com
+*** Looking up your hostname...
+*** Checking Ident
+*** No Ident response <---
+*** Found your hostname
+.Ed
+.Pp
+This requires port 113 to be open, i.e. not behind a firewall.
+.\" ----------------------------------------
+.\" IDENTD FAKENAMES
+.\" ----------------------------------------
+.It Sy identd_fakenames Pq Em bool
+Respond to ident queries with fake (randomized) names?
+.\" ----------------------------------------
+.\" IDENTD PORT
+.\" ----------------------------------------
+.It Sy identd_port Pq Em int
+Which port shall the ident server listen on?
+In general, on Unix only root can listen on ports below 1024.
+Since you neither CAN or SHOULD run
+.Xr swirc 1
+as root you should specify a different port using this setting and
+configure your firewall to redirect connections to port 113.
 .\" ----------------------------------------
 .\" INVITE NOTIFY
 .\" ----------------------------------------
