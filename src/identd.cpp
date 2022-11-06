@@ -39,6 +39,10 @@
 #endif
 #include <stdexcept>
 
+#if WIN32
+#include "compat/stdlib.h" /* arc4random_uniform() */
+#endif
+
 #include "config.h"
 #include "dataClassify.h"
 #include "errHand.h"
