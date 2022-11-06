@@ -51,6 +51,7 @@
 SOCKET		 identd::sock = INVALID_SOCKET;
 bool		 identd::listening = false;
 bool		 identd::loop = false;
+char		 identd::fakename[20] = { '\0' };
 const char	*identd::name = "identd";
 
 static void

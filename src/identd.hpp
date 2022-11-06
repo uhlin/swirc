@@ -110,6 +110,7 @@ namespace identd
 	extern SOCKET		 sock;
 	extern bool		 listening;
 	extern bool		 loop;
+	extern char		 fakename[];
 	extern const char	*name;
 
 	void	start(const int);
