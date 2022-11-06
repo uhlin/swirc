@@ -34,6 +34,9 @@
 #endif
 
 #include <inttypes.h>
+#ifndef _lint
+#include <random>
+#endif
 #include <stdexcept>
 
 #include "config.h"
