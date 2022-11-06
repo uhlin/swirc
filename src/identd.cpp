@@ -180,8 +180,6 @@ identd::listen_on_port(const int port)
 	try {
 		struct sockaddr_in service;
 
-		errno = 0;
-
 		if ((identd::sock = socket(AF_INET, SOCK_STREAM, 0)) ==
 		    INVALID_SOCKET) {
 			throw std::runtime_error("unable to create an endpoint "
