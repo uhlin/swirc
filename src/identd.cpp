@@ -29,6 +29,10 @@
 
 #include "common.h"
 
+#if UNIX
+#include <sys/select.h>
+#endif
+
 #include <inttypes.h>
 #include <stdexcept>
 
