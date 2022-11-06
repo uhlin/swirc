@@ -55,6 +55,10 @@
 #define NORETURN
 #endif
 
+#ifndef SOCKET_ERROR
+#define SOCKET_ERROR -1
+#endif
+
 #if UNIX
 typedef int SOCKET;
 #endif
