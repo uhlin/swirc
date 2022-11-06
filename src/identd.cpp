@@ -261,6 +261,10 @@ identd::listen_on_port(const int port)
 		clean_up_socket(identd::sock);
 		printtext_print("err", "%s: %s", __func__, e.what());
 		return;
+	} catch (...) {
+		clean_up_socket(identd::sock);
+		printtext_print("err", "%s: %s", __func__, "unknown exception");
+		return;
 	}
 
 	printtext_print("success", "%s: listening on port %d", identd::name,
