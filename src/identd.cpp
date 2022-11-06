@@ -41,6 +41,8 @@
 #include "errHand.h"
 #include "identd.hpp"
 #include "libUtils.h"
+#include "main.h"
+#include "nestHome.h"
 #include "network.h"
 #include "printtext.h"
 #include "strHand.h"
@@ -99,6 +101,15 @@ get_servport(void)
 static const char *
 get_username(void)
 {
+	static char *username;
+
+	if ((username = g_cmdline_opts->username) != NULL)
+		return username;
+	else if ((username = Config_mod("username")) != NULL &&
+	    !strings_match(username, ""))
+		return username;
+	else if ((username = g_user) != NULL && !strings_match(username, ""))
+		return username;
 	return "noname";
 }
 
