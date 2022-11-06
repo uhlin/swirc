@@ -54,6 +54,7 @@ extern "C" {
 #include "nestHome.h"
 #include "network.h"
 #include "printtext.h"
+#include "sig.h"
 #include "strHand.h"
 #include "strdup_printf.h"
 
@@ -188,6 +189,7 @@ identd::enter_loop(ident_client *cli)
 
 	printtext_print("success", "%s: %s connected", identd::name,
 	    cli->get_ip());
+	block_signals();
 
 	while (identd::loop) {
 		if ((bytes_received = net_recv_plain(&ctx, &recvbuf[0],
@@ -269,6 +271,7 @@ identd::listen_on_port(const int port)
 
 	printtext_print("success", "%s: listening on port %d", identd::name,
 	    port);
+	block_signals();
 	identd::listening = true;
 	identd::loop = true;
 
