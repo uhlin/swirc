@@ -130,6 +130,10 @@ get_username_fake(void)
 	    "abcdefghijklmnopqrstuvwxyz";
 
 #if defined(BSD) || defined(WIN32)
+	for (size_t i = 0; i < ARRAY_SIZE(identd::fakename); i++) {
+		identd::fakename[i] = legal_index[arc4random_uniform
+		    (sizeof legal_index - 1)];
+	}
 #else
 	std::random_device rd;
 	std::mt19937 gen(rd());
