@@ -67,7 +67,9 @@ squeeze_text_deco(char *buffer)
 	else if (strings_match(buffer, ""))
 		return buffer;
 
-	for (i = j = 0; buffer[i] != '\0'; i++) {
+	i = j = 0;
+
+	while (buffer[i] != '\0') {
 		switch (buffer[i]) {
 		case COLOR:
 		{
@@ -141,6 +143,8 @@ squeeze_text_deco(char *buffer)
 				buffer[j++] = buffer[i];
 			break;
 		} /* switch block */
+
+		i++;
 	}
 
 	buffer[j] = '\0';
