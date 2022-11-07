@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018-2022 Markus Uhlin. All rights reserved.
 .\"
-.Dd November 6, 2022
+.Dd November 7, 2022
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -160,7 +160,8 @@ In general, on Unix only root can listen on ports below 1024.
 Since you neither CAN or SHOULD run
 .Xr swirc 1
 as root you should specify a different port using this setting and
-configure your firewall to redirect connections to port 113.
+configure your firewall to redirect connections to port 113 to this
+one.
 .\" ----------------------------------------
 .\" INVITE NOTIFY
 .\" ----------------------------------------
