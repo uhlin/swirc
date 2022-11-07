@@ -284,13 +284,10 @@ case_blink(WINDOW *win, bool *is_blink)
 {
 	UNUSED_PARAM(win);
 
-	if (! (*is_blink)) {
-		//WATTR_ON(win, A_BLINK);
+	if (!*is_blink)
 		*is_blink = true;
-	} else {
-		//WATTR_OFF(win, A_BLINK);
+	else
 		*is_blink = false;
-	}
 }
 
 /**

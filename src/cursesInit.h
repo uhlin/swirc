@@ -2,7 +2,6 @@
 #define CURSES_INIT_H
 
 #define LIGHT_RED	8
-//#define LIGHT_YELLOW	8
 #define LIGHT_GREEN	9
 #define LIGHT_CYAN	11
 #define LIGHT_BLUE	12

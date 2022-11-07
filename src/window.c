@@ -795,7 +795,6 @@ window_scroll_up(PIRC_WINDOW window, const int amount)
 			/*
 			 * first page up
 			 */
-//			window->scroll_count += MIN_SIZE;
 			window->scroll_count += first_page_up(window);
 		}
 

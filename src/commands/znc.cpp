@@ -148,8 +148,6 @@ cmd_znc(const char *data)
 			    tokens.at(0).c_str()) < 0) {
 				throw std::runtime_error("cannot send");
 			}
-
-//			return;
 		} else if (tokens.size() != 2) {
 			throw std::runtime_error("bogus number of tokens "
 			    "(expected 2)");

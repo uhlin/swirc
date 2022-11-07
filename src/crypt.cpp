@@ -29,7 +29,6 @@
 
 #include "common.h"
 
-//#include <cmath>
 #include <stdexcept>
 
 #include "base64.h"
