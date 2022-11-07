@@ -33,6 +33,12 @@ enum message_specifier_type {
 	TYPE_SPEC_NONE
 };
 
+typedef enum {
+	BUF_EOF,
+	GO_ON,
+	STOP_INTERPRETING
+} cc_check_t;
+
 typedef struct tagPRINTTEXT_CONTEXT {
 	PIRC_WINDOW window;
 	enum message_specifier_type spec_type;

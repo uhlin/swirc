@@ -349,12 +349,6 @@ convert_wc(wchar_t wc)
 	    1));
 }
 
-typedef enum {
-	BUF_EOF,
-	GO_ON,
-	STOP_INTERPRETING
-} cc_check_t;
-
 /**
  * check for ^CN
  */
