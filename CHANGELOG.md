@@ -15,12 +15,14 @@ All notable changes to this project will be documented in this file.
   - 414 (`ERR_WILDTOPLEVEL`)
   - 415 (`ERR_BADMASK`)
 - Added usage of `__func__`
+- Deleted commented-out code
 - Did code refactoring
 - Fixed display of IPv6 addresses in event 338
 - Made const arrays static const
 - Made improvements to the following files:
   - `commands/theme.c`
   - `network.cpp`
+- Moved `squeeze_text_deco()` to a separate file
 - Reduced VA args in printtext calls
 
 ## [3.3.7] - 2022-10-22 ##
