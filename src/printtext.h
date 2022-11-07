@@ -3,6 +3,7 @@
 
 #include "irc.h"
 #include "mutex.h"
+#include "squeeze_text_deco.h"
 #include "window.h"
 
 /* text decoration */
@@ -75,7 +76,6 @@ void	printtext_context_init(PPRINTTEXT_CONTEXT, PIRC_WINDOW,
 /*lint -printf(2, printtext) */
 /*lint -printf(2, printtext_print) */
 
-char	*squeeze_text_deco(char *);
 short int
 	 color_pair_find(short int foreground, short int background);
 void	 print_and_free(const char *msg, char *);

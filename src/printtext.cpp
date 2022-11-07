@@ -1006,20 +1006,6 @@ get_processed_out_message(
 }
 
 /**
- * Helper function for squeeze_text_deco().
- */
-static void
-handle_foo_situation(char *buffer, long int &i, long int &j, const char *reject)
-{
-	if (!buffer[i])
-		return;
-	else if (buffer[i] == COLOR)
-		i--;
-	else if (strchr(reject, buffer[i]) == NULL)
-		buffer[j++] = buffer[i];
-}
-
-/**
  * WIN32 specific: attempt to convert multibyte character string to
  * wide-character string by using UTF-8. The storage is obtained with
  * xcalloc().
@@ -1277,113 +1263,6 @@ printtext_context_init(
 
 	BZERO(ctx->server_time, sizeof ctx->server_time);
 	ctx->has_server_time = false;
-}
-
-/**
- * Squeeze text-decoration from a buffer
- *
- * @param buffer Target buffer
- * @return The result
- */
-char *
-squeeze_text_deco(char *buffer)
-{
-	static const char reject[] =
-	    TXT_BLINK
-	    TXT_BOLD
-	    TXT_NORMAL
-	    TXT_REVERSE
-	    TXT_UNDERLINE;
-	long int i, j;
-#if defined(__cplusplus) && __cplusplus >= 201703L
-	[[maybe_unused]] bool has_comma;
-#else
-	bool has_comma;
-#endif
-
-	if (buffer == NULL)
-		err_exit(EINVAL, "%s", __func__);
-	else if (strings_match(buffer, ""))
-		return buffer;
-
-	for (i = j = 0; buffer[i] != '\0'; i++) {
-		switch (buffer[i]) {
-		case COLOR:
-		{
-			/*
-			 * check for ^CN
-			 */
-			if (!sw_isdigit(buffer[++i])) {
-				handle_foo_situation(buffer, i, j, reject);
-				break;
-			}
-
-			/*
-			 * check for ^CNN or ^CN,
-			 */
-			if (!sw_isdigit(buffer[++i]) && buffer[i] != ',') {
-				handle_foo_situation(buffer, i, j, reject);
-				break;
-			}
-
-			has_comma = buffer[i++] == ',';
-
-			/*
-			 * check for ^CNN, or ^CN,N
-			 */
-			if (!has_comma && buffer[i] == ',') {
-				has_comma = true;
-			} else if (has_comma && sw_isdigit(buffer[i])) {
-				/* ^CN,N */;
-			} else if (has_comma && !sw_isdigit(buffer[i])) {
-				i--;
-				handle_foo_situation(buffer, i, j, reject);
-				break;
-			} else {
-				handle_foo_situation(buffer, i, j, reject);
-				break;
-			}
-
-			sw_assert(has_comma);
-			UNUSED_VAR(has_comma);
-
-			/*
-			 * check for ^CNN,N or ^CN,NN
-			 */
-			if (buffer[i] == ',') { /* ^CNN, */
-				if (!sw_isdigit(buffer[++i])) {
-					i--;
-					handle_foo_situation(buffer, i, j,
-					    reject);
-					break;
-				}
-			} else { /* ^CN,N */
-				sw_assert(sw_isdigit(buffer[i]));
-				if (sw_isdigit(buffer[++i])) /* we have ^CN,NN? */
-					break;
-				handle_foo_situation(buffer, i, j, reject);
-				break;
-			}
-
-			/*
-			 * check for ^CNN,NN
-			 */
-			if (!sw_isdigit(buffer[++i])) {
-				handle_foo_situation(buffer, i, j, reject);
-				break;
-			}
-
-			break;
-		} /* case COLOR */
-		default:
-			if (strchr(reject, buffer[i]) == NULL)
-				buffer[j++] = buffer[i];
-			break;
-		} /* switch block */
-	}
-
-	buffer[j] = '\0';
-	return buffer;
 }
 
 /**
