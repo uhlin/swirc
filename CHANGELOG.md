@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Deleted commented-out code
 - Did code refactoring
 - Fixed display of IPv6 addresses in event 338
+- Fixed verification of the X509 certificate presented by the peer
 - Made const arrays static const
 - Made improvements to the following files:
   - `commands/theme.c`
