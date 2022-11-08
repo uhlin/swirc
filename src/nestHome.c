@@ -233,23 +233,10 @@ save_cmdline_opts(const char *path)
 	config_do_save(path, "w");
 }
 
-void
-nestHome_init(void)
+static void
+read_config(void)
 {
 #define EXPLICIT_CONFIG g_cmdline_opts->config_file
-	char *hp = path_to_home() ? sw_strdup(path_to_home()) : NULL;
-	const char *cp, *mech;
-
-	if (isNull(hp))
-		err_quit("Can't resolve homepath!");
-
-	init_globals(hp);
-	make_requested_dir(g_home_dir);
-	make_requested_dir(g_tmp_dir);
-	make_requested_dir(g_log_dir);
-
-	config_init();
-	theme_init();
 
 	if (g_explicit_config_file) {
 		if (file_exists(EXPLICIT_CONFIG) &&
@@ -280,13 +267,38 @@ nestHome_init(void)
 	} else {
 		sw_assert_not_reached();
 	}
+}
 
+static void
+read_config_post_check(void)
+{
 	if (get_sasl_passwd_type() == g_decrypted_pass_sym) {
 		err_msg("warning!");
 		err_msg("decrypted SASL password found in read config  --  "
 		    "cannot continue!");
 		abort();
 	}
+}
+
+void
+nestHome_init(void)
+{
+	char *hp = path_to_home() ? sw_strdup(path_to_home()) : NULL;
+	const char *cp, *mech;
+
+	if (isNull(hp))
+		err_quit("Can't resolve homepath!");
+
+	init_globals(hp);
+	make_requested_dir(g_home_dir);
+	make_requested_dir(g_tmp_dir);
+	make_requested_dir(g_log_dir);
+
+	config_init();
+	theme_init();
+
+	read_config();
+	read_config_post_check();
 
 	mech = Config("sasl_mechanism");
 	if (sasl_is_enabled() &&
