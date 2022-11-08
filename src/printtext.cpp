@@ -592,12 +592,12 @@ init_numbers(const char *fg, const char *bg, short int &num1, short int &num2)
 static void
 case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 {
-	bool has_comma = false;
-	cc_check_t res;
-	char bg[10] = { 0 };
-	char fg[10] = { 0 };
-	short int num1 = -1;
-	short int num2 = -1;
+	bool		has_comma = false;
+	cc_check_t	res;
+	char		bg[10] = { 0 };
+	char		fg[10] = { 0 };
+	short int	num1 = -1;
+	short int	num2 = -1;
 
 	if (*is_color) {
 		WCOLOR_SET(win, 0);
