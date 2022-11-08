@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 - Made improvements to the following files:
   - `commands/theme.c`
   - `network.cpp`
+  - `printtext.cpp`
 - Moved `squeeze_text_deco()` to a separate file
 - Reduced VA args in printtext calls
 
