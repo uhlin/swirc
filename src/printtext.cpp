@@ -566,6 +566,21 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 	*is_color = true;
 }
 
+static void
+init_numbers(const char *fg, const char *bg, short int &num1, short int &num2)
+{
+	struct integer_context intctx("term_background", 0, 15, 1);
+
+	num1 = static_cast<short int>(atoi(fg));
+
+	if (!isEmpty(bg))
+		num2 = static_cast<short int>(atoi(bg));
+	else if (isEmpty(bg) && theme_bool("term_use_default_colors", true))
+		num2 = -1;
+	else
+		num2 = static_cast<short int>(theme_integer(&intctx));
+}
+
 /**
  * Handle and interpret color codes.
  *
@@ -583,7 +598,6 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	char fg[10] = { 0 };
 	short int num1 = -1;
 	short int num2 = -1;
-	struct integer_context intctx("term_background", 0, 15, 1);
 
 	if (*is_color) {
 		WCOLOR_SET(win, 0);
@@ -609,16 +623,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	else if (check_for_part5(bufp, &bg[1]) == BUF_EOF)
 		return;
 
-	num1 = static_cast<short int>(atoi(fg));
-
-	if (!isEmpty(bg)) {
-		num2 = static_cast<short int>(atoi(bg));
-	} else if (isEmpty(bg) && theme_bool("term_use_default_colors", true)) {
-		num2 = -1;
-	} else {
-		num2 = static_cast<short int>(theme_integer(&intctx));
-	}
-
+	init_numbers(&fg[0], &bg[0], num1, num2);
 	printtext_set_color(win, is_color, num1, num2);
 
 	if (has_comma && !(bg[0]))
