@@ -1247,19 +1247,21 @@ color_pair_find(short int fg, short int bg)
 void
 print_and_free(const char *msg, char *cp)
 {
+#ifndef UNIT_TESTING
+	PRINTTEXT_CONTEXT ctx;
+#endif
+
 	if (msg == NULL)
 		err_exit(EINVAL, "%s", __func__);
 
-#ifdef UNIT_TESTING
-	(void) fprintf(stderr, "** %s **\r\n", msg);
-	free(cp);
-	fail();
-#else
-	PRINTTEXT_CONTEXT ctx;
-
+#ifndef UNIT_TESTING
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 	printtext(&ctx, "%s", msg);
 	free(cp);
+#else
+	fprintf(stderr, "** %s **\r\n", msg);
+	free(cp);
+	fail();
 #endif
 }
 
