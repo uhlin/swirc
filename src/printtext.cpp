@@ -1581,10 +1581,10 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 	}
 
 	if (ctx->window->logging) {
-		char *logpath = log_get_path(g_server_hostname,
-		    ctx->window->label);
+		char *logpath;
 
-		if (logpath) {
+		if ((logpath = log_get_path(g_server_hostname,
+		    ctx->window->label)) != NULL) {
 			log_msg(logpath, pout->text);
 			free(logpath);
 		}
