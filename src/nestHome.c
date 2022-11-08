@@ -272,11 +272,25 @@ read_config(void)
 static void
 read_config_post_check(void)
 {
+	const char *cp, *mech;
+
 	if (get_sasl_passwd_type() == g_decrypted_pass_sym) {
 		err_msg("warning!");
 		err_msg("decrypted SASL password found in read config  --  "
 		    "cannot continue!");
 		abort();
+	}
+
+	mech = Config("sasl_mechanism");
+
+	if (sasl_is_enabled() &&
+	    is_sasl_mechanism_supported(mech) &&
+	    !strings_match(mech, "ECDSA-NIST256P-CHALLENGE") &&
+	    get_sasl_passwd_type() == g_encrypted_pass_sym) {
+		cp = Config("sasl_password");
+
+		if (!strings_match(cp, ""))
+			prompt_for_decryption(cp);
 	}
 }
 
@@ -284,7 +298,6 @@ void
 nestHome_init(void)
 {
 	char *hp = path_to_home() ? sw_strdup(path_to_home()) : NULL;
-	const char *cp, *mech;
 
 	if (isNull(hp))
 		err_quit("Can't resolve homepath!");
@@ -299,16 +312,6 @@ nestHome_init(void)
 
 	read_config();
 	read_config_post_check();
-
-	mech = Config("sasl_mechanism");
-	if (sasl_is_enabled() &&
-	    is_sasl_mechanism_supported(mech) &&
-	    !strings_match(mech, "ECDSA-NIST256P-CHALLENGE") &&
-	    get_sasl_passwd_type() == g_encrypted_pass_sym) {
-		cp = Config("sasl_password");
-		if (!strings_match(cp, ""))
-			prompt_for_decryption(cp);
-	}
 
 	config_lock_hash_table();
 
