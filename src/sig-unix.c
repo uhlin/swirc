@@ -65,8 +65,8 @@ signal_handler(int signum)
 	if (signum == SIGWINCH) {
 		struct timespec ts;
 
-		ts.tv_sec = 0;
-		ts.tv_nsec = 250000000;
+		ts.tv_sec	= 0;
+		ts.tv_nsec	= 250000000;
 
 		if (nanosleep(&ts, NULL) == 0 && !atomic_load_bool
 		    (&g_connection_in_progress))
