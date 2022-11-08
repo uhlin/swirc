@@ -89,6 +89,26 @@ create_openssl_scripts(void)
 }
 
 static void
+init_globals(const char *hp)
+{
+	g_user = sw_strdup(getuser());
+
+#if defined(UNIX)
+	g_home_dir = strdup_printf("%s/.swirc", hp);
+	g_tmp_dir = strdup_printf("%s/.swirc/tmp", hp);
+	g_log_dir = strdup_printf("%s/.swirc/log", hp);
+	g_config_file = strdup_printf("%s/.swirc/swirc%s", hp,
+	    g_config_filesuffix);
+#elif defined(WIN32)
+	g_home_dir = strdup_printf("%s\\swirc", hp);
+	g_tmp_dir = strdup_printf("%s\\swirc\\tmp", hp);
+	g_log_dir = strdup_printf("%s\\swirc\\log", hp);
+	g_config_file = strdup_printf("%s\\swirc\\swirc%s", hp,
+	    g_config_filesuffix);
+#endif
+}
+
+static void
 make_requested_dir(const char *path)
 {
 	if (is_directory(path)) {
@@ -223,22 +243,7 @@ nestHome_init(void)
 	if (isNull(hp))
 		err_quit("Can't resolve homepath!");
 
-	g_user = sw_strdup(getuser());
-
-#if defined(UNIX)
-	g_home_dir = strdup_printf("%s/.swirc", hp);
-	g_tmp_dir = strdup_printf("%s/.swirc/tmp", hp);
-	g_log_dir = strdup_printf("%s/.swirc/log", hp);
-	g_config_file = strdup_printf("%s/.swirc/swirc%s", hp,
-	    g_config_filesuffix);
-#elif defined(WIN32)
-	g_home_dir = strdup_printf("%s\\swirc", hp);
-	g_tmp_dir = strdup_printf("%s\\swirc\\tmp", hp);
-	g_log_dir = strdup_printf("%s\\swirc\\log", hp);
-	g_config_file = strdup_printf("%s\\swirc\\swirc%s", hp,
-	    g_config_filesuffix);
-#endif
-
+	init_globals(hp);
 	make_requested_dir(g_home_dir);
 	make_requested_dir(g_tmp_dir);
 	make_requested_dir(g_log_dir);
