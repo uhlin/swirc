@@ -294,27 +294,9 @@ read_config_post_check(void)
 	}
 }
 
-void
-nestHome_init(void)
+static void
+read_theme(const char *hp)
 {
-	char *hp = path_to_home() ? sw_strdup(path_to_home()) : NULL;
-
-	if (isNull(hp))
-		err_quit("Can't resolve homepath!");
-
-	init_globals(hp);
-	make_requested_dir(g_home_dir);
-	make_requested_dir(g_tmp_dir);
-	make_requested_dir(g_log_dir);
-
-	config_init();
-	theme_init();
-
-	read_config();
-	read_config_post_check();
-
-	config_lock_hash_table();
-
 #if defined(UNIX)
 	g_theme_file = strdup_printf("%s/.swirc/%s%s", hp, Config("theme"),
 	    g_theme_filesuffix);
@@ -341,7 +323,30 @@ nestHome_init(void)
 	} else {
 		theme_readit(g_theme_file, "r");
 	}
+}
 
+void
+nestHome_init(void)
+{
+	char *hp = path_to_home() ? sw_strdup(path_to_home()) : NULL;
+
+	if (isNull(hp))
+		err_quit("Can't resolve homepath!");
+
+	init_globals(hp);
+	make_requested_dir(g_home_dir);
+	make_requested_dir(g_tmp_dir);
+	make_requested_dir(g_log_dir);
+
+	config_init();
+	theme_init();
+
+	read_config();
+	read_config_post_check();
+
+	config_lock_hash_table();
+
+	read_theme(hp);
 	free(hp);
 	create_openssl_scripts();
 }
