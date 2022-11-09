@@ -3,7 +3,8 @@
 ![Swirc Logo](https://www.nifty-networks.net/swirc/gfx/swirc-royal-110x110.png)
 
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/18215/badge.svg)](https://scan.coverity.com/projects/uhlin-swirc)
-[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/uhlin/swirc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/uhlin/swirc/context:cpp)
+[![CodeQL](https://github.com/uhlin/swirc/actions/workflows/codeql.yml/badge.svg)](https://github.com/uhlin/swirc/actions/workflows/codeql.yml)
+[![macOS](https://github.com/uhlin/swirc/actions/workflows/macos.yml/badge.svg)](https://github.com/uhlin/swirc/actions/workflows/macos.yml)
 
 ## What is Swirc? ##
 
