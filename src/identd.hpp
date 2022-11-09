@@ -107,11 +107,11 @@ private:
 
 namespace identd
 {
-	extern SOCKET		 sock;
+	extern char		 fakename[];
 	extern bool		 listening;
 	extern bool		 loop;
-	extern char		 fakename[];
 	extern const char	*name;
+	extern SOCKET		 sock;
 
 	void	start(const int);
 	void	stop(void);

@@ -58,11 +58,11 @@ extern "C" {
 #include "strHand.h"
 #include "strdup_printf.h"
 
-SOCKET		 identd::sock = INVALID_SOCKET;
+char		 identd::fakename[20] = { '\0' };
 bool		 identd::listening = false;
 bool		 identd::loop = false;
-char		 identd::fakename[20] = { '\0' };
 const char	*identd::name = "identd";
+SOCKET		 identd::sock = INVALID_SOCKET;
 
 static void
 clean_up_socket(SOCKET &sock)
