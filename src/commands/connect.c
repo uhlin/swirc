@@ -502,6 +502,79 @@ ssl_is_enabled(void)
 	return secure_connection;
 }
 
+static void
+choose_server(const char *server, const char *port)
+{
+	static PIRC_SERVER srvptr;
+
+	g_disconnect_wanted = false;
+	g_connection_lost = g_on_air = false;
+
+	if (strings_match_ignore_case(server, "afternet")) {
+		srvptr = get_server_v2(&afternet_servers[0],
+		    ARRAY_SIZE(afternet_servers),
+		    "AfterNET IRC network - www.afternet.org");
+		IRC_CONNECT(srvptr->host, srvptr->port);
+	} else if (strings_match_ignore_case(server, "alphachat")) {
+		srvptr = get_server_v2(&alphachat_servers[0],
+		    ARRAY_SIZE(alphachat_servers),
+		    "AlphaChat - www.alphachat.net");
+		IRC_CONNECT(srvptr->host, srvptr->port);
+	} else if (strings_match_ignore_case(server, "anonops")) {
+		srvptr = get_server_v2(&anonops_servers[0],
+		    ARRAY_SIZE(anonops_servers),
+		    "AnonOps IRC network");
+		IRC_CONNECT(srvptr->host, srvptr->port);
+	} else if (strings_match_ignore_case(server, "efnet")) {
+		srvptr = get_server_v2(&efnet_servers[0],
+		    ARRAY_SIZE(efnet_servers),
+		    "Eris Free network");
+		IRC_CONNECT(srvptr->host, srvptr->port);
+	} else if (strings_match_ignore_case(server, "freenode")) {
+		srvptr = get_server_v2(&freenode_servers[0],
+		    ARRAY_SIZE(freenode_servers),
+		    "Freenode IRC network");
+		IRC_CONNECT(srvptr->host, srvptr->port);
+	} else if (strings_match_ignore_case(server, "ircnet")) {
+		srvptr = get_server_v2(&ircnet_servers[0],
+		    ARRAY_SIZE(ircnet_servers),
+		    "IRCnet servers");
+		IRC_CONNECT(srvptr->host, srvptr->port);
+	} else if (strings_match_ignore_case(server, "ircnow")) {
+		srvptr = get_server_v2(&ircnow_servers[0],
+		    ARRAY_SIZE(ircnow_servers),
+		    "IRCNow: The Users' Network");
+		IRC_CONNECT(srvptr->host, srvptr->port);
+	} else if (strings_match_ignore_case(server, "libera")) {
+		srvptr = get_server_v2(&libera_servers[0],
+		    ARRAY_SIZE(libera_servers),
+		    "Libera Chat");
+		IRC_CONNECT(srvptr->host, srvptr->port);
+	} else if (strings_match_ignore_case(server, "oftc")) {
+		srvptr = get_server_v2(&oftc_servers[0],
+		    ARRAY_SIZE(oftc_servers),
+		    "The Open and Free Technology Community");
+		IRC_CONNECT(srvptr->host, srvptr->port);
+	} else if (strings_match_ignore_case(server, "quakenet")) {
+		srvptr = get_server_v2(&quakenet_servers[0],
+		    ARRAY_SIZE(quakenet_servers),
+		    "QuakeNet IRC network");
+		IRC_CONNECT(srvptr->host, srvptr->port);
+	} else if (strings_match_ignore_case(server, "undernet")) {
+		srvptr = get_server_v2(&undernet_servers[0],
+		    ARRAY_SIZE(undernet_servers),
+		    "Undernet IRC Network");
+		IRC_CONNECT(srvptr->host, srvptr->port);
+	} else if (strings_match_ignore_case(server, "test")) {
+		srvptr = get_server_v2(&test_servers[0],
+		    ARRAY_SIZE(test_servers),
+		    "Test servers; both ICB and IRC");
+		IRC_CONNECT(srvptr->host, srvptr->port);
+	} else {
+		IRC_CONNECT(server, port);
+	}
+}
+
 /* usage: /connect [-tls] <server[:port]> */
 void
 cmd_connect(const char *data)
@@ -565,71 +638,7 @@ cmd_connect(const char *data)
 		print_and_free("/connect: bogus port number", dcopy);
 		return;
 	} else {
-		static PIRC_SERVER srvptr;
-
-		g_disconnect_wanted = false;
-		g_connection_lost = g_on_air = false;
-
-		if (strings_match_ignore_case(server, "afternet")) {
-			srvptr = get_server_v2(&afternet_servers[0],
-			    ARRAY_SIZE(afternet_servers), "AfterNET IRC network"
-			    " - www.afternet.org");
-			IRC_CONNECT(srvptr->host, srvptr->port);
-		} else if (strings_match_ignore_case(server, "alphachat")) {
-			srvptr = get_server_v2(&alphachat_servers[0],
-			    ARRAY_SIZE(alphachat_servers), "AlphaChat - "
-			    "www.alphachat.net");
-			IRC_CONNECT(srvptr->host, srvptr->port);
-		} else if (strings_match_ignore_case(server, "anonops")) {
-			srvptr = get_server_v2(&anonops_servers[0],
-			    ARRAY_SIZE(anonops_servers), "AnonOps IRC network");
-			IRC_CONNECT(srvptr->host, srvptr->port);
-		} else if (strings_match_ignore_case(server, "efnet")) {
-			srvptr = get_server_v2(&efnet_servers[0],
-			    ARRAY_SIZE(efnet_servers), "Eris Free network");
-			IRC_CONNECT(srvptr->host, srvptr->port);
-		} else if (strings_match_ignore_case(server, "freenode")) {
-			srvptr = get_server_v2(&freenode_servers[0],
-			    ARRAY_SIZE(freenode_servers), "Freenode IRC "
-			    "network");
-			IRC_CONNECT(srvptr->host, srvptr->port);
-		} else if (strings_match_ignore_case(server, "ircnet")) {
-			srvptr = get_server_v2(&ircnet_servers[0],
-			    ARRAY_SIZE(ircnet_servers), "IRCnet servers");
-			IRC_CONNECT(srvptr->host, srvptr->port);
-		} else if (strings_match_ignore_case(server, "ircnow")) {
-			srvptr = get_server_v2(&ircnow_servers[0],
-			    ARRAY_SIZE(ircnow_servers), "IRCNow: "
-			    "The Users' Network");
-			IRC_CONNECT(srvptr->host, srvptr->port);
-		} else if (strings_match_ignore_case(server, "libera")) {
-			srvptr = get_server_v2(&libera_servers[0],
-			    ARRAY_SIZE(libera_servers), "Libera Chat");
-			IRC_CONNECT(srvptr->host, srvptr->port);
-		} else if (strings_match_ignore_case(server, "oftc")) {
-			srvptr = get_server_v2(&oftc_servers[0],
-			    ARRAY_SIZE(oftc_servers), "The Open and Free "
-			    "Technology Community");
-			IRC_CONNECT(srvptr->host, srvptr->port);
-		} else if (strings_match_ignore_case(server, "quakenet")) {
-			srvptr = get_server_v2(&quakenet_servers[0],
-			    ARRAY_SIZE(quakenet_servers), "QuakeNet IRC "
-			    "network");
-			IRC_CONNECT(srvptr->host, srvptr->port);
-		} else if (strings_match_ignore_case(server, "undernet")) {
-			srvptr = get_server_v2(&undernet_servers[0],
-			    ARRAY_SIZE(undernet_servers), "Undernet IRC "
-			    "Network");
-			IRC_CONNECT(srvptr->host, srvptr->port);
-		} else if (strings_match_ignore_case(server, "test")) {
-			srvptr = get_server_v2(&test_servers[0],
-			    ARRAY_SIZE(test_servers), "Test servers; "
-			    "both ICB and IRC");
-			IRC_CONNECT(srvptr->host, srvptr->port);
-		} else {
-			IRC_CONNECT(server, port);
-		}
-
+		choose_server(server, port);
 		free(dcopy);
 	}
 }
