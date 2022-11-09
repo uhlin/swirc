@@ -326,11 +326,13 @@ static void
 list_all_commands(void)
 {
 	PRINTTEXT_CONTEXT ctx;
+	struct cmds_tag *sp;
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
 	printtext(&ctx, "--------------- Commands ---------------");
 
-	FOREACH_COMMAND() {
+	sp = &cmds[0];
+	while (sp < &cmds[ARRAY_SIZE(cmds)]) {
 		const char *cmd1 = sp->cmd;
 		char *cmd2, *cmd3;
 
@@ -353,6 +355,7 @@ list_all_commands(void)
 			printtext(&ctx, "%s", cmd1);
 		else
 			sw_assert_not_reached();
+		sp++;
 	}
 }
 
