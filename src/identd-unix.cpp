@@ -97,6 +97,9 @@ identd::start(const int port)
 	pthread_t	tid;
 	static int	i;
 
+	if (identd::start_pre_check() == -1)
+		return;
+
 	i = port;
 
 	if ((errno = pthread_create(&tid, NULL, accept_thread, &i)) != 0)

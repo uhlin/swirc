@@ -88,6 +88,9 @@ identd::start(const int port)
 {
 	static int i;
 
+	if (identd::start_pre_check() == -1)
+		return;
+
 	i = port;
 
 	if (_beginthread(accept_thread, 0, &i) == g_beginthread_failed)
