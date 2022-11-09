@@ -113,6 +113,7 @@ namespace identd
 	extern const char	*name;
 	extern SOCKET		 sock;
 
+	int	start_pre_check(void);
 	void	start(const int);
 	void	stop(void);
 

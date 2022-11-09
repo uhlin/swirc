@@ -359,6 +359,14 @@ identd::send_response(const char *server_port, const char *client_port,
 	free(str);
 }
 
+int
+identd::start_pre_check(void)
+{
+	if (identd::listening || identd::sock != INVALID_SOCKET)
+		return -1;
+	return 0;
+}
+
 void
 identd::stop(void)
 {
