@@ -9,7 +9,7 @@ link_with_libnotify () {
 	local _tmpfile _srcfile _out
 	local _includes _libs
 
-	echo -n "creating temp file..."
+	printf "creating temp file..."
 	_tmpfile=$(mktemp) || { echo "error"; exit 1; }
 	echo "ok"
 
@@ -38,7 +38,7 @@ EOF
 	_includes="$(pkg-config --cflags-only-I libnotify)"
 	_libs="$(pkg-config --libs-only-l libnotify)"
 
-	echo -n "checking whether to define 'USE_LIBNOTIFY=1'..."
+	printf "checking whether to define 'USE_LIBNOTIFY=1'..."
 	${CC} ${CFLAGS} ${_includes} -Werror "$_srcfile" -o "$_out" ${LDFLAGS} \
 	    ${_libs} >/dev/null 2>&1
 	if [ $? -eq 0 ]; then

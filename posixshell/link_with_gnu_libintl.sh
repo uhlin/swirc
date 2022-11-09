@@ -1,7 +1,7 @@
 check_intl_header () {
 	local _tmpfile _srcfile _out
 
-	echo -n "creating temp file..."
+	printf "creating temp file..."
 	_tmpfile=$(mktemp) || { echo "error"; exit 1; }
 	echo "ok"
 
@@ -20,7 +20,7 @@ EOF
 		echo "failed to create $_srcfile"
 		exit 1
 	fi
-	echo -n "checking for 'libintl.h'..."
+	printf "checking for 'libintl.h'..."
 	${CC} ${CFLAGS} "$_srcfile" -o "$_out" >/dev/null 2>&1
 	if [ $? -eq 0 ]; then
 		echo "yes"
@@ -50,7 +50,7 @@ EOF
 check_intl_setlocale () {
 	local _tmpfile _srcfile _out _libs
 
-	echo -n "creating temp file..."
+	printf "creating temp file..."
 	_tmpfile=$(mktemp) || { echo "error"; exit 1; }
 	echo "ok"
 
@@ -74,7 +74,7 @@ EOF
 		echo "failed to create $_srcfile"
 		exit 1
 	fi
-	echo -n "checking for libintl_setlocale()..."
+	printf "checking for libintl_setlocale()..."
 	if [ "$(uname -s)" = "Linux" ]; then
 		_libs=""
 	else

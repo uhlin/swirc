@@ -1,7 +1,7 @@
 check_strcasestr () {
 	local _tmpfile _srcfile _out
 
-	echo -n "creating temp file..."
+	printf "creating temp file..."
 	_tmpfile=$(mktemp) || { echo "error"; exit 1; }
 	echo "ok"
 
@@ -26,7 +26,7 @@ EOF
 		echo "failed to create $_srcfile"
 		exit 1
 	fi
-	echo -n "checking for strcasestr()..."
+	printf "checking for strcasestr()..."
 	${CC} ${CFLAGS} -Werror "$_srcfile" -o "$_out" ${LDFLAGS} \
 	    >/dev/null 2>&1
 	if [ $? -eq 0 ]; then

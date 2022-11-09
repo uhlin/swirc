@@ -1,7 +1,7 @@
 link_with_libiconv () {
 	local _tmpfile _srcfile _out _libs
 
-	echo -n "creating temp file..."
+	printf "creating temp file..."
 	_tmpfile=$(mktemp) || { echo "error"; exit 1; }
 	echo "ok"
 
@@ -28,7 +28,7 @@ EOF
 		echo "failed to create $_srcfile"
 		exit 1
 	fi
-	echo -n "checking for gnu libiconv..."
+	printf "checking for gnu libiconv..."
 	if [ "$(uname -s)" = "Linux" ]; then
 		_libs=""
 	else
