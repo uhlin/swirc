@@ -325,8 +325,8 @@ history_prev(void)
 static void
 list_all_commands(void)
 {
-	PRINTTEXT_CONTEXT ctx;
-	struct cmds_tag *sp;
+	PRINTTEXT_CONTEXT	 ctx;
+	struct cmds_tag		*sp;
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
 	printtext(&ctx, "--------------- Commands ---------------");
