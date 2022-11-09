@@ -59,8 +59,8 @@ extern "C" {
 #include "strdup_printf.h"
 
 char		 identd::fakename[20] = { '\0' };
-bool		 identd::listening = false;
-bool		 identd::loop = false;
+volatile bool	 identd::listening = false;
+volatile bool	 identd::loop = false;
 const char	*identd::name = "identd";
 SOCKET		 identd::sock = INVALID_SOCKET;
 

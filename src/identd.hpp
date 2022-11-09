@@ -108,8 +108,8 @@ private:
 namespace identd
 {
 	extern char		 fakename[];
-	extern bool		 listening;
-	extern bool		 loop;
+	extern volatile bool	 listening;
+	extern volatile bool	 loop;
 	extern const char	*name;
 	extern SOCKET		 sock;
 
