@@ -69,6 +69,8 @@ extern char g_last_server[];
 extern char g_last_port[];
 extern char g_last_pass[];
 
+extern int g_socket_address_family;
+
 /*lint -sem(net_addr_resolve, r_null) */
 
 bool		 sasl_is_enabled(void);

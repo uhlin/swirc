@@ -140,6 +140,8 @@ char	g_last_server[1024] = { 0 };
 char	g_last_port[32] = { 0 };
 char	g_last_pass[256] = { 0 };
 
+int g_socket_address_family = AF_UNSPEC;
+
 /****************************************************************
 *                                                               *
 *  -------------- Objects with internal linkage --------------  *
@@ -148,7 +150,6 @@ char	g_last_pass[256] = { 0 };
 
 static class reconnect_context reconn_ctx;
 static const int RECVBUF_SIZE = 2048;
-static int socket_address_family = AF_UNSPEC;
 
 /****************************************************************
 *                                                               *
@@ -577,7 +578,7 @@ net_addr_resolve(const char *host, const char *port)
 
 	BZERO(&hints, sizeof hints);
 	hints.ai_flags     = AI_CANONNAME;
-	hints.ai_family    = socket_address_family;
+	hints.ai_family    = g_socket_address_family;
 	hints.ai_socktype  = SOCK_STREAM;
 	hints.ai_protocol  = 0;
 	hints.ai_addrlen   = 0;
@@ -756,11 +757,11 @@ server_destroy(struct server *server)
 void
 net_set_sock_addr_family_ipv4(void)
 {
-	socket_address_family = AF_INET;
+	g_socket_address_family = AF_INET;
 }
 
 void
 net_set_sock_addr_family_ipv6(void)
 {
-	socket_address_family = AF_INET6;
+	g_socket_address_family = AF_INET6;
 }
