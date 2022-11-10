@@ -30,13 +30,19 @@
 #include "base64.h"
 #include "common.h"
 
-#ifndef _lint
+#if !defined(BSD) && !defined(WIN32)
 #include <random>
 #endif
 #include <stdexcept>
 
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
+
+#if WIN32
+extern "C" {
+#include "compat/stdlib.h" /* arc4random_uniform() */
+}
+#endif
 
 #include "../assertAPI.h"
 #include "../config.h"
@@ -85,21 +91,26 @@ static unsigned int	signature_expected_len = 0;
 static void
 generate_and_store_nonce()
 {
-#ifndef _lint
 	static const char legal_index[] =
 	    "!\"#$%&'()*+-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
 	    "abcdefghijklmnopqrstuvwxyz{|}~";
 
+#if defined(BSD) || defined(WIN32)
+	for (size_t i = 0; i < ARRAY_SIZE(nonce); i++) {
+		nonce[i] = legal_index[arc4random_uniform
+		    (sizeof legal_index - 1)];
+	}
+#else
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<size_t> dist(0, strlen(legal_index) - 1);
 
 	for (size_t i = 0; i < ARRAY_SIZE(nonce); i++)
 		nonce[i] = legal_index[dist(gen)];
+#endif
 
 	nonce[ARRAY_SIZE(nonce) - 1] = '\0';
 	debug("generate_and_store_nonce: nonce: %s", nonce);
-#endif
 }
 
 static const char *
