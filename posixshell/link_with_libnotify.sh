@@ -30,6 +30,7 @@ main(void)
 	return 0;
 }
 EOF
+
 	if [ ! -f "$_srcfile" ]; then
 		echo "failed to create $_srcfile"
 		exit 1
@@ -39,8 +40,10 @@ EOF
 	_libs="$(pkg-config --libs-only-l libnotify)"
 
 	printf "checking whether to define 'USE_LIBNOTIFY=1'..."
+
 	${CC} ${CFLAGS} ${_includes} -Werror "$_srcfile" -o "$_out" ${LDFLAGS} \
 	    ${_libs} >/dev/null 2>&1
+
 	if [ $? -eq 0 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE

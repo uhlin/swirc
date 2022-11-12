@@ -16,12 +16,16 @@ main(void)
 	return 0;
 }
 EOF
+
 	if [ ! -f "$_srcfile" ]; then
 		echo "failed to create $_srcfile"
 		exit 1
 	fi
+
 	printf "checking for 'libintl.h'..."
+
 	${CC} ${CFLAGS} "$_srcfile" -o "$_out" >/dev/null 2>&1
+
 	if [ $? -eq 0 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE
@@ -70,18 +74,23 @@ main(void)
 	return 0;
 }
 EOF
+
 	if [ ! -f "$_srcfile" ]; then
 		echo "failed to create $_srcfile"
 		exit 1
 	fi
+
 	printf "checking for libintl_setlocale()..."
+
 	if [ "$(uname -s)" = "Linux" ]; then
 		_libs=""
 	else
 		_libs="-lintl"
 	fi
+
 	${CC} ${CFLAGS} "$_srcfile" -o "$_out" ${LDFLAGS} ${_libs} \
 	    >/dev/null 2>&1
+
 	if [ $? -eq 0 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE

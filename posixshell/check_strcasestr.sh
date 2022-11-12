@@ -22,13 +22,17 @@ main(void)
 	return (str ? 0 : 1);
 }
 EOF
+
 	if [ ! -f "$_srcfile" ]; then
 		echo "failed to create $_srcfile"
 		exit 1
 	fi
+
 	printf "checking for strcasestr()..."
+
 	${CC} ${CFLAGS} -Werror "$_srcfile" -o "$_out" ${LDFLAGS} \
 	    >/dev/null 2>&1
+
 	if [ $? -eq 0 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE
