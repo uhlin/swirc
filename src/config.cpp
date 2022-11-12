@@ -377,15 +377,15 @@ get_list_of_matching_settings(const char *search_var)
 			if (textBuf_size(matches) == 0) {
 				if ((errno = textBuf_ins_next(matches, NULL,
 				    cdv_p->setting_name, -1)) != 0) {
-					err_sys("get_list_of_matching_settings"
-					    ": textBuf_ins_next");
+					err_sys("%s: textBuf_ins_next",
+					    __func__);
 				}
 			} else {
 				if ((errno = textBuf_ins_next(matches,
 				    textBuf_tail(matches), cdv_p->setting_name,
 				    -1)) != 0) {
-					err_sys("get_list_of_matching_settings"
-					    ": textBuf_ins_next");
+					err_sys("%s: textBuf_ins_next",
+					    __func__);
 				}
 			}
 		}
@@ -420,10 +420,10 @@ config_lock_hash_table(void)
 {
 #if defined(UNIX)
 	if (mlock(addrof(hash_table[0]), sizeof hash_table) == -1)
-		err_log(errno, "config_lock_hash_table: mlock");
+		err_log(errno, "%s: mlock", __func__);
 #elif defined(WIN32)
 	if (!VirtualLock(addrof(hash_table[0]), sizeof hash_table)) {
-		err_log(0, "config_lock_hash_table: VirtualLock: %s",
+		err_log(0, "%s: VirtualLock: %s", __func__,
 		    errdesc_by_last_err());
 	}
 #endif
@@ -434,10 +434,10 @@ config_unlock_hash_table(void)
 {
 #if defined(UNIX)
 	if (munlock(addrof(hash_table[0]), sizeof hash_table) == -1)
-		err_log(errno, "config_unlock_hash_table: munlock");
+		err_log(errno, "%s: munlock", __func__);
 #elif defined(WIN32)
 	if (!VirtualUnlock(addrof(hash_table[0]), sizeof hash_table)) {
-		err_log(0, "config_unlock_hash_table: VirtualUnlock: %s",
+		err_log(0, "%s: VirtualUnlock: %s", __func__,
 		    errdesc_by_last_err());
 	}
 #endif
@@ -449,7 +449,7 @@ config_bool(const char *setting_name, bool fallback_default)
 	PCONF_HTBL_ENTRY item;
 
 	if (setting_name == NULL)
-		err_exit(EINVAL, "config_bool");
+		err_exit(EINVAL, "%s", __func__);
 
 	for (item = hash_table[hash(setting_name)];
 	    item != NULL;
@@ -544,7 +544,7 @@ config_integer(const struct integer_context *ctx)
 	long int val;
 
 	if (ctx == NULL)
-		err_exit(EINVAL, "config_integer");
+		err_exit(EINVAL, "%s", __func__);
 
 	for (item = hash_table[hash(ctx->setting_name)];
 	    item != NULL;
@@ -632,9 +632,9 @@ config_readit(const char *path, const char *mode)
 		fclose_ensure_success(fp);
 		init_missing_to_defs();
 	} else if (ferror(fp)) {
-		err_quit("config_readit: %s", g_fgets_nullret_err1);
+		err_quit("%s: %s", __func__, g_fgets_nullret_err1);
 	} else {
-		err_msg("config_readit: %s", g_fgets_nullret_err2);
+		err_msg("%s: %s", __func__, g_fgets_nullret_err2);
 		abort();
 	}
 }
