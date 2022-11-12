@@ -24,7 +24,7 @@ term_get_size(void)
 	struct winsize size = { 0 };
 
 	if (ioctl(fileno(stdin), TIOCGWINSZ, &size) == -1)
-		err_sys("term_get_size: ioctl: TIOCGWINSZ");
+		err_sys("%s: ioctl: TIOCGWINSZ", __func__);
 	return size;
 }
 
@@ -76,7 +76,7 @@ term_toggle_echo(on_off_t state)
 	errno = 0;
 
 	if (tcgetattr(STDIN_FILENO, &attrs) == -1) {
-		err_log(errno, "term_toggle_echo: tcgetattr");
+		err_log(errno, "%s: tcgetattr", __func__);
 		return;
 	}
 
@@ -85,14 +85,14 @@ term_toggle_echo(on_off_t state)
 		if (!(attrs.c_lflag & ECHO)) {
 			attrs.c_lflag |= ECHO;
 			if (tcsetattr(STDIN_FILENO, TCSANOW, &attrs) != 0)
-				err_log(errno, "term_toggle_echo: tcsetattr");
+				err_log(errno, "%s: tcsetattr", __func__);
 		}
 		break;
 	case OFF:
 		if (attrs.c_lflag & ECHO) {
 			attrs.c_lflag &= ~ECHO;
 			if (tcsetattr(STDIN_FILENO, TCSANOW, &attrs) != 0)
-				err_log(errno, "term_toggle_echo: tcsetattr");
+				err_log(errno, "%s: tcsetattr", __func__);
 		}
 		break;
 	default:

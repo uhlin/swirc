@@ -22,7 +22,7 @@ term_get_size(void)
 	struct winsize size = { 0 };
 
 	if (!GetConsoleScreenBufferInfo(hOut, &info)) {
-		err_quit("term_get_size: GetConsoleScreenBufferInfo: %s",
+		err_quit("%s: GetConsoleScreenBufferInfo: %s", __func__,
 		    errdesc_by_last_err());
 	}
 
@@ -59,11 +59,11 @@ term_toggle_echo(on_off_t state)
 
 	if ((stdin_handle = GetStdHandle(STD_INPUT_HANDLE)) ==
 	    INVALID_HANDLE_VALUE) {
-		err_log(0, "term_toggle_echo: GetStdHandle: %s",
+		err_log(0, "%s: GetStdHandle: %s", __func__,
 		    errdesc_by_last_err());
 		return;
 	} else if (!GetConsoleMode(stdin_handle, &modes)) {
-		err_log(0, "term_toggle_echo: GetConsoleMode: %s",
+		err_log(0, "%s: GetConsoleMode: %s", __func__,
 		    errdesc_by_last_err());
 		return;
 	}
@@ -73,7 +73,7 @@ term_toggle_echo(on_off_t state)
 		if (!(modes & ENABLE_ECHO_INPUT)) {
 			modes |= ENABLE_ECHO_INPUT;
 			if (!SetConsoleMode(stdin_handle, modes)) {
-				err_log(0, "term_toggle_echo: SetConsoleMode",
+				err_log(0, "%s: SetConsoleMode", __func__,
 				    errdesc_by_last_err());
 			}
 		}
@@ -82,7 +82,7 @@ term_toggle_echo(on_off_t state)
 		if (modes & ENABLE_ECHO_INPUT) {
 			modes &= ~ENABLE_ECHO_INPUT;
 			if (!SetConsoleMode(stdin_handle, modes)) {
-				err_log(0, "term_toggle_echo: SetConsoleMode",
+				err_log(0, "%s: SetConsoleMode", __func__,
 				    errdesc_by_last_err());
 			}
 		}
