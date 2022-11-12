@@ -432,6 +432,33 @@ no_more_matches(volatile struct readline_session_context *ctx)
 	readline_tab_comp_ctx_reset(ctx->tc);
 }
 
+static void
+init_mode(volatile struct readline_session_context *ctx)
+{
+	const bool is_command = (ctx->tc->search_var[0] == '/');
+
+	if (!strncmp(get_search_var(ctx), "/help ", 6))
+		init_mode_for_help(ctx);
+	else if (!strncmp(get_search_var(ctx), "/msg ", 5))
+		init_mode_for_msg(ctx);
+	else if (!strncmp(get_search_var(ctx), "/notice ", 8))
+		init_mode_for_notice(ctx);
+	else if (!strncmp(get_search_var(ctx), "/query ", 7))
+		init_mode_for_query(ctx);
+	else if (!strncmp(get_search_var(ctx), "/sasl ", 6))
+		init_mode_for_sasl(ctx);
+	else if (!strncmp(get_search_var(ctx), "/set ", 5))
+		init_mode_for_set(ctx);
+	else if (!strncmp(get_search_var(ctx), "/whois ", 7))
+		init_mode_for_whois(ctx);
+	else if (!strncmp(get_search_var(ctx), "/znc ", 5))
+		init_mode_for_znc_cmds(ctx);
+	else if (is_command)
+		init_mode_for_commands(ctx, (ctx->n_insert > 1));
+	else if (is_irc_channel(ACTWINLABEL))
+		init_mode_for_channel_users(ctx);
+}
+
 void
 readline_handle_tab(volatile struct readline_session_context *ctx)
 {
@@ -507,26 +534,5 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	const bool is_command = (ctx->tc->search_var[0] == '/');
-
-	if (!strncmp(get_search_var(ctx), "/help ", 6))
-		init_mode_for_help(ctx);
-	else if (!strncmp(get_search_var(ctx), "/msg ", 5))
-		init_mode_for_msg(ctx);
-	else if (!strncmp(get_search_var(ctx), "/notice ", 8))
-		init_mode_for_notice(ctx);
-	else if (!strncmp(get_search_var(ctx), "/query ", 7))
-		init_mode_for_query(ctx);
-	else if (!strncmp(get_search_var(ctx), "/sasl ", 6))
-		init_mode_for_sasl(ctx);
-	else if (!strncmp(get_search_var(ctx), "/set ", 5))
-		init_mode_for_set(ctx);
-	else if (!strncmp(get_search_var(ctx), "/whois ", 7))
-		init_mode_for_whois(ctx);
-	else if (!strncmp(get_search_var(ctx), "/znc ", 5))
-		init_mode_for_znc_cmds(ctx);
-	else if (is_command)
-		init_mode_for_commands(ctx, (ctx->n_insert > 1));
-	else if (is_irc_channel(ACTWINLABEL))
-		init_mode_for_channel_users(ctx);
+	init_mode(ctx);
 }
