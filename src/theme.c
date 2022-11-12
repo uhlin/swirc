@@ -255,7 +255,7 @@ theme_bool(const char *item_name, bool fallback_default)
 	PTHEME_HTBL_ENTRY item;
 
 	if (item_name == NULL)
-		err_exit(EINVAL, "theme_bool");
+		err_exit(EINVAL, "%s", __func__);
 
 	for (item = hash_table[hash(item_name)];
 	    item != NULL;
@@ -347,7 +347,7 @@ theme_integer(const struct integer_context *ctx)
 	long int val;
 
 	if (ctx == NULL)
-		err_exit(EINVAL, "theme_integer");
+		err_exit(EINVAL, "%s", __func__);
 
 	for (item = hash_table[hash(ctx->setting_name)];
 	    item != NULL;
@@ -373,7 +373,7 @@ theme_color(const char *item_name, short int fallback_color)
 	PTHEME_HTBL_ENTRY item;
 
 	if (item_name == NULL)
-		err_exit(EINVAL, "theme_color");
+		err_exit(EINVAL, "%s", __func__);
 
 	for (item = hash_table[hash(item_name)];
 	    item != NULL;
@@ -459,9 +459,9 @@ theme_readit(const char *path, const char *mode)
 		fclose_ensure_success(fp);
 		init_missing_to_defs();
 	} else if (ferror(fp)) {
-		err_quit("theme_readit: %s", g_fgets_nullret_err1);
+		err_quit("%s: %s", __func__, g_fgets_nullret_err1);
 	} else {
-		err_msg("theme_readit: %s", g_fgets_nullret_err2);
+		err_msg("%s: %s", __func__, g_fgets_nullret_err2);
 		abort();
 	}
 }
