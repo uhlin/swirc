@@ -404,7 +404,7 @@ nicklist_scroll_down(PIRC_WINDOW win)
 	win->nicklist.scroll_pos += g_nicklist_scroll_amount;
 
 	if (nicklist_draw(win, LINES) != 0)
-		debug("nicklist_scroll_down: nicklist_draw: error");
+		debug("%s: nicklist_draw: error", __func__);
 }
 
 void
@@ -419,7 +419,7 @@ nicklist_scroll_up(PIRC_WINDOW win)
 	win->nicklist.scroll_pos -= g_nicklist_scroll_amount;
 
 	if (nicklist_draw(win, LINES) != 0)
-		debug("nicklist_scroll_up: nicklist_draw: error");
+		debug("%s: nicklist_draw: error", __func__);
 }
 
 int
