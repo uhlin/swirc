@@ -210,12 +210,13 @@ addnick(WINDOW *win, short int bg, const char *nick) noexcept
 	(void) waddch(win, *nick);
 
 	cp = &nick[1];
-	if (g_my_nickname && strings_match_ignore_case(cp, g_my_nickname))
+	if (g_my_nickname && strings_match_ignore_case(cp, g_my_nickname)) {
 		nick_color = new integer_context("nicklist_my_nick_color",
 		    0, 99, 0);
-	else
+	} else {
 		nick_color = new integer_context("nicklist_nick_color",
 		    0, 99, 0);
+	}
 	printtext_set_color(win, &state2, static_cast<short int>
 	    (theme_integer(nick_color)), bg);
 	delete nick_color;
