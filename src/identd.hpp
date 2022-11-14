@@ -89,7 +89,7 @@ public:
 		static char buf[INET_ADDRSTRLEN];
 
 		if (inet_ntop(AF_INET, &this->addr.sin_addr, &buf[0],
-		    sizeof buf) == NULL)
+		    sizeof buf) == nullptr)
 			return "";
 		return &buf[0];
 	}

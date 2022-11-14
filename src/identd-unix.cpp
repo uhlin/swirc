@@ -44,7 +44,7 @@ accept_thread(void *arg)
 	identd::exit_thread();
 
 	/* NOTREACHED */
-	return NULL;
+	return nullptr;
 }
 
 static void *
@@ -57,7 +57,7 @@ com_thread(void *arg)
 	identd::exit_thread();
 
 	/* NOTREACHED */
-	return NULL;
+	return nullptr;
 }
 
 void
@@ -65,7 +65,7 @@ identd::com_with_client(ident_client *cli)
 {
 	pthread_t tid;
 
-	if ((errno = pthread_create(&tid, NULL, com_thread, cli)) != 0)
+	if ((errno = pthread_create(&tid, nullptr, com_thread, cli)) != 0)
 		err_sys("%s: pthread_create", __func__);
 	else if ((errno = pthread_detach(tid)) != 0)
 		err_sys("%s: pthread_detach", __func__);
@@ -102,7 +102,7 @@ identd::start(const int port)
 
 	i = port;
 
-	if ((errno = pthread_create(&tid, NULL, accept_thread, &i)) != 0)
+	if ((errno = pthread_create(&tid, nullptr, accept_thread, &i)) != 0)
 		err_sys("%s: pthread_create", __func__);
 	else if ((errno = pthread_detach(tid)) != 0)
 		err_sys("%s: pthread_detach", __func__);

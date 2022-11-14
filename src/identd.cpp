@@ -105,7 +105,7 @@ get_servport(void)
 
 	if (g_socket == INVALID_SOCKET || getsockname(g_socket, reinterpret_cast
 	    <struct sockaddr *>(&addr), &len) != 0)
-		return NULL;
+		return nullptr;
 	return strdup_printf("%" PRIu16, ntohs(addr.sin_port));
 }
 
@@ -114,12 +114,12 @@ get_username(void)
 {
 	static char *username;
 
-	if ((username = g_cmdline_opts->username) != NULL)
+	if ((username = g_cmdline_opts->username) != nullptr)
 		return username;
-	else if ((username = Config_mod("username")) != NULL &&
+	else if ((username = Config_mod("username")) != nullptr &&
 	    !strings_match(username, ""))
 		return username;
-	else if ((username = g_user) != NULL && !strings_match(username, ""))
+	else if ((username = g_user) != nullptr && !strings_match(username, ""))
 		return username;
 	return "noname";
 }
@@ -157,7 +157,7 @@ handle_ident_query(const char *server_port, const char *client_port,
 {
 	char *port;
 
-	if ((port = get_servport()) == NULL)
+	if ((port = get_servport()) == nullptr)
 		err_log(0, "%s: get_servport() error", __func__);
 	else if (strings_match(port, server_port) && strings_match(client_port,
 	    g_last_port))
@@ -173,7 +173,7 @@ query_chars_ok(const char *recvbuf, const int bytes_received)
 	static const char legal_index[] = "\r\n ,0123456789";
 
 	for (int i = 0; i < bytes_received; i++) {
-		if (strchr(legal_index, recvbuf[i]) == NULL)
+		if (strchr(legal_index, recvbuf[i]) == nullptr)
 			return false;
 	}
 
@@ -209,10 +209,10 @@ identd::enter_loop(ident_client *cli)
 			recvbuf[bytes_received] = '\0';
 
 			server_port = strtok_r(&recvbuf[0], sep, &last);
-			client_port = strtok_r(NULL, sep, &last);
+			client_port = strtok_r(nullptr, sep, &last);
 
-			if (server_port == NULL || client_port == NULL ||
-			    strtok_r(NULL, sep, &last) != NULL ||
+			if (server_port == nullptr || client_port == nullptr ||
+			    strtok_r(nullptr, sep, &last) != nullptr ||
 			    !is_numeric(server_port) ||
 			    !is_numeric(client_port) ||
 			    *server_port == '0' || *client_port == '0') {
@@ -292,7 +292,7 @@ identd::listen_on_port(const int port)
 		tv.tv_sec	= 3;
 		tv.tv_usec	= 111;
 
-		if (select(get_maxfdp1(), &readset, NULL, NULL, &tv) ==
+		if (select(get_maxfdp1(), &readset, nullptr, nullptr, &tv) ==
 		    SOCKET_ERROR) {
 			if (errno == EINTR)
 				continue;
