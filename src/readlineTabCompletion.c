@@ -527,12 +527,9 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		else
 			auto_complete_channel_user(ctx, next_text(ctx->tc));
 		return;
-	}
-
-	if (store_search_var(ctx) == -1) {
+	} else if (store_search_var(ctx) == -1) {
 		output_error("cannot store search variable");
 		return;
-	}
-
-	init_mode(ctx);
+	} else
+		init_mode(ctx);
 }
