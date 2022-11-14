@@ -52,8 +52,8 @@ const int	g_nicklist_scroll_amount = 10;
 static bool
 can_scroll(const IRC_WINDOW *win)
 {
-	if (win == NULL || !is_irc_channel(win->label) ||
-	    !win->received_names || win->nicklist.pan == NULL ||
+	if (win == nullptr || !is_irc_channel(win->label) ||
+	    !win->received_names || win->nicklist.pan == nullptr ||
 	    win->nicklist.width <= 0 || term_is_too_small())
 		return false;
 	return true;
@@ -156,7 +156,7 @@ get_list(const IRC_WINDOW *window, const bool sort)
 
 	for (size_t i = 0; i < ARRAY_SIZE(window->names_hash); i++) {
 		for (PNAMES names = window->names_hash[i];
-		    names != NULL;
+		    names != nullptr;
 		    names = names->next) {
 			char c;
 
@@ -264,7 +264,7 @@ list_fits_yes(PIRC_WINDOW win, WINDOW *nl_win, const int HEIGHT,
 	}
 
 	while (count < HEIGHT) {
-		printnick(nl_win, count, 0, NULL);
+		printnick(nl_win, count, 0, nullptr);
 		count++;
 	}
 
@@ -314,7 +314,7 @@ nicklist_new(PIRC_WINDOW win)
 {
 	const int width = nicklist_get_width(win);
 
-	win->nicklist.pan		= NULL;
+	win->nicklist.pan		= nullptr;
 	win->nicklist.scroll_pos	= 0;
 	win->nicklist.width		= width;
 
@@ -327,7 +327,7 @@ nicklist_destroy(PIRC_WINDOW win)
 {
 	if (win->nicklist.pan)
 		term_remove_panel(win->nicklist.pan);
-	win->nicklist.pan = NULL;
+	win->nicklist.pan = nullptr;
 	win->nicklist.scroll_pos = 0;
 	win->nicklist.width = 0;
 	return 0;
@@ -338,8 +338,8 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 {
 	WINDOW *nl_win;
 
-	if (win == NULL || rows < 0 || !win->received_names ||
-	    win->nicklist.pan == NULL) {
+	if (win == nullptr || rows < 0 || !win->received_names ||
+	    win->nicklist.pan == nullptr) {
 		return -1;
 	} else if (term_is_too_small()) {
 		(void) napms(30);
@@ -349,7 +349,8 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 	const int HEIGHT = (rows - 3);
 	std::list<std::string> list(get_list(win, true));
 
-	if ((nl_win = panel_window(win->nicklist.pan)) == NULL || HEIGHT < 0 ||
+	if ((nl_win = panel_window(win->nicklist.pan)) == nullptr ||
+	    HEIGHT < 0 ||
 	    list.size() != static_cast<unsigned int>(win->num_total))
 		return -1;
 
@@ -378,7 +379,7 @@ nicklist_get_width(const PIRC_WINDOW window)
 
 	for (size_t i = 0; i < ARRAY_SIZE(window->names_hash); i++) {
 		for (PNAMES names = window->names_hash[i];
-		    names != NULL;
+		    names != nullptr;
 		    names = names->next) {
 			if (strlen(names->nick) > len)
 				len = strlen(names->nick);
@@ -424,7 +425,8 @@ nicklist_scroll_up(PIRC_WINDOW win)
 int
 nicklist_update(PIRC_WINDOW win)
 {
-	if (win == NULL || !is_irc_channel(win->label) || !win->received_names)
+	if (win == nullptr || !is_irc_channel(win->label) ||
+	    !win->received_names)
 		return -1;
 
 	const bool width_changed = (nicklist_get_width(win) !=
