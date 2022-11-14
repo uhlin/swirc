@@ -184,14 +184,14 @@ get_list_of_matching_znc_commands(const char *search_var)
 			if (textBuf_size(matches) == 0) {
 				if ((errno = textBuf_ins_next(matches, NULL,
 				    cmd, -1)) != 0) {
-					err_sys("get_list_of_matching_znc_"
-					    "commands: textBuf_ins_next");
+					err_sys("%s: textBuf_ins_next",
+					    __func__);
 				}
 			} else {
 				if ((errno = textBuf_ins_next(matches,
 				    textBuf_tail(matches), cmd, -1)) != 0) {
-					err_sys("get_list_of_matching_znc_"
-					    "commands: textBuf_ins_next");
+					err_sys("%s: textBuf_ins_next",
+					    __func__);
 				}
 			}
 		}
