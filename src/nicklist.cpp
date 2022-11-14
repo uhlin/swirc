@@ -33,7 +33,6 @@
 #include <list>
 #include <string>
 
-#include "assertAPI.h"
 #include "dataClassify.h"
 #include "errHand.h"
 #include "irc.h"
@@ -361,15 +360,12 @@ nicklist_draw(PIRC_WINDOW win, const int rows)
 		list_fits_yes(win, nl_win, HEIGHT, list);
 		mutex_unlock(&g_puts_mutex);
 		return 0;
-	} else {
-		mutex_lock(&g_puts_mutex);
-		list_fits_no(win, nl_win, HEIGHT, list);
-		mutex_unlock(&g_puts_mutex);
-		return 0;
 	}
 
-	/*NOTREACHED*/ sw_assert_not_reached();
-	/*NOTREACHED*/ return -1;
+	mutex_lock(&g_puts_mutex);
+	list_fits_no(win, nl_win, HEIGHT, list);
+	mutex_unlock(&g_puts_mutex);
+	return 0;
 }
 
 int
