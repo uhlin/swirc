@@ -75,14 +75,14 @@ fopen_exit_on_error(const char *path, const char *mode)
 	FILE	*fp;
 
 	if (path == NULL || mode == NULL)
-		err_exit(EINVAL, "fopen_exit_on_error");
+		err_exit(EINVAL, "%s", __func__);
 
 #ifdef HAVE_BCI
 	if ((errno = fopen_s(&fp, path, mode)) != 0)
-		err_sys("fopen_s");
+		err_sys("%s", __func__);
 #else
 	if ((fp = fopen(path, mode)) == NULL)
-		err_sys("fopen");
+		err_sys("%s", __func__);
 #endif
 
 	return (fp);
@@ -349,7 +349,7 @@ void
 fclose_ensure_success(FILE *fp)
 {
 	if (fp != NULL && fclose(fp) != 0)
-		err_sys("fclose");
+		err_sys("%s", __func__);
 }
 
 void
@@ -358,14 +358,14 @@ realloc_strcat(char **dest, const char *src)
 	size_t	newsize = 0;
 
 	if (isNull(dest) || isNull(*dest) || isNull(src))
-		err_exit(EINVAL, "realloc_strcat");
+		err_exit(EINVAL, "%s", __func__);
 	else
 		newsize = strlen(*dest) + strlen(src) + 1;
 
 	if ((*dest = realloc(*dest, newsize)) == NULL)
-		err_exit(ENOMEM, "realloc_strcat");
+		err_exit(ENOMEM, "%s", __func__);
 	else if ((errno = sw_strcat(*dest, src, newsize)) != 0)
-		err_sys("realloc_strcat");
+		err_sys("%s", __func__);
 }
 
 void
