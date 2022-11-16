@@ -104,7 +104,9 @@ public:
 
 private:
 	SOCKET sock;
-	struct sockaddr_in addr;
+	struct sockaddr_storage ss;
+	struct sockaddr_in *sin;
+	struct sockaddr_in6 *sin6;
 };
 
 namespace identd
