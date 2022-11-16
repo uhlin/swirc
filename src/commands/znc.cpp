@@ -161,6 +161,8 @@ cmd_znc(const char *data)
 		}
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s: %s", cmd, e.what());
+	} catch (...) {
+		printtext_print("err", "%s: %s", cmd, "unknown exception");
 	}
 }
 
