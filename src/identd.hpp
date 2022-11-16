@@ -81,10 +81,23 @@ public:
 		this->sin6 = nullptr;
 	}
 
-	ident_client(const SOCKET clisock, const struct sockaddr_in &cliaddr)
+	ident_client(const SOCKET clisock, const struct sockaddr_storage &ss)
 	{
-		this->sock = clisock;
-		this->addr = cliaddr;
+		this->sock	= clisock;
+		this->ss	= ss;
+
+		if (ss.ss_family == AF_INET) {
+			this->sin = reinterpret_cast<struct sockaddr_in *>
+			    (&this->ss);
+			this->sin6 = nullptr;
+		} else if (ss.ss_family == AF_INET6) {
+			this->sin = nullptr;
+			this->sin6 = reinterpret_cast<struct sockaddr_in6 *>
+			    (&this->ss);
+		} else {
+			this->sin	= nullptr;
+			this->sin6	= nullptr;
+		}
 	}
 
 	const char *
