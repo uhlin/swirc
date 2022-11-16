@@ -76,5 +76,7 @@ cmd_squery(const char *data)
 			throw std::runtime_error("cannot send");
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s: %s", cmd, e.what());
+	} catch (...) {
+		printtext_print("err", "%s: %s", cmd, "unknown exception");
 	}
 }
