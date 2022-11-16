@@ -98,15 +98,26 @@ static char *
 get_servport(void)
 {
 	socklen_t len;
-	struct sockaddr_in addr;
+	struct sockaddr_storage ss;
 
-	len = sizeof addr;
-	memset(&addr, 0, len);
+	len = sizeof ss;
+	memset(&ss, 0, len);
 
 	if (g_socket == INVALID_SOCKET || getsockname(g_socket, reinterpret_cast
-	    <struct sockaddr *>(&addr), &len) != 0)
+	    <struct sockaddr *>(&ss), &len) != 0)
 		return nullptr;
-	return strdup_printf("%" PRIu16, ntohs(addr.sin_port));
+	else if (ss.ss_family == AF_INET) {
+		struct sockaddr_in *sin;
+
+		sin = reinterpret_cast<struct sockaddr_in *>(&ss);
+		return strdup_printf("%" PRIu16, ntohs(sin->sin_port));
+	} else if (ss.ss_family == AF_INET6) {
+		struct sockaddr_in6 *sin6;
+
+		sin6 = reinterpret_cast<struct sockaddr_in6 *>(&ss);
+		return strdup_printf("%" PRIu16, ntohs(sin6->sin6_port));
+	}
+	return nullptr;
 }
 
 static const char *
