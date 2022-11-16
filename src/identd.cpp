@@ -291,8 +291,8 @@ identd::listen_on_port(const int port)
 	while (identd::listening) {
 		SOCKET			clisock;
 		fd_set			readset;
-		socklen_t		len = sizeof(struct sockaddr_in);
-		struct sockaddr_in	cliaddr;
+		socklen_t		len = sizeof(struct sockaddr_storage);
+		struct sockaddr_storage	cliaddr;
 		struct timeval		tv = { 0 };
 
 		FD_ZERO(&readset);
