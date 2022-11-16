@@ -247,11 +247,11 @@ void
 identd::listen_on_port(const int port)
 {
 	try {
-		struct sockaddr_in service;
+		struct sockaddr_in6 service;
 
 		if (identd::start_pre_check() == -1) {
 			throw std::runtime_error("already listening");
-		} else if ((identd::sock = socket(AF_INET, SOCK_STREAM, 0)) ==
+		} else if ((identd::sock = socket(AF_INET6, SOCK_STREAM, 0)) ==
 		    INVALID_SOCKET) {
 			throw std::runtime_error("unable to create an endpoint "
 			    "for communication");
@@ -260,9 +260,9 @@ identd::listen_on_port(const int port)
 		identd::set_reuseaddr(identd::sock);
 
 		memset(&service, 0, sizeof service);
-		service.sin_family = AF_INET;
-		service.sin_port = htons(port);
-		service.sin_addr.s_addr = htonl(INADDR_ANY);
+		service.sin6_family = AF_INET6;
+		service.sin6_port = htons(port);
+		service.sin6_addr = in6addr_any;
 
 		if (bind(identd::sock, reinterpret_cast<struct sockaddr *>
 		    (&service), sizeof service) != 0) {
