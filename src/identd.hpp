@@ -76,7 +76,9 @@ public:
 	ident_client()
 	{
 		this->sock = INVALID_SOCKET;
-		memset(&this->addr, 0, sizeof this->addr);
+		memset(&this->ss, 0, sizeof this->ss);
+		this->sin = nullptr;
+		this->sin6 = nullptr;
 	}
 
 	ident_client(const SOCKET clisock, const struct sockaddr_in &cliaddr)
