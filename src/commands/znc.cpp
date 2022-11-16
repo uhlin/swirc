@@ -133,9 +133,9 @@ cmd_znc(const char *data)
 	free(dcopy);
 
 	try {
-		char *module;
-		std::string token;
-		std::vector<std::string> tokens;
+		char				*module;
+		std::string			 token;
+		std::vector<std::string>	 tokens;
 
 		while (std::getline(input, token))
 			tokens.push_back(token);
