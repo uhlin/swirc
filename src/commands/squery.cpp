@@ -69,8 +69,8 @@ cmd_squery(const char *data)
 		if (tokens.size() != 2)
 			throw std::runtime_error("missing arguments");
 
-		const char *servicename = tokens.at(0).c_str();
-		const char *text = tokens.at(1).c_str();
+		const char *servicename	= tokens.at(0).c_str();
+		const char *text	= tokens.at(1).c_str();
 
 		if (net_send("SQUERY %s :%s", servicename, text) < 0)
 			throw std::runtime_error("cannot send");
