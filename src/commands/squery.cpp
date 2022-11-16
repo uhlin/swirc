@@ -47,8 +47,6 @@ void
 cmd_squery(const char *data)
 {
 	char *dcopy;
-	std::string token;
-	std::vector<std::string> tokens;
 
 	if (strings_match(data, "")) {
 		print_and_free("/squery: missing arguments", NULL);
@@ -60,10 +58,13 @@ cmd_squery(const char *data)
 	std::istringstream input(dcopy);
 	free(dcopy);
 
-	while (std::getline(input, token))
-		tokens.push_back(token);
-
 	try {
+		std::string			token;
+		std::vector<std::string>	tokens;
+
+		while (std::getline(input, token))
+			tokens.push_back(token);
+
 		if (tokens.size() != 2)
 			throw std::runtime_error("missing arguments");
 
