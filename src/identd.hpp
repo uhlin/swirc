@@ -59,6 +59,8 @@
 #define SOCKET_ERROR -1
 #endif
 
+#include "assertAPI.h"
+
 #if UNIX
 typedef int SOCKET;
 #endif
