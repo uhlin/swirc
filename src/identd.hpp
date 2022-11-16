@@ -103,11 +103,22 @@ public:
 	const char *
 	get_ip(void) const
 	{
-		static char buf[INET_ADDRSTRLEN];
+		static char buf[INET6_ADDRSTRLEN];
 
-		if (inet_ntop(AF_INET, &this->addr.sin_addr, &buf[0],
-		    sizeof buf) == nullptr)
+		sw_static_assert(INET6_ADDRSTRLEN >= INET_ADDRSTRLEN,
+		    "'INET6_ADDRSTRLEN' too short");
+		if (this->sin == nullptr && this->sin6 == nullptr)
 			return "";
+		else if (this->sin) {
+			if (inet_ntop(AF_INET, &this->sin->sin_addr, &buf[0],
+			    sizeof buf) == nullptr)
+				return "";
+		} else if (this->sin6) {
+			if (inet_ntop(AF_INET6, &this->sin6->sin6_addr, &buf[0],
+			    sizeof buf) == nullptr)
+				return "";
+		} else
+			sw_assert_not_reached();
 		return &buf[0];
 	}
 
