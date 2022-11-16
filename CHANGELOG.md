@@ -15,7 +15,9 @@ All notable changes to this project will be documented in this file.
   - 414 (`ERR_WILDTOPLEVEL`)
   - 415 (`ERR_BADMASK`)
 - Added usage of `__func__`
+- Added usage of `printtext_print()`
 - Deleted commented-out code
+- Deleted unused includes
 - Did code refactoring
 - Fixed display of IPv6 addresses in event 338
 - Fixed verification of the X509 certificate presented by the peer
