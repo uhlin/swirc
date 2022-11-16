@@ -118,11 +118,12 @@ got_hits(const char *search_var)
 void
 cmd_znc(const char *data)
 {
-	bool	 written_linefeed = false;
-	char	*dcopy;
+	bool			 written_linefeed = false;
+	char			*dcopy;
+	static chararray_t	 cmd = "/znc";
 
 	if (strings_match(data, "")) {
-		print_and_free("/znc: missing arguments", NULL);
+		printtext_print("err", "%s: missing arguments", cmd);
 		return;
 	}
 
@@ -159,10 +160,7 @@ cmd_znc(const char *data)
 			free(module);
 		}
 	} catch (const std::runtime_error &e) {
-		std::string s("/znc: ");
-		s.append(e.what());
-		print_and_free(s.c_str(), NULL);
-		return;
+		printtext_print("err", "%s: %s", cmd, e.what());
 	}
 }
 
