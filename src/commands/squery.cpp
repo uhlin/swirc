@@ -46,10 +46,11 @@
 void
 cmd_squery(const char *data)
 {
-	char *dcopy;
+	char			*dcopy;
+	static const char	 cmd[] = "/squery";
 
 	if (strings_match(data, "")) {
-		print_and_free("/squery: missing arguments", NULL);
+		printtext_print("err", "%s: missing arguments", cmd);
 		return;
 	}
 
@@ -74,8 +75,6 @@ cmd_squery(const char *data)
 		if (net_send("SQUERY %s :%s", servicename, text) < 0)
 			throw std::runtime_error("cannot send");
 	} catch (const std::runtime_error &e) {
-		std::string s("/squery: ");
-		s.append(e.what());
-		print_and_free(s.c_str(), NULL);
+		printtext_print("err", "%s: %s", cmd, e.what());
 	}
 }
