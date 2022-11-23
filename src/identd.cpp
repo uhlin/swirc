@@ -120,6 +120,29 @@ get_servport(void)
 	return nullptr;
 }
 
+static struct sockaddr *
+get_sockaddr(const int port, socklen_t &size)
+{
+	static struct sockaddr_in	sin;
+	static struct sockaddr_in6	sin6;
+
+	if (g_socket_address_family != AF_INET6) {
+		memset(&sin, 0, sizeof sin);
+		sin.sin_family		= AF_INET;
+		sin.sin_port		= htons(port);
+		sin.sin_addr.s_addr	= INADDR_ANY;
+		size = sizeof sin;
+		return reinterpret_cast<struct sockaddr *>(&sin);
+	}
+
+	memset(&sin6, 0, sizeof sin6);
+	sin6.sin6_family	= AF_INET6;
+	sin6.sin6_port		= htons(port);
+	sin6.sin6_addr		= in6addr_any;
+	size = sizeof sin6;
+	return reinterpret_cast<struct sockaddr *>(&sin6);
+}
+
 static inline int
 get_sockdomain(void)
 {
@@ -253,7 +276,8 @@ void
 identd::listen_on_port(const int port)
 {
 	try {
-		struct sockaddr_in6 service;
+		struct sockaddr *sa;
+		socklen_t sa_size = 0;
 
 		if (identd::start_pre_check() == -1) {
 			throw std::runtime_error("already listening");
@@ -264,14 +288,9 @@ identd::listen_on_port(const int port)
 		}
 
 		identd::set_reuseaddr(identd::sock);
+		sa = get_sockaddr(port, sa_size);
 
-		memset(&service, 0, sizeof service);
-		service.sin6_family = AF_INET6;
-		service.sin6_port = htons(port);
-		service.sin6_addr = in6addr_any;
-
-		if (bind(identd::sock, reinterpret_cast<struct sockaddr *>
-		    (&service), sizeof service) != 0) {
+		if (bind(identd::sock, sa, sa_size) != 0) {
 			throw std::runtime_error("unable to bind a name to "
 			    "a socket");
 		} else if (listen(identd::sock, 10) != 0) {
