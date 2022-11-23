@@ -120,6 +120,12 @@ get_servport(void)
 	return nullptr;
 }
 
+static inline int
+get_sockdomain(void)
+{
+	return (g_socket_address_family != AF_INET6 ? AF_INET : AF_INET6);
+}
+
 static const char *
 get_username(void)
 {
@@ -251,8 +257,8 @@ identd::listen_on_port(const int port)
 
 		if (identd::start_pre_check() == -1) {
 			throw std::runtime_error("already listening");
-		} else if ((identd::sock = socket(AF_INET6, SOCK_STREAM, 0)) ==
-		    INVALID_SOCKET) {
+		} else if ((identd::sock = socket(get_sockdomain(), SOCK_STREAM,
+		    0)) == INVALID_SOCKET) {
 			throw std::runtime_error("unable to create an endpoint "
 			    "for communication");
 		}
