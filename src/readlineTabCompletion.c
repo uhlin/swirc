@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include "commands/sasl.h"
+#include "commands/theme.h"
 #include "commands/znc.h"
 
 /* names.h wants this header before itself */
@@ -99,6 +100,13 @@ auto_complete_setting(volatile struct readline_session_context *ctx,
     const char *s)
 {
 	do_work(ctx, L"/set ", s);
+}
+
+static void
+auto_complete_theme(volatile struct readline_session_context *ctx,
+    const char *s)
+{
+	do_work(ctx, L"/theme ", s);
 }
 
 static void
@@ -190,6 +198,7 @@ readline_tab_comp_ctx_new(void)
 	ctx.isInCirculationModeForQuery		= false;
 	ctx.isInCirculationModeForSasl		= false;
 	ctx.isInCirculationModeForSettings	= false;
+	ctx.isInCirculationModeForTheme		= false;
 	ctx.isInCirculationModeForWhois		= false;
 	ctx.isInCirculationModeForZncCmds	= false;
 	ctx.isInCirculationModeForCmds		= false;
@@ -220,6 +229,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 		ctx->isInCirculationModeForQuery	= false;
 		ctx->isInCirculationModeForSasl		= false;
 		ctx->isInCirculationModeForSettings	= false;
+		ctx->isInCirculationModeForTheme	= false;
 		ctx->isInCirculationModeForWhois	= false;
 		ctx->isInCirculationModeForZncCmds	= false;
 		ctx->isInCirculationModeForCmds		= false;
@@ -350,6 +360,23 @@ init_mode_for_set(volatile struct readline_session_context *ctx)
 }
 
 static void
+init_mode_for_theme(volatile struct readline_session_context *ctx)
+{
+	char	*p;
+
+	p = addrof(ctx->tc->search_var[7]);
+
+	if ((ctx->tc->matches = get_list_of_matching_theme_cmds(p)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_theme(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeForTheme = true;
+}
+
+static void
 init_mode_for_whois(volatile struct readline_session_context *ctx)
 {
 	char	*p;
@@ -449,6 +476,8 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_sasl(ctx);
 	else if (!strncmp(get_search_var(ctx), "/set ", 5))
 		init_mode_for_set(ctx);
+	else if (!strncmp(get_search_var(ctx), "/theme ", 7))
+		init_mode_for_theme(ctx);
 	else if (!strncmp(get_search_var(ctx), "/whois ", 7))
 		init_mode_for_whois(ctx);
 	else if (!strncmp(get_search_var(ctx), "/znc ", 5))
@@ -502,6 +531,12 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 			no_more_matches(ctx);
 		else
 			auto_complete_setting(ctx, next_text(ctx->tc));
+		return;
+	} else if (ctx->tc->isInCirculationModeForTheme) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
+			no_more_matches(ctx);
+		else
+			auto_complete_theme(ctx, next_text(ctx->tc));
 		return;
 	} else if (ctx->tc->isInCirculationModeForWhois) {
 		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))

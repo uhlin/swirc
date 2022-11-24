@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 - Added an ident protocol daemon (which is OFF by default)
 - Added and made use of `printf_and_free()`
 - Added exception handling
+- Added tab completion for `/theme`
 - Added the following config options:
   - `awaymsgs_in_privconv` (bool)
   - `identd` (bool)
