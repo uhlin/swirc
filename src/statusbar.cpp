@@ -68,9 +68,7 @@ get_chanmodes()
 			(void) str.append(Theme("slogan"));
 		} else if (is_irc_channel(win->label)) {
 			(void) str.append(win->label);
-			(void) str.append("(");
-			(void) str.append(win->chanmodes);
-			(void) str.append(")");
+			(void) str.append("(").append(win->chanmodes).append(")");
 		} else {
 			(void) str.append(win->label);
 		}
@@ -90,8 +88,7 @@ get_nick_and_server()
 		(void) str.append(g_user_modes[0] == ':' ? &g_user_modes[1]
 		    : &g_user_modes[0]);
 		(void) str.append(")");
-		(void) str.append("@");
-		(void) str.append(g_server_hostname);
+		(void) str.append("@").append(g_server_hostname);
 	}
 
 	return str;
