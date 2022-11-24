@@ -58,6 +58,18 @@
 #define PATH_MAX 1024
 #endif
 
+static stringarray_t theme_cmds = {
+	"install ",
+	"install bx",
+	"install nano",
+	"install superkod",
+	"list-remote",
+	"set ",
+	"set bx",
+	"set nano",
+	"set superkod",
+};
+
 static THEME_INFO theme_info_array[MAX_NO_THEMES];
 
 static void free_theme_info(PTHEME_INFO) PTR_ARGS_NONNULL;
@@ -493,4 +505,48 @@ cmd_theme(const char *data)
 
 	free(dcopy);
 	clean_up(url, db_path);
+}
+
+static bool
+got_hits(const char *search_var)
+{
+	for (size_t i = 0; i < ARRAY_SIZE(theme_cmds); i++) {
+		if (!strncmp(search_var, theme_cmds[i], strlen(search_var)))
+			return true;
+	}
+
+	return false;
+}
+
+PTEXTBUF
+get_list_of_matching_theme_cmds(const char *search_var)
+{
+	PTEXTBUF matches;
+
+	if (!got_hits(search_var))
+		return NULL;
+
+	matches = textBuf_new();
+
+	for (size_t i = 0; i < ARRAY_SIZE(theme_cmds); i++) {
+		const char *cmd = theme_cmds[i];
+
+		if (!strncmp(search_var, cmd, strlen(search_var))) {
+			if (textBuf_size(matches) == 0) {
+				if ((errno = textBuf_ins_next(matches, NULL,
+				    cmd, -1)) != 0) {
+					err_sys("%s: textBuf_ins_next",
+					    __func__);
+				}
+			} else {
+				if ((errno = textBuf_ins_next(matches,
+				    textBuf_tail(matches), cmd, -1)) != 0) {
+					err_sys("%s: textBuf_ins_next",
+					    __func__);
+				}
+			}
+		}
+	}
+
+	return matches;
 }

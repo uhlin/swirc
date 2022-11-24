@@ -1,6 +1,8 @@
 #ifndef CMD_THEME_H
 #define CMD_THEME_H
 
+#include "../textBuffer.h"
+
 typedef enum {
 	FOPEN_FAILED,
 	PARSE_ERROR,
@@ -24,6 +26,11 @@ typedef struct tagTHEME_INFO {
 	char *comment;
 } THEME_INFO, *PTHEME_INFO;
 
-void cmd_theme(const char *);
+/*lint -sem(get_list_of_matching_theme_cmds, r_null) */
+
+__SWIRC_BEGIN_DECLS
+void		cmd_theme(const char *);
+PTEXTBUF	get_list_of_matching_theme_cmds(const char *);
+__SWIRC_END_DECLS
 
 #endif
