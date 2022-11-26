@@ -14,7 +14,7 @@ SHARED_FLAGS=-DNCURSES_OPAQUE=0\\
 	-Wall\\
 	-pipe
 CC=clang
-CFLAGS=\$(SHARED_FLAGS) -std=c17
+CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=clang++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
 LDFLAGS=-L/usr/local/opt/libressl/lib
