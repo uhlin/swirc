@@ -11,8 +11,7 @@ Build-Depends:
   libidn11-dev,
   libncursesw5-dev,
   libnotify-dev,
-  libssl-dev,
-  quilt
+  libssl-dev
 Standards-Version: 4.6.1.0
 Homepage: https://www.nifty-networks.net/swirc/
 Vcs-Browser: https://github.com/uhlin/swirc
