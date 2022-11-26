@@ -22,14 +22,16 @@
 void
 cmd_op(const char *data)
 {
+	static const char cmd[] = "/op";
+
 	if (strings_match(data, "")) {
-		print_and_free("/op: " MISSING_ARGS, NULL);
+		printtext_print("err", "%s: %s", cmd, MISSING_ARGS);
 		return;
 	} else if (!is_valid_nickname(data)) {
-		print_and_free("/op: " INVALID_NICK, NULL);
+		printtext_print("err", "%s: %s", cmd, INVALID_NICK);
 		return;
 	} else if (!is_irc_channel(ACTWINLABEL)) {
-		print_and_free("/op: " NOT_AN_IRC_CHANNEL, NULL);
+		printtext_print("err", "%s: %s", cmd, NOT_AN_IRC_CHANNEL);
 		return;
 	}
 
@@ -42,14 +44,16 @@ cmd_op(const char *data)
 void
 cmd_deop(const char *data)
 {
+	static const char cmd[] = "/deop";
+
 	if (strings_match(data, "")) {
-		print_and_free("/deop: " MISSING_ARGS, NULL);
+		printtext_print("err", "%s: %s", cmd, MISSING_ARGS);
 		return;
 	} else if (!is_valid_nickname(data)) {
-		print_and_free("/deop: " INVALID_NICK, NULL);
+		printtext_print("err", "%s: %s", cmd, INVALID_NICK);
 		return;
 	} else if (!is_irc_channel(ACTWINLABEL)) {
-		print_and_free("/deop: " NOT_AN_IRC_CHANNEL, NULL);
+		printtext_print("err", "%s: %s", cmd, NOT_AN_IRC_CHANNEL);
 		return;
 	}
 
