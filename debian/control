@@ -3,7 +3,6 @@ Maintainer: Markus Uhlin <markus.uhlin@bredband.net>
 Section: net
 Priority: optional
 Build-Depends:
-  debhelper (>= 13~),
   debhelper-compat (= 13),
   gettext,
   libcmocka-dev,
