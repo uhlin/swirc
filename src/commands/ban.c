@@ -12,8 +12,8 @@
 #define ACTWINLABEL "#chatzone"
 #endif
 
-#define NO_MASK "no mask"
-#define NOT_AN_IRC_CHANNEL "active window isn't an irc channel"
+#define NO_MASK			"no mask"
+#define NOT_AN_IRC_CHANNEL	"active window isn't an irc channel"
 
 /*
  * usage: /ban <mask>
