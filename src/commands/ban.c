@@ -21,11 +21,13 @@
 void
 cmd_ban(const char *data)
 {
+	static const char cmd[] = "/ban";
+
 	if (strings_match(data, "")) {
-		print_and_free("/ban: " NO_MASK, NULL);
+		printtext_print("err", "%s: %s", cmd, NO_MASK);
 		return;
 	} else if (!is_irc_channel(ACTWINLABEL)) {
-		print_and_free("/ban: " NOT_AN_IRC_CHANNEL, NULL);
+		printtext_print("err", "%s: %s", cmd, NOT_AN_IRC_CHANNEL);
 		return;
 	}
 
@@ -38,11 +40,13 @@ cmd_ban(const char *data)
 void
 cmd_unban(const char *data)
 {
+	static const char cmd[] = "/unban";
+
 	if (strings_match(data, "")) {
-		print_and_free("/unban: " NO_MASK, NULL);
+		printtext_print("err", "%s: %s", cmd, NO_MASK);
 		return;
 	} else if (!is_irc_channel(ACTWINLABEL)) {
-		print_and_free("/unban: " NOT_AN_IRC_CHANNEL, NULL);
+		printtext_print("err", "%s: %s", cmd, NOT_AN_IRC_CHANNEL);
 		return;
 	}
 
