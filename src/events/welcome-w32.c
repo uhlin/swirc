@@ -35,10 +35,10 @@ bool
 event_welcome_is_signaled(void)
 {
 	struct integer_context intctx = {
-		.setting_name = "connection_timeout",
-		.lo_limit = 0,
-		.hi_limit = 300, /* 5 min */
-		.fallback_default = 45,
+		.setting_name		= "connection_timeout",
+		.lo_limit		= 0,
+		.hi_limit		= 300, /* 5 min */
+		.fallback_default	= 45,
 	};
 
 	return (WaitForSingleObject(welcome_cond,
