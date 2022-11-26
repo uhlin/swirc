@@ -2,32 +2,32 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added an ident protocol daemon (which is OFF by default)
-- Added and made use of `printf_and_free()`
-- Added exception handling
-- Added tab completion for `/theme`
-- Added the following config options:
+- **Added** an ident protocol daemon (which is OFF by default)
+- **Added** and made use of `printf_and_free()`
+- **Added** exception handling
+- **Added** tab completion for `/theme`
+- **Added** the following config options:
   - `awaymsgs_in_privconv` (bool)
   - `identd` (bool)
   - `identd_fakenames` (bool)
   - `identd_port` (int)
-- Added the following events:
+- **Added** the following events:
   - 413 (`ERR_NOTOPLEVEL`)
   - 414 (`ERR_WILDTOPLEVEL`)
   - 415 (`ERR_BADMASK`)
-- Added usage of `__func__`
-- Added usage of `printtext_print()`
-- Deleted commented-out code
-- Deleted unused includes
-- Did code refactoring
-- Fixed display of IPv6 addresses in event 338
-- Fixed verification of the X509 certificate presented by the peer
-- Made const arrays static const
-- Made improvements to the following files:
+- **Added** usage of `__func__`
+- **Added** usage of `printtext_print()`
+- **Deleted** commented-out code
+- **Deleted** unused includes
+- **Did code refactoring**
+- **Fixed** display of IPv6 addresses in event 338
+- **Fixed** verification of the X509 certificate presented by the peer
+- **Made** const arrays static const
+- **Made** improvements to the following files:
   - `commands/theme.c`
   - `network.cpp`
   - `printtext.cpp`
-- Moved `squeeze_text_deco()` to a separate file
+- **Moved** `squeeze_text_deco()` to a separate file
 - Reduced VA args in printtext calls
 
 ## [3.3.7] - 2022-10-22 ##
