@@ -12,8 +12,8 @@
 #define ACTWINLABEL "#chatzone"
 #endif
 
-#define NO_MASK			"no mask"
-#define NOT_AN_IRC_CHANNEL	"active window isn't an irc channel"
+static const char	err1[] = "no mask";
+static const char	err2[] = "active window isn't an irc channel";
 
 /*
  * usage: /ban <mask>
@@ -24,10 +24,10 @@ cmd_ban(const char *data)
 	static const char cmd[] = "/ban";
 
 	if (strings_match(data, "")) {
-		printtext_print("err", "%s: %s", cmd, NO_MASK);
+		printtext_print("err", "%s: %s", cmd, err1);
 		return;
 	} else if (!is_irc_channel(ACTWINLABEL)) {
-		printtext_print("err", "%s: %s", cmd, NOT_AN_IRC_CHANNEL);
+		printtext_print("err", "%s: %s", cmd, err2);
 		return;
 	}
 
@@ -43,10 +43,10 @@ cmd_unban(const char *data)
 	static const char cmd[] = "/unban";
 
 	if (strings_match(data, "")) {
-		printtext_print("err", "%s: %s", cmd, NO_MASK);
+		printtext_print("err", "%s: %s", cmd, err1);
 		return;
 	} else if (!is_irc_channel(ACTWINLABEL)) {
-		printtext_print("err", "%s: %s", cmd, NOT_AN_IRC_CHANNEL);
+		printtext_print("err", "%s: %s", cmd, err2);
 		return;
 	}
 
