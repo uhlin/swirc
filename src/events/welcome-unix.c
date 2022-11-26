@@ -1,4 +1,4 @@
-/* Copyright (C) 2014-2021 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2014-2022 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -27,7 +27,7 @@ event_welcome_is_signaled(void)
 	intctx.fallback_default = 45;
 
 	if (gettimeofday(&tv, NULL) != 0)
-		err_sys("event_welcome_is_signaled: gettimeofday");
+		err_sys("%s: gettimeofday", __func__);
 
 	ts.tv_sec = tv.tv_sec + config_integer(&intctx);
 	ts.tv_nsec = tv.tv_usec;
@@ -44,14 +44,14 @@ void
 event_welcome_cond_init(void)
 {
 	if ((errno = pthread_cond_init(&welcome_cond, NULL)) != 0)
-		err_sys("event_welcome_cond_init: pthread_cond_init");
+		err_sys("%s: pthread_cond_init", __func__);
 }
 
 void
 event_welcome_cond_destroy(void)
 {
 	if ((errno = pthread_cond_destroy(&welcome_cond)) != 0)
-		err_sys("event_welcome_cond_destroy: pthread_cond_destroy");
+		err_sys("%s: pthread_cond_destroy", __func__);
 }
 
 /*
@@ -61,5 +61,5 @@ void
 event_welcome_signalit(void)
 {
 	if ((errno = pthread_cond_broadcast(&welcome_cond)) != 0)
-		err_sys("event_welcome_signalit: pthread_cond_broadcast");
+		err_sys("%s: pthread_cond_broadcast", __func__);
 }
