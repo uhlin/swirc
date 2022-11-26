@@ -1,4 +1,4 @@
-/* Copyright (C) 2014-2021 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2014-2022 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -24,7 +24,7 @@ DWORD
 dword_product(const DWORD elt_count, const DWORD elt_size)
 {
 	if (elt_size && elt_count > MAXDWORD / elt_size) {
-		err_msg("Integer overflow");
+		err_msg("%s: integer overflow", __func__);
 		abort();
 	}
 
@@ -49,7 +49,7 @@ void
 event_welcome_cond_init(void)
 {
 	if ((welcome_cond = CreateEvent(NULL, true, false, NULL)) == NULL) {
-		err_quit("event_welcome_cond_init: CreateEvent: %s",
+		err_quit("%s: CreateEvent: %s", __func__,
 		    errdesc_by_last_err());
 	}
 }
@@ -58,7 +58,7 @@ void
 event_welcome_cond_destroy(void)
 {
 	if (!CloseHandle(welcome_cond)) {
-		err_quit("event_welcome_cond_destroy: CloseHandle: %s",
+		err_quit("%s: CloseHandle: %s", __func__,
 		    errdesc_by_last_err());
 	}
 }
@@ -66,8 +66,6 @@ event_welcome_cond_destroy(void)
 void
 event_welcome_signalit(void)
 {
-	if (!SetEvent(welcome_cond)) {
-		err_quit("event_welcome_signalit: SetEvent: %s",
-		    errdesc_by_last_err());
-	}
+	if (!SetEvent(welcome_cond))
+		err_quit("%s: SetEvent: %s", __func__, errdesc_by_last_err());
 }
