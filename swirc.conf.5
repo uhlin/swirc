@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018-2022 Markus Uhlin. All rights reserved.
 .\"
-.Dd November 7, 2022
+.Dd November 27, 2022
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -162,6 +162,21 @@ Since you neither CAN or SHOULD run
 as root you should specify a different port using this setting and
 configure your firewall to redirect connections to port 113 to this
 one.
+.Pp
+If you're using
+.Ox
+and
+.Xr pf 4 ,
+pose that you want use port 6500 and that the name of the target
+interface is vio0.
+You could then add the following lines to your
+.Xr pf.conf 5 :
+.Bd -literal -offset indent
+pass in on vio0 inet  proto tcp from any to any port auth \e
+    rdr-to 127.0.0.1 port 6500
+pass in on vio0 inet6 proto tcp from any to any port auth \e
+    rdr-to ::1 port 6500
+.Ed
 .\" ----------------------------------------
 .\" INVITE NOTIFY
 .\" ----------------------------------------
