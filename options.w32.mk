@@ -24,7 +24,7 @@ CXXFLAGS = $(CFLAGS)\
 
 # Versions
 CURL_VERSION = 7.83.0
-LIBRESSL_VERSION = 3.5.2
+LIBRESSL_VERSION = 3.6.1
 PDCURSES_VERSION = 3.9
 
 GNU_BUNDLE_DATE = 202205
@@ -36,11 +36,11 @@ Q = @
 
 MACHINE = x64
 NAME_libcharset = libcharset-1
-NAME_libcrypto = crypto-49
+NAME_libcrypto = crypto-50
 NAME_libiconv = libiconv-2
 NAME_libidn = libidn-12
 NAME_libintl = libintl-8
-NAME_libssl = ssl-52
+NAME_libssl = ssl-53
 
 LDFLAGS = -LIBPATH:curl-$(CURL_VERSION)/$(MACHINE)\
 	-LIBPATH:gnu-bundle-$(GNU_BUNDLE_DATE)/$(MACHINE)\
