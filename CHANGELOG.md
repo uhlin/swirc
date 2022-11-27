@@ -30,6 +30,9 @@ All notable changes to this project will be documented in this file.
 - **Moved** `squeeze_text_deco()` to a separate file
 - Reduced VA args in printtext calls
 
+### Windows ###
+- Upgraded to [LibreSSL](https://www.libressl.org/) 3.6.1
+
 ## [3.3.7] - 2022-10-22 ##
 - **Added** code to the following scripts:
   - `posixshell/link_with_gnu_libidn.sh`
