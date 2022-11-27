@@ -4,7 +4,8 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 3.3.7   | :heavy_check_mark: |
+| 3.3.8   | :heavy_check_mark: |
+| 3.3.7   | :x:                |
 | 3.3.6   | :x:                |
 | 3.3.5   | :heavy_check_mark: |
 | < 3.3.5 | :x:                |
