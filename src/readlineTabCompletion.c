@@ -50,13 +50,15 @@ static void
 do_work(volatile struct readline_session_context *ctx, const wchar_t *cmd,
     const char *s)
 {
-	size_t	i;
+	const size_t cmdlen = wcslen(cmd);
+	const size_t slen = strlen(s);
+	size_t i;
 
 	while (ctx->n_insert != 0)
 		readline_handle_backspace(ctx);
-	for (i = 0; i < wcslen(cmd); i++)
+	for (i = 0; i < cmdlen; i++)
 		readline_handle_key_exported(ctx, cmd[i]);
-	for (i = 0; i < strlen(s); i++)
+	for (i = 0; i < slen; i++)
 		readline_handle_key_exported(ctx, btowc(s[i]));
 }
 
@@ -127,12 +129,14 @@ static void
 auto_complete_command(volatile struct readline_session_context *ctx,
     const char *s)
 {
+	const size_t slen = strlen(s);
+
 	while (ctx->n_insert != 0)
 		readline_handle_backspace(ctx);
 
-	readline_handle_key_exported(ctx, btowc('/'));
+	readline_handle_key_exported(ctx, L'/');
 
-	for (size_t i = 0; i < strlen(s); i++)
+	for (size_t i = 0; i < slen; i++)
 		readline_handle_key_exported(ctx, btowc(s[i]));
 }
 
@@ -140,12 +144,14 @@ static void
 auto_complete_channel_user(volatile struct readline_session_context *ctx,
     const char *s)
 {
+	const size_t slen = strlen(s);
+
 	while (ctx->n_insert != 0)
 		readline_handle_backspace(ctx);
-	for (size_t i = 0; i < strlen(s); i++)
+	for (size_t i = 0; i < slen; i++)
 		readline_handle_key_exported(ctx, btowc(s[i]));
-	readline_handle_key_exported(ctx, btowc(':'));
-	readline_handle_key_exported(ctx, btowc(' '));
+	readline_handle_key_exported(ctx, L':');
+	readline_handle_key_exported(ctx, L' ');
 }
 
 static bool
@@ -462,8 +468,6 @@ no_more_matches(volatile struct readline_session_context *ctx)
 static void
 init_mode(volatile struct readline_session_context *ctx)
 {
-	const bool is_command = (ctx->tc->search_var[0] == '/');
-
 	if (!strncmp(get_search_var(ctx), "/help ", 6))
 		init_mode_for_help(ctx);
 	else if (!strncmp(get_search_var(ctx), "/msg ", 5))
@@ -482,7 +486,7 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_whois(ctx);
 	else if (!strncmp(get_search_var(ctx), "/znc ", 5))
 		init_mode_for_znc_cmds(ctx);
-	else if (is_command)
+	else if (ctx->tc->search_var[0] == '/')
 		init_mode_for_commands(ctx, (ctx->n_insert > 1));
 	else if (is_irc_channel(ACTWINLABEL))
 		init_mode_for_channel_users(ctx);
