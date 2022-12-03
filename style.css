@@ -50,6 +50,12 @@
 	margin-right: 30px;
 	width: 576px;
 }
+#top img {
+	transition: transform .7s ease-in-out;
+}
+#top img:hover {
+	transform: rotate(360deg);
+}
 a {
 	color: darkgoldenrod;
 	text-decoration: none;
