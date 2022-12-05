@@ -644,11 +644,11 @@ void
 irc_handle_interpret_events(char *recvbuffer, char **message_concat,
     enum message_concat_state *state)
 {
-	bool terminated_recvchunk = false;
-	char *cp = NULL, *tokstate = "";
-	char *last_token = NULL;
-	long int loop_count = 0;
-	static const char separators[] = "\r\n";
+	bool			 terminated_recvchunk = false;
+	char			*cp = NULL, *tokstate = "";
+	char			*last_token = NULL;
+	long int		 loop_count = 0;
+	static const char	 separators[] = "\r\n";
 
 	if (recvbuffer == NULL || message_concat == NULL || state == NULL)
 		err_exit(EINVAL, "%s", __func__);
