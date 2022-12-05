@@ -612,12 +612,12 @@ net_connect_clean_up(void)
 void
 net_irc_listen(bool *connection_lost)
 {
-	PRINTTEXT_CONTEXT ptext_ctx;
-	char *message_concat = NULL;
-	char *recvbuf = NULL;
-	enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
-	int bytes_received = -1;
-	struct network_recv_context ctx(g_socket, 0, 5, 0);
+	PRINTTEXT_CONTEXT		 ptext_ctx;
+	char				*message_concat = NULL;
+	char				*recvbuf = NULL;
+	enum message_concat_state	 state = CONCAT_BUFFER_IS_EMPTY;
+	int				 bytes_received = -1;
+	struct network_recv_context	 ctx(g_socket, 0, 5, 0);
 
 	if (atomic_load_bool(&g_irc_listening))
 		return;
@@ -638,8 +638,8 @@ net_irc_listen(bool *connection_lost)
 			 * ICB
 			 */
 
-			char array[10] = { '\0' };
-			int length, ret;
+			char	array[10] = { '\0' };
+			int	length, ret;
 
 			if ((bytes_received = net_recv(&ctx, recvbuf, 1)) ==
 			    -1) {
