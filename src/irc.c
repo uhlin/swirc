@@ -427,12 +427,13 @@ handle_extension(size_t *bytes, const char *protocol_message,
 static struct irc_message_compo *
 SortMsgCompo(const char *protocol_message)
 {
-	char *cp = NULL, *state = "";
-	char *remaining_data = NULL;
-	int message_has_prefix = 0, requested_feeds = -1;
-	short int loop_run = 0;
-	size_t bytes = 0;
-	struct irc_message_compo *compo = xcalloc(sizeof *compo, 1);
+	char				*cp = NULL, *state = "";
+	char				*remaining_data = NULL;
+	int				 message_has_prefix = 0,
+					 requested_feeds = -1;
+	short int			 loop_run = 0;
+	size_t				 bytes = 0;
+	struct irc_message_compo	*compo = xcalloc(sizeof *compo, 1);
 
 	compo->year = compo->month = compo->day = -1;
 	compo->hour = compo->minute = compo->second = compo->precision = -1;
