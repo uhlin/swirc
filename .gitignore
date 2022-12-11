@@ -2,6 +2,7 @@
 !tests/fuzz/*.log
 tests/fuzz/ircfuzz.log
 
+*.c.smatch
 *.cab
 *.dll
 *.ico
