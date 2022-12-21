@@ -1,3 +1,10 @@
+swirc (3.3.8-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * No change source-only upload for testing migration.
+
+ -- Boyuan Yang <byang@debian.org>  Wed, 07 Dec 2022 14:24:18 -0500
+
 swirc (3.3.8-1) unstable; urgency=medium
 
   * Initial import. (Closes: #1021993)
