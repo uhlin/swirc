@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added micro optimizations
+- Added the following config options:
+  - `qbot_host`
 
 ## [3.3.8] - 2022-11-27 ##
 - **Added** an ident protocol daemon (which is OFF by default)
