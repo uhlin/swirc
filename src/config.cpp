@@ -94,6 +94,7 @@ static struct tagConfDefValues {
 
 	{ "chanserv_host",             TYPE_STRING,  1, "services." },
 	{ "nickserv_host",             TYPE_STRING,  1, "services." },
+	{ "qbot_host",                 TYPE_STRING,  1, "CServe.quakenet.org" },
 
 	{ "account_notify",            TYPE_BOOLEAN, 2, "no" },
 	{ "away_notify",               TYPE_BOOLEAN, 2, "no" },
