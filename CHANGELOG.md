@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 - Added the following config options:
   - `qbot_host`
 
+### Linux ###
+- Fixed building on riscv64
+
 ## [3.3.8] - 2022-11-27 ##
 - **Added** an ident protocol daemon (which is OFF by default)
 - **Added** and made use of `printf_and_free()`
