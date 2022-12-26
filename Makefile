@@ -3,10 +3,6 @@ include options.mk
 CFLAGS += -Isrc/include
 CXXFLAGS += -Isrc/include
 
-ifeq ($(shell uname -m),riscv64)
-LDFLAGS += -latomic
-endif
-
 PREFIX ?= /usr/local
 
 all: main

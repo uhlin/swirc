@@ -86,6 +86,12 @@ case "$(uname -s)" in
 	fi
 
 	fix_cflags_with_pkg_config
+
+	if [ "$(uname -m)" = "riscv64" ]; then
+		cat <<EOF >>$MAKE_DEF_FILE
+LDLIBS += -latomic
+EOF
+	fi
 	;;
 *)
 	echo "OS not supported!"
