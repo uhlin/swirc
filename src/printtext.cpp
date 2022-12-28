@@ -996,9 +996,9 @@ windows_convert_to_utf8(const char *buf)
 static wchar_t *
 try_convert_buf_with_cs(const char *buf, const char *codeset)
 {
-	struct locale_info *li = NULL;
 	char *original_locale = NULL;
 	char *tmp_locale = NULL;
+	struct locale_info *li = NULL;
 	wchar_t *out = NULL;
 
 	try {
