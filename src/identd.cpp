@@ -94,6 +94,7 @@ get_maxfdp1(void)
 #endif
 }
 
+//lint -sem(get_servport, r_null)
 static char *
 get_servport(void)
 {
