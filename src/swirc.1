@@ -1,7 +1,7 @@
 .\"
 .\" Public domain
 .\"
-.Dd September 25, 2021
+.Dd December 28, 2022
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -62,7 +62,11 @@ Debug logging
 .It Fl i
 Turn on Internet Citizen's Band mode
 .It Fl j Ar join
-A comma-separated list of channels to join
+A comma-separated list of channels to join.
+For example:
+.Bd -literal -offset indent
+-j libera,linux,c,c++
+.Ed
 .It Fl n Ar nickname
 Online nickname
 .It Fl p
