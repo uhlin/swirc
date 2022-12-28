@@ -41,12 +41,13 @@ typedef enum {
 } cc_check_t;
 
 typedef struct tagPRINTTEXT_CONTEXT {
-	PIRC_WINDOW window;
-	enum message_specifier_type spec_type;
-	bool include_ts;
+	PIRC_WINDOW	 window;
+	enum message_specifier_type
+			 spec_type;
+	bool		 include_ts;
 
-	char server_time[64];
-	bool has_server_time;
+	char		 server_time[64];
+	bool		 has_server_time;
 } PRINTTEXT_CONTEXT, *PPRINTTEXT_CONTEXT;
 
 __SWIRC_BEGIN_DECLS
