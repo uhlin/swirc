@@ -1409,12 +1409,13 @@ void
 printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
 	       int *rep_count)
 {
-	char *tmpbuf = NULL;
-	const char *tmpbuf_p = NULL;
-	int insert_count = 0;
-	int line_count = 0;
-	struct text_decoration_bools booleans; // calls constructor
-	wchar_t *wc_buf = NULL;
+	char		*tmpbuf = NULL;
+	const char	*tmpbuf_p = NULL;
+	int		 insert_count = 0;
+	int		 line_count = 0;
+	struct text_decoration_bools
+			 booleans; // calls constructor
+	wchar_t		*wc_buf = NULL;
 
 #if defined(UNIX)
 	if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0)
