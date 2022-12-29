@@ -15,7 +15,7 @@ check_strcasestr () {
 	_srcfile="${_tmpfile}.c"
 	_out="${_tmpfile}.out"
 	cat <<EOF >"$_srcfile"
-#if defined(__linux__) && !defined(_GNU_SOURCE)
+#if (defined(__gnu_hurd__) || defined(__linux__)) && !defined(_GNU_SOURCE)
 #define _GNU_SOURCE
 #endif
 #include <string.h>
