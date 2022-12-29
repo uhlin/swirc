@@ -1,3 +1,10 @@
+#######################################################
+#
+# Check whether strcasestr() exists
+#
+# Copyright (c) 2022 Markus Uhlin. All rights reserved.
+#
+
 check_strcasestr () {
 	local _tmpfile _srcfile _out
 
