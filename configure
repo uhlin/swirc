@@ -13,6 +13,7 @@ MAKE_DEF_FILE=options.mk
 . "posixshell/link_with_libiconv.sh"
 . "posixshell/link_with_libnotify.sh"
 . "posixshell/os_BSD.sh"
+. "posixshell/os_GNU.sh"
 . "posixshell/os_LINUX.sh"
 . "posixshell/os_LINUX_suncc.sh"
 . "posixshell/os_MAC.sh"
@@ -74,6 +75,9 @@ case "$(uname -s)" in
 	;;
 "FreeBSD" | "OpenBSD")
 	os_BSD
+	;;
+"GNU")
+	os_GNU
 	;;
 "Linux")
 	if [ "$1" = "suncc" ]; then
