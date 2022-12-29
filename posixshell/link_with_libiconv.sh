@@ -32,7 +32,7 @@ EOF
 
 	printf "checking for gnu libiconv..."
 
-	if [ "$(uname -s)" = "Linux" ]; then
+	if [ "$(uname -s)" = "GNU" ] || [ "$(uname -s)" = "Linux" ]; then
 		_libs=""
 	else
 		_libs="-liconv"
