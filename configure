@@ -75,9 +75,6 @@ case "$(uname -s)" in
 "FreeBSD" | "OpenBSD")
 	os_BSD
 	;;
-"NetBSD")
-	os_NETBSD
-	;;
 "Linux")
 	if [ "$1" = "suncc" ]; then
 		os_LINUX_suncc
@@ -92,6 +89,9 @@ case "$(uname -s)" in
 LDLIBS += -latomic
 EOF
 	fi
+	;;
+"NetBSD")
+	os_NETBSD
 	;;
 *)
 	echo "OS not supported!"
