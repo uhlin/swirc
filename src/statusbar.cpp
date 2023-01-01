@@ -1,5 +1,5 @@
 /* Swirc statusbar
-   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -54,6 +54,20 @@ apply_statusbar_options(WINDOW *win)
 {
 	if (is_scrollok(win))
 		(void) scrollok(win, false);
+}
+
+static std::string
+int_to_str(const int i)
+{
+	char		buf[20] = { '\0' };
+	int		ret;
+	std::string	str("");
+
+	if ((ret = snprintf(buf, sizeof buf, "%d", i)) < 0 ||
+	    static_cast<size_t>(ret) >= sizeof buf)
+		return str;
+	str.assign(&buf[0]);
+	return str;
 }
 
 static std::string
@@ -115,11 +129,11 @@ get_readline_pos()
 
 	if (g_readline_pos) {
 		if (g_readline_pos->x == g_readline_pos->y) {
-			str.append(std::to_string(g_readline_pos->x));
+			str.append(int_to_str(g_readline_pos->x));
 		} else {
-			str.append(std::to_string(g_readline_pos->x));
+			str.append(int_to_str(g_readline_pos->x));
 			str.push_back(',');
-			str.append(std::to_string(g_readline_pos->y));
+			str.append(int_to_str(g_readline_pos->y));
 		}
 	}
 
@@ -187,15 +201,13 @@ statusbar_update_display_beta(void)
 	(void) werase(win);
 	(void) wbkgd(win, (blank | COLOR_PAIR(pair_n) | A_NORMAL));
 
-#ifndef _lint
 	(void) str.append(" ");
 	(void) str.append(lb);
-	(void) str.append(std::to_string(g_active_window->refnum));
+	(void) str.append(int_to_str(g_active_window->refnum));
 	(void) str.append("(");
-	(void) str.append(std::to_string(g_ntotal_windows));
+	(void) str.append(int_to_str(g_ntotal_windows));
 	(void) str.append(")");
 	(void) str.append(rb);
-#endif
 
 	(void) str.append(" ");
 	(void) str.append(lb).append(get_readline_pos()).append(rb);
