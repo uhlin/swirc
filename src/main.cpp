@@ -1,5 +1,5 @@
 /* main.cpp  --  starts execution
-   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -84,7 +84,7 @@
    ============================ */
 
 chararray_t	g_swircVersion	= "v3.3.8";
-chararray_t	g_swircYear	= "2012-2022";
+chararray_t	g_swircYear	= "2012-2023";
 chararray_t	g_swircAuthor	= "Markus Uhlin";
 chararray_t	g_swircWebAddr	= "https://www.nifty-networks.net/swirc/";
 
