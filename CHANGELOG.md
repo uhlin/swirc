@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added micro optimizations
 - Added support for the GNU Hurd OS
+- Added the following commands:
+  - `/qbot`
 - Added the following config options:
   - `qbot_host`
 
