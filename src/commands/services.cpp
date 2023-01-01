@@ -107,7 +107,7 @@ run_command(const char *slashcmd, const char *srv_name,
 		std::string str(slashcmd);
 
 		(void) str.append(": ").append(e.what());
-		print_and_free(str.c_str(), NULL);
+		printtext_print("err", "%s", str.c_str());
 
 		if (strings_match(e.what(), "cannot send")) {
 			err_log(ENOTCONN, "%s", slashcmd);
