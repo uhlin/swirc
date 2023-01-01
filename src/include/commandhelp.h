@@ -1,7 +1,7 @@
 #ifndef COMMAND_HELP_H
 #define COMMAND_HELP_H
 /* commandhelp.h
-   Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -445,6 +445,15 @@ static usage_t passmod_usage = {
   N_("usage: /passmod <nickname>"),
   "",
   N_("Pass the ICB moderation privilege to another group member."),
+  "",
+};
+
+static usage_t qbot_usage = {
+  N_("usage: /qbot <[service hostname | --]> <command> [...]"),
+  "",
+  N_("Communicate with QuakeNet's network service, the Q bot. If the initial\n"
+     "argument equals to '--', then the value of setting 'qbot_host' is used\n"
+     "as a service hostname."),
   "",
 };
 

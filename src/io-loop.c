@@ -1,5 +1,5 @@
 /* Input output loop
-   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -134,6 +134,7 @@ static struct cmds_tag {
 	{ "p",           cmd_part,        true,  part_usage,        ARRAY_SIZE(part_usage),        true  },
 	{ "part",        cmd_part,        true,  part_usage,        ARRAY_SIZE(part_usage),        true  },
 	{ "passmod",     cmd_passmod,     true,  passmod_usage,     ARRAY_SIZE(passmod_usage),     false },
+	{ "qbot",        cmd_qbot,        true,  qbot_usage,        ARRAY_SIZE(qbot_usage),        true  },
 	{ "query",       cmd_query,       false, query_usage,       ARRAY_SIZE(query_usage),       false },
 	{ "quit",        cmd_quit,        false, quit_usage,        ARRAY_SIZE(quit_usage),        false },
 	{ "resize",      cmd_resize,      false, resize_usage,      ARRAY_SIZE(resize_usage),      false },
