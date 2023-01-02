@@ -141,15 +141,18 @@ shouldHighlightMessage_case1(const char *msg)
 	char	*s1 = strdup_printf("%s:", g_my_nickname);
 	char	*s2 = strdup_printf("%s,", g_my_nickname);
 	char	*s3 = strdup_printf("%s ", g_my_nickname);
+	char	*s4 = strdup_printf(" %s ", g_my_nickname);
 
 	if (!strncasecmp(msg, s1, strlen(s1)) ||
 	    !strncasecmp(msg, s2, strlen(s2)) ||
 	    !strncasecmp(msg, s3, strlen(s3)) ||
+	    strcasestr(msg, s4) != NULL ||
 	    strings_match_ignore_case(msg, g_my_nickname))
 		result = true;
 	free(s1);
 	free(s2);
 	free(s3);
+	free(s4);
 	return result;
 }
 
