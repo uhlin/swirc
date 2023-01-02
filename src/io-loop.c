@@ -334,8 +334,8 @@ list_all_commands(void)
 
 	sp = &cmds[0];
 	while (sp < &cmds[ARRAY_SIZE(cmds)]) {
-		const char *cmd1 = sp->cmd;
-		char *cmd2, *cmd3;
+		const char	*cmd1 = sp->cmd;
+		char		*cmd2, *cmd3;
 
 		if ((sp + 1) < &cmds[ARRAY_SIZE(cmds)] &&
 		    (sp + 2) < &cmds[ARRAY_SIZE(cmds)]) {
@@ -369,8 +369,8 @@ output_help_for_command(const char *command)
 
 	FOREACH_COMMAND() {
 		if (strings_match(command, sp->cmd)) {
-			const char **lines = & (sp->usage[0]);
-			const size_t size = sp->size;
+			const char**	 lines = &sp->usage[0];
+			const size_t	 size = sp->size;
 
 			while (lines < & (sp->usage[size])) {
 				if (!strings_match(*lines, ""))
