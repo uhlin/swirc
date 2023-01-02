@@ -589,10 +589,8 @@ enter_io_loop(void)
 			    "  --  nothing has been transmitted!");
 		} else {
 			if (g_on_air && !strings_match(ACTWINLABEL,
-			    g_status_window_label)) {
-				transmit_user_input(ACTWINLABEL,
-				    line);
-			}
+			    g_status_window_label))
+				transmit_user_input(ACTWINLABEL, line);
 		}
 
 		add_to_history(line);
