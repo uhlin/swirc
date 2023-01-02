@@ -582,15 +582,15 @@ enter_io_loop(void)
 			handle_cmds(&line[1]);
 		} else if (config_bool("cmd_type_prot", true) &&
 		    g_on_air &&
-		    !strings_match(g_active_window->label, g_status_window_label) &&
+		    !strings_match(ACTWINLABEL, g_status_window_label) &&
 		    (len = strspn(line, " ")) <= 3 &&
 		    line[len] == cmd_char) {
 			printtext_print("warn", "Command type protection is ON"
 			    "  --  nothing has been transmitted!");
 		} else {
-			if (g_on_air && !strings_match(g_active_window->label,
+			if (g_on_air && !strings_match(ACTWINLABEL,
 			    g_status_window_label)) {
-				transmit_user_input(g_active_window->label,
+				transmit_user_input(ACTWINLABEL,
 				    line);
 			}
 		}
