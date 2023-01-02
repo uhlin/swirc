@@ -7,7 +7,8 @@ All notable changes to this project will be documented in this file.
 - Added the following commands:
   - `/qbot`
 - Added the following config options:
-  - `qbot_host`
+  - `ctcp_reply` (bool)
+  - `qbot_host` (string)
 
 ### Linux ###
 - Fixed building on riscv64
