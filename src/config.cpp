@@ -114,6 +114,7 @@ static struct tagConfDefValues {
 	{ "beeps",                     TYPE_BOOLEAN, 4, "yes" },
 	{ "cipher_suite",              TYPE_STRING,  3, "compat" },
 	{ "cmd_hist_size",             TYPE_INTEGER, 3, "50" },
+	{ "cmd_type_prot",             TYPE_BOOLEAN, 3, "yes" },
 	{ "connection_timeout",        TYPE_INTEGER, 2, "45" },
 	{ "ctcp_reply",                TYPE_BOOLEAN, 3, "yes" },
 	{ "hostname_checking",         TYPE_BOOLEAN, 2, "yes" },

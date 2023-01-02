@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Added the following commands:
   - `/qbot`
 - Added the following config options:
+  - `cmd_type_prot` (bool)
   - `ctcp_reply` (bool)
   - `qbot_host` (string)
 
