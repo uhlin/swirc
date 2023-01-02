@@ -559,6 +559,7 @@ enter_io_loop(void)
 
 	do {
 		char *prompt, *line;
+		size_t len;
 		static const char cmd_char = '/';
 
 		prompt = get_prompt();
@@ -579,6 +580,13 @@ enter_io_loop(void)
 			continue;
 		} else if (*line == cmd_char) {
 			handle_cmds(&line[1]);
+		} else if (config_bool("cmd_type_prot", true) &&
+		    g_on_air &&
+		    !strings_match(g_active_window->label, g_status_window_label) &&
+		    (len = strspn(line, " ")) <= 3 &&
+		    line[len] == cmd_char) {
+			printtext_print("warn", "Command type protection is ON"
+			    "  --  nothing has been transmitted!");
 		} else {
 			if (g_on_air && !strings_match(g_active_window->label,
 			    g_status_window_label)) {
