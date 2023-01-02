@@ -558,9 +558,9 @@ enter_io_loop(void)
 	history = textBuf_new();
 
 	do {
-		char *prompt, *line;
-		size_t len;
-		static const char cmd_char = '/';
+		char			*prompt, *line;
+		size_t			 len;
+		static const char	 cmd_char = '/';
 
 		prompt = get_prompt();
 		line = readline(prompt);
@@ -642,8 +642,8 @@ transmit_user_input(const char *winlabel, const char *input)
 		    S1, COLOR1, g_my_nickname, NORMAL, S2,
 		    input);
 	} else {
-		PNAMES n;
-		char c;
+		PNAMES	n;
+		char	c;
 
 		if ((n = event_names_htbl_lookup(g_my_nickname, winlabel)) ==
 		    NULL) {
