@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Added support for the GNU Hurd OS
 - Added the following commands:
   - `/qbot`
+  - `/stats`
 - Added the following config options:
   - `cmd_type_prot` (bool)
   - `ctcp_reply` (bool)
