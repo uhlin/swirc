@@ -1,5 +1,5 @@
 /* Handles event PRIVMSG
-   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -102,17 +102,17 @@ handle_special_msg(const struct special_msg_context *ctx)
 
 	if (!strncmp(msg, "ACTION ", 7)) {
 		printtext(&ptext_ctx, " - %s %s", ctx->nick, &msg[7]);
+	} else if (!strncmp(msg, "TIME", 5)) {
+		if (net_send("NOTICE %s :\001TIME %s\001", ctx->nick,
+		    current_time("%c")) < 0)
+			g_connection_lost = true;
+		acknowledge_ctcp_request("TIME", ctx);
 	} else if (!strncmp(msg, "VERSION", 8)) {
 		if (net_send("NOTICE %s :"
 		    "\001VERSION Swirc %s by %s  --  %s\001", ctx->nick,
 		    g_swircVersion, g_swircAuthor, g_swircWebAddr) < 0)
 			g_connection_lost = true;
 		acknowledge_ctcp_request("VERSION", ctx);
-	} else if (!strncmp(msg, "TIME", 5)) {
-		if (net_send("NOTICE %s :\001TIME %s\001", ctx->nick,
-		    current_time("%c")) < 0)
-			g_connection_lost = true;
-		acknowledge_ctcp_request("TIME", ctx);
 	} else {
 		/* do nothing */;
 	}
