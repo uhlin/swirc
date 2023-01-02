@@ -109,6 +109,13 @@ all
 Command history size.
 No more than this number of commands will be stored in the memory.
 .\" ----------------------------------------
+.\" CMD TYPE PROT
+.\" ----------------------------------------
+.It Sy cmd_type_prot Pq Em bool
+Command type protection.
+Detects up to 5 leading spaces followed by a command character
+preventing a command to be accidentally transmitted as a chat message.
+.\" ----------------------------------------
 .\" CONNECTION TIMEOUT
 .\" ----------------------------------------
 .It Sy connection_timeout Pq Em int
