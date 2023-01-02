@@ -585,8 +585,9 @@ enter_io_loop(void)
 		    !strings_match(ACTWINLABEL, g_status_window_label) &&
 		    (len = strspn(line, " ")) <= 5 &&
 		    line[len] == cmd_char) {
-			printtext_print("warn", "Command type protection is ON"
-			    "  --  nothing has been transmitted!");
+			printtext_print("warn", "Command type protection is "
+			    "%sON%s  --  nothing has been transmitted!",
+			    TXT_BOLD, TXT_BOLD);
 		} else {
 			if (g_on_air && !strings_match(ACTWINLABEL,
 			    g_status_window_label))
