@@ -583,7 +583,7 @@ enter_io_loop(void)
 		} else if (config_bool("cmd_type_prot", true) &&
 		    g_on_air &&
 		    !strings_match(ACTWINLABEL, g_status_window_label) &&
-		    (len = strspn(line, " ")) <= 3 &&
+		    (len = strspn(line, " ")) <= 5 &&
 		    line[len] == cmd_char) {
 			printtext_print("warn", "Command type protection is ON"
 			    "  --  nothing has been transmitted!");
