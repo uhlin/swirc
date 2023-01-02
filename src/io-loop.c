@@ -147,6 +147,7 @@ static struct cmds_tag {
 	{ "servlist",    cmd_servlist,    true,  servlist_usage,    ARRAY_SIZE(servlist_usage),    true  },
 	{ "set",         cmd_set,         false, set_usage,         ARRAY_SIZE(set_usage),         false },
 	{ "squery",      cmd_squery,      true,  squery_usage,      ARRAY_SIZE(squery_usage),      true  },
+	{ "stats",       cmd_stats,       true,  stats_usage,       ARRAY_SIZE(stats_usage),       false },
 	{ "theme",       cmd_theme,       false, theme_usage,       ARRAY_SIZE(theme_usage),       false },
 	{ "time",        cmd_time,        true,  time_usage,        ARRAY_SIZE(time_usage),        true  },
 	{ "topic",       cmd_topic,       true,  topic_usage,       ARRAY_SIZE(topic_usage),       false },

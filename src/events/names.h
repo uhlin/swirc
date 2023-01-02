@@ -8,6 +8,7 @@ __SWIRC_BEGIN_DECLS
 
 /*lint -sem(get_list_of_matching_channel_users, r_null) */
 
+void		cmd_stats(const char *);
 PTEXTBUF	get_list_of_matching_channel_users(const char *chan,
 		    const char *search_var);
 

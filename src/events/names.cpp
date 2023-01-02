@@ -1,5 +1,5 @@
 /* Handle event names (353) and event EOF names (366)
-   Copyright (C) 2015-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -289,6 +289,39 @@ reset_counters(PIRC_WINDOW window)
 	window->num_voices	= 0;
 	window->num_normal	= 0;
 	window->num_total	= 0;
+}
+
+/*
+ * usage: /stats [channel]
+ */
+void
+cmd_stats(const char *data)
+{
+	PIRC_WINDOW		win;
+	PRINTTEXT_CONTEXT	ptext_ctx;
+	static chararray_t	cmd = "/stats";
+
+	if (strings_match(data, "")) {
+		if (!is_irc_channel(ACTWINLABEL))
+			printtext_print("err", "%s: not an irc channel", cmd);
+		else if ((win = window_by_label(ACTWINLABEL)) == NULL)
+			printtext_print("err", "%s: no such channel", cmd);
+		else {
+			printtext_context_init(&ptext_ctx, win, TYPE_SPEC3,
+			    true);
+			output_statistics(ptext_ctx, ACTWINLABEL, win);
+		}
+	} else {
+		if (!is_irc_channel(data))
+			printtext_print("err", "%s: bogus irc channel", cmd);
+		else if ((win = window_by_label(data)) == NULL)
+			printtext_print("err", "%s: no such channel", cmd);
+		else {
+			printtext_context_init(&ptext_ctx, g_active_window,
+			    TYPE_SPEC3, true);
+			output_statistics(ptext_ctx, data, win);
+		}
+	}
 }
 
 PTEXTBUF

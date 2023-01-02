@@ -604,6 +604,15 @@ static usage_t squery_usage = {
   "",
 };
 
+static usage_t stats_usage = {
+  N_("usage: /stats [channel]"),
+  "",
+  N_("Outputs a channel's user statistics. If the channel argument is left\n"
+     "empty and the active window is an IRC channel, Swirc will output the\n"
+     "user statistics for that channel."),
+  "",
+};
+
 static usage_t theme_usage = {
   N_("usage: /theme [install <name> | list-remote | set <name>]"),
   "",
