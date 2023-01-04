@@ -1,5 +1,5 @@
 /* Readline tab completion
-   Copyright (C) 2020-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -112,6 +112,20 @@ auto_complete_theme(volatile struct readline_session_context *ctx,
 }
 
 static void
+auto_complete_time(volatile struct readline_session_context *ctx,
+    const char *s)
+{
+	do_work(ctx, L"/time ", s);
+}
+
+static void
+auto_complete_version(volatile struct readline_session_context *ctx,
+    const char *s)
+{
+	do_work(ctx, L"/version ", s);
+}
+
+static void
 auto_complete_whois(volatile struct readline_session_context *ctx,
     const char *s)
 {
@@ -205,6 +219,8 @@ readline_tab_comp_ctx_new(void)
 	ctx.isInCirculationModeForSasl		= false;
 	ctx.isInCirculationModeForSettings	= false;
 	ctx.isInCirculationModeForTheme		= false;
+	ctx.isInCirculationModeForTime		= false;
+	ctx.isInCirculationModeForVersion	= false;
 	ctx.isInCirculationModeForWhois		= false;
 	ctx.isInCirculationModeForZncCmds	= false;
 	ctx.isInCirculationModeForCmds		= false;
@@ -236,6 +252,8 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 		ctx->isInCirculationModeForSasl		= false;
 		ctx->isInCirculationModeForSettings	= false;
 		ctx->isInCirculationModeForTheme	= false;
+		ctx->isInCirculationModeForTime		= false;
+		ctx->isInCirculationModeForVersion	= false;
 		ctx->isInCirculationModeForWhois	= false;
 		ctx->isInCirculationModeForZncCmds	= false;
 		ctx->isInCirculationModeForCmds		= false;
@@ -383,6 +401,52 @@ init_mode_for_theme(volatile struct readline_session_context *ctx)
 }
 
 static void
+init_mode_for_time(volatile struct readline_session_context *ctx)
+{
+	char	*p;
+
+	if (!is_irc_channel(ACTWINLABEL)) {
+		output_error("not in irc channel");
+		return;
+	}
+
+	p = addrof(ctx->tc->search_var[6]);
+
+	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
+	    p)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_time(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeForTime = true;
+}
+
+static void
+init_mode_for_version(volatile struct readline_session_context *ctx)
+{
+	char	*p;
+
+	if (!is_irc_channel(ACTWINLABEL)) {
+		output_error("not in irc channel");
+		return;
+	}
+
+	p = addrof(ctx->tc->search_var[9]);
+
+	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
+	    p)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_version(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeForVersion = true;
+}
+
+static void
 init_mode_for_whois(volatile struct readline_session_context *ctx)
 {
 	char	*p;
@@ -482,6 +546,10 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_set(ctx);
 	else if (!strncmp(get_search_var(ctx), "/theme ", 7))
 		init_mode_for_theme(ctx);
+	else if (!strncmp(get_search_var(ctx), "/time ", 6))
+		init_mode_for_time(ctx);
+	else if (!strncmp(get_search_var(ctx), "/version ", 9))
+		init_mode_for_version(ctx);
 	else if (!strncmp(get_search_var(ctx), "/whois ", 7))
 		init_mode_for_whois(ctx);
 	else if (!strncmp(get_search_var(ctx), "/znc ", 5))
@@ -541,6 +609,18 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 			no_more_matches(ctx);
 		else
 			auto_complete_theme(ctx, next_text(ctx->tc));
+		return;
+	} else if (ctx->tc->isInCirculationModeForTime) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
+			no_more_matches(ctx);
+		else
+			auto_complete_time(ctx, next_text(ctx->tc));
+		return;
+	} else if (ctx->tc->isInCirculationModeForVersion) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
+			no_more_matches(ctx);
+		else
+			auto_complete_version(ctx, next_text(ctx->tc));
 		return;
 	} else if (ctx->tc->isInCirculationModeForWhois) {
 		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))

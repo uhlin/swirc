@@ -53,6 +53,8 @@ typedef struct tagTAB_COMPLETION {
 	bool	isInCirculationModeForSasl;
 	bool	isInCirculationModeForSettings;
 	bool	isInCirculationModeForTheme;
+	bool	isInCirculationModeForTime;
+	bool	isInCirculationModeForVersion;
 	bool	isInCirculationModeForWhois;
 	bool	isInCirculationModeForZncCmds;
 	bool	isInCirculationModeForCmds;
