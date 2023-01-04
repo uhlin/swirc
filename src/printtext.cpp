@@ -1,5 +1,5 @@
 /* Prints and handles text
-   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -300,7 +300,7 @@ case_blink(WINDOW *win, bool *is_blink)
 static void
 case_bold(WINDOW *win, bool *is_bold)
 {
-	if (! (*is_bold)) {
+	if (!*is_bold) {
 		WATTR_ON(win, A_BOLD);
 		*is_bold = true;
 	} else {
@@ -750,7 +750,7 @@ case_default(const struct case_default_context *ctx, int *rep_count,
 static void
 case_reverse(WINDOW *win, bool *is_reverse)
 {
-	if (! (*is_reverse)) {
+	if (!*is_reverse) {
 		WATTR_ON(win, A_REVERSE);
 		*is_reverse = true;
 	} else {
@@ -769,7 +769,7 @@ case_reverse(WINDOW *win, bool *is_reverse)
 static void
 case_underline(WINDOW *win, bool *is_underline)
 {
-	if (! (*is_underline)) {
+	if (!*is_underline) {
 		WATTR_ON(win, A_UNDERLINE);
 		*is_underline = true;
 	} else {
