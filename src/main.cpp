@@ -174,8 +174,8 @@ view_version()
 	free(MessageVersion);
 
 	while (true) {
-		char answer[100] = { '\0' };
-		int c;
+		char	answer[100] = { '\0' };
+		int	c;
 
 		PUTS("Output disclaimer? [y/N]: ");
 		(void) fflush(stdout);
@@ -240,9 +240,9 @@ case_launched_by_toast_hook()
 static void
 case_connect()
 {
-	char *last = const_cast<char *>("");
-	char *token1, *token2;
-	static bool been_case = false;
+	char		*last = const_cast<char *>("");
+	char		*token1, *token2;
+	static bool	 been_case = false;
 
 	if (been_case)
 		DUP_OPTION_ERR('c');
@@ -291,9 +291,9 @@ case_icb()
 static void
 case_join()
 {
-	char *cp;
-	char *last = const_cast<char *>("");
-	static bool been_case = false;
+	char		*cp;
+	char		*last = const_cast<char *>("");
+	static bool	 been_case = false;
 
 	if (been_case)
 		DUP_OPTION_ERR('j');
@@ -488,8 +488,8 @@ get_seed()
 static void
 toast_notifications_init()
 {
-	const wchar_t aumid[] = L"SwircDevelopmentTeam.Swirc";
-	const GUID clsid = __uuidof(NotificationActivator);
+	const wchar_t	aumid[] = L"SwircDevelopmentTeam.Swirc";
+	const GUID	clsid = __uuidof(NotificationActivator);
 
 	/*
 	 * Initializes the COM library for use by the calling thread
@@ -672,8 +672,8 @@ main(int argc, char *argv[])
 
 #if defined(OpenBSD) && OpenBSD >= 201811
 	struct whitelist_tag {
-		const char *path;
-		const char *permissions;
+		const char	*path;
+		const char	*permissions;
 	} whitelist[] = {
 		{ "/etc/ssl/cert.pem", "r" },
 		{ LC_MSGS_DE, "r" },
@@ -733,10 +733,10 @@ main(int argc, char *argv[])
 struct locale_info *
 get_locale_info(int category)
 {
-	char *last = const_cast<char *>("");
-	char *tok;
-	char buf[200] = { '\0' };
-	struct locale_info *li = new locale_info();
+	char			*last = const_cast<char *>("");
+	char			*tok;
+	char			 buf[200] = { '\0' };
+	struct locale_info	*li = new locale_info();
 
 	if (sw_strcpy(buf, xsetlocale(category, NULL), ARRAY_SIZE(buf)) != 0)
 		return (li);
