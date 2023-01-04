@@ -1,5 +1,5 @@
 /* Window functions
-   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -165,7 +165,7 @@ first_page_up(PIRC_WINDOW window)
 		printtext_puts(tmp, element->text, element->indent, -1,
 		    &rep_count);
 		element = element->prev;
-		elt_count ++;
+		elt_count++;
 		i += rep_count;
 	} /* while */
 	(void) curs_set(1);
@@ -209,7 +209,7 @@ get_dynamic_scroll_amount(PIRC_WINDOW window, plus_minus_t pm)
 			element = element->next;
 		else
 			sw_assert_not_reached();
-		amount ++;
+		amount++;
 		i += rep_count;
 	} /* while */
 	(void) curs_set(1);
@@ -376,7 +376,7 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 			printtext_puts(pwin, element->text, element->indent, -1,
 			    NULL);
 			element = element->next;
-			++ i;
+			++i;
 		}
 		(void) curs_set(1);
 		(void) atomic_swap_bool(&g_redrawing_window, false);
@@ -452,7 +452,7 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
 	 * draw main window
 	 */
 	if (window->scroll_mode) {
-		if (! (window->scroll_count > HEIGHT)) {
+		if (!(window->scroll_count > HEIGHT)) {
 			window->saved_size = 0;
 			window->scroll_count = 0;
 			window->scroll_mode = false;
@@ -752,7 +752,7 @@ window_scroll_down(PIRC_WINDOW window, const int amount)
 		window->scroll_count -= amount;
 	}
 
-	if (! (window->scroll_count > HEIGHT)) {
+	if (!(window->scroll_count > HEIGHT)) {
 		window->saved_size = 0;
 		window->scroll_count = 0;
 		window->scroll_mode = false;
