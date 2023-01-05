@@ -23,7 +23,8 @@ All notable changes to this project will be documented in this file.
   - `/whois`
 
 ### Linux ###
-- Fixed building on riscv64
+- Fixed building on riscv64. Contributed by
+  [Eric Long](https://github.com/hack3ric) - thanks!
 
 ## [3.3.8] - 2022-11-27 ##
 - **Added** an ident protocol daemon (which is OFF by default)
