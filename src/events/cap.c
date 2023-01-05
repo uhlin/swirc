@@ -1,5 +1,5 @@
 /* IRCv3 Client Capability Negotiation
-   Copyright (C) 2017-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -44,6 +44,8 @@ is_sasl_mechanism_supported(const char *mechanism)
 	if (mechanism == NULL)
 		return false;
 	else if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE"))
+		return true;
+	else if (strings_match(mechanism, "EXTERNAL"))
 		return true;
 	else if (strings_match(mechanism, "PLAIN"))
 		return true;
