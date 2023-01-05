@@ -95,5 +95,7 @@ x509_fingerprint::show_fp(void)
 		return;
 	}
 
-	printtext_print("success", "fingerprint: %s", str.c_str());
+	printtext_print("success", "fingerprint (%s): %s",
+	    (this->alg == EVP_sha1() ? "sha1" : "unknown"),
+	    str.c_str());
 }
