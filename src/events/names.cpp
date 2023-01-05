@@ -106,7 +106,7 @@ static char names_channel[1000] = { '\0' };
 static void
 add_match(PTEXTBUF matches, const char *user)
 {
-	chararray_t msg = "get_list_of_matching_channel_users: "
+	static chararray_t msg = "get_list_of_matching_channel_users: "
 	    "textBuf_ins_next";
 
 	if (textBuf_size(matches) != 0) {
