@@ -1,5 +1,5 @@
 /* Create the home directory and read its configuration files
-   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -286,6 +286,7 @@ read_config_post_check(void)
 	if (sasl_is_enabled() &&
 	    is_sasl_mechanism_supported(mech) &&
 	    !strings_match(mech, "ECDSA-NIST256P-CHALLENGE") &&
+	    !strings_match(mech, "EXTERNAL") &&
 	    get_sasl_passwd_type() == g_encrypted_pass_sym) {
 		cp = Config("sasl_password");
 
