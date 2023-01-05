@@ -461,7 +461,7 @@ set_x509(const char *filename)
 
    keygen [--force]
    pubkey
-   mechanism [ecdsa-nist256p-challenge | plain | scram-sha-256]
+   mechanism [ecdsa-nist256p-challenge | external | plain | scram-sha-256]
    username <name>
    password <pass>
    passwd_s <sasl pass> <encryption pass>
