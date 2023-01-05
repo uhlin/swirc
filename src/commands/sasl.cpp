@@ -451,10 +451,10 @@ set_x509(const char *filename)
 	if (!modify_setting("sasl_x509", filename)) {
 		output_message(true, "set x509 failed");
 		return;
-	} else {
-		output_message(false, "set x509 ok");
-		save_to_config();
 	}
+
+	output_message(false, "set x509 ok");
+	save_to_config();
 }
 
 /* usage: /sasl <operation> [...]
