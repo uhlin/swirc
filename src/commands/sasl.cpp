@@ -73,6 +73,7 @@ static stringarray_t sasl_cmds = {
 	"pubkey",
 	"mechanism ",
 	"mechanism ecdsa-nist256p-challenge",
+	"mechanism external",
 	"mechanism plain",
 	"mechanism scram-sha-256",
 	"username ",
