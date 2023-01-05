@@ -43,6 +43,7 @@
 #include "../crypt.h"
 #include "../errHand.h"
 #include "../filePred.h"
+#include "../get_x509_fp.hpp"
 #include "../libUtils.h"
 #include "../main.h"
 #include "../nestHome.h"
@@ -448,6 +449,8 @@ set_state(char *state)
 static void
 set_x509(const char *filename)
 {
+	static const char err_prefix[] = "fingerprint: ";
+
 	if (!modify_setting("sasl_x509", filename)) {
 		output_message(true, "set x509 failed");
 		return;
@@ -455,6 +458,23 @@ set_x509(const char *filename)
 
 	output_message(false, "set x509 ok");
 	save_to_config();
+
+	try {
+		std::string path("");
+
+		(void) path.append(g_home_dir);
+		(void) path.append(SLASH);
+		(void) path.append(Config("sasl_x509"));
+
+		x509_fingerprint fp(path.c_str());
+
+		fp.show_fp();
+	} catch (const std::runtime_error &e) {
+		printtext_print("err", "%s%s", err_prefix, e.what());
+	} catch (...) {
+		printtext_print("err", "%s%s", err_prefix,
+		    "unknown exception was thrown!");
+	}
 }
 
 /* usage: /sasl <operation> [...]
