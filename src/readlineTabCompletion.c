@@ -449,17 +449,16 @@ init_mode_for_version(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_whois(volatile struct readline_session_context *ctx)
 {
-	char	*p;
+	char	*p = addrof(ctx->tc->search_var[7]);
 
 	if (!is_irc_channel(ACTWINLABEL)) {
-		output_error("not in irc channel");
-		return;
+		ctx->tc->matches = get_list_of_matching_queries(p);
+	} else {
+		ctx->tc->matches = get_list_of_matching_channel_users
+		    (ACTWINLABEL, p);
 	}
 
-	p = addrof(ctx->tc->search_var[7]);
-
-	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
-	    p)) == NULL) {
+	if (ctx->tc->matches == NULL) {
 		output_error("no magic");
 		return;
 	}
