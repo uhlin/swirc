@@ -186,6 +186,8 @@ get_matches_common(const char *p)
 		else
 			return get_list_of_matching_channels(p);
 	}
+	if (is_irc_channel(p))
+		return get_list_of_matching_channels(p);
 	return get_list_of_matching_channel_users(ACTWINLABEL, p);
 }
 
