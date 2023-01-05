@@ -33,6 +33,7 @@
 
 #include <cstring>
 #include <stdexcept>
+#include <string>
 
 #include "filePred.h"
 #include "get_x509_fp.hpp"
