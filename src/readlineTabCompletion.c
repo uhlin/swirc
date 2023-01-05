@@ -177,6 +177,18 @@ buf_contains_disallowed_chars(const volatile struct readline_session_context *ct
 	return yes_no;
 }
 
+static PTEXTBUF
+get_matches_common(const char *p)
+{
+	if (!is_irc_channel(ACTWINLABEL)) {
+		if (!is_irc_channel(p))
+			return get_list_of_matching_queries(p);
+		else
+			return get_list_of_matching_channels(p);
+	}
+	return get_list_of_matching_channel_users(ACTWINLABEL, p);
+}
+
 static inline char *
 get_search_var(const volatile struct readline_session_context *ctx)
 {
@@ -287,17 +299,7 @@ init_mode_for_msg(volatile struct readline_session_context *ctx)
 {
 	char	*p = addrof(ctx->tc->search_var[5]);
 
-	if (!is_irc_channel(ACTWINLABEL)) {
-		if (!is_irc_channel(p))
-			ctx->tc->matches = get_list_of_matching_queries(p);
-		else
-			ctx->tc->matches = get_list_of_matching_channels(p);
-	} else {
-		ctx->tc->matches = get_list_of_matching_channel_users
-		    (ACTWINLABEL, p);
-	}
-
-	if (ctx->tc->matches == NULL) {
+	if ((ctx->tc->matches = get_matches_common(p)) == NULL) {
 		output_error("no magic");
 		return;
 	}
@@ -312,17 +314,7 @@ init_mode_for_notice(volatile struct readline_session_context *ctx)
 {
 	char	*p = addrof(ctx->tc->search_var[8]);
 
-	if (!is_irc_channel(ACTWINLABEL)) {
-		if (!is_irc_channel(p))
-			ctx->tc->matches = get_list_of_matching_queries(p);
-		else
-			ctx->tc->matches = get_list_of_matching_channels(p);
-	} else {
-		ctx->tc->matches = get_list_of_matching_channel_users
-		    (ACTWINLABEL, p);
-	}
-
-	if (ctx->tc->matches == NULL) {
+	if ((ctx->tc->matches = get_matches_common(p)) == NULL) {
 		output_error("no magic");
 		return;
 	}
@@ -409,17 +401,7 @@ init_mode_for_time(volatile struct readline_session_context *ctx)
 {
 	char	*p = addrof(ctx->tc->search_var[6]);
 
-	if (!is_irc_channel(ACTWINLABEL)) {
-		if (!is_irc_channel(p))
-			ctx->tc->matches = get_list_of_matching_queries(p);
-		else
-			ctx->tc->matches = get_list_of_matching_channels(p);
-	} else {
-		ctx->tc->matches = get_list_of_matching_channel_users
-		    (ACTWINLABEL, p);
-	}
-
-	if (ctx->tc->matches == NULL) {
+	if ((ctx->tc->matches = get_matches_common(p)) == NULL) {
 		output_error("no magic");
 		return;
 	}
@@ -434,17 +416,7 @@ init_mode_for_version(volatile struct readline_session_context *ctx)
 {
 	char	*p = addrof(ctx->tc->search_var[9]);
 
-	if (!is_irc_channel(ACTWINLABEL)) {
-		if (!is_irc_channel(p))
-			ctx->tc->matches = get_list_of_matching_queries(p);
-		else
-			ctx->tc->matches = get_list_of_matching_channels(p);
-	} else {
-		ctx->tc->matches = get_list_of_matching_channel_users
-		    (ACTWINLABEL, p);
-	}
-
-	if (ctx->tc->matches == NULL) {
+	if ((ctx->tc->matches = get_matches_common(p)) == NULL) {
 		output_error("no magic");
 		return;
 	}
