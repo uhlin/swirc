@@ -1,5 +1,5 @@
 /* events/auth.c
-   Copyright (C) 2017-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -161,6 +161,8 @@ event_authenticate(struct irc_message_compo *compo)
 
 			(void) net_send("AUTHENTICATE %s", encoded_username);
 			free(encoded_username);
+		} else if (strings_match(mechanism, "EXTERNAL")) {
+			(void) net_send("AUTHENTICATE +");
 		} else if (strings_match(mechanism, "PLAIN")) {
 			char *msg = NULL;
 
