@@ -194,9 +194,9 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
 int
 net_ssl_begin(void)
 {
-	PRINTTEXT_CONTEXT ptext_ctx;
-	const char *err_reason = "";
-	static const int VALUE_HANDSHAKE_OK = 1;
+	PRINTTEXT_CONTEXT	 ptext_ctx;
+	const char		*err_reason = "";
+	static const int	 VALUE_HANDSHAKE_OK = 1;
 
 	if (ssl != NULL) {
 		err_reason = "SSL object nonnull";
