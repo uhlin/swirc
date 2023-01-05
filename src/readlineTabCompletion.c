@@ -407,17 +407,19 @@ init_mode_for_theme(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_time(volatile struct readline_session_context *ctx)
 {
-	char	*p;
+	char	*p = addrof(ctx->tc->search_var[6]);
 
 	if (!is_irc_channel(ACTWINLABEL)) {
-		output_error("not in irc channel");
-		return;
+		if (!is_irc_channel(p))
+			ctx->tc->matches = get_list_of_matching_queries(p);
+		else
+			ctx->tc->matches = get_list_of_matching_channels(p);
+	} else {
+		ctx->tc->matches = get_list_of_matching_channel_users
+		    (ACTWINLABEL, p);
 	}
 
-	p = addrof(ctx->tc->search_var[6]);
-
-	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
-	    p)) == NULL) {
+	if (ctx->tc->matches == NULL) {
 		output_error("no magic");
 		return;
 	}
@@ -430,17 +432,19 @@ init_mode_for_time(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_version(volatile struct readline_session_context *ctx)
 {
-	char	*p;
+	char	*p = addrof(ctx->tc->search_var[9]);
 
 	if (!is_irc_channel(ACTWINLABEL)) {
-		output_error("not in irc channel");
-		return;
+		if (!is_irc_channel(p))
+			ctx->tc->matches = get_list_of_matching_queries(p);
+		else
+			ctx->tc->matches = get_list_of_matching_channels(p);
+	} else {
+		ctx->tc->matches = get_list_of_matching_channel_users
+		    (ACTWINLABEL, p);
 	}
 
-	p = addrof(ctx->tc->search_var[9]);
-
-	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
-	    p)) == NULL) {
+	if (ctx->tc->matches == NULL) {
 		output_error("no magic");
 		return;
 	}
