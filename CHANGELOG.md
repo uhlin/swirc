@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added micro optimizations
 - Added rules for nickname highlighting
+- Added SASL auth mechanism: external
 - Added support for the GNU Hurd OS
 - Added tab completion for:
   - `/time`
