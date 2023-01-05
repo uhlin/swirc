@@ -67,8 +67,10 @@ x509_fingerprint::x509_fingerprint(const char *path)
 
 x509_fingerprint::~x509_fingerprint()
 {
-	BIO_free_all(this->bio);
-	X509_free(this->cert);
+	if (this->bio)
+		BIO_free_all(this->bio);
+	if (this->cert)
+		X509_free(this->cert);
 }
 
 void
