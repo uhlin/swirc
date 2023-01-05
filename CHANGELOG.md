@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file.
   - `ctcp_reply` (bool)
   - `qbot_host` (string)
   - `sasl_x509` (string)
+- Improved tab completion for:
+  - `/whois`
 
 ### Linux ###
 - Fixed building on riscv64
