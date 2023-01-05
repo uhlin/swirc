@@ -101,6 +101,19 @@ static stringarray_t znc_commands = {
 	"Restart",
 };
 
+static void
+add_cmd(PTEXTBUF matches, const char *str)
+{
+	if (textBuf_size(matches) != 0) {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
+		    str, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	} else {
+		if ((errno = textBuf_ins_next(matches, NULL, str, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	}
+}
+
 static bool
 got_hits(const char *search_var)
 {
@@ -177,23 +190,10 @@ get_list_of_matching_znc_commands(const char *search_var)
 	matches = textBuf_new();
 
 	for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i++) {
-		const char	*cmd = znc_commands[i];
+		const char *cmd = znc_commands[i];
 
-		if (!strncmp(search_var, cmd, strlen(search_var))) {
-			if (textBuf_size(matches) == 0) {
-				if ((errno = textBuf_ins_next(matches, NULL,
-				    cmd, -1)) != 0) {
-					err_sys("%s: textBuf_ins_next",
-					    __func__);
-				}
-			} else {
-				if ((errno = textBuf_ins_next(matches,
-				    textBuf_tail(matches), cmd, -1)) != 0) {
-					err_sys("%s: textBuf_ins_next",
-					    __func__);
-				}
-			}
-		}
+		if (!strncmp(search_var, cmd, strlen(search_var)))
+			add_cmd(matches, cmd);
 	}
 
 	return matches;
