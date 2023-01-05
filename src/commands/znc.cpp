@@ -1,5 +1,5 @@
 /* commands/znc.cpp
-   Copyright (C) 2020-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -104,7 +104,7 @@ static stringarray_t znc_commands = {
 static bool
 got_hits(const char *search_var)
 {
-	for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i ++) {
+	for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i++) {
 		if (!strncmp(search_var, znc_commands[i], strlen(search_var)))
 			return true;
 	}
@@ -176,7 +176,7 @@ get_list_of_matching_znc_commands(const char *search_var)
 
 	matches = textBuf_new();
 
-	for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i ++) {
+	for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i++) {
 		const char	*cmd = znc_commands[i];
 
 		if (!strncmp(search_var, cmd, strlen(search_var))) {
