@@ -101,6 +101,19 @@ static PIRC_WINDOW hash_table[200] = { NULL };
 
 /* -------------------------------------------------- */
 
+static void
+add_match(PTEXTBUF matches, const char *what)
+{
+	if (textBuf_size(matches) != 0) {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
+		    what, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	} else {
+		if ((errno = textBuf_ins_next(matches, NULL, what, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	}
+}
+
 /**
  * Apply window options
  */
@@ -547,6 +560,47 @@ window_by_refnum(int refnum)
 		}
 	}
 	return NULL;
+}
+
+PTEXTBUF
+get_list_of_matching_channels(const char *search_var)
+{
+	PTEXTBUF	matches = textBuf_new();
+
+	FOREACH_HASH_TABLE_ENTRY() {
+		FOREACH_WINDOW_IN_ENTRY() {
+			if (is_irc_channel(window->label) &&
+			    !strncasecmp(search_var, window->label,
+			    strlen(search_var)))
+				add_match(matches, window->label);
+		}
+	}
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
+	}
+	return matches;
+}
+
+PTEXTBUF
+get_list_of_matching_queries(const char *search_var)
+{
+	PTEXTBUF	matches = textBuf_new();
+
+	FOREACH_HASH_TABLE_ENTRY() {
+		FOREACH_WINDOW_IN_ENTRY() {
+			if (!is_irc_channel(window->label) &&
+			    window != g_status_window &&
+			    !strncasecmp(search_var, window->label,
+			    strlen(search_var)))
+				add_match(matches, window->label);
+		}
+	}
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
+	}
+	return matches;
 }
 
 /**

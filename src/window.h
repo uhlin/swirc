@@ -77,9 +77,13 @@ void windowSystem_deinit(void);
 
 /*lint -sem(window_by_label, r_null) */
 /*lint -sem(window_by_refnum, r_null) */
+/*lint -sem(get_list_of_matching_channels, r_null) */
+/*lint -sem(get_list_of_matching_queries, r_null) */
 
 PIRC_WINDOW	window_by_label(const char *);
 PIRC_WINDOW	window_by_refnum(int);
+PTEXTBUF	get_list_of_matching_channels(const char *search_var);
+PTEXTBUF	get_list_of_matching_queries(const char *search_var);
 int		change_window_by_label(const char *);
 int		change_window_by_refnum(int);
 int		destroy_chat_window(const char *label);
