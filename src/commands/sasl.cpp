@@ -1,5 +1,5 @@
 /* commands/sasl.cpp
-   Copyright (C) 2017-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -80,6 +80,8 @@ static stringarray_t sasl_cmds = {
 	"set ",
 	"set on",
 	"set off",
+	"x509 ",
+	"x509 client.pem",
 };
 
 /*lint -sem(get_filepath, r_null) */
