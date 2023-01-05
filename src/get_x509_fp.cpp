@@ -36,6 +36,7 @@
 
 #include "filePred.h"
 #include "get_x509_fp.hpp"
+#include "printtext.h"
 
 x509_fingerprint::x509_fingerprint()
 {
@@ -67,4 +68,31 @@ x509_fingerprint::~x509_fingerprint()
 {
 	BIO_free_all(this->bio);
 	X509_free(this->cert);
+}
+
+void
+x509_fingerprint::show_fp(void)
+{
+	bool		error = false;
+	std::string	str("");
+
+	for (unsigned int i = 0; i < this->md_len; i++) {
+		char	buf[3] = { '\0' };
+		int	ret;
+
+		if ((ret = snprintf(buf, sizeof buf, "%02X", this->md[i])) < 0 ||
+		    static_cast<size_t>(ret) >= sizeof buf) {
+			error = true;
+			break;
+		}
+
+		str.append(&buf[0]);
+	}
+
+	if (error) {
+		printtext_print("err", "error showing the fingerprint");
+		return;
+	}
+
+	printtext_print("success", "fingerprint: %s", str.c_str());
 }

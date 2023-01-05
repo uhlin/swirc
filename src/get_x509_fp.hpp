@@ -10,6 +10,8 @@ public:
 	explicit x509_fingerprint(const char *);
 	~x509_fingerprint();
 
+	void show_fp(void);
+
 private:
 	BIO		*bio;
 	X509		*cert;
