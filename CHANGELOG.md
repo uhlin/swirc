@@ -18,6 +18,8 @@ All notable changes to this project will be documented in this file.
   - `qbot_host` (string)
   - `sasl_x509` (string)
 - Improved tab completion for:
+  - `/msg`
+  - `/notice`
   - `/whois`
 
 ### Linux ###
