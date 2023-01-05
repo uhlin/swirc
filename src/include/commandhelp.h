@@ -508,11 +508,12 @@ static usage_t sasl_usage = {
   "",
   "    keygen [--force]",
   "    pubkey",
-  "    mechanism [ecdsa-nist256p-challenge | plain | scram-sha-256]",
+  "    mechanism [ecdsa-nist256p-challenge | external | plain | scram-sha-256]",
   "    username <name>",
   "    password <pass>",
   "    passwd_s <sasl pass> <encryption pass>",
   "    set [on | off]",
+  "    x509 <filename>",
   "",
   N_("SASL is a method that lets you identify with NickServ during the\n"
      "connection process eliminating the need to do it manually."),
