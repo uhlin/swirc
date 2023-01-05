@@ -119,22 +119,6 @@ add_match(PTEXTBUF matches, const char *user)
 	}
 }
 
-static bool
-got_hits(const IRC_WINDOW *window, const char *search_var)
-{
-	for (size_t n = 0; n < ARRAY_SIZE(window->names_hash); n++) {
-		for (PNAMES names = window->names_hash[n];
-		    names != NULL;
-		    names = names->next) {
-			if (!strncmp(search_var, names->nick,
-			    strlen(search_var)))
-				return true;
-		}
-	}
-
-	return false;
-}
-
 static inline bool
 already_is_in_names_hash(const char *nick, PIRC_WINDOW window)
 {
@@ -330,8 +314,7 @@ get_list_of_matching_channel_users(const char *chan, const char *search_var)
 	PIRC_WINDOW	window;
 	PTEXTBUF	matches;
 
-	if ((window = window_by_label(chan)) == NULL || !got_hits(window,
-	    search_var))
+	if ((window = window_by_label(chan)) == NULL)
 		return NULL;
 
 	matches = textBuf_new();
@@ -344,6 +327,11 @@ get_list_of_matching_channel_users(const char *chan, const char *search_var)
 			    strlen(search_var)))
 				add_match(matches, names->nick);
 		}
+	}
+
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
 	}
 
 	return matches;
