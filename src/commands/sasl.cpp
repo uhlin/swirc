@@ -445,6 +445,18 @@ set_state(char *state)
 	}
 }
 
+static void
+set_x509(const char *filename)
+{
+	if (!modify_setting("sasl_x509", filename)) {
+		output_message(true, "set x509 failed");
+		return;
+	} else {
+		output_message(false, "set x509 ok");
+		save_to_config();
+	}
+}
+
 /* usage: /sasl <operation> [...]
 
    keygen [--force]
@@ -453,7 +465,8 @@ set_state(char *state)
    username <name>
    password <pass>
    passwd_s <sasl pass> <encryption pass>
-   set [on | off] */
+   set [on | off]
+   x509 <filename> */
 void
 cmd_sasl(const char *data)
 {
@@ -461,6 +474,7 @@ cmd_sasl(const char *data)
 	char username[101] = { '\0' };
 	char password[301] = { '\0' };
 	char state[11] = { '\0' };
+	char filename[51] = { '\0' };
 
 /*
  * sscanf() is safe in this context
@@ -486,6 +500,8 @@ cmd_sasl(const char *data)
 		set_passwd_s(addrof(data[9]));
 	else if (sscanf(data, "set %10s", state) == 1)
 		set_state(state);
+	else if (sscanf(data, "x509 %50s", filename) == 1)
+		set_x509(filename);
 	else
 		output_message(true, "bogus operation");
 
