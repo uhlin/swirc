@@ -2,28 +2,28 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added micro optimizations
-- Added rules for nickname highlighting
-- Added SASL auth mechanism: external
-- Added support for the GNU Hurd OS
-- Added tab completion for:
+- **Added** micro optimizations
+- **Added** rules for nickname highlighting
+- **Added** SASL auth mechanism: **external**
+- **Added** support for the GNU Hurd OS
+- **Added** tab completion for:
   - `/time`
   - `/version`
-- Added the following commands:
+- **Added** the following commands:
   - `/qbot`
   - `/stats`
-- Added the following config options:
+- **Added** the following config options:
   - `cmd_type_prot` (bool)
   - `ctcp_reply` (bool)
   - `qbot_host` (string)
   - `sasl_x509` (string)
-- Improved tab completion for:
+- **Improved** tab completion for:
   - `/msg`
   - `/notice`
   - `/whois`
 
 ### Linux ###
-- Fixed building on riscv64. Contributed by
+- **Fixed** building on riscv64. Contributed by
   [Eric Long](https://github.com/hack3ric) - thanks!
 
 ## [3.3.8] - 2022-11-27 ##
