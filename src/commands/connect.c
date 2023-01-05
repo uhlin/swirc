@@ -1,5 +1,5 @@
 /* Connect and Disconnect commands
-   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -166,6 +166,32 @@ static IRC_SERVER test_servers[] = {
 	{ "testnet.inspircd.org",  "6667", "InspIRCd Test Network PLAIN" },
 	{ "testnet.inspircd.org",  "6697", "InspIRCd Test Network TLS" },
 	{ NULL,                    NULL,   NULL },
+};
+
+static stringarray_t connect_cmds = {
+	"afternet",
+	"alphachat",
+	"anonops",
+	"efnet",
+	"freenode",
+	"ircnet",
+	"ircnow",
+	"libera",
+	"oftc",
+	"quakenet",
+	"undernet",
+	"-tls ",
+	"-tls afternet",
+	"-tls alphachat",
+	"-tls anonops",
+	"-tls efnet",
+	"-tls freenode",
+	"-tls ircnet",
+	"-tls ircnow",
+	"-tls libera",
+	"-tls oftc",
+	"-tls quakenet",
+	"-tls undernet",
 };
 
 static bool
@@ -388,6 +414,37 @@ assign_nickname(char **cp)
 		return true;
 	}
 	return false;
+}
+
+static void
+add_cmd(PTEXTBUF matches, const char *str)
+{
+	if (textBuf_size(matches) != 0) {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
+		    str, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	} else {
+		if ((errno = textBuf_ins_next(matches, NULL, str, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	}
+}
+
+PTEXTBUF
+get_list_of_matching_connect_cmds(const char *search_var)
+{
+	PTEXTBUF	matches = textBuf_new();
+
+	for (size_t i = 0; i < ARRAY_SIZE(connect_cmds); i++) {
+		const char *cmd = connect_cmds[i];
+
+		if (!strncmp(search_var, cmd, strlen(search_var)))
+			add_cmd(matches, cmd);
+	}
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
+	}
+	return matches;
 }
 
 void

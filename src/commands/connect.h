@@ -23,6 +23,8 @@ typedef const struct tagIRC_SERVER *servarray_const_ptr_t;
 __SWIRC_BEGIN_DECLS
 extern bool g_disconnect_wanted;
 
+PTEXTBUF	get_list_of_matching_connect_cmds(const char *);
+
 void	do_connect(const char *server, const char *port, const char *pass);
 void	set_ssl_on(void);
 void	set_ssl_off(void);
