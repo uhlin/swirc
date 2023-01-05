@@ -1,4 +1,4 @@
-/* Copyright (c) 2016-2022 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2016-2023 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -33,16 +33,20 @@
 #include "config.h"
 #include "dataClassify.h"
 #include "errHand.h"
+#include "filePred.h"
 #include "libUtils.h"
 #include "main.h"
+#include "nestHome.h"
 #include "network.h"
 #include "printtext.h"
 #include "strHand.h"
 #include "strdup_printf.h"
 #include "tls-server.h"
 
-#define CAFILE "trusted_roots.pem"
-#define CADIR NULL
+#include "events/cap.h" /* get_sasl_mechanism() */
+
+#define CAFILE	"trusted_roots.pem"
+#define CADIR	NULL
 
 static SSL_CTX	*ssl_ctx = NULL;
 static SSL	*ssl = NULL;
@@ -96,6 +100,46 @@ create_ssl_context_obj_insecure(void)
 	(void) SSL_CTX_set_options(ssl_ctx, SSL_OP_NO_SSLv3);
 }
 #endif
+
+static char *
+get_filepath(void)
+{
+	if (g_home_dir == NULL || strings_match(Config("sasl_x509"), ""))
+		return NULL;
+	return strdup_printf("%s%s%s", g_home_dir, SLASH, Config("sasl_x509"));
+}
+
+static void
+load_x509(void)
+{
+	char		*file = NULL;
+	const char	*err_reason = "";
+
+	if ((file = get_filepath()) == NULL) {
+		err_reason = "unable to get the file path";
+		goto err;
+	} else if (!file_exists(file)) {
+		err_reason = "file non-existent";
+		goto err;
+	} else if (!is_regular_file(file)) {
+		err_reason = "not a regular file";
+		goto err;
+	} else if (SSL_use_certificate_chain_file(ssl, file) != 1) {
+		err_reason = "load error";
+		goto err;
+	} else if (SSL_use_PrivateKey_file(ssl, file, SSL_FILETYPE_PEM) != 1) {
+		err_reason = "private key error";
+		goto err;
+	}
+
+	free(file);
+	printtext_print("success", "%s: ok", __func__);
+	return;
+
+  err:
+	free(file);
+	printtext_print("err", "%s: %s", __func__, err_reason);
+}
 
 static void
 set_ciphers(const char *list)
@@ -163,6 +207,10 @@ net_ssl_begin(void)
 	} else {
 		(void) atomic_swap_bool(&ssl_object_is_null, false);
 	}
+
+	if (sasl_is_enabled() && strings_match(get_sasl_mechanism(),
+	    "EXTERNAL"))
+		load_x509();
 
 	if (!SSL_set_fd(ssl, g_socket)) {
 		err_reason = "Unable to associate the global socket fd with "
