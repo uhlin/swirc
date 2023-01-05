@@ -14,6 +14,7 @@ OBJS = $(OBJS)\
 	$(SRC_DIR)dataClassify.obj\
 	$(SRC_DIR)errHand.obj\
 	$(SRC_DIR)filePred.obj\
+	$(SRC_DIR)get_x509_fp.obj\
 	$(SRC_DIR)icb.obj\
 	$(SRC_DIR)identd-w32.obj\
 	$(SRC_DIR)identd.obj\
