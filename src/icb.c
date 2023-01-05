@@ -1,5 +1,5 @@
 /* ICB protocol handling
-   Copyright (C) 2019-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -86,10 +86,11 @@ get_label(void)
 static void
 process_event(const char *format, ...)
 {
-	char *event;
-	char *message_concat = NULL;
-	enum message_concat_state state = CONCAT_BUFFER_IS_EMPTY;
-	va_list ap;
+	char	*event;
+	char	*message_concat = NULL;
+	enum message_concat_state
+		 state = CONCAT_BUFFER_IS_EMPTY;
+	va_list	 ap;
 
 	va_start(ap, format);
 	event = strdup_vprintf(format, ap);
@@ -525,10 +526,10 @@ sign_off_depart(char *str, const char *sep)
 static void
 handle_status_msg_packet(const char *pktdata)
 {
-	PRINTTEXT_CONTEXT ctx;
-	char *pktdata_copy = sw_strdup(pktdata);
-	int offset = 0;
-	static const char sep[] = " (@)";
+	PRINTTEXT_CONTEXT	 ctx;
+	char			*pktdata_copy = sw_strdup(pktdata);
+	int			 offset = 0;
+	static const char	 sep[] = " (@)";
 
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
 
@@ -654,9 +655,9 @@ who_listing(char *cp)
 static void
 handle_cmd_output_packet(const char *pktdata)
 {
-	PIRC_WINDOW win = NULL;
-	PRINTTEXT_CONTEXT ctx;
-	char *pktdata_copy = sw_strdup(pktdata);
+	PIRC_WINDOW		 win = NULL;
+	PRINTTEXT_CONTEXT	 ctx;
+	char			*pktdata_copy = sw_strdup(pktdata);
 
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
 
