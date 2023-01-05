@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
   - `cmd_type_prot` (bool)
   - `ctcp_reply` (bool)
   - `qbot_host` (string)
+  - `sasl_x509` (string)
 
 ### Linux ###
 - Fixed building on riscv64

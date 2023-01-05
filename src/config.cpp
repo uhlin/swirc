@@ -91,6 +91,7 @@ static struct tagConfDefValues {
 	{ "sasl_mechanism",            TYPE_STRING,  1, "PLAIN" },
 	{ "sasl_username",             TYPE_STRING,  1, "" },
 	{ "sasl_password",             TYPE_STRING,  1, "" },
+	{ "sasl_x509",                 TYPE_STRING,  1, "client.pem" },
 
 	{ "chanserv_host",             TYPE_STRING,  1, "services." },
 	{ "nickserv_host",             TYPE_STRING,  1, "services." },
