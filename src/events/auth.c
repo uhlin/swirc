@@ -129,6 +129,10 @@ handle_else_branch(const char *mechanism, const char *params)
 {
 	if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE")) {
 		handle_ecdsa_nist256p_challenge(params);
+	} else if (strings_match(mechanism, "EXTERNAL")) {
+		/* empty */;
+	} else if (strings_match(mechanism, "PLAIN")) {
+		/* empty */;
 	} else if (strings_match(mechanism, "SCRAM-SHA-256")) {
 		if (!g_sasl_scram_sha_got_first_msg) {
 			if (sasl_scram_sha_handle_serv_first_msg(params) == -1)
@@ -141,6 +145,8 @@ handle_else_branch(const char *mechanism, const char *params)
 			else
 				(void) net_send("AUTHENTICATE +");
 		}
+	} else {
+		/* TODO: Do something */;
 	}
 }
 
