@@ -130,9 +130,11 @@ handle_else_branch(const char *mechanism, const char *params)
 	if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE")) {
 		handle_ecdsa_nist256p_challenge(params);
 	} else if (strings_match(mechanism, "EXTERNAL")) {
-		/* empty */;
+		err_log(EPROTO, "%s: error (external): expected '+'", __func__);
+		abort_authentication();
 	} else if (strings_match(mechanism, "PLAIN")) {
-		/* empty */;
+		err_log(EPROTO, "%s: error (plain): expected '+'", __func__);
+		abort_authentication();
 	} else if (strings_match(mechanism, "SCRAM-SHA-256")) {
 		if (!g_sasl_scram_sha_got_first_msg) {
 			if (sasl_scram_sha_handle_serv_first_msg(params) == -1)
@@ -146,7 +148,9 @@ handle_else_branch(const char *mechanism, const char *params)
 				(void) net_send("AUTHENTICATE +");
 		}
 	} else {
-		/* TODO: Do something */;
+		err_log(0, "%s: unknown mechanism", __func__);
+		err_log(0, "%s: aborting authentication...", __func__);
+		abort_authentication();
 	}
 }
 
