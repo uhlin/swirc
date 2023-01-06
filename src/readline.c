@@ -430,7 +430,8 @@ finalize_out_string(const wchar_t *buf)
 static inline bool
 isInCirculationMode(const TAB_COMPLETION *tc)
 {
-	return (tc->isInCirculationModeForHelp ||
+	return (tc->isInCirculationModeForConnect ||
+	    tc->isInCirculationModeForHelp ||
 	    tc->isInCirculationModeForMsg ||
 	    tc->isInCirculationModeForNotice ||
 	    tc->isInCirculationModeForQuery ||

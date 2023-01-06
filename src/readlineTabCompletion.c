@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include "commands/connect.h"
 #include "commands/sasl.h"
 #include "commands/theme.h"
 #include "commands/znc.h"
@@ -60,6 +61,13 @@ do_work(volatile struct readline_session_context *ctx, const wchar_t *cmd,
 		readline_handle_key_exported(ctx, cmd[i]);
 	for (i = 0; i < slen; i++)
 		readline_handle_key_exported(ctx, btowc(s[i]));
+}
+
+static void
+auto_complete_connect(volatile struct readline_session_context *ctx,
+    const char *s)
+{
+	do_work(ctx, L"/connect ", s);
 }
 
 static void
@@ -226,6 +234,7 @@ readline_tab_comp_ctx_new(void)
 
 	BZERO(ctx.search_var, sizeof ctx.search_var);
 
+	ctx.isInCirculationModeForConnect	= false;
 	ctx.isInCirculationModeForHelp		= false;
 	ctx.isInCirculationModeForMsg		= false;
 	ctx.isInCirculationModeForNotice	= false;
@@ -259,6 +268,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 	if (ctx) {
 		BZERO(ctx->search_var, sizeof ctx->search_var);
 
+		ctx->isInCirculationModeForConnect	= false;
 		ctx->isInCirculationModeForHelp		= false;
 		ctx->isInCirculationModeForMsg		= false;
 		ctx->isInCirculationModeForNotice	= false;
@@ -279,6 +289,21 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 		ctx->matches = NULL;
 		ctx->elmt = NULL;
 	}
+}
+
+static void
+init_mode_for_connect(volatile struct readline_session_context *ctx)
+{
+	char	*p = addrof(ctx->tc->search_var[9]);
+
+	if ((ctx->tc->matches = get_list_of_matching_connect_cmds(p)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_connect(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeForConnect = true;
 }
 
 static void
@@ -513,7 +538,9 @@ no_more_matches(volatile struct readline_session_context *ctx)
 static void
 init_mode(volatile struct readline_session_context *ctx)
 {
-	if (!strncmp(get_search_var(ctx), "/help ", 6))
+	if (!strncmp(get_search_var(ctx), "/connect ", 9))
+		init_mode_for_connect(ctx);
+	else if (!strncmp(get_search_var(ctx), "/help ", 6))
 		init_mode_for_help(ctx);
 	else if (!strncmp(get_search_var(ctx), "/msg ", 5))
 		init_mode_for_msg(ctx);
@@ -548,6 +575,12 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 	    buf_contains_disallowed_chars(ctx)) {
 		output_error("no magic");
 		readline_tab_comp_ctx_reset(ctx->tc);
+		return;
+	} else if (ctx->tc->isInCirculationModeForConnect) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
+			no_more_matches(ctx);
+		else
+			auto_complete_connect(ctx, next_text(ctx->tc));
 		return;
 	} else if (ctx->tc->isInCirculationModeForHelp) {
 		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))

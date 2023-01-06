@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - **Added** SASL auth mechanism: **external**
 - **Added** support for the GNU Hurd OS
 - **Added** tab completion for:
+  - `/connect`
   - `/time`
   - `/version`
 - **Added** the following commands:

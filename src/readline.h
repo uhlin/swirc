@@ -46,6 +46,7 @@ typedef struct tagREADLINE_POS {
 
 typedef struct tagTAB_COMPLETION {
 	char	search_var[64];
+	bool	isInCirculationModeForConnect;
 	bool	isInCirculationModeForHelp;
 	bool	isInCirculationModeForMsg;
 	bool	isInCirculationModeForNotice;
