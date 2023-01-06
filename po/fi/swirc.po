@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.3.8\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-01-05 13:36+0100\n"
+"POT-Creation-Date: 2023-01-06 09:10+0100\n"
 "PO-Revision-Date: 2021-08-22 22:22+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -971,75 +971,75 @@ msgstr "    -x <config>          Config tiedosto\n"
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Käyttö: %s [VAIHTOEHTO] ...\n"
 
-#: ../src/readline.c:549
+#: ../src/readline.c:550
 msgid "--------------- Keys ---------------"
 msgstr ""
 
-#: ../src/readline.c:551
+#: ../src/readline.c:552
 msgid "CTRL+a     Move to beginning of line"
 msgstr ""
 
-#: ../src/readline.c:552
+#: ../src/readline.c:553
 msgid "CTRL+e     Move to end of line"
 msgstr ""
 
-#: ../src/readline.c:553
+#: ../src/readline.c:554
 msgid "CTRL+b     Move cursor backward"
 msgstr ""
 
-#: ../src/readline.c:554
+#: ../src/readline.c:555
 msgid "CTRL+f     Move cursor forward"
 msgstr ""
 
-#: ../src/readline.c:555
+#: ../src/readline.c:556
 msgid "CTRL+d     Delete"
 msgstr ""
 
-#: ../src/readline.c:556
+#: ../src/readline.c:557
 msgid "CTRL+g     Clear readline input"
 msgstr ""
 
-#: ../src/readline.c:557
+#: ../src/readline.c:558
 msgid "CTRL+l     Toggle logging on/off"
 msgstr ""
 
-#: ../src/readline.c:558
+#: ../src/readline.c:559
 msgid "CTRL+n     Next window"
 msgstr ""
 
-#: ../src/readline.c:559
+#: ../src/readline.c:560
 msgid "CTRL+p     Previous window"
 msgstr ""
 
-#: ../src/readline.c:560
+#: ../src/readline.c:561
 msgid "PG UP      Scroll up"
 msgstr ""
 
-#: ../src/readline.c:561
+#: ../src/readline.c:562
 msgid "PG DOWN    Scroll down"
 msgstr ""
 
-#: ../src/readline.c:562
+#: ../src/readline.c:563
 msgid "Up arrow   History previous"
 msgstr ""
 
-#: ../src/readline.c:563
+#: ../src/readline.c:564
 msgid "Down arrow History next"
 msgstr ""
 
-#: ../src/readline.c:564
+#: ../src/readline.c:565
 msgid "F3         Scroll nicklist up"
 msgstr ""
 
-#: ../src/readline.c:565
+#: ../src/readline.c:566
 msgid "F4         Scroll nicklist down"
 msgstr ""
 
-#: ../src/readline.c:566
+#: ../src/readline.c:567
 msgid "F11        Close window"
 msgstr ""
 
-#: ../src/readline.c:567
+#: ../src/readline.c:568
 msgid "F12        Close all private conversations"
 msgstr ""
 
