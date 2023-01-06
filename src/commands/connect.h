@@ -1,6 +1,8 @@
 #ifndef CMD_CONNECT_H
 #define CMD_CONNECT_H
 
+#include "../textBuffer.h"
+
 #define ICB_PORT	"7326"
 #define ICB_SSL_PORT	"7327"
 
