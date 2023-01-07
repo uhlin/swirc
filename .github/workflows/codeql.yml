@@ -35,6 +35,7 @@ jobs:
         queries: security-extended,security-and-quality
 
     - run: |
+        sudo apt-get update
         sudo apt-get install libcurl4-openssl-dev
         ./configure --without-libintl
         make
