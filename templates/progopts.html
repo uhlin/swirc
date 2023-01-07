@@ -38,21 +38,21 @@
 <kbd>usage: swirc [-46?CPRdipv] [-c server[:port]] [-j join] [-n nickname] [-r rl name] [-u username] [-x config]</kbd>
 </p>
 <table class="po">
-  <tr>
-    <td><b>-4</b></td>
-    <td>Use IPv4 addresses only</td>
-  </tr>
-  <tr>
-    <td><b>-6</b></td>
-    <td>Use IPv6 addresses only</td>
-  </tr>
-  <tr>
-    <td><b>-?</b></td>
-    <td>Output help</td>
-  </tr>
-  <tr>
-    <td><b>-C</b></td>
-    <td>
+	<tr>
+		<td><b>-4</b></td>
+		<td>Use IPv4 addresses only</td>
+	</tr>
+	<tr>
+		<td><b>-6</b></td>
+		<td>Use IPv6 addresses only</td>
+	</tr>
+	<tr>
+		<td><b>-?</b></td>
+		<td>Output help</td>
+	</tr>
+	<tr>
+		<td><b>-C</b></td>
+		<td>
 Do not change color definitions.
 If the terminal used to run
 <strong>swirc</strong>
@@ -66,50 +66,50 @@ to initialize the extended IRC color palette.
 Which may or may not already be set correctly by the terminal.
 This option is useful in case the terminal look strange after exit,
 which is possible to fix by simply restarting it.
-    </td>
-  </tr>
-  <tr>
-    <td><b>-P</b></td>
-    <td>
+		</td>
+	</tr>
+	<tr>
+		<td><b>-P</b></td>
+		<td>
 Permanently disable SASL authentication.
 If specified, the effect is
 <u>final</u>
 (i.e. it overrides any config file value.)
-    </td>
-  </tr>
-  <tr>
-    <td><b>-R</b></td>
-    <td>Disable TLS/SSL peer verification</td>
-  </tr>
-  <tr>
-    <td><b>-c</b> &lt;server[:port]&gt;</td>
-    <td>
+		</td>
+	</tr>
+	<tr>
+		<td><b>-R</b></td>
+		<td>Disable TLS/SSL peer verification</td>
+	</tr>
+	<tr>
+		<td><b>-c</b> &lt;server[:port]&gt;</td>
+		<td>
 Connect to given server.
 If the port is omitted port 6667 will be chosen.
 And if the port is 7326 ICB mode is turned on automatically.
 Further, if the port is 6697 <strong>swirc</strong> attempts to
 initiate a TLS/SSL connection.
-    </td>
-  </tr>
-  <tr>
-    <td><b>-d</b></td>
-    <td>Debug logging</td>
-  </tr>
-  <tr>
-    <td><b>-i</b></td>
-    <td>Turn on Internet Citizen's Band mode</td>
-  </tr>
-  <tr>
-    <td><b>-j</b> &lt;join&gt;</td>
-    <td>A comma-separated list of channels to join</td>
-  </tr>
-  <tr>
-    <td><b>-n</b> &lt;nickname&gt;</td>
-    <td>Online nickname</td>
-  </tr>
-  <tr>
-    <td><b>-p</b></td>
-    <td>
+		</td>
+	</tr>
+	<tr>
+		<td><b>-d</b></td>
+		<td>Debug logging</td>
+	</tr>
+	<tr>
+		<td><b>-i</b></td>
+		<td>Turn on Internet Citizen's Band mode</td>
+	</tr>
+	<tr>
+		<td><b>-j</b> &lt;join&gt;</td>
+		<td>A comma-separated list of channels to join</td>
+	</tr>
+	<tr>
+		<td><b>-n</b> &lt;nickname&gt;</td>
+		<td>Online nickname</td>
+	</tr>
+	<tr>
+		<td><b>-p</b></td>
+		<td>
 Server password (for private servers).
 However: InspIRCd has a module called password forward, which means
 that if a server password is specified by this flag, it will be used
@@ -119,24 +119,24 @@ connection, to prevent your password from being disclosed in clear
 text.
 <strong>swirc</strong> also supports IRCv3 SASL authentication which
 is probably a better alternative.
-    </td>
-  </tr>
-  <tr>
-    <td><b>-r</b> &lt;rl name&gt;</td>
-    <td>Your real name</td>
-  </tr>
-  <tr>
-    <td><b>-u</b> &lt;username&gt;</td>
-    <td>Your username</td>
-  </tr>
-  <tr>
-    <td><b>-v</b></td>
-    <td>Output <strong>swirc</strong> version</td>
-  </tr>
-  <tr>
-    <td><b>-x</b> &lt;config&gt;</td>
-    <td>Config file</td>
-  </tr>
+		</td>
+	</tr>
+	<tr>
+		<td><b>-r</b> &lt;rl name&gt;</td>
+		<td>Your real name</td>
+	</tr>
+	<tr>
+		<td><b>-u</b> &lt;username&gt;</td>
+		<td>Your username</td>
+	</tr>
+	<tr>
+		<td><b>-v</b></td>
+		<td>Output <strong>swirc</strong> version</td>
+	</tr>
+	<tr>
+		<td><b>-x</b> &lt;config&gt;</td>
+		<td>Config file</td>
+	</tr>
 </table>
 <h3>Keys</h3>
 <table>
