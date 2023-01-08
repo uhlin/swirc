@@ -36,7 +36,7 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2022-02-24</em></small></p>
+<p><small><em>Updated: 2023-01-08</em></small></p>
 <h3>Configuration options in swirc.conf</h3>
 <p>
 <span class="note">NOTE</span>
@@ -177,6 +177,23 @@ No more than this number of commands will be stored in the memory.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- CMD TYPE PROT -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>cmd_type_prot</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Command type protection.
+Detects up to 5 leading spaces followed by a command character
+preventing a command to be accidentally transmitted as a chat message.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <!-- ================== -->
 <!-- CONNECTION TIMEOUT -->
 <!-- ================== -->
@@ -192,6 +209,22 @@ No more than this number of commands will be stored in the memory.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========== -->
+<!-- CTCP REPLY -->
+<!-- ========== -->
+	<tr>
+		<td>
+			<strong>ctcp_reply</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Reply to CTCP requests?
+		(For example TIME and VERSION.)
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <!-- ================= -->
 <!-- HOSTNAME CHECKING -->
 <!-- ================= -->
@@ -204,6 +237,105 @@ No more than this number of commands will be stored in the memory.
 	<tr>
 		<td class="desc">
 		Enable or disable TLS/SSL hostname verification
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- ICONV CONVERSION -->
+<!-- ================ -->
+	<tr>
+		<td>
+			<strong>iconv_conversion</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Perform character conversion using GNU libiconv?
+If having this option set to 'on' causes troubles or if you don't need
+it, it can safely be switched off.
+Switching it off boosts the performance of the printtext module
+significantly.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ====== -->
+<!-- IDENTD -->
+<!-- ====== -->
+	<tr>
+		<td>
+			<strong>identd</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Use the built-in ident protocol daemon/server?
+It's automatically started and stopped during the connection process
+if this option is enabled.
+During the connection process to an IRC server the IRC server often
+attempts to send an ident query to port 113 on your computer.
+You might have seen something like:
+<pre>
+	*** Processing connection to irc.server.com
+	*** Looking up your hostname...
+	*** Checking Ident
+	*** No Ident response <---
+	*** Found your hostname
+</pre>
+(This requires port 113 to be open, i.e. not behind a firewall.)
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- IDENTD FAKENAMES -->
+<!-- ================ -->
+	<tr>
+		<td>
+			<strong>identd_fakenames</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Respond to ident queries with fake (randomized) names?
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =========== -->
+<!-- IDENTD PORT -->
+<!-- =========== -->
+	<tr>
+		<td>
+			<strong>identd_port</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Which port shall the ident server listen on?
+In general, on Unix only root can listen on ports below 1024.
+Since you neither CAN or SHOULD run Swirc as root you should specify a
+different port using this setting and configure your firewall to
+redirect connections to port 113 to this one.
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+If you are using
+<a href="http://www.openbsd.org/">OpenBSD</a>
+and
+<a href="https://man.openbsd.org/pf.4">pf(4)</a>,
+pose that you want use port 6500 and that the name of the target
+interface is vio0.
+You could then add the following lines to your
+<a href="https://man.openbsd.org/pf.conf.5">pf.conf(5)</a>:
+			<pre>
+	pass in on vio0 inet  proto tcp from any to any port auth \
+	    rdr-to 127.0.0.1 port 6500
+	pass in on vio0 inet6 proto tcp from any to any port auth \
+	    rdr-to ::1 port 6500
+			</pre>
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -235,7 +367,7 @@ users are invited to channels
 	<tr>
 		<td class="desc">
 Enable or disable IRCv3 server time extension.
-The server time extension is particularly useful if you're using an
+The server time extension is particularly useful if you are using an
 IRC bouncer like
 <a href="https://znc.in/">ZNC</a>.
 		</td>
@@ -284,6 +416,40 @@ window be terminated?
 	<tr>
 		<td class="desc">
 		Max chat windows that can be open simultaneously
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ===== -->
+<!-- MOUSE -->
+<!-- ===== -->
+	<tr>
+		<td>
+			<strong>mouse</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Use the mouse?
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============ -->
+<!-- MOUSE EVENTS -->
+<!-- ============ -->
+	<tr>
+		<td>
+			<strong>mouse_events</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Which mouse events shall be reported?
+		<ul>
+			<li>all</li>
+			<li>wheel (default)</li>
+		</ul>
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -346,6 +512,24 @@ the aliases given by this setting.
 	<tr>
 		<td class="desc">
 		Message when leaving a channel
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========= -->
+<!-- QBOT HOST -->
+<!-- ========= -->
+	<tr>
+		<td>
+			<strong>qbot_host</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Q bot hostname.
+The Q bot is a
+<a href="https://www.quakenet.org/">QuakeNet</a>
+service.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
