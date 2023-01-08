@@ -707,6 +707,43 @@ a part of the password.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========= -->
+<!-- SASL X509 -->
+<!-- ========= -->
+	<tr>
+		<td>
+			<strong>sasl_x509</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Filename for your certificate chain file.
+The file shall be located in Swirc&apos;s home dir and be in PEM
+format.
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+The certificate chain file is used for automatic NickServ
+authentication using the external SASL auth mechanism.
+		<ul>
+			<li>1-root-ca.sh (Create the root CA)</li>
+			<li>
+			4-client-cert.sh
+			(Create the client certificate and sign it with the root CA)
+			</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+After running the scripts stated above in given order you can set this
+setting to
+<em>client.pem</em>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <!-- =================== -->
 <!-- SERVER CIPHER SUITE -->
 <!-- =================== -->
