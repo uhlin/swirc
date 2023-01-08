@@ -677,7 +677,18 @@ to get the connection working again before giving up?
 	<tr>
 		<td class="desc">
 		SASL password.
-		For mechanism PLAIN and SCRAM-SHA-256.
+		(For mechanism PLAIN and SCRAM-SHA-256.)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+It is recommended to set this setting using the interactive sasl
+command.
+However, if the initial character is a question mark (‘?’) it
+symbolizes that the password is in plain text/unencrypted; while a
+hash mark (‘#’) symbolizes that the password is encrypted.
+The initial character must be either of them and is not interpreted as
+a part of the password.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
