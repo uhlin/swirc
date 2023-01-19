@@ -230,7 +230,7 @@ store_search_var(const volatile struct readline_session_context *ctx)
 PTAB_COMPLETION
 readline_tab_comp_ctx_new(void)
 {
-	static TAB_COMPLETION	ctx;
+	static TAB_COMPLETION	ctx = { 0 };
 
 	BZERO(ctx.search_var, sizeof ctx.search_var);
 
