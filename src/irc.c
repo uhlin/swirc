@@ -508,9 +508,11 @@ SortMsgCompo(const char *protocol_message)
 	}
 
 	free(remaining_data);
-	sw_assert(compo->command != NULL);
-	sw_assert(compo->params != NULL ||
-	    strings_match(compo->command, "AWAY"));
+	if (compo->command == NULL || (compo->params == NULL &&
+	    !strings_match(compo->command, "AWAY"))) {
+		FreeMsgCompo(compo);
+		return NULL;
+	}
 	return compo;
 }
 
