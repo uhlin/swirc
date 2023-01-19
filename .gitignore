@@ -1,6 +1,8 @@
 *.log
 !tests/fuzz/*.log
+tests/fuzz/append-log
 tests/fuzz/ircfuzz.log
+tests/fuzz/out/
 
 *.c.smatch
 *.cab
