@@ -1,5 +1,5 @@
 /* Handle and interpret IRC events
-   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -267,6 +267,12 @@ static struct numeric_events_tag {
 *                                                               *
 ****************************************************************/
 
+//lint -sem(SortMsgCompo, r_null)
+
+static struct irc_message_compo *
+		 SortMsgCompo(const char *);
+static void	 FreeMsgCompo(struct irc_message_compo *);
+
 /**
  * Initialize irc module
  */
@@ -423,7 +429,6 @@ handle_extension(size_t *bytes, const char *protocol_message,
 /**
  * Sort message components - into prefix, command and params.
  */
-/*lint -sem(SortMsgCompo, r_null) */
 static struct irc_message_compo *
 SortMsgCompo(const char *protocol_message)
 {
