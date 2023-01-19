@@ -6,7 +6,7 @@ if [ "$(whoami)" = "root" ]; then
 fi
 
 DICT_FILE=irc.dict
-NEXECS=943718
+NEXECS=471859
 TMPFILE=$(mktemp log.XXXXXXXXXX)
 
 afl-fuzz -i "in" -o "out" -n -x "${DICT_FILE}" -E "${NEXECS}" -- \
