@@ -1,5 +1,5 @@
 /* Platform independent networking routines
-   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -196,6 +196,15 @@ conn_check()
 	}
 
 	return 0;
+}
+
+static void
+destroy_null_bytes(char *recvbuf, const int bytes_received)
+{
+	for (int i = 0; i < bytes_received; i++) {
+		if (recvbuf[i] == '\0')
+			recvbuf[i] = 'X';
+	}
 }
 
 static void
@@ -690,6 +699,11 @@ net_irc_listen(bool *connection_lost)
 			    RECVBUF_SIZE)) == -1) {
 				g_connection_lost = true;
 			} else if (bytes_received > 0) {
+				if (memchr(recvbuf, 0, bytes_received) !=
+				    NULL) {
+					destroy_null_bytes(recvbuf,
+					    bytes_received);
+				}
 				irc_handle_interpret_events(recvbuf,
 				    &message_concat, &state);
 			}
