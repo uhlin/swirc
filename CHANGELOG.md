@@ -1,6 +1,9 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Fixed possible crashes
+
 ## [3.3.9] - 2023-01-07 ##
 - **Added** micro optimizations
 - **Added** rules for nickname highlighting
