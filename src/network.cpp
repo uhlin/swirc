@@ -148,7 +148,7 @@ int g_socket_address_family = AF_UNSPEC;
 *                                                               *
 ****************************************************************/
 
-static class reconnect_context reconn_ctx;
+static reconnect_context reconn_ctx;
 static const int RECVBUF_SIZE = 2048;
 
 /****************************************************************
