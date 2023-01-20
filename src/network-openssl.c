@@ -279,6 +279,12 @@ net_ssl_check_hostname(const char *host, unsigned int flags)
 	return ret;
 }
 
+SSL *
+net_ssl_getobj(void)
+{
+	return ssl;
+}
+
 int
 net_ssl_send(const char *fmt, ...)
 {

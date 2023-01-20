@@ -89,13 +89,14 @@ void		 server_destroy(struct server *);
 void	net_set_sock_addr_family_ipv4(void);
 void	net_set_sock_addr_family_ipv6(void);
 
-int	net_ssl_begin(void);
-void	net_ssl_end(void);
-int	net_ssl_check_hostname(const char *, unsigned int);
-int	net_ssl_send(const char *fmt, ...);
-int	net_ssl_recv(struct network_recv_context *, char *, int);
-void	net_ssl_init(void);
-void	net_ssl_deinit(void);
+int	 net_ssl_begin(void);
+void	 net_ssl_end(void);
+int	 net_ssl_check_hostname(const char *, unsigned int);
+SSL	*net_ssl_getobj(void);
+int	 net_ssl_send(const char *, ...);
+int	 net_ssl_recv(struct network_recv_context *, char *, int);
+void	 net_ssl_init(void);
+void	 net_ssl_deinit(void);
 
 __SWIRC_END_DECLS
 
