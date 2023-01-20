@@ -201,9 +201,17 @@ conn_check()
 static inline void
 destroy_null_bytes(char *recvbuf, const int bytes_received)
 {
-	for (int i = 0; i < bytes_received; i++) {
-		if (recvbuf[i] == '\0')
-			recvbuf[i] = 'X';
+	int	i, j;
+
+	if (bytes_received < 1)
+		return;
+	for (i = bytes_received - 1; i >= 0; i--) {
+		if (recvbuf[i] != '\0')
+			break;
+	}
+	for (j = 0; j < i; j++) {
+		if (recvbuf[j] == '\0')
+			recvbuf[j] = 'X';
 	}
 }
 
