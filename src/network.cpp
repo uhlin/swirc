@@ -619,6 +619,12 @@ net_connect_clean_up(void)
 }
 
 void
+destroy_null_bytes_exported(char *buf, const int len)
+{
+	destroy_null_bytes(buf, len);
+}
+
+void
 net_irc_listen(bool *connection_lost)
 {
 	PRINTTEXT_CONTEXT		 ptext_ctx;
