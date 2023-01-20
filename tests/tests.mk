@@ -8,6 +8,7 @@ TESTS = cmd_ban.run\
 	cmd_unban.run\
 	cmd_znc.run\
 	crypt.run\
+	destroy_null_bytes.run\
 	getuser.run\
 	icb_send_pm.run\
 	int_diff.run\

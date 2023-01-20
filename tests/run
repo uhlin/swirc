@@ -11,6 +11,7 @@ cmd_squery
 cmd_unban
 cmd_znc
 crypt
+destroy_null_bytes
 getuser
 icb_send_pm
 int_diff
