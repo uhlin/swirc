@@ -270,8 +270,8 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 			throw std::runtime_error("read bytes mismatch "
 			    "remaining");
 		}
-
-		UNUSED_VAR(bytes_received);
+		if (memchr(tmp, 0, bytes_received) != NULL)
+			destroy_null_bytes(tmp, bytes_received);
 
 		concatSize = strlen(recvbuf) + strlen(tmp) + 1;
 		concat = static_cast<char *>(xmalloc(concatSize));
@@ -702,6 +702,11 @@ net_irc_listen(bool *connection_lost)
 					break;
 				}
 			} else if (bytes_received > 0) {
+				if (memchr(recvbuf, 0, bytes_received) !=
+				    NULL) {
+					destroy_null_bytes(recvbuf,
+					    bytes_received);
+				}
 				icb_irc_proxy(length, recvbuf[0], &recvbuf[1]);
 			}
 		} else {
