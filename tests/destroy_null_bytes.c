@@ -55,6 +55,32 @@ canDestroyNullBytes_test3(void **state)
 	UNUSED_PARAM(state);
 }
 
+static void
+leavesBufUnchanged_test1(void **state)
+{
+	char buf[] = { 0,0 };
+	const char expected[] = { 0,0 };
+
+	assert_true(sizeof buf == 2);
+	assert_true(sizeof buf == sizeof expected);
+	destroy_null_bytes_exported(buf, sizeof buf);
+	assert_memory_equal(buf, expected, sizeof buf);
+	UNUSED_PARAM(state);
+}
+
+static void
+leavesBufUnchanged_test2(void **state)
+{
+	char buf[] = { 0 };
+	const char expected[] = { 0 };
+
+	assert_true(sizeof buf == 1);
+	assert_true(sizeof buf == sizeof expected);
+	destroy_null_bytes_exported(buf, sizeof buf);
+	assert_memory_equal(buf, expected, sizeof buf);
+	UNUSED_PARAM(state);
+}
+
 int
 main(void)
 {
@@ -62,6 +88,8 @@ main(void)
 		cmocka_unit_test(canDestroyNullBytes_test1),
 		cmocka_unit_test(canDestroyNullBytes_test2),
 		cmocka_unit_test(canDestroyNullBytes_test3),
+		cmocka_unit_test(leavesBufUnchanged_test1),
+		cmocka_unit_test(leavesBufUnchanged_test2),
 	};
 
 	return cmocka_run_group_tests(tests, NULL, NULL);
