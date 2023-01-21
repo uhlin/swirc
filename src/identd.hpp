@@ -1,7 +1,7 @@
 #ifndef IDENT_DAEMON_HPP
 #define IDENT_DAEMON_HPP
 /* identd.hpp
-   Copyright (C) 2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -61,7 +61,8 @@
 
 #include "assertAPI.h"
 
-#if UNIX
+#if defined(UNIX) && !defined(_SOCKET_DEFINED)
+#define _SOCKET_DEFINED 1
 typedef int SOCKET;
 #endif
 
