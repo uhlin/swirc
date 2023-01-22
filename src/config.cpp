@@ -93,6 +93,11 @@ static struct tagConfDefValues {
 	{ "sasl_password",             TYPE_STRING,  1, "" },
 	{ "sasl_x509",                 TYPE_STRING,  1, "client.pem" },
 
+	{ "socks",                     TYPE_BOOLEAN, 2, "no" },
+	{ "socks_atyp",                TYPE_INTEGER, 1, "1" },
+	{ "socks_host",                TYPE_STRING,  1, "localhost" },
+	{ "socks_port",                TYPE_STRING,  1, "9050" },
+
 	{ "chanserv_host",             TYPE_STRING,  1, "services." },
 	{ "nickserv_host",             TYPE_STRING,  1, "services." },
 	{ "qbot_host",                 TYPE_STRING,  1, "CServe.quakenet.org" },
