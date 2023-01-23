@@ -119,20 +119,20 @@ cmd_colormap(const char *data)
 		return;
 	}
 
-	out.push_back("");
-	out.push_back(TXT_BOLD "COLORMAP" TXT_BOLD);
-	out.push_back("");
-	out.push_back("\0031,0 00 \0030,1 01 \0030,2 02 \0030,3 03 "
-		      "\0031,4 04 \0030,5 05 \0030,6 06 \0031,7 07 ");
-	out.push_back("\0031,8 08 \0031,9 09 \0030,10 10 \0031,11 11 "
-		      "\0030,12 12 \0031,13 13 \0031,14 14 \0031,15 15 ");
-	out.push_back("");
+	OUT_PB("");
+	OUT_PB(TXT_BOLD "COLORMAP" TXT_BOLD);
+	OUT_PB("");
+	OUT_PB("\0031,0 00 \0030,1 01 \0030,2 02 \0030,3 03 "
+	       "\0031,4 04 \0030,5 05 \0030,6 06 \0031,7 07 ");
+	OUT_PB("\0031,8 08 \0031,9 09 \0030,10 10 \0031,11 11 "
+	       "\0030,12 12 \0031,13 13 \0031,14 14 \0031,15 15 ");
+	OUT_PB("");
 #if LINUX
 	pb_linux_colors(out);
 #else
 	pb_other_colors(out);
 #endif
-	out.push_back("");
+	OUT_PB("");
 
 	ctx.spec_type = TYPE_SPEC1;
 
