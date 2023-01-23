@@ -502,7 +502,7 @@ check_for_part5(wchar_t **bufp, char *bg)
 
 static void
 map_color(short int *inout, const short int i, const short int colorMap_size,
-	  attr_t *attr_out)
+    attr_t *attr_out)
 {
 	switch (*inout) {
 	case COLOR_BLACK:
@@ -680,7 +680,7 @@ start_on_a_new_row(const ptrdiff_t sum, const WINDOW *win)
  */
 static void
 case_default(const struct case_default_context *ctx, int *rep_count,
-	     int *line_count, int *insert_count)
+    int *line_count, int *insert_count)
 {
 	unsigned char *mbs;
 
@@ -811,8 +811,8 @@ get_mb_strlen(const char *s)
 static void
 set_indent(int *indent, const char *fmt, ...)
 {
-	va_list ap;
-	char *str = NULL;
+	va_list		 ap;
+	char		*str = NULL;
 
 	va_start(ap, fmt);
 	str = strdup_vprintf(fmt, ap);
@@ -832,11 +832,8 @@ set_indent(int *indent, const char *fmt, ...)
  * @return Message components
  */
 static struct message_components *
-get_processed_out_message(
-	const char *unproc_msg,
-	enum message_specifier_type spec_type,
-	bool include_ts,
-	const char *srv_time)
+get_processed_out_message(const char *unproc_msg, enum message_specifier_type
+    spec_type, bool include_ts, const char *srv_time)
 {
 	struct message_components *pout =
 	    static_cast<struct message_components *>(xcalloc(sizeof *pout, 1));
@@ -974,8 +971,9 @@ get_processed_out_message(
 static wchar_t *
 windows_convert_to_utf8(const char *buf)
 {
-	const int size = static_cast<int>(strlen(buf) + 1);
-	wchar_t *out = static_cast<wchar_t *>(xcalloc(size, sizeof *out));
+	const int	 size = static_cast<int>(strlen(buf) + 1);
+	wchar_t		*out = static_cast<wchar_t *>(xcalloc(size,
+			     sizeof *out));
 
 	if (MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, buf, -1, out,
 	    size) > 0)
@@ -1181,7 +1179,7 @@ vprinttext_mutex_init(void)
 
 PPRINTTEXT_CONTEXT
 printtext_context_new(PIRC_WINDOW window, enum message_specifier_type spec_type,
-		      bool include_ts)
+    bool include_ts)
 {
 	PPRINTTEXT_CONTEXT ctx =
 	    static_cast<PPRINTTEXT_CONTEXT>(xcalloc(sizeof *ctx, 1));
@@ -1203,11 +1201,8 @@ printtext_context_destroy(PPRINTTEXT_CONTEXT ctx)
 }
 
 void
-printtext_context_init(
-	PPRINTTEXT_CONTEXT ctx,
-	PIRC_WINDOW window,
-	enum message_specifier_type spec_type,
-	bool include_ts)
+printtext_context_init(PPRINTTEXT_CONTEXT ctx, PIRC_WINDOW window,
+    enum message_specifier_type spec_type, bool include_ts)
 {
 	if (ctx == NULL) {
 		err_log(EINVAL, "%s", __func__);
@@ -1413,7 +1408,7 @@ get_buffer(const char *orig)
  */
 void
 printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
-	       int *rep_count)
+    int *rep_count)
 {
 	char		*tmpbuf = NULL;
 	const char	*tmpbuf_p = NULL;
