@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added destruction of null bytes on receive where appropriate
+- Added the following config options:
+  - `socks` (bool)
+  - `socks_atyp` (int)
+  - `socks_host` (string)
+  - `socks_port` (string)
 - Fixed possible crashes
 
 ## [3.3.9] - 2023-01-07 ##
