@@ -1,0 +1,1 @@
+:irc.server.com NOTICE #swirc :wheee!

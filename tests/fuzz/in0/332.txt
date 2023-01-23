@@ -1,0 +1,1 @@
+:localhost 332 Mo #swirc :Welcome to Swirc IRC client support channel
