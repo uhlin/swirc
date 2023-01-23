@@ -245,8 +245,10 @@ socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 			 * SOCKS 4 extension
 			 */
 
-			if (inet_pton(AF_INET, "0.0.0.1", this->ipv4_addr) != 1)
-				throw std::runtime_error("conversion error");
+			this->ipv4_addr[0] = 0;
+			this->ipv4_addr[1] = 0;
+			this->ipv4_addr[2] = 0;
+			this->ipv4_addr[3] = 1;
 		}
 
 		this->request.push_back(SOCKS_VER);
