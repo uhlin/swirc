@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added a SOCKS proxy client
 - Added destruction of null bytes on receive where appropriate
 - Added the following config options:
   - `socks` (bool)
