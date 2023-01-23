@@ -52,6 +52,7 @@
 #include "network.h"
 #include "printtext.h"
 #include "sig.h"
+#include "socks.hpp"
 #include "strHand.h"
 
 #include "commands/connect.h"
@@ -524,11 +525,24 @@ net_connect(const struct network_connect_context *ctx,
 		}
 #endif
 
+		if (socks::yesno() && ssl_is_enabled()) {
+			throw std::runtime_error("TLS/SSL not supported with "
+			    "SOCKS");
+		}
+
 		save_last_server(ctx->server, ctx->port, (ctx->password ?
 		    ctx->password : ""));
 		if (config_bool("identd", false))
 			identd::start(config_integer(&intctx));
-		get_ip_addresses(res, ctx->server, ctx->port, &ptext_ctx);
+		if (!socks::yesno()) {
+			get_ip_addresses(res, ctx->server, ctx->port,
+			    &ptext_ctx);
+		} else {
+			get_ip_addresses(res,
+			    Config("socks_host"), Config("socks_port"),
+			    &ptext_ctx);
+		}
+
 		establish_conn(res, &ptext_ctx);
 
 		if (res)
@@ -536,7 +550,14 @@ net_connect(const struct network_connect_context *ctx,
 
 		select_send_and_recv_funcs();
 		check_conn_fail();
-		check_hostname(ctx->server, &ptext_ctx);
+		if (!socks::yesno())
+			check_hostname(ctx->server, &ptext_ctx);
+		else {
+			std::string err("");
+
+			if (socks::connect(ctx->server, ctx->port, err) == -1)
+				throw std::runtime_error(err);
+		}
 
 		event_welcome_cond_init();
 		net_spawn_listen_thread();
