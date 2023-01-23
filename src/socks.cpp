@@ -302,7 +302,7 @@ socks::inttoatyp(const long int li)
 		return ATYP_IPV4_ADDR;
 	else if (li == 2)
 		return ATYP_IPV6_ADDR;
-	err_log(EINVAL, "%s: bad address type %li", __func__, li);
+	err_log(EINVAL, "%s: bad address type %ld", __func__, li);
 	return ATYP_IPV4_ADDR;
 }
 
