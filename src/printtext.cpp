@@ -1344,9 +1344,15 @@ get_buffer(const char *orig)
 
 	std::list<std::string> fromcode;
 
+#if defined(__cplusplus) && __cplusplus >= 201103L
+	fromcode.emplace_back("UTF-8");
+	fromcode.emplace_back("ISO-8859-1");
+	fromcode.emplace_back("ISO-8859-15");
+#else
 	fromcode.push_back("UTF-8");
 	fromcode.push_back("ISO-8859-1");
 	fromcode.push_back("ISO-8859-15");
+#endif
 
 	for (const std::string &x : fromcode) {
 		char *in, *orig_copy, *out, *out_p;

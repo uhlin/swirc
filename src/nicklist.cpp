@@ -1,5 +1,5 @@
 /* nicklist.cpp
-   Copyright (C) 2021-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -175,7 +175,11 @@ get_list(const IRC_WINDOW *window, const bool sort)
 			std::string str("");
 			str.push_back(c);
 			str.append(names->nick);
+#if defined(__cplusplus) && __cplusplus >= 201103L
+			list.emplace_back(str);
+#else
 			list.push_back(str);
+#endif
 		}
 	}
 
