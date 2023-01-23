@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
   - `socks_atyp` (int)
   - `socks_host` (string)
   - `socks_port` (string)
+- Added usage of `emplace_back()`
 - Fixed possible crashes
 
 ## [3.3.9] - 2023-01-07 ##
