@@ -31,7 +31,7 @@ main(int argc, char *argv[])
 {
 	FILE		*fp;
 	const int	 maxchars = 1024;
-	const off_t	 maxfile = 9437184; // 9 MB
+	const off_t	 maxfile = 18874368; // 18 MB
 	int		 c, i;
 	struct stat	 sb = { 0 };
 
