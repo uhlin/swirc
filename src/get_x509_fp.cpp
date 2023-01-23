@@ -74,7 +74,7 @@ x509_fingerprint::~x509_fingerprint()
 }
 
 void
-x509_fingerprint::show_fp(void)
+x509_fingerprint::show_fp(void) const
 {
 	bool		error = false;
 	std::string	str("");
