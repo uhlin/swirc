@@ -345,8 +345,14 @@ socks::read(SOCKET sock, void *buf, const int len)
 {
 	int nread;
 
+#if defined(UNIX)
 	if ((nread = recv(sock, buf, len, 0)) == SOCKET_ERROR)
 		return -1;
+#elif defined(WIN32)
+	if ((nread = recv(sock, static_cast<char *>(buf), len, 0)) ==
+	    SOCKET_ERROR)
+		return -1;
+#endif
 	return nread;
 }
 
@@ -355,7 +361,13 @@ socks::write(SOCKET sock, const void *buf, const int len)
 {
 	int nwritten;
 
+#if defined(UNIX)
 	if ((nwritten = send(sock, buf, len, 0)) == SOCKET_ERROR)
 		return -1;
+#elif defined(WIN32)
+	if ((nwritten = send(sock, static_cast<const char *>(buf), len, 0)) ==
+	    SOCKET_ERROR)
+		return -1;
+#endif
 	return nwritten;
 }
