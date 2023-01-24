@@ -542,17 +542,17 @@ net_connect(const struct network_connect_context *ctx,
 
 		if (res)
 			freeaddrinfo(res);
-
-		select_send_and_recv_funcs();
-		check_conn_fail();
-		if (!socks::yesno())
-			check_hostname(ctx->server, &ptext_ctx);
-		else {
+		if (socks::yesno()) {
 			std::string err("");
 
 			if (socks::connect(ctx->server, ctx->port, err) == -1)
 				throw std::runtime_error(err);
 		}
+
+		select_send_and_recv_funcs();
+		check_conn_fail();
+		if (!socks::yesno())
+			check_hostname(ctx->server, &ptext_ctx);
 
 		event_welcome_cond_init();
 		net_spawn_listen_thread();
