@@ -95,8 +95,8 @@ namespace socks
 	void	 strError(socks_byte_t, std::string &);
 	bool	 yesno(void);
 
-	int	 read(SOCKET, socks_byte_t *, const int);
-	int	 write(SOCKET, socks_byte_t *, const int);
+	int	 read(SOCKET, void *, const int);
+	int	 write(SOCKET, const void *, const int);
 }
 
 #endif

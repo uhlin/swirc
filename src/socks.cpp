@@ -341,7 +341,7 @@ socks::yesno(void)
 }
 
 int
-socks::read(SOCKET sock, socks_byte_t *buf, const int len)
+socks::read(SOCKET sock, void *buf, const int len)
 {
 	int nread;
 
@@ -351,7 +351,7 @@ socks::read(SOCKET sock, socks_byte_t *buf, const int len)
 }
 
 int
-socks::write(SOCKET sock, socks_byte_t *buf, const int len)
+socks::write(SOCKET sock, const void *buf, const int len)
 {
 	int nwritten;
 
