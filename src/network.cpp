@@ -525,11 +525,6 @@ net_connect(const struct network_connect_context *ctx,
 		}
 #endif
 
-		if (socks::yesno() && ssl_is_enabled()) {
-			throw std::runtime_error("TLS/SSL not supported with "
-			    "SOCKS");
-		}
-
 		save_last_server(ctx->server, ctx->port, (ctx->password ?
 		    ctx->password : ""));
 		if (config_bool("identd", false))
