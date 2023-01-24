@@ -29,7 +29,9 @@
    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
    POSSIBILITY OF SUCH DAMAGE. */
 
-#include <arpa/inet.h>
+#ifdef WIN32
+#include <ws2tcpip.h>
+#endif
 
 #include <string>
 #include <vector>

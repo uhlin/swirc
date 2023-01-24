@@ -29,10 +29,13 @@
 
 #include "common.h"
 
+#ifdef UNIX
 #include <sys/socket.h>
 #include <sys/types.h>
 
+#include <arpa/inet.h>
 #include <netdb.h>
+#endif
 
 #include <inttypes.h>
 #include <stdexcept>
