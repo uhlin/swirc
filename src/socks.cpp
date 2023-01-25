@@ -205,10 +205,8 @@ socks_conn_req::socks_conn_req()
 
 socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 {
-	int			 addr_family_save;
-	long int		 val = 0;
-	struct addrinfo		*res = nullptr;
-	uint16_t		 host16 = 0;
+	long int	 val = 0;
+	uint16_t	 host16 = 0;
 
 	BZERO(this->dst_port, sizeof this->dst_port);
 	sw_static_assert(sizeof this->dst_port == sizeof(uint16_t),
@@ -229,31 +227,8 @@ socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 		 * IPv4
 		 */
 
-		addr_family_save = g_socket_address_family;
-		net_set_sock_addr_family_ipv4();
-		res = net_addr_resolve(host, port);
-		g_socket_address_family = addr_family_save;
-
-		if (res != nullptr) {
-			(void) memcpy(this->ipv4_addr,
-			    &(sw_satosin(res->ai_addr)->sin_addr.s_addr),
-			    sizeof this->ipv4_addr);
-			sw_static_assert(sizeof this->ipv4_addr == sizeof
-			    sw_satosin(res->ai_addr)->sin_addr.s_addr,
-			    "sizes mismatch");
-			freeaddrinfo(res);
-			res = nullptr;
-		} else {
-			/*
-			 * SOCKS 4 extension
-			 */
-
-			this->ipv4_addr[0] = 0;
-			this->ipv4_addr[1] = 0;
-			this->ipv4_addr[2] = 0;
-			this->ipv4_addr[3] = 1;
-		}
-
+		if (inet_pton(AF_INET, host, this->ipv4_addr) != 1)
+			throw std::runtime_error("IPv4 addr conversion failed");
 		this->request.push_back(SOCKS_VER);
 		this->request.push_back(CMD_CONNECT);
 		this->request.push_back(SOCKS_RSV);
