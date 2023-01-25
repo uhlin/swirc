@@ -1531,10 +1531,10 @@ set_timestamp(char *dest, size_t destsize,
 void
 vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
 {
-	char *fmt_copy = NULL;
-	const int tbszp1 = textBuf_size(ctx->window->buf) + 1;
-	struct integer_context intctx("textbuffer_size_absolute", 350, 4700,
-	    1000);
+	char			*fmt_copy = NULL;
+	const int		 tbszp1 = textBuf_size(ctx->window->buf) + 1;
+	struct integer_context	 intctx("textbuffer_size_absolute", 350, 4700,
+				     1000);
 	struct message_components *pout = NULL;
 
 #if defined(UNIX)
