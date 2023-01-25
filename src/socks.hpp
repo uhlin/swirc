@@ -78,6 +78,7 @@ public:
 	socks_conn_req();
 	socks_conn_req(const char *, const char *, long int);
 
+	std::vector<socks_byte_t> fqdn;
 	std::vector<socks_byte_t> request;
 
 private:
