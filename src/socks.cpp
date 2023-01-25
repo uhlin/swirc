@@ -143,9 +143,10 @@ read_conn_req_resp(std::string &err)
 	}
 
 	atyp = socks::inttoatyp(config_integer(&intctx));
+	UNUSED_VAR(atyp);
 
-	if (preamble[3] != atyp) {
-		err.assign(__func__).append(": bad address type");
+	if (preamble[3] == ATYP_DOMAINNAME) {
+		err.assign(__func__).append(": not implemented");
 		return -1;
 	} else if (preamble[3] == ATYP_IPV4_ADDR) {
 		char		 buf[INET_ADDRSTRLEN] = { '\0' };
