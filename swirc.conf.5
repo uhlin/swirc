@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018-2023 Markus Uhlin. All rights reserved.
 .\"
-.Dd January 5, 2023
+.Dd January 25, 2023
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -397,6 +397,38 @@ The default is NO.
 .\" ----------------------------------------
 .It Sy skip_motd Pq Em bool
 Skip message of the day (MOTD) on connection to a server?
+.\" ----------------------------------------
+.\" SOCKS
+.\" ----------------------------------------
+.It Sy socks Pq Em bool
+Use the SOCKS proxy client?
+.\" ----------------------------------------
+.\" SOCKS ATYP
+.\" ----------------------------------------
+.It Sy socks_atyp Pq Em int
+SOCKS address type.
+Which can have one of the following values:
+.Bl -bullet -compact
+.It
+(0) Fully qualified domain name.
+The default.
+.It
+(1) IPv4 address
+.It
+(2) IPv6 address
+.El
+.\" ----------------------------------------
+.\" SOCKS HOST
+.\" ----------------------------------------
+.It Sy socks_host Pq Em string
+SOCKS hostname.
+.\" ----------------------------------------
+.\" SOCKS PORT
+.\" ----------------------------------------
+.It Sy socks_port Pq Em string
+SOCKS port.
+The default is 9050 which is used by
+.Lk https://www.torproject.org/ Tor .
 .\" ----------------------------------------
 .\" SSL VERIFY PEER
 .\" ----------------------------------------
