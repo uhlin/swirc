@@ -223,9 +223,28 @@ socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 	host16 = static_cast<uint16_t>(val);
 	this->net16 = htons(host16);
 
-	if (socks::inttoatyp(li) == ATYP_DOMAINNAME)
-		throw std::runtime_error("unsupported address type");
-	else if (socks::inttoatyp(li) == ATYP_IPV4_ADDR) {
+	if (socks::inttoatyp(li) == ATYP_DOMAINNAME) {
+		size_t len;
+
+		if ((len = strlen(host)) > FQDN_MAX)
+			len = FQDN_MAX;
+		for (size_t i = 0; i < len; i++) {
+			this->fqdn.push_back
+			    (static_cast<socks_byte_t>(host[i]));
+		}
+		this->request.push_back(SOCKS_VER);
+		this->request.push_back(CMD_CONNECT);
+		this->request.push_back(SOCKS_RSV);
+		this->request.push_back(ATYP_DOMAINNAME);
+		this->request.push_back
+		    (static_cast<socks_byte_t>(this->fqdn.size()));
+		for (const socks_byte_t &b : this->fqdn)
+			this->request.push_back(b);
+		(void) memcpy(this->dst_port, &this->net16,
+		    sizeof this->dst_port);
+		this->request.push_back(this->dst_port[0]);
+		this->request.push_back(this->dst_port[1]);
+	} else if (socks::inttoatyp(li) == ATYP_IPV4_ADDR) {
 		/*
 		 * IPv4
 		 */
