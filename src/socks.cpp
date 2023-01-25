@@ -98,7 +98,7 @@ read_vid_resp(std::string &err)
 static int
 send_conn_req(const char *host, const char *port, std::string &err)
 {
-	struct integer_context	 intctx("socks_atyp", 0, 2, 1);
+	struct integer_context	 intctx("socks_atyp", 0, 2, 0);
 
 	try {
 		socks_conn_req	 scr(host, port, config_integer(&intctx));
@@ -127,7 +127,7 @@ read_conn_req_resp(std::string &err)
 	socks_byte_t		 bnd_port[2] = { 0,0 };
 	socks_byte_t		 preamble[4] = { 0,0,0,0 };
 	std::string		 str("");
-	struct integer_context	 intctx("socks_atyp", 0, 2, 1);
+	struct integer_context	 intctx("socks_atyp", 0, 2, 0);
 	uint16_t		 net16 = 0;
 
 	if (socks::read(g_socket, &preamble[0], sizeof preamble) !=
