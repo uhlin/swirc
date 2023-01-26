@@ -203,6 +203,13 @@ socks_conn_req::socks_conn_req()
 
 socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 {
+#define PB_DST_PORT()\
+	do {\
+		(void) memcpy(this->dst_port, &this->net16,\
+		    sizeof this->dst_port);\
+		this->request.push_back(this->dst_port[0]);\
+		this->request.push_back(this->dst_port[1]);\
+	} while (0)
 	long int	 val = 0;
 	uint16_t	 host16 = 0;
 
@@ -235,10 +242,7 @@ socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 		    (static_cast<socks_byte_t>(this->fqdn.size()));
 		for (const socks_byte_t &b : this->fqdn)
 			this->request.push_back(b);
-		(void) memcpy(this->dst_port, &this->net16,
-		    sizeof this->dst_port);
-		this->request.push_back(this->dst_port[0]);
-		this->request.push_back(this->dst_port[1]);
+		PB_DST_PORT();
 	} else if (socks::inttoatyp(li) == ATYP_IPV4_ADDR) {
 		/*
 		 * IPv4
@@ -252,10 +256,7 @@ socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 		this->request.push_back(ATYP_IPV4_ADDR);
 		for (const socks_byte_t &b : this->ipv4_addr)
 			this->request.push_back(b);
-		(void) memcpy(this->dst_port, &this->net16,
-		    sizeof this->dst_port);
-		this->request.push_back(this->dst_port[0]);
-		this->request.push_back(this->dst_port[1]);
+		PB_DST_PORT();
 	} else if (socks::inttoatyp(li) == ATYP_IPV6_ADDR) {
 		/*
 		 * IPv6
@@ -269,10 +270,7 @@ socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 		this->request.push_back(ATYP_IPV6_ADDR);
 		for (const socks_byte_t &b : this->ipv6_addr)
 			this->request.push_back(b);
-		(void) memcpy(this->dst_port, &this->net16,
-		    sizeof this->dst_port);
-		this->request.push_back(this->dst_port[0]);
-		this->request.push_back(this->dst_port[1]);
+		PB_DST_PORT();
 	} else
 		throw std::runtime_error("invalid address type");
 }
