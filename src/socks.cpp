@@ -198,6 +198,27 @@ socks_conn_req::socks_conn_req()
 	this->net16 = 0;
 }
 
+static void
+domainname(const char *host, std::vector<socks_byte_t> &fqdn,
+    std::vector<socks_byte_t> &req)
+{
+	size_t len;
+
+	if ((len = strlen(host)) > FQDN_MAX)
+		len = FQDN_MAX;
+	for (size_t i = 0; i < len; i++)
+		fqdn.push_back(static_cast<socks_byte_t>(host[i]));
+
+	req.push_back(SOCKS_VER);
+	req.push_back(CMD_CONNECT);
+	req.push_back(SOCKS_RSV);
+	req.push_back(ATYP_DOMAINNAME);
+	req.push_back(static_cast<socks_byte_t>(fqdn.size()));
+
+	for (const socks_byte_t &b : fqdn)
+		req.push_back(b);
+}
+
 socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 {
 #define PB_DST_PORT()\
@@ -223,24 +244,7 @@ socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 	this->net16 = htons(host16);
 
 	if (socks::inttoatyp(li) == ATYP_DOMAINNAME) {
-		size_t len;
-
-		if ((len = strlen(host)) > FQDN_MAX)
-			len = FQDN_MAX;
-		for (size_t i = 0; i < len; i++) {
-			this->fqdn.push_back
-			    (static_cast<socks_byte_t>(host[i]));
-		}
-
-		this->request.push_back(SOCKS_VER);
-		this->request.push_back(CMD_CONNECT);
-		this->request.push_back(SOCKS_RSV);
-		this->request.push_back(ATYP_DOMAINNAME);
-		this->request.push_back
-		    (static_cast<socks_byte_t>(this->fqdn.size()));
-
-		for (const socks_byte_t &b : this->fqdn)
-			this->request.push_back(b);
+		domainname(host, this->fqdn, this->request);
 		PB_DST_PORT();
 	} else if (socks::inttoatyp(li) == ATYP_IPV4_ADDR) {
 		/*
