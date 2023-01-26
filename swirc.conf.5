@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018-2023 Markus Uhlin. All rights reserved.
 .\"
-.Dd January 25, 2023
+.Dd January 26, 2023
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -402,6 +402,24 @@ Skip message of the day (MOTD) on connection to a server?
 .\" ----------------------------------------
 .It Sy socks Pq Em bool
 Use the SOCKS proxy client?
+The SOCKS proxy client is particulary suited for use with Tor.
+Examples of IRC networks that are accessible via Tor are Libera Chat
+and OFTC.
+In order to access Libera Chat and OFTC using the previously mentioned
+technique you can add the following lines to your
+.Xr torrc 5 :
+.Bd -literal -offset indent
+# Libera Chat
+MapAddress palladium.libera.chat libera75jm6of4wxpxt4aynol3xjmbtxgfyjpu34ss4d7r7q2v5zrpyd.onion
+
+# OFTC
+MapAddress irc.oftc.net oftcnet6xg6roj6d7id4y4cu6dchysacqj2ldgea73qzdagufflqxrid.onion
+.Ed
+.Pp
+After this has been done (and after restarting Tor) you should be able
+to connect to one of the mapped addresses inside Swirc.
+The socks host setting should point to the machine where the Tor
+service is running.
 .\" ----------------------------------------
 .\" SOCKS ATYP
 .\" ----------------------------------------
