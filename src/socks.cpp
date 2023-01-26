@@ -49,9 +49,6 @@
 #include "printtext.h"
 #include "socks.hpp"
 
-#define sw_satosin(_sa) (reinterpret_cast<struct sockaddr_in *>(_sa))
-#define sw_satosin6(_sa) (reinterpret_cast<struct sockaddr_in6 *>(_sa))
-
 static const size_t FQDN_MAX = 255;
 
 /*
