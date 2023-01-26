@@ -211,7 +211,7 @@ domainname(const char *host, std::vector<socks_byte_t> &fqdn,
 
 	req.push_back(SOCKS_VER);
 	req.push_back(CMD_CONNECT);
-	req.push_back(SOCKS_RSV);
+	req.push_back(0x00);
 	req.push_back(ATYP_DOMAINNAME);
 	req.push_back(static_cast<socks_byte_t>(fqdn.size()));
 
@@ -256,7 +256,7 @@ socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 
 		this->request.push_back(SOCKS_VER);
 		this->request.push_back(CMD_CONNECT);
-		this->request.push_back(SOCKS_RSV);
+		this->request.push_back(0x00);
 		this->request.push_back(ATYP_IPV4_ADDR);
 
 		for (const socks_byte_t &b : this->ipv4_addr)
@@ -272,7 +272,7 @@ socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 
 		this->request.push_back(SOCKS_VER);
 		this->request.push_back(CMD_CONNECT);
-		this->request.push_back(SOCKS_RSV);
+		this->request.push_back(0x00);
 		this->request.push_back(ATYP_IPV6_ADDR);
 
 		for (const socks_byte_t &b : this->ipv6_addr)

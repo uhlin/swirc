@@ -46,7 +46,6 @@ typedef int SOCKET;
 #endif
 
 #define SOCKS_NMETHODS	0x01
-#define SOCKS_RSV	0x00
 #define SOCKS_VER	0x05
 
 typedef unsigned char socks_byte_t;
