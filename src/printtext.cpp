@@ -1343,10 +1343,12 @@ get_buffer(const char *orig)
 	fromcode.emplace_back("UTF-8");
 	fromcode.emplace_back("ISO-8859-1");
 	fromcode.emplace_back("ISO-8859-15");
+	fromcode.emplace_back("WINDOWS-1251");
 #else
 	fromcode.push_back("UTF-8");
 	fromcode.push_back("ISO-8859-1");
 	fromcode.push_back("ISO-8859-15");
+	fromcode.push_back("WINDOWS-1251");
 #endif
 
 	for (const std::string &x : fromcode) {
