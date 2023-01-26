@@ -234,12 +234,14 @@ socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 			this->fqdn.push_back
 			    (static_cast<socks_byte_t>(host[i]));
 		}
+
 		this->request.push_back(SOCKS_VER);
 		this->request.push_back(CMD_CONNECT);
 		this->request.push_back(SOCKS_RSV);
 		this->request.push_back(ATYP_DOMAINNAME);
 		this->request.push_back
 		    (static_cast<socks_byte_t>(this->fqdn.size()));
+
 		for (const socks_byte_t &b : this->fqdn)
 			this->request.push_back(b);
 		PB_DST_PORT();
@@ -250,10 +252,12 @@ socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 
 		if (inet_pton(AF_INET, host, this->ipv4_addr) != 1)
 			throw std::runtime_error("IPv4 addr conversion failed");
+
 		this->request.push_back(SOCKS_VER);
 		this->request.push_back(CMD_CONNECT);
 		this->request.push_back(SOCKS_RSV);
 		this->request.push_back(ATYP_IPV4_ADDR);
+
 		for (const socks_byte_t &b : this->ipv4_addr)
 			this->request.push_back(b);
 		PB_DST_PORT();
@@ -264,10 +268,12 @@ socks_conn_req::socks_conn_req(const char *host, const char *port, long int li)
 
 		if (inet_pton(AF_INET6, host, this->ipv6_addr) != 1)
 			throw std::runtime_error("IPv6 addr conversion failed");
+
 		this->request.push_back(SOCKS_VER);
 		this->request.push_back(CMD_CONNECT);
 		this->request.push_back(SOCKS_RSV);
 		this->request.push_back(ATYP_IPV6_ADDR);
+
 		for (const socks_byte_t &b : this->ipv6_addr)
 			this->request.push_back(b);
 		PB_DST_PORT();
