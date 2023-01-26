@@ -123,11 +123,9 @@ send_conn_req(const char *host, const char *port, std::string &err)
 static int
 read_conn_req_resp(std::string &err)
 {
-	socks_byte_t		 atyp;
 	socks_byte_t		 bnd_port[2] = { 0,0 };
 	socks_byte_t		 preamble[4] = { 0,0,0,0 };
 	std::string		 str("");
-	struct integer_context	 intctx("socks_atyp", 0, 2, 0);
 	uint16_t		 net16 = 0;
 
 	if (socks::read(g_socket, &preamble[0], sizeof preamble) !=
@@ -141,9 +139,6 @@ read_conn_req_resp(std::string &err)
 		socks::strError(preamble[1], err);
 		return -1;
 	}
-
-	atyp = socks::inttoatyp(config_integer(&intctx));
-	UNUSED_VAR(atyp);
 
 	if (preamble[3] == ATYP_DOMAINNAME) {
 		err.assign(__func__).append(": not implemented");
