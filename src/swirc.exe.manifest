@@ -4,15 +4,13 @@
     manifestVersion="1.0"
     xmlns="urn:schemas-microsoft-com:asm.v1"
     xmlns:asmv3="urn:schemas-microsoft-com:asm.v3">
-<!--
 	<assemblyIdentity
 	    type="win32"
-	    name="Swirc"
-	    version=""
+	    name="SDT.Swirc.Swirc"
+	    version="3.3.9.0"
 	    processorArchitecture="x64" />
 
 	<description>Curses IRC client</description>
--->
 
 	<trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
 		<security>
