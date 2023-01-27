@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
+<!--,^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^.-->
+<!--|                                                            |-->
+<!--| swirc.exe.manifest                                         |-->
+<!--|                                                            |-->
+<!--| Copyright (C) 2018-2023 Markus Uhlin. All rights reserved. |-->
+<!--|                                                            |-->
+<!--`____________________________________________________________'-->
+
 <assembly
     manifestVersion="1.0"
     xmlns="urn:schemas-microsoft-com:asm.v1"
