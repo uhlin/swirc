@@ -1,6 +1,6 @@
 edit_dot_wxs () {
-	local _expr1="18s/    Name=\".*\"/    Name=\"Swirc $VERSION\"/"
-	local _expr2="20s/    Version=\".*\"/    Version=\"${VERSION}\.0\"/"
+	local _expr1="16s/    Name=\".*\"/    Name=\"Swirc $VERSION\"/"
+	local _expr2="18s/    Version=\".*\"/    Version=\"${VERSION}\.0\"/"
 
 	printf "  - Editing %s..." "$1"
 
