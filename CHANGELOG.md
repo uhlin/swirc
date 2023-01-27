@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file.
 - Added usage of `emplace_back()`
 - Fixed possible crashes
 
+### Windows ###
+- It is no longer necessary to enable the option "Use Unicode UTF-8
+  for worldwide language support", because this is now done in the
+  exe-manifest, only for Swirc.
+
 ## [3.3.9] - 2023-01-07 ##
 - **Added** micro optimizations
 - **Added** rules for nickname highlighting
