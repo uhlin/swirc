@@ -15,7 +15,7 @@
 	<assemblyIdentity
 	    type="win32"
 	    name="SDT.Swirc.Swirc"
-	    processorArchitecture="x64"
+	    processorArchitecture="*"
 	    version="3.3.9.0" />
 
 	<description>Curses IRC client</description>
