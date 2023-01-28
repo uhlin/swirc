@@ -15,7 +15,6 @@
 	<assemblyIdentity
 	    type="win32"
 	    name="SDT.Swirc.Swirc"
-	    language="*"
 	    processorArchitecture="x64"
 	    version="3.3.9.0" />
 
