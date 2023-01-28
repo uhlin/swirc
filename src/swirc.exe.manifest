@@ -52,4 +52,9 @@
 			<activeCodePage>UTF-8</activeCodePage>
 		</asmv3:windowsSettings>
 	</asmv3:application>
+
+	<msix xmlns="urn:schemas-microsoft-com:msix.v1"
+	    publisher="CN=SDT"
+	    packageName="Swirc"
+	    applicationId="Swirc" />
 </assembly>
