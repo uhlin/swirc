@@ -129,6 +129,7 @@ namespace DesktopNotificationManagerCompat {
 		std::wstring exePathStr(exePath);
 		exePathStr = L"\"" + exePathStr + L"\" " +
 		    TOAST_ACTIVATED_LAUNCH_ARG;
+		exePathStr.append(L"--");
 
 		/**
 		 * We don't need to worry about overflow here as
