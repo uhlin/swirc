@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
 - Fixed possible crashes
 
 ### Windows ###
+- Fixed launch by toast. (COM appends the `-Embedding` flag to the
+  args passed, which caused troubles.)
 - It is no longer necessary to enable the option "Use Unicode UTF-8
   for worldwide language support", because this is now done in the
   exe-manifest, only for Swirc.
