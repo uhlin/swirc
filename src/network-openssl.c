@@ -45,9 +45,6 @@
 
 #include "events/cap.h" /* get_sasl_mechanism() */
 
-#define CAFILE	"trusted_roots.pem"
-#define CADIR	NULL
-
 char *g_ca_file = NULL;
 
 static SSL_CTX	*ssl_ctx = NULL;
