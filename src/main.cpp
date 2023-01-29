@@ -573,6 +573,7 @@ main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 #elif defined(WIN32)
+#define PEM_FILE "trusted_roots.pem"
 	char	*pgm = NULL,
 		*str = NULL;
 
@@ -591,6 +592,10 @@ main(int argc, char *argv[])
 		err_ret("bindtextdomain");
 		return EXIT_FAILURE;
 	}
+	if (str)
+		g_ca_file = strdup_printf("%s/%s", str, PEM_FILE);
+	else
+		g_ca_file = sw_strdup(PEM_FILE);
 	free(str);
 #endif
 	(void) bind_textdomain_codeset("swirc", "UTF-8");
