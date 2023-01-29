@@ -48,6 +48,8 @@
 #define CAFILE	"trusted_roots.pem"
 #define CADIR	NULL
 
+char *g_ca_file = NULL;
+
 static SSL_CTX	*ssl_ctx = NULL;
 static SSL	*ssl = NULL;
 
@@ -493,4 +495,6 @@ net_ssl_deinit(void)
 		SSL_CTX_free(ssl_ctx);
 		ssl_ctx = NULL;
 	}
+
+	free_and_null(&g_ca_file);
 }

@@ -52,6 +52,9 @@ typedef enum {
 
 __SWIRC_BEGIN_DECLS
 
+/* From network-openssl.c */
+extern char *g_ca_file;
+
 /*
  * net_send_fake() store the sent data into this buffer
  */
