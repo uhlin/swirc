@@ -455,7 +455,7 @@ net_ssl_init(void)
 
 	if (g_ssl_verify_peer && config_bool("ssl_verify_peer", true)) {
 #ifdef WIN32
-		if (!SSL_CTX_load_verify_locations(ssl_ctx, CAFILE, CADIR)) {
+		if (!SSL_CTX_load_verify_locations(ssl_ctx, g_ca_file, NULL)) {
 			printtext(&ptext_ctx, "%s: Error loading CA file "
 			    "and/or directory", __func__);
 		}
