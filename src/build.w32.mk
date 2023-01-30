@@ -39,6 +39,7 @@ OBJS = $(OBJS)\
 	$(SRC_DIR)readlineTabCompletion.obj\
 	$(SRC_DIR)sig-w32.obj\
 	$(SRC_DIR)socks.obj\
+	$(SRC_DIR)spell.obj\
 	$(SRC_DIR)squeeze_text_deco.obj\
 	$(SRC_DIR)statusbar.obj\
 	$(SRC_DIR)strHand.obj\

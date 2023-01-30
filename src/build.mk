@@ -36,6 +36,7 @@ OBJS += $(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)readlineTabCompletion.o\
 	$(SRC_DIR)sig-unix.o\
 	$(SRC_DIR)socks.o\
+	$(SRC_DIR)spell.o\
 	$(SRC_DIR)squeeze_text_deco.o\
 	$(SRC_DIR)statusbar.o\
 	$(SRC_DIR)strHand.o\
