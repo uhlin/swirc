@@ -2,7 +2,7 @@
 
 # Swirc configure script
 #
-# Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
+# Copyright (C) 2016-2023 Markus Uhlin. All rights reserved.
 
 MAKE_DEF_FILE=options.mk
 
@@ -10,6 +10,7 @@ MAKE_DEF_FILE=options.mk
 . "posixshell/fix_cflags.sh"
 . "posixshell/link_with_gnu_libidn.sh"
 . "posixshell/link_with_gnu_libintl.sh"
+. "posixshell/link_with_hunspell.sh"
 . "posixshell/link_with_libiconv.sh"
 . "posixshell/link_with_libnotify.sh"
 . "posixshell/os_BSD.sh"
@@ -129,6 +130,8 @@ if [ ${_without_libintl} -eq 0 ]; then
 #	${MAKE:-make} -Cpo clean
 	${MAKE:-make} -Cpo
 fi
+
+link_with_hunspell
 
 if [ -f "$MAKE_DEF_FILE" ]; then
 	echo "configure: $MAKE_DEF_FILE successfully created!"
