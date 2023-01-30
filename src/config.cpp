@@ -98,6 +98,10 @@ static struct tagConfDefValues {
 	{ "socks_host",                TYPE_STRING,  1, "localhost" },
 	{ "socks_port",                TYPE_STRING,  1, "9050" },
 
+	{ "spell",                     TYPE_BOOLEAN, 2, "yes" },
+	{ "spell_lang",                TYPE_STRING,  1, "en_US" },
+	{ "spell_syswide",             TYPE_BOOLEAN, 1, "yes" },
+
 	{ "chanserv_host",             TYPE_STRING,  1, "services." },
 	{ "nickserv_host",             TYPE_STRING,  1, "services." },
 	{ "qbot_host",                 TYPE_STRING,  1, "CServe.quakenet.org" },
