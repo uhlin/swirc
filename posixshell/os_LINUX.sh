@@ -34,6 +34,9 @@ EOF
 	if [ -z ${CC+x} ]; then
 		CC=gcc
 	fi
+	if [ -z ${CXX+x} ]; then
+		CXX=g++
+	fi
 	if [ -z ${CFLAGS+x} ]; then
 		CFLAGS=""
 	fi
