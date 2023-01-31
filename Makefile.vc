@@ -67,7 +67,7 @@ dist: $(DIST_DEPS)
 
 ALG = SHA256
 
-SIGNTOOL_FLAGS = -f "c:\certs\SwircDevelopmentTeam.pfx"\
+SIGNTOOL_FLAGS = -f "C:\CERTS\SwircDevelopmentTeam.pfx"\
 	-fd $(ALG)\
 	-tr "http://timestamp.sectigo.com"\
 	-td $(ALG)\
