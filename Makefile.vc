@@ -7,6 +7,7 @@ BUILD_LOG = build.log
 CFLAGS = $(CFLAGS)\
 	-Icurl-$(CURL_VERSION)/include\
 	-Ignu-bundle-$(GNU_BUNDLE_DATE)/include\
+	-Ihunspell-$(HUNSPELL_VERSION)/include\
 	-Ilibressl-$(LIBRESSL_VERSION)-windows/include\
 	-Isrc/include
 
@@ -40,6 +41,7 @@ DIST_DEPS = swirc.exe\
 	"gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libiconv).dll"\
 	"gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libidn).dll"\
 	"gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libintl).dll"\
+	"hunspell-$(HUNSPELL_VERSION)\$(MACHINE)\$(NAME_libhunspell).dll"\
 	"pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll"\
 	"src\trusted_roots.pem"
 
@@ -57,6 +59,7 @@ dist: $(DIST_DEPS)
 	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libiconv).dll" $(DEST)
 	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libidn).dll" $(DEST)
 	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libintl).dll" $(DEST)
+	copy "hunspell-$(HUNSPELL_VERSION)\$(MACHINE)\$(NAME_libhunspell).dll" $(DEST)
 	copy "pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll" $(DEST)
 	copy "src\trusted_roots.pem" $(DEST)
 	copy "swirc.exe" $(DEST)
@@ -75,6 +78,7 @@ SIGNTOOL_FLAGS = -f "C:\CERTS\SwircDevelopmentTeam.pfx"\
 
 setupfile: dist Swirc.wxs
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libcharset).dll"
+	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libhunspell).dll"
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libiconv).dll"
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libidn).dll"
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libintl).dll"
@@ -102,6 +106,7 @@ clean:
 	$(RM) Swirc.wixobj
 	$(RM) curl-$(CURL_VERSION).cab
 	$(RM) gnu-bundle-$(GNU_BUNDLE_DATE).cab
+	$(RM) hunspell-$(HUNSPELL_VERSION).cab
 	$(RM) libressl-$(LIBRESSL_VERSION)-windows.cab
 	$(RM) pdcurses-$(PDCURSES_VERSION).cab
 	$(RM) swirc-locales-$(LOCALES_SNAP).cab
@@ -114,6 +119,9 @@ clean:
 !	endif
 !	if exists(gnu-bundle-$(GNU_BUNDLE_DATE))
 		rmdir /s /q gnu-bundle-$(GNU_BUNDLE_DATE)
+!	endif
+!	if exists(hunspell-$(HUNSPELL_VERSION))
+		rmdir /s /q hunspell-$(HUNSPELL_VERSION)
 !	endif
 !	if exists(libressl-$(LIBRESSL_VERSION)-windows)
 		rmdir /s /q libressl-$(LIBRESSL_VERSION)-windows

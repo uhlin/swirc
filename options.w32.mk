@@ -1,5 +1,6 @@
 CC = cl
 CFLAGS = -DHAVE_ATLSTR_H=1\
+	-DHAVE_HUNSPELL=1\
 	-DHAVE_LIBICONV=1\
 	-DHAVE_LIBIDN=1\
 	-DHAVE_LIBINTL_H=1\
@@ -24,6 +25,7 @@ CXXFLAGS = $(CFLAGS)\
 
 # Versions
 CURL_VERSION = 7.83.0
+HUNSPELL_VERSION = 1.7.2
 LIBRESSL_VERSION = 3.6.1
 PDCURSES_VERSION = 3.9
 
@@ -37,6 +39,7 @@ Q = @
 MACHINE = x64
 NAME_libcharset = libcharset-1
 NAME_libcrypto = crypto-50
+NAME_libhunspell = libhunspell-1.7-0
 NAME_libiconv = libiconv-2
 NAME_libidn = libidn-12
 NAME_libintl = libintl-8
@@ -44,12 +47,14 @@ NAME_libssl = ssl-53
 
 LDFLAGS = -LIBPATH:curl-$(CURL_VERSION)/$(MACHINE)\
 	-LIBPATH:gnu-bundle-$(GNU_BUNDLE_DATE)/$(MACHINE)\
+	-LIBPATH:hunspell-$(HUNSPELL_VERSION)/$(MACHINE)\
 	-LIBPATH:libressl-$(LIBRESSL_VERSION)-windows/$(MACHINE)\
 	-LIBPATH:pdcurses-$(PDCURSES_VERSION)/$(MACHINE)\
 	-NODEFAULTLIB:MSVCRTD
 
 LDLIBS = $(NAME_libcharset).lib\
 	$(NAME_libcrypto).lib\
+	$(NAME_libhunspell).lib\
 	$(NAME_libiconv).lib\
 	$(NAME_libidn).lib\
 	$(NAME_libintl).lib\

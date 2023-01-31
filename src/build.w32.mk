@@ -69,6 +69,7 @@ fetch_and_expand:
 	cscript $(SRC_DIR)get_file.js
 	expand curl-$(CURL_VERSION).cab "-F:*" .
 	expand gnu-bundle-$(GNU_BUNDLE_DATE).cab "-F:*" .
+	expand hunspell-$(HUNSPELL_VERSION).cab "-F:*" .
 	expand libressl-$(LIBRESSL_VERSION)-windows.cab "-F:*" .
 	expand pdcurses-$(PDCURSES_VERSION).cab "-F:*" .
 	expand swirc-locales-$(LOCALES_SNAP).cab "-F:*" .
