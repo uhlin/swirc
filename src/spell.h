@@ -2,6 +2,9 @@
 #define SPELL_H
 
 __SWIRC_BEGIN_DECLS
+extern const char g_aff_suffix[];
+extern const char g_dic_suffix[];
+
 void spell_init(void);
 void spell_deinit(void);
 
