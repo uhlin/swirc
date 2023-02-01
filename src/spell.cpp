@@ -20,6 +20,27 @@ static Hunhandle *hh = nullptr;
 void
 spell_init(void)
 {
+	std::string aff("");
+	std::string dic("");
+
+	if (config_bool("spell_syswide", true)) {
+#if defined(UNIX)
+		aff.append(HUNSPELL_PATH);
+		dic.append(HUNSPELL_PATH);
+#elif defined(WIN32)
+		aff.append(g_home_dir);
+		dic.append(g_home_dir);
+#endif
+	} else {
+		aff.append(g_home_dir);
+		dic.append(g_home_dir);
+	}
+
+	aff.append(SLASH).append(Config("spell_lang")).append(g_aff_suffix);
+	dic.append(SLASH).append(Config("spell_lang")).append(g_dic_suffix);
+
+	if ((hh = Hunspell_create(aff.c_str(), dic.c_str())) == nullptr)
+		printtext_print("err", "%s: error", __func__);
 }
 
 void
