@@ -52,3 +52,18 @@ spell_deinit(void)
 		Hunspell_destroy(hh);
 	hh = nullptr;
 }
+
+bool
+spell_word(const char *word)
+{
+	if (hh == nullptr)
+		return false;
+	return (Hunspell_spell(hh, word) != 0 ? true : false);
+}
+
+bool
+spell_wide_word(const wchar_t *word)
+{
+	UNUSED_PARAM(word);
+	return false;
+}
