@@ -17,6 +17,8 @@ cat <<EOF >${HDRPATH}
 #define SWIRC_BTD_PATH "${PREFIX}/share/locale"
 #define SWIRC_ICON_PATH "${PREFIX}/share/swirc/swirc-royal.png"
 
+#define HUNSPELL_PATH "${PREFIX}/share/hunspell"
+
 #define LC_MSGS_DE	"${PREFIX}/share/locale/de/LC_MESSAGES/swirc.mo"
 #define LC_MSGS_FI	"${PREFIX}/share/locale/fi/LC_MESSAGES/swirc.mo"
 #define LC_MSGS_FR	"${PREFIX}/share/locale/fr/LC_MESSAGES/swirc.mo"
