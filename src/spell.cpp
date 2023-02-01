@@ -39,6 +39,8 @@ spell_init(void)
 	aff.append(SLASH).append(Config("spell_lang")).append(g_aff_suffix);
 	dic.append(SLASH).append(Config("spell_lang")).append(g_dic_suffix);
 
+	if (hh)
+		Hunspell_destroy(hh);
 	if ((hh = Hunspell_create(aff.c_str(), dic.c_str())) == nullptr)
 		printtext_print("err", "%s: error", __func__);
 }
