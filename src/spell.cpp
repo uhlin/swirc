@@ -17,6 +17,41 @@ const char g_dic_suffix[] = ".dic";
 
 static Hunhandle *hh = nullptr;
 
+suggestion::suggestion()
+{
+	this->word = nullptr;
+	this->wide_word = nullptr;
+}
+
+suggestion::suggestion(const char *word)
+{
+	UNUSED_PARAM(word);
+}
+
+suggestion::~suggestion()
+{
+	if (this->word) {
+		free(this->word);
+		this->word = nullptr;
+	}
+	if (this->wide_word) {
+		free(this->wide_word);
+		this->wide_word = nullptr;
+	}
+}
+
+const char *
+suggestion::get_word(void)
+{
+	return (this->word);
+}
+
+const wchar_t *
+suggestion::get_wide_word(void)
+{
+	return (this->wide_word);
+}
+
 void
 spell_init(void)
 {
