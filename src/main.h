@@ -8,6 +8,12 @@
 
 #include <stdio.h> /* FILE */
 
+#if defined(UNIX)
+#define DEV_NULL "/dev/null"
+#elif defined(WIN32)
+#define DEV_NULL "nul"
+#endif
+
 struct locale_info {
 	char	*lang_and_territory;
 	char	*codeset;
