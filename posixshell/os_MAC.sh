@@ -29,5 +29,8 @@ EOF
 	if [ -z ${CC+x} ]; then
 		CC=clang
 	fi
+	if [ -z ${CXX+x} ]; then
+		CXX=clang++
+	fi
 	set_common
 }

@@ -27,5 +27,8 @@ EOF
 	if [ -z ${CC+x} ]; then
 		CC=cc
 	fi
+	if [ -z ${CXX+x} ]; then
+		CXX=c++
+	fi
 	set_common
 }

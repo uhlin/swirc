@@ -34,5 +34,8 @@ EOF
 	if [ -z ${CC+x} ]; then
 		CC=suncc
 	fi
+	if [ -z ${CXX+x} ]; then
+		CXX=sunCC
+	fi
 	set_common
 }
