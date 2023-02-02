@@ -11,6 +11,7 @@ SHARED_FLAGS=-DLINUX=1\\
 	-D_POSIX_C_SOURCE=200809L\\
 	-D_XOPEN_SOURCE=500\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
+	-I/usr/local/include\\
 	-O2\\
 	-Wall\\
 	-fstack-protector-strong\\

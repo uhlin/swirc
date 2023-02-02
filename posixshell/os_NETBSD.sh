@@ -7,6 +7,7 @@ os_NETBSD () {
 SHARED_FLAGS=-DBSD=1\\
 	-DUNIX=1\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
+	-I/usr/local/include\\
 	-I/usr/pkg/include/ncursesw\\
 	-I/usr/pkg/include\\
 	-Wall

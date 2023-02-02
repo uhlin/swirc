@@ -9,6 +9,7 @@ SHARED_FLAGS=-DHURD=1\\
 	-DUNIX=1\\
 	-D_FORTIFY_SOURCE=2\\
 	-D_GNU_SOURCE=1\\
+	-I/usr/local/include\\
 	-O2\\
 	-Wall\\
 	-fstack-protector-strong\\

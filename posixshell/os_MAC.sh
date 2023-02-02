@@ -9,6 +9,7 @@ SHARED_FLAGS=-DNCURSES_OPAQUE=0\\
 	-DOS_X=1\\
 	-DUNIX=1\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
+	-I/usr/local/include\\
 	-I/usr/local/opt/libressl/include\\
 	-O2\\
 	-Wall\\
