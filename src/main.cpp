@@ -643,6 +643,8 @@ main(int argc, char *argv[])
 	term_init();
 	nestHome_init();
 
+	if ((g_dev_null = xfopen(DEV_NULL, "w")) == NULL)
+		debug("dev null error");
 #if WIN32
 	if (pgm)
 		debug("_get_pgmptr: \"%s\"", pgm);
