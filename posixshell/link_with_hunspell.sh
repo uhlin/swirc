@@ -41,8 +41,8 @@ EOF
 
 	printf "checking for hunspell..."
 
-	${CXX} ${CXXFLAGS} ${_includes%%/hunspell} -Werror "$_srcfile" -o \
-	    "$_out" ${LDFLAGS} ${_libpath} ${_libs} >/dev/null 2>&1
+	${CXX} ${CXXFLAGS} ${_includes%%/hunspell} "$_srcfile" -o \
+	    "$_out" ${LDFLAGS} ${_libpath} ${_libs}
 
 	if [ $? -eq 0 ]; then
 		echo "yes"
