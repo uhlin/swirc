@@ -31,6 +31,7 @@
 
 #include <hunspell/hunspell.h>
 
+#include <clocale>
 #include <stdexcept>
 #include <string>
 
