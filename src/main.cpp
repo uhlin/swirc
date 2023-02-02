@@ -88,6 +88,7 @@ chararray_t	g_swircYear	= "2012-2023";
 chararray_t	g_swircAuthor	= "Markus Uhlin";
 chararray_t	g_swircWebAddr	= "https://www.nifty-networks.net/swirc/";
 
+FILE		*g_dev_null = NULL;
 char		*g_progname = const_cast<char *>("");
 long int	 g_pid = -1;
 

@@ -6,6 +6,8 @@
 #include <vector>
 #endif
 
+#include <stdio.h> /* FILE */
+
 struct locale_info {
 	char	*lang_and_territory;
 	char	*codeset;
@@ -60,6 +62,7 @@ extern chararray_t	g_swircYear;
 extern chararray_t	g_swircAuthor;
 extern chararray_t	g_swircWebAddr;
 
+extern FILE *g_dev_null;
 extern char *g_progname;
 extern long int g_pid;
 
