@@ -88,11 +88,11 @@ chararray_t	g_swircYear	= "2012-2023";
 chararray_t	g_swircAuthor	= "Markus Uhlin";
 chararray_t	g_swircWebAddr	= "https://www.nifty-networks.net/swirc/";
 
-char *g_progname = const_cast<char *>("");
-long int g_pid = -1;
+char		*g_progname = const_cast<char *>("");
+long int	 g_pid = -1;
 
-SETLOCALE_FN xsetlocale = NULL;
-char g_locale[200] = { '\0' };
+SETLOCALE_FN	 xsetlocale = NULL;
+char		 g_locale[200] = { '\0' };
 
 std::vector<std::string> g_join_list;
 

@@ -63,8 +63,8 @@ extern chararray_t	g_swircWebAddr;
 extern char *g_progname;
 extern long int g_pid;
 
-extern SETLOCALE_FN xsetlocale;
-extern char g_locale[];
+extern SETLOCALE_FN	 xsetlocale;
+extern char		 g_locale[];
 
 #ifdef __cplusplus
 extern std::vector<std::string> g_join_list;
