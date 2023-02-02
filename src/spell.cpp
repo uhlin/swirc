@@ -30,7 +30,41 @@ suggestion::suggestion()
 
 suggestion::suggestion(const char *word)
 {
-	UNUSED_PARAM(word);
+	char			*lang, *encoding;
+	std::string		 orig_locale("");
+	std::string		 tmp_locale("");
+	struct locale_info	*li;
+
+	this->word = nullptr;
+	this->wide_word = nullptr;
+
+	if (word == nullptr || strings_match(word, ""))
+		throw std::runtime_error("no word");
+
+	li = get_locale_info(LC_CTYPE);
+	if (li->lang_and_territory == nullptr || li->codeset == nullptr) {
+		free_locale_info(li);
+		throw std::runtime_error("get locale info error");
+	} else if ((encoding = Hunspell_get_dic_encoding(hh)) == nullptr) {
+		free_locale_info(li);
+		throw std::runtime_error("get dic encoding error");
+	}
+
+	lang = li->lang_and_territory;
+	(void) orig_locale.assign(lang).append(".").append(li->codeset);
+	(void) tmp_locale.assign(lang).append(".").append(encoding);
+	free_locale_info(li);
+
+	if (xsetlocale(LC_CTYPE, tmp_locale.c_str()) == nullptr)
+		debug("temporary locale error");
+	const size_t size = strlen(word) + 1;
+	this->wide_word = static_cast<wchar_t *>(xcalloc(size,
+	    sizeof(wchar_t)));
+	if (xmbstowcs(this->wide_word, word, size) == g_conversion_failed)
+		BZERO(this->wide_word, size);
+	if (xsetlocale(LC_CTYPE, orig_locale.c_str()) == nullptr)
+		debug("original locale error");
+	this->word = sw_strdup(word);
 }
 
 suggestion::~suggestion()
