@@ -6,7 +6,8 @@
 #
 
 link_with_hunspell () {
-	local _tmpfile _srcfile _out _libs
+	local _tmpfile _srcfile _out
+	local _includes _libs
 
 	printf "creating temp file..."
 	_tmpfile=$(mktemp) || { echo "error"; exit 1; }
@@ -14,7 +15,6 @@ link_with_hunspell () {
 
 	_srcfile="${_tmpfile}.cpp"
 	_out="${_tmpfile}.out"
-	_libs="$(pkg-config --libs-only-l hunspell)"
 	cat <<EOF >"$_srcfile"
 #include <hunspell/hunspell.hxx>
 
@@ -39,16 +39,22 @@ EOF
 		exit 1
 	fi
 
+	_includes="$(pkg-config --cflags-only-I hunspell)"
+	_libs="$(pkg-config --libs-only-l hunspell)"
+
 	printf "checking for hunspell..."
 
-	${CXX} ${CXXFLAGS} -Werror "$_srcfile" -o "$_out" ${LDFLAGS} ${_libs} \
-	    >/dev/null 2>&1
+	${CXX} ${CXXFLAGS} ${_includes%%/hunspell} -Werror "$_srcfile" -o \
+	    "$_out" ${LDFLAGS} ${_libs} >/dev/null 2>&1
 
 	if [ $? -eq 0 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE
 CFLAGS += -DHAVE_HUNSPELL=1
+CFLAGS += ${_includes%%/hunspell}
+
 CXXFLAGS += -DHAVE_HUNSPELL=1
+CXXFLAGS += ${_includes%%/hunspell}
 
 LDLIBS += ${_libs}
 EOF
