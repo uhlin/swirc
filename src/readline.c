@@ -50,6 +50,7 @@
 #include "readline.h"
 #include "readlineAPI.h"
 #include "readlineTabCompletion.h"
+#include "spell.h"
 #include "statusbar.h"
 #include "strHand.h"
 #include "terminal.h"
@@ -801,6 +802,8 @@ report_wheel_events(void)
 void
 readline_init(void)
 {
+	spell_init();
+
 	g_readline_pos = xcalloc(sizeof *g_readline_pos, 1);
 	g_readline_pos->x = -1;
 	g_readline_pos->y = -1;
@@ -820,6 +823,8 @@ readline_init(void)
 void
 readline_deinit(void)
 {
+	spell_deinit();
+
 	free(g_readline_pos);
 	g_readline_pos = NULL;
 
