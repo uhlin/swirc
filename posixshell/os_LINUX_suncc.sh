@@ -23,7 +23,9 @@ CC=suncc
 CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=sunCC
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
-LDFLAGS=-xannotate -xprevise
+LDFLAGS=-L/usr/local/lib\\
+	-xannotate\\
+	-xprevise
 LDLIBS=-lcrypto\\
 	-lcurl\\
 	-lncursesw\\

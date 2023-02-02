@@ -18,7 +18,8 @@ CC=clang
 CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=clang++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
-LDFLAGS=-L/usr/local/opt/libressl/lib
+LDFLAGS=-L/usr/local/lib\\
+	-L/usr/local/opt/libressl/lib
 LDLIBS=-lcrypto\\
 	-lcurl\\
 	-lncurses\\

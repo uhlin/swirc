@@ -20,7 +20,8 @@ CFLAGS=\$(SHARED_FLAGS) -std=c11\\
 	-Wsign-compare -Wstrict-prototypes
 CXX=g++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
-LDFLAGS=-Wl,-z,now\\
+LDFLAGS=-L/usr/local/lib\\
+	-Wl,-z,now\\
 	-Wl,-z,relro
 LDLIBS=-lcrypto\\
 	-lcurl\\

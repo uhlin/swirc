@@ -15,7 +15,8 @@ CC=cc
 CFLAGS=\$(SHARED_FLAGS) -std=c11
 CXX=c++
 CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
-LDFLAGS=-L/usr/pkg/lib\\
+LDFLAGS=-L/usr/local/lib\\
+	-L/usr/pkg/lib\\
 	-Wl,-rpath,/usr/pkg/lib
 LDLIBS=-lcrypto\\
 	-lcurl\\
