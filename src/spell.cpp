@@ -2,12 +2,17 @@
 
 #include <hunspell/hunspell.h>
 
+#include <stdexcept>
 #include <string>
 
 #include "config.h"
+#include "errHand.h"
+#include "libUtils.h"
+#include "main.h"
 #include "nestHome.h"
 #include "printtext.h"
 #include "spell.h"
+#include "strHand.h"
 #ifdef UNIX
 #include "swircpaths.h"
 #endif
