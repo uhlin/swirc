@@ -92,7 +92,7 @@ suggestion::suggestion(const char *word)
 	this->wide_word = static_cast<wchar_t *>(xcalloc(size,
 	    sizeof(wchar_t)));
 	if (xmbstowcs(this->wide_word, word, size - 1) == g_conversion_failed)
-		BZERO(this->wide_word, size);
+		this->wide_word[0] = L'\0';
 	if (xsetlocale(LC_CTYPE, orig_locale.c_str()) == nullptr)
 		debug("original locale error");
 	mutex_unlock(&g_puts_mutex);
