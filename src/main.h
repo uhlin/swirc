@@ -82,9 +82,10 @@ extern bool	g_ssl_verify_peer;
 
 extern struct cmdline_opt_values *g_cmdline_opts;
 
-struct locale_info *get_locale_info(int category);
-void free_locale_info(struct locale_info *);
-void cmdline_options_destroy(void);
+struct locale_info *
+	 get_locale_info(int category);
+void	 free_locale_info(struct locale_info *);
+void	 cmdline_options_destroy(void);
 __SWIRC_END_DECLS
 
 #endif
