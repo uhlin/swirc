@@ -16,15 +16,15 @@ link_with_hunspell () {
 	_srcfile="${_tmpfile}.cpp"
 	_out="${_tmpfile}.out"
 	cat <<EOF >"$_srcfile"
+#include <cstddef>
 #include <hunspell/hunspell.h>
-
-static Hunhandle *hh = nullptr;
 
 int
 main(void)
 {
-	hh = Hunspell_create("", "");
-	if (hh)
+	Hunhandle *hh;
+
+	if ((hh = Hunspell_create("", "")) != NULL)
 		Hunspell_destroy(hh);
 	return 0;
 }
