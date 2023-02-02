@@ -28,10 +28,5 @@ EOF
 	if [ -z ${CC+x} ]; then
 		CC=cc
 	fi
-	if [ -z ${CFLAGS+x} ]; then
-		CFLAGS="-I/usr/local/include"
-	fi
-	if [ -z ${LDFLAGS+x} ]; then
-		LDFLAGS="-L/usr/local/lib"
-	fi
+	set_common
 }

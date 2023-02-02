@@ -37,13 +37,5 @@ EOF
 	if [ -z ${CXX+x} ]; then
 		CXX=g++
 	fi
-	if [ -z ${CFLAGS+x} ]; then
-		CFLAGS=""
-	fi
-	if [ -z ${CXXFLAGS+x} ]; then
-		CXXFLAGS=""
-	fi
-	if [ -z ${LDFLAGS+x} ]; then
-		LDFLAGS=""
-	fi
+	set_common
 }

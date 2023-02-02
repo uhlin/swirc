@@ -13,6 +13,8 @@ MAKE_DEF_FILE=options.mk
 . "posixshell/link_with_hunspell.sh"
 . "posixshell/link_with_libiconv.sh"
 . "posixshell/link_with_libnotify.sh"
+. "posixshell/set_common.sh"
+
 . "posixshell/os_BSD.sh"
 . "posixshell/os_GNU.sh"
 . "posixshell/os_LINUX.sh"
