@@ -18,6 +18,9 @@ All notable changes to this project will be documented in this file.
 - It is no longer necessary to enable the option "Use Unicode UTF-8
   for worldwide language support", because this is now done in the
   exe-manifest, only for Swirc.
+- Upgraded to...
+  - [Curl](https://curl.se/) 7.87.0
+  - [LibreSSL](https://www.libressl.org/) 3.7.0
 
 ## [3.3.9] - 2023-01-07 ##
 - **Added** micro optimizations
