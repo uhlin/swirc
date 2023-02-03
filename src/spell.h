@@ -15,6 +15,8 @@ private:
 	char *word;
 	wchar_t *wide_word;
 };
+
+typedef suggestion *sugg_ptr;
 #endif
 
 __SWIRC_BEGIN_DECLS
