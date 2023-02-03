@@ -23,7 +23,7 @@ cov-int
 cppcheck-data
 curl-*
 gnu-bundle-*
-libressl-*-windows
+libressl-*
 options.mk
 pdcurses-*
 swirc
