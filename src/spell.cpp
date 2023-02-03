@@ -31,10 +31,13 @@
 
 #include <hunspell/hunspell.h>
 
+#include <climits>
 #include <clocale>
+#include <cwchar>
 #include <stdexcept>
 #include <string>
 
+#include "assertAPI.h"
 #include "config.h"
 #include "errHand.h"
 #include "libUtils.h"
