@@ -26,6 +26,9 @@ extern const char g_dic_suffix[];
 void spell_init(void);
 void spell_deinit(void);
 
+void spell_test1(const char *);
+void spell_test2(const wchar_t *);
+
 bool spell_word(const char *);
 bool spell_wide_word(const wchar_t *);
 __SWIRC_END_DECLS

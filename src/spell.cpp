@@ -162,6 +162,18 @@ spell_deinit(void)
 	hh = nullptr;
 }
 
+void
+spell_test1(const char *word)
+{
+	UNUSED_PARAM(word);
+}
+
+void
+spell_test2(const wchar_t *word)
+{
+	UNUSED_PARAM(word);
+}
+
 bool
 spell_word(const char *word)
 {
