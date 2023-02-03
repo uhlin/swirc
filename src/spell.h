@@ -2,6 +2,8 @@
 #define SPELL_H
 
 #ifdef __cplusplus
+#include <vector>
+
 class suggestion {
 public:
 	suggestion();
@@ -25,6 +27,10 @@ extern const char g_dic_suffix[];
 
 void spell_init(void);
 void spell_deinit(void);
+
+#ifdef __cplusplus
+std::vector<sugg_ptr> *spell_get_suggs(const char *, const wchar_t *);
+#endif
 
 void spell_test1(const char *);
 void spell_test2(const wchar_t *);

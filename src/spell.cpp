@@ -162,6 +162,14 @@ spell_deinit(void)
 	hh = nullptr;
 }
 
+std::vector<sugg_ptr> *
+spell_get_suggs(const char *mbs, const wchar_t *wcs)
+{
+	UNUSED_PARAM(mbs);
+	UNUSED_PARAM(wcs);
+	return nullptr;
+}
+
 void
 spell_test1(const char *word)
 {
