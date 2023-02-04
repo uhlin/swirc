@@ -211,7 +211,7 @@ spell_get_suggs(const char *mbs, const wchar_t *wcs)
 			return nullptr;
 		}
 		word[bytes_convert] = '\0';
-		if ((nsuggs = Hunspell_suggest(hh, &list, mbs)) < 1) {
+		if ((nsuggs = Hunspell_suggest(hh, &list, word)) < 1) {
 			free(word);
 			return nullptr;
 		}
