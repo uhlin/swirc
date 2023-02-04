@@ -279,7 +279,7 @@ spell_test2(const wchar_t *word)
 bool
 spell_word(const char *word)
 {
-	if (hh == nullptr)
+	if (hh == nullptr || word == nullptr)
 		return false;
 	return (Hunspell_spell(hh, word) != 0 ? true : false);
 }
