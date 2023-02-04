@@ -179,12 +179,10 @@ spell_destroy_suggs(std::vector<sugg_ptr> *suggs)
 {
 	if (suggs != nullptr) {
 		std::vector<sugg_ptr>::iterator it;
-		sugg_ptr ptr;
 
-		for (it = suggs->begin(); it != suggs->end(); ++it) {
-			ptr = *it;
-			delete ptr;
-		}
+		for (it = suggs->begin(); it != suggs->end(); ++it)
+			delete *it;
+
 		delete suggs;
 	}
 }
