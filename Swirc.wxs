@@ -111,6 +111,12 @@
 			    KeyPath="yes"
 			    Source="c:\out\swirc-x64\libcurl.dll" />
 		</Component>
+		<Component Guid="*" Id="libhunspell_dll" Win64="yes">
+			<File
+			    Id="libhunspell_dll_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\libhunspell-1.7-0.dll" />
+		</Component>
 		<Component Guid="*" Id="libiconv_dll" Win64="yes">
 			<File
 			    Id="libiconv_dll_file"
@@ -204,6 +210,7 @@
 
 		<ComponentRef Id="libcharset_dll" />
 		<ComponentRef Id="libcurl_dll" />
+		<ComponentRef Id="libhunspell_dll" />
 		<ComponentRef Id="libiconv_dll" />
 		<ComponentRef Id="libidn_dll" />
 		<ComponentRef Id="libintl_dll" />
