@@ -53,6 +53,8 @@
 
 #define MAXWORDLEN 50
 
+bool g_suggs_mode = false;
+
 const char	 g_aff_suffix[] = ".aff";
 const char	 g_dic_suffix[] = ".dic";
 

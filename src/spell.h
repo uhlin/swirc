@@ -24,6 +24,8 @@ typedef suggestion *sugg_ptr;
 #endif
 
 __SWIRC_BEGIN_DECLS
+extern bool g_suggs_mode;
+
 extern const char	 g_aff_suffix[];
 extern const char	 g_dic_suffix[];
 
