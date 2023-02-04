@@ -183,6 +183,26 @@ spell_destroy_suggs(std::vector<sugg_ptr> *suggs)
 	}
 }
 
+//lint -sem(get_mbs, r_null)
+static char *
+get_mbs(const wchar_t *wcs)
+{
+	char	*out;
+	size_t	 bytes_convert, size;
+
+	size		= size_product(wcslen(wcs) + 1, MB_LEN_MAX);
+	out		= static_cast<char *>(xmalloc(size));
+	bytes_convert	= wcstombs(out, wcs, size - 1);
+
+	if (bytes_convert == g_conversion_failed) {
+		free(out);
+		return nullptr;
+	}
+
+	out[bytes_convert] = '\0';
+	return out;
+}
+
 std::vector<sugg_ptr> *
 spell_get_suggs(const char *mbs, const wchar_t *wcs)
 {
@@ -199,24 +219,13 @@ spell_get_suggs(const char *mbs, const wchar_t *wcs)
 			return nullptr;
 	} else if (wcs) {
 		char	*word;
-		size_t	 bytes_convert, size;
 
 		if (wcscmp(wcs, L"") == STRINGS_MATCH ||
 		    wcslen(wcs) > MAXWORDLEN)
 			return nullptr;
 
-		size		= size_product(wcslen(wcs) + 1, MB_LEN_MAX);
-		word		= static_cast<char *>(xmalloc(size));
-		bytes_convert	= wcstombs(word, wcs, size - 1);
-
-		if (bytes_convert == g_conversion_failed) {
-			free(word);
-			return nullptr;
-		}
-
-		word[bytes_convert] = '\0';
-
-		if ((nsuggs = Hunspell_suggest(hh, &list, word)) < 1) {
+		if ((word = get_mbs(wcs)) == nullptr ||
+		    (nsuggs = Hunspell_suggest(hh, &list, word)) < 1) {
 			free(word);
 			return nullptr;
 		}
@@ -296,23 +305,15 @@ spell_wide_word(const wchar_t *word)
 {
 	bool	 ret;
 	char	*mbs;
-	size_t	 bytes_convert, size;
 
 	if (hh == nullptr || word == nullptr ||
 	    wcscmp(word, L"") == STRINGS_MATCH ||
 	    wcslen(word) > MAXWORDLEN)
 		return false;
 
-	size		= size_product(wcslen(word) + 1, MB_LEN_MAX);
-	mbs		= static_cast<char *>(xmalloc(size));
-	bytes_convert	= wcstombs(mbs, word, size - 1);
-
-	if (bytes_convert == g_conversion_failed) {
-		free(mbs);
+	if ((mbs = get_mbs(word)) == nullptr)
 		return false;
-	}
 
-	mbs[bytes_convert] = '\0';
 	ret = (Hunspell_spell(hh, mbs) != 0 ? true : false);
 	free(mbs);
 
