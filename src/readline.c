@@ -863,6 +863,7 @@ readline(const char *prompt)
 	case READLINE_PROCESS:
 		g_readline_loop = true;
 		g_resize_requested = false;
+		g_suggs_mode = false;
 		g_hist_next = false;
 		g_hist_prev = false;
 		ctx = new_session(prompt);
