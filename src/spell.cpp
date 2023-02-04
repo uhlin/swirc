@@ -50,8 +50,8 @@
 #include "swircpaths.h"
 #endif
 
-const char g_aff_suffix[] = ".aff";
-const char g_dic_suffix[] = ".dic";
+const char	 g_aff_suffix[] = ".aff";
+const char	 g_dic_suffix[] = ".dic";
 
 static Hunhandle *hh = nullptr;
 

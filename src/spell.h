@@ -22,11 +22,11 @@ typedef suggestion *sugg_ptr;
 #endif
 
 __SWIRC_BEGIN_DECLS
-extern const char g_aff_suffix[];
-extern const char g_dic_suffix[];
+extern const char	 g_aff_suffix[];
+extern const char	 g_dic_suffix[];
 
-void spell_init(void);
-void spell_deinit(void);
+void	 spell_init(void);
+void	 spell_deinit(void);
 
 #ifdef __cplusplus
 void spell_destroy_suggs(std::vector<sugg_ptr> *);
