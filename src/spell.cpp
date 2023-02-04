@@ -58,7 +58,10 @@ bool g_suggs_mode = false;
 const char	 g_aff_suffix[] = ".aff";
 const char	 g_dic_suffix[] = ".dic";
 
-static Hunhandle *hh = nullptr;
+static Hunhandle			*hh = nullptr;
+static std::vector<sugg_ptr>		*rl_suggs = nullptr;
+static std::vector<sugg_ptr>::iterator	 suggs_it;
+static std::wstring			 rl_word;
 
 suggestion::suggestion()
 {
