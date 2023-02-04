@@ -352,6 +352,17 @@ auto_complete_next_sugg(volatile struct readline_session_context *ctx)
 	suggs_it++;
 }
 
+static void
+print_suggestions(std::vector<sugg_ptr> *suggs)
+{
+	std::vector<sugg_ptr>::iterator it;
+
+	printtext_print(nullptr, "suggestions:");
+
+	for (it = suggs->begin(); it != suggs->end(); ++it)
+		printtext_print(nullptr, "  %ls", (*it)->get_wide_word());
+}
+
 void
 spell_word_readline(volatile struct readline_session_context *ctx)
 {
