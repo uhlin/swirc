@@ -287,6 +287,25 @@ spell_word(const char *word)
 bool
 spell_wide_word(const wchar_t *word)
 {
-	UNUSED_PARAM(word);
-	return false;
+	bool	 ret;
+	char	*mbs;
+	size_t	 bytes_convert, size;
+
+	if (hh == nullptr || word == nullptr)
+		return false;
+
+	size		= size_product(wcslen(word) + 1, MB_LEN_MAX);
+	mbs		= static_cast<char *>(xmalloc(size));
+	bytes_convert	= wcstombs(mbs, word, size - 1);
+
+	if (bytes_convert == g_conversion_failed) {
+		free(mbs);
+		return false;
+	}
+
+	mbs[bytes_convert] = '\0';
+	ret = (Hunspell_spell(hh, mbs) != 0 ? true : false);
+	free(mbs);
+
+	return ret;
 }
