@@ -141,8 +141,8 @@ suggestion::get_wide_word(void) const
 void
 spell_init(void)
 {
-	std::string aff("");
-	std::string dic("");
+	std::string	 aff("");
+	std::string	 dic("");
 
 	if (config_bool("spell_syswide", true)) {
 #if defined(UNIX)
@@ -262,8 +262,8 @@ spell_get_suggs(const char *mbs, const wchar_t *wcs)
 void
 spell_test1(const char *word)
 {
-	std::vector<sugg_ptr> *suggs;
-	std::vector<sugg_ptr>::iterator it;
+	std::vector<sugg_ptr>			*suggs;
+	std::vector<sugg_ptr>::iterator		 it;
 
 	printtext_print(nullptr, " -- %s is %s", word, (spell_word(word) ?
 	    "correct" : "incorrect"));
@@ -278,8 +278,8 @@ spell_test1(const char *word)
 void
 spell_test2(const wchar_t *word)
 {
-	std::vector<sugg_ptr> *suggs;
-	std::vector<sugg_ptr>::iterator it;
+	std::vector<sugg_ptr>			*suggs;
+	std::vector<sugg_ptr>::iterator		 it;
 
 	printtext_print(nullptr, " -- %ls is %s", word, (spell_wide_word(word) ?
 	    "correct" : "incorrect"));

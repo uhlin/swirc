@@ -12,12 +12,12 @@ public:
 	suggestion(const char *);
 	~suggestion();
 
-	const char *get_word(void) const;
-	const wchar_t *get_wide_word(void) const;
+	const char	*get_word(void) const;
+	const wchar_t	*get_wide_word(void) const;
 
 private:
-	char *word;
-	wchar_t *wide_word;
+	char		*word;
+	wchar_t		*wide_word;
 };
 
 typedef suggestion *sugg_ptr;
