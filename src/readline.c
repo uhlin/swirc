@@ -696,7 +696,7 @@ process(volatile struct readline_session_context *ctx)
 		case KEY_F(2):
 			spell_test1("particulary");
 			spell_test1("particularly");
-			spell_test2(L"särskiljt");
+			spell_test2(L"särskillt");
 			spell_test2(L"särskilt");
 			break;
 		case KEY_F(3):
