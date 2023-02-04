@@ -366,7 +366,43 @@ print_suggestions(std::vector<sugg_ptr> *suggs)
 void
 spell_word_readline(volatile struct readline_session_context *ctx)
 {
-	UNUSED_PARAM(ctx);
+	if (!g_suggs_mode) {
+		int pos;
+
+		if (ctx->bufpos < 1)
+			return;
+		pos = ctx->bufpos;
+
+		if ((ctx->buffer[pos] != L'\0' && ctx->buffer[pos] != L' ') ||
+		    !iswalpha(ctx->buffer[pos - 1]))
+			return;
+		while (pos != 0 && iswalpha(ctx->buffer[pos - 1]))
+			pos--;
+		rl_word.assign(&ctx->buffer[pos], ctx->bufpos - pos);
+
+		if (spell_wide_word(rl_word.c_str())) {
+			printtext_print("success", "%ls is correct",
+			    rl_word.c_str());
+			return;
+		}
+
+		printtext_print("err", "%ls is incorrect", rl_word.c_str());
+
+		if (rl_suggs)
+			spell_destroy_suggs(rl_suggs);
+		if ((rl_suggs = spell_get_suggs(nullptr, rl_word.c_str())) ==
+		    nullptr)
+			return;
+		print_suggestions(rl_suggs);
+		g_suggs_mode = true;
+		suggs_it = rl_suggs->begin();
+		return;
+	}
+
+	if (rl_suggs)
+		auto_complete_next_sugg(ctx);
+	else
+		err_log(EINVAL, "%s: readline suggestions null", __func__);
 }
 
 bool
