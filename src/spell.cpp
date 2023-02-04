@@ -204,18 +204,23 @@ spell_get_suggs(const char *mbs, const wchar_t *wcs)
 		if (wcscmp(wcs, L"") == STRINGS_MATCH ||
 		    wcslen(wcs) > MAXWORDLEN)
 			return nullptr;
-		size = size_product(wcslen(wcs) + 1, MB_LEN_MAX);
-		word = static_cast<char *>(xmalloc(size));
-		if ((bytes_convert = wcstombs(word, wcs, size - 1)) ==
-		    g_conversion_failed) {
+
+		size		= size_product(wcslen(wcs) + 1, MB_LEN_MAX);
+		word		= static_cast<char *>(xmalloc(size));
+		bytes_convert	= wcstombs(word, wcs, size - 1);
+
+		if (bytes_convert == g_conversion_failed) {
 			free(word);
 			return nullptr;
 		}
+
 		word[bytes_convert] = '\0';
+
 		if ((nsuggs = Hunspell_suggest(hh, &list, word)) < 1) {
 			free(word);
 			return nullptr;
 		}
+
 		free(word);
 	} else
 		sw_assert_not_reached();
