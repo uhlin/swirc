@@ -165,9 +165,58 @@ spell_deinit(void)
 std::vector<sugg_ptr> *
 spell_get_suggs(const char *mbs, const wchar_t *wcs)
 {
-	UNUSED_PARAM(mbs);
-	UNUSED_PARAM(wcs);
-	return nullptr;
+#define MAXWORDLEN 50
+	char**			 list;
+	int			 nsuggs;
+	std::vector<sugg_ptr>	*suggs;
+	sugg_ptr		 ptr;
+
+	if (mbs == nullptr && wcs == nullptr)
+		return nullptr;
+	else if (mbs) {
+		if (strcmp(mbs, "") == STRINGS_MATCH ||
+		    (nsuggs = Hunspell_suggest(hh, &list, mbs)) < 1)
+			return nullptr;
+	} else if (wcs) {
+		char	*word;
+		size_t	 bytes_convert, size;
+
+		if (wcscmp(wcs, L"") == STRINGS_MATCH ||
+		    wcslen(wcs) > MAXWORDLEN)
+			return nullptr;
+		size = size_product(wcslen(wcs) + 1, MB_LEN_MAX);
+		word = static_cast<char *>(xmalloc(size));
+		if ((bytes_convert = wcstombs(word, wcs, size - 1)) ==
+		    g_conversion_failed) {
+			free(word);
+			return nullptr;
+		}
+		word[bytes_convert] = '\0';
+		if ((nsuggs = Hunspell_suggest(hh, &list, mbs)) < 1) {
+			free(word);
+			return nullptr;
+		}
+		free(word);
+	} else
+		sw_assert_not_reached();
+
+	suggs = new std::vector<sugg_ptr>();
+
+	for (int i = 0; i < nsuggs; i++) {
+		try {
+			ptr = new suggestion(list[i]);
+			suggs->push_back(ptr);
+		} catch (const std::runtime_error &e) {
+			delete ptr;
+			debug("%s: %s", __func__, e.what());
+		} catch (...) {
+			delete ptr;
+			debug("%s: unknown error", __func__);
+		}
+	}
+
+	Hunspell_free_list(hh, &list, nsuggs);
+	return suggs;
 }
 
 void
