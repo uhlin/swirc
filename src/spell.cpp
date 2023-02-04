@@ -303,6 +303,21 @@ spell_word(const char *word)
 	return (Hunspell_spell(hh, word) != 0 ? true : false);
 }
 
+static void
+erase_word(volatile struct readline_session_context *ctx, const size_t len)
+{
+	for (size_t i = 0; i < len; i++)
+		readline_handle_backspace(ctx);
+}
+
+static void
+type_word(volatile struct readline_session_context *ctx,
+    const std::wstring &word)
+{
+	for (size_t i = 0; i < word.size(); i++)
+		readline_handle_key_exported(ctx, word.at(i));
+}
+
 void
 spell_word_readline(volatile struct readline_session_context *ctx)
 {
