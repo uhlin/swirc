@@ -55,7 +55,7 @@ do_work(volatile struct readline_session_context *ctx, const wchar_t *cmd,
 	const size_t slen = strlen(s);
 	size_t i;
 
-	while (ctx->n_insert != 0)
+	while (ctx->numins != 0)
 		readline_handle_backspace(ctx);
 	for (i = 0; i < cmdlen; i++)
 		readline_handle_key_exported(ctx, cmd[i]);
@@ -153,7 +153,7 @@ auto_complete_command(volatile struct readline_session_context *ctx,
 {
 	const size_t slen = strlen(s);
 
-	while (ctx->n_insert != 0)
+	while (ctx->numins != 0)
 		readline_handle_backspace(ctx);
 
 	readline_handle_key_exported(ctx, L'/');
@@ -168,7 +168,7 @@ auto_complete_channel_user(volatile struct readline_session_context *ctx,
 {
 	const size_t slen = strlen(s);
 
-	while (ctx->n_insert != 0)
+	while (ctx->numins != 0)
 		readline_handle_backspace(ctx);
 	for (size_t i = 0; i < slen; i++)
 		readline_handle_key_exported(ctx, btowc(s[i]));
@@ -492,11 +492,11 @@ init_mode_for_znc_cmds(volatile struct readline_session_context *ctx)
 
 static void
 init_mode_for_commands(volatile struct readline_session_context *ctx,
-    const bool n_insert_greater_than_one)
+    const bool numins_greater_than_one)
 {
 	char	*p = addrof(ctx->tc->search_var[1]);
 
-	if (!n_insert_greater_than_one || (ctx->tc->matches =
+	if (!numins_greater_than_one || (ctx->tc->matches =
 	    get_list_of_matching_commands(p)) == NULL) {
 		output_error("no magic");
 		return;
@@ -563,7 +563,7 @@ init_mode(volatile struct readline_session_context *ctx)
 	else if (!strncmp(get_search_var(ctx), "/znc ", 5))
 		init_mode_for_znc_cmds(ctx);
 	else if (ctx->tc->search_var[0] == '/')
-		init_mode_for_commands(ctx, (ctx->n_insert > 1));
+		init_mode_for_commands(ctx, (ctx->numins > 1));
 	else if (is_irc_channel(ACTWINLABEL))
 		init_mode_for_channel_users(ctx);
 }
@@ -571,7 +571,7 @@ init_mode(volatile struct readline_session_context *ctx)
 void
 readline_handle_tab(volatile struct readline_session_context *ctx)
 {
-	if (ctx->n_insert == 0 || ctx->insert_mode ||
+	if (ctx->numins == 0 || ctx->insert_mode ||
 	    buf_contains_disallowed_chars(ctx)) {
 		output_error("no magic");
 		readline_tab_comp_ctx_reset(ctx->tc);

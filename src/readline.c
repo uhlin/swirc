@@ -243,7 +243,7 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 
 		ptr = &ctx->buffer[ctx->bufpos--];
 		(void) wmemmove(ptr - 1, ptr, wcslen(ptr));
-		ctx->buffer[--ctx->n_insert] = 0L;
+		ctx->buffer[--ctx->numins] = 0L;
 
 		mutex_lock(&g_puts_mutex);
 		ret[0] = wmove(ctx->act, term_get_pos(ctx->act).cury,
@@ -266,7 +266,7 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 		 */
 
 		ctx->buffer[--ctx->bufpos] = 0L;
-		ctx->n_insert--;
+		ctx->numins--;
 
 		mutex_lock(&g_puts_mutex);
 		ret[0] = wmove(ctx->act, term_get_pos(ctx->act).cury,
@@ -302,7 +302,7 @@ case_key_dc(volatile struct readline_session_context *ctx)
 
 	ptr = &ctx->buffer[i];
 	(void) wmemmove(ptr - 1, ptr, wcslen(ptr));
-	ctx->buffer[--ctx->n_insert] = 0L;
+	ctx->buffer[--ctx->numins] = 0L;
 
 	mutex_lock(&g_puts_mutex);
 	ret[0] = wdelch(ctx->act);
@@ -469,7 +469,7 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc,
 		*ptr = wc;
 
 		ctx->bufpos++;
-		ctx->n_insert++;
+		ctx->numins++;
 
 		readline_winsch(ctx->act, wc);
 
@@ -483,7 +483,7 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc,
 	} else {
 		ctx->buffer[ctx->bufpos] = wc;
 		ctx->bufpos++;
-		ctx->n_insert++;
+		ctx->numins++;
 		readline_waddch(ctx->act, wc);
 	}
 
@@ -528,7 +528,7 @@ new_session(const char *prompt)
 	ctx->buffer      = xcalloc(readline_bufsize + 1, sizeof(wchar_t));
 	ctx->bufpos      = 0;
 	ctx->insert_mode = false;
-	ctx->n_insert    = 0;
+	ctx->numins      = 0;
 	ctx->no_bufspc   = false;
 	ctx->prompt      = sw_strdup(prompt);
 	ctx->prompt_size = (int) strlen(squeeze_text_deco(prompt_copy));
@@ -596,14 +596,14 @@ process(volatile struct readline_session_context *ctx)
 	do {
 		wint_t wc = 0L;
 
-		ctx->insert_mode = (ctx->bufpos != ctx->n_insert);
-		ctx->no_bufspc = (ctx->n_insert + 1 >= readline_bufsize);
+		ctx->insert_mode = (ctx->bufpos != ctx->numins);
+		ctx->no_bufspc = (ctx->numins + 1 >= readline_bufsize);
 
 		if (*buf_p == L'\0' && g_readline_pos != NULL) {
 			if (g_readline_pos->x != ctx->bufpos ||
-			    g_readline_pos->y != ctx->n_insert) {
+			    g_readline_pos->y != ctx->numins) {
 				g_readline_pos->x = ctx->bufpos;
-				g_readline_pos->y = ctx->n_insert;
+				g_readline_pos->y = ctx->numins;
 				statusbar_update_display_beta();
 				readline_top_panel();
 			}
@@ -629,7 +629,7 @@ process(volatile struct readline_session_context *ctx)
 			while (ctx->bufpos != 0) {
 				case_key_left(ctx);
 				ctx->insert_mode =
-				    (ctx->bufpos != ctx->n_insert);
+				    (ctx->bufpos != ctx->numins);
 			}
 
 			if (isInCirculationMode(ctx->tc))
@@ -640,7 +640,7 @@ process(volatile struct readline_session_context *ctx)
 			while (ctx->insert_mode) {
 				case_key_right(ctx);
 				ctx->insert_mode =
-				    (ctx->bufpos != ctx->n_insert);
+				    (ctx->bufpos != ctx->numins);
 			}
 
 			if (isInCirculationMode(ctx->tc))
@@ -780,8 +780,8 @@ process(volatile struct readline_session_context *ctx)
 
 	write_cmdprompt(ctx->act, "", 0);
 
-	if (ctx->n_insert > 0) {
-		ctx->buffer[ctx->n_insert] = 0L;
+	if (ctx->numins > 0) {
+		ctx->buffer[ctx->numins] = 0L;
 	} else {
 		session_destroy(ctx);
 		return NULL;

@@ -71,7 +71,7 @@ struct readline_session_context {
 	bool             no_bufspc;
 	char            *prompt;
 	int              bufpos;
-	int              n_insert;
+	int              numins;
 	int              prompt_size;
 	wchar_t         *buffer;
 };
