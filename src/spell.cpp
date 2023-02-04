@@ -321,6 +321,37 @@ type_word(volatile struct readline_session_context *ctx,
 		readline_handle_key_exported(ctx, word.at(i));
 }
 
+static void
+auto_complete_next_sugg(volatile struct readline_session_context *ctx)
+{
+	std::wstring	 word(L"");
+	sugg_ptr	 ptr;
+
+	if (suggs_it == rl_suggs->end()) {
+		printtext_print("warn", "no more suggestions");
+		g_suggs_mode = false;
+		spell_destroy_suggs(rl_suggs);
+		rl_suggs = nullptr;
+		return;
+	}
+
+	if (!rl_word.empty())
+		word.assign(rl_word);
+	else {
+		ptr = *(suggs_it - 1);
+		word.assign(ptr->get_wide_word());
+	}
+
+	erase_word(ctx, word.size());
+	if (!rl_word.empty())
+		rl_word.assign(L"");
+
+	ptr = *suggs_it;
+	word.assign(ptr->get_wide_word());
+	type_word(ctx, word);
+	suggs_it++;
+}
+
 void
 spell_word_readline(volatile struct readline_session_context *ctx)
 {
