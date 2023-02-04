@@ -4,11 +4,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added a SOCKS proxy client
 - Added destruction of null bytes on receive where appropriate
+- Added spelling support with Hunspell
 - Added the following config options:
   - `socks` (bool)
   - `socks_atyp` (int)
   - `socks_host` (string)
   - `socks_port` (string)
+  - `spell` (bool)
+  - `spell_lang` (string)
+  - `spell_syswide` (bool)
 - Added usage of `emplace_back()`
 - Fixed possible crashes
 
