@@ -267,8 +267,8 @@ spell_test1(const char *word)
 
 	printtext_print(nullptr, " -- %s is %s", word, (spell_word(word) ?
 	    "correct" : "incorrect"));
-	suggs = spell_get_suggs(word, nullptr);
-	if (suggs != nullptr) {
+
+	if ((suggs = spell_get_suggs(word, nullptr)) != nullptr) {
 		for (it = suggs->begin(); it != suggs->end(); ++it)
 			printtext_print(nullptr, "%s", (*it)->get_word());
 		spell_destroy_suggs(suggs);
@@ -283,8 +283,8 @@ spell_test2(const wchar_t *word)
 
 	printtext_print(nullptr, " -- %ls is %s", word, (spell_wide_word(word) ?
 	    "correct" : "incorrect"));
-	suggs = spell_get_suggs(nullptr, word);
-	if (suggs != nullptr) {
+
+	if ((suggs = spell_get_suggs(nullptr, word)) != nullptr) {
 		for (it = suggs->begin(); it != suggs->end(); ++it)
 			printtext_print(nullptr, "%ls", (*it)->get_wide_word());
 		spell_destroy_suggs(suggs);
