@@ -237,7 +237,20 @@ spell_get_suggs(const char *mbs, const wchar_t *wcs)
 void
 spell_test1(const char *word)
 {
-	UNUSED_PARAM(word);
+	std::vector<sugg_ptr> *suggs;
+	std::vector<sugg_ptr>::iterator it;
+	sugg_ptr ptr;
+
+	printtext_print(nullptr, " -- %s is %s", word, (spell_word(word) ?
+	    "correct" : "incorrect"));
+	suggs = spell_get_suggs(word, nullptr);
+	if (suggs != nullptr) {
+		for (it = suggs->begin(); it != suggs->end(); ++it) {
+			ptr = *it;
+			printtext_print(nullptr, "%s", ptr->get_word());
+		}
+		spell_destroy_suggs(suggs);
+	}
 }
 
 void
