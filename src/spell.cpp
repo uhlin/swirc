@@ -119,13 +119,13 @@ suggestion::~suggestion()
 }
 
 const char *
-suggestion::get_word(void)
+suggestion::get_word(void) const
 {
 	return (this->word);
 }
 
 const wchar_t *
-suggestion::get_wide_word(void)
+suggestion::get_wide_word(void) const
 {
 	return (this->wide_word);
 }

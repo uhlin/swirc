@@ -10,8 +10,8 @@ public:
 	suggestion(const char *);
 	~suggestion();
 
-	const char *get_word(void);
-	const wchar_t *get_wide_word(void);
+	const char *get_word(void) const;
+	const wchar_t *get_wide_word(void) const;
 
 private:
 	char *word;
