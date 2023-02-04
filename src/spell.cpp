@@ -300,6 +300,12 @@ spell_word(const char *word)
 	return (Hunspell_spell(hh, word) != 0 ? true : false);
 }
 
+void
+spell_word_readline(volatile struct readline_session_context *ctx)
+{
+	UNUSED_PARAM(ctx);
+}
+
 bool
 spell_wide_word(const wchar_t *word)
 {
