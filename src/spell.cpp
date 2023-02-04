@@ -341,7 +341,7 @@ auto_complete_next_sugg(volatile struct readline_session_context *ctx)
 	ptr = *suggs_it;
 	word.assign(ptr->get_wide_word());
 	type_word(ctx, word);
-	suggs_it++;
+	++suggs_it;
 }
 
 static void
