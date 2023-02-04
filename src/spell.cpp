@@ -280,7 +280,8 @@ spell_test2(const wchar_t *word)
 bool
 spell_word(const char *word)
 {
-	if (hh == nullptr || word == nullptr)
+	if (hh == nullptr || word == nullptr ||
+	    strcmp(word, "") == STRINGS_MATCH)
 		return false;
 	return (Hunspell_spell(hh, word) != 0 ? true : false);
 }
@@ -292,7 +293,9 @@ spell_wide_word(const wchar_t *word)
 	char	*mbs;
 	size_t	 bytes_convert, size;
 
-	if (hh == nullptr || word == nullptr)
+	if (hh == nullptr || word == nullptr ||
+	    wcscmp(word, L"") == STRINGS_MATCH ||
+	    wcslen(word) > MAXWORDLEN)
 		return false;
 
 	size		= size_product(wcslen(word) + 1, MB_LEN_MAX);
