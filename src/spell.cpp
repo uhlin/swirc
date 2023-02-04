@@ -264,16 +264,13 @@ spell_test1(const char *word)
 {
 	std::vector<sugg_ptr> *suggs;
 	std::vector<sugg_ptr>::iterator it;
-	sugg_ptr ptr;
 
 	printtext_print(nullptr, " -- %s is %s", word, (spell_word(word) ?
 	    "correct" : "incorrect"));
 	suggs = spell_get_suggs(word, nullptr);
 	if (suggs != nullptr) {
-		for (it = suggs->begin(); it != suggs->end(); ++it) {
-			ptr = *it;
-			printtext_print(nullptr, "%s", ptr->get_word());
-		}
+		for (it = suggs->begin(); it != suggs->end(); ++it)
+			printtext_print(nullptr, "%s", (*it)->get_word());
 		spell_destroy_suggs(suggs);
 	}
 }
@@ -283,16 +280,13 @@ spell_test2(const wchar_t *word)
 {
 	std::vector<sugg_ptr> *suggs;
 	std::vector<sugg_ptr>::iterator it;
-	sugg_ptr ptr;
 
 	printtext_print(nullptr, " -- %ls is %s", word, (spell_wide_word(word) ?
 	    "correct" : "incorrect"));
 	suggs = spell_get_suggs(nullptr, word);
 	if (suggs != nullptr) {
-		for (it = suggs->begin(); it != suggs->end(); ++it) {
-			ptr = *it;
-			printtext_print(nullptr, "%ls", ptr->get_wide_word());
-		}
+		for (it = suggs->begin(); it != suggs->end(); ++it)
+			printtext_print(nullptr, "%ls", (*it)->get_wide_word());
 		spell_destroy_suggs(suggs);
 	}
 }
