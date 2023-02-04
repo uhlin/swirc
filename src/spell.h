@@ -29,6 +29,7 @@ void spell_init(void);
 void spell_deinit(void);
 
 #ifdef __cplusplus
+void spell_destroy_suggs(std::vector<sugg_ptr> *);
 std::vector<sugg_ptr> *spell_get_suggs(const char *, const wchar_t *);
 #endif
 
