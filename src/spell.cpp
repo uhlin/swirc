@@ -34,6 +34,7 @@
 #include <climits>
 #include <clocale>
 #include <cwchar>
+#include <cwctype>
 #include <stdexcept>
 #include <string>
 
