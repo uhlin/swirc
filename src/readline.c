@@ -694,10 +694,7 @@ process(volatile struct readline_session_context *ctx)
 			output_help();
 			break;
 		case KEY_F(2):
-			spell_test1("particulary");
-			spell_test1("particularly");
-			spell_test2(L"särskillt");
-			spell_test2(L"särskilt");
+			spell_word_readline(ctx);
 			break;
 		case KEY_F(3):
 			nicklist_scroll_up(g_active_window);
