@@ -50,6 +50,8 @@
 #include "swircpaths.h"
 #endif
 
+#define MAXWORDLEN 50
+
 const char	 g_aff_suffix[] = ".aff";
 const char	 g_dic_suffix[] = ".dic";
 
@@ -184,7 +186,6 @@ spell_destroy_suggs(std::vector<sugg_ptr> *suggs)
 std::vector<sugg_ptr> *
 spell_get_suggs(const char *mbs, const wchar_t *wcs)
 {
-#define MAXWORDLEN 50
 	char**			 list;
 	int			 nsuggs;
 	std::vector<sugg_ptr>	*suggs;
