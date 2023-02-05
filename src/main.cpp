@@ -90,6 +90,7 @@ chararray_t	g_swircWebAddr	= "https://www.nifty-networks.net/swirc/";
 
 FILE		*g_dev_null = NULL;
 char		*g_progname = const_cast<char *>("");
+char		*g_progpath = NULL;
 long int	 g_pid = -1;
 
 SETLOCALE_FN	 xsetlocale = NULL;
@@ -586,6 +587,7 @@ main(int argc, char *argv[])
 			return EXIT_FAILURE;
 		}
 		*cp = '\0';
+		g_progpath = sw_strdup(str);
 		while ((cp = strchr(str, SLASH_CHAR)) != NULL)
 			*cp = '/';
 	}
@@ -717,6 +719,7 @@ main(int argc, char *argv[])
 #endif
 
 	enter_io_loop();
+	free_and_null(&g_progpath);
 
 	/*
 	 * Reverse order...
