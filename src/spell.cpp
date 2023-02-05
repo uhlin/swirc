@@ -374,6 +374,9 @@ print_suggestions(std::vector<sugg_ptr> *suggs)
 void
 spell_word_readline(volatile struct readline_session_context *ctx)
 {
+	if (!config_bool("spell", true))
+		return;
+
 	if (!g_suggs_mode) {
 		int pos;
 
