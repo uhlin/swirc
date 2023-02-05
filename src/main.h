@@ -68,10 +68,10 @@ extern chararray_t	g_swircYear;
 extern chararray_t	g_swircAuthor;
 extern chararray_t	g_swircWebAddr;
 
-extern FILE *g_dev_null;
-extern char *g_progname;
-extern char *g_progpath;
-extern long int g_pid;
+extern FILE		*g_dev_null;
+extern char		*g_progname;
+extern char		*g_progpath;
+extern long int		 g_pid;
 
 extern int	 g_stderr_fd;
 extern int	 g_stdout_fd;
