@@ -29,7 +29,7 @@ extern bool g_suggs_mode;
 extern const char	 g_aff_suffix[];
 extern const char	 g_dic_suffix[];
 
-void	 spell_init(void);
+void	 spell_init(bool);
 void	 spell_deinit(void);
 
 #ifdef __cplusplus

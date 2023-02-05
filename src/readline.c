@@ -805,7 +805,7 @@ report_wheel_events(void)
 void
 readline_init(void)
 {
-	spell_init();
+	spell_init(true);
 
 	g_readline_pos = xcalloc(sizeof *g_readline_pos, 1);
 	g_readline_pos->x = -1;

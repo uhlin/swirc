@@ -41,6 +41,7 @@
 #include "assertAPI.h"
 #include "config.h"
 #include "errHand.h"
+#include "filePred.h"
 #include "libUtils.h"
 #include "main.h"
 #include "nestHome.h"
@@ -140,7 +141,7 @@ suggestion::get_wide_word(void) const
 }
 
 void
-spell_init(void)
+spell_init(bool report_nonexistent)
 {
 	std::string	 aff("");
 	std::string	 dic("");
@@ -160,6 +161,17 @@ spell_init(void)
 
 	aff.append(SLASH).append(Config("spell_lang")).append(g_aff_suffix);
 	dic.append(SLASH).append(Config("spell_lang")).append(g_dic_suffix);
+
+	if (report_nonexistent) {
+		if (!is_regular_file(aff.c_str())) {
+			printtext_print("err", "%s: %s not found", __func__,
+			    aff.c_str());
+		}
+		if (!is_regular_file(dic.c_str())) {
+			printtext_print("err", "%s: %s not found", __func__,
+			    dic.c_str());
+		}
+	}
 
 	if (hh)
 		Hunspell_destroy(hh);
