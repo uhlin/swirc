@@ -58,8 +58,8 @@
 
 bool g_suggs_mode = false;
 
-const char	 g_aff_suffix[] = ".aff";
-const char	 g_dic_suffix[] = ".dic";
+MAYBE_UNUSED const char g_aff_suffix[] = ".aff";
+MAYBE_UNUSED const char g_dic_suffix[] = ".dic";
 
 #ifdef HAVE_HUNSPELL
 static Hunhandle			*hh = nullptr;
