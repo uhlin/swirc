@@ -3,7 +3,7 @@
 
 #include "readline.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus) && defined(HAVE_HUNSPELL)
 #include <vector>
 
 class suggestion {
@@ -29,6 +29,7 @@ extern bool g_suggs_mode;
 extern const char	 g_aff_suffix[];
 extern const char	 g_dic_suffix[];
 
+#ifdef HAVE_HUNSPELL
 void	 spell_init(bool);
 void	 spell_deinit(void);
 
@@ -44,6 +45,7 @@ void	 spell_test2(const wchar_t *);
 bool	 spell_word(const char *);
 void	 spell_word_readline(volatile struct readline_session_context *);
 bool	 spell_wide_word(const wchar_t *);
+#endif // HAVE_HUNSPELL
 __SWIRC_END_DECLS
 
 #endif

@@ -699,13 +699,18 @@ process(volatile struct readline_session_context *ctx)
 		case KEY_F(1):
 			output_help();
 			break;
-		case KEY_F(2):
+		case KEY_F(2): {
+#ifdef HAVE_HUNSPELL
 			if (!isInCirculationMode(ctx->tc))
 				spell_word_readline(ctx);
 			else
 				printtext_print("err", "Is in tab circulation "
 				    "mode");
+#else
+			printtext_print("err", "No Hunspell support!");
+#endif
 			break;
+		} /* ---------- F2 ---------- */
 		case KEY_F(3):
 			nicklist_scroll_up(g_active_window);
 			break;
@@ -816,7 +821,9 @@ report_wheel_events(void)
 void
 readline_init(void)
 {
+#ifdef HAVE_HUNSPELL
 	spell_init(true);
+#endif
 
 	g_readline_pos = xcalloc(sizeof *g_readline_pos, 1);
 	g_readline_pos->x = -1;
@@ -837,7 +844,9 @@ readline_init(void)
 void
 readline_deinit(void)
 {
+#ifdef HAVE_HUNSPELL
 	spell_deinit();
+#endif
 
 	free(g_readline_pos);
 	g_readline_pos = NULL;

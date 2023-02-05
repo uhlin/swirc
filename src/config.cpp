@@ -304,8 +304,12 @@ set_value_for_setting_ok_hook(const char *setting, const char *value)
 		readline_mouse_init();
 	else if (strings_match(setting, "spell_lang") ||
 	    strings_match(setting, "spell_syswide")) {
+#ifdef HAVE_HUNSPELL
 		spell_deinit();
 		spell_init(true);
+#else
+		/* null */;
+#endif
 	}
 	UNUSED_PARAM(value);
 }

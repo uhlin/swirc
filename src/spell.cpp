@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#ifdef HAVE_HUNSPELL
 #include <hunspell/hunspell.h>
 
 #include <climits>
@@ -51,6 +52,7 @@
 #ifdef UNIX
 #include "swircpaths.h"
 #endif
+#endif // HAVE_HUNSPELL
 
 #define MAXWORDLEN 50
 
@@ -59,6 +61,7 @@ bool g_suggs_mode = false;
 const char	 g_aff_suffix[] = ".aff";
 const char	 g_dic_suffix[] = ".dic";
 
+#ifdef HAVE_HUNSPELL
 static Hunhandle			*hh = nullptr;
 static std::vector<sugg_ptr>		*rl_suggs = nullptr;
 static std::vector<sugg_ptr>::iterator	 suggs_it;
@@ -437,3 +440,6 @@ spell_wide_word(const wchar_t *word)
 
 	return ret;
 }
+#else
+#pragma message("Consider installing Hunspell")
+#endif // HAVE_HUNSPELL
