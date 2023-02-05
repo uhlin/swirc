@@ -45,6 +45,7 @@
 #endif
 
 #if WIN32
+#include <io.h>
 #include <process.h> /* _getpid() */
 #endif
 
