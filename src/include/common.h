@@ -31,6 +31,12 @@
 #include "fallbackattrs.h"
 #endif
 
+#if defined(__cplusplus) && __cplusplus >= 201703L
+#define MAYBE_UNUSED [[maybe_unused]]
+#else
+#define MAYBE_UNUSED
+#endif
+
 #if defined(UNIX)
 #define SLASH "/"
 #elif defined(WIN32)
