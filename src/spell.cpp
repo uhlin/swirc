@@ -185,6 +185,8 @@ spell_init(bool report_nonexistent)
 void
 spell_deinit(void)
 {
+	g_suggs_mode = false;
+
 	if (hh)
 		Hunspell_destroy(hh);
 	hh = nullptr;
