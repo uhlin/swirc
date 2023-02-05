@@ -791,3 +791,16 @@ cmdline_options_destroy(void)
 
 	delete g_cmdline_opts;
 }
+
+void
+redir_stderr(void)
+{
+	g_stderr_fd = dup(fileno(stderr));
+	(void) dup2(fileno(g_dev_null), fileno(stderr));
+}
+
+void
+restore_stderr(void)
+{
+	(void) dup2(g_stderr_fd, fileno(stderr));
+}

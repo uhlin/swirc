@@ -99,6 +99,8 @@ struct locale_info *
 	 get_locale_info(int category);
 void	 free_locale_info(struct locale_info *);
 void	 cmdline_options_destroy(void);
+void	 redir_stderr(void);
+void	 restore_stderr(void);
 __SWIRC_END_DECLS
 
 #endif
