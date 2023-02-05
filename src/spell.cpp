@@ -149,8 +149,8 @@ spell_init(void)
 		aff.append(HUNSPELL_PATH);
 		dic.append(HUNSPELL_PATH);
 #elif defined(WIN32)
-		aff.append(g_home_dir);
-		dic.append(g_home_dir);
+		aff.append(g_progpath ? g_progpath : g_home_dir);
+		dic.append(g_progpath ? g_progpath : g_home_dir);
 #endif
 	} else {
 		aff.append(g_home_dir);
