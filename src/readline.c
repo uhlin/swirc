@@ -700,7 +700,11 @@ process(volatile struct readline_session_context *ctx)
 			output_help();
 			break;
 		case KEY_F(2):
-			spell_word_readline(ctx);
+			if (!isInCirculationMode(ctx->tc))
+				spell_word_readline(ctx);
+			else
+				printtext_print("err", "Is in tab circulation "
+				    "mode");
 			break;
 		case KEY_F(3):
 			nicklist_scroll_up(g_active_window);
