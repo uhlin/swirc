@@ -83,6 +83,7 @@ suggestion::suggestion(const char *word)
 		throw std::runtime_error("no word");
 
 	li = get_locale_info(LC_CTYPE);
+
 	if (li->lang_and_territory == nullptr || li->codeset == nullptr) {
 		free_locale_info(li);
 		throw std::runtime_error("get locale info error");
@@ -162,8 +163,11 @@ spell_init(void)
 
 	if (hh)
 		Hunspell_destroy(hh);
+
+	redir_stderr();
 	if ((hh = Hunspell_create(aff.c_str(), dic.c_str())) == nullptr)
 		printtext_print("err", "%s: error", __func__);
+	restore_stderr();
 }
 
 void
