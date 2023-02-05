@@ -94,6 +94,9 @@ char		*g_progname = const_cast<char *>("");
 char		*g_progpath = NULL;
 long int	 g_pid = -1;
 
+int	 g_stderr_fd = -1;
+int	 g_stdout_fd = -1;
+
 SETLOCALE_FN	 xsetlocale = NULL;
 char		 g_locale[200] = { '\0' };
 

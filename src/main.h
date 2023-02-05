@@ -73,6 +73,9 @@ extern char *g_progname;
 extern char *g_progpath;
 extern long int g_pid;
 
+extern int	 g_stderr_fd;
+extern int	 g_stdout_fd;
+
 extern SETLOCALE_FN	 xsetlocale;
 extern char		 g_locale[];
 
