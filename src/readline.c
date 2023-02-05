@@ -494,6 +494,7 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc,
 	if (check_reset) {
 		if (isInCirculationMode(ctx->tc))
 			readline_tab_comp_ctx_reset(ctx->tc);
+		g_suggs_mode = false;
 	}
 }
 
@@ -634,6 +635,7 @@ process(volatile struct readline_session_context *ctx)
 
 			if (isInCirculationMode(ctx->tc))
 				readline_tab_comp_ctx_reset(ctx->tc);
+			g_suggs_mode = false;
 			break;
 		} /* ---------- CTRL+A ---------- */
 		case CTRL_E: {
@@ -645,6 +647,7 @@ process(volatile struct readline_session_context *ctx)
 
 			if (isInCirculationMode(ctx->tc))
 				readline_tab_comp_ctx_reset(ctx->tc);
+			g_suggs_mode = false;
 			break;
 		} /* ---------- CTRL+E ---------- */
 		case CTRL_L:
@@ -672,6 +675,7 @@ process(volatile struct readline_session_context *ctx)
 
 			if (isInCirculationMode(ctx->tc))
 				readline_tab_comp_ctx_reset(ctx->tc);
+			g_suggs_mode = false;
 			break;
 		} /* ---------- KEY_LEFT ---------- */
 		case KEY_RIGHT:
@@ -680,6 +684,7 @@ process(volatile struct readline_session_context *ctx)
 
 			if (isInCirculationMode(ctx->tc))
 				readline_tab_comp_ctx_reset(ctx->tc);
+			g_suggs_mode = false;
 			break;
 		} /* ---------- KEY_RIGHT ---------- */
 		case KEY_BACKSPACE:
@@ -688,6 +693,7 @@ process(volatile struct readline_session_context *ctx)
 
 			if (isInCirculationMode(ctx->tc))
 				readline_tab_comp_ctx_reset(ctx->tc);
+			g_suggs_mode = false;
 			break;
 		} /* ---------- KEY_BACKSPACE ---------- */
 		case KEY_F(1):
@@ -740,6 +746,7 @@ process(volatile struct readline_session_context *ctx)
 
 			if (isInCirculationMode(ctx->tc))
 				readline_tab_comp_ctx_reset(ctx->tc);
+			g_suggs_mode = false;
 			break;
 		} /* ---------- KEY_DC ---------- */
 		case KEY_MOUSE:
