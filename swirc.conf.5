@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018-2023 Markus Uhlin. All rights reserved.
 .\"
-.Dd January 27, 2023
+.Dd February 5, 2023
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -447,6 +447,23 @@ SOCKS hostname.
 SOCKS port.
 The default is 9050 which is used by
 .Lk https://www.torproject.org/ Tor .
+.\" ----------------------------------------
+.\" SPELL
+.\" ----------------------------------------
+.It Sy spell Pq Em bool
+Use spelling?
+.\" ----------------------------------------
+.\" SPELL LANG
+.\" ----------------------------------------
+.It Sy spell_lang Pq Em string
+Spell language.
+The default is \fBen_US\fR.
+.\" ----------------------------------------
+.\" SPELL SYSWIDE
+.\" ----------------------------------------
+.It Sy spell_syswide Pq Em bool
+Where shall Swirc look for spelling dictionaries?
+(System wide or in the program settings dir.)
 .\" ----------------------------------------
 .\" SSL VERIFY PEER
 .\" ----------------------------------------
