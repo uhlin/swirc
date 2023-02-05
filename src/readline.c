@@ -564,6 +564,7 @@ output_help(void)
 	printtext(&ctx, "%s", _("PG DOWN    Scroll down"));
 	printtext(&ctx, "%s", _("Up arrow   History previous"));
 	printtext(&ctx, "%s", _("Down arrow History next"));
+	printtext(&ctx, "%s", _("F2         Spell word"));
 	printtext(&ctx, "%s", _("F3         Scroll nicklist up"));
 	printtext(&ctx, "%s", _("F4         Scroll nicklist down"));
 	printtext(&ctx, "%s", _("F11        Close window"));
