@@ -2,10 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added a SOCKS proxy client
-- Added destruction of null bytes on receive where appropriate
-- Added spelling support with Hunspell
-- Added the following config options:
+- **Added** a SOCKS proxy client
+- **Added** destruction of null bytes on receive where appropriate
+- **Added** spelling support with Hunspell
+- **Added** the following config options:
   - `socks` (bool)
   - `socks_atyp` (int)
   - `socks_host` (string)
@@ -13,16 +13,16 @@ All notable changes to this project will be documented in this file.
   - `spell` (bool)
   - `spell_lang` (string)
   - `spell_syswide` (bool)
-- Added usage of `emplace_back()`
-- Fixed possible crashes
+- **Added** usage of `emplace_back()`
+- **Fixed** possible crashes
 
 ### Windows ###
-- Fixed launch by toast. (COM appends the `-Embedding` flag to the
+- **Fixed** launch by toast. (COM appends the `-Embedding` flag to the
   args passed, which caused troubles.)
 - It is no longer necessary to enable the option "Use Unicode UTF-8
   for worldwide language support", because this is now done in the
   exe-manifest, only for Swirc.
-- Upgraded to...
+- **Upgraded to**...
   - [Curl](https://curl.se/) 7.87.0
   - [LibreSSL](https://www.libressl.org/) 3.7.0
 
