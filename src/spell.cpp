@@ -198,7 +198,7 @@ spell_deinit(void)
 void
 spell_destroy_suggs(std::vector<sugg_ptr> *suggs)
 {
-	if (suggs != nullptr) {
+	if (suggs) {
 		std::vector<sugg_ptr>::iterator it;
 
 		for (it = suggs->begin(); it != suggs->end(); ++it)
