@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-02-06 02:03+0100\n"
-"PO-Revision-Date: 2023-01-03 06:46+0100\n"
+"PO-Revision-Date: 2023-02-06 02:08+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1148,7 +1148,7 @@ msgstr "Down arrow Nästa kommando"
 
 #: ../src/readline.c:567
 msgid "F2         Spell word"
-msgstr ""
+msgstr "F2         Stava ord"
 
 #: ../src/readline.c:568
 msgid "F3         Scroll nicklist up"
