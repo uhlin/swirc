@@ -200,6 +200,13 @@ static usage_t exlist_usage = {
   "",
 };
 
+static usage_t fetchdic_usage = {
+  "usage: /fetchdic [lang]",
+  "",
+  "No help yet.",
+  "",
+};
+
 static usage_t group_usage = {
   N_("usage: /group <name>"),
   "",

@@ -5,6 +5,7 @@ OBJS = $(COMMANDS_DIR)ban.o\
 	$(COMMANDS_DIR)colormap.o\
 	$(COMMANDS_DIR)connect.o\
 	$(COMMANDS_DIR)echo.o\
+	$(COMMANDS_DIR)fetchdic.o\
 	$(COMMANDS_DIR)ignore.o\
 	$(COMMANDS_DIR)invite.o\
 	$(COMMANDS_DIR)jp.o\
