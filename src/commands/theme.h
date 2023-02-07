@@ -1,6 +1,8 @@
 #ifndef CMD_THEME_H
 #define CMD_THEME_H
 
+#include <stdio.h> /* FILE */
+
 #include "../textBuffer.h"
 
 typedef enum {
