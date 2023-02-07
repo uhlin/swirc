@@ -1,5 +1,5 @@
 /* commands/theme.c  --  management of themes on-the-fly
-   Copyright (C) 2017-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -507,24 +507,10 @@ cmd_theme(const char *data)
 	clean_up(url, db_path);
 }
 
-static bool
-got_hits(const char *search_var)
-{
-	for (size_t i = 0; i < ARRAY_SIZE(theme_cmds); i++) {
-		if (!strncmp(search_var, theme_cmds[i], strlen(search_var)))
-			return true;
-	}
-
-	return false;
-}
-
 PTEXTBUF
 get_list_of_matching_theme_cmds(const char *search_var)
 {
 	PTEXTBUF matches;
-
-	if (!got_hits(search_var))
-		return NULL;
 
 	matches = textBuf_new();
 
@@ -546,6 +532,11 @@ get_list_of_matching_theme_cmds(const char *search_var)
 				}
 			}
 		}
+	}
+
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
 	}
 
 	return matches;
