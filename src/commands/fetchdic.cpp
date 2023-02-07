@@ -60,7 +60,7 @@ public:
 	std::string	 author;
 	std::string	 license;
 
-	void	 fetch(void);
+	void	 fetch(void) const;
 };
 
 dictionary::dictionary()
@@ -104,7 +104,7 @@ dictionary::dictionary(const char *line)
 }
 
 void
-dictionary::fetch(void)
+dictionary::fetch(void) const
 {
 	std::string	 aff_file(g_home_dir);
 	std::string	 aff_url(this->url);
