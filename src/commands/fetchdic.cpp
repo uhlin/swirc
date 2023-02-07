@@ -4,11 +4,13 @@
 #include <string>
 #include <vector>
 
+#include "../filePred.h"
 #include "../interpreter.h"
 #include "../libUtils.h"
 #include "../main.h"
 #include "../nestHome.h"
 #include "../printtext.h"
+#include "../spell.h"
 #include "../strHand.h"
 #include "../theme.h"
 
