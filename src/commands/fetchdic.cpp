@@ -33,6 +33,7 @@
 #include <string>
 #include <vector>
 
+#include "../errHand.h"
 #include "../filePred.h"
 #include "../interpreter.h"
 #include "../libUtils.h"
@@ -230,4 +231,9 @@ cmd_fetchdic(const char *data)
 		dump_db(vec);
 	else
 		fetchdic(data, vec);
+
+	if (remove(tmp.c_str()) != 0) {
+		err_log(errno, "%s: failed to remove: %s", __func__,
+		    tmp.c_str());
+	}
 }
