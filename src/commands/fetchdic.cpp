@@ -137,7 +137,7 @@ read_db(const char *path, std::vector<dictionary> &vec)
 }
 
 /*
- * usage: /fetchdic [lang]
+ * usage: /fetchdic [name]
  */
 void
 cmd_fetchdic(const char *data)
