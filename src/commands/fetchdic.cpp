@@ -116,15 +116,21 @@ dictionary::fetch(void)
 	aff_url.append(this->name).append(g_aff_suffix);
 	dic_url.append(this->name).append(g_dic_suffix);
 
+	printtext_print(nullptr, "Fetching...");
 	url_to_file(aff_url.c_str(), aff_file.c_str());
 
 	if (is_regular_file(aff_file.c_str()))
 		printtext_print("success", "Fetched %s", aff_file.c_str());
+	else
+		printtext_print("err", "Error %s", g_aff_suffix);
 
+	printtext_print(nullptr, "Fetching...");
 	url_to_file(dic_url.c_str(), dic_file.c_str());
 
 	if (is_regular_file(dic_file.c_str()))
 		printtext_print("success", "Fetched %s", dic_file.c_str());
+	else
+		printtext_print("err", "Error %s", g_dic_suffix);
 }
 
 static void
