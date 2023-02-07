@@ -73,7 +73,6 @@ static stringarray_t theme_cmds = {
 static THEME_INFO theme_info_array[MAX_NO_THEMES];
 
 static void free_theme_info(PTHEME_INFO) PTR_ARGS_NONNULL;
-static void url_to_file(const char *, const char *) PTR_ARGS_NONNULL;
 static void install_theme(const char *) PTR_ARGS_NONNULL;
 static void set_theme(const char *) PTR_ARGS_NONNULL;
 
@@ -133,7 +132,7 @@ write_data(void *ptr, size_t size, size_t nmemb, void *stream)
 	return fwrite(ptr, size, nmemb, ((FILE *) stream));
 }
 
-static void
+void
 url_to_file(const char *url, const char *path)
 {
 	CURL		*curl_handle = NULL;
@@ -190,7 +189,7 @@ url_to_file(const char *url, const char *path)
 	    curl_easy_strerror(ret));
 }
 
-static bool
+bool
 get_next_line_from_file(FILE *fp, char **line)
 {
 	const int LINE_MAX_LEN = 2048;

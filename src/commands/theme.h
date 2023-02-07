@@ -31,6 +31,8 @@ typedef struct tagTHEME_INFO {
 __SWIRC_BEGIN_DECLS
 void		cmd_theme(const char *);
 PTEXTBUF	get_list_of_matching_theme_cmds(const char *);
+bool		get_next_line_from_file(FILE *, char **);
+void		url_to_file(const char *, const char *);
 __SWIRC_END_DECLS
 
 #endif
