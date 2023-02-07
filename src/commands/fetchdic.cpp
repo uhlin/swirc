@@ -47,7 +47,7 @@ dictionary::dictionary(const char *line)
 	char			*lang, *name, *date, *url;
 	char			*last = const_cast<char *>("");
 	char			*line_copy = sw_strdup(line);
-	static const char	 sep[] = ";";
+	static const char	 sep[] = "|";
 
 	if ((lang = strtok_r(line_copy, sep, &last)) == nullptr ||
 	    (name = strtok_r(nullptr, sep, &last)) == nullptr ||
