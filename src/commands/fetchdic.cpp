@@ -51,15 +51,15 @@ public:
 	dictionary();
 	explicit dictionary(const char *);
 
-	std::string lang;
-	std::string name;
-	std::string date;
-	std::string url;
+	std::string	 lang;
+	std::string	 name;
+	std::string	 date;
+	std::string	 url;
 
-	std::string author;
-	std::string license;
+	std::string	 author;
+	std::string	 license;
 
-	void fetch(void);
+	void	 fetch(void);
 };
 
 dictionary::dictionary()
