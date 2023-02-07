@@ -76,6 +76,24 @@ dictionary::dictionary(const char *line)
 void
 dictionary::fetch(void)
 {
+	std::string	 aff_file(g_home_dir);
+	std::string	 aff_url(this->url);
+	std::string	 dic_file(g_home_dir);
+	std::string	 dic_url(this->url);
+
+	aff_file.append(SLASH).append(this->name).append(g_aff_suffix);
+	dic_file.append(SLASH).append(this->name).append(g_dic_suffix);
+
+	aff_url.append(this->name).append(g_aff_suffix);
+	dic_url.append(this->name).append(g_dic_suffix);
+
+	url_to_file(aff_url.c_str(), aff_file.c_str());
+	url_to_file(dic_url.c_str(), dic_file.c_str());
+
+	if (is_regular_file(aff_file.c_str()))
+		printtext_print("success", "Fetched %s", aff_file.c_str());
+	if (is_regular_file(dic_file.c_str()))
+		printtext_print("success", "Fetched %s", dic_file.c_str());
 }
 
 static void
