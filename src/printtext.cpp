@@ -1313,6 +1313,12 @@ printtext_print(const char *what, const char *fmt, ...)
 
 	if (what == NULL)
 		/* null */;
+	else if (strings_match(what, "sp1"))
+		ctx->spec_type = TYPE_SPEC1;
+	else if (strings_match(what, "sp2"))
+		ctx->spec_type = TYPE_SPEC2;
+	else if (strings_match(what, "sp3"))
+		ctx->spec_type = TYPE_SPEC3;
 	else if (strings_match(what, "err"))
 		ctx->spec_type = TYPE_SPEC1_FAILURE;
 	else if (strings_match(what, "success"))
