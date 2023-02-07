@@ -10,6 +10,7 @@
 #include "../nestHome.h"
 #include "../printtext.h"
 #include "../strHand.h"
+#include "../theme.h"
 
 #include "fetchdic.h"
 #include "theme.h"
@@ -78,7 +79,16 @@ dictionary::fetch(void)
 static void
 dump_db(const std::vector<dictionary> &vec)
 {
-	UNUSED_PARAM(vec);
+	for (const dictionary &dic : vec) {
+		printtext_print("sp1", "----- %s%s%s -----",
+		    COLOR1, dic.lang.c_str(), TXT_NORMAL);
+		printtext_print("sp1", "name:     %s", dic.name.c_str());
+		printtext_print("sp1", "date:     %s", dic.date.c_str());
+		printtext_print("sp1", "url:      %s", dic.url.c_str());
+		printtext_print("sp1", "author:   %s", dic.author.c_str());
+		printtext_print("sp1", "license:  %s", dic.license.c_str());
+		printtext_print("sp1", " ");
+	}
 }
 
 static void
