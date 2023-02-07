@@ -1,4 +1,5 @@
 OTHER_FILES="
+dic_db
 mu170225.asc
 mu180520.asc
 mu190523.asc
