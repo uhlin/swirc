@@ -117,10 +117,12 @@ dictionary::fetch(void)
 	dic_url.append(this->name).append(g_dic_suffix);
 
 	url_to_file(aff_url.c_str(), aff_file.c_str());
-	url_to_file(dic_url.c_str(), dic_file.c_str());
 
 	if (is_regular_file(aff_file.c_str()))
 		printtext_print("success", "Fetched %s", aff_file.c_str());
+
+	url_to_file(dic_url.c_str(), dic_file.c_str());
+
 	if (is_regular_file(dic_file.c_str()))
 		printtext_print("success", "Fetched %s", dic_file.c_str());
 }
