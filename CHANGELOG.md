@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - **Added** a SOCKS proxy client
+- **Added** command `/fetchdic`
 - **Added** destruction of null bytes on receive where appropriate
 - **Added** spelling support with Hunspell
 - **Added** the following config options:
