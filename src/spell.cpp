@@ -39,6 +39,8 @@
 #include <stdexcept>
 #include <string>
 
+#include "commands/fetchdic.h"
+
 #include "assertAPI.h"
 #include "config.h"
 #include "errHand.h"
@@ -57,9 +59,6 @@
 #define MAXWORDLEN 50
 
 bool g_suggs_mode = false;
-
-MAYBE_UNUSED const char g_aff_suffix[] = ".aff";
-MAYBE_UNUSED const char g_dic_suffix[] = ".dic";
 
 #ifdef HAVE_HUNSPELL
 static Hunhandle			*hh = nullptr;

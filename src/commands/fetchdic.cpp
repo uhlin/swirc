@@ -47,6 +47,9 @@
 #include "fetchdic.h"
 #include "theme.h"
 
+const char	 g_aff_suffix[] = ".aff";
+const char	 g_dic_suffix[] = ".dic";
+
 class dictionary {
 public:
 	dictionary();

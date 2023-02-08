@@ -26,9 +26,6 @@ typedef suggestion *sugg_ptr;
 __SWIRC_BEGIN_DECLS
 extern bool g_suggs_mode;
 
-extern const char	 g_aff_suffix[];
-extern const char	 g_dic_suffix[];
-
 #ifdef HAVE_HUNSPELL
 void	 spell_init(bool);
 void	 spell_deinit(void);
