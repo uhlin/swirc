@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.3.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-02-08 17:59+0100\n"
-"PO-Revision-Date: 2023-02-06 02:08+0100\n"
+"PO-Revision-Date: 2023-02-08 18:11+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -232,9 +232,8 @@ msgstr ""
 "kanalen."
 
 #: ../src/include/commandhelp.h:204
-#, fuzzy
 msgid "usage: /fetchdic [name]"
-msgstr "användning: /topic [nytt ämne]"
+msgstr "användning: /fetchdic [namn]"
 
 #: ../src/include/commandhelp.h:206
 msgid ""
@@ -242,10 +241,13 @@ msgid ""
 "will output a list of available dictionaries. The list is obtained\n"
 "remotely which means its contents can be updated at any time."
 msgstr ""
+"Hämtar stavningsordböcker. Om namnargumentet utelämnas kommer Swirc\n"
+"att mata ut en lista över tillgängliga ordböcker. Listan erhålls på\n"
+"distans vilket innebär att dess innehåll kan uppdateras när som helst."
 
 #: ../src/include/commandhelp.h:212
 msgid "Fetch the american english dictionary:"
-msgstr ""
+msgstr "Hämta den amerikansk engelska ordboken:"
 
 #: ../src/include/commandhelp.h:218
 msgid "usage: /group <name>"
