@@ -201,9 +201,16 @@ static usage_t exlist_usage = {
 };
 
 static usage_t fetchdic_usage = {
-  "usage: /fetchdic [lang]",
+  N_("usage: /fetchdic [name]"),
   "",
-  "No help yet.",
+  N_("Fetches spelling dictionaries. If the name argument is omitted Swirc\n"
+     "will output a list of available dictionaries. The list is obtained\n"
+     "remotely which means its contents can be updated at any time."),
+  "",
+  (TXT_BOLD "EXAMPLE" TXT_BOLD),
+  "",
+  N_("Fetch the american english dictionary:"),
+  "    /fetchdic en_US",
   "",
 };
 
