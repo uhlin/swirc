@@ -83,12 +83,15 @@ dictionary::dictionary(const char *line)
 	char			*line_copy = sw_strdup(line);
 	static const char	 sep[] = "|";
 
-	if ((lang = strtok_r(line_copy, sep, &last)) == nullptr ||
-	    (name = strtok_r(nullptr, sep, &last)) == nullptr ||
-	    (date = strtok_r(nullptr, sep, &last)) == nullptr ||
-	    (url = strtok_r(nullptr, sep, &last)) == nullptr ||
-	    (author = strtok_r(nullptr, sep, &last)) == nullptr ||
-	    (license = strtok_r(nullptr, sep, &last)) == nullptr) {
+	lang        = strtok_r(line_copy, sep, &last);
+	name        = strtok_r(nullptr, sep, &last);
+	date        = strtok_r(nullptr, sep, &last);
+	url         = strtok_r(nullptr, sep, &last);
+	author      = strtok_r(nullptr, sep, &last);
+	license     = strtok_r(nullptr, sep, &last);
+
+	if (lang == nullptr || name == nullptr || date == nullptr ||
+	    url == nullptr || author == nullptr || license == nullptr) {
 		free(line_copy);
 		throw std::runtime_error("missing tokens");
 	}
