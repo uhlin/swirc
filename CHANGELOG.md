@@ -25,7 +25,7 @@ All notable changes to this project will be documented in this file.
   exe-manifest, only for Swirc.
 - **Upgraded to**...
   - [Curl](https://curl.se/) 7.87.0
-  - [LibreSSL](https://www.libressl.org/) 3.7.0
+  - [LibreSSL](https://www.libressl.org/) 3.6.2
 
 ## [3.3.9] - 2023-01-07 ##
 - **Added** micro optimizations
