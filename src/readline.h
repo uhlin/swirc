@@ -77,7 +77,8 @@ struct readline_session_context {
 };
 
 __SWIRC_BEGIN_DECLS
-extern PREADLINE_POS g_readline_pos;
+extern PREADLINE_POS	 g_readline_pos;
+extern const int	 g_readline_bufsize;
 
 extern bool	g_readline_loop;
 extern bool	g_resize_requested;

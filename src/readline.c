@@ -63,7 +63,8 @@
 *                                                               *
 ****************************************************************/
 
-PREADLINE_POS g_readline_pos = NULL;
+PREADLINE_POS	 g_readline_pos = NULL;
+const int	 g_readline_bufsize = 2000;
 
 bool		g_readline_loop = false;
 bool		g_resize_requested = false;
@@ -80,7 +81,6 @@ bool	g_hist_prev = false;
 
 static PANEL			*readline_pan1 = NULL;
 static PANEL			*readline_pan2 = NULL;
-static const int		 readline_bufsize = 2000;
 static rl_active_panel_t	 panel_state = PANEL1_ACTIVE;
 
 /****************************************************************
@@ -526,7 +526,7 @@ new_session(const char *prompt)
 	struct readline_session_context *ctx = xcalloc(sizeof *ctx, 1);
 
 	ctx->act         = panel_window(readline_pan1);
-	ctx->buffer      = xcalloc(readline_bufsize + 1, sizeof(wchar_t));
+	ctx->buffer      = xcalloc(g_readline_bufsize + 1, sizeof(wchar_t));
 	ctx->bufpos      = 0;
 	ctx->insert_mode = false;
 	ctx->numins      = 0;
@@ -599,7 +599,7 @@ process(volatile struct readline_session_context *ctx)
 		wint_t wc = 0L;
 
 		ctx->insert_mode = (ctx->bufpos != ctx->numins);
-		ctx->no_bufspc = (ctx->numins + 1 >= readline_bufsize);
+		ctx->no_bufspc = (ctx->numins + 1 >= g_readline_bufsize);
 
 		if (*buf_p == L'\0' && g_readline_pos != NULL) {
 			if (g_readline_pos->x != ctx->bufpos ||
