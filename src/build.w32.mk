@@ -70,6 +70,7 @@ fetch_and_expand:
 	expand curl-$(CURL_VERSION).cab "-F:*" .
 	expand gnu-bundle-$(GNU_BUNDLE_DATE).cab "-F:*" .
 	expand hunspell-$(HUNSPELL_VERSION).cab "-F:*" .
+	expand hunspell-en-us.cab "-F:*" .
 	expand libressl-$(LIBRESSL_VERSION).cab "-F:*" .
 	expand pdcurses-$(PDCURSES_VERSION).cab "-F:*" .
 	expand swirc-locales-$(LOCALES_SNAP).cab "-F:*" .
