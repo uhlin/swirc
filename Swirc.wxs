@@ -99,6 +99,18 @@
 	</DirectoryRef>
 
 	<DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+		<Component Guid="*" Id="en_US_aff" Win64="yes">
+			<File
+			    Id="en_US_aff_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\en_US.aff" />
+		</Component>
+		<Component Guid="*" Id="en_US_dic" Win64="yes">
+			<File
+			    Id="en_US_dic_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\en_US.dic" />
+		</Component>
 		<Component Guid="*" Id="libcharset_dll" Win64="yes">
 			<File
 			    Id="libcharset_dll_file"
@@ -207,6 +219,9 @@
 		<ComponentRef Id="fi_lc_msgs_compo" />
 		<ComponentRef Id="fr_lc_msgs_compo" />
 		<ComponentRef Id="sv_lc_msgs_compo" />
+
+		<ComponentRef Id="en_US_aff" />
+		<ComponentRef Id="en_US_dic" />
 
 		<ComponentRef Id="libcharset_dll" />
 		<ComponentRef Id="libcurl_dll" />
