@@ -378,7 +378,8 @@ print_suggestions(std::vector<sugg_ptr> *suggs)
 void
 spell_word_readline(volatile struct readline_session_context *ctx)
 {
-	if (!config_bool("spell", true))
+	if (!config_bool("spell", true) ||
+	    ctx->numins > int_diff(g_readline_bufsize, MAXWORDLEN * 3))
 		return;
 
 	if (!g_suggs_mode) {
