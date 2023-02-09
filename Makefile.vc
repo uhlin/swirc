@@ -126,6 +126,9 @@ clean:
 !	if exists(hunspell-$(HUNSPELL_VERSION))
 		rmdir /s /q hunspell-$(HUNSPELL_VERSION)
 !	endif
+!	if exists(hunspell-en-us)
+		rmdir /s /q hunspell-en-us
+!	endif
 !	if exists(libressl-$(LIBRESSL_VERSION))
 		rmdir /s /q libressl-$(LIBRESSL_VERSION)
 !	endif
