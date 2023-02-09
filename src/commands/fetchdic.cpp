@@ -96,13 +96,17 @@ dictionary::dictionary(const char *line)
 		throw std::runtime_error("missing tokens");
 	}
 
-	this->lang.assign(lang);
-	this->name.assign(name);
-	this->date.assign(date);
-	this->url.assign(url);
+	try {
+		this->lang.assign(lang);
+		this->name.assign(name);
+		this->date.assign(date);
+		this->url.assign(url);
 
-	this->author.assign(author);
-	this->license.assign(license);
+		this->author.assign(author);
+		this->license.assign(license);
+	} catch (...) {
+		/* null */;
+	}
 
 	free(line_copy);
 }
