@@ -107,6 +107,7 @@ clean:
 	$(RM) curl-$(CURL_VERSION).cab
 	$(RM) gnu-bundle-$(GNU_BUNDLE_DATE).cab
 	$(RM) hunspell-$(HUNSPELL_VERSION).cab
+	$(RM) hunspell-en-us.cab
 	$(RM) libressl-$(LIBRESSL_VERSION).cab
 	$(RM) pdcurses-$(PDCURSES_VERSION).cab
 	$(RM) swirc-locales-$(LOCALES_SNAP).cab
