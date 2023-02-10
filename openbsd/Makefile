@@ -21,7 +21,8 @@ COMPILER =		base-clang ports-gcc
 BUILD_DEPENDS =		devel/gettext,-tools
 LIB_DEPENDS =		devel/gettext,-runtime \
 			devel/libidn \
-			net/curl
+			net/curl \
+			textproc/hunspell
 
 CFLAGS +=		-I${LOCALBASE}/include
 LDFLAGS +=		-L${LOCALBASE}/lib
