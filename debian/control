@@ -7,6 +7,7 @@ Build-Depends:
   gettext,
   libcmocka-dev,
   libcurl4-openssl-dev | libcurl4-gnutls-dev | libcurl4-nss-dev,
+  libhunspell-dev,
   libidn11-dev,
   libncursesw5-dev,
   libnotify-dev,
