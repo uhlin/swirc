@@ -1,3 +1,10 @@
+swirc (3.4.0-1) unstable; urgency=medium
+
+  * New upstream version.
+  * Adds support for spell-checking (thus added a build-dep on Hunspell).
+
+ -- Markus Uhlin <markus.uhlin@bredband.net>  Fri, 10 Feb 2023 05:22:11 +0100
+
 swirc (3.3.9-1) unstable; urgency=medium
 
   * New upstream version
