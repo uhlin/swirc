@@ -45,7 +45,7 @@ void	 term_deinit(void);
 
 void	 term_beep(void);
 struct current_cursor_pos
-	 term_get_pos(WINDOW *);
+	 term_get_pos(WINDOW *) PTR_ARGS_NONNULL;
 bool	 term_is_too_small(void);
 PANEL	*term_new_panel(int rows, int cols, int start_row, int start_col);
 void	 term_remove_panel(PANEL *);
