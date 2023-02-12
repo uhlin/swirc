@@ -1,5 +1,5 @@
 /* Readline API
-   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -244,8 +244,6 @@ readline_waddnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
 	const ptrdiff_t length = (ptrdiff_t) wcslen(s);
 	const ptrdiff_t i = (n <= 0 || n > length ? length : n);
 
-	(void) wnoutrefresh(win);
-
 	for (const wchar_t *ptr = &s[0]; ptr < &s[i]; ptr++)
 		readline_waddch(win, *ptr);
 }
@@ -322,8 +320,6 @@ readline_winsnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
 {
 	const ptrdiff_t length = (ptrdiff_t) wcslen(s);
 	const ptrdiff_t i = (n <= 0 || n > length ? length : n);
-
-	(void) wnoutrefresh(win);
 
 	for (const wchar_t *ptr = &s[i - 1]; ptr >= &s[0]; ptr--)
 		readline_winsch(win, *ptr);
