@@ -1,8 +1,11 @@
 # DICTIONARY DATABASE
 # lang|name|date|url|author|license
 
+Danish|da_DK|2023-02-12|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/da_DK/|NA|NA
 English|en_GB|2023-02-07|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/|NA|NA
 English|en_US|2023-02-07|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/|NA|NA
 French|fr|2023-02-07|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/fr_FR/|Olivier R.|MPL 2.0
 German|de_DE_frami|2023-02-07|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/de/|Björn Jacke|GNU GPL
+Italian|it_IT|2023-02-12|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/it_IT/|Marina Latini|GNU GPL
+Spanish|es_ES|2023-02-12|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/es/|NA|NA
 Swedish|sv_SE|2023-02-07|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/sv_SE/|Göran Andersson|GNU LGPL
