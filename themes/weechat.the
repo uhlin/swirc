@@ -1,0 +1,69 @@
+# -*- mode: conf; -*-
+
+term_background         = "1";
+term_enable_colors      = "yes";
+term_use_default_colors = "yes";
+
+color3 = "03";
+color4 = "05";
+
+gfx_failure = "28-40-52>";
+gfx_success = "32-44-56>";
+gfx_warning = "30-42-54>";
+
+left_bracket  = "03(";
+right_bracket = "03)";
+
+logo_color = "10";
+
+nick_s1 = "05:";
+nick_s2 = "05:";
+
+nicklist_my_nick_color   = "10";
+nicklist_nick_color      = "15";
+nicklist_privilege_color = "3";
+nicklist_vline_color     = "2";
+
+notice_color1   = "";
+notice_color2   = "";
+notice_inner_b1 = "03(";
+notice_inner_b2 = "03)";
+notice_lb       = "14-";
+notice_rb       = "14-";
+notice_sep      = "10:";
+
+primary_color   = "10";
+secondary_color = "03";
+
+slogan = "";
+
+specifier1 = "61*49*37*";
+specifier2 = "";
+specifier3 = "";
+
+statusbar_bg           = "blue";
+statusbar_fg           = "white";
+statusbar_leftBracket  = "10,02[";
+statusbar_rightBracket = "10,02]";
+statusbar_spec         = "";
+
+time_format = "%H07:%M07:%S";
+
+titlebar_bg = "blue";
+titlebar_fg = "white";
+
+whois_acc      = "14=> account  :";
+whois_away     = "14=> away     :";
+whois_bot      = "14=> bot      :";
+whois_cert     = "14=> cert     :";
+whois_channels = "14=> channels :";
+whois_conn     = "14=> conn     :";
+whois_host     = "14=> host     :";
+whois_idle     = "14=> idle     :";
+whois_ircName  = "14=> ircname  :";
+whois_ircOp    = "14=> IRC op   :";
+whois_modes    = "14=> modes    :";
+whois_server   = "14=> server   :";
+whois_service  = "14=> service  :";
+whois_ssl      = "14=> TLS/SSL  :";
+# EOF
