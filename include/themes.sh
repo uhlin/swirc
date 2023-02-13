@@ -2,6 +2,7 @@ THEMES="
 bx.the
 nano.the
 superkod.the
+weechat.the
 themes
 "
 
