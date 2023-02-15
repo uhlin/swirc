@@ -348,6 +348,13 @@ convert_wc(wchar_t wc)
 	return static_cast<unsigned char *>(xrealloc(mbs, bytes_written + 1));
 }
 
+static inline void
+putbyte(char *cp, const unsigned char b)
+{
+	cp[0] = static_cast<char>(b);
+	cp[1] = '\0';
+}
+
 /***************************************************
  *
  * check for ^CN
@@ -397,7 +404,7 @@ check_for_part2(wchar_t **bufp, char *fg, bool *has_comma)
 	}
 
 	if (sw_isdigit(*mbs))
-		sw_snprintf(fg, 2, "%c", *mbs);
+		putbyte(fg, *mbs);
 	else if (*mbs == ',')
 		*has_comma = true;
 	else
@@ -439,7 +446,7 @@ check_for_part3(wchar_t **bufp, bool *has_comma, bool fg_complete, char *bg)
 	if (*mbs == ',')
 		*has_comma = true;
 	else if (sw_isdigit(*mbs))
-		sw_snprintf(bg, 2, "%c", *mbs);
+		putbyte(bg, *mbs);
 	else
 		sw_assert_not_reached();
 
@@ -467,12 +474,12 @@ check_for_part4(wchar_t **bufp, bool got_digit_bg, char *bg)
 		free(mbs);
 		return STOP_INTERPRETING;
 	} else if (got_digit_bg) {
-		sw_snprintf(++bg, 2, "%c", *mbs);
+		putbyte(++bg, *mbs);
 		free(mbs);
 		return STOP_INTERPRETING;
 	}
 
-	sw_snprintf(bg, 2, "%c", *mbs);
+	putbyte(bg, *mbs);
 	free(mbs);
 	return GO_ON;
 }
@@ -498,7 +505,7 @@ check_for_part5(wchar_t **bufp, char *bg)
 		return STOP_INTERPRETING;
 	}
 
-	sw_snprintf(bg, 2, "%c", *mbs);
+	putbyte(bg, *mbs);
 	free(mbs);
 	return GO_ON;
 }
