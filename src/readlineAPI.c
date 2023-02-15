@@ -48,12 +48,13 @@
 static char *
 convert_wc(wchar_t wc)
 {
-	const size_t	 size = (MB_LEN_MAX + 1);
-	char		*mbs = xcalloc(size, 1);
+	const size_t	 size = MB_LEN_MAX;
+	char		*mbs = xmalloc(size + 1);
 	mbstate_t	 ps;
-	size_t		 bytes_written;
+	size_t		 bytes_written = 0;
 
 	BZERO(&ps, sizeof(mbstate_t));
+	mbs[size] = '\0';
 
 #ifdef HAVE_BCI
 	if ((errno = wcrtomb_s(&bytes_written, mbs, size, wc, &ps)) != 0) {
@@ -67,8 +68,8 @@ convert_wc(wchar_t wc)
 	}
 #endif
 
-	UNUSED_VAR(bytes_written);
-	return xrealloc(mbs, strlen(mbs) + 1);
+	mbs[bytes_written] = '\0';
+	return xrealloc(mbs, bytes_written + 1);
 }
 
 /**
