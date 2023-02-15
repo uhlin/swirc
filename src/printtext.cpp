@@ -320,30 +320,32 @@ case_bold(WINDOW *win, bool *is_bold)
 static unsigned char *
 convert_wc(wchar_t wc)
 {
-	const size_t	 size = (MB_LEN_MAX + 1);
+	const size_t	 size = MB_LEN_MAX;
 	mbstate_t	 ps;
-	size_t		 bytes_written;
-	unsigned char	*mbs = static_cast<unsigned char *>(xcalloc(size, 1));
+	size_t		 bytes_written = 0;
+	unsigned char	*mbs = static_cast<unsigned char *>(xmalloc(size + 1));
 
 	BZERO(&ps, sizeof(mbstate_t));
+	mbs[size] = '\0';
 
 #ifdef HAVE_BCI
 	if ((errno = wcrtomb_s(&bytes_written, reinterpret_cast<char *>(mbs),
 	    size, wc, &ps)) != 0) {
 		err_log(errno, "printtext: %s: wcrtomb_s", __func__);
-		BZERO(mbs, size);
+		*mbs = '\0';
+		return mbs;
 	}
 #else
 	if ((bytes_written = wcrtomb(reinterpret_cast<char *>(mbs), wc, &ps)) ==
 	    g_conversion_failed) {
 		err_log(EILSEQ, "printtext: %s: wcrtomb", __func__);
-		BZERO(mbs, size);
+		*mbs = '\0';
+		return mbs;
 	}
 #endif
 
-	UNUSED_VAR(bytes_written);
-	return static_cast<unsigned char *>(xrealloc(mbs, STRLEN_CAST(mbs) +
-	    1));
+	mbs[bytes_written] = '\0';
+	return static_cast<unsigned char *>(xrealloc(mbs, bytes_written + 1));
 }
 
 /***************************************************
