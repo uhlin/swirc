@@ -371,7 +371,7 @@ check_for_part1(wchar_t **bufp, char *fg)
 	mbs = convert_wc(**bufp);
 
 	if (STRLEN_CAST(mbs) != 1 || !sw_isdigit(*mbs)) {
-		(*bufp)--;
+		--(*bufp);
 		free(mbs);
 		return STOP_INTERPRETING;
 	}
@@ -398,7 +398,7 @@ check_for_part2(wchar_t **bufp, char *fg, bool *has_comma)
 	mbs = convert_wc(**bufp);
 
 	if (STRLEN_CAST(mbs) != 1 || (!sw_isdigit(*mbs) && *mbs != ',')) {
-		(*bufp)--;
+		--(*bufp);
 		free(mbs);
 		return STOP_INTERPRETING;
 	}
@@ -430,15 +430,15 @@ check_for_part3(wchar_t **bufp, bool *has_comma, bool fg_complete, char *bg)
 	mbs = convert_wc(**bufp);
 
 	if (STRLEN_CAST(mbs) != 1 || (*mbs != ',' && !sw_isdigit(*mbs))) {
-		(*bufp)--;
+		--(*bufp);
 		free(mbs);
 		return STOP_INTERPRETING;
 	} else if (*mbs == ',' && *has_comma) {
-		(*bufp)--;
+		--(*bufp);
 		free(mbs);
 		return STOP_INTERPRETING;
 	} else if (*mbs != ',' && fg_complete) {
-		(*bufp)--;
+		--(*bufp);
 		free(mbs);
 		return STOP_INTERPRETING;
 	}
@@ -470,7 +470,7 @@ check_for_part4(wchar_t **bufp, bool got_digit_bg, char *bg)
 	mbs = convert_wc(**bufp);
 
 	if (STRLEN_CAST(mbs) != 1 || !sw_isdigit(*mbs)) {
-		(*bufp)--;
+		--(*bufp);
 		free(mbs);
 		return STOP_INTERPRETING;
 	} else if (got_digit_bg) {
@@ -500,7 +500,7 @@ check_for_part5(wchar_t **bufp, char *bg)
 	mbs = convert_wc(**bufp);
 
 	if (STRLEN_CAST(mbs) != 1 || !sw_isdigit(*mbs)) {
-		(*bufp)--;
+		--(*bufp);
 		free(mbs);
 		return STOP_INTERPRETING;
 	}
@@ -637,7 +637,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 	printtext_set_color(win, is_color, num1, num2);
 
 	if (has_comma && !(bg[0]))
-		(*bufp)--;
+		--(*bufp);
 }
 
 /**
