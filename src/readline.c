@@ -587,7 +587,7 @@ static char *
 process(volatile struct readline_session_context *ctx)
 {
 	char *out;
-	static const int sleep_time_milliseconds = 90;
+	static const int sleep_time_milliseconds = 30;
 	wchar_t *buf_p = &g_push_back_buf[0];
 
 	write_cmdprompt(ctx->act, ctx->prompt, ctx->prompt_size);
