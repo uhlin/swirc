@@ -369,7 +369,8 @@ check_for_part1(wchar_t **bufp, char *fg)
 		return STOP_INTERPRETING;
 	}
 
-	sw_snprintf(fg, 2, "%c", *mbs);
+	fg[0] = static_cast<char>(*mbs);
+	fg[1] = '\0';
 	free(mbs);
 	return GO_ON;
 }
