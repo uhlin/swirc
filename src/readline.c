@@ -111,7 +111,7 @@ apply_readline_options(WINDOW *win)
 		SCROLLOK(win, 0);
 	}
 
-#define WAIT_TIME_MILLISEC 0
+#define WAIT_TIME_MILLISEC 30
 
 	wtimeout(win, WAIT_TIME_MILLISEC);
 }
