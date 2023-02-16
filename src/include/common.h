@@ -76,8 +76,8 @@
 
 #define ARRAY_SIZE(ar)	(sizeof(ar) / sizeof((ar)[0]))
 #define BZERO(b, len)	((void) memset(b, 0, len))
-#define STRING(x)	#x
-#define STRINGIFY(x)	STRING(x)
+#define QUOTE(x)	#x
+#define STRINGIFY(x)	QUOTE(x)
 #define addrof(x)	(&(x))
 
 #ifdef WIN32
