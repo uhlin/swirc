@@ -455,7 +455,7 @@ swirc_greeting(void)
 }
 
 PTEXTBUF
-get_list_of_matching_commands(const char *search_var)
+get_list_of_matching_commands(CSTRING search_var)
 {
 	PTEXTBUF matches;
 
@@ -485,7 +485,7 @@ get_list_of_matching_commands(const char *search_var)
 	return matches;
 }
 
-char *
+STRING
 get_prompt(void)
 {
 	char			*prompt;
@@ -523,7 +523,7 @@ get_prompt(void)
 
 /* usage: /help [command] */
 void
-cmd_help(const char *data)
+cmd_help(CSTRING data)
 {
 	const bool has_command = !strings_match(data, "");
 
@@ -612,7 +612,7 @@ enter_io_loop(void)
 }
 
 void
-transmit_user_input(const char *winlabel, const char *input)
+transmit_user_input(CSTRING winlabel, CSTRING input)
 {
 	PRINTTEXT_CONTEXT ctx;
 

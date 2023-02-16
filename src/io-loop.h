@@ -14,11 +14,11 @@ extern wchar_t	g_push_back_buf[MAX_PBB];
 
 /*lint -sem(get_list_of_matching_commands, r_null) */
 
-PTEXTBUF	 get_list_of_matching_commands(const char *search_var);
-char		*get_prompt(void);
-void		 cmd_help(const char *);
+PTEXTBUF	 get_list_of_matching_commands(CSTRING search_var);
+STRING		 get_prompt(void);
+void		 cmd_help(CSTRING);
 void		 enter_io_loop(void);
-void		 transmit_user_input(const char *, const char *input);
+void		 transmit_user_input(CSTRING, CSTRING input);
 __SWIRC_END_DECLS
 
 #endif
