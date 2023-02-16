@@ -69,7 +69,7 @@
 #define WATTR_ON(win, attrs)  ((void) wattr_on(win, attrs, NULL))
 #define WCOLOR_SET(win, cpn)  ((void) wcolor_set(win, cpn, NULL))
 
-#define STRLEN_CAST(string) strlen(reinterpret_cast<const char *>(string))
+#define STRLEN_CAST(string) strlen(reinterpret_cast<CSTRING>(string))
 
 /****************************************************************
 *                                                               *
@@ -255,7 +255,7 @@ addmbs(WINDOW *win, const unsigned char *mbs)
 	while ((c = *p++) != '\0')
 		WADDCH(win, c);
 #elif defined(WIN32)
-	(void) waddnstr(win, reinterpret_cast<const char *>(mbs), -1);
+	(void) waddnstr(win, reinterpret_cast<CSTRING>(mbs), -1);
 #endif
 }
 
@@ -577,7 +577,7 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 }
 
 static void
-init_numbers(const char *fg, const char *bg, short int &num1, short int &num2)
+init_numbers(CSTRING fg, CSTRING bg, short int &num1, short int &num2)
 {
 	struct integer_context intctx("term_background", 0, 15, 1);
 
@@ -792,7 +792,7 @@ case_underline(WINDOW *win, bool *is_underline)
  * Get multibyte string length
  */
 static size_t
-get_mb_strlen(const char *s)
+get_mb_strlen(CSTRING s)
 {
 	const size_t ERR_CASE1 = static_cast<size_t>(-1);
 	const size_t ERR_CASE2 = static_cast<size_t>(-2);
@@ -819,7 +819,7 @@ get_mb_strlen(const char *s)
 }
 
 static void
-set_indent(int *indent, const char *fmt, ...)
+set_indent(int *indent, CSTRING fmt, ...)
 {
 	va_list		 ap;
 	char		*str = NULL;
@@ -842,8 +842,8 @@ set_indent(int *indent, const char *fmt, ...)
  * @return Message components
  */
 static struct message_components *
-get_processed_out_message(const char *unproc_msg, enum message_specifier_type
-    spec_type, bool include_ts, const char *srv_time)
+get_processed_out_message(CSTRING unproc_msg, enum message_specifier_type
+    spec_type, bool include_ts, CSTRING srv_time)
 {
 	struct message_components *pout =
 	    static_cast<struct message_components *>(xcalloc(sizeof *pout, 1));
@@ -979,7 +979,7 @@ get_processed_out_message(const char *unproc_msg, enum message_specifier_type
  */
 #if WIN32
 static wchar_t *
-windows_convert_to_utf8(const char *buf)
+windows_convert_to_utf8(CSTRING buf)
 {
 	const int	 size = static_cast<int>(strlen(buf) + 1);
 	wchar_t		*out = static_cast<wchar_t *>(xcalloc(size,
@@ -1002,7 +1002,7 @@ windows_convert_to_utf8(const char *buf)
  * @return A wide-character string, or NULL on error.
  */
 static wchar_t *
-try_convert_buf_with_cs(const char *buf, const char *codeset)
+try_convert_buf_with_cs(CSTRING buf, CSTRING codeset)
 {
 	char			*original_locale = NULL;
 	char			*tmp_locale = NULL;
@@ -1343,10 +1343,10 @@ printtext_print(CSTRING what, CSTRING fmt, ...)
 	printtext_context_destroy(ctx);
 }
 
-static char *get_buffer(const char *) PTR_ARGS_NONNULL;
+static char *get_buffer(CSTRING) PTR_ARGS_NONNULL;
 
 static char *
-get_buffer(const char *orig)
+get_buffer(CSTRING orig)
 {
 #ifdef HAVE_LIBICONV
 #define UTF8_MAXBYTE 4
