@@ -86,6 +86,9 @@
 #define strtok_r	strtok_s
 #endif
 
+typedef char *STRING;
+typedef const char *CSTRING;
+
 #if defined(WIN32) && !defined(_SSIZE_T_DEFINED)
 #define _SSIZE_T_DEFINED 1
 typedef long int ssize_t;
