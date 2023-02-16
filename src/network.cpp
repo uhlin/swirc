@@ -687,7 +687,7 @@ net_irc_listen(bool *connection_lost)
 			} else if (bytes_received != 1) {
 				if (atomic_load_bool(&g_icb_processing_names))
 					icb_process_event_eof_names();
-				continue;
+				goto _conn_check;
 			}
 
 			ret = snprintf(array, ARRAY_SIZE(array), "%d",
@@ -744,6 +744,7 @@ net_irc_listen(bool *connection_lost)
 			}
 		}
 
+	  _conn_check:
 		if (bytes_received == 0 && should_check_connection()) {
 			if (conn_check() == -1)
 				g_connection_lost = true;
