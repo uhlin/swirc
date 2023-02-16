@@ -684,13 +684,13 @@ start_on_a_new_row(const ptrdiff_t sum, const WINDOW *win)
  *
  * @param[in]     ctx          Context structure
  * @param[in,out] rep_count    "Represent" count
- * @param[out]    line_count   Line count
+ * @param[out]    lines_count  Lines count
  * @param[out]    insert_count Insert count
  * @return Void
  */
 static void
 case_default(const struct case_default_context *ctx, int *rep_count,
-    int *line_count, int *insert_count)
+    int *lines_count, int *insert_count)
 {
 	unsigned char *mbs;
 
@@ -714,7 +714,7 @@ case_default(const struct case_default_context *ctx, int *rep_count,
 		new_row(ctx->win, insert_count, rep_count);
 
 		if (care_about_max_lines &&
-		    !(++ (*line_count) < ctx->max_lines)) {
+		    !(++ (*lines_count) < ctx->max_lines)) {
 			free(mbs);
 			return;
 		}
@@ -733,7 +733,7 @@ case_default(const struct case_default_context *ctx, int *rep_count,
 		new_row(ctx->win, insert_count, rep_count);
 
 		if (care_about_max_lines &&
-		    !(++ (*line_count) < ctx->max_lines)) {
+		    !(++ (*lines_count) < ctx->max_lines)) {
 			free(mbs);
 			return;
 		}
@@ -1433,7 +1433,7 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 	char		*tmpbuf = NULL;
 	const char	*tmpbuf_p = NULL;
 	int		 insert_count = 0;
-	int		 line_count = 0;
+	int		 lines_count = 0;
 	struct text_decoration_bools
 			 booleans; // calls constructor
 	wchar_t		*wc_buf = NULL;
@@ -1500,7 +1500,7 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 				diff = (wcp - wc_bufp);
 			struct case_default_context def_ctx(pwin, wc,
 			    !wcscmp(wc_bufp + 1, L""), indent, max_lines, diff);
-			case_default(&def_ctx, rep_count, &line_count,
+			case_default(&def_ctx, rep_count, &lines_count,
 			    &insert_count);
 			break;
 		} /* case default */
@@ -1509,7 +1509,7 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 		++ wc_bufp;
 
 		if (is_scrollok(pwin) && max_lines > 0)
-			max_lines_flagged = line_count >= max_lines;
+			max_lines_flagged = lines_count >= max_lines;
 	}
 
 	free(wc_buf);
