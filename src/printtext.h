@@ -79,15 +79,15 @@ void	printtext_context_init(PPRINTTEXT_CONTEXT, PIRC_WINDOW,
 
 short int
 	 color_pair_find(short int foreground, short int background);
-void	 print_and_free(const char *msg, char *);
-void	 printf_and_free(char *, const char *, ...) PRINTFLIKE(2);
-void	 printtext(PPRINTTEXT_CONTEXT, const char *, ...) PRINTFLIKE(2);
-void	 printtext_print(const char *what, const char *, ...) PRINTFLIKE(2);
-void	 printtext_puts(WINDOW *, const char *buf, int indent, int, int *);
+void	 print_and_free(CSTRING msg, char *);
+void	 printf_and_free(char *, CSTRING, ...) PRINTFLIKE(2);
+void	 printtext(PPRINTTEXT_CONTEXT, CSTRING, ...) PRINTFLIKE(2);
+void	 printtext_print(CSTRING what, CSTRING, ...) PRINTFLIKE(2);
+void	 printtext_puts(WINDOW *, CSTRING buf, int indent, int, int *);
 void	 printtext_set_color(WINDOW *, bool *, short int, short int);
 void	 set_timestamp(char *dest, size_t destsize,
 	     const struct irc_message_compo *) PTR_ARGS_NONNULL;
-void	 vprinttext(PPRINTTEXT_CONTEXT, const char *format, va_list);
+void	 vprinttext(PPRINTTEXT_CONTEXT, CSTRING fmt, va_list);
 __SWIRC_END_DECLS
 
 #endif

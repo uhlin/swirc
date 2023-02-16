@@ -1255,7 +1255,7 @@ color_pair_find(short int fg, short int bg)
  * space pointed to by @cp
  */
 void
-print_and_free(const char *msg, char *cp)
+print_and_free(CSTRING msg, char *cp)
 {
 #ifndef UNIT_TESTING
 	PRINTTEXT_CONTEXT ctx;
@@ -1276,7 +1276,7 @@ print_and_free(const char *msg, char *cp)
 }
 
 void
-printf_and_free(char *cp, const char *fmt, ...)
+printf_and_free(char *cp, CSTRING fmt, ...)
 {
 	PPRINTTEXT_CONTEXT ctx;
 	va_list ap;
@@ -1299,7 +1299,7 @@ printf_and_free(char *cp, const char *fmt, ...)
  * @return Void
  */
 void
-printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
+printtext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, ...)
 {
 	va_list ap;
 
@@ -1309,7 +1309,7 @@ printtext(PPRINTTEXT_CONTEXT ctx, const char *fmt, ...)
 }
 
 void
-printtext_print(const char *what, const char *fmt, ...)
+printtext_print(CSTRING what, CSTRING fmt, ...)
 {
 	PPRINTTEXT_CONTEXT ctx;
 	va_list ap;
@@ -1427,7 +1427,7 @@ get_buffer(const char *orig)
  * @return Void
  */
 void
-printtext_puts(WINDOW *pwin, const char *buf, int indent, int max_lines,
+printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
     int *rep_count)
 {
 	char		*tmpbuf = NULL;
@@ -1549,7 +1549,7 @@ set_timestamp(char *dest, size_t destsize,
  * @return Void
  */
 void
-vprinttext(PPRINTTEXT_CONTEXT ctx, const char *fmt, va_list ap)
+vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 {
 	char			*fmt_copy = NULL;
 	const int		 tbszp1 = textBuf_size(ctx->window->buf) + 1;
