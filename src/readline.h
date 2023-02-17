@@ -94,8 +94,8 @@ void readline_deinit(void);
 /*lint -sem(readline, r_null) */
 
 WINDOW	*readline_get_active_pwin(void);
-char	*readline(const char *prompt);
-char	*readline_finalize_out_string_exported(const wchar_t *);
+STRING	 readline(CSTRING prompt);
+STRING	 readline_finalize_out_string_exported(const wchar_t *);
 void	 readline_handle_backspace(volatile struct readline_session_context *);
 void	 readline_handle_key_exported(volatile struct readline_session_context *,
 	     wint_t);

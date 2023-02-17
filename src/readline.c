@@ -872,8 +872,8 @@ readline_get_active_pwin(void)
  * @param prompt Prompt
  * @return The read line (dynamically allocated) or NULL
  */
-char *
-readline(const char *prompt)
+STRING
+readline(CSTRING prompt)
 {
 	volatile struct readline_session_context *ctx = NULL;
 
@@ -892,7 +892,7 @@ readline(const char *prompt)
 	return NULL;
 }
 
-char *
+STRING
 readline_finalize_out_string_exported(const wchar_t *buf)
 {
 	return finalize_out_string(buf);
