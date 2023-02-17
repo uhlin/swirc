@@ -454,6 +454,19 @@ swirc_greeting(void)
 	printtext(&ctx, " ");
 }
 
+static void
+add_cmd(PTEXTBUF matches, CSTRING cmd)
+{
+	if (textBuf_size(matches) == 0) {
+		if ((errno = textBuf_ins_next(matches, NULL, cmd, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	} else {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
+		    cmd, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	}
+}
+
 PTEXTBUF
 get_list_of_matching_commands(CSTRING search_var)
 {
@@ -465,21 +478,8 @@ get_list_of_matching_commands(CSTRING search_var)
 	matches = textBuf_new();
 
 	FOREACH_COMMAND() {
-		if (!strncmp(search_var, sp->cmd, strlen(search_var))) {
-			if (textBuf_size(matches) == 0) {
-				if ((errno = textBuf_ins_next(matches, NULL,
-				    sp->cmd, -1)) != 0) {
-					err_sys("%s: textBuf_ins_next",
-					    __func__);
-				}
-			} else {
-				if ((errno = textBuf_ins_next(matches,
-				    textBuf_tail(matches), sp->cmd, -1)) != 0) {
-					err_sys("%s: textBuf_ins_next",
-					    __func__);
-				}
-			}
-		}
+		if (!strncmp(search_var, sp->cmd, strlen(search_var)))
+			add_cmd(matches, sp->cmd);
 	}
 
 	return matches;
