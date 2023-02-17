@@ -385,7 +385,7 @@ static void
 swirc_greeting(void)
 {
 	PRINTTEXT_CONTEXT ctx;
-	static const char *logo[] = {
+	static stringarray_t logo = {
 #define USE_LARRY3D_LOGO 1
 #if USE_LARRY3D_LOGO
 		"                     __                              ",
