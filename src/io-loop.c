@@ -88,7 +88,7 @@ static PTEXTBUF_ELMT	element = NULL;
 #include "commandhelp.h"
 
 static struct cmds_tag {
-	char		*cmd;
+	STRING		 cmd;
 	CMD_HANDLER_FN	 fn;
 	bool		 requires_connection;
 	const char**	 usage;
@@ -337,8 +337,8 @@ list_all_commands(void)
 
 	sp = &cmds[0];
 	while (sp < &cmds[ARRAY_SIZE(cmds)]) {
-		const char	*cmd1 = sp->cmd;
-		char		*cmd2, *cmd3;
+		CSTRING  cmd1 = sp->cmd;
+		STRING   cmd2, cmd3;
 
 		if ((sp + 1) < &cmds[ARRAY_SIZE(cmds)] &&
 		    (sp + 2) < &cmds[ARRAY_SIZE(cmds)]) {
@@ -488,7 +488,7 @@ get_list_of_matching_commands(CSTRING search_var)
 STRING
 get_prompt(void)
 {
-	char			*prompt;
+	STRING			 prompt;
 	int			 ret;
 	static const char	 AFK[] = "(away)";
 	static const size_t	 minimum_cols = sizeof "#abc...: ";
@@ -561,7 +561,7 @@ enter_io_loop(void)
 	history = textBuf_new();
 
 	do {
-		char			*prompt, *line;
+		STRING			 prompt, line;
 		size_t			 len;
 		static const char	 cmd_char = '/';
 
