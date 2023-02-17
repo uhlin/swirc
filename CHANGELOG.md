@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Changed the requirements for checking if a connection is lost. The
   change avoids flooding the server with PING commands better.
+- Improved algorithms.
 - Optimized commonly used functions for speed.
 
 ## [3.4.0] - 2023-02-10 ##
