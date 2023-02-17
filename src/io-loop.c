@@ -238,16 +238,6 @@ get_error_log_size(double *size)
 	return true;
 }
 
-static bool
-got_hits(CSTRING search_var)
-{
-	FOREACH_COMMAND() {
-		if (!strncmp(search_var, sp->cmd, strlen(search_var)))
-			return true;
-	}
-	return false;
-}
-
 static void
 handle_cmds(CSTRING data)
 {
@@ -470,16 +460,16 @@ add_cmd(PTEXTBUF matches, CSTRING cmd)
 PTEXTBUF
 get_list_of_matching_commands(CSTRING search_var)
 {
-	PTEXTBUF matches;
-
-	if (!got_hits(search_var))
-		return NULL;
-
-	matches = textBuf_new();
+	PTEXTBUF matches = textBuf_new();
 
 	FOREACH_COMMAND() {
 		if (!strncmp(search_var, sp->cmd, strlen(search_var)))
 			add_cmd(matches, sp->cmd);
+	}
+
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
 	}
 
 	return matches;
