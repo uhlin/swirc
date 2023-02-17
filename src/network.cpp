@@ -471,7 +471,7 @@ should_check_connection()
 {
 	static int times_called = 0;
 
-	if (times_called > 10) {
+	if (times_called > 15) {
 		times_called = 0;
 		return true;
 	}
