@@ -1,5 +1,5 @@
 /* SASL auth mechanism SCRAM-SHA-256
-   Copyright (C) 2019-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -260,7 +260,7 @@ get_sfm_components(const char *msg, unsigned char **salt, int *saltlen,
 		if (!is_numeric(cp))
 			throw std::runtime_error("iteration count not numeric");
 
-		*iter = (int) strtol(cp, NULL, 10);
+		*iter = static_cast<int>(strtol(cp, NULL, 10));
 		ok = true;
 	} catch (const std::runtime_error &e) {
 		delete[] *salt;
