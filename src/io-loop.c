@@ -165,7 +165,7 @@ static struct cmds_tag {
 	for (struct cmds_tag *sp = &cmds[0]; sp < &cmds[ARRAY_SIZE(cmds)]; sp++)
 
 static void
-add_to_history(const char *string)
+add_to_history(CSTRING string)
 {
 	const int tbszp1 = textBuf_size(history) + 1;
 	struct integer_context intctx = {
@@ -202,7 +202,7 @@ add_to_history(const char *string)
 }
 
 static void
-bold_fix(char *string)
+bold_fix(STRING string)
 {
 	char *cp;
 
@@ -239,7 +239,7 @@ get_error_log_size(double *size)
 }
 
 static bool
-got_hits(const char *search_var)
+got_hits(CSTRING search_var)
 {
 	FOREACH_COMMAND() {
 		if (!strncmp(search_var, sp->cmd, strlen(search_var)))
@@ -249,7 +249,7 @@ got_hits(const char *search_var)
 }
 
 static void
-handle_cmds(const char *data)
+handle_cmds(CSTRING data)
 {
 	PRINTTEXT_CONTEXT ctx;
 
@@ -364,7 +364,7 @@ list_all_commands(void)
 }
 
 static void
-output_help_for_command(const char *command)
+output_help_for_command(CSTRING command)
 {
 	PRINTTEXT_CONTEXT ctx;
 
