@@ -138,7 +138,7 @@ hiLim_isset(WINDOW *win)
  * Write the command-prompt.
  */
 static void
-write_cmdprompt(WINDOW *win, const char *prompt, int size)
+write_cmdprompt(WINDOW *win, CSTRING prompt, int size)
 {
 	int ret;
 
@@ -383,11 +383,11 @@ case_key_right(volatile struct readline_session_context *ctx)
 /* ---- */
 /* UNIX */
 /* ---- */
-static char *
+static STRING
 finalize_out_string(const wchar_t *buf)
 {
 	const size_t	 size = size_product(wcslen(buf) + 1, MB_LEN_MAX);
-	char		*out = xcalloc(size, 1);
+	STRING		 out = xcalloc(size, 1);
 	size_t		 bytes_convert;
 
 	errno = 0;
@@ -407,12 +407,12 @@ finalize_out_string(const wchar_t *buf)
 /* ----- */
 /* WIN32 */
 /* ----- */
-static char *
+static STRING
 finalize_out_string(const wchar_t *buf)
 {
 	const int	 size = size_to_int(size_product(wcslen(buf) + 1,
 			     MB_LEN_MAX));
-	char		*out = xcalloc(size, 1);
+	STRING		 out = xcalloc(size, 1);
 
 	errno = 0;
 
@@ -517,9 +517,9 @@ handle_mouse(void)
  * Initiate a new readline session
  */
 static struct readline_session_context *
-new_session(const char *prompt)
+new_session(CSTRING prompt)
 {
-	char *prompt_copy = sw_strdup(prompt);
+	STRING prompt_copy = sw_strdup(prompt);
 	struct readline_session_context *ctx = xcalloc(sizeof *ctx, 1);
 
 	ctx->act         = panel_window(readline_pan1);
@@ -583,10 +583,10 @@ session_destroy(volatile struct readline_session_context *ctx)
 	}
 }
 
-static char *
+static STRING
 process(volatile struct readline_session_context *ctx)
 {
-	char *out;
+	STRING out;
 	static const int sleep_time_milliseconds = 30;
 	wchar_t *buf_p = &g_push_back_buf[0];
 
@@ -915,7 +915,7 @@ void
 readline_mouse_init(void)
 {
 	if (config_bool("mouse", false)) {
-		const char *str = Config("mouse_events");
+		CSTRING str = Config("mouse_events");
 
 		if (strings_match(str, "all") || strings_match(str, "ALL"))
 			(void) mousemask(ALL_MOUSE_EVENTS, NULL);

@@ -66,10 +66,10 @@ typedef struct tagTAB_COMPLETION {
 
 struct readline_session_context {
 	PTAB_COMPLETION  tc;
+	STRING           prompt;
 	WINDOW          *act;
 	bool             insert_mode;
 	bool             no_bufspc;
-	char            *prompt;
 	int              bufpos;
 	int              numins;
 	int              prompt_size;
