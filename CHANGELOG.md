@@ -8,6 +8,11 @@ All notable changes to this project will be documented in this file.
 - **Optimized** commonly used functions for speed.
 - **Replaced** C-style casts in C++.
 
+### Windows ###
+- **Fixed** missing DLLs. Unfortunately some DLLs were missing after
+  adding the dependency on Hunspell. Since I am running a dev
+  environment I had them my PATH and therefore didn't notice it.
+
 ## [3.4.0] - 2023-02-10 ##
 - **Added** a SOCKS proxy client
 - **Added** command `/fetchdic`
