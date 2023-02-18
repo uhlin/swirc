@@ -35,6 +35,7 @@ main: $(TGTS)
 	$(E) ^ ^ CXX^ ^ ^ ^ ^ $@
 	$(Q) $(CXX) $(CXXFLAGS) -c -Fo$*.obj $< 1>>$(BUILD_LOG)
 
+# XXX: Add the MINGW DLLs? (Hunspell)
 DIST_DEPS = swirc.exe\
 	"curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll"\
 	"gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libcharset).dll"\
@@ -60,6 +61,9 @@ dist: $(DIST_DEPS)
 	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libidn).dll" $(DEST)
 	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libintl).dll" $(DEST)
 	copy "hunspell-$(HUNSPELL_VERSION)\$(MACHINE)\$(NAME_libhunspell).dll" $(DEST)
+	copy "hunspell-$(HUNSPELL_VERSION)\$(MACHINE)\$(DLL_libgcc)" $(DEST)
+	copy "hunspell-$(HUNSPELL_VERSION)\$(MACHINE)\$(DLL_libstdcpp)" $(DEST)
+	copy "hunspell-$(HUNSPELL_VERSION)\$(MACHINE)\$(DLL_libwinpthread)" $(DEST)
 	copy "hunspell-en-us\en_US.aff" $(DEST)
 	copy "hunspell-en-us\en_US.dic" $(DEST)
 	copy "pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll" $(DEST)
@@ -79,6 +83,9 @@ SIGNTOOL_FLAGS = -f "C:\CERTS\SwircDevelopmentTeam.pfx"\
 	-v
 
 setupfile: dist Swirc.wxs
+	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(DLL_libgcc)"
+	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(DLL_libstdcpp)"
+	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(DLL_libwinpthread)"
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libcharset).dll"
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libhunspell).dll"
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libiconv).dll"
