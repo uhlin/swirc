@@ -1,3 +1,10 @@
+swirc (3.4.1-1) unstable; urgency=medium
+
+  * New upstream version. (A few but good changes.)
+  * Updated obsolete package names in 'Build-Depends'.
+
+ -- Markus Uhlin <markus.uhlin@bredband.net>  Sat, 18 Feb 2023 20:36:55 +0100
+
 swirc (3.4.0-1) unstable; urgency=medium
 
   * New upstream version.
