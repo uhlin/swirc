@@ -23,6 +23,7 @@ cov-int
 cppcheck-data
 curl-*
 gnu-bundle-*
+hunspell-*
 libressl-*
 options.mk
 pdcurses-*
