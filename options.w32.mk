@@ -45,6 +45,11 @@ NAME_libidn = libidn-12
 NAME_libintl = libintl-8
 NAME_libssl = ssl-53
 
+# MINGW hunspell
+DLL_libgcc = libgcc_s_seh-1.dll
+DLL_libstdcpp = libstdc++-6.dll
+DLL_libwinpthread = libwinpthread-1.dll
+
 LDFLAGS = -LIBPATH:curl-$(CURL_VERSION)/$(MACHINE)\
 	-LIBPATH:gnu-bundle-$(GNU_BUNDLE_DATE)/$(MACHINE)\
 	-LIBPATH:hunspell-$(HUNSPELL_VERSION)/$(MACHINE)\
