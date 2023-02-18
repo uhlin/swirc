@@ -5,9 +5,9 @@
 
 __SWIRC_BEGIN_DECLS
 
-void cmd_znc(const char *) PTR_ARGS_NONNULL;
+void cmd_znc(CSTRING);
 
-PTEXTBUF get_list_of_matching_znc_commands(const char *);
+PTEXTBUF get_list_of_matching_znc_commands(CSTRING);
 
 __SWIRC_END_DECLS
 

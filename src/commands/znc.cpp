@@ -102,7 +102,7 @@ static stringarray_t znc_commands = {
 };
 
 static void
-add_cmd(PTEXTBUF matches, const char *str)
+add_cmd(PTEXTBUF matches, CSTRING str)
 {
 	if (textBuf_size(matches) != 0) {
 		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
@@ -118,10 +118,10 @@ add_cmd(PTEXTBUF matches, const char *str)
  * usage: /znc [*module] <command>
  */
 void
-cmd_znc(const char *data)
+cmd_znc(CSTRING data)
 {
+	STRING			 dcopy;
 	bool			 written_linefeed = false;
-	char			*dcopy;
 	static chararray_t	 cmd = "/znc";
 
 	if (strings_match(data, "")) {
@@ -135,7 +135,7 @@ cmd_znc(const char *data)
 	free(dcopy);
 
 	try {
-		char				*module;
+		STRING				 module;
 		std::string			 token;
 		std::vector<std::string>	 tokens;
 
@@ -169,12 +169,12 @@ cmd_znc(const char *data)
 }
 
 PTEXTBUF
-get_list_of_matching_znc_commands(const char *search_var)
+get_list_of_matching_znc_commands(CSTRING search_var)
 {
 	PTEXTBUF matches = textBuf_new();
 
 	for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i++) {
-		const char *cmd = znc_commands[i];
+		CSTRING cmd = znc_commands[i];
 
 		if (!strncmp(search_var, cmd, strlen(search_var)))
 			add_cmd(matches, cmd);
