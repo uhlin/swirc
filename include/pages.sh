@@ -1,7 +1,6 @@
 PAGES="
 about.html
 cloning-and-building.html
-cmds.html
 confopts.html
 debian.html
 index.html
