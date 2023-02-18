@@ -114,17 +114,6 @@ add_cmd(PTEXTBUF matches, const char *str)
 	}
 }
 
-static bool
-got_hits(const char *search_var)
-{
-	for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i++) {
-		if (!strncmp(search_var, znc_commands[i], strlen(search_var)))
-			return true;
-	}
-
-	return false;
-}
-
 /*
  * usage: /znc [*module] <command>
  */
@@ -182,18 +171,18 @@ cmd_znc(const char *data)
 PTEXTBUF
 get_list_of_matching_znc_commands(const char *search_var)
 {
-	PTEXTBUF	matches;
-
-	if (!got_hits(search_var))
-		return NULL;
-
-	matches = textBuf_new();
+	PTEXTBUF matches = textBuf_new();
 
 	for (size_t i = 0; i < ARRAY_SIZE(znc_commands); i++) {
 		const char *cmd = znc_commands[i];
 
 		if (!strncmp(search_var, cmd, strlen(search_var)))
 			add_cmd(matches, cmd);
+	}
+
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
 	}
 
 	return matches;
