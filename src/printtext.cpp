@@ -329,14 +329,14 @@ convert_wc(wchar_t wc)
 	mbs[size] = '\0';
 
 #ifdef HAVE_BCI
-	if ((errno = wcrtomb_s(&bytes_written, reinterpret_cast<char *>(mbs),
+	if ((errno = wcrtomb_s(&bytes_written, reinterpret_cast<STRING>(mbs),
 	    size, wc, &ps)) != 0) {
 		err_log(errno, "printtext: %s: wcrtomb_s", __func__);
 		*mbs = '\0';
 		return mbs;
 	}
 #else
-	if ((bytes_written = wcrtomb(reinterpret_cast<char *>(mbs), wc, &ps)) ==
+	if ((bytes_written = wcrtomb(reinterpret_cast<STRING>(mbs), wc, &ps)) ==
 	    g_conversion_failed) {
 		err_log(EILSEQ, "printtext: %s: wcrtomb", __func__);
 		*mbs = '\0';
@@ -852,7 +852,7 @@ get_processed_out_message(CSTRING unproc_msg, enum message_specifier_type
 	pout->indent = 0;
 
 	if (include_ts) {
-		char *ts = NULL;
+		STRING ts = NULL;
 
 		if (srv_time)
 			ts = sw_strdup(srv_time);
@@ -1079,7 +1079,7 @@ static wchar_t *
 perform_convert_buffer(const char **in_buf)
 {
 	bool		 chars_lost = false;
-	const char	*ar[] = {
+	stringarray_t	 ar = {
 #if defined(UNIX)
 		"UTF-8", "utf8",
 		"ISO-8859-1", "ISO8859-1", "iso88591",
@@ -1551,7 +1551,7 @@ set_timestamp(char *dest, size_t destsize,
 void
 vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 {
-	char			*fmt_copy = NULL;
+	STRING			 fmt_copy = NULL;
 	const int		 tbszp1 = textBuf_size(ctx->window->buf) + 1;
 	struct integer_context	 intctx("textbuffer_size_absolute", 350, 4700,
 				     1000);
@@ -1608,7 +1608,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 	}
 
 	if (ctx->window->logging) {
-		char *logpath;
+		STRING logpath;
 
 		if ((logpath = log_get_path(g_server_hostname,
 		    ctx->window->label)) != NULL) {
