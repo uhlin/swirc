@@ -111,6 +111,28 @@
 			    KeyPath="yes"
 			    Source="c:\out\swirc-x64\en_US.dic" />
 		</Component>
+
+		<!-- BEGIN MINGW -->
+		<Component Guid="*" Id="libgcc_dll" Win64="yes">
+			<File
+			    Id="libgcc_dll_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\libgcc_s_seh-1.dll" />
+		</Component>
+		<Component Guid="*" Id="libstdcpp_dll" Win64="yes">
+			<File
+			    Id="libstdcpp_dll_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\libstdc++-6.dll" />
+		</Component>
+		<Component Guid="*" Id="libwinpthread_dll" Win64="yes">
+			<File
+			    Id="libwinpthread_dll_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\libwinpthread-1.dll" />
+		</Component>
+		<!-- END MINGW -->
+
 		<Component Guid="*" Id="libcharset_dll" Win64="yes">
 			<File
 			    Id="libcharset_dll_file"
@@ -222,6 +244,10 @@
 
 		<ComponentRef Id="en_US_aff" />
 		<ComponentRef Id="en_US_dic" />
+
+		<ComponentRef Id="libgcc_dll" />
+		<ComponentRef Id="libstdcpp_dll" />
+		<ComponentRef Id="libwinpthread_dll" />
 
 		<ComponentRef Id="libcharset_dll" />
 		<ComponentRef Id="libcurl_dll" />
