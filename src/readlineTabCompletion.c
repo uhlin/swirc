@@ -186,27 +186,27 @@ buf_contains_disallowed_chars(const volatile struct readline_session_context *ct
 }
 
 static PTEXTBUF
-get_matches_common(const char *p)
+get_matches_common(CSTRING srch)
 {
 	if (!is_irc_channel(ACTWINLABEL)) {
-		if (!is_irc_channel(p))
-			return get_list_of_matching_queries(p);
+		if (!is_irc_channel(srch))
+			return get_list_of_matching_queries(srch);
 		else
-			return get_list_of_matching_channels(p);
+			return get_list_of_matching_channels(srch);
 	}
-	if (is_irc_channel(p))
-		return get_list_of_matching_channels(p);
-	return get_list_of_matching_channel_users(ACTWINLABEL, p);
+	if (is_irc_channel(srch))
+		return get_list_of_matching_channels(srch);
+	return get_list_of_matching_channel_users(ACTWINLABEL, srch);
 }
 
-static inline char *
+static inline STRING
 get_search_var(const volatile struct readline_session_context *ctx)
 {
 	return addrof(ctx->tc->search_var[0]);
 }
 
 static void
-output_error(const char *msg)
+output_error(CSTRING msg)
 {
 	PRINTTEXT_CONTEXT	ctx;
 
@@ -218,7 +218,7 @@ output_error(const char *msg)
 static int
 store_search_var(const volatile struct readline_session_context *ctx)
 {
-	char *s = readline_finalize_out_string_exported(ctx->buffer);
+	STRING s = readline_finalize_out_string_exported(ctx->buffer);
 
 	const int store_res = sw_strcpy(ctx->tc->search_var, s,
 	    ARRAY_SIZE(ctx->tc->search_var));
@@ -521,7 +521,7 @@ init_mode_for_channel_users(volatile struct readline_session_context *ctx)
 	ctx->tc->isInCirculationModeForChanUsers = true;
 }
 
-static char *
+static STRING
 next_text(PTAB_COMPLETION tc)
 {
 	tc->elmt = tc->elmt->next;
