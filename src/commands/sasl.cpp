@@ -572,11 +572,23 @@ got_hits(const char *search_var)
 	return false;
 }
 
+static void
+add_cmd(PTEXTBUF matches, const char *cmd)
+{
+	if (textBuf_size(matches) == 0) {
+		if ((errno = textBuf_ins_next(matches, NULL, cmd, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	} else {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
+		    cmd, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	}
+}
+
 PTEXTBUF
 get_list_of_matching_sasl_cmds(const char *search_var)
 {
-#define MSG "get_list_of_matching_sasl_cmds: textBuf_ins_next"
-	PTEXTBUF	matches;
+	PTEXTBUF matches;
 
 	if (!got_hits(search_var))
 		return NULL;
@@ -584,19 +596,10 @@ get_list_of_matching_sasl_cmds(const char *search_var)
 	matches = textBuf_new();
 
 	for (size_t i = 0; i < ARRAY_SIZE(sasl_cmds); i++) {
-		const char	*cmd = sasl_cmds[i];
+		const char *cmd = sasl_cmds[i];
 
-		if (!strncmp(search_var, cmd, strlen(search_var))) {
-			if (textBuf_size(matches) == 0) {
-				if ((errno = textBuf_ins_next(matches, NULL,
-				    cmd, -1)) != 0)
-					err_sys(MSG);
-			} else {
-				if ((errno = textBuf_ins_next(matches,
-				    textBuf_tail(matches), cmd, -1)) != 0)
-					err_sys(MSG);
-			}
-		}
+		if (!strncmp(search_var, cmd, strlen(search_var)))
+			add_cmd(matches, cmd);
 	}
 
 	return matches;
