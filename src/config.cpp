@@ -195,18 +195,6 @@ get_string(const char *name, const char *type)
 	return str;
 }
 
-static bool
-got_hits(const char *search_var)
-{
-	FOREACH_CDV() {
-		if (!strncmp(search_var, cdv_p->setting_name,
-		    strlen(search_var)))
-			return true;
-	}
-
-	return false;
-}
-
 static void
 hInstall(const char *name, const char *value)
 {
@@ -400,17 +388,17 @@ add_name(PTEXTBUF matches, const char *name)
 PTEXTBUF
 get_list_of_matching_settings(const char *search_var)
 {
-	PTEXTBUF matches;
-
-	if (!got_hits(search_var))
-		return NULL;
-
-	matches = textBuf_new();
+	PTEXTBUF matches = textBuf_new();
 
 	FOREACH_CDV() {
 		if (!strncmp(search_var, cdv_p->setting_name,
 		    strlen(search_var)))
 			add_name(matches, cdv_p->setting_name);
+	}
+
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
 	}
 
 	return matches;
