@@ -2,11 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Changed the requirements for checking if a connection is lost. (The
+- **Changed** the requirements for checking if a connection is lost. (The
   change avoids flooding the server with PING commands better.)
-- Improved algorithms.
-- Optimized commonly used functions for speed.
-- Replaced C-style casts in C++.
+- **Improved** algorithms.
+- **Optimized** commonly used functions for speed.
+- **Replaced** C-style casts in C++.
 
 ## [3.4.0] - 2023-02-10 ##
 - **Added** a SOCKS proxy client
