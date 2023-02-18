@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.4.1] - 2023-02-18 ##
 - **Changed** the requirements for checking if a connection is lost. (The
   change avoids flooding the server with PING commands better.)
 - **Improved** algorithms.
