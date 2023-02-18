@@ -384,6 +384,19 @@ write_config_header(FILE *fp)
 
 /* -------------------------------------------------- */
 
+static void
+add_name(PTEXTBUF matches, const char *name)
+{
+	if (textBuf_size(matches) == 0) {
+		if ((errno = textBuf_ins_next(matches, NULL, name, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	} else {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
+		    name, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	}
+}
+
 PTEXTBUF
 get_list_of_matching_settings(const char *search_var)
 {
@@ -396,22 +409,8 @@ get_list_of_matching_settings(const char *search_var)
 
 	FOREACH_CDV() {
 		if (!strncmp(search_var, cdv_p->setting_name,
-		    strlen(search_var))) {
-			if (textBuf_size(matches) == 0) {
-				if ((errno = textBuf_ins_next(matches, NULL,
-				    cdv_p->setting_name, -1)) != 0) {
-					err_sys("%s: textBuf_ins_next",
-					    __func__);
-				}
-			} else {
-				if ((errno = textBuf_ins_next(matches,
-				    textBuf_tail(matches), cdv_p->setting_name,
-				    -1)) != 0) {
-					err_sys("%s: textBuf_ins_next",
-					    __func__);
-				}
-			}
-		}
+		    strlen(search_var)))
+			add_name(matches, cdv_p->setting_name);
 	}
 
 	return matches;
