@@ -45,11 +45,11 @@
 /**
  * Convert a wide-character to a multibyte sequence
  */
-static char *
+static STRING
 convert_wc(wchar_t wc)
 {
 	const size_t	 size = MB_LEN_MAX;
-	char		*mbs = xmalloc(size + 1);
+	STRING		 mbs = xmalloc(size + 1);
 	mbstate_t	 ps;
 	size_t		 bytes_written = 0;
 
@@ -160,7 +160,7 @@ ins_complex_char(WINDOW *win, int c)
  * Readline error handling
  */
 NORETURN void
-readline_error(int error, const char *msg)
+readline_error(int error, CSTRING msg)
 {
 	PRINTTEXT_CONTEXT ctx;
 	char strerrbuf[MAXERROR] = { '\0' };
@@ -184,7 +184,7 @@ readline_error(int error, const char *msg)
 void
 readline_mvwaddch(WINDOW *win, int row, int col, wint_t wc)
 {
-	char *mbs = convert_wc(wc);
+	STRING mbs = convert_wc(wc);
 
 	mutex_lock(&g_puts_mutex);
 	if (wmove(win, row, col) == ERR) {
@@ -214,7 +214,7 @@ readline_mvwaddch(WINDOW *win, int row, int col, wint_t wc)
 void
 readline_waddch(WINDOW *win, wint_t wc)
 {
-	char *mbs = convert_wc(wc);
+	STRING mbs = convert_wc(wc);
 
 	mutex_lock(&g_puts_mutex);
 	if (!is_text_decoration(wc)) {
@@ -261,7 +261,7 @@ readline_waddnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
 void
 readline_mvwinsch(WINDOW *win, int row, int col, wint_t wc)
 {
-	char *mbs = convert_wc(wc);
+	STRING mbs = convert_wc(wc);
 
 	mutex_lock(&g_puts_mutex);
 	if (wmove(win, row, col) == ERR) {
@@ -291,7 +291,7 @@ readline_mvwinsch(WINDOW *win, int row, int col, wint_t wc)
 void
 readline_winsch(WINDOW *win, wint_t wc)
 {
-	char *mbs = convert_wc(wc);
+	STRING mbs = convert_wc(wc);
 
 	mutex_lock(&g_puts_mutex);
 	if (!is_text_decoration(wc)) {
