@@ -561,17 +561,6 @@ sign_decoded_data(EC_KEY *key, const uint8_t *data, int datalen, uint8_t **sig,
 	return true;
 }
 
-static bool
-got_hits(const char *search_var)
-{
-	for (size_t i = 0; i < ARRAY_SIZE(sasl_cmds); i++) {
-		if (!strncmp(search_var, sasl_cmds[i], strlen(search_var)))
-			return true;
-	}
-
-	return false;
-}
-
 static void
 add_cmd(PTEXTBUF matches, const char *cmd)
 {
@@ -588,18 +577,18 @@ add_cmd(PTEXTBUF matches, const char *cmd)
 PTEXTBUF
 get_list_of_matching_sasl_cmds(const char *search_var)
 {
-	PTEXTBUF matches;
-
-	if (!got_hits(search_var))
-		return NULL;
-
-	matches = textBuf_new();
+	PTEXTBUF matches = textBuf_new();
 
 	for (size_t i = 0; i < ARRAY_SIZE(sasl_cmds); i++) {
 		const char *cmd = sasl_cmds[i];
 
 		if (!strncmp(search_var, cmd, strlen(search_var)))
 			add_cmd(matches, cmd);
+	}
+
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
 	}
 
 	return matches;
