@@ -49,7 +49,7 @@
 
 static void
 do_work(volatile struct readline_session_context *ctx, const wchar_t *cmd,
-    const char *s)
+    CSTRING s)
 {
 	const size_t cmdlen = wcslen(cmd);
 	const size_t slen = strlen(s);
@@ -65,91 +65,91 @@ do_work(volatile struct readline_session_context *ctx, const wchar_t *cmd,
 
 static void
 auto_complete_connect(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	do_work(ctx, L"/connect ", s);
 }
 
 static void
 auto_complete_help(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	do_work(ctx, L"/help ", s);
 }
 
 static void
 auto_complete_msg(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	do_work(ctx, L"/msg ", s);
 }
 
 static void
 auto_complete_notice(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	do_work(ctx, L"/notice ", s);
 }
 
 static void
 auto_complete_query(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	do_work(ctx, L"/query ", s);
 }
 
 static void
 auto_complete_sasl(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	do_work(ctx, L"/sasl ", s);
 }
 
 static void
 auto_complete_setting(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	do_work(ctx, L"/set ", s);
 }
 
 static void
 auto_complete_theme(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	do_work(ctx, L"/theme ", s);
 }
 
 static void
 auto_complete_time(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	do_work(ctx, L"/time ", s);
 }
 
 static void
 auto_complete_version(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	do_work(ctx, L"/version ", s);
 }
 
 static void
 auto_complete_whois(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	do_work(ctx, L"/whois ", s);
 }
 
 static void
 auto_complete_znc_cmd(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	do_work(ctx, L"/znc ", s);
 }
 
 static void
 auto_complete_command(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	const size_t slen = strlen(s);
 
@@ -164,7 +164,7 @@ auto_complete_command(volatile struct readline_session_context *ctx,
 
 static void
 auto_complete_channel_user(volatile struct readline_session_context *ctx,
-    const char *s)
+    CSTRING s)
 {
 	const size_t slen = strlen(s);
 
@@ -179,7 +179,7 @@ auto_complete_channel_user(volatile struct readline_session_context *ctx,
 static bool
 buf_contains_disallowed_chars(const volatile struct readline_session_context *ctx)
 {
-	char *s = readline_finalize_out_string_exported(ctx->buffer);
+	STRING s = readline_finalize_out_string_exported(ctx->buffer);
 	const bool yes_no = (strpbrk(s, g_textdeco_chars) != NULL);
 	free(s);
 	return yes_no;
