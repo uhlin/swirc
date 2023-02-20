@@ -80,15 +80,15 @@ void windowSystem_deinit(void);
 /*lint -sem(get_list_of_matching_channels, r_null) */
 /*lint -sem(get_list_of_matching_queries, r_null) */
 
-PIRC_WINDOW	window_by_label(const char *);
+PIRC_WINDOW	window_by_label(CSTRING);
 PIRC_WINDOW	window_by_refnum(int);
-PTEXTBUF	get_list_of_matching_channels(const char *search_var);
-PTEXTBUF	get_list_of_matching_queries(const char *search_var);
-int		change_window_by_label(const char *);
+PTEXTBUF	get_list_of_matching_channels(CSTRING search_var);
+PTEXTBUF	get_list_of_matching_queries(CSTRING search_var);
+int		change_window_by_label(CSTRING);
 int		change_window_by_refnum(int);
-errno_t		destroy_chat_window(const char *label);
-errno_t		spawn_chat_window(const char *label, const char *title);
-void		new_window_title(const char *label, const char *title);
+errno_t		destroy_chat_window(CSTRING label);
+errno_t		spawn_chat_window(CSTRING label, CSTRING title);
+void		new_window_title(CSTRING label, CSTRING title);
 void		window_close_all_priv_conv(void);
 void		window_foreach_destroy_names(void);
 void		window_foreach_rejoin_all_channels(void);

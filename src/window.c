@@ -528,7 +528,7 @@ windowSystem_deinit(void)
  * error
  */
 PIRC_WINDOW
-window_by_label(const char *label)
+window_by_label(CSTRING label)
 {
 	PIRC_WINDOW window;
 
@@ -563,7 +563,7 @@ window_by_refnum(int refnum)
 }
 
 PTEXTBUF
-get_list_of_matching_channels(const char *search_var)
+get_list_of_matching_channels(CSTRING search_var)
 {
 	PTEXTBUF	matches = textBuf_new();
 
@@ -583,7 +583,7 @@ get_list_of_matching_channels(const char *search_var)
 }
 
 PTEXTBUF
-get_list_of_matching_queries(const char *search_var)
+get_list_of_matching_queries(CSTRING search_var)
 {
 	PTEXTBUF	matches = textBuf_new();
 
@@ -607,7 +607,7 @@ get_list_of_matching_queries(const char *search_var)
  * Change window to the one specified by @label
  */
 int
-change_window_by_label(const char *label)
+change_window_by_label(CSTRING label)
 {
 	return change_window(window_by_label(label));
 }
@@ -625,7 +625,7 @@ change_window_by_refnum(int refnum)
  * Destroy a chat window
  */
 errno_t
-destroy_chat_window(const char *label)
+destroy_chat_window(CSTRING label)
 {
 	PIRC_WINDOW window;
 
@@ -648,7 +648,7 @@ destroy_chat_window(const char *label)
  * Spawn a chat window with given label and title
  */
 errno_t
-spawn_chat_window(const char *label, const char *title)
+spawn_chat_window(CSTRING label, CSTRING title)
 {
 	const int ntotalp1 = g_ntotal_windows + 1;
 	struct integer_context intctx = {
@@ -692,7 +692,7 @@ spawn_chat_window(const char *label, const char *title)
  * Set new window title
  */
 void
-new_window_title(const char *label, const char *title)
+new_window_title(CSTRING label, CSTRING title)
 {
 	PIRC_WINDOW window;
 
