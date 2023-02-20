@@ -624,7 +624,7 @@ change_window_by_refnum(int refnum)
 /**
  * Destroy a chat window
  */
-int
+errno_t
 destroy_chat_window(const char *label)
 {
 	PIRC_WINDOW window;
@@ -647,7 +647,7 @@ destroy_chat_window(const char *label)
 /**
  * Spawn a chat window with given label and title
  */
-int
+errno_t
 spawn_chat_window(const char *label, const char *title)
 {
 	const int ntotalp1 = g_ntotal_windows + 1;
