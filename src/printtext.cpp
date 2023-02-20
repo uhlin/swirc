@@ -330,7 +330,7 @@ convert_wc(wchar_t wc)
 
 #ifdef HAVE_BCI
 	if ((errno = wcrtomb_s(&bytes_written, reinterpret_cast<STRING>(mbs),
-	    size, wc, &ps)) != 0) {
+	    size, wc, &ps)) != 0 || bytes_written == g_conversion_failed) {
 		err_log(errno, "printtext: %s: wcrtomb_s", __func__);
 		*mbs = '\0';
 		return mbs;
