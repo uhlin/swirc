@@ -106,6 +106,7 @@ typedef long int ssize_t;
 #define __SWIRC_END_DECLS
 #endif
 
+#include "errno-type.h"
 #include <errno.h>
 #include <stdarg.h>
 #include <stdbool.h>
