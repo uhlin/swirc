@@ -78,8 +78,8 @@
    ===================== */
 
 struct hInstall_context {
-	char	*label;
-	char	*title;
+	STRING	 label;
+	STRING	 title;
 	PANEL	*pan;
 	int	 refnum;
 };
@@ -102,7 +102,7 @@ static PIRC_WINDOW hash_table[200] = { NULL };
 /* -------------------------------------------------- */
 
 static void
-add_match(PTEXTBUF matches, const char *what)
+add_match(PTEXTBUF matches, CSTRING what)
 {
 	if (textBuf_size(matches) != 0) {
 		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
@@ -144,7 +144,7 @@ change_window(PIRC_WINDOW window)
 	statusbar_update_display_beta();
 
 	if ((pwin = readline_get_active_pwin()) != NULL) {
-		char *prompt;
+		STRING prompt;
 
 		(void) werase(pwin);
 		prompt = get_prompt();
@@ -668,8 +668,8 @@ spawn_chat_window(CSTRING label, CSTRING title)
 	struct hInstall_context inst_ctx;
 	PIRC_WINDOW entry;
 
-	inst_ctx.label  = (char *) label;
-	inst_ctx.title  = (char *) title;
+	inst_ctx.label  = (STRING) label;
+	inst_ctx.title  = (STRING) title;
 	inst_ctx.pan    = term_new_panel(LINES - 2, 0, 1, 0);
 	inst_ctx.refnum = g_ntotal_windows + 1;
 

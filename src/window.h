@@ -41,8 +41,8 @@ typedef struct tagIRC_WINDOW {
 	bool		 received_names;
 	bool		 scroll_mode;
 	char		 chanmodes[256];
-	char		*label; /* Should not be case-sensitive */
-	char		*title;
+	STRING		 label; /* Should not be case-sensitive */
+	STRING		 title;
 
 	int	num_owners;
 	int	num_superops;
