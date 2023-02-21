@@ -3,11 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added usage of typedefs (`STRING`, `CSTRING`, `errno_t`, ...)
-
-### Windows ###
-- Fixed the usage of `wcrtomb_s()`. Comparing the return value against
-  non-zero in order to detect an error is unfortunately not
-  sufficient.
+- Fixed printtext() bugs
 
 ## [3.4.1] - 2023-02-18 ##
 - **Changed** the requirements for checking if a connection is lost. (The
