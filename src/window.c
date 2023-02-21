@@ -124,7 +124,7 @@ apply_window_options(WINDOW *win)
 		(void) scrollok(win, true);
 }
 
-static int
+static errno_t
 change_window(PIRC_WINDOW window)
 {
 	WINDOW *pwin;
@@ -606,7 +606,7 @@ get_list_of_matching_queries(CSTRING search_var)
 /**
  * Change window to the one specified by @label
  */
-int
+errno_t
 change_window_by_label(CSTRING label)
 {
 	return change_window(window_by_label(label));
@@ -615,7 +615,7 @@ change_window_by_label(CSTRING label)
 /**
  * Change window to the one specified by @refnum
  */
-int
+errno_t
 change_window_by_refnum(int refnum)
 {
 	return change_window(window_by_refnum(refnum));
@@ -637,7 +637,7 @@ destroy_chat_window(CSTRING label)
 
 	hUndef(window);
 	reassign_window_refnums();
-	const int ret = change_window_by_refnum(g_ntotal_windows);
+	const errno_t ret = change_window_by_refnum(g_ntotal_windows);
 	(void) ret;
 	sw_assert_perror(ret);
 
@@ -675,7 +675,7 @@ spawn_chat_window(CSTRING label, CSTRING title)
 
 	entry = hInstall(&inst_ctx);
 	apply_window_options(panel_window(entry->pan));
-	const int ret = change_window_by_label(entry->label);
+	const errno_t ret = change_window_by_label(entry->label);
 	(void) ret;
 	sw_assert_perror(ret);
 
