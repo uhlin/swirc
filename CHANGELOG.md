@@ -3,7 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added usage of typedefs (`STRING`, `CSTRING`, `errno_t`, ...)
-- Fixed printtext() bugs
+- Fixed printtext() bugs due to not checking if the wide character
+  passed to `wcrtomb_s()` or `wcrtomb()` is a null character.
 
 ## [3.4.1] - 2023-02-18 ##
 - **Changed** the requirements for checking if a connection is lost. (The
