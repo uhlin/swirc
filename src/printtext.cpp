@@ -329,16 +329,21 @@ convert_wc(wchar_t wc)
 	mbs[size] = '\0';
 
 #ifdef HAVE_BCI
-	if ((errno = wcrtomb_s(&bytes_written, reinterpret_cast<STRING>(mbs),
-	    size, wc, &ps)) != 0 || bytes_written == g_conversion_failed) {
-		err_log(errno, "printtext: %s: wcrtomb_s", __func__);
+	if (wc == L'\0' ||
+	    (errno = wcrtomb_s(&bytes_written, reinterpret_cast<STRING>(mbs),
+	    size, wc, &ps)) != 0 ||
+	    bytes_written == g_conversion_failed) {
+		if (wc != L'\0')
+			err_log(errno, "printtext: %s: wcrtomb_s", __func__);
 		*mbs = '\0';
 		return mbs;
 	}
 #else
-	if ((bytes_written = wcrtomb(reinterpret_cast<STRING>(mbs), wc, &ps)) ==
+	if (wc == L'\0' ||
+	    (bytes_written = wcrtomb(reinterpret_cast<STRING>(mbs), wc, &ps)) ==
 	    g_conversion_failed) {
-		err_log(EILSEQ, "printtext: %s: wcrtomb", __func__);
+		if (wc != L'\0')
+			err_log(EILSEQ, "printtext: %s: wcrtomb", __func__);
 		*mbs = '\0';
 		return mbs;
 	}
