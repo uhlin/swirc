@@ -56,6 +56,11 @@ convert_wc(wchar_t wc)
 	BZERO(&ps, sizeof(mbstate_t));
 	mbs[size] = '\0';
 
+	if (wc == L'\0') {
+		mbs[0] = '\0';
+		return mbs;
+	}
+
 #ifdef HAVE_BCI
 	if ((errno = wcrtomb_s(&bytes_written, mbs, size, wc, &ps)) != 0 ||
 	    bytes_written == g_conversion_failed) {
