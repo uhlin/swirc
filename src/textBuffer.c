@@ -78,7 +78,7 @@ textBuf_get_element_by_pos(const TEXTBUF *buf, int pos)
 	return NULL;
 }
 
-int
+errno_t
 textBuf_ins_next(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
     int indent)
 {
@@ -109,7 +109,7 @@ textBuf_ins_next(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
 	return 0;
 }
 
-int
+errno_t
 textBuf_ins_prev(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
     int indent)
 {
@@ -140,7 +140,7 @@ textBuf_ins_prev(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
 	return 0;
 }
 
-int
+errno_t
 textBuf_remove(PTEXTBUF buf, PTEXTBUF_ELMT element)
 {
 	if (buf == NULL || element == NULL || textBuf_size(buf) == 0)

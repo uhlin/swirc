@@ -523,7 +523,7 @@ Config(const char *setting_name)
 	return "";
 }
 
-int
+errno_t
 config_item_install(const char *name, const char *value)
 {
 	if (name == NULL || value == NULL)
@@ -535,7 +535,7 @@ config_item_install(const char *name, const char *value)
 	return 0;
 }
 
-int
+errno_t
 config_item_undef(const char *name)
 {
 	PCONF_HTBL_ENTRY entry;
