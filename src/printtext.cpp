@@ -795,6 +795,8 @@ case_underline(WINDOW *win, bool *is_underline)
 	}
 }
 
+static size_t get_mb_strlen(CSTRING) PTR_ARGS_NONNULL;
+
 /**
  * Get multibyte string length
  */
@@ -805,9 +807,6 @@ get_mb_strlen(CSTRING s)
 	const size_t ERR_CASE2 = static_cast<size_t>(-2);
 	size_t idx = 0;
 	size_t len = 0;
-
-	if (s == NULL)
-		return 0;
 
 	while (true) {
 		const size_t ret = mbrlen(&s[idx], MB_CUR_MAX, NULL);
