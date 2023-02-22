@@ -2,8 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [3.4.2] - 2023-02-22 ##
-- Added usage of typedefs (`STRING`, `CSTRING`, `errno_t`, ...)
-- Fixed printtext() bugs due to not checking if the wide character
+- **Added** usage of typedefs (`STRING`, `CSTRING`, `errno_t`, ...)
+- **Fixed** printtext() bugs due to not checking if the wide character
   passed to `wcrtomb_s()` or `wcrtomb()` is a null character.
 
 ## [3.4.1] - 2023-02-18 ##
