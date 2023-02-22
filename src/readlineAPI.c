@@ -63,12 +63,14 @@ convert_wc(wchar_t wc)
 
 #ifdef HAVE_BCI
 	if ((errno = wcrtomb_s(&bytes_written, mbs, size, wc, &ps)) != 0 ||
-	    bytes_written == g_conversion_failed) {
+	    bytes_written == g_conversion_failed ||
+	    bytes_written > size) {
 		free(mbs);
 		readline_error(errno, "wcrtomb_s");
 	}
 #else
-	if ((bytes_written = wcrtomb(mbs, wc, &ps)) == g_conversion_failed) {
+	if ((bytes_written = wcrtomb(mbs, wc, &ps)) == g_conversion_failed ||
+	    bytes_written > size) {
 		free(mbs);
 		readline_error(errno, "wcrtomb");
 	}
