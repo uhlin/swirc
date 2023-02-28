@@ -204,9 +204,7 @@ statusbar_update_display_beta(void)
 	(void) str.append(" ");
 	(void) str.append(lb);
 	(void) str.append(int_to_str(g_active_window->refnum));
-	(void) str.append("(");
-	(void) str.append(int_to_str(g_ntotal_windows));
-	(void) str.append(")");
+	(void) str.append("(").append(int_to_str(g_ntotal_windows)).append(")");
 	(void) str.append(rb);
 
 	(void) str.append(" ");
