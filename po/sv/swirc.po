@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-02-08 17:59+0100\n"
+"POT-Creation-Date: 2023-02-28 11:59+0100\n"
 "PO-Revision-Date: 2023-02-08 18:11+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -983,44 +983,44 @@ msgstr "  Mata ut din ZNC version:"
 msgid "  Identical to the previous example:"
 msgstr "  Identiskt med föregående exempel:"
 
-#: ../src/io-loop.c:432
+#: ../src/io-loop.c:422
 #, c-format
 msgid "    Swirc %s by %s"
 msgstr "    Swirc %s av %s"
 
-#: ../src/io-loop.c:433
+#: ../src/io-loop.c:423
 #, c-format
 msgid "    Compiled on %s%s %s%s"
 msgstr "    Kompilerad %s%s %s%s"
 
-#: ../src/io-loop.c:439
+#: ../src/io-loop.c:429
 #, c-format
 msgid "Current language %s%s%s"
 msgstr "Aktuellt språk %s%s%s"
 
-#: ../src/io-loop.c:442
+#: ../src/io-loop.c:432
 #, c-format
 msgid "Program settings are stored in %s%s%s"
 msgstr "Programinställningar lagras i %s%s%s"
 
-#: ../src/io-loop.c:444
+#: ../src/io-loop.c:434
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
 msgstr "%c%hd%c färgpar har initierats"
 
-#: ../src/io-loop.c:446
+#: ../src/io-loop.c:436
 msgid "Type /help for a list of commands; or /help <command>"
 msgstr "Skriv /help för en lista med kommandon; eller /help <kommando>"
 
-#: ../src/io-loop.c:448
+#: ../src/io-loop.c:438
 msgid "for help of a specific command"
 msgstr "för hjälp av ett specifikt kommando"
 
-#: ../src/io-loop.c:449
+#: ../src/io-loop.c:439
 msgid "Type F1 for keys"
 msgstr "Skriv F1 för tangenter"
 
-#: ../src/io-loop.c:451
+#: ../src/io-loop.c:441
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr "Storlek på fellogg %s%.1f KB%s"
@@ -1108,79 +1108,79 @@ msgstr "    -x <config>          Konfigurationsfil\n"
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Användning: %s [FLAGGA] ...\n"
 
-#: ../src/readline.c:552
+#: ../src/readline.c:549
 msgid "--------------- Keys ---------------"
 msgstr "--------------- Tangenter ---------------"
 
-#: ../src/readline.c:554
+#: ../src/readline.c:551
 msgid "CTRL+a     Move to beginning of line"
 msgstr "CTRL+a     Flytta till början av raden"
 
-#: ../src/readline.c:555
+#: ../src/readline.c:552
 msgid "CTRL+e     Move to end of line"
 msgstr "CTRL+e     Flytta till slutet av raden"
 
-#: ../src/readline.c:556
+#: ../src/readline.c:553
 msgid "CTRL+b     Move cursor backward"
 msgstr "CTRL+b     Flytta markören bakåt"
 
-#: ../src/readline.c:557
+#: ../src/readline.c:554
 msgid "CTRL+f     Move cursor forward"
 msgstr "CTRL+f     Flytta markören framåt"
 
-#: ../src/readline.c:558
+#: ../src/readline.c:555
 msgid "CTRL+d     Delete"
 msgstr "CTRL+d     Ta bort"
 
-#: ../src/readline.c:559
+#: ../src/readline.c:556
 msgid "CTRL+g     Clear readline input"
 msgstr "CTRL+g     Töm inmatning"
 
-#: ../src/readline.c:560
+#: ../src/readline.c:557
 msgid "CTRL+l     Toggle logging on/off"
 msgstr "CTRL+l     Växla loggning av/på"
 
-#: ../src/readline.c:561
+#: ../src/readline.c:558
 msgid "CTRL+n     Next window"
 msgstr "CTRL+n     Nästa fönster"
 
-#: ../src/readline.c:562
+#: ../src/readline.c:559
 msgid "CTRL+p     Previous window"
 msgstr "CTRL+p     Föregående fönster"
 
-#: ../src/readline.c:563
+#: ../src/readline.c:560
 msgid "PG UP      Scroll up"
 msgstr "PG UP      Scrolla upp"
 
-#: ../src/readline.c:564
+#: ../src/readline.c:561
 msgid "PG DOWN    Scroll down"
 msgstr "PG DOWN    Scrolla ned"
 
-#: ../src/readline.c:565
+#: ../src/readline.c:562
 msgid "Up arrow   History previous"
 msgstr "Up arrow   Föregående kommando"
 
-#: ../src/readline.c:566
+#: ../src/readline.c:563
 msgid "Down arrow History next"
 msgstr "Down arrow Nästa kommando"
 
-#: ../src/readline.c:567
+#: ../src/readline.c:564
 msgid "F2         Spell word"
 msgstr "F2         Stava ord"
 
-#: ../src/readline.c:568
+#: ../src/readline.c:565
 msgid "F3         Scroll nicklist up"
 msgstr "F3         Scrolla nicklistan upp"
 
-#: ../src/readline.c:569
+#: ../src/readline.c:566
 msgid "F4         Scroll nicklist down"
 msgstr "F4         Scrolla nicklistan ned"
 
-#: ../src/readline.c:570
+#: ../src/readline.c:567
 msgid "F11        Close window"
 msgstr "F11        Stäng fönster"
 
-#: ../src/readline.c:571
+#: ../src/readline.c:568
 msgid "F12        Close all private conversations"
 msgstr "F12        Stäng alla privata konversationer"
 
@@ -1203,3 +1203,19 @@ msgstr "Segmenteringsfel"
 #: ../src/sig-w32.c:30
 msgid "Termination request"
 msgstr "Avslutad"
+
+#: ../src/statusbar.cpp:222
+msgid "Log: "
+msgstr ""
+
+#: ../src/statusbar.cpp:222
+msgid "Yes"
+msgstr ""
+
+#: ../src/statusbar.cpp:223
+msgid "No"
+msgstr ""
+
+#: ../src/statusbar.cpp:227
+msgid "-- MORE --"
+msgstr ""
