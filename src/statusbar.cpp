@@ -37,6 +37,7 @@
 
 #include "cursesInit.h"
 #include "dataClassify.h"
+#include "i18n.h"
 #include "irc.h"
 #include "printtext.h"
 #include "readline.h"
@@ -218,12 +219,12 @@ statusbar_update_display_beta(void)
 
 	(void) str.append(" ");
 	(void) str.append(lb);
-	(void) str.append("Log: ").append(g_active_window->logging ? "Yes"
-	    : "No");
+	(void) str.append(_("Log: ")).append(g_active_window->logging ? _("Yes")
+	    : _("No"));
 	(void) str.append(rb);
 
 	(void) str.append(" ");
-	(void) str.append(g_active_window->scroll_mode ? "-- MORE --" : "");
+	(void) str.append(g_active_window->scroll_mode ? _("-- MORE --") : "");
 
 	out_s = sw_strdup(str.c_str());
 	printtext_puts(win, (g_no_colors ? squeeze_text_deco(out_s) : out_s),
