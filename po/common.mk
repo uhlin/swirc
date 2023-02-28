@@ -1,3 +1,5 @@
+# Common make defs
+
 PKG = swirc
 
 MSGMERGE = msgmerge
@@ -21,7 +23,8 @@ INPUTFILES = $(SRC_DIR)include/commandhelp.h\
 	$(SRC_DIR)io-loop.c\
 	$(SRC_DIR)main.cpp\
 	$(SRC_DIR)readline.c\
-	$(SRC_DIR)sig-w32.c
+	$(SRC_DIR)sig-w32.c\
+	$(SRC_DIR)statusbar.cpp
 
 POFILES = de/$(PKG).po\
 	fi/$(PKG).po\
