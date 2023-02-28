@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-02-28 11:59+0100\n"
-"PO-Revision-Date: 2021-08-22 22:22+0200\n"
+"PO-Revision-Date: 2023-02-28 18:40+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -1084,16 +1084,16 @@ msgstr "Päätetty"
 
 #: ../src/statusbar.cpp:222
 msgid "Log: "
-msgstr ""
+msgstr "Loki: "
 
 #: ../src/statusbar.cpp:222
 msgid "Yes"
-msgstr ""
+msgstr "Kyllä"
 
 #: ../src/statusbar.cpp:223
 msgid "No"
-msgstr ""
+msgstr "Ei"
 
 #: ../src/statusbar.cpp:227
 msgid "-- MORE --"
-msgstr ""
+msgstr "-- LISÄÄ --"
