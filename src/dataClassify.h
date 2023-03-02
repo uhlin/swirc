@@ -36,43 +36,43 @@ isEmpty(const char *data)
 #include <stdio.h>		/* EOF */
 
 static SW_INLINE int
-sw_isalnum(int c)
+sw_isalnum(const int c)
 {
 	return ((c == EOF || c < 0 || c > UCHAR_MAX) ? false : isalnum(c));
 }
 
 static SW_INLINE int
-sw_isalpha(int c)
+sw_isalpha(const int c)
 {
 	return ((c == EOF || c < 0 || c > UCHAR_MAX) ? false : isalpha(c));
 }
 
 static SW_INLINE int
-sw_isdigit(int c)
+sw_isdigit(const int c)
 {
 	return ((c == EOF || c < 0 || c > UCHAR_MAX) ? false : isdigit(c));
 }
 
 static SW_INLINE int
-sw_isspace(int c)
+sw_isspace(const int c)
 {
 	return ((c == EOF || c < 0 || c > UCHAR_MAX) ? false : isspace(c));
 }
 
 static SW_INLINE int
-sw_isprint(int c)
+sw_isprint(const int c)
 {
 	return ((c == EOF || c < 0 || c > UCHAR_MAX) ? false : isprint(c));
 }
 
 static SW_INLINE int
-sw_isupper(int c)
+sw_isupper(const int c)
 {
 	return ((c == EOF || c < 0 || c > UCHAR_MAX) ? false : isupper(c));
 }
 
 static SW_INLINE int
-sw_islower(int c)
+sw_islower(const int c)
 {
 	return ((c == EOF || c < 0 || c > UCHAR_MAX) ? false : islower(c));
 }
