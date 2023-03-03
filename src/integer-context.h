@@ -8,21 +8,23 @@ struct integer_context {
 	long int	 fallback_default; /* If the range is exceeded  --  use this value */
 
 #ifdef __cplusplus
-	integer_context()
+	integer_context() : setting_name("")
+	    , lo_limit(0)
+	    , hi_limit(0)
+	    , fallback_default(0)
 	{
-		this->setting_name = "";
-		this->lo_limit = 0;
-		this->hi_limit = 0;
-		this->fallback_default = 0;
+		/* null */;
 	}
 
-	integer_context(const char *setting_name,
-	    long int lo_limit, long int hi_limit, long int fallback_default)
+	integer_context(const char *p_setting_name,
+	    long int p_lo_limit,
+	    long int p_hi_limit,
+	    long int p_fallback_default) : setting_name(p_setting_name)
+	    , lo_limit(p_lo_limit)
+	    , hi_limit(p_hi_limit)
+	    , fallback_default(p_fallback_default)
 	{
-		this->setting_name = setting_name;
-		this->lo_limit = lo_limit;
-		this->hi_limit = hi_limit;
-		this->fallback_default = fallback_default;
+		/* null */;
 	}
 #endif
 };
