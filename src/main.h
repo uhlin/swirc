@@ -28,6 +28,8 @@ struct locale_info {
 	    : lang_and_territory(str1)
 	    , codeset(str2)
 	{}
+
+	~locale_info();
 #endif
 };
 

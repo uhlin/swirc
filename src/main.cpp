@@ -762,17 +762,19 @@ get_locale_info(int category)
 	return (li);
 }
 
+locale_info::~locale_info()
+{
+	free(this->lang_and_territory);
+	free(this->codeset);
+}
+
 /**
  * Free locale info
  */
 void
 free_locale_info(struct locale_info *li)
 {
-	if (li) {
-		free(li->lang_and_territory);
-		free(li->codeset);
-		delete li;
-	}
+	delete li;
 }
 
 cmdline_opt_values::~cmdline_opt_values()
