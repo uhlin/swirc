@@ -85,6 +85,15 @@ struct message_components {
 	    : text(NULL)
 	    , indent(0)
 	{}
+	message_components(STRING p_text, int p_indent)
+	    : text(p_text)
+	    , indent(p_indent)
+	{}
+	~message_components()
+	{
+		free(this->text);
+//		this->text = NULL;
+	}
 };
 
 struct text_decoration_bools {
