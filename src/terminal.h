@@ -15,19 +15,22 @@ struct term_window_size {
 
 #ifdef __cplusplus
 	term_window_size()
-	{
-		this->rows = 0;
-		this->cols = 0;
-		this->start_row = 0;
-		this->start_col = 0;
-	}
+	    : rows(0)
+	    , cols(0)
+	    , start_row(0)
+	    , start_col(0)
+	{}
 
-	term_window_size(int rows, int cols, int start_row, int start_col)
+	term_window_size(int p_rows,
+	    int p_cols,
+	    int p_start_row,
+	    int p_start_col)
+	    : rows(p_rows)
+	    , cols(p_cols)
+	    , start_row(p_start_row)
+	    , start_col(p_start_col)
 	{
-		this->rows = rows;
-		this->cols = cols;
-		this->start_row = start_row;
-		this->start_col = start_col;
+		/* null */;
 	}
 #endif
 };
