@@ -20,16 +20,14 @@ struct locale_info {
 
 #ifdef __cplusplus
 	locale_info()
-	{
-		this->lang_and_territory = NULL;
-		this->codeset = NULL;
-	}
+	    : lang_and_territory(NULL)
+	    , codeset(NULL)
+	{}
 
 	locale_info(char *str1, char *str2)
-	{
-		this->lang_and_territory = str1;
-		this->codeset = str2;
-	}
+	    : lang_and_territory(str1)
+	    , codeset(str2)
+	{}
 #endif
 };
 
@@ -43,15 +41,15 @@ struct cmdline_opt_values {
 	char	*config_file;
 
 #ifdef __cplusplus
-	cmdline_opt_values()
+	cmdline_opt_values() : server(NULL)
+	    , port(NULL)
+	    , nickname(NULL)
+	    , username(NULL)
+	    , rl_name(NULL)
+	    , hostname(NULL)
+	    , config_file(NULL)
 	{
-		this->server		= NULL;
-		this->port		= NULL;
-		this->nickname		= NULL;
-		this->username		= NULL;
-		this->rl_name		= NULL;
-		this->hostname		= NULL;
-		this->config_file	= NULL;
+		/* empty */;
 	}
 #endif
 };
