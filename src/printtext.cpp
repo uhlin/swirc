@@ -855,7 +855,7 @@ set_indent(int *indent, CSTRING fmt, ...)
  */
 static struct message_components *
 get_processed_out_message(CSTRING unproc_msg, enum message_specifier_type
-    spec_type, bool include_ts, CSTRING srv_time)
+    spec_type, bool include_ts, CSTRING srv_time) noexcept
 {
 	struct message_components *pout = new message_components(NULL, 0);
 
