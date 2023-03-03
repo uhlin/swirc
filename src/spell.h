@@ -9,7 +9,7 @@
 class suggestion {
 public:
 	suggestion();
-	suggestion(const char *);
+	explicit suggestion(const char *);
 	~suggestion();
 
 	const char	*get_word(void) const;
