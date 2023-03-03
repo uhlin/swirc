@@ -78,7 +78,7 @@
 ****************************************************************/
 
 struct message_components {
-	char	*text;
+	STRING	 text;
 	int	 indent;
 
 	message_components()
