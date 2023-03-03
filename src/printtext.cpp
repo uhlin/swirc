@@ -659,7 +659,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 static void
 do_indent(WINDOW *win, const int indent, int *insert_count)
 {
-	attr_t attrs = win->_attrs;
+	const attr_t attrs = win->_attrs;
 
 	/* turn off all attributes during indentation */
 	(void) wattrset(win, A_NORMAL);
