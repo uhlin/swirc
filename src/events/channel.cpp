@@ -1,5 +1,5 @@
 /* Channel related events
-   Copyright (C) 2015-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -44,6 +44,7 @@
 #include "../theme.h"
 
 #include "channel.h"
+#include "i18n.h"
 #include "names.h"
 
 #define SHUTDOWN_IRC_CONNECTION_BEHAVIOR 0
@@ -83,7 +84,7 @@ event_chan_hp(struct irc_message_compo *compo)
 		if ((ctx.window = window_by_label(channel)) == NULL)
 			throw std::runtime_error("window lookup error");
 
-		printtext(&ctx, "Homepage for %s%s%s%c%s: %s",
+		printtext(&ctx, _("Homepage for %s%s%s%c%s: %s"),
 		    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 		    homepage);
 	} catch (const std::runtime_error &e) {
@@ -150,7 +151,7 @@ event_join(struct irc_message_compo *compo)
 			if ((ctx.window = window_by_label(channel)) == NULL)
 				throw std::runtime_error("window lookup error");
 
-			printtext(&ctx, "%s%s%c %s%s@%s%s has joined %s%s%c",
+			printtext(&ctx, _("%s%s%c %s%s@%s%s has joined %s%s%c"),
 			    COLOR1, nick, NORMAL,
 			    LEFT_BRKT, user, host, RIGHT_BRKT,
 			    COLOR2, channel, NORMAL);
@@ -233,7 +234,7 @@ event_kick(struct irc_message_compo *compo)
 		if ((ctx.window = window_by_label(channel)) == NULL)
 			ctx.window = g_active_window;
 
-		printtext(&ctx, "%s was kicked from %s%s%c by %s%s%c %s%s%s",
+		printtext(&ctx, _("%s was kicked from %s%s%c by %s%s%c %s%s%s"),
 		    victim, COLOR2, channel, NORMAL, COLOR2, nick, NORMAL,
 		    LEFT_BRKT, (has_reason ? reason : ""), RIGHT_BRKT);
 	} catch (const std::runtime_error &e) {
@@ -493,7 +494,7 @@ event_mode(struct irc_message_compo *compo)
 			 * User mode
 			 */
 
-			printtext(&ctx, "Mode change %s%s%s for user %c%s%c",
+			printtext(&ctx, _("Mode change %s%s%s for user %c%s%c"),
 			    LEFT_BRKT, next_token_copy, RIGHT_BRKT,
 			    BOLD, nick, BOLD);
 
@@ -501,7 +502,7 @@ event_mode(struct irc_message_compo *compo)
 				throw std::runtime_error("cannot send");
 		} else if (is_irc_channel(channel) &&
 		    (ctx.window = window_by_label(channel)) != NULL) {
-			printtext(&ctx, "mode/%s%s%s%c%s %s%s%s by %s%s%c",
+			printtext(&ctx, _("mode/%s%s%s%c%s %s%s%s by %s%s%c"),
 			    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 			    LEFT_BRKT, next_token_copy, RIGHT_BRKT,
 			    COLOR2, nick, NORMAL);
@@ -602,8 +603,8 @@ event_nick(struct irc_message_compo *compo)
 			    == OK) {
 				ctx.window = window;
 
-				printtext(&ctx, "%s%s%c is now known as %s "
-				    "%s%s%c", COLOR2, nick, NORMAL, THE_SPEC2,
+				printtext(&ctx, _("%s%s%c is now known as %s "
+				    "%s%s%c"), COLOR2, nick, NORMAL, THE_SPEC2,
 				    COLOR1, new_nick, NORMAL);
 			}
 		}
@@ -680,8 +681,8 @@ event_part(struct irc_message_compo *compo)
 			if (has_message && message != NULL && *message == ':')
 				message++;
 
-			printtext(&ctx, "%s%s%c %s%s@%s%s has left %s%s%c "
-			    "%s%s%s",
+			printtext(&ctx, _("%s%s%c %s%s@%s%s has left %s%s%c "
+			    "%s%s%s"),
 			    COLOR2, nick, NORMAL,
 			    LEFT_BRKT, user, host, RIGHT_BRKT,
 			    COLOR2, channel, NORMAL,
@@ -739,8 +740,8 @@ event_quit(struct irc_message_compo *compo)
 				if (config_bool("joins_parts_quits", true)) {
 					ctx.window = window;
 
-					printtext(&ctx, "%s%s%c %s%s@%s%s has "
-					    "quit %s%s%s",
+					printtext(&ctx, _("%s%s%c %s%s@%s%s "
+					    "has quit %s%s%s"),
 					    COLOR2, nick, NORMAL,
 					    LEFT_BRKT, user, host, RIGHT_BRKT,
 					    LEFT_BRKT, message, RIGHT_BRKT);
@@ -786,7 +787,7 @@ event_topic(struct irc_message_compo *compo)
 			throw std::runtime_error("window lookup error");
 
 		new_window_title(channel, topic);
-		printtext(&ctx, "Topic for %s%s%s%c%s: %s",
+		printtext(&ctx, _("Topic for %s%s%s%c%s: %s"),
 		    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 		    topic);
 	} catch (const std::runtime_error &e) {
@@ -843,7 +844,7 @@ event_topic_chg(struct irc_message_compo *compo)
 			throw std::runtime_error("window lookup error");
 
 		new_window_title(channel, new_topic);
-		printtext(&ctx, "%c%s%c changed the topic of %c%s%c to: %s",
+		printtext(&ctx, _("%c%s%c changed the topic of %c%s%c to: %s"),
 		    BOLD, nick, BOLD,
 		    BOLD, channel, BOLD,
 		    new_topic);
@@ -915,7 +916,8 @@ event_topic_creator(struct irc_message_compo *compo)
 			throw std::runtime_error("no nickname");
 		} else if ((user = strtok_r(NULL, "!@", &state2)) != NULL &&
 		    (host = strtok_r(NULL, "!@", &state2)) != NULL) {
-			printtext(&ctx, "Topic set by %c%s%c %s%s@%s%s %s%s%s",
+			printtext(&ctx, _("Topic set by %c%s%c %s%s@%s%s "
+			    "%s%s%s"),
 			    BOLD, nick, BOLD,
 			    LEFT_BRKT, user, host, RIGHT_BRKT,
 			    LEFT_BRKT, trim(tbuf), RIGHT_BRKT);
