@@ -22,10 +22,10 @@ int	 strFeed(char *string, int count);
 #if defined(HAVE_STRCASESTR) && HAVE_STRCASESTR == 0
 char	*strcasestr(const char *, const char *);
 #endif
-int	 sw_strcat(char *dest, const char *src, size_t);
-int	 sw_strcpy(char *dest, const char *src, size_t);
-int	 sw_wcscat(wchar_t *dest, const wchar_t *src, size_t);
-int	 sw_wcscpy(wchar_t *dest, const wchar_t *src, size_t);
+errno_t	 sw_strcat(char *dest, const char *src, size_t);
+errno_t	 sw_strcpy(char *dest, const char *src, size_t);
+errno_t	 sw_wcscat(wchar_t *dest, const wchar_t *src, size_t);
+errno_t	 sw_wcscpy(wchar_t *dest, const wchar_t *src, size_t);
 size_t	 xstrnlen(const char *, size_t);
 void	 squeeze(char *, const char *);
 void	 sw_snprintf(char *, size_t, const char *, ...) PRINTFLIKE(3);

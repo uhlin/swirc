@@ -18,11 +18,13 @@
 #include <stddef.h>
 #include <wchar.h>
 
+#include "errno-type.h"
+
 /* sw_wcscat  --  concatenate two wide-character strings
    Returns 0 on success; and an error number on failure.
 
    NOTE: 'size' is the full size of the destination buffer */
-int
+errno_t
 sw_wcscat(wchar_t *dest, const wchar_t *src, size_t size)
 {
 	if (dest == NULL || src == NULL || size == 0)

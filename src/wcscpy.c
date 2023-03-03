@@ -18,9 +18,11 @@
 #include <stddef.h>
 #include <wchar.h>
 
+#include "errno-type.h"
+
 /* sw_wcscpy()  --  copy a wide-character string
    Returns 0 on success; and an error number on failure. */
-int
+errno_t
 sw_wcscpy(wchar_t *dest, const wchar_t *src, size_t size)
 {
 	if (dest == NULL || src == NULL || size == 0)

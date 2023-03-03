@@ -18,11 +18,13 @@
 #include <stddef.h>
 #include <string.h>
 
+#include "errno-type.h"
+
 /* sw_strcat()  --  concatenate two strings
    Returns 0 on success; and an error number on failure.
 
    NOTE: 'size' is the full size of the destination buffer */
-int
+errno_t
 sw_strcat(char *dest, const char *src, size_t size)
 {
 	if (dest == NULL || src == NULL || size == 0)

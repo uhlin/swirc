@@ -18,9 +18,11 @@
 #include <stddef.h>
 #include <string.h>
 
+#include "errno-type.h"
+
 /* sw_strcpy()  --  copy a string
    Returns 0 on success; and an error number on failure. */
-int
+errno_t
 sw_strcpy(char *dest, const char *src, size_t size)
 {
 	if (dest == NULL || src == NULL || size == 0)
