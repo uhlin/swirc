@@ -51,6 +51,8 @@ struct cmdline_opt_values {
 	{
 		/* empty */;
 	}
+
+	~cmdline_opt_values();
 #endif
 };
 

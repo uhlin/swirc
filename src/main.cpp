@@ -775,21 +775,25 @@ free_locale_info(struct locale_info *li)
 	}
 }
 
+cmdline_opt_values::~cmdline_opt_values()
+{
+	free(this->server);
+	free(this->port);
+	free(this->nickname);
+	free(this->username);
+	free(this->rl_name);
+	free(this->hostname);
+	free(this->config_file);
+}
+
 /**
  * Command-line options destroy
  */
 void
 cmdline_options_destroy(void)
 {
-	free_and_null(&g_cmdline_opts->server);
-	free_and_null(&g_cmdline_opts->port);
-	free_and_null(&g_cmdline_opts->nickname);
-	free_and_null(&g_cmdline_opts->username);
-	free_and_null(&g_cmdline_opts->rl_name);
-	free_and_null(&g_cmdline_opts->hostname);
-	free_and_null(&g_cmdline_opts->config_file);
-
 	delete g_cmdline_opts;
+	g_cmdline_opts = NULL;
 }
 
 void
