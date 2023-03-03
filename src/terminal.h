@@ -8,10 +8,10 @@
 #endif
 
 struct term_window_size {
-	int rows;
-	int cols;
-	int start_row;
-	int start_col;
+	int	rows;
+	int	cols;
+	int	start_row;
+	int	start_col;
 
 #ifdef __cplusplus
 	term_window_size()
