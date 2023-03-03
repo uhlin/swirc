@@ -10,22 +10,18 @@ struct network_recv_context {
 	long int	microsec;
 
 #ifdef __cplusplus
-	network_recv_context()
-	{
-		this->sock	= INVALID_SOCKET;
-		this->flags	= 0;
-		this->sec	= 0;
-		this->microsec	= 0;
-	}
+	network_recv_context() : sock(INVALID_SOCKET)
+	    , flags(0)
+	    , sec(0)
+	    , microsec(0)
+	{}
 
-	network_recv_context(SOCKET sock, int flags, long int sec,
-	    long int microsec)
-	{
-		this->sock	= sock;
-		this->flags	= flags;
-		this->sec	= sec;
-		this->microsec	= microsec;
-	}
+	network_recv_context(SOCKET p_sock, int p_flags, long int p_sec,
+	    long int p_microsec) : sock(p_sock)
+	    , flags(p_flags)
+	    , sec(p_sec)
+	    , microsec(p_microsec)
+	{}
 #endif
 };
 
