@@ -38,6 +38,18 @@ struct term_window_size {
 struct current_cursor_pos {
 	int cury; /* row */
 	int curx; /* col */
+
+#ifdef __cplusplus
+	current_cursor_pos()
+	    : cury(0)
+	    , curx(0)
+	{}
+
+	current_cursor_pos(const int row, const int col)
+	    : cury(row)
+	    , curx(col)
+	{}
+#endif
 };
 
 __SWIRC_BEGIN_DECLS
