@@ -857,11 +857,7 @@ static struct message_components *
 get_processed_out_message(CSTRING unproc_msg, enum message_specifier_type
     spec_type, bool include_ts, CSTRING srv_time)
 {
-	struct message_components *pout =
-	    static_cast<struct message_components *>(xcalloc(sizeof *pout, 1));
-
-	pout->text = NULL;
-	pout->indent = 0;
+	struct message_components *pout = new message_components(NULL, 0);
 
 	if (include_ts) {
 		STRING ts = NULL;
@@ -1630,7 +1626,6 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 	}
 
 	free(fmt_copy);
-	free(pout->text);
-	free(pout);
+	delete pout;
 	mutex_unlock(&vprinttext_mutex);
 }
