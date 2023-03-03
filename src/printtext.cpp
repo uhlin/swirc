@@ -80,6 +80,11 @@
 struct message_components {
 	char	*text;
 	int	 indent;
+
+	message_components()
+	    : text(NULL)
+	    , indent(0)
+	{}
 };
 
 struct text_decoration_bools {
