@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-03-04 01:15+0100\n"
+"POT-Creation-Date: 2023-03-04 13:57+0100\n"
 "PO-Revision-Date: 2023-02-28 18:35+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -73,6 +73,11 @@ msgstr ""
 #: ../src/events/channel.cpp:918
 #, c-format
 msgid "Topic set by %c%s%c %s%s@%s%s %s%s%s"
+msgstr ""
+
+#: ../src/events/channel.cpp:924
+#, c-format
+msgid "Topic set by %c%s%c %s%s%s"
 msgstr ""
 
 #: ../src/include/commandhelp.h:44

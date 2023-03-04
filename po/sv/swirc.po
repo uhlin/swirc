@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-03-04 01:15+0100\n"
-"PO-Revision-Date: 2023-03-04 13:53+0100\n"
+"POT-Creation-Date: 2023-03-04 13:57+0100\n"
+"PO-Revision-Date: 2023-03-04 13:59+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -74,6 +74,11 @@ msgstr "%c%s%c ändrade ämnet för %c%s%c till: %s"
 #, c-format
 msgid "Topic set by %c%s%c %s%s@%s%s %s%s%s"
 msgstr "Ämnet satt av %c%s%c %s%s@%s%s %s%s%s"
+
+#: ../src/events/channel.cpp:924
+#, c-format
+msgid "Topic set by %c%s%c %s%s%s"
+msgstr "Ämnet satt av %c%s%c %s%s%s"
 
 #: ../src/include/commandhelp.h:44
 msgid "usage: /away [reason]"
