@@ -109,6 +109,16 @@ struct text_decoration_bools {
 	    , is_reverse(false)
 	    , is_underline(false)
 	{}
+
+	void
+	reset(void)
+	{
+		this->is_blink		= false;
+		this->is_bold		= false;
+		this->is_color		= false;
+		this->is_reverse	= false;
+		this->is_underline	= false;
+	}
 };
 
 struct case_default_context {
@@ -1171,22 +1181,6 @@ replace_characters_with_spaces(wchar_t *wc_buf, const wchar_t *set)
 }
 
 /**
- * Reset text-decoration bools
- *
- * @param booleans Context structure
- * @return Void
- */
-static void
-text_decoration_bools_reset(struct text_decoration_bools *booleans)
-{
-	booleans->is_blink     = false;
-	booleans->is_bold      = false;
-	booleans->is_color     = false;
-	booleans->is_reverse   = false;
-	booleans->is_underline = false;
-}
-
-/**
  * Create mutex "vprinttext_mutex".
  */
 static void
@@ -1489,7 +1483,7 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 			case_color(pwin, &booleans.is_color, &wc_bufp);
 			break;
 		case NORMAL:
-			text_decoration_bools_reset(&booleans);
+			booleans.reset();
 			(void) wattrset(pwin, A_NORMAL);
 			break;
 		case REVERSE:
