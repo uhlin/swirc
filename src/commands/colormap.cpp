@@ -37,6 +37,7 @@
 #include "../strHand.h"
 
 #include "colormap.h"
+#include "i18n.h"
 
 #if defined(__cplusplus) && __cplusplus >= 201103L
 #define OUT_PB(str) (void)out.emplace_back(str)
@@ -149,7 +150,7 @@ cmd_colormap(const char *data)
 	printtext(&ctx, " ");
 	printtext(&ctx, "COLORS:      %d", COLORS);
 	printtext(&ctx, "COLOR_PAIRS: %d", COLOR_PAIRS);
-	printtext(&ctx, "can_change_color: %s", (can_change_color() ? "Yes"
-	    : "No"));
+	printtext(&ctx, "can_change_color: %s", (can_change_color() ? _("Yes")
+	    : _("No")));
 	printtext(&ctx, "g_initialized_pairs: %hd", g_initialized_pairs);
 }
