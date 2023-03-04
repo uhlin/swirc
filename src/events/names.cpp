@@ -63,31 +63,30 @@ struct hInstall_context {
 	bool	 is_halfop;
 	bool	 is_voice;
 
-	hInstall_context();
-	hInstall_context(char *, char *, const char);
+	hInstall_context()
+	    : channel(NULL)
+	    , nick(NULL)
+	    , is_owner(false)
+	    , is_superop(false)
+	    , is_op(false)
+	    , is_halfop(false)
+	    , is_voice(false)
+	{
+		/* null */;
+	}
+
+	hInstall_context(char *p_channel, char *p_nick, const char c)
+	    : channel(p_channel)
+	    , nick(p_nick)
+	    , is_owner(c == '~')
+	    , is_superop(c == '&')
+	    , is_op(c == '@')
+	    , is_halfop(c == '%')
+	    , is_voice(c == '+')
+	{
+		/* null */;
+	}
 };
-
-hInstall_context::hInstall_context()
-{
-	this->channel = NULL;
-	this->nick = NULL;
-	this->is_owner		= false;
-	this->is_superop	= false;
-	this->is_op		= false;
-	this->is_halfop		= false;
-	this->is_voice		= false;
-}
-
-hInstall_context::hInstall_context(char *channel, char *nick, const char c)
-{
-	this->channel = channel;
-	this->nick = nick;
-	this->is_owner		= (c == '~');
-	this->is_superop	= (c == '&');
-	this->is_op		= (c == '@');
-	this->is_halfop		= (c == '%');
-	this->is_voice		= (c == '+');
-}
 
 /****************************************************************
 *                                                               *
