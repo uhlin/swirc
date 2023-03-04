@@ -121,7 +121,7 @@ event_join(struct irc_message_compo *compo)
 		if ((host = strtok_r(NULL, "!@", &state)) == NULL)
 			host = const_cast<char *>("<no host>");
 
-		const char *channel = (*(compo->params) == ':' ?
+		const char * const channel = (*(compo->params) == ':' ?
 		    &compo->params[1] : &compo->params[0]);
 
 		if (!is_irc_channel(channel) ||
