@@ -19,7 +19,8 @@ XGTFLAGS = --add-comments\
 	--output=$(PKG).pot\
 	--sort-by-file
 
-INPUTFILES = $(EVENTS_DIR)channel.cpp\
+INPUTFILES = $(COMMANDS_DIR)colormap.cpp\
+	$(EVENTS_DIR)channel.cpp\
 	$(SRC_DIR)include/commandhelp.h\
 	$(SRC_DIR)io-loop.c\
 	$(SRC_DIR)main.cpp\
