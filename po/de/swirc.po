@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-03-04 13:57+0100\n"
+"POT-Creation-Date: 2023-03-04 21:31+0100\n"
 "PO-Revision-Date: 2023-02-28 18:35+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -16,6 +16,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../src/commands/colormap.cpp:153 ../src/statusbar.cpp:222
+msgid "Yes"
+msgstr "Ja"
+
+#: ../src/commands/colormap.cpp:154 ../src/statusbar.cpp:223
+msgid "No"
+msgstr "Nein"
 
 #: ../src/events/channel.cpp:86
 #, c-format
@@ -1149,14 +1157,6 @@ msgstr "Beendet"
 #: ../src/statusbar.cpp:222
 msgid "Log: "
 msgstr "Log: "
-
-#: ../src/statusbar.cpp:222
-msgid "Yes"
-msgstr "Ja"
-
-#: ../src/statusbar.cpp:223
-msgid "No"
-msgstr "Nein"
 
 #: ../src/statusbar.cpp:227
 msgid "-- MORE --"
