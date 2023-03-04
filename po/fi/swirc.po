@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-04 21:31+0100\n"
-"PO-Revision-Date: 2023-03-04 22:38+0100\n"
+"PO-Revision-Date: 2023-03-04 23:25+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -51,12 +51,12 @@ msgstr "Tilamuutos %s%s%s käyttäjälle %c%s%c"
 #: ../src/events/channel.cpp:504
 #, c-format
 msgid "mode/%s%s%s%c%s %s%s%s by %s%s%c"
-msgstr ""
+msgstr "tila/%s%s%s%c%s %s%s%s / %s%s%c"
 
 #: ../src/events/channel.cpp:605
 #, c-format
 msgid "%s%s%c is now known as %s %s%s%c"
-msgstr ""
+msgstr "%s%s%c tunnetaan nykyään nimellä %s %s%s%c"
 
 #: ../src/events/channel.cpp:683
 #, c-format
