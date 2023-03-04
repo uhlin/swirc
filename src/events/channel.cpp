@@ -32,7 +32,6 @@
 #include <stdexcept>
 #include <time.h>
 
-#include "../assertAPI.h"
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
