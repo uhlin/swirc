@@ -92,7 +92,7 @@ struct message_components {
 	~message_components()
 	{
 		free(this->text);
-//		this->text = NULL;
+		this->text = NULL;
 	}
 };
 
