@@ -921,7 +921,7 @@ event_topic_creator(struct irc_message_compo *compo)
 			    LEFT_BRKT, user, host, RIGHT_BRKT,
 			    LEFT_BRKT, trim(tbuf), RIGHT_BRKT);
 		} else {
-			printtext(&ctx, "Topic set by %c%s%c %s%s%s",
+			printtext(&ctx, _("Topic set by %c%s%c %s%s%s"),
 			    BOLD, nick, BOLD,
 			    LEFT_BRKT, trim(tbuf), RIGHT_BRKT);
 		}
