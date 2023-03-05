@@ -2,13 +2,13 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added code improvements:
-  - Added constructors/destructors
-  - Added usage of initializer lists
-  - Added usage of new/delete
-  - Deleted unused includes
+- **Added** code improvements:
+  - **Added** constructors/destructors
+  - **Added** usage of initializer lists
+  - **Added** usage of new/delete
+  - **Deleted** unused includes
   - ...
-- Added translations
+- **Added** translations
 
 ## [3.4.2] - 2023-02-22 ##
 - **Added** usage of typedefs (`STRING`, `CSTRING`, `errno_t`, ...)
