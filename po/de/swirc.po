@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-04 21:31+0100\n"
-"PO-Revision-Date: 2023-03-05 15:28+0100\n"
+"PO-Revision-Date: 2023-03-05 15:34+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -46,12 +46,12 @@ msgstr ""
 #: ../src/events/channel.cpp:496
 #, c-format
 msgid "Mode change %s%s%s for user %c%s%c"
-msgstr ""
+msgstr "Modusänderung %s%s%s für Benutzer %c%s%c"
 
 #: ../src/events/channel.cpp:504
 #, c-format
 msgid "mode/%s%s%s%c%s %s%s%s by %s%s%c"
-msgstr ""
+msgstr "mode/%s%s%s%c%s %s%s%s von %s%s%c"
 
 #: ../src/events/channel.cpp:605
 #, c-format
