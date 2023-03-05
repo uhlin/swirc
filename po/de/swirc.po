@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-04 21:31+0100\n"
-"PO-Revision-Date: 2023-02-28 18:35+0100\n"
+"PO-Revision-Date: 2023-03-05 15:28+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -28,12 +28,12 @@ msgstr "Nein"
 #: ../src/events/channel.cpp:86
 #, c-format
 msgid "Homepage for %s%s%s%c%s: %s"
-msgstr ""
+msgstr "Startseite für %s%s%s%c%s: %s"
 
 #: ../src/events/channel.cpp:153
 #, c-format
 msgid "%s%s%c %s%s@%s%s has joined %s%s%c"
-msgstr ""
+msgstr "%s%s%c %s%s@%s%s ist %s%s%c beigetreten"
 
 #: ../src/events/channel.cpp:236
 #, c-format
