@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-04 21:31+0100\n"
-"PO-Revision-Date: 2023-03-05 16:42+0100\n"
+"PO-Revision-Date: 2023-03-05 16:54+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -38,7 +38,7 @@ msgstr "%s%s%c %s%s@%s%s ist %s%s%c beigetreten"
 #: ../src/events/channel.cpp:236
 #, c-format
 msgid "%s was kicked from %s%s%c by %s%s%c %s%s%s"
-msgstr ""
+msgstr "%s wurde aus %s%s%c geschmissen / %s%s%c %s%s%s"
 
 #.
 #. * User mode
