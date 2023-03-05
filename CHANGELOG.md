@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - **Added** code improvements:
   - **Added** constructors/destructors
+  - **Added** improved algorithms
   - **Added** usage of initializer lists
   - **Added** usage of new/delete
   - **Deleted** unused includes
