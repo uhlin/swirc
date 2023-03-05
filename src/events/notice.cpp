@@ -1,5 +1,5 @@
 /* Handles event NOTICE
-   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -55,23 +55,18 @@ struct notice_context {
 	char *dest;
 	char *msg;
 
-	notice_context();
-	notice_context(char *, char *, char *);
+	notice_context()
+	    : srv_name(NULL)
+	    , dest(NULL)
+	    , msg(NULL)
+	{}
+
+	notice_context(char *p_srv_name, char *p_dest, char *p_msg)
+	    : srv_name(p_srv_name)
+	    , dest(p_dest)
+	    , msg(p_msg)
+	{}
 };
-
-notice_context::notice_context()
-{
-	this->srv_name = NULL;
-	this->dest = NULL;
-	this->msg = NULL;
-}
-
-notice_context::notice_context(char *srv_name, char *dest, char *msg)
-{
-	this->srv_name = srv_name;
-	this->dest = dest;
-	this->msg = msg;
-}
 
 static void
 handle_notice_while_connecting(struct irc_message_compo *compo)
