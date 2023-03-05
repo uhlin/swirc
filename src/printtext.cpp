@@ -69,8 +69,6 @@
 #define WATTR_ON(win, attrs)  ((void) wattr_on(win, attrs, NULL))
 #define WCOLOR_SET(win, cpn)  ((void) wcolor_set(win, cpn, NULL))
 
-#define STRLEN_CAST(string) strlen(reinterpret_cast<CSTRING>(string))
-
 /****************************************************************
 *                                                               *
 *  ------------------ Structure definitions ------------------  *
@@ -334,10 +332,11 @@ case_bold(WINDOW *win, bool *is_bold)
  * free()'d.
  *
  * @param wc Wide-character
+ * @param bytes_out How many bytes is the wc?
  * @return The result
  */
 static unsigned char *
-convert_wc(wchar_t wc)
+convert_wc(wchar_t wc, size_t &bytes_out)
 {
 	const size_t	 size = MB_LEN_MAX;
 	mbstate_t	 ps;
@@ -356,6 +355,7 @@ convert_wc(wchar_t wc)
 		if (wc != L'\0')
 			err_log(errno, "printtext: %s: wcrtomb_s", __func__);
 		*mbs = '\0';
+		bytes_out = 0;
 		return mbs;
 	}
 #else
@@ -366,11 +366,13 @@ convert_wc(wchar_t wc)
 		if (wc != L'\0')
 			err_log(EILSEQ, "printtext: %s: wcrtomb", __func__);
 		*mbs = '\0';
+		bytes_out = 0;
 		return mbs;
 	}
 #endif
 
 	mbs[bytes_written] = '\0';
+	bytes_out = bytes_written;
 	return static_cast<unsigned char *>(xrealloc(mbs, bytes_written + 1));
 }
 
@@ -389,14 +391,15 @@ putbyte(char *cp, const unsigned char b)
 static cc_check_t
 check_for_part1(wchar_t **bufp, char *fg)
 {
-	unsigned char *mbs;
+	size_t		 bytes_out = 0;
+	unsigned char	*mbs;
 
 	if (!*++(*bufp))
 		return BUF_EOF;
 
-	mbs = convert_wc(**bufp);
+	mbs = convert_wc(**bufp, bytes_out);
 
-	if (STRLEN_CAST(mbs) != 1 || !sw_isdigit(*mbs)) {
+	if (bytes_out != 1 || !sw_isdigit(*mbs)) {
 		--(*bufp);
 		free(mbs);
 		return STOP_INTERPRETING;
@@ -416,14 +419,15 @@ check_for_part1(wchar_t **bufp, char *fg)
 static cc_check_t
 check_for_part2(wchar_t **bufp, char *fg, bool *has_comma)
 {
-	unsigned char *mbs;
+	size_t		 bytes_out = 0;
+	unsigned char	*mbs;
 
 	if (!*++(*bufp))
 		return BUF_EOF;
 
-	mbs = convert_wc(**bufp);
+	mbs = convert_wc(**bufp, bytes_out);
 
-	if (STRLEN_CAST(mbs) != 1 || (!sw_isdigit(*mbs) && *mbs != ',')) {
+	if (bytes_out != 1 || (!sw_isdigit(*mbs) && *mbs != ',')) {
 		--(*bufp);
 		free(mbs);
 		return STOP_INTERPRETING;
@@ -448,14 +452,15 @@ check_for_part2(wchar_t **bufp, char *fg, bool *has_comma)
 static cc_check_t
 check_for_part3(wchar_t **bufp, bool *has_comma, bool fg_complete, char *bg)
 {
-	unsigned char *mbs;
+	size_t		 bytes_out = 0;
+	unsigned char	*mbs;
 
 	if (!*++(*bufp))
 		return BUF_EOF;
 
-	mbs = convert_wc(**bufp);
+	mbs = convert_wc(**bufp, bytes_out);
 
-	if (STRLEN_CAST(mbs) != 1 || (*mbs != ',' && !sw_isdigit(*mbs))) {
+	if (bytes_out != 1 || (*mbs != ',' && !sw_isdigit(*mbs))) {
 		--(*bufp);
 		free(mbs);
 		return STOP_INTERPRETING;
@@ -488,14 +493,15 @@ check_for_part3(wchar_t **bufp, bool *has_comma, bool fg_complete, char *bg)
 static cc_check_t
 check_for_part4(wchar_t **bufp, bool got_digit_bg, char *bg)
 {
-	unsigned char *mbs;
+	size_t		 bytes_out = 0;
+	unsigned char	*mbs;
 
 	if (!*++(*bufp))
 		return BUF_EOF;
 
-	mbs = convert_wc(**bufp);
+	mbs = convert_wc(**bufp, bytes_out);
 
-	if (STRLEN_CAST(mbs) != 1 || !sw_isdigit(*mbs)) {
+	if (bytes_out != 1 || !sw_isdigit(*mbs)) {
 		--(*bufp);
 		free(mbs);
 		return STOP_INTERPRETING;
@@ -518,14 +524,15 @@ check_for_part4(wchar_t **bufp, bool got_digit_bg, char *bg)
 static cc_check_t
 check_for_part5(wchar_t **bufp, char *bg)
 {
-	unsigned char *mbs;
+	size_t		 bytes_out = 0;
+	unsigned char	*mbs;
 
 	if (!*++(*bufp))
 		return BUF_EOF;
 
-	mbs = convert_wc(**bufp);
+	mbs = convert_wc(**bufp, bytes_out);
 
-	if (STRLEN_CAST(mbs) != 1 || !sw_isdigit(*mbs)) {
+	if (bytes_out != 1 || !sw_isdigit(*mbs)) {
 		--(*bufp);
 		free(mbs);
 		return STOP_INTERPRETING;
@@ -718,12 +725,14 @@ static void
 case_default(const struct case_default_context *ctx, int *rep_count,
     int *lines_count, int *insert_count)
 {
-	unsigned char *mbs;
+	size_t		 dummy;
+	unsigned char	*mbs;
 
 	if (!iswprint(ctx->wc) && ctx->wc != L'\n')
 		return;
 
-	mbs = convert_wc(ctx->wc);
+	mbs = convert_wc(ctx->wc, dummy);
+	UNUSED_VAR(dummy);
 
 	if (!is_scrollok(ctx->win)) {
 		addmbs(ctx->win, mbs);
