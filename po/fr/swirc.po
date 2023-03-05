@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-04 21:31+0100\n"
-"PO-Revision-Date: 2023-03-05 17:13+0100\n"
+"PO-Revision-Date: 2023-03-05 18:36+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -56,12 +56,12 @@ msgstr "mode/%s%s%s%c%s %s%s%s par %s%s%c"
 #: ../src/events/channel.cpp:605
 #, c-format
 msgid "%s%s%c is now known as %s %s%s%c"
-msgstr ""
+msgstr "%s%s%c est maintenant connu sous le nom de %s %s%s%c"
 
 #: ../src/events/channel.cpp:683
 #, c-format
 msgid "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s"
-msgstr ""
+msgstr "%s%s%c %s%s@%s%s a quitté %s%s%c %s%s%s"
 
 #: ../src/events/channel.cpp:742
 #, c-format
@@ -71,7 +71,7 @@ msgstr ""
 #: ../src/events/channel.cpp:789
 #, c-format
 msgid "Topic for %s%s%s%c%s: %s"
-msgstr ""
+msgstr "Sujet pour %s%s%s%c%s: %s"
 
 #: ../src/events/channel.cpp:846
 #, c-format
