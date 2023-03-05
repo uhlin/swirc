@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-04 21:31+0100\n"
-"PO-Revision-Date: 2023-03-05 16:14+0100\n"
+"PO-Revision-Date: 2023-03-05 16:23+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -71,12 +71,12 @@ msgstr "%s%s%c %s%s@%s%s hat sich abgemeldet %s%s%s"
 #: ../src/events/channel.cpp:789
 #, c-format
 msgid "Topic for %s%s%s%c%s: %s"
-msgstr ""
+msgstr "Thema für %s%s%s%c%s: %s"
 
 #: ../src/events/channel.cpp:846
 #, c-format
 msgid "%c%s%c changed the topic of %c%s%c to: %s"
-msgstr ""
+msgstr "%c%s%c hat das Thema von %c%s%c geändert: %s"
 
 #: ../src/events/channel.cpp:918
 #, c-format
