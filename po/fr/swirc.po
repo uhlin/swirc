@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-04 21:31+0100\n"
-"PO-Revision-Date: 2023-03-05 18:36+0100\n"
+"PO-Revision-Date: 2023-03-05 19:51+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -66,7 +66,7 @@ msgstr "%s%s%c %s%s@%s%s a quitté %s%s%c %s%s%s"
 #: ../src/events/channel.cpp:742
 #, c-format
 msgid "%s%s%c %s%s@%s%s has quit %s%s%s"
-msgstr ""
+msgstr "%s%s%c %s%s@%s%s est parti %s%s%s"
 
 #: ../src/events/channel.cpp:789
 #, c-format
@@ -76,17 +76,17 @@ msgstr "Sujet pour %s%s%s%c%s: %s"
 #: ../src/events/channel.cpp:846
 #, c-format
 msgid "%c%s%c changed the topic of %c%s%c to: %s"
-msgstr ""
+msgstr "%c%s%c a changé le sujet de %c%s%c en: %s"
 
 #: ../src/events/channel.cpp:918
 #, c-format
 msgid "Topic set by %c%s%c %s%s@%s%s %s%s%s"
-msgstr ""
+msgstr "Le sujet a été défini par %c%s%c %s%s@%s%s %s%s%s"
 
 #: ../src/events/channel.cpp:924
 #, c-format
 msgid "Topic set by %c%s%c %s%s%s"
-msgstr ""
+msgstr "Le sujet a été défini par %c%s%c %s%s%s"
 
 #: ../src/include/commandhelp.h:44
 msgid "usage: /away [reason]"
