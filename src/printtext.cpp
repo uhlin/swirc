@@ -261,6 +261,9 @@ static struct ptext_colorMap_tag {
 *                                                               *
 ****************************************************************/
 
+static size_t	 get_mb_strlen(CSTRING) PTR_ARGS_NONNULL;
+static char	*get_buffer(CSTRING) PTR_ARGS_NONNULL;
+
 static void
 addmbs(WINDOW *win, const unsigned char *mbs)
 {
@@ -811,8 +814,6 @@ case_underline(WINDOW *win, bool *is_underline)
 	}
 }
 
-static size_t get_mb_strlen(CSTRING) PTR_ARGS_NONNULL;
-
 /**
  * Get multibyte string length
  */
@@ -1344,8 +1345,6 @@ printtext_print(CSTRING what, CSTRING fmt, ...)
 
 	printtext_context_destroy(ctx);
 }
-
-static char *get_buffer(CSTRING) PTR_ARGS_NONNULL;
 
 static char *
 get_buffer(CSTRING orig)
