@@ -8,23 +8,23 @@ struct special_msg_context {
 	char	*dest;
 	char	*msg;
 
-	special_msg_context()
+	special_msg_context() : nick(NULL)
+	    , user(NULL)
+	    , host(NULL)
+	    , dest(NULL)
+	    , msg(NULL)
 	{
-		this->nick	= NULL;
-		this->user	= NULL;
-		this->host	= NULL;
-		this->dest	= NULL;
-		this->msg	= NULL;
+		/* empty */;
 	}
 
-	special_msg_context(char *nick, char *user, char *host, char *dest,
-	    char *msg)
+	special_msg_context(char *p_nick, char *p_user, char *p_host,
+	    char *p_dest, char *p_msg) : nick(p_nick)
+	    , user(p_user)
+	    , host(p_host)
+	    , dest(p_dest)
+	    , msg(p_msg)
 	{
-		this->nick	= nick;
-		this->user	= user;
-		this->host	= host;
-		this->dest	= dest;
-		this->msg	= msg;
+		/* empty */;
 	}
 };
 
