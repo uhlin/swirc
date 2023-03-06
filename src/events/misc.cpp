@@ -1,5 +1,5 @@
 /* Miscellaneous events
-   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -44,6 +44,7 @@
 #include "../strHand.h"
 #include "../theme.h"
 
+#include "i18n.h"
 #include "misc.h"
 #include "welcome.h"
 
@@ -239,7 +240,7 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 		if (strftime(tbuf, ARRAY_SIZE(tbuf), "%c", &result) == 0)
 			throw std::runtime_error("strftime: zero return");
 
-		printtext(&ctx, "Channel %s%s%s%c%s created %s",
+		printtext(&ctx, _("Channel %s%s%s%c%s created %s"),
 		    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 		    trim(tbuf));
 
@@ -296,7 +297,7 @@ event_channelModeIs(struct irc_message_compo *compo)
 			throw std::runtime_error("unable to store channel "
 			    "modes");
 		} else if (! (ctx.window->received_chanmodes)) {
-			printtext(&ctx, "mode/%s%s%s%c%s %s%s%s",
+			printtext(&ctx, _("mode/%s%s%s%c%s %s%s%s"),
 			    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 			    LEFT_BRKT, data, RIGHT_BRKT);
 
@@ -346,7 +347,7 @@ event_channel_forward(struct irc_message_compo *compo)
 		(void) msg; /* unused */
 
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
-		printtext(&ctx, "Channel forwarding from %c%s%c to %c%s%c",
+		printtext(&ctx, _("Channel forwarding from %c%s%c to %c%s%c"),
 		    BOLD, from_channel, BOLD, BOLD, to_channel, BOLD);
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
@@ -403,7 +404,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
 
 		printtext_context_init(&ctx, g_status_window,
 		    TYPE_SPEC1_FAILURE, true);
-		printtext(&ctx, "Nickname %c%s%c is already in use",
+		printtext(&ctx, _("Nickname %c%s%c is already in use"),
 		    BOLD, nick, BOLD);
 
 		if (!atomic_load_bool(&g_connection_in_progress))
@@ -483,7 +484,7 @@ event_youAreOper(struct irc_message_compo *compo)
 	(void) compo;
 
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_SUCCESS, true);
-	printtext(&ctx, "You're now an IRC operator!");
+	printtext(&ctx, "%s", _("You're now an IRC operator!"));
 	printtext(&ctx, "    auto_op_yourself = %s",
 	    (config_bool("auto_op_yourself", true) ? "ON" : "OFF"));
 	g_am_irc_op = true;
