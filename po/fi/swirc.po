@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-06 02:41+0100\n"
-"PO-Revision-Date: 2023-03-05 00:55+0100\n"
+"PO-Revision-Date: 2023-03-06 13:35+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -91,26 +91,26 @@ msgstr "Aiheen on asettanut %c%s%c %s%s%s"
 #: ../src/events/misc.cpp:243
 #, c-format
 msgid "Channel %s%s%s%c%s created %s"
-msgstr ""
+msgstr "Kanava %s%s%s%c%s luotiin %s"
 
 #: ../src/events/misc.cpp:300
-#, fuzzy, c-format
+#, c-format
 msgid "mode/%s%s%s%c%s %s%s%s"
-msgstr "tila/%s%s%s%c%s %s%s%s / %s%s%c"
+msgstr "tila/%s%s%s%c%s %s%s%s"
 
 #: ../src/events/misc.cpp:350
 #, c-format
 msgid "Channel forwarding from %c%s%c to %c%s%c"
-msgstr ""
+msgstr "Kanavan edelleenlähetys paikasta %c%s%c paikkaan %c%s%c"
 
 #: ../src/events/misc.cpp:407
 #, c-format
 msgid "Nickname %c%s%c is already in use"
-msgstr ""
+msgstr "Lempinimi %c%s%c on jo käytössä"
 
 #: ../src/events/misc.cpp:487
 msgid "You're now an IRC operator!"
-msgstr ""
+msgstr "Olet nyt IRC operaattori!"
 
 #: ../src/include/commandhelp.h:44
 msgid "usage: /away [reason]"
