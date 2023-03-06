@@ -1032,8 +1032,8 @@ windows_convert_to_utf8(CSTRING buf)
 static wchar_t *
 try_convert_buf_with_cs(CSTRING buf, CSTRING codeset)
 {
-	char			*original_locale = NULL;
-	char			*tmp_locale = NULL;
+	STRING			 original_locale = NULL;
+	STRING			 tmp_locale = NULL;
 	struct locale_info	*li = NULL;
 	wchar_t			*out = NULL;
 
