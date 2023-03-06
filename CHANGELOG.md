@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
   - **Added** usage of new/delete
   - **Deleted** unused includes
   - ...
+- **Added** event `320` (the same as `275` and `671`, whois ssl)
 - **Added** MULTIPLE new translations
 
 ## [3.4.2] - 2023-02-22 ##

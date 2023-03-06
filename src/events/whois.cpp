@@ -1,5 +1,5 @@
 /* Whois events
-   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -681,10 +681,11 @@ event_whois_service(struct irc_message_compo *compo)
 	}
 }
 
-/* event_whois_ssl: 275, 671
+/* event_whois_ssl: 275, 320, 671
 
    Examples:
      :irc.server.com 275 <issuer> <target> :is connected via SSL (secure link)
+     :irc.server.com 320 <issuer> <target> :is a Secure Connection (SSL/TLS)
      :irc.server.com 671 <issuer> <target> :is using a secure connection */
 void
 event_whois_ssl(struct irc_message_compo *compo)
