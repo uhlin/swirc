@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-03-04 21:31+0100\n"
+"POT-Creation-Date: 2023-03-06 02:41+0100\n"
 "PO-Revision-Date: 2023-03-05 16:54+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -87,6 +87,30 @@ msgstr "Das Thema wurde von %c%s%c %s%s@%s%s festgelegt %s%s%s"
 #, c-format
 msgid "Topic set by %c%s%c %s%s%s"
 msgstr "Das Thema wurde von %c%s%c festgelegt %s%s%s"
+
+#: ../src/events/misc.cpp:243
+#, c-format
+msgid "Channel %s%s%s%c%s created %s"
+msgstr ""
+
+#: ../src/events/misc.cpp:300
+#, fuzzy, c-format
+msgid "mode/%s%s%s%c%s %s%s%s"
+msgstr "mode/%s%s%s%c%s %s%s%s von %s%s%c"
+
+#: ../src/events/misc.cpp:350
+#, c-format
+msgid "Channel forwarding from %c%s%c to %c%s%c"
+msgstr ""
+
+#: ../src/events/misc.cpp:407
+#, c-format
+msgid "Nickname %c%s%c is already in use"
+msgstr ""
+
+#: ../src/events/misc.cpp:487
+msgid "You're now an IRC operator!"
+msgstr ""
 
 #: ../src/include/commandhelp.h:44
 msgid "usage: /away [reason]"
