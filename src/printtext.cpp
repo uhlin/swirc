@@ -1320,6 +1320,52 @@ printtext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, ...)
 	va_end(ap);
 }
 
+#ifdef UNIT_TESTING
+void
+printtext_convert_wc_test1(void **state)
+{
+	const wchar_t array[] =
+	    L"0123456789"
+	    L"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	    L"abcdefghijklmnopqrstuvwxyz";
+	const size_t array_len = wcslen(array);
+
+	for (size_t i = 0; i < array_len; i++) {
+		size_t		 bytes_out = 0;
+		unsigned char	*mbs;
+
+		mbs = convert_wc(array[i], bytes_out);
+		assert_non_null(mbs);
+		assert_true(bytes_out == 1);
+		free(mbs);
+	}
+	UNUSED_PARAM(state);
+}
+
+void
+printtext_convert_wc_test2(void **state)
+{
+	const wchar_t array[] = {L'Å',L'Ä',L'Ö',L'å',L'ä',L'ö'};
+
+	for (size_t i = 0; i < ARRAY_SIZE(array); i++) {
+		size_t		 bytes_out = 0;
+		unsigned char	*mbs;
+
+		mbs = convert_wc(array[i], bytes_out);
+		assert_non_null(mbs);
+		if (!*mbs) {
+			assert_true(bytes_out == 0);
+		} else {
+			assert_true(bytes_out > 1);
+			print_message("%s: in=%lc out=%s\r\n", __func__,
+			    array[i], mbs);
+		}
+		free(mbs);
+	}
+	UNUSED_PARAM(state);
+}
+#endif // UNIT_TESTING
+
 void
 printtext_print(CSTRING what, CSTRING fmt, ...)
 {

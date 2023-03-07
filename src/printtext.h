@@ -82,6 +82,10 @@ short int
 void	 print_and_free(CSTRING msg, char *);
 void	 printf_and_free(char *, CSTRING, ...) PRINTFLIKE(2);
 void	 printtext(PPRINTTEXT_CONTEXT, CSTRING, ...) PRINTFLIKE(2);
+#ifdef UNIT_TESTING
+void	 printtext_convert_wc_test1(void **);
+void	 printtext_convert_wc_test2(void **);
+#endif
 void	 printtext_print(CSTRING what, CSTRING, ...) PRINTFLIKE(2);
 void	 printtext_puts(WINDOW *, CSTRING buf, int indent, int, int *);
 void	 printtext_set_color(WINDOW *, bool *, short int, short int);

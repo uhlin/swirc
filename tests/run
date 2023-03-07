@@ -18,6 +18,7 @@ int_diff
 int_sum
 is_alphabetic
 is_numeric
+printtext_convert_wc
 realloc_strcat
 rot13
 size_product
@@ -40,5 +41,5 @@ xstrnlen
 "
 
 for test in $TESTS; do
-    test -x "${test}.run" && "./${test}.run"
+	test -x "${test}.run" && "./${test}.run"
 done

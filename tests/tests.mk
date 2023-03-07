@@ -1,3 +1,5 @@
+# tests.mk
+
 TESTS = cmd_ban.run\
 	cmd_deop.run\
 	cmd_kick.run\
@@ -15,6 +17,7 @@ TESTS = cmd_ban.run\
 	int_sum.run\
 	is_alphabetic.run\
 	is_numeric.run\
+	printtext_convert_wc.run\
 	realloc_strcat.run\
 	rot13.run\
 	size_product.run\
