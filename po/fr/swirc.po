@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-08 15:26+0100\n"
-"PO-Revision-Date: 2023-03-07 19:19+0100\n"
+"PO-Revision-Date: 2023-03-08 15:47+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -110,16 +110,16 @@ msgstr "Le surnom %c%s%c est déjà utilisé"
 
 #: ../src/events/misc.cpp:415
 msgid "Alternative nickname already tested. Disconnecting..."
-msgstr ""
+msgstr "Surnom alternatif déjà testé. Déconnexion..."
 
 #: ../src/events/misc.cpp:420
 #, c-format
 msgid "Attempting to use alt_nick (%s) instead..."
-msgstr ""
+msgstr "Tentative d'utilisation de alt_nick (%s) à la place..."
 
 #: ../src/events/misc.cpp:428
 msgid "Disconnecting..."
-msgstr ""
+msgstr "Déconnexion..."
 
 #: ../src/events/misc.cpp:487
 msgid "You're now an IRC operator!"
