@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-08 20:59+0100\n"
-"PO-Revision-Date: 2023-03-08 15:50+0100\n"
+"PO-Revision-Date: 2023-03-08 22:11+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -1133,9 +1133,8 @@ msgid "Connection to IRC server lost"
 msgstr ""
 
 #: ../src/network.cpp:775
-#, fuzzy
 msgid "Disconnected"
-msgstr "Verbindung wird getrennt..."
+msgstr ""
 
 #: ../src/readline.c:549
 msgid "--------------- Keys ---------------"
