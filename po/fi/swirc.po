@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-03-08 15:26+0100\n"
+"POT-Creation-Date: 2023-03-08 20:59+0100\n"
 "PO-Revision-Date: 2023-03-08 15:42+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -1093,6 +1093,48 @@ msgstr "    -x <config>          Config tiedosto\n"
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Käyttö: %s [VAIHTOEHTO] ...\n"
+
+#: ../src/network.cpp:179
+msgid "Hostname checking failed!"
+msgstr ""
+
+#: ../src/network.cpp:181
+msgid "Hostname checking OK!"
+msgstr ""
+
+#: ../src/network.cpp:238
+msgid "Connected!"
+msgstr ""
+
+#: ../src/network.cpp:304
+msgid "Unable to get a list of IP addresses"
+msgstr ""
+
+#: ../src/network.cpp:307
+msgid "Get a list of IP addresses completed"
+msgstr ""
+
+#: ../src/network.cpp:514
+#, c-format
+msgid "Connecting to %s (%s)"
+msgstr ""
+
+#: ../src/network.cpp:523
+msgid "Cannot initiate use of the Winsock DLL"
+msgstr ""
+
+#: ../src/network.cpp:526
+msgid "Use of the Winsock DLL granted"
+msgstr ""
+
+#: ../src/network.cpp:761
+msgid "Connection to IRC server lost"
+msgstr ""
+
+#: ../src/network.cpp:775
+#, fuzzy
+msgid "Disconnected"
+msgstr "Yhteyttä katkaistaan..."
 
 #: ../src/readline.c:549
 msgid "--------------- Keys ---------------"
