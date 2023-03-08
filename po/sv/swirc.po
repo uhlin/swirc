@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-08 15:26+0100\n"
-"PO-Revision-Date: 2023-03-06 02:56+0100\n"
+"PO-Revision-Date: 2023-03-08 15:36+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -110,16 +110,16 @@ msgstr "Smeknamnet %c%s%c används redan"
 
 #: ../src/events/misc.cpp:415
 msgid "Alternative nickname already tested. Disconnecting..."
-msgstr ""
+msgstr "Alternativt smeknamn har redan testats. Kopplar från..."
 
 #: ../src/events/misc.cpp:420
 #, c-format
 msgid "Attempting to use alt_nick (%s) instead..."
-msgstr ""
+msgstr "Försöker använda alt_nick (%s) istället..."
 
 #: ../src/events/misc.cpp:428
 msgid "Disconnecting..."
-msgstr ""
+msgstr "Kopplar från..."
 
 #: ../src/events/misc.cpp:487
 msgid "You're now an IRC operator!"
