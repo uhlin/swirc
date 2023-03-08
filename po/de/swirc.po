@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-08 23:08+0100\n"
-"PO-Revision-Date: 2023-03-08 22:11+0100\n"
+"PO-Revision-Date: 2023-03-09 00:31+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -1097,48 +1097,48 @@ msgstr "Anwendung: %s [FLAGGE] ...\n"
 
 #: ../src/network.cpp:171
 msgid "Failed to establish a connection"
-msgstr ""
+msgstr "Fehler beim Herstellen einer Verbindung"
 
 #: ../src/network.cpp:179
 msgid "Hostname checking failed!"
-msgstr ""
+msgstr "Hostnamenprüfung fehlgeschlagen!"
 
 #: ../src/network.cpp:181
 msgid "Hostname checking OK!"
-msgstr ""
+msgstr "Hostnamenprüfung OK!"
 
 #: ../src/network.cpp:238
 msgid "Connected!"
-msgstr ""
+msgstr "In Verbindung gebracht!"
 
 #: ../src/network.cpp:304
 msgid "Unable to get a list of IP addresses"
-msgstr ""
+msgstr "Es kann keine Liste mit IP-Adressen abgerufen werden"
 
 #: ../src/network.cpp:307
 msgid "Get a list of IP addresses completed"
-msgstr ""
+msgstr "Holen Sie sich eine Liste der IP-Adressen, fertig"
 
 #: ../src/network.cpp:514
 #, c-format
 msgid "Connecting to %s (%s)"
-msgstr ""
+msgstr "Verbindung zu %s (%s) wird hergestellt..."
 
 #: ../src/network.cpp:523
 msgid "Cannot initiate use of the Winsock DLL"
-msgstr ""
+msgstr "Verwendung der Winsock DLL kann nicht initiiert werden"
 
 #: ../src/network.cpp:526
 msgid "Use of the Winsock DLL granted"
-msgstr ""
+msgstr "Nutzung der Winsock DLL gewährt"
 
 #: ../src/network.cpp:761
 msgid "Connection to IRC server lost"
-msgstr ""
+msgstr "Die Verbindung zum IRC-Server wurde unterbrochen"
 
 #: ../src/network.cpp:775
 msgid "Disconnected"
-msgstr ""
+msgstr "Offline"
 
 #: ../src/readline.c:549
 msgid "--------------- Keys ---------------"
