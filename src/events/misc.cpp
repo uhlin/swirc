@@ -412,20 +412,20 @@ event_nicknameInUse(struct irc_message_compo *compo)
 		ctx.spec_type = TYPE_SPEC1;
 
 		if (g_alt_nick_tested) {
-			printtext(&ctx, "Alternative nickname already tested. "
-			    "Disconnecting...");
+			printtext(&ctx, "%s", _("Alternative nickname already "
+			    "tested. Disconnecting..."));
 			g_on_air = false;
 			event_welcome_signalit();
 		} else if (!isEmpty(Config("alt_nick"))) {
-			printtext(&ctx, "Attempting to use alt_nick (%s) "
-			    "instead...", Config("alt_nick"));
+			printtext(&ctx, _("Attempting to use alt_nick (%s) "
+			    "instead..."), Config("alt_nick"));
 
 			if (net_send("NICK %s", Config("alt_nick")) < 0)
 				throw std::runtime_error("cannot send");
 
 			g_alt_nick_tested = true;
 		} else {
-			printtext(&ctx, "Disconnecting...");
+			printtext(&ctx, "%s", _("Disconnecting..."));
 			g_on_air = false;
 			event_welcome_signalit();
 		}
