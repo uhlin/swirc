@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-08 23:08+0100\n"
-"PO-Revision-Date: 2023-03-08 23:58+0100\n"
+"PO-Revision-Date: 2023-03-09 00:43+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -1100,7 +1100,7 @@ msgstr "Usage: %s [OPTION] ...\n"
 
 #: ../src/network.cpp:171
 msgid "Failed to establish a connection"
-msgstr "Échec de l'établissement de la connexion"
+msgstr "Impossible d'établir une connexion"
 
 #: ../src/network.cpp:179
 msgid "Hostname checking failed!"
@@ -1120,7 +1120,7 @@ msgstr "Impossible d'obtenir une liste d'adresses IP"
 
 #: ../src/network.cpp:307
 msgid "Get a list of IP addresses completed"
-msgstr "Obtenir une liste d'adresses IP, complétée"
+msgstr "Obtenir une liste d'adresses IP, c'est fait"
 
 #: ../src/network.cpp:514
 #, c-format
