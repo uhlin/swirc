@@ -44,6 +44,7 @@
 #include "config.h"
 #include "dataClassify.h"
 #include "errHand.h"
+#include "i18n.h"
 #include "icb.h"
 #include "identd.hpp"
 #include "irc.h"
@@ -175,9 +176,9 @@ check_hostname(const char *host, PPRINTTEXT_CONTEXT ctx)
 {
 	if (ssl_is_enabled() && config_bool("hostname_checking", true)) {
 		if (net_ssl_check_hostname(host, 0) != OK)
-			throw std::runtime_error("Hostname checking failed!");
+			throw std::runtime_error(_("Hostname checking failed!"));
 		else
-			printtext(ctx, "Hostname checking OK!");
+			printtext(ctx, "%s", _("Hostname checking OK!"));
 	}
 }
 
@@ -234,7 +235,7 @@ establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
 		net_set_send_timeout(TEMP_SEND_TIMEOUT);
 
 		if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) == 0) {
-			printtext(ctx, "Connected!");
+			printtext(ctx, "%s", _("Connected!"));
 
 			g_on_air = true;
 
@@ -300,10 +301,10 @@ get_ip_addresses(struct addrinfo *&res, const char *server, const char *port,
     PPRINTTEXT_CONTEXT ctx)
 {
 	if ((res = net_addr_resolve(server, port)) == NULL) {
-		throw std::runtime_error("Unable to get a list of IP "
-		    "addresses");
+		throw std::runtime_error(_("Unable to get a list of IP "
+		    "addresses"));
 	} else {
-		printtext(ctx, "Get a list of IP addresses completed");
+		printtext(ctx, "%s", _("Get a list of IP addresses completed"));
 	}
 }
 
@@ -510,7 +511,8 @@ net_connect(const struct network_connect_context *ctx,
 	}
 
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1, true);
-	printtext(&ptext_ctx, "Connecting to %s (%s)", ctx->server, ctx->port);
+	printtext(&ptext_ctx, _("Connecting to %s (%s)"), ctx->server,
+	    ctx->port);
 	connect_hook();
 
 	try {
@@ -518,10 +520,11 @@ net_connect(const struct network_connect_context *ctx,
 
 #ifdef WIN32
 		if (!winsock_init()) {
-			throw std::runtime_error("Cannot initiate use of the "
-			    "Winsock DLL");
+			throw std::runtime_error(_("Cannot initiate use of the "
+			    "Winsock DLL"));
 		} else {
-			printtext(&ptext_ctx, "Use of the Winsock DLL granted");
+			printtext(&ptext_ctx, "%s", _("Use of the Winsock DLL "
+			    "granted"));
 		}
 #endif
 
@@ -755,7 +758,7 @@ net_irc_listen(bool *connection_lost)
 	    true);
 	*connection_lost = (g_on_air && g_connection_lost);
 	if (*connection_lost)
-		printtext(&ptext_ctx, "Connection to IRC server lost");
+		printtext(&ptext_ctx, "%s", _("Connection to IRC server lost"));
 	if (g_on_air)
 		g_on_air = false;
 	net_ssl_end();
@@ -769,7 +772,7 @@ net_irc_listen(bool *connection_lost)
 	irc_deinit();
 	free(recvbuf);
 	free(message_concat);
-	printtext(&ptext_ctx, "Disconnected");
+	printtext(&ptext_ctx, "%s", _("Disconnected"));
 	(void) atomic_swap_bool(&g_irc_listening, false);
 }
 
