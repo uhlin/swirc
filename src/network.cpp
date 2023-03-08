@@ -168,7 +168,7 @@ static void
 check_conn_fail()
 {
 	if (!g_on_air || (ssl_is_enabled() && net_ssl_begin() == -1))
-		throw std::runtime_error("Failed to establish a connection");
+		throw std::runtime_error(_("Failed to establish a connection"));
 }
 
 static void
