@@ -24,6 +24,7 @@ INPUTFILES = $(COMMANDS_DIR)colormap.cpp\
 	$(EVENTS_DIR)misc.cpp\
 	$(SRC_DIR)include/commandhelp.h\
 	$(SRC_DIR)io-loop.c\
+	$(SRC_DIR)log.c\
 	$(SRC_DIR)main.cpp\
 	$(SRC_DIR)network.cpp\
 	$(SRC_DIR)readline.c\
