@@ -1,5 +1,5 @@
 /* IRC logs i.e. not logs for system messages
-   Copyright (C) 2020-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -34,6 +34,7 @@
 
 #include "assertAPI.h"
 #include "dataClassify.h"
+#include "i18n.h"
 #include "libUtils.h"
 #include "log.h"
 #include "nestHome.h"
@@ -157,11 +158,11 @@ log_toggle_on_off(void)
 	if (g_active_window->logging) {
 		g_active_window->logging = false;
 		ctx.spec_type = TYPE_SPEC1_WARN;
-		printtext(&ctx, "Logging for window (refnum: %d) now off",
+		printtext(&ctx, _("Logging for window (refnum: %d) now off"),
 		    g_active_window->refnum);
 	} else {
 		ctx.spec_type = TYPE_SPEC1_SUCCESS;
-		printtext(&ctx, "Logging for window (refnum: %d) now on",
+		printtext(&ctx, _("Logging for window (refnum: %d) now on"),
 		    g_active_window->refnum);
 		g_active_window->logging = true;
 	}
