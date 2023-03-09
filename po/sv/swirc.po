@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.2\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-09 12:51+0100\n"
-"PO-Revision-Date: 2023-03-08 23:11+0100\n"
+"PO-Revision-Date: 2023-03-09 13:01+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1136,12 +1136,12 @@ msgstr "Storlek på fellogg %s%.1f KB%s"
 #: ../src/log.c:161
 #, c-format
 msgid "Logging for window (refnum: %d) now off"
-msgstr ""
+msgstr "Loggning för fönstret (refnum: %d) är nu av"
 
 #: ../src/log.c:165
 #, c-format
 msgid "Logging for window (refnum: %d) now on"
-msgstr ""
+msgstr "Loggning för fönstret (refnum: %d) är nu på"
 
 #: ../src/main.cpp:136
 msgid ""
