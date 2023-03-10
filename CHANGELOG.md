@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.4.3] - 2023-03-10 ##
 - **Added** code improvements:
   - **Added** constructors/destructors
   - **Added** improved algorithms

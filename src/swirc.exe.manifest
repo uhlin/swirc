@@ -16,7 +16,7 @@
 	    type="win32"
 	    name="SDT.Swirc.Swirc"
 	    processorArchitecture="*"
-	    version="3.4.2.0" />
+	    version="3.4.3.0" />
 
 	<description>Curses IRC client</description>
 
