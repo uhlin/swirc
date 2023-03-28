@@ -1,0 +1,126 @@
+.\" -*- mode: nroff; -*-
+.\"
+.\" Copyright 2023 Markus Uhlin. All rights reserved.
+.\"
+.Dd March 28, 2023
+.Dt SWIRC.THEME 5
+.Os
+.Sh NAME
+.Nm swirc.theme
+.Nd how to write themes for swirc
+.Sh DESCRIPTION
+This manual page is the ultimate reference to consult when writing
+themes to
+.Xr swirc 1 .
+.Sh TEXT DECORATION
+.Bl -column "          " "Hex" "Octal" "Appearance" -offset indent
+.It Sy "What" Ta Sy "Hex" Ta Sy "Octal" Ta Sy "Appearance"
+.It "Blink" Ta "1d" Ta "035" Ta "^]"
+.It "Bold" Ta "02" Ta "002" Ta "^B"
+.It "Color" Ta "03" Ta "003" Ta "^C"
+.It "Normal" Ta "0f" Ta "017" Ta "^O"
+.It "Reverse" Ta "16" Ta "026" Ta "^V"
+.It "Underline" Ta "1f" Ta "037" Ta "^_"
+.El
+.Pp
+Example usage:
+.Bd -literal -offset indent -compact
+blabla ^Bbold text^B blabla
+blabla ^Vreversed text^V blabla
+blabla ^_underlined text^_ blabla
+.Ed
+.Pp
+Always use the
+.Em literal
+control characters because else it won't work!
+.Sh COLORS
+.Bl -column "Number" "          " "" -offset indent
+.It Sy "Number" Ta Sy "Name" Ta Sy ""
+.It "00" Ta "white" Ta ""
+.It "01" Ta "black" Ta ""
+.It "02" Ta "blue" Ta "(navy)"
+.It "03" Ta "green" Ta ""
+.It "04" Ta "red" Ta ""
+.It "05" Ta "brown" Ta "(maroon)"
+.It "06" Ta "purple" Ta ""
+.It "07" Ta "orange" Ta "(olive)"
+.It "08" Ta "yellow" Ta ""
+.It "09" Ta "lt.green" Ta "(lime)"
+.It "10" Ta "teal" Ta "(a kinda green/blue cyan)"
+.It "11" Ta "lt.cyan" Ta "(cyan ?) (aqua)"
+.It "12" Ta "lt.blue" Ta "(royal)"
+.It "13" Ta "pink" Ta "(light purple) (fuchsia)"
+.It "14" Ta "grey" Ta ""
+.It "15" Ta "lt.grey" Ta "(silver)"
+.El
+.Pp
+For the colors 16-99 see the output of the command
+.Sy "/colormap" .
+Enough color pairs must've been initialized.
+(193 color pairs are too few for the colors 16-99 to be used as
+backgrounds.)
+.Pp
+The syntax of the color attribute in text has the format ^CN[,M].
+N will be the text (foreground) color and M the background color.
+A background color (M) is optional and is not always included.
+.Pp
+N and M can maximally be two digits long.
+Although the colors
+.Brq 0,1,2,...,9
+are supported you are highly encouraged to use
+.Brq 00,01,02,...,09 .
+.Pp
+A plain ^C can be used to turn the color effect off.
+While typing ^O will make sure ALL the text effects gets resetted.
+For example:
+.Bd -literal -offset indent -compact
+blabla ^C05,02red text on blue background^C blabla
+blabla ^C09green text^O blabla
+.Ed
+.Pp
+Of course settings can start with colored text and a closing ^C is not
+essential.
+.Sh SETTING TYPES
+See
+.Xr swirc 1 .
+.Sh SETTINGS
+.Bl -tag -width Ds
+.\" ----------------------------------------
+.\" TERM BACKGROUND
+.\" ----------------------------------------
+.It Sy term_background Pq Em int
+Which background color (0-15) is this theme written for?
+.Bd -literal -offset indent -compact
+0 = white
+1 = black
+.Ed
+.\" ----------------------------------------
+.\" TERM ENABLE COLORS
+.\" ----------------------------------------
+.It Sy term_enable_colors Pq Em bool
+Enable colors (yes/no)?
+.\" ----------------------------------------
+.\" TERM USE DEFAULT COLORS
+.\" ----------------------------------------
+.It Sy term_use_default_colors Pq Em bool
+Use terminal's default colors?
+I.e. call
+.Xr use_default_colors 3 .
+.El
+.Sh FILES
+.Bl -tag -width "                         " -compact
+.It Pa ~/.swirc/default.the
+default theme
+.El
+.Sh SEE ALSO
+.Xr swirc 1 , Xr swirc.conf 5
+.Sh AUTHORS
+This manual page was written by
+.An Markus Uhlin
+.Aq Mt markus.uhlin@bredband.net
+.Sh CAVEATS
+If you want to give color to
+.Em numbers
+be sure to use
+.Em two
+digits for N nor M!
