@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2023 Markus Uhlin. All rights reserved.
 .\"
-.Dd March 28, 2023
+.Dd March 29, 2023
 .Dt SWIRC.THEME 5
 .Os
 .Sh NAME
@@ -106,6 +106,36 @@ Enable colors (yes/no)?
 Use terminal's default colors?
 I.e. call
 .Xr use_default_colors 3 .
+.\" ----------------------------------------
+.\" COLOR3 / COLOR4
+.\" ----------------------------------------
+.It Sy color3 , color4 Pq Em string
+Colors used in uncategorized contexts.
+Must begin with ^C.
+.\" ----------------------------------------
+.\" GFX FAILURE/SUCCESS/WARNING
+.\" ----------------------------------------
+.It Sy gfx_failure , gfx_success , gfx_warning Pq Em string
+Used in contexts where to flag failures, successes and warnings
+respectively.
+.\" ----------------------------------------
+.\" LEFT/RIGHT-BRACKET
+.\" ----------------------------------------
+.It Sy left_bracket , right_bracket Pq Em string
+Left and right bracket.
+Frequently used.
+.\" ----------------------------------------
+.\" LOGO COLOR
+.\" ----------------------------------------
+.It Sy logo_color Pq Em string
+Swirc ASCII logo color displayed at startup.
+(Must begin with ^C.)
+.\" ----------------------------------------
+.\" NICK S1/S2
+.\" ----------------------------------------
+.It Sy nick_s1 , nick_s2 Pq Em string
+When you or another user types something the nickname will be enclosed
+by s1 and s2.
 .El
 .Sh FILES
 .Bl -tag -width "                         " -compact
