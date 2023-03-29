@@ -2,7 +2,8 @@ INSTALL = install
 INSTALL_DEPS = src/swirc.1\
 	swirc\
 	swirc-royal.png\
-	swirc.conf.5
+	swirc.conf.5\
+	swirc.theme.5
 LC_MSGS = po/de/swirc.mo\
 	po/fi/swirc.mo\
 	po/fr/swirc.mo\
@@ -29,6 +30,7 @@ install: $(INSTALL_DEPS) $(LC_MSGS)
 	$(INSTALL) -m 0755 swirc $(DEST_PROGRAM)
 	$(INSTALL) -m 0444 src/swirc.1 $(DEST_MANUAL)
 	$(INSTALL) -m 0444 swirc.conf.5 $(DEST_CONFMAN)
+	$(INSTALL) -m 0444 swirc.theme.5 $(DEST_CONFMAN)
 	$(INSTALL) -m 0444 swirc-royal.png $(DEST_LOGO)
 	$(INSTALL) -m 0644 po/de/swirc.mo $(DEST_LC_MSGS)de/LC_MESSAGES
 	$(INSTALL) -m 0644 po/fi/swirc.mo $(DEST_LC_MSGS)fi/LC_MESSAGES
@@ -43,4 +45,5 @@ install-no-lc-msgs: $(INSTALL_DEPS)
 	$(INSTALL) -m 0755 swirc $(DEST_PROGRAM)
 	$(INSTALL) -m 0444 src/swirc.1 $(DEST_MANUAL)
 	$(INSTALL) -m 0444 swirc.conf.5 $(DEST_CONFMAN)
+	$(INSTALL) -m 0444 swirc.theme.5 $(DEST_CONFMAN)
 	$(INSTALL) -m 0444 swirc-royal.png $(DEST_LOGO)
