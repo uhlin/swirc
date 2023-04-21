@@ -491,12 +491,13 @@ cmd_theme(const char *data)
 	}
 
 	if (strings_match(instruction, "install")) {
-		if (theme_is_in_db(name))
+		if (isValid(name) && theme_is_in_db(name))
 			install_theme(name);
 	} else if (strings_match(instruction, "list-remote")) {
 		list_remote();
 	} else if (strings_match(instruction, "set")) {
-		if (strings_match(name, "default") || theme_is_in_db(name))
+		if (isValid(name) && (strings_match(name, "default") ||
+		    theme_is_in_db(name)))
 			set_theme(name);
 	} else {
 		sw_assert_not_reached();
