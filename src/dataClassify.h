@@ -31,6 +31,21 @@ isEmpty(const char *data)
 	return (*data == '\0');
 }
 
+#ifndef _lint
+static SW_INLINE bool
+isValid(void *ptr)
+{
+#if defined(BSD) || defined(LINUX)
+	extern char etext;
+	return (ptr != NULL && ((char *) ptr) > &etext);
+#else
+	return (ptr != NULL);
+#endif
+}
+#else
+#define isValid(_ptr) ((_ptr) != NULL)
+#endif
+
 #include <ctype.h>
 #include <limits.h>
 #include <stdio.h>		/* EOF */
