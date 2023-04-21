@@ -35,7 +35,7 @@ isEmpty(const char *data)
 static SW_INLINE bool
 isValid(void *ptr)
 {
-#if defined(BSD) || defined(LINUX)
+#if defined(HAVE_ETEXT_SEGMENT)
 	extern char etext;
 	return (ptr != NULL && ((char *) ptr) > &etext);
 #else
