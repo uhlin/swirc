@@ -21,10 +21,10 @@ check_etext () {
 int global;
 
 static int
-valid(void *ptr)
+valid(const void *ptr)
 {
 	extern char etext;
-	return (ptr != NULL && ((char *) ptr) > &etext);
+	return (ptr != NULL && ((const char *) ptr) > &etext);
 }
 
 int

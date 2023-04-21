@@ -33,11 +33,11 @@ isEmpty(const char *data)
 
 #ifndef _lint
 static SW_INLINE bool
-isValid(void *ptr)
+isValid(const void *ptr)
 {
 #if defined(HAVE_ETEXT_SEGMENT)
 	extern char etext;
-	return (ptr != NULL && ((char *) ptr) > &etext);
+	return (ptr != NULL && ((const char *) ptr) > &etext);
 #else
 	return (ptr != NULL);
 #endif
