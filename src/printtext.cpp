@@ -699,7 +699,7 @@ new_row(WINDOW *win, int *insert_count, int *rep_count)
 	WADDCH(win, '\n');
 	*insert_count = 0;
 
-	if (rep_count != NULL)
+	if (isValid(rep_count))
 		(*rep_count) ++;
 }
 
@@ -1502,7 +1502,7 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 		err_sys("%s: init_once", __func__);
 #endif
 
-	if (rep_count)
+	if (isValid(rep_count))
 		*rep_count = 0;
 	if (pwin == NULL || buf == NULL)
 		err_exit(EINVAL, "%s", __func__);
