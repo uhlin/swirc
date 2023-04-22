@@ -397,7 +397,7 @@ finalize_out_string(const wchar_t *buf)
 		err_log(errno, "finalize_out_string: wcstombs");
 		BZERO(out, size);
 		return xrealloc(out, 1);
-	} else if (bytes_convert == (size - 1)) {
+	} else if (bytes_convert >= (size - 1)) {
 		out[size - 1] = '\0';
 	}
 

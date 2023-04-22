@@ -1069,7 +1069,7 @@ try_convert_buf_with_cs(CSTRING buf, CSTRING codeset)
 			throw std::runtime_error("conversion failed");
 		}
 
-		if (bytes_convert == (size - 1))
+		if (bytes_convert >= (size - 1))
 			out[size - 1] = 0L;
 		if (xsetlocale(LC_CTYPE, original_locale) == NULL) {
 			err_log(EPERM, "%s: cannot restore original "
