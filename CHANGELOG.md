@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Added a man page that describes how to write themes.
+- Added and made use of a pointer validation function.
+
 ## [3.4.3] - 2023-03-10 ##
 - **Added** code improvements:
   - **Added** constructors/destructors
