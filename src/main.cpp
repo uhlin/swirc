@@ -54,6 +54,7 @@
 #include "assertAPI.h"
 #include "curses-funcs.h"
 #include "cursesInit.h"
+#include "dataClassify.h"
 #include "errHand.h"
 #include "i18n.h"
 #include "io-loop.h"
@@ -737,6 +738,12 @@ main(int argc, char *argv[])
 	nestHome_deinit();
 	term_deinit();
 
+	if (isValid(g_dev_null)) {
+		if (fclose(g_dev_null) != 0)
+			err_ret("fclose");
+		else
+			g_dev_null = NULL;
+	}
 	cmdline_options_destroy();
 	puts("- Exit Success! -");
 	return (EXIT_SUCCESS);
