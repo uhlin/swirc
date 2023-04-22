@@ -15,6 +15,7 @@ TESTS = cmd_ban.run\
 	icb_send_pm.run\
 	int_diff.run\
 	int_sum.run\
+	isValid.run\
 	is_alphabetic.run\
 	is_numeric.run\
 	printtext_convert_wc.run\

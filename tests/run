@@ -16,6 +16,7 @@ getuser
 icb_send_pm
 int_diff
 int_sum
+isValid
 is_alphabetic
 is_numeric
 printtext_convert_wc
