@@ -61,7 +61,7 @@
 bool g_suggs_mode = false;
 
 #ifdef HAVE_HUNSPELL
-static Hunhandle			*hh = nullptr;
+static Hunhandle			*pHunspell = nullptr;
 static std::vector<sugg_ptr>		*rl_suggs = nullptr;
 static std::vector<sugg_ptr>::iterator	 suggs_it;
 static std::wstring			 rl_word;
@@ -90,7 +90,8 @@ suggestion::suggestion(const char *word)
 	if (li->lang_and_territory == nullptr || li->codeset == nullptr) {
 		free_locale_info(li);
 		throw std::runtime_error("get locale info error");
-	} else if ((encoding = Hunspell_get_dic_encoding(hh)) == nullptr) {
+	} else if ((encoding = Hunspell_get_dic_encoding(pHunspell)) ==
+	    nullptr) {
 		free_locale_info(li);
 		throw std::runtime_error("get dic encoding error");
 	}
@@ -175,11 +176,11 @@ spell_init(bool report_nonexistent)
 		}
 	}
 
-	if (hh)
-		Hunspell_destroy(hh);
+	if (pHunspell)
+		Hunspell_destroy(pHunspell);
 
 	redir_stderr();
-	if ((hh = Hunspell_create(aff.c_str(), dic.c_str())) == nullptr)
+	if ((pHunspell = Hunspell_create(aff.c_str(), dic.c_str())) == nullptr)
 		printtext_print("err", "%s: error", __func__);
 	restore_stderr();
 }
@@ -189,9 +190,9 @@ spell_deinit(void)
 {
 	g_suggs_mode = false;
 
-	if (hh)
-		Hunspell_destroy(hh);
-	hh = nullptr;
+	if (pHunspell)
+		Hunspell_destroy(pHunspell);
+	pHunspell = nullptr;
 }
 
 void
@@ -239,7 +240,7 @@ spell_get_suggs(const char *mbs, const wchar_t *wcs)
 		return nullptr;
 	else if (mbs) {
 		if (strcmp(mbs, "") == STRINGS_MATCH ||
-		    (nsuggs = Hunspell_suggest(hh, &list, mbs)) < 1)
+		    (nsuggs = Hunspell_suggest(pHunspell, &list, mbs)) < 1)
 			return nullptr;
 	} else if (wcs) {
 		char	*word;
@@ -249,7 +250,7 @@ spell_get_suggs(const char *mbs, const wchar_t *wcs)
 			return nullptr;
 
 		if ((word = get_mbs(wcs)) == nullptr ||
-		    (nsuggs = Hunspell_suggest(hh, &list, word)) < 1) {
+		    (nsuggs = Hunspell_suggest(pHunspell, &list, word)) < 1) {
 			free(word);
 			return nullptr;
 		}
@@ -273,7 +274,7 @@ spell_get_suggs(const char *mbs, const wchar_t *wcs)
 		}
 	}
 
-	Hunspell_free_list(hh, &list, nsuggs);
+	Hunspell_free_list(pHunspell, &list, nsuggs);
 	return suggs;
 }
 
@@ -312,10 +313,10 @@ spell_test2(const wchar_t *word)
 bool
 spell_word(const char *word)
 {
-	if (hh == nullptr || word == nullptr ||
+	if (pHunspell == nullptr || word == nullptr ||
 	    strcmp(word, "") == STRINGS_MATCH)
 		return false;
-	return (Hunspell_spell(hh, word) != 0 ? true : false);
+	return (Hunspell_spell(pHunspell, word) != 0 ? true : false);
 }
 
 static void
@@ -427,7 +428,7 @@ spell_wide_word(const wchar_t *word)
 	bool	 ret;
 	char	*mbs;
 
-	if (hh == nullptr || word == nullptr ||
+	if (pHunspell == nullptr || word == nullptr ||
 	    wcscmp(word, L"") == STRINGS_MATCH ||
 	    wcslen(word) > MAXWORDLEN)
 		return false;
@@ -435,7 +436,7 @@ spell_wide_word(const wchar_t *word)
 	if ((mbs = get_mbs(word)) == nullptr)
 		return false;
 
-	ret = (Hunspell_spell(hh, mbs) != 0 ? true : false);
+	ret = (Hunspell_spell(pHunspell, mbs) != 0 ? true : false);
 	free(mbs);
 
 	return ret;
