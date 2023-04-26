@@ -808,12 +808,31 @@ cmdline_options_destroy(void)
 void
 redir_stderr(void)
 {
-	g_stderr_fd = dup(fileno(stderr));
-	(void) dup2(fileno(g_dev_null), fileno(stderr));
+	const bool is_valid_fd = (g_stderr_fd != -1);
+
+	if (is_valid_fd)
+		err_log(EBUSY, "%s: valid file descriptor", __func__);
+	else if (!isValid(g_dev_null))
+		err_log(EFAULT, "%s: dev null not open", __func__);
+	else if ((g_stderr_fd = dup(fileno(stderr))) == -1)
+		err_sys("%s: dup() error", __func__);
+	else if (dup2(fileno(g_dev_null), fileno(stderr)) == -1)
+		err_sys("%s: dup2() error", __func__);
+	else
+		return;
 }
 
 void
 restore_stderr(void)
 {
-	(void) dup2(g_stderr_fd, fileno(stderr));
+	const bool is_valid_fd = (g_stderr_fd != -1);
+
+	if (!is_valid_fd)
+		err_log(EBADF, "%s", __func__);
+	else if (dup2(g_stderr_fd, fileno(stderr)) == -1)
+		err_sys("%s: dup2() error", __func__);
+	else if (close(g_stderr_fd) != 0)
+		err_log(errno, "%s: close() error", __func__);
+	else
+		g_stderr_fd = -1;
 }
