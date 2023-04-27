@@ -3,7 +3,6 @@ bx.the
 nano.the
 superkod.the
 weechat.the
-themes
 "
 
 check_themes () {

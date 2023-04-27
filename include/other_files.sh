@@ -15,6 +15,7 @@ reports/swirc-3.3.0.html
 reports/swirc-3.3.2.html
 style.css
 swirc.list
+themes/themes
 "
 
 check_other_files () {
