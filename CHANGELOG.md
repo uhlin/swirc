@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 - Added a man page that describes how to write themes.
 - Added and made use of a pointer validation function.
 - Changed the file suffix for theme files from `.the` to
-  `.thm`. `.the` looks too much like the English word "the".
+  `.thm`. (`.the` looks too much like the English word "the".)
+- Closed an open stream before exit
+- Defined noreturn for C++ in `fallbackattrs.h`
 - Fixed unchecked return values
 
 ## [3.4.3] - 2023-03-10 ##
