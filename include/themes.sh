@@ -1,24 +1,30 @@
 THEMES="
-bx.the
-nano.the
-superkod.the
-weechat.the
+bx
+nano
+superkod
+weechat
 "
 
 check_themes () {
+	local _suff=".thm"
+
 	for theme in $THEMES; do
-		printf "  - Checking for %s..." "themes/${theme}"
-		test -f "themes/${theme}" || { printf "error\n"; exit 1; }
+		printf "  - Checking for %s..." "themes/${theme}${_suff}"
+		test -f "themes/${theme}${_suff}" || \
+		    { printf "error\n"; exit 1; }
 		printf "ok\n"
 	done
 }
 
 add_themes () {
-	for theme in $THEMES; do
-		printf "  - Adding %s..." "${1}/themes/${theme}"
-		cp "themes/${theme}" "${1}/themes/${theme}"
+	local _suff="${2}"
 
-		test -f "${1}/themes/${theme}" || { printf "error\n"; exit 1; }
+	for theme in $THEMES; do
+		printf "  - Adding %s..." "${1}/themes/${theme}${_suff}"
+		cp "themes/${theme}.thm" "${1}/themes/${theme}${_suff}"
+
+		test -f "${1}/themes/${theme}${_suff}" || \
+		    { printf "error\n"; exit 1; }
 		printf "ok\n"
 	done
 }
