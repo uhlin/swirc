@@ -1,5 +1,5 @@
 /* Data classification utilities
-   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -54,6 +54,15 @@ is_alphabetic(const char *string)
 }
 
 bool
+is_irc_channel(const char *name)
+{
+	if (name == NULL || *name == '\0')
+		return false;
+
+	return (*name == '&' || *name == '#' || *name == '+' || *name == '!');
+}
+
+bool
 is_numeric(const char *string)
 {
 	if (string == NULL || *string == '\0')
@@ -68,26 +77,21 @@ is_numeric(const char *string)
 }
 
 bool
-is_whiteSpace(const char *string)
+is_valid_hostname(const char *hostname)
 {
-	if (string == NULL || *string == '\0')
+	static const char host_chars[] =
+	    "abcdefghijklmnopqrstuvwxyz.0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ:";
+
+	if (hostname == NULL || *hostname == '\0' ||
+	    xstrnlen(hostname, hostname_len_max + 1) > hostname_len_max)
 		return false;
 
-	for (const char *p = &string[0]; *p != '\0'; p++) {
-		if (!sw_isspace(*p))
+	for (const char *ccp = &hostname[0]; *ccp != '\0'; ccp++) {
+		if (strchr(host_chars, *ccp) == NULL)
 			return false;
 	}
 
 	return true;
-}
-
-bool
-is_irc_channel(const char *name)
-{
-	if (name == NULL || *name == '\0')
-		return false;
-
-	return (*name == '&' || *name == '#' || *name == '+' || *name == '!');
 }
 
 bool
@@ -103,6 +107,21 @@ is_valid_nickname(const char *nickname)
 
 	for (const char *ccp = &nickname[0]; *ccp != '\0'; ccp++) {
 		if (strchr(legal_index, *ccp) == NULL)
+			return false;
+	}
+
+	return true;
+}
+
+bool
+is_valid_real_name(const char *real_name)
+{
+	if (real_name == NULL || *real_name == '\0' ||
+	    xstrnlen(real_name, real_name_len_max + 1) > real_name_len_max)
+		return false;
+
+	for (const char *ccp = &real_name[0]; *ccp != '\0'; ccp++) {
+		if (!sw_isprint(*ccp))
 			return false;
 	}
 
@@ -129,32 +148,13 @@ is_valid_username(const char *username)
 }
 
 bool
-is_valid_real_name(const char *real_name)
+is_whiteSpace(const char *string)
 {
-	if (real_name == NULL || *real_name == '\0' ||
-	    xstrnlen(real_name, real_name_len_max + 1) > real_name_len_max)
+	if (string == NULL || *string == '\0')
 		return false;
 
-	for (const char *ccp = &real_name[0]; *ccp != '\0'; ccp++) {
-		if (!sw_isprint(*ccp))
-			return false;
-	}
-
-	return true;
-}
-
-bool
-is_valid_hostname(const char *hostname)
-{
-	static const char host_chars[] =
-	    "abcdefghijklmnopqrstuvwxyz.0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ:";
-
-	if (hostname == NULL || *hostname == '\0' ||
-	    xstrnlen(hostname, hostname_len_max + 1) > hostname_len_max)
-		return false;
-
-	for (const char *ccp = &hostname[0]; *ccp != '\0'; ccp++) {
-		if (strchr(host_chars, *ccp) == NULL)
+	for (const char *p = &string[0]; *p != '\0'; p++) {
+		if (!sw_isspace(*p))
 			return false;
 	}
 
