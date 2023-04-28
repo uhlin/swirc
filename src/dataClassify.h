@@ -3,13 +3,13 @@
 
 __SWIRC_BEGIN_DECLS
 bool	is_alphabetic(const char *);
-bool	is_numeric(const char *);
-bool	is_whiteSpace(const char *);
 bool	is_irc_channel(const char *);
-bool	is_valid_nickname(const char *);
-bool	is_valid_username(const char *);
-bool	is_valid_real_name(const char *);
+bool	is_numeric(const char *);
 bool	is_valid_hostname(const char *);
+bool	is_valid_nickname(const char *);
+bool	is_valid_real_name(const char *);
+bool	is_valid_username(const char *);
+bool	is_whiteSpace(const char *);
 __SWIRC_END_DECLS
 
 /* Inline function definitions
