@@ -53,6 +53,16 @@ is_alphabetic(const char *string)
 	return true;
 }
 
+/*
+ * Chinese, Japanese and Korean
+ */
+bool
+is_cjk(const wchar_t wc)
+{
+	UNUSED_PARAM(wc);
+	return false;
+}
+
 bool
 is_irc_channel(const char *name)
 {
