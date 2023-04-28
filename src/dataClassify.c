@@ -148,7 +148,7 @@ is_valid_username(const char *username)
 }
 
 bool
-is_whiteSpace(const char *string)
+is_whitespace(const char *string)
 {
 	if (string == NULL || *string == '\0')
 		return false;

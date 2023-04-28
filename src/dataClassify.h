@@ -9,7 +9,7 @@ bool	is_valid_hostname(const char *);
 bool	is_valid_nickname(const char *);
 bool	is_valid_real_name(const char *);
 bool	is_valid_username(const char *);
-bool	is_whiteSpace(const char *);
+bool	is_whitespace(const char *);
 __SWIRC_END_DECLS
 
 /* Inline function definitions

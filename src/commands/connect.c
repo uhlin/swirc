@@ -643,7 +643,7 @@ cmd_connect(const char *data)
 
 	set_ssl_off();
 
-	if (strings_match(dcopy, "") || is_whiteSpace(dcopy)) {
+	if (strings_match(dcopy, "") || is_whitespace(dcopy)) {
 		print_and_free("/connect: missing arguments", dcopy);
 		return;
 	} else if ((feeds_written = strFeed(dcopy, 1)) == 1) {
