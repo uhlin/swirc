@@ -18,6 +18,7 @@ int_diff
 int_sum
 isValid
 is_alphabetic
+is_cjk
 is_numeric
 printtext_convert_wc
 realloc_strcat

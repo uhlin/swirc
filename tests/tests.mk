@@ -17,6 +17,7 @@ TESTS = cmd_ban.run\
 	int_sum.run\
 	isValid.run\
 	is_alphabetic.run\
+	is_cjk.run\
 	is_numeric.run\
 	printtext_convert_wc.run\
 	realloc_strcat.run\
