@@ -8,7 +8,7 @@
 
 #include "dataClassify.h"
 
-int expected = -1;
+static int expected = -1;
 
 static void
 test1(void **state)
