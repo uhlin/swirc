@@ -18,6 +18,9 @@ bool	is_valid_nickname(const char *);
 bool	is_valid_real_name(const char *);
 bool	is_valid_username(const char *);
 bool	is_whitespace(const char *);
+
+int	xwcwidth(const wchar_t);
+int	xwcswidth(const wchar_t *);
 __SWIRC_END_DECLS
 
 /* Inline function definitions

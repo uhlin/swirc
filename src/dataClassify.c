@@ -212,3 +212,17 @@ is_whitespace(const char *string)
 
 	return true;
 }
+
+int
+xwcwidth(const wchar_t wc)
+{
+	UNUSED_PARAM(wc);
+	return 0;
+}
+
+int
+xwcswidth(const wchar_t *str)
+{
+	UNUSED_PARAM(str);
+	return 0;
+}
