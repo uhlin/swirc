@@ -236,6 +236,12 @@ xwcwidth(const wchar_t wc)
 int
 xwcswidth(const wchar_t *str)
 {
-	UNUSED_PARAM(str);
-	return 0;
+	const wchar_t	*ptr = str;
+	int		 width = 0;
+
+	while (*ptr) {
+		width += xwcwidth(*ptr);
+		ptr++;
+	}
+	return width;
 }
