@@ -216,8 +216,21 @@ is_whitespace(const char *string)
 int
 xwcwidth(const wchar_t wc)
 {
-	UNUSED_PARAM(wc);
-	return 0;
+	static const RANGE fullwidth[] = {
+		{ 0x1F600, 0x1F64F, "Emoticons" },
+	};
+
+	if (wc <= 0xFF)
+		return 1;
+	else if (is_combined(wc))
+		return 0;
+	for (const RANGE *rp = &fullwidth[0];
+	    rp < &fullwidth[ARRAY_SIZE(fullwidth)];
+	    rp++) {
+		if (wc >= rp->start && wc <= rp->stop)
+			return 2;
+	}
+	return (is_cjk(wc) ? 2 : 1);
 }
 
 int
