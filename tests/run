@@ -40,6 +40,7 @@ sw_wcscpy
 trim
 write_to_stream
 xstrnlen
+xwcswidth
 "
 
 for test in $TESTS; do
