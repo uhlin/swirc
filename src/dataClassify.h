@@ -1,6 +1,12 @@
 #ifndef DATA_CLASSIFY_H
 #define DATA_CLASSIFY_H
 
+typedef struct tagRANGE {
+	wchar_t start;
+	wchar_t stop;
+	CSTRING comment;
+} RANGE, *PRANGE;
+
 __SWIRC_BEGIN_DECLS
 bool	is_alphabetic(const char *);
 bool	is_cjk(const wchar_t);
