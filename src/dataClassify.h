@@ -10,6 +10,7 @@ typedef struct tagRANGE {
 __SWIRC_BEGIN_DECLS
 bool	is_alphabetic(const char *);
 bool	is_cjk(const wchar_t);
+bool	is_combined(const wchar_t);
 bool	is_irc_channel(const char *);
 bool	is_numeric(const char *);
 bool	is_valid_hostname(const char *);

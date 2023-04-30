@@ -85,6 +85,27 @@ is_cjk(const wchar_t wc)
 }
 
 bool
+is_combined(const wchar_t wc)
+{
+	static const RANGE array[] = {
+		{ 0x0300, 0x036F, "Combining Diacritical Marks" },
+		{ 0x1AB0, 0x1AFF, "Combining Diacritical Marks Extended" }, // stop 0x1ACE?
+		{ 0x1DC0, 0x1DFF, "Combining Diacritical Marks Supplement" },
+		{ 0x20D0, 0x20FF, "Combining Diacritical Marks for Symbols" }, // stop 0x20F0?
+		{ 0xFE20, 0xFE2F, "Combining Half Marks" },
+	};
+
+	for (const RANGE *rp = &array[0];
+	    rp < &array[ARRAY_SIZE(array)];
+	    rp++) {
+		if (wc >= rp->start && wc <= rp->stop)
+			return true;
+	}
+
+	return false;
+}
+
+bool
 is_irc_channel(const char *name)
 {
 	if (name == NULL || *name == '\0')
