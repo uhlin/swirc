@@ -59,7 +59,28 @@ is_alphabetic(const char *string)
 bool
 is_cjk(const wchar_t wc)
 {
-	UNUSED_PARAM(wc);
+	static const RANGE array[] = {
+		{ 0x2E80,  0x2EFF,  "CJK Radicals Supplement" },
+		{ 0x2F00,  0x2FDF,  "Kangxi Radicals" },
+		{ 0x3000,  0x303F,  "CJK Symbols and Punctuation" },
+		{ 0x31C0,  0x31EF,  "CJK Strokes" },
+		{ 0x3200,  0x32FF,  "Enclosed CJK Letters and Months" },
+		{ 0x3300,  0x33FF,  "CJK Compatibility" },
+		{ 0x3400,  0x4DBF,  "CJK Unified Ideographs Extension A" },
+		{ 0x4E00,  0x9FFF,  "CJK Unified Ideographs" },
+		{ 0xF900,  0xFAFF,  "CJK Compatibility Ideographs" },
+		{ 0xFE30,  0xFE4F,  "CJK Compatibility Forms" },
+		{ 0x20000, 0x2A6DF, "CJK Unified Ideographs Extension B" },
+		{ 0x2F800, 0x2FA1F, "CJK Compatibility Ideographs Supplement" },
+	};
+
+	for (const RANGE *rp = &array[0];
+	    rp < &array[ARRAY_SIZE(array)];
+	    rp++) {
+		if (wc >= rp->start && wc <= rp->stop)
+			return true;
+	}
+
 	return false;
 }
 
