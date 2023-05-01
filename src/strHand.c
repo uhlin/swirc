@@ -1,5 +1,5 @@
 /* String handling functions
-   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -60,7 +60,7 @@ strToLower(char *s)
 {
 	size_t	len = 0;
 
-	if (!isValid(s))
+	if (s == NULL)
 		err_exit(EINVAL, "strToLower");
 	else if (! (*s))
 		return s;
@@ -84,7 +84,7 @@ strToUpper(char *s)
 {
 	size_t	len = 0;
 
-	if (!isValid(s))
+	if (s == NULL)
 		err_exit(EINVAL, "strToUpper");
 	else if (! (*s))
 		return s;
@@ -110,7 +110,7 @@ sw_strdup(const char *string)
 	char	*dest = NULL;
 	size_t	 size = 0;
 
-	if (!isValid(string))
+	if (isNull(string))
 		err_exit(EINVAL, "%s error", __func__);
 	else
 		size = strlen(string) + 1;
@@ -136,7 +136,7 @@ trim(char *string)
 {
 	char	*p = NULL;
 
-	if (!isValid(string)) {
+	if (isNull(string)) {
 		err_exit(EINVAL, "trim");
 	} else if (isEmpty(string)) {
 		return string;
