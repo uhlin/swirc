@@ -759,7 +759,7 @@ case_default(const struct case_default_context *ctx, int *rep_count,
 	} else if (!start_on_a_new_row((*insert_count) + ctx->diff + 1,
 		    ctx->win)) {
 		addmbs(ctx->win, mbs);
-		(*insert_count) ++;
+		(*insert_count) += xwcwidth(ctx->wc); // XXX
 	} else {
 		/*
 		 * Start on a new row
