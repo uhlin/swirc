@@ -214,9 +214,11 @@ is_whitespace(const char *string)
 }
 
 /*
- * Determines columns needed for a wide character.
- * Test the 'wc' using iswprint() initially. This is done elsewhere so
- * we don't want to do it twice...
+ * Determines the number of column positions required to display a
+ * wide character.
+ *
+ * Test the 'wc' using iswprint() initially. (This is done elsewhere
+ * so we don't want to do it twice...)
  */
 int
 xwcwidth(const wchar_t wc)
