@@ -217,6 +217,9 @@ int
 xwcwidth(const wchar_t wc)
 {
 	static const RANGE fullwidth[] = {
+		{ 0xFF01, 0xFF5E, "Fullwidth ASCII variants" },
+		{ 0xFF5F, 0xFF60, "Fullwidth brackets" },
+		{ 0xFFE0, 0xFFE6, "Fullwidth symbol variants" },
 		{ 0x1F600, 0x1F64F, "Emoticons" },
 	};
 
