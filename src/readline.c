@@ -457,15 +457,20 @@ static void
 handle_key(volatile struct readline_session_context *ctx, wint_t wc,
     bool check_reset)
 {
+	int width;
+	struct current_cursor_pos yx;
+
 	if (ctx->no_bufspc) {
 		term_beep();
 		return;
 	}
+
 	if (hiLim_isset(ctx->act))
 		magic_swap_panels(ctx, true);
+	width = xwcwidth(wc);
+
 	if (ctx->insert_mode) {
-		int		 ret;
-		wchar_t		*ptr;
+		wchar_t *ptr;
 
 		ptr = &ctx->buffer[ctx->bufpos];
 		(void) wmemmove(ptr + 1, ptr, wcslen(ptr));
@@ -473,20 +478,27 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc,
 
 		ctx->bufpos++;
 		ctx->numins++;
+		ctx->vispos += width;
 
 		readline_winsch(ctx->act, wc);
 
-		mutex_lock(&g_puts_mutex);
-		ret = wmove(ctx->act, term_get_pos(ctx->act).cury,
-		    term_get_pos(ctx->act).curx + 1);
-		mutex_unlock(&g_puts_mutex);
+		if (width > 0) {
+			int ret;
 
-		if (ret == ERR)
-			readline_error(0, "handle_key: wmove");
+			yx = term_get_pos(ctx->act);
+
+			mutex_lock(&g_puts_mutex);
+			ret = wmove(ctx->act, yx.cury, yx.curx + width);
+			mutex_unlock(&g_puts_mutex);
+
+			if (ret == ERR)
+				readline_error(0, "handle_key: wmove");
+		}
 	} else {
 		ctx->buffer[ctx->bufpos] = wc;
 		ctx->bufpos++;
 		ctx->numins++;
+		ctx->vispos += width;
 		readline_waddch(ctx->act, wc);
 	}
 
