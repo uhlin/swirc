@@ -458,7 +458,6 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc,
     bool check_reset)
 {
 	int width;
-	struct current_cursor_pos yx;
 
 	if (ctx->no_bufspc) {
 		term_beep();
@@ -484,6 +483,7 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc,
 
 		if (width > 0) {
 			int ret;
+			struct current_cursor_pos yx;
 
 			yx = term_get_pos(ctx->act);
 
