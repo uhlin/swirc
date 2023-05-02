@@ -526,8 +526,8 @@ new_session(CSTRING prompt)
 	ctx->buffer      = xcalloc(g_readline_bufsize + 1, sizeof(wchar_t));
 	ctx->bufpos      = 0;
 	ctx->insert_mode = false;
-	ctx->numins      = 0;
 	ctx->no_bufspc   = false;
+	ctx->numins      = 0;
 	ctx->prompt      = sw_strdup(prompt);
 	ctx->prompt_size = (int) strlen(squeeze_text_deco(prompt_copy));
 	ctx->tc          = readline_tab_comp_ctx_new();
