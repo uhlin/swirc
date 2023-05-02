@@ -323,6 +323,7 @@ case_key_dc(volatile struct readline_session_context *ctx)
 static void
 case_key_left(volatile struct readline_session_context *ctx)
 {
+	int width;
 	struct current_cursor_pos yx;
 
 	if (ctx->bufpos == 0) {
@@ -334,14 +335,16 @@ case_key_left(volatile struct readline_session_context *ctx)
 		magic_swap_panels(ctx, false);
 
 	mutex_lock(&g_puts_mutex);
-	ctx->bufpos--;
-	yx = term_get_pos(ctx->act);
-	if (wmove(ctx->act, yx.cury, yx.curx - 1) == ERR) {
-		mutex_unlock(&g_puts_mutex);
-		readline_error(EIO, "wmove");
-		/* NOTREACHED */
+	if ((width = xwcwidth(ctx->buffer[--ctx->bufpos])) > 0) {
+		ctx->vispos -= width;
+		yx = term_get_pos(ctx->act);
+		if (wmove(ctx->act, yx.cury, yx.curx - width) == ERR) {
+			mutex_unlock(&g_puts_mutex);
+			readline_error(EIO, "wmove");
+			/* NOTREACHED */
+		}
+		(void) wrefresh(ctx->act);
 	}
-	(void) wrefresh(ctx->act);
 	mutex_unlock(&g_puts_mutex);
 }
 
@@ -351,6 +354,7 @@ case_key_left(volatile struct readline_session_context *ctx)
 static void
 case_key_right(volatile struct readline_session_context *ctx)
 {
+	int width;
 	struct current_cursor_pos yx;
 
 	if (!ctx->insert_mode) {
@@ -362,14 +366,16 @@ case_key_right(volatile struct readline_session_context *ctx)
 		magic_swap_panels(ctx, true);
 
 	mutex_lock(&g_puts_mutex);
-	ctx->bufpos++;
-	yx = term_get_pos(ctx->act);
-	if (wmove(ctx->act, yx.cury, yx.curx + 1) == ERR) {
-		mutex_unlock(&g_puts_mutex);
-		readline_error(EIO, "wmove");
-		/* NOTREACHED */
+	if ((width = xwcwidth(ctx->buffer[ctx->bufpos++])) > 0) {
+		ctx->vispos += width;
+		yx = term_get_pos(ctx->act);
+		if (wmove(ctx->act, yx.cury, yx.curx + width) == ERR) {
+			mutex_unlock(&g_puts_mutex);
+			readline_error(EIO, "wmove");
+			/* NOTREACHED */
+		}
+		(void) wrefresh(ctx->act);
 	}
-	(void) wrefresh(ctx->act);
 	mutex_unlock(&g_puts_mutex);
 }
 
