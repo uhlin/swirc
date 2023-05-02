@@ -73,6 +73,7 @@ struct readline_session_context {
 	int              bufpos;
 	int              numins;
 	int              prompt_size;
+	int              vispos; // visual position
 	wchar_t         *buffer;
 };
 

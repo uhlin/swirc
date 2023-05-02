@@ -531,6 +531,7 @@ new_session(CSTRING prompt)
 	ctx->prompt      = sw_strdup(prompt);
 	ctx->prompt_size = (int) strlen(squeeze_text_deco(prompt_copy));
 	ctx->tc          = readline_tab_comp_ctx_new();
+	ctx->vispos      = 0;
 
 	free(prompt_copy);
 
