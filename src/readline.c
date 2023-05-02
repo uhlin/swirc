@@ -784,7 +784,7 @@ process(volatile struct readline_session_context *ctx)
 			session_destroy(ctx);
 			return NULL;
 		default:
-			if (iswprint(wc))
+			if (iswprint(wc) && !is_combined(wc))
 				handle_key(ctx, wc, true);
 			break;
 		}
