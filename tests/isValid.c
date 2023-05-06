@@ -76,6 +76,22 @@ isValid_unusualLoc(void **state)
 	UNUSED_PARAM(state);
 }
 
+static void
+isValid_emptyStr(void **state)
+{
+	bval = isValid("");
+	print_message("empty string valid? %s\n", yesno(bval));
+	UNUSED_PARAM(state);
+}
+
+static void
+isValid_fixedStr(void **state)
+{
+	bval = isValid("foo");
+	print_message("fixed string valid? %s\n", yesno(bval));
+	UNUSED_PARAM(state);
+}
+
 int
 main(void)
 {
@@ -86,6 +102,8 @@ main(void)
 		cmocka_unit_test(isValid_ptrToHeap),
 		cmocka_unit_test(isValid_nullPtr),
 		cmocka_unit_test(isValid_unusualLoc),
+		cmocka_unit_test(isValid_emptyStr),
+		cmocka_unit_test(isValid_fixedStr),
 	};
 
 	return cmocka_run_group_tests(tests, NULL, NULL);
