@@ -230,9 +230,9 @@ xwcwidth(const wchar_t wc)
 		{ 0x1F600, 0x1F64F, "Emoticons" },
 	};
 
-	if (wc <= 0xFF)
+	if (wc >= 0x20 && wc <= 0xFF)
 		return 1;
-	else if (is_combined(wc))
+	else if (wc < 0x20 || is_combined(wc))
 		return 0;
 	for (const RANGE *rp = &fullwidth[0];
 	    rp < &fullwidth[ARRAY_SIZE(fullwidth)];
