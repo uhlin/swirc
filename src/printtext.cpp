@@ -1552,8 +1552,21 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 			wchar_t		*wcp = NULL;
 
 			if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) !=
-			    NULL)
+			    NULL) {
+				size_t size = 0;
+				wchar_t *str = NULL;
+
 				diff = (wcp - wc_bufp);
+				sw_assert(diff > 0);
+				size = size_product(diff + 1, sizeof *str);
+				str = static_cast<wchar_t *>(xmalloc(size));
+				(void) wcsncpy(str, wc_bufp, diff);
+				str[diff] = L'\0';
+				if ((diff = xwcswidth(str)) < 0)
+					diff = 0;
+				free(str);
+				str = NULL;
+			}
 			struct case_default_context def_ctx(pwin, wc,
 			    !wcscmp(wc_bufp + 1, L""), indent, max_lines, diff);
 			case_default(&def_ctx, rep_count, &lines_count,
