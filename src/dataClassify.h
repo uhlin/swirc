@@ -20,7 +20,7 @@ bool	is_valid_username(const char *);
 bool	is_whitespace(const char *);
 
 int	xwcwidth(const wchar_t, const int);
-int	xwcswidth(const wchar_t *, const int);
+int	xwcswidth(const wchar_t *, const int) NONNULL;
 __SWIRC_END_DECLS
 
 /* Inline function definitions
