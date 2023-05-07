@@ -224,7 +224,7 @@ is_whitespace(const char *string)
  * so we don't want to do it twice...)
  */
 int
-xwcwidth(const wchar_t wc)
+xwcwidth(const wchar_t wc, const int fwlen)
 {
 	static const RANGE fullwidth[] = {
 		{ 0xFF01, 0xFF5E, "Fullwidth ASCII variants" },
@@ -241,19 +241,19 @@ xwcwidth(const wchar_t wc)
 	    rp < &fullwidth[ARRAY_SIZE(fullwidth)];
 	    rp++) {
 		if (wc >= rp->start && wc <= rp->stop)
-			return 2;
+			return fwlen;
 	}
-	return (is_cjk(wc) ? 2 : 1);
+	return (is_cjk(wc) ? fwlen : 1);
 }
 
 int
-xwcswidth(const wchar_t *str)
+xwcswidth(const wchar_t *str, const int fwlen)
 {
 	const wchar_t	*ptr = str;
 	int		 width = 0;
 
 	while (*ptr) {
-		width += xwcwidth(*ptr);
+		width += xwcwidth(*ptr, fwlen);
 		ptr++;
 	}
 	return width;

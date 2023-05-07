@@ -759,7 +759,7 @@ case_default(const struct case_default_context *ctx, int *rep_count,
 	} else if (!start_on_a_new_row((*insert_count) + ctx->diff + 1,
 		    ctx->win)) {
 		addmbs(ctx->win, mbs);
-		(*insert_count) += xwcwidth(ctx->wc); // XXX
+		(*insert_count) += xwcwidth(ctx->wc, 2); // XXX
 	} else {
 		/*
 		 * Start on a new row
@@ -1562,7 +1562,7 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 				str = static_cast<wchar_t *>(xmalloc(size));
 				(void) wcsncpy(str, wc_bufp, diff);
 				str[diff] = L'\0';
-				if ((diff = xwcswidth(str)) < 0)
+				if ((diff = xwcswidth(str, 2)) < 0)
 					diff = 0;
 				free(str);
 				str = NULL;

@@ -57,6 +57,12 @@
 
 #include "commands/misc.h"
 
+#if defined(UNIX)
+#define FWLEN 2
+#elif defined(WIN32)
+#define FWLEN 1
+#endif
+
 /****************************************************************
 *                                                               *
 *  -------------- Objects with external linkage --------------  *
@@ -335,7 +341,7 @@ case_key_left(volatile struct readline_session_context *ctx)
 		magic_swap_panels(ctx, false);
 
 	mutex_lock(&g_puts_mutex);
-	if ((width = xwcwidth(ctx->buffer[--ctx->bufpos])) > 0) {
+	if ((width = xwcwidth(ctx->buffer[--ctx->bufpos], FWLEN)) > 0) {
 		ctx->vispos -= width;
 		yx = term_get_pos(ctx->act);
 		if (wmove(ctx->act, yx.cury, yx.curx - width) == ERR) {
@@ -366,7 +372,7 @@ case_key_right(volatile struct readline_session_context *ctx)
 		magic_swap_panels(ctx, true);
 
 	mutex_lock(&g_puts_mutex);
-	if ((width = xwcwidth(ctx->buffer[ctx->bufpos++])) > 0) {
+	if ((width = xwcwidth(ctx->buffer[ctx->bufpos++], FWLEN)) > 0) {
 		ctx->vispos += width;
 		yx = term_get_pos(ctx->act);
 		if (wmove(ctx->act, yx.cury, yx.curx + width) == ERR) {
@@ -466,7 +472,7 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc,
 
 	if (hiLim_isset(ctx->act))
 		magic_swap_panels(ctx, true);
-	width = xwcwidth(wc);
+	width = xwcwidth(wc, FWLEN);
 
 	if (ctx->insert_mode) {
 		wchar_t *ptr;

@@ -16,7 +16,7 @@ test1(void **state)
 	const wchar_t str[] = L"Ӽe̲̅v̲̅o̲̅l̲̅u̲̅t̲̅i̲̅o̲̅ɳ̲̅ᕗ";
 
 	expected = 11;
-	assert_true(xwcswidth(str) == expected);
+	assert_true(xwcswidth(str, 2) == expected);
 	UNUSED_PARAM(state);
 }
 
@@ -26,7 +26,7 @@ test2(void **state)
 	const wchar_t str[] = L"你a好b世c界";
 
 	expected = 11;
-	assert_true(xwcswidth(str) == expected);
+	assert_true(xwcswidth(str, 2) == expected);
 	UNUSED_PARAM(state);
 }
 
