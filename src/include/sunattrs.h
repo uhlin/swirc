@@ -45,7 +45,7 @@
  */
 #define NO_SIDE_EFFECT			__attribute__((const))
 
-#define PRINTFLIKE(arg_no)
 #define NONNULL
-#define SW_INLINE			inline
 #define NORETURN			__attribute__((noreturn))
+#define PRINTFLIKE(arg_no)
+#define SW_INLINE			inline
