@@ -217,6 +217,9 @@ is_whitespace(const char *string)
  * Determines the number of column positions required to display a
  * wide character.
  *
+ * Specifically written to be used in the printtext and readline
+ * modules.
+ *
  * Test the 'wc' using iswprint() initially. (This is done elsewhere
  * so we don't want to do it twice...)
  */
