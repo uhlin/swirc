@@ -1553,8 +1553,8 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 
 			if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) !=
 			    NULL) {
-				size_t size = 0;
-				wchar_t *str = NULL;
+				size_t		 size = 0;
+				wchar_t		*str = NULL;
 
 				diff = (wcp - wc_bufp);
 				sw_assert(diff > 0);
