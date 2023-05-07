@@ -46,8 +46,8 @@
 
 const char	g_log_filesuffix[] = ".txt";
 
-static const char *get_modified_server_host(const char *) PTR_ARGS_NONNULL;
-static const char *get_logtype(const char *) PTR_ARGS_NONNULL;
+static const char *get_modified_server_host(const char *) NONNULL;
+static const char *get_logtype(const char *) NONNULL;
 
 static const char *
 get_date(void)

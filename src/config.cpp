@@ -211,7 +211,7 @@ hInstall(const char *name, const char *value)
 	hash_table[hashval] = item;
 }
 
-static void hUndef(PCONF_HTBL_ENTRY) PTR_ARGS_NONNULL;
+static void hUndef(PCONF_HTBL_ENTRY) NONNULL;
 
 static void
 hUndef(PCONF_HTBL_ENTRY entry)

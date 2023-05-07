@@ -259,8 +259,8 @@ static struct ptext_colorMap_tag {
 *                                                               *
 ****************************************************************/
 
-static size_t	 get_mb_strlen(CSTRING) PTR_ARGS_NONNULL;
-static char	*get_buffer(CSTRING) PTR_ARGS_NONNULL;
+static size_t	 get_mb_strlen(CSTRING) NONNULL;
+static char	*get_buffer(CSTRING) NONNULL;
 
 static void
 addmbs(WINDOW *win, const unsigned char *mbs)

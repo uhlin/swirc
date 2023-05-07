@@ -20,10 +20,10 @@ void	readline_mvwaddch(WINDOW *, int row, int col, wint_t);
 void	readline_mvwinsch(WINDOW *, int row, int col, wint_t);
 void	readline_waddch(WINDOW *, wint_t);
 void	readline_waddnstr(WINDOW *, const wchar_t *, ptrdiff_t)
-	    PTR_ARGS_NONNULL;
+	    NONNULL;
 void	readline_winsch(WINDOW *, wint_t);
 void	readline_winsnstr(WINDOW *, const wchar_t *, ptrdiff_t)
-	    PTR_ARGS_NONNULL;
+	    NONNULL;
 __SWIRC_END_DECLS
 
 #endif

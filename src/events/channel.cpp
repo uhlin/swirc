@@ -355,7 +355,7 @@ chg_status_for_voice(plus_minus_state_t pm_state, const char *nick,
 }
 
 static void	maintain_channel_stats(const char *, const char *)
-		    PTR_ARGS_NONNULL;
+		    NONNULL;
 
 /*
  * Example input: +vvv nick1 nick2 nick3

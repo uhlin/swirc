@@ -160,9 +160,9 @@ static const int RECVBUF_SIZE = 2048;
 ****************************************************************/
 
 static void	 send_icb_login_packet(const struct network_connect_context *)
-		     PTR_ARGS_NONNULL;
+		     NONNULL;
 static void	 send_reg_cmds(const struct network_connect_context *)
-		     PTR_ARGS_NONNULL;
+		     NONNULL;
 
 static void
 check_conn_fail()

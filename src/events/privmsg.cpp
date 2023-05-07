@@ -63,8 +63,8 @@
 #include "swircpaths.h"
 #endif
 
-static bool	shouldHighlightMessage_case1(const char *) PTR_ARGS_NONNULL;
-static bool	shouldHighlightMessage_case2(const char *) PTR_ARGS_NONNULL;
+static bool	shouldHighlightMessage_case1(const char *) NONNULL;
+static bool	shouldHighlightMessage_case2(const char *) NONNULL;
 
 static void
 acknowledge_ctcp_request(const char *cmd, const struct special_msg_context *ctx)

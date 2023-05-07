@@ -291,7 +291,7 @@ hInstall(const struct hInstall_context *ctx)
 	return entry;
 }
 
-static void hUndef(PIRC_WINDOW) PTR_ARGS_NONNULL;
+static void hUndef(PIRC_WINDOW) NONNULL;
 
 static void
 hUndef(PIRC_WINDOW entry)

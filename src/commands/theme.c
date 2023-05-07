@@ -72,9 +72,9 @@ static stringarray_t theme_cmds = {
 
 static THEME_INFO theme_info_array[MAX_NO_THEMES];
 
-static void free_theme_info(PTHEME_INFO) PTR_ARGS_NONNULL;
-static void install_theme(const char *) PTR_ARGS_NONNULL;
-static void set_theme(const char *) PTR_ARGS_NONNULL;
+static void free_theme_info(PTHEME_INFO) NONNULL;
+static void install_theme(const char *) NONNULL;
+static void set_theme(const char *) NONNULL;
 
 static bool
 is_instruction_ok(const char *instruction)

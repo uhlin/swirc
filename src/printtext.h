@@ -90,7 +90,7 @@ void	 printtext_print(CSTRING what, CSTRING, ...) PRINTFLIKE(2);
 void	 printtext_puts(WINDOW *, CSTRING buf, int indent, int, int *);
 void	 printtext_set_color(WINDOW *, bool *, short int, short int);
 void	 set_timestamp(char *dest, size_t destsize,
-	     const struct irc_message_compo *) PTR_ARGS_NONNULL;
+	     const struct irc_message_compo *) NONNULL;
 void	 vprinttext(PPRINTTEXT_CONTEXT, CSTRING fmt, va_list);
 __SWIRC_END_DECLS
 
