@@ -778,7 +778,7 @@ case_default(const struct case_default_context *ctx, int *rep_count,
 
 		if (ctx->wc != L' ') {
 			addmbs(ctx->win, mbs);
-			(*insert_count) ++;
+			(*insert_count) += xwcwidth(ctx->wc, 2);
 		}
 	}
 
