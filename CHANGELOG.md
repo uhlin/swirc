@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added a man page that describes how to write themes.
 - Added and made use of a pointer validation function.
+- Added improved unicode support in the printtext and readline modules.
+- Added usage of a binary search algorithm.
 - Changed the file suffix for theme files from `.the` to
   `.thm`. (`.the` looks too much like the English word "the".)
 - Closed an open stream before exit
