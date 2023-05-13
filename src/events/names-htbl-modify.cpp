@@ -1,5 +1,5 @@
 /* names-htbl-modify.cpp
-   Copyright (C) 2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include "../libUtils.h"
+#include "../main.h"
 #include "../nicklist.h"
 #include "../strHand.h"
 #include "../window.h"
@@ -43,7 +44,7 @@ check_args(const char *nick, const char *channel, PIRC_WINDOW &window)
 {
 	if (nick == NULL || strings_match(nick, "") ||
 	    (window = window_by_label(channel)) == NULL ||
-	    !window->received_names) /* XXX */
+	    (!window->received_names && !g_icb_mode)) /* XXX */
 		return ERR;
 	return OK;
 }
