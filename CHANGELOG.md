@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 - Added and made use of a pointer validation function.
 - Added improved unicode support in the printtext and readline modules.
 - Added usage of a binary search algorithm.
+- Allowed the names htbl modify API to alter names even if the list is
+  incomplete. (But only in ICB mode.)
 - Changed the file suffix for theme files from `.the` to
   `.thm`. (`.the` looks too much like the English word "the".)
 - Closed an open stream before exit
