@@ -141,16 +141,16 @@ hInstall(const struct hInstall_context *ctx)
 	if (ctx == NULL || ctx->channel == NULL) {
 		return ERR;
 	} else if ((window = window_by_label(ctx->channel)) == NULL) {
-		debug("events/names.cpp: hInstall: cannot find window "
-		    "labelled \"%s\"", ctx->channel);
+		debug("%s: %s: cannot find window labelled \"%s\"", __FILE__,
+		    __func__, ctx->channel);
 		return ERR;
 	} else if (ctx->nick == NULL || strings_match(ctx->nick, "")) {
-		debug("events/names.cpp: hInstall: no nickname (channel=%s)",
+		debug("%s: %s: no nickname (channel=%s)", __FILE__, __func__,
 		    ctx->channel);
 		return ERR;
 	} else if (already_is_in_names_hash(ctx->nick, window)) {
-		debug("events/names.cpp: hInstall: busy nickname: "
-		    "\"%s\" (channel=%s)", ctx->nick, ctx->channel);
+		debug("%s: %s: busy nickname: \"%s\" (channel=%s)", __FILE__,
+		    __func__, ctx->nick, ctx->channel);
 		return ERR;
 	}
 
