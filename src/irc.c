@@ -274,6 +274,16 @@ static struct irc_message_compo *
 		 SortMsgCompo(const char *);
 static void	 FreeMsgCompo(struct irc_message_compo *);
 
+static int
+cmp_fn(const void *vp1, const void *vp2)
+{
+	const struct numeric_events_tag *evt1, *evt2;
+
+	evt1 = vp1;
+	evt2 = vp2;
+	return strcmp(evt1->numeric_event, evt2->numeric_event);
+}
+
 /**
  * Initialize irc module
  */
@@ -281,6 +291,7 @@ void
 irc_init(void)
 {
 	char *nickname;
+	static bool is_sorted = false;
 
 	if (g_cmdline_opts->nickname)
 		irc_set_my_nickname(g_cmdline_opts->nickname);
@@ -292,6 +303,12 @@ irc_init(void)
 	else
 		err_quit("%s: no nickname", __func__);
 	event_names_init();
+
+	if (!is_sorted) {
+		qsort(numeric_events, ARRAY_SIZE(numeric_events),
+		    sizeof numeric_events[0], cmp_fn);
+		is_sorted = true;
+	}
 }
 
 /**
