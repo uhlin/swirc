@@ -564,29 +564,33 @@ handle_normal_event(struct irc_message_compo *compo)
 static int
 handle_numeric_event(struct irc_message_compo *compo)
 {
-	for (struct numeric_events_tag *sp = &numeric_events[0];
-	     sp < &numeric_events[ARRAY_SIZE(numeric_events)]; sp++) {
-		if (strings_match(sp->numeric_event, compo->command)) {
-			if (sp->event_handler != NULL) {
-				sp->event_handler(compo);
-			} else {
-				if (sp->window == STATUS_WINDOW) {
-					irc_extract_msg(compo, g_status_window,
-					    sp->ext_bits,
-					    !strncmp(sp->official_name, "ERR_",
-					    4));
-				} else if (sp->window == ACTIVE_WINDOW) {
-					irc_extract_msg(compo, g_active_window,
-					    sp->ext_bits,
-					    !strncmp(sp->official_name, "ERR_",
-					    4));
-				} else {
-					sw_assert_not_reached();
-				}
-			}
+	struct numeric_events_tag *evt, key;
 
-			return 0;
+	key.numeric_event	= compo->command;
+	key.official_name	= NULL;
+	key.window		= NO_WINDOW;
+	key.ext_bits		= 0;
+	key.event_handler	= NULL;
+
+	if ((evt = bsearch(&key, numeric_events, ARRAY_SIZE(numeric_events),
+	    sizeof numeric_events[0], cmp_fn)) != NULL) {
+		if (evt->event_handler != NULL) {
+			evt->event_handler(compo);
+		} else {
+			if (evt->window == STATUS_WINDOW) {
+				irc_extract_msg(compo, g_status_window,
+				    evt->ext_bits,
+				    !strncmp(evt->official_name, "ERR_", 4));
+			} else if (evt->window == ACTIVE_WINDOW) {
+				irc_extract_msg(compo, g_active_window,
+				    evt->ext_bits,
+				    !strncmp(evt->official_name, "ERR_", 4));
+			} else {
+				sw_assert_not_reached();
+			}
 		}
+
+		return 0;
 	}
 
 	return -1;
