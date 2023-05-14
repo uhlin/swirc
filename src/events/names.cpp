@@ -54,8 +54,8 @@
 ****************************************************************/
 
 struct hInstall_context {
-	char	*channel;
-	char	*nick;
+	STRING	 channel;
+	STRING	 nick;
 
 	bool	 is_owner;
 	bool	 is_superop;
@@ -75,7 +75,7 @@ struct hInstall_context {
 		/* null */;
 	}
 
-	hInstall_context(char *p_channel, char *p_nick, const char c)
+	hInstall_context(STRING p_channel, STRING p_nick, const char c)
 	    : channel(p_channel)
 	    , nick(p_nick)
 	    , is_owner(c == '~')
@@ -103,7 +103,7 @@ static char names_channel[1000] = { '\0' };
 ****************************************************************/
 
 static void
-add_match(PTEXTBUF matches, const char *user)
+add_match(PTEXTBUF matches, CSTRING user)
 {
 	static chararray_t msg = "get_list_of_matching_channel_users: "
 	    "textBuf_ins_next";
@@ -119,7 +119,7 @@ add_match(PTEXTBUF matches, const char *user)
 }
 
 static inline bool
-already_is_in_names_hash(const char *nick, PIRC_WINDOW window)
+already_is_in_names_hash(CSTRING nick, PIRC_WINDOW window)
 {
 	for (PNAMES names = window->names_hash[hash(nick)];
 	    names != NULL;
@@ -216,19 +216,19 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
 	free(entry);
 }
 
-static char *
+static STRING
 get_bold_int(const int i)
 {
 	return strdup_printf("%c%d%c", BOLD, i, BOLD);
 }
 
 static void
-output_statistics(PRINTTEXT_CONTEXT ctx, const char *channel,
+output_statistics(PRINTTEXT_CONTEXT ctx, CSTRING channel,
     const IRC_WINDOW *window)
 {
-	char *str;
-	char *num_total;
-	char *num_ops, *num_halfops, *num_voices, *num_normal;
+	STRING str;
+	STRING num_total;
+	STRING num_ops, num_halfops, num_voices, num_normal;
 
 	str = strdup_printf("%s%s%s%c%s", LEFT_BRKT, COLOR1, channel, NORMAL,
 	    RIGHT_BRKT);
@@ -382,8 +382,8 @@ event_names_htbl_insert(CSTRING nick, CSTRING channel)
 
 	struct hInstall_context ctx; /* calls constructor */
 
-	ctx.channel	= const_cast<char *>(channel);
-	ctx.nick	= const_cast<char *>(nick);
+	ctx.channel	= const_cast<STRING>(channel);
+	ctx.nick	= const_cast<STRING>(nick);
 
 	if (hInstall(&ctx) == ERR)
 		return ERR;
@@ -431,8 +431,8 @@ event_eof_names(struct irc_message_compo *compo)
 
 	try {
 		PIRC_WINDOW win = NULL;
-		char *channel, *eof_msg;
-		char *state = const_cast<char *>("");
+		STRING channel, eof_msg;
+		STRING state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 2) != 2)
 			throw std::runtime_error("strFeed");
@@ -507,13 +507,13 @@ event_eof_names(struct irc_message_compo *compo)
 void
 event_names(struct irc_message_compo *compo)
 {
-	char *names_copy = NULL;
+	STRING names_copy = NULL;
 
 	try {
 		PIRC_WINDOW win = NULL;
-		char *chan_type, *channel, *names;
-		char *state1 = const_cast<char *>("");
-		char *state2 = const_cast<char *>("");
+		STRING chan_type, channel, names;
+		STRING state1 = const_cast<STRING>("");
+		STRING state2 = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 3) != 3)
 			throw std::runtime_error("strFeed");
@@ -554,7 +554,7 @@ event_names(struct irc_message_compo *compo)
 		}
 
 		for (char *cp = &names_copy[0];; cp = NULL) {
-			char *token, *nick;
+			STRING token, nick;
 
 			if ((token = strtok_r(cp, " ", &state2)) == NULL)
 				break;
