@@ -131,6 +131,21 @@ already_is_in_names_hash(CSTRING nick, PIRC_WINDOW window)
 	return false;
 }
 
+static inline bool
+name_chars_ok(CSTRING name)
+{
+	UNUSED_PARAM(name);
+	return true;
+}
+
+static inline bool
+name_len_ok(CSTRING name)
+{
+	const size_t maxlen = 45;
+
+	return (xstrnlen(name, maxlen) <= maxlen);
+}
+
 static int
 hInstall(const struct hInstall_context *ctx)
 {
@@ -147,6 +162,12 @@ hInstall(const struct hInstall_context *ctx)
 	} else if (ctx->nick == NULL || strings_match(ctx->nick, "")) {
 		debug("%s: %s: no nickname (channel=%s)", __FILE__, __func__,
 		    ctx->channel);
+		return ERR;
+	} else if (!name_len_ok(ctx->nick)) {
+		debug("%s: %s: name too long!", __FILE__, __func__);
+		return ERR;
+	} else if (!name_chars_ok(ctx->nick)) {
+		debug("%s: %s: name is invalid", __FILE__, __func__);
 		return ERR;
 	} else if (already_is_in_names_hash(ctx->nick, window)) {
 		debug("%s: %s: busy nickname: \"%s\" (channel=%s)", __FILE__,
