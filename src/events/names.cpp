@@ -278,7 +278,7 @@ reset_counters(PIRC_WINDOW window)
  * usage: /stats [channel]
  */
 void
-cmd_stats(const char *data)
+cmd_stats(CSTRING data)
 {
 	PIRC_WINDOW		win;
 	PRINTTEXT_CONTEXT	ptext_ctx;
@@ -308,7 +308,7 @@ cmd_stats(const char *data)
 }
 
 PTEXTBUF
-get_list_of_matching_channel_users(const char *chan, const char *search_var)
+get_list_of_matching_channel_users(CSTRING chan, CSTRING search_var)
 {
 	PIRC_WINDOW	window;
 	PTEXTBUF	matches;
@@ -355,7 +355,7 @@ event_names_deinit(void)
 }
 
 PNAMES
-event_names_htbl_lookup(const char *nick, const char *channel)
+event_names_htbl_lookup(CSTRING nick, CSTRING channel)
 {
 	PIRC_WINDOW	window;
 	PNAMES		names;
@@ -375,7 +375,7 @@ event_names_htbl_lookup(const char *nick, const char *channel)
 }
 
 int
-event_names_htbl_insert(const char *nick, const char *channel)
+event_names_htbl_insert(CSTRING nick, CSTRING channel)
 {
 	if (nick == NULL || strings_match(nick, ""))
 		return ERR;
@@ -393,7 +393,7 @@ event_names_htbl_insert(const char *nick, const char *channel)
 }
 
 int
-event_names_htbl_remove(const char *nick, const char *channel)
+event_names_htbl_remove(CSTRING nick, CSTRING channel)
 {
 	PIRC_WINDOW	window;
 	PNAMES		names;
