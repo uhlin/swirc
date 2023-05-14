@@ -141,9 +141,9 @@ name_chars_ok(CSTRING name)
 static inline bool
 name_len_ok(CSTRING name)
 {
-	const size_t maxlen = 45;
+	static const size_t maxlen = 45;
 
-	return (xstrnlen(name, maxlen) <= maxlen);
+	return (xstrnlen(name, maxlen + 1) <= maxlen);
 }
 
 static int
