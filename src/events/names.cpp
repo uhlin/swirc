@@ -131,10 +131,24 @@ already_is_in_names_hash(CSTRING nick, PIRC_WINDOW window)
 	return false;
 }
 
+/*
+ * Non-strict checking.
+ * But we cannot allow:
+ *     ~&@%+
+ */
 static inline bool
 name_chars_ok(CSTRING name)
 {
-	UNUSED_PARAM(name);
+	static chararray_t chars =
+	    "!#$'()*,-./0123456789:;<=>?"
+	    "ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
+	    "abcdefghijklmnopqrstuvwxyz{|}";
+
+	for (const char *cp = name; *cp != '\0'; cp++) {
+		if (strchr(chars, *cp) == NULL)
+			return false;
+	}
+
 	return true;
 }
 
