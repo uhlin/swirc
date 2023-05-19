@@ -153,7 +153,7 @@ write_cmdprompt(WINDOW *win, CSTRING prompt, int size)
 	mutex_unlock(&g_puts_mutex);
 
 	if (ret == ERR)
-		readline_error(0, "write_cmdprompt: werase");
+		readline_ferror(0, "%s: werase", __func__);
 
 	printtext_puts(win, prompt, -1, -1, NULL);
 	UNUSED_PARAM(size);
@@ -182,7 +182,7 @@ compute_new_window_entry(const volatile struct readline_session_context *ctx,
 		diff = int_diff(COLS / 2, ctx->prompt_size);
 
 		if ((bufindex = int_diff(ctx->bufpos, diff)) < 0) {
-			readline_error(ERANGE, "compute_new_window_entry");
+			readline_ferror(ERANGE, "%s", __func__);
 			/* NOTREACHED */
 		}
 
@@ -262,9 +262,9 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 		mutex_unlock(&g_puts_mutex);
 
 		if (ret[0] == ERR)
-			readline_error(EIO, "case_key_backspace: wmove");
+			readline_ferror(EIO, "%s: wmove", __func__);
 		else if (ret[1] == ERR)
-			readline_error(EIO, "case_key_backspace: wclrtoeol");
+			readline_ferror(EIO, "%s: wclrtoeol", __func__);
 
 		if (width > 0) {
 			readline_winsnstr(ctx->act, &ctx->buffer[ctx->bufpos],
@@ -288,9 +288,9 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 		mutex_unlock(&g_puts_mutex);
 
 		if (ret[0] == ERR)
-			readline_error(EIO, "case_key_backspace: wmove");
+			readline_ferror(EIO, "%s: wmove", __func__);
 		else if (ret[1] == ERR)
-			readline_error(EIO, "case_key_backspace: wclrtoeol");
+			readline_ferror(EIO, "%s: wclrtoeol", __func__);
 	}
 
 	mutex_lock(&g_puts_mutex);
@@ -323,9 +323,9 @@ case_key_dc(volatile struct readline_session_context *ctx)
 	mutex_unlock(&g_puts_mutex);
 
 	if (ret[0] == ERR)
-		readline_error(EIO, "case_key_dc: wdelch");
+		readline_ferror(EIO, "%s: wdelch", __func__);
 	else if (ret[1] == ERR)
-		readline_error(EIO, "case_key_dc: wclrtoeol");
+		readline_ferror(EIO, "%s: wclrtoeol", __func__);
 
 	readline_winsnstr(ctx->act, &ctx->buffer[ctx->bufpos], -1);
 
