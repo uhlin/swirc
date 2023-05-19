@@ -38,6 +38,7 @@
 #include "printtext.h"
 #include "readline.h"
 #include "readlineAPI.h"
+#include "strHand.h"
 
 #define WATTR_ON(win, attrs)  ((void) wattr_on(win, attrs, NULL))
 #define WATTR_OFF(win, attrs) ((void) wattr_off(win, attrs, NULL))
@@ -183,8 +184,27 @@ readline_error(int error, CSTRING msg)
 NORETURN void
 readline_ferror(int error, CSTRING fmt, ...)
 {
-	UNUSED_PARAM(error);
-	UNUSED_PARAM(fmt);
+	PRINTTEXT_CONTEXT ctx;
+	char out[900] = { '\0' };
+	char strerrbuf[MAXERROR] = { '\0' };
+	va_list ap;
+
+	va_start(ap, fmt);
+#if defined(UNIX)
+	(void) vsnprintf(out, sizeof out, fmt, ap);
+#elif defined(WIN32)
+	(void) vsnprintf_s(out, sizeof out, _TRUNCATE, fmt, ap);
+#endif
+	va_end(ap);
+
+	if (error) {
+		(void) sw_strcat(out, ": ", sizeof out);
+		(void) sw_strcat(out, xstrerror(error, strerrbuf, MAXERROR),
+		    sizeof out);
+	}
+
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_FAILURE, true);
+	printtext(&ctx, "non-fatal: %s", out);
 	g_readline_loop = false;
 	longjmp(g_readline_loc_info, READLINE_RESTART);
 }
