@@ -232,54 +232,65 @@ magic_swap_panels(volatile struct readline_session_context *ctx, bool fwd)
 static void
 case_key_backspace(volatile struct readline_session_context *ctx)
 {
-	int ret[3];
+	int ret[2] = { OK };
+	int width;
+	struct current_cursor_pos yx;
 
 	if (ctx->bufpos == 0) {
 		term_beep();
 		return;
 	}
+
 	if (loLim_isset(ctx->act, ctx->prompt_size))
 		magic_swap_panels(ctx, false);
+	yx = term_get_pos(ctx->act);
+
 	if (ctx->insert_mode) {
 		wchar_t *ptr;
 
+		width = xwcwidth(ctx->buffer[ctx->bufpos - 1], FWLEN);
 		ptr = &ctx->buffer[ctx->bufpos--];
 		(void) wmemmove(ptr - 1, ptr, wcslen(ptr));
 		ctx->buffer[--ctx->numins] = 0L;
 
 		mutex_lock(&g_puts_mutex);
-		ret[0] = wmove(ctx->act, term_get_pos(ctx->act).cury,
-		    term_get_pos(ctx->act).curx - 1);
-		ret[1] = wdelch(ctx->act);
-		ret[2] = wclrtoeol(ctx->act);
+		if (width > 0) {
+			ctx->vispos -= width;
+			ret[0] = wmove(ctx->act, yx.cury, yx.curx - width);
+			ret[1] = wclrtoeol(ctx->act);
+		}
 		mutex_unlock(&g_puts_mutex);
 
 		if (ret[0] == ERR)
 			readline_error(EIO, "case_key_backspace: wmove");
 		else if (ret[1] == ERR)
-			readline_error(EIO, "case_key_backspace: wdelch");
-		else if (ret[2] == ERR)
 			readline_error(EIO, "case_key_backspace: wclrtoeol");
 
-		readline_winsnstr(ctx->act, &ctx->buffer[ctx->bufpos], -1);
+		if (width > 0) {
+			readline_winsnstr(ctx->act, &ctx->buffer[ctx->bufpos],
+			    -1);
+		}
 	} else {
 		/*
 		 * Not insert mode
 		 */
 
+		width = xwcwidth(ctx->buffer[ctx->bufpos - 1], FWLEN);
 		ctx->buffer[--ctx->bufpos] = 0L;
 		ctx->numins--;
 
 		mutex_lock(&g_puts_mutex);
-		ret[0] = wmove(ctx->act, term_get_pos(ctx->act).cury,
-		    term_get_pos(ctx->act).curx - 1);
-		ret[1] = wdelch(ctx->act);
+		if (width > 0) {
+			ctx->vispos -= width;
+			ret[0] = wmove(ctx->act, yx.cury, yx.curx - width);
+			ret[1] = wclrtoeol(ctx->act);
+		}
 		mutex_unlock(&g_puts_mutex);
 
 		if (ret[0] == ERR)
 			readline_error(EIO, "case_key_backspace: wmove");
 		else if (ret[1] == ERR)
-			readline_error(EIO, "case_key_backspace: wdelch");
+			readline_error(EIO, "case_key_backspace: wclrtoeol");
 	}
 
 	mutex_lock(&g_puts_mutex);
