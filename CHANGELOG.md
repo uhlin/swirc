@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
   `.thm`. (`.the` looks too much like the English word "the".)
 - Closed an open stream before exit
 - Defined noreturn for C++ in `fallbackattrs.h`
+- Fixed hardcoded function names in error messages
 - Fixed unchecked return values
 
 ## [3.4.3] - 2023-03-10 ##
