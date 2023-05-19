@@ -180,6 +180,15 @@ readline_error(int error, CSTRING msg)
 	longjmp(g_readline_loc_info, READLINE_RESTART);
 }
 
+NORETURN void
+readline_ferror(int error, CSTRING fmt, ...)
+{
+	UNUSED_PARAM(error);
+	UNUSED_PARAM(fmt);
+	g_readline_loop = false;
+	longjmp(g_readline_loc_info, READLINE_RESTART);
+}
+
 /**
  * Add a character at given position
  *

@@ -15,6 +15,7 @@
 
 __SWIRC_BEGIN_DECLS
 NORETURN void readline_error(int, CSTRING);
+NORETURN void readline_ferror(int, CSTRING, ...) PRINTFLIKE(2);
 
 void	readline_mvwaddch(WINDOW *, int row, int col, wint_t);
 void	readline_mvwinsch(WINDOW *, int row, int col, wint_t);
