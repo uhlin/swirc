@@ -231,12 +231,12 @@ readline_mvwaddch(WINDOW *win, int row, int col, wint_t wc)
 	if (wmove(win, row, col) == ERR) {
 		free_and_null(&mbs);
 		mutex_unlock(&g_puts_mutex);
-		readline_error(0, "readline_mvwaddch: wmove");
+		readline_ferror(0, "%s: wmove", __func__);
 	} else if (!is_text_decoration(wc)) {
 		if (waddnstr(win, mbs, -1) == ERR) {
 			free_and_null(&mbs);
 			mutex_unlock(&g_puts_mutex);
-			readline_error(0, "readline_mvwaddch: waddnstr");
+			readline_ferror(0, "%s: waddnstr", __func__);
 		}
 	} else {
 		add_complex_char(win, *mbs);
@@ -262,7 +262,7 @@ readline_waddch(WINDOW *win, wint_t wc)
 		if (waddnstr(win, mbs, -1) == ERR) {
 			free_and_null(&mbs);
 			mutex_unlock(&g_puts_mutex);
-			readline_error(EIO, "readline_waddch: waddnstr");
+			readline_ferror(EIO, "%s: waddnstr", __func__);
 			/* NOTREACHED */
 		}
 	} else {
@@ -308,12 +308,12 @@ readline_mvwinsch(WINDOW *win, int row, int col, wint_t wc)
 	if (wmove(win, row, col) == ERR) {
 		free_and_null(&mbs);
 		mutex_unlock(&g_puts_mutex);
-		readline_error(0, "readline_mvwinsch: wmove");
+		readline_ferror(0, "%s: wmove", __func__);
 	} else if (!is_text_decoration(wc)) {
 		if (winsnstr(win, mbs, size_to_int(strlen(mbs) + 1)) == ERR) {
 			free_and_null(&mbs);
 			mutex_unlock(&g_puts_mutex);
-			readline_error(0, "readline_mvwinsch: winsnstr");
+			readline_ferror(0, "%s: winsnstr", __func__);
 		}
 	} else {
 		ins_complex_char(win, *mbs);
@@ -339,7 +339,7 @@ readline_winsch(WINDOW *win, wint_t wc)
 		if (winsnstr(win, mbs, size_to_int(strlen(mbs) + 1)) == ERR) {
 			free_and_null(&mbs);
 			mutex_unlock(&g_puts_mutex);
-			readline_error(EIO, "readline_winsch: winsnstr");
+			readline_ferror(EIO, "%s: winsnstr", __func__);
 			/* NOTREACHED */
 		}
 	} else {
