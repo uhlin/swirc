@@ -57,6 +57,10 @@
 
 #include "commands/misc.h"
 
+/*
+ * Full-width length, i.e. the number of column positions required to
+ * display a full width wide character. (Windows behaves differently.)
+ */
 #if defined(UNIX)
 #define FWLEN 2
 #elif defined(WIN32)
