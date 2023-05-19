@@ -417,7 +417,7 @@ finalize_out_string(const wchar_t *buf)
 
 	if ((bytes_convert = wcstombs(out, buf, size - 1)) ==
 	    g_conversion_failed) {
-		err_log(errno, "finalize_out_string: wcstombs");
+		err_log(errno, "%s: wcstombs", __func__);
 		BZERO(out, size);
 		return xrealloc(out, 1);
 	} else if (bytes_convert >= (size - 1)) {
@@ -442,7 +442,7 @@ finalize_out_string(const wchar_t *buf)
 	if (WideCharToMultiByte(CP_UTF8, 0, buf, -1, out, size, NULL, NULL) > 0)
 		return xrealloc(out, strlen(out) + 1);
 
-	err_log(errno, "finalize_out_string: WideCharToMultiByte");
+	err_log(errno, "%s: WideCharToMultiByte", __func__);
 	BZERO(out, size);
 	return xrealloc(out, 1);
 }
@@ -959,7 +959,7 @@ readline_mouse_init(void)
 		    "WHEEL"))
 			report_wheel_events();
 		else
-			err_log(EINVAL, "readline_mouse_init: 'mouse_events'");
+			err_log(EINVAL, "%s: 'mouse_events'", __func__);
 	} else {
 		(void) mousemask(0, NULL);
 	}
