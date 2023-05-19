@@ -8,7 +8,7 @@
 #elif WIN32
 #include "pdcurses/curses.h"
 #else
-#error "Cannot determine curses header file!"
+#error Cannot determine Curses header file!
 #endif
 
 /*lint -sem(readline_error, r_no) doesn't return because of longjmp() */
