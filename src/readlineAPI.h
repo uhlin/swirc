@@ -11,7 +11,9 @@
 #error Cannot determine Curses header file!
 #endif
 
-/*lint -sem(readline_error, r_no) doesn't return because of longjmp() */
+//lint -printf(2, readline_ferror)
+//lint -sem(readline_error, r_no) doesn't return because of longjmp()
+//lint -sem(readline_ferror, r_no) likewise
 
 __SWIRC_BEGIN_DECLS
 NORETURN void readline_error(int, CSTRING);
