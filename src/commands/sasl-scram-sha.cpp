@@ -90,7 +90,7 @@ static unsigned int	signature_expected_len = 0;
 /*lint -sem(get_salted_password, r_null) */
 
 static void
-generate_and_store_nonce()
+generate_and_store_nonce(void)
 {
 	static const char legal_index[] =
 	    "!\"#$%&'()*+-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
