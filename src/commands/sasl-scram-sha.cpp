@@ -111,7 +111,7 @@ generate_and_store_nonce()
 #endif
 
 	nonce[ARRAY_SIZE(nonce) - 1] = '\0';
-	debug("generate_and_store_nonce: nonce: %s", nonce);
+	debug("%s: nonce: %s", __func__, nonce);
 }
 
 static CSTRING
@@ -172,7 +172,7 @@ sasl_scram_sha_send_client_final_msg(CSTRING proof)
 		return -1;
 	}
 
-	debug("sasl_scram_sha_send_client_final_msg: C: %s", cli_final_msg);
+	debug("%s: C: %s", __func__, cli_final_msg);
 	delete[] cli_final_msg;
 	return 0;
 }
@@ -223,7 +223,7 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 			    "message");
 		}
 
-		debug("get_sfm_components: S: %s", decoded_msg);
+		debug("%s: S: %s", __func__, decoded_msg);
 		cp = decoded_msg;
 
 		if (strncmp(cp, "r=", 2) != STRINGS_MATCH)
@@ -269,7 +269,7 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 		*salt = NULL;
 		*saltlen = 0;
 		*iter = PKCS5_DEFAULT_ITER;
-		err_log(0, "get_sfm_components: %s", e.what());
+		err_log(0, "%s: %s", __func__, e.what());
 	}
 
 	if (decoded_msg)
@@ -307,10 +307,10 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 	} catch (const std::runtime_error &e) {
 		*outsize = 0;
 		delete[] out;
-		err_log(0, "get_salted_password: %s", e.what());
+		err_log(0, "%s: %s", __func__, e.what());
 		return NULL;
 	} catch (const std::bad_alloc &e) {
-		err_exit(ENOMEM, "get_salted_password: %s", e.what());
+		err_exit(ENOMEM, "%s: %s", __func__, e.what());
 		/* NOTREACHED */
 	} catch (...) {
 		sw_assert_not_reached();
@@ -492,8 +492,7 @@ sasl_scram_sha_handle_serv_final_msg(CSTRING msg)
 			throw std::runtime_error("expected server signature");
 		}
 
-		debug("sasl_scram_sha_handle_serv_final_msg: S: %s",
-		    decoded_msg);
+		debug("%s: S: %s", __func__, decoded_msg);
 
 		cp = decoded_msg;
 		cp += 2;
@@ -511,8 +510,7 @@ sasl_scram_sha_handle_serv_final_msg(CSTRING msg)
 		delete[] signature;
 	} catch (const std::runtime_error &e) {
 		delete[] decoded_msg;
-		err_log(0, "sasl_scram_sha_handle_serv_final_msg: %s",
-		    e.what());
+		err_log(0, "%s: %s", __func__, e.what());
 		return -1;
 	}
 
