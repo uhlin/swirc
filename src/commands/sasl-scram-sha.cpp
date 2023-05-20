@@ -151,7 +151,7 @@ sasl_scram_sha_send_client_first_msg(void)
 /* C: c=biws,r=rOprNGfwEbeRWgbNEkqO%hvYDpWUa2RaTCAfuxFIlj)hNlF$k0,
       p=dHzbZapWIk4jUhN+Ute9ytag9zjfMHgsqmmiz7AndVQ= */
 int
-sasl_scram_sha_send_client_final_msg(const char *proof)
+sasl_scram_sha_send_client_final_msg(CSTRING proof)
 {
 	char		*cli_final_msg;
 	size_t		 size;
@@ -387,7 +387,7 @@ get_auth_msg(const char *b64msg, size_t *auth_msg_len)
 }
 
 int
-sasl_scram_sha_handle_serv_first_msg(const char *msg)
+sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 {
 	char		 proof[EVP_MAX_MD_SIZE] = { '\0' };
 	int		 iter = PKCS5_DEFAULT_ITER;
@@ -474,7 +474,7 @@ sasl_scram_sha_handle_serv_first_msg(const char *msg)
  * S: v=6rriTRBi23WpRR/wtup+mMhUZUn/dB5nLTJRsjl95G4=
  */
 int
-sasl_scram_sha_handle_serv_final_msg(const char *msg)
+sasl_scram_sha_handle_serv_final_msg(CSTRING msg)
 {
 	bool	 signature_ok = false;
 	char	*decoded_msg = NULL;
