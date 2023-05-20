@@ -80,7 +80,7 @@ digest_context::digest_context(unsigned char *key, int key_len,
 
 volatile bool	g_sasl_scram_sha_got_first_msg = false;
 
-static char	*complete_nonce = NULL;
+static STRING	 complete_nonce = NULL;
 static char	 nonce[64] = { '\0' };
 
 static unsigned char	signature_expected[EVP_MAX_MD_SIZE] = { '\0' };
@@ -114,8 +114,8 @@ generate_and_store_nonce()
 	debug("generate_and_store_nonce: nonce: %s", nonce);
 }
 
-static const char *
-get_encoded_msg(const char *source)
+static CSTRING
+get_encoded_msg(CSTRING source)
 {
 	static char	encoded_msg[4096] = { '\0' };
 
@@ -129,9 +129,9 @@ get_encoded_msg(const char *source)
 int
 sasl_scram_sha_send_client_first_msg(void)
 {
-	char		*msg;
-	const char	*encoded_msg;
-	const char	*username = Config("sasl_username");
+	CSTRING encoded_msg;
+	CSTRING username = Config("sasl_username");
+	STRING msg;
 
 	if (!is_valid_username(username))
 		return -1;
@@ -153,7 +153,7 @@ sasl_scram_sha_send_client_first_msg(void)
 int
 sasl_scram_sha_send_client_final_msg(CSTRING proof)
 {
-	char		*cli_final_msg;
+	STRING		 cli_final_msg;
 	size_t		 size;
 	std::string	 str("c=biws,r=");
 
@@ -177,10 +177,10 @@ sasl_scram_sha_send_client_final_msg(CSTRING proof)
 	return 0;
 }
 
-static char *
-get_decoded_msg(const char *source, int *outlen) noexcept
+static STRING
+get_decoded_msg(CSTRING source, int *outlen) noexcept
 {
-	char	*decoded_msg = NULL;
+	STRING	 decoded_msg = NULL;
 	int	 length_needed = b64_decode(source, NULL, 0);
 
 	if (length_needed < 0)
@@ -204,11 +204,11 @@ get_decoded_msg(const char *source, int *outlen) noexcept
 /* S: r=rOprNGfwEbeRWgbNEkqO%hvYDpWUa2RaTCAfuxFIlj)hNlF$k0,
       s=W22ZaJ0SNY7soEsUEjb6gQ==,i=4096 */
 static int
-get_sfm_components(const char *msg, unsigned char **salt, int *saltlen,
+get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
     int *iter)
 {
+	STRING	 decoded_msg = NULL;
 	bool	 ok = false;
-	char	*decoded_msg = NULL;
 
 	*salt = NULL;
 	*saltlen = 0;
@@ -285,7 +285,7 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 	unsigned char *out = NULL;
 
 	try {
-		const char *pass;
+		CSTRING pass;
 
 		if (*outsize = EVP_MD_size(EVP_sha256()), *outsize < 0) {
 			throw std::runtime_error("message digest size "
@@ -326,10 +326,10 @@ get_digest(struct digest_context *ctx)
 	return 0;
 }
 
-static char *
+static STRING
 get_client_first_msg_bare() noexcept
 {
-	char		*msg_bare;
+	STRING		 msg_bare;
 	size_t		 size;
 	std::string	 str("n=");
 
@@ -344,10 +344,10 @@ get_client_first_msg_bare() noexcept
 	return msg_bare;
 }
 
-static char *
+static STRING
 get_client_final_msg_wo_proof() noexcept
 {
-	char		*msg_wo_proof;
+	STRING		 msg_wo_proof;
 	size_t		 size;
 	std::string	 str("c=biws,r=");
 
@@ -367,10 +367,10 @@ get_client_final_msg_wo_proof() noexcept
  *              client-final-message-without-proof
  */
 static unsigned char *
-get_auth_msg(const char *b64msg, size_t *auth_msg_len)
+get_auth_msg(CSTRING b64msg, size_t *auth_msg_len)
 {
-	char	*msg_bare, *msg_wo_proof, *serv_first_msg;
-	char	*out;
+	STRING msg_bare, msg_wo_proof, serv_first_msg;
+	STRING out;
 
 	msg_bare = get_client_first_msg_bare();
 	msg_wo_proof = get_client_final_msg_wo_proof();
@@ -476,8 +476,8 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 int
 sasl_scram_sha_handle_serv_final_msg(CSTRING msg)
 {
+	STRING	 decoded_msg = NULL;
 	bool	 signature_ok = false;
-	char	*decoded_msg = NULL;
 
 	try {
 		char		*cp;
