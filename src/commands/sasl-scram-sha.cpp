@@ -215,13 +215,16 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 	*iter = PKCS5_DEFAULT_ITER;
 
 	try {
+		char *cp, *b64salt;
+		size_t n;
+
 		if ((decoded_msg = get_decoded_msg(msg, NULL)) == NULL) {
 			throw std::runtime_error("unable to get decoded "
 			    "message");
 		}
 
 		debug("get_sfm_components: S: %s", decoded_msg);
-		char *cp = decoded_msg;
+		cp = decoded_msg;
 
 		if (strncmp(cp, "r=", 2) != STRINGS_MATCH)
 			throw std::runtime_error("expected nonce");
@@ -231,7 +234,7 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 		if (strncmp(cp, nonce, strlen(nonce)) != STRINGS_MATCH)
 			throw std::runtime_error("nonce mismatch");
 
-		size_t n = strcspn(cp, ",");
+		n = strcspn(cp, ",");
 		cp[n] = '\0';
 		free(complete_nonce);
 		complete_nonce = sw_strdup(cp);
@@ -243,11 +246,10 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 		cp += 3;
 		n = strcspn(cp, ",");
 		cp[n] = '\0';
-		char *b64salt = sw_strdup(cp);
+		b64salt = sw_strdup(cp);
 		cp[n] = ',';
-		*salt =
-		    reinterpret_cast<unsigned char *>(get_decoded_msg(b64salt,
-		    saltlen));
+		*salt = reinterpret_cast<unsigned char *>
+		    (get_decoded_msg(b64salt, saltlen));
 		free(b64salt);
 
 		if (*salt == NULL)
