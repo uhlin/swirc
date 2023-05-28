@@ -1405,25 +1405,22 @@ static char *
 get_buffer(CSTRING orig)
 {
 #ifdef HAVE_LIBICONV
+#if defined(__cplusplus) && __cplusplus >= 201103L
+#define fromcode_pb(_str) fromcode.emplace_back(_str)
+#else
+#define fromcode_pb(_str) fromcode.push_back(_str)
+#endif
 #define UTF8_MAXBYTE 4
 	if (!config_bool("iconv_conversion", false))
 		return sw_strdup(orig);
 
 	std::list<std::string> fromcode;
 
-#if defined(__cplusplus) && __cplusplus >= 201103L
-	fromcode.emplace_back("UTF-8");
-	fromcode.emplace_back("ISO-8859-1");
-	fromcode.emplace_back("ISO-8859-15");
-	fromcode.emplace_back("WINDOWS-1251");
-	fromcode.emplace_back("WINDOWS-1252");
-#else
-	fromcode.push_back("UTF-8");
-	fromcode.push_back("ISO-8859-1");
-	fromcode.push_back("ISO-8859-15");
-	fromcode.push_back("WINDOWS-1251");
-	fromcode.push_back("WINDOWS-1252");
-#endif
+	fromcode_pb("UTF-8");
+	fromcode_pb("ISO-8859-1");
+	fromcode_pb("ISO-8859-15");
+	fromcode_pb("WINDOWS-1251");
+	fromcode_pb("WINDOWS-1252");
 
 	for (const std::string &x : fromcode) {
 		char *in, *orig_copy, *out, *out_p;
