@@ -1,5 +1,5 @@
 /* crypt.cpp
-   Copyright (C) 2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022, 2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -109,8 +109,7 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 		if (crypt_get_key_and_iv(password, &crypt_ctx) == -1) {
 			throw std::runtime_error("unable to get key/iv");
 		} else if ((cipher_ctx = EVP_CIPHER_CTX_new()) == NULL) {
-			err_exit(ENOMEM, "crypt_decrypt_str: "
-			    "EVP_CIPHER_CTX_new");
+			err_exit(ENOMEM, "%s: EVP_CIPHER_CTX_new", __func__);
 		} else if (!EVP_DecryptInit_ex(cipher_ctx, get_encrypt_alg(),
 		    NULL, addrof(crypt_ctx.key[0]), addrof(crypt_ctx.iv[0]))) {
 			throw std::runtime_error("evp decrypt initialization "
@@ -131,8 +130,8 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 		}
 
 		decdat_len += rem_bytes;
-		debug("crypt_decrypt_str: decdat_len:  %d", decdat_len);
-		debug("crypt_decrypt_str: decdat_size: %d", decdat_size);
+		debug("%s: decdat_len:  %d", __func__, decdat_len);
+		debug("%s: decdat_size: %d", __func__, decdat_size);
 
 		EVP_CIPHER_CTX_free(cipher_ctx);
 		cipher_ctx = NULL;
@@ -143,10 +142,10 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 		memcpy(out_str, decdat, static_cast<size_t>(decdat_len));
 	} catch (const std::runtime_error &e) {
 		error = true;
-		err_log(0, "crypt_decrypt_str: %s", e.what());
+		err_log(0, "%s: %s", __func__, e.what());
 	} catch (...) {
 		error = true;
-		err_log(0, "crypt_decrypt_str: %s", "unknown exception!");
+		err_log(0, "%s: %s", __func__, "unknown exception!");
 	}
 
 	clean_up(cipher_ctx, &crypt_ctx, decdat, static_cast<size_t>
@@ -193,8 +192,7 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 		} else if (crypt_get_key_and_iv(password, &crypt_ctx) == -1) {
 			throw std::runtime_error("unable to get key/iv");
 		} else if ((cipher_ctx = EVP_CIPHER_CTX_new()) == NULL) {
-			err_exit(ENOMEM, "crypt_encrypt_str: "
-			    "EVP_CIPHER_CTX_new");
+			err_exit(ENOMEM, "%s: EVP_CIPHER_CTX_new", __func__);
 		} else if (!EVP_EncryptInit_ex(cipher_ctx, get_encrypt_alg(),
 		    NULL, addrof(crypt_ctx.key[0]), addrof(crypt_ctx.iv[0]))) {
 			throw std::runtime_error("evp encrypt initialization "
@@ -215,8 +213,8 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 		}
 
 		encdat_len += rem_bytes;
-		debug("crypt_encrypt_str: encdat_len:  %d", encdat_len);
-		debug("crypt_encrypt_str: encdat_size: %d", encdat_size);
+		debug("%s: encdat_len:  %d", __func__, encdat_len);
+		debug("%s: encdat_size: %d", __func__, encdat_size);
 
 		EVP_CIPHER_CTX_free(cipher_ctx);
 		cipher_ctx = NULL;
@@ -231,10 +229,10 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 			throw std::runtime_error("base64 error");
 	} catch (const std::runtime_error &e) {
 		error = true;
-		err_log(0, "crypt_encrypt_str: %s", e.what());
+		err_log(0, "%s: %s", __func__, e.what());
 	} catch (...) {
 		error = true;
-		err_log(0, "crypt_encrypt_str: %s", "unknown exception!");
+		err_log(0, "%s: %s", __func__, "unknown exception!");
 	}
 
 	clean_up(cipher_ctx, &crypt_ctx, encdat, static_cast<size_t>
