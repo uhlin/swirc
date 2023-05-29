@@ -919,11 +919,11 @@ readline(CSTRING prompt)
 
 	switch (setjmp(g_readline_loc_info)) {
 	case READLINE_PROCESS:
-		g_readline_loop = true;
-		g_resize_requested = false;
-		g_suggs_mode = false;
-		g_hist_next = false;
-		g_hist_prev = false;
+		g_hist_next		= false;
+		g_hist_prev		= false;
+		g_readline_loop		= true;
+		g_resize_requested	= false;
+		g_suggs_mode		= false;
 		ctx = new_session(prompt);
 		return process(ctx);
 	case READLINE_RESTART:
