@@ -926,6 +926,15 @@ readline(CSTRING prompt)
 		g_hist_prev = false;
 		ctx = new_session(prompt);
 		return process(ctx);
+	case READLINE_RESTART:
+		debug("%s: restarting...", __func__);
+		break;
+	case READLINE_TERMINATE:
+		debug("%s: terminating...", __func__);
+		break;
+	default:
+		sw_assert_not_reached();
+		break;
 	}
 
 	session_destroy(ctx);
