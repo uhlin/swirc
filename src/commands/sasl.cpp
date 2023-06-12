@@ -30,6 +30,15 @@
 #include "base64.h"
 #include "common.h"
 
+/*
+ * Certain low-level functions from the OpenSSL toolkit that we use in
+ * this file have been flagged deprecated in OpenSSL 3.0. They aren't
+ * deprecated in LibreSSL. Some redesign of this file is certainly
+ * needed in order to use the new API. But I haven't investigated it
+ * closer yet nor if it's possible to accomplish the same effect using
+ * the new higher level API. Suppress for now...
+ */
+#define OPENSSL_SUPPRESS_DEPRECATED 1
 #include <openssl/pem.h>
 
 #include <climits>
