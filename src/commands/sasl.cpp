@@ -38,7 +38,7 @@
  * closer yet nor if it's possible to accomplish the same effect using
  * the new higher level API. Suppress for now...
  */
-#define OPENSSL_SUPPRESS_DEPRECATED 1
+#define OPENSSL_API_COMPAT 10101
 #include <openssl/pem.h>
 
 #include <climits>

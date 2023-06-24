@@ -1,5 +1,5 @@
 /* TLS server
-   Copyright (C) 2021-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -29,6 +29,10 @@
 
 #include "common.h"
 
+/*
+ * OpenSSL 1.1.1 API compat
+ */
+#define OPENSSL_API_COMPAT 10101
 #include <openssl/bio.h>
 #include <openssl/err.h>
 #include <openssl/pem.h>
