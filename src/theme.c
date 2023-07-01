@@ -36,7 +36,7 @@
 #elif WIN32
 #include "pdcurses/curses.h"
 #else
-#error "Cannot determine curses header file!"
+#error Cannot determine Curses header file!
 #endif
 
 #include "errHand.h"

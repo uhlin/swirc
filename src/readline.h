@@ -8,7 +8,7 @@
 #elif WIN32
 #include "pdcurses/panel.h"
 #else
-#error "Cannot determine panel header file!"
+#error Cannot determine Panel header file!
 #endif
 
 #include <setjmp.h> /* want type jmp_buf */
