@@ -1,5 +1,5 @@
 /* Networking for UNIX
-   Copyright (C) 2014-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -90,7 +90,7 @@ net_send_plain(const char *fmt, ...)
 	if (g_socket == INVALID_SOCKET)
 		return -1;
 	else if (fmt == NULL)
-		err_exit(EINVAL, "net_send_plain");
+		err_exit(EINVAL, "%s", __func__);
 	else if (strings_match(fmt, ""))
 		return 0;
 
@@ -131,16 +131,16 @@ net_do_connect_detached(const char *host, const char *port, const char *pass)
 
 	if ((errno = pthread_create(&thread, NULL, do_connect_wrapper,
 	    server)) != 0)
-		err_sys("net_do_connect_detached: pthread_create");
+		err_sys("%s: pthread_create", __func__);
 	else if ((errno = pthread_detach(thread)) != 0)
-		err_sys("net_do_connect_detached: pthread_detach");
+		err_sys("%s: pthread_detach", __func__);
 }
 
 void
 net_listen_thread_join(void)
 {
 	if ((errno = pthread_join(listen_thread_id, NULL)) != 0)
-		err_sys("net_listen_thread_join: pthread_join");
+		err_sys("%s: pthread_join", __func__);
 }
 
 /*lint -sem(listen_thread_fn, r_null) */
@@ -167,9 +167,9 @@ net_spawn_listen_thread(void)
 {
 	if ((errno = pthread_create(&listen_thread_id, NULL, listen_thread_fn,
 	    NULL)) != 0)
-		err_sys("net_spawn_listen_thread: pthread_create");
+		err_sys("%s: pthread_create", __func__);
 	else if ((errno = pthread_detach(listen_thread_id)) != 0)
-		err_sys("net_spawn_listen_thread: pthread_detach");
+		err_sys("%s: pthread_detach", __func__);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -185,7 +185,7 @@ net_set_recv_timeout(const time_t seconds)
 	errno = 0;
 
 	if (setsockopt(g_socket, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof tv) != 0)
-		err_log(errno, "net_set_recv_timeout: setsockopt");
+		err_log(errno, "%s: setsockopt", __func__);
 }
 
 void
@@ -199,5 +199,5 @@ net_set_send_timeout(const time_t seconds)
 	errno = 0;
 
 	if (setsockopt(g_socket, SOL_SOCKET, SO_SNDTIMEO, &tv, sizeof tv) != 0)
-		err_log(errno, "net_set_send_timeout: setsockopt");
+		err_log(errno, "%s: setsockopt", __func__);
 }
