@@ -259,8 +259,7 @@ static struct ptext_colorMap_tag {
 *                                                               *
 ****************************************************************/
 
-static size_t	 get_mb_strlen(CSTRING) NONNULL;
-static char	*get_buffer(CSTRING) NONNULL;
+static char *get_buffer(CSTRING) NONNULL;
 
 static void
 addmbs(WINDOW *win, const unsigned char *mbs)
@@ -821,33 +820,6 @@ case_underline(WINDOW *win, bool *is_underline)
 		WATTR_OFF(win, A_UNDERLINE);
 		*is_underline = false;
 	}
-}
-
-/**
- * Get multibyte string length
- */
-static size_t
-get_mb_strlen(CSTRING s)
-{
-	const size_t ERR_CASE1 = static_cast<size_t>(-1);
-	const size_t ERR_CASE2 = static_cast<size_t>(-2);
-	size_t idx = 0;
-	size_t len = 0;
-
-	while (true) {
-		const size_t ret = mbrlen(&s[idx], MB_CUR_MAX, NULL);
-
-		if (ret == ERR_CASE1 || ret == ERR_CASE2) {
-			return strlen(s);
-		} else if (ret == 0) {
-			break;
-		} else {
-			idx += ret;
-			len += 1;
-		}
-	}
-
-	return len;
 }
 
 static void
