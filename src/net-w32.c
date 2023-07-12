@@ -1,5 +1,5 @@
 /* Networking for WIN32
-   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -103,7 +103,7 @@ net_send_plain(const char *fmt, ...)
 	if (g_socket == INVALID_SOCKET)
 		return -1;
 	else if (fmt == NULL)
-		err_exit(EINVAL, "net_send_plain");
+		err_exit(EINVAL, "%s", __func__);
 	else if (strings_match(fmt, ""))
 		return 0;
 
@@ -142,7 +142,7 @@ net_do_connect_detached(const char *host, const char *port, const char *pass)
 	errno = 0;
 
 	if (_beginthread(do_connect_wrapper, 0, server) == g_beginthread_failed)
-		err_sys("net_do_connect_detached: _beginthread");
+		err_sys("%s: _beginthread", __func__);
 }
 
 void
@@ -174,7 +174,7 @@ net_spawn_listen_thread(void)
 {
 	if ((listen_thread_id = _beginthread(listen_thread_fn, 0, NULL)) ==
 	    g_beginthread_failed)
-		err_sys("net_spawn_listen_thread: _beginthread");
+		err_sys("%s: _beginthread", __func__);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -187,7 +187,7 @@ net_set_recv_timeout(const DWORD seconds)
 
 	if (setsockopt(g_socket, SOL_SOCKET, SO_RCVTIMEO,
 	    ((char *) &timeout_milliseconds), optlen) != 0)
-		err_log(0, "net_set_recv_timeout: setsockopt");
+		err_log(0, "%s: setsockopt", __func__);
 }
 
 void
@@ -198,5 +198,5 @@ net_set_send_timeout(const DWORD seconds)
 
 	if (setsockopt(g_socket, SOL_SOCKET, SO_SNDTIMEO,
 	    ((char *) &timeout_milliseconds), optlen) != 0)
-		err_log(0, "net_set_send_timeout: setsockopt");
+		err_log(0, "%s: setsockopt", __func__);
 }
