@@ -47,7 +47,9 @@ To clone the repository use [Git](https://git-scm.com).
 Swirc currently depends on:
 
 * [Curl](https://curl.haxx.se/libcurl/)
+* [GNU gettext](https://www.gnu.org/software/gettext/)
 * [GNU libidn](https://www.gnu.org/software/libidn/)
+* [Hunspell](https://hunspell.github.io/)
 * [Ncurses](https://www.gnu.org/software/ncurses/ncurses.html)
   with wide character support
 * [OpenSSL toolkit](https://www.openssl.org/)
