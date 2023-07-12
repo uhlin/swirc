@@ -825,15 +825,24 @@ case_underline(WINDOW *win, bool *is_underline)
 static void
 set_indent(int *indent, CSTRING fmt, ...)
 {
-	va_list		 ap;
 	char		*str = NULL;
+	size_t		 bytes_convert;
+	va_list		 ap;
+	wchar_t		 wcs[400] = { L'\0' };
 
 	va_start(ap, fmt);
 	str = strdup_vprintf(fmt, ap);
 	va_end(ap);
 
-	*indent = static_cast<int>(get_mb_strlen(squeeze_text_deco(str)));
+	bytes_convert = xmbstowcs(addrof(wcs[0]), squeeze_text_deco(str),
+	    ARRAY_SIZE(wcs) - 1);
+	wcs[ARRAY_SIZE(wcs) - 1] = L'\0';
 	free(str);
+	if (bytes_convert == g_conversion_failed) {
+		*indent = 0;
+		return;
+	}
+	*indent = xwcswidth(addrof(wcs[0]), 2);
 }
 
 /**
