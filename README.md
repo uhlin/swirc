@@ -55,9 +55,9 @@ Swirc currently depends on:
 * [OpenSSL toolkit](https://www.openssl.org/)
 
 Which means that on for example a Debian GNU/Linux system you need to
-install 4 packages before building:
+install these packages before building:
 
-    # apt install libcurl4-openssl-dev libidn11-dev libncursesw5-dev libssl-dev
+    # apt install gettext libcurl4-openssl-dev libhunspell-dev libidn11-dev libncursesw5-dev libssl-dev
 
 And on Mac OS X, provided that
 [Homebrew](http://brew.sh/)
