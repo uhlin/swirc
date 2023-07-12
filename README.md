@@ -65,9 +65,9 @@ is installed, issue:
 
     $ brew install libressl
 
-#### Void GNU/Linux ####
+#### Void Linux ####
 
-    # xbps-install -S libcurl-devel libressl-devel ncurses-devel libidn-devel
+    # xbps-install -S gettext-devel hunspell-devel libcurl-devel libidn-devel libnotify-devel ncurses-devel openssl-devel
 
 ### Building for the UNIX environment ###
 
