@@ -63,6 +63,7 @@ And on Mac OS X, provided that
 [Homebrew](http://brew.sh/)
 is installed, issue:
 
+    $ brew install hunspell
     $ brew install libressl
 
 #### Void Linux ####
