@@ -1,4 +1,4 @@
-/* Copyright (C) 2012-2022 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2012-2023 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -92,7 +92,7 @@ block_signals(void)
 			(void) sigaddset(&set, ssp->num);
 	}
 	if ((errno = pthread_sigmask(SIG_BLOCK, &set, NULL)) != 0)
-		err_sys("block_signals: pthread_sigmask");
+		err_sys("%s: pthread_sigmask", __func__);
 }
 
 bool
@@ -106,7 +106,7 @@ sighand_init(void)
 	act.sa_flags = 0;
 
 	if (pthread_sigmask(SIG_SETMASK, &set, NULL) != 0) {
-		err_ret("sighand_init: SIG_SETMASK");
+		err_ret("%s: SIG_SETMASK", __func__);
 		return false;
 	}
 
@@ -118,8 +118,8 @@ sighand_init(void)
 		else
 			act.sa_handler = signal_handler;
 		if (sigaction(ssp->num, &act, NULL) != 0) {
-			err_ret("sighand_init: sigaction failed on signal %d "
-			    "(%s)", ssp->num, ssp->num_str);
+			err_ret("%s: sigaction failed on signal %d (%s)",
+			    __func__, ssp->num, ssp->num_str);
 			return false;
 		}
 	}
@@ -127,7 +127,7 @@ sighand_init(void)
 	(void) sigemptyset(&set);
 
 	if (pthread_sigmask(SIG_SETMASK, &set, NULL) != 0) {
-		err_ret("sighand_init: SIG_SETMASK");
+		err_ret("%s: SIG_SETMASK", __func__);
 		return false;
 	}
 
