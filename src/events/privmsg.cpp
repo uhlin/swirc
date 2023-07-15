@@ -217,7 +217,7 @@ static wchar_t *
 get_message(const wchar_t *s1, const wchar_t *s2, const wchar_t *s3,
     const wchar_t *s4, const wchar_t *s5)
 {
-	static wchar_t	message[1001] = { '\0' };
+	static wchar_t	message[1001] = { L'\0' };
 
 	(void) wmemset(message, 0L, ARRAY_SIZE(message));
 
