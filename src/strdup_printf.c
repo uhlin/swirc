@@ -98,8 +98,7 @@ strdup_vprintf(const char *fmt, va_list ap)
 
 	if ((size = get_size(fmt, ap)) < 0)
 		err_exit(ENOSYS, "%s: get_size", __func__);
-	else
-		size += 1;
+	size += 1;
 
 	if ((buffer = malloc(size)) == NULL) {
 		err_exit(ENOMEM, "%s: malloc (allocating %d bytes)", __func__,
