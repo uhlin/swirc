@@ -66,6 +66,10 @@ is installed, issue:
     $ brew install hunspell
     $ brew install libressl
 
+Prompts that begin with a hash(#) symbolizes that the command shall be
+executed as root, while prompts that begin with a dollar sign ($)
+symbolizes that the command shall be executed as a normal user.
+
 #### Void Linux ####
 
     # xbps-install -S gettext-devel hunspell-devel libcurl-devel libidn-devel libnotify-devel ncurses-devel openssl-devel
