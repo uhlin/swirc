@@ -186,8 +186,9 @@ compute_new_window_entry(const volatile struct readline_session_context *ctx,
 		diff = int_diff(COLS / 2, ctx->prompt_size);
 
 		if ((bufindex = int_diff(ctx->bufpos, diff)) < 0) {
-			readline_ferror(ERANGE, "%s", __func__);
-			/* NOTREACHED */
+			printtext_print("warn", "%s: bufindex=%d", __func__,
+			    bufindex);
+			bufindex = 0;
 		}
 
 		str1 = &ctx->buffer[bufindex];
