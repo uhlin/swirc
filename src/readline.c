@@ -167,8 +167,8 @@ static int
 get_subtrahend(const volatile struct readline_session_context *ctx,
     const int diff)
 {
+	const wchar_t	*ptr;
 	int		 i, j;
-	wchar_t		*ptr;
 
 	i = j = 0;
 	ptr = addrof(ctx->buffer[ctx->bufpos - 1]);
