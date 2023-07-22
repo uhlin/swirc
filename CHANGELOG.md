@@ -2,20 +2,20 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added a man page that describes how to write themes.
-- Added and made use of a pointer validation function.
-- Added improved unicode support in the printtext and readline modules.
-- Added usage of a binary search algorithm.
-- Added validation of nicknames before they go into the names hash
+- **Added** a man page that describes how to write themes.
+- **Added** and made use of a pointer validation function.
+- **Added** improved unicode support in the **printtext** and **readline** modules.
+- **Added** usage of a binary search algorithm.
+- **Added** validation of nicknames before they go into the names hash
   table.
-- Allowed the names htbl modify API to alter names even if the list is
+- **Allowed** the names htbl modify API to alter names even if the list is
   incomplete. (But only in ICB mode.)
-- Changed the file suffix for theme files from `.the` to
+- **Changed** the file suffix for theme files from `.the` to
   `.thm`. (`.the` looks too much like the English word "the".)
-- Closed an open stream before exit
-- Defined noreturn for C++ in `fallbackattrs.h`
-- Fixed hardcoded function names in error messages
-- Fixed unchecked return values
+- **Closed** an open stream before exit
+- **Defined** noreturn for C++ in `fallbackattrs.h`
+- **Fixed** hardcoded function names in error messages
+- **Fixed** unchecked return values
 
 ## [3.4.3] - 2023-03-10 ##
 - **Added** code improvements:
