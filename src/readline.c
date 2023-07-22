@@ -177,9 +177,6 @@ compute_new_window_entry(const volatile struct readline_session_context *ctx,
 		diff = (COLS / 2);
 		bufindex = int_diff(ctx->bufpos, diff);
 
-		if ((COLS % 2) == 0)
-			bufindex += 1;
-
 		str1 = &ctx->buffer[bufindex];
 		str2 = &ctx->buffer[ctx->bufpos];
 	} else {
