@@ -163,6 +163,25 @@ write_cmdprompt(WINDOW *win, CSTRING prompt, int size)
 	UNUSED_PARAM(size);
 }
 
+static int
+get_subtrahend(const volatile struct readline_session_context *ctx,
+    const int diff)
+{
+	int		 i, j;
+	wchar_t		*ptr;
+
+	i = j = 0;
+	ptr = addrof(ctx->buffer[ctx->bufpos - 1]);
+
+	while (i < diff && ptr >= addrof(ctx->buffer[0])) {
+		i += readline_wcwidth(*ptr, FWLEN);
+		j++;
+		ptr--;
+	}
+
+	return j;
+}
+
 /**
  * When swapping between panels: computes the new window entry.
  */
@@ -175,14 +194,15 @@ compute_new_window_entry(const volatile struct readline_session_context *ctx,
 
 	if (fwd) {
 		diff = (COLS / 2);
-		bufindex = int_diff(ctx->bufpos, diff);
+		bufindex = int_diff(ctx->bufpos, get_subtrahend(ctx, diff));
 
 		str1 = &ctx->buffer[bufindex];
 		str2 = &ctx->buffer[ctx->bufpos];
 	} else {
 		diff = int_diff(COLS / 2, ctx->prompt_size);
+		bufindex = int_diff(ctx->bufpos, get_subtrahend(ctx, diff));
 
-		if ((bufindex = int_diff(ctx->bufpos, diff)) < 0) {
+		if (bufindex < 0) {
 			printtext_print("warn", "%s: bufindex=%d", __func__,
 			    bufindex);
 			bufindex = 0;
