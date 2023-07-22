@@ -196,6 +196,9 @@ compute_new_window_entry(const volatile struct readline_session_context *ctx,
 		diff = (COLS / 2);
 		bufindex = int_diff(ctx->bufpos, get_subtrahend(ctx, diff));
 
+		if (bufindex < 0)
+			readline_ferror(ERANGE, "%s", __func__);
+
 		str1 = &ctx->buffer[bufindex];
 		str2 = &ctx->buffer[ctx->bufpos];
 	} else {
