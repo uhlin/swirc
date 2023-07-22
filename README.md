@@ -49,6 +49,7 @@ Swirc currently depends on:
 * [Curl](https://curl.haxx.se/libcurl/)
 * [GNOME libnotify](https://wiki.gnome.org/)
 * [GNU gettext](https://www.gnu.org/software/gettext/)
+* [GNU libiconv](https://www.gnu.org/software/libiconv/)
 * [GNU libidn](https://www.gnu.org/software/libidn/)
 * [Hunspell](https://hunspell.github.io/)
 * [Ncurses](https://www.gnu.org/software/ncurses/ncurses.html)
