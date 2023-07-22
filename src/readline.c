@@ -189,8 +189,8 @@ static void
 compute_new_window_entry(const volatile struct readline_session_context *ctx,
 			 bool fwd)
 {
-	int bufindex, diff;
-	wchar_t *str1, *str2;
+	const wchar_t	*str1, *str2;
+	int		 bufindex, diff;
 
 	if (fwd) {
 		diff = (COLS / 2);
