@@ -770,8 +770,8 @@ net_irc_listen(bool *connection_lost)
 	winsock_deinit();
 #endif
 	irc_deinit();
-	free(recvbuf);
-	free(message_concat);
+	free_and_null(&recvbuf);
+	free_and_null(&message_concat);
 	printtext(&ptext_ctx, "%s", _("Disconnected"));
 	(void) atomic_swap_bool(&g_irc_listening, false);
 }
