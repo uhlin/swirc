@@ -252,7 +252,7 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 	if (ctx->insert_mode) {
 		wchar_t *ptr;
 
-		width = xwcwidth(ctx->buffer[ctx->bufpos - 1], FWLEN);
+		width = readline_wcwidth(ctx->buffer[ctx->bufpos - 1], FWLEN);
 		ptr = &ctx->buffer[ctx->bufpos--];
 		(void) wmemmove(ptr - 1, ptr, wcslen(ptr));
 		ctx->buffer[--ctx->numins] = 0L;
@@ -279,7 +279,7 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 		 * Not insert mode
 		 */
 
-		width = xwcwidth(ctx->buffer[ctx->bufpos - 1], FWLEN);
+		width = readline_wcwidth(ctx->buffer[ctx->bufpos - 1], FWLEN);
 		ctx->buffer[--ctx->bufpos] = 0L;
 		ctx->numins--;
 
@@ -356,7 +356,7 @@ case_key_left(volatile struct readline_session_context *ctx)
 		magic_swap_panels(ctx, false);
 
 	mutex_lock(&g_puts_mutex);
-	if ((width = xwcwidth(ctx->buffer[--ctx->bufpos], FWLEN)) > 0) {
+	if ((width = readline_wcwidth(ctx->buffer[--ctx->bufpos], FWLEN)) > 0) {
 		ctx->vispos -= width;
 		yx = term_get_pos(ctx->act);
 		if (wmove(ctx->act, yx.cury, yx.curx - width) == ERR) {
@@ -387,7 +387,7 @@ case_key_right(volatile struct readline_session_context *ctx)
 		magic_swap_panels(ctx, true);
 
 	mutex_lock(&g_puts_mutex);
-	if ((width = xwcwidth(ctx->buffer[ctx->bufpos++], FWLEN)) > 0) {
+	if ((width = readline_wcwidth(ctx->buffer[ctx->bufpos++], FWLEN)) > 0) {
 		ctx->vispos += width;
 		yx = term_get_pos(ctx->act);
 		if (wmove(ctx->act, yx.cury, yx.curx + width) == ERR) {
@@ -487,7 +487,7 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc,
 
 	if (hiLim_isset(ctx->act))
 		magic_swap_panels(ctx, true);
-	width = xwcwidth(wc, FWLEN);
+	width = readline_wcwidth(wc, FWLEN);
 
 	if (ctx->insert_mode) {
 		wchar_t *ptr;
