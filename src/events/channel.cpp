@@ -507,6 +507,10 @@ event_mode(struct irc_message_compo *compo)
 			    COLOR2, nick, NORMAL);
 
 			maintain_channel_stats(channel, next_token_copy);
+		} else if (strings_match_ignore_case(nick, "NickServ") &&
+		    strings_match_ignore_case(channel, g_my_nickname)) {
+			if (net_send("MODE %s", g_my_nickname) < 0)
+				throw std::runtime_error("cannot send");
 		} else {
 			throw std::runtime_error("unhandled else branch");
 		}
