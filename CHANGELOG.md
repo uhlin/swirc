@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - **Defined** noreturn for C++ in `fallbackattrs.h`
 - **Fixed** hardcoded function names in error messages
 - **Fixed** unchecked return values
+- And more...
 
 ## [3.4.3] - 2023-03-10 ##
 - **Added** code improvements:
