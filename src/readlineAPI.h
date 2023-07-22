@@ -27,6 +27,9 @@ void	readline_waddnstr(WINDOW *, const wchar_t *, ptrdiff_t)
 void	readline_winsch(WINDOW *, wint_t);
 void	readline_winsnstr(WINDOW *, const wchar_t *, ptrdiff_t)
 	    NONNULL;
+
+int	readline_wcwidth(const wchar_t, const int);
+int	readline_wcswidth(const wchar_t *, const int);
 __SWIRC_END_DECLS
 
 #endif

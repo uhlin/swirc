@@ -33,6 +33,7 @@
 #include <string.h>
 
 #include "assertAPI.h"
+#include "dataClassify.h"
 #include "errHand.h"
 #include "libUtils.h"
 #include "printtext.h"
@@ -365,4 +366,25 @@ readline_winsnstr(WINDOW *win, const wchar_t *s, ptrdiff_t n)
 
 	for (const wchar_t *ptr = &s[i - 1]; ptr >= &s[0]; ptr--)
 		readline_winsch(win, *ptr);
+}
+
+int
+readline_wcwidth(const wchar_t wc, const int fwlen)
+{
+	if (is_text_decoration(wc))
+		return 1;
+	return xwcwidth(wc, fwlen);
+}
+
+int
+readline_wcswidth(const wchar_t *str, const int fwlen)
+{
+	const wchar_t	*ptr = str;
+	int		 width = 0;
+
+	while (*ptr) {
+		width += readline_wcwidth(*ptr, fwlen);
+		ptr++;
+	}
+	return width;
 }
