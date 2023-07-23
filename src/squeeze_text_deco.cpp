@@ -1,5 +1,5 @@
 /* squeeze_text_deco.cpp
-   Copyright (C) 2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -176,5 +176,11 @@ squeeze_text_deco(char *buffer)
 	}
 
 	buffer[j] = '\0';
+	return buffer;
+}
+
+wchar_t *
+squeeze_text_deco_wide(wchar_t *buffer)
+{
 	return buffer;
 }
