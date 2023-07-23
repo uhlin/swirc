@@ -26,6 +26,7 @@ rot13
 size_product
 squeeze
 squeeze_text_deco
+squeeze_text_deco_wide
 strColor
 strFeed
 strToLower

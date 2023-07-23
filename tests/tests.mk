@@ -25,6 +25,7 @@ TESTS = cmd_ban.run\
 	size_product.run\
 	squeeze.run\
 	squeeze_text_deco.run\
+	squeeze_text_deco_wide.run\
 	strColor.run\
 	strFeed.run\
 	strToLower.run\
