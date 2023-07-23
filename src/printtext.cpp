@@ -1540,7 +1540,9 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 				str = static_cast<wchar_t *>(xmalloc(size));
 				(void) wcsncpy(str, wc_bufp, diff);
 				str[diff] = L'\0';
-				if ((diff = xwcswidth(str, 2)) < 0)
+				if ((diff = xwcswidth(wcspbrk(str,
+				    L"\035\002\003\017\026\037") ?
+				    squeeze_text_deco_wide(str) : str, 2)) < 0)
 					diff = 0;
 				free(str);
 				str = NULL;
