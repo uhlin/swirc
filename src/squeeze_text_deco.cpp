@@ -29,11 +29,19 @@
 
 #include "common.h"
 
+#include <string>
+
 #include "assertAPI.h"
 #include "dataClassify.h"
 #include "errHand.h"
 #include "printtext.h"
 #include "strHand.h"
+
+#if defined(UNIX)
+#define PRINT_SIZE	"%zu"
+#elif defined(WIN32)
+#define PRINT_SIZE	"%Iu"
+#endif
 
 static const char reject[] =
     TXT_BLINK
@@ -182,5 +190,38 @@ squeeze_text_deco(char *buffer)
 wchar_t *
 squeeze_text_deco_wide(wchar_t *buffer)
 {
+	STRING		 str_copy = NULL;
+	size_t		 buflen, newlen, num;
+	std::string	 str;
+	std::wstring	 wstr;
+
+	if (buffer == NULL)
+		err_exit(EINVAL, "%s", __func__);
+	else if (wcscmp(buffer, L"") == STRINGS_MATCH)
+		return buffer;
+
+	buflen = wcslen(buffer);
+	newlen = num = 0;
+
+	try {
+		wstr.assign(buffer);
+		sw_assert(wstr.size() == buflen);
+		str.assign(wstr.begin(), wstr.end());
+		str_copy = sw_strdup(str.c_str());
+		str.assign(squeeze_text_deco(str_copy));
+		free(str_copy);
+		str_copy = NULL;
+		wstr.assign(str.begin(), str.end());
+		newlen = wstr.size();
+		num = newlen < buflen ? newlen : buflen;
+		wmemcpy(buffer, wstr.data(), num);
+		buffer[num] = L'\0';
+	} catch (...) {
+		err_log(0, "%s: fatal error", __func__);
+		err_log(0, "buflen: " PRINT_SIZE, buflen);
+		err_log(0, "newlen: " PRINT_SIZE, newlen);
+		free(str_copy);
+	}
+
 	return buffer;
 }
