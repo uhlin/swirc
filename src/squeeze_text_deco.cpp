@@ -213,8 +213,8 @@ squeeze_text_deco_wide(wchar_t *buffer)
 		(void) str.assign(squeeze_text_deco(str_copy));
 		(void) wstr.assign(str.begin(), str.end());
 
-		newlen = wstr.size();
-		num = newlen < buflen ? newlen : buflen;
+		newlen	= wstr.size();
+		num	= (newlen < buflen ? newlen : buflen);
 
 		wmemcpy(buffer, wstr.data(), num);
 		buffer[num] = L'\0';
