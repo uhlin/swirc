@@ -1531,10 +1531,12 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 
 			if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) !=
 			    NULL) {
-				static wchar_t str[4096] = { L'\0' };
+				static wchar_t		str[4096] = { L'\0' };
+				static const ptrdiff_t	ARSZ = static_cast
+				    <ptrdiff_t>(ARRAY_SIZE(str));
 
-				if ((diff = (wcp - wc_bufp)) > ARRAY_SIZE(str) - 1)
-					diff = ARRAY_SIZE(str) - 1;
+				if ((diff = (wcp - wc_bufp)) > ARSZ - 1)
+					diff = ARSZ - 1;
 				sw_assert(diff > 0);
 				(void) wcsncpy(str, wc_bufp, diff);
 				str[diff] = L'\0';
