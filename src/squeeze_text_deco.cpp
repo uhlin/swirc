@@ -190,7 +190,7 @@ squeeze_text_deco(char *buffer)
 wchar_t *
 squeeze_text_deco_wide(wchar_t *buffer)
 {
-	STRING		 str_copy = NULL;
+	char		 str_copy[4096] = { '\0' };
 	size_t		 buflen, newlen, num;
 	std::string	 str;
 	std::wstring	 wstr;
@@ -207,10 +207,9 @@ squeeze_text_deco_wide(wchar_t *buffer)
 		wstr.assign(buffer);
 		sw_assert(wstr.size() == buflen);
 		str.assign(wstr.begin(), wstr.end());
-		str_copy = sw_strdup(str.c_str());
+		strncpy(str_copy, str.c_str(), sizeof str_copy - 1);
+		str_copy[sizeof str_copy - 1] = '\0';
 		str.assign(squeeze_text_deco(str_copy));
-		free(str_copy);
-		str_copy = NULL;
 		wstr.assign(str.begin(), str.end());
 		newlen = wstr.size();
 		num = newlen < buflen ? newlen : buflen;
@@ -220,7 +219,6 @@ squeeze_text_deco_wide(wchar_t *buffer)
 		err_log(0, "%s: fatal error", __func__);
 		err_log(0, "buflen: " PRINT_SIZE, buflen);
 		err_log(0, "newlen: " PRINT_SIZE, newlen);
-		free(str_copy);
 	}
 
 	return buffer;
