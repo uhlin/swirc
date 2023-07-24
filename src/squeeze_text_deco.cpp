@@ -205,7 +205,6 @@ squeeze_text_deco_wide(wchar_t *buffer)
 
 	try {
 		wstr.assign(buffer);
-		sw_assert(wstr.size() == buflen);
 		str.assign(wstr.begin(), wstr.end());
 		strncpy(str_copy, str.c_str(), sizeof str_copy - 1);
 		str_copy[sizeof str_copy - 1] = '\0';
