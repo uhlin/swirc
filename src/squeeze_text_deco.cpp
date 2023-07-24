@@ -192,8 +192,8 @@ squeeze_text_deco_wide(wchar_t *buffer)
 {
 	char		 str_copy[4096] = { '\0' };
 	size_t		 buflen, newlen, num;
-	std::string	 str;
-	std::wstring	 wstr;
+	std::string	 str("");
+	std::wstring	 wstr(L"");
 
 	if (buffer == NULL)
 		err_exit(EINVAL, "%s", __func__);
