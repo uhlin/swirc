@@ -63,11 +63,13 @@ static stringarray_t theme_cmds = {
 	"install bx",
 	"install nano",
 	"install superkod",
+	"install weechat",
 	"list-remote",
 	"set ",
 	"set bx",
 	"set nano",
 	"set superkod",
+	"set weechat",
 };
 
 static THEME_INFO theme_info_array[MAX_NO_THEMES];
