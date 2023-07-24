@@ -206,12 +206,16 @@ squeeze_text_deco_wide(wchar_t *buffer)
 	try {
 		wstr.assign(buffer);
 		str.assign(wstr.begin(), wstr.end());
+
 		strncpy(str_copy, str.c_str(), sizeof str_copy - 1);
 		str_copy[sizeof str_copy - 1] = '\0';
+
 		str.assign(squeeze_text_deco(str_copy));
 		wstr.assign(str.begin(), str.end());
+
 		newlen = wstr.size();
 		num = newlen < buflen ? newlen : buflen;
+
 		wmemcpy(buffer, wstr.data(), num);
 		buffer[num] = L'\0';
 	} catch (...) {
