@@ -75,6 +75,9 @@ is_cjk(const wchar_t wc)
 
 		{ 0x3100,  0x312F,  "Bopomofo" },
 		{ 0x31A0,  0x31BF,  "Bopomofo Extended" },
+
+		{ 0x30A0,  0x30FF,  "Katakana" },
+		{ 0x31F0,  0x31FF,  "Katakana Phonetic Extensions" },
 	};
 
 	for (const RANGE *rp = &array[0];
