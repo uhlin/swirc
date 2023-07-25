@@ -63,7 +63,11 @@ is_cjk(const wchar_t wc)
 		{ 0x2E80,  0x2EFF,  "CJK Radicals Supplement" },
 		{ 0x2F00,  0x2FDF,  "Kangxi Radicals" },
 		{ 0x3000,  0x303F,  "CJK Symbols and Punctuation" },
+		{ 0x30A0,  0x30FF,  "Katakana" },
+		{ 0x3100,  0x312F,  "Bopomofo" },
+		{ 0x31A0,  0x31BF,  "Bopomofo Extended" },
 		{ 0x31C0,  0x31EF,  "CJK Strokes" },
+		{ 0x31F0,  0x31FF,  "Katakana Phonetic Extensions" },
 		{ 0x3200,  0x32FF,  "Enclosed CJK Letters and Months" },
 		{ 0x3300,  0x33FF,  "CJK Compatibility" },
 		{ 0x3400,  0x4DBF,  "CJK Unified Ideographs Extension A" },
@@ -72,12 +76,6 @@ is_cjk(const wchar_t wc)
 		{ 0xFE30,  0xFE4F,  "CJK Compatibility Forms" },
 		{ 0x20000, 0x2A6DF, "CJK Unified Ideographs Extension B" },
 		{ 0x2F800, 0x2FA1F, "CJK Compatibility Ideographs Supplement" },
-
-		{ 0x3100,  0x312F,  "Bopomofo" },
-		{ 0x31A0,  0x31BF,  "Bopomofo Extended" },
-
-		{ 0x30A0,  0x30FF,  "Katakana" },
-		{ 0x31F0,  0x31FF,  "Katakana Phonetic Extensions" },
 	};
 
 	for (const RANGE *rp = &array[0];
