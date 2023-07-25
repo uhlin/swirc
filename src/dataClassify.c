@@ -72,6 +72,8 @@ is_cjk(const wchar_t wc)
 		{ 0x3300,  0x33FF,  "CJK Compatibility" },
 		{ 0x3400,  0x4DBF,  "CJK Unified Ideographs Extension A" },
 		{ 0x4E00,  0x9FFF,  "CJK Unified Ideographs" },
+		{ 0xA000,  0xA48F,  "Yi Syllables" },
+		{ 0xA490,  0xA4CF,  "Yi Radicals" },
 		{ 0xF900,  0xFAFF,  "CJK Compatibility Ideographs" },
 		{ 0xFE30,  0xFE4F,  "CJK Compatibility Forms" },
 		{ 0x20000, 0x2A6DF, "CJK Unified Ideographs Extension B" },
