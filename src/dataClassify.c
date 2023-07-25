@@ -76,7 +76,11 @@ is_cjk(const wchar_t wc)
 		{ 0xA490,  0xA4CF,  "Yi Radicals" },
 		{ 0xF900,  0xFAFF,  "CJK Compatibility Ideographs" },
 		{ 0xFE30,  0xFE4F,  "CJK Compatibility Forms" },
+
 		{ 0x20000, 0x2A6DF, "CJK Unified Ideographs Extension B" },
+		{ 0x2A700, 0x2B739, "CJK Unified Ideographs Extension C" },
+		{ 0x2B740, 0x2B81D, "CJK Unified Ideographs Extension D" },
+		{ 0x2B820, 0x2CEA1, "CJK Unified Ideographs Extension E" },
 		{ 0x2F800, 0x2FA1F, "CJK Compatibility Ideographs Supplement" },
 	};
 
