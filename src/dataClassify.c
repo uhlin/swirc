@@ -72,6 +72,9 @@ is_cjk(const wchar_t wc)
 		{ 0xFE30,  0xFE4F,  "CJK Compatibility Forms" },
 		{ 0x20000, 0x2A6DF, "CJK Unified Ideographs Extension B" },
 		{ 0x2F800, 0x2FA1F, "CJK Compatibility Ideographs Supplement" },
+
+		{ 0x3100,  0x312F,  "Bopomofo" },
+		{ 0x31A0,  0x31BF,  "Bopomofo Extended" },
 	};
 
 	for (const RANGE *rp = &array[0];
