@@ -83,7 +83,7 @@ is_cjk(const wchar_t wc)
 		{ 0x2B820, 0x2CEA1, "CJK Unified Ideographs Extension E" },
 		{ 0x2F800, 0x2FA1F, "CJK Compatibility Ideographs Supplement" },
 	};
-	const size_t mid = ARRAY_SIZE(array) / 2;
+	static const size_t mid = ARRAY_SIZE(array) / 2;
 
 	for (const RANGE *rp = &array[wc < array[mid].start ? 0 : mid];
 	    rp < &array[ARRAY_SIZE(array)];
