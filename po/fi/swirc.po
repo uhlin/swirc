@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-09 12:51+0100\n"
-"PO-Revision-Date: 2023-03-09 13:15+0100\n"
+"PO-Revision-Date: 2023-07-28 23:28+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -127,17 +127,19 @@ msgstr "Olet nyt IRC operaattori!"
 
 #: ../src/include/commandhelp.h:44
 msgid "usage: /away [reason]"
-msgstr ""
+msgstr "käyttö: /away [syy]"
 
 #: ../src/include/commandhelp.h:46
 msgid ""
 "Marks yourself as being away (with a reason). If the reason is omitted\n"
 "you will be marked as no longer being away."
 msgstr ""
+"Merkitsee itsesi poissa (syyn kanssa). Jos syy jätetään pois, sinut\n"
+"merkitään et ole enää poissa."
 
 #: ../src/include/commandhelp.h:52
 msgid "usage: /ban <mask>"
-msgstr ""
+msgstr "käyttö: /ban <mask>"
 
 #: ../src/include/commandhelp.h:54
 msgid ""
@@ -145,6 +147,10 @@ msgid ""
 "matches the provided mask from joining the channel. Wildcards are okay\n"
 "and the active window must be an IRC channel."
 msgstr ""
+"Asettaa kanavakiellon, joka estää kaikkia käyttäjiä, joiden\n"
+"'nick!user@host' vastaa annettua maskia, liittymästä\n"
+"kanavaan. Jokerimerkit ovat kunnossa ja aktiivisen ikkunan on oltava\n"
+"IRC kanava."
 
 #: ../src/include/commandhelp.h:61
 msgid "usage: /banlist [channel]"
