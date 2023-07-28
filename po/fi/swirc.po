@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-09 12:51+0100\n"
-"PO-Revision-Date: 2023-07-28 23:28+0200\n"
+"PO-Revision-Date: 2023-07-28 23:44+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -154,7 +154,7 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:61
 msgid "usage: /banlist [channel]"
-msgstr ""
+msgstr "käyttö: /banlist [kanava]"
 
 #: ../src/include/commandhelp.h:63
 msgid ""
@@ -162,22 +162,25 @@ msgid ""
 "the active window is an IRC channel, Swirc will output the banlist for\n"
 "that channel."
 msgstr ""
+"Näyttää kanavan banlistin. Jos kanavaargumentti jätetään tyhjäksi ja\n"
+"aktiivinen ikkuna on IRC kanava, Swirc tulostaa kyseisen kanavan\n"
+"banlistin."
 
 #: ../src/include/commandhelp.h:70
 msgid "usage: /beep <nickname>"
-msgstr ""
+msgstr "käyttö: /beep <lempinimi>"
 
 #: ../src/include/commandhelp.h:72
 msgid "Send beeps. (ICB only)"
-msgstr ""
+msgstr "Lähetä piippaukset. (Vain ICB)"
 
 #: ../src/include/commandhelp.h:77
 msgid "usage: /boot <victim>"
-msgstr ""
+msgstr "käyttö: /boot <uhri>"
 
 #: ../src/include/commandhelp.h:79
 msgid "Kick a user out of your group. (ICB only)"
-msgstr ""
+msgstr "Potkaise käyttäjä ryhmästäsi. (Vain ICB)"
 
 #: ../src/include/commandhelp.h:84
 msgid "usage: /chanserv <[service hostname | --]> <command> [...]"
