@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-09 12:51+0100\n"
-"PO-Revision-Date: 2023-07-29 12:27+0200\n"
+"PO-Revision-Date: 2023-07-29 21:36+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -233,19 +233,19 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:122
 msgid "usage: /colormap"
-msgstr ""
+msgstr "käyttö: /colormap"
 
 #: ../src/include/commandhelp.h:124
 msgid "Outputs information about colors."
-msgstr ""
+msgstr "Tulostaa tietoa väreistä."
 
 #: ../src/include/commandhelp.h:129
 msgid "usage: /connect [-tls] <server[:port]>"
-msgstr ""
+msgstr "käyttö: /connect [-tls] <palvelin[:portti]>"
 
 #: ../src/include/commandhelp.h:131
 msgid "Connect to given server."
-msgstr ""
+msgstr "Yhdistä annettuun palvelimeen."
 
 #: ../src/include/commandhelp.h:133
 msgid ""
@@ -254,6 +254,10 @@ msgid ""
 "Swirc attempts to initiate a TLS/SSL connection, as well as if '-tls'\n"
 "is entered."
 msgstr ""
+"Jos portti jätetään pois, valitaan portti 6667. Ja jos portti on 7326,\n"
+"ICB tila kytkeytyy automaattisesti päälle. Lisäksi, jos portti on\n"
+"6697, Swirc yrittää aloittaa TLS/SSL-yhteyden sekä jos syötetään\n"
+"'-tls'."
 
 #: ../src/include/commandhelp.h:138
 msgid ""
@@ -262,6 +266,9 @@ msgid ""
 "Libera Chat using an encrypted connection. Preprogrammed network names\n"
 "are:"
 msgstr ""
+"On mahdollista muodostaa yhteys tiettyyn IRC verkkoon syöttämällä vain\n"
+"verkon nimi. Esimerkiksi: '/connect -tls libera' muodostaa yhteyden\n"
+"Libera Chatiin salatulla yhteydellä. Esiohjelmoidut verkkonimet ovat:"
 
 #: ../src/include/commandhelp.h:158
 msgid "usage: /cycle [channel]"
