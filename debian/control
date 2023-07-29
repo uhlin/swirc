@@ -8,7 +8,7 @@ Build-Depends:
   libcmocka-dev,
   libcurl4-openssl-dev | libcurl4-gnutls-dev | libcurl4-nss-dev,
   libhunspell-dev,
-  libidn-dev | libidn11-dev,
+  libidn-dev,
   libncurses-dev,
   libnotify-dev,
   libssl-dev
