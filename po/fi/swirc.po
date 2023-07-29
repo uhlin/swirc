@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-09 12:51+0100\n"
-"PO-Revision-Date: 2023-07-28 23:44+0200\n"
+"PO-Revision-Date: 2023-07-29 12:27+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -184,7 +184,7 @@ msgstr "Potkaise käyttäjä ryhmästäsi. (Vain ICB)"
 
 #: ../src/include/commandhelp.h:84
 msgid "usage: /chanserv <[service hostname | --]> <command> [...]"
-msgstr ""
+msgstr "käyttö: /chanserv <[palvelun isäntänimi | --]> <komento> [...]"
 
 #: ../src/include/commandhelp.h:86
 msgid ""
@@ -192,30 +192,37 @@ msgid ""
 "argument equals to '--', then the value of setting 'chanserv_host' is\n"
 "used as a service hostname."
 msgstr ""
+"Kommunikoi IRC verkkosi kanavapalvelun kanssa. Jos aloitusargumentti\n"
+"on '--', palvelun isäntänimenä käytetään asetuksen 'chanserv_host'\n"
+"arvoa."
 
 #: ../src/include/commandhelp.h:97
 msgid "usage: /cap [ls | list]"
-msgstr ""
+msgstr "käyttö: /cap [ls | list]"
 
 #: ../src/include/commandhelp.h:99
 msgid ""
 "Lists the (IRCv3) capabilities supported by the server and/or the\n"
 "capabilities associated with the active connection."
 msgstr ""
+"Luetteloi palvelimen tukemat IRCv3 ominaisuudet ja/tai aktiiviseen\n"
+"yhteyteen liittyvät ominaisuudet."
 
 #: ../src/include/commandhelp.h:105
 msgid "usage: /cleartoasts"
-msgstr ""
+msgstr "käyttö: /cleartoasts"
 
 #: ../src/include/commandhelp.h:107
 msgid ""
 "On Windows Swirc sends toast notifications. By running this command\n"
 "all notifications associated with Swirc will be cleared."
 msgstr ""
+"Windowsissa Swirc lähettää toast-ilmoituksia. Suorittamalla tämän\n"
+"komennon kaikki Swirciin liittyvät ilmoitukset tyhjennetään."
 
 #: ../src/include/commandhelp.h:113
 msgid "usage: /close"
-msgstr ""
+msgstr "käyttö: /close"
 
 #: ../src/include/commandhelp.h:115
 msgid ""
