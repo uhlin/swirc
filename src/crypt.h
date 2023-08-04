@@ -22,7 +22,7 @@ void	 crypt_freezero(void *, size_t);
 int	 crypt_get_base64_decode_length(const char *);
 int	 crypt_get_base64_encode_length(const int);
 int	 crypt_get_key_and_iv(cryptstr_const_t password, PCRYPT_CTX);
-int	 crypt_strlen(cryptstr_const_t);
+int	 crypt_strlen(cryptstr_const_t) NONNULL;
 __SWIRC_END_DECLS
 
 #endif
