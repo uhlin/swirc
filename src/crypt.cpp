@@ -282,5 +282,9 @@ crypt_get_key_and_iv(cryptstr_const_t password, PCRYPT_CTX ctx)
 int
 crypt_strlen(cryptstr_const_t str)
 {
-	return size_to_int(strlen(reinterpret_cast<const char *>(str)));
+	cryptstr_const_t ptr = str;
+
+	while (*ptr != '\0')
+		ptr++;
+	return (ptr - str);
 }
