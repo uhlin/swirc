@@ -68,13 +68,13 @@ get_encrypt_alg()
  *
  * @return     The decrypted string, or NULL on error.
  */
-char *
-crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
+STRING
+crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 {
 	CRYPT_CTX	 crypt_ctx;		/* Key and IV                */
 	EVP_CIPHER_CTX	*cipher_ctx = NULL;	/* Cipher context            */
+	STRING		 str_copy = NULL;	/* Non-const copy of 'str'   */
 	bool		 error = false;		/* True if an error occurred */
-	char		*str_copy = NULL;	/* Non-const copy of 'str'   */
 	cryptstr_t	 decdat = NULL;		/* Decrypted data            */
 	cryptstr_t	 decoded_str = NULL;	/* Base64 decoded string     */
 	cryptstr_t	 out_str = NULL;	/* Returned on success       */
@@ -159,7 +159,7 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
 		return NULL;
 	}
 
-	return reinterpret_cast<char *>(out_str);
+	return reinterpret_cast<STRING>(out_str);
 }
 
 /**
@@ -171,14 +171,14 @@ crypt_decrypt_str(const char *str, cryptstr_const_t password, const bool rot13)
  *
  * @return     The encrypted string, or NULL on error.
  */
-char *
+STRING
 crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
     const bool rot13)
 {
 	CRYPT_CTX	 crypt_ctx;		/* Key and IV                */
 	EVP_CIPHER_CTX	*cipher_ctx = NULL;	/* Cipher context            */
+	STRING		 b64str = NULL;		/* Base64 string             */
 	bool		 error = false;		/* True if an error occurred */
-	char		*b64str = NULL;		/* Base64 string             */
 	cryptstr_t	 encdat = NULL;		/* Encrypted data            */
 	int		 encdat_len = 0,	/* Encrypted data length     */
 			 encdat_size = 0;	/* 'encdat' size             */
@@ -221,7 +221,7 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 
 		if ((size = crypt_get_base64_encode_length(encdat_len)) <= 0)
 			throw std::runtime_error("base64 length error");
-		b64str = static_cast<char *>(xmalloc(size));
+		b64str = static_cast<STRING>(xmalloc(size));
 		b64str[size - 1] = '\0';
 
 		if (b64_encode(encdat, encdat_len, b64str, static_cast<size_t>
@@ -255,7 +255,7 @@ crypt_freezero(void *vp, size_t len)
 }
 
 int
-crypt_get_base64_decode_length(const char *str)
+crypt_get_base64_decode_length(CSTRING str)
 {
 	if (str == NULL)
 		return 0;
