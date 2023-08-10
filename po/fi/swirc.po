@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-09 12:51+0100\n"
-"PO-Revision-Date: 2023-08-08 22:33+0200\n"
+"PO-Revision-Date: 2023-08-11 01:51+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -286,41 +286,43 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:167
 msgid "usage: /deop <nick>"
-msgstr ""
+msgstr "käyttö: /deop <nimi>"
 
 #: ../src/include/commandhelp.h:169
 msgid "Remove the channel operator privilege from another user."
-msgstr ""
+msgstr "Poista kanavaoperaattorin oikeudet toiselta käyttäjältä."
 
 #: ../src/include/commandhelp.h:174
 msgid "usage: /disconnect [message]"
-msgstr ""
+msgstr "käyttö: /disconnect [viesti]"
 
 #: ../src/include/commandhelp.h:176
 msgid ""
 "Disconnect from IRC, but don't quit the program. A disconnect message\n"
 "is optional."
 msgstr ""
+"Katkaise yhteys IRC:hen, mutta älä lopeta ohjelmaa. Yhteyden\n"
+"katkaisuviesti on valinnainen."
 
 #: ../src/include/commandhelp.h:182
 msgid "usage: /echo <text>"
-msgstr ""
+msgstr "käyttö: /echo <teksti>"
 
 #: ../src/include/commandhelp.h:184
 msgid "Writes text to the current window without sending anything."
-msgstr ""
+msgstr "Kirjoittaa tekstiä nykyiseen ikkunaan lähettämättä mitään."
 
 #: ../src/include/commandhelp.h:188
 msgid "Echo 'Hello World':"
-msgstr ""
+msgstr "Echo 'Hei Maailma':"
 
 #: ../src/include/commandhelp.h:189
 msgid "    /echo Hello World"
-msgstr ""
+msgstr "    /echo Hei Maailma"
 
 #: ../src/include/commandhelp.h:194
 msgid "usage: /exlist [channel]"
-msgstr ""
+msgstr "käyttö: /exlist [kanava]"
 
 #: ../src/include/commandhelp.h:196
 msgid ""
@@ -329,6 +331,9 @@ msgid ""
 "an IRC channel, the client will output the exception list for that\n"
 "channel."
 msgstr ""
+"Näyttää kanavan poikkeusluettelon. Poikkeusmaski (+e) ohittaa eston\n"
+"maskin. Jos kanavaargumentti jätetään pois ja aktiivinen ikkuna on IRC\n"
+"kanava, asiakas tulostaa kyseisen kanavan poikkeusluettelon."
 
 #: ../src/include/commandhelp.h:204
 msgid "usage: /fetchdic [name]"
