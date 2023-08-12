@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-09 12:51+0100\n"
-"PO-Revision-Date: 2023-08-12 14:29+0200\n"
+"PO-Revision-Date: 2023-08-12 16:30+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -340,7 +340,7 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:204
 msgid "usage: /fetchdic [name]"
-msgstr ""
+msgstr "käyttö: /fetchdic [nimi]"
 
 #: ../src/include/commandhelp.h:206
 msgid ""
@@ -348,10 +348,14 @@ msgid ""
 "will output a list of available dictionaries. The list is obtained\n"
 "remotely which means its contents can be updated at any time."
 msgstr ""
+"Lataa oikeinkirjoitussanakirjoja. Jos nimiargumentti jätetään pois,\n"
+"Swirc tulostaa luettelon käytettävissä olevista sanakirjoista.\n"
+"Luettelo hankitaan etänä, joten sen sisältöä voidaan päivittää\n"
+"milloin tahansa."
 
 #: ../src/include/commandhelp.h:212
 msgid "Fetch the american english dictionary:"
-msgstr ""
+msgstr "Lataa amerikkalaisen englannin sanakirja:"
 
 #: ../src/include/commandhelp.h:218
 msgid "usage: /group <name>"
