@@ -425,8 +425,8 @@ spell_word_readline(volatile struct readline_session_context *ctx)
 bool
 spell_wide_word(const wchar_t *word)
 {
-	STRING mbs;
-	bool ret;
+	STRING	mbs;
+	bool	ret;
 
 	if (pHunspell == nullptr || word == nullptr ||
 	    wcscmp(word, L"") == STRINGS_MATCH ||
