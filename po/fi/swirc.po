@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-03-09 12:51+0100\n"
-"PO-Revision-Date: 2023-08-12 12:53+0200\n"
+"PO-Revision-Date: 2023-08-12 14:29+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -275,7 +275,7 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:158
 msgid "usage: /cycle [channel]"
-msgstr ""
+msgstr "käyttö: /cycle [kanava]"
 
 #: ../src/include/commandhelp.h:160
 msgid ""
@@ -283,6 +283,9 @@ msgid ""
 "omitted and the active window is an IRC channel, the client will cycle\n"
 "that channel."
 msgstr ""
+"Kierrä kanavaa, eli '/part' ja '/join'. Jos kanava-argumentti jätetään\n"
+"pois ja aktiivinen ikkuna on IRC kanava, asiakas jaksottaa kyseistä\n"
+"kanavaa."
 
 #: ../src/include/commandhelp.h:167
 msgid "usage: /deop <nick>"
