@@ -107,15 +107,11 @@ suggestion::suggestion(CSTRING word)
 	 * wide word
 	 */
 	mutex_lock(&g_puts_mutex);
-	if (xsetlocale(LC_CTYPE, tmp_locale.c_str()) == nullptr)
-		debug("temporary locale error");
 	const size_t size = strlen(word) + 1;
 	this->wide_word = static_cast<wchar_t *>(xcalloc(size,
 	    sizeof(wchar_t)));
 	if (xmbstowcs(this->wide_word, word, size - 1) == g_conversion_failed)
 		this->wide_word[0] = L'\0';
-	if (xsetlocale(LC_CTYPE, orig_locale.c_str()) == nullptr)
-		debug("original locale error");
 	mutex_unlock(&g_puts_mutex);
 }
 
