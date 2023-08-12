@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-03-09 12:51+0100\n"
+"POT-Creation-Date: 2023-08-12 16:42+0200\n"
 "PO-Revision-Date: 2023-03-09 13:21+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -53,37 +53,37 @@ msgstr "Modusänderung %s%s%s für Benutzer %c%s%c"
 msgid "mode/%s%s%s%c%s %s%s%s by %s%s%c"
 msgstr "mode/%s%s%s%c%s %s%s%s von %s%s%c"
 
-#: ../src/events/channel.cpp:605
+#: ../src/events/channel.cpp:609
 #, c-format
 msgid "%s%s%c is now known as %s %s%s%c"
 msgstr "%s%s%c heißt jetzt %s %s%s%c"
 
-#: ../src/events/channel.cpp:683
+#: ../src/events/channel.cpp:687
 #, c-format
 msgid "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s"
 msgstr "%s%s%c %s%s@%s%s hat %s%s%c verlassen %s%s%s"
 
-#: ../src/events/channel.cpp:742
+#: ../src/events/channel.cpp:746
 #, c-format
 msgid "%s%s%c %s%s@%s%s has quit %s%s%s"
 msgstr "%s%s%c %s%s@%s%s hat sich abgemeldet %s%s%s"
 
-#: ../src/events/channel.cpp:789
+#: ../src/events/channel.cpp:793
 #, c-format
 msgid "Topic for %s%s%s%c%s: %s"
 msgstr "Thema für %s%s%s%c%s: %s"
 
-#: ../src/events/channel.cpp:846
+#: ../src/events/channel.cpp:850
 #, c-format
 msgid "%c%s%c changed the topic of %c%s%c to: %s"
 msgstr "%c%s%c hat das Thema von %c%s%c geändert: %s"
 
-#: ../src/events/channel.cpp:918
+#: ../src/events/channel.cpp:922
 #, c-format
 msgid "Topic set by %c%s%c %s%s@%s%s %s%s%s"
 msgstr "Das Thema wurde von %c%s%c %s%s@%s%s festgelegt %s%s%s"
 
-#: ../src/events/channel.cpp:924
+#: ../src/events/channel.cpp:928
 #, c-format
 msgid "Topic set by %c%s%c %s%s%s"
 msgstr "Das Thema wurde von %c%s%c festgelegt %s%s%s"
@@ -1022,7 +1022,7 @@ msgstr "Die Protokollierung für das Fenster (refnum: %d) ist jetzt deaktiviert"
 msgid "Logging for window (refnum: %d) now on"
 msgstr "Die Protokollierung für das Fenster (refnum: %d) ist jetzt aktiviert"
 
-#: ../src/main.cpp:136
+#: ../src/main.cpp:137
 msgid ""
 "\n"
 "Options:\n"
@@ -1032,75 +1032,75 @@ msgstr ""
 "Optionen:\n"
 "\n"
 
-#: ../src/main.cpp:137
+#: ../src/main.cpp:138
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   Nur IPv4-Adressen verwenden\n"
 
-#: ../src/main.cpp:138
+#: ../src/main.cpp:139
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   Nur IPv6-Adressen verwenden\n"
 
-#: ../src/main.cpp:139
+#: ../src/main.cpp:140
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Hilfe anzeigen\n"
 
-#: ../src/main.cpp:140
+#: ../src/main.cpp:141
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Farbdefinitionen nicht ändern\n"
 
-#: ../src/main.cpp:141
+#: ../src/main.cpp:142
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr ""
 "    -P                   SASL-Authentifizierung dauerhaft deaktivieren\n"
 
-#: ../src/main.cpp:142
+#: ../src/main.cpp:143
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   TLS/SSL peer verification deaktivieren\n"
 
-#: ../src/main.cpp:147
+#: ../src/main.cpp:148
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Mit IRC-Server verbinden\n"
 
-#: ../src/main.cpp:148
+#: ../src/main.cpp:149
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Debug Protokollierung\n"
 
-#: ../src/main.cpp:149
+#: ../src/main.cpp:150
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Internet Citizen's Band aktivieren\n"
 
-#: ../src/main.cpp:150
+#: ../src/main.cpp:151
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr ""
 "    -j <join>            Kommata getrennte Liste von Kanälen zum joinen\n"
 
-#: ../src/main.cpp:151
+#: ../src/main.cpp:152
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Online Nickname\n"
 
-#: ../src/main.cpp:152
+#: ../src/main.cpp:153
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Server-Passwort anfordern (für private Server)\n"
 
-#: ../src/main.cpp:153
+#: ../src/main.cpp:154
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Dein echter Name\n"
 
-#: ../src/main.cpp:154
+#: ../src/main.cpp:155
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Dein Benutzername\n"
 
-#: ../src/main.cpp:155
+#: ../src/main.cpp:156
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Swirc-Version anzeigen\n"
 
-#: ../src/main.cpp:156
+#: ../src/main.cpp:157
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsdatei\n"
 
-#: ../src/main.cpp:223
+#: ../src/main.cpp:224
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Anwendung: %s [FLAGGE] ...\n"
@@ -1150,79 +1150,79 @@ msgstr "Die Verbindung zum IRC-Server wurde unterbrochen"
 msgid "Disconnected"
 msgstr "Offline"
 
-#: ../src/readline.c:549
+#: ../src/readline.c:610
 msgid "--------------- Keys ---------------"
 msgstr ""
 
-#: ../src/readline.c:551
+#: ../src/readline.c:612
 msgid "CTRL+a     Move to beginning of line"
 msgstr ""
 
-#: ../src/readline.c:552
+#: ../src/readline.c:613
 msgid "CTRL+e     Move to end of line"
 msgstr ""
 
-#: ../src/readline.c:553
+#: ../src/readline.c:614
 msgid "CTRL+b     Move cursor backward"
 msgstr ""
 
-#: ../src/readline.c:554
+#: ../src/readline.c:615
 msgid "CTRL+f     Move cursor forward"
 msgstr ""
 
-#: ../src/readline.c:555
+#: ../src/readline.c:616
 msgid "CTRL+d     Delete"
 msgstr ""
 
-#: ../src/readline.c:556
+#: ../src/readline.c:617
 msgid "CTRL+g     Clear readline input"
 msgstr ""
 
-#: ../src/readline.c:557
+#: ../src/readline.c:618
 msgid "CTRL+l     Toggle logging on/off"
 msgstr ""
 
-#: ../src/readline.c:558
+#: ../src/readline.c:619
 msgid "CTRL+n     Next window"
 msgstr ""
 
-#: ../src/readline.c:559
+#: ../src/readline.c:620
 msgid "CTRL+p     Previous window"
 msgstr ""
 
-#: ../src/readline.c:560
+#: ../src/readline.c:621
 msgid "PG UP      Scroll up"
 msgstr ""
 
-#: ../src/readline.c:561
+#: ../src/readline.c:622
 msgid "PG DOWN    Scroll down"
 msgstr ""
 
-#: ../src/readline.c:562
+#: ../src/readline.c:623
 msgid "Up arrow   History previous"
 msgstr ""
 
-#: ../src/readline.c:563
+#: ../src/readline.c:624
 msgid "Down arrow History next"
 msgstr ""
 
-#: ../src/readline.c:564
+#: ../src/readline.c:625
 msgid "F2         Spell word"
 msgstr ""
 
-#: ../src/readline.c:565
+#: ../src/readline.c:626
 msgid "F3         Scroll nicklist up"
 msgstr ""
 
-#: ../src/readline.c:566
+#: ../src/readline.c:627
 msgid "F4         Scroll nicklist down"
 msgstr ""
 
-#: ../src/readline.c:567
+#: ../src/readline.c:628
 msgid "F11        Close window"
 msgstr ""
 
-#: ../src/readline.c:568
+#: ../src/readline.c:629
 msgid "F12        Close all private conversations"
 msgstr ""
 

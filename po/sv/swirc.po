@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-03-09 12:51+0100\n"
+"POT-Creation-Date: 2023-08-12 16:42+0200\n"
 "PO-Revision-Date: 2023-03-09 13:01+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -53,37 +53,37 @@ msgstr "Lägesändring %s%s%s för användaren %c%s%c"
 msgid "mode/%s%s%s%c%s %s%s%s by %s%s%c"
 msgstr "läge/%s%s%s%c%s %s%s%s av %s%s%c"
 
-#: ../src/events/channel.cpp:605
+#: ../src/events/channel.cpp:609
 #, c-format
 msgid "%s%s%c is now known as %s %s%s%c"
 msgstr "%s%s%c har bytt namn till %s %s%s%c"
 
-#: ../src/events/channel.cpp:683
+#: ../src/events/channel.cpp:687
 #, c-format
 msgid "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s"
 msgstr "%s%s%c %s%s@%s%s har lämnat %s%s%c %s%s%s"
 
-#: ../src/events/channel.cpp:742
+#: ../src/events/channel.cpp:746
 #, c-format
 msgid "%s%s%c %s%s@%s%s has quit %s%s%s"
 msgstr "%s%s%c %s%s@%s%s har avslutat %s%s%s"
 
-#: ../src/events/channel.cpp:789
+#: ../src/events/channel.cpp:793
 #, c-format
 msgid "Topic for %s%s%s%c%s: %s"
 msgstr "Ämne för %s%s%s%c%s: %s"
 
-#: ../src/events/channel.cpp:846
+#: ../src/events/channel.cpp:850
 #, c-format
 msgid "%c%s%c changed the topic of %c%s%c to: %s"
 msgstr "%c%s%c ändrade ämnet för %c%s%c till: %s"
 
-#: ../src/events/channel.cpp:918
+#: ../src/events/channel.cpp:922
 #, c-format
 msgid "Topic set by %c%s%c %s%s@%s%s %s%s%s"
 msgstr "Ämnet satt av %c%s%c %s%s@%s%s %s%s%s"
 
-#: ../src/events/channel.cpp:924
+#: ../src/events/channel.cpp:928
 #, c-format
 msgid "Topic set by %c%s%c %s%s%s"
 msgstr "Ämnet satt av %c%s%c %s%s%s"
@@ -1143,7 +1143,7 @@ msgstr "Loggning för fönstret (refnum: %d) är nu av"
 msgid "Logging for window (refnum: %d) now on"
 msgstr "Loggning för fönstret (refnum: %d) är nu på"
 
-#: ../src/main.cpp:136
+#: ../src/main.cpp:137
 msgid ""
 "\n"
 "Options:\n"
@@ -1153,75 +1153,75 @@ msgstr ""
 "Flaggor:\n"
 "\n"
 
-#: ../src/main.cpp:137
+#: ../src/main.cpp:138
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   Använd enbart IPv4 adresser\n"
 
-#: ../src/main.cpp:138
+#: ../src/main.cpp:139
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   Använd enbart IPv6 adresser\n"
 
-#: ../src/main.cpp:139
+#: ../src/main.cpp:140
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Skriv ut hjälp\n"
 
-#: ../src/main.cpp:140
+#: ../src/main.cpp:141
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Ändra inte färgdefinitioner\n"
 
-#: ../src/main.cpp:141
+#: ../src/main.cpp:142
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr "    -P                   Stäng av SASL autentisering permanent\n"
 
-#: ../src/main.cpp:142
+#: ../src/main.cpp:143
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   Stäng av TLS/SSL peer verifikation\n"
 
-#: ../src/main.cpp:147
+#: ../src/main.cpp:148
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Anslut till IRC server\n"
 
-#: ../src/main.cpp:148
+#: ../src/main.cpp:149
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Debug loggning\n"
 
-#: ../src/main.cpp:149
+#: ../src/main.cpp:150
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Sätt på Internet Citizen's Band läge\n"
 
-#: ../src/main.cpp:150
+#: ../src/main.cpp:151
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr ""
 "    -j <join>            En kommaseparerad lista bestående av kanaler att "
 "öppna\n"
 
-#: ../src/main.cpp:151
+#: ../src/main.cpp:152
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Online nickname\n"
 
-#: ../src/main.cpp:152
+#: ../src/main.cpp:153
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Fråga efter serverlösenord (för privata servrar)\n"
 
-#: ../src/main.cpp:153
+#: ../src/main.cpp:154
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Ditt riktiga namn\n"
 
-#: ../src/main.cpp:154
+#: ../src/main.cpp:155
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Ditt användarnamn\n"
 
-#: ../src/main.cpp:155
+#: ../src/main.cpp:156
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Visa Swirc version\n"
 
-#: ../src/main.cpp:156
+#: ../src/main.cpp:157
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsfil\n"
 
-#: ../src/main.cpp:223
+#: ../src/main.cpp:224
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Användning: %s [FLAGGA] ...\n"
@@ -1271,79 +1271,79 @@ msgstr "Anslutningen till IRC servern förlorad"
 msgid "Disconnected"
 msgstr "Frånkopplad"
 
-#: ../src/readline.c:549
+#: ../src/readline.c:610
 msgid "--------------- Keys ---------------"
 msgstr "--------------- Tangenter ---------------"
 
-#: ../src/readline.c:551
+#: ../src/readline.c:612
 msgid "CTRL+a     Move to beginning of line"
 msgstr "CTRL+a     Flytta till början av raden"
 
-#: ../src/readline.c:552
+#: ../src/readline.c:613
 msgid "CTRL+e     Move to end of line"
 msgstr "CTRL+e     Flytta till slutet av raden"
 
-#: ../src/readline.c:553
+#: ../src/readline.c:614
 msgid "CTRL+b     Move cursor backward"
 msgstr "CTRL+b     Flytta markören bakåt"
 
-#: ../src/readline.c:554
+#: ../src/readline.c:615
 msgid "CTRL+f     Move cursor forward"
 msgstr "CTRL+f     Flytta markören framåt"
 
-#: ../src/readline.c:555
+#: ../src/readline.c:616
 msgid "CTRL+d     Delete"
 msgstr "CTRL+d     Ta bort"
 
-#: ../src/readline.c:556
+#: ../src/readline.c:617
 msgid "CTRL+g     Clear readline input"
 msgstr "CTRL+g     Töm inmatning"
 
-#: ../src/readline.c:557
+#: ../src/readline.c:618
 msgid "CTRL+l     Toggle logging on/off"
 msgstr "CTRL+l     Växla loggning av/på"
 
-#: ../src/readline.c:558
+#: ../src/readline.c:619
 msgid "CTRL+n     Next window"
 msgstr "CTRL+n     Nästa fönster"
 
-#: ../src/readline.c:559
+#: ../src/readline.c:620
 msgid "CTRL+p     Previous window"
 msgstr "CTRL+p     Föregående fönster"
 
-#: ../src/readline.c:560
+#: ../src/readline.c:621
 msgid "PG UP      Scroll up"
 msgstr "PG UP      Scrolla upp"
 
-#: ../src/readline.c:561
+#: ../src/readline.c:622
 msgid "PG DOWN    Scroll down"
 msgstr "PG DOWN    Scrolla ned"
 
-#: ../src/readline.c:562
+#: ../src/readline.c:623
 msgid "Up arrow   History previous"
 msgstr "Up arrow   Föregående kommando"
 
-#: ../src/readline.c:563
+#: ../src/readline.c:624
 msgid "Down arrow History next"
 msgstr "Down arrow Nästa kommando"
 
-#: ../src/readline.c:564
+#: ../src/readline.c:625
 msgid "F2         Spell word"
 msgstr "F2         Stava ord"
 
-#: ../src/readline.c:565
+#: ../src/readline.c:626
 msgid "F3         Scroll nicklist up"
 msgstr "F3         Scrolla nicklistan upp"
 
-#: ../src/readline.c:566
+#: ../src/readline.c:627
 msgid "F4         Scroll nicklist down"
 msgstr "F4         Scrolla nicklistan ned"
 
-#: ../src/readline.c:567
+#: ../src/readline.c:628
 msgid "F11        Close window"
 msgstr "F11        Stäng fönster"
 
-#: ../src/readline.c:568
+#: ../src/readline.c:629
 msgid "F12        Close all private conversations"
 msgstr "F12        Stäng alla privata konversationer"
 
