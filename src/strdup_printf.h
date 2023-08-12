@@ -4,8 +4,8 @@
 /*lint -printf(1, strdup_printf) */
 
 __SWIRC_BEGIN_DECLS
-char	*strdup_printf(const char *, ...) PRINTFLIKE(1);
-char	*strdup_vprintf(const char *, va_list);
+STRING	strdup_printf(CSTRING, ...) PRINTFLIKE(1);
+STRING	strdup_vprintf(CSTRING, va_list);
 __SWIRC_END_DECLS
 
 #endif

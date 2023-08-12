@@ -50,7 +50,7 @@ mutex_init(void)
 }
 
 static int
-get_size(const char *fmt, va_list ap)
+get_size(CSTRING fmt, va_list ap)
 {
 	int	size;
 	va_list	ap_copy;
@@ -66,11 +66,11 @@ get_size(const char *fmt, va_list ap)
 	return size;
 }
 
-char *
-strdup_printf(const char *fmt, ...)
+STRING
+strdup_printf(CSTRING fmt, ...)
 {
-	char	*buffer;
-	va_list	 ap;
+	STRING buffer;
+	va_list ap;
 
 	va_start(ap, fmt);
 	buffer = strdup_vprintf(fmt, ap);
@@ -79,12 +79,12 @@ strdup_printf(const char *fmt, ...)
 	return buffer;
 }
 
-char *
-strdup_vprintf(const char *fmt, va_list ap)
+STRING
+strdup_vprintf(CSTRING fmt, va_list ap)
 {
-	char	*buffer;
-	int	 n_print;
-	int	 size;
+	STRING buffer;
+	int n_print;
+	int size;
 
 #if defined(UNIX)
 	if ((errno = pthread_once(&init_done, mutex_init)) != 0)
