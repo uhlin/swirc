@@ -72,9 +72,9 @@ suggestion::suggestion()
 	this->wide_word = nullptr;
 }
 
-suggestion::suggestion(const char *word)
+suggestion::suggestion(CSTRING word)
 {
-	char			*lang, *encoding;
+	STRING			 lang, encoding;
 	std::string		 orig_locale("");
 	std::string		 tmp_locale("");
 	struct locale_info	*li;
@@ -131,7 +131,7 @@ suggestion::~suggestion()
 	}
 }
 
-const char *
+CSTRING
 suggestion::get_word(void) const
 {
 	return (this->word);
@@ -209,14 +209,14 @@ spell_destroy_suggs(std::vector<sugg_ptr> *suggs)
 }
 
 //lint -sem(get_mbs, r_null)
-static char *
+static STRING
 get_mbs(const wchar_t *wcs)
 {
-	char	*out;
+	STRING	 out;
 	size_t	 bytes_convert, size;
 
 	size		= size_product(wcslen(wcs) + 1, MB_LEN_MAX);
-	out		= static_cast<char *>(xmalloc(size));
+	out		= static_cast<STRING>(xmalloc(size));
 	bytes_convert	= wcstombs(out, wcs, size - 1);
 
 	if (bytes_convert == g_conversion_failed) {
@@ -229,7 +229,7 @@ get_mbs(const wchar_t *wcs)
 }
 
 std::vector<sugg_ptr> *
-spell_get_suggs(const char *mbs, const wchar_t *wcs)
+spell_get_suggs(CSTRING mbs, const wchar_t *wcs)
 {
 	char**			 list;
 	int			 nsuggs;
@@ -243,7 +243,7 @@ spell_get_suggs(const char *mbs, const wchar_t *wcs)
 		    (nsuggs = Hunspell_suggest(pHunspell, &list, mbs)) < 1)
 			return nullptr;
 	} else if (wcs) {
-		char	*word;
+		STRING word;
 
 		if (wcscmp(wcs, L"") == STRINGS_MATCH ||
 		    wcslen(wcs) > MAXWORDLEN)
@@ -279,7 +279,7 @@ spell_get_suggs(const char *mbs, const wchar_t *wcs)
 }
 
 void
-spell_test1(const char *word)
+spell_test1(CSTRING word)
 {
 	std::vector<sugg_ptr>			*suggs;
 	std::vector<sugg_ptr>::iterator		 it;
@@ -311,7 +311,7 @@ spell_test2(const wchar_t *word)
 }
 
 bool
-spell_word(const char *word)
+spell_word(CSTRING word)
 {
 	if (pHunspell == nullptr || word == nullptr ||
 	    strcmp(word, "") == STRINGS_MATCH)
@@ -425,8 +425,8 @@ spell_word_readline(volatile struct readline_session_context *ctx)
 bool
 spell_wide_word(const wchar_t *word)
 {
-	bool	 ret;
-	char	*mbs;
+	STRING mbs;
+	bool ret;
 
 	if (pHunspell == nullptr || word == nullptr ||
 	    wcscmp(word, L"") == STRINGS_MATCH ||
