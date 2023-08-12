@@ -82,9 +82,9 @@ strdup_printf(CSTRING fmt, ...)
 STRING
 strdup_vprintf(CSTRING fmt, va_list ap)
 {
-	STRING buffer;
-	int n_print;
-	int size;
+	STRING	buffer;
+	int	n_print;
+	int	size;
 
 #if defined(UNIX)
 	if ((errno = pthread_once(&init_done, mutex_init)) != 0)
