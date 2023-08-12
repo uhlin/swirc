@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-08-12 16:42+0200\n"
-"PO-Revision-Date: 2023-08-12 19:53+0200\n"
+"PO-Revision-Date: 2023-08-12 23:14+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -395,19 +395,19 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:240
 msgid "    1. ^  Matches the starting position within the string, if it is"
-msgstr ""
+msgstr "    1. ^  Vastaa aloituskohtaa merkkijonossa, jos se on säännöllisen"
 
 #: ../src/include/commandhelp.h:241
 msgid "          the first character of the regular expression."
-msgstr ""
+msgstr "          lausekkeen ensimmäinen merkki."
 
 #: ../src/include/commandhelp.h:242
 msgid "    2. $  Matches the ending position of the string, if it is the last"
-msgstr ""
+msgstr "    2. $  Vastaa merkkijonon loppukohtaa, jos se on säännöllisen"
 
 #: ../src/include/commandhelp.h:243
 msgid "          character of the regular expression."
-msgstr ""
+msgstr "          lausekkeen viimeinen merkki."
 
 #: ../src/include/commandhelp.h:247
 msgid "Ignore nickname 'troll':"
