@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-08-12 16:42+0200\n"
-"PO-Revision-Date: 2023-08-12 16:41+0200\n"
+"PO-Revision-Date: 2023-08-12 19:53+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -379,7 +379,7 @@ msgstr "(Tai ohje tietyn komennon kohdalla.)"
 
 #: ../src/include/commandhelp.h:233
 msgid "usage: /ignore [regex]"
-msgstr ""
+msgstr "käyttö: /ignore [regex]"
 
 #: ../src/include/commandhelp.h:235
 msgid ""
@@ -388,6 +388,10 @@ msgid ""
 "grammar. This command isn't to be used by beginners and I advice you\n"
 "to be careful when using it. I highly recommend the use of:"
 msgstr ""
+"Ohittaa kaikki 'nick!user@host', jotka vastaavat annettua säännöllistä\n"
+"lauseketta, käyttämällä POSIXin perussäännöllisten lausekkeiden\n"
+"kielioppia. Aloittelijat eivät saa käyttää tätä komentoa, ja kehotan\n"
+"sinua olemaan varovainen sen käytössä. Suosittelen lämpimästi käyttöä:"
 
 #: ../src/include/commandhelp.h:240
 msgid "    1. ^  Matches the starting position within the string, if it is"
