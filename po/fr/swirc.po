@@ -96,7 +96,7 @@ msgstr "La chaîne %s%s%s%c%s a été créée le %s"
 #: ../src/events/misc.cpp:300
 #, c-format
 msgid "mode/%s%s%s%c%s %s%s%s"
-msgstr ""
+msgstr "mode/%s%s%s%c%s %s%s%s"
 
 #: ../src/events/misc.cpp:350
 #, c-format
@@ -127,17 +127,19 @@ msgstr "Vous êtes maintenant un opérateur IRC!"
 
 #: ../src/include/commandhelp.h:44
 msgid "usage: /away [reason]"
-msgstr ""
+msgstr "usage: /away [raison]"
 
 #: ../src/include/commandhelp.h:46
 msgid ""
 "Marks yourself as being away (with a reason). If the reason is omitted\n"
 "you will be marked as no longer being away."
 msgstr ""
+"Vous marque comme étant absent (avec une raison). Si la raison est\n"
+"omise, vous serez marqué comme n'étant plus absent."
 
 #: ../src/include/commandhelp.h:52
 msgid "usage: /ban <mask>"
-msgstr ""
+msgstr "usage: /ban <masque>"
 
 #: ../src/include/commandhelp.h:54
 msgid ""
@@ -145,10 +147,14 @@ msgid ""
 "matches the provided mask from joining the channel. Wildcards are okay\n"
 "and the active window must be an IRC channel."
 msgstr ""
+"Définit une interdiction de canal qui rejette tous les utilisateurs\n"
+"dont le 'nick!user@host' correspond au masque fourni de rejoindre le\n"
+"canal. Les caractères génériques sont acceptables et la fenêtre active\n"
+"doit être un canal IRC."
 
 #: ../src/include/commandhelp.h:61
 msgid "usage: /banlist [channel]"
-msgstr ""
+msgstr "usage: /banlist [canal]"
 
 #: ../src/include/commandhelp.h:63
 msgid ""
@@ -156,22 +162,25 @@ msgid ""
 "the active window is an IRC channel, Swirc will output the banlist for\n"
 "that channel."
 msgstr ""
+"Affiche la banlist d'un canal. Si l'argument du canal est laissé vide\n"
+"et que la fenêtre active est un canal IRC, Swirc affichera la banlist\n"
+"pour ce canal."
 
 #: ../src/include/commandhelp.h:70
 msgid "usage: /beep <nickname>"
-msgstr ""
+msgstr "usage: /beep <surnom>"
 
 #: ../src/include/commandhelp.h:72
 msgid "Send beeps. (ICB only)"
-msgstr ""
+msgstr "Envoyer des bips. (ICB uniquement)"
 
 #: ../src/include/commandhelp.h:77
 msgid "usage: /boot <victim>"
-msgstr ""
+msgstr "usage: /boot <victime>"
 
 #: ../src/include/commandhelp.h:79
 msgid "Kick a user out of your group. (ICB only)"
-msgstr ""
+msgstr "Expulsez un utilisateur de votre groupe. (ICB uniquement)"
 
 #: ../src/include/commandhelp.h:84
 msgid "usage: /chanserv <[service hostname | --]> <command> [...]"
