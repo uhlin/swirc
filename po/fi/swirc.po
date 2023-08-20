@@ -411,23 +411,23 @@ msgstr "          lausekkeen viimeinen merkki."
 
 #: ../src/include/commandhelp.h:247
 msgid "Ignore nickname 'troll':"
-msgstr ""
+msgstr "Ohita lempinimi 'troll':"
 
 #: ../src/include/commandhelp.h:250
 msgid "Ignore all users with username 'troll':"
-msgstr ""
+msgstr "Ohita kaikki käyttäjät, joiden käyttäjänimi on 'troll':"
 
 #: ../src/include/commandhelp.h:253
 msgid "Ignore all users with hostname 'insecure.org':"
-msgstr ""
+msgstr "Ohita kaikki käyttäjät, joiden isäntänimi on 'insecure.org':"
 
 #: ../src/include/commandhelp.h:256
 msgid "Ignore all users with a Chinese domain (.cn):"
-msgstr ""
+msgstr "Ohita kaikki käyttäjät, joilla on kiinalainen verkkotunnus (.cn):"
 
 #: ../src/include/commandhelp.h:262
 msgid "usage: /ilist [channel]"
-msgstr ""
+msgstr "käyttö: /ilist [kanava]"
 
 #: ../src/include/commandhelp.h:264
 msgid ""
