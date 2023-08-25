@@ -1179,7 +1179,7 @@ msgstr "    -R                   Stäng av TLS/SSL peer verifikation\n"
 
 #: ../src/main.cpp:148
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
-msgstr ""
+msgstr "    -W <password>        Samma effekt som flaggan 'p' men icke-interaktiv\n"
 
 #: ../src/main.cpp:149
 msgid "    -c <server[:port]>   Connect to IRC server\n"
