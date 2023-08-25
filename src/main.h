@@ -36,6 +36,7 @@ struct locale_info {
 struct cmdline_opt_values {
 	char	*server;
 	char	*port;
+	char	*passwd;
 	char	*nickname;
 	char	*username;
 	char	*rl_name;
@@ -45,6 +46,7 @@ struct cmdline_opt_values {
 #ifdef __cplusplus
 	cmdline_opt_values() : server(NULL)
 	    , port(NULL)
+	    , passwd(NULL)
 	    , nickname(NULL)
 	    , username(NULL)
 	    , rl_name(NULL)

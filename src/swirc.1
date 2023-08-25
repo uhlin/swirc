@@ -1,7 +1,7 @@
 .\"
 .\" Public domain
 .\"
-.Dd April 27, 2023
+.Dd August 25, 2023
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -11,6 +11,7 @@
 .Nm swirc
 .Bk -words
 .Op Fl 46?CPRdipv
+.Op Fl W Ar password
 .Op Fl c Ar server[:port]
 .Op Fl j Ar join
 .Op Fl n Ar nickname
@@ -50,6 +51,14 @@ If specified, the effect is \fIfinal\fP (i.e. it overrides any config
 file value.)
 .It Fl R
 Disable TLS/SSL peer verification
+.It Fl W Ar password
+Equal effect as flag
+.Fl p
+but operates in a non-interactive manner.
+Be careful if you are using this option on a public computer with
+multiple other users because the password will then be visible to them
+in the output of
+.Xr ps 1 .
 .It Fl c Ar server[:port]
 Connect to given server.
 If the port is omitted port 6667 will be chosen.

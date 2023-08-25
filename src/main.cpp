@@ -145,6 +145,7 @@ static stringarray_t OptionDesc = {
   "    -T                   Internal option. Windows: Invoked when\n",
   "                         launched by a toast.\n",
 #endif
+  N_("    -W <password>        Equal effect as flag 'p' but non-interactive\n"),
   N_("    -c <server[:port]>   Connect to IRC server\n"),
   N_("    -d                   Debug logging\n"),
   N_("    -i                   Turn on Internet Citizen's Band mode\n"),
@@ -335,15 +336,17 @@ case_nickname()
 }
 
 /**
- * Option -p
+ * Option 'p' and 'W'
  */
 static void
-case_password()
+case_password(const bool interactive)
 {
 	static bool been_case = false;
 
 	if (been_case)
-		DUP_OPTION_ERR('p');
+		DUP_OPTION_ERR(interactive ? 'p' : 'W');
+	if (!interactive)
+		g_cmdline_opts->passwd = sw_strdup(g_option_arg);
 
 	g_connection_password = been_case = true;
 }
@@ -421,6 +424,9 @@ process_options(int argc, char *argv[], const char *optstring)
 		case 'T':
 			case_launched_by_toast_hook();
 			break;
+		case 'W':
+			case_password(false);
+			break;
 		case 'c':
 			case_connect();
 			break;
@@ -440,7 +446,7 @@ process_options(int argc, char *argv[], const char *optstring)
 			case_nickname();
 			break;
 		case 'p':
-			case_password();
+			case_password(true);
 			break;
 		case 'r':
 			case_rl_name();
@@ -643,7 +649,7 @@ main(int argc, char *argv[])
 	}
 #endif
 
-	process_options(argc, argv, "46CPRTc:dh:ij:n:pr:u:x:");
+	process_options(argc, argv, "46CPRTW:c:dh:ij:n:pr:u:x:");
 
 	srand(get_seed());
 
@@ -788,6 +794,7 @@ cmdline_opt_values::~cmdline_opt_values()
 {
 	free(this->server);
 	free(this->port);
+	free(this->passwd);
 	free(this->nickname);
 	free(this->username);
 	free(this->rl_name);

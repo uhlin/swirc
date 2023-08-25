@@ -232,6 +232,16 @@ get_password(void)
 {
 	static char pass[400] = { '\0' };
 
+	if (g_cmdline_opts->passwd) {
+		if ((errno = sw_strcpy(pass, g_cmdline_opts->passwd,
+		    sizeof pass)) == 0)
+			return (&pass[0]);
+		else {
+			err_log(errno, "%s: string copy error", __func__);
+			return NULL;
+		}
+	}
+
 	escape_curses();
 
 	if (!shouldConnectUsingPassword()) {
