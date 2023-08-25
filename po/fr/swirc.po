@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-08-12 16:42+0200\n"
+"POT-Creation-Date: 2023-08-25 18:19+0200\n"
 "PO-Revision-Date: 2023-03-09 13:09+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -1068,51 +1068,55 @@ msgstr ""
 "SSL\n"
 
 #: ../src/main.cpp:148
+msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
+msgstr ""
+
+#: ../src/main.cpp:149
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Se connecter à un serveur IRC\n"
 
-#: ../src/main.cpp:149
+#: ../src/main.cpp:150
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Activer les journaux de débogage\n"
 
-#: ../src/main.cpp:150
+#: ../src/main.cpp:151
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Activer le mode Internet Citizen's Band\n"
 
-#: ../src/main.cpp:151
+#: ../src/main.cpp:152
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr ""
 "    -j <join>            Liste de salons à rejoinre (séparés par des "
 "virgules)\n"
 
-#: ../src/main.cpp:152
+#: ../src/main.cpp:153
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Pseudonyme\n"
 
-#: ../src/main.cpp:153
+#: ../src/main.cpp:154
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Requête pour le mot de passe serveur (serveurs "
 "privés uniquement)\n"
 
-#: ../src/main.cpp:154
+#: ../src/main.cpp:155
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Votre nom\n"
 
-#: ../src/main.cpp:155
+#: ../src/main.cpp:156
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Votre utilisateur\n"
 
-#: ../src/main.cpp:156
+#: ../src/main.cpp:157
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Affiche la version de Swirc\n"
 
-#: ../src/main.cpp:157
+#: ../src/main.cpp:158
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Fichier de configuration\n"
 
-#: ../src/main.cpp:224
+#: ../src/main.cpp:225
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Usage: %s [OPTION] ...\n"
