@@ -1,5 +1,6 @@
 COMMANDS_DIR = src/commands/
-OBJS = $(COMMANDS_DIR)ban.obj\
+OBJS = $(COMMANDS_DIR)admin.obj\
+	$(COMMANDS_DIR)ban.obj\
 	$(COMMANDS_DIR)cap.obj\
 	$(COMMANDS_DIR)cleartoasts.obj\
 	$(COMMANDS_DIR)colormap.obj\

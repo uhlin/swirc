@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added command-line option `-W`
+- Added the following commands:
+  - `/die`
+  - `/rehash`
+  - `/restart`
+  - `/wallops`
 
 ## [3.4.4] - 2023-07-29 ##
 - **Added** a man page that describes how to write themes.

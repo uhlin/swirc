@@ -170,6 +170,14 @@ static usage_t deop_usage = {
   "",
 };
 
+static usage_t die_usage = {
+  N_("usage: /die [--I-am-sure]"),
+  "",
+  N_("An IRC operator can use this command to shutdown the server. Please\n"
+     "confirm that this is what you really want by typing '--I-am-sure'."),
+  "",
+};
+
 static usage_t disconnect_usage = {
   N_("usage: /disconnect [message]"),
   "",
@@ -488,12 +496,29 @@ static usage_t quit_usage = {
   "",
 };
 
+static usage_t rehash_usage = {
+  N_("usage: /rehash"),
+  "",
+  N_("The rehash command is an administrative command which can be used by\n"
+     "an IRC operator to force the server to re-read and process its conf-\n"
+     "iguration file."),
+  "",
+};
+
 static usage_t resize_usage = {
   N_("usage: /resize"),
   "",
   N_("Resize the terminal. For example, Windows doesn't send 'SIGWINCH',\n"
      "instead this command can be used. First resize the window then run\n"
      "this command."),
+  "",
+};
+
+static usage_t restart_usage = {
+  N_("usage: /restart"),
+  "",
+  N_("An IRC operator can use the 'restart'-command to force the server to\n"
+     "restart itself."),
   "",
 };
 
@@ -691,6 +716,14 @@ static usage_t version_usage = {
   "",
   N_("Send a CTCP VERSION request to 'target', which is either a nickname or\n"
      "an IRC channel."),
+  "",
+};
+
+static usage_t wallops_usage = {
+  N_("usage: /wallops <message>"),
+  "",
+  N_("The 'wallops'-command is used to send a message to all currently\n"
+     "connected users who have set the 'w' user mode for themselves."),
   "",
 };
 

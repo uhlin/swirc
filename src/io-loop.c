@@ -50,6 +50,7 @@
 #include "terminal.h"
 #include "theme.h"
 
+#include "commands/admin.h"
 #include "commands/ban.h"
 #include "commands/cap.h"
 #include "commands/cleartoasts.h"
@@ -109,6 +110,7 @@ static struct cmds_tag {
 	{ "cs",          cmd_chanserv,    true,  chanserv_usage,    ARRAY_SIZE(chanserv_usage),    true  },
 	{ "cycle",       cmd_cycle,       true,  cycle_usage,       ARRAY_SIZE(cycle_usage),       true  },
 	{ "deop",        cmd_deop,        true,  deop_usage,        ARRAY_SIZE(deop_usage),        true  },
+	{ "die",         cmd_die,         true,  die_usage,         ARRAY_SIZE(die_usage),         true  },
 	{ "disconnect",  cmd_disconnect,  false, disconnect_usage,  ARRAY_SIZE(disconnect_usage),  false },
 	{ "echo",        cmd_echo,        false, echo_usage,        ARRAY_SIZE(echo_usage),        false },
 	{ "exlist",      cmd_exlist,      true,  exlist_usage,      ARRAY_SIZE(exlist_usage),      true  },
@@ -139,7 +141,9 @@ static struct cmds_tag {
 	{ "qbot",        cmd_qbot,        true,  qbot_usage,        ARRAY_SIZE(qbot_usage),        true  },
 	{ "query",       cmd_query,       false, query_usage,       ARRAY_SIZE(query_usage),       false },
 	{ "quit",        cmd_quit,        false, quit_usage,        ARRAY_SIZE(quit_usage),        false },
+	{ "rehash",      cmd_rehash,      true,  rehash_usage,      ARRAY_SIZE(rehash_usage),      true  },
 	{ "resize",      cmd_resize,      false, resize_usage,      ARRAY_SIZE(resize_usage),      false },
+	{ "restart",     cmd_restart,     true,  restart_usage,     ARRAY_SIZE(restart_usage),     true  },
 #if NOT_YET
 	{ "rgui",        cmd_rgui,        false, rgui_usage,        ARRAY_SIZE(rgui_usage),        false },
 #endif
@@ -156,6 +160,7 @@ static struct cmds_tag {
 	{ "unban",       cmd_unban,       true,  unban_usage,       ARRAY_SIZE(unban_usage),       true  },
 	{ "unignore",    cmd_unignore,    false, unignore_usage,    ARRAY_SIZE(unignore_usage),    false },
 	{ "version",     cmd_version,     true,  version_usage,     ARRAY_SIZE(version_usage),     true  },
+	{ "wallops",     cmd_wallops,     true,  wallops_usage,     ARRAY_SIZE(wallops_usage),     true  },
 	{ "who",         cmd_who,         true,  who_usage,         ARRAY_SIZE(who_usage),         true  },
 	{ "whois",       cmd_whois,       true,  whois_usage,       ARRAY_SIZE(whois_usage),       true  },
 	{ "znc",         cmd_znc,         true,  znc_usage,         ARRAY_SIZE(znc_usage),         true  },
