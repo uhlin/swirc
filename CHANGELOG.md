@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 - Added command-line option `-W`
 - Added the following commands:
   - `/die`
+  - `/gline`
+  - `/kline`
   - `/rehash`
   - `/restart`
   - `/wallops`

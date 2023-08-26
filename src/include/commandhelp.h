@@ -222,6 +222,13 @@ static usage_t fetchdic_usage = {
   "",
 };
 
+static usage_t gline_usage = {
+  N_("usage: /gline <nick!user@host> [<duration> :<reason>]"),
+  "",
+  N_("Network-wide bans."),
+  "",
+};
+
 static usage_t group_usage = {
   N_("usage: /group <name>"),
   "",
@@ -321,6 +328,13 @@ static usage_t kill_usage = {
   "",
   N_("Disconnect a user from the connected network."),
   N_("(Requires IRC op privilege.)"),
+  "",
+};
+
+static usage_t kline_usage = {
+  N_("usage: /kline <nick!user@host> [<duration> :<reason>]"),
+  "",
+  N_("Server-local bans."),
   "",
 };
 

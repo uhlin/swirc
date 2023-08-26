@@ -41,6 +41,24 @@ cmd_die(const char *data)
 }
 
 /*
+ * usage: /gline <nick!user@host> [<duration> :<reason>]
+ */
+void
+cmd_gline(const char *data)
+{
+	UNUSED_PARAM(data);
+}
+
+/*
+ * usage: /kline <nick!user@host> [<duration> :<reason>]
+ */
+void
+cmd_kline(const char *data)
+{
+	UNUSED_PARAM(data);
+}
+
+/*
  * usage: /rehash
  */
 void
