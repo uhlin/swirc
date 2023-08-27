@@ -44,6 +44,12 @@
 
 static stringarray_t squery_commands = {
 	/* Alis v2.4 */
+	"alis ",
+	"alis admin",
+	"alis die",
+	"alis hash",
+	"alis info",
+	"alis list ",
 	"alis help",
 	"alis help ",
 	"alis help admin",
@@ -53,19 +59,9 @@ static stringarray_t squery_commands = {
 	"alis help list",
 	"alis help status",
 	"alis help version",
-	"alis admin",
-	"alis die",
-	"alis hash",
-	"alis info",
-	"alis list ",
 
 	/* Clis v1.0a2 */
-	"clis help",
-	"clis help ",
-	"clis help admin",
-	"clis help info",
-	"clis help list",
-	"clis help version",
+	"clis ",
 	"clis admin",
 	"clis info",
 	"clis list ",
@@ -74,6 +70,12 @@ static stringarray_t squery_commands = {
 	"clis list --topic ",
 	"clis list --show ",
 	"clis version",
+	"clis help",
+	"clis help ",
+	"clis help admin",
+	"clis help info",
+	"clis help list",
+	"clis help version",
 };
 
 static void
