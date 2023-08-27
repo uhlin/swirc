@@ -76,6 +76,21 @@ static stringarray_t squery_commands = {
 	"clis help info",
 	"clis help list",
 	"clis help version",
+
+	"nickserv ",
+	"nickserv access ",
+	"nickserv access add ",
+	"nickserv access del ",
+	"nickserv access list",
+	"nickserv alist",
+	"nickserv cert add ",
+	"nickserv cert del ",
+	"nickserv cert list",
+	"nickserv confirm ",
+	"nickserv drop ",
+	"nickserv glist",
+	"nickserv group",
+	"nickserv identify ",
 };
 
 static void
