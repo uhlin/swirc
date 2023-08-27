@@ -3,7 +3,7 @@
 
 __SWIRC_BEGIN_DECLS
 
-void cmd_squery(const char *) NONNULL;
+void cmd_squery(CSTRING) NONNULL;
 
 //lint -sem(get_list_of_matching_squery_commands, r_null)
 PTEXTBUF get_list_of_matching_squery_commands(CSTRING);
