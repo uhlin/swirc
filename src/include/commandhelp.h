@@ -227,6 +227,16 @@ static usage_t gline_usage = {
   "",
   N_("Network-wide bans."),
   "",
+  N_("When a client matches a G-line it cannot connect to ANY server on the\n"
+     "IRC network for 'duration' seconds. If the duration is zero then the\n"
+     "G-line will be permanent."),
+  "",
+  N_("(If no duration and no reason is given the G-line is deleted.)"),
+  "",
+  (TXT_BOLD "SEE ALSO" TXT_BOLD),
+  "",
+  "    /kline",
+  "",
 };
 
 static usage_t group_usage = {
