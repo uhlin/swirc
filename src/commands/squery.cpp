@@ -1,5 +1,5 @@
 /* commands/squery.cpp
-   Copyright (C) 2020-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -34,11 +34,60 @@
 #include <string>
 #include <vector>
 
+#include "../errHand.h"
+#include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
 
 #include "squery.h"
+
+static stringarray_t squery_commands = {
+	/* Alis v2.4 */
+	"alis help",
+	"alis help ",
+	"alis help admin",
+	"alis help die",
+	"alis help hash",
+	"alis help info",
+	"alis help list",
+	"alis help status",
+	"alis help version",
+	"alis admin",
+	"alis die",
+	"alis hash",
+	"alis info",
+	"alis list ",
+
+	/* Clis v1.0a2 */
+	"clis help",
+	"clis help ",
+	"clis help admin",
+	"clis help info",
+	"clis help list",
+	"clis help version",
+	"clis admin",
+	"clis info",
+	"clis list ",
+	"clis list -min ",
+	"clis list -max ",
+	"clis list --topic ",
+	"clis list --show ",
+	"clis version",
+};
+
+static void
+add_squery_cmd(PTEXTBUF matches, CSTRING str)
+{
+	if (textBuf_size(matches) != 0) {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
+		    str, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	} else {
+		if ((errno = textBuf_ins_next(matches, NULL, str, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	}
+}
 
 /*
  * usage: /squery <servicename> <text>
@@ -79,4 +128,24 @@ cmd_squery(const char *data)
 	} catch (...) {
 		printtext_print("err", "%s: %s", cmd, "unknown exception");
 	}
+}
+
+PTEXTBUF
+get_list_of_matching_squery_commands(CSTRING search_var)
+{
+	PTEXTBUF matches = textBuf_new();
+
+	for (size_t i = 0; i < ARRAY_SIZE(squery_commands); i++) {
+		CSTRING cmd = squery_commands[i];
+
+		if (!strncmp(search_var, cmd, strlen(search_var)))
+			add_squery_cmd(matches, cmd);
+	}
+
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
+	}
+
+	return matches;
 }
