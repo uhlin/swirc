@@ -346,6 +346,16 @@ static usage_t kline_usage = {
   "",
   N_("Server-local bans."),
   "",
+  N_("When a client matches a K-line it cannot connect to the local server\n"
+     "for 'duration' seconds. If the duration is zero then the K-line will\n"
+     "be permanent."),
+  "",
+  N_("(If no duration and no reason is given the K-line is deleted.)"),
+  "",
+  (TXT_BOLD "SEE ALSO" TXT_BOLD),
+  "",
+  "    /gline",
+  "",
 };
 
 static usage_t list_usage = {
