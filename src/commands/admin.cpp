@@ -35,7 +35,7 @@
  * usage: /die [--I-am-sure]
  */
 void
-cmd_die(const char *data)
+cmd_die(CSTRING data)
 {
 	UNUSED_PARAM(data);
 }
@@ -44,7 +44,7 @@ cmd_die(const char *data)
  * usage: /gline <nick!user@host> [<duration> :<reason>]
  */
 void
-cmd_gline(const char *data)
+cmd_gline(CSTRING data)
 {
 	UNUSED_PARAM(data);
 }
@@ -53,7 +53,7 @@ cmd_gline(const char *data)
  * usage: /kline <nick!user@host> [<duration> :<reason>]
  */
 void
-cmd_kline(const char *data)
+cmd_kline(CSTRING data)
 {
 	UNUSED_PARAM(data);
 }
@@ -62,7 +62,7 @@ cmd_kline(const char *data)
  * usage: /rehash
  */
 void
-cmd_rehash(const char *data)
+cmd_rehash(CSTRING data)
 {
 	UNUSED_PARAM(data);
 }
@@ -71,7 +71,7 @@ cmd_rehash(const char *data)
  * usage: /restart
  */
 void
-cmd_restart(const char *data)
+cmd_restart(CSTRING data)
 {
 	UNUSED_PARAM(data);
 }
@@ -80,7 +80,7 @@ cmd_restart(const char *data)
  * usage: /wallops <message>
  */
 void
-cmd_wallops(const char *data)
+cmd_wallops(CSTRING data)
 {
 	UNUSED_PARAM(data);
 }
