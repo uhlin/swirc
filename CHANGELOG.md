@@ -4,8 +4,11 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added command-line option `-W`
 - Added the following commands:
+  - `/admin`
   - `/die`
   - `/gline`
+  - `/info`
+  - `/ison`
   - `/kline`
   - `/rehash`
   - `/restart`
