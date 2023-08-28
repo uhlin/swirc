@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include "../irc.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -41,7 +42,9 @@
 void
 cmd_die(CSTRING data)
 {
-	if (strings_match(data, ""))
+	if (!g_am_irc_op)
+		printtext_print("err", "not irc op");
+	else if (strings_match(data, ""))
 		printtext_print("err", "missing args");
 	else if (!strings_match(data, "--I-am-sure"))
 		printtext_print("err", "aborting...");
@@ -57,7 +60,9 @@ cmd_die(CSTRING data)
 void
 cmd_gline(CSTRING data)
 {
-	if (strings_match(data, ""))
+	if (!g_am_irc_op)
+		printtext_print("err", "not irc op");
+	else if (strings_match(data, ""))
 		printtext_print("err", "missing args");
 	else if (net_send("GLINE %s", data) < 0)
 		printtext_print("err", "cannot send");
@@ -71,7 +76,9 @@ cmd_gline(CSTRING data)
 void
 cmd_kline(CSTRING data)
 {
-	if (strings_match(data, ""))
+	if (!g_am_irc_op)
+		printtext_print("err", "not irc op");
+	else if (strings_match(data, ""))
 		printtext_print("err", "missing args");
 	else if (net_send("KLINE %s", data) < 0)
 		printtext_print("err", "cannot send");
@@ -85,7 +92,9 @@ cmd_kline(CSTRING data)
 void
 cmd_rehash(CSTRING data)
 {
-	if (!strings_match(data, ""))
+	if (!g_am_irc_op)
+		printtext_print("err", "not irc op");
+	else if (!strings_match(data, ""))
 		printtext_print("err", "implicit trailing data");
 	else if (net_send("REHASH") < 0)
 		printtext_print("err", "cannot send");
@@ -99,7 +108,9 @@ cmd_rehash(CSTRING data)
 void
 cmd_restart(CSTRING data)
 {
-	if (strings_match(data, ""))
+	if (!g_am_irc_op)
+		printtext_print("err", "not irc op");
+	else if (strings_match(data, ""))
 		printtext_print("err", "missing args");
 	else if (!strings_match(data, "--I-am-sure"))
 		printtext_print("err", "aborting...");
@@ -115,7 +126,9 @@ cmd_restart(CSTRING data)
 void
 cmd_wallops(CSTRING data)
 {
-	if (strings_match(data, ""))
+	if (!g_am_irc_op)
+		printtext_print("err", "not irc op");
+	else if (strings_match(data, ""))
 		printtext_print("err", "missing args");
 	else if (net_send("WALLOPS %s", data) < 0)
 		printtext_print("err", "cannot send");
