@@ -29,6 +29,10 @@
 
 #include "common.h"
 
+#include "../network.h"
+#include "../printtext.h"
+#include "../strHand.h"
+
 #include "admin.h"
 
 /*
@@ -37,7 +41,14 @@
 void
 cmd_die(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	if (strings_match(data, ""))
+		printtext_print("err", "missing args");
+	else if (!strings_match(data, "--I-am-sure"))
+		printtext_print("err", "aborting...");
+	else if (net_send("DIE") < 0)
+		printtext_print("err", "cannot send");
+	else
+		printtext_print("success", "msg sent");
 }
 
 /*
