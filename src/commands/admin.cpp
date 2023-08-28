@@ -57,7 +57,12 @@ cmd_die(CSTRING data)
 void
 cmd_gline(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	if (strings_match(data, ""))
+		printtext_print("err", "missing args");
+	else if (net_send("GLINE %s", data) < 0)
+		printtext_print("err", "cannot send");
+	else
+		return;
 }
 
 /*
@@ -66,7 +71,12 @@ cmd_gline(CSTRING data)
 void
 cmd_kline(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	if (strings_match(data, ""))
+		printtext_print("err", "missing args");
+	else if (net_send("KLINE %s", data) < 0)
+		printtext_print("err", "cannot send");
+	else
+		return;
 }
 
 /*
