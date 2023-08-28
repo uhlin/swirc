@@ -549,7 +549,7 @@ static usage_t resize_usage = {
 };
 
 static usage_t restart_usage = {
-  N_("usage: /restart"),
+  N_("usage: /restart [--I-am-sure]"),
   "",
   N_("An IRC operator can use the 'restart'-command to force the server to\n"
      "restart itself."),

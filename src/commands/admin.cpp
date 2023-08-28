@@ -94,7 +94,7 @@ cmd_rehash(CSTRING data)
 }
 
 /*
- * usage: /restart
+ * usage: /restart [--I-am-sure]
  */
 void
 cmd_restart(CSTRING data)
