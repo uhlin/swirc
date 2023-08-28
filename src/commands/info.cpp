@@ -56,7 +56,13 @@ cmd_admin(CSTRING data)
 void
 cmd_info(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	if (strings_match(data, "")) {
+		if (net_send("INFO") < 0)
+			printtext_print("err", "cannot send");
+	} else {
+		if (net_send("INFO %s", data) < 0)
+			printtext_print("err", "cannot send");
+	}
 }
 
 /*
