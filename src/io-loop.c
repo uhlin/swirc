@@ -59,6 +59,7 @@
 #include "commands/echo.h"
 #include "commands/fetchdic.h"
 #include "commands/ignore.h"
+#include "commands/info.h"
 #include "commands/invite.h"
 #include "commands/jp.h"
 #include "commands/kick.h"
@@ -96,6 +97,7 @@ static struct cmds_tag {
 	const size_t	 size;
 	bool		 irc_only;
 } cmds[] = {
+	{ "admin",       cmd_admin,       true,  admin_usage,       ARRAY_SIZE(admin_usage),       true  },
 	{ "away",        cmd_away,        true,  away_usage,        ARRAY_SIZE(away_usage),        true  },
 	{ "ban",         cmd_ban,         true,  ban_usage,         ARRAY_SIZE(ban_usage),         true  },
 	{ "banlist",     cmd_banlist,     true,  banlist_usage,     ARRAY_SIZE(banlist_usage),     true  },
@@ -120,7 +122,9 @@ static struct cmds_tag {
 	{ "help",        cmd_help,        false, help_usage,        ARRAY_SIZE(help_usage),        false },
 	{ "ignore",      cmd_ignore,      false, ignore_usage,      ARRAY_SIZE(ignore_usage),      false },
 	{ "ilist",       cmd_ilist,       true,  ilist_usage,       ARRAY_SIZE(ilist_usage),       true  },
+	{ "info",        cmd_info,        true,  info_usage,        ARRAY_SIZE(info_usage),        true  },
 	{ "invite",      cmd_invite,      true,  invite_usage,      ARRAY_SIZE(invite_usage),      true  },
+	{ "ison",        cmd_ison,        true,  ison_usage,        ARRAY_SIZE(ison_usage),        true  },
 	{ "j",           cmd_join,        true,  join_usage,        ARRAY_SIZE(join_usage),        true  },
 	{ "join",        cmd_join,        true,  join_usage,        ARRAY_SIZE(join_usage),        true  },
 	{ "kick",        cmd_kick,        true,  kick_usage,        ARRAY_SIZE(kick_usage),        true  },
