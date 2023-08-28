@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-08-28 20:21+0200\n"
-"PO-Revision-Date: 2023-03-09 13:01+0100\n"
+"PO-Revision-Date: 2023-08-28 20:53+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -126,9 +126,8 @@ msgid "You're now an IRC operator!"
 msgstr "Du är nu en IRC operatör!"
 
 #: ../src/include/commandhelp.h:44
-#, fuzzy
 msgid "usage: /admin [target]"
-msgstr "användning: /time <mål>"
+msgstr "användning: /admin [mål]"
 
 #: ../src/include/commandhelp.h:46
 msgid ""
@@ -136,6 +135,9 @@ msgid ""
 "of the given server, or current server if 'target' parameter is omit-\n"
 "ted."
 msgstr ""
+"Admin-kommandot används för att hitta information om administratören\n"
+"för den givna servern, eller aktuell server om 'mål'-parametern ute-\n"
+"lämnas."
 
 #: ../src/include/commandhelp.h:53
 msgid "usage: /away [reason]"
@@ -308,15 +310,17 @@ msgid "Remove the channel operator privilege from another user."
 msgstr "Ta bort kanaloperatörsprivilegiet från en annan användare."
 
 #: ../src/include/commandhelp.h:183
-#, fuzzy
 msgid "usage: /die [--I-am-sure]"
-msgstr "användning: /fetchdic [namn]"
+msgstr "användning: /die [--I-am-sure]"
 
 #: ../src/include/commandhelp.h:185
 msgid ""
 "An IRC operator can use this command to shutdown the server. Please\n"
 "confirm that this is what you really want by typing '--I-am-sure'."
 msgstr ""
+"En IRC operatör kan använda detta kommando för att stänga av\n"
+"servern. Vänligen bekräfta att det är vad du verkligen vill genom att\n"
+"skriva '--I-am-sure'."
 
 #: ../src/include/commandhelp.h:191
 msgid "usage: /disconnect [message]"
@@ -381,13 +385,12 @@ msgid "Fetch the american english dictionary:"
 msgstr "Hämta den amerikansk engelska ordboken:"
 
 #: ../src/include/commandhelp.h:235
-#, fuzzy
 msgid "usage: /gline <nick!user@host> [<duration> :<reason>]"
-msgstr "användning: /kickban <nick> <mask> [anledning]"
+msgstr "användning: /gline <nick!user@host> [<duration> :<reason>]"
 
 #: ../src/include/commandhelp.h:237
 msgid "Network-wide bans."
-msgstr ""
+msgstr "Nätverksomfattande förbud."
 
 #: ../src/include/commandhelp.h:239
 msgid ""
@@ -395,10 +398,13 @@ msgid ""
 "IRC network for 'duration' seconds. If the duration is zero then the\n"
 "G-line will be permanent."
 msgstr ""
+"När en klient matchar en G-linje kan den inte ansluta till NÅGON\n"
+"server på IRC nätverket under 'varaktighet' sekunder. Om varaktigheten\n"
+"är noll kommer G-linjen att vara permanent."
 
 #: ../src/include/commandhelp.h:243
 msgid "(If no duration and no reason is given the G-line is deleted.)"
-msgstr ""
+msgstr "(Om ingen varaktighet och ingen anledning anges raderas G-linjen.)"
 
 #: ../src/include/commandhelp.h:252
 msgid "usage: /group <name>"
@@ -486,14 +492,12 @@ msgstr ""
 "mata ut inbjudningslistan för den kanalen."
 
 #: ../src/include/commandhelp.h:306
-#, fuzzy
 msgid "usage: /info [target]"
-msgstr "användning: /ignore [reguljärt uttryck]"
+msgstr "användning: /info [mål]"
 
 #: ../src/include/commandhelp.h:308
-#, fuzzy
 msgid "The info command returns information about the server."
-msgstr "Frågar efter information om en annan användare."
+msgstr "Kommandot info returnerar information om servern."
 
 #: ../src/include/commandhelp.h:313
 msgid "usage: /invite <targ_nick> <channel>"
@@ -504,13 +508,12 @@ msgid "Invites 'targ_nick' to a channel."
 msgstr "Bjuder in 'smeknamn' till en kanal."
 
 #: ../src/include/commandhelp.h:320
-#, fuzzy
 msgid "usage: /ison <nick1> [nick2] [nick3] [...]"
-msgstr "användning: /kick <nick1[,nick2][,nick3][...]> [anledning]"
+msgstr "användning: /ison <nick1> [nick2] [nick3] [...]"
 
 #: ../src/include/commandhelp.h:322
 msgid "Checks whether users are on IRC."
-msgstr ""
+msgstr "Kontrollerar om användare är på IRC."
 
 #: ../src/include/commandhelp.h:327
 msgid "usage: /join <channel> [key]"
@@ -569,13 +572,12 @@ msgid "(Requires IRC op privilege.)"
 msgstr "(Kräver IRC op-behörighet.)"
 
 #: ../src/include/commandhelp.h:368
-#, fuzzy
 msgid "usage: /kline <nick!user@host> [<duration> :<reason>]"
-msgstr "användning: /kickban <nick> <mask> [anledning]"
+msgstr "användning: /kline <nick!user@host> [<duration> :<reason>]"
 
 #: ../src/include/commandhelp.h:370
 msgid "Server-local bans."
-msgstr ""
+msgstr "Serverlokala förbud."
 
 #: ../src/include/commandhelp.h:372
 msgid ""
@@ -583,10 +585,13 @@ msgid ""
 "for 'duration' seconds. If the duration is zero then the K-line will\n"
 "be permanent."
 msgstr ""
+"När en klient matchar en K-linje kan den inte ansluta till den lokala\n"
+"servern under 'varaktighet' sekunder. Om varaktigheten är noll kommer\n"
+"K-linjen att vara permanent."
 
 #: ../src/include/commandhelp.h:376
 msgid "(If no duration and no reason is given the K-line is deleted.)"
-msgstr ""
+msgstr "(Om ingen varaktighet och ingen anledning anges tas K-linjen bort.)"
 
 #: ../src/include/commandhelp.h:385
 msgid "usage: /list [<max_users[,>min_users][,pattern][...]]"
@@ -880,9 +885,8 @@ msgstr ""
 "valfritt."
 
 #: ../src/include/commandhelp.h:557
-#, fuzzy
 msgid "usage: /rehash"
-msgstr "användning: /rules"
+msgstr "användning: /rehash"
 
 #: ../src/include/commandhelp.h:559
 msgid ""
@@ -890,6 +894,9 @@ msgid ""
 "an IRC operator to force the server to re-read and process its conf-\n"
 "iguration file."
 msgstr ""
+"Rehash-kommandot är ett administrativt kommando som kan användas av en\n"
+"IRC operatör för att tvinga servern att läsa om och bearbeta sin konf-\n"
+"igurationsfil."
 
 #: ../src/include/commandhelp.h:566
 msgid "usage: /resize"
@@ -906,15 +913,16 @@ msgstr ""
 "storleken på fönstret och kör sedan det här kommandot."
 
 #: ../src/include/commandhelp.h:575
-#, fuzzy
 msgid "usage: /restart [--I-am-sure]"
-msgstr "användning: /stats [kanal]"
+msgstr "användning: /restart [--I-am-sure]"
 
 #: ../src/include/commandhelp.h:577
 msgid ""
 "An IRC operator can use the 'restart'-command to force the server to\n"
 "restart itself."
 msgstr ""
+"En IRC operatör kan använda kommandot 'restart' för att tvinga servern\n"
+"att starta om sig själv."
 
 #: ../src/include/commandhelp.h:592
 msgid "usage: /rules"
@@ -1151,15 +1159,17 @@ msgstr ""
 "smeknamn eller en IRC kanal."
 
 #: ../src/include/commandhelp.h:780
-#, fuzzy
 msgid "usage: /wallops <message>"
-msgstr "användning: /say <meddelande>"
+msgstr "användning: /wallops <meddelande>"
 
 #: ../src/include/commandhelp.h:782
 msgid ""
 "The 'wallops'-command is used to send a message to all currently\n"
 "connected users who have set the 'w' user mode for themselves."
 msgstr ""
+"'wallops'-kommandot används för att skicka ett meddelande till alla\n"
+"för närvarande anslutna användare som har ställt in användarläget 'w'\n"
+"för sig själva."
 
 #: ../src/include/commandhelp.h:788
 msgid "usage: /who <mask>"
