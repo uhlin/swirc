@@ -8,6 +8,7 @@ OBJS = $(COMMANDS_DIR)admin.o\
 	$(COMMANDS_DIR)echo.o\
 	$(COMMANDS_DIR)fetchdic.o\
 	$(COMMANDS_DIR)ignore.o\
+	$(COMMANDS_DIR)info.o\
 	$(COMMANDS_DIR)invite.o\
 	$(COMMANDS_DIR)jp.o\
 	$(COMMANDS_DIR)kick.o\
