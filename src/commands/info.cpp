@@ -31,18 +31,27 @@
 
 #include "info.h"
 
+/*
+ * usage: /admin [target]
+ */
 void
 cmd_admin(CSTRING data)
 {
 	UNUSED_PARAM(data);
 }
 
+/*
+ * usage: /info [target]
+ */
 void
 cmd_info(CSTRING data)
 {
 	UNUSED_PARAM(data);
 }
 
+/*
+ * usage: /ison <nick1> [nick2] [nick3] [...]
+ */
 void
 cmd_ison(CSTRING data)
 {

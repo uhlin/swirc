@@ -40,6 +40,15 @@ typedef const char *usage_t[];
  * Run esc+q on the text from the outside of the array
  */
 
+static usage_t admin_usage = {
+  N_("usage: /admin [target]"),
+  "",
+  N_("The admin command is used to find information about the administrator\n"
+     "of the given server, or current server if 'target' parameter is omit-\n"
+     "ted."),
+  "",
+};
+
 static usage_t away_usage = {
   N_("usage: /away [reason]"),
   "",
@@ -293,10 +302,24 @@ static usage_t ilist_usage = {
   "",
 };
 
+static usage_t info_usage = {
+  N_("usage: /info [target]"),
+  "",
+  N_("The info command returns information about the server."),
+  "",
+};
+
 static usage_t invite_usage = {
   N_("usage: /invite <targ_nick> <channel>"),
   "",
   N_("Invites 'targ_nick' to a channel."),
+  "",
+};
+
+static usage_t ison_usage = {
+  N_("usage: /ison <nick1> [nick2] [nick3] [...]"),
+  "",
+  N_("Checks whether users are on IRC."),
   "",
 };
 
