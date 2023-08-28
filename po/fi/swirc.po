@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-08-28 20:21+0200\n"
-"PO-Revision-Date: 2023-08-25 18:50+0200\n"
+"PO-Revision-Date: 2023-08-28 21:03+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -126,9 +126,8 @@ msgid "You're now an IRC operator!"
 msgstr "Olet nyt IRC operaattori!"
 
 #: ../src/include/commandhelp.h:44
-#, fuzzy
 msgid "usage: /admin [target]"
-msgstr "käyttö: /ignore [regex]"
+msgstr ""
 
 #: ../src/include/commandhelp.h:46
 msgid ""
@@ -308,9 +307,8 @@ msgid "Remove the channel operator privilege from another user."
 msgstr "Poista kanavaoperaattorin oikeudet toiselta käyttäjältä."
 
 #: ../src/include/commandhelp.h:183
-#, fuzzy
 msgid "usage: /die [--I-am-sure]"
-msgstr "käyttö: /fetchdic [nimi]"
+msgstr ""
 
 #: ../src/include/commandhelp.h:185
 msgid ""
@@ -480,9 +478,8 @@ msgid ""
 msgstr ""
 
 #: ../src/include/commandhelp.h:306
-#, fuzzy
 msgid "usage: /info [target]"
-msgstr "käyttö: /ignore [regex]"
+msgstr ""
 
 #: ../src/include/commandhelp.h:308
 msgid "The info command returns information about the server."
@@ -832,9 +829,8 @@ msgid ""
 msgstr ""
 
 #: ../src/include/commandhelp.h:557
-#, fuzzy
 msgid "usage: /rehash"
-msgstr "käyttö: /away [syy]"
+msgstr ""
 
 #: ../src/include/commandhelp.h:559
 msgid ""
@@ -855,9 +851,8 @@ msgid ""
 msgstr ""
 
 #: ../src/include/commandhelp.h:575
-#, fuzzy
 msgid "usage: /restart [--I-am-sure]"
-msgstr "käyttö: /fetchdic [nimi]"
+msgstr ""
 
 #: ../src/include/commandhelp.h:577
 msgid ""
@@ -1070,9 +1065,8 @@ msgid ""
 msgstr ""
 
 #: ../src/include/commandhelp.h:780
-#, fuzzy
 msgid "usage: /wallops <message>"
-msgstr "käyttö: /group <nimi>"
+msgstr ""
 
 #: ../src/include/commandhelp.h:782
 msgid ""
