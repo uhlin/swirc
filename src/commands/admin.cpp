@@ -115,5 +115,10 @@ cmd_restart(CSTRING data)
 void
 cmd_wallops(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	if (strings_match(data, ""))
+		printtext_print("err", "missing args");
+	else if (net_send("WALLOPS %s", data) < 0)
+		printtext_print("err", "cannot send");
+	else
+		printtext_print("success", "wallops msg sent: %s", data);
 }
