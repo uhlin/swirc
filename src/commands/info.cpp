@@ -71,5 +71,10 @@ cmd_info(CSTRING data)
 void
 cmd_ison(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	if (strings_match(data, ""))
+		printtext_print("err", "missing args");
+	else if (net_send("ISON %s", data) < 0)
+		printtext_print("err", "cannot send");
+	else
+		return;
 }
