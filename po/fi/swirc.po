@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-08-28 20:21+0200\n"
-"PO-Revision-Date: 2023-08-28 21:03+0200\n"
+"PO-Revision-Date: 2023-08-28 21:23+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -127,7 +127,7 @@ msgstr "Olet nyt IRC operaattori!"
 
 #: ../src/include/commandhelp.h:44
 msgid "usage: /admin [target]"
-msgstr ""
+msgstr "käyttö: /admin [kohde]"
 
 #: ../src/include/commandhelp.h:46
 msgid ""
@@ -135,6 +135,9 @@ msgid ""
 "of the given server, or current server if 'target' parameter is omit-\n"
 "ted."
 msgstr ""
+"Admin-komentoa käytetään etsimään tietoja tietyn palvelimen\n"
+"järjestelmänvalvojasta tai nykyisestä palvelimesta, jos\n"
+"'target'-parametri jätetään pois."
 
 #: ../src/include/commandhelp.h:53
 msgid "usage: /away [reason]"
