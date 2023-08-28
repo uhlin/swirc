@@ -29,6 +29,10 @@
 
 #include "common.h"
 
+#include "../network.h"
+#include "../printtext.h"
+#include "../strHand.h"
+
 #include "info.h"
 
 /*
@@ -37,7 +41,13 @@
 void
 cmd_admin(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	if (strings_match(data, "")) {
+		if (net_send("ADMIN") < 0)
+			printtext_print("err", "cannot send");
+	} else {
+		if (net_send("ADMIN %s", data) < 0)
+			printtext_print("err", "cannot send");
+	}
 }
 
 /*
