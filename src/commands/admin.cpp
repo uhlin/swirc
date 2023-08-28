@@ -85,7 +85,12 @@ cmd_kline(CSTRING data)
 void
 cmd_rehash(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	if (!strings_match(data, ""))
+		printtext_print("err", "implicit trailing data");
+	else if (net_send("REHASH") < 0)
+		printtext_print("err", "cannot send");
+	else
+		printtext_print("success", "msg sent");
 }
 
 /*
