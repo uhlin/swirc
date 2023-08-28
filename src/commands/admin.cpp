@@ -99,7 +99,14 @@ cmd_rehash(CSTRING data)
 void
 cmd_restart(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	if (strings_match(data, ""))
+		printtext_print("err", "missing args");
+	else if (!strings_match(data, "--I-am-sure"))
+		printtext_print("err", "aborting...");
+	else if (net_send("RESTART") < 0)
+		printtext_print("err", "cannot send");
+	else
+		printtext_print("success", "msg sent");
 }
 
 /*
