@@ -15,6 +15,11 @@ All notable changes to this project will be documented in this file.
   - `/rehash`
   - `/restart`
   - `/wallops`
+- Added the following events:
+  - 256 (`RPL_ADMINME`)
+  - 257 (`RPL_ADMINLOC1`)
+  - 258 (`RPL_ADMINLOC2`)
+  - 259 (`RPL_ADMINEMAIL`)
 
 ## [3.4.4] - 2023-07-29 ##
 - **Added** a man page that describes how to write themes.
