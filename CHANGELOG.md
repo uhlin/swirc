@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added command-line option `-W`
+- Added tab completion for:
+  - `/squery`
 - Added the following commands:
   - `/admin`
   - `/die`

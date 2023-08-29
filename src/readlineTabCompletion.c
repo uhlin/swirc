@@ -31,6 +31,7 @@
 
 #include "commands/connect.h"
 #include "commands/sasl.h"
+#include "commands/squery.h"
 #include "commands/theme.h"
 #include "commands/znc.h"
 
@@ -110,6 +111,13 @@ auto_complete_setting(volatile struct readline_session_context *ctx,
     CSTRING s)
 {
 	do_work(ctx, L"/set ", s);
+}
+
+static void
+auto_complete_squery(volatile struct readline_session_context *ctx,
+    CSTRING s)
+{
+	do_work(ctx, L"/squery ", s);
 }
 
 static void
@@ -241,6 +249,7 @@ readline_tab_comp_ctx_new(void)
 	ctx.isInCirculationModeForQuery		= false;
 	ctx.isInCirculationModeForSasl		= false;
 	ctx.isInCirculationModeForSettings	= false;
+	ctx.isInCirculationModeForSquery	= false;
 	ctx.isInCirculationModeForTheme		= false;
 	ctx.isInCirculationModeForTime		= false;
 	ctx.isInCirculationModeForVersion	= false;
@@ -275,6 +284,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 		ctx->isInCirculationModeForQuery	= false;
 		ctx->isInCirculationModeForSasl		= false;
 		ctx->isInCirculationModeForSettings	= false;
+		ctx->isInCirculationModeForSquery	= false;
 		ctx->isInCirculationModeForTheme	= false;
 		ctx->isInCirculationModeForTime		= false;
 		ctx->isInCirculationModeForVersion	= false;
@@ -404,6 +414,22 @@ init_mode_for_set(volatile struct readline_session_context *ctx)
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_setting(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeForSettings = true;
+}
+
+static void
+init_mode_for_squery(volatile struct readline_session_context *ctx)
+{
+	char	*p = addrof(ctx->tc->search_var[8]);
+
+	if ((ctx->tc->matches = get_list_of_matching_squery_commands(p)) ==
+	    NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_squery(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeForSquery = true;
 }
 
 static void
@@ -552,6 +578,8 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_sasl(ctx);
 	else if (!strncmp(get_search_var(ctx), "/set ", 5))
 		init_mode_for_set(ctx);
+	else if (!strncmp(get_search_var(ctx), "/squery ", 8))
+		init_mode_for_squery(ctx);
 	else if (!strncmp(get_search_var(ctx), "/theme ", 7))
 		init_mode_for_theme(ctx);
 	else if (!strncmp(get_search_var(ctx), "/time ", 6))
@@ -617,6 +645,12 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 			no_more_matches(ctx);
 		else
 			auto_complete_setting(ctx, next_text(ctx->tc));
+		return;
+	} else if (ctx->tc->isInCirculationModeForSquery) {
+		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
+			no_more_matches(ctx);
+		else
+			auto_complete_squery(ctx, next_text(ctx->tc));
 		return;
 	} else if (ctx->tc->isInCirculationModeForTheme) {
 		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))

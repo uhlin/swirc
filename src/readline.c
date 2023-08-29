@@ -483,6 +483,7 @@ isInCirculationMode(const TAB_COMPLETION *tc)
 	    tc->isInCirculationModeForQuery ||
 	    tc->isInCirculationModeForSasl ||
 	    tc->isInCirculationModeForSettings ||
+	    tc->isInCirculationModeForSquery ||
 	    tc->isInCirculationModeForTheme ||
 	    tc->isInCirculationModeForTime ||
 	    tc->isInCirculationModeForVersion ||
