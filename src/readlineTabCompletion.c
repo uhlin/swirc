@@ -596,6 +596,17 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_channel_users(ctx);
 }
 
+typedef void (*AC_FUNC)(volatile struct readline_session_context *, CSTRING);
+
+static void
+ac_doit(AC_FUNC ac, volatile struct readline_session_context *ctx)
+{
+	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
+		no_more_matches(ctx);
+	else
+		ac(ctx, next_text(ctx->tc));
+}
+
 /*
  * Handles a TAB key press. It initially checks if tabbing is
  * possible. After that it checks if it's already in circulation for a
@@ -612,94 +623,49 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		readline_tab_comp_ctx_reset(ctx->tc);
 		return;
 	} else if (ctx->tc->isInCirculationModeForConnect) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_connect(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_connect, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForHelp) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_help(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_help, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForMsg) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_msg(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_msg, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForNotice) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_notice(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_notice, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForQuery) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_query(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_query, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForSasl) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_sasl(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_sasl, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForSettings) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_setting(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_setting, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForSquery) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_squery(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_squery, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForTheme) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_theme(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_theme, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForTime) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_time(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_time, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForVersion) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_version(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_version, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForWhois) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_whois(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_whois, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForZncCmds) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_znc_cmd(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_znc_cmd, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForCmds) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_command(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_command, ctx);
 		return;
 	} else if (ctx->tc->isInCirculationModeForChanUsers) {
-		if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
-			no_more_matches(ctx);
-		else
-			auto_complete_channel_user(ctx, next_text(ctx->tc));
+		ac_doit(auto_complete_channel_user, ctx);
 		return;
 	} else if (store_search_var(ctx) == -1) {
 		output_error("cannot store search variable");
