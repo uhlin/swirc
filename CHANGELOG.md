@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
   - 257 (`RPL_ADMINLOC1`)
   - 258 (`RPL_ADMINLOC2`)
   - 259 (`RPL_ADMINEMAIL`)
+  - 303 (`RPL_ISON`)
   - 371 (`RPL_INFO`)
   - 374 (`RPL_ENDOFINFO`)
 
