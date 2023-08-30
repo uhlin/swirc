@@ -23,6 +23,8 @@ All notable changes to this project will be documented in this file.
   - 303 (`RPL_ISON`)
   - 371 (`RPL_INFO`)
   - 374 (`RPL_ENDOFINFO`)
+- Added translations
+- Did code improvements
 
 ## [3.4.4] - 2023-07-29 ##
 - **Added** a man page that describes how to write themes.
