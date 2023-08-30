@@ -311,13 +311,16 @@ msgstr "Poista kanavaoperaattorin oikeudet toiselta käyttäjältä."
 
 #: ../src/include/commandhelp.h:183
 msgid "usage: /die [--I-am-sure]"
-msgstr ""
+msgstr "käyttö: /die [--I-am-sure]"
 
 #: ../src/include/commandhelp.h:185
 msgid ""
 "An IRC operator can use this command to shutdown the server. Please\n"
 "confirm that this is what you really want by typing '--I-am-sure'."
 msgstr ""
+"IRC operaattori voi käyttää tätä komentoa sammuttaakseen\n"
+"palvelimen. Vahvista, että tämä on se, mitä todella haluat\n"
+"kirjoittamalla '--I-am-sure'."
 
 #: ../src/include/commandhelp.h:191
 msgid "usage: /disconnect [message]"
