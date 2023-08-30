@@ -596,6 +596,13 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_channel_users(ctx);
 }
 
+/*
+ * Handles a TAB key press. It initially checks if tabbing is
+ * possible. After that it checks if it's already in circulation for a
+ * mode and auto completes. Else it attempts to store the search
+ * variable and initializes completion for a mode depending on what's
+ * stored in the search variable.
+ */
 void
 readline_handle_tab(volatile struct readline_session_context *ctx)
 {
