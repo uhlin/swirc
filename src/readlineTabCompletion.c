@@ -624,49 +624,34 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		return;
 	} else if (ctx->tc->isInCirculationModeForConnect) {
 		ac_doit(auto_complete_connect, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForHelp) {
 		ac_doit(auto_complete_help, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForMsg) {
 		ac_doit(auto_complete_msg, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForNotice) {
 		ac_doit(auto_complete_notice, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForQuery) {
 		ac_doit(auto_complete_query, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForSasl) {
 		ac_doit(auto_complete_sasl, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForSettings) {
 		ac_doit(auto_complete_setting, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForSquery) {
 		ac_doit(auto_complete_squery, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForTheme) {
 		ac_doit(auto_complete_theme, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForTime) {
 		ac_doit(auto_complete_time, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForVersion) {
 		ac_doit(auto_complete_version, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForWhois) {
 		ac_doit(auto_complete_whois, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForZncCmds) {
 		ac_doit(auto_complete_znc_cmd, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForCmds) {
 		ac_doit(auto_complete_command, ctx);
-		return;
 	} else if (ctx->tc->isInCirculationModeForChanUsers) {
 		ac_doit(auto_complete_channel_user, ctx);
-		return;
 	} else if (store_search_var(ctx) == -1) {
 		output_error("cannot store search variable");
 		return;
