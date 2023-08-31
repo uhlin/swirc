@@ -118,10 +118,7 @@ run_command(CSTRING slashcmd, CSTRING srv_name, CSTRING host_setting,
 				throw std::runtime_error("cannot send");
 		}
 	} catch (const std::runtime_error &e) {
-		std::string str(slashcmd);
-
-		(void) str.append(": ").append(e.what());
-		printtext_print("err", "%s", str.c_str());
+		printtext_print("err", "%s: %s", slashcmd, e.what());
 
 		if (strings_match(e.what(), "cannot send")) {
 			err_log(ENOTCONN, "%s", slashcmd);
