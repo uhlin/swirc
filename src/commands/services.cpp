@@ -35,11 +35,25 @@
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
+#include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
 
 #include "services.h"
+#include "squery.h"
+
+static stringarray_t cs_cmds = {
+//lint -e786
+	cs_cmds_macro(--),
+//lint +e786
+};
+
+static stringarray_t ns_cmds = {
+//lint -e786
+	ns_cmds_macro(--),
+//lint +e786
+};
 
 class irc_service_cmd {
 	std::string	srv_host;
@@ -141,4 +155,57 @@ void
 cmd_qbot(const char *data)
 {
 	run_command("/qbot", "Q", "qbot_host", data);
+}
+
+static void
+add_cmd(PTEXTBUF matches, const char *str)
+{
+	if (textBuf_size(matches) != 0) {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
+		    str, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	} else {
+		if ((errno = textBuf_ins_next(matches, NULL, str, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	}
+}
+
+PTEXTBUF
+get_list_of_matching_cs_cmds(const char *search_var)
+{
+	PTEXTBUF matches = textBuf_new();
+
+	for (size_t i = 0; i < ARRAY_SIZE(cs_cmds); i++) {
+		const char *cmd = cs_cmds[i];
+
+		if (!strncmp(search_var, cmd, strlen(search_var)))
+			add_cmd(matches, cmd);
+	}
+
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
+	}
+
+	return matches;
+}
+
+PTEXTBUF
+get_list_of_matching_ns_cmds(const char *search_var)
+{
+	PTEXTBUF matches = textBuf_new();
+
+	for (size_t i = 0; i < ARRAY_SIZE(ns_cmds); i++) {
+		const char *cmd = ns_cmds[i];
+
+		if (!strncmp(search_var, cmd, strlen(search_var)))
+			add_cmd(matches, cmd);
+	}
+
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
+	}
+
+	return matches;
 }
