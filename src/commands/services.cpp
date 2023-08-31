@@ -60,7 +60,7 @@ class irc_service_cmd {
 	std::string	msg;
 
 public:
-	explicit irc_service_cmd(const char *);
+	explicit irc_service_cmd(CSTRING);
 
 	const std::string &
 	get_srv_host(void) const
@@ -68,18 +68,18 @@ public:
 		return this->srv_host;
 	}
 
-	const char *
+	CSTRING
 	get_msg(void) const
 	{
 		return this->msg.c_str();
 	}
 };
 
-irc_service_cmd::irc_service_cmd(const char *data)
+irc_service_cmd::irc_service_cmd(CSTRING data)
 {
-	char *dcopy;
-	char *last = const_cast<char *>("");
-	char *token1, *token2;
+	STRING	 dcopy;
+	STRING	 token1, token2;
+	char	*last = const_cast<char *>("");
 
 	if (strings_match(data, ""))
 		throw std::runtime_error("no data");
@@ -98,8 +98,8 @@ irc_service_cmd::irc_service_cmd(const char *data)
 }
 
 static void
-run_command(const char *slashcmd, const char *srv_name,
-    const char *host_setting, const char *data)
+run_command(CSTRING slashcmd, CSTRING srv_name, CSTRING host_setting,
+    CSTRING data)
 {
 	try {
 		irc_service_cmd sc(data);
@@ -134,7 +134,7 @@ run_command(const char *slashcmd, const char *srv_name,
  * usage: /chanserv <[service hostname | --]> <command> [...]
  */
 void
-cmd_chanserv(const char *data)
+cmd_chanserv(CSTRING data)
 {
 	run_command("/chanserv", "ChanServ", "chanserv_host", data);
 }
@@ -143,7 +143,7 @@ cmd_chanserv(const char *data)
  * usage: /nickserv <[service hostname | --]> <command> [...]
  */
 void
-cmd_nickserv(const char *data)
+cmd_nickserv(CSTRING data)
 {
 	run_command("/nickserv", "NickServ", "nickserv_host", data);
 }
@@ -152,13 +152,13 @@ cmd_nickserv(const char *data)
  * usage: /qbot <[service hostname | --]> <command> [...]
  */
 void
-cmd_qbot(const char *data)
+cmd_qbot(CSTRING data)
 {
 	run_command("/qbot", "Q", "qbot_host", data);
 }
 
 static void
-add_cmd(PTEXTBUF matches, const char *str)
+add_cmd(PTEXTBUF matches, CSTRING str)
 {
 	if (textBuf_size(matches) != 0) {
 		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
@@ -171,12 +171,12 @@ add_cmd(PTEXTBUF matches, const char *str)
 }
 
 static PTEXTBUF
-get_list(const char *search_var, stringarray_t array, const size_t size)
+get_list(CSTRING search_var, stringarray_t array, const size_t size)
 {
 	PTEXTBUF matches = textBuf_new();
 
 	for (size_t i = 0; i < size; i++) {
-		const char *cmd = array[i];
+		CSTRING cmd = array[i];
 
 		if (!strncmp(search_var, cmd, strlen(search_var)))
 			add_cmd(matches, cmd);
@@ -186,7 +186,7 @@ get_list(const char *search_var, stringarray_t array, const size_t size)
 }
 
 PTEXTBUF
-get_list_of_matching_cs_cmds(const char *search_var)
+get_list_of_matching_cs_cmds(CSTRING search_var)
 {
 	PTEXTBUF matches;
 
@@ -201,7 +201,7 @@ get_list_of_matching_cs_cmds(const char *search_var)
 }
 
 PTEXTBUF
-get_list_of_matching_ns_cmds(const char *search_var)
+get_list_of_matching_ns_cmds(CSTRING search_var)
 {
 	PTEXTBUF matches;
 
