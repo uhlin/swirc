@@ -1,6 +1,19 @@
 #ifndef CMD_SQUERY_H
 #define CMD_SQUERY_H
 
+#define cs_cmds_macro(x)\
+	(#x " "),\
+	(#x " ban "),\
+	(#x " drop "),\
+	(#x " getkey "),\
+	(#x " info "),\
+	(#x " invite "),\
+	(#x " kick "),\
+	(#x " list "),\
+	(#x " register "),\
+	(#x " status "),\
+	(#x " unban ")
+
 #define ns_cmds_macro(x)\
 	(#x " "),\
 	(#x " access "),\

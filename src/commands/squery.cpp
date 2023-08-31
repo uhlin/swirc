@@ -78,6 +78,7 @@ static stringarray_t squery_commands = {
 	"clis help version",
 
 	//lint -e786
+	cs_cmds_macro(chanserv),
 	ns_cmds_macro(nickserv),
 	//lint +e786
 };
