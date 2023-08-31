@@ -157,6 +157,7 @@ static struct cmds_tag {
 	{ "sasl",        cmd_sasl,        false, sasl_usage,        ARRAY_SIZE(sasl_usage),        true  },
 	{ "say",         cmd_say,         true,  say_usage,         ARRAY_SIZE(say_usage),         false },
 	{ "servlist",    cmd_servlist,    true,  servlist_usage,    ARRAY_SIZE(servlist_usage),    true  },
+	{ "servstats",   cmd_servstats,   true,  servstats_usage,   ARRAY_SIZE(servstats_usage),   true  },
 	{ "set",         cmd_set,         false, set_usage,         ARRAY_SIZE(set_usage),         false },
 	{ "squery",      cmd_squery,      true,  squery_usage,      ARRAY_SIZE(squery_usage),      true  },
 	{ "stats",       cmd_stats,       true,  stats_usage,       ARRAY_SIZE(stats_usage),       false },

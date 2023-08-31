@@ -660,6 +660,13 @@ static usage_t servlist_usage = {
   "",
 };
 
+static usage_t servstats_usage = {
+  N_("usage: /servstats [<query> [<target>]]"),
+  "",
+  N_("This command is used to query statistics of a certain IRC server."),
+  "",
+};
+
 static usage_t set_usage = {
   N_("usage: /set [[setting] [value]]"),
   "",

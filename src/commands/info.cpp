@@ -78,3 +78,18 @@ cmd_ison(CSTRING data)
 	else
 		return;
 }
+
+/*
+ * usage: /servstats [<query> [<target>]]
+ */
+void
+cmd_servstats(CSTRING data)
+{
+	if (strings_match(data, "")) {
+		if (net_send("STATS") < 0)
+			printtext_print("err", "cannot send");
+	} else {
+		if (net_send("STATS %s", data) < 0)
+			printtext_print("err", "cannot send");
+	}
+}

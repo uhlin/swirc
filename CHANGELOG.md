@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
   - `/kline`
   - `/rehash`
   - `/restart`
+  - `/servstats`
   - `/wallops`
 - Added the following events:
   - 256 (`RPL_ADMINME`)
