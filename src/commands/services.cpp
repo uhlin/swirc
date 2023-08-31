@@ -170,17 +170,27 @@ add_cmd(PTEXTBUF matches, const char *str)
 	}
 }
 
-PTEXTBUF
-get_list_of_matching_cs_cmds(const char *search_var)
+static PTEXTBUF
+get_list(const char *search_var, stringarray_t array, const size_t size)
 {
 	PTEXTBUF matches = textBuf_new();
 
-	for (size_t i = 0; i < ARRAY_SIZE(cs_cmds); i++) {
-		const char *cmd = cs_cmds[i];
+	for (size_t i = 0; i < size; i++) {
+		const char *cmd = array[i];
 
 		if (!strncmp(search_var, cmd, strlen(search_var)))
 			add_cmd(matches, cmd);
 	}
+
+	return matches;
+}
+
+PTEXTBUF
+get_list_of_matching_cs_cmds(const char *search_var)
+{
+	PTEXTBUF matches;
+
+	matches = get_list(search_var, cs_cmds, ARRAY_SIZE(cs_cmds));
 
 	if (textBuf_size(matches) == 0) {
 		textBuf_destroy(matches);
@@ -193,14 +203,9 @@ get_list_of_matching_cs_cmds(const char *search_var)
 PTEXTBUF
 get_list_of_matching_ns_cmds(const char *search_var)
 {
-	PTEXTBUF matches = textBuf_new();
+	PTEXTBUF matches;
 
-	for (size_t i = 0; i < ARRAY_SIZE(ns_cmds); i++) {
-		const char *cmd = ns_cmds[i];
-
-		if (!strncmp(search_var, cmd, strlen(search_var)))
-			add_cmd(matches, cmd);
-	}
+	matches = get_list(search_var, ns_cmds, ARRAY_SIZE(ns_cmds));
 
 	if (textBuf_size(matches) == 0) {
 		textBuf_destroy(matches);
