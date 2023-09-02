@@ -19,6 +19,8 @@ All notable changes to this project will be documented in this file.
   - `/servstats`
   - `/wallops`
 - Added the following events:
+  - 211 (`RPL_STATSLINKINFO`)
+  - 212 (`RPL_STATSCOMMANDS`)
   - 219 (`RPL_ENDOFSTATS`)
   - 242 (`RPL_STATSUPTIME`)
   - 256 (`RPL_ADMINME`)

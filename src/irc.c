@@ -126,6 +126,8 @@ static struct numeric_events_tag {
 	{ "005", "RPL_ISUPPORT",            NO_WINDOW,      0, event_serverFeatures },
 	{ "020", "",                        STATUS_WINDOW,  1, NULL },
 	{ "042", "",                        NO_WINDOW,      0, event_allaround_extract_remove_colon },
+	{ "211", "RPL_STATSLINKINFO",       ACTIVE_WINDOW,  1, NULL }, // XXX
+	{ "212", "RPL_STATSCOMMANDS",       ACTIVE_WINDOW,  1, NULL }, // XXX
 	{ "219", "RPL_ENDOFSTATS",          ACTIVE_WINDOW,  2, NULL },
 	{ "221", "RPL_UMODEIS",             NO_WINDOW,      0, event_userModeIs },
 	{ "232", "",                        ACTIVE_WINDOW,  1, NULL },
