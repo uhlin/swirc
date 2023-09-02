@@ -1,6 +1,8 @@
 #ifndef CMD_SQUERY_H
 #define CMD_SQUERY_H
 
+#include "../textBuffer.h"
+
 #define cs_cmds_macro(x)\
 	(#x " "),\
 	(#x " ban "),\
