@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-08-28 20:21+0200\n"
+"POT-Creation-Date: 2023-09-02 19:12+0200\n"
 "PO-Revision-Date: 2023-08-28 20:53+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -1007,28 +1007,37 @@ msgstr ""
 "resultatet."
 
 #: ../src/include/commandhelp.h:664
+#, fuzzy
+msgid "usage: /servstats [<query> [<target>]]"
+msgstr "användning: /servlist [<mask> [<typ>]]"
+
+#: ../src/include/commandhelp.h:666
+msgid "This command is used to query statistics of a certain IRC server."
+msgstr ""
+
+#: ../src/include/commandhelp.h:671
 msgid "usage: /set [[setting] [value]]"
 msgstr "användning: /set [[inställning] [värde]]"
 
-#: ../src/include/commandhelp.h:666
+#: ../src/include/commandhelp.h:673
 msgid "Alter Swirc settings."
 msgstr "Ändra Swirc-inställningar."
 
-#: ../src/include/commandhelp.h:671
+#: ../src/include/commandhelp.h:678
 msgid ""
 "    Bools are case insensitive and can have one of the following\n"
 "    values:"
 msgstr "    Bools är skiftlägesokänsliga och kan ha ett av följande värden:"
 
-#: ../src/include/commandhelp.h:673
+#: ../src/include/commandhelp.h:680
 msgid "    - on, true or yes"
 msgstr "    - on, true eller yes"
 
-#: ../src/include/commandhelp.h:674
+#: ../src/include/commandhelp.h:681
 msgid "    - off, false or no"
 msgstr "    - off, false eller no"
 
-#: ../src/include/commandhelp.h:677
+#: ../src/include/commandhelp.h:684
 msgid ""
 "    Integers. Swirc implements a min/max value for each integer in\n"
 "    order to keep its value safe. The error log will tell if the\n"
@@ -1040,27 +1049,27 @@ msgstr ""
 "    begränsningarna för ett heltal inte är inom gränserna och i så\n"
 "    fall att ett förprogrammerat reservvärde används istället."
 
-#: ../src/include/commandhelp.h:683
+#: ../src/include/commandhelp.h:690
 msgid "    An arbitrary sequence of characters"
 msgstr "    En godtycklig sekvens av tecken"
 
-#: ../src/include/commandhelp.h:687
+#: ../src/include/commandhelp.h:694
 msgid "  Output the current values of all settings:"
 msgstr "  Mata ut de aktuella värdena för alla inställningar:"
 
-#: ../src/include/commandhelp.h:688
+#: ../src/include/commandhelp.h:695
 msgid "    /set (without any arguments)"
 msgstr "    /set (utan några argument)"
 
-#: ../src/include/commandhelp.h:690
+#: ../src/include/commandhelp.h:697
 msgid "  Turn beeps on/off:"
 msgstr "  Slå pip på/av:"
 
-#: ../src/include/commandhelp.h:697
+#: ../src/include/commandhelp.h:704
 msgid "usage: /squery <servicename> <text>"
 msgstr "användning: /squery <tjänstens namn> <text>"
 
-#: ../src/include/commandhelp.h:699
+#: ../src/include/commandhelp.h:706
 msgid ""
 "This command is used similarly to '/msg'. The only difference is that\n"
 "the recipient MUST be a service."
@@ -1068,11 +1077,11 @@ msgstr ""
 "Detta kommando används på samma sätt som '/msg'. Den enda skillnaden\n"
 "är att mottagaren MÅSTE vara en tjänst."
 
-#: ../src/include/commandhelp.h:705
+#: ../src/include/commandhelp.h:712
 msgid "usage: /stats [channel]"
 msgstr "användning: /stats [kanal]"
 
-#: ../src/include/commandhelp.h:707
+#: ../src/include/commandhelp.h:714
 msgid ""
 "Outputs a channel's user statistics. If the channel argument is left\n"
 "empty and the active window is an IRC channel, Swirc will output the\n"
@@ -1082,31 +1091,31 @@ msgstr ""
 "och det aktiva fönstret är en IRC kanal, kommer Swirc att mata ut\n"
 "användarstatistiken för den kanalen."
 
-#: ../src/include/commandhelp.h:714
+#: ../src/include/commandhelp.h:721
 msgid "usage: /theme [install <name> | list-remote | set <name>]"
 msgstr "användning: /theme [install <namn> | list-remote | set <namn>]"
 
-#: ../src/include/commandhelp.h:716
+#: ../src/include/commandhelp.h:723
 msgid "Management of themes on-the-fly."
 msgstr "Hantering av teman."
 
-#: ../src/include/commandhelp.h:720
+#: ../src/include/commandhelp.h:727
 msgid "    Install a theme named 'bx':"
 msgstr "    Installera ett tema som heter 'bx':"
 
-#: ../src/include/commandhelp.h:723
+#: ../src/include/commandhelp.h:730
 msgid "    List all available themes:"
 msgstr "    Lista alla tillgängliga teman:"
 
-#: ../src/include/commandhelp.h:726
+#: ../src/include/commandhelp.h:733
 msgid "    Activate an installed theme with name 'bx':"
 msgstr "    Aktivera ett installerat tema med namnet 'bx':"
 
-#: ../src/include/commandhelp.h:732
+#: ../src/include/commandhelp.h:739
 msgid "usage: /time <target>"
 msgstr "användning: /time <mål>"
 
-#: ../src/include/commandhelp.h:734
+#: ../src/include/commandhelp.h:741
 msgid ""
 "Send a CTCP TIME request to 'target', which is either a nickname or an\n"
 "IRC channel."
@@ -1114,11 +1123,11 @@ msgstr ""
 "Skicka en CTCP TIME förfrågan till 'mål', som antingen är ett smeknamn\n"
 "eller en IRC kanal."
 
-#: ../src/include/commandhelp.h:740
+#: ../src/include/commandhelp.h:747
 msgid "usage: /topic [new topic]"
 msgstr "användning: /topic [nytt ämne]"
 
-#: ../src/include/commandhelp.h:742
+#: ../src/include/commandhelp.h:749
 msgid ""
 "Sets a new topic for a channel. If 'new topic' is omitted the action\n"
 "will be to display the current topic. (The active window must be an\n"
@@ -1128,29 +1137,29 @@ msgstr ""
 "åtgärden att vara att visa det aktuella ämnet. (Det aktiva fönstret\n"
 "måste vara en IRC kanal.)"
 
-#: ../src/include/commandhelp.h:749
+#: ../src/include/commandhelp.h:756
 msgid "usage: /unban <mask>"
 msgstr "användning: /unban <mask>"
 
-#: ../src/include/commandhelp.h:751
+#: ../src/include/commandhelp.h:758
 msgid "Removes a channel ban. (The active window must be an IRC channel.)"
 msgstr ""
 "Tar bort ett kanalförbud.\n"
 "(Det aktiva fönstret måste vara en IRC kanal.)"
 
-#: ../src/include/commandhelp.h:761
+#: ../src/include/commandhelp.h:768
 msgid "usage: /unignore [#]"
 msgstr "användning: /unignore [#]"
 
-#: ../src/include/commandhelp.h:763
+#: ../src/include/commandhelp.h:770
 msgid "Deletes a regular expression from the ignore list."
 msgstr "Tar bort ett reguljärt uttryck från ignoreringslistan."
 
-#: ../src/include/commandhelp.h:772
+#: ../src/include/commandhelp.h:779
 msgid "usage: /version <target>"
 msgstr "användning: /version <mål>"
 
-#: ../src/include/commandhelp.h:774
+#: ../src/include/commandhelp.h:781
 msgid ""
 "Send a CTCP VERSION request to 'target', which is either a nickname or\n"
 "an IRC channel."
@@ -1158,11 +1167,11 @@ msgstr ""
 "Skicka en CTCP VERSION förfrågan till 'mål', vilket antingen är ett\n"
 "smeknamn eller en IRC kanal."
 
-#: ../src/include/commandhelp.h:780
+#: ../src/include/commandhelp.h:787
 msgid "usage: /wallops <message>"
 msgstr "användning: /wallops <meddelande>"
 
-#: ../src/include/commandhelp.h:782
+#: ../src/include/commandhelp.h:789
 msgid ""
 "The 'wallops'-command is used to send a message to all currently\n"
 "connected users who have set the 'w' user mode for themselves."
@@ -1171,11 +1180,11 @@ msgstr ""
 "för närvarande anslutna användare som har ställt in användarläget 'w'\n"
 "för sig själva."
 
-#: ../src/include/commandhelp.h:788
+#: ../src/include/commandhelp.h:795
 msgid "usage: /who <mask>"
 msgstr "användning: /who <mask>"
 
-#: ../src/include/commandhelp.h:790
+#: ../src/include/commandhelp.h:797
 msgid ""
 "Generates a query which returns a list of information which matches\n"
 "the provided 'mask'."
@@ -1183,78 +1192,78 @@ msgstr ""
 "Genererar en fråga som returnerar en lista med information som matchar\n"
 "den angivna 'masken'."
 
-#: ../src/include/commandhelp.h:795
+#: ../src/include/commandhelp.h:802
 msgid "  Show the Libera Chat crew:"
 msgstr "  Visa Libera Chat teamet:"
 
-#: ../src/include/commandhelp.h:798
+#: ../src/include/commandhelp.h:805
 msgid "  Show users with a German domain name:"
 msgstr "  Visa användare med ett tyskt domännamn:"
 
-#: ../src/include/commandhelp.h:804
+#: ../src/include/commandhelp.h:811
 msgid "usage: /whois <nick>"
 msgstr "användning: /whois <smeknamn>"
 
-#: ../src/include/commandhelp.h:806
+#: ../src/include/commandhelp.h:813
 msgid "Asks after information about another user."
 msgstr "Frågar efter information om en annan användare."
 
-#: ../src/include/commandhelp.h:811
+#: ../src/include/commandhelp.h:818
 msgid "usage: /znc [*module] <command>"
 msgstr "användning: /znc [*modul] <kommando>"
 
-#: ../src/include/commandhelp.h:813
+#: ../src/include/commandhelp.h:820
 msgid ""
 "Simplifies the communication with ZNC which is a popular\n"
 "'IRC bouncer'."
 msgstr "Förenklar kommunikationen med ZNC som är en populär 'IRC studsare'."
 
-#: ../src/include/commandhelp.h:818
+#: ../src/include/commandhelp.h:825
 msgid "  Output your ZNC version:"
 msgstr "  Mata ut din ZNC version:"
 
-#: ../src/include/commandhelp.h:821
+#: ../src/include/commandhelp.h:828
 msgid "  Identical to the previous example:"
 msgstr "  Identiskt med föregående exempel:"
 
-#: ../src/io-loop.c:433
+#: ../src/io-loop.c:434
 #, c-format
 msgid "    Swirc %s by %s"
 msgstr "    Swirc %s av %s"
 
-#: ../src/io-loop.c:434
+#: ../src/io-loop.c:435
 #, c-format
 msgid "    Compiled on %s%s %s%s"
 msgstr "    Kompilerad %s%s %s%s"
 
-#: ../src/io-loop.c:440
+#: ../src/io-loop.c:441
 #, c-format
 msgid "Current language %s%s%s"
 msgstr "Aktuellt språk %s%s%s"
 
-#: ../src/io-loop.c:443
+#: ../src/io-loop.c:444
 #, c-format
 msgid "Program settings are stored in %s%s%s"
 msgstr "Programinställningar lagras i %s%s%s"
 
-#: ../src/io-loop.c:445
+#: ../src/io-loop.c:446
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
 msgstr "%c%hd%c färgpar har initierats"
 
-#: ../src/io-loop.c:447
+#: ../src/io-loop.c:448
 msgid "Type /help for a list of commands; or /help <command>"
 msgstr "Skriv /help för en lista med kommandon; eller /help <kommando>"
 
-#: ../src/io-loop.c:449
+#: ../src/io-loop.c:450
 msgid "for help of a specific command"
 msgstr "för hjälp av ett specifikt kommando"
 
-#: ../src/io-loop.c:450
+#: ../src/io-loop.c:451
 msgid "Type F1 for keys"
 msgstr "Skriv F1 för tangenter"
 
-#: ../src/io-loop.c:452
+#: ../src/io-loop.c:453
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr "Storlek på fellogg %s%.1f KB%s"
@@ -1402,79 +1411,79 @@ msgstr "Anslutningen till IRC servern förlorad"
 msgid "Disconnected"
 msgstr "Frånkopplad"
 
-#: ../src/readline.c:610
+#: ../src/readline.c:613
 msgid "--------------- Keys ---------------"
 msgstr "--------------- Tangenter ---------------"
 
-#: ../src/readline.c:612
+#: ../src/readline.c:615
 msgid "CTRL+a     Move to beginning of line"
 msgstr "CTRL+a     Flytta till början av raden"
 
-#: ../src/readline.c:613
+#: ../src/readline.c:616
 msgid "CTRL+e     Move to end of line"
 msgstr "CTRL+e     Flytta till slutet av raden"
 
-#: ../src/readline.c:614
+#: ../src/readline.c:617
 msgid "CTRL+b     Move cursor backward"
 msgstr "CTRL+b     Flytta markören bakåt"
 
-#: ../src/readline.c:615
+#: ../src/readline.c:618
 msgid "CTRL+f     Move cursor forward"
 msgstr "CTRL+f     Flytta markören framåt"
 
-#: ../src/readline.c:616
+#: ../src/readline.c:619
 msgid "CTRL+d     Delete"
 msgstr "CTRL+d     Ta bort"
 
-#: ../src/readline.c:617
+#: ../src/readline.c:620
 msgid "CTRL+g     Clear readline input"
 msgstr "CTRL+g     Töm inmatning"
 
-#: ../src/readline.c:618
+#: ../src/readline.c:621
 msgid "CTRL+l     Toggle logging on/off"
 msgstr "CTRL+l     Växla loggning av/på"
 
-#: ../src/readline.c:619
+#: ../src/readline.c:622
 msgid "CTRL+n     Next window"
 msgstr "CTRL+n     Nästa fönster"
 
-#: ../src/readline.c:620
+#: ../src/readline.c:623
 msgid "CTRL+p     Previous window"
 msgstr "CTRL+p     Föregående fönster"
 
-#: ../src/readline.c:621
+#: ../src/readline.c:624
 msgid "PG UP      Scroll up"
 msgstr "PG UP      Scrolla upp"
 
-#: ../src/readline.c:622
+#: ../src/readline.c:625
 msgid "PG DOWN    Scroll down"
 msgstr "PG DOWN    Scrolla ned"
 
-#: ../src/readline.c:623
+#: ../src/readline.c:626
 msgid "Up arrow   History previous"
 msgstr "Up arrow   Föregående kommando"
 
-#: ../src/readline.c:624
+#: ../src/readline.c:627
 msgid "Down arrow History next"
 msgstr "Down arrow Nästa kommando"
 
-#: ../src/readline.c:625
+#: ../src/readline.c:628
 msgid "F2         Spell word"
 msgstr "F2         Stava ord"
 
-#: ../src/readline.c:626
+#: ../src/readline.c:629
 msgid "F3         Scroll nicklist up"
 msgstr "F3         Scrolla nicklistan upp"
 
-#: ../src/readline.c:627
+#: ../src/readline.c:630
 msgid "F4         Scroll nicklist down"
 msgstr "F4         Scrolla nicklistan ned"
 
-#: ../src/readline.c:628
+#: ../src/readline.c:631
 msgid "F11        Close window"
 msgstr "F11        Stäng fönster"
 
-#: ../src/readline.c:629
+#: ../src/readline.c:632
 msgid "F12        Close all private conversations"
 msgstr "F12        Stäng alla privata konversationer"
 
