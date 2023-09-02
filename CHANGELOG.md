@@ -2,12 +2,12 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added command-line option `-W`
-- Added tab completion for:
+- **Added** command-line option `-W`
+- **Added** tab completion for:
   - `/cs`, `/chanserv`
   - `/ns`, `/nickserv`
   - `/squery`
-- Added the following commands:
+- **Added** the following commands:
   - `/admin`
   - `/die`
   - `/gline`
@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file.
   - `/restart`
   - `/servstats`
   - `/wallops`
-- Added the following events:
+- **Added** the following events:
   - 211 (`RPL_STATSLINKINFO`)
   - 212 (`RPL_STATSCOMMANDS`)
   - 216 (`RPL_STATSKLINE`)
@@ -31,8 +31,8 @@ All notable changes to this project will be documented in this file.
   - 303 (`RPL_ISON`)
   - 371 (`RPL_INFO`)
   - 374 (`RPL_ENDOFINFO`)
-- Added translations
-- Did code improvements
+- **Added** translations
+- **Did** code improvements
 
 ## [3.4.4] - 2023-07-29 ##
 - **Added** a man page that describes how to write themes.
