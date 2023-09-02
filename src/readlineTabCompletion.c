@@ -439,9 +439,7 @@ init_mode_for_query(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_sasl(volatile struct readline_session_context *ctx)
 {
-	const char *cp;
-
-	cp = addrof(ctx->tc->search_var[6]);
+	const char *cp = addrof(ctx->tc->search_var[6]);
 
 	if ((ctx->tc->matches = get_list_of_matching_sasl_cmds(cp)) == NULL) {
 		output_error("no magic");
@@ -487,9 +485,7 @@ init_mode_for_squery(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_theme(volatile struct readline_session_context *ctx)
 {
-	const char *cp;
-
-	cp = addrof(ctx->tc->search_var[7]);
+	const char *cp = addrof(ctx->tc->search_var[7]);
 
 	if ((ctx->tc->matches = get_list_of_matching_theme_cmds(cp)) == NULL) {
 		output_error("no magic");
