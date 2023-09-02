@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-09-02 19:12+0200\n"
-"PO-Revision-Date: 2023-09-02 19:14+0200\n"
+"PO-Revision-Date: 2023-09-02 19:19+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1008,11 +1008,13 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:664
 msgid "usage: /servstats [<query> [<target>]]"
-msgstr ""
+msgstr "användning: /servstats [<fråga> [<mål>]]"
 
 #: ../src/include/commandhelp.h:666
 msgid "This command is used to query statistics of a certain IRC server."
 msgstr ""
+"Detta kommando används för att fråga efter statistik för en viss IRC\n"
+"server."
 
 #: ../src/include/commandhelp.h:671
 msgid "usage: /set [[setting] [value]]"
