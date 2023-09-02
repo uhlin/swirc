@@ -641,37 +641,38 @@ var_matches_ns(CSTRING sv, int *iout)
 static void
 init_mode(volatile struct readline_session_context *ctx)
 {
+	CSTRING sv = get_search_var(ctx);
 	int off1, off2;
 
-	if (!strncmp(get_search_var(ctx), "/connect ", 9))
+	if (!strncmp(sv, "/connect ", 9))
 		init_mode_for_connect(ctx);
-	else if (var_matches_cs(get_search_var(ctx), &off1))
+	else if (var_matches_cs(sv, &off1))
 		init_mode_for_cs(ctx, off1);
-	else if (!strncmp(get_search_var(ctx), "/help ", 6))
+	else if (!strncmp(sv, "/help ", 6))
 		init_mode_for_help(ctx);
-	else if (!strncmp(get_search_var(ctx), "/msg ", 5))
+	else if (!strncmp(sv, "/msg ", 5))
 		init_mode_for_msg(ctx);
-	else if (!strncmp(get_search_var(ctx), "/notice ", 8))
+	else if (!strncmp(sv, "/notice ", 8))
 		init_mode_for_notice(ctx);
-	else if (var_matches_ns(get_search_var(ctx), &off2))
+	else if (var_matches_ns(sv, &off2))
 		init_mode_for_ns(ctx, off2);
-	else if (!strncmp(get_search_var(ctx), "/query ", 7))
+	else if (!strncmp(sv, "/query ", 7))
 		init_mode_for_query(ctx);
-	else if (!strncmp(get_search_var(ctx), "/sasl ", 6))
+	else if (!strncmp(sv, "/sasl ", 6))
 		init_mode_for_sasl(ctx);
-	else if (!strncmp(get_search_var(ctx), "/set ", 5))
+	else if (!strncmp(sv, "/set ", 5))
 		init_mode_for_set(ctx);
-	else if (!strncmp(get_search_var(ctx), "/squery ", 8))
+	else if (!strncmp(sv, "/squery ", 8))
 		init_mode_for_squery(ctx);
-	else if (!strncmp(get_search_var(ctx), "/theme ", 7))
+	else if (!strncmp(sv, "/theme ", 7))
 		init_mode_for_theme(ctx);
-	else if (!strncmp(get_search_var(ctx), "/time ", 6))
+	else if (!strncmp(sv, "/time ", 6))
 		init_mode_for_time(ctx);
-	else if (!strncmp(get_search_var(ctx), "/version ", 9))
+	else if (!strncmp(sv, "/version ", 9))
 		init_mode_for_version(ctx);
-	else if (!strncmp(get_search_var(ctx), "/whois ", 7))
+	else if (!strncmp(sv, "/whois ", 7))
 		init_mode_for_whois(ctx);
-	else if (!strncmp(get_search_var(ctx), "/znc ", 5))
+	else if (!strncmp(sv, "/znc ", 5))
 		init_mode_for_znc_cmds(ctx);
 	else if (ctx->tc->search_var[0] == '/')
 		init_mode_for_commands(ctx, (ctx->numins > 1));
