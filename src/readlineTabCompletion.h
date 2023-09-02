@@ -1,6 +1,8 @@
 #ifndef READLINE_TAB_COMPLETION_H
 #define READLINE_TAB_COMPLETION_H
 
+typedef void (*AC_FUNC)(volatile struct readline_session_context *, CSTRING);
+
 __SWIRC_BEGIN_DECLS
 PTAB_COMPLETION readline_tab_comp_ctx_new(void);
 void readline_tab_comp_ctx_destroy(PTAB_COMPLETION);

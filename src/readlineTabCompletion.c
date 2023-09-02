@@ -676,8 +676,6 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_channel_users(ctx);
 }
 
-typedef void (*AC_FUNC)(volatile struct readline_session_context *, CSTRING);
-
 static void
 ac_doit(AC_FUNC ac, volatile struct readline_session_context *ctx)
 {
