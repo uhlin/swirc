@@ -61,6 +61,7 @@
 #include "events/pong.h"
 #include "events/privmsg.h"
 #include "events/servlist.h"
+#include "events/stats.h"
 #include "events/wallops.h"
 #include "events/welcome.h"
 #include "events/whois.h"
@@ -128,6 +129,7 @@ static struct numeric_events_tag {
 	{ "042", "",                        NO_WINDOW,      0, event_allaround_extract_remove_colon },
 	{ "211", "RPL_STATSLINKINFO",       ACTIVE_WINDOW,  1, NULL }, // XXX
 	{ "212", "RPL_STATSCOMMANDS",       ACTIVE_WINDOW,  1, NULL }, // XXX
+	{ "216", "RPL_STATSKLINE",          NO_WINDOW,      0, event_statskline },
 	{ "219", "RPL_ENDOFSTATS",          ACTIVE_WINDOW,  2, NULL },
 	{ "221", "RPL_UMODEIS",             NO_WINDOW,      0, event_userModeIs },
 	{ "232", "",                        ACTIVE_WINDOW,  1, NULL },

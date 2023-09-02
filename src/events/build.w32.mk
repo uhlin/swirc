@@ -19,6 +19,7 @@ OBJS = $(OBJS)\
 	$(EVENTS_DIR)pong.obj\
 	$(EVENTS_DIR)privmsg.obj\
 	$(EVENTS_DIR)servlist.obj\
+	$(EVENTS_DIR)stats.obj\
 	$(EVENTS_DIR)wallops.obj\
 	$(EVENTS_DIR)welcome-w32.obj\
 	$(EVENTS_DIR)welcome.obj\

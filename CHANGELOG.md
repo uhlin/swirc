@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - Added the following events:
   - 211 (`RPL_STATSLINKINFO`)
   - 212 (`RPL_STATSCOMMANDS`)
+  - 216 (`RPL_STATSKLINE`)
   - 219 (`RPL_ENDOFSTATS`)
   - 242 (`RPL_STATSUPTIME`)
   - 256 (`RPL_ADMINME`)
