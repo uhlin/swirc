@@ -613,25 +613,27 @@ no_more_matches(volatile struct readline_session_context *ctx)
 static bool
 var_matches_cs(CSTRING sv, int *iout)
 {
-	if (!strncmp(sv, "/chanserv ", 10))
+	if (strncmp(sv, "/chanserv ", 10) == 0)
 		*iout = 10;
-	else if (!strncmp(sv, "/cs ", 4))
+	else if (strncmp(sv, "/cs ", 4) == 0)
 		*iout = 4;
 	else
 		*iout = 0;
-	return (!strncmp(sv, "/chanserv ", 10) || !strncmp(sv, "/cs ", 4));
+	return (strncmp(sv, "/chanserv ", 10) == 0 ||
+		strncmp(sv, "/cs ", 4) == 0);
 }
 
 static bool
 var_matches_ns(CSTRING sv, int *iout)
 {
-	if (!strncmp(sv, "/nickserv ", 10))
+	if (strncmp(sv, "/nickserv ", 10) == 0)
 		*iout = 10;
-	else if (!strncmp(sv, "/ns ", 4))
+	else if (strncmp(sv, "/ns ", 4) == 0)
 		*iout = 4;
 	else
 		*iout = 0;
-	return (!strncmp(sv, "/nickserv ", 10) || !strncmp(sv, "/ns ", 4));
+	return (strncmp(sv, "/nickserv ", 10) == 0 ||
+		strncmp(sv, "/ns ", 4) == 0);
 }
 
 static void
