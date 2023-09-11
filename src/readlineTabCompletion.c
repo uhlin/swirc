@@ -257,23 +257,23 @@ readline_tab_comp_ctx_new(void)
 
 	BZERO(ctx.search_var, sizeof ctx.search_var);
 
-	ctx.isInCirculationModeForConnect	= false;
-	ctx.isInCirculationModeForCs		= false;
-	ctx.isInCirculationModeForHelp		= false;
-	ctx.isInCirculationModeForMsg		= false;
-	ctx.isInCirculationModeForNotice	= false;
-	ctx.isInCirculationModeForNs		= false;
-	ctx.isInCirculationModeForQuery		= false;
-	ctx.isInCirculationModeForSasl		= false;
-	ctx.isInCirculationModeForSettings	= false;
-	ctx.isInCirculationModeForSquery	= false;
-	ctx.isInCirculationModeForTheme		= false;
-	ctx.isInCirculationModeForTime		= false;
-	ctx.isInCirculationModeForVersion	= false;
-	ctx.isInCirculationModeForWhois		= false;
-	ctx.isInCirculationModeForZncCmds	= false;
-	ctx.isInCirculationModeForCmds		= false;
-	ctx.isInCirculationModeForChanUsers	= false;
+	ctx.isInCirculationModeForConnect =
+	ctx.isInCirculationModeForCs =
+	ctx.isInCirculationModeForHelp =
+	ctx.isInCirculationModeForMsg =
+	ctx.isInCirculationModeForNotice =
+	ctx.isInCirculationModeForNs =
+	ctx.isInCirculationModeForQuery =
+	ctx.isInCirculationModeForSasl =
+	ctx.isInCirculationModeForSettings =
+	ctx.isInCirculationModeForSquery =
+	ctx.isInCirculationModeForTheme =
+	ctx.isInCirculationModeForTime =
+	ctx.isInCirculationModeForVersion =
+	ctx.isInCirculationModeForWhois =
+	ctx.isInCirculationModeForZncCmds =
+	ctx.isInCirculationModeForCmds =
+	ctx.isInCirculationModeForChanUsers = false;
 
 	ctx.matches = NULL;
 	ctx.elmt = NULL;
@@ -294,23 +294,23 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 	if (ctx) {
 		BZERO(ctx->search_var, sizeof ctx->search_var);
 
-		ctx->isInCirculationModeForConnect	= false;
-		ctx->isInCirculationModeForCs		= false;
-		ctx->isInCirculationModeForHelp		= false;
-		ctx->isInCirculationModeForMsg		= false;
-		ctx->isInCirculationModeForNotice	= false;
-		ctx->isInCirculationModeForNs		= false;
-		ctx->isInCirculationModeForQuery	= false;
-		ctx->isInCirculationModeForSasl		= false;
-		ctx->isInCirculationModeForSettings	= false;
-		ctx->isInCirculationModeForSquery	= false;
-		ctx->isInCirculationModeForTheme	= false;
-		ctx->isInCirculationModeForTime		= false;
-		ctx->isInCirculationModeForVersion	= false;
-		ctx->isInCirculationModeForWhois	= false;
-		ctx->isInCirculationModeForZncCmds	= false;
-		ctx->isInCirculationModeForCmds		= false;
-		ctx->isInCirculationModeForChanUsers	= false;
+		ctx->isInCirculationModeForConnect =
+		ctx->isInCirculationModeForCs =
+		ctx->isInCirculationModeForHelp =
+		ctx->isInCirculationModeForMsg =
+		ctx->isInCirculationModeForNotice =
+		ctx->isInCirculationModeForNs =
+		ctx->isInCirculationModeForQuery =
+		ctx->isInCirculationModeForSasl =
+		ctx->isInCirculationModeForSettings =
+		ctx->isInCirculationModeForSquery =
+		ctx->isInCirculationModeForTheme =
+		ctx->isInCirculationModeForTime =
+		ctx->isInCirculationModeForVersion =
+		ctx->isInCirculationModeForWhois =
+		ctx->isInCirculationModeForZncCmds =
+		ctx->isInCirculationModeForCmds =
+		ctx->isInCirculationModeForChanUsers = false;
 
 		if (ctx->matches != NULL)
 			textBuf_destroy(ctx->matches);
