@@ -33,6 +33,10 @@
 
 #include "stats.h"
 
+/* event_statskline: 216 (RPL_STATSKLINE)
+
+   Example:
+     :irc.server.com 216 ... */
 void
 event_statskline(struct irc_message_compo *compo)
 {
