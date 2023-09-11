@@ -34,6 +34,11 @@ All notable changes to this project will be documented in this file.
 - **Added** translations
 - **Did** code improvements
 
+### Windows ###
+- Fixed a bug which caused the program to exit silently without any
+  message. This when turning logging on for a window. The solution was
+  to replace `fprintf()` with `fprintf_s()`.
+
 ## [3.4.4] - 2023-07-29 ##
 - **Added** a man page that describes how to write themes.
 - **Added** and made use of a pointer validation function.

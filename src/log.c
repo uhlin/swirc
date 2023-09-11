@@ -141,8 +141,13 @@ log_msg(const char *path, const char *text)
 		char *text_copy;
 
 		text_copy = sw_strdup(text);
+#ifdef HAVE_BCI
+		(void) fprintf_s(fp, "%s %s\n", get_date(),
+		    squeeze_text_deco(text_copy));
+#else
 		(void) fprintf(fp, "%s %s\n", get_date(),
 		    squeeze_text_deco(text_copy));
+#endif
 		(void) fclose(fp);
 		free(text_copy);
 	}
