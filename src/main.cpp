@@ -174,10 +174,9 @@ view_version()
 	char *MessageVersion;
 
 	MessageVersion = strdup_printf("Swirc %s\nCopyright (C) %s %s. "
-	    "All rights reserved.\n",
-	    g_swircVersion,
-	    g_swircYear,
-	    g_swircAuthor);
+	    "All rights reserved.\n%s %s\n",
+	    g_swircVersion, g_swircYear, g_swircAuthor,
+	    __DATE__, __TIME__);
 	PUTS(MessageVersion);
 	free(MessageVersion);
 
