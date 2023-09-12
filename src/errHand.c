@@ -1,5 +1,5 @@
 /* errHand.c  --  Error handling routines
-   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -87,8 +87,13 @@ write_to_error_log(const char *msg)
 #endif
 
 	if ((fp = xfopen(path, "a")) != NULL) {
+#ifdef HAVE_BCI
+		(void) fprintf_s(fp, "%s %s[%ld]: %s\n", get_timestamp(),
+		    g_progname, g_pid, msg);
+#else
 		(void) fprintf(fp, "%s %s[%ld]: %s\n", get_timestamp(),
 		    g_progname, g_pid, msg);
+#endif
 		(void) fclose(fp);
 	}
 }
@@ -291,8 +296,13 @@ debug_doit(const char *fmt, va_list ap)
 #endif
 
 	if ((fp = xfopen(path, "a")) != NULL) {
+#ifdef HAVE_BCI
+		(void) fprintf_s(fp, "%s %s[%ld]: %s\n", get_timestamp(),
+		    g_progname, g_pid, out);
+#else
 		(void) fprintf(fp, "%s %s[%ld]: %s\n", get_timestamp(),
 		    g_progname, g_pid, out);
+#endif
 		(void) fclose(fp);
 	}
 }
