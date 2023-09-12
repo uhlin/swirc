@@ -52,7 +52,7 @@ static const char *get_logtype(const char *) NONNULL;
 static const char *
 get_date(void)
 {
-	static char	buffer[200] = { 0 };
+	static char	buffer[200] = { '\0' };
 	struct tm	items = { 0 };
 	time_t		seconds = 0;
 
