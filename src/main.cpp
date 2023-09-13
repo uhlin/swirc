@@ -520,8 +520,6 @@ toast_notifications_init()
 	 */
 	if (DesktopNotificationManagerCompat::RegisterActivator() != S_OK)
 		err_log(0, "Failed to register COM activator");
-
-	Toasts::SendTestNotification();
 }
 #endif
 
