@@ -2,7 +2,7 @@
 .\"
 .\" Copyright 2018-2023 Markus Uhlin. All rights reserved.
 .\"
-.Dd February 5, 2023
+.Dd September 13, 2023
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -368,24 +368,24 @@ setting to \fIclient.pem\fR.
 .\" ----------------------------------------
 .\" SERVER CIPHER SUITE
 .\" ----------------------------------------
-.It Sy server_cipher_suite Pq Em string
-Server cipher suite.
-Which can have one of the following values:
-.Bl -bullet -compact
-.It
-secure
-.It
-compat
-.It
-legacy
-.It
-all
-.El
-.Pp
-The server cipher suite is used when you start a TLS server in
-.Xr swirc 1
-used for remote GUI connections.
-(Managed using the \fBrgui\fR command).
+.\" .It Sy server_cipher_suite Pq Em string
+.\" Server cipher suite.
+.\" Which can have one of the following values:
+.\" .Bl -bullet -compact
+.\" .It
+.\" secure
+.\" .It
+.\" compat
+.\" .It
+.\" legacy
+.\" .It
+.\" all
+.\" .El
+.\" .Pp
+.\" The server cipher suite is used when you start a TLS server in
+.\" .Xr swirc 1
+.\" used for remote GUI connections.
+.\" (Managed using the \fBrgui\fR command).
 .\" ----------------------------------------
 .\" SHOW PING PONG
 .\" ----------------------------------------
