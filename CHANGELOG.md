@@ -35,7 +35,7 @@ All notable changes to this project will be documented in this file.
 - **Did** code improvements
 
 ### Windows ###
-- Fixed a bug which caused the program to exit silently without any
+- **Fixed** a bug which caused the program to exit silently without any
   message. This when turning logging on for a window. The solution was
   to replace `fprintf()` with `fprintf_s()`.
 
