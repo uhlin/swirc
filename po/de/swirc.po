@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-09-02 19:12+0200\n"
+"POT-Creation-Date: 2023-09-14 18:22+0200\n"
 "PO-Revision-Date: 2023-08-25 18:57+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -1126,12 +1126,12 @@ msgstr "Geben Sie F1 für Tastaturtasten ein"
 msgid "Error log size %s%.1f KB%s"
 msgstr "Größe des Fehlerprotokolls %s%.1f KB%s"
 
-#: ../src/log.c:161
+#: ../src/log.c:166
 #, c-format
 msgid "Logging for window (refnum: %d) now off"
 msgstr "Die Protokollierung für das Fenster (refnum: %d) ist jetzt deaktiviert"
 
-#: ../src/log.c:165
+#: ../src/log.c:170
 #, c-format
 msgid "Logging for window (refnum: %d) now on"
 msgstr "Die Protokollierung für das Fenster (refnum: %d) ist jetzt aktiviert"
@@ -1220,7 +1220,7 @@ msgstr "    -v, --version        Swirc-Version anzeigen\n"
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsdatei\n"
 
-#: ../src/main.cpp:225
+#: ../src/main.cpp:224
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Anwendung: %s [FLAGGE] ...\n"

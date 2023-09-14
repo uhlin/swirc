@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-09-02 19:12+0200\n"
+"POT-Creation-Date: 2023-09-14 18:22+0200\n"
 "PO-Revision-Date: 2023-09-02 19:19+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -1269,12 +1269,12 @@ msgstr "Skriv F1 för tangenter"
 msgid "Error log size %s%.1f KB%s"
 msgstr "Storlek på fellogg %s%.1f KB%s"
 
-#: ../src/log.c:161
+#: ../src/log.c:166
 #, c-format
 msgid "Logging for window (refnum: %d) now off"
 msgstr "Loggning för fönstret (refnum: %d) är nu av"
 
-#: ../src/log.c:165
+#: ../src/log.c:170
 #, c-format
 msgid "Logging for window (refnum: %d) now on"
 msgstr "Loggning för fönstret (refnum: %d) är nu på"
@@ -1362,7 +1362,7 @@ msgstr "    -v, --version        Visa Swirc version\n"
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsfil\n"
 
-#: ../src/main.cpp:225
+#: ../src/main.cpp:224
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Användning: %s [FLAGGA] ...\n"
