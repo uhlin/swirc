@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.4.5] - 2023-09-14 ##
 - **Added** command-line option `-W`
 - **Added** tab completion for:
   - `/cs`, `/chanserv`

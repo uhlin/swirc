@@ -16,7 +16,7 @@ DEST = c:\out\swirc-$(MACHINE)
 # Locale location
 LOCLOC = LC_MESSAGES\swirc.mo
 
-PRODUCT_VERSION = 3.4.4
+PRODUCT_VERSION = 3.4.5
 REVISION =
 
 all: main
