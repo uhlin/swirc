@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added adoption of SPDX-tags for the distributed manual pages
 - Fixed typos in manual pages
 
 ## [3.4.5] - 2023-09-14 ##
