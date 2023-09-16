@@ -1,5 +1,5 @@
 /* wallops.cpp
-   Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -92,10 +92,10 @@ event_wallops(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
-		printtext(&ctx, "event_wallops: %s", e.what());
+		printtext(&ctx, "%s: %s", __func__, e.what());
 	} catch (const std::bad_alloc &e) {
-		err_exit(ENOMEM, "event_wallops: %s", e.what());
+		err_exit(ENOMEM, "%s: %s", __func__, e.what());
 	} catch (...) {
-		err_log(0, "event_wallops: unknown exception");
+		err_log(0, "%s: unknown exception", __func__);
 	}
 }
