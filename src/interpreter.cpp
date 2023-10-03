@@ -132,8 +132,8 @@ Interpreter(const struct Interpreter_in *in)
 		}
 
 		adv_while_isspace(&cp);
-		if (*cp++ != ArgBegin) // XXX
-			throw std::runtime_error("expected string");
+		if (*cp++ != ArgBegin)
+			throw std::runtime_error("expected arg begin");
 		else if ((arg = copy_argument(cp)) == NULL)
 			throw std::runtime_error("unterminated argument");
 
