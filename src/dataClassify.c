@@ -45,8 +45,8 @@ is_alphabetic(const char *string)
 	if (string == NULL || *string == '\0')
 		return false;
 
-	for (const char *p = &string[0]; *p != '\0'; p++) {
-		if (!sw_isalpha(*p))
+	for (const char *cp = &string[0]; *cp != '\0'; cp++) {
+		if (!sw_isalpha(*cp))
 			return false;
 	}
 
@@ -134,8 +134,8 @@ is_numeric(const char *string)
 	if (string == NULL || *string == '\0')
 		return false;
 
-	for (const char *p = &string[0]; *p != '\0'; p++) {
-		if (!sw_isdigit(*p))
+	for (const char *cp = &string[0]; *cp != '\0'; cp++) {
+		if (!sw_isdigit(*cp))
 			return false;
 	}
 
@@ -152,8 +152,8 @@ is_valid_hostname(const char *hostname)
 	    xstrnlen(hostname, hostname_len_max + 1) > hostname_len_max)
 		return false;
 
-	for (const char *ccp = &hostname[0]; *ccp != '\0'; ccp++) {
-		if (strchr(host_chars, *ccp) == NULL)
+	for (const char *cp = &hostname[0]; *cp != '\0'; cp++) {
+		if (strchr(host_chars, *cp) == NULL)
 			return false;
 	}
 
@@ -171,8 +171,8 @@ is_valid_nickname(const char *nickname)
 	    xstrnlen(nickname, nickname_len_max + 1) > nickname_len_max)
 		return false;
 
-	for (const char *ccp = &nickname[0]; *ccp != '\0'; ccp++) {
-		if (strchr(legal_index, *ccp) == NULL)
+	for (const char *cp = &nickname[0]; *cp != '\0'; cp++) {
+		if (strchr(legal_index, *cp) == NULL)
 			return false;
 	}
 
@@ -186,8 +186,8 @@ is_valid_real_name(const char *real_name)
 	    xstrnlen(real_name, real_name_len_max + 1) > real_name_len_max)
 		return false;
 
-	for (const char *ccp = &real_name[0]; *ccp != '\0'; ccp++) {
-		if (!sw_isprint(*ccp))
+	for (const char *cp = &real_name[0]; *cp != '\0'; cp++) {
+		if (!sw_isprint(*cp))
 			return false;
 	}
 
@@ -205,8 +205,8 @@ is_valid_username(const char *username)
 	    xstrnlen(username, username_len_max + 1) > username_len_max)
 		return false;
 
-	for (const char *ccp = &username[0]; *ccp != '\0'; ccp++) {
-		if (strchr(legal_index, *ccp) == NULL)
+	for (const char *cp = &username[0]; *cp != '\0'; cp++) {
+		if (strchr(legal_index, *cp) == NULL)
 			return false;
 	}
 
@@ -219,8 +219,8 @@ is_whitespace(const char *string)
 	if (string == NULL || *string == '\0')
 		return false;
 
-	for (const char *p = &string[0]; *p != '\0'; p++) {
-		if (!sw_isspace(*p))
+	for (const char *cp = &string[0]; *cp != '\0'; cp++) {
+		if (!sw_isspace(*cp))
 			return false;
 	}
 
