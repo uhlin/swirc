@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2022 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2012-2023 Markus Uhlin <markus.uhlin@bredband.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -55,7 +55,7 @@ copy_identifier(const char *&id) noexcept
 /**
  * Copy argument
  */
-/*lint -sem(copy_argument, r_null) */
+//lint -sem(copy_argument, r_null)
 static char *
 copy_argument(const char *&arg) noexcept
 {
