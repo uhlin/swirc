@@ -28,6 +28,10 @@ const char g_fgets_nullret_err1[] = "error: fgets() returned null and the "
 const char g_fgets_nullret_err2[] = "error: fgets() returned null for an "
     "unknown reason";
 
+static const char ArgBegin = '"';
+static const char ArgEnd = '"';
+static const char CommentChar = '#';
+
 static const size_t	identifier_maxSize = 50;
 static const size_t	argument_maxSize = 480;
 
@@ -66,7 +70,7 @@ copy_argument(const char *&arg)
 	char	*dest = addrof(dest_buf[0]);
 
 	while (*arg && count > 1) {
-		if (*arg == '\"') {
+		if (*arg == ArgEnd) {
 			inside_arg = false;
 			arg++;
 			break;
@@ -128,7 +132,7 @@ Interpreter(const struct Interpreter_in *in)
 		}
 
 		adv_while_isspace(&cp);
-		if (*cp++ != '\"')
+		if (*cp++ != ArgBegin) // XXX
 			throw std::runtime_error("expected string");
 		else if ((arg = copy_argument(cp)) == NULL)
 			throw std::runtime_error("unterminated argument");
@@ -138,7 +142,7 @@ Interpreter(const struct Interpreter_in *in)
 			throw std::runtime_error("no line terminator!");
 
 		adv_while_isspace(&cp);
-		if (*cp && *cp != '#') {
+		if (*cp && *cp != CommentChar) {
 			throw std::runtime_error("implicit data after "
 			    "line terminator!");
 		} else if (!(in->validator_func(id))) {
@@ -188,7 +192,7 @@ Interpreter_processAllLines(FILE *fp, const char *path, Interpreter_vFunc func1,
 
 		cp = &buf[0];
 		adv_while_isspace(&cp);
-		if (strings_match(cp, "") || *cp == '#') {
+		if (strings_match(cp, "") || *cp == CommentChar) {
 			line_num++;
 			continue;
 		}
