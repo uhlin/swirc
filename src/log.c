@@ -166,10 +166,10 @@ log_toggle_on_off(void)
 		printtext(&ctx, _("Logging for window (refnum: %d) now off"),
 		    g_active_window->refnum);
 	} else {
+		g_active_window->logging = true;
 		ctx.spec_type = TYPE_SPEC1_SUCCESS;
 		printtext(&ctx, _("Logging for window (refnum: %d) now on"),
 		    g_active_window->refnum);
-		g_active_window->logging = true;
 	}
 
 	statusbar_update_display_beta();
