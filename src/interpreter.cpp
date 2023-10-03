@@ -15,6 +15,7 @@
    PERFORMANCE OF THIS SOFTWARE. */
 
 #include "common.h"
+#include "assertAPI.h"
 #include "errHand.h"
 #include "interpreter.h"
 #include "strHand.h"
@@ -34,7 +35,7 @@ static const size_t	argument_maxSize = 480;
  * Copy identifier
  */
 static char *
-copy_identifier(const char *&id) noexcept
+copy_identifier(const char *&id)
 {
 	size_t	 count = identifier_maxSize;
 	char	*dest_buf = new char[count + 1];
@@ -57,7 +58,7 @@ copy_identifier(const char *&id) noexcept
  */
 //lint -sem(copy_argument, r_null)
 static char *
-copy_argument(const char *&arg) noexcept
+copy_argument(const char *&arg)
 {
 	bool	 inside_arg = true;
 	size_t	 count = argument_maxSize;
@@ -162,6 +163,12 @@ Interpreter(const struct Interpreter_in *in)
 
 		clean_up(id, arg);
 		abort();
+	} catch (const std::bad_alloc &e) {
+		std::cerr << "out of memory: " << e.what() << '\n';
+		clean_up(id, arg);
+		abort();
+	} catch (...) {
+		sw_assert_not_reached();
 	}
 
 	clean_up(id, arg);
