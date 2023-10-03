@@ -46,9 +46,10 @@ copy_identifier(const char *&id) noexcept
 
 	*dest = '\0';
 
-	if (count == 1)
-		err_exit(EOVERFLOW, "In copy_identifier: fatal: "
-		    "string was truncated!");
+	if (count == 1) {
+		err_exit(EOVERFLOW, "In %s: fatal: string was truncated!",
+		    __func__);
+	}
 	return dest_buf;
 }
 
@@ -77,8 +78,8 @@ copy_argument(const char *&arg) noexcept
 	*dest = '\0';
 
 	if (inside_arg && count == 1)
-		err_exit(EOVERFLOW, "In copy_argument: fatal: "
-		    "string was truncated!");
+		err_exit(EOVERFLOW, "In %s: fatal: string was truncated!",
+		    __func__);
 	if (inside_arg) {
 		delete[] dest_buf;
 		return NULL;
