@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added adoption of SPDX-tags for the distributed manual pages
+- Added detection of server Wallops
+- Added handling of empty user/host combinations in Wallops messages
 - Fixed occurrences of hardcoded function names in messages
 - Fixed typos in manual pages
 - Improved C++ exception handling
