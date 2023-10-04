@@ -66,7 +66,8 @@ event_wallops(struct irc_message_compo *compo)
 		printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE,
 		    true);
 
-		if (strings_match_ignore_case(prefix, g_server_hostname)) {
+		if (strings_match_ignore_case(prefix, g_server_hostname) ||
+		    strpbrk(prefix, "!@") == NULL) {
 			printtext(&ctx, "%s!%s%c %s", COLOR3, "WALLOPS", NORMAL,
 			    message);
 			return;
@@ -75,17 +76,16 @@ event_wallops(struct irc_message_compo *compo)
 			char	*nick, *user, *host;
 			char	*str;
 
-			if ((nick = strtok_r(prefix, "!@", &last)) == NULL ||
-			    (user = strtok_r(NULL, "!@", &last)) == NULL ||
-			    (host = strtok_r(NULL, "!@", &last)) == NULL) {
-				throw std::runtime_error("no nick or "
-				    "user@host");
-			}
+			if ((nick = strtok_r(prefix, "!@", &last)) == NULL)
+				throw std::runtime_error("no nick");
+			user = strtok_r(NULL, "!@", &last);
+			host = strtok_r(NULL, "!@", &last);
 
 			/*
 			 * NOTE: Current look is identical to notice
 			 */
-			str = get_notice(nick, user, host);
+			str = get_notice(nick, (user ? user : "<no user>"),
+			    (host ? host : "<no host>"));
 			printtext(&ctx, "%s %s", str, message);
 			free(str);
 		}
