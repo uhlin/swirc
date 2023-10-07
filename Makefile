@@ -15,11 +15,11 @@ main: $(TGTS)
 
 .c.o:
 	$(E) "  CC      " $@
-	$(Q) $(CC) $(CFLAGS) -c -o $@ $<
+	$(Q) $(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 .cpp.o:
 	$(E) "  CXX     " $@
-	$(Q) $(CXX) $(CXXFLAGS) -c -o $@ $<
+	$(Q) $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 include tests/recompile.mk
 
