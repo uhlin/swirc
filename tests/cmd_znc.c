@@ -25,8 +25,8 @@ sendsExpected_test1(void **state)
 static void
 sendsExpected_test2(void **state)
 {
-	cmd_znc("*status setBUFFER #ChatZone 300");
-	assert_string_equal(g_sent, "PRIVMSG *status :setBUFFER #ChatZone 300");
+	cmd_znc("*status SETbuffER #ChatZone 300");
+	assert_string_equal(g_sent, "PRIVMSG *status :SETbuffER #ChatZone 300");
 	UNUSED_PARAM(state);
 }
 
