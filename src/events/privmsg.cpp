@@ -63,11 +63,11 @@
 #include "swircpaths.h"
 #endif
 
-static bool	shouldHighlightMessage_case1(const char *) NONNULL;
-static bool	shouldHighlightMessage_case2(const char *) NONNULL;
+static bool	shouldHighlightMessage_case1(CSTRING) NONNULL;
+static bool	shouldHighlightMessage_case2(CSTRING) NONNULL;
 
 static void
-acknowledge_ctcp_request(const char *cmd, const struct special_msg_context *ctx)
+acknowledge_ctcp_request(CSTRING cmd, const struct special_msg_context *ctx)
 {
 	PRINTTEXT_CONTEXT	ptext_ctx;
 
@@ -82,7 +82,7 @@ static void
 handle_special_msg(const struct special_msg_context *ctx)
 {
 	PRINTTEXT_CONTEXT ptext_ctx;
-	char *msg = sw_strdup(ctx->msg);
+	STRING msg = sw_strdup(ctx->msg);
 
 	printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
 	squeeze(msg, "\001");
@@ -135,13 +135,13 @@ broadcast_window_activity(const IRC_WINDOW *src)
 }
 
 static bool
-shouldHighlightMessage_case1(const char *msg)
+shouldHighlightMessage_case1(CSTRING msg)
 {
 	bool	 result = false;
-	char	*s1 = strdup_printf("%s:", g_my_nickname);
-	char	*s2 = strdup_printf("%s,", g_my_nickname);
-	char	*s3 = strdup_printf("%s ", g_my_nickname);
-	char	*s4 = strdup_printf(" %s ", g_my_nickname);
+	STRING	 s1 = strdup_printf("%s:", g_my_nickname);
+	STRING	 s2 = strdup_printf("%s,", g_my_nickname);
+	STRING	 s3 = strdup_printf("%s ", g_my_nickname);
+	STRING	 s4 = strdup_printf(" %s ", g_my_nickname);
 
 	if (!strncasecmp(msg, s1, strlen(s1)) ||
 	    !strncasecmp(msg, s2, strlen(s2)) ||
@@ -157,7 +157,7 @@ shouldHighlightMessage_case1(const char *msg)
 }
 
 static bool
-shouldHighlightMessage_case2(const char *msg)
+shouldHighlightMessage_case2(CSTRING msg)
 {
 	bool	 result = false;
 	char	*last = const_cast<char *>("");
@@ -176,9 +176,9 @@ shouldHighlightMessage_case2(const char *msg)
 #endif
 			continue;
 		} else {
-			char	*s1 = strdup_printf("%s:", token);
-			char	*s2 = strdup_printf("%s,", token);
-			char	*s3 = strdup_printf("%s ", token);
+			STRING	 s1 = strdup_printf("%s:", token);
+			STRING	 s2 = strdup_printf("%s,", token);
+			STRING	 s3 = strdup_printf("%s ", token);
 
 			if (!strncasecmp(msg, s1, strlen(s1)) ||
 			    !strncasecmp(msg, s2, strlen(s2)) ||
@@ -201,7 +201,7 @@ shouldHighlightMessage_case2(const char *msg)
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 static wchar_t *
-get_converted_wcs(const char *s)
+get_converted_wcs(CSTRING s)
 {
 	const size_t	 size = strlen(s) + 1;
 	wchar_t		*out = new wchar_t[size];
@@ -231,8 +231,8 @@ get_message(const wchar_t *s1, const wchar_t *s2, const wchar_t *s3,
 #endif /* ----- WIN32 and TOAST_NOTIFICATIONS ----- */
 
 static void
-handle_msgs_from_my_server(PPRINTTEXT_CONTEXT ctx, const char *dest,
-    const char *msg)
+handle_msgs_from_my_server(PPRINTTEXT_CONTEXT ctx, CSTRING dest,
+    CSTRING msg)
 {
 	if (g_my_nickname && strings_match_ignore_case(dest, g_my_nickname))
 		ctx->window = g_active_window;
@@ -243,7 +243,7 @@ handle_msgs_from_my_server(PPRINTTEXT_CONTEXT ctx, const char *dest,
 }
 
 static void
-handle_private_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *msg)
+handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 {
 	if ((ctx->window = window_by_label(nick)) == NULL)
 		throw std::runtime_error("window lookup error");
@@ -260,7 +260,7 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *msg)
 	delete[] wNick;
 	delete[] wMsg;
 #elif defined(UNIX) && USE_LIBNOTIFY
-	char *body = strdup_printf("[PM] &lt;%s&gt; %s", nick, msg);
+	STRING body = strdup_printf("[PM] &lt;%s&gt; %s", nick, msg);
 	NotifyNotification *notification = notify_notification_new(SUMMARY_TEXT,
 	    body, SWIRC_ICON_PATH);
 
@@ -275,8 +275,8 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *msg)
 }
 
 static void
-handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *dest,
-    const char *msg)
+handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING dest,
+    CSTRING msg)
 {
 	PNAMES	n = NULL;
 	char	c = '!';
@@ -319,7 +319,7 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *dest,
 		delete[] wDest;
 		delete[] wMsg;
 #elif defined(UNIX) && USE_LIBNOTIFY
-		char *body = strdup_printf("%s @ %s: %s", nick, dest, msg);
+		STRING body = strdup_printf("%s @ %s: %s", nick, dest, msg);
 		NotifyNotification *notification =
 		    notify_notification_new(SUMMARY_TEXT, body, SWIRC_ICON_PATH);
 
