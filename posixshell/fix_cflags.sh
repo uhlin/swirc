@@ -25,8 +25,7 @@ fix_cflags_with_pkg_config () {
 		local _hdr_search_path="$(pkg-config --cflags-only-I ncursesw)"
 
 		if [ -n "$_hdr_search_path" ]; then
-			echo "CFLAGS += ${_hdr_search_path}" >>$MAKE_DEF_FILE
-			echo "CXXFLAGS += ${_hdr_search_path}" >>$MAKE_DEF_FILE
+			echo "CPPFLAGS += ${_hdr_search_path}" >>$MAKE_DEF_FILE
 		fi
 	fi
 }
