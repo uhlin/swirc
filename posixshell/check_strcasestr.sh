@@ -1,9 +1,8 @@
-#############################################################
-#
+# check_strcasestr.sh:
 # Check whether strcasestr() exists
 #
-# Copyright (c) 2022, 2023 Markus Uhlin. All rights reserved.
-#
+# SPDX-FileCopyrightText: Copyright 2022-2023 Markus Uhlin
+# SPDX-License-Identifier: BSD-3-Clause
 
 check_strcasestr () {
 	local _tmpfile _srcfile _out

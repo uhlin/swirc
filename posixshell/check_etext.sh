@@ -1,9 +1,8 @@
-#######################################################
-#
+# check_etext.sh:
 # Check whether the etext segment is usable
 #
-# Copyright (c) 2023 Markus Uhlin. All rights reserved.
-#
+# SPDX-FileCopyrightText: Copyright 2023 Markus Uhlin
+# SPDX-License-Identifier: BSD-3-Clause
 
 check_etext () {
 	local _tmpfile _srcfile _out

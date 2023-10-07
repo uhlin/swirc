@@ -2,7 +2,8 @@
 
 # Swirc configure script
 #
-# Copyright (C) 2016-2023 Markus Uhlin. All rights reserved.
+# SPDX-FileCopyrightText: Copyright 2016-2023 Markus Uhlin
+# SPDX-License-Identifier: BSD-3-Clause
 
 MAKE_DEF_FILE=options.mk
 
