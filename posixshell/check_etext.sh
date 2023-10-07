@@ -55,8 +55,7 @@ EOF
 	if [ ${_val} -eq 99 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE
-CFLAGS += -DHAVE_ETEXT_SEGMENT=1
-CXXFLAGS += -DHAVE_ETEXT_SEGMENT=1
+CPPFLAGS += -DHAVE_ETEXT_SEGMENT=1
 EOF
 	else
 		echo "no"

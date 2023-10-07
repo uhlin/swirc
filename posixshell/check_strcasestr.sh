@@ -1,8 +1,8 @@
-#######################################################
+#############################################################
 #
 # Check whether strcasestr() exists
 #
-# Copyright (c) 2022 Markus Uhlin. All rights reserved.
+# Copyright (c) 2022, 2023 Markus Uhlin. All rights reserved.
 #
 
 check_strcasestr () {
@@ -43,14 +43,12 @@ EOF
 	if [ $? -eq 0 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE
-CFLAGS += -DHAVE_STRCASESTR=1
-CXXFLAGS += -DHAVE_STRCASESTR=1
+CPPFLAGS += -DHAVE_STRCASESTR=1
 EOF
 	else
 		echo "no"
 		cat <<EOF >>$MAKE_DEF_FILE
-CFLAGS += -DHAVE_STRCASESTR=0
-CXXFLAGS += -DHAVE_STRCASESTR=0
+CPPFLAGS += -DHAVE_STRCASESTR=0
 EOF
 	fi
 
