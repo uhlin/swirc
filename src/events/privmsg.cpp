@@ -203,13 +203,12 @@ shouldHighlightMessage_case2(const char *msg)
 static wchar_t *
 get_converted_wcs(const char *s)
 {
-	const size_t	 size1 = strlen(s) + 1;
-	const size_t	 size2 = size_product(sizeof(wchar_t), size1);
-	wchar_t		*out = static_cast<wchar_t *>(xmalloc(size2));
+	const size_t	 size = strlen(s) + 1;
+	wchar_t		*out = new wchar_t[size];
 
-	if (MultiByteToWideChar(CP_UTF8, 0, s, -1, out, size_to_int(size1)) > 0)
+	if (MultiByteToWideChar(CP_UTF8, 0, s, -1, out, size_to_int(size)) > 0)
 		return out;
-	(void) wmemset(out, 0L, size1);
+	*out = L'\0';
 	return out;
 }
 
@@ -258,8 +257,8 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *msg)
 
 	Toasts::SendBasicToast(get_message(L"[PM]", L" <", wNick, L"> ", wMsg));
 
-	free(wNick);
-	free(wMsg);
+	delete[] wNick;
+	delete[] wMsg;
 #elif defined(UNIX) && USE_LIBNOTIFY
 	char *body = strdup_printf("[PM] &lt;%s&gt; %s", nick, msg);
 	NotifyNotification *notification = notify_notification_new(SUMMARY_TEXT,
@@ -316,9 +315,9 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, const char *nick, const char *dest,
 		Toasts::SendBasicToast(get_message(wNick, L" @ ", wDest, L": ",
 		    wMsg));
 
-		free(wNick);
-		free(wDest);
-		free(wMsg);
+		delete[] wNick;
+		delete[] wDest;
+		delete[] wMsg;
 #elif defined(UNIX) && USE_LIBNOTIFY
 		char *body = strdup_printf("%s @ %s: %s", nick, dest, msg);
 		NotifyNotification *notification =
