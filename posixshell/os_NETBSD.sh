@@ -3,7 +3,7 @@
 # --------------------------------------------------
 
 os_NETBSD () {
-	cat <<EOF >>$MAKE_DEF_FILE
+	cat <<EOF >>${MAKE_DEF_FILE}
 CC = cc
 CFLAGS = -O2 -Wall -std=c11
 CXX = c++
