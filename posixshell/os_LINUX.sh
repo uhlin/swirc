@@ -15,12 +15,7 @@ CFLAGS = -O2\\
 	-std=c11
 
 CXX = g++
-CXXFLAGS = -O2\\
-	-Wall\\
-	-fstack-protector-strong\\
-	-g\\
-	-pipe\\
-	-std=c++17
+CXXFLAGS = -O2 -Wall -fstack-protector-strong -g -pipe -std=c++17
 
 CPPFLAGS = -DLINUX=1\\
 	-DNDEBUG=1\\
