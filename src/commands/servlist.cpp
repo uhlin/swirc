@@ -11,8 +11,8 @@
 void
 cmd_servlist(const char *data)
 {
-    if (strings_match(data, ""))
-	(void) net_send("SERVLIST");
-    else
-	(void) net_send("SERVLIST %s", data);
+	if (strings_match(data, ""))
+		(void)net_send("SERVLIST");
+	else
+		(void)net_send("SERVLIST %s", data);
 }
