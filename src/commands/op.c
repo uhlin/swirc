@@ -1,5 +1,5 @@
 /* Command op and deop
-   Copyright (C) 2019-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -35,11 +35,6 @@
 #include "../strHand.h"
 
 #include "op.h"
-
-#ifdef UNIT_TESTING
-#undef  ACTWINLABEL
-#define ACTWINLABEL "#chatzone"
-#endif
 
 static const char	err1[] = "missing arguments";
 static const char	err2[] = "invalid nickname";

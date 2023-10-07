@@ -1,5 +1,5 @@
-/* Join and Part commands
-   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
+/* Command join and part
+   Copyright (C) 2016-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -39,11 +39,6 @@
 #include "../strHand.h"
 
 #include "jp.h"
-
-#ifdef UNIT_TESTING
-#undef ACTWINLABEL
-#define ACTWINLABEL "#channel"
-#endif
 
 /*
  * usage: /join <channel> [key]
