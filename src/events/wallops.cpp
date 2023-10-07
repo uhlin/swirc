@@ -72,9 +72,9 @@ event_wallops(struct irc_message_compo *compo)
 			    message);
 			return;
 		} else {
-			char	*last = const_cast<char *>("");
-			char	*nick, *user, *host;
-			char	*str;
+			CSTRING nick, user, host;
+			STRING last = const_cast<STRING>("");
+			STRING str;
 
 			if ((nick = strtok_r(prefix, "!@", &last)) == NULL)
 				throw std::runtime_error("no nick");
