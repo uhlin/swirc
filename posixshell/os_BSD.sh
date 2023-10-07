@@ -4,20 +4,17 @@
 
 os_BSD () {
 	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=-DBSD=1\\
+CC = cc
+CFLAGS = -O2 -Wall -pipe -std=c17
+CXX = c++
+CXXFLAGS = -O2 -Wall -pipe -std=c++17
+CPPFLAGS = -DBSD=1\\
 	-DNDEBUG=1\\
 	-DUNIX=1\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
-	-I/usr/local/include\\
-	-O2\\
-	-Wall\\
-	-pipe
-CC=cc
-CFLAGS=\$(SHARED_FLAGS) -std=c17
-CXX=c++
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
-LDFLAGS=-L/usr/local/lib
-LDLIBS=-lcrypto\\
+	-I/usr/local/include
+LDFLAGS = -L/usr/local/lib
+LDLIBS = -lcrypto\\
 	-lcurl\\
 	-lncursesw\\
 	-lpanelw\\
