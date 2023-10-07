@@ -1,5 +1,5 @@
 fix_cflags () {
-	local _cf _helper_scripts
+	local _flags _helper_scripts
 
 	_helper_scripts="
 ncursesw6-config
@@ -8,11 +8,11 @@ ncursesw5-config
 
 	for s in $_helper_scripts; do
 		if [ -x "$(which "$s")" ]; then
-			_cf="$($s --cflags)"
+			_flags="$($s --cflags)"
 
-			if [ -n "$_cf" ]; then
-				echo "CFLAGS += ${_cf}" >>$MAKE_DEF_FILE
-				echo "CXXFLAGS += ${_cf}" >>$MAKE_DEF_FILE
+			if [ -n "$_flags" ]; then
+				echo "CFLAGS += ${_flags}" >>$MAKE_DEF_FILE
+				echo "CXXFLAGS += ${_flags}" >>$MAKE_DEF_FILE
 			fi
 
 			break
