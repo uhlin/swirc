@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Added better detection of server Wallops
 - Added extensive use of the `CPPFLAGS` make macro
 - Added handling of empty user@host combinations in Wallops messages
+- Did code improvements
 - Fixed occurrences of hardcoded function names in messages
 - Fixed typos in manual pages
 - Improved C++ exception handling
