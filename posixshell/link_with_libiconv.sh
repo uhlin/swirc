@@ -1,3 +1,10 @@
+#############################################################
+#
+# Link with GNU LibIconv
+#
+# Copyright (c) 2022, 2023 Markus Uhlin. All rights reserved.
+#
+
 link_with_libiconv () {
 	local _tmpfile _srcfile _out _libs
 
