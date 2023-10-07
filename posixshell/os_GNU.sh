@@ -4,26 +4,27 @@
 
 os_GNU () {
 	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=-DHURD=1\\
+CC = gcc
+CFLAGS = -O2\\
+	-Wall\\
+	-Wsign-compare\\
+	-Wstrict-prototypes\\
+	-fstack-protector-strong\\
+	-g\\
+	-pipe\\
+	-std=c11
+CXX = g++
+CXXFLAGS = -O2 -Wall -fstack-protector-strong -g -pipe -std=c++17
+CPPFLAGS = -DHURD=1\\
 	-DNDEBUG=1\\
 	-DUNIX=1\\
 	-D_FORTIFY_SOURCE=2\\
 	-D_GNU_SOURCE=1\\
-	-I/usr/local/include\\
-	-O2\\
-	-Wall\\
-	-fstack-protector-strong\\
-	-g\\
-	-pipe
-CC=gcc
-CFLAGS=\$(SHARED_FLAGS) -std=c11\\
-	-Wsign-compare -Wstrict-prototypes
-CXX=g++
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
-LDFLAGS=-L/usr/local/lib\\
+	-I/usr/local/include
+LDFLAGS = -L/usr/local/lib\\
 	-Wl,-z,now\\
 	-Wl,-z,relro
-LDLIBS=-lcrypto\\
+LDLIBS = -lcrypto\\
 	-lcurl\\
 	-lncursesw\\
 	-lpanelw\\
