@@ -13,14 +13,17 @@ CFLAGS = -O2\\
 	-g\\
 	-pipe\\
 	-std=c11
+
 CXX = g++
 CXXFLAGS = -O2 -Wall -fstack-protector-strong -g -pipe -std=c++17
+
 CPPFLAGS = -DHURD=1\\
 	-DNDEBUG=1\\
 	-DUNIX=1\\
 	-D_FORTIFY_SOURCE=2\\
 	-D_GNU_SOURCE=1\\
 	-I/usr/local/include
+
 LDFLAGS = -L/usr/local/lib\\
 	-Wl,-z,now\\
 	-Wl,-z,relro

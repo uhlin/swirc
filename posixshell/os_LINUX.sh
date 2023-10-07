@@ -13,6 +13,7 @@ CFLAGS = -O2\\
 	-g\\
 	-pipe\\
 	-std=c11
+
 CXX = g++
 CXXFLAGS = -O2\\
 	-Wall\\
@@ -20,6 +21,7 @@ CXXFLAGS = -O2\\
 	-g\\
 	-pipe\\
 	-std=c++17
+
 CPPFLAGS = -DLINUX=1\\
 	-DNDEBUG=1\\
 	-DUNIX=1\\
@@ -28,6 +30,7 @@ CPPFLAGS = -DLINUX=1\\
 	-D_XOPEN_SOURCE=500\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
 	-I/usr/local/include
+
 LDFLAGS = -L/usr/local/lib\\
 	-Wl,-z,now\\
 	-Wl,-z,relro

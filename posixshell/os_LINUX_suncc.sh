@@ -14,6 +14,7 @@ CFLAGS = -O2\\
 	-xatomic=studio\\
 	-xprevise\\
 	-xsecure_code_analysis
+
 CXX = sunCC
 CXXFLAGS = -O2\\
 	-Wp,-I/usr/include/x86_64-linux-gnu\\
@@ -24,6 +25,7 @@ CXXFLAGS = -O2\\
 	-xatomic=studio\\
 	-xprevise\\
 	-xsecure_code_analysis
+
 CPPFLAGS = -DLINUX=1\\
 	-DUNIX=1\\
 	-D_FORTIFY_SOURCE=2\\
@@ -31,6 +33,7 @@ CPPFLAGS = -DLINUX=1\\
 	-D_XOPEN_SOURCE=500\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
 	-I/usr/local/include
+
 LDFLAGS = -L/usr/local/lib\\
 	-xannotate\\
 	-xprevise
