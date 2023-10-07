@@ -24,5 +24,4 @@ OBJS += $(EVENTS_DIR)account.o\
 	$(EVENTS_DIR)welcome.o\
 	$(EVENTS_DIR)whois.o
 
-CFLAGS += -I $(EVENTS_DIR)
-CXXFLAGS += -I $(EVENTS_DIR)
+CPPFLAGS += -I $(EVENTS_DIR)
