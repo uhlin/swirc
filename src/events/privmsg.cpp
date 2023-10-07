@@ -421,10 +421,10 @@ event_privmsg(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
-		printtext(&ctx, "event_privmsg: error: %s", e.what());
+		printtext(&ctx, "%s: error: %s", __func__, e.what());
 	} catch (const std::bad_alloc &e) {
-		err_exit(ENOMEM, "event_privmsg: error: %s", e.what());
+		err_exit(ENOMEM, "%s: error: %s", __func__, e.what());
 	} catch (...) {
-		err_log(0, "event_privmsg: error: unknown exception");
+		err_log(0, "%s: error: unknown exception", __func__);
 	}
 }
