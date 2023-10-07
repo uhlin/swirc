@@ -4,21 +4,20 @@
 
 os_NETBSD () {
 	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=-DBSD=1\\
+CC = cc
+CFLAGS = -O2 -Wall -std=c11
+CXX = c++
+CXXFLAGS = -O2 -Wall -std=c++17
+CPPFLAGS = -DBSD=1\\
 	-DUNIX=1\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
 	-I/usr/local/include\\
 	-I/usr/pkg/include/ncursesw\\
-	-I/usr/pkg/include\\
-	-Wall
-CC=cc
-CFLAGS=\$(SHARED_FLAGS) -std=c11
-CXX=c++
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++17
-LDFLAGS=-L/usr/local/lib\\
+	-I/usr/pkg/include
+LDFLAGS = -L/usr/local/lib\\
 	-L/usr/pkg/lib\\
 	-Wl,-rpath,/usr/pkg/lib
-LDLIBS=-lcrypto\\
+LDLIBS = -lcrypto\\
 	-lcurl\\
 	-lgnupanelw\\
 	-lncursesw\\
