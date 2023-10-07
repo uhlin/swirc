@@ -10,6 +10,7 @@ CFLAGS = -O2 -Wall -pipe -std=c17
 CXX = c++
 CXXFLAGS = -O2 -Wall -pipe -std=c++17
 
+# C preprocessor flags
 CPPFLAGS = -DBSD=1\\
 	-DNDEBUG=1\\
 	-DUNIX=1\\

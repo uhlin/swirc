@@ -26,6 +26,7 @@ CXXFLAGS = -O2\\
 	-xprevise\\
 	-xsecure_code_analysis
 
+# C preprocessor flags
 CPPFLAGS = -DLINUX=1\\
 	-DUNIX=1\\
 	-D_FORTIFY_SOURCE=2\\

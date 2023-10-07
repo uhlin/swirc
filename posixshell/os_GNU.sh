@@ -17,6 +17,7 @@ CFLAGS = -O2\\
 CXX = g++
 CXXFLAGS = -O2 -Wall -fstack-protector-strong -g -pipe -std=c++17
 
+# C preprocessor flags
 CPPFLAGS = -DHURD=1\\
 	-DNDEBUG=1\\
 	-DUNIX=1\\
