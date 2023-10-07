@@ -7,12 +7,7 @@ TEST_LOGFILE ?= /tmp/run.log
 
 include $(ROOT)options.mk
 
-CFLAGS += -DUNIT_TESTING=1\
-	-I$(SRC_DIR)\
-	-I$(SRC_DIR)include\
-	-I/usr/local/include
-
-CXXFLAGS += -DUNIT_TESTING=1\
+CPPFLAGS += -DUNIT_TESTING=1\
 	-I$(SRC_DIR)\
 	-I$(SRC_DIR)include\
 	-I/usr/local/include
@@ -32,11 +27,11 @@ main: $(RECOMPILE) $(TESTS)
 
 .c.o:
 	$(E) "  CC      " $@
-	$(Q) $(CC) $(CFLAGS) -c -o $@ $<
+	$(Q) $(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 .cpp.o:
 	$(E) "  CXX     " $@
-	$(Q) $(CXX) $(CXXFLAGS) -c -o $@ $<
+	$(Q) $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 .o.run:
 	$(E) "  LINK    " $@
