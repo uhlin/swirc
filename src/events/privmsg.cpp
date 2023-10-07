@@ -164,7 +164,7 @@ shouldHighlightMessage_case2(CSTRING msg)
 	char	*nickname_aliases = sw_strdup(Config("nickname_aliases"));
 
 	for (char *cp = &nickname_aliases[0];; cp = NULL) {
-		char	*token;
+		CSTRING token;
 
 		if ((token = strtok_r(cp, " ", &last)) == NULL) {
 			result = false;
