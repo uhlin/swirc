@@ -3,7 +3,7 @@
 # --------------------------------------------------
 
 os_BSD () {
-	cat <<EOF >>${MAKE_DEF_FILE}
+	cat <<EOF >>"${MAKE_DEF_FILE}"
 CC = cc
 CFLAGS = -O2 -Wall -pipe -std=c17
 

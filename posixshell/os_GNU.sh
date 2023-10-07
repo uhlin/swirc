@@ -3,7 +3,7 @@
 # --------------------------------------------------
 
 os_GNU () {
-	cat <<EOF >>${MAKE_DEF_FILE}
+	cat <<EOF >>"${MAKE_DEF_FILE}"
 CC = gcc
 CFLAGS = -O2\\
 	-Wall\\

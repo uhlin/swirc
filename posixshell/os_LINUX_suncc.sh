@@ -3,7 +3,7 @@
 # --------------------------------------------------
 
 os_LINUX_suncc () {
-	cat <<EOF >>${MAKE_DEF_FILE}
+	cat <<EOF >>"${MAKE_DEF_FILE}"
 CC = suncc
 CFLAGS = -O2\\
 	-Wp,-I/usr/include/x86_64-linux-gnu\\
