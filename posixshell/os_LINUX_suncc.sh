@@ -4,29 +4,37 @@
 
 os_LINUX_suncc () {
 	cat <<EOF >>$MAKE_DEF_FILE
-SHARED_FLAGS=-DLINUX=1\\
+CC = suncc
+CFLAGS = -O2\\
+	-Wp,-I/usr/include/x86_64-linux-gnu\\
+	-errtags\\
+	-pedantic\\
+	-std=c11\\
+	-xannotate\\
+	-xatomic=studio\\
+	-xprevise\\
+	-xsecure_code_analysis
+CXX = sunCC
+CXXFLAGS = -O2\\
+	-Wp,-I/usr/include/x86_64-linux-gnu\\
+	-errtags\\
+	-pedantic\\
+	-std=c++14\\
+	-xannotate\\
+	-xatomic=studio\\
+	-xprevise\\
+	-xsecure_code_analysis
+CPPFLAGS = -DLINUX=1\\
 	-DUNIX=1\\
 	-D_FORTIFY_SOURCE=2\\
 	-D_POSIX_C_SOURCE=200809L\\
 	-D_XOPEN_SOURCE=500\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
-	-I/usr/local/include\\
-	-O2\\
-	-Wp,-I/usr/include/x86_64-linux-gnu\\
-	-errtags\\
-	-pedantic\\
-	-xannotate\\
-	-xatomic=studio\\
-	-xprevise\\
-	-xsecure_code_analysis
-CC=suncc
-CFLAGS=\$(SHARED_FLAGS) -std=c11
-CXX=sunCC
-CXXFLAGS=\$(SHARED_FLAGS) -std=c++14
-LDFLAGS=-L/usr/local/lib\\
+	-I/usr/local/include
+LDFLAGS = -L/usr/local/lib\\
 	-xannotate\\
 	-xprevise
-LDLIBS=-lcrypto\\
+LDLIBS = -lcrypto\\
 	-lcurl\\
 	-lncursesw\\
 	-lpanelw\\
