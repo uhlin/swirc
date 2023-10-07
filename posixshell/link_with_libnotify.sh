@@ -1,8 +1,8 @@
-#######################################################
+#############################################################
 #
 # Link with LibNotify
 #
-# Copyright (c) 2022 Markus Uhlin. All rights reserved.
+# Copyright (c) 2022, 2023 Markus Uhlin. All rights reserved.
 #
 
 link_with_libnotify () {
