@@ -47,11 +47,8 @@ EOF
 	if [ $? -eq 0 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE
-CFLAGS += -DHAVE_HUNSPELL=1
-CFLAGS += ${_includes%%/hunspell}
-
-CXXFLAGS += -DHAVE_HUNSPELL=1
-CXXFLAGS += ${_includes%%/hunspell}
+CPPFLAGS += -DHAVE_HUNSPELL=1
+CPPFLAGS += ${_includes%%/hunspell}
 
 LDFLAGS += ${_libpath}
 LDLIBS += ${_libs}

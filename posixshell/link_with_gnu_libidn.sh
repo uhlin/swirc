@@ -45,9 +45,7 @@ EOF
 	if [ $? -eq 0 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE
-CFLAGS += -DHAVE_LIBIDN=1
-CXXFLAGS += -DHAVE_LIBIDN=1
-
+CPPFLAGS += -DHAVE_LIBIDN=1
 LDLIBS += ${_libs}
 EOF
 	else

@@ -44,8 +44,7 @@ EOF
 	if [ $? -eq 0 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE
-CFLAGS += -DHAVE_LIBICONV=1
-CXXFLAGS += -DHAVE_LIBICONV=1
+CPPFLAGS += -DHAVE_LIBICONV=1
 EOF
 		case "$(uname -s)" in
 		"Darwin" | "FreeBSD" | "NetBSD" | "OpenBSD")

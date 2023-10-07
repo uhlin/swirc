@@ -47,11 +47,8 @@ EOF
 	if [ $? -eq 0 ]; then
 		echo "yes"
 		cat <<EOF >>$MAKE_DEF_FILE
-CFLAGS += -DUSE_LIBNOTIFY=1
-CFLAGS += ${_includes}
-
-CXXFLAGS += -DUSE_LIBNOTIFY=1
-CXXFLAGS += ${_includes}
+CPPFLAGS += -DUSE_LIBNOTIFY=1
+CPPFLAGS += ${_includes}
 
 LDLIBS += ${_libs}
 EOF
