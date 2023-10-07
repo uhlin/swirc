@@ -4,7 +4,8 @@
 
 BUILD_LOG = build.log
 
-CFLAGS = $(CFLAGS)\
+# C preprocessor flags
+CPPFLAGS = $(CPPFLAGS)\
 	-Icurl-$(CURL_VERSION)/include\
 	-Ignu-bundle-$(GNU_BUNDLE_DATE)/include\
 	-Ihunspell-$(HUNSPELL_VERSION)/include\
@@ -29,11 +30,11 @@ main: $(TGTS)
 
 .c.obj:
 	$(E) ^ ^ CC^ ^ ^ ^ ^ ^ $@
-	$(Q) $(CC) $(CFLAGS) -c -Fo$*.obj $< 1>>$(BUILD_LOG)
+	$(Q) $(CC) $(CFLAGS) $(CPPFLAGS) -c -Fo$*.obj $< 1>>$(BUILD_LOG)
 
 .cpp.obj:
 	$(E) ^ ^ CXX^ ^ ^ ^ ^ $@
-	$(Q) $(CXX) $(CXXFLAGS) -c -Fo$*.obj $< 1>>$(BUILD_LOG)
+	$(Q) $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -Fo$*.obj $< 1>>$(BUILD_LOG)
 
 # XXX: Add the MINGW DLLs? (Hunspell)
 DIST_DEPS = swirc.exe\

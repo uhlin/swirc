@@ -25,4 +25,4 @@ OBJS = $(OBJS)\
 	$(EVENTS_DIR)welcome.obj\
 	$(EVENTS_DIR)whois.obj
 
-CFLAGS = $(CFLAGS) -I $(EVENTS_DIR)
+CPPFLAGS = $(CPPFLAGS) -I $(EVENTS_DIR)
