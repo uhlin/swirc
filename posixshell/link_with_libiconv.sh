@@ -1,9 +1,8 @@
-#############################################################
-#
+# link_with_libiconv.sh:
 # Link with GNU LibIconv
 #
-# Copyright (c) 2022, 2023 Markus Uhlin. All rights reserved.
-#
+# SPDX-FileCopyrightText: Copyright 2022-2023 Markus Uhlin
+# SPDX-License-Identifier: BSD-3-Clause
 
 link_with_libiconv () {
 	local _tmpfile _srcfile _out _libs

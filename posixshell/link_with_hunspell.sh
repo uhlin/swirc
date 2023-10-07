@@ -1,9 +1,8 @@
-#######################################################
-#
+# link_with_hunspell.sh:
 # Link with Hunspell
 #
-# Copyright (c) 2023 Markus Uhlin. All rights reserved.
-#
+# SPDX-FileCopyrightText: Copyright 2023 Markus Uhlin
+# SPDX-License-Identifier: BSD-3-Clause
 
 link_with_hunspell () {
 	local _tmpfile _srcfile _out

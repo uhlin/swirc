@@ -1,9 +1,8 @@
-#############################################################
-#
+# link_with_gnu_libidn.sh:
 # Link with GNU libidn
 #
-# Copyright (c) 2022, 2023 Markus Uhlin. All rights reserved.
-#
+# SPDX-FileCopyrightText: Copyright 2021-2023 Markus Uhlin
+# SPDX-License-Identifier: BSD-3-Clause
 
 link_with_gnu_libidn () {
 	local _tmpfile _srcfile _out _libs

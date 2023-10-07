@@ -1,9 +1,8 @@
-#############################################################
-#
+# link_with_libnotify.sh:
 # Link with LibNotify
 #
-# Copyright (c) 2022, 2023 Markus Uhlin. All rights reserved.
-#
+# SPDX-FileCopyrightText: Copyright 2021-2023 Markus Uhlin
+# SPDX-License-Identifier: BSD-3-Clause
 
 link_with_libnotify () {
 	local _tmpfile _srcfile _out
