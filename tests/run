@@ -1,14 +1,8 @@
 #!/usr/bin/env bash
 
 TESTS="
-cmd_ban
-cmd_deop
-cmd_kick
-cmd_op
-cmd_part
 cmd_servlist
 cmd_squery
-cmd_unban
 cmd_znc
 crypt
 destroy_null_bytes

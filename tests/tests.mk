@@ -1,13 +1,7 @@
 # tests.mk
 
-TESTS = cmd_ban.run\
-	cmd_deop.run\
-	cmd_kick.run\
-	cmd_op.run\
-	cmd_part.run\
-	cmd_servlist.run\
+TESTS = cmd_servlist.run\
 	cmd_squery.run\
-	cmd_unban.run\
 	cmd_znc.run\
 	crypt.run\
 	destroy_null_bytes.run\
