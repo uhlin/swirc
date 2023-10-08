@@ -257,23 +257,23 @@ readline_tab_comp_ctx_new(void)
 
 	BZERO(ctx.search_var, sizeof ctx.search_var);
 
-	ctx.isInCirculationModeForConnect =
-	ctx.isInCirculationModeForCs =
-	ctx.isInCirculationModeForHelp =
-	ctx.isInCirculationModeForMsg =
-	ctx.isInCirculationModeForNotice =
-	ctx.isInCirculationModeForNs =
-	ctx.isInCirculationModeForQuery =
-	ctx.isInCirculationModeForSasl =
-	ctx.isInCirculationModeForSettings =
-	ctx.isInCirculationModeForSquery =
-	ctx.isInCirculationModeForTheme =
-	ctx.isInCirculationModeForTime =
-	ctx.isInCirculationModeForVersion =
-	ctx.isInCirculationModeForWhois =
-	ctx.isInCirculationModeForZncCmds =
-	ctx.isInCirculationModeForCmds =
-	ctx.isInCirculationModeForChanUsers = false;
+	ctx.isInCirculationModeFor.ChanUsers =
+	ctx.isInCirculationModeFor.Cmds =
+	ctx.isInCirculationModeFor.Connect =
+	ctx.isInCirculationModeFor.Cs =
+	ctx.isInCirculationModeFor.Help =
+	ctx.isInCirculationModeFor.Msg =
+	ctx.isInCirculationModeFor.Notice =
+	ctx.isInCirculationModeFor.Ns =
+	ctx.isInCirculationModeFor.Query =
+	ctx.isInCirculationModeFor.Sasl =
+	ctx.isInCirculationModeFor.Settings =
+	ctx.isInCirculationModeFor.Squery =
+	ctx.isInCirculationModeFor.Theme =
+	ctx.isInCirculationModeFor.Time =
+	ctx.isInCirculationModeFor.Version =
+	ctx.isInCirculationModeFor.Whois =
+	ctx.isInCirculationModeFor.ZncCmds = false;
 
 	ctx.matches = NULL;
 	ctx.elmt = NULL;
@@ -294,23 +294,23 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 	if (ctx) {
 		BZERO(ctx->search_var, sizeof ctx->search_var);
 
-		ctx->isInCirculationModeForConnect =
-		ctx->isInCirculationModeForCs =
-		ctx->isInCirculationModeForHelp =
-		ctx->isInCirculationModeForMsg =
-		ctx->isInCirculationModeForNotice =
-		ctx->isInCirculationModeForNs =
-		ctx->isInCirculationModeForQuery =
-		ctx->isInCirculationModeForSasl =
-		ctx->isInCirculationModeForSettings =
-		ctx->isInCirculationModeForSquery =
-		ctx->isInCirculationModeForTheme =
-		ctx->isInCirculationModeForTime =
-		ctx->isInCirculationModeForVersion =
-		ctx->isInCirculationModeForWhois =
-		ctx->isInCirculationModeForZncCmds =
-		ctx->isInCirculationModeForCmds =
-		ctx->isInCirculationModeForChanUsers = false;
+		ctx->isInCirculationModeFor.ChanUsers =
+		ctx->isInCirculationModeFor.Cmds =
+		ctx->isInCirculationModeFor.Connect =
+		ctx->isInCirculationModeFor.Cs =
+		ctx->isInCirculationModeFor.Help =
+		ctx->isInCirculationModeFor.Msg =
+		ctx->isInCirculationModeFor.Notice =
+		ctx->isInCirculationModeFor.Ns =
+		ctx->isInCirculationModeFor.Query =
+		ctx->isInCirculationModeFor.Sasl =
+		ctx->isInCirculationModeFor.Settings =
+		ctx->isInCirculationModeFor.Squery =
+		ctx->isInCirculationModeFor.Theme =
+		ctx->isInCirculationModeFor.Time =
+		ctx->isInCirculationModeFor.Version =
+		ctx->isInCirculationModeFor.Whois =
+		ctx->isInCirculationModeFor.ZncCmds = false;
 
 		if (ctx->matches != NULL)
 			textBuf_destroy(ctx->matches);
@@ -333,7 +333,7 @@ init_mode_for_connect(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_connect(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForConnect = true;
+	ctx->tc->isInCirculationModeFor.Connect = true;
 }
 
 static void
@@ -349,7 +349,7 @@ init_mode_for_cs(volatile struct readline_session_context *ctx,
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_cs(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForCs = true;
+	ctx->tc->isInCirculationModeFor.Cs = true;
 }
 
 static void
@@ -364,7 +364,7 @@ init_mode_for_help(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_help(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForHelp = true;
+	ctx->tc->isInCirculationModeFor.Help = true;
 }
 
 static void
@@ -379,7 +379,7 @@ init_mode_for_msg(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_msg(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForMsg = true;
+	ctx->tc->isInCirculationModeFor.Msg = true;
 }
 
 static void
@@ -394,7 +394,7 @@ init_mode_for_notice(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_notice(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForNotice = true;
+	ctx->tc->isInCirculationModeFor.Notice = true;
 }
 
 static void
@@ -410,7 +410,7 @@ init_mode_for_ns(volatile struct readline_session_context *ctx,
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_ns(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForNs = true;
+	ctx->tc->isInCirculationModeFor.Ns = true;
 }
 
 static void
@@ -433,7 +433,7 @@ init_mode_for_query(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_query(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForQuery = true;
+	ctx->tc->isInCirculationModeFor.Query = true;
 }
 
 static void
@@ -448,7 +448,7 @@ init_mode_for_sasl(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_sasl(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForSasl = true;
+	ctx->tc->isInCirculationModeFor.Sasl = true;
 }
 
 static void
@@ -463,7 +463,7 @@ init_mode_for_set(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_setting(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForSettings = true;
+	ctx->tc->isInCirculationModeFor.Settings = true;
 }
 
 static void
@@ -479,7 +479,7 @@ init_mode_for_squery(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_squery(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForSquery = true;
+	ctx->tc->isInCirculationModeFor.Squery = true;
 }
 
 static void
@@ -494,7 +494,7 @@ init_mode_for_theme(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_theme(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForTheme = true;
+	ctx->tc->isInCirculationModeFor.Theme = true;
 }
 
 static void
@@ -509,7 +509,7 @@ init_mode_for_time(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_time(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForTime = true;
+	ctx->tc->isInCirculationModeFor.Time = true;
 }
 
 static void
@@ -524,7 +524,7 @@ init_mode_for_version(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_version(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForVersion = true;
+	ctx->tc->isInCirculationModeFor.Version = true;
 }
 
 static void
@@ -546,7 +546,7 @@ init_mode_for_whois(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_whois(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForWhois = true;
+	ctx->tc->isInCirculationModeFor.Whois = true;
 }
 
 static void
@@ -562,7 +562,7 @@ init_mode_for_znc_cmds(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_znc_cmd(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForZncCmds = true;
+	ctx->tc->isInCirculationModeFor.ZncCmds = true;
 }
 
 static void
@@ -579,7 +579,7 @@ init_mode_for_commands(volatile struct readline_session_context *ctx,
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_command(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForCmds = true;
+	ctx->tc->isInCirculationModeFor.Cmds = true;
 }
 
 static void
@@ -593,7 +593,7 @@ init_mode_for_channel_users(volatile struct readline_session_context *ctx)
 
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_channel_user(ctx, ctx->tc->elmt->text);
-	ctx->tc->isInCirculationModeForChanUsers = true;
+	ctx->tc->isInCirculationModeFor.ChanUsers = true;
 }
 
 static STRING
@@ -702,39 +702,39 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		output_error("no magic");
 		readline_tab_comp_ctx_reset(ctx->tc);
 		return;
-	} else if (ctx->tc->isInCirculationModeForConnect) {
+	} else if (ctx->tc->isInCirculationModeFor.Connect) {
 		ac_doit(auto_complete_connect, ctx);
-	} else if (ctx->tc->isInCirculationModeForCs) {
+	} else if (ctx->tc->isInCirculationModeFor.Cs) {
 		ac_doit(auto_complete_cs, ctx);
-	} else if (ctx->tc->isInCirculationModeForHelp) {
+	} else if (ctx->tc->isInCirculationModeFor.Help) {
 		ac_doit(auto_complete_help, ctx);
-	} else if (ctx->tc->isInCirculationModeForMsg) {
+	} else if (ctx->tc->isInCirculationModeFor.Msg) {
 		ac_doit(auto_complete_msg, ctx);
-	} else if (ctx->tc->isInCirculationModeForNotice) {
+	} else if (ctx->tc->isInCirculationModeFor.Notice) {
 		ac_doit(auto_complete_notice, ctx);
-	} else if (ctx->tc->isInCirculationModeForNs) {
+	} else if (ctx->tc->isInCirculationModeFor.Ns) {
 		ac_doit(auto_complete_ns, ctx);
-	} else if (ctx->tc->isInCirculationModeForQuery) {
+	} else if (ctx->tc->isInCirculationModeFor.Query) {
 		ac_doit(auto_complete_query, ctx);
-	} else if (ctx->tc->isInCirculationModeForSasl) {
+	} else if (ctx->tc->isInCirculationModeFor.Sasl) {
 		ac_doit(auto_complete_sasl, ctx);
-	} else if (ctx->tc->isInCirculationModeForSettings) {
+	} else if (ctx->tc->isInCirculationModeFor.Settings) {
 		ac_doit(auto_complete_setting, ctx);
-	} else if (ctx->tc->isInCirculationModeForSquery) {
+	} else if (ctx->tc->isInCirculationModeFor.Squery) {
 		ac_doit(auto_complete_squery, ctx);
-	} else if (ctx->tc->isInCirculationModeForTheme) {
+	} else if (ctx->tc->isInCirculationModeFor.Theme) {
 		ac_doit(auto_complete_theme, ctx);
-	} else if (ctx->tc->isInCirculationModeForTime) {
+	} else if (ctx->tc->isInCirculationModeFor.Time) {
 		ac_doit(auto_complete_time, ctx);
-	} else if (ctx->tc->isInCirculationModeForVersion) {
+	} else if (ctx->tc->isInCirculationModeFor.Version) {
 		ac_doit(auto_complete_version, ctx);
-	} else if (ctx->tc->isInCirculationModeForWhois) {
+	} else if (ctx->tc->isInCirculationModeFor.Whois) {
 		ac_doit(auto_complete_whois, ctx);
-	} else if (ctx->tc->isInCirculationModeForZncCmds) {
+	} else if (ctx->tc->isInCirculationModeFor.ZncCmds) {
 		ac_doit(auto_complete_znc_cmd, ctx);
-	} else if (ctx->tc->isInCirculationModeForCmds) {
+	} else if (ctx->tc->isInCirculationModeFor.Cmds) {
 		ac_doit(auto_complete_command, ctx);
-	} else if (ctx->tc->isInCirculationModeForChanUsers) {
+	} else if (ctx->tc->isInCirculationModeFor.ChanUsers) {
 		ac_doit(auto_complete_channel_user, ctx);
 	} else if (store_search_var(ctx) == -1) {
 		output_error("cannot store search variable");

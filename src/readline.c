@@ -476,23 +476,23 @@ finalize_out_string(const wchar_t *buf)
 static inline bool
 isInCirculationMode(const TAB_COMPLETION *tc)
 {
-	return (tc->isInCirculationModeForConnect ||
-	    tc->isInCirculationModeForCs ||
-	    tc->isInCirculationModeForHelp ||
-	    tc->isInCirculationModeForMsg ||
-	    tc->isInCirculationModeForNotice ||
-	    tc->isInCirculationModeForNs ||
-	    tc->isInCirculationModeForQuery ||
-	    tc->isInCirculationModeForSasl ||
-	    tc->isInCirculationModeForSettings ||
-	    tc->isInCirculationModeForSquery ||
-	    tc->isInCirculationModeForTheme ||
-	    tc->isInCirculationModeForTime ||
-	    tc->isInCirculationModeForVersion ||
-	    tc->isInCirculationModeForWhois ||
-	    tc->isInCirculationModeForZncCmds ||
-	    tc->isInCirculationModeForCmds ||
-	    tc->isInCirculationModeForChanUsers);
+	return (tc->isInCirculationModeFor.ChanUsers ||
+	    tc->isInCirculationModeFor.Cmds ||
+	    tc->isInCirculationModeFor.Connect ||
+	    tc->isInCirculationModeFor.Cs ||
+	    tc->isInCirculationModeFor.Help ||
+	    tc->isInCirculationModeFor.Msg ||
+	    tc->isInCirculationModeFor.Notice ||
+	    tc->isInCirculationModeFor.Ns ||
+	    tc->isInCirculationModeFor.Query ||
+	    tc->isInCirculationModeFor.Sasl ||
+	    tc->isInCirculationModeFor.Settings ||
+	    tc->isInCirculationModeFor.Squery ||
+	    tc->isInCirculationModeFor.Theme ||
+	    tc->isInCirculationModeFor.Time ||
+	    tc->isInCirculationModeFor.Version ||
+	    tc->isInCirculationModeFor.Whois ||
+	    tc->isInCirculationModeFor.ZncCmds);
 }
 
 /**

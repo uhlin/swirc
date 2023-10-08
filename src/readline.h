@@ -46,23 +46,27 @@ typedef struct tagREADLINE_POS {
 
 typedef struct tagTAB_COMPLETION {
 	char	search_var[64];
-	bool	isInCirculationModeForConnect;
-	bool	isInCirculationModeForCs;
-	bool	isInCirculationModeForHelp;
-	bool	isInCirculationModeForMsg;
-	bool	isInCirculationModeForNotice;
-	bool	isInCirculationModeForNs;
-	bool	isInCirculationModeForQuery;
-	bool	isInCirculationModeForSasl;
-	bool	isInCirculationModeForSettings;
-	bool	isInCirculationModeForSquery;
-	bool	isInCirculationModeForTheme;
-	bool	isInCirculationModeForTime;
-	bool	isInCirculationModeForVersion;
-	bool	isInCirculationModeForWhois;
-	bool	isInCirculationModeForZncCmds;
-	bool	isInCirculationModeForCmds;
-	bool	isInCirculationModeForChanUsers;
+
+	struct {
+		bool ChanUsers;
+		bool Cmds;
+		bool Connect;
+		bool Cs;
+		bool Help;
+		bool Msg;
+		bool Notice;
+		bool Ns;
+		bool Query;
+		bool Sasl;
+		bool Settings;
+		bool Squery;
+		bool Theme;
+		bool Time;
+		bool Version;
+		bool Whois;
+		bool ZncCmds;
+	} isInCirculationModeFor;
+
 	PTEXTBUF	matches;
 	PTEXTBUF_ELMT	elmt;
 } TAB_COMPLETION, *PTAB_COMPLETION;
