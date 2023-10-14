@@ -7,11 +7,11 @@ enum {
 };
 
 __SWIRC_BEGIN_DECLS
+extern char	*g_option_arg;
 extern int	 g_option_index;
 extern int	 g_option_save;
-extern char	*g_option_arg;
 
-int	options(int, char *[], const char *);
+int	options(int, char * const [], const char *);
 __SWIRC_END_DECLS
 
 #endif

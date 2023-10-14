@@ -1,5 +1,5 @@
-/* Interpret command-line options
-   Copyright (C) 2013, 2021 Markus Uhlin. All rights reserved.
+/* Parse argc/argv argument vector
+   Copyright (C) 2013, 2021, 2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -36,14 +36,14 @@
 
 #define SELF_TEST 0
 
+char	*g_option_arg = NULL;
 int	 g_option_index = 1;
 int	 g_option_save = -1;
-char	*g_option_arg = NULL;
 
 int
-options(int argc, char *argv[], const char *optstring)
+options(int argc, char * const argv[], const char *optstring)
 {
-	const char	*p;
+	const char	*cp;
 	int		 opt;
 	static char	*nextchar = "";
 
@@ -58,11 +58,11 @@ options(int argc, char *argv[], const char *optstring)
 
 	g_option_save = opt = *nextchar++;
 
-	if ((p = strchr(optstring, opt)) == NULL) {
+	if ((cp = strchr(optstring, opt)) == NULL) {
 		if (!*nextchar)
 			g_option_index++;
 		return UNRECOGNIZED_OPTION;
-	} else if (*++p != ':') {
+	} else if (*++cp != ':') {
 		if (!*nextchar)
 			g_option_index++;
 		g_option_arg = NULL;
