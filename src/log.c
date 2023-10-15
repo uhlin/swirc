@@ -49,6 +49,24 @@ const char	g_log_filesuffix[] = ".txt";
 static const char *get_modified_server_host(const char *) NONNULL;
 static const char *get_logtype(const char *) NONNULL;
 
+static int
+check_label(const char *label, int *ip)
+{
+	static const char legal_index[] =
+	    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	    "abcdefghijklmnopqrstuvwxyz"
+	    "0123456789+-_";
+
+	for (const char *cp = &label[0]; *cp != '\0'; cp++) {
+		if (strchr(legal_index, *cp) == NULL) {
+			*ip = *cp;
+			return ERR;
+		}
+	}
+
+	return OK;
+}
+
 static const char *
 get_date(void)
 {
@@ -95,10 +113,22 @@ get_logtype(const char *label)
 char *
 log_get_path(const char *server_host, const char *label)
 {
-	char	*path;
+	char			*cp, *label_copy, *path;
+	int			 c = 'X';
+	static const size_t	 maxlabel = 20;
 
 	if (server_host == NULL || label == NULL || g_log_dir == NULL)
 		return NULL;
+
+	label_copy = sw_strdup(label);
+
+	if (xstrnlen(label, maxlabel + 1) > maxlabel)
+		label_copy[maxlabel] = '\0';
+	while (check_label(label_copy, &c) != OK) {
+		if ((cp = strchr(label_copy, c)) == NULL)
+			sw_assert_not_reached();
+		*cp = 'X';
+	}
 
 	path = sw_strdup(g_log_dir);
 
@@ -119,12 +149,13 @@ log_get_path(const char *server_host, const char *label)
 		break;
 	case 2:
 	case 3:
-		realloc_strcat(&path, label);
+		realloc_strcat(&path, label_copy);
 		break;
 	default:
 		sw_assert_not_reached();
 	}
 
+	free(label_copy);
 	realloc_strcat(&path, g_log_filesuffix);
 	return (strToLower(path));
 }
