@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Fixed occurrences of hardcoded function names in messages
 - Fixed typos in manual pages
 - Improved C++ exception handling
+- Limited notification messages
 
 ## [3.4.5] - 2023-09-14 ##
 - **Added** command-line option `-W`
