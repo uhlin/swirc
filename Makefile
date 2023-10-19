@@ -1,7 +1,6 @@
 include options.mk
 
-CFLAGS += -Isrc/include
-CXXFLAGS += -Isrc/include
+CPPFLAGS += -Isrc/include
 
 PREFIX ?= /usr/local
 
