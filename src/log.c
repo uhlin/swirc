@@ -115,6 +115,7 @@ log_get_path(const char *server_host, const char *label)
 {
 	char			*cp, *label_copy, *path;
 	int			 c = 'X';
+	size_t			 num_illegal = 0;
 	static const size_t	 maxlabel = 20;
 
 	if (server_host == NULL || label == NULL || g_log_dir == NULL)
@@ -128,6 +129,16 @@ log_get_path(const char *server_host, const char *label)
 		if ((cp = strchr(label_copy, c)) == NULL)
 			sw_assert_not_reached();
 		*cp = 'X';
+		num_illegal++;
+	}
+	if (num_illegal && num_illegal == strlen(label_copy)) {
+		PRINTTEXT_CONTEXT	ctx;
+
+		printtext_context_init(&ctx, g_status_window,
+		    TYPE_SPEC1_FAILURE, true);
+		printtext(&ctx, "%s: inappropriate filename", __func__);
+		free(label_copy);
+		return NULL;
 	}
 
 	path = sw_strdup(g_log_dir);
@@ -141,7 +152,7 @@ log_get_path(const char *server_host, const char *label)
 	realloc_strcat(&path, get_modified_server_host(server_host));
 	realloc_strcat(&path, "-");
 	realloc_strcat(&path, get_logtype(label));
-	realloc_strcat(&path, ".");
+	realloc_strcat(&path, "-");
 
 	switch (atoi(get_logtype(label))) {
 	case 1:
