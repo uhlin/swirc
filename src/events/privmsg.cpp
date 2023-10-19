@@ -63,6 +63,11 @@
 #include "swircpaths.h"
 #endif
 
+/*
+ * Notification message max length
+ */
+static const size_t nmsg_maxlen = 150;
+
 static bool	shouldHighlightMessage_case1(CSTRING) NONNULL;
 static bool	shouldHighlightMessage_case2(CSTRING) NONNULL;
 
@@ -245,22 +250,27 @@ handle_msgs_from_my_server(PPRINTTEXT_CONTEXT ctx, CSTRING dest,
 static void
 handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 {
+	STRING msg_copy;
+
 	if ((ctx->window = window_by_label(nick)) == NULL)
 		throw std::runtime_error("window lookup error");
 
 	printtext(ctx, "%s%s%s%c%s %s", NICK_S1, COLOR2, nick, NORMAL, NICK_S2,
 	    msg);
+	msg_copy = sw_strdup(msg);
+	if (strlen(msg_copy) > nmsg_maxlen)
+		msg_copy[nmsg_maxlen] = '\0';
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 	wchar_t *wNick = get_converted_wcs(nick);
-	wchar_t *wMsg = get_converted_wcs(msg);
+	wchar_t *wMsg = get_converted_wcs(msg_copy);
 
 	Toasts::SendBasicToast(get_message(L"[PM]", L" <", wNick, L"> ", wMsg));
 
 	delete[] wNick;
 	delete[] wMsg;
 #elif defined(UNIX) && USE_LIBNOTIFY
-	STRING body = strdup_printf("[PM] &lt;%s&gt; %s", nick, msg);
+	STRING body = strdup_printf("[PM] &lt;%s&gt; %s", nick, msg_copy);
 	NotifyNotification *notification = notify_notification_new(SUMMARY_TEXT,
 	    body, SWIRC_ICON_PATH);
 
@@ -270,6 +280,7 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 	g_object_unref(G_OBJECT(notification));
 #endif
 
+	free(msg_copy);
 	if (ctx->window != g_active_window)
 		broadcast_window_activity(ctx->window);
 }
@@ -300,9 +311,14 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING dest,
 
 	if (shouldHighlightMessage_case1(msg) ||
 	    shouldHighlightMessage_case2(msg)) {
+		STRING msg_copy;
+
 		printtext(ctx, "%s%c%s%s%c%s %s",
 		    NICK_S1, c, COLOR4, nick, NORMAL, NICK_S2,
 		    msg);
+		msg_copy = sw_strdup(msg);
+		if (strlen(msg_copy) > nmsg_maxlen)
+			msg_copy[nmsg_maxlen] = '\0';
 
 		if (ctx->window != g_active_window)
 			broadcast_window_activity(ctx->window);
@@ -310,7 +326,7 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING dest,
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 		wchar_t *wNick = get_converted_wcs(nick);
 		wchar_t *wDest = get_converted_wcs(dest);
-		wchar_t *wMsg = get_converted_wcs(msg);
+		wchar_t *wMsg = get_converted_wcs(msg_copy);
 
 		Toasts::SendBasicToast(get_message(wNick, L" @ ", wDest, L": ",
 		    wMsg));
@@ -319,15 +335,17 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING dest,
 		delete[] wDest;
 		delete[] wMsg;
 #elif defined(UNIX) && USE_LIBNOTIFY
-		STRING body = strdup_printf("%s @ %s: %s", nick, dest, msg);
-		NotifyNotification *notification =
-		    notify_notification_new(SUMMARY_TEXT, body, SWIRC_ICON_PATH);
+		STRING body = strdup_printf("%s @ %s: %s", nick, dest,
+		    msg_copy);
+		NotifyNotification *notification = notify_notification_new
+		    (SUMMARY_TEXT, body, SWIRC_ICON_PATH);
 
 		notify_notification_show(notification, NULL);
 
 		free(body);
 		g_object_unref(G_OBJECT(notification));
 #endif
+		free(msg_copy);
 	} else {
 		/*
 		 * Normal message with no highlighting
