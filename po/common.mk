@@ -20,6 +20,7 @@ XGTFLAGS = --add-comments\
 	--sort-by-file
 
 INPUTFILES = $(COMMANDS_DIR)colormap.cpp\
+	$(EVENTS_DIR)away.cpp\
 	$(EVENTS_DIR)channel.cpp\
 	$(EVENTS_DIR)misc.cpp\
 	$(SRC_DIR)include/commandhelp.h\
