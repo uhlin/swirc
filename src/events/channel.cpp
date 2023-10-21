@@ -816,16 +816,16 @@ event_topic_chg(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char	*channel, *new_topic;
-		char	*nick, *user, *host;
-		char	*prefix = NULL;
-		char	*state1 = const_cast<char *>("");
-		char	*state2 = const_cast<char *>("");
+		char		*prefix = NULL;
+		char		*state1 = const_cast<char *>("");
+		char		*state2 = const_cast<char *>("");
+		const char	*channel, *new_topic;
+		const char	*nick, *user, *host;
 
 		if (compo->prefix == NULL)
 			throw std::runtime_error("no prefix");
 
-		prefix = & (compo->prefix[1]);
+		prefix = &compo->prefix[1];
 
 		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
 			throw std::runtime_error("no nickname");
@@ -833,9 +833,8 @@ event_topic_chg(struct irc_message_compo *compo)
 		user = strtok_r(NULL, "!@", &state1);
 		host = strtok_r(NULL, "!@", &state1);
 
-		/* unused */
-		(void) user;
-		(void) host;
+		UNUSED_VAR(user);
+		UNUSED_VAR(host);
 
 		if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
