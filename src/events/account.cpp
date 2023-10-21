@@ -40,6 +40,32 @@
 #include "account.h"
 #include "names.h"
 
+static void
+print_logged_in(PPRINTTEXT_CONTEXT ctx,
+    const char *nick,
+    const char *user,
+    const char *host,
+    const char *accountname)
+{
+	printtext(ctx, "%s%s%c %s%s@%s%s has "
+	    "logged into a new account %s%s%c",
+	    COLOR1, nick, NORMAL,
+	    LEFT_BRKT, user, host, RIGHT_BRKT,
+	    COLOR4, accountname, NORMAL);
+}
+
+static void
+print_logged_out(PPRINTTEXT_CONTEXT ctx,
+    const char *nick,
+    const char *user,
+    const char *host)
+{
+	printtext(ctx, "%s%s%c %s%s@%s%s has "
+	    "logged out of their account",
+	    COLOR2, nick, NORMAL,
+	    LEFT_BRKT, user, host, RIGHT_BRKT);
+}
+
 /* event_account
 
    Examples:
@@ -82,20 +108,15 @@ event_account(struct irc_message_compo *compo)
 				ctx.window = window;
 
 				if (logged_out) {
-					printtext(&ctx, "%s%s%c %s%s@%s%s has "
-					    "logged out of their account",
-					    COLOR2, nick, NORMAL,
-					    LEFT_BRKT, user, host, RIGHT_BRKT);
+					print_logged_out(&ctx, nick, user,
+					    host);
 				} else {
 					/*
 					 * Logged in...
 					 */
 
-					printtext(&ctx, "%s%s%c %s%s@%s%s has "
-					    "logged into a new account %s%s%c",
-					    COLOR1, nick, NORMAL,
-					    LEFT_BRKT, user, host, RIGHT_BRKT,
-					    COLOR4, accountname, NORMAL);
+					print_logged_in(&ctx, nick, user, host,
+					    accountname);
 				}
 			}
 		} /* for */
