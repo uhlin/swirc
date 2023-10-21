@@ -38,6 +38,7 @@
 #include "../theme.h"
 
 #include "account.h"
+#include "i18n.h"
 #include "names.h"
 
 static void
@@ -47,8 +48,8 @@ print_logged_in(PPRINTTEXT_CONTEXT ctx,
     const char *host,
     const char *accountname)
 {
-	printtext(ctx, "%s%s%c %s%s@%s%s has "
-	    "logged into a new account %s%s%c",
+	printtext(ctx, _("%s%s%c %s%s@%s%s has "
+	    "logged into a new account %s%s%c"),
 	    COLOR1, nick, NORMAL,
 	    LEFT_BRKT, user, host, RIGHT_BRKT,
 	    COLOR4, accountname, NORMAL);
@@ -60,8 +61,8 @@ print_logged_out(PPRINTTEXT_CONTEXT ctx,
     const char *user,
     const char *host)
 {
-	printtext(ctx, "%s%s%c %s%s@%s%s has "
-	    "logged out of their account",
+	printtext(ctx, _("%s%s%c %s%s@%s%s has "
+	    "logged out of their account"),
 	    COLOR2, nick, NORMAL,
 	    LEFT_BRKT, user, host, RIGHT_BRKT);
 }
