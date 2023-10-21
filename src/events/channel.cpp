@@ -456,17 +456,17 @@ event_mode(struct irc_message_compo *compo)
 	char *next_token_copy = NULL;
 
 	try {
-		char	*channel, *next_token;
-		char	*cp = NULL;
-		char	*nick = NULL;
-		char	*prefix = NULL;
-		char	*state1 = const_cast<char *>("");
-		char	*state2 = const_cast<char *>("");
+		char		*channel, *next_token;
+		char		*cp = NULL;
+		char		*prefix = NULL;
+		char		*state1 = const_cast<char *>("");
+		char		*state2 = const_cast<char *>("");
+		const char	*nick = NULL;
 
 		if (compo->prefix == NULL)
 			throw std::runtime_error("no prefix");
 
-		prefix = & (compo->prefix[1]);
+		prefix = &compo->prefix[1];
 
 		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL) {
 			throw std::runtime_error("unable to get nickname in "
