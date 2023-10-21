@@ -51,7 +51,7 @@ event_inviting(struct irc_message_compo *compo)
 	(void) compo;
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
-	printtext(&ctx, "Invitation passed onto the end client");
+	printtext(&ctx, "The invitation has been passed onto the end user");
 }
 
 /* event_invite
