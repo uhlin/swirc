@@ -89,7 +89,8 @@ event_chan_hp(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
-		printtext(&ctx, "event_chan_hp: error: %s", e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+		    e.what());
 	}
 }
 
@@ -158,7 +159,8 @@ event_join(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
-		printtext(&ctx, "event_join: fatal: %s", e.what());
+		printtext(&ctx, "%s(%s): fatal: %s", __func__, compo->command,
+		    e.what());
 #if SHUTDOWN_IRC_CONNECTION_BEHAVIOR
 		printtext(&ctx, "Shutting down IRC connection...");
 		g_on_air = false;
@@ -239,7 +241,8 @@ event_kick(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
-		printtext(&ctx, "event_kick: fatal: %s", e.what());
+		printtext(&ctx, "%s(%s): fatal: %s", __func__, compo->command,
+		    e.what());
 #if SHUTDOWN_IRC_CONNECTION_BEHAVIOR
 		printtext(&ctx, "Shutting down IRC connection...");
 		g_on_air = false;
@@ -261,11 +264,11 @@ chg_status_for_owner(plus_minus_state_t pm_state, const char *nick,
 	switch (pm_state) {
 	case STATE_PLUS:
 		if (names_htbl_modify::owner(nick, channel, true) != OK)
-			err_log(0, "chg_status_for_owner (+)");
+			err_log(0, "%s (+)", __func__);
 		break;
 	case STATE_MINUS:
 		if (names_htbl_modify::owner(nick, channel, false) != OK)
-			err_log(0, "chg_status_for_owner (-)");
+			err_log(0, "%s (-)", __func__);
 		break;
 	case STATE_NEITHER_PM:
 	default:
@@ -281,11 +284,11 @@ chg_status_for_superop(plus_minus_state_t pm_state, const char *nick,
 	switch (pm_state) {
 	case STATE_PLUS:
 		if (names_htbl_modify::superop(nick, channel, true) != OK)
-			err_log(0, "chg_status_for_superop (+)");
+			err_log(0, "%s (+)", __func__);
 		break;
 	case STATE_MINUS:
 		if (names_htbl_modify::superop(nick, channel, false) != OK)
-			err_log(0, "chg_status_for_superop (-)");
+			err_log(0, "%s (-)", __func__);
 		break;
 	case STATE_NEITHER_PM:
 	default:
@@ -301,11 +304,11 @@ chg_status_for_op(plus_minus_state_t pm_state, const char *nick,
 	switch (pm_state) {
 	case STATE_PLUS:
 		if (names_htbl_modify::op(nick, channel, true) != OK)
-			err_log(0, "chg_status_for_op (+)");
+			err_log(0, "%s (+)", __func__);
 		break;
 	case STATE_MINUS:
 		if (names_htbl_modify::op(nick, channel, false) != OK)
-			err_log(0, "chg_status_for_op (-)");
+			err_log(0, "%s (-)", __func__);
 		break;
 	case STATE_NEITHER_PM:
 	default:
@@ -321,11 +324,11 @@ chg_status_for_halfop(plus_minus_state_t pm_state, const char *nick,
 	switch (pm_state) {
 	case STATE_PLUS:
 		if (names_htbl_modify::halfop(nick, channel, true) != OK)
-			err_log(0, "chg_status_for_halfop (+)");
+			err_log(0, "%s (+)", __func__);
 		break;
 	case STATE_MINUS:
 		if (names_htbl_modify::halfop(nick, channel, false) != OK)
-			err_log(0, "chg_status_for_halfop (-)");
+			err_log(0, "%s (-)", __func__);
 		break;
 	case STATE_NEITHER_PM:
 	default:
@@ -341,11 +344,11 @@ chg_status_for_voice(plus_minus_state_t pm_state, const char *nick,
 	switch (pm_state) {
 	case STATE_PLUS:
 		if (names_htbl_modify::voice(nick, channel, true) != OK)
-			err_log(0, "chg_status_for_voice (+)");
+			err_log(0, "%s (+)", __func__);
 		break;
 	case STATE_MINUS:
 		if (names_htbl_modify::voice(nick, channel, false) != OK)
-			err_log(0, "chg_status_for_voice (-)");
+			err_log(0, "%s (-)", __func__);
 		break;
 	case STATE_NEITHER_PM:
 	default:
@@ -375,7 +378,7 @@ maintain_channel_stats(const char *channel, const char *input)
 	input_copy = sw_strdup(input);
 
 	if ((modes = strtok_r(input_copy, " ", &state)) == NULL) {
-		err_log(EINVAL, "maintain_channel_stats");
+		err_log(EINVAL, "%s", __func__);
 		free(input_copy);
 		return;
 	}
@@ -429,7 +432,7 @@ maintain_channel_stats(const char *channel, const char *input)
 
 	if (strspn(modes, "+-Ibeqaohv") != strlen(modes) && net_send("MODE %s",
 	    channel) < 0)
-		err_log(ENOTCONN, "maintain_channel_stats: net_send");
+		err_log(ENOTCONN, "%s: net_send", __func__);
 
 	free(input_copy);
 
@@ -517,7 +520,8 @@ event_mode(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
-		printtext(&ctx, "event_mode: error: %s", e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+		    e.what());
 	}
 
 	free(next_token_copy);
@@ -540,10 +544,10 @@ RemoveAndInsertNick(const char *old_nick, const char *new_nick,
 	is_voice	= p->is_voice;
 
 	if (event_names_htbl_remove(old_nick, label) != OK) {
-		err_log(0, "RemoveAndInsertNick: event_names_htbl_remove");
+		err_log(0, "%s: event_names_htbl_remove", __func__);
 		return ERR;
 	} else if (event_names_htbl_insert(new_nick, label) != OK) {
-		err_log(0, "RemoveAndInsertNick: event_names_htbl_insert");
+		err_log(0, "%s: event_names_htbl_insert", __func__);
 		return ERR;
 	}
 
@@ -617,7 +621,8 @@ event_nick(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
-		printtext(&ctx, "event_nick: error: %s", e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+		    e.what());
 	}
 }
 
@@ -694,7 +699,8 @@ event_part(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
-		printtext(&ctx, "event_part: fatal: %s", e.what());
+		printtext(&ctx, "%s(%s): fatal: %s", __func__, compo->command,
+		    e.what());
 #if SHUTDOWN_IRC_CONNECTION_BEHAVIOR
 		printtext(&ctx, "Shutting down IRC connection...");
 		g_on_air = false;
@@ -754,7 +760,8 @@ event_quit(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
-		printtext(&ctx, "event_quit: error: %s", e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+		    e.what());
 	}
 }
 
