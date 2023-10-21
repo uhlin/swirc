@@ -717,24 +717,24 @@ event_quit(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char	*message;
-		char	*nick, *user, *host;
-		char	*prefix;
-		char	*state = const_cast<char *>("");
+		CSTRING message;
+		CSTRING nick, user, host;
+		STRING prefix;
+		STRING state = const_cast<STRING>("");
 
 		if (compo->prefix == NULL)
 			throw std::runtime_error("no prefix");
 
 		message = (*(compo->params) == ':' ? &compo->params[1] :
 		    &compo->params[0]);
-		prefix = & (compo->prefix[1]);
+		prefix = &compo->prefix[1];
 
 		if ((nick = strtok_r(prefix, "!@", &state)) == NULL)
 			throw std::runtime_error("unable to get nickname");
 		if ((user = strtok_r(NULL, "!@", &state)) == NULL)
-			user = const_cast<char *>("<no user>");
+			user = "<no user>";
 		if ((host = strtok_r(NULL, "!@", &state)) == NULL)
-			host = const_cast<char *>("<no host>");
+			host = "<no host>";
 
 		printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
