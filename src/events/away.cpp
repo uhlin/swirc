@@ -40,6 +40,32 @@
 #include "away.h"
 #include "names.h"
 
+static void
+print_unaway(PPRINTTEXT_CONTEXT ctx,
+    const char *nick,
+    const char *user,
+    const char *host)
+{
+	printtext(ctx, "%s%s%c %s%s@%s%s is no longer marked "
+	    "as being away!",
+	    COLOR1, nick, NORMAL,
+	    LEFT_BRKT, user, host, RIGHT_BRKT);
+}
+
+static void
+print_nowAway(PPRINTTEXT_CONTEXT ctx,
+    const char *nick,
+    const char *user,
+    const char *host,
+    const char *message)
+{
+	printtext(ctx, "%s%s%c %s%s@%s%s has been marked "
+	    "as being away (%s)",
+	    COLOR2, nick, NORMAL,
+	    LEFT_BRKT, user, host, RIGHT_BRKT,
+	    message);
+}
+
 /* event_away
 
    Example:
@@ -84,16 +110,10 @@ event_away(struct irc_message_compo *compo)
 				ctx.window = window;
 
 				if (message != NULL) {
-					printtext(&ctx, "%s%s%c %s%s@%s%s has "
-					    "been marked as being away (%s)",
-					    COLOR2, nick, NORMAL,
-					    LEFT_BRKT, user, host, RIGHT_BRKT,
+					print_nowAway(&ctx, nick, user, host,
 					    message);
 				} else {
-					printtext(&ctx, "%s%s%c %s%s@%s%s is "
-					    "no longer marked as being away!",
-					    COLOR1, nick, NORMAL,
-					    LEFT_BRKT, user, host, RIGHT_BRKT);
+					print_unaway(&ctx, nick, user, host);
 				}
 			}
 		} /* for */
