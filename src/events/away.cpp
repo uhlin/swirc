@@ -38,6 +38,7 @@
 #include "../theme.h"
 
 #include "away.h"
+#include "i18n.h"
 #include "names.h"
 
 static void	print_unaway(PPRINTTEXT_CONTEXT, const char *, const char *,
@@ -51,8 +52,8 @@ print_unaway(PPRINTTEXT_CONTEXT ctx,
     const char *user,
     const char *host)
 {
-	printtext(ctx, "%s%s%c %s%s@%s%s is no longer marked "
-	    "as being away!",
+	printtext(ctx, _("%s%s%c %s%s@%s%s is no longer marked "
+	    "as being away!"),
 	    COLOR1, nick, NORMAL,
 	    LEFT_BRKT, user, host, RIGHT_BRKT);
 }
@@ -64,8 +65,8 @@ print_nowAway(PPRINTTEXT_CONTEXT ctx,
     const char *host,
     const char *message)
 {
-	printtext(ctx, "%s%s%c %s%s@%s%s has been marked "
-	    "as being away (%s)",
+	printtext(ctx, _("%s%s%c %s%s@%s%s has been marked "
+	    "as being away (%s)"),
 	    COLOR2, nick, NORMAL,
 	    LEFT_BRKT, user, host, RIGHT_BRKT,
 	    message);
