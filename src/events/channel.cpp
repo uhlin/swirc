@@ -366,9 +366,9 @@ static void
 maintain_channel_stats(const char *channel, const char *input)
 {
 	char			*input_copy;
-	char			*modes = const_cast<char *>("");
 	char			*nicks[15] = { NULL };
 	char			*state = const_cast<char *>("");
+	const char		*modes = "";
 	const size_t		 ar_sz = ARRAY_SIZE(nicks);
 	plus_minus_state_t	 pm_state = STATE_NEITHER_PM;
 	size_t			 ar_i = 0;
@@ -383,7 +383,7 @@ maintain_channel_stats(const char *channel, const char *input)
 	}
 
 	for (nicks_assigned = 0;; nicks_assigned++) {
-		char	*token;
+		const char	*token;
 
 		if ((token = strtok_r(NULL, " ", &state)) != NULL &&
 		    nicks_assigned < ar_sz)
@@ -392,7 +392,7 @@ maintain_channel_stats(const char *channel, const char *input)
 			break;
 	}
 
-	for (char *cp = modes; *cp && ar_i < nicks_assigned; cp++) {
+	for (const char *cp = modes; *cp && ar_i < nicks_assigned; cp++) {
 		switch (*cp) {
 		case '+':
 			pm_state = STATE_PLUS;
@@ -878,11 +878,11 @@ event_topic_creator(struct irc_message_compo *compo)
 	char *string_copy = NULL;
 
 	try {
-		char		*channel, *creator, *time_str;
-		char		*nick, *user, *host;
+		char		 tbuf[100] = { '\0' };
 		char		*state1 = const_cast<char *>("");
 		char		*state2 = const_cast<char *>("");
-		char		 tbuf[100] = { '\0' };
+		const char	*channel, *creator, *time_str;
+		const char	*nick, *user, *host;
 		struct tm	 result = { 0 };
 
 		if (strFeed(compo->params, 3) != 3)
