@@ -1,5 +1,5 @@
 /* events/account.cpp
-   Copyright (C) 2018-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -51,10 +51,10 @@ event_account(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char	*accountname;
-		char	*last = const_cast<char *>("");
-		char	*nick, *user, *host;
-		char	*prefix;
+		char		*last = const_cast<char *>("");
+		char		*prefix;
+		const char	*accountname;
+		const char	*nick, *user, *host;
 
 		if ((prefix = compo->prefix) == NULL)
 			throw std::runtime_error("no prefix");
