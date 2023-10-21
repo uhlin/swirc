@@ -182,7 +182,8 @@ event_serverFeatures(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
-		printtext(&ctx, "event_serverFeatures: error: %s", e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+		    e.what());
 	}
 }
 
@@ -248,7 +249,7 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
-		printtext(&ctx, "event_channelCreatedWhen: error: %s",
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
 		    e.what());
 	}
 }
@@ -309,7 +310,8 @@ event_channelModeIs(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
-		printtext(&ctx, "event_channelModeIs: error: %s", e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+		    e.what());
 	}
 }
 
@@ -352,7 +354,8 @@ event_channel_forward(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
-		printtext(&ctx, "event_channel_forward: error: %s", e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+		    e.what());
 	}
 }
 
@@ -432,7 +435,8 @@ event_nicknameInUse(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
-		printtext(&ctx, "event_nicknameInUse: error: %s", e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+		    e.what());
 	}
 }
 
@@ -468,7 +472,8 @@ event_userModeIs(struct irc_message_compo *compo)
 
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
 		    true);
-		printtext(&ctx, "event_userModeIs: error: %s", e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+		    e.what());
 	}
 }
 
