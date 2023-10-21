@@ -37,6 +37,7 @@
 #include "../strHand.h"
 #include "../theme.h"
 
+#include "i18n.h"
 #include "invite.h"
 
 /* event_inviting: 341 (RPL_INVITING)
@@ -51,7 +52,8 @@ event_inviting(struct irc_message_compo *compo)
 	(void) compo;
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_SUCCESS, true);
-	printtext(&ctx, "The invitation has been passed onto the end user");
+	printtext(&ctx, "%s",
+	    _("The invitation has been passed onto the end user"));
 }
 
 /* event_invite
@@ -98,8 +100,8 @@ event_invite(struct irc_message_compo *compo)
 		    g_forbidden_chan_name_chars) != NULL) {
 			throw std::runtime_error("bogus irc channel");
 		} else if (strings_match_ignore_case(target, g_my_nickname)) {
-			printtext(&ctx, "%c%s%c %s%s@%s%s invites you to "
-			    "%c%s%c",
+			printtext(&ctx, _("%c%s%c %s%s@%s%s invites you to "
+			    "%c%s%c"),
 			    BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT,
 			    BOLD, channel, BOLD);
 		} else {
@@ -108,8 +110,8 @@ event_invite(struct irc_message_compo *compo)
 			 * that's doing the invite is in
 			 */
 
-			printtext(&ctx, "%c%s%c %s%s@%s%s invites %c%s%c to "
-			    "%c%s%c",
+			printtext(&ctx, _("%c%s%c %s%s@%s%s invites %c%s%c to "
+			    "%c%s%c"),
 			    BOLD, nick, BOLD, LEFT_BRKT, user, host, RIGHT_BRKT,
 			    BOLD, target, BOLD, BOLD, channel, BOLD);
 		}
