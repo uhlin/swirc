@@ -576,17 +576,17 @@ event_nick(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char	*new_nick;
-		char	*nick, *user, *host;
-		char	*prefix = NULL;
-		char	*state = const_cast<char *>("");
+		CSTRING new_nick;
+		CSTRING nick, user, host;
+		STRING prefix = NULL;
+		STRING state = const_cast<STRING>("");
 
 		if (compo->prefix == NULL)
 			throw std::runtime_error("no prefix");
 
 		new_nick = (*(compo->params) == ':' ? &compo->params[1] :
 		    &compo->params[0]);
-		prefix = & (compo->prefix[1]);
+		prefix = &compo->prefix[1];
 
 		if ((nick = strtok_r(prefix, "!@", &state)) == NULL)
 			throw std::runtime_error("no nickname");
@@ -594,9 +594,8 @@ event_nick(struct irc_message_compo *compo)
 		user = strtok_r(NULL, "!@", &state);
 		host = strtok_r(NULL, "!@", &state);
 
-		/* unused */
-		(void) user;
-		(void) host;
+		UNUSED_VAR(user);
+		UNUSED_VAR(host);
 
 		printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
 
