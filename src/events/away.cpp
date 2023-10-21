@@ -40,6 +40,11 @@
 #include "away.h"
 #include "names.h"
 
+static void	print_unaway(PPRINTTEXT_CONTEXT, const char *, const char *,
+		    const char *) NONNULL;
+static void	print_nowAway(PPRINTTEXT_CONTEXT, const char *, const char *,
+		    const char *, const char *) NONNULL;
+
 static void
 print_unaway(PPRINTTEXT_CONTEXT ctx,
     const char *nick,
