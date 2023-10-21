@@ -41,6 +41,11 @@
 #include "i18n.h"
 #include "names.h"
 
+static void	print_logged_in(PPRINTTEXT_CONTEXT, const char *, const char *,
+		    const char *, const char *) NONNULL;
+static void	print_logged_out(PPRINTTEXT_CONTEXT, const char *, const char *,
+		    const char *) NONNULL;
+
 static void
 print_logged_in(PPRINTTEXT_CONTEXT ctx,
     const char *nick,
