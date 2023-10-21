@@ -1,5 +1,5 @@
 /* events/invite.cpp
-   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2023 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -66,11 +66,11 @@ event_invite(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*nick, *user, *host;
-		char	*prefix;
-		char	*state1 = const_cast<char *>("");
-		char	*state2 = const_cast<char *>("");
-		char	*target, *channel;
+		char		*prefix;
+		char		*state1 = const_cast<char *>("");
+		char		*state2 = const_cast<char *>("");
+		const char	*nick, *user, *host;
+		const char	*target, *channel;
 
 		if ((prefix = compo->prefix) == NULL)
 			throw std::runtime_error("no prefix");
@@ -80,9 +80,9 @@ event_invite(struct irc_message_compo *compo)
 		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
 			throw std::runtime_error("unable to get nick");
 		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
-			user = const_cast<char *>("<no user>");
+			user = "<no user>";
 		if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
-			host = const_cast<char *>("<no host>");
+			host = "<no host>";
 
 		if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
@@ -115,6 +115,6 @@ event_invite(struct irc_message_compo *compo)
 		}
 	} catch (const std::runtime_error &e) {
 		ctx.spec_type = TYPE_SPEC1_WARN;
-		printtext(&ctx, "event_invite: error: %s", e.what());
+		printtext(&ctx, "%s: error: %s", __func__, e.what());
 	}
 }
