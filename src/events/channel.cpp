@@ -178,29 +178,28 @@ event_kick(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char	*channel, *victim, *reason;
-		char	*nick, *user, *host;
-		char	*prefix = NULL;
-		char	*state1 = const_cast<char *>("");
-		char	*state2 = const_cast<char *>("");
+		CSTRING channel, victim, reason;
+		CSTRING nick, user, host;
+		STRING prefix = NULL;
+		STRING state1 = const_cast<STRING>("");
+		STRING state2 = const_cast<STRING>("");
 
 		if (compo == NULL)
 			throw std::runtime_error("no components");
 		else if (compo->prefix == NULL)
 			throw std::runtime_error("no prefix");
 
-		prefix = & (compo->prefix[1]);
+		prefix = &compo->prefix[1];
 
 		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
 			throw std::runtime_error("no nickname");
 		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
-			user = const_cast<char *>("<no user>");
+			user = "<no user>";
 		if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
-			host = const_cast<char *>("<no host>");
+			host = "<no host>";
 
-		/* unused */
-		(void) user;
-		(void) host;
+		UNUSED_VAR(user);
+		UNUSED_VAR(host);
 
 		(void) strFeed(compo->params, 2);
 
