@@ -499,7 +499,7 @@ event_mode(struct irc_message_compo *compo)
 			    LEFT_BRKT, next_token_copy, RIGHT_BRKT,
 			    BOLD, g_my_nickname, BOLD);
 
-			if (net_send("MODE %s", nick) < 0)
+			if (net_send("MODE %s", g_my_nickname) < 0)
 				throw std::runtime_error("cannot send");
 		} else if (is_irc_channel(channel) &&
 		    (ctx.window = window_by_label(channel)) != NULL) {
