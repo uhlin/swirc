@@ -490,14 +490,14 @@ event_mode(struct irc_message_compo *compo)
 
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
-		if (strings_match_ignore_case(nick, channel)) {
+		if (strings_match_ignore_case(channel, g_my_nickname)) {
 			/*
 			 * User mode
 			 */
 
 			printtext(&ctx, _("Mode change %s%s%s for user %c%s%c"),
 			    LEFT_BRKT, next_token_copy, RIGHT_BRKT,
-			    BOLD, nick, BOLD);
+			    BOLD, g_my_nickname, BOLD);
 
 			if (net_send("MODE %s", nick) < 0)
 				throw std::runtime_error("cannot send");
@@ -509,10 +509,6 @@ event_mode(struct irc_message_compo *compo)
 			    COLOR2, nick, NORMAL);
 
 			maintain_channel_stats(channel, next_token_copy);
-		} else if (strings_match_ignore_case(nick, "NickServ") &&
-		    strings_match_ignore_case(channel, g_my_nickname)) {
-			if (net_send("MODE %s", g_my_nickname) < 0)
-				throw std::runtime_error("cannot send");
 		} else {
 			throw std::runtime_error("unhandled else branch");
 		}
