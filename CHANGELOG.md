@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Added handling of empty user@host combinations in Wallops messages
 - Added protection for bad filenames for IRC logs
 - Added translations
+- Changed the way of recognizing a user mode versus channel mode
 - Did code improvements
 - Fixed occurrences of hardcoded function names in messages
 - Fixed typos in manual pages
