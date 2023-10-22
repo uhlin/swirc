@@ -519,7 +519,8 @@ do_connect(const char *server, const char *port, const char *pass)
 			turn_icb_mode_off();
 
 		if (strings_match(conn_ctx.port, ICB_SSL_PORT) ||
-		    strings_match(conn_ctx.port, IRC_SSL_PORT))
+		    strings_match(conn_ctx.port, IRC_SSL_PORT) ||
+		    g_force_tls)
 			set_ssl_on();
 
 		reconnect_begin();
@@ -663,7 +664,8 @@ cmd_connect(const char *data)
 		sw_assert(token != NULL);
 
 		if (strings_match(token, "-tls") ||
-		    strings_match(token, "-ssl"))
+		    strings_match(token, "-ssl") ||
+		    g_force_tls)
 			set_ssl_on();
 
 		server = strtok_r(NULL, "\n:", &state);
