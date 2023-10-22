@@ -461,7 +461,7 @@ event_mode(struct irc_message_compo *compo)
 		char		*prefix = NULL;
 		char		*state1 = const_cast<char *>("");
 		char		*state2 = const_cast<char *>("");
-		const char	*nick = NULL;
+		const char	*nick, *user, *host;
 
 		if (compo->prefix == NULL)
 			throw std::runtime_error("no prefix");
@@ -474,6 +474,13 @@ event_mode(struct irc_message_compo *compo)
 		} else if (strFeed(compo->params, 1) != 1) {
 			throw std::runtime_error("strFeed");
 		}
+
+		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
+			user = "";
+		if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
+			host = "";
+		UNUSED_VAR(user);
+		UNUSED_VAR(host);
 
 		if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL ||
 		    (next_token = strtok_r(NULL, "\n", &state2)) == NULL) {
