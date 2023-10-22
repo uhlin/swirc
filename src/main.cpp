@@ -109,6 +109,7 @@ bool	g_change_color_defs	= true;
 bool	g_connection_password	= false;
 bool	g_debug_logging		= false;
 bool	g_explicit_config_file	= false;
+bool	g_force_tls		= false;
 bool	g_icb_mode		= false;
 bool	g_sasl_authentication	= true;
 bool	g_ssl_verify_peer	= true;
@@ -141,6 +142,7 @@ static stringarray_t OptionDesc = {
   N_("    -C                   Do not change color definitions\n"),
   N_("    -P                   Permanently disable SASL authentication\n"),
   N_("    -R                   Disable TLS/SSL peer verification\n"),
+  N_("    -S                   Force TLS\n"),
 #if OUTPUT_INTERNAL_OPTIONS
   "    -T                   Internal option. Windows: Invoked when\n",
   "                         launched by a toast.\n",
@@ -420,6 +422,9 @@ process_options(int argc, char *argv[], const char *optstring)
 		case 'R':
 			g_ssl_verify_peer = false;
 			break;
+		case 'S':
+			g_force_tls = true;
+			break;
 		case 'T':
 			case_launched_by_toast_hook();
 			break;
@@ -646,7 +651,7 @@ main(int argc, char *argv[])
 	}
 #endif
 
-	process_options(argc, argv, "46CPRTW:c:dh:ij:n:pr:u:x:");
+	process_options(argc, argv, "46CPRSTW:c:dh:ij:n:pr:u:x:");
 
 	srand(get_seed());
 

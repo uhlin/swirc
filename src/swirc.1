@@ -3,7 +3,7 @@
 .\" SPDX-FileCopyrightText: Copyright 2016-2023 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd September 16, 2023
+.Dd October 22, 2023
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -12,7 +12,7 @@
 .Sh SYNOPSIS
 .Nm swirc
 .Bk -words
-.Op Fl 46?CPRdipv
+.Op Fl 46?CPRSdipv
 .Op Fl W Ar password
 .Op Fl c Ar server[:port]
 .Op Fl j Ar join
@@ -53,6 +53,8 @@ If specified, the effect is \fIfinal\fP (i.e. it overrides any config
 file value.)
 .It Fl R
 Disable TLS/SSL peer verification
+.It Fl S
+Force TLS (Transport Layer Security)
 .It Fl W Ar password
 Equal effect as flag
 .Fl p

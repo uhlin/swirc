@@ -93,6 +93,7 @@ extern bool	g_change_color_defs;
 extern bool	g_connection_password;
 extern bool	g_debug_logging;
 extern bool	g_explicit_config_file;
+extern bool	g_force_tls;
 extern bool	g_icb_mode;
 extern bool	g_sasl_authentication;
 extern bool	g_ssl_verify_peer;

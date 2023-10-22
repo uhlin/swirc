@@ -15,7 +15,7 @@ client written in C/C++, whose goals are to be portable and secure.
 
 ## Program options ##
 
-usage: swirc [-46?CPRdipv] [-W password] [-c server[:port]] [-j join] [-n nickname] [-r rl name] [-u username] [-x config]
+usage: swirc [-46?CPRSdipv] [-W password] [-c server[:port]] [-j join] [-n nickname] [-r rl name] [-u username] [-x config]
 
     -4                   Use IPv4 addresses only
     -6                   Use IPv6 addresses only
@@ -23,6 +23,7 @@ usage: swirc [-46?CPRdipv] [-W password] [-c server[:port]] [-j join] [-n nickna
     -C                   Do not change color definitions
     -P                   Permanently disable SASL authentication
     -R                   Disable TLS/SSL peer verification
+    -S                   Force TLS
     -W <password>        Equal effect as flag 'p' but non-interactive
     -c <server[:port]>   Connect to IRC server
     -d                   Debug logging
