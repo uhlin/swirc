@@ -594,9 +594,10 @@ event_nick(struct irc_message_compo *compo)
 		if ((nick = strtok_r(prefix, "!@", &state)) == NULL)
 			throw std::runtime_error("no nickname");
 
-		user = strtok_r(NULL, "!@", &state);
-		host = strtok_r(NULL, "!@", &state);
-
+		if ((user = strtok_r(NULL, "!@", &state)) == NULL)
+			user = "";
+		if ((host = strtok_r(NULL, "!@", &state)) == NULL)
+			host = "";
 		UNUSED_VAR(user);
 		UNUSED_VAR(host);
 
@@ -833,9 +834,10 @@ event_topic_chg(struct irc_message_compo *compo)
 		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
 			throw std::runtime_error("no nickname");
 
-		user = strtok_r(NULL, "!@", &state1);
-		host = strtok_r(NULL, "!@", &state1);
-
+		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
+			user = "";
+		if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
+			host = "";
 		UNUSED_VAR(user);
 		UNUSED_VAR(host);
 
