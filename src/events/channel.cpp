@@ -683,7 +683,7 @@ event_part(struct irc_message_compo *compo)
 			if ((ctx.window = window_by_label(channel)) == NULL)
 				throw std::runtime_error("window lookup error");
 			if (!has_message || message == NULL)
-				message = const_cast<char *>("");
+				message = "";
 			if (has_message && message != NULL && *message == ':')
 				message++;
 
