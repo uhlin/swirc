@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.5\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2023-09-14 18:22+0200\n"
+"POT-Creation-Date: 2023-11-03 23:14+0100\n"
 "PO-Revision-Date: 2023-09-02 19:15+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -25,17 +25,37 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
+#: ../src/events/account.cpp:56
+#, fuzzy, c-format
+msgid "%s%s%c %s%s@%s%s has logged into a new account %s%s%c"
+msgstr "%s%s%c %s%s@%s%s a rejoint %s%s%c"
+
+#: ../src/events/account.cpp:69
+#, fuzzy, c-format
+msgid "%s%s%c %s%s@%s%s has logged out of their account"
+msgstr "%s%s%c %s%s@%s%s a rejoint %s%s%c"
+
+#: ../src/events/away.cpp:55
+#, c-format
+msgid "%s%s%c %s%s@%s%s is no longer marked as being away!"
+msgstr ""
+
+#: ../src/events/away.cpp:68
+#, fuzzy, c-format
+msgid "%s%s%c %s%s@%s%s has been marked as being away (%s)"
+msgstr "%s%s%c %s%s@%s%s a rejoint %s%s%c"
+
 #: ../src/events/channel.cpp:86
 #, c-format
 msgid "Homepage for %s%s%s%c%s: %s"
 msgstr "Page d'accueil de %s%s%s%c%s: %s"
 
-#: ../src/events/channel.cpp:153
+#: ../src/events/channel.cpp:154
 #, c-format
 msgid "%s%s%c %s%s@%s%s has joined %s%s%c"
 msgstr "%s%s%c %s%s@%s%s a rejoint %s%s%c"
 
-#: ../src/events/channel.cpp:236
+#: ../src/events/channel.cpp:237
 #, c-format
 msgid "%s was kicked from %s%s%c by %s%s%c %s%s%s"
 msgstr "%s a été expulsé de %s%s%c par %s%s%c %s%s%s"
@@ -43,85 +63,103 @@ msgstr "%s a été expulsé de %s%s%c par %s%s%c %s%s%s"
 #.
 #. * User mode
 #.
-#: ../src/events/channel.cpp:496
+#: ../src/events/channel.cpp:505
 #, c-format
 msgid "Mode change %s%s%s for user %c%s%c"
 msgstr "Changement de mode %s%s%s pour l'utilisateur %c%s%c"
 
-#: ../src/events/channel.cpp:504
+#: ../src/events/channel.cpp:513
 #, c-format
 msgid "mode/%s%s%s%c%s %s%s%s by %s%s%c"
 msgstr "mode/%s%s%s%c%s %s%s%s par %s%s%c"
 
-#: ../src/events/channel.cpp:609
+#: ../src/events/channel.cpp:615
 #, c-format
 msgid "%s%s%c is now known as %s %s%s%c"
 msgstr "%s%s%c est maintenant connu sous le nom de %s %s%s%c"
 
-#: ../src/events/channel.cpp:687
+#: ../src/events/channel.cpp:694
 #, c-format
 msgid "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s"
 msgstr "%s%s%c %s%s@%s%s a quitté %s%s%c %s%s%s"
 
-#: ../src/events/channel.cpp:746
+#: ../src/events/channel.cpp:754
 #, c-format
 msgid "%s%s%c %s%s@%s%s has quit %s%s%s"
 msgstr "%s%s%c %s%s@%s%s est parti %s%s%s"
 
-#: ../src/events/channel.cpp:793
+#: ../src/events/channel.cpp:802
 #, c-format
 msgid "Topic for %s%s%s%c%s: %s"
 msgstr "Sujet pour %s%s%s%c%s: %s"
 
-#: ../src/events/channel.cpp:850
+#: ../src/events/channel.cpp:860
 #, c-format
 msgid "%c%s%c changed the topic of %c%s%c to: %s"
 msgstr "%c%s%c a changé le sujet de %c%s%c en: %s"
 
-#: ../src/events/channel.cpp:922
+#: ../src/events/channel.cpp:933
 #, c-format
 msgid "Topic set by %c%s%c %s%s@%s%s %s%s%s"
 msgstr "Le sujet a été défini par %c%s%c %s%s@%s%s %s%s%s"
 
-#: ../src/events/channel.cpp:928
+#: ../src/events/channel.cpp:939
 #, c-format
 msgid "Topic set by %c%s%c %s%s%s"
 msgstr "Le sujet a été défini par %c%s%c %s%s%s"
 
-#: ../src/events/misc.cpp:243
+#: ../src/events/invite.cpp:56
+msgid "The invitation has been passed onto the end user"
+msgstr ""
+
+#: ../src/events/invite.cpp:103
+#, fuzzy, c-format
+msgid "%c%s%c %s%s@%s%s invites you to %c%s%c"
+msgstr "%s%s%c %s%s@%s%s est parti %s%s%s"
+
+#.
+#. * TODO: Write to the channels where the user
+#. * that's doing the invite is in
+#.
+#: ../src/events/invite.cpp:113
+#, fuzzy, c-format
+msgid "%c%s%c %s%s@%s%s invites %c%s%c to %c%s%c"
+msgstr "%s%s%c %s%s@%s%s a quitté %s%s%c %s%s%s"
+
+#: ../src/events/misc.cpp:244
 #, c-format
 msgid "Channel %s%s%s%c%s created %s"
 msgstr "La chaîne %s%s%s%c%s a été créée le %s"
 
-#: ../src/events/misc.cpp:300
+#: ../src/events/misc.cpp:301
 #, c-format
 msgid "mode/%s%s%s%c%s %s%s%s"
 msgstr "mode/%s%s%s%c%s %s%s%s"
 
-#: ../src/events/misc.cpp:350
+#: ../src/events/misc.cpp:352
 #, c-format
 msgid "Channel forwarding from %c%s%c to %c%s%c"
 msgstr "Transfert de canal de %c%s%c vers %c%s%c"
 
-#: ../src/events/misc.cpp:407
+#: ../src/events/misc.cpp:410
 #, c-format
 msgid "Nickname %c%s%c is already in use"
 msgstr "Le surnom %c%s%c est déjà utilisé"
 
-#: ../src/events/misc.cpp:415
+#: ../src/events/misc.cpp:418
 msgid "Alternative nickname already tested. Disconnecting..."
 msgstr "Surnom alternatif déjà testé. Déconnexion..."
 
-#: ../src/events/misc.cpp:420
+#: ../src/events/misc.cpp:423
 #, c-format
 msgid "Attempting to use alt_nick (%s) instead..."
 msgstr "Tentative d'utilisation de alt_nick (%s) à la place..."
 
-#: ../src/events/misc.cpp:428
+#: ../src/events/misc.cpp:431
 msgid "Disconnecting..."
 msgstr "Déconnexion..."
 
-#: ../src/events/misc.cpp:487
+#: ../src/events/misc.cpp:492
 msgid "You're now an IRC operator!"
 msgstr "Vous êtes maintenant un opérateur IRC!"
 
@@ -1138,17 +1176,17 @@ msgstr "Tapez F1 pour les touches du clavier"
 msgid "Error log size %s%.1f KB%s"
 msgstr "Taille du journal des erreurs %s%.1f KB%s"
 
-#: ../src/log.c:166
+#: ../src/log.c:217
 #, c-format
 msgid "Logging for window (refnum: %d) now off"
 msgstr "Journalisation pour la fenêtre (refnum: %d) désormais désactivée"
 
-#: ../src/log.c:170
+#: ../src/log.c:221
 #, c-format
 msgid "Logging for window (refnum: %d) now on"
 msgstr "Journalisation pour la fenêtre (refnum: %d) désormais activée"
 
-#: ../src/main.cpp:137
+#: ../src/main.cpp:138
 msgid ""
 "\n"
 "Options:\n"
@@ -1158,84 +1196,89 @@ msgstr ""
 "Options:\n"
 "\n"
 
-#: ../src/main.cpp:138
+#: ../src/main.cpp:139
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   IPv4 seulement\n"
 
-#: ../src/main.cpp:139
+#: ../src/main.cpp:140
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   IPv6 seulement\n"
 
-#: ../src/main.cpp:140
+#: ../src/main.cpp:141
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Afficher l'aide\n"
 
-#: ../src/main.cpp:141
+#: ../src/main.cpp:142
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Ne pas changer les couleurs\n"
 
-#: ../src/main.cpp:142
+#: ../src/main.cpp:143
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr "    -P                   Désactiver l'authentification SASL\n"
 
-#: ../src/main.cpp:143
+#: ../src/main.cpp:144
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr ""
 "    -R                   Désactivation de la vérification du certificat TLS/"
 "SSL\n"
 
-#: ../src/main.cpp:148
+#: ../src/main.cpp:145
+#, fuzzy
+msgid "    -S                   Force TLS\n"
+msgstr "    -d                   Activer les journaux de débogage\n"
+
+#: ../src/main.cpp:150
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
 msgstr ""
 "    -W <password>        Effet égal à celui du drapeau 'p' mais non "
 "interactif\n"
 
-#: ../src/main.cpp:149
+#: ../src/main.cpp:151
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Se connecter à un serveur IRC\n"
 
-#: ../src/main.cpp:150
+#: ../src/main.cpp:152
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Activer les journaux de débogage\n"
 
-#: ../src/main.cpp:151
+#: ../src/main.cpp:153
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Activer le mode Internet Citizen's Band\n"
 
-#: ../src/main.cpp:152
+#: ../src/main.cpp:154
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr ""
 "    -j <join>            Liste de salons à rejoinre (séparés par des "
 "virgules)\n"
 
-#: ../src/main.cpp:153
+#: ../src/main.cpp:155
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Pseudonyme\n"
 
-#: ../src/main.cpp:154
+#: ../src/main.cpp:156
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Requête pour le mot de passe serveur (serveurs "
 "privés uniquement)\n"
 
-#: ../src/main.cpp:155
+#: ../src/main.cpp:157
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Votre nom\n"
 
-#: ../src/main.cpp:156
+#: ../src/main.cpp:158
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Votre utilisateur\n"
 
-#: ../src/main.cpp:157
+#: ../src/main.cpp:159
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Affiche la version de Swirc\n"
 
-#: ../src/main.cpp:158
+#: ../src/main.cpp:160
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Fichier de configuration\n"
 
-#: ../src/main.cpp:224
+#: ../src/main.cpp:226
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Usage: %s [OPTION] ...\n"
