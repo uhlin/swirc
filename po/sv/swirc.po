@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.5\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-11-03 23:14+0100\n"
-"PO-Revision-Date: 2023-09-02 19:19+0200\n"
+"PO-Revision-Date: 2023-11-03 23:32+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -26,24 +26,24 @@ msgid "No"
 msgstr "Nej"
 
 #: ../src/events/account.cpp:56
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%c %s%s@%s%s has logged into a new account %s%s%c"
-msgstr "%s%s%c %s%s@%s%s har gått med i %s%s%c"
+msgstr "%s%s%c %s%s@%s%s har loggat in på ett nytt konto %s%s%c"
 
 #: ../src/events/account.cpp:69
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%c %s%s@%s%s has logged out of their account"
-msgstr "%s%s%c %s%s@%s%s har gått med i %s%s%c"
+msgstr "%s%s%c %s%s@%s%s har loggat ut från sitt konto"
 
 #: ../src/events/away.cpp:55
 #, c-format
 msgid "%s%s%c %s%s@%s%s is no longer marked as being away!"
-msgstr ""
+msgstr "%s%s%c %s%s@%s%s är inte längre markerad som borta!"
 
 #: ../src/events/away.cpp:68
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%c %s%s@%s%s has been marked as being away (%s)"
-msgstr "%s%s%c %s%s@%s%s har gått med i %s%s%c"
+msgstr "%s%s%c %s%s@%s%s har markerats som borta (%s)"
 
 #: ../src/events/channel.cpp:86
 #, c-format
@@ -110,21 +110,21 @@ msgstr "Ämnet satt av %c%s%c %s%s%s"
 
 #: ../src/events/invite.cpp:56
 msgid "The invitation has been passed onto the end user"
-msgstr ""
+msgstr "Inbjudan har skickats till slutanvändaren"
 
 #: ../src/events/invite.cpp:103
-#, fuzzy, c-format
+#, c-format
 msgid "%c%s%c %s%s@%s%s invites you to %c%s%c"
-msgstr "%s%s%c %s%s@%s%s har avslutat %s%s%s"
+msgstr "%c%s%c %s%s@%s%s bjuder in dig till %c%s%c"
 
 #.
 #. * TODO: Write to the channels where the user
 #. * that's doing the invite is in
 #.
 #: ../src/events/invite.cpp:113
-#, fuzzy, c-format
+#, c-format
 msgid "%c%s%c %s%s@%s%s invites %c%s%c to %c%s%c"
-msgstr "%s%s%c %s%s@%s%s har lämnat %s%s%c %s%s%s"
+msgstr "%c%s%c %s%s@%s%s bjuder in %c%s%c till %c%s%c"
 
 #: ../src/events/misc.cpp:244
 #, c-format
@@ -1352,9 +1352,8 @@ msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   Stäng av TLS/SSL peer verifikation\n"
 
 #: ../src/main.cpp:145
-#, fuzzy
 msgid "    -S                   Force TLS\n"
-msgstr "    -d                   Debug loggning\n"
+msgstr "    -S                   Tvinga TLS\n"
 
 #: ../src/main.cpp:150
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
