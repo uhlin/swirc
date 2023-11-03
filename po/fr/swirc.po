@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.5\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-11-03 23:14+0100\n"
-"PO-Revision-Date: 2023-09-02 19:15+0200\n"
+"PO-Revision-Date: 2023-11-03 23:41+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -26,14 +26,14 @@ msgid "No"
 msgstr "Non"
 
 #: ../src/events/account.cpp:56
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%c %s%s@%s%s has logged into a new account %s%s%c"
-msgstr "%s%s%c %s%s@%s%s a rejoint %s%s%c"
+msgstr "%s%s%c %s%s@%s%s s'est connecté à un nouveau compte %s%s%c"
 
 #: ../src/events/account.cpp:69
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%c %s%s@%s%s has logged out of their account"
-msgstr "%s%s%c %s%s@%s%s a rejoint %s%s%c"
+msgstr "%s%s%c %s%s@%s%s s'est déconnecté de son compte"
 
 #: ../src/events/away.cpp:55
 #, c-format
@@ -41,9 +41,9 @@ msgid "%s%s%c %s%s@%s%s is no longer marked as being away!"
 msgstr ""
 
 #: ../src/events/away.cpp:68
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%c %s%s@%s%s has been marked as being away (%s)"
-msgstr "%s%s%c %s%s@%s%s a rejoint %s%s%c"
+msgstr "%s%s%c %s%s@%s%s a été marqué comme étant absent (%s)"
 
 #: ../src/events/channel.cpp:86
 #, c-format
@@ -113,18 +113,18 @@ msgid "The invitation has been passed onto the end user"
 msgstr ""
 
 #: ../src/events/invite.cpp:103
-#, fuzzy, c-format
+#, c-format
 msgid "%c%s%c %s%s@%s%s invites you to %c%s%c"
-msgstr "%s%s%c %s%s@%s%s est parti %s%s%s"
+msgstr "%c%s%c %s%s@%s%s vous invite à %c%s%c"
 
 #.
 #. * TODO: Write to the channels where the user
 #. * that's doing the invite is in
 #.
 #: ../src/events/invite.cpp:113
-#, fuzzy, c-format
+#, c-format
 msgid "%c%s%c %s%s@%s%s invites %c%s%c to %c%s%c"
-msgstr "%s%s%c %s%s@%s%s a quitté %s%s%c %s%s%s"
+msgstr "%c%s%c %s%s@%s%s invite %c%s%c à %c%s%c"
 
 #: ../src/events/misc.cpp:244
 #, c-format
@@ -1223,9 +1223,8 @@ msgstr ""
 "SSL\n"
 
 #: ../src/main.cpp:145
-#, fuzzy
 msgid "    -S                   Force TLS\n"
-msgstr "    -d                   Activer les journaux de débogage\n"
+msgstr "    -S                   Forcer TLS\n"
 
 #: ../src/main.cpp:150
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
