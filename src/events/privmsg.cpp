@@ -429,7 +429,7 @@ event_privmsg(struct irc_message_compo *compo)
 		}
 
 		if (strings_match_ignore_case(dest, g_my_nickname)) {
-			if (*nick == '*') {
+			if (*nick == '*' && !g_icb_mode) {
 				char *module;
 
 				module = get_notice(nick + 1, "znc", "znc.in");
