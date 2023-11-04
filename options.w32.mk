@@ -34,12 +34,12 @@ Q = @
 
 MACHINE = x64
 NAME_libcharset = libcharset-1
-NAME_libcrypto = crypto-50
+NAME_libcrypto = crypto
 NAME_libhunspell = libhunspell-1.7-0
 NAME_libiconv = libiconv-2
 NAME_libidn = libidn-12
 NAME_libintl = libintl-8
-NAME_libssl = ssl-53
+NAME_libssl = ssl
 
 # MINGW hunspell
 DLL_libgcc = libgcc_s_seh-1.dll
