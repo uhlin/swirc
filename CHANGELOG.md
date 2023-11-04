@@ -4,9 +4,11 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added adoption of SPDX-tags for the distributed manual pages
 - Added better detection of server Wallops
-- Added command-line option `-S`
+- Added command-line option `-S` (Force TLS)
 - Added extensive use of the `CPPFLAGS` make macro
 - Added handling of empty user@host combinations in Wallops messages
+- Added handling of znc messages. (Made them look like notices and
+  appear in the active window.)
 - Added protection for bad filenames for IRC logs
 - Added translations
 - Changed the way of recognizing a user mode versus channel mode
@@ -14,7 +16,7 @@ All notable changes to this project will be documented in this file.
 - Fixed occurrences of hardcoded function names in messages
 - Fixed typos in manual pages
 - Improved C++ exception handling
-- Limited notification messages
+- Limited notification messages in length
 
 ## [3.4.5] - 2023-09-14 ##
 - **Added** command-line option `-W`
