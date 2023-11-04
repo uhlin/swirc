@@ -57,6 +57,7 @@
 #define NICK_S2 Theme("nick_s2")
 
 #include "names.h"
+#include "notice.h"
 #include "privmsg.h"
 #include "special-msg-context.hpp"
 #if UNIX
@@ -248,6 +249,13 @@ handle_msgs_from_my_server(PPRINTTEXT_CONTEXT ctx, CSTRING dest,
 }
 
 static void
+handle_znc_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING module, CSTRING msg)
+{
+	ctx->window = g_active_window;
+	printtext(ctx, "%s %s", module, msg);
+}
+
+static void
 handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 {
 	STRING msg_copy;
@@ -421,10 +429,19 @@ event_privmsg(struct irc_message_compo *compo)
 		}
 
 		if (strings_match_ignore_case(dest, g_my_nickname)) {
-			if (window_by_label(nick) == NULL &&
-			    spawn_chat_window(nick, nick) != 0)
-				throw std::runtime_error("spawn_chat_window");
-			handle_private_msgs(&ctx, nick, msg);
+			if (*nick == '*') {
+				char *module;
+
+				module = get_notice(nick + 1, "znc", "znc.in");
+				handle_znc_msgs(&ctx, module, msg);
+				free(module);
+			} else {
+				if (window_by_label(nick) == NULL &&
+				    spawn_chat_window(nick, nick) != 0)
+					throw std::runtime_error("cannot spawn "
+					    "chat window");
+				handle_private_msgs(&ctx, nick, msg);
+			}
 		} else {
 			/*
 			 * Dest is an IRC channel
