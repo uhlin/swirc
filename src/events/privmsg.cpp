@@ -430,11 +430,11 @@ event_privmsg(struct irc_message_compo *compo)
 
 		if (strings_match_ignore_case(dest, g_my_nickname)) {
 			if (*nick == '*' && !g_icb_mode) {
-				char *module;
+				char *notice;
 
-				module = get_notice(nick + 1, "znc", "znc.in");
-				handle_znc_msgs(&ctx, module, msg);
-				free(module);
+				notice = get_notice(nick + 1, "znc", "znc.in");
+				handle_znc_msgs(&ctx, notice, msg);
+				free(notice);
 			} else {
 				if (window_by_label(nick) == NULL &&
 				    spawn_chat_window(nick, nick) != 0)
