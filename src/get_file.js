@@ -14,7 +14,7 @@ function get_file(url, name)
 }
 
 get_file("https://curl.haxx.se/ca/cacert.pem", "src/trusted_roots.pem");
-get_file("https://www.nifty-networks.net/swirc/curl-7.87.0.cab", "curl-7.87.0.cab");
+get_file("https://www.nifty-networks.net/swirc/curl-8.4.0.cab", "curl-8.4.0.cab");
 get_file("https://www.nifty-networks.net/swirc/gnu-bundle-202205.cab", "gnu-bundle-202205.cab");
 get_file("https://www.nifty-networks.net/swirc/hunspell-1.7.2-dlls.cab", "hunspell-1.7.2.cab");
 get_file("https://www.nifty-networks.net/swirc/hunspell-en-us.cab", "hunspell-en-us.cab");
