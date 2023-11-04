@@ -18,6 +18,11 @@ All notable changes to this project will be documented in this file.
 - Improved C++ exception handling
 - Limited notification messages in length
 
+### Windows ###
+- **Upgraded to**...
+  - [Curl](https://curl.se/) 8.4.0
+  - [LibreSSL](https://www.libressl.org/) 3.8.2
+
 ## [3.4.5] - 2023-09-14 ##
 - **Added** command-line option `-W`
 - **Added** tab completion for:
