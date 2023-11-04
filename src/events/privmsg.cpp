@@ -249,10 +249,10 @@ handle_msgs_from_my_server(PPRINTTEXT_CONTEXT ctx, CSTRING dest,
 }
 
 static void
-handle_znc_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING module, CSTRING msg)
+handle_znc_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING notice, CSTRING msg)
 {
 	ctx->window = g_active_window;
-	printtext(ctx, "%s %s", module, msg);
+	printtext(ctx, "%s %s", notice, msg);
 }
 
 static void
