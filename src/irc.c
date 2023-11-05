@@ -136,6 +136,7 @@ static struct numeric_events_tag {
 	{ "234", "RPL_SERVLIST",            NO_WINDOW,      0, event_servlist },
 	{ "235", "RPL_SERVLISTEND",         NO_WINDOW,      0, event_servlistEnd },
 	{ "242", "RPL_STATSUPTIME",         ACTIVE_WINDOW,  1, NULL },
+	{ "249", "RPL_STATSDEBUG",          ACTIVE_WINDOW,  2, NULL },
 	{ "250", "",                        STATUS_WINDOW,  1, NULL },
 	{ "251", "RPL_LUSERCLIENT",         STATUS_WINDOW,  1, NULL },
 	{ "252", "RPL_LUSEROP",             NO_WINDOW,      0, event_allaround_extract_remove_colon },

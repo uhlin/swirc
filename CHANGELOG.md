@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 - **Added** adoption of SPDX-tags for the distributed manual pages
 - **Added** better detection of server Wallops
 - **Added** command-line option `-S` (Force TLS)
+- **Added** event 249 (`RPL_STATSDEBUG`)
 - **Added** extensive use of the `CPPFLAGS` make macro
 - **Added** handling of empty user@host combinations in Wallops messages
 - **Added** handling of znc messages. (Made them look like notices and
