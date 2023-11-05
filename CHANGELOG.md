@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.4.6] - 2023-11-05 ##
 - **Added** adoption of SPDX-tags for the distributed manual pages
 - **Added** better detection of server Wallops
 - **Added** command-line option `-S` (Force TLS)
