@@ -2,6 +2,7 @@ COMMENT =	curses icb and irc client
 DISTNAME =	swirc-3.4.6
 CATEGORIES =	net
 HOMEPAGE =	https://www.nifty-networks.net/swirc/
+REVISION =	0
 
 MAINTAINER =		Markus Uhlin <markus.uhlin@bredband.net>
 
@@ -12,7 +13,7 @@ PERMIT_PACKAGE =	Yes
 WANTLIB =		${COMPILER_LIBCXX} c crypto curl curses hunspell-1.7 \
 			iconv idn intl m panel pthread ssl
 
-MASTER_SITES =		https://www.nifty-networks.net/swirc/releases/
+SITES =			https://www.nifty-networks.net/swirc/releases/
 EXTRACT_SUFX =		.tgz
 
 # C++17
