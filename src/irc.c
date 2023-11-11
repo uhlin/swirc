@@ -47,6 +47,7 @@
 #include "events/auth.h"
 #include "events/away.h"
 #include "events/banlist.h"
+#include "events/batch.h"
 #include "events/cap.h"
 #include "events/channel.h"
 #include "events/error.h"
@@ -95,6 +96,7 @@ static struct normal_events_tag {
 	{ "ACCOUNT",      event_account      },
 	{ "AUTHENTICATE", event_authenticate },
 	{ "AWAY",         event_away         },
+	{ "BATCH",        event_batch        },
 	{ "CAP",          event_cap          },
 	{ "ERROR",        event_error        },
 	{ "INVITE",       event_invite       },
