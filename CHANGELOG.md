@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Added command `/dcc`
+- Added event `BATCH` (IRCv3)
+
 ## [3.4.6] - 2023-11-05 ##
 - **Added** adoption of SPDX-tags for the distributed manual pages
 - **Added** better detection of server Wallops
