@@ -18,7 +18,6 @@ OBJS = $(COMMANDS_DIR)admin.o\
 	$(COMMANDS_DIR)nick.o\
 	$(COMMANDS_DIR)notice.o\
 	$(COMMANDS_DIR)op.o\
-	$(COMMANDS_DIR)rgui.o\
 	$(COMMANDS_DIR)sasl-scram-sha.o\
 	$(COMMANDS_DIR)sasl.o\
 	$(COMMANDS_DIR)say.o\
