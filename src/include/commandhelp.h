@@ -579,15 +579,6 @@ static usage_t restart_usage = {
   "",
 };
 
-#if NOT_YET
-static usage_t rgui_usage = {
-  "usage: /rgui ...",
-  "",
-  "No help yet.",
-  "",
-};
-#endif
-
 static usage_t rules_usage = {
   N_("usage: /rules"),
   "",
