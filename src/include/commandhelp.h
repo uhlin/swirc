@@ -172,6 +172,13 @@ static usage_t cycle_usage = {
   "",
 };
 
+static usage_t dcc_usage = {
+  "usage: /dcc ...",
+  "",
+  "No help yet.",
+  "",
+};
+
 static usage_t deop_usage = {
   N_("usage: /deop <nick>"),
   "",

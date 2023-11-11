@@ -5,6 +5,7 @@ OBJS = $(COMMANDS_DIR)admin.o\
 	$(COMMANDS_DIR)cleartoasts.o\
 	$(COMMANDS_DIR)colormap.o\
 	$(COMMANDS_DIR)connect.o\
+	$(COMMANDS_DIR)dcc.o\
 	$(COMMANDS_DIR)echo.o\
 	$(COMMANDS_DIR)fetchdic.o\
 	$(COMMANDS_DIR)ignore.o\

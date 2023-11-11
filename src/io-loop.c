@@ -56,6 +56,7 @@
 #include "commands/cleartoasts.h"
 #include "commands/colormap.h"
 #include "commands/connect.h"
+#include "commands/dcc.h"
 #include "commands/echo.h"
 #include "commands/fetchdic.h"
 #include "commands/ignore.h"
@@ -110,6 +111,7 @@ static struct cmds_tag {
 	{ "connect",     cmd_connect,     false, connect_usage,     ARRAY_SIZE(connect_usage),     false },
 	{ "cs",          cmd_chanserv,    true,  chanserv_usage,    ARRAY_SIZE(chanserv_usage),    true  },
 	{ "cycle",       cmd_cycle,       true,  cycle_usage,       ARRAY_SIZE(cycle_usage),       true  },
+	{ "dcc",         cmd_dcc,         false, dcc_usage,         ARRAY_SIZE(dcc_usage),         false },
 	{ "deop",        cmd_deop,        true,  deop_usage,        ARRAY_SIZE(deop_usage),        true  },
 	{ "die",         cmd_die,         true,  die_usage,         ARRAY_SIZE(die_usage),         true  },
 	{ "disconnect",  cmd_disconnect,  false, disconnect_usage,  ARRAY_SIZE(disconnect_usage),  false },
