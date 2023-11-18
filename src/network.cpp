@@ -439,9 +439,17 @@ send_reg_cmds(const struct network_connect_context *ctx)
 		if (net_send("CAP REQ :away-notify") > 0)
 			printtext(&ptext_ctx, "Requesting away notify");
 	}
+	if (config_bool("batch", true)) {
+		if (net_send("CAP REQ :batch") > 0)
+			printtext(&ptext_ctx, "Requesting batch");
+	}
 	if (config_bool("invite_notify", false)) {
 		if (net_send("CAP REQ :invite-notify") > 0)
 			printtext(&ptext_ctx, "Requesting invite notify");
+	}
+	if (config_bool("multi_prefix", true)) {
+		if (net_send("CAP REQ :multi-prefix") > 0)
+			printtext(&ptext_ctx, "Requesting multi prefix");
 	}
 	if (config_bool("server_time", false)) {
 		if (net_send("CAP REQ :server-time") > 0)
