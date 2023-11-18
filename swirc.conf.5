@@ -239,6 +239,15 @@ all
 wheel (default)
 .El
 .\" ----------------------------------------
+.\" MULTI PREFIX
+.\" ----------------------------------------
+.It Sy multi_prefix Pq Em bool
+When requested, the multi-prefix client capability will cause the IRC
+server to send all possible prefixes which apply to a user in NAMES,
+WHO and WHOIS output.
+.Pp
+(These prefixes are in order of ‘rank’, from highest to lowest.)
+.\" ----------------------------------------
 .\" NICKNAME
 .\" ----------------------------------------
 .It Sy nickname Pq Em string
