@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.6\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2023-11-03 23:14+0100\n"
-"PO-Revision-Date: 2023-11-03 23:50+0100\n"
+"PO-Revision-Date: 2023-11-18 13:25+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -38,7 +38,7 @@ msgstr "%s%s%c %s%s@%s%s on kirjautunut ulos tilistään"
 #: ../src/events/away.cpp:55
 #, c-format
 msgid "%s%s%c %s%s@%s%s is no longer marked as being away!"
-msgstr ""
+msgstr "%s%s%c %s%s@%s%s ei ole enää merkitty poissa olevaksi!"
 
 #: ../src/events/away.cpp:68
 #, c-format
@@ -110,7 +110,7 @@ msgstr "Aiheen on asettanut %c%s%c %s%s%s"
 
 #: ../src/events/invite.cpp:56
 msgid "The invitation has been passed onto the end user"
-msgstr ""
+msgstr "Kutsu on välitetty loppukäyttäjälle"
 
 #: ../src/events/invite.cpp:103
 #, c-format
