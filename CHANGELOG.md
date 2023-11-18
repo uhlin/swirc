@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added command `/dcc`
 - Added event `BATCH` (IRCv3)
+- Renamed option `ircv3_server_time` to `server_time`.
 
 ## [3.4.6] - 2023-11-05 ##
 - **Added** adoption of SPDX-tags for the distributed manual pages
