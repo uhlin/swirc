@@ -107,9 +107,12 @@ static struct tagConfDefValues {
 	{ "nickserv_host",             TYPE_STRING,  1, "services." },
 	{ "qbot_host",                 TYPE_STRING,  1, "CServe.quakenet.org" },
 
+	/* IRCv3 */
 	{ "account_notify",            TYPE_BOOLEAN, 2, "no" },
 	{ "away_notify",               TYPE_BOOLEAN, 2, "no" },
+	{ "batch",                     TYPE_BOOLEAN, 3, "yes" },
 	{ "invite_notify",             TYPE_BOOLEAN, 2, "no" },
+	{ "multi_prefix",              TYPE_BOOLEAN, 2, "yes" },
 	{ "server_time",               TYPE_BOOLEAN, 2, "no" },
 
 	{ "part_message",              TYPE_STRING,  1, "" },

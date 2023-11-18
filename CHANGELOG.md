@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added command `/dcc`
 - Added event `BATCH` (IRCv3)
+- Added the following config options:
+  - `batch` (bool)
+  - `multi_prefix` (bool)
 - Renamed option `ircv3_server_time` to `server_time`.
 
 ## [3.4.6] - 2023-11-05 ##
