@@ -443,7 +443,7 @@ send_reg_cmds(const struct network_connect_context *ctx)
 		if (net_send("CAP REQ :invite-notify") > 0)
 			printtext(&ptext_ctx, "Requesting invite notify");
 	}
-	if (config_bool("ircv3_server_time", false)) {
+	if (config_bool("server_time", false)) {
 		if (net_send("CAP REQ :server-time") > 0)
 			printtext(&ptext_ctx, "Requesting server time");
 	}

@@ -110,7 +110,7 @@ static struct tagConfDefValues {
 	{ "account_notify",            TYPE_BOOLEAN, 2, "no" },
 	{ "away_notify",               TYPE_BOOLEAN, 2, "no" },
 	{ "invite_notify",             TYPE_BOOLEAN, 2, "no" },
-	{ "ircv3_server_time",         TYPE_BOOLEAN, 1, "no" },
+	{ "server_time",               TYPE_BOOLEAN, 2, "no" },
 
 	{ "part_message",              TYPE_STRING,  1, "" },
 	{ "quit_message",              TYPE_STRING,  1, "Swirc IRC client" },
