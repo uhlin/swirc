@@ -3,7 +3,7 @@
 .\" SPDX-FileCopyrightText: Copyright 2018-2023 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd September 16, 2023
+.Dd November 18, 2023
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -198,14 +198,6 @@ pass in on vio0 inet6 proto tcp from any to any port auth \e
 Allows a client to specify that it would like to be notified when
 users are invited to channels
 .\" ----------------------------------------
-.\" IRCV3 SERVER TIME
-.\" ----------------------------------------
-.It Sy ircv3_server_time Pq Em bool
-Enable or disable IRCv3 server time extension.
-The server time extension is particularly useful if you're using an
-IRC bouncer like
-.Lk https://znc.in/ ZNC
-.\" ----------------------------------------
 .\" JOINS PARTS QUITS
 .\" ----------------------------------------
 .It Sy joins_parts_quits Pq Em bool
@@ -387,6 +379,14 @@ setting to \fIclient.pem\fR.
 .\" .Xr swirc 1
 .\" used for remote GUI connections.
 .\" (Managed using the \fBrgui\fR command).
+.\" ----------------------------------------
+.\" SERVER TIME
+.\" ----------------------------------------
+.It Sy server_time Pq Em bool
+Enable or disable IRCv3 server time extension.
+The server time extension is particularly useful if you're using an
+IRC bouncer like
+.Lk https://znc.in/ ZNC
 .\" ----------------------------------------
 .\" SHOW PING PONG
 .\" ----------------------------------------
