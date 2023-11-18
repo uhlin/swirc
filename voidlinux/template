@@ -17,7 +17,7 @@ license="BSD-3-Clause, ISC, MIT"
 homepage="https://www.nifty-networks.net/swirc"
 changelog="https://raw.githubusercontent.com/uhlin/swirc/master/CHANGELOG.md"
 distfiles="https://www.nifty-networks.net/swirc/releases/swirc-${version}.tgz"
-checksum=3142273db2568a9dd812abf87112edb01fdcac6b4ee7e61ebb5fc96f60a95a18
+checksum=b34b2fed727eb4ebd7f7fdd134e2466d70665e3fc397b1488bdb2c0f475da982
 
 build_options="notify"
 build_options_default="notify"
@@ -29,8 +29,8 @@ post_configure() {
 		msg_error "cannot find $_file\n"
 	fi
 
-	vsed -i "$_file" -e "s/CC=/CC?=/"
-	vsed -i "$_file" -e "s/CXX=/CXX?=/"
+	vsed -i "$_file" -e "s/CC =/CC ?=/"
+	vsed -i "$_file" -e "s/CXX =/CXX ?=/"
 }
 
 post_check() {
