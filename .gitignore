@@ -3,6 +3,7 @@
 *.orig.tar.xz
 *.orig.tar.xz.asc
 *.orig.tar.xz.sig
+.pc/
 build/
 swirc*.buildinfo
 swirc*.changes
