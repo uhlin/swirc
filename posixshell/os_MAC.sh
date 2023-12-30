@@ -11,7 +11,7 @@ CXX = clang++
 CXXFLAGS = -O2 -Wall -pipe -std=c++17
 
 # C preprocessor flags
-CPPFLAGS = -DNCURSES_OPAQUE=0\\
+CPPFLAGS = -DNCURSES_OPAQUE=1\\
 	-DNDEBUG=1\\
 	-DOS_X=1\\
 	-DUNIX=1\\
