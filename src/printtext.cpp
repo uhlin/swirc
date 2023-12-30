@@ -678,7 +678,7 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 static void
 do_indent(WINDOW *win, const int indent, int *insert_count)
 {
-	attr_t	 attrs = 0;
+	attr_t	 attrs;
 	attr_t	*ap = &attrs;
 
 	(void) wattr_get(win, ap, NULL, NULL);
