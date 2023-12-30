@@ -69,8 +69,8 @@ term_get_pos(WINDOW *win)
 {
 	struct current_cursor_pos yx = { 0 };
 
-	yx.cury = win->_cury; /* row */
-	yx.curx = win->_curx; /* col */
+	yx.cury = getcury(win); /* row */
+	yx.curx = getcurx(win); /* col */
 
 	return yx;
 }

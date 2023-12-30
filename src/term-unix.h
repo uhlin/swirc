@@ -35,7 +35,7 @@ static SW_INLINE void
 term_set_attr(WINDOW *win, attr_t at)
 {
 	if (win != NULL)
-		win->_attrs = at;
+		(void)wattrset(win, at);
 }
 
 #endif

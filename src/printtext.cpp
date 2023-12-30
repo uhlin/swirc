@@ -678,7 +678,9 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 static void
 do_indent(WINDOW *win, const int indent, int *insert_count)
 {
-	const attr_t attrs = win->_attrs;
+	attr_t attrs = 0;
+
+	(void) wattr_get(win, &attrs, NULL, NULL);
 
 	/* turn off all attributes during indentation */
 	(void) wattrset(win, A_NORMAL);
@@ -708,7 +710,7 @@ new_row(WINDOW *win, int *insert_count, int *rep_count)
 static bool
 start_on_a_new_row(const ptrdiff_t sum, const WINDOW *win)
 {
-	return (sum < win->_maxx ? false : true);
+	return (sum < getmaxx(win) ? false : true);
 }
 
 /**
