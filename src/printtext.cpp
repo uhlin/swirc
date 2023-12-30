@@ -678,9 +678,10 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 static void
 do_indent(WINDOW *win, const int indent, int *insert_count)
 {
-	attr_t attrs = 0;
+	attr_t	 attrs = 0;
+	attr_t	*ap = &attrs;
 
-	(void) wattr_get(win, &attrs, NULL, NULL);
+	(void) wattr_get(win, ap, NULL, NULL);
 
 	/* turn off all attributes during indentation */
 	(void) wattrset(win, A_NORMAL);
@@ -691,7 +692,7 @@ do_indent(WINDOW *win, const int indent, int *insert_count)
 	}
 
 	/* restore attributes after indenting */
-	(void) wattrset(win, attrs);
+	(void) wattrset(win, *ap);
 }
 
 static void
