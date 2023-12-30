@@ -1,8 +1,8 @@
 Fixes building on sid.
 (Or any setup where Ncurses is built using opaque types.)
 This change will also be applied to the next upstream version.
---- a/swirc-3.4.6/src/printtext.cpp
-+++ b/swirc-3.4.6/src/printtext.cpp
+--- a/src/printtext.cpp
++++ b/src/printtext.cpp
 @@ -678,7 +678,9 @@
  static void
  do_indent(WINDOW *win, const int indent, int *insert_count)
@@ -23,8 +23,8 @@ This change will also be applied to the next upstream version.
  }
  
  /**
---- a/swirc-3.4.6/src/terminal.c
-+++ b/swirc-3.4.6/src/terminal.c
+--- a/src/terminal.c
++++ b/src/terminal.c
 @@ -69,8 +69,8 @@
  {
  	struct current_cursor_pos yx = { 0 };
@@ -36,8 +36,8 @@ This change will also be applied to the next upstream version.
  
  	return yx;
  }
---- a/swirc-3.4.6/src/term-unix.h
-+++ b/swirc-3.4.6/src/term-unix.h
+--- a/src/term-unix.h
++++ b/src/term-unix.h
 @@ -35,7 +35,7 @@
  term_set_attr(WINDOW *win, attr_t at)
  {
