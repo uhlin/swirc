@@ -1,3 +1,12 @@
+swirc (3.4.6-2) unstable; urgency=medium
+
+  * Fixed building on sid, or any setup where Ncurses is built using opaque
+    types. (Closes: #1057940)
+  * Updated my email address. The 'bredband.net' address will no longer exist
+    after 16 January.
+
+ -- Markus Uhlin <markus@nifty-networks.net>  Sat, 30 Dec 2023 06:59:58 +0100
+
 swirc (3.4.6-1) unstable; urgency=medium
 
   * New upstream version.
