@@ -12,7 +12,7 @@ check_tools()
 	_tools="curl gpg"
 
 	for _tool in ${_tools}; do
-		echo -n "checking for ${_tool}..."
+		printf "checking for %s..." "${_tool}"
 		if [ -x "`/bin/which ${_tool}`" ]; then
 			echo "found"
 		else
@@ -48,7 +48,7 @@ prep_build_dir()
 
 	# TODO: verify signature
 
-	echo -n "creating dir: ${BUILD_DIR}..."
+	printf "creating dir: %s..." "${BUILD_DIR}"
 	mkdir ${BUILD_DIR}
 	if [ -d ${BUILD_DIR} ]; then
 		echo "ok"
@@ -57,7 +57,7 @@ prep_build_dir()
 		exit 1
 	fi
 
-	echo -n "unpacking swirc_${VERSION}.orig.tar.xz..."
+	printf "unpacking %s..." "swirc_${VERSION}.orig.tar.gz"
 	tar -xz -C ${BUILD_DIR} -f swirc_${VERSION}.orig.tar.gz \
 	    --strip-components=1
 	if [ -f ${BUILD_DIR}/configure ]; then
@@ -67,7 +67,7 @@ prep_build_dir()
 		exit 1
 	fi
 
-	echo -n "copying files to ${BUILD_DIR}/debian..."
+	printf "copying files to %s..." "${BUILD_DIR}/debian"
 	cp -R debian ${BUILD_DIR}
 	if [ -d ${BUILD_DIR}/debian ]; then
 		echo "ok"
