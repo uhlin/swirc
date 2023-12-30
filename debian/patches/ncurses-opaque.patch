@@ -1,0 +1,62 @@
+Fixes building on sid.
+(Or any setup where Ncurses is built using opaque types.)
+--- a/src/printtext.cpp
++++ b/src/printtext.cpp
+@@ -678,10 +678,13 @@
+ static void
+ do_indent(WINDOW *win, const int indent, int *insert_count)
+ {
+-	const attr_t attrs = win->_attrs;
++	attr_t		 attrs = 0;
++	short int	 pair = 0;
++
++	(void) wattr_get(win, &attrs, &pair, NULL);
+ 
+ 	/* turn off all attributes during indentation */
+-	(void) wattrset(win, A_NORMAL);
++	(void) wattr_set(win, A_NORMAL, 0, NULL);
+ 
+ 	for (int i = 0; i < indent; i++) {
+ 		WADDCH(win, ' ');
+@@ -689,7 +692,7 @@
+ 	}
+ 
+ 	/* restore attributes after indenting */
+-	(void) wattrset(win, attrs);
++	(void) wattr_set(win, attrs, pair, NULL);
+ }
+ 
+ static void
+@@ -708,7 +711,7 @@
+ static bool
+ start_on_a_new_row(const ptrdiff_t sum, const WINDOW *win)
+ {
+-	return (sum < win->_maxx ? false : true);
++	return (sum < getmaxx(win) ? false : true);
+ }
+ 
+ /**
+--- a/src/terminal.c
++++ b/src/terminal.c
+@@ -69,8 +69,8 @@
+ {
+ 	struct current_cursor_pos yx = { 0 };
+ 
+-	yx.cury = win->_cury; /* row */
+-	yx.curx = win->_curx; /* col */
++	yx.cury = getcury(win); /* row */
++	yx.curx = getcurx(win); /* col */
+ 
+ 	return yx;
+ }
+--- a/src/term-unix.h
++++ b/src/term-unix.h
+@@ -35,7 +35,7 @@
+ term_set_attr(WINDOW *win, attr_t at)
+ {
+ 	if (win != NULL)
+-		win->_attrs = at;
++		(void)wattrset(win, at);
+ }
+ 
+ #endif
