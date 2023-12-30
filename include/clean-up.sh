@@ -11,9 +11,9 @@ swirc-${UPSTREAM_VER}.tgz
 swirc-${UPSTREAM_VER}.tgz.sig
 swirc_${DEB_VERSION}.debian.tar.xz
 swirc_${DEB_VERSION}.dsc
-swirc_${VERSION}.orig.tar.xz
-swirc_${VERSION}.orig.tar.xz.asc
-swirc_${VERSION}.orig.tar.xz.sig
+swirc_${VERSION}.orig.tar.gz
+swirc_${VERSION}.orig.tar.gz.asc
+swirc_${VERSION}.orig.tar.gz.sig
 "
 
 	echo "deleting directories..."
