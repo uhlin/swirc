@@ -678,13 +678,13 @@ case_color(WINDOW *win, bool *is_color, wchar_t **bufp)
 static void
 do_indent(WINDOW *win, const int indent, int *insert_count)
 {
-	attr_t	 attrs;
-	attr_t	*ap = &attrs;
+	attr_t		 attrs = 0;
+	short int	 pair = 0;
 
-	(void) wattr_get(win, ap, NULL, NULL);
+	(void) wattr_get(win, &attrs, &pair, NULL);
 
 	/* turn off all attributes during indentation */
-	(void) wattrset(win, A_NORMAL);
+	(void) wattr_set(win, A_NORMAL, 0, NULL);
 
 	for (int i = 0; i < indent; i++) {
 		WADDCH(win, ' ');
@@ -692,7 +692,7 @@ do_indent(WINDOW *win, const int indent, int *insert_count)
 	}
 
 	/* restore attributes after indenting */
-	(void) wattrset(win, *ap);
+	(void) wattr_set(win, attrs, pair, NULL);
 }
 
 static void
