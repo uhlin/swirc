@@ -24,22 +24,25 @@ check_tools()
 
 prep_build_dir()
 {
+	local _out1="swirc_${VERSION}.orig.tar.gz"
+	local _out2="swirc_${VERSION}.orig.tar.gz.asc"
+	local _url1="${RELEASES_URL}swirc-${UPSTREAM_VER}.tgz"
+	local _url2="${RELEASES_URL}swirc-${UPSTREAM_VER}.tgz.sig"
+
 	check_tools
 
-	printf "downloading %s..." "swirc_${VERSION}.orig.tar.gz"
-	curl --output swirc_${VERSION}.orig.tar.gz --silent \
-	    ${RELEASES_URL}swirc-${UPSTREAM_VER}.tgz
-	if [ -f swirc_${VERSION}.orig.tar.gz ]; then
+	printf "downloading %s..." "${_out1}"
+	curl --output ${_out1} --silent ${_url1}
+	if [ -f ${_out1} ]; then
 		echo "ok"
 	else
 		echo "error"
 		exit 1
 	fi
 
-	printf "downloading %s..." "swirc_${VERSION}.orig.tar.gz.asc"
-	curl --output swirc_${VERSION}.orig.tar.gz.asc --silent \
-	    ${RELEASES_URL}swirc-${UPSTREAM_VER}.tgz.sig
-	if [ -f swirc_${VERSION}.orig.tar.gz.asc ]; then
+	printf "downloading %s..." "${_out2}"
+	curl --output ${_out2} --silent ${_url2}
+	if [ -f ${_out2} ]; then
 		echo "ok"
 	else
 		echo "error"
@@ -57,9 +60,16 @@ prep_build_dir()
 		exit 1
 	fi
 
-	printf "unpacking %s..." "swirc_${VERSION}.orig.tar.gz"
-	tar -xz -C ${BUILD_DIR} -f swirc_${VERSION}.orig.tar.gz \
-	    --strip-components=1
+	printf "unpacking %s..." "${_out1}"
+	if [[ ${_out1} = *.tar.gz ]]; then
+		tar -xz -C ${BUILD_DIR} -f ${_out1} --strip-components=1
+	elif [[ ${_out1} = *.tar.xz ]]; then
+		tar -xJ -C ${BUILD_DIR} -f ${_out1} --strip-components=1
+	else
+		echo "error"
+		exit 1
+	fi
+
 	if [ -f ${BUILD_DIR}/configure ]; then
 		echo "ok"
 	else
