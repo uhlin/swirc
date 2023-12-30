@@ -26,20 +26,20 @@ prep_build_dir()
 {
 	check_tools
 
-	echo -n "downloading swirc-${UPSTREAM_VER}.tgz..."
-	curl --output swirc-${UPSTREAM_VER}.tgz --silent \
+	printf "downloading %s..." "swirc_${VERSION}.orig.tar.gz"
+	curl --output swirc_${VERSION}.orig.tar.gz --silent \
 	    ${RELEASES_URL}swirc-${UPSTREAM_VER}.tgz
-	if [ -f swirc-${UPSTREAM_VER}.tgz ]; then
+	if [ -f swirc_${VERSION}.orig.tar.gz ]; then
 		echo "ok"
 	else
 		echo "error"
 		exit 1
 	fi
 
-	echo -n "downloading swirc-${UPSTREAM_VER}.tgz.sig..."
-	curl --output swirc-${UPSTREAM_VER}.tgz.sig --silent \
+	printf "downloading %s..." "swirc_${VERSION}.orig.tar.gz.asc"
+	curl --output swirc_${VERSION}.orig.tar.gz.asc --silent \
 	    ${RELEASES_URL}swirc-${UPSTREAM_VER}.tgz.sig
-	if [ -f swirc-${UPSTREAM_VER}.tgz.sig ]; then
+	if [ -f swirc_${VERSION}.orig.tar.gz.asc ]; then
 		echo "ok"
 	else
 		echo "error"
@@ -47,33 +47,6 @@ prep_build_dir()
 	fi
 
 	# TODO: verify signature
-
-	echo -n "unpacking swirc-${UPSTREAM_VER}.tgz..."
-	tar -xzf swirc-${UPSTREAM_VER}.tgz
-	if [ -d swirc-${UPSTREAM_VER} ]; then
-		echo "ok"
-	else
-		echo "error"
-		exit 1
-	fi
-
-	if [ -d swirc-${UPSTREAM_VER}/debian ]; then
-		echo "warning: upstream tarball comes with a debian folder"
-		echo "deleting it..."
-		rm -frv swirc-${UPSTREAM_VER}/debian
-	fi
-
-	echo -n "creating swirc_${VERSION}.orig.tar.xz..."
-	tar -cJf swirc_${VERSION}.orig.tar.xz swirc-${UPSTREAM_VER}
-	if [ -f swirc_${VERSION}.orig.tar.xz ]; then
-		echo "ok"
-	else
-		echo "error"
-		exit 1
-	fi
-
-#	gpg -o swirc_${VERSION}.orig.tar.xz.sig -a -b \
-#	    swirc_${VERSION}.orig.tar.xz || exit 1
 
 	echo -n "creating dir: ${BUILD_DIR}..."
 	mkdir ${BUILD_DIR}
@@ -85,7 +58,7 @@ prep_build_dir()
 	fi
 
 	echo -n "unpacking swirc_${VERSION}.orig.tar.xz..."
-	tar -xJ -C ${BUILD_DIR} -f swirc_${VERSION}.orig.tar.xz \
+	tar -xz -C ${BUILD_DIR} -f swirc_${VERSION}.orig.tar.gz \
 	    --strip-components=1
 	if [ -f ${BUILD_DIR}/configure ]; then
 		echo "ok"
