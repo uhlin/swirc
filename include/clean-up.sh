@@ -14,6 +14,9 @@ swirc_${DEB_VERSION}.dsc
 swirc_${VERSION}.orig.tar.gz
 swirc_${VERSION}.orig.tar.gz.asc
 swirc_${VERSION}.orig.tar.gz.sig
+swirc_${VERSION}.orig.tar.xz
+swirc_${VERSION}.orig.tar.xz.asc
+swirc_${VERSION}.orig.tar.xz.sig
 "
 
 	echo "deleting directories..."
