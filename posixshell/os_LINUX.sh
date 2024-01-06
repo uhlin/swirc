@@ -21,7 +21,7 @@ CXXFLAGS = -O2 -Wall -fstack-protector-strong -g -pipe -std=c++17
 CPPFLAGS = -DLINUX=1\\
 	-DNDEBUG=1\\
 	-DUNIX=1\\
-	-D_FORTIFY_SOURCE=2\\
+	-D_FORTIFY_SOURCE=3\\
 	-D_POSIX_C_SOURCE=200809L\\
 	-D_XOPEN_SOURCE=500\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
