@@ -1,5 +1,5 @@
 /* Handle event names (353) and event EOF names (366)
-   Copyright (C) 2015-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -85,6 +85,33 @@ struct hInstall_context {
 	    , is_voice(c == '+')
 	{
 		/* null */;
+	}
+
+	hInstall_context(STRING p_channel, STRING p_nick, CSTRING privs)
+	    : channel(p_channel)
+	    , nick(p_nick)
+	    , is_owner(false)
+	    , is_superop(false)
+	    , is_op(false)
+	    , is_halfop(false)
+	    , is_voice(false)
+	{
+		for (const char *cp = privs; *cp != '\0'; cp++) {
+			if (*cp == '~')
+				this->is_owner = true;
+			else if (*cp == '&')
+				this->is_superop = true;
+			else if (*cp == '@')
+				this->is_op = true;
+			else if (*cp == '%')
+				this->is_halfop = true;
+			else if (*cp == '+')
+				this->is_voice = true;
+			else {
+				err_log(0, "%s: invalid privilege '%c' "
+				    "(privs: %s)", __func__, *cp, privs);
+			}
+		}
 	}
 };
 
