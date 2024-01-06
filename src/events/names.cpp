@@ -616,16 +616,27 @@ event_names(struct irc_message_compo *compo)
 		}
 
 		for (char *cp = &names_copy[0];; cp = NULL) {
-			STRING token, nick;
+			STRING	token, nick;
+			char	privs[6] = { '\0' };
+			size_t	ret;
 
 			if ((token = strtok_r(cp, " ", &state2)) == NULL)
 				break;
 
-			nick = ((*token == '~' || *token == '&' ||
-			    *token == '@' || *token == '%' || *token == '+') ?
-			    &token[1] : &token[0]);
+			ret = strspn(token, "~&@%+");
 
-			struct hInstall_context ctx(channel, nick, *token);
+			if (ret >= sizeof privs) {
+				debug("%s: privileges too long", __func__);
+				continue;
+			} else if (ret > 0) {
+				strncpy(privs, token, ret);
+				privs[sizeof privs - 1] = '\0';
+				nick = &token[ret];
+			} else
+				nick = &token[0];
+
+			struct hInstall_context ctx(channel, nick, (ret > 0
+			    ? privs : ""));
 
 			if (hInstall(&ctx) != OK)
 				continue;
