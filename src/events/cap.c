@@ -1,5 +1,5 @@
 /* IRCv3 Client Capability Negotiation
-   Copyright (C) 2017-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -84,7 +84,9 @@ static bool
 shouldContinueCapabilityNegotiation_case1(void)
 {
 	return (config_bool("away_notify", false) ||
+	    config_bool("batch", true) ||
 	    config_bool("invite_notify", false) ||
+	    config_bool("multi_prefix", true) ||
 	    config_bool("server_time", false) ||
 	    sasl_is_enabled());
 }
@@ -92,7 +94,9 @@ shouldContinueCapabilityNegotiation_case1(void)
 static bool
 shouldContinueCapabilityNegotiation_case2(void)
 {
-	return (config_bool("invite_notify", false) ||
+	return (config_bool("batch", true) ||
+	    config_bool("invite_notify", false) ||
+	    config_bool("multi_prefix", true) ||
 	    config_bool("server_time", false) ||
 	    sasl_is_enabled());
 }
@@ -100,11 +104,29 @@ shouldContinueCapabilityNegotiation_case2(void)
 static bool
 shouldContinueCapabilityNegotiation_case3(void)
 {
-	return (config_bool("server_time", false) || sasl_is_enabled());
+	return (config_bool("invite_notify", false) ||
+	    config_bool("multi_prefix", true) ||
+	    config_bool("server_time", false) ||
+	    sasl_is_enabled());
 }
 
 static bool
 shouldContinueCapabilityNegotiation_case4(void)
+{
+	return (config_bool("multi_prefix", true) ||
+	    config_bool("server_time", false) ||
+	    sasl_is_enabled());
+}
+
+static bool
+shouldContinueCapabilityNegotiation_case5(void)
+{
+	return (config_bool("server_time", false) ||
+	    sasl_is_enabled());
+}
+
+static bool
+shouldContinueCapabilityNegotiation_case6(void)
 {
 	return sasl_is_enabled();
 }
@@ -125,18 +147,30 @@ handle_ack_and_nak(PPRINTTEXT_CONTEXT ctx, struct irc_message_compo *compo,
 		else
 			NAK("Away notify");
 		*continue_capneg = shouldContinueCapabilityNegotiation_case2();
+	} else if (strings_match(caplist, "batch")) {
+		if (strings_match(cmd, "ACK"))
+			ACK("Batch");
+		else
+			NAK("Batch");
+		*continue_capneg = shouldContinueCapabilityNegotiation_case3();
 	} else if (strings_match(caplist, "invite-notify")) {
 		if (strings_match(cmd, "ACK"))
 			ACK("Invite notify");
 		else
 			NAK("Invite notify");
-		*continue_capneg = shouldContinueCapabilityNegotiation_case3();
+		*continue_capneg = shouldContinueCapabilityNegotiation_case4();
+	} else if (strings_match(caplist, "multi-prefix")) {
+		if (strings_match(cmd, "ACK"))
+			ACK("Multi prefix");
+		else
+			NAK("Multi prefix");
+		*continue_capneg = shouldContinueCapabilityNegotiation_case5();
 	} else if (strings_match(caplist, "server-time")) {
 		if (strings_match(cmd, "ACK"))
 			ACK("Server time");
 		else
 			NAK("Server time");
-		*continue_capneg = shouldContinueCapabilityNegotiation_case4();
+		*continue_capneg = shouldContinueCapabilityNegotiation_case6();
 	} else if (strings_match(caplist, "sasl")) {
 		if (strings_match(cmd, "ACK")) {
 			const char *mechanism;
