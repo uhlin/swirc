@@ -63,4 +63,4 @@ gen-hdr:
 swirc: gen-hdr $(OBJS)
 	$(E) "  LINK    " $@
 	$(Q) $(CXX) $(CXXFLAGS) -o $@ $(OBJS) $(LDFLAGS) $(LDLIBS)
-	$(Q) strip $@
+#	$(Q) strip $@
