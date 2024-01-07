@@ -42,6 +42,7 @@
 #include "readline.h"		/* readline_top_panel() */
 #include "statusbar.h"
 #include "strHand.h"
+#include "strdup_printf.h"
 
 #include "events/account.h"
 #include "events/auth.h"
