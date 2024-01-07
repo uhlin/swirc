@@ -1,5 +1,5 @@
 /* Handle and interpret IRC events
-   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -761,6 +761,12 @@ irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 	} /* while */
 
 	free(last_token);
+}
+
+void
+irc_process_proto_msg(const char *msg)
+{
+	ProcessProtoMsg(msg);
 }
 
 /**
