@@ -1,5 +1,5 @@
 /* Prints and handles text
-   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -1424,8 +1424,6 @@ get_buffer(CSTRING orig)
 			out[outsize - outbytes] = '\0';
 			free(orig_copy);
 			(void) iconv_close(cd);
-			debug("%s: iconv succeeded: fromcode: %s", __func__,
-			    x.c_str());
 			return static_cast<char *>(xrealloc(out,
 			    strlen(out) + 1));
 		}
