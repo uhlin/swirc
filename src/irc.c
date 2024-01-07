@@ -411,6 +411,118 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
 }
 
 static int
+get_num_semicolons(const char *str)
+{
+	int num = 0;
+
+	for (const char *cp = str; *cp != '\0'; cp++) {
+		if (*cp == ';')
+			num++;
+	}
+
+	return num;
+}
+
+static int
+handle_batch(const size_t bytes, char *substring, const char *protocol_message)
+{
+	char	ref[201] = { '\0' };
+	size_t	offset = bytes;
+
+	debug("%s: substring = \"%s\"", __func__, substring);
+	debug("%s: offset = '%zu'", __func__, offset);
+
+	if (strchr(substring, ';') == NULL) {
+		if (sscanf(substring, "@batch=%200s", ref) != 1) {
+			printf_and_free(substring, "%s: error assigning batch "
+			    "ref tag", __func__);
+			return -1;
+		} else if (strings_match(ref, "")) {
+			printf_and_free(substring, "%s: empty ref tag",
+			    __func__);
+			return -1;
+		}
+
+		if (*(protocol_message + offset) == '\0') {
+			printf_and_free(substring, "%s: protocol error",
+			    __func__);
+			return -1;
+		} else {
+			debug("%s: protocol_message + offset: \"%s\"", __func__,
+			    (protocol_message + offset));
+		}
+
+		event_batch_add_irc_msgs(ref, (protocol_message + offset));
+	} else { /* has semicolons */
+		char	*cp, *str;
+		int	 year, month, day;
+		int	 hour, minute, second, precision;
+
+		year = month = day = 0;
+		hour = minute = second = precision = 0;
+
+		if (get_num_semicolons(substring) > 1) {
+			printf_and_free(substring, "%s: too many semicolons",
+			    __func__);
+			return -1;
+		}
+
+		cp = substring;
+		cp += strlen("@batch=");
+		offset = strcspn(cp, ";");
+		cp[offset] = '\0';
+
+		debug("%s: cp = \"%s\"", __func__, cp);
+		debug("%s: offset = '%zu'", __func__, offset);
+
+		if (sw_strcpy(ref, cp, sizeof ref) != 0) {
+			printf_and_free(substring, "%s: too long ref tag",
+			    __func__);
+			return -1;
+		} else if (strings_match(ref, "")) {
+			printf_and_free(substring, "%s: empty ref tag",
+			    __func__);
+			return -1;
+		}
+
+		cp[offset] = ';';
+
+		if ((cp = strstr(substring, ";time=")) == NULL) {
+			printf_and_free(substring, "%s: cannot find time",
+			    __func__);
+			return -1;
+		} else if (sscanf(cp, ";time=%d-%d-%dT%d:%d:%d.%dZ",
+		    &year, &month, &day,
+		    &hour, &minute, &second, &precision) != 7) {
+			printf_and_free(substring, "%s: server time error",
+			    __func__);
+			return -1;
+		}
+
+		offset = bytes;
+
+		if (*(protocol_message + offset) == '\0') {
+			printf_and_free(substring, "%s: protocol error",
+			    __func__);
+			return -1;
+		} else {
+			debug("%s: protocol_message + offset: \"%s\"", __func__,
+			    (protocol_message + offset));
+		}
+
+		str = strdup_printf("@time=%d-%d-%dT%d:%d:%d.%dZ %s",
+		    year, month, day,
+		    hour, minute, second, precision,
+		    (protocol_message + offset));
+		event_batch_add_irc_msgs(ref, str);
+		free(str);
+	}
+
+	free(substring);
+	return -1;
+}
+
+static int
 handle_extension(size_t *bytes, const char *protocol_message,
     struct irc_message_compo *compo)
 {
@@ -433,6 +545,8 @@ handle_extension(size_t *bytes, const char *protocol_message,
 		printf_and_free(substring, "%s: print formatted error",
 		    __func__);
 		return -1;
+	} else if (!strncmp(substring, "@batch=", 7)) {
+		return handle_batch(*bytes, substring, protocol_message);
 	} else if (!strncmp(substring, "@time=", 6)) {
 		if (sscanf(substring, "@time=%d-%d-%dT%d:%d:%d.%dZ",
 		    & (compo->year),
