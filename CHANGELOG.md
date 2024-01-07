@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Added the following config options:
   - `batch` (bool)
   - `multi_prefix` (bool)
+- Fixed a off-by-one error in the IRC module.
 - Fixed building on any setup where Ncurses is built with opaque
   types.
 - Renamed option `ircv3_server_time` to `server_time`.
