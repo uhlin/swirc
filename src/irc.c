@@ -418,6 +418,7 @@ handle_extension(size_t *bytes, const char *protocol_message,
 	int	 ret;
 
 	*bytes = strcspn(protocol_message, " ");
+	(*bytes) += 1;
 	substring = xmalloc((*bytes) + 1);
 	substring[*bytes] = '\0';
 	ret = snprintf(substring, *bytes, "%s", protocol_message);
