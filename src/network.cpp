@@ -1,5 +1,5 @@
 /* Platform independent networking routines
-   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -451,7 +451,7 @@ send_reg_cmds(const struct network_connect_context *ctx)
 		if (net_send("CAP REQ :multi-prefix") > 0)
 			printtext(&ptext_ctx, "Requesting multi prefix");
 	}
-	if (config_bool("server_time", false)) {
+	if (config_bool("server_time", true)) {
 		if (net_send("CAP REQ :server-time") > 0)
 			printtext(&ptext_ctx, "Requesting server time");
 	}

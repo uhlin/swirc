@@ -1,5 +1,5 @@
 /* User configuration
-   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -113,7 +113,7 @@ static struct tagConfDefValues {
 	{ "batch",                     TYPE_BOOLEAN, 3, "yes" },
 	{ "invite_notify",             TYPE_BOOLEAN, 2, "no" },
 	{ "multi_prefix",              TYPE_BOOLEAN, 2, "yes" },
-	{ "server_time",               TYPE_BOOLEAN, 2, "no" },
+	{ "server_time",               TYPE_BOOLEAN, 2, "yes" },
 
 	{ "part_message",              TYPE_STRING,  1, "" },
 	{ "quit_message",              TYPE_STRING,  1, "Swirc IRC client" },

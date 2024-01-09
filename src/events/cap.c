@@ -87,7 +87,7 @@ shouldContinueCapabilityNegotiation_case1(void)
 	    config_bool("batch", true) ||
 	    config_bool("invite_notify", false) ||
 	    config_bool("multi_prefix", true) ||
-	    config_bool("server_time", false) ||
+	    config_bool("server_time", true) ||
 	    sasl_is_enabled());
 }
 
@@ -97,7 +97,7 @@ shouldContinueCapabilityNegotiation_case2(void)
 	return (config_bool("batch", true) ||
 	    config_bool("invite_notify", false) ||
 	    config_bool("multi_prefix", true) ||
-	    config_bool("server_time", false) ||
+	    config_bool("server_time", true) ||
 	    sasl_is_enabled());
 }
 
@@ -106,7 +106,7 @@ shouldContinueCapabilityNegotiation_case3(void)
 {
 	return (config_bool("invite_notify", false) ||
 	    config_bool("multi_prefix", true) ||
-	    config_bool("server_time", false) ||
+	    config_bool("server_time", true) ||
 	    sasl_is_enabled());
 }
 
@@ -114,14 +114,14 @@ static bool
 shouldContinueCapabilityNegotiation_case4(void)
 {
 	return (config_bool("multi_prefix", true) ||
-	    config_bool("server_time", false) ||
+	    config_bool("server_time", true) ||
 	    sasl_is_enabled());
 }
 
 static bool
 shouldContinueCapabilityNegotiation_case5(void)
 {
-	return (config_bool("server_time", false) ||
+	return (config_bool("server_time", true) ||
 	    sasl_is_enabled());
 }
 
