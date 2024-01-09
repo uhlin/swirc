@@ -426,9 +426,9 @@ get_num_semicolons(const char *str)
 static int
 handle_batch(const size_t bytes, char *substring, const char *protocol_message)
 {
-	char	*pmsg_plus_off;
-	char	 ref[250] = { '\0' };
-	size_t	 offset = bytes;
+	char		 ref[250] = { '\0' };
+	const char	*pmsg_plus_off;
+	size_t		 offset = bytes;
 
 	pmsg_plus_off = &protocol_message[offset];
 
