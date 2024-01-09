@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include <stdexcept>
+#include <stdint.h>
 #include <string>
 #include <vector>
 
@@ -237,5 +238,21 @@ event_batch_add_irc_msgs(CSTRING ref, CSTRING msg)
 		printtext(&ctx, "%s: error: %s", __func__, e.what());
 	} catch (...) {
 		err_log(0, "%s: error: unknown exception", __func__);
+	}
+}
+
+void
+event_batch_init(void)
+{
+	if (!batch_db.empty())
+		batch_db.clear();
+}
+
+void
+event_batch_deinit(void)
+{
+	if (!batch_db.empty()) {
+		printtext_print("warn", "%ju unprocessed batches!",
+		    static_cast<uintmax_t>(batch_db.size()));
 	}
 }

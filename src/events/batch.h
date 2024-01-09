@@ -12,6 +12,9 @@ typedef enum {
 __SWIRC_BEGIN_DECLS
 void	event_batch(struct irc_message_compo *);
 void	event_batch_add_irc_msgs(CSTRING, CSTRING);
+
+void	event_batch_init(void);
+void	event_batch_deinit(void);
 __SWIRC_END_DECLS
 
 #endif
