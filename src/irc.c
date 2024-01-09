@@ -526,14 +526,12 @@ static int
 handle_extension(size_t *bytes, const char *protocol_message,
     struct irc_message_compo *compo)
 {
-	char	*substring;
-	int	 ret;
+	char *substring;
 
 	*bytes = strcspn(protocol_message, " ");
-	(*bytes) += 1;
 	substring = xmalloc((*bytes) + 1);
+	memcpy(substring, protocol_message, *bytes);
 	substring[*bytes] = '\0';
-	ret = snprintf(substring, *bytes, "%s", protocol_message);
 
 /*
  * sscanf() is safe in this context
@@ -541,11 +539,7 @@ handle_extension(size_t *bytes, const char *protocol_message,
 #if WIN32
 #pragma warning(disable: 4996)
 #endif
-	if (ret < 0) {
-		printf_and_free(substring, "%s: print formatted error",
-		    __func__);
-		return -1;
-	} else if (!strncmp(substring, "@batch=", 7)) {
+	if (!strncmp(substring, "@batch=", 7)) {
 		return handle_batch(*bytes, substring, protocol_message);
 	} else if (!strncmp(substring, "@time=", 6)) {
 		if (sscanf(substring, "@time=%d-%d-%dT%d:%d:%d.%dZ",
