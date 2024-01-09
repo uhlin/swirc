@@ -444,7 +444,7 @@ handle_batch(const size_t bytes, char *substring, const char *protocol_message)
 	debug("%s: offset = '%zu'", __func__, offset);
 
 	if (strchr(substring, ';') == NULL) {
-		if (sscanf(substring, "@batch=%200s", ref) != 1) {
+		if (sw_strcpy(ref, &substring[7], sizeof ref) != 0) {
 			printf_and_free(substring, "%s: error assigning batch "
 			    "ref tag", __func__);
 			return -1;
