@@ -432,6 +432,14 @@ handle_batch(const size_t bytes, char *substring, const char *protocol_message)
 
 	pmsg_plus_off = &protocol_message[offset];
 
+	if (strings_match(pmsg_plus_off, "")) {
+		printf_and_free(substring, "%s: empty message", __func__);
+		return -1;
+	} else {
+		debug("%s: protocol_message + offset: \"%s\"", __func__,
+		    pmsg_plus_off);
+	}
+
 	debug("%s: substring = \"%s\"", __func__, substring);
 	debug("%s: offset = '%zu'", __func__, offset);
 
@@ -444,13 +452,6 @@ handle_batch(const size_t bytes, char *substring, const char *protocol_message)
 			printf_and_free(substring, "%s: empty ref tag",
 			    __func__);
 			return -1;
-		} else if (*pmsg_plus_off == '\0') {
-			printf_and_free(substring, "%s: protocol error",
-			    __func__);
-			return -1;
-		} else {
-			debug("%s: protocol_message + offset: \"%s\"", __func__,
-			    pmsg_plus_off);
 		}
 
 		event_batch_add_irc_msgs(ref, pmsg_plus_off);
@@ -498,13 +499,6 @@ handle_batch(const size_t bytes, char *substring, const char *protocol_message)
 			printf_and_free(substring, "%s: server time error",
 			    __func__);
 			return -1;
-		} else if (*pmsg_plus_off == '\0') {
-			printf_and_free(substring, "%s: protocol error",
-			    __func__);
-			return -1;
-		} else {
-			debug("%s: protocol_message + offset: \"%s\"", __func__,
-			    pmsg_plus_off);
 		}
 
 		str = strdup_printf("@time=%d-%d-%dT%d:%d:%d.%dZ %s",
