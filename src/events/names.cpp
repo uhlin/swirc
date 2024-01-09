@@ -629,8 +629,8 @@ event_names(struct irc_message_compo *compo)
 				debug("%s: privileges too long", __func__);
 				continue;
 			} else if (ret > 0) {
-				strncpy(privs, token, ret);
-				privs[sizeof privs - 1] = '\0';
+				memcpy(privs, token, ret);
+				privs[ret] = '\0';
 				nick = &token[ret];
 			} else
 				nick = &token[0];
