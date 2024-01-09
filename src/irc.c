@@ -319,6 +319,8 @@ irc_init(void)
 		irc_set_my_nickname(nickname);
 	else
 		err_quit("%s: no nickname", __func__);
+
+	event_batch_init();
 	event_names_init();
 
 	if (!is_sorted) {
@@ -343,6 +345,7 @@ irc_deinit(void)
 	free_and_null(&g_server_hostname);
 	BZERO(g_user_modes, sizeof g_user_modes);
 
+	event_batch_deinit();
 	event_names_deinit();
 
 	statusbar_update_display_beta();
