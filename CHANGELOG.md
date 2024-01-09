@@ -15,7 +15,8 @@ All notable changes to this project will be documented in this file.
   versions weren't really affected however.
 - Fixed building on any setup where Ncurses is built with opaque
   types.
-- Renamed option `ircv3_server_time` to `server_time`.
+- Renamed option `ircv3_server_time` to `server_time` and enabled it
+  by default.
 
 ## [3.4.6] - 2023-11-05 ##
 - **Added** adoption of SPDX-tags for the distributed manual pages
