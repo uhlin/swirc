@@ -3,11 +3,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added command `/dcc`
-- Added event `BATCH` (IRCv3)
+- Added event `BATCH` (IRCv3). The following types were added:
+  - `chathistory`
+  - `netjoin`
+  - `netsplit`
+  - `znc.in/playback`
 - Added the following config options:
   - `batch` (bool)
   - `multi_prefix` (bool)
-- Fixed an off-by-one error in the IRC module.
+- Fixed an off-by-one error in the IRC module. The previous program
+  versions weren't really affected however.
 - Fixed building on any setup where Ncurses is built with opaque
   types.
 - Renamed option `ircv3_server_time` to `server_time`.
