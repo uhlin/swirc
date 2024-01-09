@@ -426,8 +426,11 @@ get_num_semicolons(const char *str)
 static int
 handle_batch(const size_t bytes, char *substring, const char *protocol_message)
 {
-	char	ref[201] = { '\0' };
-	size_t	offset = bytes;
+	char	*pmsg_plus_off;
+	char	 ref[201] = { '\0' };
+	size_t	 offset = bytes;
+
+	pmsg_plus_off = &protocol_message[offset];
 
 	debug("%s: substring = \"%s\"", __func__, substring);
 	debug("%s: offset = '%zu'", __func__, offset);
@@ -441,18 +444,16 @@ handle_batch(const size_t bytes, char *substring, const char *protocol_message)
 			printf_and_free(substring, "%s: empty ref tag",
 			    __func__);
 			return -1;
-		}
-
-		if (*(protocol_message + offset) == '\0') {
+		} else if (*pmsg_plus_off == '\0') {
 			printf_and_free(substring, "%s: protocol error",
 			    __func__);
 			return -1;
 		} else {
 			debug("%s: protocol_message + offset: \"%s\"", __func__,
-			    (protocol_message + offset));
+			    pmsg_plus_off);
 		}
 
-		event_batch_add_irc_msgs(ref, (protocol_message + offset));
+		event_batch_add_irc_msgs(ref, pmsg_plus_off);
 	} else { /* has semicolons */
 		char	*cp, *str;
 		int	 year, month, day;
@@ -497,23 +498,19 @@ handle_batch(const size_t bytes, char *substring, const char *protocol_message)
 			printf_and_free(substring, "%s: server time error",
 			    __func__);
 			return -1;
-		}
-
-		offset = bytes;
-
-		if (*(protocol_message + offset) == '\0') {
+		} else if (*pmsg_plus_off == '\0') {
 			printf_and_free(substring, "%s: protocol error",
 			    __func__);
 			return -1;
 		} else {
 			debug("%s: protocol_message + offset: \"%s\"", __func__,
-			    (protocol_message + offset));
+			    pmsg_plus_off);
 		}
 
 		str = strdup_printf("@time=%d-%d-%dT%d:%d:%d.%dZ %s",
 		    year, month, day,
 		    hour, minute, second, precision,
-		    (protocol_message + offset));
+		    pmsg_plus_off);
 		event_batch_add_irc_msgs(ref, str);
 		free(str);
 	}
