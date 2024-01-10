@@ -149,10 +149,21 @@ netsplit(batch &obj)
 static void
 znc_in_playback(batch &obj)
 {
+	PIRC_WINDOW		win;
+	PRINTTEXT_CONTEXT	ctx;
+	std::string		label("");
+
+	printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
+
+	if (!obj.params.empty())
+		label.assign(obj.params.at(0));
+	if ((win = window_by_label(label.c_str())) != nullptr)
+		ctx.window = win;
+
+	printtext(&ctx, "--- BEGIN playback (%s) ---", label.c_str());
 	for (std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
-	printtext_print("success", "%s: processed batch ref: %s", __func__,
-	    obj.get_ref());
+	printtext(&ctx, "--- END playback (%s) ---", label.c_str());
 }
 
 static void
