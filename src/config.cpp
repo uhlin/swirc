@@ -84,6 +84,11 @@ static struct tagConfDefValues {
 	{ "username",                  TYPE_STRING,  2, "" },
 	{ "real_name",                 TYPE_STRING,  2, "" },
 
+	{ "dcc",                       TYPE_BOOLEAN, 3, "yes" },
+	{ "dcc_cipher_suite",          TYPE_STRING,  1, "compat" },
+	{ "dcc_own_ip",                TYPE_STRING,  2, "" },
+	{ "dcc_port",                  TYPE_INTEGER, 2, "8080" },
+
 	{ "identd",                    TYPE_BOOLEAN, 3, "no" },
 	{ "identd_fakenames",          TYPE_BOOLEAN, 1, "no" },
 	{ "identd_port",               TYPE_INTEGER, 2, "113" },
@@ -138,7 +143,6 @@ static struct tagConfDefValues {
 	{ "max_chat_windows",          TYPE_INTEGER, 2, "60" },
 	{ "mouse",                     TYPE_BOOLEAN, 4, "no" },
 	{ "mouse_events",              TYPE_STRING,  3, "wheel" },
-	{ "server_cipher_suite",       TYPE_STRING,  2, "compat" },
 	{ "show_ping_pong",            TYPE_BOOLEAN, 3, "no" },
 	{ "skip_motd",                 TYPE_BOOLEAN, 3, "no" },
 	{ "ssl_verify_peer",           TYPE_BOOLEAN, 3, "yes" },
