@@ -10,6 +10,10 @@ All notable changes to this project will be documented in this file.
   - `znc.in/playback`
 - Added the following config options:
   - `batch` (bool)
+  - `dcc` (bool)
+  - `dcc_cipher_suite` (string)
+  - `dcc_own_ip` (string)
+  - `dcc_port` (int)
   - `multi_prefix` (bool)
 - Fixed an off-by-one error in the IRC module. The previous program
   versions weren't really affected however.
