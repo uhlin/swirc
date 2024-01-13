@@ -75,12 +75,6 @@ tls_server::begin(const int port)
 }
 
 void
-tls_server::end(void)
-{
-	(void) atomic_swap_bool(&g_accepting_new_connections, false);
-}
-
-void
 tls_server::com_with_client(SSL *ssl)
 {
 	pthread_t tid;

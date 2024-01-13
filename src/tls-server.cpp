@@ -240,6 +240,12 @@ tls_server::accept_new_connections(const int port)
 	printtext(&ptext_ctx, "Stopped accepting DCC connections");
 }
 
+void
+tls_server::end(void)
+{
+	(void) atomic_swap_bool(&g_accepting_new_connections, false);
+}
+
 BIO *
 tls_server::get_accept_bio(const int port)
 {
