@@ -218,7 +218,7 @@ tls_server_accept_new_connections(const int port)
 	}
 
 	ptext_ctx.spec_type = TYPE_SPEC1_SUCCESS;
-	printtext(&ptext_ctx, "Accepting connections at port: %d", port);
+	printtext(&ptext_ctx, "Accepting DCC connections at port: %d", port);
 
 	do {
 		if (BIO_do_accept(abio) <= 0) {
