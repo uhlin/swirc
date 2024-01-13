@@ -26,3 +26,22 @@ dcc_deinit(void)
 {
 	tls_server::end();
 }
+
+void
+dcc_handle_incoming_conn(SSL *ssl)
+{
+	switch (SSL_accept(ssl)) {
+	case 0:
+		debug("%s: SSL_accept: The TLS/SSL handshake was not "
+		    "successful", __func__);
+		return;
+	case 1:
+		debug("%s: SSL_accept: The TLS/SSL handshake was successfully "
+		    "completed", __func__);
+		break;
+	default:
+		debug("%s: SSL_accept: The TLS/SSL handshake was not "
+		    "successful because a fatal error occurred", __func__);
+		return;
+	}
+}
