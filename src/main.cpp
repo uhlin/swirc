@@ -73,6 +73,8 @@
 #include "titlebar.h"
 #include "window.h"
 
+#include "commands/dcc.h"
+
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 #include "DesktopNotificationManagerCompat.hpp"
 #include "ToastsAPI.hpp"
@@ -731,12 +733,14 @@ main(int argc, char *argv[])
 	}
 #endif
 
+	dcc_init();
 	enter_io_loop();
 	free_and_null(&g_progpath);
 
 	/*
 	 * Reverse order...
 	 */
+	dcc_deinit();
 	net_ssl_deinit();
 	readline_deinit();
 	windowSystem_deinit();
