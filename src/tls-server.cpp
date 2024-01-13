@@ -62,7 +62,7 @@ static DH	*dh2048 = NULL;
 static DH	*dh4096 = NULL;
 
 /*lint -sem(tmp_dh_callback, r_null) */
-/*lint -sem(tls_server_setup_context, r_null) */
+/*lint -sem(tls_server::setup_context, r_null) */
 
 static char *
 get_filename(const char *filename)
@@ -185,7 +185,7 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
 }
 
 void
-tls_server_accept_new_connections(const int port)
+tls_server::accept_new_connections(const int port)
 {
 	BIO			*abio = NULL;
 	BIO			*cbio = NULL;
@@ -204,10 +204,10 @@ tls_server_accept_new_connections(const int port)
 	}
 
 	try {
-		if ((ctx = tls_server_setup_context()) == NULL) {
+		if ((ctx = tls_server::setup_context()) == NULL) {
 			throw std::runtime_error("Error setting up TLS server "
 			    "context. Check the error log.");
-		} else if ((abio = tls_server_get_accept_bio(port)) == NULL) {
+		} else if ((abio = tls_server::get_accept_bio(port)) == NULL) {
 			throw std::runtime_error("Operation failed");
 		}
 	} catch (const std::runtime_error &e) {
@@ -232,7 +232,7 @@ tls_server_accept_new_connections(const int port)
 			err_exit(ENOMEM, "Out of memory");
 		SSL_set_accept_state(ssl);
 		SSL_set_bio(ssl, cbio, cbio);
-		tls_server_com_with_client(ssl);
+		tls_server::com_with_client(ssl);
 	} while (atomic_load_bool(&g_accepting_new_connections));
 
 	BIO_vfree(abio);
@@ -242,7 +242,7 @@ tls_server_accept_new_connections(const int port)
 }
 
 void
-tls_server_enter_loop(SSL *ssl)
+tls_server::enter_loop(SSL *ssl)
 {
 	const char prefix[] = "tls_server_enter_loop: SSL_accept: ";
 
@@ -272,7 +272,7 @@ tls_server_enter_loop(SSL *ssl)
 }
 
 BIO *
-tls_server_get_accept_bio(const int port)
+tls_server::get_accept_bio(const int port)
 {
 	BIO	*bio = NULL;
 	char	*port_str = NULL;
@@ -306,7 +306,7 @@ tls_server_get_accept_bio(const int port)
 }
 
 SSL_CTX *
-tls_server_setup_context(void)
+tls_server::setup_context(void)
 {
 	SSL_CTX	*ctx = NULL;
 	char	*cafile = NULL;

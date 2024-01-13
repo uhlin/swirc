@@ -41,8 +41,8 @@ accept_thread(void *arg)
 {
 	const int port = *(static_cast<int *>(arg));
 
-	tls_server_accept_new_connections(port);
-	tls_server_exit_thread();
+	tls_server::accept_new_connections(port);
+	tls_server::exit_thread();
 
 	/* NOTREACHED */
 	return NULL;
@@ -53,13 +53,13 @@ com_with_client(void *arg)
 {
 	SSL *ssl = static_cast<SSL *>(arg);
 
-	tls_server_enter_loop(ssl);
+	tls_server::enter_loop(ssl);
 	SSL_free(ssl);
 	return NULL;
 }
 
 void
-tls_server_begin(const int port)
+tls_server::begin(const int port)
 {
 	pthread_t	tid;
 	static int	i;
@@ -73,14 +73,14 @@ tls_server_begin(const int port)
 }
 
 void
-tls_server_end(void)
+tls_server::end(void)
 {
 	(void) atomic_swap_bool(&g_accepting_new_connections, false);
 	(void) atomic_swap_bool(&g_tls_server_loop, false);
 }
 
 void
-tls_server_com_with_client(SSL *ssl)
+tls_server::com_with_client(SSL *ssl)
 {
 	pthread_t tid;
 
@@ -91,7 +91,7 @@ tls_server_com_with_client(SSL *ssl)
 }
 
 NORETURN void
-tls_server_exit_thread(void)
+tls_server::exit_thread(void)
 {
 	int dummy = 0;
 

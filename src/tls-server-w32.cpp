@@ -45,8 +45,8 @@ accept_thread(void *arg)
 {
 	const int port = *(static_cast<int *>(arg));
 
-	tls_server_accept_new_connections(port);
-	tls_server_exit_thread();
+	tls_server::accept_new_connections(port);
+	tls_server::exit_thread();
 }
 
 static VoidCdecl
@@ -54,13 +54,13 @@ com_with_client(void *arg)
 {
 	SSL *ssl = static_cast<SSL *>(arg);
 
-	tls_server_enter_loop(ssl);
+	tls_server::enter_loop(ssl);
 	SSL_free(ssl);
 	_endthread();
 }
 
 void
-tls_server_begin(const int port)
+tls_server::begin(const int port)
 {
 	static int i;
 
@@ -71,21 +71,21 @@ tls_server_begin(const int port)
 }
 
 void
-tls_server_end(void)
+tls_server::end(void)
 {
 	(void) atomic_swap_bool(&g_accepting_new_connections, false);
 	(void) atomic_swap_bool(&g_tls_server_loop, false);
 }
 
 void
-tls_server_com_with_client(SSL *ssl)
+tls_server::com_with_client(SSL *ssl)
 {
 	if (_beginthread(com_with_client, 0, ssl) == g_beginthread_failed)
 		err_sys("%s: _beginthread", __func__);
 }
 
 NORETURN void
-tls_server_exit_thread(void)
+tls_server::exit_thread(void)
 {
 	_endthread();
 	sw_assert_not_reached();

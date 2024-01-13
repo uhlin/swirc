@@ -28,21 +28,25 @@ extern const uintptr_t g_beginthread_failed;
 
 extern volatile bool	g_accepting_new_connections;
 extern volatile bool	g_tls_server_loop;
-
-/*lint -sem(tls_server_get_accept_bio, r_null) */
-/*lint -sem(tls_server_setup_context, r_null) */
-
-void	 tls_server_accept_new_connections(const int);
-void	 tls_server_enter_loop(SSL *);
-BIO	*tls_server_get_accept_bio(const int);
-SSL_CTX	*tls_server_setup_context(void);
-
-/*lint -sem(tls_server_exit_thread, r_no) */
-
-void		 tls_server_begin(const int);
-void		 tls_server_end(void);
-void		 tls_server_com_with_client(SSL *);
-NORETURN void	 tls_server_exit_thread(void);
 __SWIRC_END_DECLS
+
+/*lint -sem(tls_server::get_accept_bio, r_null) */
+/*lint -sem(tls_server::setup_context, r_null) */
+/*lint -sem(tls_server::exit_thread, r_no) */
+
+#ifdef __cplusplus
+namespace tls_server
+{
+	void		 accept_new_connections(const int);
+	void		 enter_loop(SSL *);
+	BIO		*get_accept_bio(const int);
+	SSL_CTX		*setup_context(void);
+
+	void		 begin(const int);
+	void		 end(void);
+	void		 com_with_client(SSL *);
+	NORETURN void	 exit_thread(void);
+}
+#endif
 
 #endif

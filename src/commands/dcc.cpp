@@ -17,12 +17,12 @@ dcc_init(void)
 	if (config_bool("dcc", true)) {
 		struct integer_context intctx("dcc_port", 1024, 65535, 8080);
 
-		tls_server_begin(config_integer(&intctx));
+		tls_server::begin(config_integer(&intctx));
 	}
 }
 
 void
 dcc_deinit(void)
 {
-	tls_server_end();
+	tls_server::end();
 }
