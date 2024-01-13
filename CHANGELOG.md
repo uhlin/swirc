@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
   versions weren't really affected however.
 - Fixed building on any setup where Ncurses is built with opaque
   types.
+- Fixed new Coverity defects
 - Renamed option `ircv3_server_time` to `server_time` and enabled it
   by default.
 
