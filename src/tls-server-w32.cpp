@@ -36,6 +36,8 @@
 #include "errHand.h"
 #include "tls-server.h"
 
+#include "commands/dcc.h"
+
 typedef void __cdecl VoidCdecl;
 
 const uintptr_t g_beginthread_failed = static_cast<uintptr_t>(-1L);
@@ -54,7 +56,7 @@ com_thread(void *arg)
 {
 	SSL *ssl = static_cast<SSL *>(arg);
 
-	tls_server::enter_loop(ssl);
+	dcc_handle_incoming_conn(ssl);
 	SSL_free(ssl);
 	_endthread();
 }

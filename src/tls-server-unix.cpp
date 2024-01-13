@@ -36,6 +36,8 @@
 #include "errHand.h"
 #include "tls-server.h"
 
+#include "commands/dcc.h"
+
 static void *
 accept_thread(void *arg)
 {
@@ -53,7 +55,7 @@ com_thread(void *arg)
 {
 	SSL *ssl = static_cast<SSL *>(arg);
 
-	tls_server::enter_loop(ssl);
+	dcc_handle_incoming_conn(ssl);
 	SSL_free(ssl);
 	return NULL;
 }
