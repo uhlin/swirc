@@ -1,6 +1,7 @@
 #include "common.h"
 
 #include "../config.h"
+#include "../errHand.h"
 #include "../tls-server.h"
 
 #include "dcc.h"
