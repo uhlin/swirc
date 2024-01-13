@@ -232,6 +232,7 @@ tls_server_accept_new_connections(const int port)
 			err_exit(ENOMEM, "Out of memory");
 		SSL_set_accept_state(ssl);
 		SSL_set_bio(ssl, cbio, cbio);
+		tls_server_com_with_client(ssl);
 	} while (atomic_load_bool(&g_accepting_new_connections));
 
 	BIO_vfree(abio);
