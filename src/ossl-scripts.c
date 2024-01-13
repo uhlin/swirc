@@ -1,5 +1,5 @@
 /* ossl-scripts.c
-   Copyright (C) 2021-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -47,7 +47,7 @@ static lines_t root_ca_script_lines = {
 	SCR_COMMENT "Create the root CA",
 	"",
 	"openssl req -newkey rsa:2048 -sha256 -keyout rootkey.pem -out "
-	"rootreq.pem",
+	"rootreq.pem -nodes",
 	"",
 	"openssl x509 -req -in rootreq.pem -sha256 -extfile " EXTFILE
 	" -extensions v3_ca -signkey rootkey.pem -out rootcert.pem",
@@ -64,7 +64,7 @@ static lines_t server_ca_script_lines = {
 	SCR_COMMENT "Create the server CA (and sign it with the root CA)",
 	"",
 	"openssl req -newkey rsa:2048 -sha256 -keyout serverCAkey.pem -out "
-	"serverCAreq.pem",
+	"serverCAreq.pem -nodes",
 	"",
 	"openssl x509 -req -in serverCAreq.pem -sha256 -extfile " EXTFILE
 	" -extensions v3_ca"
