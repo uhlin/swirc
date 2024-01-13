@@ -1,5 +1,5 @@
 /* TLS server
-   Copyright (C) 2021-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -361,7 +361,7 @@ tls_server_setup_context(void)
 
 		SSL_CTX_set_tmp_dh_callback(ctx, tmp_dh_callback);
 		assignment_ok = true;
-		cs = Config("server_cipher_suite");
+		cs = Config("dcc_cipher_suite");
 
 		if (strings_match(cs, "secure") || strings_match(cs, "SECURE"))
 			set_server_ciphers(ctx, g_suite_secure, assignment_ok);
