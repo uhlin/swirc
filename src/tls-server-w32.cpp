@@ -50,7 +50,7 @@ accept_thread(void *arg)
 }
 
 static VoidCdecl
-com_with_client(void *arg)
+com_thread(void *arg)
 {
 	SSL *ssl = static_cast<SSL *>(arg);
 
@@ -80,7 +80,7 @@ tls_server::end(void)
 void
 tls_server::com_with_client(SSL *ssl)
 {
-	if (_beginthread(com_with_client, 0, ssl) == g_beginthread_failed)
+	if (_beginthread(com_thread, 0, ssl) == g_beginthread_failed)
 		err_sys("%s: _beginthread", __func__);
 }
 

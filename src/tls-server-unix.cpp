@@ -49,7 +49,7 @@ accept_thread(void *arg)
 }
 
 static void *
-com_with_client(void *arg)
+com_thread(void *arg)
 {
 	SSL *ssl = static_cast<SSL *>(arg);
 
@@ -84,7 +84,7 @@ tls_server::com_with_client(SSL *ssl)
 {
 	pthread_t tid;
 
-	if ((errno = pthread_create(&tid, NULL, com_with_client, ssl)) != 0)
+	if ((errno = pthread_create(&tid, NULL, com_thread, ssl)) != 0)
 		err_sys("%s: pthread_create", __func__);
 	else if ((errno = pthread_detach(tid)) != 0)
 		err_sys("%s: pthread_detach", __func__);
