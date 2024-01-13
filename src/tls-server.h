@@ -41,6 +41,7 @@ extern const uintptr_t g_beginthread_failed;
 
 void		 tls_server_begin(const int);
 void		 tls_server_end(void);
+void		 tls_server_com_with_client(SSL *);
 NORETURN void	 tls_server_exit_thread(void);
 __SWIRC_END_DECLS
 
