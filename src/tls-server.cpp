@@ -1,4 +1,4 @@
-/* TLS server
+/* TLS server for DCC (Direct Client-to-Client)
    Copyright (C) 2021-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
