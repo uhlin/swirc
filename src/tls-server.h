@@ -22,6 +22,10 @@ extern const char	g_suite_compat[];
 extern const char	g_suite_legacy[];
 extern const char	g_suite_all[];
 
+#ifdef WIN32
+extern const uintptr_t g_beginthread_failed;
+#endif
+
 extern volatile bool	g_accepting_new_connections;
 extern volatile bool	g_tls_server_loop;
 
@@ -34,10 +38,6 @@ BIO	*tls_server_get_accept_bio(const int);
 SSL_CTX	*tls_server_setup_context(void);
 
 /*lint -sem(tls_server_exit_thread, r_no) */
-
-#ifdef WIN32
-extern const uintptr_t g_beginthread_failed;
-#endif
 
 void		 tls_server_begin(const int);
 void		 tls_server_end(void);
