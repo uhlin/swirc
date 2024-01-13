@@ -109,7 +109,7 @@ init_dhparams()
 			    "(4096)");
 		}
 	} catch (const std::runtime_error &e) {
-		err_log(errno, "init_dhparams: %s", e.what());
+		err_log(errno, "%s: %s", __func__, e.what());
 		free(name1);
 		free(name2);
 		return -1;
@@ -385,7 +385,7 @@ tls_server_setup_context(void)
 
 		if (err)
 			err_log(0, "%s", ERR_error_string(err, NULL));
-		err_log(0, "tls_server_setup_context: %s", ex.what());
+		err_log(0, "%s: %s", __func__, ex.what());
 		SSL_CTX_free(ctx);
 		free(cafile);
 		free(certfile);
