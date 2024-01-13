@@ -27,7 +27,6 @@ extern const uintptr_t g_beginthread_failed;
 #endif
 
 extern volatile bool	g_accepting_new_connections;
-extern volatile bool	g_tls_server_loop;
 __SWIRC_END_DECLS
 
 /*lint -sem(tls_server::get_accept_bio, r_null) */

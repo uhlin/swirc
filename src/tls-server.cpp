@@ -56,7 +56,6 @@ const char g_suite_legacy[] = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
 const char g_suite_all[] = "ALL:!aNULL:!eNULL";
 
 volatile bool	g_accepting_new_connections = false;
-volatile bool	g_tls_server_loop = false;
 
 static DH	*dh2048 = NULL;
 static DH	*dh4096 = NULL;

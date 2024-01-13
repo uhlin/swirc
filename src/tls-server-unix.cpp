@@ -78,7 +78,6 @@ void
 tls_server::end(void)
 {
 	(void) atomic_swap_bool(&g_accepting_new_connections, false);
-	(void) atomic_swap_bool(&g_tls_server_loop, false);
 }
 
 void
