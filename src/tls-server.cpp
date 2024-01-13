@@ -197,7 +197,7 @@ tls_server_accept_new_connections(const int port)
 	    true);
 
 	if (atomic_load_bool(&g_accepting_new_connections)) {
-		printtext(&ptext_ctx, "Already accepting connections...");
+		printtext(&ptext_ctx, "Already accepting DCC connections...");
 		return;
 	} else {
 		(void) atomic_swap_bool(&g_accepting_new_connections, true);
@@ -237,7 +237,7 @@ tls_server_accept_new_connections(const int port)
 	BIO_vfree(abio);
 	SSL_CTX_free(ctx);
 	ptext_ctx.spec_type = TYPE_SPEC1_WARN;
-	printtext(&ptext_ctx, "Stopped accepting connections");
+	printtext(&ptext_ctx, "Stopped accepting DCC connections");
 }
 
 void
