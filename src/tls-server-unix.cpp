@@ -1,5 +1,5 @@
 /* TLS server (Unix specific functions)
-   Copyright (C) 2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -67,9 +67,9 @@ tls_server_begin(const int port)
 	i = port;
 
 	if ((errno = pthread_create(&tid, NULL, accept_thread, &i)) != 0)
-		err_sys("tls_server_begin: pthread_create");
+		err_sys("%s: pthread_create", __func__);
 	else if ((errno = pthread_detach(tid)) != 0)
-		err_sys("tls_server_begin: pthread_detach");
+		err_sys("%s: pthread_detach", __func__);
 }
 
 void
@@ -85,9 +85,9 @@ tls_server_com_with_client(SSL *ssl)
 	pthread_t tid;
 
 	if ((errno = pthread_create(&tid, NULL, com_with_client, ssl)) != 0)
-		err_sys("tls_server_com_with_client: pthread_create");
+		err_sys("%s: pthread_create", __func__);
 	else if ((errno = pthread_detach(tid)) != 0)
-		err_sys("tls_server_com_with_client: pthread_detach");
+		err_sys("%s: pthread_detach", __func__);
 }
 
 NORETURN void

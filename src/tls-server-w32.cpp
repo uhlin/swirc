@@ -1,5 +1,5 @@
 /* TLS server (Win32 specific functions)
-   Copyright (C) 2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -67,7 +67,7 @@ tls_server_begin(const int port)
 	i = port;
 
 	if (_beginthread(accept_thread, 0, &i) == g_beginthread_failed)
-		err_sys("tls_server_begin: _beginthread");
+		err_sys("%s: _beginthread", __func__);
 }
 
 void
@@ -81,7 +81,7 @@ void
 tls_server_com_with_client(SSL *ssl)
 {
 	if (_beginthread(com_with_client, 0, ssl) == g_beginthread_failed)
-		err_sys("tls_server_com_with_client: _beginthread");
+		err_sys("%s: _beginthread", __func__);
 }
 
 NORETURN void
