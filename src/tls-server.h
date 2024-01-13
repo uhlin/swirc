@@ -38,7 +38,6 @@ __SWIRC_END_DECLS
 namespace tls_server
 {
 	void		 accept_new_connections(const int);
-	void		 enter_loop(SSL *);
 	BIO		*get_accept_bio(const int);
 	SSL_CTX		*setup_context(void);
 

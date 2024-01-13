@@ -241,36 +241,6 @@ tls_server::accept_new_connections(const int port)
 	printtext(&ptext_ctx, "Stopped accepting DCC connections");
 }
 
-void
-tls_server::enter_loop(SSL *ssl)
-{
-	const char prefix[] = "tls_server_enter_loop: SSL_accept: ";
-
-	switch (SSL_accept(ssl)) {
-	case 0:
-		debug("%sThe TLS/SSL handshake was not successful", prefix);
-		return;
-	case 1:
-		debug("%sThe TLS/SSL handshake was successfully completed",
-		    prefix);
-		break;
-	default:
-		debug("%sThe TLS/SSL handshake was not successful because a "
-		    "fatal error occurred", prefix);
-		return;
-	}
-
-	(void) atomic_swap_bool(&g_tls_server_loop, true);
-
-	while (atomic_load_bool(&g_tls_server_loop)) {
-		/*
-		 * TODO: Add code
-		 */
-
-		(void) napms(500);
-	}
-}
-
 BIO *
 tls_server::get_accept_bio(const int port)
 {
