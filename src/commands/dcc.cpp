@@ -31,6 +31,7 @@
 
 #include "../config.h"
 #include "../errHand.h"
+#include "../sig.h"
 #include "../tls-server.h"
 
 #include "dcc.h"
@@ -60,6 +61,8 @@ dcc_deinit(void)
 void
 dcc_handle_incoming_conn(SSL *ssl)
 {
+	block_signals();
+
 	switch (SSL_accept(ssl)) {
 	case 0:
 		debug("%s: SSL_accept: The TLS/SSL handshake was not "

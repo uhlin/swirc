@@ -46,6 +46,7 @@
 #include "libUtils.h"
 #include "nestHome.h"
 #include "printtext.h"
+#include "sig.h"
 #include "strHand.h"
 #include "strdup_printf.h"
 #include "tls-server.h"
@@ -191,6 +192,8 @@ tls_server::accept_new_connections(const int port)
 	PRINTTEXT_CONTEXT	 ptext_ctx;
 	SSL			*ssl = NULL;
 	SSL_CTX			*ctx = NULL;
+
+	block_signals();
 
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
 	    true);
