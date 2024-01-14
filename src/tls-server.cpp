@@ -193,8 +193,6 @@ tls_server::accept_new_connections(const int port)
 	SSL			*ssl = NULL;
 	SSL_CTX			*ctx = NULL;
 
-	block_signals();
-
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
 	    true);
 
@@ -223,6 +221,7 @@ tls_server::accept_new_connections(const int port)
 
 	ptext_ctx.spec_type = TYPE_SPEC1_SUCCESS;
 	printtext(&ptext_ctx, "Accepting DCC connections at port: %d", port);
+	block_signals();
 
 	do {
 		if (BIO_do_accept(abio) <= 0) {
