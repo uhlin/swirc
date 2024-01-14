@@ -56,7 +56,7 @@ const char g_suite_compat[] = "HIGH:!aNULL";
 const char g_suite_legacy[] = "ALL:!ADH:!EXP:!LOW:!MD5:@STRENGTH";
 const char g_suite_all[] = "ALL:!aNULL:!eNULL";
 
-volatile bool	g_accepting_new_connections = false;
+volatile bool tls_server::accepting_new_connections = false;
 
 static DH	*dh2048 = NULL;
 static DH	*dh4096 = NULL;
@@ -198,11 +198,12 @@ tls_server::accept_new_connections(const int port)
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
 	    true);
 
-	if (atomic_load_bool(&g_accepting_new_connections)) {
+	if (atomic_load_bool(&tls_server::accepting_new_connections)) {
 		printtext(&ptext_ctx, "Already accepting DCC connections...");
 		return;
 	} else {
-		(void) atomic_swap_bool(&g_accepting_new_connections, true);
+		(void) atomic_swap_bool(&tls_server::accepting_new_connections,
+		    true);
 	}
 
 	try {
@@ -215,7 +216,8 @@ tls_server::accept_new_connections(const int port)
 	} catch (const std::runtime_error &e) {
 		SSL_CTX_free(ctx);
 		printtext(&ptext_ctx, "%s", e.what());
-		(void) atomic_swap_bool(&g_accepting_new_connections, false);
+		(void) atomic_swap_bool(&tls_server::accepting_new_connections,
+		    false);
 		return;
 	}
 
@@ -235,7 +237,7 @@ tls_server::accept_new_connections(const int port)
 		SSL_set_accept_state(ssl);
 		SSL_set_bio(ssl, cbio, cbio);
 		tls_server::com_with_client(ssl);
-	} while (atomic_load_bool(&g_accepting_new_connections));
+	} while (atomic_load_bool(&tls_server::accepting_new_connections));
 
 	BIO_vfree(abio);
 	SSL_CTX_free(ctx);
@@ -246,7 +248,7 @@ tls_server::accept_new_connections(const int port)
 void
 tls_server::end(void)
 {
-	(void) atomic_swap_bool(&g_accepting_new_connections, false);
+	(void) atomic_swap_bool(&tls_server::accepting_new_connections, false);
 }
 
 BIO *

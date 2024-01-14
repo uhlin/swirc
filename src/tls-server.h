@@ -25,8 +25,6 @@ extern const char	g_suite_all[];
 #ifdef WIN32
 extern const uintptr_t g_beginthread_failed;
 #endif
-
-extern volatile bool	g_accepting_new_connections;
 __SWIRC_END_DECLS
 
 /*lint -sem(tls_server::get_accept_bio, r_null) */
@@ -36,6 +34,8 @@ __SWIRC_END_DECLS
 #ifdef __cplusplus
 namespace tls_server
 {
+	extern volatile bool accepting_new_connections;
+
 	void		 accept_new_connections(const int);
 	BIO		*get_accept_bio(const int);
 	SSL_CTX		*setup_context(void);
