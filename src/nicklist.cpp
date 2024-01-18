@@ -1,5 +1,5 @@
 /* nicklist.cpp
-   Copyright (C) 2021-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -200,7 +200,7 @@ addvline(WINDOW *win, short int bg)
 }
 
 static void
-addnick(WINDOW *win, short int bg, const char *nick) noexcept
+addnick(WINDOW *win, short int bg, const char *nick)
 {
 	bool			 state1 = false;
 	bool			 state2 = false;
@@ -244,8 +244,13 @@ printnick(WINDOW *win, const int row, const int col, const char *nick)
 
 	(void) wmove(win, row, col);
 	addvline(win, bg);
-	if (nick)
-		addnick(win, bg, nick);
+	if (nick) {
+		try {
+			addnick(win, bg, nick);
+		} catch (const std::bad_alloc &e) {
+			err_exit(ENOMEM, "%s: fatal: %s", __func__, e.what());
+		}
+	}
 	resetattrs(win);
 }
 
