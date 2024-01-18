@@ -734,7 +734,12 @@ main(int argc, char *argv[])
 #endif
 
 	dcc_init();
-	enter_io_loop();
+	try {
+		enter_io_loop();
+	} catch (const std::exception &e) {
+		err_msg("enter_io_loop: %s", e.what());
+		return EXIT_FAILURE;
+	}
 	free_and_null(&g_progpath);
 
 	/*
