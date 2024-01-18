@@ -859,9 +859,15 @@ set_indent(int *indent, CSTRING fmt, ...)
  */
 static struct message_components *
 get_processed_out_message(CSTRING unproc_msg, enum message_specifier_type
-    spec_type, bool include_ts, CSTRING srv_time) noexcept
+    spec_type, bool include_ts, CSTRING srv_time)
 {
-	struct message_components *pout = new message_components(NULL, 0);
+	struct message_components *pout;
+
+	try {
+		pout = new message_components(NULL, 0);
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "%s: fatal: %s", __func__, e.what());
+	}
 
 	if (include_ts) {
 		STRING ts = NULL;
