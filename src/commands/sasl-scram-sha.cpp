@@ -1,5 +1,5 @@
 /* SASL auth mechanism SCRAM-SHA-256
-   Copyright (C) 2019-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -178,7 +178,7 @@ sasl_scram_sha_send_client_final_msg(CSTRING proof)
 }
 
 static STRING
-get_decoded_msg(CSTRING source, int *outlen) noexcept
+get_decoded_msg(CSTRING source, int *outlen)
 {
 	STRING	 decoded_msg = NULL;
 	int	 length_needed = b64_decode(source, NULL, 0);
@@ -329,7 +329,7 @@ get_digest(struct digest_context *ctx)
 }
 
 static STRING
-get_client_first_msg_bare() noexcept
+get_client_first_msg_bare()
 {
 	STRING		 msg_bare;
 	size_t		 size;
@@ -347,7 +347,7 @@ get_client_first_msg_bare() noexcept
 }
 
 static STRING
-get_client_final_msg_wo_proof() noexcept
+get_client_final_msg_wo_proof()
 {
 	STRING		 msg_wo_proof;
 	size_t		 size;
@@ -374,9 +374,13 @@ get_auth_msg(CSTRING b64msg, size_t *auth_msg_len)
 	STRING msg_bare, msg_wo_proof, serv_first_msg;
 	STRING out;
 
-	msg_bare = get_client_first_msg_bare();
-	msg_wo_proof = get_client_final_msg_wo_proof();
-	serv_first_msg = get_decoded_msg(b64msg, NULL);
+	try {
+		msg_bare = get_client_first_msg_bare();
+		msg_wo_proof = get_client_final_msg_wo_proof();
+		serv_first_msg = get_decoded_msg(b64msg, NULL);
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "%s: fatal: %s", __func__, e.what());
+	}
 
 	out = strdup_printf("%s,%s,%s", msg_bare, serv_first_msg, msg_wo_proof);
 
