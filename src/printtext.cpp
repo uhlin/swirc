@@ -709,7 +709,7 @@ new_row(WINDOW *win, int *insert_count, int *rep_count)
  * Start on a new row?
  */
 static bool
-start_on_a_new_row(const ptrdiff_t sum, const WINDOW *win)
+start_on_a_new_row(const ptrdiff_t sum, WINDOW *win)
 {
 	return (sum < getmaxx(win) ? false : true);
 }
