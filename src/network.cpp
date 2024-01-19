@@ -666,10 +666,15 @@ irc(int &bytes_received, struct network_recv_context *ctx, char *recvbuf,
 	if ((bytes_received = net_recv(ctx, recvbuf, RECVBUF_SIZE)) == -1) {
 		g_connection_lost = true;
 	} else if (bytes_received > 0) {
-		if (memchr(recvbuf, 0, bytes_received) != NULL) {
+		if (memchr(recvbuf, 0, bytes_received) != NULL)
 			destroy_null_bytes(recvbuf, bytes_received);
+
+		try {
+			irc_handle_interpret_events(recvbuf, message_concat,
+			    state);
+		} catch (const std::exception &e) {
+			err_log(0, "%s: catched: %s", __func__, e.what());
 		}
-		irc_handle_interpret_events(recvbuf, message_concat, state);
 	}
 }
 
