@@ -693,7 +693,12 @@ icb(int &bytes_received, struct network_recv_context *ctx, char *recvbuf)
 	} else if (bytes_received > 0) {
 		if (memchr(recvbuf, 0, bytes_received) != NULL)
 			destroy_null_bytes(recvbuf, bytes_received);
-		icb_irc_proxy(length, recvbuf[0], &recvbuf[1]);
+
+		try {
+			icb_irc_proxy(length, recvbuf[0], &recvbuf[1]);
+		} catch (const std::exception &e) {
+			err_log(0, "%s: catched: %s", __func__, e.what());
+		}
 	}
 
 	return OK;
