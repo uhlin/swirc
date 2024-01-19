@@ -659,6 +659,46 @@ destroy_null_bytes_exported(char *buf, const int len)
 	destroy_null_bytes(buf, len);
 }
 
+static int
+icb(int &bytes_received, struct network_recv_context *ctx, char *recvbuf)
+{
+	char	array[10] = { '\0' };
+	int	length, ret;
+
+	ret = snprintf(array, ARRAY_SIZE(array), "%d",
+	    static_cast<unsigned char>(recvbuf[0]));
+
+	if (ret < 0 || static_cast<size_t>(ret) >= ARRAY_SIZE(array)) {
+		err_log(ENOBUFS, "%s", __func__);
+		g_connection_lost = true;
+		return ERR;
+	}
+
+	length = atoi(array);
+	sw_assert(length >= 0 && length <= UCHAR_MAX);
+
+	if ((bytes_received = net_recv(ctx, recvbuf, length)) == -1) {
+		g_connection_lost = true;
+	} else if (bytes_received != length && length != 0) {
+		const int	maxval = MAX(length, bytes_received);
+		const int	minval = MIN(length, bytes_received);
+		const int	bytes_rem = int_diff(maxval, minval);
+
+		if (get_and_handle_remaining_bytes(bytes_rem, ctx, recvbuf,
+		    length) == ERR) {
+			err_log(EPROTO, "%s", __func__);
+			g_connection_lost = true;
+			return ERR;
+		}
+	} else if (bytes_received > 0) {
+		if (memchr(recvbuf, 0, bytes_received) != NULL)
+			destroy_null_bytes(recvbuf, bytes_received);
+		icb_irc_proxy(length, recvbuf[0], &recvbuf[1]);
+	}
+
+	return OK;
+}
+
 static void
 irc(int &bytes_received, struct network_recv_context *ctx, char *recvbuf,
     char **message_concat, enum message_concat_state *state)
@@ -707,9 +747,6 @@ net_irc_listen(bool *connection_lost)
 			 * ICB
 			 */
 
-			char	array[10] = { '\0' };
-			int	length, ret;
-
 			if ((bytes_received = net_recv(&ctx, recvbuf, 1)) ==
 			    -1) {
 				g_connection_lost = true;
@@ -718,43 +755,8 @@ net_irc_listen(bool *connection_lost)
 				if (atomic_load_bool(&g_icb_processing_names))
 					icb_process_event_eof_names();
 				goto _conn_check;
-			}
-
-			ret = snprintf(array, ARRAY_SIZE(array), "%d",
-			    static_cast<unsigned char>(recvbuf[0]));
-
-			if (ret < 0 || static_cast<size_t>(ret) >=
-			    ARRAY_SIZE(array)) {
-				err_log(ENOBUFS, "%s", __func__);
-				g_connection_lost = true;
+			} else if (icb(bytes_received, &ctx, recvbuf) != OK)
 				break;
-			}
-
-			length = atoi(array);
-			sw_assert(length >= 0 && length <= UCHAR_MAX);
-
-			if ((bytes_received = net_recv(&ctx, recvbuf,
-			    length)) == -1) {
-				g_connection_lost = true;
-			} else if (bytes_received != length && length != 0) {
-				const int maxval = MAX(length, bytes_received);
-				const int minval = MIN(length, bytes_received);
-				const int bytes_rem = int_diff(maxval, minval);
-
-				if (get_and_handle_remaining_bytes(bytes_rem,
-				    &ctx, recvbuf, length) == ERR) {
-					err_log(EPROTO, "%s", __func__);
-					g_connection_lost = true;
-					break;
-				}
-			} else if (bytes_received > 0) {
-				if (memchr(recvbuf, 0, bytes_received) !=
-				    NULL) {
-					destroy_null_bytes(recvbuf,
-					    bytes_received);
-				}
-				icb_irc_proxy(length, recvbuf[0], &recvbuf[1]);
-			}
 		} else {
 			/*
 			 * IRC
