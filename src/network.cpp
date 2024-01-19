@@ -659,6 +659,20 @@ destroy_null_bytes_exported(char *buf, const int len)
 	destroy_null_bytes(buf, len);
 }
 
+static void
+irc(int &bytes_received, struct network_recv_context *ctx, char *recvbuf,
+    char **message_concat, enum message_concat_state *state)
+{
+	if ((bytes_received = net_recv(ctx, recvbuf, RECVBUF_SIZE)) == -1) {
+		g_connection_lost = true;
+	} else if (bytes_received > 0) {
+		if (memchr(recvbuf, 0, bytes_received) != NULL) {
+			destroy_null_bytes(recvbuf, bytes_received);
+		}
+		irc_handle_interpret_events(recvbuf, message_concat, state);
+	}
+}
+
 void
 net_irc_listen(bool *connection_lost)
 {
@@ -741,18 +755,8 @@ net_irc_listen(bool *connection_lost)
 			 * IRC
 			 */
 
-			if ((bytes_received = net_recv(&ctx, recvbuf,
-			    RECVBUF_SIZE)) == -1) {
-				g_connection_lost = true;
-			} else if (bytes_received > 0) {
-				if (memchr(recvbuf, 0, bytes_received) !=
-				    NULL) {
-					destroy_null_bytes(recvbuf,
-					    bytes_received);
-				}
-				irc_handle_interpret_events(recvbuf,
-				    &message_concat, &state);
-			}
+			irc(bytes_received, &ctx, recvbuf, &message_concat,
+			    &state);
 		}
 
 	  _conn_check:
