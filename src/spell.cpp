@@ -258,6 +258,8 @@ spell_get_suggs(CSTRING mbs, const wchar_t *wcs)
 		try {
 			ptr = new suggestion(list[i]);
 			suggs->push_back(ptr);
+		} catch (const std::bad_alloc &e) {
+			err_exit(ENOMEM, "%s: fatal: %s", __func__, e.what());
 		} catch (const std::runtime_error &e) {
 			delete ptr;
 			debug("%s: %s", __func__, e.what());
