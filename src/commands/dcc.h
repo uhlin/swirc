@@ -5,9 +5,15 @@
 
 __SWIRC_BEGIN_DECLS
 void cmd_dcc(const char *);
-void dcc_init(void);
-void dcc_deinit(void);
-void dcc_handle_incoming_conn(SSL *);
 __SWIRC_END_DECLS
+
+#ifdef __cplusplus
+namespace dcc
+{
+	void init(void);
+	void deinit(void);
+	void handle_incoming_conn(SSL *);
+}
+#endif
 
 #endif

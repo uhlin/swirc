@@ -43,7 +43,7 @@ cmd_dcc(const char *data)
 }
 
 void
-dcc_init(void)
+dcc::init(void)
 {
 	if (config_bool("dcc", true)) {
 		struct integer_context intctx("dcc_port", 1024, 65535, 8080);
@@ -53,13 +53,13 @@ dcc_init(void)
 }
 
 void
-dcc_deinit(void)
+dcc::deinit(void)
 {
 	tls_server::end();
 }
 
 void
-dcc_handle_incoming_conn(SSL *ssl)
+dcc::handle_incoming_conn(SSL *ssl)
 {
 	block_signals();
 
