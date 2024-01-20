@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2023 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2012-2024 Markus Uhlin <markus@nifty-networks.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -154,6 +154,10 @@ Interpreter(const struct Interpreter_in *in)
 		} else if ((errno = in->install_func(id, arg)) != 0) {
 			throw std::runtime_error("install error");
 		}
+	} catch (const std::bad_alloc &e) {
+		std::cerr << "out of memory: " << e.what() << '\n';
+		clean_up(id, arg);
+		abort();
 	} catch (const std::runtime_error &e) {
 		std::cerr << '\t' << in->line << '\n';
 
@@ -165,10 +169,6 @@ Interpreter(const struct Interpreter_in *in)
 			    e.what());
 		}
 
-		clean_up(id, arg);
-		abort();
-	} catch (const std::bad_alloc &e) {
-		std::cerr << "out of memory: " << e.what() << '\n';
 		clean_up(id, arg);
 		abort();
 	} catch (...) {
