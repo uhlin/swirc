@@ -1,5 +1,5 @@
 /* Whois events
-   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -201,13 +201,13 @@ event_whoReply(struct irc_message_compo *compo)
 
 		printtext(&ctx, "%s: %s %s %s %s@%s %s", str1.c_str(),
 		    str2.c_str(), symbol, hopcount, user, host, str3.c_str());
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "%s(%s): error: %s", __func__, compo->command,
+		    e.what());
 	} catch (const std::runtime_error &e) {
 		ctx.spec_type = TYPE_SPEC1_FAILURE;
 
 		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
-		    e.what());
-	} catch (const std::bad_alloc &e) {
-		err_exit(ENOMEM, "%s(%s): error: %s", __func__, compo->command,
 		    e.what());
 	} catch (...) {
 		err_log(0, "%s(%s): error: %s", __func__, compo->command,

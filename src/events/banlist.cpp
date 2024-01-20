@@ -1,5 +1,5 @@
 /* Event 367 (RPL_BANLIST) and 368 (RPL_ENDOFBANLIST)
-   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -169,13 +169,13 @@ event_banlist(struct irc_message_compo *compo)
 			throw std::runtime_error("unexpected number of feeds "
 			    "written");
 		}
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "event_banlist(%s): error: %s", compo->command,
+		    e.what());
 	} catch (const std::runtime_error &e) {
 		ctx.spec_type = TYPE_SPEC1_FAILURE;
 
 		printtext(&ctx, "event_banlist(%s): error: %s", compo->command,
-		    e.what());
-	} catch (const std::bad_alloc &e) {
-		err_exit(ENOMEM, "event_banlist(%s): error: %s", compo->command,
 		    e.what());
 	} catch (...) {
 		err_log(0, "event_banlist(%s): error: unknown exception",
