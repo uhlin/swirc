@@ -12,7 +12,10 @@ namespace dcc
 {
 	void init(void);
 	void deinit(void);
+
+	const char *get_upload_dir(void);
 	void handle_incoming_conn(SSL *);
+	bool want_unveil_uploads(void);
 }
 #endif
 

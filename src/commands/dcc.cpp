@@ -32,6 +32,8 @@
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
+#include "../filePred.h"
+#include "../nestHome.h"
 #include "../printtext.h"
 #include "../sig.h"
 #include "../strHand.h"
@@ -141,6 +143,18 @@ dcc::deinit(void)
 	tls_server::end();
 }
 
+const char *
+dcc::get_upload_dir(void)
+{
+	static const char *dir;
+
+	dir = Config("dcc_upload_dir");
+
+	if (!is_directory(dir))
+		return g_dcc_upload_dir;
+	return dir;
+}
+
 void
 dcc::handle_incoming_conn(SSL *ssl)
 {
@@ -160,4 +174,16 @@ dcc::handle_incoming_conn(SSL *ssl)
 		    "successful because a fatal error occurred", __func__);
 		return;
 	}
+}
+
+bool
+dcc::want_unveil_uploads(void)
+{
+	const char *dir = Config("dcc_upload_dir");
+
+	if (strings_match(dir, ""))
+		return false;
+	else if (strncmp(dir, g_home_dir, strlen(g_home_dir)) == 0)
+		return false;
+	return true;
 }
