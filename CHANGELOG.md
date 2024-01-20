@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
   - `dcc_cipher_suite` (string)
   - `dcc_own_ip` (string)
   - `dcc_port` (int)
+  - `dcc_upload_dir` (string)
   - `multi_prefix` (bool)
 - Fixed an off-by-one error in the IRC module. The previous program
   versions weren't really affected however.
