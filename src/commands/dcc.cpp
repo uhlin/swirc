@@ -151,7 +151,7 @@ dcc::get_upload_dir(void)
 	dir = Config("dcc_upload_dir");
 
 	if (!is_directory(dir))
-		return g_dcc_upload_dir;
+		return (g_dcc_upload_dir ? g_dcc_upload_dir : "");
 	return dir;
 }
 
