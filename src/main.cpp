@@ -733,19 +733,18 @@ main(int argc, char *argv[])
 	}
 #endif
 
-	dcc_init();
 	try {
 		enter_io_loop();
 	} catch (const std::exception &e) {
 		err_msg("enter_io_loop: %s", e.what());
 		return EXIT_FAILURE;
 	}
+
 	free_and_null(&g_progpath);
 
 	/*
 	 * Reverse order...
 	 */
-	dcc_deinit();
 	net_ssl_deinit();
 	readline_deinit();
 	windowSystem_deinit();
