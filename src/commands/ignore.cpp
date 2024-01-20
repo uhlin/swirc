@@ -1,5 +1,5 @@
 /* Ignore commands
-   Copyright (C) 2021-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -160,11 +160,11 @@ cmd_unignore(const char *data)
 		regex = NULL;
 		print_ignore_list();
 		return;
-	} catch (const std::runtime_error &e) {
+	} catch (const std::out_of_range &e) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ctx, "/unignore: %s", e.what());
-	} catch (const std::out_of_range &e) {
+	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ctx, "/unignore: %s", e.what());
