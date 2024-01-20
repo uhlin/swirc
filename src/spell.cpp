@@ -1,5 +1,5 @@
 /* spell.cpp
-   Copyright (C) 2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2023-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -101,28 +101,25 @@ suggestion::suggestion(CSTRING word)
 	(void) tmp_locale.assign(lang).append(".").append(encoding);
 	free_locale_info(li);
 
-	this->word = sw_strdup(word);
-
-	/*
-	 * wide word
-	 */
-	mutex_lock(&g_puts_mutex);
 	const size_t size = strlen(word) + 1;
-	this->wide_word = static_cast<wchar_t *>(xcalloc(size,
-	    sizeof(wchar_t)));
+
+	this->word = new char[size];
+	memcpy(this->word, word, size);
+
+	this->wide_word = new wchar_t[size];
 	if (xmbstowcs(this->wide_word, word, size - 1) == g_conversion_failed)
 		this->wide_word[0] = L'\0';
-	mutex_unlock(&g_puts_mutex);
+	this->wide_word[size - 1] = L'\0';
 }
 
 suggestion::~suggestion()
 {
 	if (this->word) {
-		free(this->word);
+		delete[] this->word;
 		this->word = nullptr;
 	}
 	if (this->wide_word) {
-		free(this->wide_word);
+		delete[] this->wide_word;
 		this->wide_word = nullptr;
 	}
 }
