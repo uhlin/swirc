@@ -304,14 +304,13 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 			throw std::runtime_error("unable to get salted "
 			    "password");
 		}
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "%s: %s", __func__, e.what());
 	} catch (const std::runtime_error &e) {
 		*outsize = 0;
 		delete[] out;
 		err_log(0, "%s: %s", __func__, e.what());
 		return NULL;
-	} catch (const std::bad_alloc &e) {
-		err_exit(ENOMEM, "%s: %s", __func__, e.what());
-		/* NOTREACHED */
 	} catch (...) {
 		sw_assert_not_reached();
 	}
