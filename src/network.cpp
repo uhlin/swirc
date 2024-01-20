@@ -57,6 +57,7 @@
 #include "strHand.h"
 
 #include "commands/connect.h"
+#include "commands/dcc.h"
 #include "commands/sasl-scram-sha.h"
 
 #include "events/cap.h"
@@ -743,6 +744,7 @@ net_irc_listen(bool *connection_lost)
 	recvbuf = static_cast<char *>(xmalloc(RECVBUF_SIZE + 1));
 	recvbuf[RECVBUF_SIZE] = '\0';
 	irc_init();
+	dcc::init();
 
 	do {
 		OPENSSL_cleanse(recvbuf, RECVBUF_SIZE);
@@ -794,6 +796,7 @@ net_irc_listen(bool *connection_lost)
 	winsock_deinit();
 #endif
 	irc_deinit();
+	dcc::deinit();
 	free_and_null(&recvbuf);
 	free_and_null(&message_concat);
 	printtext(&ptext_ctx, "%s", _("Disconnected"));
