@@ -1070,15 +1070,14 @@ try_convert_buf_with_cs(CSTRING buf, CSTRING codeset)
 		free(original_locale);
 		free(tmp_locale);
 		return out;
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "%s: %s", __func__, e.what());
 	} catch (const std::runtime_error &e) {
 		debug("%s: %s", __func__, e.what());
 		free_locale_info(li);
 		free(original_locale);
 		free(tmp_locale);
 		free(out);
-	} catch (const std::bad_alloc &e) {
-		err_exit(ENOMEM, "%s: %s", __func__, e.what());
-		/* NOTREACHED */
 	} catch (...) {
 		sw_assert_not_reached();
 	}

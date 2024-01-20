@@ -579,12 +579,12 @@ net_connect(const struct network_connect_context *ctx,
 		}
 
 		event_welcome_cond_destroy();
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "%s: %s", __func__, e.what());
 	} catch (const std::runtime_error &e) {
 		handle_conn_err(&ptext_ctx, e.what(), sleep_time_seconds,
 		    conn_res);
 		return conn_res;
-	} catch (const std::bad_alloc &e) {
-		err_exit(ENOMEM, "%s: %s", __func__, e.what());
 	} catch (...) {
 		handle_conn_err(&ptext_ctx, "unknown exception",
 		    sleep_time_seconds, conn_res);
