@@ -56,7 +56,7 @@ com_thread(void *arg)
 {
 	SSL *ssl = static_cast<SSL *>(arg);
 
-	dcc_handle_incoming_conn(ssl);
+	dcc::handle_incoming_conn(ssl);
 	SSL_free(ssl);
 	_endthread();
 }
