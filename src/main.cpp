@@ -724,6 +724,13 @@ main(int argc, char *argv[])
 			return EXIT_FAILURE;
 		}
 	}
+
+	if (dcc::want_unveil_uploads()) {
+		if (unveil(dcc::get_upload_dir(), "r") == -1) {
+			err_ret("unveil");
+			return EXIT_FAILURE;
+		}
+	}
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201605
