@@ -30,6 +30,7 @@
 #include "common.h"
 
 #include "../config.h"
+#include "../dataClassify.h"
 #include "../errHand.h"
 #include "../printtext.h"
 #include "../sig.h"
@@ -72,6 +73,9 @@ subcmd_send(const char *nick, const char *file)
 {
 	if (nick == nullptr || file == nullptr) {
 		printtext_print("err", "insufficient args");
+		return;
+	} else if (!is_valid_nickname(nick)) {
+		printtext_print("err", "invalid nickname");
 		return;
 	}
 }
