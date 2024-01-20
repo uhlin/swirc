@@ -31,15 +31,94 @@
 
 #include "../config.h"
 #include "../errHand.h"
+#include "../printtext.h"
 #include "../sig.h"
+#include "../strHand.h"
 #include "../tls-server.h"
 
 #include "dcc.h"
 
+static bool
+subcmd_ok(const char *subcmd)
+{
+	if (strings_match(subcmd, "close"))
+		return true;
+	else if (strings_match(subcmd, "get"))
+		return true;
+	else if (strings_match(subcmd, "list"))
+		return true;
+	else if (strings_match(subcmd, "send"))
+		return true;
+	return false;
+}
+
+static void
+subcmd_close()
+{
+}
+
+static void
+subcmd_get()
+{
+}
+
+static void
+subcmd_list()
+{
+}
+
+static void
+subcmd_send(const char *nick, const char *file)
+{
+	if (nick == nullptr || file == nullptr) {
+		printtext_print("err", "insufficient args");
+		return;
+	}
+}
+
+/*
+ * usage: /dcc [close|get|list|send] [args]
+ */
 void
 cmd_dcc(const char *data)
 {
-	UNUSED_PARAM(data);
+	char *dcopy;
+	char *last = const_cast<char *>("");
+	char *subcmd, *arg1, *arg2;
+	static const char cmd[] = "/dcc";
+	static const char sep[] = "\n";
+
+	if (strings_match(data, "")) {
+		printtext_print("err", "insufficient args");
+		return;
+	}
+
+	dcopy = sw_strdup(data);
+	(void) strFeed(dcopy, 2);
+
+	if ((subcmd = strtok_r(dcopy, sep, &last)) == nullptr) {
+		printf_and_free(dcopy, "%s: insufficient args", cmd);
+		return;
+	} else if (!subcmd_ok(subcmd)) {
+		printf_and_free(dcopy, "%s: invalid subcommand '%s'", cmd,
+		    subcmd);
+		return;
+	}
+
+	arg1 = strtok_r(nullptr, sep, &last);
+	arg2 = strtok_r(nullptr, sep, &last);
+
+	if (strings_match(subcmd, "close"))
+		subcmd_close();
+	else if (strings_match(subcmd, "get"))
+		subcmd_get();
+	else if (strings_match(subcmd, "list"))
+		subcmd_list();
+	else if (strings_match(subcmd, "send"))
+		subcmd_send(arg1, arg2);
+	else
+		printtext_print("err", "%s: invalid subcommand", cmd);
+	free(dcopy);
 }
 
 void
