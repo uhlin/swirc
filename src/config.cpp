@@ -88,6 +88,7 @@ static struct tagConfDefValues {
 	{ "dcc_cipher_suite",          TYPE_STRING,  1, "compat" },
 	{ "dcc_own_ip",                TYPE_STRING,  2, "" },
 	{ "dcc_port",                  TYPE_INTEGER, 2, "8080" },
+	{ "dcc_upload_dir",            TYPE_STRING,  2, "" },
 
 	{ "identd",                    TYPE_BOOLEAN, 3, "no" },
 	{ "identd_fakenames",          TYPE_BOOLEAN, 1, "no" },
