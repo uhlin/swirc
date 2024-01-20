@@ -1,5 +1,5 @@
 /* Create the home directory and read its configuration files
-   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -72,6 +72,9 @@ char	*g_home_dir = NULL;
 char	*g_tmp_dir = NULL;
 char	*g_log_dir = NULL;
 
+char	*g_dcc_download_dir = NULL;
+char	*g_dcc_upload_dir = NULL;
+
 const char	g_config_filesuffix[] = ".conf";
 const char	g_theme_filesuffix[] = ".thm";
 
@@ -97,12 +100,16 @@ init_globals(const char *hp)
 	g_home_dir = strdup_printf("%s/.swirc", hp);
 	g_tmp_dir = strdup_printf("%s/.swirc/tmp", hp);
 	g_log_dir = strdup_printf("%s/.swirc/log", hp);
+	g_dcc_download_dir = strdup_printf("%s/.swirc/downloads", hp);
+	g_dcc_upload_dir = strdup_printf("%s/.swirc/uploads", hp);
 	g_config_file = strdup_printf("%s/.swirc/swirc%s", hp,
 	    g_config_filesuffix);
 #elif defined(WIN32)
 	g_home_dir = strdup_printf("%s\\swirc", hp);
 	g_tmp_dir = strdup_printf("%s\\swirc\\tmp", hp);
 	g_log_dir = strdup_printf("%s\\swirc\\log", hp);
+	g_dcc_download_dir = strdup_printf("%s\\.swirc\\downloads", hp);
+	g_dcc_upload_dir = strdup_printf("%s\\.swirc\\uploads", hp);
 	g_config_file = strdup_printf("%s\\swirc\\swirc%s", hp,
 	    g_config_filesuffix);
 #endif
@@ -339,6 +346,9 @@ nestHome_init(void)
 	make_requested_dir(g_tmp_dir);
 	make_requested_dir(g_log_dir);
 
+	make_requested_dir(g_dcc_download_dir);
+	make_requested_dir(g_dcc_upload_dir);
+
 	config_init();
 	theme_init();
 
@@ -361,6 +371,9 @@ nestHome_deinit(void)
 	free_and_null(&g_home_dir);
 	free_and_null(&g_tmp_dir);
 	free_and_null(&g_log_dir);
+
+	free_and_null(&g_dcc_download_dir);
+	free_and_null(&g_dcc_upload_dir);
 
 	free_and_null(&g_config_file);
 	free_and_null(&g_theme_file);

@@ -9,6 +9,9 @@ extern char	*g_home_dir;
 extern char	*g_tmp_dir;
 extern char	*g_log_dir;
 
+extern char	*g_dcc_download_dir;
+extern char	*g_dcc_upload_dir;
+
 extern const char	g_config_filesuffix[];
 extern const char	g_theme_filesuffix[];
 
