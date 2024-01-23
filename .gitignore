@@ -27,6 +27,8 @@ hunspell-*
 libressl-*
 options.mk
 pdcurses-*
+report.tasks
+strace_out
 swirc
 swirc.analyze
 swirc.exe
