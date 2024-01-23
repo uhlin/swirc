@@ -36,6 +36,10 @@ usage: swirc [-46?CPRSdipv] [-W password] [-c server[:port]] [-j join] [-n nickn
     -v, --version        Output Swirc version
     -x <config>          Config file
 
+## SAST Tools ##
+
+[PVS-Studio](https://pvs-studio.com/en/pvs-studio/?utm_source=website&utm_medium=github&utm_campaign=open_source) - static analyzer for C, C++, C#, and Java code.
+
 ## Cloning ##
 
 To clone the repository use [Git](https://git-scm.com).
