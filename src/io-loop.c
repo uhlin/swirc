@@ -470,10 +470,11 @@ add_cmd(PTEXTBUF matches, CSTRING cmd)
 PTEXTBUF
 get_list_of_matching_commands(CSTRING search_var)
 {
-	PTEXTBUF matches = textBuf_new();
+	PTEXTBUF	matches = textBuf_new();
+	const size_t	varlen = strlen(search_var);
 
 	FOREACH_COMMAND() {
-		if (!strncmp(search_var, sp->cmd, strlen(search_var)))
+		if (!strncmp(search_var, sp->cmd, varlen))
 			add_cmd(matches, sp->cmd);
 	}
 

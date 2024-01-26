@@ -374,18 +374,19 @@ get_list_of_matching_channel_users(CSTRING chan, CSTRING search_var)
 {
 	PIRC_WINDOW	window;
 	PTEXTBUF	matches;
+	size_t		varlen;
 
 	if ((window = window_by_label(chan)) == NULL)
 		return NULL;
 
 	matches = textBuf_new();
+	varlen = strlen(search_var);
 
 	for (size_t n = 0; n < ARRAY_SIZE(window->names_hash); n++) {
 		for (PNAMES names = window->names_hash[n];
 		    names != NULL;
 		    names = names->next) {
-			if (!strncmp(search_var, names->nick,
-			    strlen(search_var)))
+			if (!strncmp(search_var, names->nick, varlen))
 				add_match(matches, names->nick);
 		}
 	}
