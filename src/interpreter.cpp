@@ -94,10 +94,8 @@ copy_argument(const char *&arg)
 static void
 clean_up(char *id, char *arg)
 {
-	if (id)
-		delete[] id;
-	if (arg)
-		delete[] arg;
+	delete[] id;
+	delete[] arg;
 }
 
 /**
