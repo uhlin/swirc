@@ -396,11 +396,11 @@ add_name(PTEXTBUF matches, const char *name)
 PTEXTBUF
 get_list_of_matching_settings(const char *search_var)
 {
-	PTEXTBUF matches = textBuf_new();
+	PTEXTBUF	matches = textBuf_new();
+	const size_t	varlen = strlen(search_var);
 
 	FOREACH_CDV() {
-		if (!strncmp(search_var, cdv_p->setting_name,
-		    strlen(search_var)))
+		if (!strncmp(search_var, cdv_p->setting_name, varlen))
 			add_name(matches, cdv_p->setting_name);
 	}
 

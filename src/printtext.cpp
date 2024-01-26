@@ -1108,6 +1108,7 @@ perform_convert_buffer(const char **in_buf)
 #endif
 	};
 	mbstate_t	 ps;
+	size_t		 outlen = 0;
 	size_t		 size = 0;
 	wchar_t		*out = NULL;
 
@@ -1138,8 +1139,10 @@ perform_convert_buffer(const char **in_buf)
 #endif
 
 	while (errno = 0, true) {
-		if (mbsrtowcs(&out[wcslen(out)], in_buf,
-		    (size - wcslen(out)) - 1, &ps) == g_conversion_failed &&
+		outlen = wcslen(out);
+
+		if (mbsrtowcs(&out[outlen], in_buf, (size - outlen) - 1, &ps) ==
+		    g_conversion_failed &&
 		    errno == EILSEQ) {
 			chars_lost = true;
 			(*in_buf)++;
