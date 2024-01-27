@@ -1,5 +1,5 @@
 /* Communicate with IRC services
-   Copyright (C) 2016-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -170,12 +170,13 @@ add_cmd(PTEXTBUF matches, CSTRING str)
 static PTEXTBUF
 get_list(CSTRING search_var, stringarray_t array, const size_t size)
 {
-	PTEXTBUF matches = textBuf_new();
+	PTEXTBUF	matches = textBuf_new();
+	const size_t	varlen = strlen(search_var);
 
 	for (size_t i = 0; i < size; i++) {
 		CSTRING cmd = array[i];
 
-		if (!strncmp(search_var, cmd, strlen(search_var)))
+		if (!strncmp(search_var, cmd, varlen))
 			add_cmd(matches, cmd);
 	}
 

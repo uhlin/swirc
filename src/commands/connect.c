@@ -1,5 +1,5 @@
 /* Connect and Disconnect commands
-   Copyright (C) 2016-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -443,11 +443,12 @@ PTEXTBUF
 get_list_of_matching_connect_cmds(const char *search_var)
 {
 	PTEXTBUF	matches = textBuf_new();
+	const size_t	varlen = strlen(search_var);
 
 	for (size_t i = 0; i < ARRAY_SIZE(connect_cmds); i++) {
 		const char *cmd = connect_cmds[i];
 
-		if (!strncmp(search_var, cmd, strlen(search_var)))
+		if (!strncmp(search_var, cmd, varlen))
 			add_cmd(matches, cmd);
 	}
 	if (textBuf_size(matches) == 0) {

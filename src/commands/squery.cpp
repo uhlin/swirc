@@ -1,5 +1,5 @@
 /* commands/squery.cpp
-   Copyright (C) 2020-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -140,12 +140,13 @@ cmd_squery(CSTRING data)
 PTEXTBUF
 get_list_of_matching_squery_commands(CSTRING search_var)
 {
-	PTEXTBUF matches = textBuf_new();
+	PTEXTBUF	matches = textBuf_new();
+	const size_t	varlen = strlen(search_var);
 
 	for (size_t i = 0; i < ARRAY_SIZE(squery_commands); i++) {
 		CSTRING cmd = squery_commands[i];
 
-		if (!strncmp(search_var, cmd, strlen(search_var)))
+		if (!strncmp(search_var, cmd, varlen))
 			add_squery_cmd(matches, cmd);
 	}
 
