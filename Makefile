@@ -39,6 +39,9 @@ clean:
 	$(RM) $(OBJS)
 	$(RM) $(TGTS)
 	$(RM) -R swirc.analyze
+	$(RM) PVS-Studio.log
+	$(RM) report.tasks
+	$(RM) strace_out
 	$(RM) swirc.html
 	$(RM) swirc.static.html
 	$(MAKE) -Cpo clean
