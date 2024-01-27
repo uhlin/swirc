@@ -31,7 +31,6 @@
 
 #include <clocale>
 #include <cwctype>
-#include <list>
 #include <stdexcept>
 #include <string>
 
@@ -1389,29 +1388,24 @@ static char *
 get_buffer(CSTRING orig)
 {
 #ifdef HAVE_LIBICONV
-#if defined(__cplusplus) && __cplusplus >= 201103L
-#define fromcode_pb(_str) fromcode.emplace_back(_str)
-#else
-#define fromcode_pb(_str) fromcode.push_back(_str)
-#endif
 #define UTF8_MAXBYTE 4
+	static stringarray_t fromcode = {
+		"UTF-8",
+		"ISO-8859-1",
+		"ISO-8859-15",
+		"WINDOWS-1251",
+		"WINDOWS-1252"
+	};
+
 	if (!config_bool("iconv_conversion", false))
 		return sw_strdup(orig);
 
-	std::list<std::string> fromcode;
-
-	fromcode_pb("UTF-8");
-	fromcode_pb("ISO-8859-1");
-	fromcode_pb("ISO-8859-15");
-	fromcode_pb("WINDOWS-1251");
-	fromcode_pb("WINDOWS-1252");
-
-	for (const std::string &x : fromcode) {
+	for (CSTRING str : fromcode) {
 		char *in, *orig_copy, *out, *out_p;
 		iconv_t cd;
 		size_t inbytes, outbytes, outsize;
 
-		if ((cd = iconv_open("UTF-8", x.c_str())) == reinterpret_cast
+		if ((cd = iconv_open("UTF-8", str)) == reinterpret_cast
 		    <iconv_t>(-1))
 			continue;
 		orig_copy = sw_strdup(orig);
