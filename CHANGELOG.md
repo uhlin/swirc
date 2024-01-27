@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file.
   - `dcc_port` (int)
   - `dcc_upload_dir` (string)
   - `multi_prefix` (bool)
+- Did code optimizations:
+  - Measure string length once
+  - ...
 - Fixed an off-by-one error in the IRC module. The previous program
   versions weren't really affected however.
 - Fixed building on any setup where Ncurses is built with opaque
