@@ -1,5 +1,5 @@
 /* IRC logs i.e. not logs for system messages
-   Copyright (C) 2020-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -129,7 +129,7 @@ log_get_path(const char *server_host, const char *label)
 
 	label_copy = sw_strdup(label);
 
-	if (xstrnlen(label, maxlabel + 1) > maxlabel)
+	if (xstrnlen(label_copy, maxlabel + 1) > maxlabel)
 		label_copy[maxlabel] = '\0';
 	while (check_label(label_copy, &c) != OK) {
 		if ((cp = strchr(label_copy, c)) == NULL)
