@@ -29,6 +29,9 @@
 
 #include "common.h"
 
+#include <string>
+#include <vector>
+
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
@@ -78,6 +81,19 @@ subcmd_send(const char *nick, const char *file)
 		return;
 	} else if (!is_valid_nickname(nick)) {
 		printtext_print("err", "invalid nickname");
+		return;
+	}
+
+	std::string full_path(dcc::get_upload_dir());
+
+	full_path.append(SLASH);
+	full_path.append(file);
+
+	if (!file_exists(full_path.c_str())) {
+		printtext_print("err", "file doesn't exist");
+		return;
+	} else if (!is_regular_file(full_path.c_str())) {
+		printtext_print("err", "file isn't a regular file");
 		return;
 	}
 }
