@@ -118,6 +118,8 @@ dcc_send::get_filename(void)
 	return addrof(this->buf[0]);
 }
 
+static std::vector<dcc_send> send_db;
+
 static bool
 subcmd_ok(const char *subcmd)
 {
