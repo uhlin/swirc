@@ -76,11 +76,16 @@ subcmd_list()
 static void
 subcmd_send(const char *nick, const char *file)
 {
+	static const size_t maxfile = 400;
+
 	if (nick == nullptr || file == nullptr) {
 		printtext_print("err", "insufficient args");
 		return;
 	} else if (!is_valid_nickname(nick)) {
 		printtext_print("err", "invalid nickname");
+		return;
+	} else if (xstrnlen(file, maxfile + 1) > maxfile) {
+		printtext_print("err", "filename too long");
 		return;
 	}
 
