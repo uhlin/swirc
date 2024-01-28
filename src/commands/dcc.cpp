@@ -47,6 +47,77 @@
 
 #include "dcc.h"
 
+class dcc_send {
+public:
+	std::string nick;
+	std::string full_path;
+
+	dcc_send();
+	dcc_send(const char *, const std::string);
+	~dcc_send();
+
+	const char *get_filename(void);
+
+private:
+	char buf[255];
+	struct stat *sb;
+};
+
+dcc_send::dcc_send()
+{
+	this->nick.assign("");
+	this->full_path.assign("");
+
+	BZERO(this->buf, sizeof this->buf);
+	this->sb = nullptr;
+}
+
+dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
+{
+	this->nick.assign(p_nick);
+	this->full_path.assign(p_full_path);
+
+	BZERO(this->buf, sizeof this->buf);
+	this->sb = new struct stat;
+
+	errno = 0;
+
+	if (stat(p_full_path.c_str(), this->sb) != 0) {
+		char strerrbuf[MAXERROR] = { '\0' };
+
+		delete this->sb;
+		throw std::runtime_error(xstrerror(errno, strerrbuf,
+		    sizeof strerrbuf));
+	}
+}
+
+dcc_send::~dcc_send()
+{
+	delete this->sb;
+}
+
+const char *
+dcc_send::get_filename(void)
+{
+	char *cp, *full_path_copy;
+
+	if (!strings_match(this->buf, ""))
+		return addrof(this->buf[0]);
+	if (this->full_path.empty())
+		return "";
+
+	full_path_copy = sw_strdup(this->full_path.c_str());
+
+	if ((cp = strrchr(full_path_copy, PATH_SEP)) == nullptr ||
+	    sw_strcpy(this->buf, cp + 1, sizeof this->buf) != 0) {
+		free(full_path_copy);
+		return "";
+	}
+
+	free(full_path_copy);
+	return addrof(this->buf[0]);
+}
+
 static bool
 subcmd_ok(const char *subcmd)
 {
