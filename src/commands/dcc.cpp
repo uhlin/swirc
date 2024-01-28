@@ -47,6 +47,10 @@
 
 #include "dcc.h"
 
+#if WIN32
+#define stat _stat
+#endif
+
 class dcc_send {
 public:
 	std::string nick;
