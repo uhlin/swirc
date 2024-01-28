@@ -177,6 +177,15 @@ subcmd_send(const char *nick, const char *file)
 		printtext_print("err", "file isn't a regular file");
 		return;
 	}
+
+	try {
+		dcc_send send_obj(nick, full_path);
+
+		send_db.push_back(send_obj);
+	} catch (const std::runtime_error &e) {
+		printtext_print("err", "%s", e.what());
+		return;
+	}
 }
 
 /*
