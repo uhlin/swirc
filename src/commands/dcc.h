@@ -3,6 +3,12 @@
 
 #include <openssl/ssl.h>
 
+#if defined(UNIX)
+#define PATH_SEP '/'
+#elif defined(WIN32)
+#define PATH_SEP '\\'
+#endif
+
 __SWIRC_BEGIN_DECLS
 void cmd_dcc(const char *);
 __SWIRC_END_DECLS
