@@ -29,6 +29,9 @@
 
 #include "common.h"
 
+#include <sys/stat.h>
+
+#include <stdexcept>
 #include <string>
 #include <vector>
 
