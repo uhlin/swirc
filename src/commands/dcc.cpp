@@ -263,6 +263,59 @@ dcc::deinit(void)
 	tls_server::end();
 }
 
+bool
+dcc::get_remote_addr(std::string &str, uint32_t &addr)
+{
+	const char *own_ip = Config("dcc_own_ip");
+
+	if (strings_match(own_ip, "")) {
+		FILE		*fileptr = nullptr;
+		char		 ext_ip[30] = { '\0' };
+		std::string	 url(g_swircWebAddr);
+		std::string	 path(g_tmp_dir);
+
+		url.append("ext_ip/");
+		path.append(SLASH);
+		path.append("ext_ip.tmp");
+
+		url_to_file(url.c_str(), path.c_str());
+
+		if (!file_exists(path.c_str()) ||
+		    (fileptr = xfopen(path.c_str(), "r")) == nullptr ||
+		    fgets(ext_ip, sizeof ext_ip, fileptr) == nullptr ||
+		    strchr(ext_ip, '\n') == nullptr) {
+			if (fileptr)
+				fclose(fileptr);
+			if (file_exists(path.c_str())) {
+				if (remove(path.c_str()) != 0)
+					err_log(errno, "%s: remove", __func__);
+			}
+			str.assign("");
+			addr = INADDR_NONE;
+			return false;
+		}
+
+		ext_ip[strcspn(ext_ip, "\n")] = '\0';
+		fclose(fileptr);
+		if (remove(path.c_str()) != 0)
+			err_log(errno, "%s: remove", __func__);
+		if ((addr = inet_addr(ext_ip)) == INADDR_NONE) {
+			str.assign("");
+			return false;
+		}
+		str.assign(ext_ip);
+		return true;
+	}
+
+	if ((addr = inet_addr(own_ip)) == INADDR_NONE) {
+		str.assign("");
+		return false;
+	}
+
+	str.assign(own_ip);
+	return true;
+}
+
 const char *
 dcc::get_upload_dir(void)
 {
