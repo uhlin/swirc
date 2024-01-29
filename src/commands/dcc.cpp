@@ -198,11 +198,11 @@ subcmd_send(const char *nick, const char *file)
 void
 cmd_dcc(const char *data)
 {
-	char *dcopy;
-	char *last = const_cast<char *>("");
-	char *subcmd, *arg1, *arg2;
-	static const char cmd[] = "/dcc";
-	static const char sep[] = "\n";
+	char			*dcopy;
+	char			*last = const_cast<char *>("");
+	char			*subcmd, *arg1, *arg2;
+	static const char	 cmd[] = "/dcc";
+	static const char	 sep[] = "\n";
 
 	if (strings_match(data, "")) {
 		printtext_print("err", "insufficient args");
