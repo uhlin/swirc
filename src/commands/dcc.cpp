@@ -29,23 +29,33 @@
 
 #include "common.h"
 
+#include <sys/types.h>
 #include <sys/stat.h>
 
+#if UNIX
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#endif
+
 #include <stdexcept>
-#include <string>
 #include <vector>
 
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
 #include "../filePred.h"
+#include "../libUtils.h"
+#include "../main.h"
 #include "../nestHome.h"
+#include "../network.h"
 #include "../printtext.h"
 #include "../sig.h"
 #include "../strHand.h"
 #include "../tls-server.h"
 
 #include "dcc.h"
+#include "theme.h" /* url_to_file() */
 
 #if WIN32
 #define stat _stat

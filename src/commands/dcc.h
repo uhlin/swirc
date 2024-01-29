@@ -3,6 +3,12 @@
 
 #include <openssl/ssl.h>
 
+#include <stdint.h> /* uint32_t */
+
+#ifdef __cplusplus
+#include <string>
+#endif
+
 #if defined(UNIX)
 #define PATH_SEP '/'
 #elif defined(WIN32)
