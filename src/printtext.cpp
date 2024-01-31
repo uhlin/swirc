@@ -1394,7 +1394,7 @@ get_buffer(CSTRING orig)
 		"ISO-8859-1",
 		"ISO-8859-15",
 		"WINDOWS-1251",
-		"WINDOWS-1252"
+		"WINDOWS-1252",
 	};
 
 	if (!config_bool("iconv_conversion", false))
