@@ -108,8 +108,8 @@ init_globals(const char *hp)
 	g_home_dir = strdup_printf("%s\\swirc", hp);
 	g_tmp_dir = strdup_printf("%s\\swirc\\tmp", hp);
 	g_log_dir = strdup_printf("%s\\swirc\\log", hp);
-	g_dcc_download_dir = strdup_printf("%s\\.swirc\\downloads", hp);
-	g_dcc_upload_dir = strdup_printf("%s\\.swirc\\uploads", hp);
+	g_dcc_download_dir = strdup_printf("%s\\swirc\\downloads", hp);
+	g_dcc_upload_dir = strdup_printf("%s\\swirc\\uploads", hp);
 	g_config_file = strdup_printf("%s\\swirc\\swirc%s", hp,
 	    g_config_filesuffix);
 #endif
