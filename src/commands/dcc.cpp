@@ -38,6 +38,7 @@
 #include <arpa/inet.h>
 #endif
 
+#include <inttypes.h>
 #include <stdexcept>
 #include <vector>
 
