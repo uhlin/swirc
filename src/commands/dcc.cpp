@@ -176,7 +176,8 @@ subcmd_list()
 static void
 subcmd_send(const char *nick, const char *file)
 {
-	static const size_t maxfile = 400;
+	static const size_t	maxfile = 400;
+	struct integer_context	intctx("dcc_port", 1024, 65535, 8080);
 
 	if (nick == nullptr || file == nullptr) {
 		printtext_print("err", "insufficient args");
@@ -203,9 +204,24 @@ subcmd_send(const char *nick, const char *file)
 	}
 
 	try {
-		dcc_send send_obj(nick, full_path);
+		std::string	ext_ip("");
+		uint32_t	addr = 0;
 
+		if (!dcc::get_remote_addr(ext_ip, addr)) {
+			throw std::runtime_error("error getting the remote "
+			    "address");
+		}
+
+		dcc_send send_obj(nick, full_path);
 		send_db.push_back(send_obj);
+
+		net_send("PRIVMSG %s :\001SW_DCC SEND " "%" PRIu32 " %ld "
+		    "%" PRIiMAX " %s\001",
+		    nick,
+		    addr,
+		    config_integer(&intctx),
+		    send_obj.get_filesize(),
+		    send_obj.get_filename());
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s", e.what());
 		return;
