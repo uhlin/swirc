@@ -72,6 +72,7 @@ public:
 	~dcc_send();
 
 	const char *get_filename(void);
+	intmax_t get_filesize(void);
 
 private:
 	char buf[255];
@@ -131,6 +132,14 @@ dcc_send::get_filename(void)
 
 	free(full_path_copy);
 	return addrof(this->buf[0]);
+}
+
+intmax_t
+dcc_send::get_filesize(void)
+{
+	if (this->sb == nullptr)
+		return 0;
+	return static_cast<intmax_t>(this->sb->st_size);
 }
 
 static std::vector<dcc_send> send_db;
