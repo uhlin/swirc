@@ -222,6 +222,7 @@ subcmd_send(const char *nick, const char *file)
 	}
 
 	try {
+		int		ret = -1;
 		std::string	ext_ip("");
 		uint32_t	addr = 0;
 
@@ -233,13 +234,17 @@ subcmd_send(const char *nick, const char *file)
 		dcc_send send_obj(nick, full_path);
 		send_db.push_back(send_obj);
 
-		net_send("PRIVMSG %s :\001SW_DCC SEND " "%" PRIu32 " %ld "
+		ret = net_send("PRIVMSG %s :\001SW_DCC SEND " "%" PRIu32 " %ld "
 		    "%" PRIiMAX " %s\001",
 		    nick,
 		    addr,
 		    config_integer(&intctx),
 		    send_obj.get_filesize(),
 		    send_obj.get_filename());
+		if (ret < 0) {
+			send_db.pop_back();
+			throw std::runtime_error("cannot send");
+		}
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s", e.what());
 		return;
