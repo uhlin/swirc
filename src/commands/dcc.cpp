@@ -70,19 +70,19 @@
 
 class dcc_send {
 public:
-	std::string nick;
-	std::string full_path;
+	std::string	nick;
+	std::string	full_path;
 
 	dcc_send();
 	dcc_send(const char *, const std::string);
 	~dcc_send();
 
-	const char *get_filename(void);
-	intmax_t get_filesize(void);
+	const char	*get_filename(void);
+	intmax_t	 get_filesize(void);
 
 private:
-	char buf[255];
-	struct stat *sb;
+	char		 buf[255];
+	struct stat	*sb;
 };
 
 dcc_send::dcc_send()
