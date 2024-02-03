@@ -1,5 +1,5 @@
 /* Data classification utilities
-   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -34,6 +34,7 @@
 #include "dataClassify.h"
 #include "strHand.h"
 
+static const size_t	filename_len_max = 80;
 static const size_t	hostname_len_max = 255;
 static const size_t	nickname_len_max = 45;
 static const size_t	real_name_len_max = 60;
@@ -136,6 +137,26 @@ is_numeric(const char *string)
 
 	for (const char *cp = &string[0]; *cp != '\0'; cp++) {
 		if (!sw_isdigit(*cp))
+			return false;
+	}
+
+	return true;
+}
+
+bool
+is_valid_filename(const char *filename)
+{
+	static const char legal_index[] =
+	    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	    "abcdefghijklmnopqrstuvwxyz"
+	    "0123456789 ()+-._[]";
+
+	if (filename == NULL || *filename == '\0' ||
+	    xstrnlen(filename, filename_len_max + 1) > filename_len_max)
+		return false;
+
+	for (const char *cp = &filename[0]; *cp != '\0'; cp++) {
+		if (strchr(legal_index, *cp) == NULL)
 			return false;
 	}
 
