@@ -68,6 +68,40 @@
 *                                                               *
 ****************************************************************/
 
+class dcc_get {
+public:
+	std::string nick;
+
+	std::string	filename;
+	intmax_t	filesize;
+
+	dcc_get();
+	dcc_get(const char *, const char *, intmax_t, uint32_t, uint16_t);
+
+private:
+	uint32_t	addr;
+	uint16_t	port;
+};
+
+dcc_get::dcc_get()
+{
+	this->nick.assign("");
+	this->filename.assign("");
+	this->filesize = 0;
+	this->addr = 0;
+	this->port = 0;
+}
+
+dcc_get::dcc_get(const char *p_nick, const char *p_filename,
+    intmax_t p_filesize, uint32_t p_addr, uint16_t p_port)
+{
+	this->nick.assign(p_nick);
+	this->filename.assign(p_filename);
+	this->filesize = p_filesize;
+	this->addr = p_addr;
+	this->port = htons(p_port);
+}
+
 class dcc_send {
 public:
 	std::string	nick;
