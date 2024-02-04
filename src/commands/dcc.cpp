@@ -356,6 +356,8 @@ dcc::deinit(void)
 {
 	tls_server::end();
 
+	if (get_db.size() > 0)
+		get_db.clear();
 	if (send_db.size() > 0)
 		send_db.clear();
 }
