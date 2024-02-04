@@ -29,11 +29,12 @@ namespace dcc
 	void init(void);
 	void deinit(void);
 
-	void add_file(const char *, const char *, const char *, const char *) NONNULL;
-	bool get_remote_addr(std::string &, uint32_t &);
-	const char *get_upload_dir(void);
-	void handle_incoming_conn(SSL *);
-	bool want_unveil_uploads(void);
+	void		 add_file(const char *, const char *, const char *,
+			     const char *) NONNULL;
+	bool		 get_remote_addr(std::string &, uint32_t &);
+	const char	*get_upload_dir(void);
+	void		 handle_incoming_conn(SSL *);
+	bool		 want_unveil_uploads(void);
 }
 #endif
 
