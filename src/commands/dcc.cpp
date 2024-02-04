@@ -280,7 +280,7 @@ subcmd_send(const char *nick, const char *file)
 		send_db.push_back(send_obj);
 
 		ret = net_send("PRIVMSG %s :\001SW_DCC SEND " "%" PRIu32 " %ld "
-		    "%" PRIiMAX " %s\001",
+		    "%" PRIdMAX " %s\001",
 		    nick,
 		    addr,
 		    config_integer(&intctx),
