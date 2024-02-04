@@ -15,6 +15,15 @@
 #define PATH_SEP '\\'
 #endif
 
+#if defined(UNIX) && !defined(_SOCKET_DEFINED)
+#define _SOCKET_DEFINED 1
+typedef int SOCKET;
+#endif
+
+#ifndef SOCKET_ERROR
+#define SOCKET_ERROR -1
+#endif
+
 __SWIRC_BEGIN_DECLS
 extern const int	g_one_kilo;
 extern const int	g_one_meg;
