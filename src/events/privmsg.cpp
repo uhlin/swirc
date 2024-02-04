@@ -31,6 +31,7 @@
 
 #include <stdexcept>
 
+#include "../commands/dcc.h"
 #include "../commands/ignore.h"
 
 #include "../config.h"
@@ -108,6 +109,9 @@ handle_special_msg(const struct special_msg_context *ctx)
 
 	if (!strncmp(msg, "ACTION ", 7)) {
 		printtext(&ptext_ctx, " - %s %s", ctx->nick, &msg[7]);
+	} else if (!strncmp(msg, "SW_DCC SEND ", 12) && config_bool("dcc",
+	    true)) {
+		dcc::add_file(ctx->nick, ctx->user, ctx->host, &msg[12]);
 	} else if (!strncmp(msg, "TIME", 5) && config_bool("ctcp_reply",
 	    true)) {
 		if (net_send("NOTICE %s :\001TIME %s\001", ctx->nick,
