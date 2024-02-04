@@ -198,7 +198,8 @@ const int	g_one_gig = 1000000000;
 *                                                               *
 ****************************************************************/
 
-static std::vector<dcc_send> send_db;
+static std::vector<dcc_get>	get_db;
+static std::vector<dcc_send>	send_db;
 
 /****************************************************************
 *                                                               *
