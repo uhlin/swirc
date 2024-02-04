@@ -16,9 +16,9 @@
 #endif
 
 __SWIRC_BEGIN_DECLS
-extern const int g_one_kilo;
-extern const int g_one_meg;
-extern const int g_one_gig;
+extern const int	g_one_kilo;
+extern const int	g_one_meg;
+extern const int	g_one_gig;
 
 void cmd_dcc(const char *);
 __SWIRC_END_DECLS
