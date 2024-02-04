@@ -362,6 +362,76 @@ dcc::deinit(void)
 		send_db.clear();
 }
 
+void
+dcc::add_file(const char *nick, const char *user, const char *host,
+    const char *data)
+{
+	char			*dcopy;
+	char			*last = const_cast<char *>("");
+	char			*token[4] = { nullptr };
+	static const char	 sep[] = "\n";
+
+	if (strings_match(data, ""))
+		return;
+
+	dcopy = sw_strdup(data);
+
+	if (strFeed(dcopy, 3) != 3) {
+		free(dcopy);
+		return;
+	}
+
+	token[0] = strtok_r(dcopy, sep, &last);
+	token[1] = strtok_r(nullptr, sep, &last);
+	token[2] = strtok_r(nullptr, sep, &last);
+	token[3] = strtok_r(nullptr, sep, &last);
+
+	if (token[0] == nullptr ||
+	    token[1] == nullptr ||
+	    token[2] == nullptr ||
+	    token[3] == nullptr) {
+		free(dcopy);
+		return;
+	} else if (!is_numeric(token[0]) ||
+	    !is_numeric(token[1]) ||
+	    !is_numeric(token[2])) {
+		free(dcopy);
+		return;
+	} else if (token[0][0] == '0' ||
+	    token[1][0] == '0' ||
+	    token[2][0] == '0') {
+		free(dcopy);
+		return;
+	} else if (!is_valid_filename(token[3])) {
+		free(dcopy);
+		return;
+	}
+
+	try {
+		uint32_t	addr = 0;
+		uint16_t	port = 0;
+		intmax_t	filesize = 0;
+
+		if (sscanf(token[0], "%" SCNu32, &addr) != 1)
+			throw std::runtime_error("error getting the address");
+		else if (sscanf(token[1], "%" SCNu16, &port) != 1)
+			throw std::runtime_error("error getting the port");
+		else if (sscanf(token[2], "%" SCNdMAX, &filesize) != 1)
+			throw std::runtime_error("error getting the file size");
+
+		dcc_get get_obj(nick, token[3], filesize, addr, port);
+		get_db.push_back(get_obj);
+
+		printtext_print("success", "%s: added: %s", __func__, token[3]);
+	} catch (const std::runtime_error &e) {
+		printtext_print("err", "%s: %s", __func__, e.what());
+		printtext_print("err", "%s: %s (%s@%s)", __func__, nick,
+		    user, host);
+	}
+
+	free(dcopy);
+}
+
 bool
 dcc::get_remote_addr(std::string &str, uint32_t &addr)
 {
