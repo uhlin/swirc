@@ -79,8 +79,10 @@ public:
 	dcc_get(const char *, const char *, intmax_t, uint32_t, uint16_t);
 
 private:
-	uint32_t	addr;
-	uint16_t	port;
+	SOCKET		 sock;
+	SSL		*ssl;
+	uint32_t	 addr;
+	uint16_t	 port;
 };
 
 dcc_get::dcc_get()
@@ -88,6 +90,8 @@ dcc_get::dcc_get()
 	this->nick.assign("");
 	this->filename.assign("");
 	this->filesize = 0;
+	this->sock = INVALID_SOCKET;
+	this->ssl = nullptr;
 	this->addr = 0;
 	this->port = 0;
 }
@@ -98,6 +102,8 @@ dcc_get::dcc_get(const char *p_nick, const char *p_filename,
 	this->nick.assign(p_nick);
 	this->filename.assign(p_filename);
 	this->filesize = p_filesize;
+	this->sock = INVALID_SOCKET;
+	this->ssl = nullptr;
 	this->addr = p_addr;
 	this->port = htons(p_port);
 }
