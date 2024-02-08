@@ -82,6 +82,7 @@ public:
 private:
 	SOCKET		 sock;
 	SSL		*ssl;
+	SSL_CTX		*ssl_ctx;
 	uint32_t	 addr;
 	uint16_t	 port;
 };
