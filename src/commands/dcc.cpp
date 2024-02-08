@@ -77,6 +77,7 @@ public:
 
 	dcc_get();
 	dcc_get(const char *, const char *, intmax_t, uint32_t, uint16_t);
+	~dcc_get();
 
 private:
 	SOCKET		 sock;
@@ -106,6 +107,10 @@ dcc_get::dcc_get(const char *p_nick, const char *p_filename,
 	this->ssl = nullptr;
 	this->addr = p_addr;
 	this->port = htons(p_port);
+}
+
+dcc_get::~dcc_get()
+{
 }
 
 class dcc_send {
