@@ -100,6 +100,7 @@ dcc_get::dcc_get()
 	this->filesize = 0;
 	this->sock = INVALID_SOCKET;
 	this->ssl = nullptr;
+	this->ssl_ctx = nullptr;
 	this->addr = 0;
 	this->port = 0;
 }
@@ -112,6 +113,7 @@ dcc_get::dcc_get(const char *p_nick, const char *p_filename,
 	this->filesize = p_filesize;
 	this->sock = INVALID_SOCKET;
 	this->ssl = nullptr;
+	this->ssl_ctx = nullptr;
 	this->addr = p_addr;
 	this->port = htons(p_port);
 }
