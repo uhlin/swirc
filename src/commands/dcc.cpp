@@ -79,6 +79,8 @@ public:
 	dcc_get(const char *, const char *, intmax_t, uint32_t, uint16_t);
 	~dcc_get();
 
+	void get_file(void);
+
 private:
 	SOCKET		 sock;
 	SSL		*ssl;
@@ -115,6 +117,11 @@ dcc_get::dcc_get(const char *p_nick, const char *p_filename,
 }
 
 dcc_get::~dcc_get()
+{
+}
+
+void
+dcc_get::get_file(void)
 {
 }
 
