@@ -125,6 +125,19 @@ dcc_get::~dcc_get()
 void
 dcc_get::get_file(void)
 {
+	if (!this->create_socket()) {
+		printtext_print("err", "%s: Error creating the socket",
+		    __func__);
+		return;
+	} else if (!this->create_ssl_ctx()) {
+		printtext_print("err", "%s: Error creating the SSL context",
+		    __func__);
+		return;
+	} else if (!this->create_ssl_obj()) {
+		printtext_print("err", "%s: Error creating the SSL object",
+		    __func__);
+		return;
+	}
 }
 
 bool
