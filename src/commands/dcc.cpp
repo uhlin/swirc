@@ -86,6 +86,7 @@ private:
 	uint32_t	 addr;
 	uint16_t	 port;
 
+	bool create_socket(void);
 	bool create_ssl_ctx(void);
 	bool create_ssl_obj(void);
 };
@@ -115,6 +116,17 @@ dcc_get::dcc_get(const char *p_nick, const char *p_filename,
 
 dcc_get::~dcc_get()
 {
+}
+
+bool
+dcc_get::create_socket(void)
+{
+	if (this->sock != INVALID_SOCKET)
+		return true;
+	else if ((this->sock = socket(AF_INET, SOCK_STREAM, 0)) ==
+	    INVALID_SOCKET)
+		return false;
+	return true;
 }
 
 static int
