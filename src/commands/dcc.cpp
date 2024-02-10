@@ -150,6 +150,9 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
 bool
 dcc_get::create_ssl_ctx(void)
 {
+	if (this->ssl_ctx)
+		return true;
+
 	try {
 		if ((this->ssl_ctx = SSL_CTX_new(TLS_client_method())) ==
 		    nullptr)
