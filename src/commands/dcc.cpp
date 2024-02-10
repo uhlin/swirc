@@ -85,6 +85,8 @@ private:
 	SSL_CTX		*ssl_ctx;
 	uint32_t	 addr;
 	uint16_t	 port;
+
+	bool create_ssl_ctx(void);
 };
 
 dcc_get::dcc_get()
@@ -112,6 +114,87 @@ dcc_get::dcc_get(const char *p_nick, const char *p_filename,
 
 dcc_get::~dcc_get()
 {
+}
+
+static int
+verify_callback(int ok, X509_STORE_CTX *ctx)
+{
+	if (!ok) {
+		PRINTTEXT_CONTEXT ptext_ctx;
+		X509 *cert = X509_STORE_CTX_get_current_cert(ctx);
+		char issuer[256]  = { '\0' };
+		char subject[256] = { '\0' };
+		const int depth = X509_STORE_CTX_get_error_depth(ctx);
+		const int err   = X509_STORE_CTX_get_error(ctx);
+
+		(void) X509_NAME_oneline(X509_get_issuer_name(cert), issuer,
+		    sizeof issuer);
+		(void) X509_NAME_oneline(X509_get_subject_name(cert), subject,
+		    sizeof subject);
+
+		printtext_context_init(&ptext_ctx, g_status_window,
+		    TYPE_SPEC1_WARN, true);
+
+		printtext(&ptext_ctx, "Error with certificate at depth: %d",
+		    depth);
+		printtext(&ptext_ctx, "  issuer  = %s", issuer);
+		printtext(&ptext_ctx, "  subject = %s", subject);
+		printtext(&ptext_ctx, "Reason: %s",
+		    X509_verify_cert_error_string(err));
+	}
+
+	return ok;
+}
+
+bool
+dcc_get::create_ssl_ctx(void)
+{
+	try {
+		if ((this->ssl_ctx = SSL_CTX_new(TLS_client_method())) ==
+		    nullptr)
+			throw std::runtime_error("out of memory");
+
+		std::string ca_file(g_home_dir);
+		std::string certfile(g_home_dir);
+
+		ca_file.append(SLASH).append(ROOT_PEM);
+		certfile.append(SLASH).append(CLIENT_PEM);
+
+		if (!SSL_CTX_load_verify_locations(this->ssl_ctx,
+		    ca_file.c_str(), nullptr)) {
+			throw std::runtime_error("load verify locations error");
+		} else if (!SSL_CTX_set_default_verify_paths(this->ssl_ctx)) {
+			throw std::runtime_error("set default verify paths "
+			    "error");
+		} else if (SSL_CTX_use_certificate_chain_file(this->ssl_ctx,
+		    certfile.c_str()) != 1) {
+			throw std::runtime_error("use certificate chain file "
+			    "error");
+		} else if (SSL_CTX_use_PrivateKey_file(this->ssl_ctx,
+		    certfile.c_str(), SSL_FILETYPE_PEM) != 1) {
+			throw std::runtime_error("use private key file error");
+		}
+
+		SSL_CTX_set_verify(this->ssl_ctx, SSL_VERIFY_PEER,
+		    verify_callback);
+		SSL_CTX_set_verify_depth(this->ssl_ctx, 4);
+
+		if (!SSL_CTX_set_min_proto_version(this->ssl_ctx,
+		    TLS1_2_VERSION)) {
+			throw std::runtime_error("error setting minimum "
+			    "supported protocol version");
+		}
+	} catch (const std::runtime_error &e) {
+		if (this->ssl_ctx) {
+			SSL_CTX_free(this->ssl_ctx);
+			this->ssl_ctx = nullptr;
+		}
+
+		printtext_print("warn", "%s: %s", __func__, e.what());
+		return false;
+	}
+
+	return true;
 }
 
 class dcc_send {
