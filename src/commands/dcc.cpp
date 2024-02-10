@@ -87,6 +87,7 @@ private:
 	uint16_t	 port;
 
 	bool create_ssl_ctx(void);
+	bool create_ssl_obj(void);
 };
 
 dcc_get::dcc_get()
@@ -194,6 +195,18 @@ dcc_get::create_ssl_ctx(void)
 		return false;
 	}
 
+	return true;
+}
+
+bool
+dcc_get::create_ssl_obj(void)
+{
+	if (this->ssl)
+		return true;
+	else if (this->ssl_ctx == nullptr)
+		return false;
+	else if ((this->ssl = SSL_new(this->ssl_ctx)) == nullptr)
+		return false;
 	return true;
 }
 
