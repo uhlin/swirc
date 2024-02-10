@@ -138,6 +138,30 @@ dcc_get::get_file(void)
 		    __func__);
 		return;
 	}
+
+	try {
+		static const int VALUE_HANDSHAKE_OK = 1;
+		struct sockaddr_in sin;
+
+		memset(&sin, 0, sizeof sin);
+		sin.sin_family		= AF_INET;
+		sin.sin_port		= this->port;
+		sin.sin_addr.s_addr	= this->addr;
+
+		if (connect(this->sock, reinterpret_cast<struct sockaddr *>
+		    (&sin), sizeof sin) == SOCKET_ERROR)
+			throw std::runtime_error("Cannot connect");
+		else if (!SSL_set_fd(this->ssl, this->sock))
+			throw std::runtime_error("Set FD error");
+
+		SSL_set_connect_state(this->ssl);
+
+		if (SSL_connect(this->ssl) != VALUE_HANDSHAKE_OK)
+			throw std::runtime_error("TLS/SSL handshake failed!");
+	} catch (const std::runtime_error &e) {
+		printtext_print("err", "%s: %s", __func__, e.what());
+		return;
+	}
 }
 
 bool
