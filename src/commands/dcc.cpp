@@ -40,6 +40,9 @@
 
 #include <inttypes.h>
 #include <stdexcept>
+#if UNIX
+#include <unistd.h>
+#endif
 #include <vector>
 
 #include "../config.h"
