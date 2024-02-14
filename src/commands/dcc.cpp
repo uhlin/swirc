@@ -181,6 +181,8 @@ dcc_get::get_file(void)
 
 		if (SSL_connect(this->ssl) != VALUE_HANDSHAKE_OK)
 			throw std::runtime_error("TLS/SSL handshake failed!");
+		else if (this->request_file() == ERR)
+			throw std::runtime_error("Send error");
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s: %s", __func__, e.what());
 		return;
