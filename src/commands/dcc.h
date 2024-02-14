@@ -1,6 +1,7 @@
 #ifndef CMD_DCC_H
 #define CMD_DCC_H
 
+#include <openssl/err.h>
 #include <openssl/ssl.h>
 
 #include <stdint.h> /* uint32_t */

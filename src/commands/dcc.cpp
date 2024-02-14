@@ -45,6 +45,7 @@
 #endif
 #include <vector>
 
+#include "../assertAPI.h"
 #include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
@@ -60,6 +61,8 @@
 
 #include "dcc.h"
 #include "theme.h" /* url_to_file() */
+
+#define DCC_FILE_REQ_SIZE 130
 
 #if WIN32
 #define stat _stat
@@ -94,6 +97,7 @@ private:
 	bool create_socket(void);
 	bool create_ssl_ctx(void);
 	bool create_ssl_obj(void);
+	int request_file(void);
 };
 
 dcc_get::dcc_get()
@@ -288,6 +292,49 @@ dcc_get::create_ssl_obj(void)
 	else if ((this->ssl = SSL_new(this->ssl_ctx)) == nullptr)
 		return false;
 	return true;
+}
+
+int
+dcc_get::request_file(void)
+{
+	char	*bufptr;
+	char	 buf[DCC_FILE_REQ_SIZE];
+	int	 buflen;
+
+	memset(buf, 0, sizeof buf);
+
+	if (sw_strcpy(buf, this->nick.c_str(), sizeof buf) != 0 ||
+	    sw_strcat(buf, "\r\n", sizeof buf) != 0 ||
+	    sw_strcat(buf, this->filename.c_str(), sizeof buf) != 0)
+		return ERR;
+
+	bufptr = addrof(buf[0]);
+	buflen = sizeof buf;
+
+	while (buflen > 0) {
+		int ret;
+
+		ERR_clear_error();
+
+		if ((ret = SSL_write(this->ssl, bufptr, buflen)) > 0) {
+			bufptr += ret;
+			buflen -= ret;
+		} else {
+			switch (SSL_get_error(this->ssl, ret)) {
+			case SSL_ERROR_NONE:
+				sw_assert_not_reached();
+				break;
+			case SSL_ERROR_WANT_READ:
+			case SSL_ERROR_WANT_WRITE:
+				debug("%s: want read / want write", __func__);
+				continue;
+			}
+
+			return ERR;
+		}
+	}
+
+	return OK;
 }
 
 class dcc_send {
