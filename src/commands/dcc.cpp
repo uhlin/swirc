@@ -191,7 +191,54 @@ dcc_get::get_file(void)
 			throw std::runtime_error("TLS/SSL handshake failed!");
 		else if (this->request_file() == ERR)
 			throw std::runtime_error("Send error");
+		else if (g_dcc_download_dir == nullptr)
+			throw std::runtime_error("Null dir");
+
+		std::string path(g_dcc_download_dir);
+		path.append(SLASH).append(this->filename);
+
+		if ((this->fileptr = xfopen(path.c_str(), "a")) == nullptr)
+			throw std::runtime_error("Open failed");
+
+		while (this->bytes_rem > 0) {
+			char			buf[DCC_IO_BYTES] = { '\0' };
+			int			ret;
+			static const int	bufsize = static_cast<int>
+						    (sizeof buf);
+
+			ERR_clear_error();
+
+			if ((ret = SSL_read(this->ssl, addrof(buf[0]),
+			    (this->bytes_rem < bufsize ? this->bytes_rem :
+			    bufsize))) > 0) {
+				if (fwrite(addrof(buf[0]), 1, ret,
+				    this->fileptr) != static_cast<size_t>(ret))
+					throw std::runtime_error("Write error");
+				this->bytes_rem -= ret;
+			} else {
+				switch (SSL_get_error(this->ssl, ret)) {
+				case SSL_ERROR_NONE:
+					sw_assert_not_reached();
+					break;
+				case SSL_ERROR_WANT_READ:
+				case SSL_ERROR_WANT_WRITE:
+					debug("%s: want read / want write",
+					    __func__);
+					break;
+				default:
+					throw std::runtime_error("Read error");
+				}
+			}
+		}
+
+		fclose(this->fileptr);
+		this->fileptr = nullptr;
 	} catch (const std::runtime_error &e) {
+		if (this->fileptr) {
+			fclose(this->fileptr);
+			this->fileptr = nullptr;
+		}
+
 		printtext_print("err", "%s: %s", __func__, e.what());
 		return;
 	}
