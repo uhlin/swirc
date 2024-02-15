@@ -360,7 +360,7 @@ dcc_get::request_file(void)
 
 	memset(buf, 0, sizeof buf);
 
-	if (sw_strcpy(buf, this->nick.c_str(), sizeof buf) != 0 ||
+	if (sw_strcpy(buf, g_my_nickname, sizeof buf) != 0 ||
 	    sw_strcat(buf, "\r\n", sizeof buf) != 0 ||
 	    sw_strcat(buf, this->filename.c_str(), sizeof buf) != 0)
 		return ERR;
