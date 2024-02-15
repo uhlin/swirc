@@ -82,6 +82,8 @@ public:
 	std::string	filename;
 	intmax_t	filesize;
 
+	intmax_t bytes_rem;
+
 	dcc_get();
 	dcc_get(const char *, const char *, intmax_t, uint32_t, uint16_t);
 	~dcc_get();
@@ -107,6 +109,7 @@ dcc_get::dcc_get()
 	this->nick.assign("");
 	this->filename.assign("");
 	this->filesize = 0;
+	this->bytes_rem = 0;
 	this->fileptr = nullptr;
 	this->sock = INVALID_SOCKET;
 	this->ssl = nullptr;
@@ -121,6 +124,7 @@ dcc_get::dcc_get(const char *p_nick, const char *p_filename,
 	this->nick.assign(p_nick);
 	this->filename.assign(p_filename);
 	this->filesize = p_filesize;
+	this->bytes_rem = p_filesize;
 	this->fileptr = nullptr;
 	this->sock = INVALID_SOCKET;
 	this->ssl = nullptr;
