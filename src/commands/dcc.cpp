@@ -88,6 +88,7 @@ public:
 	void get_file(void);
 
 private:
+	FILE		*fileptr;
 	SOCKET		 sock;
 	SSL		*ssl;
 	SSL_CTX		*ssl_ctx;
@@ -105,6 +106,7 @@ dcc_get::dcc_get()
 	this->nick.assign("");
 	this->filename.assign("");
 	this->filesize = 0;
+	this->fileptr = nullptr;
 	this->sock = INVALID_SOCKET;
 	this->ssl = nullptr;
 	this->ssl_ctx = nullptr;
@@ -118,6 +120,7 @@ dcc_get::dcc_get(const char *p_nick, const char *p_filename,
 	this->nick.assign(p_nick);
 	this->filename.assign(p_filename);
 	this->filesize = p_filesize;
+	this->fileptr = nullptr;
 	this->sock = INVALID_SOCKET;
 	this->ssl = nullptr;
 	this->ssl_ctx = nullptr;
