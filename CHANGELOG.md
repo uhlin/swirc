@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - Did code optimizations:
   - Measure string length once
   - ...
+- Enabled `iconv_conversion` by default.
 - Fixed an off-by-one error in the IRC module. The previous program
   versions weren't really affected however.
 - Fixed building on any setup where Ncurses is built with opaque
