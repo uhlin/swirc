@@ -1397,7 +1397,7 @@ get_buffer(CSTRING orig)
 		"WINDOWS-1252",
 	};
 
-	if (!config_bool("iconv_conversion", false))
+	if (!config_bool("iconv_conversion", true))
 		return sw_strdup(orig);
 
 	for (CSTRING str : fromcode) {

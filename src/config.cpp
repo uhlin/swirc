@@ -138,7 +138,7 @@ static struct tagConfDefValues {
 	{ "connection_timeout",        TYPE_INTEGER, 2, "45" },
 	{ "ctcp_reply",                TYPE_BOOLEAN, 3, "yes" },
 	{ "hostname_checking",         TYPE_BOOLEAN, 2, "yes" },
-	{ "iconv_conversion",          TYPE_BOOLEAN, 2, "no" },
+	{ "iconv_conversion",          TYPE_BOOLEAN, 2, "yes" },
 	{ "joins_parts_quits",         TYPE_BOOLEAN, 2, "no" },
 	{ "kick_close_window",         TYPE_BOOLEAN, 2, "yes" },
 	{ "max_chat_windows",          TYPE_INTEGER, 2, "60" },
