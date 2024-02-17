@@ -65,8 +65,8 @@
 #include "dcc.h"
 #include "theme.h" /* url_to_file() */
 
-#define DCC_FILE_REQ_SIZE 130
-#define DCC_IO_BYTES 256
+#define DCC_FILE_REQ_SIZE	130
+#define DCC_IO_BYTES		256
 
 #if WIN32
 #define stat _stat
