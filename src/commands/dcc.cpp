@@ -39,6 +39,9 @@
 #endif
 
 #include <inttypes.h>
+#if WIN32
+#include <io.h>
+#endif
 #include <stdexcept>
 #if UNIX
 #include <unistd.h>
