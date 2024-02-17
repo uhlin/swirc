@@ -950,7 +950,43 @@ dcc::handle_incoming_conn(SSL *ssl)
 		printtext_print("warn", "%s: unable to find the send object",
 		    __func__);
 		return;
+	} else if (send_db[pos].bytes_rem == 0) {
+		printtext_print("warn", "%s: already sent file", __func__);
+		return;
+	} else if (send_db[pos].fileptr == nullptr && (send_db[pos].fileptr =
+	    xfopen(send_db[pos].full_path.c_str(), "r")) == nullptr) {
+		printtext_print("warn", "%s: file open error", __func__);
+		return;
 	}
+
+	if (send_db[pos].bytes_rem == -1)
+		send_db[pos].bytes_rem = send_db[pos].get_filesize();
+
+	while (send_db[pos].bytes_rem > 0) {
+		char			buf[DCC_IO_BYTES] = { '\0' };
+		int			bytes;
+		static const int	bufsize = static_cast<int>(sizeof buf);
+
+		bytes = ((send_db[pos].bytes_rem < bufsize)
+			 ? send_db[pos].bytes_rem
+			 : bufsize);
+
+		if (fread(buf, 1, bytes, send_db[pos].fileptr) !=
+		    static_cast<size_t>(bytes)) {
+			fclose_and_null(addrof(send_db[pos].fileptr));
+			printtext_print("err", "%s: file read error", __func__);
+			return;
+		} else if (send_bytes(ssl, addrof(buf[0]), bytes,
+		    send_db[pos].bytes_rem) != OK) {
+			fclose_and_null(addrof(send_db[pos].fileptr));
+			printtext_print("err", "%s: tls write error", __func__);
+			return;
+		}
+	}
+
+	fclose_and_null(addrof(send_db[pos].fileptr));
+	printtext_print("success", "%s: successfully sent file: %s", __func__,
+	    filename.c_str());
 }
 
 bool
