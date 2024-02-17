@@ -882,6 +882,39 @@ find_send_obj(const std::string nick, const char *filename, dcc_send &obj,
 	return false;
 }
 
+static int
+send_bytes(SSL *ssl, const char *buf, const int bytes, intmax_t &bytes_rem)
+{
+	const char	*bufptr = buf;
+	int		 buflen = bytes;
+
+	while (buflen > 0) {
+		int ret;
+
+		ERR_clear_error();
+
+		if ((ret = SSL_write(ssl, bufptr, buflen)) > 0) {
+			bufptr += ret;
+			buflen -= ret;
+			bytes_rem -= ret;
+		} else {
+			switch (SSL_get_error(ssl, ret)) {
+			case SSL_ERROR_NONE:
+				sw_assert_not_reached();
+				break;
+			case SSL_ERROR_WANT_READ:
+			case SSL_ERROR_WANT_WRITE:
+				debug("%s: want read / want write", __func__);
+				continue;
+			}
+
+			return ERR;
+		}
+	}
+
+	return OK;
+}
+
 void
 dcc::handle_incoming_conn(SSL *ssl)
 {
