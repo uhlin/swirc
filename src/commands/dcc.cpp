@@ -456,6 +456,11 @@ dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
 
 dcc_send::~dcc_send()
 {
+	if (this->fileptr) {
+		fclose(this->fileptr);
+		this->fileptr = nullptr;
+	}
+
 	delete this->sb;
 }
 
