@@ -897,6 +897,15 @@ dcc::handle_incoming_conn(SSL *ssl)
 		printtext_print("warn", "%s: read request error", __func__);
 		return;
 	}
+
+	dcc_send send_obj;
+	std::vector<dcc_send>::size_type pos;
+
+	if (!find_send_obj(nick, filename.c_str(), send_obj, pos)) {
+		printtext_print("warn", "%s: unable to find the send object",
+		    __func__);
+		return;
+	}
 }
 
 bool
