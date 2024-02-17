@@ -851,6 +851,25 @@ read_request(SSL *ssl, std::string &nick, std::string &filename)
 	return OK;
 }
 
+static bool
+find_send_obj(const std::string nick, const char *filename, dcc_send &obj,
+    std::vector<dcc_send>::size_type &pos)
+{
+	pos = 0;
+
+	for (dcc_send &x : send_db) {
+		if (x.nick.compare(nick) == 0 && strings_match(x.get_filename(),
+		    filename)) {
+			obj = x;
+			return true;
+		}
+
+		pos++;
+	}
+
+	return false;
+}
+
 void
 dcc::handle_incoming_conn(SSL *ssl)
 {
