@@ -789,6 +789,57 @@ dcc::get_upload_dir(void)
 	return dir;
 }
 
+static int
+read_request(SSL *ssl, std::string &nick, std::string &filename)
+{
+	char			*bufptr;
+	char			*last = const_cast<char *>("");
+	char			*token[2] = { nullptr };
+	char			 buf[DCC_FILE_REQ_SIZE] = { '\0' };
+	int			 buflen;
+	static const char	 sep[] = "\r\n";
+
+	bufptr = addrof(buf[0]);
+	buflen = sizeof buf;
+
+	do {
+		int ret;
+
+		ERR_clear_error();
+
+		if ((ret = SSL_read(ssl, bufptr, buflen)) > 0) {
+			bufptr += ret;
+			buflen -= ret;
+		} else {
+			switch (SSL_get_error(ssl, ret)) {
+			case SSL_ERROR_NONE:
+				sw_assert_not_reached();
+				break;
+			case SSL_ERROR_WANT_READ:
+			case SSL_ERROR_WANT_WRITE:
+				debug("%s: want read / want write", __func__);
+				break;
+			default:
+				return ERR;
+			}
+		}
+	} while (buflen > 0);
+
+	if (memchr(buf, '\0', sizeof buf) == nullptr ||
+	    (token[0] = strtok_r(buf, sep, &last)) == nullptr ||
+	    (token[1] = strtok_r(nullptr, sep, &last)) == nullptr)
+		return ERR;
+	else if (!is_valid_nickname(token[0]))
+		return ERR;
+	else if (!is_valid_filename(token[1]))
+		return ERR;
+
+	nick.assign(token[0]);
+	filename.assign(token[1]);
+
+	return OK;
+}
+
 void
 dcc::handle_incoming_conn(SSL *ssl)
 {
