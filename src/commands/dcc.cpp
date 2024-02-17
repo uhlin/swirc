@@ -859,6 +859,14 @@ dcc::handle_incoming_conn(SSL *ssl)
 		    "successful because a fatal error occurred", __func__);
 		return;
 	}
+
+	std::string nick("");
+	std::string filename("");
+
+	if (read_request(ssl, nick, filename) != OK) {
+		printtext_print("warn", "%s: read request error", __func__);
+		return;
+	}
 }
 
 bool
