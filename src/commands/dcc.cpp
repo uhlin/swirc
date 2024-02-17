@@ -203,6 +203,14 @@ dcc_get::get_file(void)
 		if ((this->fileptr = xfopen(path.c_str(), "a")) == nullptr)
 			throw std::runtime_error("Open failed");
 
+#if defined(UNIX)
+		if (ftruncate(fileno(this->fileptr), 0) != 0)
+			throw std::runtime_error("Change size error");
+#elif defined(WIN32)
+		if ((errno = _chsize_s(fileno(this->fileptr), 0)) != 0)
+			throw std::runtime_error("Change size error");
+#endif
+
 		while (this->bytes_rem > 0) {
 			char			buf[DCC_IO_BYTES] = { '\0' };
 			int			ret;
