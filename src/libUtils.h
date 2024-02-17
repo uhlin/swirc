@@ -60,6 +60,15 @@ __SWIRC_END_DECLS
    =========================== */
 
 static inline void
+fclose_and_null(FILE **fp)
+{
+	if (fp != NULL && *fp != NULL) {
+		(void) fclose(*fp);
+		*fp = NULL;
+	}
+}
+
+static inline void
 free_not_null(void *ptr)
 {
 	if (ptr != NULL)
