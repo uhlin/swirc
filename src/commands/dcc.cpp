@@ -101,10 +101,10 @@ private:
 	uint32_t	 addr;
 	uint16_t	 port;
 
-	bool create_socket(void);
-	bool create_ssl_ctx(void);
-	bool create_ssl_obj(void);
-	int request_file(void);
+	bool	create_socket(void);
+	bool	create_ssl_ctx(void);
+	bool	create_ssl_obj(void);
+	int	request_file(void);
 };
 
 dcc_get::dcc_get()
