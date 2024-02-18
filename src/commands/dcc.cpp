@@ -219,6 +219,9 @@ dcc_get::get_file(void)
 
 		fclose(this->fileptr);
 		this->fileptr = nullptr;
+
+		printtext_print("success", "%s: wrote: %s", __func__,
+		    path.c_str());
 	} catch (const std::runtime_error &e) {
 		if (this->fileptr) {
 			fclose(this->fileptr);
