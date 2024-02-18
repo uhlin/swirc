@@ -4,6 +4,10 @@
 #include <openssl/err.h>
 #include <openssl/ssl.h>
 
+#if WIN32
+#include <ws2tcpip.h>
+#endif
+
 #include <stdint.h> /* uint32_t */
 
 #ifdef __cplusplus
