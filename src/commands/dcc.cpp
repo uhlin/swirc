@@ -209,7 +209,10 @@ dcc_get::get_file(void)
 					    __func__);
 					break;
 				default:
-					throw std::runtime_error("Read error");
+					const unsigned long int err =
+					    ERR_peek_last_error();
+					throw std::runtime_error
+					    (ERR_error_string(err, nullptr));
 				}
 			}
 		}
