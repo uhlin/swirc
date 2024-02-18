@@ -29,6 +29,37 @@ typedef int SOCKET;
 #define SOCKET_ERROR -1
 #endif
 
+#ifdef __cplusplus
+class dcc_get {
+public:
+	std::string nick;
+
+	std::string	filename;
+	intmax_t	filesize;
+
+	intmax_t bytes_rem;
+
+	dcc_get();
+	dcc_get(const char *, const char *, intmax_t, uint32_t, uint16_t);
+	~dcc_get();
+
+	void get_file(void);
+
+private:
+	FILE		*fileptr;
+	SOCKET		 sock;
+	SSL		*ssl;
+	SSL_CTX		*ssl_ctx;
+	uint32_t	 addr;
+	uint16_t	 port;
+
+	bool	create_socket(void);
+	bool	create_ssl_ctx(void);
+	bool	create_ssl_obj(void);
+	int	request_file(void);
+};
+#endif
+
 __SWIRC_BEGIN_DECLS
 extern const int	g_one_kilo;
 extern const int	g_one_meg;
