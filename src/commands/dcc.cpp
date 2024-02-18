@@ -516,6 +516,25 @@ subcmd_close()
 {
 }
 
+static bool
+find_get_obj(const char *nick, const char *file, dcc_get &obj,
+    std::vector<dcc_get>::size_type &pos)
+{
+	pos = 0;
+
+	for (dcc_get &x : get_db) {
+		if (strings_match(x.nick.c_str(), nick) &&
+		    strings_match(x.filename.c_str(), file)) {
+			obj = x;
+			return true;
+		}
+
+		pos++;
+	}
+
+	return false;
+}
+
 static void
 subcmd_get()
 {
