@@ -536,8 +536,25 @@ find_get_obj(const char *nick, const char *file, dcc_get &obj,
 }
 
 static void
-subcmd_get()
+subcmd_get(const char *nick, const char *file)
 {
+	dcc_get dummy;
+	std::vector<dcc_get>::size_type pos;
+
+	if (!is_valid_nickname(nick)) {
+		printtext_print("err", "%s: invalid nickname: %s", __func__,
+		    nick);
+		return;
+	} else if (!is_valid_filename(file)) {
+		printtext_print("err", "%s: invalid filename: %s", __func__,
+		    file);
+		return;
+	} else if (!find_get_obj(nick, file, dummy, pos)) {
+		printtext_print("err", "%s: no such nick/file", __func__);
+		return;
+	}
+
+	dcc::get_file_detached(addrof(get_db[pos]));
 }
 
 static void
