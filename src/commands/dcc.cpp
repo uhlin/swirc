@@ -196,6 +196,7 @@ dcc_get::get_file(void)
 				if (fwrite(addrof(buf[0]), 1, ret,
 				    this->fileptr) != static_cast<size_t>(ret))
 					throw std::runtime_error("Write error");
+				(void) fflush(this->fileptr);
 				this->bytes_rem -= ret;
 			} else {
 				switch (SSL_get_error(this->ssl, ret)) {
