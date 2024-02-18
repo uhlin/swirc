@@ -657,7 +657,7 @@ cmd_dcc(const char *data)
 	if (strings_match(subcmd, "close"))
 		subcmd_close();
 	else if (strings_match(subcmd, "get"))
-		subcmd_get();
+		subcmd_get(arg1, arg2);
 	else if (strings_match(subcmd, "list"))
 		subcmd_list();
 	else if (strings_match(subcmd, "send"))
