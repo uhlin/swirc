@@ -937,21 +937,35 @@ send_bytes(SSL *ssl, const char *buf, const int bytes, intmax_t &bytes_rem)
 void
 dcc::handle_incoming_conn(SSL *ssl)
 {
+	bool	loop = true;
+
 	block_signals();
 
-	switch (SSL_accept(ssl)) {
-	case 0:
-		debug("%s: SSL_accept: The TLS/SSL handshake was not "
-		    "successful", __func__);
-		return;
-	case 1:
-		debug("%s: SSL_accept: The TLS/SSL handshake was successfully "
-		    "completed", __func__);
-		break;
-	default:
-		debug("%s: SSL_accept: The TLS/SSL handshake was not "
-		    "successful because a fatal error occurred", __func__);
-		return;
+	while (loop) {
+		const int ret = SSL_accept(ssl);
+
+		switch (ret) {
+		case 0:
+			debug("%s: SSL_accept: The TLS/SSL handshake was not "
+			    "successful", __func__);
+			return;
+		case 1:
+			debug("%s: SSL_accept: The TLS/SSL handshake was "
+			    "successfully completed", __func__);
+			loop = false;
+			break;
+		default:
+			if (SSL_get_error(ssl, ret) == SSL_ERROR_WANT_READ ||
+			    SSL_get_error(ssl, ret) == SSL_ERROR_WANT_WRITE) {
+				(void) napms(100);
+				continue;
+			}
+
+			debug("%s: SSL_accept: The TLS/SSL handshake was not "
+			    "successful because a fatal error occurred",
+			    __func__);
+			return;
+		}
 	}
 
 	std::string nick("");
