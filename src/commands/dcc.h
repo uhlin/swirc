@@ -80,6 +80,8 @@ namespace dcc
 
 	void		 add_file(const char *, const char *, const char *,
 			     const char *) NONNULL;
+	NORETURN void	 exit_thread(void);
+	void		 get_file_detached(dcc_get *);
 	bool		 get_remote_addr(std::string &, uint32_t &);
 	const char	*get_upload_dir(void);
 	void		 handle_incoming_conn(SSL *);
