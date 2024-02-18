@@ -340,9 +340,9 @@ dcc_get::create_ssl_obj(void)
 int
 dcc_get::request_file(void)
 {
-	char	*bufptr;
-	char	 buf[DCC_FILE_REQ_SIZE];
-	int	 buflen;
+	char		 buf[DCC_FILE_REQ_SIZE];
+	const char	*bufptr;
+	int		 buflen;
 
 	memset(buf, 0, sizeof buf);
 
@@ -445,7 +445,8 @@ dcc_send::~dcc_send()
 const char *
 dcc_send::get_filename(void)
 {
-	char *cp, *full_path_copy;
+	char		*full_path_copy;
+	const char	*cp;
 
 	if (!strings_match(this->buf, ""))
 		return addrof(this->buf[0]);
@@ -630,7 +631,7 @@ cmd_dcc(const char *data)
 {
 	char			*dcopy;
 	char			*last = const_cast<char *>("");
-	char			*subcmd, *arg1, *arg2;
+	const char		*subcmd, *arg1, *arg2;
 	static const char	 cmd[] = "/dcc";
 	static const char	 sep[] = "\n";
 
