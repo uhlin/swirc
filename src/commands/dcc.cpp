@@ -248,6 +248,10 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
 		const int depth = X509_STORE_CTX_get_error_depth(ctx);
 		const int err   = X509_STORE_CTX_get_error(ctx);
 
+		if (err == X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT ||
+		    err == X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN)
+			return 1;
+
 		(void) X509_NAME_oneline(X509_get_issuer_name(cert), issuer,
 		    sizeof issuer);
 		(void) X509_NAME_oneline(X509_get_subject_name(cert), subject,
