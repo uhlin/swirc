@@ -513,7 +513,7 @@ toast_notifications_init()
 	/*
 	 * Initializes the COM library for use by the calling thread
 	 */
-	(void) CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+	(void) CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
 	/*
 	 * Register AUMID and COM server (for Desktop Bridge apps, this no-ops)
