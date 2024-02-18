@@ -393,7 +393,7 @@ public:
 	~dcc_send();
 
 	const char	*get_filename(void);
-	intmax_t	 get_filesize(void);
+	intmax_t	 get_filesize(void) const;
 
 private:
 	char		 buf[255];
@@ -465,7 +465,7 @@ dcc_send::get_filename(void)
 }
 
 intmax_t
-dcc_send::get_filesize(void)
+dcc_send::get_filesize(void) const
 {
 	if (this->sb == nullptr)
 		return 0;
