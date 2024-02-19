@@ -169,7 +169,7 @@ dcc_get::get_file(void)
 			throw std::runtime_error("Null dir");
 
 		std::string path(g_dcc_download_dir);
-		path.append(SLASH).append(this->filename);
+		(void) path.append(SLASH).append(this->filename);
 
 		if ((this->fileptr = xfopen(path.c_str(), "a")) == nullptr)
 			throw std::runtime_error("Open failed");
@@ -292,8 +292,8 @@ dcc_get::create_ssl_ctx(void)
 		std::string ca_file(g_home_dir);
 		std::string certfile(g_home_dir);
 
-		ca_file.append(SLASH).append(ROOT_PEM);
-		certfile.append(SLASH).append(CLIENT_PEM);
+		(void) ca_file.append(SLASH).append(ROOT_PEM);
+		(void) certfile.append(SLASH).append(CLIENT_PEM);
 
 		if (!SSL_CTX_load_verify_locations(this->ssl_ctx,
 		    ca_file.c_str(), nullptr)) {
@@ -588,9 +588,7 @@ subcmd_send(const char *nick, const char *file)
 	}
 
 	std::string full_path(dcc::get_upload_dir());
-
-	full_path.append(SLASH);
-	full_path.append(file);
+	(void) full_path.append(SLASH).append(file);
 
 	if (!file_exists(full_path.c_str())) {
 		printtext_print("err", "file doesn't exist");
@@ -777,9 +775,8 @@ dcc::get_remote_addr(std::string &str, uint32_t &addr)
 		std::string	 url(g_swircWebAddr);
 		std::string	 path(g_tmp_dir);
 
-		url.append("ext_ip/");
-		path.append(SLASH);
-		path.append("ext_ip.tmp");
+		(void) url.append("ext_ip/");
+		(void) path.append(SLASH).append("ext_ip.tmp");
 
 		url_to_file(url.c_str(), path.c_str());
 
