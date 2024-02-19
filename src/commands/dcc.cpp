@@ -540,7 +540,7 @@ static void
 subcmd_get(const char *nick, const char *file)
 {
 	dcc_get dummy;
-	std::vector<dcc_get>::size_type pos;
+	std::vector<dcc_get>::size_type pos = 0;
 
 	if (!is_valid_nickname(nick)) {
 		printtext_print("err", "%s: invalid nickname: %s", __func__,
@@ -970,7 +970,7 @@ dcc::handle_incoming_conn(SSL *ssl)
 	}
 
 	dcc_send dummy;
-	std::vector<dcc_send>::size_type pos;
+	std::vector<dcc_send>::size_type pos = 0;
 
 	if (!find_send_obj(nick, filename.c_str(), dummy, pos)) {
 		printtext_print("warn", "%s: unable to find the send object",
