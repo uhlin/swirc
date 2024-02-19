@@ -17,14 +17,15 @@ All notable changes to this project will be documented in this file.
   - `dcc_upload_dir` (string)
   - `multi_prefix` (bool)
 - Did code optimizations:
-  - Measure string length once
+  - Measure string length once, found by
+    [PVS-Studio](https://pvs-studio.com/en/pvs-studio/).
   - ...
 - Enabled `iconv_conversion` by default.
 - Fixed an off-by-one error in the IRC module. The previous program
   versions weren't really affected however.
 - Fixed building on any setup where Ncurses is built with opaque
   types.
-- Fixed new Coverity defects
+- Fixed new [Coverity](https://scan.coverity.com/) defects
 - Improved C++ exception handling. Among other things, handle if 'new'
   throws.
 - Renamed option `ircv3_server_time` to `server_time` and enabled it
