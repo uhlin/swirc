@@ -790,29 +790,32 @@ dcc::get_remote_addr(std::string &str, uint32_t &addr)
 				if (remove(path.c_str()) != 0)
 					err_log(errno, "%s: remove", __func__);
 			}
-			str.assign("");
+
+			(void) str.assign("");
 			addr = INADDR_NONE;
 			return false;
 		}
 
 		ext_ip[strcspn(ext_ip, "\n")] = '\0';
 		fclose(fileptr);
+
 		if (remove(path.c_str()) != 0)
 			err_log(errno, "%s: remove", __func__);
 		if ((addr = inet_addr(ext_ip)) == INADDR_NONE) {
-			str.assign("");
+			(void) str.assign("");
 			return false;
 		}
-		str.assign(ext_ip);
+
+		(void) str.assign(ext_ip);
 		return true;
 	}
 
 	if ((addr = inet_addr(own_ip)) == INADDR_NONE) {
-		str.assign("");
+		(void) str.assign("");
 		return false;
 	}
 
-	str.assign(own_ip);
+	(void) str.assign(own_ip);
 	return true;
 }
 
@@ -873,8 +876,8 @@ read_request(SSL *ssl, std::string &nick, std::string &filename)
 	else if (!is_valid_filename(token[1]))
 		return ERR;
 
-	nick.assign(token[0]);
-	filename.assign(token[1]);
+	(void) nick.assign(token[0]);
+	(void) filename.assign(token[1]);
 
 	return OK;
 }
