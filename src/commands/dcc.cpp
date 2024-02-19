@@ -789,7 +789,7 @@ dcc::get_remote_addr(std::string &str, uint32_t &addr)
 		    fgets(ext_ip, sizeof ext_ip, fileptr) == nullptr ||
 		    strchr(ext_ip, '\n') == nullptr) {
 			if (fileptr)
-				fclose(fileptr);
+				(void) fclose(fileptr);
 			if (file_exists(path.c_str())) {
 				if (remove(path.c_str()) != 0)
 					err_log(errno, "%s: remove", __func__);
@@ -801,7 +801,7 @@ dcc::get_remote_addr(std::string &str, uint32_t &addr)
 		}
 
 		ext_ip[strcspn(ext_ip, "\n")] = '\0';
-		fclose(fileptr);
+		(void) fclose(fileptr);
 
 		if (remove(path.c_str()) != 0)
 			err_log(errno, "%s: remove", __func__);
