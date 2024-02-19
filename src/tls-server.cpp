@@ -266,6 +266,9 @@ tls_server::get_accept_bio(const int port)
 		if (BIO_set_nbio_accept(bio, 1) != 1) {
 			throw std::runtime_error("Error setting accept socket "
 			    "to non-blocking mode");
+		} else if (BIO_set_bind_mode(bio, BIO_BIND_REUSEADDR) != 1) {
+			throw std::runtime_error("Error setting bind mode "
+			    "(REUSEADDR)");
 		} else if (BIO_do_accept(bio) != 1) {
 			throw std::runtime_error("Error creating accept socket "
 			    "or bind an address to it");
