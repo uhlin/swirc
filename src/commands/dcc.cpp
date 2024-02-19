@@ -78,33 +78,34 @@
 *                                                               *
 ****************************************************************/
 
-dcc_get::dcc_get()
+dcc_get::dcc_get() : filesize(0)
+    , bytes_rem(0)
+    , fileptr(nullptr)
+    , sock(INVALID_SOCKET)
+    , ssl(nullptr)
+    , ssl_ctx(nullptr)
+    , addr(0)
+    , port(0)
 {
 	this->nick.assign("");
 	this->filename.assign("");
-	this->filesize	= 0;
-	this->bytes_rem	= 0;
-	this->fileptr	= nullptr;
-	this->sock	= INVALID_SOCKET;
-	this->ssl	= nullptr;
-	this->ssl_ctx	= nullptr;
-	this->addr	= 0;
-	this->port	= 0;
 }
 
-dcc_get::dcc_get(const char *p_nick, const char *p_filename,
-    intmax_t p_filesize, uint32_t p_addr, uint16_t p_port)
+dcc_get::dcc_get(const char *p_nick,
+    const char *p_filename,
+    intmax_t p_filesize,
+    uint32_t p_addr,
+    uint16_t p_port) : filesize(p_filesize)
+    , bytes_rem(p_filesize)
+    , fileptr(nullptr)
+    , sock(INVALID_SOCKET)
+    , ssl(nullptr)
+    , ssl_ctx(nullptr)
+    , addr(p_addr)
+    , port(htons(p_port))
 {
 	this->nick.assign(p_nick);
 	this->filename.assign(p_filename);
-	this->filesize	= p_filesize;
-	this->bytes_rem	= p_filesize;
-	this->fileptr	= nullptr;
-	this->sock	= INVALID_SOCKET;
-	this->ssl	= nullptr;
-	this->ssl_ctx	= nullptr;
-	this->addr	= p_addr;
-	this->port	= htons(p_port);
 }
 
 dcc_get::~dcc_get()
