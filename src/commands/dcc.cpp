@@ -389,11 +389,11 @@ dcc_get::request_file(void)
 
 class dcc_send {
 public:
-	std::string	nick;
-	std::string	full_path;
+	std::string	 nick;
+	std::string	 full_path;
 
-	FILE *fileptr;
-	intmax_t bytes_rem;
+	FILE		*fileptr;
+	intmax_t	 bytes_rem;
 
 	dcc_send();
 	dcc_send(const char *, const std::string);
