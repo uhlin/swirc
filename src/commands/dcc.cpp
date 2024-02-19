@@ -127,6 +127,42 @@ dcc_get::~dcc_get()
 	}
 }
 
+static void
+read_and_write(SSL *ssl, FILE *fp, intmax_t &bytes_rem)
+{
+	while (bytes_rem > 0) {
+		char			buf[DCC_IO_BYTES] = { '\0' };
+		int			ret;
+		static const int	bufsize = static_cast<int>(sizeof buf);
+
+		ERR_clear_error();
+
+		if ((ret = SSL_read(ssl, addrof(buf[0]), (bytes_rem < bufsize ?
+		    bytes_rem : bufsize))) > 0) {
+			if (fwrite(addrof(buf[0]), 1, ret, fp) !=
+			    static_cast<size_t>(ret))
+				throw std::runtime_error("Write error");
+			(void) fflush(fp);
+			bytes_rem -= ret;
+		} else {
+			switch (SSL_get_error(ssl, ret)) {
+			case SSL_ERROR_NONE:
+				sw_assert_not_reached();
+				break;
+			case SSL_ERROR_WANT_READ:
+			case SSL_ERROR_WANT_WRITE:
+				debug("%s: want read / want write", __func__);
+				break;
+			default:
+				const unsigned long int err =
+				    ERR_peek_last_error();
+				throw std::runtime_error(ERR_error_string(err,
+				    nullptr));
+			}
+		}
+	}
+}
+
 void
 dcc_get::get_file(void)
 {
@@ -182,40 +218,7 @@ dcc_get::get_file(void)
 			throw std::runtime_error("Change size error");
 #endif
 
-		while (this->bytes_rem > 0) {
-			char			buf[DCC_IO_BYTES] = { '\0' };
-			int			ret;
-			static const int	bufsize = static_cast<int>
-						    (sizeof buf);
-
-			ERR_clear_error();
-
-			if ((ret = SSL_read(this->ssl, addrof(buf[0]),
-			    (this->bytes_rem < bufsize ? this->bytes_rem :
-			    bufsize))) > 0) {
-				if (fwrite(addrof(buf[0]), 1, ret,
-				    this->fileptr) != static_cast<size_t>(ret))
-					throw std::runtime_error("Write error");
-				(void) fflush(this->fileptr);
-				this->bytes_rem -= ret;
-			} else {
-				switch (SSL_get_error(this->ssl, ret)) {
-				case SSL_ERROR_NONE:
-					sw_assert_not_reached();
-					break;
-				case SSL_ERROR_WANT_READ:
-				case SSL_ERROR_WANT_WRITE:
-					debug("%s: want read / want write",
-					    __func__);
-					break;
-				default:
-					const unsigned long int err =
-					    ERR_peek_last_error();
-					throw std::runtime_error
-					    (ERR_error_string(err, nullptr));
-				}
-			}
-		}
+		read_and_write(this->ssl, this->fileptr, this->bytes_rem);
 
 		fclose(this->fileptr);
 		this->fileptr = nullptr;
