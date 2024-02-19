@@ -220,18 +220,11 @@ dcc_get::get_file(void)
 #endif
 
 		read_and_write(this->ssl, this->fileptr, this->bytes_rem);
-
-		fclose(this->fileptr);
-		this->fileptr = nullptr;
-
+		fclose_and_null(addrof(this->fileptr));
 		printtext_print("success", "%s: wrote: %s", __func__,
 		    path.c_str());
 	} catch (const std::runtime_error &e) {
-		if (this->fileptr) {
-			fclose(this->fileptr);
-			this->fileptr = nullptr;
-		}
-
+		fclose_and_null(addrof(this->fileptr));
 		printtext_print("err", "%s: %s", __func__, e.what());
 		return;
 	}
@@ -445,11 +438,7 @@ dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
 
 dcc_send::~dcc_send()
 {
-	if (this->fileptr) {
-		fclose(this->fileptr);
-		this->fileptr = nullptr;
-	}
-
+	fclose_and_null(addrof(this->fileptr));
 	delete this->sb;
 }
 
