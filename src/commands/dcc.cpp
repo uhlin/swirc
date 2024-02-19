@@ -973,10 +973,10 @@ dcc::handle_incoming_conn(SSL *ssl)
 		return;
 	}
 
-	dcc_send send_obj;
+	dcc_send dummy;
 	std::vector<dcc_send>::size_type pos;
 
-	if (!find_send_obj(nick, filename.c_str(), send_obj, pos)) {
+	if (!find_send_obj(nick, filename.c_str(), dummy, pos)) {
 		printtext_print("warn", "%s: unable to find the send object",
 		    __func__);
 		return;
