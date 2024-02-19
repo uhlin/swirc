@@ -411,23 +411,23 @@ private:
 	struct stat	*sb;
 };
 
-dcc_send::dcc_send()
+dcc_send::dcc_send() : fileptr(nullptr)
+    , bytes_rem(-1)
+    , sb(nullptr)
 {
 	this->nick.assign("");
 	this->full_path.assign("");
-	this->fileptr = nullptr;
-	this->bytes_rem = -1;
 
 	BZERO(this->buf, sizeof this->buf);
-	this->sb = nullptr;
 }
 
 dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
+    : fileptr(nullptr)
+    , bytes_rem(-1)
+    , sb(nullptr)
 {
 	this->nick.assign(p_nick);
 	this->full_path.assign(p_full_path);
-	this->fileptr = nullptr;
-	this->bytes_rem = -1;
 
 	BZERO(this->buf, sizeof this->buf);
 	this->sb = new struct stat;
