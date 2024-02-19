@@ -41,6 +41,7 @@ event_welcome_is_signaled(void)
 
 		if (ret == 0) {
 			is_signaled = true;
+			break;
 		} else if (ret == EINVAL) {
 			err_exit(EINVAL, "%s: pthread_cond_timedwait",
 			    __func__);
