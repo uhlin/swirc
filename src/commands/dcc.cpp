@@ -1023,6 +1023,9 @@ dcc::handle_incoming_conn(SSL *ssl)
 	fclose_and_null(addrof(send_obj->fileptr));
 	printtext_print("success", "%s: successfully sent file: %s", __func__,
 	    filename.c_str());
+	while (ssl != nullptr && !(SSL_get_shutdown(ssl) &
+	    SSL_RECEIVED_SHUTDOWN))
+		(void) napms(100);
 }
 
 void
