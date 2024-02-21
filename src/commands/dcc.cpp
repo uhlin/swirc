@@ -165,6 +165,12 @@ read_and_write(SSL *ssl, FILE *fp, intmax_t &bytes_rem)
 }
 
 void
+dcc_get::finalize_download(void)
+{
+	dcc::shutdown_conn(this->ssl);
+}
+
+void
 dcc_get::get_file(void)
 {
 	if (!this->create_socket()) {

@@ -47,6 +47,7 @@ public:
 	dcc_get(const char *, const char *, intmax_t, uint32_t, uint16_t);
 	~dcc_get();
 
+	void finalize_download(void);
 	void get_file(void);
 
 private:
