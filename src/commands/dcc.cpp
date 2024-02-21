@@ -1019,6 +1019,23 @@ dcc::handle_incoming_conn(SSL *ssl)
 	    filename.c_str());
 }
 
+void
+dcc::shutdown_conn(SSL *ssl)
+{
+	switch (SSL_shutdown(ssl)) {
+	case 0:
+		debug("%s: SSL_shutdown: not yet finished", __func__);
+		(void) SSL_shutdown(ssl);
+		break;
+	case 1:
+		/* success! */
+		break;
+	default:
+		err_log(0, "%s: SSL_shutdown: error", __func__);
+		break;
+	}
+}
+
 bool
 dcc::want_unveil_uploads(void)
 {
