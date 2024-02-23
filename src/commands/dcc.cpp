@@ -524,15 +524,15 @@ subcmd_close()
 }
 
 static bool
-find_get_obj(const char *nick, const char *file, dcc_get &obj,
-    std::vector<dcc_get>::size_type &pos)
+find_get_obj(const char *nick, const char *file, std::vector<dcc_get>::size_type
+    &pos)
 {
 	pos = 0;
 
 	for (dcc_get &x : get_db) {
 		if (strings_match(x.nick.c_str(), nick) &&
 		    strings_match(x.filename.c_str(), file)) {
-			obj = x;
+//			obj = x;
 			return true;
 		}
 
@@ -545,7 +545,6 @@ find_get_obj(const char *nick, const char *file, dcc_get &obj,
 static void
 subcmd_get(const char *nick, const char *file)
 {
-	dcc_get dummy;
 	std::vector<dcc_get>::size_type pos = 0;
 
 	if (!is_valid_nickname(nick)) {
@@ -556,7 +555,7 @@ subcmd_get(const char *nick, const char *file)
 		printtext_print("err", "%s: invalid filename: %s", __func__,
 		    file);
 		return;
-	} else if (!find_get_obj(nick, file, dummy, pos)) {
+	} else if (!find_get_obj(nick, file, pos)) {
 		printtext_print("err", "%s: no such nick/file", __func__);
 		return;
 	}
@@ -882,7 +881,7 @@ read_request(SSL *ssl, std::string &nick, std::string &filename)
 }
 
 static bool
-find_send_obj(const std::string nick, const char *filename, dcc_send &obj,
+find_send_obj(const std::string nick, const char *filename,
     std::vector<dcc_send>::size_type &pos)
 {
 	pos = 0;
@@ -890,7 +889,7 @@ find_send_obj(const std::string nick, const char *filename, dcc_send &obj,
 	for (dcc_send &x : send_db) {
 		if (x.nick.compare(nick) == 0 && strings_match(x.get_filename(),
 		    filename)) {
-			obj = x;
+//			obj = x;
 			return true;
 		}
 
@@ -975,10 +974,9 @@ dcc::handle_incoming_conn(SSL *ssl)
 		return;
 	}
 
-	dcc_send dummy;
 	std::vector<dcc_send>::size_type pos = 0;
 
-	if (!find_send_obj(nick, filename.c_str(), dummy, pos)) {
+	if (!find_send_obj(nick, filename.c_str(), pos)) {
 		printtext_print("warn", "%s: unable to find the send object",
 		    __func__);
 		return;
