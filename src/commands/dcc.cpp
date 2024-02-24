@@ -759,6 +759,8 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 		get_db.push_back(get_obj);
 
 		printtext_print("success", "%s: added: %s", __func__, token[3]);
+		printtext_print("success", "%s: from: %s <%s@%s>", __func__,
+		    nick, user, host);
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s: %s", __func__, e.what());
 		printtext_print("err", "%s: %s <%s@%s>", __func__, nick,
