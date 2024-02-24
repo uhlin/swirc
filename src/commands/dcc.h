@@ -85,6 +85,7 @@ namespace dcc
 			     const char *) NONNULL;
 	NORETURN void	 exit_thread(void);
 	void		 get_file_detached(dcc_get *);
+	void		 get_file_size(const intmax_t, double &, char &);
 	bool		 get_remote_addr(std::string &, uint32_t &);
 	const char	*get_upload_dir(void);
 	void		 handle_incoming_conn(SSL *);

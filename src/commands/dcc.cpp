@@ -772,6 +772,27 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 	free(dcopy);
 }
 
+void
+dcc::get_file_size(const intmax_t bytes, double &size, char &unit)
+{
+	if (bytes <= 0) {
+		size = 0.0;
+		unit = 'B';
+	} else if (bytes >= g_one_gig) {
+		size = static_cast<double>(bytes / g_one_gig);
+		unit = 'G';
+	} else if (bytes >= g_one_meg) {
+		size = static_cast<double>(bytes / g_one_meg);
+		unit = 'M';
+	} else if (bytes >= g_one_kilo) {
+		size = static_cast<double>(bytes / g_one_kilo);
+		unit = 'K';
+	} else {
+		size = static_cast<double>(bytes);
+		unit = 'B';
+	}
+}
+
 bool
 dcc::get_remote_addr(std::string &str, uint32_t &addr)
 {
