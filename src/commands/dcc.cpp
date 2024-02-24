@@ -761,7 +761,7 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 		printtext_print("success", "%s: added: %s", __func__, token[3]);
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s: %s", __func__, e.what());
-		printtext_print("err", "%s: %s (%s@%s)", __func__, nick,
+		printtext_print("err", "%s: %s <%s@%s>", __func__, nick,
 		    user, host);
 	}
 
