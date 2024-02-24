@@ -160,11 +160,11 @@ dcc_get::destroy(void)
 #endif
 		this->sock = INVALID_SOCKET;
 	}
-	if (this->ssl) {
+	if (this->ssl != nullptr) {
 		SSL_free(this->ssl);
 		this->ssl = nullptr;
 	}
-	if (this->ssl_ctx) {
+	if (this->ssl_ctx != nullptr) {
 		SSL_CTX_free(this->ssl_ctx);
 		this->ssl_ctx = nullptr;
 	}
@@ -290,7 +290,7 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
 bool
 dcc_get::create_ssl_ctx(void)
 {
-	if (this->ssl_ctx)
+	if (this->ssl_ctx != nullptr)
 		return true;
 
 	try {
@@ -329,7 +329,7 @@ dcc_get::create_ssl_ctx(void)
 			    "supported protocol version");
 		}
 	} catch (const std::runtime_error &e) {
-		if (this->ssl_ctx) {
+		if (this->ssl_ctx != nullptr) {
 			SSL_CTX_free(this->ssl_ctx);
 			this->ssl_ctx = nullptr;
 		}
@@ -344,7 +344,7 @@ dcc_get::create_ssl_ctx(void)
 bool
 dcc_get::create_ssl_obj(void)
 {
-	if (this->ssl)
+	if (this->ssl != nullptr)
 		return true;
 	else if (this->ssl_ctx == nullptr)
 		return false;
@@ -453,7 +453,7 @@ dcc_send::~dcc_send()
 	fclose_and_null(addrof(this->fileptr));
 
 #if 0
-	if (this->sb) {
+	if (this->sb != nullptr) {
 		delete this->sb;
 		this->sb = nullptr;
 	}
