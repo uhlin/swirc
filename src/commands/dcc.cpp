@@ -452,10 +452,12 @@ dcc_send::~dcc_send()
 {
 	fclose_and_null(addrof(this->fileptr));
 
+#if 0
 	if (this->sb) {
 		delete this->sb;
 		this->sb = nullptr;
 	}
+#endif
 }
 
 const char *
