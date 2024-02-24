@@ -425,7 +425,7 @@ dcc_send::dcc_send() : fileptr(nullptr)
 	this->nick.assign("");
 	this->full_path.assign("");
 
-	BZERO(this->buf, sizeof this->buf);
+	BZERO(addrof(this->buf[0]), sizeof this->buf);
 }
 
 dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
@@ -436,7 +436,7 @@ dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
 	this->nick.assign(p_nick);
 	this->full_path.assign(p_full_path);
 
-	BZERO(this->buf, sizeof this->buf);
+	BZERO(addrof(this->buf[0]), sizeof this->buf);
 
 	errno = 0;
 
