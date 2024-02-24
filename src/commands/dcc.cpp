@@ -112,6 +112,7 @@ dcc_get::dcc_get(const char *p_nick,
 dcc_get::~dcc_get()
 {
 	debug("%s: destructor called", __func__);
+	this->destroy();
 }
 
 static void
