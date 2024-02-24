@@ -108,26 +108,6 @@ dcc_get::dcc_get(const char *p_nick,
 	this->filename.assign(p_filename);
 }
 
-dcc_get::~dcc_get()
-{
-	if (this->sock != INVALID_SOCKET) {
-#if defined(UNIX)
-		(void) close(this->sock);
-#elif defined(WIN32)
-		(void) closesocket(this->sock);
-#endif
-		this->sock = INVALID_SOCKET;
-	}
-	if (this->ssl) {
-		SSL_free(this->ssl);
-		this->ssl = nullptr;
-	}
-	if (this->ssl_ctx) {
-		SSL_CTX_free(this->ssl_ctx);
-		this->ssl_ctx = nullptr;
-	}
-}
-
 static void
 read_and_write(SSL *ssl, FILE *fp, intmax_t &bytes_rem)
 {
@@ -161,6 +141,27 @@ read_and_write(SSL *ssl, FILE *fp, intmax_t &bytes_rem)
 				    nullptr));
 			}
 		}
+	}
+}
+
+void
+dcc_get::destroy(void)
+{
+	if (this->sock != INVALID_SOCKET) {
+#if defined(UNIX)
+		(void) close(this->sock);
+#elif defined(WIN32)
+		(void) closesocket(this->sock);
+#endif
+		this->sock = INVALID_SOCKET;
+	}
+	if (this->ssl) {
+		SSL_free(this->ssl);
+		this->ssl = nullptr;
+	}
+	if (this->ssl_ctx) {
+		SSL_CTX_free(this->ssl_ctx);
+		this->ssl_ctx = nullptr;
 	}
 }
 
