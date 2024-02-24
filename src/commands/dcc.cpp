@@ -1003,19 +1003,20 @@ dcc::handle_incoming_conn(SSL *ssl)
 	while (send_obj->bytes_rem > 0) {
 		char			buf[DCC_IO_BYTES] = { '\0' };
 		int			bytes;
+		size_t			bytes_read;
 		static const int	bufsize = static_cast<int>(sizeof buf);
 
 		bytes = ((send_obj->bytes_rem < bufsize)
 			 ? send_obj->bytes_rem
 			 : bufsize);
+		bytes_read = fread(buf, 1, bytes, send_obj->fileptr);
 
-		if (fread(buf, 1, bytes, send_obj->fileptr) !=
-		    static_cast<size_t>(bytes)) {
+		if (bytes_read == 0) {
 			fclose_and_null(addrof(send_obj->fileptr));
 			printtext_print("err", "%s: file read error", __func__);
 			return;
-		} else if (send_bytes(ssl, addrof(buf[0]), bytes,
-		    send_obj->bytes_rem) != OK) {
+		} else if (send_bytes(ssl, addrof(buf[0]),
+		    static_cast<int>(bytes_read), send_obj->bytes_rem) != OK) {
 			fclose_and_null(addrof(send_obj->fileptr));
 			printtext_print("err", "%s: tls write error", __func__);
 			return;
