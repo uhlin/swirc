@@ -442,7 +442,6 @@ dcc_send::dcc_send(const char *p_nick, const std::string &p_full_path)
 	if (stat(p_full_path.c_str(), this->sb) != 0) {
 		char strerrbuf[MAXERROR] = { '\0' };
 
-		delete this->sb;
 		throw std::runtime_error(xstrerror(errno, strerrbuf,
 		    sizeof strerrbuf));
 	}
