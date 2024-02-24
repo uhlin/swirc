@@ -532,10 +532,8 @@ find_get_obj(const char *nick, const char *file, std::vector<dcc_get>::size_type
 
 	for (dcc_get &x : get_db) {
 		if (strings_match(x.nick.c_str(), nick) &&
-		    strings_match(x.filename.c_str(), file)) {
-//			obj = x;
+		    strings_match(x.filename.c_str(), file))
 			return true;
-		}
 
 		pos++;
 	}
@@ -889,10 +887,8 @@ find_send_obj(const std::string nick, const char *filename,
 
 	for (dcc_send &x : send_db) {
 		if (x.nick.compare(nick) == 0 && strings_match(x.get_filename(),
-		    filename)) {
-//			obj = x;
+		    filename))
 			return true;
-		}
 
 		pos++;
 	}
