@@ -405,7 +405,7 @@ public:
 	intmax_t	 bytes_rem;
 
 	dcc_send();
-	dcc_send(const char *, const std::string);
+	dcc_send(const char *, const std::string &);
 	~dcc_send();
 
 	const char	*get_filename(void);
@@ -426,7 +426,7 @@ dcc_send::dcc_send() : fileptr(nullptr)
 	BZERO(this->buf, sizeof this->buf);
 }
 
-dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
+dcc_send::dcc_send(const char *p_nick, const std::string &p_full_path)
     : fileptr(nullptr)
     , bytes_rem(-1)
     , sb(nullptr)
@@ -891,7 +891,7 @@ read_request(SSL *ssl, std::string &nick, std::string &filename)
 }
 
 static bool
-find_send_obj(const std::string nick, const char *filename,
+find_send_obj(const std::string &nick, const char *filename,
     std::vector<dcc_send>::size_type &pos)
 {
 	pos = 0;
