@@ -46,6 +46,7 @@
 #if UNIX
 #include <unistd.h>
 #endif
+#include <utility>
 #include <vector>
 
 #include "../assertAPI.h"
@@ -405,7 +406,7 @@ public:
 	intmax_t	 bytes_rem;
 
 	dcc_send();
-	dcc_send(const char *, const std::string &);
+	dcc_send(const char *, const std::string);
 	~dcc_send();
 
 	const char	*get_filename(void);
@@ -427,7 +428,7 @@ dcc_send::dcc_send() : fileptr(nullptr)
 	BZERO(this->buf, sizeof this->buf);
 }
 
-dcc_send::dcc_send(const char *p_nick, const std::string &p_full_path)
+dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
     : fileptr(nullptr)
     , bytes_rem(-1)
     , sb(addrof(this->sb_obj))
@@ -608,7 +609,12 @@ subcmd_send(const char *nick, const char *file)
 			    "address");
 		}
 
+#if defined(__cplusplus) && __cplusplus >= 201103L
+		dcc_send send_obj(nick, std::move(full_path));
+#else
 		dcc_send send_obj(nick, full_path);
+#endif
+
 		send_db.push_back(send_obj);
 
 		ret = net_send("PRIVMSG %s :\001SW_DCC SEND " "%" PRIu32 " %ld "
