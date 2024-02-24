@@ -414,33 +414,32 @@ public:
 
 private:
 	char		 buf[255];
-	struct stat	 sb_obj;
-	struct stat	*sb;
+	struct stat	 sb;
 };
 
 dcc_send::dcc_send() : fileptr(nullptr)
     , bytes_rem(-1)
-    , sb(addrof(this->sb_obj))
 {
 	this->nick.assign("");
 	this->full_path.assign("");
 
 	BZERO(addrof(this->buf[0]), sizeof this->buf);
+	BZERO(addrof(this->sb), sizeof this->sb);
 }
 
 dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
     : fileptr(nullptr)
     , bytes_rem(-1)
-    , sb(addrof(this->sb_obj))
 {
 	this->nick.assign(p_nick);
 	this->full_path.assign(p_full_path);
 
 	BZERO(addrof(this->buf[0]), sizeof this->buf);
+	BZERO(addrof(this->sb), sizeof this->sb);
 
 	errno = 0;
 
-	if (stat(p_full_path.c_str(), this->sb) != 0) {
+	if (stat(p_full_path.c_str(), addrof(this->sb)) != 0) {
 		char strerrbuf[MAXERROR] = { '\0' };
 
 		throw std::runtime_error(xstrerror(errno, strerrbuf,
@@ -479,9 +478,7 @@ dcc_send::get_filename(void)
 intmax_t
 dcc_send::get_filesize(void) const
 {
-	if (this->sb == nullptr)
-		return 0;
-	return static_cast<intmax_t>(this->sb->st_size);
+	return static_cast<intmax_t>(this->sb.st_size);
 }
 
 /****************************************************************
