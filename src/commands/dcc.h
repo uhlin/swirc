@@ -34,6 +34,7 @@ typedef int SOCKET;
 #endif
 
 #ifdef __cplusplus
+//lint -sem(dcc_get::destroy,cleanup)
 class dcc_get {
 public:
 	std::string nick;
