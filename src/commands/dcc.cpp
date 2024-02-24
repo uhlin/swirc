@@ -108,6 +108,11 @@ dcc_get::dcc_get(const char *p_nick,
 	this->filename.assign(p_filename);
 }
 
+dcc_get::~dcc_get()
+{
+	debug("%s: destructor called", __func__);
+}
+
 static void
 read_and_write(SSL *ssl, FILE *fp, intmax_t &bytes_rem)
 {
