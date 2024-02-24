@@ -1026,6 +1026,8 @@ dcc::handle_incoming_conn(SSL *ssl)
 	while (ssl != nullptr && !(SSL_get_shutdown(ssl) &
 	    SSL_RECEIVED_SHUTDOWN))
 		(void) napms(100);
+	dcc::shutdown_conn(ssl);
+	send_db.erase(send_db.begin() + pos);
 }
 
 void
