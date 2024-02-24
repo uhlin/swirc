@@ -413,12 +413,13 @@ public:
 
 private:
 	char		 buf[255];
+	struct stat	 sb_obj;
 	struct stat	*sb;
 };
 
 dcc_send::dcc_send() : fileptr(nullptr)
     , bytes_rem(-1)
-    , sb(nullptr)
+    , sb(addrof(this->sb_obj))
 {
 	this->nick.assign("");
 	this->full_path.assign("");
@@ -429,13 +430,12 @@ dcc_send::dcc_send() : fileptr(nullptr)
 dcc_send::dcc_send(const char *p_nick, const std::string &p_full_path)
     : fileptr(nullptr)
     , bytes_rem(-1)
-    , sb(nullptr)
+    , sb(addrof(this->sb_obj))
 {
 	this->nick.assign(p_nick);
 	this->full_path.assign(p_full_path);
 
 	BZERO(this->buf, sizeof this->buf);
-	this->sb = new struct stat;
 
 	errno = 0;
 
@@ -451,13 +451,6 @@ dcc_send::dcc_send(const char *p_nick, const std::string &p_full_path)
 dcc_send::~dcc_send()
 {
 	fclose_and_null(addrof(this->fileptr));
-
-#if 0
-	if (this->sb != nullptr) {
-		delete this->sb;
-		this->sb = nullptr;
-	}
-#endif
 }
 
 const char *
