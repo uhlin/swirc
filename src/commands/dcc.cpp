@@ -643,6 +643,12 @@ subcmd_send(const char *nick, const char *file)
 			send_db.pop_back();
 			throw std::runtime_error("cannot send");
 		}
+
+		printtext_print("sp1", "sending '%s' to %s (%.1f%c)...",
+		    send_obj.get_filename(),
+		    nick,
+		    send_obj.size,
+		    send_obj.unit);
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s", e.what());
 		return;
