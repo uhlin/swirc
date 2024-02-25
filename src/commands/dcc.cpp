@@ -66,6 +66,7 @@
 #include "dcc.h"
 #include "theme.h" /* url_to_file() */
 
+#define DCC_FILE_MAX_SIZE	(g_one_gig * static_cast<intmax_t>(10))
 #define DCC_FILE_REQ_SIZE	130
 #define DCC_IO_BYTES		256
 
@@ -618,7 +619,8 @@ subcmd_send(const char *nick, const char *file)
 #else
 		dcc_send send_obj(nick, full_path);
 #endif
-
+		if (send_obj.get_filesize() > DCC_FILE_MAX_SIZE)
+			throw std::runtime_error("too large file");
 		send_db.push_back(send_obj);
 
 		ret = net_send("PRIVMSG %s :\001SW_DCC SEND " "%" PRIu32 " %ld "
@@ -760,6 +762,8 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 			throw std::runtime_error("error getting the port");
 		else if (sscanf(token[2], "%" SCNdMAX, &filesize) != 1)
 			throw std::runtime_error("error getting the file size");
+		else if (filesize > DCC_FILE_MAX_SIZE)
+			throw std::runtime_error("too large file");
 
 		dcc_get get_obj(nick, token[3], filesize, addr, port);
 		get_db.push_back(get_obj);
