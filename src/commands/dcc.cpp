@@ -783,7 +783,8 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 		dcc_get get_obj(nick, token[3], filesize, addr, port);
 		get_db.push_back(get_obj);
 
-		printtext_print("success", "%s: added: %s", __func__, token[3]);
+		printtext_print("success", "%s: added: '%s' (%.1f%c)", __func__,
+		    token[3], get_obj.size, get_obj.unit);
 		printtext_print("success", "%s: from: %s <%s@%s>", __func__,
 		    nick, user, host);
 		printtext_print("sp1", "To get the file, type:");
