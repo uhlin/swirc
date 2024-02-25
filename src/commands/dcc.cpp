@@ -460,6 +460,8 @@ dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
 		throw std::runtime_error(xstrerror(errno, strerrbuf,
 		    sizeof strerrbuf));
 	}
+
+	dcc::get_file_size(this->get_filesize(), this->size, this->unit);
 }
 
 dcc_send::~dcc_send()
