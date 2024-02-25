@@ -780,7 +780,9 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 		uint16_t	port = 0;
 		intmax_t	filesize = 0;
 
-		if (sscanf(token[0], "%" SCNu32, &addr) != 1)
+		if (!(get_db.size() < GET_DB_MAX))
+			throw std::runtime_error("database full");
+		else if (sscanf(token[0], "%" SCNu32, &addr) != 1)
 			throw std::runtime_error("error getting the address");
 		else if (sscanf(token[1], "%" SCNu16, &port) != 1)
 			throw std::runtime_error("error getting the port");
