@@ -44,6 +44,9 @@ public:
 
 	intmax_t bytes_rem;
 
+	double	size;
+	char	unit;
+
 	dcc_get();
 	dcc_get(const char *, const char *, intmax_t, uint32_t, uint16_t);
 	~dcc_get();

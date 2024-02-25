@@ -81,6 +81,8 @@
 
 dcc_get::dcc_get() : filesize(0)
     , bytes_rem(0)
+    , size(0.0)
+    , unit('B')
     , fileptr(nullptr)
     , sock(INVALID_SOCKET)
     , ssl(nullptr)
@@ -98,6 +100,8 @@ dcc_get::dcc_get(const char *p_nick,
     uint32_t p_addr,
     uint16_t p_port) : filesize(p_filesize)
     , bytes_rem(p_filesize)
+    , size(0.0)
+    , unit('B')
     , fileptr(nullptr)
     , sock(INVALID_SOCKET)
     , ssl(nullptr)
