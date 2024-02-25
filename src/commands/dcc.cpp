@@ -244,6 +244,7 @@ dcc_get::get_file(void)
 			throw std::runtime_error("Change size error");
 #endif
 
+		rewind(this->fileptr);
 		read_and_write(this->ssl, this->fileptr, this->bytes_rem);
 		fclose_and_null(addrof(this->fileptr));
 		printtext_print("success", "%s: wrote: %s", __func__,
