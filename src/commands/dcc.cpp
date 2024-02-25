@@ -605,6 +605,12 @@ subcmd_send(const char *nick, const char *file)
 	} else if (!is_valid_nickname(nick)) {
 		printtext_print("err", "invalid nickname");
 		return;
+	} else if (!is_valid_filename(file)) {
+		printtext_print("err", "invalid filename");
+		return;
+	} else if (!(send_db.size() < SEND_DB_MAX)) {
+		printtext_print("err", "database full");
+		return;
 	}
 
 	std::string full_path(dcc::get_upload_dir());
