@@ -46,7 +46,6 @@ dcc_getit(void *arg)
 
 	obj->get_file();
 	obj->finalize_download();
-	obj->destroy();
 	dcc::exit_thread();
 }
 
