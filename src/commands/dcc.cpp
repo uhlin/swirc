@@ -520,6 +520,9 @@ const int	g_one_gig = 1000000000;
 *                                                               *
 ****************************************************************/
 
+static const std::vector<dcc_get>::size_type	GET_DB_MAX = 100;
+static const std::vector<dcc_send>::size_type	SEND_DB_MAX = 100;
+
 static std::vector<dcc_get>	get_db;
 static std::vector<dcc_send>	send_db;
 
