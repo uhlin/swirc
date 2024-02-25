@@ -111,6 +111,8 @@ dcc_get::dcc_get(const char *p_nick,
 {
 	this->nick.assign(p_nick);
 	this->filename.assign(p_filename);
+
+	dcc::get_file_size(p_filesize, this->size, this->unit);
 }
 
 dcc_get::~dcc_get()
