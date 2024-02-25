@@ -163,8 +163,12 @@ dcc_get::destroy(void)
 {
 	if (this->sock != INVALID_SOCKET) {
 #if defined(UNIX)
+		if (shutdown(this->sock, SHUT_RDWR) == -1)
+			err_log(errno, "%s: shutdown", __func__);
 		(void) close(this->sock);
 #elif defined(WIN32)
+		if (shutdown(this->sock, SD_BOTH) != 0)
+			err_log(errno, "%s: shutdown", __func__);
 		(void) closesocket(this->sock);
 #endif
 		this->sock = INVALID_SOCKET;
