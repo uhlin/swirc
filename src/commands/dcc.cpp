@@ -809,13 +809,13 @@ dcc::get_file_size(const intmax_t bytes, double &size, char &unit)
 		size = 0.0;
 		unit = 'B';
 	} else if (bytes >= g_one_gig) {
-		size = static_cast<double>(bytes / g_one_gig);
+		size = static_cast<double>(bytes) / g_one_gig;
 		unit = 'G';
 	} else if (bytes >= g_one_meg) {
-		size = static_cast<double>(bytes / g_one_meg);
+		size = static_cast<double>(bytes) / g_one_meg;
 		unit = 'M';
 	} else if (bytes >= g_one_kilo) {
-		size = static_cast<double>(bytes / g_one_kilo);
+		size = static_cast<double>(bytes) / g_one_kilo;
 		unit = 'K';
 	} else {
 		size = static_cast<double>(bytes);
