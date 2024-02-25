@@ -389,6 +389,8 @@ dcc_get::request_file(void)
 		ERR_clear_error();
 
 		if ((ret = SSL_write(this->ssl, bufptr, buflen)) > 0) {
+			if (BIO_flush(SSL_get_wbio(this->ssl)) != 1)
+				debug("%s: error flushing write bio", __func__);
 			bufptr += ret;
 			buflen -= ret;
 		} else {
@@ -970,6 +972,8 @@ send_bytes(SSL *ssl, const char *buf, const int bytes, intmax_t &bytes_rem)
 		ERR_clear_error();
 
 		if ((ret = SSL_write(ssl, bufptr, buflen)) > 0) {
+			if (BIO_flush(SSL_get_wbio(ssl)) != 1)
+				debug("%s: error flushing write bio", __func__);
 			bufptr += ret;
 			buflen -= ret;
 			bytes_rem -= ret;
