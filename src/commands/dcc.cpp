@@ -991,12 +991,10 @@ send_bytes(SSL *ssl, const char *buf, const int bytes, intmax_t &bytes_rem)
 	return OK;
 }
 
-void
-dcc::handle_incoming_conn(SSL *ssl)
+static int
+accept_incoming(SSL *ssl)
 {
 	bool	loop = true;
-
-	block_signals();
 
 	while (loop) {
 		const int ret = SSL_accept(ssl);
@@ -1005,7 +1003,7 @@ dcc::handle_incoming_conn(SSL *ssl)
 		case 0:
 			debug("%s: SSL_accept: The TLS/SSL handshake was not "
 			    "successful", __func__);
-			return;
+			return ERR;
 		case 1:
 			debug("%s: SSL_accept: The TLS/SSL handshake was "
 			    "successfully completed", __func__);
@@ -1021,9 +1019,20 @@ dcc::handle_incoming_conn(SSL *ssl)
 			debug("%s: SSL_accept: The TLS/SSL handshake was not "
 			    "successful because a fatal error occurred",
 			    __func__);
-			return;
+			return ERR;
 		}
 	}
+
+	return OK;
+}
+
+void
+dcc::handle_incoming_conn(SSL *ssl)
+{
+	block_signals();
+
+	if (accept_incoming(ssl) != OK)
+		return;
 
 	std::string nick("");
 	std::string filename("");
