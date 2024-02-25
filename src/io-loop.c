@@ -244,7 +244,7 @@ get_error_log_size(double *size)
 		return false;
 	}
 
-	*size = (double) (sb.st_size / 1000);
+	*size = (double) (sb.st_size / 1000.0);
 	return true;
 }
 
