@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 - Fixed building on any setup where Ncurses is built with opaque
   types.
 - Fixed new [Coverity](https://scan.coverity.com/) defects
+- Fixed the precision of the error log size in KB.
 - Improved C++ exception handling. Among other things, handle if 'new'
   throws.
 - Renamed option `ircv3_server_time` to `server_time` and enabled it
