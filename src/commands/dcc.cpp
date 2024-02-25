@@ -1091,6 +1091,11 @@ dcc::handle_incoming_conn(SSL *ssl)
 void
 dcc::shutdown_conn(SSL *ssl)
 {
+	if (SSL_get_shutdown(ssl) & SSL_SENT_SHUTDOWN) {
+		debug("%s: already sent shutdown", __func__);
+		return;
+	}
+
 	switch (SSL_shutdown(ssl)) {
 	case 0:
 		debug("%s: SSL_shutdown: not yet finished", __func__);
