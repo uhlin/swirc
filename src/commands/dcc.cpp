@@ -413,6 +413,9 @@ public:
 	FILE		*fileptr;
 	intmax_t	 bytes_rem;
 
+	double	size;
+	char	unit;
+
 	dcc_send();
 	dcc_send(const char *, const std::string);
 	~dcc_send();
@@ -427,6 +430,8 @@ private:
 
 dcc_send::dcc_send() : fileptr(nullptr)
     , bytes_rem(-1)
+    , size(0.0)
+    , unit('B')
 {
 	this->nick.assign("");
 	this->full_path.assign("");
@@ -438,6 +443,8 @@ dcc_send::dcc_send() : fileptr(nullptr)
 dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
     : fileptr(nullptr)
     , bytes_rem(-1)
+    , size(0.0)
+    , unit('B')
 {
 	this->nick.assign(p_nick);
 	this->full_path.assign(p_full_path);
