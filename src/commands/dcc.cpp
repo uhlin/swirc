@@ -789,12 +789,12 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 		dcc_get get_obj(nick, token[3], filesize, addr, port);
 		get_db.push_back(get_obj);
 
-		printtext_print("success", "%s: added: '%s' (%.1f%c)", __func__,
+		printtext_print("sp3", "%s: added: '%s' (%.1f%c)", __func__,
 		    token[3], get_obj.size, get_obj.unit);
-		printtext_print("success", "%s: from: %s <%s@%s>", __func__,
+		printtext_print("sp3", "%s: from: %s <%s@%s>", __func__,
 		    nick, user, host);
-		printtext_print("sp1", "To get the file, type:");
-		printtext_print("sp1", "  /dcc get %s %s", nick, token[3]);
+		printtext_print("sp2", "To get the file, type:");
+		printtext_print("sp2", "  /dcc get %s %s", nick, token[3]);
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s: %s", __func__, e.what());
 		printtext_print("err", "%s: %s <%s@%s>", __func__, nick,
