@@ -536,7 +536,7 @@ static std::vector<dcc_send>	send_db;
 static bool
 subcmd_ok(const char *subcmd)
 {
-	if (strings_match(subcmd, "close"))
+	if (strings_match(subcmd, "clear"))
 		return true;
 	else if (strings_match(subcmd, "get"))
 		return true;
@@ -548,7 +548,7 @@ subcmd_ok(const char *subcmd)
 }
 
 static void
-subcmd_close()
+subcmd_clear()
 {
 }
 
@@ -668,7 +668,7 @@ subcmd_send(const char *nick, const char *file)
 }
 
 /*
- * usage: /dcc [close|get|list|send] [args]
+ * usage: /dcc [clear|get|list|send] [args]
  */
 void
 cmd_dcc(const char *data)
@@ -699,8 +699,8 @@ cmd_dcc(const char *data)
 	arg1 = strtok_r(nullptr, sep, &last);
 	arg2 = strtok_r(nullptr, sep, &last);
 
-	if (strings_match(subcmd, "close"))
-		subcmd_close();
+	if (strings_match(subcmd, "clear"))
+		subcmd_clear();
 	else if (strings_match(subcmd, "get"))
 		subcmd_get(arg1, arg2);
 	else if (strings_match(subcmd, "list"))
