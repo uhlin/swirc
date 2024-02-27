@@ -249,7 +249,7 @@ dcc_get::get_file(void)
 		std::string path(g_dcc_download_dir);
 		(void) path.append(SLASH).append(this->filename);
 
-		if ((this->fileptr = xfopen(path.c_str(), "a+")) == nullptr)
+		if ((this->fileptr = xfopen(path.c_str(), "ab")) == nullptr)
 			throw std::runtime_error("Open failed");
 
 #if defined(UNIX)
