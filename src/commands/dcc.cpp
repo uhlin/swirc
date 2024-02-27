@@ -233,7 +233,7 @@ dcc_get::get_file(void)
 		std::string path(g_dcc_download_dir);
 		(void) path.append(SLASH).append(this->filename);
 
-		if ((this->fileptr = xfopen(path.c_str(), "a")) == nullptr)
+		if ((this->fileptr = xfopen(path.c_str(), "a+")) == nullptr)
 			throw std::runtime_error("Open failed");
 
 #if defined(UNIX)
@@ -244,7 +244,7 @@ dcc_get::get_file(void)
 			throw std::runtime_error("Change size error");
 #endif
 
-		rewind(this->fileptr);
+		(void) fseek(this->fileptr, 0L, SEEK_END);
 		read_and_write(this->ssl, this->fileptr, this->bytes_rem);
 		fclose_and_null(addrof(this->fileptr));
 		printtext_print("success", "%s: wrote: %s", __func__,
