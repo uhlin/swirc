@@ -116,6 +116,22 @@ dcc_get::dcc_get(const char *p_nick,
 	dcc::get_file_size(p_filesize, this->size, this->unit);
 }
 
+dcc_get::dcc_get(const dcc_get &obj) : nick(obj.nick)
+    , filename(obj.filename)
+    , filesize(obj.filesize)
+    , bytes_rem(obj.bytes_rem)
+    , size(obj.size)
+    , unit(obj.unit)
+    , fileptr(nullptr)
+    , sock(INVALID_SOCKET)
+    , ssl(nullptr)
+    , ssl_ctx(nullptr)
+    , addr(obj.addr)
+    , port(obj.port)
+{
+	debug("%s: copy constructor called", __func__);
+}
+
 dcc_get::~dcc_get()
 {
 	debug("%s: destructor called", __func__);
