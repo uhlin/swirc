@@ -712,11 +712,34 @@ cmd_dcc(const char *data)
 	free(dcopy);
 }
 
+static bool
+has_all_certs(void)
+{
+	std::string path[4];
+
+	(void) path[0].assign(g_home_dir).append(SLASH).append(ROOT_PEM);
+	(void) path[1].assign(g_home_dir).append(SLASH).append(SERVER_CA_PEM);
+	(void) path[2].assign(g_home_dir).append(SLASH).append(SERVER_PEM);
+	(void) path[3].assign(g_home_dir).append(SLASH).append(CLIENT_PEM);
+
+	if (!file_exists(path[0].c_str()) || !file_exists(path[1].c_str()) ||
+	    !file_exists(path[2].c_str()) || !file_exists(path[3].c_str()))
+		return false;
+
+	return true;
+}
+
 void
 dcc::init(void)
 {
 	if (config_bool("dcc", true)) {
 		struct integer_context intctx("dcc_port", 1024, 65535, 8080);
+
+		if (!has_all_certs()) {
+			printtext_print("warn", "Missing certs. Not starting "
+			    "the DCC server. Please create them.");
+			return;
+		}
 
 		tls_server::begin(config_integer(&intctx));
 	}
