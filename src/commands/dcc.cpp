@@ -1107,7 +1107,7 @@ dcc::handle_incoming_conn(SSL *ssl)
 		printtext_print("warn", "%s: already sent file", __func__);
 		return;
 	} else if (send_obj->fileptr == nullptr && (send_obj->fileptr =
-	    xfopen(send_obj->full_path.c_str(), "r")) == nullptr) {
+	    xfopen(send_obj->full_path.c_str(), "rb")) == nullptr) {
 		printtext_print("warn", "%s: file open error", __func__);
 		return;
 	}
