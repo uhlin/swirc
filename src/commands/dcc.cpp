@@ -1134,11 +1134,17 @@ dcc::shutdown_conn(SSL *ssl)
 bool
 dcc::want_unveil_uploads(void)
 {
-	const char *dir = Config("dcc_upload_dir");
+	const char	*dir = Config("dcc_upload_dir");
+	size_t		 len1, len2;
 
 	if (strings_match(dir, ""))
 		return false;
-	else if (strncmp(dir, g_home_dir, strlen(g_home_dir)) == 0)
+
+	len1 = strlen(dir);
+	len2 = strlen(g_home_dir);
+
+	if (len1 >= len2 && strncmp(dir, g_home_dir, MIN(len1, len2)) ==
+	    STRINGS_MATCH)
 		return false;
 	return true;
 }
