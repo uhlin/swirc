@@ -980,7 +980,7 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 	char			*token[4] = { nullptr };
 	static const char	 sep[] = "\n";
 
-	if (strings_match(data, ""))
+	if (!is_valid_nickname(nick) || strings_match(data, ""))
 		return;
 
 	dcopy = sw_strdup(data);
