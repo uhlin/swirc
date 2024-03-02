@@ -651,8 +651,8 @@ find_send_obj(const std::string &nick, const char *filename,
 	pos = 0;
 
 	for (dcc_send &x : send_db) {
-		if (x.nick.compare(nick) == 0 && strings_match(x.get_filename(),
-		    filename))
+		if (x.nick.compare(nick) == 0 &&
+		    strings_match(x.get_filename(), filename))
 			return true;
 
 		pos++;
