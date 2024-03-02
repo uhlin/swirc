@@ -9,10 +9,10 @@
 #endif
 
 #include <stdint.h> /* uint32_t */
-
 #ifdef __cplusplus
 #include <string>
 #endif
+#include <time.h>
 
 #if defined(UNIX)
 #define PATH_SEP '/'
@@ -46,6 +46,9 @@ public:
 
 	double	size;
 	char	unit;
+
+	time_t	start;
+	time_t	stop;
 
 	dcc_get();
 	dcc_get(const char *, const char *, intmax_t, uint32_t, uint16_t);

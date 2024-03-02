@@ -85,6 +85,8 @@ dcc_get::dcc_get() : filesize(0)
     , bytes_rem(0)
     , size(0.0)
     , unit('B')
+    , start(g_time_error)
+    , stop(g_time_error)
     , fileptr(nullptr)
     , sock(INVALID_SOCKET)
     , ssl(nullptr)
@@ -104,6 +106,8 @@ dcc_get::dcc_get(const char *p_nick,
     , bytes_rem(p_filesize)
     , size(0.0)
     , unit('B')
+    , start(g_time_error)
+    , stop(g_time_error)
     , fileptr(nullptr)
     , sock(INVALID_SOCKET)
     , ssl(nullptr)
@@ -123,6 +127,8 @@ dcc_get::dcc_get(const dcc_get &obj) : nick(obj.nick)
     , bytes_rem(obj.bytes_rem)
     , size(obj.size)
     , unit(obj.unit)
+    , start(g_time_error)
+    , stop(g_time_error)
     , fileptr(nullptr)
     , sock(INVALID_SOCKET)
     , ssl(nullptr)
@@ -144,6 +150,8 @@ dcc_get &dcc_get::operator=(const dcc_get &obj)
 	this->bytes_rem  = obj.bytes_rem;
 	this->size       = obj.size;
 	this->unit       = obj.unit;
+	this->start      = obj.start;
+	this->stop       = obj.stop;
 	this->fileptr    = nullptr;
 	this->sock       = INVALID_SOCKET;
 	this->ssl        = nullptr;
