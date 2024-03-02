@@ -628,6 +628,40 @@ static std::vector<dcc_send>	send_db;
 ****************************************************************/
 
 static bool
+find_get_obj(const char *nick, const char *file, std::vector<dcc_get>::size_type
+    &pos)
+{
+	pos = 0;
+
+	for (dcc_get &x : get_db) {
+		if (strings_match(x.nick.c_str(), nick) &&
+		    strings_match(x.filename.c_str(), file))
+			return true;
+
+		pos++;
+	}
+
+	return false;
+}
+
+static bool
+find_send_obj(const std::string &nick, const char *filename,
+    std::vector<dcc_send>::size_type &pos)
+{
+	pos = 0;
+
+	for (dcc_send &x : send_db) {
+		if (x.nick.compare(nick) == 0 && strings_match(x.get_filename(),
+		    filename))
+			return true;
+
+		pos++;
+	}
+
+	return false;
+}
+
+static bool
 subcmd_ok(const char *subcmd)
 {
 	if (strings_match(subcmd, "clear"))
@@ -644,23 +678,6 @@ subcmd_ok(const char *subcmd)
 static void
 subcmd_clear()
 {
-}
-
-static bool
-find_get_obj(const char *nick, const char *file, std::vector<dcc_get>::size_type
-    &pos)
-{
-	pos = 0;
-
-	for (dcc_get &x : get_db) {
-		if (strings_match(x.nick.c_str(), nick) &&
-		    strings_match(x.filename.c_str(), file))
-			return true;
-
-		pos++;
-	}
-
-	return false;
 }
 
 static void
@@ -1155,23 +1172,6 @@ read_request(SSL *ssl, std::string &nick, std::string &filename)
 	(void) filename.assign(token[1]);
 
 	return OK;
-}
-
-static bool
-find_send_obj(const std::string &nick, const char *filename,
-    std::vector<dcc_send>::size_type &pos)
-{
-	pos = 0;
-
-	for (dcc_send &x : send_db) {
-		if (x.nick.compare(nick) == 0 && strings_match(x.get_filename(),
-		    filename))
-			return true;
-
-		pos++;
-	}
-
-	return false;
 }
 
 static int
