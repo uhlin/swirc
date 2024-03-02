@@ -795,7 +795,8 @@ dup_check_send(const char *nick, const char *file)
 static void
 subcmd_send(const char *nick, const char *file)
 {
-	struct integer_context intctx("dcc_port", 1024, 65535, 8080);
+	char			*nick_lc = nullptr;
+	struct integer_context	 intctx("dcc_port", 1024, 65535, 8080);
 
 	if (nick == nullptr || file == nullptr) {
 		printtext_print("err", "insufficient args");
@@ -832,12 +833,13 @@ subcmd_send(const char *nick, const char *file)
 			    "address");
 		}
 
-		dup_check_send(nick, file);
+		nick_lc = strToLower(sw_strdup(nick));
+		dup_check_send(nick_lc, file);
 
 #if defined(__cplusplus) && __cplusplus >= 201103L
-		dcc_send send_obj(nick, std::move(full_path));
+		dcc_send send_obj(nick_lc, std::move(full_path));
 #else
-		dcc_send send_obj(nick, full_path);
+		dcc_send send_obj(nick_lc, full_path);
 #endif
 		if (send_obj.get_filesize() > DCC_FILE_MAX_SIZE)
 			throw std::runtime_error("too large file");
@@ -845,7 +847,7 @@ subcmd_send(const char *nick, const char *file)
 
 		ret = net_send("PRIVMSG %s :\001SW_DCC SEND " "%" PRIu32 " %ld "
 		    "%" PRIdMAX " %s\001",
-		    nick,
+		    nick_lc,
 		    addr,
 		    config_integer(&intctx),
 		    send_obj.get_filesize(),
@@ -862,8 +864,9 @@ subcmd_send(const char *nick, const char *file)
 		    send_obj.unit);
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s", e.what());
-		return;
 	}
+
+	free(nick_lc);
 }
 
 /*
