@@ -158,7 +158,12 @@ dcc_get &dcc_get::operator=(const dcc_get &obj)
 dcc_get::~dcc_get()
 {
 	debug("%s: destructor called", __func__);
-	this->destroy();
+
+	try {
+		this->destroy();
+	} catch (...) {
+		/* null */;
+	}
 }
 
 static void
