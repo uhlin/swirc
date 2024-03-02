@@ -297,7 +297,11 @@ dcc_get::get_file(void)
 #endif
 
 		(void) fseek(this->fileptr, 0L, SEEK_END);
+
+		this->start = time(nullptr);
 		read_and_write(this->ssl, this->fileptr, this->bytes_rem);
+		this->stop = time(nullptr);
+
 		fclose_and_null(addrof(this->fileptr));
 		printtext_print("success", "%s: wrote: %s", __func__,
 		    path.c_str());
