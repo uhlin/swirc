@@ -924,6 +924,19 @@ dcc::deinit(void)
 		send_db.clear();
 }
 
+static void
+dup_check(const char *nick, const char *file)
+{
+	std::vector<dcc_get>::size_type pos = 0;
+
+	if (!find_get_obj(nick, file, pos))
+		return;
+	else if (!get_db[pos].has_completed())
+		throw std::runtime_error("a such nick/file already exists");
+	else
+		get_db.erase(get_db.begin() + pos);
+}
+
 void
 dcc::add_file(const char *nick, const char *user, const char *host,
     const char *data)
@@ -984,6 +997,8 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 			throw std::runtime_error("error getting the file size");
 		else if (filesize > DCC_FILE_MAX_SIZE)
 			throw std::runtime_error("too large file");
+
+		dup_check(nick, token[3]);
 
 		dcc_get get_obj(nick, token[3], filesize, addr, port);
 		get_db.push_back(get_obj);
