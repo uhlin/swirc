@@ -53,11 +53,11 @@ public:
 	dcc_get &operator=(const dcc_get &);
 	~dcc_get();
 
-	void destroy(void);
-	void finalize_download(void);
-	void get_file(void);
-	double get_percent(void);
-	bool has_completed(void);
+	void	destroy(void);
+	void	finalize_download(void);
+	void	get_file(void);
+	double	get_percent(void);
+	bool	has_completed(void);
 
 private:
 	FILE		*fileptr;
