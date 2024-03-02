@@ -296,6 +296,14 @@ dcc_get::get_file(void)
 }
 
 bool
+dcc_get::has_completed(void)
+{
+	if (!(this->filesize > 0))
+		return false;
+	return (this->bytes_rem == 0);
+}
+
+bool
 dcc_get::create_socket(void)
 {
 	if (this->sock != INVALID_SOCKET)
@@ -468,6 +476,7 @@ public:
 
 	const char	*get_filename(void);
 	intmax_t	 get_filesize(void) const;
+	bool		 has_completed(void);
 
 private:
 	char		 buf[255];
@@ -542,6 +551,12 @@ intmax_t
 dcc_send::get_filesize(void) const
 {
 	return static_cast<intmax_t>(this->sb.st_size);
+}
+
+bool
+dcc_send::has_completed(void)
+{
+	return (this->bytes_rem == 0);
 }
 
 /****************************************************************
