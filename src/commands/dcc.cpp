@@ -976,6 +976,7 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 {
 	char			*dcopy;
 	char			*last = const_cast<char *>("");
+	char			*nick_lc = nullptr;
 	char			*token[4] = { nullptr };
 	static const char	 sep[] = "\n";
 
@@ -1031,9 +1032,11 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 		else if (filesize > DCC_FILE_MAX_SIZE)
 			throw std::runtime_error("too large file");
 
-		dup_check(nick, token[3]);
+		nick_lc = strToLower(sw_strdup(nick));
 
-		dcc_get get_obj(nick, token[3], filesize, addr, port);
+		dup_check(nick_lc, token[3]);
+
+		dcc_get get_obj(nick_lc, token[3], filesize, addr, port);
 		get_db.push_back(get_obj);
 
 		printtext_print("sp3", "%s: added: '%s' (%.1f%c)", __func__,
@@ -1041,7 +1044,7 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 		printtext_print("sp3", "%s: from: %s <%s@%s>", __func__,
 		    nick, user, host);
 		printtext_print("sp2", "To get the file, type:");
-		printtext_print("sp2", "  /dcc get %s %s", nick, token[3]);
+		printtext_print("sp2", "  /dcc get %s %s", nick_lc, token[3]);
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s: %s", __func__, e.what());
 		printtext_print("err", "%s: %s <%s@%s>", __func__, nick,
@@ -1049,6 +1052,7 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 	}
 
 	free(dcopy);
+	free(nick_lc);
 }
 
 void
