@@ -864,6 +864,8 @@ subcmd_send(const char *nick, const char *file)
 		    send_obj.unit);
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s", e.what());
+	} catch (...) {
+		/* null */;
 	}
 
 	free(nick_lc);
