@@ -132,6 +132,28 @@ dcc_get::dcc_get(const dcc_get &obj) : nick(obj.nick)
 	debug("%s: copy constructor called", __func__);
 }
 
+dcc_get &dcc_get::operator=(const dcc_get &obj)
+{
+	if (&obj == this)
+		return *this;
+
+	this->nick       = obj.nick;
+	this->filename   = obj.filename;
+	this->filesize   = obj.filesize;
+	this->bytes_rem  = obj.bytes_rem;
+	this->size       = obj.size;
+	this->unit       = obj.unit;
+	this->fileptr    = nullptr;
+	this->sock       = INVALID_SOCKET;
+	this->ssl        = nullptr;
+	this->ssl_ctx    = nullptr;
+	this->addr       = obj.addr;
+	this->port       = obj.port;
+
+	debug("%s: copy assignment called", __func__);
+	return *this;
+}
+
 dcc_get::~dcc_get()
 {
 	debug("%s: destructor called", __func__);
