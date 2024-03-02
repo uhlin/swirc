@@ -296,7 +296,7 @@ dcc_get::get_file(void)
 }
 
 double
-dcc_get::get_percent(void)
+dcc_get::get_percent(void) const
 {
 	double ret;
 
@@ -307,7 +307,7 @@ dcc_get::get_percent(void)
 }
 
 bool
-dcc_get::has_completed(void)
+dcc_get::has_completed(void) const
 {
 	if (!(this->filesize > 0))
 		return false;
@@ -487,8 +487,8 @@ public:
 
 	const char	*get_filename(void);
 	intmax_t	 get_filesize(void) const;
-	double		 get_percent(void);
-	bool		 has_completed(void);
+	double		 get_percent(void) const;
+	bool		 has_completed(void) const;
 
 private:
 	char		 buf[255];
@@ -566,7 +566,7 @@ dcc_send::get_filesize(void) const
 }
 
 double
-dcc_send::get_percent(void)
+dcc_send::get_percent(void) const
 {
 	double ret;
 
@@ -577,7 +577,7 @@ dcc_send::get_percent(void)
 }
 
 bool
-dcc_send::has_completed(void)
+dcc_send::has_completed(void) const
 {
 	return (this->bytes_rem == 0);
 }

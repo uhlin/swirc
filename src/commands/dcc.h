@@ -56,8 +56,8 @@ public:
 	void	destroy(void);
 	void	finalize_download(void);
 	void	get_file(void);
-	double	get_percent(void);
-	bool	has_completed(void);
+	double	get_percent(void) const;
+	bool	has_completed(void) const;
 
 private:
 	FILE		*fileptr;
