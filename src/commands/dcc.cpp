@@ -892,6 +892,8 @@ dcc::init(void)
 		if (!has_all_certs()) {
 			printtext_print("warn", "Missing certs. Not starting "
 			    "the DCC server. Please create them.");
+			printtext_print("warn", "(%s, %s, %s and %s)", ROOT_PEM,
+			    SERVER_CA_PEM, SERVER_PEM, CLIENT_PEM);
 			return;
 		}
 
