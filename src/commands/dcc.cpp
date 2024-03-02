@@ -61,6 +61,7 @@
 #include "../printtext.h"
 #include "../sig.h"
 #include "../strHand.h"
+#include "../theme.h"
 #include "../tls-server.h"
 
 #include "dcc.h"
@@ -629,8 +630,72 @@ subcmd_get(const char *nick, const char *file)
 }
 
 static void
-subcmd_list()
+list_get(void)
 {
+	PRINTTEXT_CONTEXT	ctx;
+	long int		objnum = 0;
+
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
+
+	for (dcc_get &x : get_db) {
+		printtext(&ctx, "----- %sGet object%s: %ld -----",
+		    COLOR1, TXT_NORMAL, objnum);
+		printtext(&ctx, "%sFrom%s: %s", COLOR2, TXT_NORMAL,
+		    x.nick.c_str());
+		printtext(&ctx, "%sName%s: %s", COLOR2, TXT_NORMAL,
+		    x.filename.c_str());
+		printtext(&ctx, "%sSize%s: %.1f%c", COLOR2, TXT_NORMAL,
+		    x.size, x.unit);
+		objnum++;
+	}
+
+	ctx.spec_type = TYPE_SPEC1_WARN;
+
+	if (objnum == 0)
+		printtext(&ctx, "Zero get objects...");
+}
+
+static void
+list_send(void)
+{
+	PRINTTEXT_CONTEXT	ctx;
+	long int		objnum = 0;
+
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
+
+	for (dcc_send &x : send_db) {
+		printtext(&ctx, "----- %sSend object%s: %ld -----",
+		    COLOR1, TXT_NORMAL, objnum);
+		printtext(&ctx, "%sTo%s:   %s", COLOR2, TXT_NORMAL,
+		    x.nick.c_str());
+		printtext(&ctx, "%sName%s: %s", COLOR2, TXT_NORMAL,
+		    x.get_filename());
+		printtext(&ctx, "%sSize%s: %.1f%c", COLOR2, TXT_NORMAL,
+		    x.size, x.unit);
+		objnum++;
+	}
+
+	ctx.spec_type = TYPE_SPEC1_WARN;
+
+	if (objnum == 0)
+		printtext(&ctx, "Zero send objects...");
+}
+
+static void
+subcmd_list(const char *what)
+{
+	if (what == nullptr || strings_match(what, "")) {
+		printtext_print("err", "insufficient args");
+	} else if (strings_match(what, "get")) {
+		list_get();
+	} else if (strings_match(what, "send")) {
+		list_send();
+	} else if (strings_match(what, "all")) {
+		list_get();
+		list_send();
+	} else {
+		printtext_print("err", "what? get, send or all");
+	}
 }
 
 static void
@@ -742,7 +807,7 @@ cmd_dcc(const char *data)
 	else if (strings_match(subcmd, "get"))
 		subcmd_get(arg1, arg2);
 	else if (strings_match(subcmd, "list"))
-		subcmd_list();
+		subcmd_list(arg1);
 	else if (strings_match(subcmd, "send"))
 		subcmd_send(arg1, arg2);
 	else
