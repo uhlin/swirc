@@ -295,6 +295,17 @@ dcc_get::get_file(void)
 	}
 }
 
+double
+dcc_get::get_percent(void)
+{
+	double ret;
+
+	if (this->bytes_rem < 0 || size == 0.0)
+		return 0.0;
+	ret = ((this->bytes_rem / size) * 100.0);
+	return ret;
+}
+
 bool
 dcc_get::has_completed(void)
 {
@@ -476,6 +487,7 @@ public:
 
 	const char	*get_filename(void);
 	intmax_t	 get_filesize(void) const;
+	double		 get_percent(void);
 	bool		 has_completed(void);
 
 private:
@@ -551,6 +563,17 @@ intmax_t
 dcc_send::get_filesize(void) const
 {
 	return static_cast<intmax_t>(this->sb.st_size);
+}
+
+double
+dcc_send::get_percent(void)
+{
+	double ret;
+
+	if (this->bytes_rem < 0 || size == 0.0)
+		return 0.0;
+	ret = ((this->bytes_rem / size) * 100.0);
+	return ret;
 }
 
 bool
