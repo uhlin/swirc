@@ -779,6 +779,20 @@ subcmd_list(const char *what)
 }
 
 static void
+dup_check_send(const char *nick, const char *file)
+{
+	std::string str(nick);
+	std::vector<dcc_get>::size_type pos = 0;
+
+	if (!find_send_obj(str, file, pos))
+		return;
+	else if (!send_db[pos].has_completed())
+		throw std::runtime_error("already sending a such nick/file");
+	else
+		send_db.erase(send_db.begin() + pos);
+}
+
+static void
 subcmd_send(const char *nick, const char *file)
 {
 	struct integer_context intctx("dcc_port", 1024, 65535, 8080);
@@ -817,6 +831,8 @@ subcmd_send(const char *nick, const char *file)
 			throw std::runtime_error("error getting the remote "
 			    "address");
 		}
+
+		dup_check_send(nick, file);
 
 #if defined(__cplusplus) && __cplusplus >= 201103L
 		dcc_send send_obj(nick, std::move(full_path));
