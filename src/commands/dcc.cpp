@@ -1291,10 +1291,6 @@ dcc::handle_incoming_conn(SSL *ssl)
 		return;
 	}
 
-	// XXX
-	if (send_obj->bytes_rem == -1)
-		send_obj->bytes_rem = send_obj->get_filesize();
-
 	while (send_obj->bytes_rem > 0) {
 		char			buf[DCC_IO_BYTES] = { '\0' };
 		int			bytes;
