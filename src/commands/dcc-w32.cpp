@@ -45,7 +45,8 @@ dcc_getit(void *arg)
 	dcc_get *obj = static_cast<dcc_get *>(arg);
 
 	obj->get_file();
-	obj->finalize_download();
+//	obj->finalize_download();
+	obj->destroy();
 	dcc::exit_thread();
 }
 
