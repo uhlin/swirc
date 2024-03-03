@@ -661,6 +661,33 @@ find_send_obj(const std::string &nick, const char *filename,
 	return false;
 }
 
+static void
+dup_check(const char *nick, const char *file)
+{
+	std::vector<dcc_get>::size_type pos = 0;
+
+	if (!find_get_obj(nick, file, pos))
+		return;
+	else if (!get_db[pos].has_completed())
+		throw std::runtime_error("a such nick/file already exists");
+	else
+		get_db.erase(get_db.begin() + pos);
+}
+
+static void
+dup_check_send(const char *nick, const char *file)
+{
+	std::string str(nick);
+	std::vector<dcc_get>::size_type pos = 0;
+
+	if (!find_send_obj(str, file, pos))
+		return;
+	else if (!send_db[pos].has_completed())
+		throw std::runtime_error("already sending a such nick/file");
+	else
+		send_db.erase(send_db.begin() + pos);
+}
+
 static bool
 subcmd_ok(const char *subcmd)
 {
@@ -776,20 +803,6 @@ subcmd_list(const char *what)
 	} else {
 		printtext_print("err", "what? get, send or all");
 	}
-}
-
-static void
-dup_check_send(const char *nick, const char *file)
-{
-	std::string str(nick);
-	std::vector<dcc_get>::size_type pos = 0;
-
-	if (!find_send_obj(str, file, pos))
-		return;
-	else if (!send_db[pos].has_completed())
-		throw std::runtime_error("already sending a such nick/file");
-	else
-		send_db.erase(send_db.begin() + pos);
 }
 
 static void
@@ -960,19 +973,6 @@ dcc::deinit(void)
 		get_db.clear();
 	if (!send_db.empty())
 		send_db.clear();
-}
-
-static void
-dup_check(const char *nick, const char *file)
-{
-	std::vector<dcc_get>::size_type pos = 0;
-
-	if (!find_get_obj(nick, file, pos))
-		return;
-	else if (!get_db[pos].has_completed())
-		throw std::runtime_error("a such nick/file already exists");
-	else
-		get_db.erase(get_db.begin() + pos);
 }
 
 void
