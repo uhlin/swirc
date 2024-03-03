@@ -678,7 +678,7 @@ static void
 dup_check_send(const char *nick, const char *file)
 {
 	std::string str(nick);
-	std::vector<dcc_get>::size_type pos = 0;
+	std::vector<dcc_send>::size_type pos = 0;
 
 	if (!find_send_obj(str, file, pos))
 		return;
