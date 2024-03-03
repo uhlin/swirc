@@ -492,7 +492,7 @@ public:
 	~dcc_send();
 
 	const char	*get_filename(void);
-	intmax_t	 get_filesize(void) const; // XXX
+	intmax_t	 get_filesize(void) const;
 	bool		 has_completed(void) const;
 
 private:
