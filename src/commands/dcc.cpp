@@ -501,7 +501,7 @@ private:
 };
 
 dcc_send::dcc_send() : fileptr(nullptr)
-    , bytes_rem(-1)
+    , bytes_rem(0)
     , size(0.0)
     , unit('B')
 {
@@ -514,7 +514,7 @@ dcc_send::dcc_send() : fileptr(nullptr)
 
 dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
     : fileptr(nullptr)
-    , bytes_rem(-1)
+    , bytes_rem(0)
     , size(0.0)
     , unit('B')
 {
