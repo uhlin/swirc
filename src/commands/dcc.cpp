@@ -312,17 +312,6 @@ dcc_get::get_file(void)
 	}
 }
 
-double
-dcc_get::get_percent(void) const
-{
-	double ret;
-
-	if (this->bytes_rem < 0 || size == 0.0)
-		return 0.0;
-	ret = ((this->bytes_rem / size) * 100.0);
-	return ret;
-}
-
 bool
 dcc_get::has_completed(void) const
 {
@@ -503,8 +492,7 @@ public:
 	~dcc_send();
 
 	const char	*get_filename(void);
-	intmax_t	 get_filesize(void) const;
-	double		 get_percent(void) const;
+	intmax_t	 get_filesize(void) const; // XXX
 	bool		 has_completed(void) const;
 
 private:
@@ -545,6 +533,7 @@ dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
 		    sizeof strerrbuf));
 	}
 
+	this->bytes_rem = this->get_filesize();
 	dcc::get_file_size(this->get_filesize(), this->size, this->unit);
 }
 
@@ -582,17 +571,6 @@ dcc_send::get_filesize(void) const
 	return static_cast<intmax_t>(this->sb.st_size);
 }
 
-double
-dcc_send::get_percent(void) const
-{
-	double ret;
-
-	if (this->bytes_rem < 0 || size == 0.0)
-		return 0.0;
-	ret = ((this->bytes_rem / size) * 100.0);
-	return ret;
-}
-
 bool
 dcc_send::has_completed(void) const
 {
@@ -626,6 +604,12 @@ static std::vector<dcc_send>	send_db;
 *  ---------------------    Functions    ---------------------  *
 *                                                               *
 ****************************************************************/
+
+static double
+percentage(double part, double total)
+{
+	return (part / total) * 100.0;
+}
 
 static bool
 find_get_obj(const char *nick, const char *file, std::vector<dcc_get>::size_type
@@ -748,7 +732,7 @@ list_get(void)
 		printtext(&ctx, "%sHas completed%s: %s (%.2f%%)",
 		    COLOR2, TXT_NORMAL,
 		    (x.has_completed() ? "Yes" : "No"),
-		    x.get_percent());
+		    percentage(x.filesize - x.bytes_rem, x.filesize));
 		objnum++;
 	}
 
@@ -762,11 +746,14 @@ static void
 list_send(void)
 {
 	PRINTTEXT_CONTEXT	ctx;
+	intmax_t		filesize;
 	long int		objnum = 0;
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
 
 	for (dcc_send &x : send_db) {
+		filesize = x.get_filesize();
+
 		printtext(&ctx, "----- %sSend object%s: %ld -----",
 		    COLOR1, TXT_NORMAL, objnum);
 		printtext(&ctx, "%sTo%s:   %s", COLOR2, TXT_NORMAL,
@@ -778,7 +765,8 @@ list_send(void)
 		printtext(&ctx, "%sHas completed%s: %s (%.2f%%)",
 		    COLOR2, TXT_NORMAL,
 		    (x.has_completed() ? "Yes" : "No"),
-		    x.get_percent());
+		    percentage(filesize - x.bytes_rem, filesize));
+
 		objnum++;
 	}
 
@@ -1303,6 +1291,7 @@ dcc::handle_incoming_conn(SSL *ssl)
 		return;
 	}
 
+	// XXX
 	if (send_obj->bytes_rem == -1)
 		send_obj->bytes_rem = send_obj->get_filesize();
 
