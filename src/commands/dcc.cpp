@@ -745,7 +745,7 @@ list_get(void)
 		    x.filename.c_str());
 		printtext(&ctx, "%sSize%s: %.1f%c", COLOR2, TXT_NORMAL,
 		    x.size, x.unit);
-		printtext(&ctx, "%sHas completed%s: %s (%.2f)",
+		printtext(&ctx, "%sHas completed%s: %s (%.2f%%)",
 		    COLOR2, TXT_NORMAL,
 		    (x.has_completed() ? "Yes" : "No"),
 		    x.get_percent());
@@ -775,7 +775,7 @@ list_send(void)
 		    x.get_filename());
 		printtext(&ctx, "%sSize%s: %.1f%c", COLOR2, TXT_NORMAL,
 		    x.size, x.unit);
-		printtext(&ctx, "%sHas completed%s: %s (%.2f)",
+		printtext(&ctx, "%sHas completed%s: %s (%.2f%%)",
 		    COLOR2, TXT_NORMAL,
 		    (x.has_completed() ? "Yes" : "No"),
 		    x.get_percent());
