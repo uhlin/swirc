@@ -99,7 +99,7 @@ namespace dcc
 	bool		 get_remote_addr(std::string &, uint32_t &);
 	const char	*get_upload_dir(void);
 	void		 handle_incoming_conn(SSL *);
-	void		 shutdown_conn(SSL *) NONNULL;
+	void		 shutdown_conn(SSL *);
 	bool		 want_unveil_uploads(void);
 }
 #endif

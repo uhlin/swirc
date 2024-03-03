@@ -1341,6 +1341,8 @@ dcc::handle_incoming_conn(SSL *ssl)
 void
 dcc::shutdown_conn(SSL *ssl)
 {
+	if (ssl == nullptr)
+		return;
 	if (SSL_get_shutdown(ssl) & SSL_SENT_SHUTDOWN) {
 		debug("%s: already sent shutdown", __func__);
 		return;
