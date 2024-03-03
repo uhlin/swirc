@@ -662,7 +662,7 @@ find_send_obj(const std::string &nick, const char *filename,
 }
 
 static void
-dup_check(const char *nick, const char *file)
+dup_check_get(const char *nick, const char *file)
 {
 	std::vector<dcc_get>::size_type pos = 0;
 
@@ -1038,8 +1038,7 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 			throw std::runtime_error("too large file");
 
 		nick_lc = strToLower(sw_strdup(nick));
-
-		dup_check(nick_lc, token[3]);
+		dup_check_get(nick_lc, token[3]);
 
 		dcc_get get_obj(nick_lc, token[3], filesize, addr, port);
 		get_db.push_back(get_obj);
