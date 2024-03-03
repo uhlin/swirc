@@ -1,7 +1,7 @@
 #ifndef COMMAND_HELP_H
 #define COMMAND_HELP_H
 /* commandhelp.h
-   Copyright (C) 2018-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -173,9 +173,9 @@ static usage_t cycle_usage = {
 };
 
 static usage_t dcc_usage = {
-  "usage: /dcc ...",
+  N_("usage: /dcc [clear|get|list|send] [args]"),
   "",
-  "No help yet.",
+  N_("Get and send files."),
   "",
 };
 
