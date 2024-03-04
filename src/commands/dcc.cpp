@@ -617,7 +617,7 @@ find_get_obj(const char *nick, const char *file, std::vector<dcc_get>::size_type
 {
 	pos = 0;
 
-	for (dcc_get &x : get_db) {
+	for (const dcc_get &x : get_db) {
 		if (strings_match(x.nick.c_str(), nick) &&
 		    strings_match(x.filename.c_str(), file))
 			return true;
