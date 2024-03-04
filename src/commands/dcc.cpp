@@ -1352,7 +1352,7 @@ dcc::want_unveil_uploads(void)
 	const char	*dir = Config("dcc_upload_dir");
 	size_t		 len1, len2;
 
-	if (strings_match(dir, "") || !is_directory(dir))
+	if (strings_match(dir, ""))
 		return false;
 
 	len1 = strlen(dir);
