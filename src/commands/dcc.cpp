@@ -69,7 +69,7 @@
 
 #define DCC_FILE_MAX_SIZE	(g_one_gig * static_cast<intmax_t>(10))
 #define DCC_FILE_REQ_SIZE	130
-#define DCC_IO_BYTES		256
+#define DCC_IO_BYTES		960
 
 #if WIN32
 #define stat _stat
