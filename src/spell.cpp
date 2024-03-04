@@ -74,33 +74,6 @@ suggestion::suggestion()
 
 suggestion::suggestion(CSTRING word)
 {
-	STRING			 lang, encoding;
-	std::string		 orig_locale("");
-	std::string		 tmp_locale("");
-	struct locale_info	*li;
-
-	this->word = nullptr;
-	this->wide_word = nullptr;
-
-	if (word == nullptr || strings_match(word, ""))
-		throw std::runtime_error("no word");
-
-	li = get_locale_info(LC_CTYPE);
-
-	if (li->lang_and_territory == nullptr || li->codeset == nullptr) {
-		free_locale_info(li);
-		throw std::runtime_error("get locale info error");
-	} else if ((encoding = Hunspell_get_dic_encoding(pHunspell)) ==
-	    nullptr) {
-		free_locale_info(li);
-		throw std::runtime_error("get dic encoding error");
-	}
-
-	lang = li->lang_and_territory;
-	(void) orig_locale.assign(lang).append(".").append(li->codeset);
-	(void) tmp_locale.assign(lang).append(".").append(encoding);
-	free_locale_info(li);
-
 	const size_t size = strlen(word) + 1;
 
 	this->word = new char[size];
