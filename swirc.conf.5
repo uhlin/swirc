@@ -1,9 +1,9 @@
 .\" -*- mode: nroff; -*-
 .\"
-.\" SPDX-FileCopyrightText: Copyright 2018-2023 Markus Uhlin
+.\" SPDX-FileCopyrightText: Copyright 2018-2024 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd November 18, 2023
+.Dd March 4, 2024
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -136,6 +136,58 @@ Connection timeout in seconds
 .It Sy ctcp_reply Pq Em bool
 Reply to CTCP requests?
 (For example TIME and VERSION.)
+.\" ----------------------------------------
+.\" DCC
+.\" ----------------------------------------
+.It Sy dcc Pq Em bool
+Use DCC (Direct Client-to-Client)?
+.\" ----------------------------------------
+.\" DCC CIPHER SUITE
+.\" ----------------------------------------
+.It Sy dcc_cipher_suite Pq Em string
+DCC cipher suite.
+Which can have one of the following values:
+.Bl -bullet -compact
+.It
+secure
+.It
+compat
+.It
+legacy
+.It
+all
+.El
+.\" ----------------------------------------
+.\" DCC OWN IP
+.\" ----------------------------------------
+.It Sy dcc_own_ip Pq Em string
+IPv4 address for incoming DCC connections.
+If empty
+.Xr swirc 1
+attempts to resovle the address automatically.
+.\" ----------------------------------------
+.\" DCC PORT
+.\" ----------------------------------------
+.It Sy dcc_port Pq Em int
+Port number for incoming DCC connections (1024-65535),
+defaults to 8080.
+Must not be blocked by a firewall.
+.\" ----------------------------------------
+.\" DCC UPLOAD DIR
+.\" ----------------------------------------
+.It Sy dcc_upload_dir Pq Em string
+Where shall
+.Xr swirc 1
+look for DCC uploads?
+If empty it defaults to
+.Em uploads
+in the home dir of Swirc.
+On
+.Ox
+this dir is made available with read-only permissions by using
+.Xr unveil 2 .
+However, that is done once at startup.
+Changing it while Swirc is running will not work.
 .\" ----------------------------------------
 .\" HOSTNAME CHECKING
 .\" ----------------------------------------
