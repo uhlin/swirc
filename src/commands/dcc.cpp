@@ -937,7 +937,7 @@ has_all_certs(void)
 void
 dcc::init(void)
 {
-	if (config_bool("dcc", true)) {
+	if (config_bool("dcc", true) && !g_icb_mode) {
 		struct integer_context intctx("dcc_port", 1024, 65535, 8080);
 
 		if (!has_all_certs()) {
