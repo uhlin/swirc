@@ -1190,7 +1190,13 @@ dcc::get_upload_dir(void)
 
 	dir = Config("dcc_upload_dir");
 
+#if defined(OpenBSD) && OpenBSD >= 201811
 	return (strings_match(dir, "") ? g_dcc_upload_dir : dir);
+#else
+	if (!is_directory(dir))
+		return (g_dcc_upload_dir ? g_dcc_upload_dir : "");
+	return dir;
+#endif
 }
 
 static int
