@@ -29,8 +29,11 @@
 
 #include "common.h"
 
-#include <sys/types.h>
+#if __OpenBSD__
+#include <sys/param.h>
+#endif
 #include <sys/stat.h>
+#include <sys/types.h>
 
 #if UNIX
 #include <sys/socket.h>
