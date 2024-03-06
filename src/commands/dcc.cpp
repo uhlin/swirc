@@ -687,8 +687,65 @@ subcmd_ok(const char *subcmd)
 }
 
 static void
-subcmd_clear()
+clear_completed_get_jobs(void)
 {
+	std::vector<dcc_get>::iterator it = get_db.begin();
+
+	while (it != get_db.end()) {
+		if (it->has_completed())
+			it = get_db.erase(it);
+		else
+			++it;
+	}
+}
+
+static void
+clear_completed_send_jobs(void)
+{
+	std::vector<dcc_send>::iterator it = send_db.begin();
+
+	while (it != send_db.end()) {
+		if (it->has_completed())
+			it = send_db.erase(it);
+		else
+			++it;
+	}
+}
+
+static void
+clear_completed(void)
+{
+	if (!get_db.empty())
+		clear_completed_get_jobs();
+	if (!send_db.empty())
+		clear_completed_send_jobs();
+}
+
+static void
+subcmd_clear(const char *what)
+{
+	if (what == nullptr || strings_match(what, "")) {
+		printtext_print("err", "insufficient args");
+	} else if (strings_match(what, "get")) {
+		if (!get_db.empty())
+			get_db.clear();
+		printtext_print("success", "cleared the get database");
+	} else if (strings_match(what, "send")) {
+		if (!send_db.empty())
+			send_db.clear();
+		printtext_print("success", "cleared the send database");
+	} else if (strings_match(what, "completed")) {
+		clear_completed();
+		printtext_print("success", "cleared completed jobs");
+	} else if (strings_match(what, "all")) {
+		if (!get_db.empty())
+			get_db.clear();
+		if (!send_db.empty())
+			send_db.clear();
+		printtext_print("success", "cleared all");
+	} else {
+		printtext_print("err", "what? get, send, completed or all?");
+	}
 }
 
 static void
@@ -905,7 +962,7 @@ cmd_dcc(const char *data)
 	arg2 = strtok_r(nullptr, sep, &last);
 
 	if (strings_match(subcmd, "clear"))
-		subcmd_clear();
+		subcmd_clear(arg1);
 	else if (strings_match(subcmd, "get"))
 		subcmd_get(arg1, arg2);
 	else if (strings_match(subcmd, "list"))
