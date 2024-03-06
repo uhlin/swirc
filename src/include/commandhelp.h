@@ -180,7 +180,9 @@ static usage_t dcc_usage = {
   "    /dcc list [get|send|all]",
   "    /dcc send <nick> <file>",
   "",
-  N_("Get and send files."),
+  N_("Get and send files. Swirc implements its own variant of DCC meaning\n"
+     "it's incompatible with other IRC clients. Transport Layer Security is\n"
+     "forced and for now the DCC feature isn't available in ICB mode."),
   "",
 };
 
