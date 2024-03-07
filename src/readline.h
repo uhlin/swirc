@@ -53,6 +53,7 @@ typedef struct tagTAB_COMPLETION {
 		bool Connect;
 		bool Cs;
 		bool Help;
+		bool Mode;
 		bool Msg;
 		bool Notice;
 		bool Ns;

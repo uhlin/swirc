@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
   - `netjoin`
   - `netsplit`
   - `znc.in/playback`
+- Added tab completion for:
+  - `/mode`
 - Added the following config options:
   - `batch` (bool)
   - `dcc` (bool)

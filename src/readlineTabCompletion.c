@@ -1,5 +1,5 @@
 /* Readline tab completion
-   Copyright (C) 2020-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -84,6 +84,13 @@ auto_complete_help(volatile struct readline_session_context *ctx,
     CSTRING s)
 {
 	do_work(ctx, L"/help ", s);
+}
+
+static void
+auto_complete_mode(volatile struct readline_session_context *ctx,
+    CSTRING s)
+{
+	do_work(ctx, L"/mode ", s);
 }
 
 static void
@@ -262,6 +269,7 @@ readline_tab_comp_ctx_new(void)
 	ctx.isInCirculationModeFor.Connect =
 	ctx.isInCirculationModeFor.Cs =
 	ctx.isInCirculationModeFor.Help =
+	ctx.isInCirculationModeFor.Mode =
 	ctx.isInCirculationModeFor.Msg =
 	ctx.isInCirculationModeFor.Notice =
 	ctx.isInCirculationModeFor.Ns =
@@ -299,6 +307,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 		ctx->isInCirculationModeFor.Connect =
 		ctx->isInCirculationModeFor.Cs =
 		ctx->isInCirculationModeFor.Help =
+		ctx->isInCirculationModeFor.Mode =
 		ctx->isInCirculationModeFor.Msg =
 		ctx->isInCirculationModeFor.Notice =
 		ctx->isInCirculationModeFor.Ns =
@@ -365,6 +374,21 @@ init_mode_for_help(volatile struct readline_session_context *ctx)
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_help(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Help = true;
+}
+
+static void
+init_mode_for_mode(volatile struct readline_session_context *ctx)
+{
+	const char *cp = addrof(ctx->tc->search_var[6]);
+
+	if ((ctx->tc->matches = get_matches_common(cp)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_mode(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeFor.Mode = true;
 }
 
 static void
@@ -648,6 +672,8 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_cs(ctx, off1);
 	else if (!strncmp(sv, "/help ", 6))
 		init_mode_for_help(ctx);
+	else if (!strncmp(sv, "/mode ", 6))
+		init_mode_for_mode(ctx);
 	else if (!strncmp(sv, "/msg ", 5))
 		init_mode_for_msg(ctx);
 	else if (!strncmp(sv, "/notice ", 8))
@@ -708,6 +734,8 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		ac_doit(auto_complete_cs, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Help) {
 		ac_doit(auto_complete_help, ctx);
+	} else if (ctx->tc->isInCirculationModeFor.Mode) {
+		ac_doit(auto_complete_mode, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Msg) {
 		ac_doit(auto_complete_msg, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Notice) {
