@@ -347,6 +347,7 @@ tls_server::setup_context(void)
 		}
 
 		SSL_CTX_set_tmp_dh_callback(ctx, tmp_dh_callback);
+
 		assignment_ok = true;
 		cs = Config("dcc_cipher_suite");
 
