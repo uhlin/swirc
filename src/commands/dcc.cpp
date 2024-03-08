@@ -180,16 +180,19 @@ dcc_get::~dcc_get()
 static void
 read_and_write(SSL *ssl, FILE *fp, intmax_t &bytes_rem)
 {
-	while (bytes_rem > 0 && isValid(ssl) && isValid(fp)) {
+	while (bytes_rem > 0) {
 		char			buf[DCC_IO_BYTES] = { '\0' };
 		int			ret;
 		static const int	bufsize = static_cast<int>(sizeof buf);
 
 		ERR_clear_error();
 
+		if (!isValid(ssl))
+			throw std::runtime_error("ssl object invalid");
 		if ((ret = SSL_read(ssl, addrof(buf[0]), (bytes_rem < bufsize ?
 		    bytes_rem : bufsize))) > 0) {
-			if (fwrite(addrof(buf[0]), 1, ret, fp) !=
+			if (!isValid(fp) ||
+			    fwrite(addrof(buf[0]), 1, ret, fp) !=
 			    static_cast<size_t>(ret))
 				throw std::runtime_error("Write error");
 			(void) fflush(fp);
