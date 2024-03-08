@@ -368,6 +368,34 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
 	return ok;
 }
 
+static void
+set_ciphers_doit(SSL_CTX *ctx, const char *list, bool &ok)
+{
+	if (!SSL_CTX_set_cipher_list(ctx, list))
+		ok = false;
+}
+
+static void
+set_ciphers(SSL_CTX *ctx)
+{
+	bool		 assignment_ok = true;
+	const char	*cs = Config("dcc_cipher_suite");
+
+	if (strings_match(cs, "secure") || strings_match(cs, "SECURE"))
+		set_ciphers_doit(ctx, g_suite_secure, assignment_ok);
+	else if (strings_match(cs, "compat") || strings_match(cs, "COMPAT"))
+		set_ciphers_doit(ctx, g_suite_compat, assignment_ok);
+	else if (strings_match(cs, "legacy") || strings_match(cs, "LEGACY"))
+		set_ciphers_doit(ctx, g_suite_legacy, assignment_ok);
+	else if (strings_match(cs, "all") || strings_match(cs, "ALL"))
+		set_ciphers_doit(ctx, g_suite_all, assignment_ok);
+	else
+		set_ciphers_doit(ctx, g_suite_compat, assignment_ok);
+
+	if (!assignment_ok)
+		throw std::runtime_error("no valid ciphers");
+}
+
 bool
 dcc_get::create_ssl_ctx(void)
 {
@@ -409,6 +437,8 @@ dcc_get::create_ssl_ctx(void)
 			throw std::runtime_error("error setting minimum "
 			    "supported protocol version");
 		}
+
+		set_ciphers(this->ssl_ctx);
 	} catch (const std::runtime_error &e) {
 		if (this->ssl_ctx != nullptr) {
 			SSL_CTX_free(this->ssl_ctx);
