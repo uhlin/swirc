@@ -911,6 +911,9 @@ subcmd_send(const char *nick, const char *file)
 	} else if (!is_valid_filename(file)) {
 		printtext_print("err", "invalid filename");
 		return;
+	} else if (g_my_nickname == nullptr) {
+		printtext_print("err", "variable unexpectedly set to null");
+		return;
 	} else if (strings_match_ignore_case(nick, g_my_nickname)) {
 		printtext_print("err", "cannot send to yourself");
 		return;
