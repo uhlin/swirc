@@ -773,6 +773,37 @@ subcmd_get(const char *nick, const char *file)
 }
 
 static void
+get_time(std::string &str, time_t secs)
+{
+	char		buf[200] = {'\0'};
+	struct tm	tm_var = {0};
+
+	if (secs == g_time_error) {
+		(void) str.assign("No");
+		return;
+	}
+
+#if defined(UNIX)
+	if (localtime_r(&secs, &tm_var) == nullptr) {
+		(void) str.assign("Not available");
+		return;
+	}
+#elif defined(WIN32)
+	if (localtime_s(&tm_var, &secs) != 0) {
+		(void) str.assign("Not available");
+		return;
+	}
+#endif
+
+	if (strftime(buf, ARRAY_SIZE(buf), "%c", &tm_var) > 0) {
+		(void) str.assign(addrof(buf[0]));
+		return;
+	}
+
+	(void) str.assign("Not available");
+}
+
+static void
 list_get(void)
 {
 	PRINTTEXT_CONTEXT	ctx;
@@ -781,6 +812,9 @@ list_get(void)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC2, true);
 
 	for (dcc_get &x : get_db) {
+		std::string	str1("");
+		std::string	str2("");
+
 		printtext(&ctx, "----- %sGet object%s: %ld -----",
 		    COLOR1, TXT_NORMAL, objnum);
 		printtext(&ctx, "%sFrom%s: %s", COLOR2, TXT_NORMAL,
@@ -793,6 +827,15 @@ list_get(void)
 		    COLOR2, TXT_NORMAL,
 		    (x.has_completed() ? "Yes" : "No"),
 		    percentage(x.filesize - x.bytes_rem, x.filesize));
+
+		get_time(str1, x.start);
+		get_time(str2, x.stop);
+
+		printtext(&ctx, "%sStarted%s: %s", COLOR2, TXT_NORMAL,
+		    str1.c_str());
+		printtext(&ctx, "%sStopped%s: %s", COLOR2, TXT_NORMAL,
+		    str2.c_str());
+
 		objnum++;
 	}
 
