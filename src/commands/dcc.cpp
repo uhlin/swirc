@@ -1398,7 +1398,9 @@ dcc::handle_incoming_conn(SSL *ssl)
 		return;
 	}
 
-	while (send_obj->bytes_rem > 0) {
+	while (atomic_load_bool(&tls_server::accepting_new_connections) &&
+	    isValid(send_obj) &&
+	    send_obj->bytes_rem > 0) {
 		char			buf[DCC_IO_BYTES] = { '\0' };
 		int			bytes;
 		size_t			bytes_read;
@@ -1407,6 +1409,8 @@ dcc::handle_incoming_conn(SSL *ssl)
 		bytes = ((send_obj->bytes_rem < bufsize)
 			 ? send_obj->bytes_rem
 			 : bufsize);
+		if (!isValid(send_obj->fileptr))
+			break;
 		bytes_read = fread(buf, 1, bytes, send_obj->fileptr);
 
 		if (bytes_read == 0) {
@@ -1421,9 +1425,17 @@ dcc::handle_incoming_conn(SSL *ssl)
 		}
 	}
 
-	fclose_and_null(addrof(send_obj->fileptr));
-	printtext_print("success", "%s: successfully sent file: %s", __func__,
-	    filename.c_str());
+	if (isValid(send_obj)) {
+		fclose_and_null(addrof(send_obj->fileptr));
+
+		if (send_obj->has_completed()) {
+			printtext_print("success", "%s: successfully sent "
+			    "file: %s", __func__, filename.c_str());
+		} else {
+			printtext_print("err", "%s: file transfer incomplete: "
+			    "%s", __func__, filename.c_str());
+		}
+	}
 	while (ssl != nullptr && !(SSL_get_shutdown(ssl) &
 	    SSL_RECEIVED_SHUTDOWN))
 		(void) napms(100);
