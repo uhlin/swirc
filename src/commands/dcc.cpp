@@ -180,7 +180,7 @@ dcc_get::~dcc_get()
 static void
 read_and_write(SSL *ssl, FILE *fp, intmax_t &bytes_rem)
 {
-	while (bytes_rem > 0) {
+	while (bytes_rem > 0 && isValid(ssl) && isValid(fp)) {
 		char			buf[DCC_IO_BYTES] = { '\0' };
 		int			ret;
 		static const int	bufsize = static_cast<int>(sizeof buf);
