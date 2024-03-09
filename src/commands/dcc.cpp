@@ -312,8 +312,13 @@ dcc_get::get_file(void)
 		fclose_and_null(addrof(this->fileptr));
 		dcc::shutdown_conn(this->ssl);
 
-		printtext_print("success", "%s: wrote: %s", __func__,
-		    path.c_str());
+		if (this->has_completed()) {
+			printtext_print("success", "%s: wrote: %s",
+			    __func__, path.c_str());
+		} else {
+			printtext_print("err", "%s: did not complete: %s",
+			    __func__, path.c_str());
+		}
 	} catch (const std::runtime_error &e) {
 		fclose_and_null(addrof(this->fileptr));
 		dcc::shutdown_conn(this->ssl);
