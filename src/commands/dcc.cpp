@@ -310,6 +310,8 @@ dcc_get::get_file(void)
 		this->stop = time(nullptr);
 
 		fclose_and_null(addrof(this->fileptr));
+		dcc::shutdown_conn(this->ssl);
+
 		printtext_print("success", "%s: wrote: %s", __func__,
 		    path.c_str());
 	} catch (const std::runtime_error &e) {
