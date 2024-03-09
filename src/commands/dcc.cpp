@@ -1472,6 +1472,8 @@ dcc::handle_incoming_conn(SSL *ssl)
 		} else {
 			printtext_print("err", "%s: file transfer incomplete: "
 			    "%s", __func__, filename.c_str());
+			dcc::shutdown_conn(ssl);
+			return;
 		}
 	}
 	while (ssl != nullptr && !(SSL_get_shutdown(ssl) &
