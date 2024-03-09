@@ -70,7 +70,7 @@ dcc::set_recv_timeout(SOCKET sock, const DWORD seconds)
 	const DWORD	timeout_milliseconds = dword_product(seconds, 1000);
 	const int	optlen = static_cast<int>(sizeof(DWORD));
 
-	if (setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<char *>
-	    (&timeout_milliseconds), optlen) != 0)
+	if (setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast
+	    <const char *>(&timeout_milliseconds), optlen) != 0)
 		err_log(0, "%s: setsockopt", __func__);
 }
