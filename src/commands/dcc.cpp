@@ -178,8 +178,10 @@ dcc_get::~dcc_get()
 }
 
 static void
-read_and_write(SSL *ssl, FILE *fp, intmax_t &bytes_rem)
+read_and_write(SOCKET sock, SSL *ssl, FILE *fp, intmax_t &bytes_rem)
 {
+	dcc::set_recv_timeout(sock, 1);
+
 	while (bytes_rem > 0 && ssl != nullptr && !(SSL_get_shutdown(ssl) &
 	    SSL_RECEIVED_SHUTDOWN)) {
 		char			buf[DCC_IO_BYTES] = { '\0' };
@@ -306,7 +308,8 @@ dcc_get::get_file(void)
 		(void) fseek(this->fileptr, 0L, SEEK_END);
 
 		this->start = time(nullptr);
-		read_and_write(this->ssl, this->fileptr, this->bytes_rem);
+		read_and_write(this->sock, this->ssl, this->fileptr,
+		    this->bytes_rem);
 		this->stop = time(nullptr);
 
 		fclose_and_null(addrof(this->fileptr));
