@@ -35,6 +35,8 @@
 #include "../errHand.h"
 #include "../tls-server.h"
 
+#include "../events/welcome-w32.h" /* dword_product() */
+
 #include "dcc.h"
 
 typedef void __cdecl VoidCdecl;
@@ -60,4 +62,15 @@ dcc::get_file_detached(dcc_get *obj)
 {
 	if (_beginthread(dcc_getit, 0, obj) == g_beginthread_failed)
 		err_sys("%s: _beginthread", __func__);
+}
+
+void
+dcc::set_recv_timeout(SOCKET sock, const DWORD seconds)
+{
+	const DWORD	timeout_milliseconds = dword_product(seconds, 1000);
+	const int	optlen = static_cast<int>(sizeof(DWORD));
+
+	if (setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<char *>
+	    (&timeout_milliseconds), optlen) != 0)
+		err_log(0, "%s: setsockopt", __func__);
 }

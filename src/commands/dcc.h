@@ -5,6 +5,7 @@
 #include <openssl/ssl.h>
 
 #if WIN32
+#include <intsafe.h> /* DWORD */
 #include <ws2tcpip.h>
 #endif
 
@@ -98,6 +99,11 @@ namespace dcc
 	bool		 get_remote_addr(std::string &, uint32_t &);
 	const char	*get_upload_dir(void);
 	void		 handle_incoming_conn(SSL *);
+#if defined(UNIX)
+	void		 set_recv_timeout(SOCKET, const time_t);
+#elif defined(WIN32)
+	void		 set_recv_timeout(SOCKET, const DWORD);
+#endif
 	void		 shutdown_conn(SSL *);
 	bool		 want_unveil_uploads(void);
 }

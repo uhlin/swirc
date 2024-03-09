@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <sys/socket.h>
+
 #include <pthread.h>
 
 #include "../assertAPI.h"
@@ -66,4 +68,18 @@ dcc::get_file_detached(dcc_get *obj)
 		err_sys("%s: pthread_create", __func__);
 	else if ((errno = pthread_detach(tid)) != 0)
 		err_sys("%s: pthread_detach", __func__);
+}
+
+void
+dcc::set_recv_timeout(SOCKET sock, const time_t seconds)
+{
+	struct timeval tv;
+
+	tv.tv_sec = seconds;
+	tv.tv_usec = 0;
+
+	errno = 0;
+
+	if (setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof tv) != 0)
+		err_log(errno, "%s: setsockopt", __func__);
 }
