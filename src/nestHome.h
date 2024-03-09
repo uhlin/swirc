@@ -21,8 +21,10 @@ extern char	*g_theme_file;
 void	nestHome_init(void);
 void	nestHome_deinit(void);
 
+/*lint -sem(path_to_downloads, r_null) */
 /*lint -sem(path_to_home, r_null) */
 
+char		*path_to_downloads(void);
 const char	*path_to_home(void);
 __SWIRC_END_DECLS
 

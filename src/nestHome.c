@@ -382,6 +382,28 @@ nestHome_deinit(void)
 	theme_deinit();
 }
 
+char *
+path_to_downloads(void)
+{
+#if defined(UNIX)
+	return (NULL);
+#elif defined(WIN32)
+	char			buf[PATH_MAX] = { '\0' };
+	size_t			ret = 0;
+	static const char	var[] = "USERPROFILE";
+
+	if (getenv_s(&ret, buf, ARRAY_SIZE(buf), var) != 0 ||
+	    !is_directory(buf) ||
+	    sw_strcat(buf, SLASH, ARRAY_SIZE(buf)) != 0 ||
+	    sw_strcat(buf, "Downloads", ARRAY_SIZE(buf)) != 0 ||
+	    !is_directory(buf))
+		return (NULL);
+
+	UNUSED_VAR(ret);
+	return (sw_strdup(buf));
+#endif
+}
+
 const char *
 path_to_home(void)
 {
