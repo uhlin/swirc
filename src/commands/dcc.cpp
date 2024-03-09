@@ -811,6 +811,13 @@ subcmd_get(const char *nick, const char *file)
 	} else if (!find_get_obj(nick, file, pos)) {
 		printtext_print("err", "%s: no such nick/file", __func__);
 		return;
+	} else if (get_db[pos].has_completed()) {
+		printtext_print("err", "%s: has completed", __func__);
+		return;
+	} else if (get_db[pos].start != g_time_error &&
+		   get_db[pos].stop == g_time_error) {
+		printtext_print("err", "%s: in progress!", __func__);
+		return;
 	}
 
 	dcc::get_file_detached(addrof(get_db[pos]));
