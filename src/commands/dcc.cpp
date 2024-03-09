@@ -314,8 +314,8 @@ dcc_get::get_file(void)
 		    path.c_str());
 	} catch (const std::runtime_error &e) {
 		fclose_and_null(addrof(this->fileptr));
+		dcc::shutdown_conn(this->ssl);
 		printtext_print("err", "%s: %s", __func__, e.what());
-		return;
 	}
 }
 
