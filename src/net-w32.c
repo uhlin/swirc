@@ -1,5 +1,5 @@
 /* Networking for WIN32
-   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -186,7 +186,7 @@ net_set_recv_timeout(const DWORD seconds)
 	const int	optlen = (int) (sizeof(DWORD));
 
 	if (setsockopt(g_socket, SOL_SOCKET, SO_RCVTIMEO,
-	    ((char *) &timeout_milliseconds), optlen) != 0)
+	    ((const char *) &timeout_milliseconds), optlen) != 0)
 		err_log(0, "%s: setsockopt", __func__);
 }
 
@@ -197,6 +197,6 @@ net_set_send_timeout(const DWORD seconds)
 	const int	optlen = (int) (sizeof(DWORD));
 
 	if (setsockopt(g_socket, SOL_SOCKET, SO_SNDTIMEO,
-	    ((char *) &timeout_milliseconds), optlen) != 0)
+	    ((const char *) &timeout_milliseconds), optlen) != 0)
 		err_log(0, "%s: setsockopt", __func__);
 }
