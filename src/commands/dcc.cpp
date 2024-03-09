@@ -1454,14 +1454,12 @@ dcc::handle_incoming_conn(SSL *ssl)
 		bytes_read = fread(buf, 1, bytes, send_obj->fileptr);
 
 		if (bytes_read == 0) {
-			fclose_and_null(addrof(send_obj->fileptr));
 			printtext_print("err", "%s: file read error", __func__);
-			return;
+			break;
 		} else if (send_bytes(ssl, addrof(buf[0]),
 		    static_cast<int>(bytes_read), send_obj->bytes_rem) != OK) {
-			fclose_and_null(addrof(send_obj->fileptr));
 			printtext_print("err", "%s: tls write error", __func__);
-			return;
+			break;
 		}
 	}
 
