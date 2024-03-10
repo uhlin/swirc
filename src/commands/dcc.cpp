@@ -1135,6 +1135,8 @@ dcc::deinit(void)
 		get_db.clear();
 	if (!send_db.empty())
 		send_db.clear();
+
+	(void) napms(100);
 }
 
 void
