@@ -1477,8 +1477,10 @@ dcc::handle_incoming_conn(SSL *ssl)
 {
 	block_signals();
 
-	if (accept_incoming(ssl) != OK)
+	if (accept_incoming(ssl) != OK) {
+		dcc::shutdown_conn(ssl);
 		return;
+	}
 
 	std::string nick("");
 	std::string filename("");
