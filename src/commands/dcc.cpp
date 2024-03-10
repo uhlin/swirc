@@ -903,7 +903,7 @@ list_get(void)
 	ctx.spec_type = TYPE_SPEC1_WARN;
 
 	if (objnum == 0)
-		printtext(&ctx, "Zero get objects...");
+		printtext(&ctx, "0 get objects");
 }
 
 static void
@@ -937,7 +937,7 @@ list_send(void)
 	ctx.spec_type = TYPE_SPEC1_WARN;
 
 	if (objnum == 0)
-		printtext(&ctx, "Zero send objects...");
+		printtext(&ctx, "0 send objects");
 }
 
 static void
