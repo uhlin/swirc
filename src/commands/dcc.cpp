@@ -501,6 +501,10 @@ dcc_get::request_file(void)
 	while (buflen > 0) {
 		int ret;
 
+		if (this->ssl == nullptr || (SSL_get_shutdown(this->ssl) &
+		    SSL_RECEIVED_SHUTDOWN))
+			return ERR;
+
 		ERR_clear_error();
 
 		if ((ret = SSL_write(this->ssl, bufptr, buflen)) > 0) {
