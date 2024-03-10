@@ -222,6 +222,8 @@ read_and_write(SOCKET sock, SSL *ssl, FILE *fp, intmax_t &bytes_rem)
 void
 dcc_get::destroy(void)
 {
+	dcc::shutdown_conn(this->ssl);
+
 	if (this->sock != INVALID_SOCKET) {
 #if defined(UNIX)
 		if (shutdown(this->sock, SHUT_RDWR) == -1)
@@ -234,6 +236,7 @@ dcc_get::destroy(void)
 #endif
 		this->sock = INVALID_SOCKET;
 	}
+
 	if (this->ssl != nullptr) {
 		SSL_free(this->ssl);
 		this->ssl = nullptr;
@@ -1447,6 +1450,7 @@ dcc::handle_incoming_conn(SSL *ssl)
 
 	if (read_request(ssl, nick, filename) != OK) {
 		printtext_print("warn", "%s: read request error", __func__);
+		dcc::shutdown_conn(ssl);
 		return;
 	}
 
@@ -1455,6 +1459,7 @@ dcc::handle_incoming_conn(SSL *ssl)
 	if (!find_send_obj(nick, filename.c_str(), pos)) {
 		printtext_print("warn", "%s: unable to find the send object",
 		    __func__);
+		dcc::shutdown_conn(ssl);
 		return;
 	}
 
@@ -1462,10 +1467,12 @@ dcc::handle_incoming_conn(SSL *ssl)
 
 	if (send_obj->bytes_rem == 0) {
 		printtext_print("warn", "%s: already sent file", __func__);
+		dcc::shutdown_conn(ssl);
 		return;
 	} else if (send_obj->fileptr == nullptr && (send_obj->fileptr =
 	    xfopen(send_obj->full_path.c_str(), "rb")) == nullptr) {
 		printtext_print("warn", "%s: file open error", __func__);
+		dcc::shutdown_conn(ssl);
 		return;
 	}
 
