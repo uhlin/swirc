@@ -1444,6 +1444,35 @@ accept_incoming(SSL *ssl)
 	return OK;
 }
 
+static void
+send_doit(SSL *ssl, dcc_send *send_obj)
+{
+	while (atomic_load_bool(&tls_server::accepting_new_connections) &&
+	    isValid(send_obj) &&
+	    send_obj->bytes_rem > 0) {
+		char			buf[DCC_IO_BYTES] = { '\0' };
+		int			bytes;
+		size_t			bytes_read;
+		static const int	bufsize = static_cast<int>(sizeof buf);
+
+		bytes = ((send_obj->bytes_rem < bufsize)
+			 ? send_obj->bytes_rem
+			 : bufsize);
+		if (!isValid(send_obj->fileptr))
+			break;
+		bytes_read = fread(buf, 1, bytes, send_obj->fileptr);
+
+		if (bytes_read == 0) {
+			printtext_print("err", "%s: file read error", __func__);
+			break;
+		} else if (send_bytes(ssl, addrof(buf[0]),
+		    static_cast<int>(bytes_read), send_obj->bytes_rem) != OK) {
+			printtext_print("err", "%s: tls write error", __func__);
+			break;
+		}
+	}
+}
+
 void
 dcc::handle_incoming_conn(SSL *ssl)
 {
@@ -1484,32 +1513,7 @@ dcc::handle_incoming_conn(SSL *ssl)
 	}
 
 	send_obj->start = time(nullptr);
-
-	while (atomic_load_bool(&tls_server::accepting_new_connections) &&
-	    isValid(send_obj) &&
-	    send_obj->bytes_rem > 0) {
-		char			buf[DCC_IO_BYTES] = { '\0' };
-		int			bytes;
-		size_t			bytes_read;
-		static const int	bufsize = static_cast<int>(sizeof buf);
-
-		bytes = ((send_obj->bytes_rem < bufsize)
-			 ? send_obj->bytes_rem
-			 : bufsize);
-		if (!isValid(send_obj->fileptr))
-			break;
-		bytes_read = fread(buf, 1, bytes, send_obj->fileptr);
-
-		if (bytes_read == 0) {
-			printtext_print("err", "%s: file read error", __func__);
-			break;
-		} else if (send_bytes(ssl, addrof(buf[0]),
-		    static_cast<int>(bytes_read), send_obj->bytes_rem) != OK) {
-			printtext_print("err", "%s: tls write error", __func__);
-			break;
-		}
-	}
-
+	send_doit(ssl, send_obj);
 	send_obj->stop = time(nullptr);
 
 	if (isValid(send_obj)) {
