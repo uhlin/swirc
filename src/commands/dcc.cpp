@@ -1476,6 +1476,13 @@ send_doit(SSL *ssl, dcc_send *send_obj)
 	}
 }
 
+static void
+warn_and_shutdown(SSL *ssl, const char *func, const char *msg)
+{
+	printtext_print("warn", "%s: %s", func, msg);
+	dcc::shutdown_conn(ssl);
+}
+
 void
 dcc::handle_incoming_conn(SSL *ssl)
 {
@@ -1490,30 +1497,26 @@ dcc::handle_incoming_conn(SSL *ssl)
 	std::string filename("");
 
 	if (read_request(ssl, nick, filename) != OK) {
-		printtext_print("warn", "%s: read request error", __func__);
-		dcc::shutdown_conn(ssl);
+		warn_and_shutdown(ssl, __func__, "read request error");
 		return;
 	}
 
 	std::vector<dcc_send>::size_type pos = 0;
 
 	if (!find_send_obj(nick, filename.c_str(), pos)) {
-		printtext_print("warn", "%s: unable to find the send object",
-		    __func__);
-		dcc::shutdown_conn(ssl);
+		warn_and_shutdown(ssl, __func__, "unable to find the send "
+		    "object");
 		return;
 	}
 
 	dcc_send *send_obj = addrof(send_db[pos]);
 
 	if (send_obj->has_completed()) {
-		printtext_print("warn", "%s: already sent file", __func__);
-		dcc::shutdown_conn(ssl);
+		warn_and_shutdown(ssl, __func__, "already sent file");
 		return;
 	} else if (send_obj->fileptr == nullptr && (send_obj->fileptr =
 	    xfopen(send_obj->full_path.c_str(), "rb")) == nullptr) {
-		printtext_print("warn", "%s: file open error", __func__);
-		dcc::shutdown_conn(ssl);
+		warn_and_shutdown(ssl, __func__, "file open error");
 		return;
 	}
 
