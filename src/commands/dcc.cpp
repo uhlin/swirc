@@ -1515,22 +1515,23 @@ dcc::handle_incoming_conn(SSL *ssl)
 	send_doit(ssl, send_obj);
 	send_obj->stop = time(nullptr);
 
-	if (isValid(send_obj)) {
-		fclose_and_null(addrof(send_obj->fileptr));
+	fclose_and_null(addrof(send_obj->fileptr));
 
-		if (send_obj->has_completed()) {
-			printtext_print("success", "%s: successfully sent "
-			    "file: %s", __func__, filename.c_str());
-		} else {
-			printtext_print("err", "%s: file transfer incomplete: "
-			    "%s", __func__, filename.c_str());
-			dcc::shutdown_conn(ssl);
-			return;
-		}
+	if (send_obj->has_completed()) {
+		printtext_print("success", "%s: successfully sent file: %s",
+		    __func__, filename.c_str());
+	} else {
+		printtext_print("err", "%s: file transfer incomplete: %s",
+		    __func__, filename.c_str());
+
+		dcc::shutdown_conn(ssl);
+		return;
 	}
+
 	while (ssl != nullptr && !(SSL_get_shutdown(ssl) &
 	    SSL_RECEIVED_SHUTDOWN))
 		(void) napms(100);
+
 	dcc::shutdown_conn(ssl);
 	send_db.erase(send_db.begin() + pos);
 }
