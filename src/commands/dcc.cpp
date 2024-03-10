@@ -1483,6 +1483,8 @@ dcc::handle_incoming_conn(SSL *ssl)
 		return;
 	}
 
+	send_obj->start = time(nullptr);
+
 	while (atomic_load_bool(&tls_server::accepting_new_connections) &&
 	    isValid(send_obj) &&
 	    send_obj->bytes_rem > 0) {
@@ -1507,6 +1509,8 @@ dcc::handle_incoming_conn(SSL *ssl)
 			break;
 		}
 	}
+
+	send_obj->stop = time(nullptr);
 
 	if (isValid(send_obj)) {
 		fclose_and_null(addrof(send_obj->fileptr));
