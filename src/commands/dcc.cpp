@@ -1472,7 +1472,7 @@ dcc::handle_incoming_conn(SSL *ssl)
 
 	dcc_send *send_obj = addrof(send_db[pos]);
 
-	if (send_obj->bytes_rem == 0) {
+	if (send_obj->has_completed()) {
 		printtext_print("warn", "%s: already sent file", __func__);
 		dcc::shutdown_conn(ssl);
 		return;
