@@ -1339,6 +1339,10 @@ read_request(SSL *ssl, std::string &nick, std::string &filename)
 	do {
 		int ret;
 
+		if (ssl == nullptr || (SSL_get_shutdown(ssl) &
+		    SSL_RECEIVED_SHUTDOWN))
+			return ERR;
+
 		ERR_clear_error();
 
 		if ((ret = SSL_read(ssl, bufptr, buflen)) > 0) {
