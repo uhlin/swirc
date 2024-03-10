@@ -1383,6 +1383,10 @@ send_bytes(SSL *ssl, const char *buf, const int bytes, intmax_t &bytes_rem)
 	while (buflen > 0) {
 		int ret;
 
+		if (ssl == nullptr || (SSL_get_shutdown(ssl) &
+		    SSL_RECEIVED_SHUTDOWN))
+			return ERR;
+
 		ERR_clear_error();
 
 		if ((ret = SSL_write(ssl, bufptr, buflen)) > 0) {
