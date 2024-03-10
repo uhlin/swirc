@@ -537,6 +537,9 @@ public:
 	double	size;
 	char	unit;
 
+	time_t	start;
+	time_t	stop;
+
 	dcc_send();
 	dcc_send(const char *, const std::string);
 	~dcc_send();
@@ -554,6 +557,8 @@ dcc_send::dcc_send() : fileptr(nullptr)
     , bytes_rem(0)
     , size(0.0)
     , unit('B')
+    , start(g_time_error)
+    , stop(g_time_error)
 {
 	this->nick.assign("");
 	this->full_path.assign("");
@@ -567,6 +572,8 @@ dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
     , bytes_rem(0)
     , size(0.0)
     , unit('B')
+    , start(g_time_error)
+    , stop(g_time_error)
 {
 	this->nick.assign(p_nick);
 	this->full_path.assign(p_full_path);
