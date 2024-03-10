@@ -1491,6 +1491,13 @@ warn_and_shutdown(SSL *ssl, const char *func, const char *msg)
 	dcc::shutdown_conn(ssl);
 }
 
+static void
+print_start_and_stop(const char *type, const char *start, const char *stop)
+{
+	printtext_print(type, "started: %s", start);
+	printtext_print(type, "stopped: %s", stop);
+}
+
 void
 dcc::handle_incoming_conn(SSL *ssl)
 {
@@ -1534,12 +1541,20 @@ dcc::handle_incoming_conn(SSL *ssl)
 
 	fclose_and_null(addrof(send_obj->fileptr));
 
+	std::string str1("");
+	std::string str2("");
+
+	get_time(str1, send_obj->start);
+	get_time(str2, send_obj->stop);
+
 	if (send_obj->has_completed()) {
 		printtext_print("success", "%s: successfully sent file: %s",
 		    __func__, filename.c_str());
+		print_start_and_stop("success", str1.c_str(), str2.c_str());
 	} else {
 		printtext_print("err", "%s: file transfer incomplete: %s",
 		    __func__, filename.c_str());
+		print_start_and_stop("err", str1.c_str(), str2.c_str());
 
 		dcc::shutdown_conn(ssl);
 		return;
