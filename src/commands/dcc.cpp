@@ -1448,7 +1448,6 @@ static void
 send_doit(SSL *ssl, dcc_send *send_obj)
 {
 	while (atomic_load_bool(&tls_server::accepting_new_connections) &&
-	    isValid(send_obj) &&
 	    send_obj->bytes_rem > 0) {
 		char			buf[DCC_IO_BYTES] = { '\0' };
 		int			bytes;
