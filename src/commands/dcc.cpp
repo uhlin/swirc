@@ -714,7 +714,7 @@ dup_check_get(const char *nick, const char *file)
 	if (!find_get_obj(nick, file, pos))
 		return;
 	else if (!get_db[pos].has_completed())
-		throw std::runtime_error("a such nick/file already exists");
+		throw std::runtime_error("already getting a such nick/file");
 	else
 		get_db.erase(get_db.begin() + pos);
 }
