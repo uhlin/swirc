@@ -62,6 +62,9 @@ public:
 	void	get_file(void);
 	bool	has_completed(void) const;
 
+	bool	is_locked(void) const;
+	void	set_lock(int);
+
 private:
 	FILE		*fileptr;
 	SOCKET		 sock;
@@ -69,6 +72,8 @@ private:
 	SSL_CTX		*ssl_ctx;
 	uint32_t	 addr;
 	uint16_t	 port;
+
+	int lock;
 
 	bool	create_socket(void);
 	bool	create_ssl_ctx(void);

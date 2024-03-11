@@ -96,6 +96,7 @@ dcc_get::dcc_get() : filesize(0)
     , ssl_ctx(nullptr)
     , addr(0)
     , port(0)
+    , lock(0)
 {
 	this->nick.assign("");
 	this->filename.assign("");
@@ -117,6 +118,7 @@ dcc_get::dcc_get(const char *p_nick,
     , ssl_ctx(nullptr)
     , addr(p_addr)
     , port(htons(p_port))
+    , lock(0)
 {
 	this->nick.assign(p_nick);
 	this->filename.assign(p_filename);
@@ -138,6 +140,7 @@ dcc_get::dcc_get(const dcc_get &obj) : nick(obj.nick)
     , ssl_ctx(nullptr)
     , addr(obj.addr)
     , port(obj.port)
+    , lock(obj.lock)
 {
 	debug("%s: copy constructor called", __func__);
 }
@@ -161,6 +164,7 @@ dcc_get &dcc_get::operator=(const dcc_get &obj)
 	this->ssl_ctx    = nullptr;
 	this->addr       = obj.addr;
 	this->port       = obj.port;
+	this->lock       = obj.lock;
 
 	debug("%s: copy assignment called", __func__);
 	return *this;
@@ -338,6 +342,18 @@ dcc_get::has_completed(void) const
 	if (!(this->filesize > 0))
 		return false;
 	return (this->bytes_rem == 0);
+}
+
+bool
+dcc_get::is_locked(void) const
+{
+	return (this->lock != 0);
+}
+
+void
+dcc_get::set_lock(int value)
+{
+	this->lock = value;
 }
 
 bool
