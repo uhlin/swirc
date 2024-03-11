@@ -87,11 +87,11 @@ suggestion::suggestion(CSTRING p_word)
 
 suggestion::~suggestion()
 {
-	if (this->word) {
+	if (this->word != nullptr) {
 		delete[] this->word;
 		this->word = nullptr;
 	}
-	if (this->wide_word) {
+	if (this->wide_word != nullptr) {
 		delete[] this->wide_word;
 		this->wide_word = nullptr;
 	}
