@@ -1581,6 +1581,8 @@ dcc::handle_incoming_conn(SSL *ssl)
 		return;
 	}
 
+	send_obj->set_lock(1);
+
 	send_obj->start = time(nullptr);
 	send_doit(ssl, send_obj);
 	send_obj->stop = time(nullptr);
