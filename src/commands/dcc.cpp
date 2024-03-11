@@ -278,6 +278,9 @@ dcc_get::get_file(void)
 		static const int VALUE_HANDSHAKE_OK = 1;
 		struct sockaddr_in sin;
 
+		// XXX
+		this->set_lock(1);
+
 		memset(&sin, 0, sizeof sin);
 		sin.sin_family		= AF_INET;
 		sin.sin_port		= this->port;
