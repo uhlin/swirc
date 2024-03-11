@@ -1572,7 +1572,7 @@ dcc::handle_incoming_conn(SSL *ssl)
 		warn_and_shutdown(ssl, __func__, "already sent file");
 		return;
 	} else if (send_obj->is_locked()) {
-		warn_and_shutdown(ssl, __func__, "send object is in an locked "
+		warn_and_shutdown(ssl, __func__, "send object is in a locked "
 		    "state");
 		return;
 	} else if (send_obj->fileptr == nullptr && (send_obj->fileptr =
