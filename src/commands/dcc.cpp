@@ -851,6 +851,9 @@ subcmd_get(const char *nick, const char *file)
 		   get_db[pos].stop == g_time_error) {
 		printtext_print("err", "%s: in progress!", __func__);
 		return;
+	} else if (get_db[pos].is_locked()) {
+		printtext_print("err", "%s: get object locked!", __func__);
+		return;
 	}
 
 	dcc::get_file_detached(addrof(get_db[pos]));
