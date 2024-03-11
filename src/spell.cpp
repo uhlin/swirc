@@ -72,15 +72,15 @@ suggestion::suggestion()
 	this->wide_word = nullptr;
 }
 
-suggestion::suggestion(CSTRING word)
+suggestion::suggestion(CSTRING p_word)
 {
-	const size_t size = strlen(word) + 1;
+	const size_t size = strlen(p_word) + 1;
 
 	this->word = new char[size];
-	memcpy(this->word, word, size);
+	memcpy(this->word, p_word, size);
 
 	this->wide_word = new wchar_t[size];
-	if (xmbstowcs(this->wide_word, word, size - 1) == g_conversion_failed)
+	if (xmbstowcs(this->wide_word, p_word, size - 1) == g_conversion_failed)
 		this->wide_word[0] = L'\0';
 	this->wide_word[size - 1] = L'\0';
 }
