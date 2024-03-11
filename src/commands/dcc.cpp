@@ -571,8 +571,12 @@ public:
 	intmax_t	 get_filesize(void) const;
 	bool		 has_completed(void) const;
 
+	bool	is_locked(void) const;
+	void	set_lock(int);
+
 private:
 	char		 buf[255];
+	int		 lock;
 	struct stat	 sb;
 };
 
@@ -582,6 +586,7 @@ dcc_send::dcc_send() : fileptr(nullptr)
     , unit('B')
     , start(g_time_error)
     , stop(g_time_error)
+    , lock(0)
 {
 	this->nick.assign("");
 	this->full_path.assign("");
@@ -597,6 +602,7 @@ dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
     , unit('B')
     , start(g_time_error)
     , stop(g_time_error)
+    , lock(0)
 {
 	this->nick.assign(p_nick);
 	this->full_path.assign(p_full_path);
@@ -655,6 +661,18 @@ bool
 dcc_send::has_completed(void) const
 {
 	return (this->bytes_rem == 0);
+}
+
+bool
+dcc_send::is_locked(void) const
+{
+	return (this->lock != 0);
+}
+
+void
+dcc_send::set_lock(int value)
+{
+	this->lock = value;
 }
 
 /****************************************************************
