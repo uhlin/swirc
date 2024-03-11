@@ -1571,6 +1571,10 @@ dcc::handle_incoming_conn(SSL *ssl)
 	if (send_obj->has_completed()) {
 		warn_and_shutdown(ssl, __func__, "already sent file");
 		return;
+	} else if (send_obj->is_locked()) {
+		warn_and_shutdown(ssl, __func__, "send object is in an locked "
+		    "state");
+		return;
 	} else if (send_obj->fileptr == nullptr && (send_obj->fileptr =
 	    xfopen(send_obj->full_path.c_str(), "rb")) == nullptr) {
 		warn_and_shutdown(ssl, __func__, "file open error");
