@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.4.7] - 2024-03-12 ##
 - Added command `/dcc`
 - Added event `BATCH` (IRCv3). The following types were added:
   - `chathistory`
