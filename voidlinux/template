@@ -12,7 +12,7 @@ makedepends="gettext-devel hunspell-devel libcurl-devel libidn-devel
  ncurses-devel openssl-devel $(vopt_if notify libnotify-devel)"
 checkdepends="cmocka-devel"
 short_desc="Curses ICB and IRC client"
-maintainer="Markus Uhlin <markus.uhlin@bredband.net>"
+maintainer="Markus Uhlin <markus@nifty-networks.net>"
 license="BSD-3-Clause, ISC, MIT"
 homepage="https://www.nifty-networks.net/swirc"
 changelog="https://raw.githubusercontent.com/uhlin/swirc/master/CHANGELOG.md"
