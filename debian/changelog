@@ -1,3 +1,10 @@
+swirc (3.4.7-1) unstable; urgency=medium
+
+  * New upstream version. Among other things it adds support for DCC.
+  * Updated the signing key.
+
+ -- Markus Uhlin <markus@nifty-networks.net>  Tue, 12 Mar 2024 21:56:05 +0100
+
 swirc (3.4.6-2) unstable; urgency=medium
 
   * Fixed building on sid, or any setup where Ncurses is built using opaque
