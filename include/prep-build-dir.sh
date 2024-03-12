@@ -24,8 +24,8 @@ check_tools()
 
 prep_build_dir()
 {
-	local _out1="swirc_${VERSION}.orig.tar.xz"
-	local _out2="swirc_${VERSION}.orig.tar.xz.asc"
+	local _out1="swirc_${VERSION}.orig.tar.gz"
+	local _out2="swirc_${VERSION}.orig.tar.gz.asc"
 	local _url1="${RELEASES_URL}swirc-${UPSTREAM_VER}.tgz"
 	local _url2="${RELEASES_URL}swirc-${UPSTREAM_VER}.tgz.sig"
 
