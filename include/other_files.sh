@@ -1,8 +1,7 @@
 OTHER_FILES="
 dic_db
-mu170225.asc
-mu180520.asc
 mu190523.asc
+mu231230.pgp
 navbar.css
 popup.css
 reports/swirc-3.2.2.html
