@@ -28,8 +28,6 @@ prep_build_dir()
 	local _out2="swirc_${VERSION}.orig.tar.xz.asc"
 	local _url1="${RELEASES_URL}swirc-${UPSTREAM_VER}.tgz"
 	local _url2="${RELEASES_URL}swirc-${UPSTREAM_VER}.tgz.sig"
-	# _url1: ${RELEASES_URL}swirc-${UPSTREAM_VER}.tgz
-	# _url2: ${RELEASES_URL}swirc-${UPSTREAM_VER}.tgz.sig
 
 	check_tools
 
