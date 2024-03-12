@@ -2,15 +2,15 @@
 All notable changes to this project will be documented in this file.
 
 ## [3.4.7] - 2024-03-12 ##
-- Added command `/dcc`
-- Added event `BATCH` (IRCv3). The following types were added:
+- **Added** command `/dcc`
+- **Added** event `BATCH` (IRCv3). The following types were added:
   - `chathistory`
   - `netjoin`
   - `netsplit`
   - `znc.in/playback`
-- Added tab completion for:
+- **Added** tab completion for:
   - `/mode`
-- Added the following config options:
+- **Added** the following config options:
   - `batch` (bool)
   - `dcc` (bool)
   - `dcc_cipher_suite` (string)
@@ -23,12 +23,12 @@ All notable changes to this project will be documented in this file.
     [PVS-Studio](https://pvs-studio.com/en/pvs-studio/).
   - ...
 - Enabled `iconv_conversion` by default.
-- Fixed an off-by-one error in the IRC module. The previous program
+- **Fixed** an off-by-one error in the IRC module. The previous program
   versions weren't really affected however.
-- Fixed building on any setup where Ncurses is built with opaque
+- **Fixed** building on any setup where Ncurses is built with opaque
   types.
-- Fixed new [Coverity](https://scan.coverity.com/) defects
-- Fixed the precision of the error log size in KB.
+- **Fixed** new [Coverity](https://scan.coverity.com/) defects
+- **Fixed** the precision of the error log size in KB.
 - Improved C++ exception handling. Among other things, handle if 'new'
   throws.
 - Renamed option `ircv3_server_time` to `server_time` and enabled it
