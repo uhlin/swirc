@@ -42,7 +42,7 @@ architectures via Debians official APT repo.
 Import <strong>current</strong> Swirc release signing key:
 </p>
 <p class="snippet">
-<kbd># wget -O - https://www.nifty-networks.net/swirc/mu231230.pgp | apt-key add -</kbd>
+<kbd># wget -qO- https://www.nifty-networks.net/swirc/mu231230.pgp | tee /etc/apt/trusted.gpg.d/mu231230.asc</kbd>
 </p>
 
 <p>
