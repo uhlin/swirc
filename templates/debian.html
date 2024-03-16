@@ -56,10 +56,7 @@ Access metadata and packages over https:
 Install Swirc source list for APT:
 </p>
 <p class="snippet">
-<kbd>
-# wget -O - https://www.nifty-networks.net/swirc/swirc.list &gt;
-/etc/apt/sources.list.d/swirc.list
-</kbd>
+<kbd># wget -qO- https://www.nifty-networks.net/swirc/swirc.list | tee /etc/apt/sources.list.d/swirc.list</kbd>
 </p>
 
 <p>
