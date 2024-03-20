@@ -366,7 +366,6 @@ static void
 case_key_left(volatile struct readline_session_context *ctx)
 {
 	int width;
-	struct current_cursor_pos yx;
 
 	if (ctx->bufpos == 0) {
 		term_beep();
@@ -378,6 +377,8 @@ case_key_left(volatile struct readline_session_context *ctx)
 
 	mutex_lock(&g_puts_mutex);
 	if ((width = readline_wcwidth(ctx->buffer[--ctx->bufpos], FWLEN)) > 0) {
+		struct current_cursor_pos yx;
+
 		ctx->vispos -= width;
 		yx = term_get_pos(ctx->act);
 		if (wmove(ctx->act, yx.cury, yx.curx - width) == ERR) {
@@ -397,7 +398,6 @@ static void
 case_key_right(volatile struct readline_session_context *ctx)
 {
 	int width;
-	struct current_cursor_pos yx;
 
 	if (!ctx->insert_mode) {
 		term_beep();
@@ -409,6 +409,8 @@ case_key_right(volatile struct readline_session_context *ctx)
 
 	mutex_lock(&g_puts_mutex);
 	if ((width = readline_wcwidth(ctx->buffer[ctx->bufpos++], FWLEN)) > 0) {
+		struct current_cursor_pos yx;
+
 		ctx->vispos += width;
 		yx = term_get_pos(ctx->act);
 		if (wmove(ctx->act, yx.cury, yx.curx + width) == ERR) {
