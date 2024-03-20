@@ -808,7 +808,7 @@ irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 	if (*state == CONCAT_BUFFER_CONTAIN_DATA &&
 	    recvbuffer[0] == '\r' && recvbuffer[1] == '\n') {
 		ProcessProtoMsg(*message_concat);
-		free_and_null(&(*message_concat));
+		free_and_null(message_concat);
 		*state = CONCAT_BUFFER_IS_EMPTY;
 	}
 
@@ -836,7 +836,7 @@ irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 		} else if (last_token != NULL &&
 		    *state == CONCAT_BUFFER_IS_EMPTY &&
 		    strings_match(token, last_token)) {
-			free_and_null(&(*message_concat));
+			free_and_null(message_concat);
 			*message_concat = sw_strdup(last_token);
 			free_and_null(&last_token);
 			*state = CONCAT_BUFFER_CONTAIN_DATA;
@@ -849,7 +849,7 @@ irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 			return;
 		} else if (loop_count == 0 &&
 		    *state == CONCAT_BUFFER_CONTAIN_DATA) {
-			realloc_strcat(&(*message_concat), token);
+			realloc_strcat(message_concat, token);
 			token = *message_concat;
 			*state = CONCAT_BUFFER_IS_EMPTY;
 
