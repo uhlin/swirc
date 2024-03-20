@@ -501,6 +501,8 @@ event_whois_idle(struct irc_message_compo *compo)
 		char		*state = const_cast<char *>("");
 		const char	*sec_idle_str = NULL;
 		const char	*signon_time_str = NULL;
+		long int	 sec_idle = LONG_MAX;
+		long int	 signon_time = LONG_MAX;
 
 		if (strFeed(compo->params, 4) != 4)
 			throw std::runtime_error("strFeed");
