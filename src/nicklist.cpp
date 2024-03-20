@@ -256,7 +256,7 @@ printnick(WINDOW *win, const int row, const int col, const char *nick)
 
 static void
 list_fits_yes(PIRC_WINDOW win, WINDOW *nl_win, const int HEIGHT,
-    const std::list<std::string> &list)
+    std::list<std::string> &list)
 {
 	std::list<std::string>::iterator it;
 	int count;
