@@ -386,7 +386,7 @@ case_key_left(volatile struct readline_session_context *ctx)
 			readline_error(EIO, "wmove");
 			/* NOTREACHED */
 		}
-		(void) wrefresh(ctx->act);
+		(void)wrefresh(ctx->act);
 	}
 	mutex_unlock(&g_puts_mutex);
 }
@@ -418,7 +418,7 @@ case_key_right(volatile struct readline_session_context *ctx)
 			readline_error(EIO, "wmove");
 			/* NOTREACHED */
 		}
-		(void) wrefresh(ctx->act);
+		(void)wrefresh(ctx->act);
 	}
 	mutex_unlock(&g_puts_mutex);
 }
