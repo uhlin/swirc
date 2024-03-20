@@ -316,8 +316,7 @@ handle_conn_err(PPRINTTEXT_CONTEXT ptext_ctx, const char *what,
 	ptext_ctx->spec_type = TYPE_SPEC1_FAILURE;
 	printtext(ptext_ctx, "%s", what);
 
-	if (g_on_air)
-		g_on_air = false;
+	g_on_air = false;
 
 	net_ssl_end();
 
@@ -785,8 +784,7 @@ net_irc_listen(bool *connection_lost)
 	*connection_lost = (g_on_air && g_connection_lost);
 	if (*connection_lost)
 		printtext(&ptext_ctx, "%s", _("Connection to IRC server lost"));
-	if (g_on_air)
-		g_on_air = false;
+	g_on_air = false;
 	net_ssl_end();
 	if (g_socket != INVALID_SOCKET) {
 		CLOSE_GLOBAL_SOCKET();
