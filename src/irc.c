@@ -307,8 +307,8 @@ cmp_fn(const void *vp1, const void *vp2)
 void
 irc_init(void)
 {
-	char *nickname;
-	static bool is_sorted = false;
+	const char	*nickname;
+	static bool	 is_sorted = false;
 
 	if (g_cmdline_opts->nickname)
 		irc_set_my_nickname(g_cmdline_opts->nickname);
@@ -611,7 +611,7 @@ SortMsgCompo(const char *protocol_message)
 	cp = &remaining_data[0];
 
 	while (true) {
-		char *token;
+		const char *token;
 
 		if ((token = strtok_r(cp, "\n", &state)) == NULL)
 			break;
@@ -829,7 +829,7 @@ irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 	loop_count = 0;
 
 	while (true) {
-		char *token;
+		const char *token;
 
 		if ((token = strtok_r(cp, separators, &tokstate)) == NULL) {
 			break; /* No more tokens  --  end loop... */

@@ -1,5 +1,5 @@
 /* libUtils.c  --  Library Utilities
-   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -216,7 +216,7 @@ current_time(const char *fmt)
 const char *
 getuser(void)
 {
-	char *var_data;
+	const char *var_data;
 	static char buf[100] = { '\0' };
 	static const char var[] =
 #if defined(UNIX)

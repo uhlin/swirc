@@ -1521,8 +1521,8 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 			break;
 		default:
 		{
+			const wchar_t	*wcp = NULL;
 			ptrdiff_t	 diff = 0;
-			wchar_t		*wcp = NULL;
 
 			if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) !=
 			    NULL) {

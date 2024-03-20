@@ -1,4 +1,4 @@
-/* Copyright (C) 2012-2022 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2012-2024 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -37,8 +37,8 @@ term_restore_title(void)
 void
 term_set_title(const char *fmt, ...)
 {
-	char	*var_data;
-	char	 term_brand[100] = { '\0' };
+	char		 term_brand[100] = { '\0' };
+	const char	*var_data;
 
 	if ((var_data = getenv("TERM")) == NULL || sw_strcpy(term_brand,
 	    var_data, sizeof term_brand) != 0)

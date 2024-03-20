@@ -498,11 +498,9 @@ event_whois_idle(struct irc_message_compo *compo)
 	try {
 		char		*ep1 = const_cast<char *>("");
 		char		*ep2 = const_cast<char *>("");
-		char		*sec_idle_str;
-		char		*signon_time_str;
 		char		*state = const_cast<char *>("");
-		long int	 sec_idle;
-		long int	 signon_time;
+		const char	*sec_idle_str = NULL;
+		const char	*signon_time_str = NULL;
 
 		if (strFeed(compo->params, 4) != 4)
 			throw std::runtime_error("strFeed");

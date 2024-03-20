@@ -651,9 +651,9 @@ session_destroy(volatile struct readline_session_context *ctx)
 static STRING
 process(volatile struct readline_session_context *ctx)
 {
-	STRING out;
-	static const int sleep_time_milliseconds = 30;
-	wchar_t *buf_p = &g_push_back_buf[0];
+	STRING			 out;
+	const wchar_t		*buf_p = &g_push_back_buf[0];
+	static const int	 sleep_time_milliseconds = 30;
 
 	write_cmdprompt(ctx->act, ctx->prompt, ctx->prompt_size);
 

@@ -408,7 +408,7 @@ path_to_downloads(void)
 const char *
 path_to_home(void)
 {
-	char *var_data;
+	const char *var_data;
 	const char var[] =
 #if defined(UNIX)
 	    "HOME";

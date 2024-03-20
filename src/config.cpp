@@ -758,9 +758,9 @@ config_get_normalized_sasl_password(void)
 void
 cmd_set(const char *data)
 {
-	char	*dcopy;
-	char	*setting, *value;
-	char	*state = const_cast<char *>("");
+	char		*dcopy;
+	char		*state = const_cast<char *>("");
+	const char	*setting, *value;
 
 	if (strings_match(data, "")) {
 		output_values_for_all_settings();
