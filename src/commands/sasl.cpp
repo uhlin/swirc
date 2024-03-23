@@ -70,7 +70,7 @@ const char	g_decrypted_pass_sym = '%';
 const char	g_encrypted_pass_sym = '#';
 const char	g_unencrypted_pass_sym = '?';
 
-const char g_sasl_pass_allowed_chars[] =
+const char g_sasl_pass_allowed_chars[100] =
     "!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
     "abcdefghijklmnopqrstuvwxyz{|}~";
 

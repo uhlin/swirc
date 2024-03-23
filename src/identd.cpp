@@ -1,5 +1,5 @@
 /* Ident protocol daemon (RFC 1413)
-   Copyright (C) 2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -58,7 +58,7 @@ extern "C" {
 #include "strHand.h"
 #include "strdup_printf.h"
 
-char		 identd::fakename[20] = { '\0' };
+char		 identd::fakename[FAKENAME_LEN] = { '\0' };
 volatile bool	 identd::listening = false;
 volatile bool	 identd::loop = false;
 const char	*identd::name = "identd";

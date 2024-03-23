@@ -11,7 +11,7 @@ extern const char	g_decrypted_pass_sym;
 extern const char	g_encrypted_pass_sym;
 extern const char	g_unencrypted_pass_sym;
 
-extern const char g_sasl_pass_allowed_chars[];
+extern const char g_sasl_pass_allowed_chars[100];
 
 void		 cmd_sasl(const char *);
 PTEXTBUF	 get_list_of_matching_sasl_cmds(const char *);

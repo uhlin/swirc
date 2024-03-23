@@ -1,5 +1,5 @@
 /* fetchdic.cpp
-   Copyright (C) 2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2023-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -46,8 +46,8 @@
 #include "fetchdic.h"
 #include "theme.h"
 
-const char	 g_aff_suffix[] = ".aff";
-const char	 g_dic_suffix[] = ".dic";
+const char	 g_aff_suffix[AFF_SUFFIX_LEN] = ".aff";
+const char	 g_dic_suffix[DIC_SUFFIX_LEN] = ".dic";
 
 struct dictionary {
 	dictionary();

@@ -1,7 +1,7 @@
 #ifndef IDENT_DAEMON_HPP
 #define IDENT_DAEMON_HPP
 /* identd.hpp
-   Copyright (C) 2022-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -42,6 +42,8 @@
 #endif
 
 #include <cstring>
+
+#define FAKENAME_LEN 20
 
 #ifndef INET_ADDRSTRLEN
 #define INET_ADDRSTRLEN 16
@@ -138,7 +140,7 @@ private:
 
 namespace identd
 {
-	extern char		 fakename[];
+	extern char		 fakename[FAKENAME_LEN];
 	extern volatile bool	 listening;
 	extern volatile bool	 loop;
 	extern const char	*name;
