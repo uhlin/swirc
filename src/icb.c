@@ -150,9 +150,9 @@ login_ok(void)
 static void
 handle_open_msg_packet(const char *pktdata)
 {
-	char	*last = "";
-	char	*nickname, *message;
-	char	*pktdata_copy = sw_strdup(pktdata);
+	char		*last = "";
+	char		*pktdata_copy = sw_strdup(pktdata);
+	const char	*nickname, *message;
 
 	if ((nickname = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) == NULL ||
 	    (message = strtok_r(NULL, ICB_FIELD_SEP, &last)) == NULL) {
@@ -171,9 +171,9 @@ handle_open_msg_packet(const char *pktdata)
 static void
 handle_personal_msg_packet(const char *pktdata)
 {
-	char	*last = "";
-	char	*nickname, *message;
-	char	*pktdata_copy = sw_strdup(pktdata);
+	char		*last = "";
+	char		*pktdata_copy = sw_strdup(pktdata);
+	const char	*nickname, *message;
 
 	if ((nickname = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) == NULL ||
 	    (message = strtok_r(NULL, ICB_FIELD_SEP, &last)) == NULL) {
@@ -482,8 +482,8 @@ deal_with_category_status(const char *data)
 static void
 sign_on_arrive(char *str, const char *sep)
 {
-	char	*last = "";
-	char	*nick, *user, *host;
+	char		*last = "";
+	const char	*nick, *user, *host;
 
 	if ((nick = strtok_r(str, sep, &last)) == NULL) {
 		err_log(EINVAL, "%s: no nickname", __func__);
@@ -504,15 +504,15 @@ sign_on_arrive(char *str, const char *sep)
 static void
 sign_off_depart(char *str, const char *sep)
 {
-	char	*last = "";
-	char	*nick;
+	char		*last = "";
+	const char	*nick;
 
 	if (!strncmp(str, "Your group moderator", 20)) {
 		/* TODO: Investigate handling */;
 	} else if ((nick = strtok_r(str, sep, &last)) == NULL) {
 		err_log(EINVAL, "%s: no nickname", __func__);
 	} else {
-		char	*user, *host;
+		const char	*user, *host;
 
 		if ((user = strtok_r(NULL, sep, &last)) == NULL)
 			user = "<no user>";
