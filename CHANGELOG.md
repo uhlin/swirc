@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
   - Marked variables with `const` and `immutable_cp_t` respectively.
   - Reduced the scope of variables.
   - Variable initializations.
+  - ...
 
 ## [3.4.7] - 2024-03-12 ##
 - **Added** command `/dcc`
