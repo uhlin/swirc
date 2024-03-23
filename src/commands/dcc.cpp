@@ -68,6 +68,7 @@
 #include "../tls-server.h"
 
 #include "dcc.h"
+#include "i18n.h"
 #include "theme.h" /* url_to_file() */
 
 #define DCC_FILE_MAX_SIZE	(g_one_gig * static_cast<intmax_t>(10))
