@@ -1,5 +1,5 @@
 /* ICB protocol handling
-   Copyright (C) 2019-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -321,7 +321,7 @@ deal_with_category_pass(const char *window_label, const char *data)
 		dataptr += strlen(nick);
 		dataptr += strlen(passed1);
 
-		const char *new_mod = dataptr;
+		immutable_cp_t new_mod = dataptr;
 
 		if (event_names_htbl_lookup(new_mod, window_label) == NULL) {
 			goto err;
@@ -626,10 +626,10 @@ static void
 who_listing(char *cp)
 {
 	PIRC_WINDOW	 win;
-	char		*initial_token, *nickname;
 	char		*last = "";
+	const char	*initial_token, *nickname;
 #if 0
-	char		*seconds_idle, *response_time, *login_time, *username,
+	const char	*seconds_idle, *response_time, *login_time, *username,
 			*userhost, *reg_status;
 #endif
 
@@ -711,9 +711,9 @@ handle_cmd_output_packet(const char *pktdata)
 static void
 handle_proto_packet(const char *pktdata)
 {
-	char	*cp;
-	char	*last = "";
-	char	*pktdata_copy = sw_strdup(pktdata);
+	char		*last = "";
+	char		*pktdata_copy = sw_strdup(pktdata);
+	const char	*cp;
 
 	if ((cp = strtok_r(pktdata_copy, ICB_FIELD_SEP, &last)) == NULL ||
 	    sw_strcpy(icb_protolevel, cp, ARRAY_SIZE(icb_protolevel)) != 0)
