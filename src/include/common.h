@@ -1,7 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 /* common.h
-   Copyright (C) 2016-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -88,6 +88,7 @@
 
 typedef char *STRING;
 typedef const char *CSTRING;
+typedef const char * const immutable_cp_t;
 
 #if defined(WIN32) && !defined(_SSIZE_T_DEFINED)
 #define _SSIZE_T_DEFINED 1
