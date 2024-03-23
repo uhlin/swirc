@@ -81,7 +81,7 @@ extern int	 g_stderr_fd;
 extern int	 g_stdout_fd;
 
 extern SETLOCALE_FN	 xsetlocale;
-extern char		 g_locale[];
+extern char		 g_locale[200];
 
 #ifdef __cplusplus
 extern std::vector<std::string> g_join_list;

@@ -12,8 +12,8 @@ extern char	*g_log_dir;
 extern char	*g_dcc_download_dir;
 extern char	*g_dcc_upload_dir;
 
-extern const char	g_config_filesuffix[];
-extern const char	g_theme_filesuffix[];
+extern const char	g_config_filesuffix[6];
+extern const char	g_theme_filesuffix[6];
 
 extern char	*g_config_file;
 extern char	*g_theme_file;

@@ -74,7 +74,7 @@
 *                                                               *
 ****************************************************************/
 
-const char g_forbidden_chan_name_chars[] = " \007,";
+const char g_forbidden_chan_name_chars[10] = " \007,";
 
 bool	 g_alt_nick_tested = false;
 bool	 g_am_irc_op = false;

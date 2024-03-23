@@ -68,9 +68,9 @@ extern volatile bool g_connection_lost;
 extern volatile bool g_irc_listening;
 extern volatile bool g_on_air;
 
-extern char g_last_server[];
-extern char g_last_port[];
-extern char g_last_pass[];
+extern char g_last_server[1024];
+extern char g_last_port[32];
+extern char g_last_pass[256];
 
 extern int g_socket_address_family;
 

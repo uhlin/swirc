@@ -28,8 +28,8 @@ struct Interpreter_in {
 };
 
 __SWIRC_BEGIN_DECLS
-extern const char g_fgets_nullret_err1[];
-extern const char g_fgets_nullret_err2[];
+extern const char g_fgets_nullret_err1[70];
+extern const char g_fgets_nullret_err2[70];
 
 void	Interpreter(const struct Interpreter_in *);
 void	Interpreter_processAllLines(FILE *, const char *, Interpreter_vFunc,

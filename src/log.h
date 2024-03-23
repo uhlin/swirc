@@ -2,7 +2,7 @@
 #define LOG_H
 
 __SWIRC_BEGIN_DECLS
-extern const char	g_log_filesuffix[];
+extern const char	g_log_filesuffix[5];
 
 char	*log_get_path(const char *, const char *);
 void	 log_msg(const char *, const char *);

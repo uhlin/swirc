@@ -89,7 +89,7 @@ struct hInstall_context {
 
 PIRC_WINDOW	g_active_window = NULL;
 PIRC_WINDOW	g_status_window = NULL;
-const char	g_status_window_label[] = "(status)";
+const char	g_status_window_label[10] = "(status)";
 const int	g_scroll_amount = 6;
 int		g_ntotal_windows = 0;
 volatile bool	g_redrawing_window = false;

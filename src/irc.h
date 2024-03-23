@@ -34,7 +34,7 @@ enum message_concat_state {
 #define UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO 1
 
 __SWIRC_BEGIN_DECLS
-extern const char g_forbidden_chan_name_chars[];
+extern const char g_forbidden_chan_name_chars[10];
 
 extern bool	 g_alt_nick_tested;
 extern bool	 g_am_irc_op;

@@ -44,7 +44,7 @@
 #include "strHand.h"
 #include "window.h"
 
-const char	g_log_filesuffix[] = ".txt";
+const char	g_log_filesuffix[5] = ".txt";
 
 static const char *get_modified_server_host(const char *) NONNULL;
 static const char *get_logtype(const char *) NONNULL;

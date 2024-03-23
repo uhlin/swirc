@@ -75,8 +75,8 @@ char	*g_log_dir = NULL;
 char	*g_dcc_download_dir = NULL;
 char	*g_dcc_upload_dir = NULL;
 
-const char	g_config_filesuffix[] = ".conf";
-const char	g_theme_filesuffix[] = ".thm";
+const char	g_config_filesuffix[6] = ".conf";
+const char	g_theme_filesuffix[6] = ".thm";
 
 char	*g_config_file = NULL;
 char	*g_theme_file = NULL;

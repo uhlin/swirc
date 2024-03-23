@@ -23,9 +23,9 @@
 #include <iostream>
 #include <stdexcept>
 
-const char g_fgets_nullret_err1[] = "error: fgets() returned null and the "
+const char g_fgets_nullret_err1[70] = "error: fgets() returned null and the "
     "error indicator is set";
-const char g_fgets_nullret_err2[] = "error: fgets() returned null for an "
+const char g_fgets_nullret_err2[70] = "error: fgets() returned null for an "
     "unknown reason";
 
 static const char ArgBegin = '"';
