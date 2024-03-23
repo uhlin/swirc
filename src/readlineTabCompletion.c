@@ -332,7 +332,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 static void
 init_mode_for_connect(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[9]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[9]);
 
 	if ((ctx->tc->matches = get_list_of_matching_connect_cmds(cp)) ==
 	    NULL) {
@@ -349,7 +349,7 @@ static void
 init_mode_for_cs(volatile struct readline_session_context *ctx,
     const int offset)
 {
-	const char *cp = addrof(ctx->tc->search_var[offset]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[offset]);
 
 	if ((ctx->tc->matches = get_list_of_matching_cs_cmds(cp)) == NULL) {
 		output_error("no magic");
@@ -364,7 +364,7 @@ init_mode_for_cs(volatile struct readline_session_context *ctx,
 static void
 init_mode_for_help(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[6]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[6]);
 
 	if ((ctx->tc->matches = get_list_of_matching_commands(cp)) == NULL) {
 		output_error("no magic");
@@ -379,7 +379,7 @@ init_mode_for_help(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_mode(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[6]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[6]);
 
 	if ((ctx->tc->matches = get_matches_common(cp)) == NULL) {
 		output_error("no magic");
@@ -394,7 +394,7 @@ init_mode_for_mode(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_msg(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[5]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[5]);
 
 	if ((ctx->tc->matches = get_matches_common(cp)) == NULL) {
 		output_error("no magic");
@@ -409,7 +409,7 @@ init_mode_for_msg(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_notice(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[8]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[8]);
 
 	if ((ctx->tc->matches = get_matches_common(cp)) == NULL) {
 		output_error("no magic");
@@ -425,7 +425,7 @@ static void
 init_mode_for_ns(volatile struct readline_session_context *ctx,
     const int offset)
 {
-	const char *cp = addrof(ctx->tc->search_var[offset]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[offset]);
 
 	if ((ctx->tc->matches = get_list_of_matching_ns_cmds(cp)) == NULL) {
 		output_error("no magic");
@@ -463,7 +463,7 @@ init_mode_for_query(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_sasl(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[6]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[6]);
 
 	if ((ctx->tc->matches = get_list_of_matching_sasl_cmds(cp)) == NULL) {
 		output_error("no magic");
@@ -478,7 +478,7 @@ init_mode_for_sasl(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_set(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[5]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[5]);
 
 	if ((ctx->tc->matches = get_list_of_matching_settings(cp)) == NULL) {
 		output_error("no magic");
@@ -493,7 +493,7 @@ init_mode_for_set(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_squery(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[8]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[8]);
 
 	if ((ctx->tc->matches = get_list_of_matching_squery_commands(cp)) ==
 	    NULL) {
@@ -509,7 +509,7 @@ init_mode_for_squery(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_theme(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[7]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[7]);
 
 	if ((ctx->tc->matches = get_list_of_matching_theme_cmds(cp)) == NULL) {
 		output_error("no magic");
@@ -524,7 +524,7 @@ init_mode_for_theme(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_time(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[6]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[6]);
 
 	if ((ctx->tc->matches = get_matches_common(cp)) == NULL) {
 		output_error("no magic");
@@ -539,7 +539,7 @@ init_mode_for_time(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_version(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[9]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[9]);
 
 	if ((ctx->tc->matches = get_matches_common(cp)) == NULL) {
 		output_error("no magic");
@@ -554,7 +554,7 @@ init_mode_for_version(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_whois(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[7]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[7]);
 
 	if (!is_irc_channel(ACTWINLABEL)) {
 		ctx->tc->matches = get_list_of_matching_queries(cp);
@@ -576,7 +576,7 @@ init_mode_for_whois(volatile struct readline_session_context *ctx)
 static void
 init_mode_for_znc_cmds(volatile struct readline_session_context *ctx)
 {
-	const char *cp = addrof(ctx->tc->search_var[5]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[5]);
 
 	if ((ctx->tc->matches = get_list_of_matching_znc_commands(cp)) ==
 	    NULL) {
@@ -593,7 +593,7 @@ static void
 init_mode_for_commands(volatile struct readline_session_context *ctx,
     const bool numins_greater_than_one)
 {
-	const char *cp = addrof(ctx->tc->search_var[1]);
+	immutable_cp_t cp = addrof(ctx->tc->search_var[1]);
 
 	if (!numins_greater_than_one || (ctx->tc->matches =
 	    get_list_of_matching_commands(cp)) == NULL) {
@@ -663,8 +663,8 @@ var_matches_ns(CSTRING sv, int *iout)
 static void
 init_mode(volatile struct readline_session_context *ctx)
 {
-	CSTRING sv = get_search_var(ctx);
-	int off1, off2;
+	immutable_cp_t	sv = get_search_var(ctx);
+	int		off1, off2;
 
 	if (!strncmp(sv, "/connect ", 9))
 		init_mode_for_connect(ctx);
