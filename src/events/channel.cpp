@@ -1,5 +1,5 @@
 /* Channel related events
-   Copyright (C) 2015-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -122,7 +122,7 @@ event_join(struct irc_message_compo *compo)
 		if ((host = strtok_r(NULL, "!@", &state)) == NULL)
 			host = "<no host>";
 
-		const char * const channel = (*(compo->params) == ':' ?
+		immutable_cp_t channel = (*(compo->params) == ':' ?
 		    &compo->params[1] : &compo->params[0]);
 
 		if (!is_irc_channel(channel) ||
