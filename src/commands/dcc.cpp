@@ -1517,11 +1517,13 @@ send_doit(SSL *ssl, dcc_send *send_obj)
 		bytes_read = fread(buf, 1, bytes, send_obj->fileptr);
 
 		if (bytes_read == 0) {
-			printtext_print("err", "%s: file read error", __func__);
+			printtext_print("err", _("%s: file read error"),
+			    __func__);
 			break;
 		} else if (send_bytes(ssl, addrof(buf[0]),
 		    static_cast<int>(bytes_read), send_obj->bytes_rem) != OK) {
-			printtext_print("err", "%s: tls write error", __func__);
+			printtext_print("err", _("%s: tls write error"),
+			    __func__);
 			break;
 		}
 	}
@@ -1537,8 +1539,8 @@ warn_and_shutdown(SSL *ssl, const char *func, const char *msg)
 static void
 print_start_and_stop(const char *type, const char *start, const char *stop)
 {
-	printtext_print(type, "started: %s", start);
-	printtext_print(type, "stopped: %s", stop);
+	printtext_print(type, _("started: %s"), start);
+	printtext_print(type, _("stopped: %s"), stop);
 }
 
 void
@@ -1555,30 +1557,30 @@ dcc::handle_incoming_conn(SSL *ssl)
 	std::string filename("");
 
 	if (read_request(ssl, nick, filename) != OK) {
-		warn_and_shutdown(ssl, __func__, "read request error");
+		warn_and_shutdown(ssl, __func__, _("read request error"));
 		return;
 	}
 
 	std::vector<dcc_send>::size_type pos = 0;
 
 	if (!find_send_obj(nick, filename.c_str(), pos)) {
-		warn_and_shutdown(ssl, __func__, "unable to find the send "
-		    "object");
+		warn_and_shutdown(ssl, __func__, _("unable to find the send "
+		    "object"));
 		return;
 	}
 
 	dcc_send *send_obj = addrof(send_db[pos]);
 
 	if (send_obj->has_completed()) {
-		warn_and_shutdown(ssl, __func__, "already sent file");
+		warn_and_shutdown(ssl, __func__, _("already sent file"));
 		return;
 	} else if (send_obj->is_locked()) {
-		warn_and_shutdown(ssl, __func__, "send object is in a locked "
-		    "state");
+		warn_and_shutdown(ssl, __func__, _("the send object is in a "
+		    "locked state"));
 		return;
 	} else if (send_obj->fileptr == nullptr && (send_obj->fileptr =
 	    xfopen(send_obj->full_path.c_str(), "rb")) == nullptr) {
-		warn_and_shutdown(ssl, __func__, "file open error");
+		warn_and_shutdown(ssl, __func__, _("file open error"));
 		return;
 	}
 
@@ -1597,11 +1599,11 @@ dcc::handle_incoming_conn(SSL *ssl)
 	get_time(str2, send_obj->stop);
 
 	if (send_obj->has_completed()) {
-		printtext_print("success", "%s: successfully sent file: %s",
+		printtext_print("success", _("%s: successfully sent file: %s"),
 		    __func__, filename.c_str());
 		print_start_and_stop("success", str1.c_str(), str2.c_str());
 	} else {
-		printtext_print("err", "%s: file transfer incomplete: %s",
+		printtext_print("err", _("%s: file transfer incomplete: %s"),
 		    __func__, filename.c_str());
 		print_start_and_stop("err", str1.c_str(), str2.c_str());
 
