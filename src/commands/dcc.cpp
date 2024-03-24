@@ -1061,13 +1061,15 @@ subcmd_send(const char *nick, const char *file)
 			throw std::runtime_error("too large file");
 		send_db.push_back(send_obj);
 
-		ret = net_send("PRIVMSG %s :\001SW_DCC SEND " "%" PRIu32 " %ld "
-		    "%" PRIdMAX " %s\001",
+		ret = net_send("PRIVMSG %s :%cSW_DCC SEND " "%" PRIu32 " %ld "
+		    "%" PRIdMAX " %s%c",
 		    nick_lc,
+		    g_ascii_soh,
 		    addr,
 		    config_integer(&intctx),
 		    send_obj.get_filesize(),
-		    send_obj.get_filename());
+		    send_obj.get_filename(),
+		    g_ascii_soh);
 		if (ret < 0) {
 			send_db.pop_back();
 			throw std::runtime_error("cannot send");
