@@ -51,6 +51,8 @@ typedef struct tagPRINTTEXT_CONTEXT {
 } PRINTTEXT_CONTEXT, *PPRINTTEXT_CONTEXT;
 
 __SWIRC_BEGIN_DECLS
+extern const char g_ascii_soh;
+
 #if defined(UNIX)
 extern pthread_mutex_t g_puts_mutex;
 #elif defined(WIN32)

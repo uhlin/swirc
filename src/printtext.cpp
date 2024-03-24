@@ -158,6 +158,8 @@ struct case_default_context {
 *                                                               *
 ****************************************************************/
 
+const char g_ascii_soh = 0x01;
+
 #if defined(UNIX)
 pthread_mutex_t g_puts_mutex;
 #elif defined(WIN32)
