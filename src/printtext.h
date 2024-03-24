@@ -8,20 +8,20 @@
 
 /* text decoration */
 enum {
-	BLINK     = '\035',
-	BOLD      = '\002',
-	COLOR     = '\003',
-	NORMAL    = '\017',
-	REVERSE   = '\026',
-	UNDERLINE = '\037'
+	BLINK     = 0x1D, // octal 035
+	BOLD      = 0x02, // octal 002
+	COLOR     = 0x03, // octal 003
+	NORMAL    = 0x0F, // octal 017
+	REVERSE   = 0x16, // octal 026
+	UNDERLINE = 0x1F  // octal 037
 };
 
-#define TXT_BLINK     "\035"
-#define TXT_BOLD      "\002"
-#define TXT_COLOR     "\003"
-#define TXT_NORMAL    "\017"
-#define TXT_REVERSE   "\026"
-#define TXT_UNDERLINE "\037"
+#define TXT_BLINK     "\x1D"
+#define TXT_BOLD      "\x02"
+#define TXT_COLOR     "\x03"
+#define TXT_NORMAL    "\x0F"
+#define TXT_REVERSE   "\x16"
+#define TXT_UNDERLINE "\x1F"
 
 enum message_specifier_type {
 	TYPE_SPEC1,
