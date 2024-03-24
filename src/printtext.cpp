@@ -1403,7 +1403,7 @@ get_buffer(CSTRING orig)
 	if (!config_bool("iconv_conversion", true))
 		return sw_strdup(orig);
 
-	for (CSTRING str : fromcode) {
+	for (immutable_cp_t str : fromcode) {
 		char *in, *orig_copy, *out, *out_p;
 		iconv_t cd;
 		size_t inbytes, outbytes, outsize;
