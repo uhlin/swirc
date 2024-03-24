@@ -234,6 +234,7 @@ cmd_fetchdic(const char *data)
 		return;
 	case READ_DB_OK:
 	default:
+		/* No statements here ATM. */
 		break;
 	}
 

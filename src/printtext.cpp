@@ -561,6 +561,7 @@ map_color(short int *inout, const short int i, const short int colorMap_size,
 		}
 		break;
 	default:
+		/* Not black/white. */
 		break;
 	}
 }

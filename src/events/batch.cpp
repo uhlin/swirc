@@ -208,6 +208,7 @@ process_batch(CSTRING params)
 		break;
 	case BATCH_UNKNOWN:
 	default:
+		/* unknown batch type */
 		throw std::runtime_error("process_batch: unknown batch type");
 	}
 

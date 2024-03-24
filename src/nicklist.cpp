@@ -91,6 +91,7 @@ cmp_fn(const std::string &nick1, const std::string &nick2)
 		break;
 	case ' ':
 	default:
+		/* empty */
 		break;
 	}
 
@@ -124,6 +125,7 @@ cmp_fn(const std::string &nick1, const std::string &nick2)
 		break;
 	case ' ':
 	default:
+		/* empty */
 		break;
 	}
 
