@@ -1,5 +1,5 @@
 /* colormap.cpp  --  output colors
-   Copyright (C) 2020-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
