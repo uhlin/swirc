@@ -1,9 +1,17 @@
 #ifndef DATA_CLASSIFY_H
 #define DATA_CLASSIFY_H
 
+#include <stdint.h>
+
 typedef struct tagRANGE {
+#if defined(UNIX)
 	wchar_t start;
 	wchar_t stop;
+#elif defined(WIN32)
+	uint32_t start;
+	uint32_t stop;
+#endif
+
 	CSTRING comment;
 } RANGE, *PRANGE;
 
