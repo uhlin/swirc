@@ -86,8 +86,8 @@ event_allaround_extract_find_colon(struct irc_message_compo *compo)
 void
 event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 {
-	PRINTTEXT_CONTEXT ctx;
-	char *msg_copy = NULL;
+	PRINTTEXT_CONTEXT	 ctx;
+	char			*msg_copy = NULL;
 
 	try {
 		char		*cp;
