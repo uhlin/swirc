@@ -92,7 +92,7 @@ handle_special_msg(const struct special_msg_context *ctx)
 	STRING msg = sw_strdup(ctx->msg);
 
 	printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
-	squeeze(msg, "\001");
+	squeeze(msg, "\x01");
 	msg = trim(msg);
 
 	if (strings_match_ignore_case(ctx->dest, g_my_nickname)) {
@@ -114,15 +114,22 @@ handle_special_msg(const struct special_msg_context *ctx)
 		dcc::add_file(ctx->nick, ctx->user, ctx->host, &msg[12]);
 	} else if (!strncmp(msg, "TIME", 5) && config_bool("ctcp_reply",
 	    true)) {
-		if (net_send("NOTICE %s :\001TIME %s\001", ctx->nick,
-		    current_time("%c")) < 0)
+		if (net_send("NOTICE %s :%cTIME %s%c",
+		    ctx->nick,
+		    g_ascii_soh,
+		    current_time("%c"),
+		    g_ascii_soh) < 0)
 			g_connection_lost = true;
 		acknowledge_ctcp_request("TIME", ctx);
 	} else if (!strncmp(msg, "VERSION", 8) && config_bool("ctcp_reply",
 	    true)) {
-		if (net_send("NOTICE %s :"
-		    "\001VERSION Swirc %s by %s  --  %s\001", ctx->nick,
-		    g_swircVersion, g_swircAuthor, g_swircWebAddr) < 0)
+		if (net_send("NOTICE %s :%cVERSION Swirc %s by %s  --  %s%c",
+		    ctx->nick,
+		    g_ascii_soh,
+		    g_swircVersion,
+		    g_swircAuthor,
+		    g_swircWebAddr,
+		    g_ascii_soh) < 0)
 			g_connection_lost = true;
 		acknowledge_ctcp_request("VERSION", ctx);
 	} else {
@@ -424,7 +431,7 @@ event_privmsg(struct irc_message_compo *compo)
 		if (is_in_ignore_list(nick, user, host))
 			return;
 
-		if (*msg == '\001') {
+		if (*msg == g_ascii_soh) {
 			struct special_msg_context msg_ctx(nick, user, host,
 			    dest, msg);
 

@@ -116,7 +116,7 @@ handle_special_msg(const struct special_msg_context *ctx)
 {
 	char	*msg = sw_strdup(ctx->msg);
 
-	squeeze(msg, "\001");
+	squeeze(msg, "\x01");
 	msg = trim(msg);
 	if (!strncmp(msg, "VERSION ", 8))
 		output_ctcp_reply("VERSION", ctx, &msg[8]);
@@ -183,7 +183,7 @@ event_notice(struct irc_message_compo *compo)
 		if (is_in_ignore_list(nick, user, host))
 			return;
 
-		if (*msg == '\001') {
+		if (*msg == g_ascii_soh) {
 			/*
 			 * Special message
 			 */
