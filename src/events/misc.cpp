@@ -1,5 +1,5 @@
 /* Miscellaneous events
-   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -90,9 +90,9 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 	char *msg_copy = NULL;
 
 	try {
-		char	*cp;
-		char	*msg;
-		char	*state = const_cast<char *>("");
+		char		*cp;
+		char		*state = const_cast<char *>("");
+		const char	*msg;
 
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
@@ -136,10 +136,10 @@ event_serverFeatures(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char	*cp = NULL;
-		char	*msg = NULL;
-		char	*msg_copy = NULL;
-		char	*state = const_cast<char *>("");
+		char		*cp = NULL;
+		char		*msg_copy = NULL;
+		char		*state = const_cast<char *>("");
+		const char	*msg = NULL;
 
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
@@ -448,8 +448,8 @@ void
 event_userModeIs(struct irc_message_compo *compo)
 {
 	try {
-		char	*modes = NULL;
-		char	*state = const_cast<char *>("");
+		char		*state = const_cast<char *>("");
+		const char	*modes = NULL;
 
 		if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
