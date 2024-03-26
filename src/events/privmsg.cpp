@@ -104,7 +104,7 @@ handle_special_msg(const struct special_msg_context *ctx)
 		ptext_ctx.window = window_by_label(ctx->dest);
 	}
 
-	if (! (ptext_ctx.window))
+	if (!(ptext_ctx.window))
 		ptext_ctx.window = g_active_window;
 
 	if (!strncmp(msg, "ACTION ", 7)) {
