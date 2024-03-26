@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 - Did code improvements:
   - Explicitly specified the size of multiple arrays (MISRA rule,
     found by PVS-Studio).
+  - Fixed octal constants (MISRA rule, found by PVS-Studio).
   - Fixed redundant checks and expressions.
   - Marked variables with `const` and `immutable_cp_t` respectively.
   - Reduced the scope of variables.
