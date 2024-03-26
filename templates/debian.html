@@ -41,28 +41,28 @@
 <h3>Debian x64 package</h3>
 
 <p>
-Import <strong>current</strong> Swirc release signing key:
+	Import <strong>current</strong> Swirc release signing key:
 </p>
 <p class="snippet">
 <kbd># wget -qO- https://www.nifty-networks.net/swirc/mu231230.pgp | tee /etc/apt/trusted.gpg.d/mu231230.asc</kbd>
 </p>
 
 <p>
-Access metadata and packages over https:
+	Access metadata and packages over https:
 </p>
 <p class="snippet">
 <kbd># apt-get install apt-transport-https</kbd>
 </p>
 
 <p>
-Install Swirc source list for APT:
+	Install Swirc source list for APT:
 </p>
 <p class="snippet">
 <kbd># wget -qO- https://www.nifty-networks.net/swirc/swirc.list | tee /etc/apt/sources.list.d/swirc.list</kbd>
 </p>
 
 <p>
-Finally update and install:
+	Finally update and install:
 </p>
 <p class="snippet">
 <kbd># apt-get update</kbd><br>
