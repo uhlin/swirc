@@ -330,7 +330,7 @@ event_channel_forward(struct irc_message_compo *compo)
 
 	try {
 		char	*from_channel, *to_channel, *msg;
-		char	*params = & (compo->params[0]);
+		char	*params = compo->params;
 		char	*state = const_cast<char *>("");
 
 		if (strFeed(params, 3) != 3)
@@ -393,7 +393,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
 
 	try {
 		char	*nick = NULL;
-		char	*params = & (compo->params[0]);
+		char	*params = compo->params;
 		char	*state = const_cast<char *>("");
 
 		if (strFeed(params, 2) != 2)
