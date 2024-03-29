@@ -12,6 +12,9 @@ All notable changes to this project will be documented in this file.
   - Variable initializations.
   - ...
 
+### Windows ###
+- Fixed a case of truncation from `int` to `wchar_t`.
+
 ## [3.4.7] - 2024-03-12 ##
 - **Added** command `/dcc`
 - **Added** event `BATCH` (IRCv3). The following types were added:
