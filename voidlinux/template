@@ -31,6 +31,14 @@ post_configure() {
 
 	vsed -i "$_file" -e "s/CC =/CC ?=/"
 	vsed -i "$_file" -e "s/CXX =/CXX ?=/"
+	vsed -i "$_file" -e "s/LDFLAGS =/LDFLAGS ?=/"
+}
+
+do_check() {
+	# The usage of the "-Wl,-z,now" and "-Wl,-z,relro" LDFLAGS
+	# results in linking errors and are disabled during "make
+	# check".
+	LDFLAGS="-L/usr/local/lib" make check
 }
 
 post_check() {
