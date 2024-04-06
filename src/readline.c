@@ -1015,7 +1015,7 @@ readline_mouse_init(void)
 void
 readline_recreate(int rows, int cols)
 {
-	struct term_window_size newsize = {
+	const struct term_window_size newsize = {
 		.rows = 1,
 		.cols = cols,
 		.start_row = (rows - 1),
