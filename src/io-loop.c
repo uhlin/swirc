@@ -174,6 +174,11 @@ static struct cmds_tag {
 #define FOREACH_COMMAND() \
 	for (struct cmds_tag *sp = &cmds[0]; sp < &cmds[ARRAY_SIZE(cmds)]; sp++)
 
+static int	get_longest_cmdlen(void);
+static int	get_space(void);
+static void	set_array(struct cmds_tag *, struct cmds_tag **, const int,
+		    const int);
+
 static void
 add_cmd(PTEXTBUF matches, CSTRING cmd)
 {
@@ -235,6 +240,28 @@ bold_fix(STRING string)
 		*cp = BOLD_ALIAS;
 }
 
+static void
+chg_space(int *ip)
+{
+	STRING      ts = sw_strdup(Theme("time_format"));
+	size_t      bytes_convert;
+	wchar_t     wcs[200] = { L'\0' };
+
+	if (strings_match(squeeze_text_deco(ts), "")) {
+		free(ts);
+		return;
+	}
+
+	bytes_convert = xmbstowcs(addrof(wcs[0]), ts, ARRAY_SIZE(wcs) - 1);
+	wcs[ARRAY_SIZE(wcs) - 1] = L'\0';
+	free(ts);
+
+	if (bytes_convert == g_conversion_failed)
+		return;
+	*ip -= xwcswidth(addrof(wcs[0]), 2);
+	*ip -= 1;
+}
+
 static bool
 get_error_log_size(double *size)
 {
@@ -259,6 +286,87 @@ get_error_log_size(double *size)
 
 	*size = (double) (sb.st_size / 1000.0);
 	return true;
+}
+
+static STRING
+get_format_str(const int num_cols)
+{
+	STRING	str;
+	char	buf[20] = { '\0' };
+
+	(void) snprintf(buf, sizeof buf, "%%-%ds", get_longest_cmdlen());
+	str = sw_strdup("");
+
+	for (int i = 0; i < num_cols; i++) {
+		if (i != (num_cols - 1)) {
+			realloc_strcat(&str, &buf[0]);
+			realloc_strcat(&str, " ");
+		} else {
+			realloc_strcat(&str, "%s");
+			break;
+		}
+	}
+
+	return str;
+}
+
+static int
+get_longest_cmdlen(void)
+{
+	int len = 0;
+	struct cmds_tag *sp = &cmds[0];
+
+	while (sp < &cmds[ARRAY_SIZE(cmds)]) {
+		int cmdlen;
+
+		if ((cmdlen = strlen(sp->cmd)) > len)
+			len = cmdlen;
+		sp++;
+	}
+
+	return len;
+}
+
+static int
+get_num_cols(void)
+{
+	const int	maxcol = 6;
+	int		cmdlen, space;
+	int		cols = 0;
+	int		count = 0;
+
+	cmdlen	= get_longest_cmdlen();
+	space	= get_space();
+
+	while (count < space && cols < maxcol) {
+		count += (cmdlen + 1);
+		cols++;
+	}
+
+	if (count > space)
+		cols -= 1;
+	return (cols <= 0 ? 1 : cols);
+}
+
+static int
+get_num_rows(void)
+{
+	int num_cols;
+	static const int num_cmds = (int) ARRAY_SIZE(cmds);
+
+	num_cols = get_num_cols();
+
+	return ((num_cmds / num_cols) +
+		(num_cmds % num_cols));
+}
+
+static int
+get_space(void)
+{
+	int space = getmaxx(panel_window(g_active_window->pan));
+
+	chg_space(&space);
+	return space;
 }
 
 static void
@@ -339,6 +447,7 @@ history_prev(void)
 		element = element->prev;
 }
 
+#if 0
 static void
 list_all_commands(void)
 {
@@ -375,6 +484,82 @@ list_all_commands(void)
 		sp++;
 	}
 }
+#endif
+
+static void
+list_all_commands_dynamic(void)
+{
+	PRINTTEXT_CONTEXT	 ctx;
+	STRING			 fmtstr;
+	int			 num_cols, num_rows;
+	struct cmds_tag		*array[6] = { NULL };
+	struct cmds_tag		*sp = &cmds[0];
+
+	num_cols = get_num_cols();
+	num_rows = get_num_rows();
+
+	fmtstr = get_format_str(num_cols);
+
+	printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
+	printtext(&ctx, "--------------- Commands ---------------");
+
+	for (int i = 0; i < num_rows; i++) {
+#define GETCMD(x) \
+    (array[x] ? array[x]->cmd : "")
+		array[0] = sp;
+		set_array(sp, &array[1], num_rows, 1);
+		set_array(sp, &array[2], num_rows, 2);
+		set_array(sp, &array[3], num_rows, 3);
+		set_array(sp, &array[4], num_rows, 4);
+		set_array(sp, &array[5], num_rows, 5);
+
+		switch (num_cols) {
+		case 1:
+			printtext(&ctx, fmtstr, GETCMD(0));
+			break;
+		case 2:
+			printtext(&ctx, fmtstr, GETCMD(0),
+			    GETCMD(1));
+			break;
+		case 3:
+			printtext(&ctx, fmtstr, GETCMD(0),
+			    GETCMD(1),
+			    GETCMD(2));
+			break;
+		case 4:
+			printtext(&ctx, fmtstr, GETCMD(0),
+			    GETCMD(1),
+			    GETCMD(2),
+			    GETCMD(3));
+			break;
+		case 5:
+			printtext(&ctx, fmtstr, GETCMD(0),
+			    GETCMD(1),
+			    GETCMD(2),
+			    GETCMD(3),
+			    GETCMD(4));
+			break;
+		case 6:
+			printtext(&ctx, fmtstr, GETCMD(0),
+			    GETCMD(1),
+			    GETCMD(2),
+			    GETCMD(3),
+			    GETCMD(4),
+			    GETCMD(5));
+			break;
+		default:
+			printtext_print("err", "%s: unexpected number of "
+			    "columns %d", __func__, num_cols);
+			goto out;
+		}
+
+		if (sp < &cmds[ARRAY_SIZE(cmds)])
+			sp++;
+	}
+
+  out:
+	free(fmtstr);
+}
 
 static void
 output_help_for_command(CSTRING command)
@@ -402,6 +587,16 @@ output_help_for_command(CSTRING command)
 
 	ctx.spec_type = TYPE_SPEC1_FAILURE;
 	printtext(&ctx, "no such command");
+}
+
+static void
+set_array(struct cmds_tag *first, struct cmds_tag **entry, const int num_rows,
+    const int multiplicand)
+{
+	if ((first + (num_rows * multiplicand)) < &cmds[ARRAY_SIZE(cmds)])
+		*entry = (first + (num_rows * multiplicand));
+	else
+		*entry = NULL;
 }
 
 static void
@@ -531,7 +726,7 @@ cmd_help(CSTRING data)
 	if (has_command)
 		output_help_for_command(data);
 	else
-		list_all_commands();
+		list_all_commands_dynamic();
 }
 
 void
