@@ -11,6 +11,9 @@ All notable changes to this project will be documented in this file.
   - Reduced the scope of variables.
   - Variable initializations.
   - ...
+- List all commands dynamically in the output of `/help`,
+  i.e. calculate the cols/rows with respect to the current window
+  size.
 
 ### Windows ###
 - Fixed a case of truncation from `int` to `wchar_t`.
