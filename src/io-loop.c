@@ -175,6 +175,7 @@ static struct cmds_tag {
 	for (struct cmds_tag *sp = &cmds[0]; sp < &cmds[ARRAY_SIZE(cmds)]; sp++)
 #define GETCMD(x) \
 	(array[x] ? array[x]->cmd : "")
+#define LIST_MAXCOL 6
 
 static int	get_longest_cmdlen(void);
 static int	get_space(void);
@@ -332,7 +333,7 @@ get_longest_cmdlen(void)
 static int
 get_num_cols(void)
 {
-	const int	maxcol = 6;
+	const int	maxcol = LIST_MAXCOL;
 	int		cmdlen, space;
 	int		cols = 0;
 	int		count = 0;
@@ -455,7 +456,7 @@ list_all_commands_dynamic(void)
 	PRINTTEXT_CONTEXT	 ctx;
 	STRING			 fmtstr;
 	int			 num_cols, num_rows;
-	struct cmds_tag		*array[6] = { NULL };
+	struct cmds_tag		*array[LIST_MAXCOL] = { NULL };
 	struct cmds_tag		*sp = &cmds[0];
 
 	num_cols = get_num_cols();
