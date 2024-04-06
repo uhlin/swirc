@@ -449,45 +449,6 @@ history_prev(void)
 		element = element->prev;
 }
 
-#if 0
-static void
-list_all_commands(void)
-{
-	PRINTTEXT_CONTEXT	 ctx;
-	struct cmds_tag		*sp;
-
-	printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
-	printtext(&ctx, "--------------- Commands ---------------");
-
-	sp = &cmds[0];
-	while (sp < &cmds[ARRAY_SIZE(cmds)]) {
-		CSTRING  cmd1 = sp->cmd;
-		STRING   cmd2, cmd3;
-
-		if ((sp + 1) < &cmds[ARRAY_SIZE(cmds)] &&
-		    (sp + 2) < &cmds[ARRAY_SIZE(cmds)]) {
-			sp++, cmd2 = sp->cmd;
-			sp++, cmd3 = sp->cmd;
-		} else if ((sp + 1) < &cmds[ARRAY_SIZE(cmds)]) {
-			sp++, cmd2 = sp->cmd;
-			cmd3 = NULL;
-		} else {
-			cmd2 = cmd3 = NULL;
-		}
-
-		if (cmd1 && cmd2 && cmd3)
-			printtext(&ctx, "%-15s %-15s %s", cmd1, cmd2, cmd3);
-		else if (cmd1 && cmd2)
-			printtext(&ctx, "%-15s %s", cmd1, cmd2);
-		else if (cmd1)
-			printtext(&ctx, "%s", cmd1);
-		else
-			sw_assert_not_reached();
-		sp++;
-	}
-}
-#endif
-
 static void
 list_all_commands_dynamic(void)
 {
