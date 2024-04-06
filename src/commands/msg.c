@@ -1,5 +1,5 @@
 /* Message command
-   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -42,9 +42,9 @@
 void
 cmd_msg(const char *data)
 {
-	char	*dcopy = sw_strdup(data);
-	char	*recipient, *message;
-	char	*state = "";
+	char		*dcopy = sw_strdup(data);
+	char		*state = "";
+	const char	*recipient, *message;
 
 	if (strings_match(dcopy, "") || strFeed(dcopy, 1) != 1 ||
 	    (recipient = strtok_r(dcopy, "\n", &state)) == NULL ||

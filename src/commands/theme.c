@@ -239,7 +239,7 @@ add_to_array(PTHEME_INFO info)
 static PTHEME_INFO
 tokenize(const char *string)
 {
-	char			*filename, *version, *author, *email,
+	const char		*filename, *version, *author, *email,
 				*timestamp, *comment;
 	char			*state = "";
 	char			*str_copy = sw_strdup(string);

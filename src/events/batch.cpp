@@ -140,7 +140,7 @@ chathistory(batch &obj)
 		ctx.window = win;
 
 	printtext(&ctx, "--- BEGIN chathistory (%s) ---", label.c_str());
-	for (std::string &str : obj.irc_msgs)
+	for (const std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
 	printtext(&ctx, "--- END chathistory (%s) ---", label.c_str());
 }
@@ -148,14 +148,14 @@ chathistory(batch &obj)
 static void
 netjoin(batch &obj)
 {
-	for (std::string &str : obj.irc_msgs)
+	for (const std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
 }
 
 static void
 netsplit(batch &obj)
 {
-	for (std::string &str : obj.irc_msgs)
+	for (const std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
 }
 
@@ -174,7 +174,7 @@ znc_in_playback(batch &obj)
 		ctx.window = win;
 
 	printtext(&ctx, "--- BEGIN playback (%s) ---", label.c_str());
-	for (std::string &str : obj.irc_msgs)
+	for (const std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
 	printtext(&ctx, "--- END playback (%s) ---", label.c_str());
 }

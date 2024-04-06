@@ -648,10 +648,10 @@ choose_server(const char *server, const char *port)
 void
 cmd_connect(const char *data)
 {
-	char	*dcopy = sw_strdup(data);
-	char	*server, *port;
-	char	*state = "";
-	int	 feeds_written = 0;
+	char		*dcopy = sw_strdup(data);
+	char		*state = "";
+	const char	*server, *port;
+	int		 feeds_written = 0;
 
 	set_ssl_off();
 
@@ -659,7 +659,7 @@ cmd_connect(const char *data)
 		print_and_free("/connect: missing arguments", dcopy);
 		return;
 	} else if ((feeds_written = strFeed(dcopy, 1)) == 1) {
-		char *token;
+		const char *token;
 
 		token = strtok_r(dcopy, "\n:", &state);
 		sw_assert(token != NULL);

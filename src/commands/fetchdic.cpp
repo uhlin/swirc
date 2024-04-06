@@ -162,7 +162,7 @@ dump_db(const std::vector<dictionary> &vec)
 static void
 fetchdic(const char *name, std::vector<dictionary> &vec)
 {
-	for (dictionary &dic : vec) {
+	for (const dictionary &dic : vec) {
 		if (strings_match(name, dic.name.c_str()))
 			dic.fetch();
 	}

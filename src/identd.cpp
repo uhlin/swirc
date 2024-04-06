@@ -238,7 +238,7 @@ identd::enter_loop(ident_client *cli)
 			break;
 		} else if (bytes_received > 0) {
 			char *last = const_cast<char *>("");
-			char *server_port, *client_port;
+			const char *server_port, *client_port;
 			static const char sep[] = "\r\n ,";
 
 			if (!query_chars_ok(recvbuf, bytes_received)) {
