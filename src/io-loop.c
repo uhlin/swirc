@@ -503,7 +503,8 @@ list_all_commands_dynamic(void)
 	fmtstr = get_format_str(num_cols);
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
-	printtext(&ctx, "--------------- Commands ---------------");
+	printtext(&ctx, "--------------- Commands(%d) ---------------",
+	    (int)ARRAY_SIZE(cmds));
 
 	for (int i = 0; i < num_rows; i++) {
 		array[0] = sp;
