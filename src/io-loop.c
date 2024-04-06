@@ -175,6 +175,19 @@ static struct cmds_tag {
 	for (struct cmds_tag *sp = &cmds[0]; sp < &cmds[ARRAY_SIZE(cmds)]; sp++)
 
 static void
+add_cmd(PTEXTBUF matches, CSTRING cmd)
+{
+	if (textBuf_size(matches) == 0) {
+		if ((errno = textBuf_ins_next(matches, NULL, cmd, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	} else {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
+		    cmd, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	}
+}
+
+static void
 add_to_history(CSTRING string)
 {
 	const int tbszp1 = textBuf_size(history) + 1;
@@ -452,19 +465,6 @@ swirc_greeting(void)
 		    LEFT_BRKT, log_size_kb, RIGHT_BRKT);
 	}
 	printtext(&ctx, " ");
-}
-
-static void
-add_cmd(PTEXTBUF matches, CSTRING cmd)
-{
-	if (textBuf_size(matches) == 0) {
-		if ((errno = textBuf_ins_next(matches, NULL, cmd, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	} else {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
-		    cmd, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	}
 }
 
 PTEXTBUF
