@@ -173,6 +173,8 @@ static struct cmds_tag {
 
 #define FOREACH_COMMAND() \
 	for (struct cmds_tag *sp = &cmds[0]; sp < &cmds[ARRAY_SIZE(cmds)]; sp++)
+#define GETCMD(x) \
+	(array[x] ? array[x]->cmd : "")
 
 static int	get_longest_cmdlen(void);
 static int	get_space(void);
@@ -504,8 +506,6 @@ list_all_commands_dynamic(void)
 	printtext(&ctx, "--------------- Commands ---------------");
 
 	for (int i = 0; i < num_rows; i++) {
-#define GETCMD(x) \
-    (array[x] ? array[x]->cmd : "")
 		array[0] = sp;
 		set_array(sp, &array[1], num_rows, 1);
 		set_array(sp, &array[2], num_rows, 2);
