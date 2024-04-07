@@ -202,7 +202,8 @@ tls_server::accept_new_connections(const int port)
 	    true);
 
 	if (atomic_load_bool(&tls_server::accepting_new_connections)) {
-		printtext(&ptext_ctx, "Already accepting DCC connections...");
+		printtext(&ptext_ctx, "%s", _("Already accepting DCC "
+		    "connections..."));
 		return;
 	} else {
 		(void) atomic_swap_bool(&tls_server::accepting_new_connections,
@@ -225,7 +226,7 @@ tls_server::accept_new_connections(const int port)
 	}
 
 	ptext_ctx.spec_type = TYPE_SPEC1_SUCCESS;
-	printtext(&ptext_ctx, "Accepting DCC connections at port: %d", port);
+	printtext(&ptext_ctx, _("Accepting DCC connections at port: %d"), port);
 	block_signals();
 
 	do {
@@ -237,7 +238,7 @@ tls_server::accept_new_connections(const int port)
 		cbio = BIO_pop(abio);
 
 		if ((ssl = SSL_new(ctx)) == NULL)
-			err_exit(ENOMEM, "Out of memory");
+			err_exit(ENOMEM, "%s", _("Out of memory"));
 		SSL_set_accept_state(ssl);
 		SSL_set_bio(ssl, cbio, cbio);
 		tls_server::com_with_client(ssl);
@@ -246,7 +247,7 @@ tls_server::accept_new_connections(const int port)
 	BIO_vfree(abio);
 	SSL_CTX_free(ctx);
 	ptext_ctx.spec_type = TYPE_SPEC1_WARN;
-	printtext(&ptext_ctx, "Stopped accepting DCC connections");
+	printtext(&ptext_ctx, "%s", _("Stopped accepting DCC connections"));
 }
 
 void
