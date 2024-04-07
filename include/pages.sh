@@ -4,6 +4,7 @@ cloning-and-building.html
 confopts.html
 debian.html
 index.html
+old-news.html
 openbsd.html
 progopts.html
 source-code.html
