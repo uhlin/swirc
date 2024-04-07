@@ -177,7 +177,7 @@ static struct cmds_tag {
 #define FOREACH_COMMAND() \
 	for (struct cmds_tag *sp = &cmds[0]; sp < &cmds[ARRAY_SIZE(cmds)]; sp++)
 #define GETCMD(x) \
-	(array[x] ? array[x]->cmd : "")
+	(isValid(array[x]) ? array[x]->cmd : "")
 #define LIST_MAXCOL 6
 
 static int	get_longest_cmdlen(void);
