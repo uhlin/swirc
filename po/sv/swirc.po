@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-04-07 15:25+0200\n"
-"PO-Revision-Date: 2024-04-07 15:35+0200\n"
+"PO-Revision-Date: 2024-04-07 15:55+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -29,100 +29,100 @@ msgstr "Nej"
 
 #: ../src/commands/dcc.cpp:205
 msgid "Write error"
-msgstr ""
+msgstr "Skrivfel"
 
 #: ../src/commands/dcc.cpp:330
 #, c-format
 msgid "%s: wrote: %s"
-msgstr ""
+msgstr "%s: skrev: %s"
 
 #: ../src/commands/dcc.cpp:333
 #, c-format
 msgid "%s: did not complete: %s"
-msgstr ""
+msgstr "%s: slutfördes inte: %s"
 
 #: ../src/commands/dcc.cpp:940
 #, c-format
 msgid "%sStarted%s: %s"
-msgstr ""
+msgstr "%sBörjade%s: %s"
 
 #: ../src/commands/dcc.cpp:942
 #, c-format
 msgid "%sStopped%s: %s"
-msgstr ""
+msgstr "%sSlutade%s: %s"
 
 #: ../src/commands/dcc.cpp:1078
 #, c-format
 msgid "sending '%s' to %s (%.1f%c)..."
-msgstr ""
+msgstr "skickar '%s' till %s (%.1f%c)..."
 
 #: ../src/commands/dcc.cpp:1161
 msgid "Missing certs. Not starting the DCC server. Please create them."
-msgstr ""
+msgstr "Saknar certifikat. Startar inte DCC servern. Vänligen skapa dem."
 
 #: ../src/commands/dcc.cpp:1268
 #, c-format
 msgid "%s: added: '%s' (%.1f%c)"
-msgstr ""
+msgstr "%s: lade till: '%s' (%.1f%c)"
 
 #: ../src/commands/dcc.cpp:1270
 #, c-format
 msgid "%s: from: %s <%s@%s>"
-msgstr ""
+msgstr "%s: från: %s <%s@%s>"
 
 #: ../src/commands/dcc.cpp:1272
 msgid "To get the file, type:"
-msgstr ""
+msgstr "För att hämta filen, skriv:"
 
 #: ../src/commands/dcc.cpp:1523
 #, c-format
 msgid "%s: file read error"
-msgstr ""
+msgstr "%s: filläsfel"
 
 #: ../src/commands/dcc.cpp:1528
 #, c-format
 msgid "%s: tls write error"
-msgstr ""
+msgstr "%s: tls skrivfel"
 
 #: ../src/commands/dcc.cpp:1545
 #, c-format
 msgid "started: %s"
-msgstr ""
+msgstr "började: %s"
 
 #: ../src/commands/dcc.cpp:1546
 #, c-format
 msgid "stopped: %s"
-msgstr ""
+msgstr "slutade: %s"
 
 #: ../src/commands/dcc.cpp:1563
 msgid "read request error"
-msgstr ""
+msgstr "läsförfrågan fel"
 
 #: ../src/commands/dcc.cpp:1570
 msgid "unable to find the send object"
-msgstr ""
+msgstr "kan inte hitta sändningsobjektet"
 
 #: ../src/commands/dcc.cpp:1578
 msgid "already sent file"
-msgstr ""
+msgstr "redan skickad fil"
 
 #: ../src/commands/dcc.cpp:1581
 msgid "the send object is in a locked state"
-msgstr ""
+msgstr "sändningsobjektet är i låst tillstånd"
 
 #: ../src/commands/dcc.cpp:1586
 msgid "file open error"
-msgstr ""
+msgstr "filöppningsfel"
 
 #: ../src/commands/dcc.cpp:1605
 #, c-format
 msgid "%s: successfully sent file: %s"
-msgstr ""
+msgstr "%s: skickad fil: %s"
 
 #: ../src/commands/dcc.cpp:1609
 #, c-format
 msgid "%s: file transfer incomplete: %s"
-msgstr ""
+msgstr "%s: filöverföringen ofullständig: %s"
 
 #: ../src/events/account.cpp:56
 #, c-format
@@ -463,11 +463,11 @@ msgstr "Ta bort kanaloperatörsprivilegiet från en annan användare."
 
 #: ../src/include/commandhelp.h:197
 msgid "usage: /devoice <nick>"
-msgstr ""
+msgstr "användning: /devoice <nick>"
 
 #: ../src/include/commandhelp.h:199
 msgid "Remove the channel voice privilege from another user."
-msgstr ""
+msgstr "Ta bort kanalröstprivilegiet från en annan användare."
 
 #: ../src/include/commandhelp.h:204
 msgid "usage: /die [--I-am-sure]"
@@ -1330,11 +1330,11 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:799
 msgid "usage: /voice <nick>"
-msgstr ""
+msgstr "användning: /voice <nick>"
 
 #: ../src/include/commandhelp.h:801
 msgid "Gives the channel voice privilege to another user."
-msgstr ""
+msgstr "Ger kanal-röst-privilegiet till en annan användare."
 
 #: ../src/include/commandhelp.h:806
 msgid "usage: /wallops <message>"
@@ -1690,17 +1690,17 @@ msgstr "-- MER --"
 
 #: ../src/tls-server.cpp:205
 msgid "Already accepting DCC connections..."
-msgstr ""
+msgstr "Accepterar redan DCC anslutningar..."
 
 #: ../src/tls-server.cpp:229
 #, c-format
 msgid "Accepting DCC connections at port: %d"
-msgstr ""
+msgstr "Accepterar DCC anslutningar på port: %d"
 
 #: ../src/tls-server.cpp:241
 msgid "Out of memory"
-msgstr ""
+msgstr "Slut på minne"
 
 #: ../src/tls-server.cpp:250
 msgid "Stopped accepting DCC connections"
-msgstr ""
+msgstr "Slutade acceptera DCC anslutningar"
