@@ -193,6 +193,13 @@ static usage_t deop_usage = {
   "",
 };
 
+static usage_t devoice_usage = {
+  N_("usage: /devoice <nick>"),
+  "",
+  N_("Remove the channel voice privilege from another user."),
+  "",
+};
+
 static usage_t die_usage = {
   N_("usage: /die [--I-am-sure]"),
   "",
@@ -785,6 +792,13 @@ static usage_t version_usage = {
   "",
   N_("Send a CTCP VERSION request to 'target', which is either a nickname or\n"
      "an IRC channel."),
+  "",
+};
+
+static usage_t voice_usage = {
+  N_("usage: /voice <nick>"),
+  "",
+  N_("Gives the channel voice privilege to another user."),
   "",
 };
 

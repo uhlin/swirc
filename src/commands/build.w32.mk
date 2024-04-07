@@ -28,6 +28,7 @@ OBJS = $(COMMANDS_DIR)admin.obj\
 	$(COMMANDS_DIR)squery.obj\
 	$(COMMANDS_DIR)theme.obj\
 	$(COMMANDS_DIR)topic.obj\
+	$(COMMANDS_DIR)voice.obj\
 	$(COMMANDS_DIR)znc.obj
 
 CPPFLAGS = $(CPPFLAGS) -I $(COMMANDS_DIR)

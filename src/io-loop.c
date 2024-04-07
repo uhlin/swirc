@@ -77,6 +77,7 @@
 #include "commands/squery.h"
 #include "commands/theme.h"
 #include "commands/topic.h"
+#include "commands/voice.h"
 #include "commands/znc.h"
 
 #include "events/names.h"
@@ -113,6 +114,7 @@ static struct cmds_tag {
 	{ "cycle",       cmd_cycle,       true,  cycle_usage,       ARRAY_SIZE(cycle_usage),       true  },
 	{ "dcc",         cmd_dcc,         true,  dcc_usage,         ARRAY_SIZE(dcc_usage),         true  },
 	{ "deop",        cmd_deop,        true,  deop_usage,        ARRAY_SIZE(deop_usage),        true  },
+	{ "devoice",     cmd_devoice,     true,  devoice_usage,     ARRAY_SIZE(devoice_usage),     true  },
 	{ "die",         cmd_die,         true,  die_usage,         ARRAY_SIZE(die_usage),         true  },
 	{ "disconnect",  cmd_disconnect,  false, disconnect_usage,  ARRAY_SIZE(disconnect_usage),  false },
 	{ "echo",        cmd_echo,        false, echo_usage,        ARRAY_SIZE(echo_usage),        false },
@@ -165,6 +167,7 @@ static struct cmds_tag {
 	{ "unban",       cmd_unban,       true,  unban_usage,       ARRAY_SIZE(unban_usage),       true  },
 	{ "unignore",    cmd_unignore,    false, unignore_usage,    ARRAY_SIZE(unignore_usage),    false },
 	{ "version",     cmd_version,     true,  version_usage,     ARRAY_SIZE(version_usage),     true  },
+	{ "voice",       cmd_voice,       true,  voice_usage,       ARRAY_SIZE(voice_usage),       true  },
 	{ "wallops",     cmd_wallops,     true,  wallops_usage,     ARRAY_SIZE(wallops_usage),     true  },
 	{ "who",         cmd_who,         true,  who_usage,         ARRAY_SIZE(who_usage),         true  },
 	{ "whois",       cmd_whois,       true,  whois_usage,       ARRAY_SIZE(whois_usage),       true  },
