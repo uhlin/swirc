@@ -1,15 +1,15 @@
 # Swedish translations for swirc package
 # Svenska översättningar för paket swirc.
 # This file is put in the public domain.
-#  <markus.uhlin@bredband.net>, 2021.
+#  <markus@nifty-networks.net>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-04-07 15:25+0200\n"
-"PO-Revision-Date: 2024-04-07 15:55+0200\n"
-"Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
+"PO-Revision-Date: 2024-04-07 16:08+0200\n"
+"Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
