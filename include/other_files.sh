@@ -4,12 +4,6 @@ mu190523.asc
 mu231230.pgp
 navbar.css
 popup.css
-reports/swirc-3.2.2.html
-reports/swirc-3.2.3.html
-reports/swirc-3.2.4.html
-reports/swirc-3.2.5.html
-reports/swirc-3.2.6.html
-reports/swirc-3.2.7.html
 reports/swirc-3.3.0.html
 reports/swirc-3.3.2.html
 style.css
