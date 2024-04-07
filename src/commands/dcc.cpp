@@ -202,7 +202,7 @@ read_and_write(SOCKET sock, SSL *ssl, FILE *fp, intmax_t &bytes_rem)
 			if (!isValid(fp) ||
 			    fwrite(addrof(buf[0]), 1, ret, fp) !=
 			    static_cast<size_t>(ret))
-				throw std::runtime_error("Write error");
+				throw std::runtime_error(_("Write error"));
 			(void) fflush(fp);
 			bytes_rem -= ret;
 		} else {
@@ -327,10 +327,10 @@ dcc_get::get_file(void)
 		dcc::shutdown_conn(this->ssl);
 
 		if (this->has_completed()) {
-			printtext_print("success", "%s: wrote: %s",
+			printtext_print("success", _("%s: wrote: %s"),
 			    __func__, path.c_str());
 		} else {
-			printtext_print("err", "%s: did not complete: %s",
+			printtext_print("err", _("%s: did not complete: %s"),
 			    __func__, path.c_str());
 		}
 	} catch (const std::runtime_error &e) {
@@ -931,15 +931,15 @@ list_get(void)
 		    x.size, x.unit);
 		printtext(&ctx, "%sHas completed%s: %s (%.2f%%)",
 		    COLOR2, TXT_NORMAL,
-		    (x.has_completed() ? "Yes" : "No"),
+		    (x.has_completed() ? _("Yes") : _("No")),
 		    percentage(x.filesize - x.bytes_rem, x.filesize));
 
 		get_time(str1, x.start);
 		get_time(str2, x.stop);
 
-		printtext(&ctx, "%sStarted%s: %s", COLOR2, TXT_NORMAL,
+		printtext(&ctx, _("%sStarted%s: %s"), COLOR2, TXT_NORMAL,
 		    str1.c_str());
-		printtext(&ctx, "%sStopped%s: %s", COLOR2, TXT_NORMAL,
+		printtext(&ctx, _("%sStopped%s: %s"), COLOR2, TXT_NORMAL,
 		    str2.c_str());
 
 		objnum++;
@@ -973,7 +973,7 @@ list_send(void)
 		    x.size, x.unit);
 		printtext(&ctx, "%sHas completed%s: %s (%.2f%%)",
 		    COLOR2, TXT_NORMAL,
-		    (x.has_completed() ? "Yes" : "No"),
+		    (x.has_completed() ? _("Yes") : _("No")),
 		    percentage(filesize - x.bytes_rem, filesize));
 
 		objnum++;
@@ -1075,7 +1075,7 @@ subcmd_send(const char *nick, const char *file)
 			throw std::runtime_error("cannot send");
 		}
 
-		printtext_print("sp1", "sending '%s' to %s (%.1f%c)...",
+		printtext_print("sp1", _("sending '%s' to %s (%.1f%c)..."),
 		    send_obj.get_filename(),
 		    nick,
 		    send_obj.size,
@@ -1158,8 +1158,9 @@ dcc::init(void)
 		struct integer_context intctx("dcc_port", 1024, 65535, 8080);
 
 		if (!has_all_certs()) {
-			printtext_print("warn", "Missing certs. Not starting "
-			    "the DCC server. Please create them.");
+			printtext_print("warn", "%s", _("Missing certs. "
+			    "Not starting the DCC server. "
+			    "Please create them."));
 			printtext_print("warn", "(%s, %s, %s and %s)", ROOT_PEM,
 			    SERVER_CA_PEM, SERVER_PEM, CLIENT_PEM);
 			return;
@@ -1264,11 +1265,11 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 		dcc_get get_obj(nick_lc, token[3], filesize, addr, port);
 		get_db.push_back(get_obj);
 
-		printtext_print("sp3", "%s: added: '%s' (%.1f%c)", __func__,
+		printtext_print("sp3", _("%s: added: '%s' (%.1f%c)"), __func__,
 		    token[3], get_obj.size, get_obj.unit);
-		printtext_print("sp3", "%s: from: %s <%s@%s>", __func__,
+		printtext_print("sp3", _("%s: from: %s <%s@%s>"), __func__,
 		    nick, user, host);
-		printtext_print("sp2", "To get the file, type:");
+		printtext_print("sp2", "%s", _("To get the file, type:"));
 		printtext_print("sp2", "  /dcc get %s %s", nick_lc, token[3]);
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s: %s", __func__, e.what());
