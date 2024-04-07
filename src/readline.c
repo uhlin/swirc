@@ -991,7 +991,7 @@ void
 readline_mouse_init(void)
 {
 	if (config_bool("mouse", false)) {
-		CSTRING str = Config("mouse_events");
+		immutable_cp_t str = Config("mouse_events");
 
 		if (strings_match(str, "all") || strings_match(str, "ALL"))
 			(void) mousemask(ALL_MOUSE_EVENTS, NULL);
