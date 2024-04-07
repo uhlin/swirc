@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 - Added the following commands:
   - `/voice`
   - `/devoice`
+- Added translations.
 - Did code improvements:
   - Explicitly specified the size of multiple arrays (MISRA rule,
     found by PVS-Studio).
