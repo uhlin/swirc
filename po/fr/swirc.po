@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-04-07 15:25+0200\n"
-"PO-Revision-Date: 2023-11-03 23:41+0100\n"
+"PO-Revision-Date: 2024-04-07 15:33+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -438,9 +438,8 @@ msgid "Remove the channel operator privilege from another user."
 msgstr ""
 
 #: ../src/include/commandhelp.h:197
-#, fuzzy
 msgid "usage: /devoice <nick>"
-msgstr "usage: /beep <surnom>"
+msgstr ""
 
 #: ../src/include/commandhelp.h:199
 msgid "Remove the channel voice privilege from another user."
@@ -1200,9 +1199,8 @@ msgid ""
 msgstr ""
 
 #: ../src/include/commandhelp.h:799
-#, fuzzy
 msgid "usage: /voice <nick>"
-msgstr "usage: /beep <surnom>"
+msgstr ""
 
 #: ../src/include/commandhelp.h:801
 msgid "Gives the channel voice privilege to another user."

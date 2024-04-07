@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-04-07 15:25+0200\n"
-"PO-Revision-Date: 2024-03-07 11:13+0100\n"
+"PO-Revision-Date: 2024-04-07 15:35+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -462,14 +462,12 @@ msgid "Remove the channel operator privilege from another user."
 msgstr "Ta bort kanaloperatörsprivilegiet från en annan användare."
 
 #: ../src/include/commandhelp.h:197
-#, fuzzy
 msgid "usage: /devoice <nick>"
-msgstr "användning: /deop <nick>"
+msgstr ""
 
 #: ../src/include/commandhelp.h:199
-#, fuzzy
 msgid "Remove the channel voice privilege from another user."
-msgstr "Ta bort kanaloperatörsprivilegiet från en annan användare."
+msgstr ""
 
 #: ../src/include/commandhelp.h:204
 msgid "usage: /die [--I-am-sure]"
@@ -1331,14 +1329,12 @@ msgstr ""
 "smeknamn eller en IRC kanal."
 
 #: ../src/include/commandhelp.h:799
-#, fuzzy
 msgid "usage: /voice <nick>"
-msgstr "användning: /op <smeknamn>"
+msgstr ""
 
 #: ../src/include/commandhelp.h:801
-#, fuzzy
 msgid "Gives the channel voice privilege to another user."
-msgstr "Ger kanaloperatörsprivilegiet till en annan användare."
+msgstr ""
 
 #: ../src/include/commandhelp.h:806
 msgid "usage: /wallops <message>"
