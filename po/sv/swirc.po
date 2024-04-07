@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-04-07 15:25+0200\n"
-"PO-Revision-Date: 2024-04-07 16:12+0200\n"
+"PO-Revision-Date: 2024-04-07 16:18+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1403,7 +1403,7 @@ msgstr "    Swirc %s av %s"
 #: ../src/io-loop.c:607
 #, c-format
 msgid "    Compiled on %s%s %s%s"
-msgstr "    Kompilerad %s%s %s%s"
+msgstr "    Kompilerat %s%s %s%s"
 
 #: ../src/io-loop.c:613
 #, c-format
