@@ -43,6 +43,7 @@
 #include "atomicops.h"
 #include "config.h"
 #include "errHand.h"
+#include "i18n.h"
 #include "libUtils.h"
 #include "nestHome.h"
 #include "printtext.h"
