@@ -1,5 +1,5 @@
 /* crypt.cpp
-   Copyright (C) 2022, 2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -185,7 +185,7 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 	int		 rem_bytes = 0;		/* Remaining bytes           */
 
 	try {
-		int size = 0;
+		uint32_t size = 0;
 
 		if (str == NULL || password == NULL) {
 			throw std::runtime_error("invalid args");
@@ -219,13 +219,12 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 		EVP_CIPHER_CTX_free(cipher_ctx);
 		cipher_ctx = NULL;
 
-		if ((size = crypt_get_base64_encode_length(encdat_len)) <= 0)
+		if ((size = crypt_get_base64_encode_length(encdat_len)) == 0)
 			throw std::runtime_error("base64 length error");
 		b64str = static_cast<STRING>(xmalloc(size));
 		b64str[size - 1] = '\0';
 
-		if (b64_encode(encdat, encdat_len, b64str, static_cast<size_t>
-		    (size)) == -1)
+		if (b64_encode(encdat, encdat_len, b64str, size) == -1)
 			throw std::runtime_error("base64 error");
 	} catch (const std::runtime_error &e) {
 		error = true;
@@ -262,9 +261,8 @@ crypt_get_base64_decode_length(CSTRING str)
 	return b64_decode(str, NULL, 0) + 1;
 }
 
-// unsigned?
-int
-crypt_get_base64_encode_length(const int n)
+uint32_t
+crypt_get_base64_encode_length(const uint32_t n)
 {
 	return (((4 * n / 3) + 3) & ~3) + 1;
 }
