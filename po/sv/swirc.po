@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-04-07 15:25+0200\n"
-"PO-Revision-Date: 2024-04-07 16:09+0200\n"
+"PO-Revision-Date: 2024-04-07 16:12+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1614,7 +1614,7 @@ msgstr "CTRL+g     Töm inmatning"
 
 #: ../src/readline.c:624
 msgid "CTRL+l     Toggle logging on/off"
-msgstr "CTRL+l     Växla loggning av/på"
+msgstr "CTRL+l     Växla loggning på/av"
 
 #: ../src/readline.c:625
 msgid "CTRL+n     Next window"
