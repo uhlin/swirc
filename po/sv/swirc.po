@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-04-07 15:25+0200\n"
-"PO-Revision-Date: 2024-04-07 16:08+0200\n"
+"PO-Revision-Date: 2024-04-07 16:09+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1626,11 +1626,11 @@ msgstr "CTRL+p     Föregående fönster"
 
 #: ../src/readline.c:627
 msgid "PG UP      Scroll up"
-msgstr "PG UP      Scrolla upp"
+msgstr "PG UP      Skrolla upp"
 
 #: ../src/readline.c:628
 msgid "PG DOWN    Scroll down"
-msgstr "PG DOWN    Scrolla ned"
+msgstr "PG DOWN    Skrolla ned"
 
 #: ../src/readline.c:629
 msgid "Up arrow   History previous"
@@ -1646,11 +1646,11 @@ msgstr "F2         Stava ord"
 
 #: ../src/readline.c:632
 msgid "F3         Scroll nicklist up"
-msgstr "F3         Scrolla nicklistan upp"
+msgstr "F3         Skrolla nicklistan upp"
 
 #: ../src/readline.c:633
 msgid "F4         Scroll nicklist down"
-msgstr "F4         Scrolla nicklistan ned"
+msgstr "F4         Skrolla nicklistan ned"
 
 #: ../src/readline.c:634
 msgid "F11        Close window"
