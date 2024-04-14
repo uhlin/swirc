@@ -74,7 +74,6 @@
 #define UNUSED_PARAM(p) ((void) (p))
 #define UNUSED_VAR(v) ((void) (v))
 
-#define ARRAY_SIZE(ar)	(sizeof(ar) / sizeof((ar)[0]))
 #define BZERO(b, len)	((void) memset(b, 0, len))
 #define QUOTE(x)	#x
 #define STRINGIFY(x)	QUOTE(x)
@@ -116,6 +115,16 @@ typedef long int ssize_t;
 
 #ifdef __NetBSD__
 #include <wchar.h>
+#endif
+
+#if defined(__cplusplus) && __cplusplus >= 201103L
+template <typename T, size_t N>
+constexpr size_t ARRAY_SIZE(T (&_array)[N]) noexcept
+{
+	return N;
+}
+#else
+#define ARRAY_SIZE(_a)	(sizeof(_a) / sizeof((_a)[0]))
 #endif
 
 #endif
