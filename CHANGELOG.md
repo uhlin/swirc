@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
     found by PVS-Studio).
   - Fixed octal constants (MISRA rule, found by PVS-Studio).
   - Fixed redundant checks and expressions.
+  - Harnessed the power of templates and defined `ARRAY_SIZE()`
+    differently for C++.
   - Marked variables with `const` and `immutable_cp_t` respectively.
   - Reduced the scope of variables.
   - Variable initializations.
