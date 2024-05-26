@@ -145,7 +145,8 @@ chathistory(batch &obj)
 	printtext(&ctx, "--- BEGIN chathistory (%s) ---", label.c_str());
 	for (const std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
-	printtext(&ctx, "--- END chathistory (%s) ---", label.c_str());
+	printtext(&ctx, "--- END chathistory (%s, %ju msgs) ---", label.c_str(),
+	    static_cast<uintmax_t>(obj.irc_msgs.size()));
 }
 
 static void
@@ -182,7 +183,8 @@ znc_in_playback(batch &obj)
 	printtext(&ctx, "--- BEGIN playback (%s) ---", label.c_str());
 	for (const std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
-	printtext(&ctx, "--- END playback (%s) ---", label.c_str());
+	printtext(&ctx, "--- END playback (%s, %ju msgs) ---", label.c_str(),
+	    static_cast<uintmax_t>(obj.irc_msgs.size()));
 }
 
 static void
