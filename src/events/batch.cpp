@@ -138,6 +138,9 @@ chathistory(batch &obj)
 		label.assign(obj.params.at(0));
 	if ((win = window_by_label(label.c_str())) != nullptr)
 		ctx.window = win;
+	else if (spawn_chat_window(label.c_str(), "") == 0 &&
+	    (win = window_by_label(label.c_str())) != nullptr)
+		ctx.window = win;
 
 	printtext(&ctx, "--- BEGIN chathistory (%s) ---", label.c_str());
 	for (const std::string &str : obj.irc_msgs)
@@ -171,6 +174,9 @@ znc_in_playback(batch &obj)
 	if (!obj.params.empty())
 		label.assign(obj.params.at(0));
 	if ((win = window_by_label(label.c_str())) != nullptr)
+		ctx.window = win;
+	else if (spawn_chat_window(label.c_str(), "") == 0 &&
+	    (win = window_by_label(label.c_str())) != nullptr)
 		ctx.window = win;
 
 	printtext(&ctx, "--- BEGIN playback (%s) ---", label.c_str());
