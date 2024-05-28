@@ -34,10 +34,12 @@
 #include <string>
 #include <vector>
 
+#include "../dataClassify.h"
 #include "../errHand.h"
 #include "../irc.h"
 #include "../printtext.h"
 #include "../strHand.h"
+#include "../theme.h"
 
 #include "batch.h"
 
