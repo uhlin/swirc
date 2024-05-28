@@ -154,6 +154,23 @@ chathistory(batch &obj)
 static void
 netjoin(batch &obj)
 {
+	CSTRING host1, host2;
+
+	host1 = host2 = nullptr;
+
+	if (obj.params.size() == 2) {
+		host1 = obj.params.at(0).c_str();
+		host2 = obj.params.at(1).c_str();
+	}
+
+	if (is_valid_hostname(host1) &&
+	    is_valid_hostname(host2)) {
+		printtext_print("warn", "%sNetJoin%s (%ju nicks) %s %s %s",
+		    COLOR3, TXT_NORMAL,
+		    static_cast<uintmax_t>(obj.irc_msgs.size()),
+		    host1, THE_SPEC2, host2);
+	}
+
 	for (const std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
 }
@@ -161,6 +178,23 @@ netjoin(batch &obj)
 static void
 netsplit(batch &obj)
 {
+	CSTRING host1, host2;
+
+	host1 = host2 = nullptr;
+
+	if (obj.params.size() == 2) {
+		host1 = obj.params.at(0).c_str();
+		host2 = obj.params.at(1).c_str();
+	}
+
+	if (is_valid_hostname(host1) &&
+	    is_valid_hostname(host2)) {
+		printtext_print("warn", "%sNetSplit%s (%ju nicks) %s %s %s",
+		    COLOR3, TXT_NORMAL,
+		    static_cast<uintmax_t>(obj.irc_msgs.size()),
+		    host1, THE_SPEC2, host2);
+	}
+
 	for (const std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
 }
