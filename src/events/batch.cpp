@@ -158,7 +158,7 @@ netjoin(batch &obj)
 
 	host1 = host2 = nullptr;
 
-	if (obj.params.size() == 2) {
+	if (obj.params.size() >= 2) {
 		host1 = obj.params.at(0).c_str();
 		host2 = obj.params.at(1).c_str();
 	}
@@ -182,7 +182,7 @@ netsplit(batch &obj)
 
 	host1 = host2 = nullptr;
 
-	if (obj.params.size() == 2) {
+	if (obj.params.size() >= 2) {
 		host1 = obj.params.at(0).c_str();
 		host2 = obj.params.at(1).c_str();
 	}
