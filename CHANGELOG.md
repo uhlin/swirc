@@ -6,7 +6,10 @@ All notable changes to this project will be documented in this file.
   - `/voice`
   - `/devoice`
 - Added translations.
-- Changed the program to output the number of messages in a batch.
+- Changed the program to:
+  - Output the number of messages in a batch.
+  - Output the number of nicks in a netjoin/netsplit plus the server
+    hostnames.
 - Did code improvements:
   - Explicitly specified the size of multiple arrays (MISRA rule,
     found by PVS-Studio).
