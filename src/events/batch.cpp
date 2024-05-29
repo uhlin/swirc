@@ -163,8 +163,7 @@ netjoin(batch &obj)
 		host2 = obj.params.at(1).c_str();
 	}
 
-	if (is_valid_hostname(host1) &&
-	    is_valid_hostname(host2)) {
+	if (host1 != nullptr && host2 != nullptr) {
 		printtext_print("warn", "%sNetJoin%s (%ju nicks) %s %s %s",
 		    COLOR3, TXT_NORMAL,
 		    static_cast<uintmax_t>(obj.irc_msgs.size()),
@@ -187,8 +186,7 @@ netsplit(batch &obj)
 		host2 = obj.params.at(1).c_str();
 	}
 
-	if (is_valid_hostname(host1) &&
-	    is_valid_hostname(host2)) {
+	if (host1 != nullptr && host2 != nullptr) {
 		printtext_print("warn", "%sNetSplit%s (%ju nicks) %s %s %s",
 		    COLOR3, TXT_NORMAL,
 		    static_cast<uintmax_t>(obj.irc_msgs.size()),
