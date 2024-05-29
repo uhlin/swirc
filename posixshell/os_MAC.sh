@@ -17,10 +17,12 @@ CPPFLAGS = -DNCURSES_OPAQUE=1\\
 	-DUNIX=1\\
 	-D_XOPEN_SOURCE_EXTENDED=1\\
 	-I/usr/local/include\\
-	-I/usr/local/opt/libressl/include
+	-I/usr/local/opt/libressl/include\\
+	-I/opt/homebrew/opt/libressl/include
 
 LDFLAGS = -L/usr/local/lib\\
-	-L/usr/local/opt/libressl/lib
+	-L/usr/local/opt/libressl/lib\\
+	-L/opt/homebrew/opt/libressl/lib
 LDLIBS = -lcrypto\\
 	-lcurl\\
 	-lncurses\\
