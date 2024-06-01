@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 - Added the following commands:
   - `/voice`
   - `/devoice`
+- Added tab completion for:
+  - `/deop`
+  - `/kick`
+  - `/kickban`
+  - `/op`
 - Added translations.
 - Changed the program to:
   - Output the number of messages in a batch.

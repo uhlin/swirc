@@ -482,11 +482,16 @@ isInCirculationMode(const TAB_COMPLETION *tc)
 	    tc->isInCirculationModeFor.Cmds ||
 	    tc->isInCirculationModeFor.Connect ||
 	    tc->isInCirculationModeFor.Cs ||
+	    tc->isInCirculationModeFor.Deop ||
+	    tc->isInCirculationModeFor.Devoice ||
 	    tc->isInCirculationModeFor.Help ||
+	    tc->isInCirculationModeFor.Kick ||
+	    tc->isInCirculationModeFor.Kickban ||
 	    tc->isInCirculationModeFor.Mode ||
 	    tc->isInCirculationModeFor.Msg ||
 	    tc->isInCirculationModeFor.Notice ||
 	    tc->isInCirculationModeFor.Ns ||
+	    tc->isInCirculationModeFor.Op ||
 	    tc->isInCirculationModeFor.Query ||
 	    tc->isInCirculationModeFor.Sasl ||
 	    tc->isInCirculationModeFor.Settings ||
@@ -494,6 +499,7 @@ isInCirculationMode(const TAB_COMPLETION *tc)
 	    tc->isInCirculationModeFor.Theme ||
 	    tc->isInCirculationModeFor.Time ||
 	    tc->isInCirculationModeFor.Version ||
+	    tc->isInCirculationModeFor.Voice ||
 	    tc->isInCirculationModeFor.Whois ||
 	    tc->isInCirculationModeFor.ZncCmds);
 }

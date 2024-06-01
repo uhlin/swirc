@@ -80,10 +80,38 @@ auto_complete_cs(volatile struct readline_session_context *ctx,
 }
 
 static void
+auto_complete_deop(volatile struct readline_session_context *ctx,
+    CSTRING s)
+{
+	do_work(ctx, L"/deop ", s);
+}
+
+static void
+auto_complete_devoice(volatile struct readline_session_context *ctx,
+    CSTRING s)
+{
+	do_work(ctx, L"/devoice ", s);
+}
+
+static void
 auto_complete_help(volatile struct readline_session_context *ctx,
     CSTRING s)
 {
 	do_work(ctx, L"/help ", s);
+}
+
+static void
+auto_complete_kick(volatile struct readline_session_context *ctx,
+    CSTRING s)
+{
+	do_work(ctx, L"/kick ", s);
+}
+
+static void
+auto_complete_kickban(volatile struct readline_session_context *ctx,
+    CSTRING s)
+{
+	do_work(ctx, L"/kickban ", s);
 }
 
 static void
@@ -112,6 +140,13 @@ auto_complete_ns(volatile struct readline_session_context *ctx,
     CSTRING s)
 {
 	do_work(ctx, L"/ns ", s);
+}
+
+static void
+auto_complete_op(volatile struct readline_session_context *ctx,
+    CSTRING s)
+{
+	do_work(ctx, L"/op ", s);
 }
 
 static void
@@ -161,6 +196,13 @@ auto_complete_version(volatile struct readline_session_context *ctx,
     CSTRING s)
 {
 	do_work(ctx, L"/version ", s);
+}
+
+static void
+auto_complete_voice(volatile struct readline_session_context *ctx,
+    CSTRING s)
+{
+	do_work(ctx, L"/voice ", s);
 }
 
 static void
@@ -268,11 +310,16 @@ readline_tab_comp_ctx_new(void)
 	ctx.isInCirculationModeFor.Cmds =
 	ctx.isInCirculationModeFor.Connect =
 	ctx.isInCirculationModeFor.Cs =
+	ctx.isInCirculationModeFor.Deop =
+	ctx.isInCirculationModeFor.Devoice =
 	ctx.isInCirculationModeFor.Help =
+	ctx.isInCirculationModeFor.Kick =
+	ctx.isInCirculationModeFor.Kickban =
 	ctx.isInCirculationModeFor.Mode =
 	ctx.isInCirculationModeFor.Msg =
 	ctx.isInCirculationModeFor.Notice =
 	ctx.isInCirculationModeFor.Ns =
+	ctx.isInCirculationModeFor.Op =
 	ctx.isInCirculationModeFor.Query =
 	ctx.isInCirculationModeFor.Sasl =
 	ctx.isInCirculationModeFor.Settings =
@@ -280,6 +327,7 @@ readline_tab_comp_ctx_new(void)
 	ctx.isInCirculationModeFor.Theme =
 	ctx.isInCirculationModeFor.Time =
 	ctx.isInCirculationModeFor.Version =
+	ctx.isInCirculationModeFor.Voice =
 	ctx.isInCirculationModeFor.Whois =
 	ctx.isInCirculationModeFor.ZncCmds = false;
 
@@ -306,11 +354,16 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 		ctx->isInCirculationModeFor.Cmds =
 		ctx->isInCirculationModeFor.Connect =
 		ctx->isInCirculationModeFor.Cs =
+		ctx->isInCirculationModeFor.Deop =
+		ctx->isInCirculationModeFor.Devoice =
 		ctx->isInCirculationModeFor.Help =
+		ctx->isInCirculationModeFor.Kick =
+		ctx->isInCirculationModeFor.Kickban =
 		ctx->isInCirculationModeFor.Mode =
 		ctx->isInCirculationModeFor.Msg =
 		ctx->isInCirculationModeFor.Notice =
 		ctx->isInCirculationModeFor.Ns =
+		ctx->isInCirculationModeFor.Op =
 		ctx->isInCirculationModeFor.Query =
 		ctx->isInCirculationModeFor.Sasl =
 		ctx->isInCirculationModeFor.Settings =
@@ -318,6 +371,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 		ctx->isInCirculationModeFor.Theme =
 		ctx->isInCirculationModeFor.Time =
 		ctx->isInCirculationModeFor.Version =
+		ctx->isInCirculationModeFor.Voice =
 		ctx->isInCirculationModeFor.Whois =
 		ctx->isInCirculationModeFor.ZncCmds = false;
 
@@ -362,6 +416,52 @@ init_mode_for_cs(volatile struct readline_session_context *ctx,
 }
 
 static void
+init_mode_for_deop(volatile struct readline_session_context *ctx)
+{
+	const char *cp;
+
+	if (!is_irc_channel(ACTWINLABEL)) {
+		output_error("not in irc channel");
+		return;
+	}
+
+	cp = addrof(ctx->tc->search_var[6]);
+
+	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
+	    cp)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_deop(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeFor.Deop = true;
+}
+
+static void
+init_mode_for_devoice(volatile struct readline_session_context *ctx)
+{
+	const char *cp;
+
+	if (!is_irc_channel(ACTWINLABEL)) {
+		output_error("not in irc channel");
+		return;
+	}
+
+	cp = addrof(ctx->tc->search_var[9]);
+
+	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
+	    cp)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_devoice(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeFor.Devoice = true;
+}
+
+static void
 init_mode_for_help(volatile struct readline_session_context *ctx)
 {
 	immutable_cp_t cp = addrof(ctx->tc->search_var[6]);
@@ -374,6 +474,52 @@ init_mode_for_help(volatile struct readline_session_context *ctx)
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_help(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Help = true;
+}
+
+static void
+init_mode_for_kick(volatile struct readline_session_context *ctx)
+{
+	const char *cp;
+
+	if (!is_irc_channel(ACTWINLABEL)) {
+		output_error("not in irc channel");
+		return;
+	}
+
+	cp = addrof(ctx->tc->search_var[6]);
+
+	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
+	    cp)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_kick(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeFor.Kick = true;
+}
+
+static void
+init_mode_for_kickban(volatile struct readline_session_context *ctx)
+{
+	const char *cp;
+
+	if (!is_irc_channel(ACTWINLABEL)) {
+		output_error("not in irc channel");
+		return;
+	}
+
+	cp = addrof(ctx->tc->search_var[9]);
+
+	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
+	    cp)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_kickban(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeFor.Kickban = true;
 }
 
 static void
@@ -435,6 +581,29 @@ init_mode_for_ns(volatile struct readline_session_context *ctx,
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_ns(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Ns = true;
+}
+
+static void
+init_mode_for_op(volatile struct readline_session_context *ctx)
+{
+	const char *cp;
+
+	if (!is_irc_channel(ACTWINLABEL)) {
+		output_error("not in irc channel");
+		return;
+	}
+
+	cp = addrof(ctx->tc->search_var[4]);
+
+	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
+	    cp)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_op(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeFor.Op = true;
 }
 
 static void
@@ -549,6 +718,29 @@ init_mode_for_version(volatile struct readline_session_context *ctx)
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_version(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Version = true;
+}
+
+static void
+init_mode_for_voice(volatile struct readline_session_context *ctx)
+{
+	const char *cp;
+
+	if (!is_irc_channel(ACTWINLABEL)) {
+		output_error("not in irc channel");
+		return;
+	}
+
+	cp = addrof(ctx->tc->search_var[7]);
+
+	if ((ctx->tc->matches = get_list_of_matching_channel_users(ACTWINLABEL,
+	    cp)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_voice(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeFor.Voice = true;
 }
 
 static void
@@ -670,8 +862,16 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_connect(ctx);
 	else if (var_matches_cs(sv, &off1))
 		init_mode_for_cs(ctx, off1);
+	else if (!strncmp(sv, "/deop ", 6))
+		init_mode_for_deop(ctx);
+	else if (!strncmp(sv, "/devoice ", 9))
+		init_mode_for_devoice(ctx);
 	else if (!strncmp(sv, "/help ", 6))
 		init_mode_for_help(ctx);
+	else if (!strncmp(sv, "/kick ", 6))
+		init_mode_for_kick(ctx);
+	else if (!strncmp(sv, "/kickban ", 9))
+		init_mode_for_kickban(ctx);
 	else if (!strncmp(sv, "/mode ", 6))
 		init_mode_for_mode(ctx);
 	else if (!strncmp(sv, "/msg ", 5))
@@ -680,6 +880,8 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_notice(ctx);
 	else if (var_matches_ns(sv, &off2))
 		init_mode_for_ns(ctx, off2);
+	else if (!strncmp(sv, "/op ", 4))
+		init_mode_for_op(ctx);
 	else if (!strncmp(sv, "/query ", 7))
 		init_mode_for_query(ctx);
 	else if (!strncmp(sv, "/sasl ", 6))
@@ -694,6 +896,8 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_time(ctx);
 	else if (!strncmp(sv, "/version ", 9))
 		init_mode_for_version(ctx);
+	else if (!strncmp(sv, "/voice ", 7))
+		init_mode_for_voice(ctx);
 	else if (!strncmp(sv, "/whois ", 7))
 		init_mode_for_whois(ctx);
 	else if (!strncmp(sv, "/znc ", 5))
@@ -732,8 +936,16 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		ac_doit(auto_complete_connect, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Cs) {
 		ac_doit(auto_complete_cs, ctx);
+	} else if (ctx->tc->isInCirculationModeFor.Deop) {
+		ac_doit(auto_complete_deop, ctx);
+	} else if (ctx->tc->isInCirculationModeFor.Devoice) {
+		ac_doit(auto_complete_devoice, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Help) {
 		ac_doit(auto_complete_help, ctx);
+	} else if (ctx->tc->isInCirculationModeFor.Kick) {
+		ac_doit(auto_complete_kick, ctx);
+	} else if (ctx->tc->isInCirculationModeFor.Kickban) {
+		ac_doit(auto_complete_kickban, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Mode) {
 		ac_doit(auto_complete_mode, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Msg) {
@@ -742,6 +954,8 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		ac_doit(auto_complete_notice, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Ns) {
 		ac_doit(auto_complete_ns, ctx);
+	} else if (ctx->tc->isInCirculationModeFor.Op) {
+		ac_doit(auto_complete_op, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Query) {
 		ac_doit(auto_complete_query, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Sasl) {
@@ -756,6 +970,8 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		ac_doit(auto_complete_time, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Version) {
 		ac_doit(auto_complete_version, ctx);
+	} else if (ctx->tc->isInCirculationModeFor.Voice) {
+		ac_doit(auto_complete_voice, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Whois) {
 		ac_doit(auto_complete_whois, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.ZncCmds) {

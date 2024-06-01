@@ -52,11 +52,16 @@ typedef struct tagTAB_COMPLETION {
 		bool Cmds;
 		bool Connect;
 		bool Cs;
+		bool Deop;
+		bool Devoice;
 		bool Help;
+		bool Kick;
+		bool Kickban;
 		bool Mode;
 		bool Msg;
 		bool Notice;
 		bool Ns;
+		bool Op;
 		bool Query;
 		bool Sasl;
 		bool Settings;
@@ -64,6 +69,7 @@ typedef struct tagTAB_COMPLETION {
 		bool Theme;
 		bool Time;
 		bool Version;
+		bool Voice;
 		bool Whois;
 		bool ZncCmds;
 	} isInCirculationModeFor;
