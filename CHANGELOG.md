@@ -2,20 +2,20 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added the following commands:
+- **Added** the following commands:
   - `/voice`
   - `/devoice`
-- Added tab completion for:
+- **Added** tab completion for:
   - `/deop`
   - `/kick`
   - `/kickban`
   - `/op`
-- Added translations.
-- Changed the program to:
+- **Added** translations.
+- **Changed** the program to:
   - Output the number of messages in a batch.
   - Output the number of nicks in a netjoin/netsplit plus the server
     hostnames.
-- Did code improvements:
+- **Did code improvements**:
   - Explicitly specified the size of multiple arrays (MISRA rule,
     found by PVS-Studio).
   - Fixed octal constants (MISRA rule, found by PVS-Studio).
@@ -26,14 +26,14 @@ All notable changes to this project will be documented in this file.
   - Reduced the scope of variables.
   - Variable initializations.
   - ...
-- Fixed the begin/end messages of a batch to not end up in the status
+- **Fixed** the begin/end messages of a batch to not end up in the status
   window.
-- List all commands dynamically in the output of `/help`,
+- **List** all commands dynamically in the output of `/help`,
   i.e. calculate the cols/rows with respect to the current window
   size.
 
 ### Windows ###
-- Fixed a case of truncation from `int` to `wchar_t`.
+- **Fixed** a case of truncation from `int` to `wchar_t`.
 
 ## [3.4.7] - 2024-03-12 ##
 - **Added** command `/dcc`
