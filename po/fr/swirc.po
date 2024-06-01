@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-04-07 15:25+0200\n"
+"POT-Creation-Date: 2024-06-01 17:19+0200\n"
 "PO-Revision-Date: 2024-04-07 15:33+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -1453,79 +1453,79 @@ msgstr "La connexion au serveur IRC a été perdue"
 msgid "Disconnected"
 msgstr "Déconnecté"
 
-#: ../src/readline.c:616
+#: ../src/readline.c:622
 msgid "--------------- Keys ---------------"
 msgstr ""
 
-#: ../src/readline.c:618
+#: ../src/readline.c:624
 msgid "CTRL+a     Move to beginning of line"
 msgstr ""
 
-#: ../src/readline.c:619
+#: ../src/readline.c:625
 msgid "CTRL+e     Move to end of line"
 msgstr ""
 
-#: ../src/readline.c:620
+#: ../src/readline.c:626
 msgid "CTRL+b     Move cursor backward"
 msgstr ""
 
-#: ../src/readline.c:621
+#: ../src/readline.c:627
 msgid "CTRL+f     Move cursor forward"
 msgstr ""
 
-#: ../src/readline.c:622
+#: ../src/readline.c:628
 msgid "CTRL+d     Delete"
 msgstr ""
 
-#: ../src/readline.c:623
+#: ../src/readline.c:629
 msgid "CTRL+g     Clear readline input"
 msgstr ""
 
-#: ../src/readline.c:624
+#: ../src/readline.c:630
 msgid "CTRL+l     Toggle logging on/off"
 msgstr ""
 
-#: ../src/readline.c:625
+#: ../src/readline.c:631
 msgid "CTRL+n     Next window"
 msgstr ""
 
-#: ../src/readline.c:626
+#: ../src/readline.c:632
 msgid "CTRL+p     Previous window"
 msgstr ""
 
-#: ../src/readline.c:627
+#: ../src/readline.c:633
 msgid "PG UP      Scroll up"
 msgstr ""
 
-#: ../src/readline.c:628
+#: ../src/readline.c:634
 msgid "PG DOWN    Scroll down"
 msgstr ""
 
-#: ../src/readline.c:629
+#: ../src/readline.c:635
 msgid "Up arrow   History previous"
 msgstr ""
 
-#: ../src/readline.c:630
+#: ../src/readline.c:636
 msgid "Down arrow History next"
 msgstr ""
 
-#: ../src/readline.c:631
+#: ../src/readline.c:637
 msgid "F2         Spell word"
 msgstr ""
 
-#: ../src/readline.c:632
+#: ../src/readline.c:638
 msgid "F3         Scroll nicklist up"
 msgstr ""
 
-#: ../src/readline.c:633
+#: ../src/readline.c:639
 msgid "F4         Scroll nicklist down"
 msgstr ""
 
-#: ../src/readline.c:634
+#: ../src/readline.c:640
 msgid "F11        Close window"
 msgstr ""
 
-#: ../src/readline.c:635
+#: ../src/readline.c:641
 msgid "F12        Close all private conversations"
 msgstr ""
 
