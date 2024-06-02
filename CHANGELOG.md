@@ -34,6 +34,8 @@ All notable changes to this project will be documented in this file.
 
 ### Windows ###
 - **Fixed** a case of truncation from `int` to `wchar_t`.
+- **Upgraded to**:
+  - [LibreSSL](https://www.libressl.org/) 3.9.2
 
 ## [3.4.7] - 2024-03-12 ##
 - **Added** command `/dcc`
