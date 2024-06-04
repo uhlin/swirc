@@ -1,3 +1,9 @@
+swirc (3.4.8-1) unstable; urgency=medium
+
+  * New upstream version.
+
+ -- Markus Uhlin <markus@nifty-networks.net>  Tue, 04 Jun 2024 04:59:25 +0200
+
 swirc (3.4.7-1) unstable; urgency=medium
 
   * New upstream version. Among other things it adds support for DCC.
