@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.4.8] - 2024-06-04 ##
 - **Added** the following commands:
   - `/voice`
   - `/devoice`
