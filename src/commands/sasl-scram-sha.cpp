@@ -181,14 +181,15 @@ static STRING
 get_decoded_msg(CSTRING source, int *outlen)
 {
 	STRING	 decoded_msg = NULL;
-	int	 length_needed = b64_decode(source, NULL, 0);
+	int	 length_needed, tmp;
 
-	if (length_needed < 0)
+	if (source == NULL || strings_match(source, "") ||
+	    (tmp = b64_decode(source, NULL, 0)) < 0)
 		return NULL;
 	if (outlen)
-		*outlen = length_needed;
+		*outlen = tmp;
 
-	length_needed += 1;
+	length_needed = int_sum(tmp, 1);
 	decoded_msg = new char[length_needed];
 	decoded_msg[length_needed - 1] = '\0';
 

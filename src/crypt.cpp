@@ -256,9 +256,12 @@ crypt_freezero(void *vp, size_t len)
 int
 crypt_get_base64_decode_length(CSTRING str)
 {
-	if (str == NULL)
+	int len;
+
+	if (str == NULL || strings_match(str, "") ||
+	    (len = b64_decode(str, NULL, 0)) < 0)
 		return 0;
-	return b64_decode(str, NULL, 0) + 1;
+	return int_sum(len, 1);
 }
 
 uint32_t
