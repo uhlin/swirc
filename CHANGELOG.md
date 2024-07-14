@@ -1,6 +1,11 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Fixed [CWE-190](https://cwe.mitre.org/data/definitions/190.html)
+  bugs found by Coverity.
+- Fixed a null pointer dereference.
+
 ## [3.4.8] - 2024-06-04 ##
 - **Added** the following commands:
   - `/voice`
