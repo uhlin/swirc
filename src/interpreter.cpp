@@ -113,10 +113,10 @@ Interpreter(const struct Interpreter_in *in)
 	char	*id = NULL;
 	char	*arg = NULL;
 
-	try {
-		if (in == NULL)
-			throw std::runtime_error("null input");
+	if (in == NULL)
+		err_exit(EINVAL, "%s", __func__);
 
+	try {
 		const char *cp = addrof(in->line[0]);
 
 		if (!sw_isalnum(*cp) && *cp != '_')
