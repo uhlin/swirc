@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added event 468 (`ERR_INVALIDUSERNAME`)
 - Fixed [CWE-190](https://cwe.mitre.org/data/definitions/190.html)
   bugs found by Coverity.
 - Fixed a null pointer dereference.

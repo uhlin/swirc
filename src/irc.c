@@ -237,6 +237,7 @@ static struct numeric_events_tag {
 	{ "465", "ERR_YOUREBANNEDCREEP",    STATUS_WINDOW,  1, NULL },
 	{ "466", "ERR_YOUWILLBEBANNED",     NO_WINDOW,      0, event_allaround_extract_find_colon },
 	{ "467", "ERR_KEYSET",              ACTIVE_WINDOW,  2, NULL },
+	{ "468", "ERR_INVALIDUSERNAME",     NO_WINDOW,      0, event_invalidUsername },
 	{ "470", "",                        NO_WINDOW,      0, event_channel_forward },
 	{ "471", "ERR_CHANNELISFULL",       ACTIVE_WINDOW,  2, NULL },
 	{ "472", "ERR_UNKNOWNMODE",         ACTIVE_WINDOW,  2, NULL },

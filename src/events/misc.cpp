@@ -359,6 +359,18 @@ event_channel_forward(struct irc_message_compo *compo)
 	}
 }
 
+/* event_invalidUsername: 468 (ERR_INVALIDUSERNAME)
+
+   Undocumented in the RFC. Present on Ergo and InspIRCd.
+
+   Example:
+     :irc.server.com 468 * :Malformed username */
+void
+event_invalidUsername(struct irc_message_compo *compo)
+{
+	(void) compo;
+}
+
 /* event_local_and_global_users: 265, 266
 
    These aren't documented at the time of writing this. They're sent
