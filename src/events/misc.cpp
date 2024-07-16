@@ -377,6 +377,12 @@ event_invalidUsername(struct irc_message_compo *compo)
 {
 	UNUSED_PARAM(compo);
 	printtext_print("err", "Malformed username");
+
+	if (!atomic_load_bool(&g_connection_in_progress))
+		return;
+
+	request_disconnect();
+	event_welcome_signalit();
 }
 
 /* event_local_and_global_users: 265, 266
