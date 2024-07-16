@@ -368,7 +368,8 @@ event_channel_forward(struct irc_message_compo *compo)
 void
 event_invalidUsername(struct irc_message_compo *compo)
 {
-	(void) compo;
+	UNUSED_PARAM(compo);
+	printtext_print("err", "Malformed username");
 }
 
 /* event_local_and_global_users: 265, 266
