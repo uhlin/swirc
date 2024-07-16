@@ -325,7 +325,7 @@ get_longest_cmdlen(void)
 	while (sp < &cmds[ARRAY_SIZE(cmds)]) {
 		int cmdlen;
 
-		if ((cmdlen = strlen(sp->cmd)) > len)
+		if ((cmdlen = (int)strlen(sp->cmd)) > len)
 			len = cmdlen;
 		sp++;
 	}
