@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added event 468 (`ERR_INVALIDUSERNAME`)
+- Changed the program to not start reconnecting on event 433
+  (`ERR_NICKNAMEINUSE`) if a connection is in progress.
 - Fixed [CWE-190](https://cwe.mitre.org/data/definitions/190.html)
   bugs found by Coverity.
 - Fixed a null pointer dereference.
