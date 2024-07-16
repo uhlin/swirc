@@ -44,6 +44,8 @@
 #include "../strHand.h"
 #include "../theme.h"
 
+#include "../commands/connect.h"
+
 #include "i18n.h"
 #include "misc.h"
 #include "welcome.h"
