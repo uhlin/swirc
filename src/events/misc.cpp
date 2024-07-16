@@ -50,6 +50,13 @@
 
 #define TM_STRUCT_MSG "unable to retrieve tm structure"
 
+static void
+request_disconnect()
+{
+	g_disconnect_wanted = true;
+	g_connection_lost = g_on_air = false;
+}
+
 /* Not written for a specific event */
 void
 event_allaround_extract_find_colon(struct irc_message_compo *compo)
