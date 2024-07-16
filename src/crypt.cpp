@@ -93,8 +93,8 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 
 		if (rot13)
 			(void) rot13_str(str_copy);
-		if ((decode_len = crypt_get_base64_decode_length(str_copy)) <=
-		    0)
+		if ((decode_len =
+		    crypt_get_base64_decode_length(str_copy)) <= 0)
 			throw std::runtime_error("length error");
 
 		decoded_str = static_cast<cryptstr_t>(xcalloc(decode_len, 1));
