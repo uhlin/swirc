@@ -445,7 +445,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
 		if (g_alt_nick_tested) {
 			printtext(&ctx, "%s", _("Alternative nickname already "
 			    "tested. Disconnecting..."));
-			g_on_air = false;
+			request_disconnect();
 			event_welcome_signalit();
 		} else if (!isEmpty(Config("alt_nick"))) {
 			printtext(&ctx, _("Attempting to use alt_nick (%s) "
@@ -457,7 +457,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
 			g_alt_nick_tested = true;
 		} else {
 			printtext(&ctx, "%s", _("Disconnecting..."));
-			g_on_air = false;
+			request_disconnect();
 			event_welcome_signalit();
 		}
 	} catch (const std::runtime_error &e) {
