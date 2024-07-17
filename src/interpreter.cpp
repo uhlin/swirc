@@ -86,7 +86,7 @@ copy_argument(const char *&arg)
 		    __func__);
 	if (inside_arg) {
 		delete[] dest_buf;
-		return NULL;
+		return nullptr;
 	}
 	return dest_buf;
 }
@@ -110,10 +110,10 @@ clean_up(char *id, char *arg)
 void
 Interpreter(const struct Interpreter_in *in)
 {
-	char	*id = NULL;
-	char	*arg = NULL;
+	char	*id = nullptr;
+	char	*arg = nullptr;
 
-	if (in == NULL)
+	if (in == nullptr)
 		err_exit(EINVAL, "%s", __func__);
 
 	try {
@@ -132,7 +132,7 @@ Interpreter(const struct Interpreter_in *in)
 		adv_while_isspace(&cp);
 		if (*cp++ != ArgBegin)
 			throw std::runtime_error("expected arg begin");
-		else if ((arg = copy_argument(cp)) == NULL)
+		else if ((arg = copy_argument(cp)) == nullptr)
 			throw std::runtime_error("unterminated argument");
 
 		adv_while_isspace(&cp);
@@ -183,7 +183,7 @@ Interpreter_processAllLines(FILE *fp, const char *path, Interpreter_vFunc func1,
 	char buf[MAXLINE] = { '\0' };
 	long int line_num = 0;
 
-	while (fgets(buf, sizeof buf, fp) != NULL) {
+	while (fgets(buf, sizeof buf, fp) != nullptr) {
 		char *line;
 		const char *cp;
 		struct Interpreter_in in;
