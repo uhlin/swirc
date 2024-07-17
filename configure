@@ -42,6 +42,11 @@ print_help () {
 	echo "  --without-libidn   Build without GNU libidn"
 	echo "  --without-libintl  No internationalization"
 	echo ""
+	if [ "$(whoami)" = "maxxe" ]; then
+		echo "  --sanitize-address"
+		echo "  --sanitize-thread"
+		echo "  --fuzz-mode"
+	fi
 }
 
 for arg in "$@"; do
