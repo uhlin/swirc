@@ -136,8 +136,7 @@ fi
 
 if [ ${_fuzz_mode} -eq 1 ]; then
 	cat <<EOF >>$MAKE_DEF_FILE
-CFLAGS += -DIRCFUZZ_MODE=1
-CXXFLAGS += -DIRCFUZZ_MODE=1
+CPPFLAGS += -DIRCFUZZ_MODE=1
 EOF
 fi
 
