@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
   (`ERR_NICKNAMEINUSE`) if a connection is in progress.
 - Fixed [CWE-190](https://cwe.mitre.org/data/definitions/190.html)
   bugs found by Coverity.
+- Fixed a few potential data races found by TSan.
 - Fixed a null pointer dereference.
 
 ## [3.4.8] - 2024-06-04 ##
