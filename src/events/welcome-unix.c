@@ -13,7 +13,7 @@
 
 static bool is_signaled = false;
 
-static pthread_mutex_t	foo_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t	wait_mtx = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t	welcome_cond;
 
 bool
@@ -35,9 +35,9 @@ event_welcome_is_signaled(void)
 	ts.tv_sec = tv.tv_sec + config_integer(&intctx);
 	ts.tv_nsec = tv.tv_usec;
 
-	mutex_lock(&foo_mutex);
+	mutex_lock(&wait_mtx);
 	while (!is_signaled) {
-		ret = pthread_cond_timedwait(&welcome_cond, &foo_mutex, &ts);
+		ret = pthread_cond_timedwait(&welcome_cond, &wait_mtx, &ts);
 
 		if (ret == 0) {
 			is_signaled = true;
@@ -52,7 +52,7 @@ event_welcome_is_signaled(void)
 			sw_assert_not_reached();
 		}
 	}
-	mutex_unlock(&foo_mutex);
+	mutex_unlock(&wait_mtx);
 
 	return is_signaled;
 }
