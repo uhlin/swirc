@@ -1,8 +1,8 @@
 CC = cl
-CFLAGS = -MD -O2 -W3 -nologo
+CFLAGS = -MD -O2 -W3 -nologo -std:c17
 
 CXX = $(CC)
-CXXFLAGS = $(CFLAGS) -DUNICODE=1 -EHsc -ZW
+CXXFLAGS = -DUNICODE=1 -EHsc -MD -O2 -W3 -ZW -nologo -std:c++17
 
 # C preprocessor flags
 CPPFLAGS = -DHAVE_ATLSTR_H=1\
