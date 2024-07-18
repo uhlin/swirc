@@ -9,10 +9,12 @@
 #include "../errHand.h"
 #include "../pthrMutex.h"
 
+#include "errno-type.h"
 #include "welcome-unix.h"
 
 static bool is_signaled = false;
 
+static pthread_mutex_t	cond_mtx = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t	wait_mtx = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t	welcome_cond;
 
@@ -68,8 +70,14 @@ event_welcome_cond_init(void)
 void
 event_welcome_cond_destroy(void)
 {
-	if ((errno = pthread_cond_destroy(&welcome_cond)) != 0)
-		err_sys("%s: pthread_cond_destroy", __func__);
+	errno_t ret;
+
+	mutex_lock(&cond_mtx);
+	ret = pthread_cond_destroy(&welcome_cond);
+	mutex_unlock(&cond_mtx);
+
+	if (ret)
+		err_exit(ret, "%s: pthread_cond_destroy", __func__);
 }
 
 /*
@@ -78,6 +86,12 @@ event_welcome_cond_destroy(void)
 void
 event_welcome_signalit(void)
 {
-	if ((errno = pthread_cond_broadcast(&welcome_cond)) != 0)
-		err_sys("%s: pthread_cond_broadcast", __func__);
+	errno_t ret;
+
+	mutex_lock(&cond_mtx);
+	ret = pthread_cond_broadcast(&welcome_cond);
+	mutex_unlock(&cond_mtx);
+
+	if (ret)
+		err_exit(ret, "%s: pthread_cond_broadcast", __func__);
 }
