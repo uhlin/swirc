@@ -1,4 +1,4 @@
-/* Copyright (c) 2016-2023 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2016-2024 Markus Uhlin <markus@nifty-networks.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -237,21 +237,22 @@ void
 net_ssl_end(void)
 {
 	if (ssl != NULL && !atomic_load_bool(&ssl_object_is_null)) {
-#define SHUTDOWN_CONN 1
-#if SHUTDOWN_CONN
-		switch (SSL_shutdown(ssl)) {
-		case 0:
-			debug("%s: SSL_shutdown: not yet finished", __func__);
-			(void) SSL_shutdown(ssl);
-			break;
-		case 1:
-			/* success! */
-			break;
-		default:
-			err_log(0, "%s: SSL_shutdown: error", __func__);
-			break;
+		if (!(SSL_get_shutdown(ssl) & SSL_SENT_SHUTDOWN)) {
+			switch (SSL_shutdown(ssl)) {
+			case 0:
+				debug("%s: SSL_shutdown: not yet finished",
+				    __func__);
+				(void) SSL_shutdown(ssl);
+				break;
+			case 1:
+				/* success! */
+				break;
+			default:
+				err_log(0, "%s: SSL_shutdown: error", __func__);
+				break;
+			}
 		}
-#endif
+
 		SSL_free(ssl);
 		ssl = NULL;
 		(void) atomic_swap_bool(&ssl_object_is_null, true);
