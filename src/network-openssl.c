@@ -237,8 +237,6 @@ void
 net_ssl_end(void)
 {
 	if (ssl != NULL && !atomic_load_bool(&ssl_object_is_null)) {
-		mutex_lock(&ssl_send_mutex);
-
 		if (!(SSL_get_shutdown(ssl) & SSL_SENT_SHUTDOWN)) {
 			switch (SSL_shutdown(ssl)) {
 			case 0:
@@ -255,10 +253,11 @@ net_ssl_end(void)
 			}
 		}
 
+		mutex_lock(&ssl_send_mutex);
 		SSL_free(ssl);
 		ssl = NULL;
-
 		mutex_unlock(&ssl_send_mutex);
+
 		(void) atomic_swap_bool(&ssl_object_is_null, true);
 	}
 }
