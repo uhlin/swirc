@@ -46,6 +46,9 @@ print_help () {
 		echo "  --sanitize-address"
 		echo "  --sanitize-thread"
 		echo "  --fuzz-mode"
+		echo ""
+		echo "ASAN_OPTIONS=\"log_path=asan.log\""
+		echo "TSAN_OPTIONS=\"log_path=tsan.log\""
 	fi
 }
 
