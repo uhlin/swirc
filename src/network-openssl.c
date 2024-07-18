@@ -253,10 +253,8 @@ net_ssl_end(void)
 			}
 		}
 
-		mutex_lock(&ssl_send_mutex);
 		SSL_free(ssl);
 		ssl = NULL;
-		mutex_unlock(&ssl_send_mutex);
 
 		(void) atomic_swap_bool(&ssl_object_is_null, true);
 	}
