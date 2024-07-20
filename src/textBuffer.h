@@ -1,6 +1,8 @@
 #ifndef TEXTBUFFER_H
 #define TEXTBUFFER_H
 
+#include "atomicops.h"
+
 typedef struct tagTEXTBUF_ELMT {
 	char	*text;
 	int	 indent;
@@ -9,7 +11,7 @@ typedef struct tagTEXTBUF_ELMT {
 } TEXTBUF_ELMT, *PTEXTBUF_ELMT;
 
 typedef struct tagTEXTBUF {
-	int		size;
+	_Atomic(int)	size;
 	PTEXTBUF_ELMT	head;
 	PTEXTBUF_ELMT	tail;
 } TEXTBUF, *PTEXTBUF;
