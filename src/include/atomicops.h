@@ -32,4 +32,17 @@
 #else
 #error FATAL: Lacking atomic operations!
 #endif
+
+#ifdef __cplusplus
+#if __cplusplus > 201103L && !defined(_Atomic)
+#define _Atomic(x) std::atomic<x>
+#else
+#define _Atomic(x) x
+#endif
+#else /* C */
+#if defined(UNIX) && defined(__STDC_NO_ATOMICS__)
+#define _Atomic(x) x
+#endif
+#endif
+
 #endif /* ATOMIC_OPERATIONS_HEADER */
