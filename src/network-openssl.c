@@ -52,7 +52,7 @@
 char *g_ca_file = NULL;
 
 static SSL_CTX *ssl_ctx = NULL;
-static _Atomic(SSL *) ssl = NULL;
+static SSL *ssl = NULL;
 
 static volatile bool ssl_object_is_null = true;
 
