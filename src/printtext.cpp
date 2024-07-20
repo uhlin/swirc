@@ -64,9 +64,9 @@
 #include "theme.h"
 
 #define WADDCH(win, c)        ((void) waddch(win, c))
-#define WATTR_OFF(win, attrs) ((void) wattr_off(win, attrs, NULL))
-#define WATTR_ON(win, attrs)  ((void) wattr_on(win, attrs, NULL))
-#define WCOLOR_SET(win, cpn)  ((void) wcolor_set(win, cpn, NULL))
+#define WATTR_OFF(win, attrs) ((void) wattr_off(win, attrs, nullptr))
+#define WATTR_ON(win, attrs)  ((void) wattr_on(win, attrs, nullptr))
+#define WCOLOR_SET(win, cpn)  ((void) wcolor_set(win, cpn, nullptr))
 
 /****************************************************************
 *                                                               *
@@ -79,7 +79,7 @@ struct message_components {
 	int	 indent;
 
 	message_components()
-	    : text(NULL)
+	    : text(nullptr)
 	    , indent(0)
 	{}
 	message_components(STRING p_text, int p_indent)
@@ -89,7 +89,7 @@ struct message_components {
 	~message_components()
 	{
 		free(this->text);
-		this->text = NULL;
+		this->text = nullptr;
 	}
 };
 
@@ -126,7 +126,7 @@ struct case_default_context {
 	int		 max_lines;
 	ptrdiff_t	 diff;
 
-	case_default_context() : win(NULL)
+	case_default_context() : win(nullptr)
 	    , wc(L'\0')
 	    , nextchar_empty(false)
 	    , indent(0)
@@ -606,7 +606,7 @@ printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 		return;
 	}
 
-	(void) wattr_set(win, attr, resolved_pair, NULL);
+	(void) wattr_set(win, attr, resolved_pair, nullptr);
 	*is_color = true;
 }
 
@@ -683,10 +683,10 @@ do_indent(WINDOW *win, const int indent, int *insert_count)
 	attr_t		 attrs = 0;
 	short int	 pair = 0;
 
-	(void) wattr_get(win, &attrs, &pair, NULL);
+	(void) wattr_get(win, &attrs, &pair, nullptr);
 
 	/* turn off all attributes during indentation */
-	(void) wattr_set(win, A_NORMAL, 0, NULL);
+	(void) wattr_set(win, A_NORMAL, 0, nullptr);
 
 	for (int i = 0; i < indent; i++) {
 		WADDCH(win, ' ');
@@ -694,7 +694,7 @@ do_indent(WINDOW *win, const int indent, int *insert_count)
 	}
 
 	/* restore attributes after indenting */
-	(void) wattr_set(win, attrs, pair, NULL);
+	(void) wattr_set(win, attrs, pair, nullptr);
 }
 
 static void
@@ -830,7 +830,7 @@ case_underline(WINDOW *win, bool *is_underline)
 static void
 set_indent(int *indent, CSTRING fmt, ...)
 {
-	char		*str = NULL;
+	char		*str = nullptr;
 	size_t		 bytes_convert;
 	va_list		 ap;
 	wchar_t		 wcs[400] = { L'\0' };
@@ -866,13 +866,13 @@ get_processed_out_message(CSTRING unproc_msg, enum message_specifier_type
 	struct message_components *pout;
 
 	try {
-		pout = new message_components(NULL, 0);
+		pout = new message_components(nullptr, 0);
 	} catch (const std::bad_alloc &e) {
 		err_exit(ENOMEM, "%s: fatal: %s", __func__, e.what());
 	}
 
 	if (include_ts) {
-		STRING ts = NULL;
+		STRING ts = nullptr;
 
 		if (srv_time)
 			ts = sw_strdup(srv_time);
@@ -982,7 +982,7 @@ get_processed_out_message(CSTRING unproc_msg, enum message_specifier_type
 		sw_assert_not_reached();
 	}
 
-	sw_assert(pout->text != NULL);
+	sw_assert(pout->text != nullptr);
 
 	if (g_no_colors)
 		pout->text = squeeze_text_deco(pout->text);
@@ -1009,7 +1009,7 @@ windows_convert_to_utf8(CSTRING buf)
 	    size) > 0)
 		return out;
 	free(out);
-	return NULL;
+	return nullptr;
 }
 #endif
 
@@ -1024,20 +1024,20 @@ windows_convert_to_utf8(CSTRING buf)
 static wchar_t *
 try_convert_buf_with_cs(CSTRING buf, CSTRING codeset)
 {
-	STRING			 original_locale = NULL;
-	STRING			 tmp_locale = NULL;
-	struct locale_info	*li = NULL;
-	wchar_t			*out = NULL;
+	STRING			 original_locale = nullptr;
+	STRING			 tmp_locale = nullptr;
+	struct locale_info	*li = nullptr;
+	wchar_t			*out = nullptr;
 
 	try {
 		size_t bytes_convert = 0;
 
 		li = get_locale_info(LC_CTYPE);
 
-		if (buf == NULL || codeset == NULL) {
+		if (buf == nullptr || codeset == nullptr) {
 			throw std::runtime_error("invalid arguments");
-		} else if (li->lang_and_territory == NULL ||
-			   li->codeset == NULL) {
+		} else if (li->lang_and_territory == nullptr ||
+			   li->codeset == nullptr) {
 			throw std::runtime_error("failed to get locale "
 			    "information");
 		}
@@ -1050,10 +1050,10 @@ try_convert_buf_with_cs(CSTRING buf, CSTRING codeset)
 		    codeset);
 		out = static_cast<wchar_t *>(xcalloc(size, sizeof *out));
 
-		if (xsetlocale(LC_CTYPE, tmp_locale) == NULL ||
+		if (xsetlocale(LC_CTYPE, tmp_locale) == nullptr ||
 		    (bytes_convert = xmbstowcs(out, buf, size - 1)) ==
 		    g_conversion_failed) {
-			if (xsetlocale(LC_CTYPE, original_locale) == NULL) {
+			if (xsetlocale(LC_CTYPE, original_locale) == nullptr) {
 				err_log(EPERM, "%s: cannot restore original "
 				    "locale (%s)", __func__, original_locale);
 			}
@@ -1063,7 +1063,7 @@ try_convert_buf_with_cs(CSTRING buf, CSTRING codeset)
 
 		if (bytes_convert >= (size - 1))
 			out[size - 1] = 0L;
-		if (xsetlocale(LC_CTYPE, original_locale) == NULL) {
+		if (xsetlocale(LC_CTYPE, original_locale) == nullptr) {
 			err_log(EPERM, "%s: cannot restore original "
 			    "locale (%s)", __func__, original_locale);
 		}
@@ -1084,7 +1084,7 @@ try_convert_buf_with_cs(CSTRING buf, CSTRING codeset)
 		sw_assert_not_reached();
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -1112,15 +1112,16 @@ perform_convert_buffer(const char **in_buf)
 	mbstate_t	 ps;
 	size_t		 outlen = 0;
 	size_t		 size = 0;
-	wchar_t		*out = NULL;
+	wchar_t		*out = nullptr;
 
 #if WIN32
-	if ((out = windows_convert_to_utf8(*in_buf)) != NULL)
+	if ((out = windows_convert_to_utf8(*in_buf)) != nullptr)
 		return out;
 #endif
 
 	for (const char **ar_p = &ar[0]; ar_p < &ar[ARRAY_SIZE(ar)]; ar_p++) {
-		if ((out = try_convert_buf_with_cs(*in_buf, *ar_p)) != NULL) {
+		if ((out = try_convert_buf_with_cs(*in_buf, *ar_p)) !=
+		    nullptr) {
 			/*
 			 * success
 			 */
@@ -1180,7 +1181,7 @@ replace_characters_with_spaces(wchar_t *wc_buf, const wchar_t *set)
 {
 	wchar_t *wcp;
 
-	while ((wcp = wcspbrk(wc_buf, set)) != NULL)
+	while ((wcp = wcspbrk(wc_buf, set)) != nullptr)
 		*wcp = L' ';
 }
 
@@ -1220,7 +1221,7 @@ void
 printtext_context_init(PPRINTTEXT_CONTEXT ctx, PIRC_WINDOW window,
     enum message_specifier_type spec_type, bool include_ts)
 {
-	if (ctx == NULL) {
+	if (ctx == nullptr) {
 		err_log(EINVAL, "%s", __func__);
 		return;
 	}
@@ -1265,7 +1266,7 @@ print_and_free(CSTRING msg, char *cp)
 {
 	PRINTTEXT_CONTEXT ctx;
 
-	if (msg == NULL)
+	if (msg == nullptr)
 		err_exit(EINVAL, "%s", __func__);
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
@@ -1358,14 +1359,14 @@ printtext_print(CSTRING what, CSTRING fmt, ...)
 	PPRINTTEXT_CONTEXT ctx;
 	va_list ap;
 
-	if (fmt == NULL)
+	if (fmt == nullptr)
 		err_exit(EINVAL, "%s", __func__);
-	else if (g_active_window == NULL)
+	else if (g_active_window == nullptr)
 		return;
 
 	ctx = printtext_context_new(g_active_window, TYPE_SPEC1, true);
 
-	if (what == NULL)
+	if (what == nullptr)
 		/* null */;
 	else if (strings_match(what, "sp1"))
 		ctx->spec_type = TYPE_SPEC1;
@@ -1462,13 +1463,13 @@ void
 printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
     int *rep_count)
 {
-	char		*tmpbuf = NULL;
-	const char	*tmpbuf_p = NULL;
+	char		*tmpbuf = nullptr;
+	const char	*tmpbuf_p = nullptr;
 	int		 insert_count = 0;
 	int		 lines_count = 0;
 	struct text_decoration_bools
 			 booleans; // calls constructor
-	wchar_t		*wc_buf = NULL;
+	wchar_t		*wc_buf = nullptr;
 
 #if defined(UNIX)
 	if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0)
@@ -1480,7 +1481,7 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 
 	if (isValid(rep_count))
 		*rep_count = 0;
-	if (pwin == NULL || buf == NULL)
+	if (pwin == nullptr || buf == nullptr)
 		err_exit(EINVAL, "%s", __func__);
 	else if (strings_match(buf, "") || term_is_too_small())
 		return;
@@ -1524,11 +1525,11 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 			break;
 		default:
 		{
-			const wchar_t	*wcp = NULL;
+			const wchar_t	*wcp = nullptr;
 			ptrdiff_t	 diff = 0;
 
 			if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) !=
-			    NULL) {
+			    nullptr) {
 				static wchar_t		str[4096] = { L'\0' };
 				static const ptrdiff_t	ARSZ = static_cast
 				    <ptrdiff_t>(ARRAY_SIZE(str));
@@ -1558,7 +1559,7 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 	}
 
 	free(wc_buf);
-	wc_buf = NULL;
+	wc_buf = nullptr;
 
 	if (!atomic_load_bool(&g_redrawing_window) &&
 	    !atomic_load_bool(&g_resizing_term)) {
@@ -1596,11 +1597,11 @@ set_timestamp(char *dest, size_t destsize,
 void
 vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 {
-	STRING			 fmt_copy = NULL;
+	STRING			 fmt_copy = nullptr;
 	const int		 tbszp1 = textBuf_size(ctx->window->buf) + 1;
 	struct integer_context	 intctx("textbuffer_size_absolute", 350, 4700,
 				     1000);
-	struct message_components *pout = NULL;
+	struct message_components *pout = nullptr;
 
 #if defined(UNIX)
 	if ((errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init))
@@ -1615,7 +1616,8 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 	mutex_lock(&vprinttext_mutex);
 	fmt_copy = strdup_vprintf(fmt, ap);
 	pout = get_processed_out_message(fmt_copy, ctx->spec_type,
-	    ctx->include_ts, (ctx->has_server_time ? ctx->server_time : NULL));
+	    ctx->include_ts, (ctx->has_server_time ? ctx->server_time :
+	    nullptr));
 
 	if (tbszp1 > config_integer(&intctx)) {
 		/*
@@ -1627,7 +1629,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 	}
 
 	if (textBuf_size(ctx->window->buf) == 0) {
-		if ((errno = textBuf_ins_next(ctx->window->buf, NULL,
+		if ((errno = textBuf_ins_next(ctx->window->buf, nullptr,
 		    pout->text, pout->indent)) != 0)
 			err_sys("%s: textBuf_ins_next", __func__);
 	} else {
@@ -1644,11 +1646,11 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 		    is_irc_channel(ctx->window->label) &&
 		    !g_icb_mode &&
 		    (!ctx->window->received_names ||
-		     ctx->window->nicklist.pan == NULL))
+		     ctx->window->nicklist.pan == nullptr))
 			/* no */;
 		else {
 			printtext_puts(panel_window(ctx->window->pan),
-			    pout->text, pout->indent, -1, NULL);
+			    pout->text, pout->indent, -1, nullptr);
 		}
 	}
 
@@ -1656,7 +1658,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 		STRING logpath;
 
 		if ((logpath = log_get_path(g_server_hostname,
-		    ctx->window->label)) != NULL) {
+		    ctx->window->label)) != nullptr) {
 			log_msg(logpath, pout->text);
 			free(logpath);
 		}
