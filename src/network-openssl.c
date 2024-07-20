@@ -45,10 +45,14 @@
 
 #include "events/cap.h" /* get_sasl_mechanism() */
 
+#if defined(UNIX) && defined(__STDC_NO_ATOMICS__)
+#pragma message("No atomics")
+#endif
+
 char *g_ca_file = NULL;
 
-static SSL_CTX	*ssl_ctx = NULL;
-static SSL	*ssl = NULL;
+static SSL_CTX *ssl_ctx = NULL;
+static _Atomic(SSL *) ssl = NULL;
 
 static volatile bool ssl_object_is_null = true;
 
