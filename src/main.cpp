@@ -92,15 +92,15 @@ chararray_t	g_swircYear	= "2012-2024";
 chararray_t	g_swircAuthor	= "Markus Uhlin";
 chararray_t	g_swircWebAddr	= "https://www.nifty-networks.net/swirc/";
 
-FILE		*g_dev_null = NULL;
+FILE		*g_dev_null = nullptr;
 char		*g_progname = const_cast<char *>("");
-char		*g_progpath = NULL;
+char		*g_progpath = nullptr;
 long int	 g_pid = -1;
 
 int	 g_stderr_fd = -1;
 int	 g_stdout_fd = -1;
 
-SETLOCALE_FN	 xsetlocale = NULL;
+SETLOCALE_FN	 xsetlocale = nullptr;
 char		 g_locale[200] = { '\0' };
 
 std::vector<std::string> g_join_list;
@@ -191,9 +191,9 @@ view_version()
 		PUTS("Output disclaimer? [y/N]: ");
 		(void) fflush(stdout);
 
-		if (fgets(answer, sizeof answer - 1, stdin) == NULL) {
+		if (fgets(answer, sizeof answer - 1, stdin) == nullptr) {
 			err_sys("%s: fgets", __func__);
-		} else if (strchr(answer, '\n') == NULL) {
+		} else if (strchr(answer, '\n') == nullptr) {
 			/*
 			 * input too big
 			 */
@@ -259,10 +259,10 @@ case_connect()
 		DUP_OPTION_ERR('c');
 
 	token1 = strtok_r(g_option_arg, ":", &last);
-	sw_assert(token1 != NULL);
+	sw_assert(token1 != nullptr);
 	g_cmdline_opts->server = sw_strdup(token1);
 
-	if ((token2 = strtok_r(NULL, ":", &last)) == NULL)
+	if ((token2 = strtok_r(nullptr, ":", &last)) == nullptr)
 		g_cmdline_opts->port = sw_strdup("6667");
 	else
 		g_cmdline_opts->port = sw_strdup(token2);
@@ -309,12 +309,12 @@ case_join()
 	if (been_case)
 		DUP_OPTION_ERR('j');
 
-	for (cp = g_option_arg;; cp = NULL) {
+	for (cp = g_option_arg;; cp = nullptr) {
 		char *token;
 
-		if ((token = strtok_r(cp, ",", &last)) == NULL)
+		if ((token = strtok_r(cp, ",", &last)) == nullptr)
 			break;
-		else if (strpbrk(token, g_forbidden_chan_name_chars) != NULL)
+		else if (strpbrk(token, g_forbidden_chan_name_chars) != nullptr)
 			err_quit("forbidden chan name chars");
 		else
 			g_join_list.push_back(token);
@@ -490,7 +490,7 @@ get_seed()
 
 	errno = 0;
 
-	if (gettimeofday(&tv, NULL) != 0)
+	if (gettimeofday(&tv, nullptr) != 0)
 		err_dump("%s", "get_seed: gettimeofday");
 
 	return (getpid() ^ tv.tv_sec ^ tv.tv_usec);
@@ -513,7 +513,7 @@ toast_notifications_init()
 	/*
 	 * Initializes the COM library for use by the calling thread
 	 */
-	(void) CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	(void) CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 
 	/*
 	 * Register AUMID and COM server (for Desktop Bridge apps, this no-ops)
@@ -550,7 +550,7 @@ main(int argc, char *argv[])
 #define SLASH_CHAR '\\'
 #endif
 
-	if ((cp = strrchr(argv[0], SLASH_CHAR)) == NULL)
+	if ((cp = strrchr(argv[0], SLASH_CHAR)) == nullptr)
 		g_progname = argv[0];
 	else
 		g_progname = cp + 1;
@@ -572,7 +572,7 @@ main(int argc, char *argv[])
 	    0) {
 #ifdef HAVE_LIBINTL_SETLOCALE
 		xsetlocale = libintl_setlocale;
-		if (xsetlocale(LC_ALL, g_locale) == NULL) {
+		if (xsetlocale(LC_ALL, g_locale) == nullptr) {
 			err_msg("error setting character encoding '%s' for "
 			    "libintl", g_locale);
 			return EXIT_FAILURE;
@@ -585,28 +585,29 @@ main(int argc, char *argv[])
 
 #ifdef HAVE_LIBINTL_H
 #if defined(UNIX)
-	if (bindtextdomain("swirc", SWIRC_BTD_PATH) == NULL) {
+	if (bindtextdomain("swirc", SWIRC_BTD_PATH) == nullptr) {
 		err_ret("bindtextdomain");
 		return EXIT_FAILURE;
 	}
 #elif defined(WIN32)
 #define PEM_FILE "trusted_roots.pem"
-	char	*pgm = NULL,
-		*str = NULL;
+	char	*pgm = nullptr,
+		*str = nullptr;
 
-	if (_get_pgmptr(&pgm) == 0 && pgm != NULL && !strings_match(pgm, "") &&
+	if (_get_pgmptr(&pgm) == 0 && pgm != nullptr &&
+	    !strings_match(pgm, "") &&
 	    !strings_match(&pgm[strspn(pgm, " \t")], "")) {
 		str = sw_strdup(pgm);
-		if ((cp = strcasestr(str, "\\swirc.exe")) == NULL) {
+		if ((cp = strcasestr(str, "\\swirc.exe")) == nullptr) {
 			err_msg("renamed executable");
 			return EXIT_FAILURE;
 		}
 		*cp = '\0';
 		g_progpath = sw_strdup(str);
-		while ((cp = strchr(str, SLASH_CHAR)) != NULL)
+		while ((cp = strchr(str, SLASH_CHAR)) != nullptr)
 			*cp = '/';
 	}
-	if (bindtextdomain("swirc", (str ? str : "")) == NULL) {
+	if (bindtextdomain("swirc", (str ? str : "")) == nullptr) {
 		err_ret("bindtextdomain");
 		return EXIT_FAILURE;
 	}
@@ -618,7 +619,7 @@ main(int argc, char *argv[])
 #endif
 	(void) bind_textdomain_codeset("swirc", "UTF-8");
 
-	if (textdomain("swirc") == NULL) {
+	if (textdomain("swirc") == nullptr) {
 		err_ret("textdomain");
 		return EXIT_FAILURE;
 	}
@@ -660,7 +661,7 @@ main(int argc, char *argv[])
 	term_init();
 	nestHome_init();
 
-	if ((g_dev_null = xfopen(DEV_NULL, "w")) == NULL)
+	if ((g_dev_null = xfopen(DEV_NULL, "w")) == nullptr)
 		debug("dev null error");
 #if WIN32
 	if (pgm)
@@ -734,7 +735,8 @@ main(int argc, char *argv[])
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201605
-	if (pledge("cpath rpath wpath dns getpw inet stdio tty", NULL) == -1) {
+	if (pledge("cpath rpath wpath dns getpw inet stdio tty", nullptr) ==
+	    -1) {
 		err_ret("pledge");
 		return EXIT_FAILURE;
 	}
@@ -765,7 +767,7 @@ main(int argc, char *argv[])
 		if (fclose(g_dev_null) != 0)
 			err_ret("fclose");
 		else
-			g_dev_null = NULL;
+			g_dev_null = nullptr;
 	}
 	cmdline_options_destroy();
 	puts("- Exit Success! -");
@@ -783,11 +785,11 @@ get_locale_info(int category)
 	char			 buf[200] = { '\0' };
 	struct locale_info	*li = new locale_info();
 
-	if (sw_strcpy(buf, xsetlocale(category, NULL), ARRAY_SIZE(buf)) != 0)
+	if (sw_strcpy(buf, xsetlocale(category, nullptr), ARRAY_SIZE(buf)) != 0)
 		return (li);
-	if ((tok = strtok_r(buf, ".", &last)) != NULL)
+	if ((tok = strtok_r(buf, ".", &last)) != nullptr)
 		li->lang_and_territory = sw_strdup(tok);
-	if ((tok = strtok_r(NULL, ".", &last)) != NULL)
+	if ((tok = strtok_r(nullptr, ".", &last)) != nullptr)
 		li->codeset = sw_strdup(tok);
 	return (li);
 }
@@ -826,7 +828,7 @@ void
 cmdline_options_destroy(void)
 {
 	delete g_cmdline_opts;
-	g_cmdline_opts = NULL;
+	g_cmdline_opts = nullptr;
 }
 
 void
