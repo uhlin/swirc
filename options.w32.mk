@@ -1,5 +1,5 @@
 CC = cl
-CFLAGS = -MD -O2 -W3 -nologo -std:c17
+CFLAGS = -MD -O2 -W3 -experimental:c11atomics -nologo -std:c17
 
 CXX = $(CC)
 CXXFLAGS = -DUNICODE=1 -EHsc -MD -O2 -W3 -ZW -nologo -std:c++17
