@@ -62,14 +62,19 @@
 #endif
 
 #ifdef __cplusplus
-#if __cplusplus > 201103L && !defined(_Atomic)
-#define _Atomic(x) std::atomic<x>
+#if __cplusplus > 201103L
+#include <atomic>
+#ifdef _Atomic
+#
 #else
-#define _Atomic(x) x
+#define _Atomic(x) std::atomic<x>
+#endif
 #endif
 #else /* C */
 #if defined(UNIX) && defined(__STDC_NO_ATOMICS__)
 #define _Atomic(x) x
+#else
+#include <stdatomic.h>
 #endif
 #endif
 
