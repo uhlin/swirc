@@ -50,7 +50,7 @@
 
 #include "connect.h"
 
-bool	g_disconnect_wanted = false;
+volatile bool g_disconnect_wanted = false;
 
 static bool	quit_reconnecting = false;
 static bool	reconnecting = false;

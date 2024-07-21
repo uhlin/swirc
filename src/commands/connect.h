@@ -23,7 +23,7 @@ typedef const struct tagIRC_SERVER servarray_const_t[];
 typedef const struct tagIRC_SERVER *servarray_const_ptr_t;
 
 __SWIRC_BEGIN_DECLS
-extern bool g_disconnect_wanted;
+extern volatile bool g_disconnect_wanted;
 
 PTEXTBUF	get_list_of_matching_connect_cmds(const char *);
 
