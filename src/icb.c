@@ -46,6 +46,7 @@
 #include "strHand.h"
 #include "strdup_printf.h"
 
+#include "commands/connect.h"
 #include "events/names.h"
 
 volatile bool g_icb_processing_names = false;
@@ -108,7 +109,9 @@ login_ok(void)
 	    strings_match(icb_serverid, "")) {
 		printf_and_free(NULL, "%s: empty protocol level, host id or "
 		    "server id", __func__);
-		g_on_air = false;
+		(void) atomic_swap_bool(&g_disconnect_wanted, true);
+		(void) atomic_swap_bool(&g_connection_lost, false);
+		(void) atomic_swap_bool(&g_on_air, false);
 		return;
 	}
 
