@@ -386,7 +386,8 @@ handle_cmds(CSTRING data)
 		char *cp = strdup_printf("%s ", sp->cmd);
 
 		if (strings_match(data, sp->cmd)) {
-			if (sp->requires_connection && !g_on_air)
+			if (sp->requires_connection &&
+			    !atomic_load_bool(&g_on_air))
 				printtext(&ctx, "command requires "
 				    "irc connection");
 			else if (sp->irc_only && g_icb_mode)
@@ -396,7 +397,8 @@ handle_cmds(CSTRING data)
 			free(cp);
 			return;
 		} else if (!strncmp(data, cp, strlen(cp))) {
-			if (sp->requires_connection && !g_on_air)
+			if (sp->requires_connection &&
+			    !atomic_load_bool(&g_on_air))
 				printtext(&ctx, "command requires "
 				    "irc connection");
 			else if (sp->irc_only && g_icb_mode)
@@ -746,7 +748,7 @@ enter_io_loop(void)
 		} else if (*line == cmd_char) {
 			handle_cmds(&line[1]);
 		} else if (config_bool("cmd_type_prot", true) &&
-		    g_on_air &&
+		    atomic_load_bool(&g_on_air) &&
 		    !strings_match(ACTWINLABEL, g_status_window_label) &&
 		    (len = strspn(line, " ")) <= 5 &&
 		    line[len] == cmd_char) {
@@ -754,8 +756,8 @@ enter_io_loop(void)
 			    "%sON%s  --  nothing has been transmitted!",
 			    TXT_BOLD, TXT_BOLD);
 		} else {
-			if (g_on_air && !strings_match(ACTWINLABEL,
-			    g_status_window_label))
+			if (atomic_load_bool(&g_on_air) &&
+			    !strings_match(ACTWINLABEL, g_status_window_label))
 				transmit_user_input(ACTWINLABEL, line);
 		}
 
