@@ -682,7 +682,9 @@ spawn_chat_window(CSTRING label, CSTRING title)
 	/*
 	 * send whois
 	 */
-	if (g_on_air && !is_irc_channel(entry->label) && !g_icb_mode)
+	if (atomic_load_bool(&g_on_air) &&
+	    !is_irc_channel(entry->label) &&
+	    !g_icb_mode)
 		cmd_whois(entry->label);
 
 	return 0;
