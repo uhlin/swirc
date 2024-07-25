@@ -168,7 +168,8 @@ static void	 send_reg_cmds(const struct network_connect_context *)
 static void
 check_conn_fail()
 {
-	if (!g_on_air || (ssl_is_enabled() && net_ssl_begin() == -1))
+	if (!atomic_load_bool(&g_on_air) ||
+	    (ssl_is_enabled() && net_ssl_begin() == -1))
 		throw std::runtime_error(_("Failed to establish a connection"));
 }
 
@@ -238,7 +239,7 @@ establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
 		if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) == 0) {
 			printtext(ctx, "%s", _("Connected!"));
 
-			g_on_air = true;
+			atomic_swap_bool(&g_on_air, true);
 
 			net_set_recv_timeout(DEFAULT_RECV_TIMEOUT);
 			net_set_send_timeout(DEFAULT_SEND_TIMEOUT);
@@ -316,7 +317,7 @@ handle_conn_err(PPRINTTEXT_CONTEXT ptext_ctx, const char *what,
 	ptext_ctx->spec_type = TYPE_SPEC1_FAILURE;
 	printtext(ptext_ctx, "%s", what);
 
-	g_on_air = false;
+	atomic_swap_bool(&g_on_air, false);
 
 	net_ssl_end();
 
@@ -777,14 +778,14 @@ net_irc_listen(bool *connection_lost)
 			if (conn_check() == -1)
 				g_connection_lost = true;
 		}
-	} while (g_on_air && !g_connection_lost);
+	} while (atomic_load_bool(&g_on_air) && !g_connection_lost);
 
 	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_WARN,
 	    true);
-	*connection_lost = (g_on_air && g_connection_lost);
+	*connection_lost = (atomic_load_bool(&g_on_air) && g_connection_lost);
 	if (*connection_lost)
 		printtext(&ptext_ctx, "%s", _("Connection to IRC server lost"));
-	g_on_air = false;
+	atomic_swap_bool(&g_on_air, false);
 	net_ssl_end();
 	if (g_socket != INVALID_SOCKET) {
 		CLOSE_GLOBAL_SOCKET();
@@ -804,8 +805,9 @@ net_irc_listen(bool *connection_lost)
 void
 net_kill_connection(void)
 {
-	g_disconnect_wanted = true;
-	g_connection_lost = g_on_air = false;
+	(void) atomic_swap_bool(&g_disconnect_wanted, true);
+	(void) atomic_swap_bool(&g_connection_lost, false);
+	(void) atomic_swap_bool(&g_on_air, false);
 
 	if (g_socket == INVALID_SOCKET)
 		return;
