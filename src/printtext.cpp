@@ -1642,7 +1642,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 	const bool shouldOutData = !(ctx->window->scroll_mode);
 
 	if (shouldOutData) {
-		if (g_on_air &&
+		if (atomic_load_bool(&g_on_air) &&
 		    is_irc_channel(ctx->window->label) &&
 		    !g_icb_mode &&
 		    (!ctx->window->received_names ||
