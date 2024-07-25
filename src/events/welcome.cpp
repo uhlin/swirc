@@ -1,5 +1,5 @@
 /* Handle event welcome (001)
-   Copyright (C) 2014-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -126,7 +126,7 @@ event_welcome(struct irc_message_compo *compo)
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ctx, "event_welcome(%s): fatal: %s", compo->command,
 		    e.what());
-		g_on_air = false;
+		net_request_disconnect();
 		event_welcome_signalit();
 	}
 }
