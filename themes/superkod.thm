@@ -2,7 +2,7 @@
 
 #
 # SuperKod
-# Version: 2.0
+# Version: 2.1
 #
 
 term_background         = "1";
@@ -24,6 +24,11 @@ logo_color = "00";
 nick_s1 = "04<";
 nick_s2 = "04>";
 
+nicklist_my_nick_color   = "7";
+nicklist_nick_color      = "15";
+nicklist_privilege_color = "3";
+nicklist_vline_color     = "4";
+
 notice_color1   = "13";
 notice_color2   = "06";
 notice_inner_b1 = "14(";
@@ -35,7 +40,7 @@ notice_sep      = "14:";
 primary_color   = "12";
 secondary_color = "08";
 
-slogan = "";
+slogan = "SuperKod";
 
 specifier1 = "09***";
 specifier2 = "14[00:14]";
@@ -54,6 +59,7 @@ titlebar_fg = "green";
 
 whois_acc      = "14=> 12account  04:";
 whois_away     = "14=> 12away     04:";
+whois_bot      = "14=> 12bot      04:";
 whois_cert     = "14=> 12cert     04:";
 whois_channels = "14=> 12channels 04:";
 whois_conn     = "14=> 12conn     04:";
