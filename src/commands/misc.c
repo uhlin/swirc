@@ -1,5 +1,5 @@
 /* Miscellaneous commands
-   Copyright (C) 2016-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -139,7 +139,8 @@ cmd_close(const char *data)
 		output_error("/close: implicit trailing data");
 	else if (g_active_window == g_status_window)
 		output_error("/close: cannot close status window");
-	else if (is_irc_channel(g_active_window->label) && g_on_air)
+	else if (is_irc_channel(g_active_window->label) &&
+		 atomic_load_bool(&g_on_air))
 		output_error("/close: cannot close window (connected)");
 	else
 		(void) destroy_chat_window(g_active_window->label);
@@ -421,9 +422,8 @@ cmd_quit(const char *data)
 {
 	const bool has_message = !strings_match(data, "");
 
-	if (g_on_air) {
-		g_disconnect_wanted = true;
-		g_connection_lost = g_on_air = false;
+	if (atomic_load_bool(&g_on_air)) {
+		net_request_disconnect();
 
 		if (g_icb_mode)
 			/* empty */;
