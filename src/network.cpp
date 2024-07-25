@@ -805,9 +805,7 @@ net_irc_listen(bool *connection_lost)
 void
 net_kill_connection(void)
 {
-	(void) atomic_swap_bool(&g_disconnect_wanted, true);
-	(void) atomic_swap_bool(&g_connection_lost, false);
-	(void) atomic_swap_bool(&g_on_air, false);
+	net_request_disconnect();
 
 	if (g_socket == INVALID_SOCKET)
 		return;
@@ -821,6 +819,14 @@ net_kill_connection(void)
 	if (shutdown(g_socket, SD_BOTH) != 0)
 		err_log(errno, "%s: shutdown", __func__);
 #endif
+}
+
+void
+net_request_disconnect(void)
+{
+	(void) atomic_swap_bool(&g_disconnect_wanted, true);
+	(void) atomic_swap_bool(&g_connection_lost, false);
+	(void) atomic_swap_bool(&g_on_air, false);
 }
 
 void

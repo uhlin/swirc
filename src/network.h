@@ -87,6 +87,7 @@ void		 destroy_null_bytes_exported(char *, const int);
 void		 net_connect_clean_up(void);
 void		 net_irc_listen(bool *connection_lost);
 void		 net_kill_connection(void);
+void		 net_request_disconnect(void);
 void		 server_destroy(struct server *);
 
 void	net_set_sock_addr_family_ipv4(void);
