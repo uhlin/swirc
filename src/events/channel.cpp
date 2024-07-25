@@ -163,7 +163,7 @@ event_join(struct irc_message_compo *compo)
 		    e.what());
 #if SHUTDOWN_IRC_CONNECTION_BEHAVIOR
 		printtext(&ctx, "Shutting down IRC connection...");
-		g_on_air = false;
+		net_request_disconnect();
 #endif
 	}
 }
@@ -244,7 +244,7 @@ event_kick(struct irc_message_compo *compo)
 		    e.what());
 #if SHUTDOWN_IRC_CONNECTION_BEHAVIOR
 		printtext(&ctx, "Shutting down IRC connection...");
-		g_on_air = false;
+		net_request_disconnect();
 #endif
 	}
 }
@@ -705,7 +705,7 @@ event_part(struct irc_message_compo *compo)
 		    e.what());
 #if SHUTDOWN_IRC_CONNECTION_BEHAVIOR
 		printtext(&ctx, "Shutting down IRC connection...");
-		g_on_air = false;
+		net_request_disconnect();
 #endif
 	}
 }

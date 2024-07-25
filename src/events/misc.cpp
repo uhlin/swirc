@@ -52,13 +52,6 @@
 
 #define TM_STRUCT_MSG "unable to retrieve tm structure"
 
-static void
-request_disconnect()
-{
-	g_disconnect_wanted = true;
-	g_connection_lost = g_on_air = false;
-}
-
 /* Not written for a specific event */
 void
 event_allaround_extract_find_colon(struct irc_message_compo *compo)
@@ -383,7 +376,7 @@ event_invalidUsername(struct irc_message_compo *compo)
 	if (!atomic_load_bool(&g_connection_in_progress))
 		return;
 
-	request_disconnect();
+	net_request_disconnect();
 	event_welcome_signalit();
 }
 
@@ -445,7 +438,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
 		if (g_alt_nick_tested) {
 			printtext(&ctx, "%s", _("Alternative nickname already "
 			    "tested. Disconnecting..."));
-			request_disconnect();
+			net_request_disconnect();
 			event_welcome_signalit();
 		} else if (is_valid_nickname(Config("alt_nick"))) {
 			printtext(&ctx, _("Attempting to use alt_nick (%s) "
@@ -457,7 +450,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
 			g_alt_nick_tested = true;
 		} else {
 			printtext(&ctx, "%s", _("Disconnecting..."));
-			request_disconnect();
+			net_request_disconnect();
 			event_welcome_signalit();
 		}
 	} catch (const std::runtime_error &e) {
