@@ -11,6 +11,7 @@
 #error Cannot determine Panel header file!
 #endif
 
+#include "atomicops.h"
 #include "textBuffer.h"
 
 #define ACTWINLABEL g_active_window->label
@@ -69,7 +70,7 @@ extern PIRC_WINDOW	g_active_window;
 extern PIRC_WINDOW	g_status_window;
 extern const char       g_status_window_label[10];
 extern const int	g_scroll_amount;
-extern int              g_ntotal_windows;
+extern _Atomic(int)	g_ntotal_windows;
 extern volatile bool	g_redrawing_window;
 
 void windowSystem_init(void);
