@@ -472,7 +472,9 @@ do_connect(const char *server, const char *port, const char *pass)
 	};
 
 	if (atomic_load_bool(&g_connection_in_progress) ||
-	    g_disconnect_wanted || !g_io_loop || g_on_air)
+	    g_disconnect_wanted ||
+	    !g_io_loop ||
+	    atomic_load_bool(&g_on_air))
 		return;
 
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
@@ -576,8 +578,9 @@ choose_server(const char *server, const char *port)
 {
 	static PIRC_SERVER srvptr;
 
-	g_disconnect_wanted = false;
-	g_connection_lost = g_on_air = false;
+	(void) atomic_swap_bool(&g_disconnect_wanted, false);
+	(void) atomic_swap_bool(&g_connection_lost, false);
+	(void) atomic_swap_bool(&g_on_air, false);
 
 	if (strings_match_ignore_case(server, "afternet")) {
 		srvptr = get_server_v2(&afternet_servers[0],
@@ -695,7 +698,7 @@ cmd_connect(const char *data)
 		print_and_free("/connect: reconnecting... /disconnect ?",
 		    dcopy);
 		return;
-	} else if (g_on_air) {
+	} else if (atomic_load_bool(&g_on_air)) {
 		print_and_free("/connect: already connected!", dcopy);
 		return;
 	} else if (strtok_r(NULL, "\n:", &state) != NULL) {
@@ -721,9 +724,8 @@ cmd_disconnect(const char *data)
 
 	quit_reconnecting = true;
 
-	if (g_on_air) {
-		g_disconnect_wanted = true;
-		g_connection_lost = g_on_air = false;
+	if (atomic_load_bool(&g_on_air)) {
+		net_request_disconnect();
 
 		if (has_message)
 			(void) net_send("QUIT :%s", data);
