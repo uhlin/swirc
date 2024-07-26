@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.8\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-06-01 17:19+0200\n"
+"POT-Creation-Date: 2024-07-26 19:59+0200\n"
 "PO-Revision-Date: 2023-11-03 23:58+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -225,40 +225,40 @@ msgstr "%c%s%c %s%s@%s%s lädt Sie zu %c%s%c ein"
 msgid "%c%s%c %s%s@%s%s invites %c%s%c to %c%s%c"
 msgstr "%c%s%c %s%s@%s%s lädt %c%s%c zu %c%s%c ein"
 
-#: ../src/events/misc.cpp:244
+#: ../src/events/misc.cpp:246
 #, c-format
 msgid "Channel %s%s%s%c%s created %s"
 msgstr "Der Kanal %s%s%s%c%s wurde am %s erstellt"
 
-#: ../src/events/misc.cpp:301
+#: ../src/events/misc.cpp:303
 #, c-format
 msgid "mode/%s%s%s%c%s %s%s%s"
 msgstr ""
 
-#: ../src/events/misc.cpp:352
+#: ../src/events/misc.cpp:354
 #, c-format
 msgid "Channel forwarding from %c%s%c to %c%s%c"
 msgstr "Kanalweiterleitung von %c%s%c zu %c%s%c"
 
-#: ../src/events/misc.cpp:410
+#: ../src/events/misc.cpp:431
 #, c-format
 msgid "Nickname %c%s%c is already in use"
 msgstr "Der Spitzname %c%s%c ist bereits in Gebrauch"
 
-#: ../src/events/misc.cpp:418
+#: ../src/events/misc.cpp:439
 msgid "Alternative nickname already tested. Disconnecting..."
 msgstr "Alternativer Spitzname bereits getestet. Verbindung wird getrennt..."
 
-#: ../src/events/misc.cpp:423
+#: ../src/events/misc.cpp:444
 #, c-format
 msgid "Attempting to use alt_nick (%s) instead..."
 msgstr "Versuch, stattdessen alt_nick (%s) zu verwenden..."
 
-#: ../src/events/misc.cpp:431
+#: ../src/events/misc.cpp:452
 msgid "Disconnecting..."
 msgstr "Verbindung wird getrennt..."
 
-#: ../src/events/misc.cpp:492
+#: ../src/events/misc.cpp:513
 msgid "You're now an IRC operator!"
 msgstr "Sie sind jetzt ein IRC Operator!"
 
@@ -1248,44 +1248,44 @@ msgstr ""
 msgid "  Identical to the previous example:"
 msgstr ""
 
-#: ../src/io-loop.c:606
+#: ../src/io-loop.c:608
 #, c-format
 msgid "    Swirc %s by %s"
 msgstr "    Swirc %s von %s"
 
-#: ../src/io-loop.c:607
+#: ../src/io-loop.c:609
 #, c-format
 msgid "    Compiled on %s%s %s%s"
 msgstr "    Kompiliert %s%s %s%s"
 
-#: ../src/io-loop.c:613
+#: ../src/io-loop.c:615
 #, c-format
 msgid "Current language %s%s%s"
 msgstr "Aktuelle Sprache %s%s%s"
 
-#: ../src/io-loop.c:616
+#: ../src/io-loop.c:618
 #, c-format
 msgid "Program settings are stored in %s%s%s"
 msgstr "Programmeinstellungen werden in %s%s%s gespeichert"
 
-#: ../src/io-loop.c:618
+#: ../src/io-loop.c:620
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
 msgstr "Es wurden %c%hd%c Farbpaare initialisiert"
 
-#: ../src/io-loop.c:620
+#: ../src/io-loop.c:622
 msgid "Type /help for a list of commands; or /help <command>"
 msgstr "Geben Sie /help für eine Liste von Befehlen ein; oder /help <Befehl>"
 
-#: ../src/io-loop.c:622
+#: ../src/io-loop.c:624
 msgid "for help of a specific command"
 msgstr "für Hilfe zu einem bestimmten Befehl"
 
-#: ../src/io-loop.c:623
+#: ../src/io-loop.c:625
 msgid "Type F1 for keys"
 msgstr "Geben Sie F1 für Tastaturtasten ein"
 
-#: ../src/io-loop.c:625
+#: ../src/io-loop.c:627
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr "Größe des Fehlerprotokolls %s%.1f KB%s"
@@ -1393,48 +1393,48 @@ msgstr "    -x <config>          Konfigurationsdatei\n"
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Anwendung: %s [FLAGGE] ...\n"
 
-#: ../src/network.cpp:172
+#: ../src/network.cpp:173
 msgid "Failed to establish a connection"
 msgstr "Fehler beim Herstellen einer Verbindung"
 
-#: ../src/network.cpp:180
+#: ../src/network.cpp:181
 msgid "Hostname checking failed!"
 msgstr "Hostnamenprüfung fehlgeschlagen!"
 
-#: ../src/network.cpp:182
+#: ../src/network.cpp:183
 msgid "Hostname checking OK!"
 msgstr "Hostnamenprüfung OK!"
 
-#: ../src/network.cpp:239
+#: ../src/network.cpp:240
 msgid "Connected!"
 msgstr "In Verbindung gebracht!"
 
-#: ../src/network.cpp:305
+#: ../src/network.cpp:306
 msgid "Unable to get a list of IP addresses"
 msgstr "Es kann keine Liste mit IP-Adressen abgerufen werden"
 
-#: ../src/network.cpp:308
+#: ../src/network.cpp:309
 msgid "Get a list of IP addresses completed"
 msgstr "Holen Sie sich eine Liste der IP-Adressen, fertig"
 
-#: ../src/network.cpp:522
+#: ../src/network.cpp:523
 #, c-format
 msgid "Connecting to %s (%s)"
 msgstr "Verbindung zu %s (%s) wird hergestellt..."
 
-#: ../src/network.cpp:531
+#: ../src/network.cpp:532
 msgid "Cannot initiate use of the Winsock DLL"
 msgstr "Verwendung der Winsock DLL kann nicht initiiert werden"
 
-#: ../src/network.cpp:534
+#: ../src/network.cpp:535
 msgid "Use of the Winsock DLL granted"
 msgstr "Nutzung der Winsock DLL gewährt"
 
-#: ../src/network.cpp:786
+#: ../src/network.cpp:787
 msgid "Connection to IRC server lost"
 msgstr "Die Verbindung zum IRC-Server wurde unterbrochen"
 
-#: ../src/network.cpp:800
+#: ../src/network.cpp:801
 msgid "Disconnected"
 msgstr "Offline"
 

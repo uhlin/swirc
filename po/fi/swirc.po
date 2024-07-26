@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.8\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-06-01 17:19+0200\n"
+"POT-Creation-Date: 2024-07-26 19:59+0200\n"
 "PO-Revision-Date: 2024-04-07 15:32+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -225,40 +225,40 @@ msgstr "%c%s%c %s%s@%s%s kutsuu sinut paikkaan %c%s%c"
 msgid "%c%s%c %s%s@%s%s invites %c%s%c to %c%s%c"
 msgstr "%c%s%c %s%s@%s%s kutsuu %c%s%c osoitteeseen %c%s%c"
 
-#: ../src/events/misc.cpp:244
+#: ../src/events/misc.cpp:246
 #, c-format
 msgid "Channel %s%s%s%c%s created %s"
 msgstr "Kanava %s%s%s%c%s luotiin %s"
 
-#: ../src/events/misc.cpp:301
+#: ../src/events/misc.cpp:303
 #, c-format
 msgid "mode/%s%s%s%c%s %s%s%s"
 msgstr "tila/%s%s%s%c%s %s%s%s"
 
-#: ../src/events/misc.cpp:352
+#: ../src/events/misc.cpp:354
 #, c-format
 msgid "Channel forwarding from %c%s%c to %c%s%c"
 msgstr "Kanavan edelleenlähetys paikasta %c%s%c paikkaan %c%s%c"
 
-#: ../src/events/misc.cpp:410
+#: ../src/events/misc.cpp:431
 #, c-format
 msgid "Nickname %c%s%c is already in use"
 msgstr "Lempinimi %c%s%c on jo käytössä"
 
-#: ../src/events/misc.cpp:418
+#: ../src/events/misc.cpp:439
 msgid "Alternative nickname already tested. Disconnecting..."
 msgstr "Vaihtoehtoinen lempinimi on jo testattu. Yhteyttä katkaistaan..."
 
-#: ../src/events/misc.cpp:423
+#: ../src/events/misc.cpp:444
 #, c-format
 msgid "Attempting to use alt_nick (%s) instead..."
 msgstr "Yritetään käyttää alt_nick (%s) sen sijaan..."
 
-#: ../src/events/misc.cpp:431
+#: ../src/events/misc.cpp:452
 msgid "Disconnecting..."
 msgstr "Yhteyttä katkaistaan..."
 
-#: ../src/events/misc.cpp:492
+#: ../src/events/misc.cpp:513
 msgid "You're now an IRC operator!"
 msgstr "Olet nyt IRC operaattori!"
 
@@ -1296,44 +1296,44 @@ msgstr ""
 msgid "  Identical to the previous example:"
 msgstr ""
 
-#: ../src/io-loop.c:606
+#: ../src/io-loop.c:608
 #, c-format
 msgid "    Swirc %s by %s"
 msgstr "    Swirc %s, kirjoittanut %s"
 
-#: ../src/io-loop.c:607
+#: ../src/io-loop.c:609
 #, c-format
 msgid "    Compiled on %s%s %s%s"
 msgstr "    Kokoonpantu %s%s %s%s"
 
-#: ../src/io-loop.c:613
+#: ../src/io-loop.c:615
 #, c-format
 msgid "Current language %s%s%s"
 msgstr "Nykyinen kieli %s%s%s"
 
-#: ../src/io-loop.c:616
+#: ../src/io-loop.c:618
 #, c-format
 msgid "Program settings are stored in %s%s%s"
 msgstr "Ohjelman asetukset tallennetaan kansioon %s%s%s"
 
-#: ../src/io-loop.c:618
+#: ../src/io-loop.c:620
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
 msgstr "%c%hd%c väriparia on alustettu"
 
-#: ../src/io-loop.c:620
+#: ../src/io-loop.c:622
 msgid "Type /help for a list of commands; or /help <command>"
 msgstr "Kirjoita /help nähdäksesi komentoluettelon; tai /help <komento>"
 
-#: ../src/io-loop.c:622
+#: ../src/io-loop.c:624
 msgid "for help of a specific command"
 msgstr "saadaksesi apua tietyn komennon suorittamiseen"
 
-#: ../src/io-loop.c:623
+#: ../src/io-loop.c:625
 msgid "Type F1 for keys"
 msgstr "Kirjoita F1 näppäimistön näppäimiä varten"
 
-#: ../src/io-loop.c:625
+#: ../src/io-loop.c:627
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr "Virhelokin koko %s%.1f KB%s"
@@ -1440,48 +1440,48 @@ msgstr "    -x <config>          Config tiedosto\n"
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Käyttö: %s [VAIHTOEHTO] ...\n"
 
-#: ../src/network.cpp:172
+#: ../src/network.cpp:173
 msgid "Failed to establish a connection"
 msgstr "Yhteyden muodostaminen epäonnistui"
 
-#: ../src/network.cpp:180
+#: ../src/network.cpp:181
 msgid "Hostname checking failed!"
 msgstr "Isäntänimen tarkistus epäonnistui!"
 
-#: ../src/network.cpp:182
+#: ../src/network.cpp:183
 msgid "Hostname checking OK!"
 msgstr "Isäntänimen tarkistus OK!"
 
-#: ../src/network.cpp:239
+#: ../src/network.cpp:240
 msgid "Connected!"
 msgstr "Kytkettynä!"
 
-#: ../src/network.cpp:305
+#: ../src/network.cpp:306
 msgid "Unable to get a list of IP addresses"
 msgstr "IP osoitteiden luetteloa ei voi saada"
 
-#: ../src/network.cpp:308
+#: ../src/network.cpp:309
 msgid "Get a list of IP addresses completed"
 msgstr "Hanki luettelo IP osoitteista, valmis"
 
-#: ../src/network.cpp:522
+#: ../src/network.cpp:523
 #, c-format
 msgid "Connecting to %s (%s)"
 msgstr "Yhdistetään kohteeseen %s (%s)"
 
-#: ../src/network.cpp:531
+#: ../src/network.cpp:532
 msgid "Cannot initiate use of the Winsock DLL"
 msgstr "Winsock DLL:n käyttöä ei voi aloittaa"
 
-#: ../src/network.cpp:534
+#: ../src/network.cpp:535
 msgid "Use of the Winsock DLL granted"
 msgstr "Winsock DLL:n käyttö myönnetty"
 
-#: ../src/network.cpp:786
+#: ../src/network.cpp:787
 msgid "Connection to IRC server lost"
 msgstr "Yhteys IRC palvelimeen katkesi"
 
-#: ../src/network.cpp:800
+#: ../src/network.cpp:801
 msgid "Disconnected"
 msgstr "Yhteys katkaistu"
 
