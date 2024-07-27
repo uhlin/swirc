@@ -391,6 +391,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 	    recvbuf == NULL ||
 	    ssl == NULL ||
 	    atomic_load_bool(&ssl_object_is_null) ||
+	    conn_is_closed(ssl) ||
 	    g_socket == INVALID_SOCKET)
 		return -1;
 	else if (!SSL_pending(ssl)) {
@@ -423,6 +424,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 
 		if (ssl == NULL ||
 		    atomic_load_bool(&ssl_object_is_null) ||
+		    conn_is_closed(ssl) ||
 		    g_socket == INVALID_SOCKET) {
 			mutex_unlock(&ssl_obj_mtx);
 			return -1;
