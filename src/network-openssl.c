@@ -57,10 +57,10 @@ static SSL *ssl = NULL;
 static volatile bool ssl_object_is_null = true;
 
 #if defined(UNIX)
-static pthread_once_t	ssl_send_init_done = PTHREAD_ONCE_INIT;
+static pthread_once_t	init_done = PTHREAD_ONCE_INIT;
 static pthread_mutex_t	ssl_send_mutex;
 #elif defined(WIN32)
-static init_once_t	ssl_send_init_done = ONCE_INITIALIZER;
+static init_once_t	init_done = ONCE_INITIALIZER;
 static HANDLE		ssl_send_mutex;
 #endif
 
@@ -300,11 +300,10 @@ net_ssl_send(const char *fmt, ...)
 	va_list ap;
 
 #if defined(UNIX)
-	if ((errno = pthread_once(&ssl_send_init_done, ssl_send_mutex_init)) !=
-	    0)
+	if ((errno = pthread_once(&init_done, ssl_send_mutex_init)) != 0)
 		err_sys("%s: pthread_once", __func__);
 #elif defined(WIN32)
-	if ((errno = init_once(&ssl_send_init_done, ssl_send_mutex_init)) != 0)
+	if ((errno = init_once(&init_done, ssl_send_mutex_init)) != 0)
 		err_sys("%s: init_once", __func__);
 #endif
 
