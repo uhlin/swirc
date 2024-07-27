@@ -58,10 +58,10 @@ static volatile bool ssl_object_is_null = true;
 
 #if defined(UNIX)
 static pthread_once_t	init_done = PTHREAD_ONCE_INIT;
-static pthread_mutex_t	ssl_send_mutex;
+static pthread_mutex_t	ssl_obj_mtx;
 #elif defined(WIN32)
 static init_once_t	init_done = ONCE_INITIALIZER;
-static HANDLE		ssl_send_mutex;
+static HANDLE		ssl_obj_mtx;
 #endif
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -161,7 +161,7 @@ set_ciphers(const char *list)
 static void
 ssl_send_mutex_init(void)
 {
-	mutex_new(&ssl_send_mutex);
+	mutex_new(&ssl_obj_mtx);
 }
 
 static int
@@ -307,13 +307,13 @@ net_ssl_send(const char *fmt, ...)
 		err_sys("%s: init_once", __func__);
 #endif
 
-	mutex_lock(&ssl_send_mutex);
+	mutex_lock(&ssl_obj_mtx);
 
 	if (fmt == NULL ||
 	    ssl == NULL ||
 	    atomic_load_bool(&ssl_object_is_null) ||
 	    g_socket == INVALID_SOCKET) {
-		mutex_unlock(&ssl_send_mutex);
+		mutex_unlock(&ssl_obj_mtx);
 		return -1;
 	}
 
@@ -327,7 +327,7 @@ net_ssl_send(const char *fmt, ...)
 
 	if (strlen(buf) > INT_MAX) {
 		free(buf);
-		mutex_unlock(&ssl_send_mutex);
+		mutex_unlock(&ssl_obj_mtx);
 		return -1;
 	}
 
@@ -360,13 +360,13 @@ net_ssl_send(const char *fmt, ...)
 			}
 
 			free(buf);
-			mutex_unlock(&ssl_send_mutex);
+			mutex_unlock(&ssl_obj_mtx);
 			return -1;
 		}
 	}
 
 	free(buf);
-	mutex_unlock(&ssl_send_mutex);
+	mutex_unlock(&ssl_obj_mtx);
 	return n_sent;
 }
 
