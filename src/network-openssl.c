@@ -400,6 +400,8 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 	int	 buflen = recvbuf_size;
 	int	 bytes_received = 0;
 
+	mutex_lock(&ssl_obj_mtx);
+
 	do {
 		ERR_clear_error();
 		const int ret = SSL_read(ssl, bufptr, buflen);
@@ -420,6 +422,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 				debug("%s: want read / want write", __func__);
 				break;
 			default:
+				mutex_unlock(&ssl_obj_mtx);
 				return -1;
 			}
 		}
@@ -428,6 +431,7 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 		UNUSED_VAR(buflen);
 	} while (false); /* buflen > 0 && SSL_pending(ssl) */
 
+	mutex_unlock(&ssl_obj_mtx);
 	return bytes_received;
 }
 
