@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.8\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-07-26 19:59+0200\n"
+"POT-Creation-Date: 2024-07-28 01:45+0200\n"
 "PO-Revision-Date: 2024-04-07 16:18+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -1576,11 +1576,11 @@ msgstr "Kan inte initiera användning av Winsock DLL"
 msgid "Use of the Winsock DLL granted"
 msgstr "Användning av Winsock DLL beviljad"
 
-#: ../src/network.cpp:787
+#: ../src/network.cpp:793
 msgid "Connection to IRC server lost"
 msgstr "Anslutningen till IRC servern förlorad"
 
-#: ../src/network.cpp:801
+#: ../src/network.cpp:807
 msgid "Disconnected"
 msgstr "Frånkopplad"
 
