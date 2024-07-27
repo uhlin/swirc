@@ -781,11 +781,13 @@ net_irc_listen(bool *connection_lost)
 				    true);
 			}
 		}
-	} while (atomic_load_bool(&g_on_air) && !g_connection_lost);
+	} while (atomic_load_bool(&g_on_air) &&
+		 !atomic_load_bool(&g_connection_lost));
 
 	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_WARN,
 	    true);
-	*connection_lost = (atomic_load_bool(&g_on_air) && g_connection_lost);
+	*connection_lost = (atomic_load_bool(&g_on_air) &&
+			    atomic_load_bool(&g_connection_lost));
 	if (*connection_lost)
 		printtext(&ptext_ctx, "%s", _("Connection to IRC server lost"));
 	atomic_swap_bool(&g_on_air, false);
