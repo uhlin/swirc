@@ -38,6 +38,7 @@ clean:
 	$(RM) $(SRC_DIR)include/swircpaths.h
 	$(RM) $(OBJS)
 	$(RM) $(TGTS)
+	$(RM) -R cov-int
 	$(RM) -R swirc.analyze
 	$(RM) PVS-Studio.log
 	$(RM) report.tasks
