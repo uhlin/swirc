@@ -487,6 +487,14 @@ net_ssl_init(void)
 		set_ciphers(g_suite_all);
 	else
 		set_ciphers(g_suite_compat);
+
+#if defined(UNIX)
+	if ((errno = pthread_once(&init_done, ssl_obj_mtx_init)) != 0)
+		err_sys("%s: pthread_once", __func__);
+#elif defined(WIN32)
+	if ((errno = init_once(&init_done, ssl_obj_mtx_init)) != 0)
+		err_sys("%s: init_once", __func__);
+#endif
 }
 
 void
