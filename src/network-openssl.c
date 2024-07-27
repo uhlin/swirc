@@ -159,7 +159,7 @@ set_ciphers(const char *list)
 }
 
 static void
-ssl_send_mutex_init(void)
+ssl_obj_mtx_init(void)
 {
 	mutex_new(&ssl_obj_mtx);
 }
@@ -300,10 +300,10 @@ net_ssl_send(const char *fmt, ...)
 	va_list ap;
 
 #if defined(UNIX)
-	if ((errno = pthread_once(&init_done, ssl_send_mutex_init)) != 0)
+	if ((errno = pthread_once(&init_done, ssl_obj_mtx_init)) != 0)
 		err_sys("%s: pthread_once", __func__);
 #elif defined(WIN32)
-	if ((errno = init_once(&init_done, ssl_send_mutex_init)) != 0)
+	if ((errno = init_once(&init_done, ssl_obj_mtx_init)) != 0)
 		err_sys("%s: init_once", __func__);
 #endif
 
