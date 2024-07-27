@@ -240,28 +240,27 @@ net_ssl_begin(void)
 void
 net_ssl_end(void)
 {
-	if (ssl != NULL && !atomic_load_bool(&ssl_object_is_null)) {
-		if (!(SSL_get_shutdown(ssl) & SSL_SENT_SHUTDOWN)) {
-			switch (SSL_shutdown(ssl)) {
-			case 0:
-				debug("%s: SSL_shutdown: not yet finished",
-				    __func__);
-				(void) SSL_shutdown(ssl);
-				break;
-			case 1:
-				/* success! */
-				break;
-			default:
-				err_log(0, "%s: SSL_shutdown: error", __func__);
-				break;
-			}
+	if (ssl == NULL || atomic_load_bool(&ssl_object_is_null))
+		return;
+	mutex_lock(&ssl_obj_mtx);
+	if (!(SSL_get_shutdown(ssl) & SSL_SENT_SHUTDOWN)) {
+		switch (SSL_shutdown(ssl)) {
+		case 0:
+			debug("%s: SSL_shutdown: not yet finished", __func__);
+			(void) SSL_shutdown(ssl);
+			break;
+		case 1:
+			/* success! */
+			break;
+		default:
+			err_log(0, "%s: SSL_shutdown: error", __func__);
+			break;
 		}
-
-		(void) atomic_swap_bool(&ssl_object_is_null, true);
-
-		SSL_free(ssl);
-		ssl = NULL;
 	}
+	(void) atomic_swap_bool(&ssl_object_is_null, true);
+	SSL_free(ssl);
+	ssl = NULL;
+	mutex_unlock(&ssl_obj_mtx);
 }
 
 int
