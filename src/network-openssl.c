@@ -291,6 +291,13 @@ net_ssl_getobj(void)
 	return ssl;
 }
 
+static bool
+conn_is_closed(const SSL *obj)
+{
+	return ((SSL_get_shutdown(obj) & SSL_SENT_SHUTDOWN) ||
+		(SSL_get_shutdown(obj) & SSL_RECEIVED_SHUTDOWN));
+}
+
 int
 net_ssl_send(const char *fmt, ...)
 {
@@ -313,6 +320,7 @@ net_ssl_send(const char *fmt, ...)
 	if (fmt == NULL ||
 	    ssl == NULL ||
 	    atomic_load_bool(&ssl_object_is_null) ||
+	    conn_is_closed(ssl) ||
 	    g_socket == INVALID_SOCKET) {
 		mutex_unlock(&ssl_obj_mtx);
 		return -1;
@@ -336,7 +344,9 @@ net_ssl_send(const char *fmt, ...)
 	buflen = (int) strlen(buf);
 
 	while (buflen > 0) {
-		if (ssl == NULL || atomic_load_bool(&ssl_object_is_null) ||
+		if (ssl == NULL ||
+		    atomic_load_bool(&ssl_object_is_null) ||
+		    conn_is_closed(ssl) ||
 		    g_socket == INVALID_SOCKET)
 			break;
 
