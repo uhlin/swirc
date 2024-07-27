@@ -310,7 +310,8 @@ net_ssl_send(const char *fmt, ...)
 
 	mutex_lock(&ssl_send_mutex);
 
-	if (fmt == NULL || ssl == NULL ||
+	if (fmt == NULL ||
+	    ssl == NULL ||
 	    atomic_load_bool(&ssl_object_is_null) ||
 	    g_socket == INVALID_SOCKET) {
 		mutex_unlock(&ssl_send_mutex);
