@@ -1,5 +1,5 @@
 /* Command kick and kickban
-   Copyright (C) 2016-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -66,7 +66,7 @@ cmd_kick(const char *data)
 	if (net_send("KICK %s %s :%s", ACTWINLABEL, nicks, (has_reason ? reason
 	    : "")) < 0) {
 		err_log(ENOTCONN, "/kick");
-		g_connection_lost = true;
+		(void) atomic_swap_bool(&g_connection_lost, true);
 	}
 	free(dcopy);
 }
@@ -113,7 +113,7 @@ cmd_kickban(const char *data)
 	    net_send("KICK %s %s :%s", ACTWINLABEL, nick, (has_reason ? reason
 	    : "")) < 0) {
 		err_log(ENOTCONN, "/kickban");
-		g_connection_lost = true;
+		(void) atomic_swap_bool(&g_connection_lost, true);
 	}
 	free(dcopy);
 }

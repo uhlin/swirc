@@ -325,12 +325,12 @@ cmd_list(const char *data)
 	if (has_params) {
 		if (net_send("LIST %s", data) < 0) {
 			err_log(ENOTCONN, "/list");
-			g_connection_lost = true;
+			(void) atomic_swap_bool(&g_connection_lost, true);
 		}
 	} else {
 		if (net_send("LIST") < 0) {
 			err_log(ENOTCONN, "/list");
-			g_connection_lost = true;
+			(void) atomic_swap_bool(&g_connection_lost, true);
 		}
 	}
 }
@@ -344,7 +344,7 @@ cmd_mode(const char *data)
 	if (strings_match(data, ""))
 		output_error("/mode: missing arguments");
 	else if (net_send("MODE %s", data) < 0)
-		g_connection_lost = true;
+		(void) atomic_swap_bool(&g_connection_lost, true);
 }
 
 /*
@@ -356,7 +356,7 @@ cmd_oper(const char *data)
 	if (strings_match(data, ""))
 		output_error("/oper: missing arguments");
 	else if (net_send("OPER %s", data) < 0)
-		g_connection_lost = true;
+		(void) atomic_swap_bool(&g_connection_lost, true);
 }
 
 /*
@@ -462,7 +462,7 @@ cmd_rules(const char *data)
 	if (!strings_match(data, ""))
 		output_error("/rules: implicit trailing data");
 	else if (net_send("RULES") < 0)
-		g_connection_lost = true;
+		(void) atomic_swap_bool(&g_connection_lost, true);
 }
 
 static void
@@ -517,10 +517,10 @@ cmd_who(const char *data)
 
 	if (has_mask) {
 		if (net_send("WHO %s", data) < 0)
-			g_connection_lost = true;
+			(void) atomic_swap_bool(&g_connection_lost, true);
 	} else {
 		if (net_send("WHO") < 0)
-			g_connection_lost = true;
+			(void) atomic_swap_bool(&g_connection_lost, true);
 	}
 }
 
@@ -535,5 +535,5 @@ cmd_whois(const char *data)
 	else if (!is_valid_nickname(data))
 		output_error("/whois: bogus nickname");
 	else if (net_send("WHOIS %s %s", data, data) < 0)
-		g_connection_lost = true;
+		(void) atomic_swap_bool(&g_connection_lost, true);
 }

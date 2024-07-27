@@ -122,7 +122,7 @@ run_command(CSTRING slashcmd, CSTRING srv_name, CSTRING host_setting,
 
 		if (strings_match(e.what(), "cannot send")) {
 			err_log(ENOTCONN, "%s", slashcmd);
-			g_connection_lost = true;
+			(void) atomic_swap_bool(&g_connection_lost, true);
 		}
 	}
 }

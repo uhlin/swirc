@@ -795,7 +795,7 @@ transmit_user_input(CSTRING winlabel, CSTRING input)
 			icb_send_pm(winlabel, input);
 	} else {
 		if (net_send("PRIVMSG %s :%s", winlabel, input) < 0) {
-			g_connection_lost = true;
+			(void) atomic_swap_bool(&g_connection_lost, true);
 			return;
 		}
 	}

@@ -1,5 +1,5 @@
 /* Notice command
-   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -82,7 +82,7 @@ cmd_notice(const char *data)
 		printtext(&ctx, "%s %s", str.c_str(), message);
 	} else {
 		err_log(ENOTCONN, "/notice");
-		g_connection_lost = true;
+		(void) atomic_swap_bool(&g_connection_lost, true);
 	}
 
 	free(dcopy);

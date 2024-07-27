@@ -1,4 +1,4 @@
-/* Copyright (C) 2014-2021 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2014-2024 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -22,7 +22,7 @@ event_ping(struct irc_message_compo *compo)
 	if (strings_match(cp, "")) {
 		return;
 	} else if ((n_sent = net_send("PONG %s", cp)) < 0) {
-		g_connection_lost = true;
+		(void) atomic_swap_bool(&g_connection_lost, true);
 	} else if (n_sent > 0 && config_bool("show_ping_pong", true)) {
 		PRINTTEXT_CONTEXT	ctx;
 

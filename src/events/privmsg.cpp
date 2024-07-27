@@ -119,7 +119,7 @@ handle_special_msg(const struct special_msg_context *ctx)
 		    g_ascii_soh,
 		    current_time("%c"),
 		    g_ascii_soh) < 0)
-			g_connection_lost = true;
+			(void) atomic_swap_bool(&g_connection_lost, true);
 		acknowledge_ctcp_request("TIME", ctx);
 	} else if (!strncmp(msg, "VERSION", 8) &&
 		   config_bool("ctcp_reply", true)) {
@@ -130,7 +130,7 @@ handle_special_msg(const struct special_msg_context *ctx)
 		    g_swircAuthor,
 		    g_swircWebAddr,
 		    g_ascii_soh) < 0)
-			g_connection_lost = true;
+			(void) atomic_swap_bool(&g_connection_lost, true);
 		acknowledge_ctcp_request("VERSION", ctx);
 	} else {
 		/* do nothing */;
