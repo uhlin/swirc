@@ -387,7 +387,11 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 #ifdef UNIX
 #define SOCKET_ERROR -1
 #endif
-	if (ctx == NULL || recvbuf == NULL || ssl == NULL)
+	if (ctx == NULL ||
+	    recvbuf == NULL ||
+	    ssl == NULL ||
+	    atomic_load_bool(&ssl_object_is_null) ||
+	    g_socket == INVALID_SOCKET)
 		return -1;
 	else if (!SSL_pending(ssl)) {
 		const int	maxfdp1 = ctx->sock + 1;
@@ -415,10 +419,18 @@ net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
 	mutex_lock(&ssl_obj_mtx);
 
 	do {
-		ERR_clear_error();
-		const int ret = SSL_read(ssl, bufptr, buflen);
+		int ret;
 
-		if (ret > 0) {
+		if (ssl == NULL ||
+		    atomic_load_bool(&ssl_object_is_null) ||
+		    g_socket == INVALID_SOCKET) {
+			mutex_unlock(&ssl_obj_mtx);
+			return -1;
+		}
+
+		ERR_clear_error();
+
+		if ((ret = SSL_read(ssl, bufptr, buflen)) > 0) {
 			if (BIO_flush(SSL_get_rbio(ssl)) != 1)
 				debug("%s: error flushing read bio", __func__);
 			bytes_received += ret;
