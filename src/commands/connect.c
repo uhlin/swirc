@@ -107,6 +107,8 @@ static IRC_SERVER ircnow_servers[] = {
 	{ "irc.ircnow.org",      "6667", "IPv4 PLAIN" },
 	{ "irc.ircnow.org",      "6697", "IPv4 TLS" },
 	{ "irc.nastycode.com",   "6697", "IPv4 TLS" },
+	{ "irc.rpblc.net",       "6667", "RePuBLiC plain" },
+	{ "irc.rpblc.net",       "6697", "RePuBLiC tls" },
 	{ "irc.shelltalk.net",   "6697", "IPv4 TLS" },
 	{ "irc.thunderirc.net",  "6697", "IPv4 TLS" },
 	{ "irc6.bsdforall.org",  "6697", "IPv6 TLS" },
