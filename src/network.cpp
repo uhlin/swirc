@@ -740,7 +740,8 @@ net_irc_listen(bool *connection_lost)
 		(void) atomic_swap_bool(&g_irc_listening, true);
 
 	block_signals();
-	*connection_lost = g_connection_lost = false;
+	*connection_lost = false;
+	atomic_swap_bool(&g_connection_lost, false);
 	recvbuf = static_cast<char *>(xmalloc(RECVBUF_SIZE + 1));
 	recvbuf[RECVBUF_SIZE] = '\0';
 	irc_init();
