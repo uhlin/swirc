@@ -240,9 +240,11 @@ net_ssl_begin(void)
 void
 net_ssl_end(void)
 {
-	if (ssl == NULL || atomic_load_bool(&ssl_object_is_null))
-		return;
 	mutex_lock(&ssl_obj_mtx);
+	if (ssl == NULL || atomic_load_bool(&ssl_object_is_null)) {
+		mutex_unlock(&ssl_obj_mtx);
+		return;
+	}
 	if (!(SSL_get_shutdown(ssl) & SSL_SENT_SHUTDOWN)) {
 		switch (SSL_shutdown(ssl)) {
 		case 0:
