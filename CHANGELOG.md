@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.4.9] - 2024-07-28 ##
 - **Added** event 468 (`ERR_INVALIDUSERNAME`)
 - **Added** usage of `nullptr`.
 - **Changed** the program to not start reconnecting on event 433

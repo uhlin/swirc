@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: swirc 3.4.8\n"
+"Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-07-28 01:45+0200\n"
 "PO-Revision-Date: 2024-04-07 15:32+0200\n"
