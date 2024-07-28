@@ -90,6 +90,12 @@ char	*g_server_hostname = NULL;
 *                                                               *
 ****************************************************************/
 
+#if defined(UNIX)
+static pthread_mutex_t	nickname_mtx;
+#elif defined(WIN32)
+static HANDLE		nickname_mtx;
+#endif
+
 static struct normal_events_tag {
 	char			*normal_event;
 	event_handler_fn	 event_handler;
@@ -874,17 +880,38 @@ irc_process_proto_msg(const char *msg)
 	ProcessProtoMsg(msg);
 }
 
+static void
+create_nickname_mtx(void)
+{
+	mutex_new(&nickname_mtx);
+}
+
 /**
  * Set user nickname
  */
 void
 irc_set_my_nickname(const char *nick)
 {
+#if defined(UNIX)
+	static pthread_once_t	init_done = PTHREAD_ONCE_INIT;
+#elif defined(WIN32)
+	static init_once_t	init_done = ONCE_INITIALIZER;
+#endif
+
 	if (nick == NULL || strings_match(nick, ""))
 		err_exit(EINVAL, "%s", __func__);
+#if defined(UNIX)
+	else if ((errno = pthread_once(&init_done, create_nickname_mtx)) != 0)
+		err_sys("%s: pthread_once", __func__);
+#elif defined(WIN32)
+	else if ((errno = init_once(&init_done, create_nickname_mtx)) != 0)
+		err_sys("%s: init_once", __func__);
+#endif
 
+	mutex_lock(&nickname_mtx);
 	free(g_my_nickname);
 	g_my_nickname = sw_strdup(nick);
+	mutex_unlock(&nickname_mtx);
 
 	statusbar_update_display_beta();
 	readline_top_panel();
