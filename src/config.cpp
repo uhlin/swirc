@@ -144,6 +144,7 @@ static struct tagConfDefValues {
 	{ "max_chat_windows",          TYPE_INTEGER, 2, "60" },
 	{ "mouse",                     TYPE_BOOLEAN, 4, "no" },
 	{ "mouse_events",              TYPE_STRING,  3, "wheel" },
+	{ "notifications",             TYPE_BOOLEAN, 3, "yes" },
 	{ "show_ping_pong",            TYPE_BOOLEAN, 3, "no" },
 	{ "skip_motd",                 TYPE_BOOLEAN, 3, "no" },
 	{ "ssl_verify_peer",           TYPE_BOOLEAN, 3, "yes" },
