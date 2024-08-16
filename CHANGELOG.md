@@ -1,6 +1,9 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Added option `notifications` (bool). Turns notifications on/off.
+
 ## [3.4.9] - 2024-07-28 ##
 - **Added** event 468 (`ERR_INVALIDUSERNAME`)
 - **Added** usage of `nullptr`.
