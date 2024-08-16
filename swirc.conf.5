@@ -3,7 +3,7 @@
 .\" SPDX-FileCopyrightText: Copyright 2018-2024 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd March 4, 2024
+.Dd August 16, 2024
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -321,6 +321,12 @@ the aliases given by this setting.
 .\" ----------------------------------------
 .It Sy nickserv_host Pq Em string
 NickServ hostname
+.\" ----------------------------------------
+.\" NOTIFICATIONS
+.\" ----------------------------------------
+.It Sy notifications Pq Em bool
+Turns notifications on/off.
+Takes effect at once.
 .\" ----------------------------------------
 .\" PART MESSAGE
 .\" ----------------------------------------
