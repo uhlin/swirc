@@ -273,6 +273,12 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x26C4, 0x26C5,   "Weather symbols"},
 		{0x26CE, 0x26CE,   "Ophiuchus (Zodiacal symbol)"},
 		{0x26D4, 0x26D4,   "No entry traffic sign"},
+		{0x26EA, 0x26EA,   "Church (Map symbol)"},
+		{0x26F2, 0x26F2,   "Fountain"},
+		{0x26F3, 0x26F3,   "Flag in hole"},
+		{0x26F5, 0x26F5,   "Sailboat"},
+		{0x26FA, 0x26FA,   "Tent"},
+		{0x26FD, 0x26FD,   "Fuel pump"},
 
 		{0x2705, 0x2705,   "White heavy check mark"},
 		{0x274C, 0x274C,   "Cross mark"},
