@@ -165,7 +165,7 @@ static stringarray_t OptionDesc = {
 static void
 swirc_terminate()
 {
-	err_msg("Unhandled exception!");
+	err_msg("%s", _("Unhandled exception!"));
 	abort();
 }
 
@@ -315,7 +315,7 @@ case_join()
 		if ((token = strtok_r(cp, ",", &last)) == nullptr)
 			break;
 		else if (strpbrk(token, g_forbidden_chan_name_chars) != nullptr)
-			err_quit("forbidden chan name chars");
+			err_quit("%s", _("forbidden channel name characters"));
 		else
 			g_join_list.push_back(token);
 	}
@@ -464,12 +464,12 @@ process_options(int argc, char *argv[], const char *optstring)
 			case_config();
 			break;
 		case UNRECOGNIZED_OPTION:
-			err_msg("%s: -%c: unrecognized option", argv[0],
+			err_msg(_("%s: -%c: unrecognized option"), argv[0],
 			    g_option_save);
 			print_help(argv[0]);
 			exit(EXIT_FAILURE);
 		case OPTION_ARG_MISSING:
-			err_msg("%s: -%c: option argument missing", argv[0],
+			err_msg(_("%s: -%c: option argument missing"), argv[0],
 			    g_option_save);
 #if defined(__cplusplus) && __cplusplus >= 201703L
 			[[fallthrough]];
@@ -626,7 +626,7 @@ main(int argc, char *argv[])
 #endif
 
 	if (!sighand_init()) {
-		err_msg("fatal: failed to initialize signal handling");
+		err_msg("%s", _("fatal: failed to initialize signal handling"));
 		return EXIT_FAILURE;
 	}
 
@@ -648,8 +648,8 @@ main(int argc, char *argv[])
 
 #if UNIX
 	if (geteuid() == 0) {
-		err_msg("fatal: running the program with root privileges is "
-		    "forbidden");
+		err_msg("%s", _("fatal: running the program with root "
+		    "privileges is forbidden"));
 		return EXIT_FAILURE;
 	}
 #endif
@@ -669,7 +669,8 @@ main(int argc, char *argv[])
 #endif
 
 	if (curses_init() != OK) {
-		err_msg("Initialization of the Curses library not possible");
+		err_msg("%s", _("Initialization of the Curses library not "
+		    "possible"));
 		return EXIT_FAILURE;
 	}
 
