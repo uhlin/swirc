@@ -262,6 +262,9 @@ int
 xwcwidth(const wchar_t wc, const int fwlen)
 {
 	static const RANGE fullwidth[] = {
+		{ 0x2614, 0x2614, "Umbrella with rain drops" },
+		{ 0x2615, 0x2615, "Hot beverage" },
+		{ 0x2648, 0x2653, "Zodiacal symbols" },
 		{ 0x2705, 0x2705, "White heavy check mark" },
 		{ 0x274C, 0x274C, "Cross mark" },
 		{ 0x274E, 0x274E, "Negative squared cross mark" },
