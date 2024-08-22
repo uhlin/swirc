@@ -80,7 +80,7 @@
 #include "ToastsAPI.hpp"
 #endif
 
-#define DUP_OPTION_ERR(opt)	err_quit("A duplicate of option -%c found", opt)
+#define DUP_OPTION_ERR(opt)	err_quit(_("A duplicate of option -%c found"), opt)
 #define PUTCHAR(c)		((void) fputc(c, stdout))
 #define PUTS(string)		((void) fputs(string, stdout))
 
