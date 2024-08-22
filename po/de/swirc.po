@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-07-28 01:45+0200\n"
+"POT-Creation-Date: 2024-08-22 11:22+0200\n"
 "PO-Revision-Date: 2023-11-03 23:58+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -1388,10 +1388,105 @@ msgstr "    -v, --version        Swirc-Version anzeigen\n"
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsdatei\n"
 
+#: ../src/main.cpp:168
+msgid "Unhandled exception!"
+msgstr ""
+
 #: ../src/main.cpp:228
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Anwendung: %s [FLAGGE] ...\n"
+
+#: ../src/main.cpp:318
+msgid "forbidden channel name characters"
+msgstr ""
+
+#: ../src/main.cpp:467
+#, c-format
+msgid "%s: -%c: unrecognized option"
+msgstr ""
+
+#: ../src/main.cpp:472
+#, c-format
+msgid "%s: -%c: option argument missing"
+msgstr ""
+
+#: ../src/main.cpp:629
+msgid "fatal: failed to initialize signal handling"
+msgstr ""
+
+#: ../src/main.cpp:651
+msgid "fatal: running the program with root privileges is forbidden"
+msgstr ""
+
+#: ../src/main.cpp:672
+msgid "Initialization of the Curses library not possible"
+msgstr ""
+
+#: ../src/nestHome.c:129
+#, c-format
+msgid "%s exists. However; it isn't a directory."
+msgstr ""
+
+#: ../src/nestHome.c:133 ../src/nestHome.c:136
+msgid "Cannot make directory"
+msgstr ""
+
+#: ../src/nestHome.c:163
+msgid "Please decrypt your SASL password..."
+msgstr ""
+
+#: ../src/nestHome.c:164
+msgid "(One attempt)"
+msgstr ""
+
+#: ../src/nestHome.c:172
+msgid "Password: "
+msgstr ""
+
+#: ../src/nestHome.c:202
+msgid "Decryption failed"
+msgstr ""
+
+#: ../src/nestHome.c:205
+msgid "Wrong password"
+msgstr ""
+
+#: ../src/nestHome.c:216
+msgid "The password seems reasonable"
+msgstr ""
+
+#: ../src/nestHome.c:228
+msgid "Press <RETURN>"
+msgstr ""
+
+#: ../src/nestHome.c:253 ../src/nestHome.c:264 ../src/nestHome.c:323
+#, c-format
+msgid "%s exists  --  but isn't a regular file."
+msgstr ""
+
+#: ../src/nestHome.c:256 ../src/nestHome.c:331
+#, c-format
+msgid "%s no such file or directory. Exiting..."
+msgstr ""
+
+#: ../src/nestHome.c:287
+msgid "Warning!"
+msgstr ""
+
+#: ../src/nestHome.c:288
+msgid ""
+"A decrypted SASL password was found in the read configuration file  --  "
+"cannot continue!"
+msgstr ""
+
+#: ../src/nestHome.c:319
+msgid "The item 'theme' in the user configuration file holds no data. Error."
+msgstr ""
+
+#: ../src/nestHome.c:344
+msgid "Can't resolve the home path!"
+msgstr ""
 
 #: ../src/network.cpp:173
 msgid "Failed to establish a connection"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-07-28 01:45+0200\n"
-"PO-Revision-Date: 2024-04-07 16:18+0200\n"
+"POT-Creation-Date: 2024-08-22 11:22+0200\n"
+"PO-Revision-Date: 2024-08-22 11:37+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1534,10 +1534,105 @@ msgstr "    -v, --version        Visa Swirc version\n"
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsfil\n"
 
+#: ../src/main.cpp:168
+msgid "Unhandled exception!"
+msgstr "Ohanterat undantag!"
+
 #: ../src/main.cpp:228
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Användning: %s [FLAGGA] ...\n"
+
+#: ../src/main.cpp:318
+msgid "forbidden channel name characters"
+msgstr "förbjudna kanalnamnstecken"
+
+#: ../src/main.cpp:467
+#, c-format
+msgid "%s: -%c: unrecognized option"
+msgstr "%s: -%c: okänt alternativ"
+
+#: ../src/main.cpp:472
+#, c-format
+msgid "%s: -%c: option argument missing"
+msgstr "%s: -%c: alternativargument saknas"
+
+#: ../src/main.cpp:629
+msgid "fatal: failed to initialize signal handling"
+msgstr "fatal: misslyckades med att initiera signalhantering"
+
+#: ../src/main.cpp:651
+msgid "fatal: running the program with root privileges is forbidden"
+msgstr "fatal: att köra programmet med root privilegier är förbjudet"
+
+#: ../src/main.cpp:672
+msgid "Initialization of the Curses library not possible"
+msgstr "Initiering av Curses biblioteket är inte möjlig"
+
+#: ../src/nestHome.c:129
+#, c-format
+msgid "%s exists. However; it isn't a directory."
+msgstr "%s finns. Dock; det är inte en katalog."
+
+#: ../src/nestHome.c:133 ../src/nestHome.c:136
+msgid "Cannot make directory"
+msgstr "Kan inte skapa katalog"
+
+#: ../src/nestHome.c:163
+msgid "Please decrypt your SASL password..."
+msgstr "Vänligen dekryptera ditt SASL lösenord..."
+
+#: ../src/nestHome.c:164
+msgid "(One attempt)"
+msgstr "(Ett försök)"
+
+#: ../src/nestHome.c:172
+msgid "Password: "
+msgstr "Lösenord: "
+
+#: ../src/nestHome.c:202
+msgid "Decryption failed"
+msgstr "Dekrypteringen misslyckades"
+
+#: ../src/nestHome.c:205
+msgid "Wrong password"
+msgstr "Fel lösenord"
+
+#: ../src/nestHome.c:216
+msgid "The password seems reasonable"
+msgstr "Lösenordet verkar rimligt"
+
+#: ../src/nestHome.c:228
+msgid "Press <RETURN>"
+msgstr "Tryck på <RETURN>"
+
+#: ../src/nestHome.c:253 ../src/nestHome.c:264 ../src/nestHome.c:323
+#, c-format
+msgid "%s exists  --  but isn't a regular file."
+msgstr "%s finns  --  men är inte en vanlig fil."
+
+#: ../src/nestHome.c:256 ../src/nestHome.c:331
+#, c-format
+msgid "%s no such file or directory. Exiting..."
+msgstr "%s ingen sådan fil eller katalog. Avslutar..."
+
+#: ../src/nestHome.c:287
+msgid "Warning!"
+msgstr "Varning!"
+
+#: ../src/nestHome.c:288
+msgid ""
+"A decrypted SASL password was found in the read configuration file  --  "
+"cannot continue!"
+msgstr "Ett dekrypterat SASL lösenord hittades i den lästa konfigurationsfilen  --  kan inte fortsätta!"
+
+#: ../src/nestHome.c:319
+msgid "The item 'theme' in the user configuration file holds no data. Error."
+msgstr "Objektet 'theme' i användarkonfigurationsfilen innehåller inga data. Fel."
+
+#: ../src/nestHome.c:344
+msgid "Can't resolve the home path!"
+msgstr "Kan inte lösa hemvägen!"
 
 #: ../src/network.cpp:173
 msgid "Failed to establish a connection"
