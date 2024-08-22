@@ -50,6 +50,7 @@
 #include "dataClassify.h"
 #include "errHand.h"
 #include "filePred.h"
+#include "i18n.h"
 #include "irc.h"
 #include "libUtils.h"
 #include "main.h"
@@ -125,14 +126,14 @@ make_requested_dir(const char *path)
 		 */
 		return;
 	} else if (file_exists(path)) {
-		err_quit("%s exists. However; it isn't a directory.", path);
+		err_quit(_("%s exists. However; it isn't a directory."), path);
 	} else {
 #if defined(UNIX)
 		if (mkdir(path, S_IRWXU) != 0)
-			err_sys("mkdir error");
+			err_sys("%s", _("Cannot make directory"));
 #elif defined(WIN32)
 		if (_mkdir(path) != 0)
-			err_sys("_mkdir error");
+			err_sys("%s", _("Cannot make directory"));
 #endif
 	}
 }
@@ -159,8 +160,8 @@ prompt_for_decryption(const char *str)
 {
 	char *dc_out = NULL;
 
-	puts("Please decrypt your SASL password...");
-	puts("(1 attempt)");
+	puts(_("Please decrypt your SASL password..."));
+	puts(_("(One attempt)"));
 
 	while (true) {
 		bool	 fgets_error;
@@ -168,7 +169,7 @@ prompt_for_decryption(const char *str)
 		char	 pass[400] = { '\0' };
 		int	 errno_save;
 
-		printf("Password: ");
+		printf("%s", _("Password: "));
 		fflush(stdout);
 
 		term_toggle_echo(OFF);
@@ -198,10 +199,10 @@ prompt_for_decryption(const char *str)
 			continue;
 		} else if ((dc_out = crypt_decrypt_str(str, (cryptstr_t)
 		    addrof(pass[0]), true)) == NULL) {
-			puts("Decryption failed");
+			puts(_("Decryption failed"));
 			break;
 		} else if (!passwd_ok_check(dc_out)) {
-			puts("Wrong pass");
+			puts(_("Wrong password"));
 			break;
 		}
 
@@ -212,7 +213,7 @@ prompt_for_decryption(const char *str)
 		 */
 		g_encrypted_sasl_pass = sw_strdup(str);
 
-		puts("Pass seems reasonable");
+		puts(_("The password seems reasonable"));
 		value = strdup_printf("%c%s", g_decrypted_pass_sym, dc_out);
 		modify_setting("sasl_password", value);
 		crypt_freezero(value, strlen(value));
@@ -224,7 +225,7 @@ prompt_for_decryption(const char *str)
 
 	free(dc_out);
 
-	puts("Press <RETURN>");
+	puts(_("Press <RETURN>"));
 	(void) getchar();
 }
 
@@ -249,10 +250,10 @@ read_config(void)
 	if (g_explicit_config_file) {
 		if (file_exists(EXPLICIT_CONFIG) &&
 		    !is_regular_file(EXPLICIT_CONFIG)) {
-			err_quit("%s exists  --  but isn't a regular file.",
+			err_quit(_("%s exists  --  but isn't a regular file."),
 			    EXPLICIT_CONFIG);
 		} else if (!file_exists(EXPLICIT_CONFIG)) {
-			err_quit("%s no such file or directory. Exiting...",
+			err_quit(_("%s no such file or directory. Exiting..."),
 			    EXPLICIT_CONFIG);
 		} else {
 			config_readit(EXPLICIT_CONFIG, "r");
@@ -260,7 +261,7 @@ read_config(void)
 	} else if (!g_explicit_config_file) {
 		if (file_exists(g_config_file) &&
 		    !is_regular_file(g_config_file)) {
-			err_quit("%s exists  --  but isn't a regular file.",
+			err_quit(_("%s exists  --  but isn't a regular file."),
 			    g_config_file);
 		} else if (!file_exists(g_config_file)) {
 			config_create(g_config_file, "w+");
@@ -283,9 +284,9 @@ read_config_post_check(void)
 	const char *cp, *mech;
 
 	if (get_sasl_passwd_type() == g_decrypted_pass_sym) {
-		err_msg("warning!");
-		err_msg("decrypted SASL password found in read config  --  "
-		    "cannot continue!");
+		err_msg("%s", _("Warning!"));
+		err_msg("%s", _("A decrypted SASL password was found in the "
+		    "read configuration file  --  cannot continue!"));
 		abort();
 	}
 
@@ -315,11 +316,11 @@ read_theme(const char *hp)
 #endif
 
 	if (isEmpty(Config("theme"))) {
-		err_quit("Item theme in user config file holds no data. "
-		    "Error.");
+		err_quit("%s", _("The item 'theme' in the user configuration "
+		    "file holds no data. Error."));
 	} else if (file_exists(g_theme_file) &&
 	    !is_regular_file(g_theme_file)) {
-		err_quit("%s exists  --  but isn't a regular file.",
+		err_quit(_("%s exists  --  but isn't a regular file."),
 		    g_theme_file);
 	} else if (!file_exists(g_theme_file) &&
 	    strncmp(Config("theme"), "default", 8) == 0) {
@@ -327,7 +328,7 @@ read_theme(const char *hp)
 		theme_readit(g_theme_file, "r");
 	} else if (!file_exists(g_theme_file) &&
 	    strncmp(Config("theme"), "default", 8) != 0) {
-		err_quit("%s no such file or directory. Exiting...",
+		err_quit(_("%s no such file or directory. Exiting..."),
 		    g_theme_file);
 	} else {
 		theme_readit(g_theme_file, "r");
@@ -340,7 +341,7 @@ nestHome_init(void)
 	char *hp = path_to_home() ? sw_strdup(path_to_home()) : NULL;
 
 	if (isNull(hp))
-		err_quit("Can't resolve homepath!");
+		err_quit("%s", _("Can't resolve the home path!"));
 
 	init_globals(hp);
 	make_requested_dir(g_home_dir);
