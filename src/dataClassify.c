@@ -265,6 +265,7 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{ 0x2614, 0x2614, "Umbrella with rain drops" },
 		{ 0x2615, 0x2615, "Hot beverage" },
 		{ 0x2648, 0x2653, "Zodiacal symbols" },
+		{ 0x267F, 0x267F, "Wheelchair symbol" },
 		{ 0x26CE, 0x26CE, "Ophiuchus (Zodiacal symbol)" },
 		{ 0x2705, 0x2705, "White heavy check mark" },
 		{ 0x274C, 0x274C, "Cross mark" },
