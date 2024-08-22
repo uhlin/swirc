@@ -30,6 +30,7 @@ INPUTFILES = $(COMMANDS_DIR)colormap.cpp\
 	$(SRC_DIR)io-loop.c\
 	$(SRC_DIR)log.c\
 	$(SRC_DIR)main.cpp\
+	$(SRC_DIR)nestHome.c\
 	$(SRC_DIR)network.cpp\
 	$(SRC_DIR)readline.c\
 	$(SRC_DIR)sig-w32.c\
