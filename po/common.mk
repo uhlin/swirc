@@ -35,6 +35,7 @@ INPUTFILES = $(COMMANDS_DIR)colormap.cpp\
 	$(SRC_DIR)network.cpp\
 	$(SRC_DIR)readline.c\
 	$(SRC_DIR)sig-w32.c\
+	$(SRC_DIR)spell.cpp\
 	$(SRC_DIR)statusbar.cpp\
 	$(SRC_DIR)tls-server.cpp
 
