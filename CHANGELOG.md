@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added option `notifications` (bool). Turns notifications on/off.
 - Added new translations.
-- Improved `xwcwidth()`.
+- Improved `xwcwidth()`. I.e. added more full width character ranges.
 
 ## [3.4.9] - 2024-07-28 ##
 - **Added** event 468 (`ERR_INVALIDUSERNAME`)
