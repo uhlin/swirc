@@ -22,7 +22,7 @@ main: $(TGTS)
 
 include tests/recompile.mk
 
-check: gen-hdr $(OBJS)
+check: $(SRC_DIR)include/swircpaths.h $(OBJS)
 	$(RM) $(RECOMPILE)
 	$(Q) strip --strip-symbol=main $(SRC_DIR)main.o
 	$(MAKE) -Ctests
