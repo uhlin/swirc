@@ -262,10 +262,14 @@ int
 xwcwidth(const wchar_t wc, const int fwlen)
 {
 	static const RANGE fullwidth[] = {
+		{ 0x2705, 0x2705, "White heavy check mark" },
+		{ 0x274C, 0x274C, "Cross mark" },
+		{ 0x274E, 0x274E, "Negative squared cross mark" },
 		{ 0x2795, 0x2797, "Heavy variants of arithmetic symbols" },
 		{ 0xFF01, 0xFF5E, "Fullwidth ASCII variants" },
 		{ 0xFF5F, 0xFF60, "Fullwidth brackets" },
 		{ 0xFFE0, 0xFFE6, "Fullwidth symbol variants" },
+
 		{ 0x1F300, 0x1F30C, "Weather, landscape, and sky symbols" },
 		{ 0x1F30D, 0x1F310, "Globe symbols" },
 		{ 0x1F600, 0x1F64F, "Emoticons" },
