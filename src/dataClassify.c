@@ -262,30 +262,30 @@ int
 xwcwidth(const wchar_t wc, const int fwlen)
 {
 	static const RANGE fullwidth[] = {
-		{ 0x2614, 0x2614, "Umbrella with rain drops" },
-		{ 0x2615, 0x2615, "Hot beverage" },
-		{ 0x2648, 0x2653, "Zodiacal symbols" },
-		{ 0x267F, 0x267F, "Wheelchair symbol" },
-		{ 0x2693, 0x2693, "Anchor" },
-		{ 0x26A1, 0x26A1, "High voltage sign" },
-		{ 0x26CE, 0x26CE, "Ophiuchus (Zodiacal symbol)" },
+		{0x2614, 0x2614, "Umbrella with rain drops"},
+		{0x2615, 0x2615, "Hot beverage"},
+		{0x2648, 0x2653, "Zodiacal symbols"},
+		{0x267F, 0x267F, "Wheelchair symbol"},
+		{0x2693, 0x2693, "Anchor"},
+		{0x26A1, 0x26A1, "High voltage sign"},
+		{0x26CE, 0x26CE, "Ophiuchus (Zodiacal symbol)"},
 
-		{ 0x2705, 0x2705, "White heavy check mark" },
-		{ 0x274C, 0x274C, "Cross mark" },
-		{ 0x274E, 0x274E, "Negative squared cross mark" },
-		{ 0x2795, 0x2797, "Heavy variants of arithmetic symbols" },
+		{0x2705, 0x2705, "White heavy check mark"},
+		{0x274C, 0x274C, "Cross mark"},
+		{0x274E, 0x274E, "Negative squared cross mark"},
+		{0x2795, 0x2797, "Heavy variants of arithmetic symbols"},
 
-		{ 0xFF01, 0xFF5E, "Fullwidth ASCII variants" },
-		{ 0xFF5F, 0xFF60, "Fullwidth brackets" },
-		{ 0xFFE0, 0xFFE6, "Fullwidth symbol variants" },
+		{0xFF01, 0xFF5E, "Fullwidth ASCII variants"},
+		{0xFF5F, 0xFF60, "Fullwidth brackets"},
+		{0xFFE0, 0xFFE6, "Fullwidth symbol variants"},
 
-		{ 0x1F300, 0x1F30C, "Weather, landscape, and sky symbols" },
-		{ 0x1F30D, 0x1F310, "Globe symbols" },
-		{ 0x1F600, 0x1F64F, "Emoticons" },
-		{ 0x1F680, 0x1F6A4, "Vehicles" },
-		{ 0x1F6A5, 0x1F6A8, "Traffic signs" },
-		{ 0x1F90D, 0x1F90E, "Colored heart symbols" },
-		{ 0x1F920, 0x1F92F, "Emoticon faces" },
+		{0x1F300, 0x1F30C, "Weather, landscape, and sky symbols"},
+		{0x1F30D, 0x1F310, "Globe symbols"},
+		{0x1F600, 0x1F64F, "Emoticons"},
+		{0x1F680, 0x1F6A4, "Vehicles"},
+		{0x1F6A5, 0x1F6A8, "Traffic signs"},
+		{0x1F90D, 0x1F90E, "Colored heart symbols"},
+		{0x1F920, 0x1F92F, "Emoticon faces"},
 	};
 
 	if (wc >= 0x20 && wc <= 0xFF)
