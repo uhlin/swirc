@@ -108,7 +108,7 @@ case "$(uname -s)" in
 		os_LINUX
 	fi
 
-	fix_cflags_with_pkg_config
+	fix_cflags
 
 	if [ "$(uname -m)" = "riscv64" ]; then
 		cat <<EOF >>$MAKE_DEF_FILE

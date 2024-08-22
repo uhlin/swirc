@@ -1,6 +1,7 @@
 # fix_cflags.sh
 
-fix_cflags_with_pkg_config () {
+fix_cflags()
+{
 	if [ -x "$(which pkg-config)" ]; then
 		local _hdr_search_path="$(pkg-config --cflags-only-I ncursesw)"
 
