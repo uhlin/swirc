@@ -347,8 +347,10 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING dest,
 		wchar_t *wDest = get_converted_wcs(dest);
 		wchar_t *wMsg = get_converted_wcs(msg_copy);
 
-		Toasts::SendBasicToast(get_message(wNick, L" @ ", wDest, L": ",
-		    wMsg));
+		if (config_bool("notifications", true)) {
+			Toasts::SendBasicToast(get_message(wNick, L" @ ", wDest,
+			    L": ", wMsg));
+		}
 
 		delete[] wNick;
 		delete[] wDest;
@@ -359,7 +361,8 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING dest,
 		NotifyNotification *notification = notify_notification_new
 		    (SUMMARY_TEXT, body, SWIRC_ICON_PATH);
 
-		notify_notification_show(notification, NULL);
+		if (config_bool("notifications", true))
+			notify_notification_show(notification, NULL);
 
 		free(body);
 		g_object_unref(G_OBJECT(notification));
