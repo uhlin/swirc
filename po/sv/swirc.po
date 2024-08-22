@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-22 15:33+0200\n"
-"PO-Revision-Date: 2024-08-22 14:52+0200\n"
+"PO-Revision-Date: 2024-08-22 15:36+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1791,25 +1791,25 @@ msgstr "Avslutad"
 #: ../src/spell.cpp:137 ../src/spell.cpp:141
 #, c-format
 msgid "%s: %s not found"
-msgstr ""
+msgstr "%s: %s hittades inte"
 
 #: ../src/spell.cpp:313
 msgid "no more suggestions"
-msgstr ""
+msgstr "inga fler förslag"
 
 #: ../src/spell.cpp:342
 msgid "suggestions:"
-msgstr ""
+msgstr "förslag:"
 
 #: ../src/spell.cpp:370
 #, c-format
 msgid "%ls is correct"
-msgstr ""
+msgstr "%ls är korrekt"
 
 #: ../src/spell.cpp:375
 #, c-format
 msgid "%ls is incorrect"
-msgstr ""
+msgstr "%ls är felaktigt"
 
 #: ../src/statusbar.cpp:222
 msgid "Log: "
