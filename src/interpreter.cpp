@@ -16,14 +16,14 @@
 
 #include "common.h"
 
+#include <iostream>
+#include <stdexcept>
+
 #include "assertAPI.h"
 #include "errHand.h"
 #include "i18n.h"
 #include "interpreter.h"
 #include "strHand.h"
-
-#include <iostream>
-#include <stdexcept>
 
 const char g_fgets_nullret_err1[70] = "error: fgets() returned null and the "
     "error indicator is set";
