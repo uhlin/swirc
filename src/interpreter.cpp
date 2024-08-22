@@ -15,8 +15,10 @@
    PERFORMANCE OF THIS SOFTWARE. */
 
 #include "common.h"
+
 #include "assertAPI.h"
 #include "errHand.h"
+#include "i18n.h"
 #include "interpreter.h"
 #include "strHand.h"
 
@@ -51,7 +53,7 @@ copy_identifier(const char *&id)
 	*dest = '\0';
 
 	if (count == 1) {
-		err_exit(EOVERFLOW, "In %s: fatal: string was truncated!",
+		err_exit(EOVERFLOW, _("%s: fatal: string was truncated"),
 		    __func__);
 	}
 	return dest_buf;
@@ -81,9 +83,10 @@ copy_argument(const char *&arg)
 
 	*dest = '\0';
 
-	if (inside_arg && count == 1)
-		err_exit(EOVERFLOW, "In %s: fatal: string was truncated!",
+	if (inside_arg && count == 1) {
+		err_exit(EOVERFLOW, _("%s: fatal: string was truncated"),
 		    __func__);
+	}
 	if (inside_arg) {
 		delete[] dest_buf;
 		return nullptr;
