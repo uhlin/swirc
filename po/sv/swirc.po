@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-22 11:53+0200\n"
-"PO-Revision-Date: 2024-08-22 11:50+0200\n"
+"PO-Revision-Date: 2024-08-22 11:56+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1450,7 +1450,7 @@ msgstr "Loggning för fönstret (refnum: %d) är nu på"
 #: ../src/main.cpp:83
 #, c-format
 msgid "A duplicate of option -%c found"
-msgstr ""
+msgstr "En dubblett av alternativet -%c hittades"
 
 #: ../src/main.cpp:140
 msgid ""
