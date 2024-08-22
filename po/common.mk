@@ -27,6 +27,7 @@ INPUTFILES = $(COMMANDS_DIR)colormap.cpp\
 	$(EVENTS_DIR)invite.cpp\
 	$(EVENTS_DIR)misc.cpp\
 	$(SRC_DIR)include/commandhelp.h\
+	$(SRC_DIR)interpreter.cpp\
 	$(SRC_DIR)io-loop.c\
 	$(SRC_DIR)log.c\
 	$(SRC_DIR)main.cpp\
