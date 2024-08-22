@@ -45,6 +45,7 @@
 #include "config.h"
 #include "errHand.h"
 #include "filePred.h"
+#include "i18n.h"
 #include "libUtils.h"
 #include "main.h"
 #include "nestHome.h"
@@ -133,11 +134,11 @@ spell_init(bool report_nonexistent)
 
 	if (report_nonexistent) {
 		if (!is_regular_file(aff.c_str())) {
-			printtext_print("err", "%s: %s not found", __func__,
+			printtext_print("err", _("%s: %s not found"), __func__,
 			    aff.c_str());
 		}
 		if (!is_regular_file(dic.c_str())) {
-			printtext_print("err", "%s: %s not found", __func__,
+			printtext_print("err", _("%s: %s not found"), __func__,
 			    dic.c_str());
 		}
 	}
@@ -309,7 +310,7 @@ auto_complete_next_sugg(volatile struct readline_session_context *ctx)
 	sugg_ptr	 ptr;
 
 	if (suggs_it == rl_suggs->end()) {
-		printtext_print("warn", "no more suggestions");
+		printtext_print("warn", "%s", _("no more suggestions"));
 		g_suggs_mode = false;
 		spell_destroy_suggs(rl_suggs);
 		rl_suggs = nullptr;
@@ -338,7 +339,7 @@ print_suggestions(std::vector<sugg_ptr> *suggs)
 {
 	std::vector<sugg_ptr>::iterator it;
 
-	printtext_print(nullptr, "suggestions:");
+	printtext_print(nullptr, "%s", _("suggestions:"));
 
 	for (it = suggs->begin(); it != suggs->end(); ++it)
 		printtext_print(nullptr, "  %ls", (*it)->get_wide_word());
@@ -366,12 +367,12 @@ spell_word_readline(volatile struct readline_session_context *ctx)
 		rl_word.assign(&ctx->buffer[pos], ctx->bufpos - pos);
 
 		if (spell_wide_word(rl_word.c_str())) {
-			printtext_print("success", "%ls is correct",
+			printtext_print("success", _("%ls is correct"),
 			    rl_word.c_str());
 			return;
 		}
 
-		printtext_print("err", "%ls is incorrect", rl_word.c_str());
+		printtext_print("err", _("%ls is incorrect"), rl_word.c_str());
 
 		if (rl_suggs)
 			spell_destroy_suggs(rl_suggs);
