@@ -306,6 +306,8 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		return 1;
 	else if (wc < 0x20 || is_combined(wc))
 		return 0;
+	else if (wc < fullwidth[0].start)
+		return (is_cjk(wc) ? fwlen : 1);
 	for (const RANGE *rp = &fullwidth[wc < fullwidth[mid].start ? 0 : mid];
 	    rp < &fullwidth[ARRAY_SIZE(fullwidth)];
 	    rp++) {
