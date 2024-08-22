@@ -270,7 +270,9 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x26A1, 0x26A1,   "High voltage sign"},
 		{0x26AA, 0x26AB,   "Medium white/black circle"},
 		{0x26BD, 0x26BE,   "Sport symbols"},
+		{0x26C4, 0x26C5,   "Weather symbols"},
 		{0x26CE, 0x26CE,   "Ophiuchus (Zodiacal symbol)"},
+		{0x26D4, 0x26D4,   "No entry traffic sign"},
 
 		{0x2705, 0x2705,   "White heavy check mark"},
 		{0x274C, 0x274C,   "Cross mark"},
