@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-08-22 11:22+0200\n"
+"POT-Creation-Date: 2024-08-22 11:53+0200\n"
 "PO-Revision-Date: 2023-11-03 23:58+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -1299,6 +1299,11 @@ msgstr "Die Protokollierung für das Fenster (refnum: %d) ist jetzt deaktiviert"
 #, c-format
 msgid "Logging for window (refnum: %d) now on"
 msgstr "Die Protokollierung für das Fenster (refnum: %d) ist jetzt aktiviert"
+
+#: ../src/main.cpp:83
+#, c-format
+msgid "A duplicate of option -%c found"
+msgstr ""
 
 #: ../src/main.cpp:140
 msgid ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-08-22 11:22+0200\n"
+"POT-Creation-Date: 2024-08-22 11:53+0200\n"
 "PO-Revision-Date: 2024-04-07 15:33+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -1311,6 +1311,11 @@ msgstr "Journalisation pour la fenêtre (refnum: %d) désormais désactivée"
 #, c-format
 msgid "Logging for window (refnum: %d) now on"
 msgstr "Journalisation pour la fenêtre (refnum: %d) désormais activée"
+
+#: ../src/main.cpp:83
+#, c-format
+msgid "A duplicate of option -%c found"
+msgstr ""
 
 #: ../src/main.cpp:140
 msgid ""
