@@ -287,12 +287,13 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F90D, 0x1F90E, "Colored heart symbols"},
 		{0x1F920, 0x1F92F, "Emoticon faces"},
 	};
+	static const size_t mid = ARRAY_SIZE(fullwidth) / 2;
 
 	if (wc >= 0x20 && wc <= 0xFF)
 		return 1;
 	else if (wc < 0x20 || is_combined(wc))
 		return 0;
-	for (const RANGE *rp = &fullwidth[0];
+	for (const RANGE *rp = &fullwidth[wc < fullwidth[mid].start ? 0 : mid];
 	    rp < &fullwidth[ARRAY_SIZE(fullwidth)];
 	    rp++) {
 		if (wc >= rp->start && wc <= rp->stop)
