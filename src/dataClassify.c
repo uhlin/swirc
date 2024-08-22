@@ -261,6 +261,9 @@ is_whitespace(const char *string)
 int
 xwcwidth(const wchar_t wc, const int fwlen)
 {
+	/*
+	 * XXX: Please keep the 'fullwidth' array sorted.
+	 */
 	static const RANGE fullwidth[] = {
 		{0x2614, 0x2614,   "Umbrella with rain drops"},
 		{0x2615, 0x2615,   "Hot beverage"},
