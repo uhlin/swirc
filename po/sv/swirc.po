@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-08-22 14:50+0200\n"
+"POT-Creation-Date: 2024-08-22 15:33+0200\n"
 "PO-Revision-Date: 2024-08-22 14:52+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -1787,6 +1787,29 @@ msgstr "Segmenteringsfel"
 #: ../src/sig-w32.c:30
 msgid "Termination request"
 msgstr "Avslutad"
+
+#: ../src/spell.cpp:137 ../src/spell.cpp:141
+#, c-format
+msgid "%s: %s not found"
+msgstr ""
+
+#: ../src/spell.cpp:313
+msgid "no more suggestions"
+msgstr ""
+
+#: ../src/spell.cpp:342
+msgid "suggestions:"
+msgstr ""
+
+#: ../src/spell.cpp:370
+#, c-format
+msgid "%ls is correct"
+msgstr ""
+
+#: ../src/spell.cpp:375
+#, c-format
+msgid "%ls is incorrect"
+msgstr ""
 
 #: ../src/statusbar.cpp:222
 msgid "Log: "
