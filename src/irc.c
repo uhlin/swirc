@@ -33,6 +33,7 @@
 #include "config.h"
 #include "dataClassify.h"
 #include "errHand.h"
+#include "i18n.h"
 #include "irc.h"
 #include "libUtils.h"
 #include "main.h"
