@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-23 11:35+0200\n"
-"PO-Revision-Date: 2024-04-07 15:32+0200\n"
+"PO-Revision-Date: 2024-08-23 11:36+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -1344,9 +1344,9 @@ msgid "Error log size %s%.1f KB%s"
 msgstr "Virhelokin koko %s%.1f KB%s"
 
 #: ../src/irc.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "%s: no nickname"
-msgstr "käyttö: /beep <lempinimi>"
+msgstr ""
 
 #: ../src/irc.c:447
 #, c-format
