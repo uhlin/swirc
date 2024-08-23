@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-08-22 15:33+0200\n"
+"POT-Creation-Date: 2024-08-23 11:35+0200\n"
 "PO-Revision-Date: 2023-11-03 23:58+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -1294,6 +1294,51 @@ msgstr "Geben Sie F1 für Tastaturtasten ein"
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr "Größe des Fehlerprotokolls %s%.1f KB%s"
+
+#: ../src/irc.c:329
+#, c-format
+msgid "%s: no nickname"
+msgstr ""
+
+#: ../src/irc.c:447
+#, c-format
+msgid "%s: empty message"
+msgstr ""
+
+#: ../src/irc.c:478
+#, c-format
+msgid "%s: too many semicolons"
+msgstr ""
+
+#: ../src/irc.c:504
+#, c-format
+msgid "%s: cannot find time"
+msgstr ""
+
+#: ../src/irc.c:510 ../src/irc.c:555
+#, c-format
+msgid "%s: server time error"
+msgstr ""
+
+#: ../src/irc.c:560
+#, c-format
+msgid "%s: unsupported extension"
+msgstr ""
+
+#: ../src/irc.c:741
+#, c-format
+msgid "Unknown normal event: %s"
+msgstr ""
+
+#: ../src/irc.c:752
+#, c-format
+msgid "Unknown numeric event: %s"
+msgstr ""
+
+#: ../src/irc.c:760
+#, c-format
+msgid "Erroneous event: %s"
+msgstr ""
 
 #: ../src/log.c:217
 #, c-format
