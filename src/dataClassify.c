@@ -296,6 +296,8 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F30D, 0x1F310, "Globe symbols"},
 		{0x1F311, 0x1F320, "Moon, sun, and star symbols"},
 		{0x1F32D, 0x1F32F, "Food symbols"},
+		{0x1F330, 0x1F335, "Plant symbols 1"},
+		{0x1F337, 0x1F344, "Plant symbols 2"},
 		{0x1F446, 0x1F450, "Hand symbols"},
 		{0x1F600, 0x1F64F, "Emoticons"},
 		{0x1F680, 0x1F6A4, "Vehicles"},
