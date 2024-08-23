@@ -326,7 +326,7 @@ irc_init(void)
 	else if ((nickname = g_user) != NULL && !strings_match(nickname, ""))
 		irc_set_my_nickname(nickname);
 	else
-		err_quit("%s: no nickname", __func__);
+		err_quit(_("%s: no nickname"), __func__);
 
 	event_batch_init();
 	event_names_init();
@@ -444,7 +444,7 @@ handle_batch(const size_t bytes, char *substring, const char *protocol_message)
 	pmsg_plus_off = &protocol_message[offset];
 
 	if (strings_match(pmsg_plus_off, "")) {
-		printf_and_free(substring, "%s: empty message", __func__);
+		printf_and_free(substring, _("%s: empty message"), __func__);
 		return -1;
 	} else {
 		debug("%s: protocol_message + offset: \"%s\"", __func__,
@@ -475,7 +475,7 @@ handle_batch(const size_t bytes, char *substring, const char *protocol_message)
 		hour = minute = second = precision = 0;
 
 		if (get_num_semicolons(substring) > 1) {
-			printf_and_free(substring, "%s: too many semicolons",
+			printf_and_free(substring, _("%s: too many semicolons"),
 			    __func__);
 			return -1;
 		}
@@ -501,13 +501,13 @@ handle_batch(const size_t bytes, char *substring, const char *protocol_message)
 		cp[offset] = ';';
 
 		if ((cp = strstr(substring, ";time=")) == NULL) {
-			printf_and_free(substring, "%s: cannot find time",
+			printf_and_free(substring, _("%s: cannot find time"),
 			    __func__);
 			return -1;
 		} else if (sscanf(cp, ";time=%d-%d-%dT%d:%d:%d.%dZ",
 		    &year, &month, &day,
 		    &hour, &minute, &second, &precision) != 7) {
-			printf_and_free(substring, "%s: server time error",
+			printf_and_free(substring, _("%s: server time error"),
 			    __func__);
 			return -1;
 		}
@@ -552,12 +552,12 @@ handle_extension(size_t *bytes, const char *protocol_message,
 		    & (compo->minute),
 		    & (compo->second),
 		    & (compo->precision)) != 7) {
-			printf_and_free(substring, "%s: server time error",
+			printf_and_free(substring, _("%s: server time error"),
 			    __func__);
 			return -1;
 		}
 	} else {
-		printf_and_free(substring, "%s: unsupported extension",
+		printf_and_free(substring, _("%s: unsupported extension"),
 		    __func__);
 		return -1;
 	}
@@ -738,7 +738,7 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 		if (handle_normal_event(compo) == 0)
 			return;
 
-		printtext(&ctx, "Unknown normal event: %s", compo->command);
+		printtext(&ctx, _("Unknown normal event: %s"), compo->command);
 
 #if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
 		printtext(&ctx, "params = %s", compo->params);
@@ -749,7 +749,7 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 		if (handle_numeric_event(compo) == 0)
 			return;
 
-		printtext(&ctx, "Unknown numeric event: %s", compo->command);
+		printtext(&ctx, _("Unknown numeric event: %s"), compo->command);
 
 #if UNKNOWN_EVENT_DISPLAY_EXTENDED_INFO
 		printtext(&ctx, "params = %s", compo->params);
@@ -757,7 +757,7 @@ irc_search_and_route_event(struct irc_message_compo *compo)
 		    (compo->prefix ? compo->prefix : "none"));
 #endif
 	} else {
-		printtext(&ctx, "Erroneous event: %s", compo->command);
+		printtext(&ctx, _("Erroneous event: %s"), compo->command);
 	}
 }
 
