@@ -46,7 +46,7 @@ clean_up(EVP_CIPHER_CTX *ctx1, PCRYPT_CTX ctx2, cryptstr_t str, size_t size)
 		OPENSSL_cleanse(ctx2->key, sizeof ctx2->key);
 		OPENSSL_cleanse(ctx2->iv, sizeof ctx2->iv);
 	}
-	if (str != NULL && size > 0)
+	if (str != nullptr && size > 0)
 		OPENSSL_cleanse(str, size);
 	free(str);
 }
@@ -66,18 +66,18 @@ get_encrypt_alg()
  * @param[in]  password  Decryption password
  * @param[in]  rot13     Shall rot13 be ran on the string initially, yes/no?
  *
- * @return     The decrypted string, or NULL on error.
+ * @return     The decrypted string, or nullptr on error.
  */
 STRING
 crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 {
 	CRYPT_CTX	 crypt_ctx;		/* Key and IV                */
-	EVP_CIPHER_CTX	*cipher_ctx = NULL;	/* Cipher context            */
-	STRING		 str_copy = NULL;	/* Non-const copy of 'str'   */
+	EVP_CIPHER_CTX	*cipher_ctx = nullptr;	/* Cipher context            */
+	STRING		 str_copy = nullptr;	/* Non-const copy of 'str'   */
 	bool		 error = false;		/* True if an error occurred */
-	cryptstr_t	 decdat = NULL;		/* Decrypted data            */
-	cryptstr_t	 decoded_str = NULL;	/* Base64 decoded string     */
-	cryptstr_t	 out_str = NULL;	/* Returned on success       */
+	cryptstr_t	 decdat = nullptr;	/* Decrypted data            */
+	cryptstr_t	 decoded_str = nullptr;	/* Base64 decoded string     */
+	cryptstr_t	 out_str = nullptr;	/* Returned on success       */
 	int		 decdat_len = 0,	/* Decrypted data length     */
 			 decdat_size = 0;	/* 'decdat' size             */
 	int		 rem_bytes = 0;		/* Remaining bytes           */
@@ -86,7 +86,7 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 		int	 decode_len = 0,	/* 'decoded_str' size     */
 			 decode_ret = -1;	/* Retval of b64_decode() */
 
-		if (str == NULL || password == NULL)
+		if (str == nullptr || password == nullptr)
 			throw std::runtime_error("invalid args");
 
 		str_copy = sw_strdup(str);
@@ -108,10 +108,12 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 
 		if (crypt_get_key_and_iv(password, &crypt_ctx) == -1) {
 			throw std::runtime_error("unable to get key/iv");
-		} else if ((cipher_ctx = EVP_CIPHER_CTX_new()) == NULL) {
+		} else if ((cipher_ctx = EVP_CIPHER_CTX_new()) == nullptr) {
 			err_exit(ENOMEM, "%s: EVP_CIPHER_CTX_new", __func__);
 		} else if (!EVP_DecryptInit_ex(cipher_ctx, get_encrypt_alg(),
-		    NULL, addrof(crypt_ctx.key[0]), addrof(crypt_ctx.iv[0]))) {
+		    nullptr,
+		    addrof(crypt_ctx.key[0]),
+		    addrof(crypt_ctx.iv[0]))) {
 			throw std::runtime_error("evp decrypt initialization "
 			    "failed");
 		}
@@ -134,7 +136,7 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 		debug("%s: decdat_size: %d", __func__, decdat_size);
 
 		EVP_CIPHER_CTX_free(cipher_ctx);
-		cipher_ctx = NULL;
+		cipher_ctx = nullptr;
 
 		out_str = static_cast<cryptstr_t>(xmalloc(int_sum(decdat_len,
 		    1)));
@@ -156,7 +158,7 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 
 	if (error) {
 		free(out_str);
-		return NULL;
+		return nullptr;
 	}
 
 	return reinterpret_cast<STRING>(out_str);
@@ -169,17 +171,17 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
  * @param[in]  password  Encryption password
  * @param[in]  rot13     Shall rot13 be used?
  *
- * @return     The encrypted string, or NULL on error.
+ * @return     The encrypted string, or nullptr on error.
  */
 STRING
 crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
     const bool rot13)
 {
 	CRYPT_CTX	 crypt_ctx;		/* Key and IV                */
-	EVP_CIPHER_CTX	*cipher_ctx = NULL;	/* Cipher context            */
-	STRING		 b64str = NULL;		/* Base64 string             */
+	EVP_CIPHER_CTX	*cipher_ctx = nullptr;	/* Cipher context            */
+	STRING		 b64str = nullptr;	/* Base64 string             */
 	bool		 error = false;		/* True if an error occurred */
-	cryptstr_t	 encdat = NULL;		/* Encrypted data            */
+	cryptstr_t	 encdat = nullptr;	/* Encrypted data            */
 	int		 encdat_len = 0,	/* Encrypted data length     */
 			 encdat_size = 0;	/* 'encdat' size             */
 	int		 rem_bytes = 0;		/* Remaining bytes           */
@@ -187,14 +189,16 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 	try {
 		uint32_t size = 0;
 
-		if (str == NULL || password == NULL) {
+		if (str == nullptr || password == nullptr) {
 			throw std::runtime_error("invalid args");
 		} else if (crypt_get_key_and_iv(password, &crypt_ctx) == -1) {
 			throw std::runtime_error("unable to get key/iv");
-		} else if ((cipher_ctx = EVP_CIPHER_CTX_new()) == NULL) {
+		} else if ((cipher_ctx = EVP_CIPHER_CTX_new()) == nullptr) {
 			err_exit(ENOMEM, "%s: EVP_CIPHER_CTX_new", __func__);
 		} else if (!EVP_EncryptInit_ex(cipher_ctx, get_encrypt_alg(),
-		    NULL, addrof(crypt_ctx.key[0]), addrof(crypt_ctx.iv[0]))) {
+		    nullptr,
+		    addrof(crypt_ctx.key[0]),
+		    addrof(crypt_ctx.iv[0]))) {
 			throw std::runtime_error("evp encrypt initialization "
 			    "failed");
 		}
@@ -217,7 +221,7 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 		debug("%s: encdat_size: %d", __func__, encdat_size);
 
 		EVP_CIPHER_CTX_free(cipher_ctx);
-		cipher_ctx = NULL;
+		cipher_ctx = nullptr;
 
 		if ((size = crypt_get_base64_encode_length(encdat_len)) == 0)
 			throw std::runtime_error("base64 length error");
@@ -239,7 +243,7 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 
 	if (error) {
 		free(b64str);
-		return NULL;
+		return nullptr;
 	}
 
 	return (rot13 ? rot13_str(b64str) : b64str);
@@ -248,7 +252,7 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 void
 crypt_freezero(void *vp, size_t len)
 {
-	if (vp != NULL && len > 0)
+	if (vp != nullptr && len > 0)
 		OPENSSL_cleanse(vp, len);
 	free(vp);
 }
@@ -258,8 +262,8 @@ crypt_get_base64_decode_length(CSTRING str)
 {
 	int len;
 
-	if (str == NULL || strings_match(str, "") ||
-	    (len = b64_decode(str, NULL, 0)) < 0)
+	if (str == nullptr || strings_match(str, "") ||
+	    (len = b64_decode(str, nullptr, 0)) < 0)
 		return 0;
 	return int_sum(len, 1);
 }
@@ -273,11 +277,11 @@ crypt_get_base64_encode_length(const uint32_t n)
 int
 crypt_get_key_and_iv(cryptstr_const_t password, PCRYPT_CTX ctx)
 {
-	if (password == NULL || ctx == NULL)
+	if (password == nullptr || ctx == nullptr)
 		return -1;
-	return (EVP_BytesToKey(get_encrypt_alg(), EVP_sha256(), NULL, password,
-	    crypt_strlen(password), PKCS5_DEFAULT_ITER, addrof(ctx->key[0]),
-	    addrof(ctx->iv[0])) > 0 ? 0 : -1);
+	return (EVP_BytesToKey(get_encrypt_alg(), EVP_sha256(), nullptr,
+	    password, crypt_strlen(password), PKCS5_DEFAULT_ITER,
+	    addrof(ctx->key[0]), addrof(ctx->iv[0])) > 0 ? 0 : -1);
 }
 
 int
