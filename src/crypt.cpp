@@ -40,9 +40,9 @@
 static void
 clean_up(EVP_CIPHER_CTX *ctx1, PCRYPT_CTX ctx2, cryptstr_t str, size_t size)
 {
-	if (ctx1)
+	if (ctx1 != nullptr)
 		EVP_CIPHER_CTX_free(ctx1);
-	if (ctx2) {
+	if (ctx2 != nullptr) {
 		OPENSSL_cleanse(ctx2->key, sizeof ctx2->key);
 		OPENSSL_cleanse(ctx2->iv, sizeof ctx2->iv);
 	}
