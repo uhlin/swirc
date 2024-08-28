@@ -20,6 +20,7 @@ XGTFLAGS = --add-comments\
 	--sort-by-file
 
 INPUTFILES = $(COMMANDS_DIR)colormap.cpp\
+	$(COMMANDS_DIR)connect.c\
 	$(COMMANDS_DIR)dcc.cpp\
 	$(COMMANDS_DIR)theme.c\
 	$(EVENTS_DIR)account.cpp\
