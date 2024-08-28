@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-08-23 11:35+0200\n"
+"POT-Creation-Date: 2024-08-28 14:53+0200\n"
 "PO-Revision-Date: 2024-08-23 11:36+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -122,6 +122,31 @@ msgstr ""
 #: ../src/commands/dcc.cpp:1609
 #, c-format
 msgid "%s: file transfer incomplete: %s"
+msgstr ""
+
+#: ../src/commands/theme.c:313
+#, c-format
+msgid "failed to remove: %s"
+msgstr ""
+
+#: ../src/commands/theme.c:332
+msgid "no such theme in the database"
+msgstr ""
+
+#: ../src/commands/theme.c:352
+msgid "theme installed (use 'set' to activate it)"
+msgstr ""
+
+#: ../src/commands/theme.c:355
+msgid "failed to install the theme :-("
+msgstr ""
+
+#: ../src/commands/theme.c:403
+msgid "non-existent"
+msgstr ""
+
+#: ../src/commands/theme.c:416
+msgid "theme activated"
 msgstr ""
 
 #: ../src/events/account.cpp:56
