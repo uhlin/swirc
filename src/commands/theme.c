@@ -400,7 +400,7 @@ set_theme(const char *name)
 		printtext(&ctx, "error building name path (errno=%d)", errno);
 		return;
 	} else if (!is_regular_file(buf)) {
-		printtext(&ctx, "non-existent");
+		printtext(&ctx, "%s", _("non-existent"));
 		return;
 	}
 
@@ -413,7 +413,7 @@ set_theme(const char *name)
 	statusbar_update_display_beta();
 
 	ctx.spec_type = TYPE_SPEC1_SUCCESS;
-	printtext(&ctx, "theme activated");
+	printtext(&ctx, "%s", _("theme activated"));
 
 	if ((errno = config_item_undef("theme")) != 0)
 		err_log(errno, "%s: config_item_undef", __func__);
