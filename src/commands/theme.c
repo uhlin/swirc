@@ -310,7 +310,7 @@ clean_up(char *url, char *path)
 		free(url);
 	if (path) {
 		if (remove(path) != 0)
-			err_log(errno, "failed to remove: %s", path);
+			err_log(errno, _("failed to remove: %s"), path);
 		free(path);
 	}
 	theme_info_array_deinit();
@@ -329,7 +329,7 @@ theme_is_in_db(const char *name)
 	}
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
-	printtext(&ctx, "theme not in database");
+	printtext(&ctx, "%s", _("no such theme in the database"));
 	return false;
 }
 
@@ -348,10 +348,12 @@ install_theme(const char *name)
 	printtext_context_init(&ctx, g_active_window, (file_exists(dest) ?
 	    TYPE_SPEC1_SUCCESS : TYPE_SPEC1_FAILURE), true);
 
-	if (ctx.spec_type == TYPE_SPEC1_SUCCESS)
-		printtext(&ctx, "theme installed (use 'set' to activate it)");
-	else
-		printtext(&ctx, "failed to install theme :-(");
+	if (ctx.spec_type == TYPE_SPEC1_SUCCESS) {
+		printtext(&ctx, "%s", _("theme installed "
+		    "(use 'set' to activate it)"));
+	} else {
+		printtext(&ctx, "%s", _("failed to install the theme :-("));
+	}
 
 	free(url);
 	free(dest);
