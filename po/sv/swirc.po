@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-28 14:53+0200\n"
-"PO-Revision-Date: 2024-08-23 11:43+0200\n"
+"PO-Revision-Date: 2024-08-28 14:58+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -127,27 +127,27 @@ msgstr "%s: filöverföringen ofullständig: %s"
 #: ../src/commands/theme.c:313
 #, c-format
 msgid "failed to remove: %s"
-msgstr ""
+msgstr "misslyckades med att ta bort: %s"
 
 #: ../src/commands/theme.c:332
 msgid "no such theme in the database"
-msgstr ""
+msgstr "inget sådant tema i databasen"
 
 #: ../src/commands/theme.c:352
 msgid "theme installed (use 'set' to activate it)"
-msgstr ""
+msgstr "tema installerat (använd 'set' för att aktivera det)"
 
 #: ../src/commands/theme.c:355
 msgid "failed to install the theme :-("
-msgstr ""
+msgstr "misslyckades med att installera temat :-("
 
 #: ../src/commands/theme.c:403
 msgid "non-existent"
-msgstr ""
+msgstr "obefintlig"
 
 #: ../src/commands/theme.c:416
 msgid "theme activated"
-msgstr ""
+msgstr "tema aktiverat"
 
 #: ../src/events/account.cpp:56
 #, c-format
