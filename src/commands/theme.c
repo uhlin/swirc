@@ -51,8 +51,8 @@
 #include "../theme.h"
 #include "../titlebar.h"
 
-/* this is not '../theme.h' */
-#include "theme.h"
+#include "i18n.h"
+#include "theme.h" /* this is not '../theme.h' */
 
 #ifndef PATH_MAX
 #define PATH_MAX 1024
