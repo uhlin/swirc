@@ -240,7 +240,7 @@ get_password(void)
 		    sizeof pass)) == 0)
 			return (&pass[0]);
 		else {
-			err_log(errno, "%s: string copy error", __func__);
+			err_log(errno, _("%s: string copy error"), __func__);
 			return NULL;
 		}
 	}
@@ -256,7 +256,7 @@ get_password(void)
 		bool	fgets_error;
 		int	errno_save;
 
-		printf("Server password (will not echo): ");
+		printf("%s", _("Server password (will not echo): "));
 		fflush(stdout);
 
 		term_toggle_echo(OFF);
@@ -272,7 +272,7 @@ get_password(void)
 		} else if (strchr(pass, '\n') == NULL) {
 			int c;
 
-			puts("input too big");
+			puts(_("input too big"));
 
 			while (c = getchar(), c != '\n' && c != EOF)
 				/* discard */;
@@ -534,8 +534,8 @@ do_connect(const char *server, const char *port, const char *pass)
 
 		while (net_connect(&conn_ctx, &sleep_time_seconds) ==
 		    SHOULD_RETRY_TO_CONNECT) {
-			printtext(&ptext_ctx, "Next reconnect attempt in %ld "
-			    "seconds...", sleep_time_seconds);
+			printtext(&ptext_ctx, _("Next reconnect attempt in %ld "
+			    "seconds..."), sleep_time_seconds);
 
 			for (long int secs = 0;
 			    secs < sleep_time_seconds;
@@ -545,8 +545,8 @@ do_connect(const char *server, const char *port, const char *pass)
 				if (quit_reconnecting) {
 					net_kill_connection();
 					net_connect_clean_up();
-					printtext(&ptext_ctx, "Reconnection "
-					    "aborted!");
+					printtext(&ptext_ctx, "%s",
+					    _("Reconnection aborted!"));
 					goto out_of_both_loops;
 				}
 			}
