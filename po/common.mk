@@ -21,6 +21,7 @@ XGTFLAGS = --add-comments\
 
 INPUTFILES = $(COMMANDS_DIR)colormap.cpp\
 	$(COMMANDS_DIR)dcc.cpp\
+	$(COMMANDS_DIR)theme.c\
 	$(EVENTS_DIR)account.cpp\
 	$(EVENTS_DIR)away.cpp\
 	$(EVENTS_DIR)channel.cpp\
