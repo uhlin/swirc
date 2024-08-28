@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-08-28 14:53+0200\n"
+"POT-Creation-Date: 2024-08-28 15:33+0200\n"
 "PO-Revision-Date: 2024-08-23 11:37+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -26,6 +26,28 @@ msgstr "Oui"
 #: ../src/commands/dcc.cpp:976 ../src/statusbar.cpp:223
 msgid "No"
 msgstr "Non"
+
+#: ../src/commands/connect.c:243
+#, c-format
+msgid "%s: string copy error"
+msgstr ""
+
+#: ../src/commands/connect.c:259
+msgid "Server password (will not echo): "
+msgstr ""
+
+#: ../src/commands/connect.c:275
+msgid "input too big"
+msgstr ""
+
+#: ../src/commands/connect.c:537
+#, c-format
+msgid "Next reconnect attempt in %ld seconds..."
+msgstr ""
+
+#: ../src/commands/connect.c:549
+msgid "Reconnection aborted!"
+msgstr ""
 
 #: ../src/commands/dcc.cpp:205
 msgid "Write error"
