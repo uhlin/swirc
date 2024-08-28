@@ -49,6 +49,7 @@
 #include "../terminal.h"
 
 #include "connect.h"
+#include "i18n.h"
 
 volatile bool g_disconnect_wanted = false;
 
