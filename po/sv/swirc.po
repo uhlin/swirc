@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-28 15:33+0200\n"
-"PO-Revision-Date: 2024-08-28 15:34+0200\n"
+"PO-Revision-Date: 2024-08-28 15:37+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -30,24 +30,24 @@ msgstr "Nej"
 #: ../src/commands/connect.c:243
 #, c-format
 msgid "%s: string copy error"
-msgstr ""
+msgstr "%s: strängkopieringsfel"
 
 #: ../src/commands/connect.c:259
 msgid "Server password (will not echo): "
-msgstr ""
+msgstr "Serverlösenord (kommer inte att eka): "
 
 #: ../src/commands/connect.c:275
 msgid "input too big"
-msgstr ""
+msgstr "input för stor"
 
 #: ../src/commands/connect.c:537
 #, c-format
 msgid "Next reconnect attempt in %ld seconds..."
-msgstr ""
+msgstr "Nästa återanslutningsförsök om %ld sekunder..."
 
 #: ../src/commands/connect.c:549
 msgid "Reconnection aborted!"
-msgstr ""
+msgstr "Återanslutningen avbröts!"
 
 #: ../src/commands/dcc.cpp:205
 msgid "Write error"
