@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-29 14:28+0200\n"
-"PO-Revision-Date: 2024-08-29 11:15+0200\n"
+"PO-Revision-Date: 2024-08-29 16:59+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -61,27 +61,27 @@ msgstr "Reconnexion annulée!"
 
 #: ../src/commands/dcc.cpp:205
 msgid "Write error"
-msgstr ""
+msgstr "Erreur d'écriture de fichier"
 
 #: ../src/commands/dcc.cpp:330
 #, c-format
 msgid "%s: wrote: %s"
-msgstr ""
+msgstr "%s: a écrit: %s"
 
 #: ../src/commands/dcc.cpp:333
 #, c-format
 msgid "%s: did not complete: %s"
-msgstr ""
+msgstr "%s: n'a pas terminé: %s"
 
 #: ../src/commands/dcc.cpp:940
 #, c-format
 msgid "%sStarted%s: %s"
-msgstr ""
+msgstr "%sDémarré%s: %s"
 
 #: ../src/commands/dcc.cpp:942
 #, c-format
 msgid "%sStopped%s: %s"
-msgstr ""
+msgstr "%sArrêté%s: %s"
 
 #: ../src/commands/dcc.cpp:1078
 #, c-format

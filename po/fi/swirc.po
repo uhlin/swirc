@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-29 14:28+0200\n"
-"PO-Revision-Date: 2024-08-29 11:31+0200\n"
+"PO-Revision-Date: 2024-08-29 17:06+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -61,27 +61,27 @@ msgstr "Uudelleenkytkentä keskeytetty!"
 
 #: ../src/commands/dcc.cpp:205
 msgid "Write error"
-msgstr ""
+msgstr "Tiedoston kirjoitusvirhe"
 
 #: ../src/commands/dcc.cpp:330
 #, c-format
 msgid "%s: wrote: %s"
-msgstr ""
+msgstr "%s: kirjoitti: %s"
 
 #: ../src/commands/dcc.cpp:333
 #, c-format
 msgid "%s: did not complete: %s"
-msgstr ""
+msgstr "%s: ei suoritettu loppuun: %s"
 
 #: ../src/commands/dcc.cpp:940
 #, c-format
 msgid "%sStarted%s: %s"
-msgstr ""
+msgstr "%sAlkoi%s: %s"
 
 #: ../src/commands/dcc.cpp:942
 #, c-format
 msgid "%sStopped%s: %s"
-msgstr ""
+msgstr "%sLopetti%s: %s"
 
 #: ../src/commands/dcc.cpp:1078
 #, c-format
