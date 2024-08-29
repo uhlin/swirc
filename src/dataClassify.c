@@ -302,6 +302,7 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F354, 0x1F374, "Food symbols"},
 		{0x1F375, 0x1F37C, "Beverage symbols"},
 		{0x1F37E, 0x1F37F, "Beverage and food symbols"},
+		{0x1F380, 0x1F393, "Celebration symbols"},
 		{0x1F446, 0x1F450, "Hand symbols"},
 		{0x1F600, 0x1F64F, "Emoticons"},
 		{0x1F680, 0x1F6A4, "Vehicles"},
