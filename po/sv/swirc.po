@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-29 10:06+0200\n"
-"PO-Revision-Date: 2024-08-28 15:37+0200\n"
+"PO-Revision-Date: 2024-08-29 10:09+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -29,7 +29,7 @@ msgstr "Nej"
 
 #: ../src/commands/connect.c:206
 msgid "Connect using password? [Y/n]: "
-msgstr ""
+msgstr "Ansluta med lösenord? [Y/n]: "
 
 #: ../src/commands/connect.c:214 ../src/commands/connect.c:275
 #: ../src/commands/connect.c:325
@@ -48,7 +48,7 @@ msgstr "Serverlösenord (kommer inte att eka): "
 #: ../src/commands/connect.c:311
 #, c-format
 msgid "Your choice (0-%d): "
-msgstr ""
+msgstr "Ditt val (0-%d): "
 
 #: ../src/commands/connect.c:537
 #, c-format
