@@ -185,7 +185,7 @@ prompt_for_decryption(const char *str)
 		} else if (strchr(pass, '\n') == NULL) {
 			int	c;
 
-			puts("Input too big");
+			puts(_("input too big"));
 
 			while (c = getchar(), c != '\n' && c != EOF)
 				/* discard */;
