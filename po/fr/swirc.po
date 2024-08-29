@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-08-29 10:06+0200\n"
+"POT-Creation-Date: 2024-08-29 14:28+0200\n"
 "PO-Revision-Date: 2024-08-29 11:15+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -32,7 +32,7 @@ msgid "Connect using password? [Y/n]: "
 msgstr "Se connecter en utilisant un mot de passe? [Y/n]: "
 
 #: ../src/commands/connect.c:214 ../src/commands/connect.c:275
-#: ../src/commands/connect.c:325
+#: ../src/commands/connect.c:325 ../src/nestHome.c:188
 msgid "input too big"
 msgstr "la saisie utilisateur est trop grande"
 
