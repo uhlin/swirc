@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-08-28 15:33+0200\n"
+"POT-Creation-Date: 2024-08-29 10:06+0200\n"
 "PO-Revision-Date: 2024-08-23 11:36+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -27,6 +27,15 @@ msgstr "Kyllä"
 msgid "No"
 msgstr "Ei"
 
+#: ../src/commands/connect.c:206
+msgid "Connect using password? [Y/n]: "
+msgstr ""
+
+#: ../src/commands/connect.c:214 ../src/commands/connect.c:275
+#: ../src/commands/connect.c:325
+msgid "input too big"
+msgstr ""
+
 #: ../src/commands/connect.c:243
 #, c-format
 msgid "%s: string copy error"
@@ -36,8 +45,9 @@ msgstr ""
 msgid "Server password (will not echo): "
 msgstr ""
 
-#: ../src/commands/connect.c:275
-msgid "input too big"
+#: ../src/commands/connect.c:311
+#, c-format
+msgid "Your choice (0-%d): "
 msgstr ""
 
 #: ../src/commands/connect.c:537
