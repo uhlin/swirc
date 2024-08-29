@@ -313,6 +313,10 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F3F4, 0x1F3F4, "Waving black flag"},
 		{0x1F3F8, 0x1F3F9, "Sport symbols"},
 		{0x1F3FA, 0x1F3FA, "Amphora"},
+//		{0x1F3FB, 0x1F3FF, "Emoji modifiers"},
+
+		{0x1F400, 0x1F42C, "Animal symbols"},
+		{0x1F42D, 0x1F43D, "Animal faces"},
 		{0x1F446, 0x1F450, "Hand symbols"},
 		{0x1F600, 0x1F64F, "Emoticons"},
 		{0x1F680, 0x1F6A4, "Vehicles"},
