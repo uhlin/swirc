@@ -203,7 +203,7 @@ shouldConnectUsingPassword(void)
 	char answer[20] = { '\0' };
 
 	while (true) {
-		printf("Connect using password? [Y/n]: ");
+		printf("%s", _("Connect using password? [Y/n]: "));
 		fflush(stdout);
 
 		if (fgets(answer, sizeof answer, stdin) == NULL) {
@@ -211,7 +211,7 @@ shouldConnectUsingPassword(void)
 		} else if (strchr(answer, '\n') == NULL) {
 			int c;
 
-			puts("input too big");
+			puts(_("input too big"));
 
 			while (c = getchar(), c != '\n' && c != EOF)
 				/* discard */;
@@ -308,7 +308,7 @@ get_server_v2(PIRC_SERVER ptr, const size_t size, const char *hdr)
 		i -= 1;
 	srvno = 0;
 	while (true) {
-		printf("Your choice (0-%d): ", i);
+		printf(_("Your choice (0-%d): "), i);
 		fflush(stdout);
 
 /*
@@ -322,7 +322,7 @@ get_server_v2(PIRC_SERVER ptr, const size_t size, const char *hdr)
 		} else if (strchr(ans, '\n') == NULL) {
 			int c;
 
-			puts("input too big");
+			puts(_("input too big"));
 
 			while (c = getchar(), c != '\n' && c != EOF)
 				/* discard */;
