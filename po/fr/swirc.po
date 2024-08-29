@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-29 10:06+0200\n"
-"PO-Revision-Date: 2024-08-23 11:37+0200\n"
+"PO-Revision-Date: 2024-08-29 11:15+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -29,35 +29,35 @@ msgstr "Non"
 
 #: ../src/commands/connect.c:206
 msgid "Connect using password? [Y/n]: "
-msgstr ""
+msgstr "Se connecter en utilisant un mot de passe? [Y/n]: "
 
 #: ../src/commands/connect.c:214 ../src/commands/connect.c:275
 #: ../src/commands/connect.c:325
 msgid "input too big"
-msgstr ""
+msgstr "la saisie utilisateur est trop grande"
 
 #: ../src/commands/connect.c:243
 #, c-format
 msgid "%s: string copy error"
-msgstr ""
+msgstr "%s: erreur de copie de string"
 
 #: ../src/commands/connect.c:259
 msgid "Server password (will not echo): "
-msgstr ""
+msgstr "Mot de passe du serveur (ne fera pas écho): "
 
 #: ../src/commands/connect.c:311
 #, c-format
 msgid "Your choice (0-%d): "
-msgstr ""
+msgstr "Votre choix (0-%d): "
 
 #: ../src/commands/connect.c:537
 #, c-format
 msgid "Next reconnect attempt in %ld seconds..."
-msgstr ""
+msgstr "Prochaine tentative de reconnexion dans %ld secondes..."
 
 #: ../src/commands/connect.c:549
 msgid "Reconnection aborted!"
-msgstr ""
+msgstr "Reconnexion annulée!"
 
 #: ../src/commands/dcc.cpp:205
 msgid "Write error"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-29 10:06+0200\n"
-"PO-Revision-Date: 2024-08-23 11:36+0200\n"
+"PO-Revision-Date: 2024-08-29 11:31+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -29,35 +29,35 @@ msgstr "Ei"
 
 #: ../src/commands/connect.c:206
 msgid "Connect using password? [Y/n]: "
-msgstr ""
+msgstr "Yhdistä salasanalla? [Y/n]: "
 
 #: ../src/commands/connect.c:214 ../src/commands/connect.c:275
 #: ../src/commands/connect.c:325
 msgid "input too big"
-msgstr ""
+msgstr "käyttäjän syöte liian suuri"
 
 #: ../src/commands/connect.c:243
 #, c-format
 msgid "%s: string copy error"
-msgstr ""
+msgstr "%s: merkkijonon kopiointivirhe"
 
 #: ../src/commands/connect.c:259
 msgid "Server password (will not echo): "
-msgstr ""
+msgstr "Palvelimen salasana (ei kaiku): "
 
 #: ../src/commands/connect.c:311
 #, c-format
 msgid "Your choice (0-%d): "
-msgstr ""
+msgstr "Valintasi (0-%d): "
 
 #: ../src/commands/connect.c:537
 #, c-format
 msgid "Next reconnect attempt in %ld seconds..."
-msgstr ""
+msgstr "Seuraava uudelleenyhteysyritys %ld sekunnin kuluttua..."
 
 #: ../src/commands/connect.c:549
 msgid "Reconnection aborted!"
-msgstr ""
+msgstr "Uudelleenkytkentä keskeytetty!"
 
 #: ../src/commands/dcc.cpp:205
 msgid "Write error"
