@@ -332,8 +332,12 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		return 0;
 	else if (wc < fullwidth[0].start)
 		return (is_cjk(wc) ? fwlen : 1);
+
+	const size_t end = (wc < fullwidth[mid].start ? mid :
+	    ARRAY_SIZE(fullwidth));
+
 	for (const RANGE *rp = &fullwidth[wc < fullwidth[mid].start ? 0 : mid];
-	    rp < &fullwidth[ARRAY_SIZE(fullwidth)];
+	    rp < &fullwidth[end];
 	    rp++) {
 		if (wc >= rp->start && wc <= rp->stop)
 			return fwlen;
