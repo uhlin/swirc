@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-29 14:28+0200\n"
-"PO-Revision-Date: 2024-09-03 21:49+0200\n"
+"PO-Revision-Date: 2024-09-03 23:49+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -132,15 +132,15 @@ msgstr ""
 
 #: ../src/commands/dcc.cpp:1570
 msgid "unable to find the send object"
-msgstr ""
+msgstr "lähetysobjektia ei löydy"
 
 #: ../src/commands/dcc.cpp:1578
 msgid "already sent file"
-msgstr ""
+msgstr "tiedosto on jo lähetetty"
 
 #: ../src/commands/dcc.cpp:1581
 msgid "the send object is in a locked state"
-msgstr ""
+msgstr "lähetysobjekti on lukitussa tilassa"
 
 #: ../src/commands/dcc.cpp:1586
 msgid "file open error"
