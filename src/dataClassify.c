@@ -317,6 +317,9 @@ xwcwidth(const wchar_t wc, const int fwlen)
 
 		{0x1F400, 0x1F42C, "Animal symbols"},
 		{0x1F42D, 0x1F43D, "Animal faces"},
+		{0x1F43E, 0x1F43E, "Paw prints"},
+		{0x1F440, 0x1F440, "Eyes"},
+		{0x1F442, 0x1F445, "Facial parts symbols"},
 		{0x1F446, 0x1F450, "Hand symbols"},
 		{0x1F600, 0x1F64F, "Emoticons"},
 		{0x1F680, 0x1F6A4, "Vehicles"},
