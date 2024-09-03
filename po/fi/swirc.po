@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-29 14:28+0200\n"
-"PO-Revision-Date: 2024-08-29 17:06+0200\n"
+"PO-Revision-Date: 2024-09-03 21:49+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -86,30 +86,30 @@ msgstr "%sLopetti%s: %s"
 #: ../src/commands/dcc.cpp:1078
 #, c-format
 msgid "sending '%s' to %s (%.1f%c)..."
-msgstr ""
+msgstr "lähetetään '%s' osoitteeseen %s (%.1f%c)..."
 
 #: ../src/commands/dcc.cpp:1161
 msgid "Missing certs. Not starting the DCC server. Please create them."
-msgstr ""
+msgstr "SSL sertifikaatit puuttuvat. DCC palvelinta ei käynnistetä. Ole hyvä ja luo ne."
 
 #: ../src/commands/dcc.cpp:1268
 #, c-format
 msgid "%s: added: '%s' (%.1f%c)"
-msgstr ""
+msgstr "%s: lisätty: '%s' (%.1f%c)"
 
 #: ../src/commands/dcc.cpp:1270
 #, c-format
 msgid "%s: from: %s <%s@%s>"
-msgstr ""
+msgstr "%s: lähettäjä: %s <%s@%s>"
 
 #: ../src/commands/dcc.cpp:1272
 msgid "To get the file, type:"
-msgstr ""
+msgstr "Saadaksesi tiedoston, kirjoita:"
 
 #: ../src/commands/dcc.cpp:1523
 #, c-format
 msgid "%s: file read error"
-msgstr ""
+msgstr "%s: tiedostolukuvirhe"
 
 #: ../src/commands/dcc.cpp:1528
 #, c-format
