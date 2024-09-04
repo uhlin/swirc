@@ -327,6 +327,9 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F481, 0x1F483, "Role symbols"},
 		{0x1F484, 0x1F488, "Personal care symbols"},
 		{0x1F489, 0x1F48A, "Medical symbols"},
+		{0x1F48B, 0x1F492, "Romance symbols"},
+		{0x1F493, 0x1F49F, "Heart symbols"},
+
 		{0x1F600, 0x1F64F, "Emoticons"},
 		{0x1F680, 0x1F6A4, "Vehicles"},
 		{0x1F6A5, 0x1F6A8, "Traffic signs"},
