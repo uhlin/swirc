@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-29 14:28+0200\n"
-"PO-Revision-Date: 2024-09-03 23:49+0200\n"
+"PO-Revision-Date: 2024-09-04 10:09+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -144,42 +144,42 @@ msgstr "lähetysobjekti on lukitussa tilassa"
 
 #: ../src/commands/dcc.cpp:1586
 msgid "file open error"
-msgstr ""
+msgstr "tiedoston avaamisvirhe"
 
 #: ../src/commands/dcc.cpp:1605
 #, c-format
 msgid "%s: successfully sent file: %s"
-msgstr ""
+msgstr "%s: onnistuneesti lähetetty tiedosto: %s"
 
 #: ../src/commands/dcc.cpp:1609
 #, c-format
 msgid "%s: file transfer incomplete: %s"
-msgstr ""
+msgstr "%s: tiedostonsiirto keskeneräinen: %s"
 
 #: ../src/commands/theme.c:313
 #, c-format
 msgid "failed to remove: %s"
-msgstr ""
+msgstr "ei onnistunut poistamaan: %s"
 
 #: ../src/commands/theme.c:332
 msgid "no such theme in the database"
-msgstr ""
+msgstr "tietokannassa ei ole tällaista teemaa"
 
 #: ../src/commands/theme.c:352
 msgid "theme installed (use 'set' to activate it)"
-msgstr ""
+msgstr "teema asennettu (aktivoi se käyttämällä 'set')"
 
 #: ../src/commands/theme.c:355
 msgid "failed to install the theme :-("
-msgstr ""
+msgstr "teeman asennus epäonnistui :-("
 
 #: ../src/commands/theme.c:403
 msgid "non-existent"
-msgstr ""
+msgstr "olematon"
 
 #: ../src/commands/theme.c:416
 msgid "theme activated"
-msgstr ""
+msgstr "teema aktivoitu"
 
 #: ../src/events/account.cpp:56
 #, c-format
