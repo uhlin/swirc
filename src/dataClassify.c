@@ -334,6 +334,8 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F4B0, 0x1F4B9, "Money symbols"},
 		{0x1F4BA, 0x1F4DC, "Office symbols"},
 		{0x1F4DD, 0x1F4F6, "Communication symbols"},
+		{0x1F4F7, 0x1F4FC, "Audio and video symbols"},
+		{0x1F4FF, 0x1F4FF, "Prayer beads"},
 
 		{0x1F600, 0x1F64F, "Emoticons"},
 		{0x1F680, 0x1F6A4, "Vehicles"},
