@@ -337,6 +337,11 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F4F7, 0x1F4FC, "Audio and video symbols"},
 		{0x1F4FF, 0x1F4FF, "Prayer beads"},
 
+		{0x1F500, 0x1F518, "User interface symbols"},
+		{0x1F519, 0x1F51D, "Words with arrows"},
+		{0x1F51E, 0x1F51F, "Enclosed alphanumeric symbols"},
+		{0x1F520, 0x1F524, "User interface input status symbols"},
+
 		{0x1F600, 0x1F64F, "Emoticons"},
 		{0x1F680, 0x1F6A4, "Vehicles"},
 		{0x1F6A5, 0x1F6A8, "Traffic signs"},
