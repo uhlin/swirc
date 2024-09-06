@@ -354,7 +354,8 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		return 1;
 	else if (wc < 0x20 || is_combined(wc))
 		return 0;
-	else if (wc < fullwidth[0].start)
+	else if (wc < fullwidth[0].start ||
+	    wc > fullwidth[ARRAY_SIZE(fullwidth) - 1].stop)
 		return (is_cjk(wc) ? fwlen : 1);
 
 	const size_t begin = (wc < fullwidth[mid].start ? 0 : mid);
