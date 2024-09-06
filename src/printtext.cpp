@@ -830,7 +830,7 @@ case_underline(WINDOW *win, bool *is_underline)
 static void
 set_indent(int *indent, CSTRING fmt, ...)
 {
-	char		*str = nullptr;
+	STRING		 str = nullptr;
 	size_t		 bytes_convert;
 	va_list		 ap;
 	wchar_t		 wcs[400] = { L'\0' };

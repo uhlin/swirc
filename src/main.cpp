@@ -175,7 +175,7 @@ swirc_terminate()
 static void
 view_version()
 {
-	char *MessageVersion;
+	STRING MessageVersion;
 
 	MessageVersion = strdup_printf("Swirc %s\nCopyright (C) %s %s. "
 	    "All rights reserved.\n%s %s\n",
@@ -221,9 +221,9 @@ view_version()
  * Print help
  */
 static void
-print_help(const char *exe)
+print_help(CSTRING exe)
 {
-	char *MessageUsage;
+	STRING MessageUsage;
 
 	MessageUsage = strdup_printf(_("Usage: %s [OPTION] ...\n"), exe);
 	PUTS(MessageUsage);
