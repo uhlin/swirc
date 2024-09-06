@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-29 14:28+0200\n"
-"PO-Revision-Date: 2024-09-05 21:52+0200\n"
-"Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
+"PO-Revision-Date: 2024-09-06 19:07+0200\n"
+"Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -1585,59 +1585,61 @@ msgstr ""
 #: ../src/nestHome.c:129
 #, c-format
 msgid "%s exists. However; it isn't a directory."
-msgstr ""
+msgstr "%s on olemassa. Kuitenkin; se ei ole hakemisto."
 
 #: ../src/nestHome.c:133 ../src/nestHome.c:136
 msgid "Cannot make directory"
-msgstr ""
+msgstr "Hakemistoa ei voi tehdä"
 
 #: ../src/nestHome.c:163
 msgid "Please decrypt your SASL password..."
-msgstr ""
+msgstr "Ole hyvä ja pura SASL salasanasi salaus..."
 
 #: ../src/nestHome.c:164
 msgid "(One attempt)"
-msgstr ""
+msgstr "(Yksi yritys)"
 
 #: ../src/nestHome.c:172
 msgid "Password: "
-msgstr ""
+msgstr "Salasana: "
 
 #: ../src/nestHome.c:202
 msgid "Decryption failed"
-msgstr ""
+msgstr "Salauksen purku epäonnistui"
 
 #: ../src/nestHome.c:205
 msgid "Wrong password"
-msgstr ""
+msgstr "Väärä salasana"
 
 #: ../src/nestHome.c:216
 msgid "The password seems reasonable"
-msgstr ""
+msgstr "Salasana vaikuttaa järkevältä"
 
 #: ../src/nestHome.c:228
 msgid "Press <RETURN>"
-msgstr ""
+msgstr "Paina <RETURN>"
 
 #: ../src/nestHome.c:253 ../src/nestHome.c:264 ../src/nestHome.c:323
 #, c-format
 msgid "%s exists  --  but isn't a regular file."
-msgstr ""
+msgstr "%s on olemassa  --  mutta se ei ole tavallinen tiedosto."
 
 #: ../src/nestHome.c:256 ../src/nestHome.c:331
 #, c-format
 msgid "%s no such file or directory. Exiting..."
-msgstr ""
+msgstr "%s ei tällaista tiedostoa tai hakemistoa. Poistuu..."
 
 #: ../src/nestHome.c:287
 msgid "Warning!"
-msgstr ""
+msgstr "Varoitus!"
 
 #: ../src/nestHome.c:288
 msgid ""
 "A decrypted SASL password was found in the read configuration file  --  "
 "cannot continue!"
 msgstr ""
+"Luetusta määritystiedostosta löytyi salauksesta purettu SASL salasana  --  "
+"ei voi jatkaa!"
 
 #: ../src/nestHome.c:319
 msgid "The item 'theme' in the user configuration file holds no data. Error."
