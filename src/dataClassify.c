@@ -346,6 +346,7 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F532, 0x1F539, "Geometric shapes"},
 		{0x1F53A, 0x1F53D, "User interface symbols"},
 		{0x1F54B, 0x1F54E, "Religious symbols"},
+		{0x1F550, 0x1F567, "Clock face symbols"},
 
 		{0x1F600, 0x1F64F, "Emoticons"},
 		{0x1F680, 0x1F6A4, "Vehicles"},
