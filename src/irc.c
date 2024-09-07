@@ -82,8 +82,8 @@ bool	 g_am_irc_op = false;
 bool	 g_is_away = false;
 bool	 g_received_welcome = false;
 
-char	*g_my_nickname = NULL;
-char	*g_server_hostname = NULL;
+STRING	 g_my_nickname = NULL;
+STRING	 g_server_hostname = NULL;
 
 /****************************************************************
 *                                                               *

@@ -13,9 +13,9 @@ struct irc_message_compo {
 	int second;
 	int precision;
 
-	char *prefix;
-	char *command;
-	char *params;
+	STRING prefix;
+	STRING command;
+	STRING params;
 };
 
 typedef void (*event_handler_fn)(struct irc_message_compo *);
@@ -41,8 +41,8 @@ extern bool	 g_am_irc_op;
 extern bool	 g_is_away;
 extern bool	 g_received_welcome;
 
-extern char	*g_my_nickname;
-extern char	*g_server_hostname;
+extern STRING	 g_my_nickname;
+extern STRING	 g_server_hostname;
 
 void	irc_init(void);
 void	irc_deinit(void);
