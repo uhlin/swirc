@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-29 14:28+0200\n"
-"PO-Revision-Date: 2024-09-07 11:56+0200\n"
+"PO-Revision-Date: 2024-09-07 12:09+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -505,6 +505,10 @@ msgid ""
 "it's incompatible with other IRC clients. Transport Layer Security is\n"
 "forced and for now the DCC feature isn't available in ICB mode."
 msgstr ""
+"Hanki ja lähetä tiedostoja. Swirc toteuttaa oman DCC versionsa, mikä\n"
+"tarkoittaa, että se ei ole yhteensopiva muiden IRC asiakkaiden\n"
+"kanssa. Transport Layer Security on pakotettu, eikä DCC ominaisuus ole\n"
+"toistaiseksi käytettävissä ICB tilassa."
 
 #: ../src/include/commandhelp.h:190
 msgid "usage: /deop <nick>"
@@ -516,11 +520,11 @@ msgstr "Poista kanavaoperaattorin oikeudet toiselta käyttäjältä."
 
 #: ../src/include/commandhelp.h:197
 msgid "usage: /devoice <nick>"
-msgstr ""
+msgstr "käyttö: /devoice <nimi>"
 
 #: ../src/include/commandhelp.h:199
 msgid "Remove the channel voice privilege from another user."
-msgstr ""
+msgstr "Poista kanavan puheoikeudet toiselta käyttäjältä."
 
 #: ../src/include/commandhelp.h:204
 msgid "usage: /die [--I-am-sure]"
