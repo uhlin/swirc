@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-29 14:28+0200\n"
-"PO-Revision-Date: 2024-09-07 10:11+0200\n"
+"PO-Revision-Date: 2024-09-07 11:56+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -1356,7 +1356,7 @@ msgstr ""
 #: ../src/interpreter.cpp:56 ../src/interpreter.cpp:87
 #, c-format
 msgid "%s: fatal: string was truncated"
-msgstr ""
+msgstr "%s: kohtalokas: merkkijono katkaistiin"
 
 #: ../src/io-loop.c:608
 #, c-format
@@ -1403,42 +1403,42 @@ msgstr "Virhelokin koko %s%.1f KB%s"
 #: ../src/irc.c:329
 #, c-format
 msgid "%s: no nickname"
-msgstr ""
+msgstr "%s: ei lempinimeä"
 
 #: ../src/irc.c:447
 #, c-format
 msgid "%s: empty message"
-msgstr ""
+msgstr "%s: tyhjä viesti"
 
 #: ../src/irc.c:478
 #, c-format
 msgid "%s: too many semicolons"
-msgstr ""
+msgstr "%s: liian monta puolipistettä"
 
 #: ../src/irc.c:504
 #, c-format
 msgid "%s: cannot find time"
-msgstr ""
+msgstr "%s: ei löydy aikaa"
 
 #: ../src/irc.c:510 ../src/irc.c:555
 #, c-format
 msgid "%s: server time error"
-msgstr ""
+msgstr "%s: palvelinaikavirhe"
 
 #: ../src/irc.c:560
 #, c-format
 msgid "%s: unsupported extension"
-msgstr ""
+msgstr "%s: ei tuettu laajennus"
 
 #: ../src/irc.c:741
 #, c-format
 msgid "Unknown normal event: %s"
-msgstr ""
+msgstr "Tuntematon normaali tapahtuma: %s"
 
 #: ../src/irc.c:752
 #, c-format
 msgid "Unknown numeric event: %s"
-msgstr ""
+msgstr "Tuntematon numeerinen tapahtuma: %s"
 
 #: ../src/irc.c:760
 #, c-format
@@ -1458,7 +1458,7 @@ msgstr "Ikkunan kirjaaminen (refnum: %d) on nyt päällä"
 #: ../src/main.cpp:83
 #, c-format
 msgid "A duplicate of option -%c found"
-msgstr ""
+msgstr "Vaihtoehdosta -%c löytyi kopio"
 
 #: ../src/main.cpp:140
 msgid ""
@@ -1549,7 +1549,7 @@ msgstr "    -x <config>          Config tiedosto\n"
 
 #: ../src/main.cpp:168
 msgid "Unhandled exception!"
-msgstr ""
+msgstr "Käsittelemätön poikkeus!"
 
 #: ../src/main.cpp:228
 #, c-format
