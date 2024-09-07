@@ -356,6 +356,15 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F600, 0x1F64F, "Emoticons"},
 		{0x1F680, 0x1F6A4, "Vehicles"},
 		{0x1F6A5, 0x1F6A8, "Traffic signs"},
+		{0x1F6A9, 0x1F6C5, "Signage and other symbols"},
+		{0x1F6CC, 0x1F6CC, "Sleeping accommodation"},
+		{0x1F6D0, 0x1F6D2, "Signage and other symbols"},
+		{0x1F6D5, 0x1F6D7, "Map symbols"},
+		{0x1F6DD, 0x1F6DF, "Miscellaneous symbols"},
+		{0x1F6EB, 0x1F6EB, "Airplane departure"},
+		{0x1F6EC, 0x1F6EC, "Airplane arriving"},
+		{0x1F6F4, 0x1F6FC, "Vehicles"},
+
 		{0x1F90D, 0x1F90E, "Colored heart symbols"},
 		{0x1F920, 0x1F92F, "Emoticon faces"},
 	};
