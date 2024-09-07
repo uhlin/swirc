@@ -86,7 +86,7 @@ is_cjk(const wchar_t wc)
 	};
 	static const size_t mid = ARRAY_SIZE(array) / 2;
 
-	if (wc < array[0].start)
+	if (wc < array[0].start || wc > array[ARRAY_SIZE(array) - 1].stop)
 		return false;
 
 	for (const RANGE *rp = &array[wc < array[mid].start ? 0 : mid];
