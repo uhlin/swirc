@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-08-29 14:28+0200\n"
-"PO-Revision-Date: 2024-09-06 19:07+0200\n"
+"PO-Revision-Date: 2024-09-07 10:11+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -1563,12 +1563,12 @@ msgstr ""
 #: ../src/main.cpp:467
 #, c-format
 msgid "%s: -%c: unrecognized option"
-msgstr ""
+msgstr "%s: -%c: tunnistamaton vaihtoehto"
 
 #: ../src/main.cpp:472
 #, c-format
 msgid "%s: -%c: option argument missing"
-msgstr ""
+msgstr "%s: -%c: vaihtoehdon argumentti puuttuu"
 
 #: ../src/main.cpp:629
 msgid "fatal: failed to initialize signal handling"
@@ -1576,7 +1576,7 @@ msgstr ""
 
 #: ../src/main.cpp:651
 msgid "fatal: running the program with root privileges is forbidden"
-msgstr ""
+msgstr "fataali: ohjelman suorittaminen pääkäyttäjän oikeuksilla on kielletty"
 
 #: ../src/main.cpp:672
 msgid "Initialization of the Curses library not possible"
