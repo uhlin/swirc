@@ -347,6 +347,11 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F53A, 0x1F53D, "User interface symbols"},
 		{0x1F54B, 0x1F54E, "Religious symbols"},
 		{0x1F550, 0x1F567, "Clock face symbols"},
+		{0x1F57A, 0x1F57A, "Man dancing"},
+		{0x1F595, 0x1F595, "Reversed hand with middle finger extended"},
+		{0x1F596, 0x1F596, "Raised hand with part between middle and ring fingers"},
+		{0x1F5A4, 0x1F5A4, "Black heart"},
+		{0x1F5FB, 0x1F5FF, "Cultural symbols"},
 
 		{0x1F600, 0x1F64F, "Emoticons"},
 		{0x1F680, 0x1F6A4, "Vehicles"},
