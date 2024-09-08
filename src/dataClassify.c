@@ -32,6 +32,7 @@
 #include <string.h>
 
 #include "dataClassify.h"
+#include "errHand.h"
 #include "strHand.h"
 
 static const size_t	filename_len_max = 80;
@@ -369,6 +370,18 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F920, 0x1F92F, "Emoticon faces"},
 	};
 	static const size_t mid = ARRAY_SIZE(fullwidth) / 2;
+
+#if TEST_XWCWIDTH
+#pragma message("warning: test included (not to be used in production)")
+	if (wc == L'\0' && fwlen == 7357) {
+		for (const RANGE *rp = &fullwidth[0];
+		    rp < &fullwidth[ARRAY_SIZE(fullwidth)];
+		    rp++) {
+			if (rp->start > rp->stop)
+				err_quit("%s: test failed", __func__);
+		}
+	}
+#endif
 
 	if (wc >= 0x20 && wc <= 0xFF)
 		return 1;

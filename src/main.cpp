@@ -658,6 +658,11 @@ main(int argc, char *argv[])
 
 	srand(get_seed());
 
+#if TEST_XWCWIDTH
+#pragma message("warning: test included (not to be used in production)")
+	(void) xwcwidth(L'\0', 7357);
+#endif
+
 	term_init();
 	nestHome_init();
 

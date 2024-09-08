@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#define TEST_XWCWIDTH 1
+
 typedef struct tagRANGE {
 #if defined(UNIX)
 	wchar_t start;
