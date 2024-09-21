@@ -264,10 +264,6 @@ netsplit_run_bkgd_task(void)
 		time_t		diff;
 
 		if (!(*it)->join_begun()) {
-			if ((*it)->has_announced_split()) {
-				++it;
-				continue;
-			}
 			if ((*it)->get_split_time() > now) {
 				printtext(&ptext_ctx, "%s: %s: unexpected "
 				    "split time (too large)", __func__, chan);
@@ -297,7 +293,8 @@ netsplit_run_bkgd_task(void)
 				delete *it;
 				it = netsplit_db.erase(it);
 				continue;
-			} else if (diff >= secs_split_stop)
+			} else if (diff >= secs_split_stop &&
+				   !(*it)->has_announced_split())
 				(*it)->announce_split();
 			++it;
 		} else {
