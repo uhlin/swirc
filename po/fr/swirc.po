@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-08-29 14:28+0200\n"
+"POT-Creation-Date: 2024-09-21 23:49+0200\n"
 "PO-Revision-Date: 2024-08-29 16:59+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -201,17 +201,17 @@ msgstr ""
 msgid "%s%s%c %s%s@%s%s has been marked as being away (%s)"
 msgstr "%s%s%c %s%s@%s%s a été marqué comme étant absent (%s)"
 
-#: ../src/events/channel.cpp:86
+#: ../src/events/channel.cpp:98
 #, c-format
 msgid "Homepage for %s%s%s%c%s: %s"
 msgstr "Page d'accueil de %s%s%s%c%s: %s"
 
-#: ../src/events/channel.cpp:154
+#: ../src/events/channel.cpp:178
 #, c-format
 msgid "%s%s%c %s%s@%s%s has joined %s%s%c"
 msgstr "%s%s%c %s%s@%s%s a rejoint %s%s%c"
 
-#: ../src/events/channel.cpp:237
+#: ../src/events/channel.cpp:261
 #, c-format
 msgid "%s was kicked from %s%s%c by %s%s%c %s%s%s"
 msgstr "%s a été expulsé de %s%s%c par %s%s%c %s%s%s"
@@ -219,47 +219,47 @@ msgstr "%s a été expulsé de %s%s%c par %s%s%c %s%s%s"
 #.
 #. * User mode
 #.
-#: ../src/events/channel.cpp:505
+#: ../src/events/channel.cpp:526
 #, c-format
 msgid "Mode change %s%s%s for user %c%s%c"
 msgstr "Changement de mode %s%s%s pour l'utilisateur %c%s%c"
 
-#: ../src/events/channel.cpp:513
+#: ../src/events/channel.cpp:534
 #, c-format
 msgid "mode/%s%s%s%c%s %s%s%s by %s%s%c"
 msgstr "mode/%s%s%s%c%s %s%s%s par %s%s%c"
 
-#: ../src/events/channel.cpp:615
+#: ../src/events/channel.cpp:636
 #, c-format
 msgid "%s%s%c is now known as %s %s%s%c"
 msgstr "%s%s%c est maintenant connu sous le nom de %s %s%s%c"
 
-#: ../src/events/channel.cpp:694
+#: ../src/events/channel.cpp:715
 #, c-format
 msgid "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s"
 msgstr "%s%s%c %s%s@%s%s a quitté %s%s%c %s%s%s"
 
-#: ../src/events/channel.cpp:754
+#: ../src/events/channel.cpp:842
 #, c-format
 msgid "%s%s%c %s%s@%s%s has quit %s%s%s"
 msgstr "%s%s%c %s%s@%s%s est parti %s%s%s"
 
-#: ../src/events/channel.cpp:802
+#: ../src/events/channel.cpp:937
 #, c-format
 msgid "Topic for %s%s%s%c%s: %s"
 msgstr "Sujet pour %s%s%s%c%s: %s"
 
-#: ../src/events/channel.cpp:860
+#: ../src/events/channel.cpp:995
 #, c-format
 msgid "%c%s%c changed the topic of %c%s%c to: %s"
 msgstr "%c%s%c a changé le sujet de %c%s%c en: %s"
 
-#: ../src/events/channel.cpp:933
+#: ../src/events/channel.cpp:1068
 #, c-format
 msgid "Topic set by %c%s%c %s%s@%s%s %s%s%s"
 msgstr "Le sujet a été défini par %c%s%c %s%s@%s%s %s%s%s"
 
-#: ../src/events/channel.cpp:939
+#: ../src/events/channel.cpp:1074
 #, c-format
 msgid "Topic set by %c%s%c %s%s%s"
 msgstr "Le sujet a été défini par %c%s%c %s%s%s"
@@ -1300,20 +1300,31 @@ msgid "Asks after information about another user."
 msgstr ""
 
 #: ../src/include/commandhelp.h:837
-msgid "usage: /znc [*module] <command>"
+msgid "usage: /wholeft"
 msgstr ""
 
 #: ../src/include/commandhelp.h:839
+msgid ""
+"By using this command you can see who left during a network server\n"
+"split. The command takes no arguments and the active window must be an\n"
+"IRC channel."
+msgstr ""
+
+#: ../src/include/commandhelp.h:846
+msgid "usage: /znc [*module] <command>"
+msgstr ""
+
+#: ../src/include/commandhelp.h:848
 msgid ""
 "Simplifies the communication with ZNC which is a popular\n"
 "'IRC bouncer'."
 msgstr ""
 
-#: ../src/include/commandhelp.h:844
+#: ../src/include/commandhelp.h:853
 msgid "  Output your ZNC version:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:847
+#: ../src/include/commandhelp.h:856
 msgid "  Identical to the previous example:"
 msgstr ""
 
@@ -1322,44 +1333,44 @@ msgstr ""
 msgid "%s: fatal: string was truncated"
 msgstr ""
 
-#: ../src/io-loop.c:608
+#: ../src/io-loop.c:611
 #, c-format
 msgid "    Swirc %s by %s"
 msgstr "    Swirc %s par %s"
 
-#: ../src/io-loop.c:609
+#: ../src/io-loop.c:612
 #, c-format
 msgid "    Compiled on %s%s %s%s"
 msgstr "    Compilé %s%s %s%s"
 
-#: ../src/io-loop.c:615
+#: ../src/io-loop.c:618
 #, c-format
 msgid "Current language %s%s%s"
 msgstr "Langue actuelle %s%s%s"
 
-#: ../src/io-loop.c:618
+#: ../src/io-loop.c:621
 #, c-format
 msgid "Program settings are stored in %s%s%s"
 msgstr "Les réglages du programme sont stockés dans %s%s%s"
 
-#: ../src/io-loop.c:620
+#: ../src/io-loop.c:623
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
 msgstr "%c%hd%c paires de couleurs ont été initialisées"
 
-#: ../src/io-loop.c:622
+#: ../src/io-loop.c:625
 msgid "Type /help for a list of commands; or /help <command>"
 msgstr "Tapez /help pour une liste de commandes; ou /help <commande>"
 
-#: ../src/io-loop.c:624
+#: ../src/io-loop.c:627
 msgid "for help of a specific command"
 msgstr "pour l'aide d'une commande spécifique"
 
-#: ../src/io-loop.c:625
+#: ../src/io-loop.c:628
 msgid "Type F1 for keys"
 msgstr "Tapez F1 pour les touches du clavier"
 
-#: ../src/io-loop.c:627
+#: ../src/io-loop.c:630
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr "Taille du journal des erreurs %s%.1f KB%s"
@@ -1546,7 +1557,7 @@ msgstr ""
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr ""
 
-#: ../src/main.cpp:672
+#: ../src/main.cpp:677
 msgid "Initialization of the Curses library not possible"
 msgstr ""
 
@@ -1615,48 +1626,48 @@ msgstr ""
 msgid "Can't resolve the home path!"
 msgstr ""
 
-#: ../src/network.cpp:173
+#: ../src/network.cpp:175
 msgid "Failed to establish a connection"
 msgstr "Impossible d'établir une connexion"
 
-#: ../src/network.cpp:181
+#: ../src/network.cpp:183
 msgid "Hostname checking failed!"
 msgstr "La vérification du nom d'hôte a échoué!"
 
-#: ../src/network.cpp:183
+#: ../src/network.cpp:185
 msgid "Hostname checking OK!"
 msgstr "Vérification du nom d'hôte OK!"
 
-#: ../src/network.cpp:240
+#: ../src/network.cpp:242
 msgid "Connected!"
 msgstr "Connecté!"
 
-#: ../src/network.cpp:306
+#: ../src/network.cpp:308
 msgid "Unable to get a list of IP addresses"
 msgstr "Impossible d'obtenir une liste d'adresses IP"
 
-#: ../src/network.cpp:309
+#: ../src/network.cpp:311
 msgid "Get a list of IP addresses completed"
 msgstr "Obtenir une liste d'adresses IP, c'est fait"
 
-#: ../src/network.cpp:523
+#: ../src/network.cpp:525
 #, c-format
 msgid "Connecting to %s (%s)"
 msgstr "Connexion à %s (%s)"
 
-#: ../src/network.cpp:532
+#: ../src/network.cpp:534
 msgid "Cannot initiate use of the Winsock DLL"
 msgstr "Impossible de lancer l'utilisation de la DLL Winsock"
 
-#: ../src/network.cpp:535
+#: ../src/network.cpp:537
 msgid "Use of the Winsock DLL granted"
 msgstr "Utilisation de la DLL Winsock accordée"
 
-#: ../src/network.cpp:793
+#: ../src/network.cpp:804
 msgid "Connection to IRC server lost"
 msgstr "La connexion au serveur IRC a été perdue"
 
-#: ../src/network.cpp:807
+#: ../src/network.cpp:819
 msgid "Disconnected"
 msgstr "Déconnecté"
 
