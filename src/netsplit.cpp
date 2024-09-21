@@ -247,7 +247,7 @@ void
 netsplit_run_bkgd_task(void)
 {
 	PRINTTEXT_CONTEXT			ptext_ctx;
-	static const time_t			keep_split_secs = 600;
+	static const time_t			keep_split_secs = 900;
 	static const time_t			secs_split_stop = 5;
 	std::vector<netsplit *>::iterator	it;
 
