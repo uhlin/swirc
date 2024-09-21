@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-09-21 23:49+0200\n"
-"PO-Revision-Date: 2024-09-21 23:53+0200\n"
+"PO-Revision-Date: 2024-09-22 00:01+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1436,7 +1436,7 @@ msgstr "Frågar efter information om en annan användare."
 
 #: ../src/include/commandhelp.h:837
 msgid "usage: /wholeft"
-msgstr ""
+msgstr "användning: /wholeft"
 
 #: ../src/include/commandhelp.h:839
 msgid ""
@@ -1444,6 +1444,9 @@ msgid ""
 "split. The command takes no arguments and the active window must be an\n"
 "IRC channel."
 msgstr ""
+"Genom att använda det här kommandot kan du se vem som lämnade under en\n"
+"nätverksserveruppdelning. Kommandot tar inga argument och det aktiva\n"
+"fönstret måste vara en IRC kanal."
 
 #: ../src/include/commandhelp.h:846
 msgid "usage: /znc [*module] <command>"
