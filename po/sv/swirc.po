@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-09-21 23:49+0200\n"
-"PO-Revision-Date: 2024-08-29 10:09+0200\n"
+"PO-Revision-Date: 2024-09-21 23:53+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1435,9 +1435,8 @@ msgid "Asks after information about another user."
 msgstr "Frågar efter information om en annan användare."
 
 #: ../src/include/commandhelp.h:837
-#, fuzzy
 msgid "usage: /wholeft"
-msgstr "användning: /close"
+msgstr ""
 
 #: ../src/include/commandhelp.h:839
 msgid ""
