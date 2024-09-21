@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 - Added option `notifications` (bool). Turns notifications on/off.
 - Added new translations.
 - Added support for netjoin/netsplit. Few IRC server software support
-  the batches which were added in 3.4.8. This release comes with its
+  the batches which were added in 3.4.7. This release comes with its
   own implementation.
 - Improved `xwcwidth()`. I.e. added more full width character ranges,
   and switched to a better search algorithm.
