@@ -250,7 +250,7 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 }
 
 void
-crypt_freezero(void *vp, size_t len)
+crypt_freezero(void *vp, const size_t len)
 {
 	if (vp != nullptr && len > 0)
 		OPENSSL_cleanse(vp, len);
