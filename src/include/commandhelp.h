@@ -833,6 +833,15 @@ static usage_t whois_usage = {
   "",
 };
 
+static usage_t wholeft_usage = {
+  N_("usage: /wholeft"),
+  "",
+  N_("By using this command you can see who left during a network server\n"
+     "split. The command takes no arguments and the active window must be an\n"
+     "IRC channel."),
+  "",
+};
+
 static usage_t znc_usage = {
   N_("usage: /znc [*module] <command>"),
   "",

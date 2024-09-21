@@ -78,6 +78,7 @@
 #include "commands/theme.h"
 #include "commands/topic.h"
 #include "commands/voice.h"
+#include "commands/wholeft.h"
 #include "commands/znc.h"
 
 #include "events/names.h"
@@ -171,6 +172,8 @@ static struct cmds_tag {
 	{ "wallops",     cmd_wallops,     true,  wallops_usage,     ARRAY_SIZE(wallops_usage),     true  },
 	{ "who",         cmd_who,         true,  who_usage,         ARRAY_SIZE(who_usage),         true  },
 	{ "whois",       cmd_whois,       true,  whois_usage,       ARRAY_SIZE(whois_usage),       true  },
+	{ "wholeft",     cmd_wholeft,     true,  wholeft_usage,     ARRAY_SIZE(wholeft_usage),     true  },
+	{ "wl",          cmd_wholeft,     true,  wholeft_usage,     ARRAY_SIZE(wholeft_usage),     true  },
 	{ "znc",         cmd_znc,         true,  znc_usage,         ARRAY_SIZE(znc_usage),         true  },
 };
 

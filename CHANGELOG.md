@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added command `/wholeft` (alias `/wl`.)
 - Added option `notifications` (bool). Turns notifications on/off.
 - Added new translations.
 - Added support for netjoin/netsplit. Few IRC server software support

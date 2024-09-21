@@ -29,6 +29,7 @@ OBJS = $(COMMANDS_DIR)admin.o\
 	$(COMMANDS_DIR)theme.o\
 	$(COMMANDS_DIR)topic.o\
 	$(COMMANDS_DIR)voice.o\
+	$(COMMANDS_DIR)wholeft.o\
 	$(COMMANDS_DIR)znc.o
 
 CPPFLAGS += -I $(COMMANDS_DIR)
