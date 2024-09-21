@@ -78,13 +78,13 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 	cryptstr_t	 decdat = nullptr;	/* Decrypted data            */
 	cryptstr_t	 decoded_str = nullptr;	/* Base64 decoded string     */
 	cryptstr_t	 out_str = nullptr;	/* Returned on success       */
-	int		 decdat_len = 0,	/* Decrypted data length     */
-			 decdat_size = 0;	/* 'decdat' size             */
+	int		 decdat_len = 0;	/* Decrypted data length     */
+	int		 decdat_size = 0;	/* 'decdat' size             */
 	int		 rem_bytes = 0;		/* Remaining bytes           */
 
 	try {
-		int	 decode_len = 0,	/* 'decoded_str' size     */
-			 decode_ret = -1;	/* Retval of b64_decode() */
+		int	 decode_len = 0;	/* 'decoded_str' size     */
+		int	 decode_ret = -1;	/* Retval of b64_decode() */
 
 		if (str == nullptr || password == nullptr)
 			throw std::runtime_error("invalid args");
@@ -182,8 +182,8 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 	STRING		 b64str = nullptr;	/* Base64 string             */
 	bool		 error = false;		/* True if an error occurred */
 	cryptstr_t	 encdat = nullptr;	/* Encrypted data            */
-	int		 encdat_len = 0,	/* Encrypted data length     */
-			 encdat_size = 0;	/* 'encdat' size             */
+	int		 encdat_len = 0;	/* Encrypted data length     */
+	int		 encdat_size = 0;	/* 'encdat' size             */
 	int		 rem_bytes = 0;		/* Remaining bytes           */
 
 	try {
