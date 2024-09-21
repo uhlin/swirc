@@ -24,6 +24,7 @@ OBJS += $(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)main.o\
 	$(SRC_DIR)nestHome.o\
 	$(SRC_DIR)net-unix.o\
+	$(SRC_DIR)netsplit.o\
 	$(SRC_DIR)network-openssl.o\
 	$(SRC_DIR)network.o\
 	$(SRC_DIR)nicklist.o\

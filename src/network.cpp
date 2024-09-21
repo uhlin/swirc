@@ -37,6 +37,7 @@
 #include <unistd.h> /* close() */
 #endif
 
+#include <exception>
 #include <stdexcept>
 #include <string.h>
 
@@ -50,6 +51,7 @@
 #include "irc.h"
 #include "libUtils.h"
 #include "main.h"
+#include "netsplit.h"
 #include "network.h"
 #include "printtext.h"
 #include "sig.h"
@@ -746,6 +748,7 @@ net_irc_listen(bool *connection_lost)
 	recvbuf[RECVBUF_SIZE] = '\0';
 	irc_init();
 	dcc::init();
+	netsplit_init();
 
 	do {
 		OPENSSL_cleanse(recvbuf, RECVBUF_SIZE);
@@ -782,6 +785,14 @@ net_irc_listen(bool *connection_lost)
 				    true);
 			}
 		}
+
+		try {
+			// Handle Netsplits
+			netsplit_run_bkgd_task();
+		} catch (const std::exception &e) {
+			err_log(0, "%s: netsplit_run_bkgd_task: %s", __func__,
+			    e.what());
+		}
 	} while (atomic_load_bool(&g_on_air) &&
 		 !atomic_load_bool(&g_connection_lost));
 
@@ -802,6 +813,7 @@ net_irc_listen(bool *connection_lost)
 #endif
 	irc_deinit();
 	dcc::deinit();
+	netsplit_deinit();
 	free_and_null(&recvbuf);
 	free_and_null(&message_concat);
 	printtext(&ptext_ctx, "%s", _("Disconnected"));

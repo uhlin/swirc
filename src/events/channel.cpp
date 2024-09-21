@@ -37,6 +37,8 @@
 #include "../errHand.h"
 #include "../irc.h"
 #include "../libUtils.h"
+#include "../main.h"
+#include "../netsplit.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -51,6 +53,16 @@
 
 #define log_unwanted_pm_state() \
 	err_log(EINVAL, "%s: error: neither +/-", __func__)
+
+struct quit_context {
+	CSTRING		message;
+	CSTRING		nick, user, host;
+};
+
+static void	handle_quit(PIRC_WINDOW, PPRINTTEXT_CONTEXT,
+		    struct quit_context *) NONNULL;
+static bool	is_netsplit(CSTRING, std::string &, std::string &) NONNULL;
+static void	maintain_channel_stats(const char *, const char *) NONNULL;
 
 /* event_chan_hp: 328
 
@@ -104,9 +116,10 @@ event_join(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		CSTRING nick, user, host;
-		STRING prefix = NULL;
-		STRING state = const_cast<STRING>("");
+		CSTRING		 nick, user, host;
+		STRING		 prefix = NULL;
+		STRING		 state = const_cast<STRING>("");
+		netsplit	*split = NULL;
 
 		if (compo == NULL)
 			throw std::runtime_error("no components");
@@ -144,7 +157,18 @@ event_join(struct irc_message_compo *compo)
 			    "channel list");
 		}
 
-		if (config_bool("joins_parts_quits", true)) {
+		if (!netsplit_db_empty() &&
+		    (split = netsplit_find(nick, channel)) != NULL) {
+			if (split->remove_nick(nick)) {
+				if (!split->join_begun())
+					split->set_join_time(time(NULL));
+			} else {
+				throw std::runtime_error("failed to remove "
+				    "nick from split");
+			}
+		}
+
+		if (split == NULL && config_bool("joins_parts_quits", true)) {
 			printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2,
 			    true);
 
@@ -355,9 +379,6 @@ chg_status_for_voice(plus_minus_state_t pm_state, const char *nick,
 		break;
 	}
 }
-
-static void	maintain_channel_stats(const char *, const char *)
-		    NONNULL;
 
 /*
  * Example input: +vvv nick1 nick2 nick3
@@ -710,6 +731,121 @@ event_part(struct irc_message_compo *compo)
 	}
 }
 
+static bool
+is_valid_server(const char *str)
+{
+	int			dots = 0;
+	static const char	serv_chars[] =
+	    "abcdefghijklmnopqrstuvwxyz.0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ*";
+	static const size_t	maxlen = 255;
+
+	if (str == NULL || strings_match(str, "") ||
+	    xstrnlen(str, maxlen + 1) > maxlen)
+		return false;
+
+	for (const char *cp = &str[0]; *cp != '\0'; cp++) {
+		if (strchr(serv_chars, *cp) == NULL)
+			return false;
+		if (*cp == '.')
+			dots++;
+	}
+
+	immutable_cp_t last = &str[strlen(str) - 1];
+
+	if (strstr(str, "..") != NULL || strstr(str, "**") != NULL)
+		return false;
+	else if (*str == '.' || *str == '-')
+		return false;
+	else if (*last == '.' || *last == '-')
+		return false;
+	return (dots > 0 ? true : false);
+}
+
+/**
+ * Checks for a netsplit by looking at the quit message.
+ *
+ * @param[in] msg Quit message
+ * @param[out] serv1 Server one
+ * @param[out] serv2 Server two
+ * @return True-/falsehood
+ */
+static bool
+is_netsplit(CSTRING msg, std::string &serv1, std::string &serv2)
+{
+	CSTRING     token[2];
+	STRING      last = const_cast<STRING>("");
+	STRING      msg_copy = NULL;
+
+	if (g_icb_mode ||
+	    strncmp(msg, "Quit: ", 6) == STRINGS_MATCH) {
+		serv1.assign("");
+		serv2.assign("");
+		return false;
+	} else if (strings_match_ignore_case(msg, "*.net *.split")) {
+		serv1.assign("*.net");
+		serv2.assign("*.split");
+		return true;
+	}
+
+	msg_copy = sw_strdup(msg);
+
+	if (strFeed(msg_copy, 2) != 1 ||
+	    (token[0] = strtok_r(msg_copy, "\n", &last)) == NULL ||
+	    (token[1] = strtok_r(NULL, "\n", &last)) == NULL ||
+	    !is_valid_server(token[0]) ||
+	    !is_valid_server(token[1])) {
+		free(msg_copy);
+		serv1.assign("");
+		serv2.assign("");
+		return false;
+	}
+
+	serv1.assign(token[0]);
+	serv2.assign(token[1]);
+	free(msg_copy);
+	return true;
+}
+
+static void
+handle_quit(PIRC_WINDOW window, PPRINTTEXT_CONTEXT ptext_ctx,
+    struct quit_context *ctx)
+{
+	bool		ret;
+	std::string	host[2];
+
+	ret = is_netsplit(ctx->message, host[0], host[1]);
+
+	if (ret) {
+		netsplit *split;
+		struct netsplit_context ns_ctx(window->label,
+		    host[0].c_str(), host[1].c_str());
+
+		if ((split = netsplit_get_split(&ns_ctx)) == NULL) {
+			if (netsplit_create(&ns_ctx, ctx->nick) == ERR) {
+				err_log(0, "%s: netsplit_create() error",
+				    __func__);
+			}
+		} else {
+			std::string str(ctx->nick);
+
+			if (!split->join_begun())
+				split->nicks.push_back(str);
+			else {
+				err_log(0, "%s: netjoin already begun (%s)",
+				    __func__, ns_ctx.chan);
+			}
+		}
+	}
+
+	if (!ret && config_bool("joins_parts_quits", true)) {
+		ptext_ctx->window = window;
+		printtext(ptext_ctx, _("%s%s%c %s%s@%s%s has quit %s%s%s"),
+		    COLOR2, ctx->nick, NORMAL,
+		    LEFT_BRKT, ctx->user, ctx->host, RIGHT_BRKT,
+		    LEFT_BRKT, ctx->message, RIGHT_BRKT);
+	}
+}
+
 /* event_quit
 
    Example:
@@ -748,15 +884,14 @@ event_quit(struct irc_message_compo *compo)
 			    is_irc_channel(window->label) &&
 			    event_names_htbl_remove(nick, window->label) ==
 			    OK) {
-				if (config_bool("joins_parts_quits", true)) {
-					ctx.window = window;
+				struct quit_context quit_ctx;
 
-					printtext(&ctx, _("%s%s%c %s%s@%s%s "
-					    "has quit %s%s%s"),
-					    COLOR2, nick, NORMAL,
-					    LEFT_BRKT, user, host, RIGHT_BRKT,
-					    LEFT_BRKT, message, RIGHT_BRKT);
-				}
+				quit_ctx.message = message;
+				quit_ctx.nick = nick;
+				quit_ctx.user = user;
+				quit_ctx.host = host;
+
+				handle_quit(window, &ctx, &quit_ctx);
 			}
 		}
 	} catch (const std::runtime_error &e) {

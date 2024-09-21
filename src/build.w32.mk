@@ -28,6 +28,7 @@ OBJS = $(OBJS)\
 	$(SRC_DIR)main.obj\
 	$(SRC_DIR)nestHome.obj\
 	$(SRC_DIR)net-w32.obj\
+	$(SRC_DIR)netsplit.obj\
 	$(SRC_DIR)network-openssl.obj\
 	$(SRC_DIR)network.obj\
 	$(SRC_DIR)nicklist.obj\
