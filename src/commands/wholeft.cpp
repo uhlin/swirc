@@ -124,9 +124,7 @@ cmd_wholeft(CSTRING data)
 		printtext_print("err", "%s: there are no netsplits at the "
 		    "moment", cmd);
 		return;
-	}
-
-	if (!netsplit_chk(ACTWINLABEL)) {
+	} else if (!netsplit_chk(ACTWINLABEL)) {
 		printtext_print("err", "%s: there are no netsplits for %s", cmd,
 		    ACTWINLABEL);
 		return;
