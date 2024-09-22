@@ -82,7 +82,7 @@ pr_wholeft(const netsplit *ns)
 	if ((ctx.window = window_by_label(ns_ctx.chan)) == nullptr)
 		ctx.window = g_status_window;
 
-	printtext(&ctx, "%s%s%s %s %s %s, the following users left: %s",
+	printtext(&ctx, "%s%s%s %s %s %s - the following users left: %s",
 	    LEFT_BRKT, ns_ctx.chan, RIGHT_BRKT,
 	    ns_ctx.serv1, THE_SPEC2, ns_ctx.serv2,
 	    list);
