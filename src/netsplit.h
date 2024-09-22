@@ -126,6 +126,8 @@ int		 netsplit_create(const struct netsplit_context *, CSTRING);
 bool		 netsplit_db_empty(void);
 void		 netsplit_destroy_all(void);
 netsplit	*netsplit_find(CSTRING, CSTRING);
+const std::vector<netsplit *> &
+		 netsplit_get_db(void);
 netsplit	*netsplit_get_split(const struct netsplit_context *);
 void		 netsplit_run_bkgd_task(void);
 

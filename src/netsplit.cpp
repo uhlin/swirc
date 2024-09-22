@@ -212,6 +212,12 @@ netsplit_find(CSTRING nick, CSTRING channel)
 	return nullptr;
 }
 
+const std::vector<netsplit *> &
+netsplit_get_db(void)
+{
+	return (netsplit_db);
+}
+
 netsplit *
 netsplit_get_split(const struct netsplit_context *ctx)
 {
