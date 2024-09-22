@@ -43,6 +43,9 @@
 
 #include "batch.h"
 
+#define PRINT_NETJOIN_MSGS 0
+#define PRINT_NETSPLIT_MSGS 0
+
 class batch {
 public:
 	std::vector<std::string>	params;
@@ -154,6 +157,7 @@ chathistory(batch &obj)
 static void
 netjoin(batch &obj)
 {
+#if PRINT_NETJOIN_MSGS
 	CSTRING host1, host2;
 
 	host1 = host2 = nullptr;
@@ -169,6 +173,7 @@ netjoin(batch &obj)
 		    static_cast<uintmax_t>(obj.irc_msgs.size()),
 		    host1, THE_SPEC2, host2);
 	}
+#endif // PRINT_NETJOIN_MSGS
 
 	for (const std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
@@ -177,6 +182,7 @@ netjoin(batch &obj)
 static void
 netsplit(batch &obj)
 {
+#if PRINT_NETSPLIT_MSGS
 	CSTRING host1, host2;
 
 	host1 = host2 = nullptr;
@@ -192,6 +198,7 @@ netsplit(batch &obj)
 		    static_cast<uintmax_t>(obj.irc_msgs.size()),
 		    host1, THE_SPEC2, host2);
 	}
+#endif // PRINT_NETSPLIT_MSGS
 
 	for (const std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
