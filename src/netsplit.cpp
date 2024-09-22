@@ -135,7 +135,11 @@ netsplit::remove_nick(CSTRING p_nick)
 		if (strings_match_ignore_case(it->c_str(), p_nick)) {
 			// Saved the removed nick
 			const std::string str(it->c_str());
+#if defined(__cplusplus) && __cplusplus >= 201103L
+			this->rem_nicks.emplace_back(str);
+#else
 			this->rem_nicks.push_back(str);
+#endif
 
 			it = this->nicks.erase(it);
 			count++;

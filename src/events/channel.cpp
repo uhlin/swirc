@@ -826,11 +826,15 @@ handle_quit(PIRC_WINDOW window, PPRINTTEXT_CONTEXT ptext_ctx,
 				    __func__);
 			}
 		} else {
-			std::string str(ctx->nick);
+			const std::string str(ctx->nick);
 
-			if (!split->join_begun())
+			if (!split->join_begun()) {
+#if defined(__cplusplus) && __cplusplus >= 201103L
+				split->nicks.emplace_back(str);
+#else
 				split->nicks.push_back(str);
-			else {
+#endif
+			} else {
 				err_log(0, "%s: netjoin already begun (%s)",
 				    __func__, ns_ctx.chan);
 			}
