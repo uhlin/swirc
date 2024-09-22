@@ -34,6 +34,8 @@
 #include <string>
 #include <vector>
 
+#include "libUtils.h"
+
 struct netsplit_context {
 	CSTRING		chan;
 	CSTRING		serv1, serv2;
