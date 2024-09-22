@@ -34,6 +34,7 @@
 #include "../netsplit.h"
 #include "../printtext.h"
 #include "../strHand.h"
+#include "../theme.h"
 #include "../window.h"
 
 #include "wholeft.h"
@@ -57,7 +58,35 @@ netsplit_chk(CSTRING channel)
 static void
 pr_wholeft(const netsplit *ns)
 {
-	UNUSED_PARAM(ns);
+	PRINTTEXT_CONTEXT	ctx;
+	STRING			list;
+
+	if (ns == nullptr || ns->nicks.empty())
+		return;
+
+	list = sw_strdup("");
+
+	for (const std::string &nick : ns->nicks) {
+		std::string str(nick);
+
+		str.insert(0, " ");
+		realloc_strcat(&list, str.c_str());
+	}
+
+	const struct netsplit_context ns_ctx(ns->channel.c_str(),
+	    ns->server[0].c_str(),
+	    ns->server[1].c_str());
+
+	printtext_context_init(&ctx, nullptr, TYPE_SPEC1, true);
+
+	if ((ctx.window = window_by_label(ns_ctx.chan)) == nullptr)
+		ctx.window = g_status_window;
+
+	printtext(&ctx, "%s%s%s %s %s %s, the following users left: %s",
+	    LEFT_BRKT, ns_ctx.chan, RIGHT_BRKT,
+	    ns_ctx.serv1, THE_SPEC2, ns_ctx.serv2,
+	    list);
+	free(list);
 }
 
 static void
