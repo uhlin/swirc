@@ -29,7 +29,50 @@
 
 #include "common.h"
 
+#include "../dataClassify.h"
+#include "../main.h"
+#include "../netsplit.h"
+#include "../printtext.h"
+#include "../strHand.h"
+#include "../window.h"
+
 #include "wholeft.h"
+
+static bool
+netsplit_chk(CSTRING channel)
+{
+	const std::vector<netsplit *> &netsplit_db = netsplit_get_db();
+	std::vector<netsplit *>::const_iterator it;
+
+	for (it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
+		immutable_cp_t db_chan = (*it)->channel.c_str();
+
+		if (strings_match_ignore_case(channel, db_chan))
+			return true;
+	}
+
+	return false;
+}
+
+static void
+pr_wholeft(const netsplit *ns)
+{
+	UNUSED_PARAM(ns);
+}
+
+static void
+wholeft(CSTRING channel)
+{
+	const std::vector<netsplit *> &netsplit_db = netsplit_get_db();
+	std::vector<netsplit *>::const_iterator it;
+
+	for (it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
+		immutable_cp_t db_chan = (*it)->channel.c_str();
+
+		if (strings_match_ignore_case(channel, db_chan))
+			pr_wholeft(*it);
+	}
+}
 
 /*
  * usage: /wholeft
@@ -37,5 +80,26 @@
 void
 cmd_wholeft(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	static chararray_t cmd = "/wholeft";
+
+	if (!strings_match(data, "")) {
+		printtext_print("err", "%s: implicit trailing data", cmd);
+		return;
+	} else if (!is_irc_channel(ACTWINLABEL)) {
+		printtext_print("err", "%s: the active window isn't an irc "
+		    "channel", cmd);
+		return;
+	} else if (netsplit_db_empty()) {
+		printtext_print("err", "%s: there are no netsplits at the "
+		    "moment", cmd);
+		return;
+	}
+
+	if (!netsplit_chk(ACTWINLABEL)) {
+		printtext_print("err", "%s: there are no netsplits for %s", cmd,
+		    ACTWINLABEL);
+		return;
+	}
+
+	wholeft(ACTWINLABEL);
 }
