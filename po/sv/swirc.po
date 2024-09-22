@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-09-21 23:49+0200\n"
+"POT-Creation-Date: 2024-09-22 21:20+0200\n"
 "PO-Revision-Date: 2024-09-22 00:01+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -239,27 +239,27 @@ msgstr "%s%s%c har bytt namn till %s %s%s%c"
 msgid "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s"
 msgstr "%s%s%c %s%s@%s%s har lämnat %s%s%c %s%s%s"
 
-#: ../src/events/channel.cpp:842
+#: ../src/events/channel.cpp:846
 #, c-format
 msgid "%s%s%c %s%s@%s%s has quit %s%s%s"
 msgstr "%s%s%c %s%s@%s%s har avslutat %s%s%s"
 
-#: ../src/events/channel.cpp:937
+#: ../src/events/channel.cpp:941
 #, c-format
 msgid "Topic for %s%s%s%c%s: %s"
 msgstr "Ämne för %s%s%s%c%s: %s"
 
-#: ../src/events/channel.cpp:995
+#: ../src/events/channel.cpp:999
 #, c-format
 msgid "%c%s%c changed the topic of %c%s%c to: %s"
 msgstr "%c%s%c ändrade ämnet för %c%s%c till: %s"
 
-#: ../src/events/channel.cpp:1068
+#: ../src/events/channel.cpp:1072
 #, c-format
 msgid "Topic set by %c%s%c %s%s@%s%s %s%s%s"
 msgstr "Ämnet satt av %c%s%c %s%s@%s%s %s%s%s"
 
-#: ../src/events/channel.cpp:1074
+#: ../src/events/channel.cpp:1078
 #, c-format
 msgid "Topic set by %c%s%c %s%s%s"
 msgstr "Ämnet satt av %c%s%c %s%s%s"
