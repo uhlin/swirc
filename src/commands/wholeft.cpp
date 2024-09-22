@@ -98,7 +98,8 @@ wholeft(CSTRING channel)
 	for (it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
 		immutable_cp_t db_chan = (*it)->channel.c_str();
 
-		if (strings_match_ignore_case(channel, db_chan))
+		if (strings_match_ignore_case(channel, db_chan) &&
+		    !(*it)->join_begun())
 			pr_wholeft(*it);
 	}
 }
