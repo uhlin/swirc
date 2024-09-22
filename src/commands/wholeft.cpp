@@ -99,6 +99,7 @@ wholeft(CSTRING channel)
 		immutable_cp_t db_chan = (*it)->channel.c_str();
 
 		if (strings_match_ignore_case(channel, db_chan) &&
+		    (*it)->has_announced_split() &&
 		    !(*it)->join_begun())
 			pr_wholeft(*it);
 	}
