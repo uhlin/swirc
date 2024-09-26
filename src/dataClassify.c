@@ -375,6 +375,8 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F930, 0x1F937, "Portrait and role symbols"},
 		{0x1F938, 0x1F93A, "Sport symbols 1"},
 		{0x1F93C, 0x1F93F, "Sport symbols 2"},
+		{0x1F940, 0x1F945, "Miscellaneous symbols 1"},
+		{0x1F947, 0x1F94F, "Miscellaneous symbols 1"},
 	};
 	static const size_t mid = ARRAY_SIZE(fullwidth) / 2;
 
