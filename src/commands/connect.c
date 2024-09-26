@@ -51,6 +51,9 @@
 
 #include "connect.h"
 #include "i18n.h"
+#if defined(WIN32) && defined(printf)
+#undef printf
+#endif
 
 volatile bool g_disconnect_wanted = false;
 
