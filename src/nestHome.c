@@ -169,7 +169,7 @@ prompt_for_decryption(const char *str)
 		char	 pass[400] = { '\0' };
 		int	 errno_save;
 
-		printf("%s", _("Password: "));
+		fputs(_("Password: "), stdout);
 		fflush(stdout);
 
 		term_toggle_echo(OFF);

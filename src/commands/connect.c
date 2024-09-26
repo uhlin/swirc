@@ -203,7 +203,7 @@ shouldConnectUsingPassword(void)
 	char answer[20] = { '\0' };
 
 	while (true) {
-		printf("%s", _("Connect using password? [Y/n]: "));
+		fputs(_("Connect using password? [Y/n]: "), stdout);
 		fflush(stdout);
 
 		if (fgets(answer, sizeof answer, stdin) == NULL) {
@@ -256,7 +256,7 @@ get_password(void)
 		bool	fgets_error;
 		int	errno_save;
 
-		printf("%s", _("Server password (will not echo): "));
+		fputs(_("Server password (will not echo): "), stdout);
 		fflush(stdout);
 
 		term_toggle_echo(OFF);
