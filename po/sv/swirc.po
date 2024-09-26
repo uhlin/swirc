@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-09-22 21:20+0200\n"
+"POT-Creation-Date: 2024-09-26 18:43+0200\n"
 "PO-Revision-Date: 2024-09-22 00:01+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -27,35 +27,35 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: ../src/commands/connect.c:206
+#: ../src/commands/connect.c:207
 msgid "Connect using password? [Y/n]: "
 msgstr "Ansluta med lösenord? [Y/n]: "
 
-#: ../src/commands/connect.c:214 ../src/commands/connect.c:275
-#: ../src/commands/connect.c:325 ../src/nestHome.c:188
+#: ../src/commands/connect.c:215 ../src/commands/connect.c:276
+#: ../src/commands/connect.c:329 ../src/nestHome.c:188
 msgid "input too big"
 msgstr "input för stor"
 
-#: ../src/commands/connect.c:243
+#: ../src/commands/connect.c:244
 #, c-format
 msgid "%s: string copy error"
 msgstr "%s: strängkopieringsfel"
 
-#: ../src/commands/connect.c:259
+#: ../src/commands/connect.c:260
 msgid "Server password (will not echo): "
 msgstr "Serverlösenord (kommer inte att eka): "
 
-#: ../src/commands/connect.c:311
+#: ../src/commands/connect.c:313
 #, c-format
 msgid "Your choice (0-%d): "
 msgstr "Ditt val (0-%d): "
 
-#: ../src/commands/connect.c:537
+#: ../src/commands/connect.c:541
 #, c-format
 msgid "Next reconnect attempt in %ld seconds..."
 msgstr "Nästa återanslutningsförsök om %ld sekunder..."
 
-#: ../src/commands/connect.c:549
+#: ../src/commands/connect.c:553
 msgid "Reconnection aborted!"
 msgstr "Återanslutningen avbröts!"
 
