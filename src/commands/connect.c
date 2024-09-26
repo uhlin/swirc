@@ -308,7 +308,7 @@ get_server_v2(PIRC_SERVER ptr, const size_t size, const char *hdr)
 		i -= 1;
 	srvno = 0;
 	while (true) {
-		printf(_("Your choice (0-%d): "), i);
+		fprintf(stdout, _("Your choice (0-%d): "), i);
 		fflush(stdout);
 
 /*
