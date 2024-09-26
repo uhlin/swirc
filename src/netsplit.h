@@ -123,7 +123,6 @@ private:
 //lint -sem(netsplit_find, r_null)
 //lint -sem(netsplit_get_split, r_null)
 
-__SWIRC_BEGIN_DECLS
 int		 netsplit_create(const struct netsplit_context *, CSTRING);
 bool		 netsplit_db_empty(void);
 void		 netsplit_destroy_all(void);
@@ -135,6 +134,5 @@ void		 netsplit_run_bkgd_task(void);
 
 void	netsplit_init(void);
 void	netsplit_deinit(void);
-__SWIRC_END_DECLS
 
 #endif
