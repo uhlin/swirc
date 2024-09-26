@@ -46,12 +46,10 @@
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
+#include "../strdup_printf.h"
 #include "../terminal.h"
 
 #include "connect.h"
-#if defined(WIN32) && defined(fprintf)
-#undef fprintf
-#endif
 #include "i18n.h"
 
 volatile bool g_disconnect_wanted = false;
@@ -294,6 +292,7 @@ static PIRC_SERVER
 get_server_v2(PIRC_SERVER ptr, const size_t size, const char *hdr)
 {
 	PIRC_SERVER	srv;
+	STRING		msg;
 	char		ans[20] = { '\0' };
 	int		i, srvno;
 
@@ -311,8 +310,10 @@ get_server_v2(PIRC_SERVER ptr, const size_t size, const char *hdr)
 		i -= 1;
 	srvno = 0;
 	while (true) {
-		fprintf(stdout, _("Your choice (0-%d): "), i);
+		msg = strdup_printf(_("Your choice (0-%d): "), i);
+		fputs(msg, stdout);
 		fflush(stdout);
+		free(msg);
 
 /*
  * sscanf() is safe in this context
