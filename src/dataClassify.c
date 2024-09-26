@@ -366,8 +366,15 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F6EC, 0x1F6EC, "Airplane arriving"},
 		{0x1F6F4, 0x1F6FC, "Vehicles"},
 
+		{0x1F90C, 0x1F90C, "Pinched fingers"},
 		{0x1F90D, 0x1F90E, "Colored heart symbols"},
+		{0x1F90F, 0x1F90F, "Pinching hand"},
+		{0x1F910, 0x1F917, "Emoticon faces"},
+		{0x1F918, 0x1F91F, "Hand symbols"},
 		{0x1F920, 0x1F92F, "Emoticon faces"},
+		{0x1F930, 0x1F937, "Portrait and role symbols"},
+		{0x1F938, 0x1F93A, "Sport symbols 1"},
+		{0x1F93C, 0x1F93F, "Sport symbols 2"},
 	};
 	static const size_t mid = ARRAY_SIZE(fullwidth) / 2;
 
