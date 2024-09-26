@@ -49,6 +49,9 @@
 #include "../terminal.h"
 
 #include "connect.h"
+#if WIN32
+#define fprintf fprintf
+#endif
 #include "i18n.h"
 
 volatile bool g_disconnect_wanted = false;
