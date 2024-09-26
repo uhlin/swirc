@@ -49,8 +49,8 @@
 #include "../terminal.h"
 
 #include "connect.h"
-#if WIN32
-#define fprintf fprintf
+#if defined(WIN32) && defined(fprintf)
+#undef fprintf
 #endif
 #include "i18n.h"
 
