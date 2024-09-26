@@ -290,9 +290,9 @@ get_password(void)
 static PIRC_SERVER
 get_server_v2(PIRC_SERVER ptr, const size_t size, const char *hdr)
 {
-	PIRC_SERVER srv;
-	char ans[20] = { '\0' };
-	int i, srvno;
+	PIRC_SERVER	srv;
+	char		ans[20] = { '\0' };
+	int		i, srvno;
 
 	escape_curses();
 	puts(hdr);
