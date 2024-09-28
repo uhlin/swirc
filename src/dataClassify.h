@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define TEST_XWCWIDTH 1
+#define TEST_XWCWIDTH 0
 
 typedef struct tagRANGE {
 #if defined(UNIX)
