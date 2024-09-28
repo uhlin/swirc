@@ -385,6 +385,10 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F9B0, 0x1F9B3, "Emoji components"}, // XXX
 		{0x1F9B4, 0x1F9B7, "Body parts"},
 		{0x1F9B8, 0x1F9B9, "Role symbols"},
+		{0x1F9BA, 0x1F9BF, "Accessibility symbols"},
+		{0x1F9C0, 0x1F9CB, "Food symbols"},
+		{0x1F9CC, 0x1F9CC, "Troll"},
+		{0x1F9CD, 0x1F9CF, "Portrait and accessibility symbols"},
 	};
 	static const size_t mid = ARRAY_SIZE(fullwidth) / 2;
 
