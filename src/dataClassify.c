@@ -382,13 +382,18 @@ xwcwidth(const wchar_t wc, const int fwlen)
 		{0x1F97B, 0x1F97F, "Clothing"},
 		{0x1F980, 0x1F9AD, "Animal symbols"},
 		{0x1F9AE, 0x1F9AF, "Accessibility symbols"},
-		{0x1F9B0, 0x1F9B3, "Emoji components"}, // XXX
+//		{0x1F9B0, 0x1F9B3, "Emoji components"},
 		{0x1F9B4, 0x1F9B7, "Body parts"},
 		{0x1F9B8, 0x1F9B9, "Role symbols"},
 		{0x1F9BA, 0x1F9BF, "Accessibility symbols"},
 		{0x1F9C0, 0x1F9CB, "Food symbols"},
 		{0x1F9CC, 0x1F9CC, "Troll"},
 		{0x1F9CD, 0x1F9CF, "Portrait and accessibility symbols"},
+		{0x1F9D0, 0x1F9D8, "Portrait and role symbols"},
+		{0x1F9D9, 0x1F9DF, "Fantasy beings"},
+		{0x1F9E0, 0x1F9E6, "Miscellaneous symbols"},
+		{0x1F9E7, 0x1F9E9, "Activities"},
+		{0x1F9EA, 0x1F9FF, "Objects"},
 	};
 	static const size_t mid = ARRAY_SIZE(fullwidth) / 2;
 
