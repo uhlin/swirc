@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.4.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-09-26 18:43+0200\n"
+"POT-Creation-Date: 2024-09-28 11:18+0200\n"
 "PO-Revision-Date: 2024-08-29 16:10+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -27,35 +27,35 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nein"
 
-#: ../src/commands/connect.c:207
+#: ../src/commands/connect.c:210
 msgid "Connect using password? [Y/n]: "
 msgstr "Mit Passwort verbinden? [Y/n]: "
 
-#: ../src/commands/connect.c:215 ../src/commands/connect.c:276
-#: ../src/commands/connect.c:329 ../src/nestHome.c:188
+#: ../src/commands/connect.c:218 ../src/commands/connect.c:279
+#: ../src/commands/connect.c:332 ../src/nestHome.c:188
 msgid "input too big"
 msgstr "Benutzereingabe zu groß"
 
-#: ../src/commands/connect.c:244
+#: ../src/commands/connect.c:247
 #, c-format
 msgid "%s: string copy error"
 msgstr "%s: String Kopierfehler"
 
-#: ../src/commands/connect.c:260
+#: ../src/commands/connect.c:263
 msgid "Server password (will not echo): "
 msgstr "Server Passwort (wird nicht widerhallen): "
 
-#: ../src/commands/connect.c:313
+#: ../src/commands/connect.c:316
 #, c-format
 msgid "Your choice (0-%d): "
 msgstr "Ihre Wahl (0-%d): "
 
-#: ../src/commands/connect.c:541
+#: ../src/commands/connect.c:544
 #, c-format
 msgid "Next reconnect attempt in %ld seconds..."
 msgstr "Nächster Wiederverbindungsversuch in %ld Sekunden..."
 
-#: ../src/commands/connect.c:553
+#: ../src/commands/connect.c:556
 msgid "Reconnection aborted!"
 msgstr "Wiederverbindung abgebrochen!"
 
