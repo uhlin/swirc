@@ -1405,9 +1405,9 @@ get_buffer(CSTRING orig)
 		return sw_strdup(orig);
 
 	for (immutable_cp_t str : fromcode) {
-		char *in, *orig_copy, *out, *out_p;
-		iconv_t cd;
-		size_t inbytes, outbytes, outsize;
+		char		*in, *orig_copy, *out, *out_p;
+		iconv_t		 cd;
+		size_t		 inbytes, outbytes, outsize;
 
 		if ((cd = iconv_open("UTF-8", str)) == reinterpret_cast
 		    <iconv_t>(-1))
