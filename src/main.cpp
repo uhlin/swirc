@@ -251,21 +251,21 @@ case_launched_by_toast_hook()
 static void
 case_connect()
 {
-	char		*last = const_cast<char *>("");
-	char		*token1, *token2;
-	static bool	 been_case = false;
+	CSTRING		token[2];
+	STRING		last = const_cast<STRING>("");
+	static bool	been_case = false;
 
 	if (been_case)
 		DUP_OPTION_ERR('c');
 
-	token1 = strtok_r(g_option_arg, ":", &last);
-	sw_assert(token1 != nullptr);
-	g_cmdline_opts->server = sw_strdup(token1);
+	token[0] = strtok_r(g_option_arg, ":", &last);
+	sw_assert(token[0] != nullptr);
+	g_cmdline_opts->server = sw_strdup(token[0]);
 
-	if ((token2 = strtok_r(nullptr, ":", &last)) == nullptr)
+	if ((token[1] = strtok_r(nullptr, ":", &last)) == nullptr)
 		g_cmdline_opts->port = sw_strdup("6667");
 	else
-		g_cmdline_opts->port = sw_strdup(token2);
+		g_cmdline_opts->port = sw_strdup(token[1]);
 
 	g_auto_connect = been_case = true;
 }
