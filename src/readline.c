@@ -89,8 +89,7 @@ bool	g_hist_prev = false;
 *                                                               *
 ****************************************************************/
 
-static PANEL			*readline_pan1 = NULL;
-static PANEL			*readline_pan2 = NULL;
+static PANEL			*readline_pan[2] = { NULL, NULL };
 static rl_active_panel_t	 panel_state = PANEL1_ACTIVE;
 
 /****************************************************************
@@ -236,12 +235,12 @@ static void
 magic_swap_panels(volatile struct readline_session_context *ctx, bool fwd)
 {
 	if (panel_state == PANEL1_ACTIVE) {
-		ctx->act = panel_window(readline_pan2);
-		(void) top_panel(readline_pan2);
+		ctx->act = panel_window(readline_pan[1]);
+		(void) top_panel(readline_pan[1]);
 		panel_state = PANEL2_ACTIVE;
 	} else if (panel_state == PANEL2_ACTIVE) {
-		ctx->act = panel_window(readline_pan1);
-		(void) top_panel(readline_pan1);
+		ctx->act = panel_window(readline_pan[0]);
+		(void) top_panel(readline_pan[0]);
 		panel_state = PANEL1_ACTIVE;
 	} else {
 		sw_assert_not_reached();
@@ -594,7 +593,7 @@ new_session(CSTRING prompt)
 	STRING prompt_copy = sw_strdup(prompt);
 	struct readline_session_context *ctx = xcalloc(sizeof *ctx, 1);
 
-	ctx->act         = panel_window(readline_pan1);
+	ctx->act         = panel_window(readline_pan[0]);
 	ctx->buffer      = xcalloc(g_readline_bufsize + 1, sizeof(wchar_t));
 	ctx->bufpos      = 0;
 	ctx->insert_mode = false;
@@ -900,11 +899,11 @@ readline_init(void)
 	g_readline_pos->x = -1;
 	g_readline_pos->y = -1;
 
-	readline_pan1 = term_new_panel(1, 0, LINES - 1, 0);
-	readline_pan2 = term_new_panel(1, 0, LINES - 1, 0);
+	readline_pan[0] = term_new_panel(1, 0, LINES - 1, 0);
+	readline_pan[1] = term_new_panel(1, 0, LINES - 1, 0);
 
-	apply_readline_options(panel_window(readline_pan1));
-	apply_readline_options(panel_window(readline_pan2));
+	apply_readline_options(panel_window(readline_pan[0]));
+	apply_readline_options(panel_window(readline_pan[1]));
 
 	readline_mouse_init();
 }
@@ -922,8 +921,8 @@ readline_deinit(void)
 	free(g_readline_pos);
 	g_readline_pos = NULL;
 
-	term_remove_panel(readline_pan1);
-	term_remove_panel(readline_pan2);
+	term_remove_panel(readline_pan[0]);
+	term_remove_panel(readline_pan[1]);
 }
 
 /**
@@ -932,11 +931,11 @@ readline_deinit(void)
 WINDOW *
 readline_get_active_pwin(void)
 {
-	if (readline_pan1 == NULL || readline_pan2 == NULL)
+	if (readline_pan[0] == NULL || readline_pan[1] == NULL)
 		return NULL;
 	return ((panel_state == PANEL1_ACTIVE)
-		? panel_window(readline_pan1)
-		: panel_window(readline_pan2));
+		? panel_window(readline_pan[0])
+		: panel_window(readline_pan[1]));
 }
 
 /**
@@ -1028,11 +1027,11 @@ readline_recreate(int rows, int cols)
 		.start_col = 0,
 	};
 
-	readline_pan1 = term_resize_panel(readline_pan1, &newsize);
-	readline_pan2 = term_resize_panel(readline_pan2, &newsize);
+	readline_pan[0] = term_resize_panel(readline_pan[0], &newsize);
+	readline_pan[1] = term_resize_panel(readline_pan[1], &newsize);
 
-	apply_readline_options(panel_window(readline_pan1));
-	apply_readline_options(panel_window(readline_pan2));
+	apply_readline_options(panel_window(readline_pan[0]));
+	apply_readline_options(panel_window(readline_pan[1]));
 }
 
 /**
@@ -1045,11 +1044,11 @@ readline_top_panel(void)
 	mutex_lock(&g_puts_mutex);
 
 	if (panel_state == PANEL1_ACTIVE) {
-		if (readline_pan1)
-			(void) top_panel(readline_pan1);
+		if (readline_pan[0])
+			(void) top_panel(readline_pan[0]);
 	} else if (panel_state == PANEL2_ACTIVE) {
-		if (readline_pan2)
-			(void) top_panel(readline_pan2);
+		if (readline_pan[1])
+			(void) top_panel(readline_pan[1]);
 	} else {
 		sw_assert_not_reached();
 	}
