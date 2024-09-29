@@ -42,8 +42,8 @@
 static bool
 netsplit_chk(CSTRING channel)
 {
-	const std::vector<netsplit *> &netsplit_db = netsplit_get_db();
-	std::vector<netsplit *>::const_iterator it;
+	const std::vector<netsplit *>		&netsplit_db = netsplit_get_db();
+	std::vector<netsplit *>::const_iterator	 it;
 
 	for (it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
 		immutable_cp_t db_chan = (*it)->channel.c_str();
@@ -92,8 +92,8 @@ pr_wholeft(const netsplit *ns)
 static void
 wholeft(CSTRING channel)
 {
-	const std::vector<netsplit *> &netsplit_db = netsplit_get_db();
-	std::vector<netsplit *>::const_iterator it;
+	const std::vector<netsplit *>		&netsplit_db = netsplit_get_db();
+	std::vector<netsplit *>::const_iterator	 it;
 
 	for (it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
 		immutable_cp_t db_chan = (*it)->channel.c_str();
