@@ -93,8 +93,8 @@ chararray_t	g_swircAuthor	= "Markus Uhlin";
 chararray_t	g_swircWebAddr	= "https://www.nifty-networks.net/swirc/";
 
 FILE		*g_dev_null = nullptr;
-char		*g_progname = const_cast<char *>("");
-char		*g_progpath = nullptr;
+STRING		 g_progname = const_cast<STRING>("");
+STRING		 g_progpath = nullptr;
 long int	 g_pid = -1;
 
 int	 g_stderr_fd = -1;
