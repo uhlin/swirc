@@ -25,8 +25,8 @@ nick_s1 = "06<";
 nick_s2 = "06>";
 
 nicklist_my_nick_color   = "14";
-nicklist_nick_color      = "10";
-nicklist_privilege_color = "6";
+nicklist_nick_color      = "15";
+nicklist_privilege_color = "3";
 nicklist_vline_color     = "2";
 
 notice_color1   = "13";
