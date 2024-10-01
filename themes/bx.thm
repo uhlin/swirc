@@ -2,7 +2,7 @@
 
 #
 # BitchX style theme
-# Version: 1.0
+# Version: 1.1
 #
 
 term_background         = "1";
@@ -24,6 +24,11 @@ logo_color = "02";
 nick_s1 = "06<";
 nick_s2 = "06>";
 
+nicklist_my_nick_color   = "14";
+nicklist_nick_color      = "10";
+nicklist_privilege_color = "6";
+nicklist_vline_color     = "2";
+
 notice_color1   = "13";
 notice_color2   = "06";
 notice_inner_b1 = "14(";
@@ -35,7 +40,7 @@ notice_sep      = "14:";
 primary_color   = "11";
 secondary_color = "10";
 
-slogan = "15,02The universal IRC client";
+slogan = "15,02BX";
 
 specifier1 = "04-00!04-";
 specifier2 = "14[00:14]";
@@ -54,6 +59,7 @@ titlebar_fg = "white";
 
 whois_acc      = "14=> account  :";
 whois_away     = "14=> away     :";
+whois_bot      = "14=> bot      :";
 whois_cert     = "14=> cert     :";
 whois_channels = "14=> channels :";
 whois_conn     = "14=> conn     :";
