@@ -1,5 +1,10 @@
 # -*- mode: conf; -*-
 
+#
+# WeeChat colors
+# Version: 1.0
+#
+
 term_background         = "1";
 term_enable_colors      = "yes";
 term_use_default_colors = "yes";
@@ -35,7 +40,7 @@ notice_sep      = "10:";
 primary_color   = "10";
 secondary_color = "03";
 
-slogan = "";
+slogan = "WC colors";
 
 specifier1 = "61*49*37*";
 specifier2 = "";
