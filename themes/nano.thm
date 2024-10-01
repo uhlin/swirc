@@ -2,7 +2,7 @@
 
 #
 # GNU nano colors
-# Version: 1.0
+# Version: 1.1
 #
 
 term_background         = "1";
@@ -24,6 +24,11 @@ logo_color = "12";
 nick_s1 = "04<";
 nick_s2 = "04>";
 
+nicklist_my_nick_color   = "2";
+nicklist_nick_color      = "15";
+nicklist_privilege_color = "5";
+nicklist_vline_color     = "2";
+
 notice_color1   = "13";
 notice_color2   = "06";
 notice_inner_b1 = "14(";
@@ -35,7 +40,7 @@ notice_sep      = "14:";
 primary_color   = "11";
 secondary_color = "10";
 
-slogan = "";
+slogan = "GNU nano colors";
 
 specifier1 = "08***";
 specifier2 = "14[00:14]";
@@ -54,6 +59,7 @@ titlebar_fg = "magenta";
 
 whois_acc      = "14=> 03account  :";
 whois_away     = "14=> 03away     :";
+whois_bot      = "14=> 03bot      :";
 whois_cert     = "14=> 03cert     :";
 whois_channels = "14=> 03channels :";
 whois_conn     = "14=> 03conn     :";
