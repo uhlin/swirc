@@ -32,10 +32,10 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2023-02-18</em></small></p>
+<p><small><em>Updated: 2024-10-02</em></small></p>
 <h3>Program options</h3>
 <p>
-<kbd>usage: swirc [-46?CPRdipv] [-c server[:port]] [-j join] [-n nickname] [-r rl name] [-u username] [-x config]</kbd>
+<kbd>usage: swirc [-46?CPRSdipv] [-W password] [-c server[:port]] [-j join] [-n nickname] [-r rl name] [-u username] [-x config]</kbd>
 </p>
 <table class="po">
 	<tr>
@@ -47,7 +47,7 @@
 		<td>Use IPv6 addresses only</td>
 	</tr>
 	<tr>
-		<td><b>-?</b></td>
+		<td><b>-?</b>, <b>--help</b></td>
 		<td>Output help</td>
 	</tr>
 	<tr>
@@ -80,6 +80,14 @@ If specified, the effect is
 	<tr>
 		<td><b>-R</b></td>
 		<td>Disable TLS/SSL peer verification</td>
+	</tr>
+	<tr>
+		<td><b>-S</b></td>
+		<td>Force TLS (Transport Layer Security)</td>
+	</tr>
+	<tr>
+		<td><b>-W</b> &lt;password&gt;</td>
+		<td>Equal effect as flag 'p' but non-interactive</td>
 	</tr>
 	<tr>
 		<td><b>-c</b> &lt;server[:port]&gt;</td>
@@ -130,7 +138,7 @@ is probably a better alternative.
 		<td>Your username</td>
 	</tr>
 	<tr>
-		<td><b>-v</b></td>
+		<td><b>-v</b>, <b>--version</b></td>
 		<td>Output <strong>swirc</strong> version</td>
 	</tr>
 	<tr>
