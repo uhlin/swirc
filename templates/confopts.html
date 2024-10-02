@@ -36,7 +36,7 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2023-02-18</em></small></p>
+<p><small><em>Updated: 2024-10-02</em></small></p>
 <h3>Configuration options in swirc.conf</h3>
 <p>
 <span class="note">NOTE</span>
@@ -90,6 +90,26 @@ default nickname is busy.
 		<td class="desc">
 Automatically op yourself on channel join when you're identified as an
 IRC operator
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ==================== -->
+<!-- AWAYMSGS IN PRIVCONV -->
+<!-- ==================== -->
+	<tr>
+		<td>
+			<strong>awaymsgs_in_privconv</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Output away messages in private conversations?
+		Away messages are often displayed each time you
+		message the user who's marked as being away which can
+		be annoying if the user isn't really away, i.e. he/she
+		just forgot to unset the status.
+		This setting defaults to YES.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -225,6 +245,101 @@ preventing a command to be accidentally transmitted as a chat message.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- === -->
+<!-- DCC -->
+<!-- === -->
+	<tr>
+		<td>
+			<strong>dcc</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Use DCC (Direct Client-to-Client)?
+		Swirc implements its own variant of DCC meaning it's
+		incompatible with other IRC clients.
+		Transport Layer Security is forced and for now the DCC
+		feature isn't available in ICB mode.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- DCC CIPHER SUITE -->
+<!-- ================ -->
+	<tr>
+		<td>
+			<strong>dcc_cipher_suite</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		DCC cipher suite.
+		Which can be:
+		<strong>secure</strong>,
+		<strong>compat</strong>,
+		<strong>legacy</strong> or
+		<strong>all</strong>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========== -->
+<!-- DCC OWN IP -->
+<!-- ========== -->
+	<tr>
+		<td>
+			<strong>dcc_own_ip</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		IPv4 address for incoming DCC connections.
+		If empty Swirc attempts to resovle the address
+		automatically.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- DCC PORT -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>dcc_port</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Port number for incoming DCC connections (1024-65535),
+		defaults to 8080.
+		Must not be blocked by a firewall.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============== -->
+<!-- DCC UPLOAD DIR -->
+<!-- ============== -->
+	<tr>
+		<td>
+			<strong>dcc_upload_dir</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Where shall Swirc look for DCC uploads?
+		If empty it defaults to <em>uploads</em> in the home
+		dir of Swirc.
+		On OpenBSD this dir is made available with read-only
+		permissions by using
+		<a href="https://man.openbsd.org/unveil">unveil(2)</a>.
+		However, that is done once at startup.
+		Changing it while Swirc is running will not work.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <!-- ================= -->
 <!-- HOSTNAME CHECKING -->
 <!-- ================= -->
@@ -356,24 +471,6 @@ users are invited to channels
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <!-- ================= -->
-<!-- IRCv3 SERVER TIME -->
-<!-- ================= -->
-	<tr>
-		<td>
-			<strong>ircv3_server_time</strong>
-			(<span class="opttype">bool</span>)
-		</td>
-	</tr>
-	<tr>
-		<td class="desc">
-Enable or disable IRCv3 server time extension.
-The server time extension is particularly useful if you&apos;re using an
-IRC bouncer like
-<a href="https://znc.in/">ZNC</a>.
-		</td>
-	</tr>
-	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<!-- ================= -->
 <!-- JOINS PARTS QUITS -->
 <!-- ================= -->
 	<tr>
@@ -500,6 +597,22 @@ the aliases given by this setting.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- NOTIFICATIONS -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>notifications</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Turns notifications on/off.
+		Takes effect at once.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <!-- ============ -->
 <!-- PART MESSAGE -->
 <!-- ============ -->
@@ -526,10 +639,10 @@ the aliases given by this setting.
 	</tr>
 	<tr>
 		<td class="desc">
-Q bot hostname.
-The Q bot is a
-<a href="https://www.quakenet.org/">QuakeNet</a>
-service.
+		Q bot hostname.
+		The Q bot is a
+		<a href="https://www.quakenet.org/">QuakeNet</a>
+		service.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -744,31 +857,24 @@ setting to
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<!-- =================== -->
-<!-- SERVER CIPHER SUITE -->
-<!-- =================== -->
+<!-- =========== -->
+<!-- SERVER TIME -->
+<!-- =========== -->
 	<tr>
 		<td>
-			<strong>server_cipher_suite</strong>
-			(<span class="opttype">string</span>)
+			<strong>server_time</strong>
+			(<span class="opttype">bool</span>)
 		</td>
 	</tr>
 	<tr>
 		<td class="desc">
-		Server cipher suite.
-		Which can have one of the following values:
-			<ul>
-			<li>secure</li>
-			<li>compat</li>
-			<li>legacy</li>
-			<li>all</li>
-			</ul>
-		The server cipher suite is used when you start a TLS server in
-		<strong>swirc</strong>
-		used for remote GUI connections.
+Enable or disable IRCv3 server time extension.
+The server time extension is particularly useful if you&apos;re using an
+IRC bouncer like
+<a href="https://znc.in/">ZNC</a>.
 		</td>
 	</tr>
-	<!--<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>-->
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <!-- ============== -->
 <!-- SHOW PING PONG -->
 <!-- ============== -->
