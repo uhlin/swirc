@@ -56,9 +56,9 @@ const time_t	g_time_error = ((time_t) -1);
 static bool
 format_codes_are_ok(const char *fmt)
 {
-	const char *cp = NULL;
-	ptrdiff_t diff = 0;
-	static const char legal_index[] = "aAbBcdHIjmMpSUwWxXyYzZ%";
+	const char		*cp = NULL;
+	ptrdiff_t		 diff = 0;
+	static const char	 legal_index[] = "aAbBcdHIjmMpSUwWxXyYzZ%";
 
 	while ((cp = strchr(&fmt[diff], '%')) != NULL) {
 		if (isEmpty(++cp) || strchr(legal_index, *cp) == NULL)
@@ -66,6 +66,7 @@ format_codes_are_ok(const char *fmt)
 		else
 			diff = (++cp - fmt);
 	}
+
 	return true;
 }
 
@@ -216,9 +217,9 @@ current_time(const char *fmt)
 const char *
 getuser(void)
 {
-	const char *var_data;
-	static char buf[100] = { '\0' };
-	static const char var[] =
+	const char		*var_data;
+	static char		 buf[100] = { '\0' };
+	static const char	 var[] =
 #if defined(UNIX)
 	    "USER";
 #elif defined(WIN32)
@@ -305,9 +306,9 @@ unsigned int
 hash_djb_g(const char *str, const bool lc, const size_t upper_bound)
 {
 #define MAGIC_NUMBER 5381
-	char *str_copy, *cp;
-	char c;
-	unsigned int hashval;
+	char		*str_copy, *cp;
+	char		 c;
+	unsigned int	 hashval;
 
 	str_copy	= (lc ? strToLower(sw_strdup(str)) : sw_strdup(str));
 	cp		= &str_copy[0];
@@ -323,9 +324,9 @@ hash_djb_g(const char *str, const bool lc, const size_t upper_bound)
 unsigned int
 hash_pjw_g(const char *str, const bool lc, const size_t upper_bound)
 {
-	char *str_copy, *cp;
-	char c;
-	unsigned int hashval;
+	char		*str_copy, *cp;
+	char		 c;
+	unsigned int	 hashval;
 
 	str_copy	= (lc ? strToLower(sw_strdup(str)) : sw_strdup(str));
 	cp		= &str_copy[0];
@@ -361,6 +362,7 @@ realloc_strcat(char **dest, const char *src)
 
 	if (isNull(dest) || isNull(*dest) || isNull(src))
 		err_exit(EINVAL, "%s", __func__);
+
 	newsize = strlen(*dest) + strlen(src) + 1;
 
 	if ((*dest = realloc(*dest, newsize)) == NULL)
@@ -384,7 +386,7 @@ write_setting(FILE *stream, const char *name, const char *value,
 void
 write_to_stream(FILE *stream, const char *fmt, ...)
 {
-	int n_print;
+	int	n_print;
 	va_list ap;
 
 	va_start(ap, fmt);
