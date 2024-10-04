@@ -572,6 +572,17 @@ handle_extension(size_t *bytes, const char *protocol_message,
 	return 0;
 }
 
+static void
+compo_init(struct irc_message_compo *compo)
+{
+	compo->year = compo->month = compo->day = -1;
+	compo->hour = compo->minute = compo->second = compo->precision = -1;
+
+	compo->prefix = NULL;
+	compo->command = NULL;
+	compo->params = NULL;
+}
+
 /**
  * Sort message components - into prefix, command and params.
  */
@@ -586,12 +597,7 @@ SortMsgCompo(const char *protocol_message)
 	size_t				 bytes = 0;
 	struct irc_message_compo	*compo = xcalloc(sizeof *compo, 1);
 
-	compo->year = compo->month = compo->day = -1;
-	compo->hour = compo->minute = compo->second = compo->precision = -1;
-
-	compo->prefix = NULL;
-	compo->command = NULL;
-	compo->params = NULL;
+	compo_init(compo);
 
 	if (*protocol_message == '@') {
 		if (handle_extension(&bytes, protocol_message, compo) == -1) {
