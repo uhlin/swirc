@@ -1586,6 +1586,40 @@ set_timestamp(char *dest, size_t destsize,
 		debug("%s: snprintf: error", __func__);
 }
 
+static void
+vprinttext_mutex_init_doit()
+{
+#if defined(UNIX)
+	if ((errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init))
+	    != 0)
+		err_sys("%s: pthread_once", __func__);
+#elif defined(WIN32)
+	if ((errno = init_once(&vprinttext_init_done, vprinttext_mutex_init))
+	    != 0)
+		err_sys("%s: init_once", __func__);
+#endif
+}
+
+static void
+remove_head_from_buffer(PTEXTBUF buf)
+{
+	if ((errno = textBuf_remove(buf, textBuf_head(buf))) != 0)
+		err_sys("%s: %s: textBuf_remove", __FILE__, __func__);
+}
+
+static void
+add_to_buffer(PTEXTBUF buf, CSTRING text, const int indent)
+{
+	if (textBuf_size(buf) == 0) {
+		if ((errno = textBuf_ins_next(buf, nullptr, text, indent)) != 0)
+			err_sys("%s: %s: textBuf_ins_next", __FILE__, __func__);
+	} else {
+		if ((errno = textBuf_ins_next(buf, textBuf_tail(buf), text,
+		    indent)) != 0)
+			err_sys("%s: %s: textBuf_ins_next", __FILE__, __func__);
+	}
+}
+
 /**
  * Variable argument list version of Swirc messenger
  *
@@ -1603,41 +1637,16 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 				     1000);
 	struct message_components *pout = nullptr;
 
-#if defined(UNIX)
-	if ((errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init))
-	    != 0)
-		err_sys("%s: pthread_once", __func__);
-#elif defined(WIN32)
-	if ((errno = init_once(&vprinttext_init_done, vprinttext_mutex_init))
-	    != 0)
-		err_sys("%s: init_once", __func__);
-#endif
-
+	vprinttext_mutex_init_doit();
 	mutex_lock(&vprinttext_mutex);
 	fmt_copy = strdup_vprintf(fmt, ap);
 	pout = get_processed_out_message(fmt_copy, ctx->spec_type,
 	    ctx->include_ts, (ctx->has_server_time ? ctx->server_time :
 	    nullptr));
 
-	if (tbszp1 > config_integer(&intctx)) {
-		/*
-		 * Buffer full. Remove head...
-		 */
-		if ((errno = textBuf_remove(ctx->window->buf,
-		    textBuf_head(ctx->window->buf))) != 0)
-			err_sys("%s: textBuf_remove", __func__);
-	}
-
-	if (textBuf_size(ctx->window->buf) == 0) {
-		if ((errno = textBuf_ins_next(ctx->window->buf, nullptr,
-		    pout->text, pout->indent)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	} else {
-		if ((errno = textBuf_ins_next(ctx->window->buf,
-		    textBuf_tail(ctx->window->buf), pout->text,
-		    pout->indent)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	}
+	if (tbszp1 > config_integer(&intctx)) /* Buffer full... */
+		remove_head_from_buffer(ctx->window->buf);
+	add_to_buffer(ctx->window->buf, pout->text, pout->indent);
 
 	const bool shouldOutData = !(ctx->window->scroll_mode);
 
