@@ -181,12 +181,8 @@ const char g_textdeco_chars[] =
 ****************************************************************/
 
 #if defined(UNIX)
-static pthread_once_t	vprinttext_init_done = PTHREAD_ONCE_INIT;
-static pthread_once_t	puts_init_done = PTHREAD_ONCE_INIT;
 static pthread_mutex_t	vprinttext_mutex;
 #elif defined(WIN32)
-static init_once_t	vprinttext_init_done = ONCE_INITIALIZER;
-static init_once_t	puts_init_done = ONCE_INITIALIZER;
 static HANDLE		vprinttext_mutex;
 #endif
 
@@ -1450,10 +1446,14 @@ static void
 puts_mutex_init_doit()
 {
 #if defined(UNIX)
-	if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0)
+	static pthread_once_t init_done = PTHREAD_ONCE_INIT;
+
+	if ((errno = pthread_once(&init_done, puts_mutex_init)) != 0)
 		err_sys("%s: pthread_once", __func__);
 #elif defined(WIN32)
-	if ((errno = init_once(&puts_init_done, puts_mutex_init)) != 0)
+	static init_once_t init_done = ONCE_INITIALIZER;
+
+	if ((errno = init_once(&init_done, puts_mutex_init)) != 0)
 		err_sys("%s: init_once", __func__);
 #endif
 }
@@ -1596,12 +1596,14 @@ static void
 vprinttext_mutex_init_doit()
 {
 #if defined(UNIX)
-	if ((errno = pthread_once(&vprinttext_init_done, vprinttext_mutex_init))
-	    != 0)
+	static pthread_once_t init_done = PTHREAD_ONCE_INIT;
+
+	if ((errno = pthread_once(&init_done, vprinttext_mutex_init)) != 0)
 		err_sys("%s: pthread_once", __func__);
 #elif defined(WIN32)
-	if ((errno = init_once(&vprinttext_init_done, vprinttext_mutex_init))
-	    != 0)
+	static init_once_t init_done = ONCE_INITIALIZER;
+
+	if ((errno = init_once(&init_done, vprinttext_mutex_init)) != 0)
 		err_sys("%s: init_once", __func__);
 #endif
 }
