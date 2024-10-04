@@ -1446,6 +1446,18 @@ get_buffer(CSTRING orig)
 #endif
 }
 
+static void
+puts_mutex_init_doit()
+{
+#if defined(UNIX)
+	if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0)
+		err_sys("%s: pthread_once", __func__);
+#elif defined(WIN32)
+	if ((errno = init_once(&puts_init_done, puts_mutex_init)) != 0)
+		err_sys("%s: init_once", __func__);
+#endif
+}
+
 /**
  * Output data to window
  *
@@ -1471,13 +1483,7 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 			 booleans; // calls constructor
 	wchar_t		*wc_buf = nullptr;
 
-#if defined(UNIX)
-	if ((errno = pthread_once(&puts_init_done, puts_mutex_init)) != 0)
-		err_sys("%s: pthread_once", __func__);
-#elif defined(WIN32)
-	if ((errno = init_once(&puts_init_done, puts_mutex_init)) != 0)
-		err_sys("%s: init_once", __func__);
-#endif
+	puts_mutex_init_doit();
 
 	if (isValid(rep_count))
 		*rep_count = 0;
