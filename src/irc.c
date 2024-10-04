@@ -794,6 +794,12 @@ get_last_token(const char *buffer)
 	return sw_strdup(++ last_token);
 }
 
+static inline bool
+is_terminated_recvchunk(const char last)
+{
+	return (last == '\r' || last == '\n');
+}
+
 /**
  * Handle and interpret irc events
  */
@@ -801,7 +807,6 @@ void
 irc_handle_interpret_events(char *recvbuffer, char **message_concat,
     enum message_concat_state *state)
 {
-	bool			 terminated_recvchunk = false;
 	char			*cp = NULL, *tokstate = "";
 	char			*last_token = NULL;
 	long int		 loop_count = 0;
@@ -820,17 +825,7 @@ irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 		*state = CONCAT_BUFFER_IS_EMPTY;
 	}
 
-	switch (recvbuffer[strlen(recvbuffer) - 1]) {
-	case '\r':
-	case '\n':
-		terminated_recvchunk = true;
-		break;
-	default:
-		terminated_recvchunk = false;
-		break;
-	}
-
-	if (!terminated_recvchunk)
+	if (!is_terminated_recvchunk(recvbuffer[strlen(recvbuffer) - 1]))
 		last_token = get_last_token(recvbuffer); /* Must be freed */
 
 	cp = &recvbuffer[0];
