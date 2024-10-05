@@ -647,12 +647,12 @@ SortMsgCompo(const char *protocol_message)
 		}
 	} /* ===== EOF IRCv3 extensions ===== */
 
-	const char *ccp = &protocol_message[bytes];
-	while (*ccp == ' ')
-		ccp++;
-	message_has_prefix = (*ccp == ':');
+	const char *cp = &protocol_message[bytes];
+	while (*cp == ' ')
+		cp++;
+	message_has_prefix = (*cp == ':');
 	requested_feeds = (message_has_prefix ? 2 : 1);
-	remaining_data = sw_strdup(ccp);
+	remaining_data = sw_strdup(cp);
 
 	if (strFeed(remaining_data, requested_feeds) != requested_feeds &&
 	    strstr(remaining_data, "\nAWAY") == NULL) {
