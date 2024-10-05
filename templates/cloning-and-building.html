@@ -113,37 +113,42 @@ OS X works.
 <h5>Install</h5>
 <p>Installing it under <kbd>/usr/local</kbd>:</p>
 <p class="snippet">
-<kbd>$ sudo make install</kbd>
+	<kbd>$ sudo make install</kbd>
 </p>
 <p>
-Installing it under
-<kbd>/home/user</kbd>
-without the translations
-(in which case you also should've passed <kbd>--without-libintl</kbd>
-to the configure script):
+	Installing it under
+	<kbd>/home/user</kbd>
+	without the translations
+	(in which case you also should've passed
+	<kbd>--without-libintl</kbd>
+	to the configure script):
 </p>
 <p class="snippet">
-<kbd>$ PREFIX=/home/user make install-no-lc-msgs</kbd>
+	<kbd>$ PREFIX=/home/user make install-no-lc-msgs</kbd>
 </p>
+
 <h4>Building for Windows</h4>
 <p>
-To build Swirc for Windows you must have
-<a href="http://www.visualstudio.com/">Visual Studio</a>.
+	To build Swirc for Windows you must have
+	<a href="http://www.visualstudio.com/">Visual Studio</a>.
 </p>
 <p>
-So, fire up the command prompt for
-<a href="http://www.visualstudio.com/">Visual Studio</a>
-where the needed tools (the compiler, etc.) are loaded into the
-environment. The regular command prompt won't work. Then:
+	So, fire up the command prompt for
+	<a href="http://www.visualstudio.com/">Visual Studio</a>
+	where the needed tools
+	(the compiler, etc.)
+	are loaded into the environment.
+	The regular command prompt won't work.
+	Then:
 </p>
 <p class="snippet">
-<kbd>cd c:\path\to\swirc</kbd><br>
-<kbd>nmake -f Makefile.vc</kbd>
+	<kbd>cd c:\path\to\swirc</kbd><br>
+	<kbd>nmake -f Makefile.vc</kbd>
 </p>
 <p><em>Done!</em></p>
 <p>To make a distribution of Swirc use:</p>
 <p class="snippet">
-<kbd>nmake -f Makefile.vc dist</kbd>
+	<kbd>nmake -f Makefile.vc dist</kbd>
 </p>
 
 <h3>Cleaning</h3>
