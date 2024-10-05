@@ -583,51 +583,18 @@ compo_init(struct irc_message_compo *compo)
 	compo->params = NULL;
 }
 
-/**
- * Sort message components - into prefix, command and params.
- */
-static struct irc_message_compo *
-SortMsgCompo(const char *protocol_message)
+static void
+compo_tokenize(STRING str, const int message_has_prefix,
+	       struct irc_message_compo *compo)
 {
-	char				*cp = NULL, *state = "";
-	char				*remaining_data = NULL;
-	int				 message_has_prefix = 0,
-					 requested_feeds = -1;
-	short int			 loop_run = 0;
-	size_t				 bytes = 0;
-	struct irc_message_compo	*compo = xcalloc(sizeof *compo, 1);
-
-	compo_init(compo);
-
-	if (*protocol_message == '@') {
-		if (handle_extension(&bytes, protocol_message, compo) == -1) {
-			free(compo);
-			return NULL;
-		}
-	} /* ===== EOF IRCv3 extensions ===== */
-
-	const char *ccp = &protocol_message[bytes];
-	while (*ccp == ' ')
-		ccp++;
-	message_has_prefix = (*ccp == ':');
-	requested_feeds = (message_has_prefix ? 2 : 1);
-	remaining_data = sw_strdup(ccp);
-
-	if (strFeed(remaining_data, requested_feeds) != requested_feeds &&
-	    strstr(remaining_data, "\nAWAY") == NULL) {
-		free(compo);
-		printf_and_free(remaining_data, "In %s: strFeed: "
-		    "requested feeds mismatch feeds written", __func__);
-		return NULL;
-	}
-
-	loop_run = 0;
-	cp = &remaining_data[0];
+	STRING		state = "";
+	short int	loop_run = 0;
 
 	while (true) {
-		const char *token;
+		CSTRING token;
 
-		if ((token = strtok_r(cp, "\n", &state)) == NULL)
+		if ((token = strtok_r(loop_run == 0 ? str : NULL, "\n",
+		    &state)) == NULL)
 			break;
 
 		switch (loop_run) {
@@ -656,10 +623,48 @@ SortMsgCompo(const char *protocol_message)
 			break;
 
 		loop_run++;
-		cp = NULL;
+	}
+}
+
+/**
+ * Sort message components - into prefix, command and params.
+ */
+static struct irc_message_compo *
+SortMsgCompo(const char *protocol_message)
+{
+	char				*remaining_data = NULL;
+	int				 message_has_prefix = 0,
+					 requested_feeds = -1;
+	size_t				 bytes = 0;
+	struct irc_message_compo	*compo = xcalloc(sizeof *compo, 1);
+
+	compo_init(compo);
+
+	if (*protocol_message == '@') {
+		if (handle_extension(&bytes, protocol_message, compo) == -1) {
+			free(compo);
+			return NULL;
+		}
+	} /* ===== EOF IRCv3 extensions ===== */
+
+	const char *ccp = &protocol_message[bytes];
+	while (*ccp == ' ')
+		ccp++;
+	message_has_prefix = (*ccp == ':');
+	requested_feeds = (message_has_prefix ? 2 : 1);
+	remaining_data = sw_strdup(ccp);
+
+	if (strFeed(remaining_data, requested_feeds) != requested_feeds &&
+	    strstr(remaining_data, "\nAWAY") == NULL) {
+		free(compo);
+		printf_and_free(remaining_data, "In %s: strFeed: "
+		    "requested feeds mismatch feeds written", __func__);
+		return NULL;
 	}
 
+	compo_tokenize(&remaining_data[0], message_has_prefix, compo);
 	free(remaining_data);
+
 	if (compo->command == NULL || (compo->params == NULL &&
 	    !strings_match(compo->command, "AWAY"))) {
 		FreeMsgCompo(compo);
