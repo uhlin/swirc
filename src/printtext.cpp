@@ -1009,6 +1009,15 @@ windows_convert_to_utf8(CSTRING buf)
 }
 #endif
 
+static void
+restore_original(CSTRING locale)
+{
+	if (xsetlocale(LC_CTYPE, locale) == nullptr) {
+		err_log(0, "%s: cannot restore original locale (%s)", __func__,
+		    locale);
+	}
+}
+
 /**
  * Attempt convert multibyte character string to wide-character string
  * by using a specific codeset. The storage is dynamically allocated.
@@ -1049,20 +1058,13 @@ try_convert_buf_with_cs(CSTRING buf, CSTRING codeset)
 		if (xsetlocale(LC_CTYPE, tmp_locale) == nullptr ||
 		    (bytes_convert = xmbstowcs(out, buf, size - 1)) ==
 		    g_conversion_failed) {
-			if (xsetlocale(LC_CTYPE, original_locale) == nullptr) {
-				err_log(EPERM, "%s: cannot restore original "
-				    "locale (%s)", __func__, original_locale);
-			}
-
+			restore_original(original_locale);
 			throw std::runtime_error("conversion failed");
 		}
 
 		if (bytes_convert >= (size - 1))
 			out[size - 1] = 0L;
-		if (xsetlocale(LC_CTYPE, original_locale) == nullptr) {
-			err_log(EPERM, "%s: cannot restore original "
-			    "locale (%s)", __func__, original_locale);
-		}
+		restore_original(original_locale);
 
 		free_locale_info(li);
 		free(original_locale);
