@@ -1047,12 +1047,12 @@ try_convert_buf_with_cs(CSTRING buf, CSTRING codeset)
 			    "information");
 		}
 
-		const size_t size = strlen(buf) + 1;
-
 		original_locale = strdup_printf("%s.%s", li->lang_and_territory,
 		    li->codeset);
 		tmp_locale = strdup_printf("%s.%s", li->lang_and_territory,
 		    codeset);
+
+		const size_t size = strlen(buf) + 1;
 		out = static_cast<wchar_t *>(xcalloc(size, sizeof *out));
 
 		if (xsetlocale(LC_CTYPE, tmp_locale) == nullptr ||
