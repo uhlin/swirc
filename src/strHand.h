@@ -3,15 +3,13 @@
 
 #include <stdint.h> /* SIZE_MAX */
 
-#ifndef STRINGS_MATCH
-#define STRINGS_MATCH 0
-#endif
-
 /*lint -sem(strColor, pure) */
 /*lint -sem(strcasestr, r_null) */
 /*lint -printf(3, sw_snprintf) */
 
 __SWIRC_BEGIN_DECLS
+extern const int STRINGS_MATCH;
+
 char	*strToLower(char *);
 char	*strToUpper(char *);
 char	*sw_strdup(const char *);

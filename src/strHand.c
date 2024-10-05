@@ -1,5 +1,5 @@
 /* String handling functions
-   Copyright (C) 2012-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2024 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -48,6 +48,8 @@
 #elif defined(WIN32)
 #define PRINT_SIZE	"%Iu"
 #endif
+
+const int STRINGS_MATCH = 0;
 
 /**
  * Convert string to lowercase
