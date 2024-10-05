@@ -855,7 +855,6 @@ set_indent(int *indent, CSTRING fmt, ...)
  * @param spec_type  "Specifier"
  * @param include_ts Include timestamp?
  * @param srv_time   Server time
- * @return Message components
  */
 void
 message_components::get_msg(CSTRING unproc_msg,
