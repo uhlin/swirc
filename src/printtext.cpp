@@ -375,7 +375,7 @@ convert_wc(wchar_t wc, size_t &bytes_out)
 }
 
 static inline void
-putbyte(char *cp, const unsigned char b)
+putbyte(char *cp, const uint8_t b)
 {
 	cp[0] = static_cast<char>(b);
 	cp[1] = '\0';
