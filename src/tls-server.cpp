@@ -293,6 +293,28 @@ tls_server::get_accept_bio(const int port)
 	return bio;
 }
 
+static void
+set_server_ciphers_doit(SSL_CTX *ctx)
+{
+	bool		 assignment_ok = true;
+	const char	*cs = Config("dcc_cipher_suite");;
+
+	if (strings_match(cs, "secure") || strings_match(cs, "SECURE"))
+		set_server_ciphers(ctx, g_suite_secure, assignment_ok);
+	else if (strings_match(cs, "compat") || strings_match(cs, "COMPAT"))
+		set_server_ciphers(ctx, g_suite_compat, assignment_ok);
+	else if (strings_match(cs, "legacy") || strings_match(cs, "LEGACY"))
+		set_server_ciphers(ctx, g_suite_legacy, assignment_ok);
+	else if (strings_match(cs, "all") || strings_match(cs, "ALL") ||
+		 strings_match(cs, "insecure") || strings_match(cs, "INSECURE"))
+		set_server_ciphers(ctx, g_suite_all, assignment_ok);
+	else
+		set_server_ciphers(ctx, g_suite_compat, assignment_ok);
+
+	if (!assignment_ok)
+		throw std::runtime_error("no valid ciphers");
+}
+
 SSL_CTX *
 tls_server::setup_context(void)
 {
@@ -303,8 +325,6 @@ tls_server::setup_context(void)
 	ERR_clear_error();
 
 	try {
-		bool		 assignment_ok;
-		const char	*cs;
 		int		 mode;
 		long int	 opts;
 
@@ -350,26 +370,7 @@ tls_server::setup_context(void)
 
 		SSL_CTX_set_tmp_dh_callback(ctx, tmp_dh_callback);
 
-		assignment_ok = true;
-		cs = Config("dcc_cipher_suite");
-
-		if (strings_match(cs, "secure") || strings_match(cs, "SECURE"))
-			set_server_ciphers(ctx, g_suite_secure, assignment_ok);
-		else if (strings_match(cs, "compat") || strings_match(cs,
-		    "COMPAT"))
-			set_server_ciphers(ctx, g_suite_compat, assignment_ok);
-		else if (strings_match(cs, "legacy") || strings_match(cs,
-		    "LEGACY"))
-			set_server_ciphers(ctx, g_suite_legacy, assignment_ok);
-		else if (strings_match(cs, "all") || strings_match(cs, "ALL") ||
-		    strings_match(cs, "insecure") || strings_match(cs,
-		    "INSECURE"))
-			set_server_ciphers(ctx, g_suite_all, assignment_ok);
-		else
-			set_server_ciphers(ctx, g_suite_compat, assignment_ok);
-
-		if (!assignment_ok)
-			throw std::runtime_error("no valid ciphers");
+		set_server_ciphers_doit(ctx);
 	} catch (const std::runtime_error &ex) {
 		const unsigned long int err = ERR_peek_last_error();
 
