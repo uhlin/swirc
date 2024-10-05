@@ -91,6 +91,8 @@ struct message_components {
 		free(this->text);
 		this->text = nullptr;
 	}
+
+	void get_msg(CSTRING, enum message_specifier_type, bool, CSTRING);
 };
 
 struct text_decoration_bools {
@@ -855,18 +857,12 @@ set_indent(int *indent, CSTRING fmt, ...)
  * @param srv_time   Server time
  * @return Message components
  */
-static struct message_components *
-get_processed_out_message(CSTRING unproc_msg, enum message_specifier_type
-    spec_type, bool include_ts, CSTRING srv_time)
+void
+message_components::get_msg(CSTRING unproc_msg,
+    enum message_specifier_type spec_type,
+    bool include_ts,
+    CSTRING srv_time)
 {
-	struct message_components *pout;
-
-	try {
-		pout = new message_components(nullptr, 0);
-	} catch (const std::bad_alloc &e) {
-		err_exit(ENOMEM, "%s: fatal: %s", __func__, e.what());
-	}
-
 	if (include_ts) {
 		STRING ts = nullptr;
 
@@ -877,48 +873,48 @@ get_processed_out_message(CSTRING unproc_msg, enum message_specifier_type
 
 		switch (spec_type) {
 		case TYPE_SPEC1:
-			pout->text = strdup_printf("%s %s %s", ts, THE_SPEC1,
+			this->text = strdup_printf("%s %s %s", ts, THE_SPEC1,
 			    unproc_msg);
-			set_indent(& (pout->indent), "%s %s ", ts, THE_SPEC1);
+			set_indent(& (this->indent), "%s %s ", ts, THE_SPEC1);
 			break;
 		case TYPE_SPEC2:
-			pout->text = strdup_printf("%s %s %s", ts, THE_SPEC2,
+			this->text = strdup_printf("%s %s %s", ts, THE_SPEC2,
 			    unproc_msg);
-			set_indent(& (pout->indent), "%s %s ", ts, THE_SPEC2);
+			set_indent(& (this->indent), "%s %s ", ts, THE_SPEC2);
 			break;
 		case TYPE_SPEC3:
-			pout->text = strdup_printf("%s %s %s", ts, THE_SPEC3,
+			this->text = strdup_printf("%s %s %s", ts, THE_SPEC3,
 			    unproc_msg);
-			set_indent(& (pout->indent), "%s %s ", ts, THE_SPEC3);
+			set_indent(& (this->indent), "%s %s ", ts, THE_SPEC3);
 			break;
 		case TYPE_SPEC1_SPEC2:
-			pout->text = strdup_printf("%s %s %s %s", ts, THE_SPEC1,
+			this->text = strdup_printf("%s %s %s %s", ts, THE_SPEC1,
 			    THE_SPEC2, unproc_msg);
-			set_indent(& (pout->indent), "%s %s %s ", ts, THE_SPEC1,
+			set_indent(& (this->indent), "%s %s %s ", ts, THE_SPEC1,
 			    THE_SPEC2);
 			break;
 		case TYPE_SPEC1_FAILURE:
-			pout->text = strdup_printf("%s %s %s %s", ts, THE_SPEC1,
+			this->text = strdup_printf("%s %s %s %s", ts, THE_SPEC1,
 			    GFX_FAILURE, unproc_msg);
-			set_indent(& (pout->indent), "%s %s %s ", ts, THE_SPEC1,
+			set_indent(& (this->indent), "%s %s %s ", ts, THE_SPEC1,
 			    GFX_FAILURE);
 			break;
 		case TYPE_SPEC1_SUCCESS:
-			pout->text = strdup_printf("%s %s %s %s", ts, THE_SPEC1,
+			this->text = strdup_printf("%s %s %s %s", ts, THE_SPEC1,
 			    GFX_SUCCESS, unproc_msg);
-			set_indent(& (pout->indent), "%s %s %s ", ts, THE_SPEC1,
+			set_indent(& (this->indent), "%s %s %s ", ts, THE_SPEC1,
 			    GFX_SUCCESS);
 			break;
 		case TYPE_SPEC1_WARN:
-			pout->text = strdup_printf("%s %s %s %s", ts, THE_SPEC1,
+			this->text = strdup_printf("%s %s %s %s", ts, THE_SPEC1,
 			    GFX_WARN, unproc_msg);
-			set_indent(& (pout->indent), "%s %s %s ", ts, THE_SPEC1,
+			set_indent(& (this->indent), "%s %s %s ", ts, THE_SPEC1,
 			    GFX_WARN);
 			break;
 		case TYPE_SPEC_NONE:
 		default:
-			pout->text = strdup_printf("%s %s", ts, unproc_msg);
-			set_indent(& (pout->indent), "%s ", ts);
+			this->text = strdup_printf("%s %s", ts, unproc_msg);
+			set_indent(& (this->indent), "%s ", ts);
 			break;
 		}
 
@@ -930,59 +926,58 @@ get_processed_out_message(CSTRING unproc_msg, enum message_specifier_type
 
 		switch (spec_type) {
 		case TYPE_SPEC1:
-			pout->text = strdup_printf("%s %s", THE_SPEC1,
+			this->text = strdup_printf("%s %s", THE_SPEC1,
 			    unproc_msg);
-			set_indent(& (pout->indent), "%s ", THE_SPEC1);
+			set_indent(& (this->indent), "%s ", THE_SPEC1);
 			break;
 		case TYPE_SPEC2:
-			pout->text = strdup_printf("%s %s", THE_SPEC2,
+			this->text = strdup_printf("%s %s", THE_SPEC2,
 			    unproc_msg);
-			set_indent(& (pout->indent), "%s ", THE_SPEC2);
+			set_indent(& (this->indent), "%s ", THE_SPEC2);
 			break;
 		case TYPE_SPEC3:
-			pout->text = strdup_printf("%s %s", THE_SPEC3,
+			this->text = strdup_printf("%s %s", THE_SPEC3,
 			    unproc_msg);
-			set_indent(& (pout->indent), "%s ", THE_SPEC3);
+			set_indent(& (this->indent), "%s ", THE_SPEC3);
 			break;
 		case TYPE_SPEC1_SPEC2:
-			pout->text = strdup_printf("%s %s %s", THE_SPEC1,
+			this->text = strdup_printf("%s %s %s", THE_SPEC1,
 			    THE_SPEC2, unproc_msg);
-			set_indent(& (pout->indent), "%s %s ", THE_SPEC1,
+			set_indent(& (this->indent), "%s %s ", THE_SPEC1,
 			    THE_SPEC2);
 			break;
 		case TYPE_SPEC1_FAILURE:
-			pout->text = strdup_printf("%s %s %s", THE_SPEC1,
+			this->text = strdup_printf("%s %s %s", THE_SPEC1,
 			    GFX_FAILURE, unproc_msg);
-			set_indent(& (pout->indent), "%s %s ", THE_SPEC1,
+			set_indent(& (this->indent), "%s %s ", THE_SPEC1,
 			    GFX_FAILURE);
 			break;
 		case TYPE_SPEC1_SUCCESS:
-			pout->text = strdup_printf("%s %s %s", THE_SPEC1,
+			this->text = strdup_printf("%s %s %s", THE_SPEC1,
 			    GFX_SUCCESS, unproc_msg);
-			set_indent(& (pout->indent), "%s %s ", THE_SPEC1,
+			set_indent(& (this->indent), "%s %s ", THE_SPEC1,
 			    GFX_SUCCESS);
 			break;
 		case TYPE_SPEC1_WARN:
-			pout->text = strdup_printf("%s %s %s", THE_SPEC1,
+			this->text = strdup_printf("%s %s %s", THE_SPEC1,
 			    GFX_WARN, unproc_msg);
-			set_indent(& (pout->indent), "%s %s ", THE_SPEC1,
+			set_indent(& (this->indent), "%s %s ", THE_SPEC1,
 			    GFX_WARN);
 			break;
 		case TYPE_SPEC_NONE:
 		default:
-			pout->text = sw_strdup(unproc_msg);
-			pout->indent = 0;
+			this->text = sw_strdup(unproc_msg);
+			this->indent = 0;
 			break;
 		}
 	} else {
 		sw_assert_not_reached();
 	}
 
-	sw_assert(pout->text != nullptr);
+	sw_assert(this->text != nullptr);
 
 	if (g_no_colors)
-		pout->text = squeeze_text_deco(pout->text);
-	return pout;
+		this->text = squeeze_text_deco(this->text);
 }
 
 /**
@@ -1645,22 +1640,22 @@ add_to_buffer(PTEXTBUF buf, CSTRING text, const int indent)
 void
 vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 {
-	STRING			 fmt_copy = nullptr;
+	STRING			 fmt_copy;
 	const int		 tbszp1 = textBuf_size(ctx->window->buf) + 1;
 	struct integer_context	 intctx("textbuffer_size_absolute", 350, 4700,
 				     1000);
-	struct message_components *pout = nullptr;
+	struct message_components pout;
 
 	vprinttext_mutex_init_doit();
 	mutex_lock(&vprinttext_mutex);
 	fmt_copy = strdup_vprintf(fmt, ap);
-	pout = get_processed_out_message(fmt_copy, ctx->spec_type,
-	    ctx->include_ts, (ctx->has_server_time ? ctx->server_time :
-	    nullptr));
+	pout.get_msg(fmt_copy, ctx->spec_type, ctx->include_ts,
+	    (ctx->has_server_time ? ctx->server_time : nullptr));
+	free(fmt_copy);
 
 	if (tbszp1 > config_integer(&intctx)) /* Buffer full... */
 		remove_head_from_buffer(ctx->window->buf);
-	add_to_buffer(ctx->window->buf, pout->text, pout->indent);
+	add_to_buffer(ctx->window->buf, pout.text, pout.indent);
 
 	const bool shouldOutData = !(ctx->window->scroll_mode);
 
@@ -1673,7 +1668,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 			/* no */;
 		else {
 			printtext_puts(panel_window(ctx->window->pan),
-			    pout->text, pout->indent, -1, nullptr);
+			    pout.text, pout.indent, -1, nullptr);
 		}
 	}
 
@@ -1682,12 +1677,10 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 
 		if ((logpath = log_get_path(g_server_hostname,
 		    ctx->window->label)) != nullptr) {
-			log_msg(logpath, pout->text);
+			log_msg(logpath, pout.text);
 			free(logpath);
 		}
 	}
 
-	free(fmt_copy);
-	delete pout;
 	mutex_unlock(&vprinttext_mutex);
 }
