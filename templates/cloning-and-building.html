@@ -96,17 +96,20 @@ Due to certain circumstances I no longer can confirm that building for
 OS X works.
 </p>
 <p class="snippet">
-<kbd>$ cd /path/to/swirc</kbd><br>
-<kbd>$ ./configure</kbd><br>
-<kbd>$ make</kbd>
+	<kbd>$ cd /path/to/swirc</kbd><br>
+	<kbd>$ ./configure</kbd><br>
+	<kbd>$ make</kbd>
 </p>
+
 <h5>Configuration options</h5>
 <p>The following options can be passed to the configure script:</p>
 <ul>
-<li><kbd>--with-libnotify</kbd>: Enable support for desktop notifications</li>
-<li><kbd>--without-libidn</kbd>: Build without GNU libidn</li>
-<li><kbd>--without-libintl</kbd>: No internationalization</li>
+	<li><kbd>--with-libnotify</kbd>: Enable support for desktop notifications</li>
+	<li><kbd>--without-libiconv</kbd>: Build without GNU libiconv</li>
+	<li><kbd>--without-libidn</kbd>: Build without GNU libidn</li>
+	<li><kbd>--without-libintl</kbd>: No internationalization</li>
 </ul>
+
 <h5>Install</h5>
 <p>Installing it under <kbd>/usr/local</kbd>:</p>
 <p class="snippet">
@@ -142,11 +145,12 @@ environment. The regular command prompt won't work. Then:
 <p class="snippet">
 <kbd>nmake -f Makefile.vc dist</kbd>
 </p>
+
 <h3>Cleaning</h3>
 <p>Examples:</p>
 <p class="snippet">
-<kbd>$ make clean</kbd><br>
-<kbd>$ nmake -f Makefile.vc clean</kbd>
+	<kbd>$ make clean</kbd><br>
+	<kbd>$ nmake -f Makefile.vc clean</kbd>
 </p>
 <p>&nbsp;</p>
 </div> <!--mid-->
