@@ -1018,6 +1018,14 @@ restore_original(CSTRING locale)
 	}
 }
 
+static void
+try_convert_clean_up(struct locale_info *li, STRING orig, STRING tmp)
+{
+	free_locale_info(li);
+	free(orig);
+	free(tmp);
+}
+
 /**
  * Attempt convert multibyte character string to wide-character string
  * by using a specific codeset. The storage is dynamically allocated.
@@ -1066,17 +1074,13 @@ try_convert_buf_with_cs(CSTRING buf, CSTRING codeset)
 			out[size - 1] = 0L;
 		restore_original(original_locale);
 
-		free_locale_info(li);
-		free(original_locale);
-		free(tmp_locale);
+		try_convert_clean_up(li, original_locale, tmp_locale);
 		return out;
 	} catch (const std::bad_alloc &e) {
 		err_exit(ENOMEM, "%s: %s", __func__, e.what());
 	} catch (const std::runtime_error &e) {
 		debug("%s: %s", __func__, e.what());
-		free_locale_info(li);
-		free(original_locale);
-		free(tmp_locale);
+		try_convert_clean_up(li, original_locale, tmp_locale);
 		free(out);
 	} catch (...) {
 		sw_assert_not_reached();
