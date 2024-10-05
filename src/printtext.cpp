@@ -261,11 +261,11 @@ static struct ptext_colorMap_tag {
 static char *get_buffer(CSTRING) NONNULL;
 
 static void
-addmbs(WINDOW *win, const unsigned char *mbs)
+addmbs(WINDOW *win, const uint8_t *mbs)
 {
 #if defined(UNIX)
 	chtype c;
-	const unsigned char *p = mbs;
+	const uint8_t *p = mbs;
 
 	while ((c = *p++) != '\0')
 		WADDCH(win, c);
