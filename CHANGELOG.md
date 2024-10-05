@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 - Did code improvements:
   - Reduced duplication
   - Reduced scope of variables
+  - Replaced macros for constants
   - `...`
 
 ## [3.5.0] - 2024-09-30 ##
