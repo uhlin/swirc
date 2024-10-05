@@ -50,6 +50,8 @@ typedef struct tagPRINTTEXT_CONTEXT {
 	bool		 has_server_time;
 } PRINTTEXT_CONTEXT, *PPRINTTEXT_CONTEXT;
 
+typedef unsigned char *UCHARPTR;
+
 __SWIRC_BEGIN_DECLS
 extern const char g_ascii_soh;
 

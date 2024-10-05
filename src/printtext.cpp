@@ -333,13 +333,13 @@ case_bold(WINDOW *win, bool *is_bold)
  * @param bytes_out How many bytes is the wc?
  * @return The result
  */
-static unsigned char *
+static UCHARPTR
 convert_wc(wchar_t wc, size_t &bytes_out)
 {
 	const size_t	 size = MB_LEN_MAX;
 	mbstate_t	 ps;
 	size_t		 bytes_written = 0;
-	unsigned char	*mbs = static_cast<unsigned char *>(xmalloc(size + 1));
+	UCHARPTR	 mbs = static_cast<UCHARPTR>(xmalloc(size + 1));
 
 	BZERO(&ps, sizeof(mbstate_t));
 	mbs[size] = '\0';
@@ -371,7 +371,7 @@ convert_wc(wchar_t wc, size_t &bytes_out)
 
 	mbs[bytes_written] = '\0';
 	bytes_out = bytes_written;
-	return static_cast<unsigned char *>(xrealloc(mbs, bytes_written + 1));
+	return static_cast<UCHARPTR>(xrealloc(mbs, bytes_written + 1));
 }
 
 static inline void
@@ -390,7 +390,7 @@ static cc_check_t
 check_for_part1(wchar_t **bufp, char *fg)
 {
 	size_t		 bytes_out = 0;
-	unsigned char	*mbs;
+	UCHARPTR	 mbs;
 
 	if (!*++(*bufp))
 		return BUF_EOF;
@@ -418,7 +418,7 @@ static cc_check_t
 check_for_part2(wchar_t **bufp, char *fg, bool *has_comma)
 {
 	size_t		 bytes_out = 0;
-	unsigned char	*mbs;
+	UCHARPTR	 mbs;
 
 	if (!*++(*bufp))
 		return BUF_EOF;
@@ -451,7 +451,7 @@ static cc_check_t
 check_for_part3(wchar_t **bufp, bool *has_comma, bool fg_complete, char *bg)
 {
 	size_t		 bytes_out = 0;
-	unsigned char	*mbs;
+	UCHARPTR	 mbs;
 
 	if (!*++(*bufp))
 		return BUF_EOF;
@@ -492,7 +492,7 @@ static cc_check_t
 check_for_part4(wchar_t **bufp, bool got_digit_bg, char *bg)
 {
 	size_t		 bytes_out = 0;
-	unsigned char	*mbs;
+	UCHARPTR	 mbs;
 
 	if (!*++(*bufp))
 		return BUF_EOF;
@@ -523,7 +523,7 @@ static cc_check_t
 check_for_part5(wchar_t **bufp, char *bg)
 {
 	size_t		 bytes_out = 0;
-	unsigned char	*mbs;
+	UCHARPTR	 mbs;
 
 	if (!*++(*bufp))
 		return BUF_EOF;
@@ -728,7 +728,7 @@ case_default(const struct case_default_context *ctx, int *rep_count,
     int *lines_count, int *insert_count)
 {
 	size_t		 dummy;
-	unsigned char	*mbs;
+	UCHARPTR	 mbs;
 
 	if (!iswprint(ctx->wc) && ctx->wc != L'\n')
 		return;
@@ -1315,7 +1315,7 @@ printtext_convert_wc_test1(void **state)
 
 	for (size_t i = 0; i < array_len; i++) {
 		size_t		 bytes_out = 0;
-		unsigned char	*mbs;
+		UCHARPTR	 mbs;
 
 		mbs = convert_wc(array[i], bytes_out);
 		assert_non_null(mbs);
@@ -1332,7 +1332,7 @@ printtext_convert_wc_test2(void **state)
 
 	for (size_t i = 0; i < ARRAY_SIZE(array); i++) {
 		size_t		 bytes_out = 0;
-		unsigned char	*mbs;
+		UCHARPTR	 mbs;
 
 		mbs = convert_wc(array[i], bytes_out);
 		assert_non_null(mbs);
