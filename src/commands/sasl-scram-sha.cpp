@@ -81,8 +81,8 @@ digest_context::digest_context(UCHARPTR key, int key_len,
 
 volatile bool	g_sasl_scram_sha_got_first_msg = false;
 
-static STRING	 complete_nonce = NULL;
-static char	 nonce[64] = { '\0' };
+static STRING	complete_nonce = NULL;
+static char	nonce[64] = { '\0' };
 
 static const unsigned char	client_key_str[] = "Client Key";
 static const unsigned char	server_key_str[] = "Server Key";
