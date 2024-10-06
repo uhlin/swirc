@@ -98,8 +98,8 @@ static HANDLE		nickname_mtx;
 #endif
 
 static struct normal_events_tag {
-	char			*normal_event;
-	event_handler_fn	 event_handler;
+	CSTRING			normal_event;
+	event_handler_fn	event_handler;
 } normal_events[] = {
 	{ "ACCOUNT",      event_account      },
 	{ "AUTHENTICATE", event_authenticate },
@@ -124,11 +124,11 @@ static struct normal_events_tag {
 };
 
 static struct numeric_events_tag {
-	char			*numeric_event;
-	char			*official_name;
-	enum to_window		 window;
-	int			 ext_bits;
-	event_handler_fn	 event_handler;
+	CSTRING			numeric_event;
+	CSTRING			official_name;
+	enum to_window		window;
+	int			ext_bits;
+	event_handler_fn	event_handler;
 } numeric_events[] = {
 	{ "001", "RPL_WELCOME",             NO_WINDOW,      0, event_welcome },
 	{ "002", "RPL_YOURHOST",            STATUS_WINDOW,  1, NULL },
