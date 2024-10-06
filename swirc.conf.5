@@ -3,7 +3,7 @@
 .\" SPDX-FileCopyrightText: Copyright 2018-2024 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd August 16, 2024
+.Dd October 6, 2024
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -96,6 +96,13 @@ However, with the help of this setting, beeps can be turned on/off.
 .\" ----------------------------------------
 .It Sy chanserv_host Pq Em string
 ChanServ hostname
+.\" ----------------------------------------
+.\" CHGHOST
+.\" ----------------------------------------
+.It Sy chghost Pq Em bool
+Allows servers to send a notification when clients change their
+username or host (IRCv3 feature).
+Defaults to yes.
 .\" ----------------------------------------
 .\" CIPHER SUITE
 .\" ----------------------------------------

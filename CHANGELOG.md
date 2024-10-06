@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added event `CHGHOST` (IRCv3.)
+- Added option `chghost` (bool). Send a notification when clients
+  change their username or host. Defaults to **yes**.
 - Did code improvements:
   - Added default constructors
   - Reduced duplication

@@ -117,6 +117,7 @@ static struct tagConfDefValues {
 	{ "account_notify",            TYPE_BOOLEAN, 2, "no" },
 	{ "away_notify",               TYPE_BOOLEAN, 2, "no" },
 	{ "batch",                     TYPE_BOOLEAN, 3, "yes" },
+	{ "chghost",                   TYPE_BOOLEAN, 3, "yes" },
 	{ "invite_notify",             TYPE_BOOLEAN, 2, "no" },
 	{ "multi_prefix",              TYPE_BOOLEAN, 2, "yes" },
 	{ "server_time",               TYPE_BOOLEAN, 2, "yes" },
