@@ -446,6 +446,10 @@ send_reg_cmds(const struct network_connect_context *ctx)
 		if (net_send("CAP REQ :batch") > 0)
 			printtext(&ptext_ctx, "Requesting batch");
 	}
+	if (config_bool("chghost", true)) {
+		if (net_send("CAP REQ :chghost") > 0)
+			printtext(&ptext_ctx, "Requesting change host");
+	}
 	if (config_bool("invite_notify", false)) {
 		if (net_send("CAP REQ :invite-notify") > 0)
 			printtext(&ptext_ctx, "Requesting invite notify");
