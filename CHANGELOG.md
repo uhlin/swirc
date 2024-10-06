@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Did code improvements:
+  - Added default constructors
   - Reduced duplication
   - Reduced scope of variables
   - Replaced macros for constants
