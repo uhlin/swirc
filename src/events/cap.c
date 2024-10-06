@@ -187,10 +187,10 @@ handle_ack_and_nak(PPRINTTEXT_CONTEXT ctx, struct irc_message_compo *compo,
 void
 event_cap(struct irc_message_compo *compo)
 {
-	PRINTTEXT_CONTEXT ctx;
-	bool continue_capneg = false;
-	char *cmd, *caplist;
-	char *last = "";
+	PRINTTEXT_CONTEXT	 ctx;
+	bool			 continue_capneg = false;
+	char			*cmd, *caplist;
+	char			*last = "";
 
 	if (strFeed(compo->params, 2) != 2) {
 		err_log(0, "event_cap: strFeed() != 2");
