@@ -65,8 +65,19 @@ struct digest_context {
 	unsigned char		 md[EVP_MAX_MD_SIZE];
 	unsigned int		 md_len;
 
+	digest_context();
 	digest_context(UCHARPTR, int, const unsigned char *, size_t);
 };
+
+digest_context::digest_context()
+    : key(NULL)
+    , key_len(0)
+    , data(NULL)
+    , data_len(0)
+    , md_len(0)
+{
+	BZERO(this->md, sizeof(this->md));
+}
 
 digest_context::digest_context(UCHARPTR p_key, int p_key_len,
     const unsigned char *p_data, size_t p_data_len)
