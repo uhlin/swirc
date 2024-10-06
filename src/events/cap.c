@@ -81,66 +81,24 @@ NAK(const char *feature)
 }
 
 static bool
-shouldContinueCapabilityNegotiation_case1(void)
+shouldContinueCapabilityNegotiation(const size_t off)
 {
-	return (config_bool("away_notify", false) ||
-	    config_bool("batch", true) ||
-	    config_bool("chghost", true) ||
-	    config_bool("invite_notify", false) ||
-	    config_bool("multi_prefix", true) ||
-	    config_bool("server_time", true) ||
-	    sasl_is_enabled());
-}
+	bool array[7];
 
-static bool
-shouldContinueCapabilityNegotiation_case2(void)
-{
-	return (config_bool("batch", true) ||
-	    config_bool("chghost", true) ||
-	    config_bool("invite_notify", false) ||
-	    config_bool("multi_prefix", true) ||
-	    config_bool("server_time", true) ||
-	    sasl_is_enabled());
-}
+	array[0] = config_bool("away_notify", false);
+	array[1] = config_bool("batch", true);
+	array[2] = config_bool("chghost", true);
+	array[3] = config_bool("invite_notify", false);
+	array[4] = config_bool("multi_prefix", true);
+	array[5] = config_bool("server_time", true);
+	array[6] = sasl_is_enabled();
 
-static bool
-shouldContinueCapabilityNegotiation_case3(void)
-{
-	return (config_bool("chghost", true) ||
-	    config_bool("invite_notify", false) ||
-	    config_bool("multi_prefix", true) ||
-	    config_bool("server_time", true) ||
-	    sasl_is_enabled());
-}
+	for (size_t i = off; i < ARRAY_SIZE(array); i++) {
+		if (array[i])
+			return true;
+	}
 
-static bool
-shouldContinueCapabilityNegotiation_case4(void)
-{
-	return (config_bool("invite_notify", false) ||
-	    config_bool("multi_prefix", true) ||
-	    config_bool("server_time", true) ||
-	    sasl_is_enabled());
-}
-
-static bool
-shouldContinueCapabilityNegotiation_case5(void)
-{
-	return (config_bool("multi_prefix", true) ||
-	    config_bool("server_time", true) ||
-	    sasl_is_enabled());
-}
-
-static bool
-shouldContinueCapabilityNegotiation_case6(void)
-{
-	return (config_bool("server_time", true) ||
-	    sasl_is_enabled());
-}
-
-static bool
-shouldContinueCapabilityNegotiation_case7(void)
-{
-	return sasl_is_enabled();
+	return false;
 }
 
 static void
@@ -152,43 +110,43 @@ handle_ack_and_nak(PPRINTTEXT_CONTEXT ctx, struct irc_message_compo *compo,
 			ACK("Account notify");
 		else
 			NAK("Account notify");
-		*continue_capneg = shouldContinueCapabilityNegotiation_case1();
+		*continue_capneg = shouldContinueCapabilityNegotiation(0);
 	} else if (strings_match(caplist, "away-notify")) {
 		if (strings_match(cmd, "ACK"))
 			ACK("Away notify");
 		else
 			NAK("Away notify");
-		*continue_capneg = shouldContinueCapabilityNegotiation_case2();
+		*continue_capneg = shouldContinueCapabilityNegotiation(1);
 	} else if (strings_match(caplist, "batch")) {
 		if (strings_match(cmd, "ACK"))
 			ACK("Batch");
 		else
 			NAK("Batch");
-		*continue_capneg = shouldContinueCapabilityNegotiation_case3();
+		*continue_capneg = shouldContinueCapabilityNegotiation(2);
 	} else if (strings_match(caplist, "chghost")) {
 		if (strings_match(cmd, "ACK"))
 			ACK("Change host");
 		else
 			NAK("Change host");
-		*continue_capneg = shouldContinueCapabilityNegotiation_case4();
+		*continue_capneg = shouldContinueCapabilityNegotiation(3);
 	} else if (strings_match(caplist, "invite-notify")) {
 		if (strings_match(cmd, "ACK"))
 			ACK("Invite notify");
 		else
 			NAK("Invite notify");
-		*continue_capneg = shouldContinueCapabilityNegotiation_case5();
+		*continue_capneg = shouldContinueCapabilityNegotiation(4);
 	} else if (strings_match(caplist, "multi-prefix")) {
 		if (strings_match(cmd, "ACK"))
 			ACK("Multi prefix");
 		else
 			NAK("Multi prefix");
-		*continue_capneg = shouldContinueCapabilityNegotiation_case6();
+		*continue_capneg = shouldContinueCapabilityNegotiation(5);
 	} else if (strings_match(caplist, "server-time")) {
 		if (strings_match(cmd, "ACK"))
 			ACK("Server time");
 		else
 			NAK("Server time");
-		*continue_capneg = shouldContinueCapabilityNegotiation_case7();
+		*continue_capneg = shouldContinueCapabilityNegotiation(6);
 	} else if (strings_match(caplist, "sasl")) {
 		if (strings_match(cmd, "ACK")) {
 			const char *mechanism;
