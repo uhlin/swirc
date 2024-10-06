@@ -60,8 +60,8 @@ extern "C" {
 struct digest_context {
 	UCHARPTR		 key;
 	int			 key_len;
-	const unsigned char	*d;
-	size_t			 n;
+	const unsigned char	*data;
+	size_t			 data_len;
 	unsigned char		 md[EVP_MAX_MD_SIZE];
 	unsigned int		 md_len;
 
@@ -69,12 +69,12 @@ struct digest_context {
 };
 
 digest_context::digest_context(UCHARPTR key, int key_len,
-    const unsigned char *d, size_t n)
+    const unsigned char *data, size_t data_len)
 {
 	this->key = key;
 	this->key_len = key_len;
-	this->d = d;
-	this->n = n;
+	this->data = data;
+	this->data_len = data_len;
 	BZERO(this->md, sizeof this->md);
 	this->md_len = 0;
 }
@@ -325,8 +325,8 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 static int
 get_digest(struct digest_context *ctx)
 {
-	if (HMAC(EVP_sha256(), ctx->key, ctx->key_len, ctx->d, ctx->n, ctx->md,
-	    & (ctx->md_len)) == NULL)
+	if (HMAC(EVP_sha256(), ctx->key, ctx->key_len,
+	    ctx->data, ctx->data_len, ctx->md, & (ctx->md_len)) == NULL)
 		return -1;
 	return 0;
 }
