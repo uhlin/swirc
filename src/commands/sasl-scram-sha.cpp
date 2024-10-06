@@ -51,23 +51,24 @@ extern "C" {
 #include "../errHand.h"
 #include "../libUtils.h"
 #include "../network.h"
+#include "../printtext.h"
 #include "../strHand.h"
 #include "../strdup_printf.h"
 
 #include "sasl-scram-sha.h"
 
 struct digest_context {
-	unsigned char		*key;
+	UCHARPTR		 key;
 	int			 key_len;
 	const unsigned char	*d;
 	size_t			 n;
 	unsigned char		 md[EVP_MAX_MD_SIZE];
 	unsigned int		 md_len;
 
-	digest_context(unsigned char *, int, const unsigned char *, size_t);
+	digest_context(UCHARPTR, int, const unsigned char *, size_t);
 };
 
-digest_context::digest_context(unsigned char *key, int key_len,
+digest_context::digest_context(UCHARPTR key, int key_len,
     const unsigned char *d, size_t n)
 {
 	this->key = key;
@@ -249,8 +250,8 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 		cp[n] = '\0';
 		b64salt = sw_strdup(cp);
 		cp[n] = ',';
-		*salt = reinterpret_cast<unsigned char *>
-		    (get_decoded_msg(b64salt, saltlen));
+		*salt = reinterpret_cast<UCHARPTR>(get_decoded_msg(b64salt,
+		    saltlen));
 		free(b64salt);
 
 		if (*salt == NULL)
@@ -281,11 +282,11 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 /*
  * SaltedPassword: Hi(Normalize(password), salt, i)
  */
-static unsigned char *
+static UCHARPTR
 get_salted_password(const unsigned char *salt, int saltlen, int iter,
     int *outsize)
 {
-	unsigned char *out = NULL;
+	UCHARPTR out = NULL;
 
 	try {
 		CSTRING pass;
@@ -368,7 +369,7 @@ get_client_final_msg_wo_proof()
  *              server-first-message + "," +
  *              client-final-message-without-proof
  */
-static unsigned char *
+static UCHARPTR
 get_auth_msg(CSTRING b64msg, size_t *auth_msg_len)
 {
 	STRING msg_bare, msg_wo_proof, serv_first_msg;
@@ -389,7 +390,7 @@ get_auth_msg(CSTRING b64msg, size_t *auth_msg_len)
 	delete[] serv_first_msg;
 
 	*auth_msg_len = strlen(out);
-	return reinterpret_cast<unsigned char *>(out);
+	return reinterpret_cast<UCHARPTR>(out);
 }
 
 int
@@ -400,9 +401,9 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 	int		 passwdlen = 0;
 	int		 saltlen = 0;
 	size_t		 auth_msg_len;
-	unsigned char	*auth_msg;
-	unsigned char	*pass = NULL;
-	unsigned char	*salt = NULL;
+	UCHARPTR	 auth_msg;
+	UCHARPTR	 pass = NULL;
+	UCHARPTR	 salt = NULL;
 	unsigned char	 stored_key[SHA256_DIGEST_LENGTH];
 
 	if (get_sfm_components(msg, &salt, &saltlen, &iter) == -1 ||
@@ -469,8 +470,9 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 	/*
 	 * ClientProof: ClientKey XOR ClientSignature
 	 */
-	for (unsigned int i = 0; i < MIN(client_key.md_len,
-	    client_signature.md_len); i++)
+	for (unsigned int i = 0;
+	    i < MIN(client_key.md_len, client_signature.md_len);
+	    i++)
 		proof[i] = client_key.md[i] ^ client_signature.md[i];
 
 	return sasl_scram_sha_send_client_final_msg(get_encoded_msg(proof));
@@ -487,7 +489,7 @@ sasl_scram_sha_handle_serv_final_msg(CSTRING msg)
 
 	try {
 		char		*cp;
-		unsigned char	*signature;
+		UCHARPTR	 signature;
 
 		if ((decoded_msg = get_decoded_msg(msg, NULL)) == NULL) {
 			throw std::runtime_error("unable to get decoded "
@@ -502,8 +504,8 @@ sasl_scram_sha_handle_serv_final_msg(CSTRING msg)
 		cp += 2;
 
 		if ((signature =
-		    reinterpret_cast<unsigned char *>(get_decoded_msg(cp,
-		    NULL))) == NULL) {
+		    reinterpret_cast<UCHARPTR>(get_decoded_msg(cp, NULL))) ==
+		    NULL) {
 			throw std::runtime_error("cannot decode server "
 			    "signature!");
 		}
