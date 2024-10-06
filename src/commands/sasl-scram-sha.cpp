@@ -68,15 +68,15 @@ struct digest_context {
 	digest_context(UCHARPTR, int, const unsigned char *, size_t);
 };
 
-digest_context::digest_context(UCHARPTR key, int key_len,
-    const unsigned char *data, size_t data_len)
+digest_context::digest_context(UCHARPTR p_key, int p_key_len,
+    const unsigned char *p_data, size_t p_data_len)
+    : key(p_key)
+    , key_len(p_key_len)
+    , data(p_data)
+    , data_len(p_data_len)
+    , md_len(0)
 {
-	this->key = key;
-	this->key_len = key_len;
-	this->data = data;
-	this->data_len = data_len;
-	BZERO(this->md, sizeof this->md);
-	this->md_len = 0;
+	BZERO(this->md, sizeof(this->md));
 }
 
 volatile bool	g_sasl_scram_sha_got_first_msg = false;
