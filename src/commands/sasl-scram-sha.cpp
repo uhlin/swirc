@@ -84,8 +84,10 @@ volatile bool	g_sasl_scram_sha_got_first_msg = false;
 static STRING	 complete_nonce = NULL;
 static char	 nonce[64] = { '\0' };
 
-static unsigned char	signature_expected[EVP_MAX_MD_SIZE] = { '\0' };
-static unsigned int	signature_expected_len = 0;
+static const unsigned char	client_key_str[] = "Client Key";
+static const unsigned char	server_key_str[] = "Server Key";
+static unsigned char		signature_expected[EVP_MAX_MD_SIZE] = { '\0' };
+static unsigned int		signature_expected_len = 0;
 
 /*lint -sem(get_decoded_msg, r_null) */
 /*lint -sem(get_salted_password, r_null) */
@@ -422,10 +424,8 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
  *
  */
 
-	struct digest_context client_key(pass, passwdlen,
-	    reinterpret_cast<const unsigned char *>("Client Key"), 10);
-	struct digest_context server_key(pass, passwdlen,
-	    reinterpret_cast<const unsigned char *>("Server Key"), 10);
+	struct digest_context client_key(pass, passwdlen, client_key_str, 10);
+	struct digest_context server_key(pass, passwdlen, server_key_str, 10);
 
 	if (get_digest(&client_key) == -1 || get_digest(&server_key) == -1) {
 		delete[] pass;
