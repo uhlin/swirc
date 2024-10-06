@@ -7,6 +7,7 @@ OBJS = $(OBJS)\
 	$(EVENTS_DIR)batch.obj\
 	$(EVENTS_DIR)cap.obj\
 	$(EVENTS_DIR)channel.obj\
+	$(EVENTS_DIR)chghost.obj\
 	$(EVENTS_DIR)error.obj\
 	$(EVENTS_DIR)invite.obj\
 	$(EVENTS_DIR)list.obj\

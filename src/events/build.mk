@@ -6,6 +6,7 @@ OBJS += $(EVENTS_DIR)account.o\
 	$(EVENTS_DIR)batch.o\
 	$(EVENTS_DIR)cap.o\
 	$(EVENTS_DIR)channel.o\
+	$(EVENTS_DIR)chghost.o\
 	$(EVENTS_DIR)error.o\
 	$(EVENTS_DIR)invite.o\
 	$(EVENTS_DIR)list.o\

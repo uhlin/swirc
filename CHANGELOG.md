@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added event `CHGHOST` (IRCv3.)
 - Did code improvements:
   - Added default constructors
   - Reduced duplication

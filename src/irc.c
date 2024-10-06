@@ -52,6 +52,7 @@
 #include "events/batch.h"
 #include "events/cap.h"
 #include "events/channel.h"
+#include "events/chghost.h"
 #include "events/error.h"
 #include "events/invite.h"
 #include "events/list.h"
@@ -106,6 +107,7 @@ static struct normal_events_tag {
 	{ "AWAY",         event_away         },
 	{ "BATCH",        event_batch        },
 	{ "CAP",          event_cap          },
+	{ "CHGHOST",      event_chghost      },
 	{ "ERROR",        event_error        },
 	{ "INVITE",       event_invite       },
 	{ "JOIN",         event_join         },
