@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 - Added event `CHGHOST` (IRCv3.)
 - Added option `chghost` (bool). Send a notification when clients
   change their username or host. Defaults to **yes**.
+- Changed the program to:
+  - Output a reason if `tls_server::get_accept_bio()` fails.
 - Did code improvements:
   - Added default constructors
   - Reduced duplication
