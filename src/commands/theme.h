@@ -1,5 +1,5 @@
-#ifndef CMD_THEME_H
-#define CMD_THEME_H
+#ifndef SRC_COMMANDS_THEME_H_
+#define SRC_COMMANDS_THEME_H_
 
 #include <stdio.h> /* FILE */
 

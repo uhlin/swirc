@@ -1,5 +1,5 @@
-#ifndef THEME_H
-#define THEME_H
+#ifndef SRC_THEME_H_
+#define SRC_THEME_H_
 
 #include "integer-context.h"
 
