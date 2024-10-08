@@ -537,16 +537,6 @@ net_connect(const struct network_connect_context *ctx,
 	try {
 		ptext_ctx.spec_type = TYPE_SPEC1_SUCCESS;
 
-#ifdef WIN32
-		if (!winsock_init()) {
-			throw std::runtime_error(_("Cannot initiate use of the "
-			    "Winsock DLL"));
-		} else {
-			printtext(&ptext_ctx, "%s", _("Use of the Winsock DLL "
-			    "granted"));
-		}
-#endif
-
 		save_last_server(ctx->server, ctx->port, (ctx->password ?
 		    ctx->password : ""));
 		if (config_bool("identd", false))

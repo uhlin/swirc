@@ -583,6 +583,26 @@ ssl_is_enabled(void)
 	return secure_connection;
 }
 
+#ifdef WIN32
+static void
+winsock_init_doit(void)
+{
+	static bool init_done = false;
+
+	if (init_done)
+		return;
+
+	if (!winsock_init()) {
+		printtext_print("err", "%s", _("Cannot initiate use of the "
+		    "Winsock DLL"));
+	} else {
+		printtext_print("success", "%s", _("Use of the Winsock DLL "
+		    "granted"));
+		init_done = true;
+	}
+}
+#endif // WIN32
+
 static void
 choose_server(const char *server, const char *port)
 {
@@ -591,6 +611,10 @@ choose_server(const char *server, const char *port)
 	(void) atomic_swap_bool(&g_disconnect_wanted, false);
 	(void) atomic_swap_bool(&g_connection_lost, false);
 	(void) atomic_swap_bool(&g_on_air, false);
+
+#ifdef WIN32
+	winsock_init_doit();
+#endif
 
 	if (strings_match_ignore_case(server, "afternet")) {
 		srvptr = get_server_v2(&afternet_servers[0],
