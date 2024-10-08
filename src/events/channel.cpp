@@ -108,8 +108,10 @@ event_chan_hp(struct irc_message_compo *compo)
 
 /* event_join
 
-   Example:
-     :<nick>!<user>@<host> JOIN <channel> */
+   Examples:
+     :<nick>!<user>@<host> JOIN <channel>
+     :<nick>!<user>@<host> JOIN <channel> <account> :<real name>
+     :<nick>!<user>@<host> JOIN <channel> * :<real name> */
 void
 event_join(struct irc_message_compo *compo)
 {
