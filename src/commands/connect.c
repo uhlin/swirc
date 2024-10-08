@@ -50,6 +50,7 @@
 #include "../terminal.h"
 
 #include "connect.h"
+#include "dcc.h"
 #include "i18n.h"
 #if defined(WIN32) && defined(printf)
 #undef printf
@@ -615,6 +616,7 @@ choose_server(const char *server, const char *port)
 #ifdef WIN32
 	winsock_init_doit();
 #endif
+	dcc_init();
 
 	if (strings_match_ignore_case(server, "afternet")) {
 		srvptr = get_server_v2(&afternet_servers[0],
