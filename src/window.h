@@ -1,5 +1,5 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef SRC_WINDOW_H_
+#define SRC_WINDOW_H_
 
 #if defined(PANEL_HDR)
 #include PANEL_HDR
