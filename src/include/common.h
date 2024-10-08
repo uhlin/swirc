@@ -87,7 +87,7 @@
 
 typedef char *STRING;
 typedef const char *CSTRING;
-typedef const char * const immutable_cp_t;
+typedef const char *const immutable_cp_t;
 
 #if defined(WIN32) && !defined(_SSIZE_T_DEFINED)
 #define _SSIZE_T_DEFINED 1
