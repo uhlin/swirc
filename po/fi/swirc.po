@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.0\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-10-08 06:36+0200\n"
-"PO-Revision-Date: 2024-09-21 23:52+0200\n"
+"PO-Revision-Date: 2024-10-08 07:00+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -613,11 +613,11 @@ msgstr "Lataa amerikkalaisen englannin sanakirja:"
 
 #: ../src/include/commandhelp.h:256
 msgid "usage: /gline <nick!user@host> [<duration> :<reason>]"
-msgstr ""
+msgstr "käyttö: /gline <nick!user@host> [<kesto> :<syy>]"
 
 #: ../src/include/commandhelp.h:258
 msgid "Network-wide bans."
-msgstr ""
+msgstr "Verkon laajuiset kiellot."
 
 #: ../src/include/commandhelp.h:260
 msgid ""
