@@ -741,7 +741,6 @@ net_irc_listen(bool *connection_lost)
 	recvbuf = static_cast<char *>(xmalloc(RECVBUF_SIZE + 1));
 	recvbuf[RECVBUF_SIZE] = '\0';
 	irc_init();
-	dcc::init();
 	netsplit_init();
 
 	do {
@@ -803,7 +802,6 @@ net_irc_listen(bool *connection_lost)
 		g_socket = INVALID_SOCKET;
 	}
 	irc_deinit();
-	dcc::deinit();
 	netsplit_deinit();
 	free_and_null(&recvbuf);
 	free_and_null(&message_concat);
