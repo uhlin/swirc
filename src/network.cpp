@@ -450,6 +450,10 @@ send_reg_cmds(const struct network_connect_context *ctx)
 		if (net_send("CAP REQ :chghost") > 0)
 			printtext(&ptext_ctx, "Requesting change host");
 	}
+	if (config_bool("extended_join", true)) {
+		if (net_send("CAP REQ :extended-join") > 0)
+			printtext(&ptext_ctx, "Requesting extended join");
+	}
 	if (config_bool("invite_notify", false)) {
 		if (net_send("CAP REQ :invite-notify") > 0)
 			printtext(&ptext_ctx, "Requesting invite notify");
