@@ -262,6 +262,8 @@ tls_server::get_accept_bio(const int port)
 	BIO	*bio = NULL;
 	char	*port_str = NULL;
 
+	ERR_clear_error();
+
 	try {
 		if (port < SERVER_MIN_PORT || port > SERVER_MAX_PORT)
 			throw std::runtime_error("Port out of range");
@@ -281,12 +283,14 @@ tls_server::get_accept_bio(const int port)
 		}
 	} catch (const std::runtime_error &e) {
 		PRINTTEXT_CONTEXT ctx;
+		const unsigned long int err = ERR_peek_last_error();
 
 		BIO_vfree(bio);
 		free(port_str);
 		printtext_context_init(&ctx, g_status_window,
 		    TYPE_SPEC1_FAILURE, true);
-		printtext(&ctx, "%s", e.what());
+		printtext(&ctx, "%s (%s)", e.what(), (err != 0 ?
+		    ERR_error_string(err, NULL) : ""));
 		return NULL;
 	}
 
