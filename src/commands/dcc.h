@@ -88,14 +88,14 @@ extern const int	g_one_meg;
 extern const int	g_one_gig;
 
 void cmd_dcc(const char *);
+
+void dcc_init(void);
+void dcc_deinit(void);
 __SWIRC_END_DECLS
 
 #ifdef __cplusplus
 namespace dcc
 {
-	void init(void);
-	void deinit(void);
-
 	void		 add_file(const char *, const char *, const char *,
 			     const char *) NONNULL;
 	NORETURN void	 exit_thread(void);
