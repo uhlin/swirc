@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.0\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-09-28 11:18+0200\n"
+"POT-Creation-Date: 2024-10-08 06:36+0200\n"
 "PO-Revision-Date: 2024-09-22 00:01+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -27,37 +27,45 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: ../src/commands/connect.c:210
+#: ../src/commands/connect.c:211
 msgid "Connect using password? [Y/n]: "
 msgstr "Ansluta med lösenord? [Y/n]: "
 
-#: ../src/commands/connect.c:218 ../src/commands/connect.c:279
-#: ../src/commands/connect.c:332 ../src/nestHome.c:188
+#: ../src/commands/connect.c:219 ../src/commands/connect.c:280
+#: ../src/commands/connect.c:333 ../src/nestHome.c:188
 msgid "input too big"
 msgstr "input för stor"
 
-#: ../src/commands/connect.c:247
+#: ../src/commands/connect.c:248
 #, c-format
 msgid "%s: string copy error"
 msgstr "%s: strängkopieringsfel"
 
-#: ../src/commands/connect.c:263
+#: ../src/commands/connect.c:264
 msgid "Server password (will not echo): "
 msgstr "Serverlösenord (kommer inte att eka): "
 
-#: ../src/commands/connect.c:316
+#: ../src/commands/connect.c:317
 #, c-format
 msgid "Your choice (0-%d): "
 msgstr "Ditt val (0-%d): "
 
-#: ../src/commands/connect.c:544
+#: ../src/commands/connect.c:545
 #, c-format
 msgid "Next reconnect attempt in %ld seconds..."
 msgstr "Nästa återanslutningsförsök om %ld sekunder..."
 
-#: ../src/commands/connect.c:556
+#: ../src/commands/connect.c:557
 msgid "Reconnection aborted!"
 msgstr "Återanslutningen avbröts!"
+
+#: ../src/commands/connect.c:597
+msgid "Cannot initiate use of the Winsock DLL"
+msgstr "Kan inte initiera användning av Winsock DLL"
+
+#: ../src/commands/connect.c:600
+msgid "Use of the Winsock DLL granted"
+msgstr "Användning av Winsock DLL beviljad"
 
 #: ../src/commands/dcc.cpp:205
 msgid "Write error"
@@ -206,12 +214,12 @@ msgstr "%s%s%c %s%s@%s%s har markerats som borta (%s)"
 msgid "Homepage for %s%s%s%c%s: %s"
 msgstr "Hemsida för %s%s%s%c%s: %s"
 
-#: ../src/events/channel.cpp:178
+#: ../src/events/channel.cpp:180
 #, c-format
 msgid "%s%s%c %s%s@%s%s has joined %s%s%c"
 msgstr "%s%s%c %s%s@%s%s har gått med i %s%s%c"
 
-#: ../src/events/channel.cpp:261
+#: ../src/events/channel.cpp:263
 #, c-format
 msgid "%s was kicked from %s%s%c by %s%s%c %s%s%s"
 msgstr "%s sparkades från %s%s%c av %s%s%c %s%s%s"
@@ -219,47 +227,47 @@ msgstr "%s sparkades från %s%s%c av %s%s%c %s%s%s"
 #.
 #. * User mode
 #.
-#: ../src/events/channel.cpp:526
+#: ../src/events/channel.cpp:528
 #, c-format
 msgid "Mode change %s%s%s for user %c%s%c"
 msgstr "Lägesändring %s%s%s för användaren %c%s%c"
 
-#: ../src/events/channel.cpp:534
+#: ../src/events/channel.cpp:536
 #, c-format
 msgid "mode/%s%s%s%c%s %s%s%s by %s%s%c"
 msgstr "läge/%s%s%s%c%s %s%s%s av %s%s%c"
 
-#: ../src/events/channel.cpp:636
+#: ../src/events/channel.cpp:638
 #, c-format
 msgid "%s%s%c is now known as %s %s%s%c"
 msgstr "%s%s%c har bytt namn till %s %s%s%c"
 
-#: ../src/events/channel.cpp:715
+#: ../src/events/channel.cpp:717
 #, c-format
 msgid "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s"
 msgstr "%s%s%c %s%s@%s%s har lämnat %s%s%c %s%s%s"
 
-#: ../src/events/channel.cpp:846
+#: ../src/events/channel.cpp:848
 #, c-format
 msgid "%s%s%c %s%s@%s%s has quit %s%s%s"
 msgstr "%s%s%c %s%s@%s%s har avslutat %s%s%s"
 
-#: ../src/events/channel.cpp:941
+#: ../src/events/channel.cpp:943
 #, c-format
 msgid "Topic for %s%s%s%c%s: %s"
 msgstr "Ämne för %s%s%s%c%s: %s"
 
-#: ../src/events/channel.cpp:999
+#: ../src/events/channel.cpp:1001
 #, c-format
 msgid "%c%s%c changed the topic of %c%s%c to: %s"
 msgstr "%c%s%c ändrade ämnet för %c%s%c till: %s"
 
-#: ../src/events/channel.cpp:1072
+#: ../src/events/channel.cpp:1074
 #, c-format
 msgid "Topic set by %c%s%c %s%s@%s%s %s%s%s"
 msgstr "Ämnet satt av %c%s%c %s%s@%s%s %s%s%s"
 
-#: ../src/events/channel.cpp:1078
+#: ../src/events/channel.cpp:1080
 #, c-format
 msgid "Topic set by %c%s%c %s%s%s"
 msgstr "Ämnet satt av %c%s%c %s%s%s"
@@ -1513,47 +1521,47 @@ msgstr "Skriv F1 för tangenter"
 msgid "Error log size %s%.1f KB%s"
 msgstr "Storlek på fellogg %s%.1f KB%s"
 
-#: ../src/irc.c:329
+#: ../src/irc.c:331
 #, c-format
 msgid "%s: no nickname"
 msgstr "%s: inget smeknamn"
 
-#: ../src/irc.c:447
+#: ../src/irc.c:449
 #, c-format
 msgid "%s: empty message"
 msgstr "%s: tomt meddelande"
 
-#: ../src/irc.c:478
+#: ../src/irc.c:480
 #, c-format
 msgid "%s: too many semicolons"
 msgstr "%s: för många semikolon"
 
-#: ../src/irc.c:504
+#: ../src/irc.c:506
 #, c-format
 msgid "%s: cannot find time"
 msgstr "%s: kan inte hitta tid"
 
-#: ../src/irc.c:510 ../src/irc.c:555
+#: ../src/irc.c:512 ../src/irc.c:557
 #, c-format
 msgid "%s: server time error"
 msgstr "%s: servertidsfel"
 
-#: ../src/irc.c:560
+#: ../src/irc.c:562
 #, c-format
 msgid "%s: unsupported extension"
 msgstr "%s: tillägg som inte stöds"
 
-#: ../src/irc.c:741
+#: ../src/irc.c:754
 #, c-format
 msgid "Unknown normal event: %s"
 msgstr "Okänd normal händelse: %s"
 
-#: ../src/irc.c:752
+#: ../src/irc.c:765
 #, c-format
 msgid "Unknown numeric event: %s"
 msgstr "Okänd numerisk händelse: %s"
 
-#: ../src/irc.c:760
+#: ../src/irc.c:773
 #, c-format
 msgid "Erroneous event: %s"
 msgstr "Felaktig händelse: %s"
@@ -1787,100 +1795,92 @@ msgstr "Det gick inte att få en lista över IP adresser"
 msgid "Get a list of IP addresses completed"
 msgstr "Få en lista över IP adresser färdig"
 
-#: ../src/network.cpp:525
+#: ../src/network.cpp:529
 #, c-format
 msgid "Connecting to %s (%s)"
 msgstr "Ansluter till %s (%s)"
 
-#: ../src/network.cpp:534
-msgid "Cannot initiate use of the Winsock DLL"
-msgstr "Kan inte initiera användning av Winsock DLL"
-
-#: ../src/network.cpp:537
-msgid "Use of the Winsock DLL granted"
-msgstr "Användning av Winsock DLL beviljad"
-
-#: ../src/network.cpp:804
+#: ../src/network.cpp:797
 msgid "Connection to IRC server lost"
 msgstr "Anslutningen till IRC servern förlorad"
 
-#: ../src/network.cpp:819
+#: ../src/network.cpp:808
 msgid "Disconnected"
 msgstr "Frånkopplad"
 
-#: ../src/readline.c:622
+#: ../src/readline.c:621
 msgid "--------------- Keys ---------------"
 msgstr "--------------- Tangenter ---------------"
 
-#: ../src/readline.c:624
+#: ../src/readline.c:623
 msgid "CTRL+a     Move to beginning of line"
 msgstr "CTRL+a     Flytta till början av raden"
 
-#: ../src/readline.c:625
+#: ../src/readline.c:624
 msgid "CTRL+e     Move to end of line"
 msgstr "CTRL+e     Flytta till slutet av raden"
 
-#: ../src/readline.c:626
+#: ../src/readline.c:625
 msgid "CTRL+b     Move cursor backward"
 msgstr "CTRL+b     Flytta markören bakåt"
 
-#: ../src/readline.c:627
+#: ../src/readline.c:626
 msgid "CTRL+f     Move cursor forward"
 msgstr "CTRL+f     Flytta markören framåt"
 
-#: ../src/readline.c:628
+#: ../src/readline.c:627
 msgid "CTRL+d     Delete"
 msgstr "CTRL+d     Ta bort"
 
-#: ../src/readline.c:629
+#: ../src/readline.c:628
 msgid "CTRL+g     Clear readline input"
 msgstr "CTRL+g     Töm inmatning"
 
-#: ../src/readline.c:630
+#: ../src/readline.c:629
 msgid "CTRL+l     Toggle logging on/off"
 msgstr "CTRL+l     Växla loggning på/av"
 
-#: ../src/readline.c:631
+#: ../src/readline.c:630
 msgid "CTRL+n     Next window"
 msgstr "CTRL+n     Nästa fönster"
 
-#: ../src/readline.c:632
+#: ../src/readline.c:631
 msgid "CTRL+p     Previous window"
 msgstr "CTRL+p     Föregående fönster"
 
-#: ../src/readline.c:633
+#: ../src/readline.c:632
 msgid "PG UP      Scroll up"
 msgstr "PG UP      Skrolla upp"
 
-#: ../src/readline.c:634
+#: ../src/readline.c:633
 msgid "PG DOWN    Scroll down"
 msgstr "PG DOWN    Skrolla ned"
 
-#: ../src/readline.c:635
+#: ../src/readline.c:634
 msgid "Up arrow   History previous"
 msgstr "Up arrow   Föregående kommando"
 
-#: ../src/readline.c:636
+#: ../src/readline.c:635
 msgid "Down arrow History next"
 msgstr "Down arrow Nästa kommando"
 
-#: ../src/readline.c:637
+#: ../src/readline.c:636
 msgid "F2         Spell word"
 msgstr "F2         Stava ord"
 
-#: ../src/readline.c:638
+#: ../src/readline.c:637
 msgid "F3         Scroll nicklist up"
 msgstr "F3         Skrolla nicklistan upp"
 
-#: ../src/readline.c:639
+#: ../src/readline.c:638
 msgid "F4         Scroll nicklist down"
 msgstr "F4         Skrolla nicklistan ned"
 
-#: ../src/readline.c:640
+#: ../src/readline.c:639
 msgid "F11        Close window"
 msgstr "F11        Stäng fönster"
 
-#: ../src/readline.c:641
+#: ../src/readline.c:640
 msgid "F12        Close all private conversations"
 msgstr "F12        Stäng alla privata konversationer"
 
