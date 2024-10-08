@@ -24,6 +24,9 @@ typedef enum {
 
 typedef struct tagNAMES {
 	char	*nick;
+	char	*account;
+	char	*rl_name;
+
 	bool	 is_owner;
 	bool	 is_superop;
 	bool	 is_op;

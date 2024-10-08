@@ -218,6 +218,8 @@ hInstall(const struct hInstall_context *ctx)
 
 	names = static_cast<PNAMES>(xcalloc(sizeof *names, 1));
 	names->nick		= sw_strdup(ctx->nick);
+	names->account		= NULL;
+	names->rl_name		= NULL;
 	names->is_owner		= ctx->is_owner;
 	names->is_superop	= ctx->is_superop;
 	names->is_op		= ctx->is_op;
@@ -260,6 +262,8 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
 
 	*indirect = entry->next;
 	free(entry->nick);
+	free(entry->account);
+	free(entry->rl_name);
 
 	if (entry->is_owner)
 		window->num_owners--;
