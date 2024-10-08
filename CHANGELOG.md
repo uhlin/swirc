@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
   change their username or host. Defaults to **yes**.
 - Added option `extended_join` (bool).
 - Changed the program to:
+  - Init/deinit Windows sockets once.
+  - Not terminate the DCC server on IRC disconnect.
+    It is Client-to-Client which means file transfers can
+    continue. IRC is only used for the negotiation.
   - Output a reason if `tls_server::get_accept_bio()` fails.
 - Did code improvements:
   - Added default constructors
