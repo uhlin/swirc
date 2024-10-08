@@ -3,7 +3,7 @@
 .\" SPDX-FileCopyrightText: Copyright 2018-2024 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd October 6, 2024
+.Dd October 8, 2024
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -200,6 +200,13 @@ this dir is made available with read-only permissions by using
 .Xr unveil 2 .
 However, that is done once at startup.
 Changing it while Swirc is running will not work.
+.\" ----------------------------------------
+.\" EXTENDED JOIN
+.\" ----------------------------------------
+.It Sy extended_join Pq Em bool
+Turns the
+.Em extended-join
+IRCv3 feature on/off.
 .\" ----------------------------------------
 .\" HOSTNAME CHECKING
 .\" ----------------------------------------
