@@ -1,5 +1,5 @@
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef SRC_INCLUDE_COMMON_H_
+#define SRC_INCLUDE_COMMON_H_
 /* common.h
    Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
 
