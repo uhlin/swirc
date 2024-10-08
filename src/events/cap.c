@@ -83,15 +83,16 @@ NAK(const char *feature)
 static bool
 shouldContinueCapabilityNegotiation(const size_t off)
 {
-	bool array[7];
+	bool array[8];
 
 	array[0] = config_bool("away_notify", false);
 	array[1] = config_bool("batch", true);
 	array[2] = config_bool("chghost", true);
-	array[3] = config_bool("invite_notify", false);
-	array[4] = config_bool("multi_prefix", true);
-	array[5] = config_bool("server_time", true);
-	array[6] = sasl_is_enabled();
+	array[3] = config_bool("extended_join", true);
+	array[4] = config_bool("invite_notify", false);
+	array[5] = config_bool("multi_prefix", true);
+	array[6] = config_bool("server_time", true);
+	array[7] = sasl_is_enabled();
 
 	for (size_t i = off; i < ARRAY_SIZE(array); i++) {
 		if (array[i])
@@ -129,24 +130,30 @@ handle_ack_and_nak(PPRINTTEXT_CONTEXT ctx, struct irc_message_compo *compo,
 		else
 			NAK("Change host");
 		*continue_capneg = shouldContinueCapabilityNegotiation(3);
+	} else if (strings_match(caplist, "extended-join")) {
+		if (strings_match(cmd, "ACK"))
+			ACK("Extended join");
+		else
+			NAK("Extended join");
+		*continue_capneg = shouldContinueCapabilityNegotiation(4);
 	} else if (strings_match(caplist, "invite-notify")) {
 		if (strings_match(cmd, "ACK"))
 			ACK("Invite notify");
 		else
 			NAK("Invite notify");
-		*continue_capneg = shouldContinueCapabilityNegotiation(4);
+		*continue_capneg = shouldContinueCapabilityNegotiation(5);
 	} else if (strings_match(caplist, "multi-prefix")) {
 		if (strings_match(cmd, "ACK"))
 			ACK("Multi prefix");
 		else
 			NAK("Multi prefix");
-		*continue_capneg = shouldContinueCapabilityNegotiation(5);
+		*continue_capneg = shouldContinueCapabilityNegotiation(6);
 	} else if (strings_match(caplist, "server-time")) {
 		if (strings_match(cmd, "ACK"))
 			ACK("Server time");
 		else
 			NAK("Server time");
-		*continue_capneg = shouldContinueCapabilityNegotiation(6);
+		*continue_capneg = shouldContinueCapabilityNegotiation(7);
 	} else if (strings_match(caplist, "sasl")) {
 		if (strings_match(cmd, "ACK")) {
 			const char *mechanism;
