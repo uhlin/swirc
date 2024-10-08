@@ -282,8 +282,8 @@ tls_server::get_accept_bio(const int port)
 			    "or bind an address to it");
 		}
 	} catch (const std::runtime_error &e) {
-		PRINTTEXT_CONTEXT ctx;
-		const unsigned long int err = ERR_peek_last_error();
+		PRINTTEXT_CONTEXT	ctx;
+		const unsigned long	err = ERR_peek_last_error();
 
 		BIO_vfree(bio);
 		free(port_str);
