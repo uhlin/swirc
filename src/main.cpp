@@ -761,6 +761,9 @@ main(int argc, char *argv[])
 	 * Reverse order...
 	 */
 	net_ssl_deinit();
+#ifdef WIN32
+	winsock_deinit();
+#endif
 	readline_deinit();
 	windowSystem_deinit();
 	statusbar_deinit();

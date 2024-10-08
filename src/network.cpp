@@ -328,10 +328,6 @@ handle_conn_err(PPRINTTEXT_CONTEXT ptext_ctx, const char *what,
 		g_socket = INVALID_SOCKET;
 	}
 
-#ifdef WIN32
-	winsock_deinit();
-#endif
-
 	if (reconn_ctx.retry++ < reconn_ctx.retries) {
 		if (reconn_ctx.is_initial_attempt())
 			*sleep_time_seconds = reconn_ctx.delay;
@@ -806,9 +802,6 @@ net_irc_listen(bool *connection_lost)
 		CLOSE_GLOBAL_SOCKET();
 		g_socket = INVALID_SOCKET;
 	}
-#ifdef WIN32
-	winsock_deinit();
-#endif
 	irc_deinit();
 	dcc::deinit();
 	netsplit_deinit();
