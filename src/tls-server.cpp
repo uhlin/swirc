@@ -376,7 +376,7 @@ tls_server::setup_context(void)
 
 		set_server_ciphers_doit(ctx);
 	} catch (const std::runtime_error &ex) {
-		const unsigned long int err = ERR_peek_last_error();
+		const unsigned long err = ERR_peek_last_error();
 
 		if (err)
 			err_log(0, "%s", ERR_error_string(err, NULL));
