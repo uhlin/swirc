@@ -760,6 +760,7 @@ main(int argc, char *argv[])
 	/*
 	 * Reverse order...
 	 */
+	dcc_deinit();
 	net_ssl_deinit();
 #ifdef WIN32
 	winsock_deinit();
