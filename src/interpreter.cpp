@@ -183,13 +183,13 @@ void
 Interpreter_processAllLines(FILE *fp, const char *path, Interpreter_vFunc func1,
     Interpreter_instFunc func2)
 {
-	char buf[MAXLINE] = { '\0' };
-	long int line_num = 0;
+	char		buf[MAXLINE] = { '\0' };
+	long int	line_num = 0;
 
 	while (fgets(buf, sizeof buf, fp) != nullptr) {
-		char *line;
-		const char *cp;
-		struct Interpreter_in in;
+		char			*line;
+		const char		*cp;
+		struct Interpreter_in	 in;
 
 		cp = &buf[0];
 		adv_while_isspace(&cp);
