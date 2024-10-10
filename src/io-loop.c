@@ -51,6 +51,7 @@
 #include "theme.h"
 
 #include "commands/admin.h"
+#include "commands/announce.h"
 #include "commands/ban.h"
 #include "commands/cap.h"
 #include "commands/cleartoasts.h"
@@ -100,6 +101,7 @@ static struct cmds_tag {
 	bool		 irc_only;
 } cmds[] = {
 	{ "admin",       cmd_admin,       true,  admin_usage,       ARRAY_SIZE(admin_usage),       true  },
+	{ "announce",    cmd_announce,    true,  announce_usage,    ARRAY_SIZE(announce_usage),    true  },
 	{ "away",        cmd_away,        true,  away_usage,        ARRAY_SIZE(away_usage),        true  },
 	{ "ban",         cmd_ban,         true,  ban_usage,         ARRAY_SIZE(ban_usage),         true  },
 	{ "banlist",     cmd_banlist,     true,  banlist_usage,     ARRAY_SIZE(banlist_usage),     true  },

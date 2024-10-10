@@ -49,6 +49,13 @@ static usage_t admin_usage = {
   "",
 };
 
+static usage_t announce_usage = {
+  "usage: /announce ...",
+  "",
+  "No help yet.",
+  "",
+};
+
 static usage_t away_usage = {
   N_("usage: /away [reason]"),
   "",
