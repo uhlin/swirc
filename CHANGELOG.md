@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
   - Not terminate the DCC server on IRC disconnect.
     It is Client-to-Client which means file transfers can
     continue. IRC is only used for the negotiation.
+  - Output a reason if `SSL_connect()` fails.
   - Output a reason if `tls_server::get_accept_bio()` fails.
 - Did code improvements:
   - Added default constructors
