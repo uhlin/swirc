@@ -200,6 +200,7 @@ net_ssl_begin(void)
 	PRINTTEXT_CONTEXT	 ptext_ctx;
 	const char		*err_reason = "";
 	static const int	 VALUE_HANDSHAKE_OK = 1;
+	unsigned long int	 err_code = 0;
 
 	if (ssl != NULL) {
 		err_reason = "SSL object nonnull";
@@ -222,6 +223,7 @@ net_ssl_begin(void)
 	}
 
 	SSL_set_connect_state(ssl);
+	ERR_clear_error();
 
 	if (SSL_connect(ssl) != VALUE_HANDSHAKE_OK) {
 		err_reason = "TLS/SSL handshake failed!";
@@ -234,6 +236,13 @@ net_ssl_begin(void)
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
 	    true);
 	printtext(&ptext_ctx, "%s: %s", __func__, err_reason);
+	if (strings_match(err_reason, "TLS/SSL handshake failed!")) {
+		err_code = ERR_peek_last_error();
+		if (err_code) {
+			printtext(&ptext_ctx, "%s: %s", __func__,
+			    ERR_error_string(err_code, NULL));
+		}
+	}
 	return -1;
 }
 
