@@ -198,13 +198,14 @@ event_join(struct irc_message_compo *compo)
 			host = "<no host>";
 
 		const int num = strFeed(compo->params, 2);
-		UNUSED_VAR(num);
 
 		channel = strtok_r(compo->params, "\n", &state[1]);
 		account = strtok_r(NULL, "\n", &state[1]);
 		rl_name = strtok_r(NULL, "\n", &state[1]);
 
-		if (channel == NULL)
+		if (!num && (account != NULL || rl_name != NULL))
+			throw std::runtime_error("too many tokens");
+		else if (channel == NULL)
 			throw std::runtime_error("no channel");
 		else if (*channel == ':')
 			channel++;
