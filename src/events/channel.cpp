@@ -598,11 +598,15 @@ static int
 RemoveAndInsertNick(const char *old_nick, const char *new_nick,
     const char *label)
 {
-	PNAMES	p;
-	bool	is_owner, is_superop, is_op, is_halfop, is_voice;
+	PNAMES		p;
+	bool		is_owner, is_superop, is_op, is_halfop, is_voice;
+	std::string	array[2];
 
 	if ((p = event_names_htbl_lookup(old_nick, label)) == NULL)
 		return ERR; /* non-fatal: old_nick not found on channel */
+
+	array[0].assign(p->account ? p->account : "<no account>");
+	array[1].assign(p->rl_name ? p->rl_name : "<no rl name>");
 
 	is_owner	= p->is_owner;
 	is_superop	= p->is_superop;
@@ -615,6 +619,17 @@ RemoveAndInsertNick(const char *old_nick, const char *new_nick,
 		return ERR;
 	} else if (event_names_htbl_insert(new_nick, label) != OK) {
 		err_log(0, "%s: event_names_htbl_insert", __func__);
+		return ERR;
+	} else if ((p = event_names_htbl_lookup(new_nick, label)) != NULL) {
+		if (p->account)
+			free(p->account);
+		if (p->rl_name)
+			free(p->rl_name);
+		p->account = sw_strdup(array[0].c_str());
+		p->rl_name = sw_strdup(array[1].c_str());
+	} else {
+		err_log(0, "%s: new nick (%s) not found on %s", __func__,
+		    new_nick, label);
 		return ERR;
 	}
 
