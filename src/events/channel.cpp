@@ -123,8 +123,6 @@ join_perform_some_tasks(CSTRING channel, CSTRING nick, CSTRING account,
 {
 	PNAMES n = NULL;
 
-	if (*channel == ':')
-		channel++;
 	if (account != NULL && *account == ':')
 		account++;
 	if (rl_name != NULL && *rl_name == ':')
@@ -208,6 +206,8 @@ event_join(struct irc_message_compo *compo)
 
 		if (channel == NULL)
 			throw std::runtime_error("no channel");
+		else if (*channel == ':')
+			channel++;
 
 		join_perform_some_tasks(channel, nick, account, rl_name);
 		chk_split(nick, channel, split);
