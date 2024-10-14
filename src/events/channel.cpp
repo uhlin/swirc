@@ -59,6 +59,7 @@ struct quit_context {
 	CSTRING		nick, user, host;
 };
 
+static void	auto_op(CSTRING, CSTRING) NONNULL;
 static void	handle_quit(PIRC_WINDOW, PPRINTTEXT_CONTEXT,
 		    struct quit_context *) NONNULL;
 static bool	is_netsplit(CSTRING, std::string &, std::string &) NONNULL;
@@ -106,6 +107,64 @@ event_chan_hp(struct irc_message_compo *compo)
 	}
 }
 
+static void
+auto_op(CSTRING channel, CSTRING nick)
+{
+	if (g_am_irc_op &&
+	    config_bool("auto_op_yourself", true) &&
+	    (net_send("MODE %s +o %s", channel, nick) < 0 ||
+	    net_send("SAMODE %s +o %s", channel, nick) < 0))
+		throw std::runtime_error("cannot send");
+}
+
+static void
+join_perform_some_tasks(CSTRING channel, CSTRING nick, CSTRING account,
+    CSTRING rl_name)
+{
+	PNAMES n = NULL;
+
+	if (*channel == ':')
+		channel++;
+	if (account != NULL && *account == ':')
+		account++;
+	if (rl_name != NULL && *rl_name == ':')
+		rl_name++;
+
+	if (!is_irc_channel(channel) ||
+	    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL) {
+		throw std::runtime_error("bogus irc channel");
+	} else if (strings_match_ignore_case(nick, g_my_nickname)) {
+		if (spawn_chat_window(channel, "No title.") != 0)
+			throw std::runtime_error("cannot spawn chat window");
+		auto_op(channel, nick);
+	} else if (event_names_htbl_insert(nick, channel) != OK) {
+		throw std::runtime_error("unable to add user to channel list");
+	} else if (account != NULL && rl_name != NULL &&
+	    (n = event_names_htbl_lookup(nick, channel)) != NULL) {
+		if (n->account)
+			free(n->account);
+		if (n->rl_name)
+			free(n->rl_name);
+		n->account = sw_strdup(account);
+		n->rl_name = sw_strdup(rl_name);
+	}
+}
+
+static void
+chk_split(CSTRING nick, CSTRING channel, netsplit *&split)
+{
+	if (!netsplit_db_empty() &&
+	    (split = netsplit_find(nick, channel)) != NULL) {
+		if (split->remove_nick(nick)) {
+			if (!split->join_begun())
+				split->set_join_time(time(NULL));
+		} else {
+			throw std::runtime_error("failed to remove nick from "
+			    "split");
+		}
+	}
+}
+
 /* event_join
 
    Examples:
@@ -118,9 +177,10 @@ event_join(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
+		CSTRING		 channel, account, rl_name;
 		CSTRING		 nick, user, host;
 		STRING		 prefix = NULL;
-		STRING		 state = const_cast<STRING>("");
+		STRING		 state[2];
 		netsplit	*split = NULL;
 
 		if (compo == NULL)
@@ -128,47 +188,29 @@ event_join(struct irc_message_compo *compo)
 		else if (compo->prefix == NULL)
 			throw std::runtime_error("no prefix");
 
+		channel = account = rl_name = NULL;
 		prefix = &compo->prefix[1];
+		state[0] = state[1] = const_cast<STRING>("");
 
-		if ((nick = strtok_r(prefix, "!@", &state)) == NULL)
+		if ((nick = strtok_r(prefix, "!@", &state[0])) == NULL)
 			throw std::runtime_error("no nickname");
-		if ((user = strtok_r(NULL, "!@", &state)) == NULL)
+		if ((user = strtok_r(NULL, "!@", &state[0])) == NULL)
 			user = "<no user>";
-		if ((host = strtok_r(NULL, "!@", &state)) == NULL)
+		if ((host = strtok_r(NULL, "!@", &state[0])) == NULL)
 			host = "<no host>";
 
-		immutable_cp_t channel = (*(compo->params) == ':' ?
-		    &compo->params[1] : &compo->params[0]);
+		const int num = strFeed(compo->params, 2);
+		UNUSED_VAR(num);
 
-		if (!is_irc_channel(channel) ||
-		    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL) {
-			throw std::runtime_error("bogus irc channel");
-		} else if (strings_match_ignore_case(nick, g_my_nickname)) {
-			if (spawn_chat_window(channel, "No title.") != 0) {
-				throw std::runtime_error("cannot spawn "
-				    "chat window");
-			}
+		channel = strtok_r(compo->params, "\n", &state[1]);
+		account = strtok_r(NULL, "\n", &state[1]);
+		rl_name = strtok_r(NULL, "\n", &state[1]);
 
-			if (g_am_irc_op &&
-			    config_bool("auto_op_yourself", true) &&
-			    (net_send("MODE %s +o %s", channel, nick) < 0 ||
-			    net_send("SAMODE %s +o %s", channel, nick) < 0))
-				throw std::runtime_error("cannot send");
-		} else if (event_names_htbl_insert(nick, channel) != OK) {
-			throw std::runtime_error("unable to add user to "
-			    "channel list");
-		}
+		if (channel == NULL)
+			throw std::runtime_error("no channel");
 
-		if (!netsplit_db_empty() &&
-		    (split = netsplit_find(nick, channel)) != NULL) {
-			if (split->remove_nick(nick)) {
-				if (!split->join_begun())
-					split->set_join_time(time(NULL));
-			} else {
-				throw std::runtime_error("failed to remove "
-				    "nick from split");
-			}
-		}
+		join_perform_some_tasks(channel, nick, account, rl_name);
+		chk_split(nick, channel, split);
 
 		if (split == NULL && config_bool("joins_parts_quits", true)) {
 			printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2,
