@@ -430,7 +430,7 @@ send_reg_cmds(const struct network_connect_context *ctx)
 
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_SUCCESS,
 	    true);
-	if (config_bool("account_notify", false)) {
+	if (config_bool("account_notify", true)) {
 		if (net_send("CAP REQ :account-notify") > 0)
 			printtext(&ptext_ctx, "Requesting account notify");
 	}

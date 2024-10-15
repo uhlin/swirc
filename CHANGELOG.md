@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
   - Replaced macros for constants
   - Usage of initializer lists
   - `...`
+- Enabled `account_notify` by default.
 
 ## [3.5.0] - 2024-09-30 ##
 - **Added** command `/wholeft` (alias `/wl`.)
