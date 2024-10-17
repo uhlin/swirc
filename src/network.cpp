@@ -428,6 +428,11 @@ send_reg_cmds(const struct network_connect_context *ctx)
 {
 	PRINTTEXT_CONTEXT ptext_ctx;
 
+	if (ctx->password)
+		(void) net_send("PASS %s", ctx->password);
+	(void) net_send("NICK %s", ctx->nickname);
+	(void) net_send("USER %s 8 * :%s", ctx->username, ctx->rl_name);
+
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_SUCCESS,
 	    true);
 	if (config_bool("account_notify", true)) {
@@ -476,10 +481,6 @@ send_reg_cmds(const struct network_connect_context *ctx)
 			}
 		}
 	}
-	if (ctx->password)
-		(void) net_send("PASS %s", ctx->password);
-	(void) net_send("NICK %s", ctx->nickname);
-	(void) net_send("USER %s 8 * :%s", ctx->username, ctx->rl_name);
 }
 
 static bool
