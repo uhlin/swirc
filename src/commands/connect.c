@@ -616,7 +616,6 @@ choose_server(const char *server, const char *port)
 #ifdef WIN32
 	winsock_init_doit();
 #endif
-	dcc_init();
 
 	if (strings_match_ignore_case(server, "afternet")) {
 		srvptr = get_server_v2(&afternet_servers[0],
@@ -681,6 +680,8 @@ choose_server(const char *server, const char *port)
 	} else {
 		IRC_CONNECT(server, port);
 	}
+
+	dcc_init();
 }
 
 /* usage: /connect [-tls] <server[:port]> */
