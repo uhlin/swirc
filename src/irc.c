@@ -452,15 +452,14 @@ handle_extension(size_t *bytes, const char *protocol_message,
 		    __func__);
 		msgtags_free(tags);
 		return -1;
-	}
-	if (tags->batch != NULL) {
+	} else if (tags->batch != NULL) {
 		msgtags_handle_batch(addrof(protocol_message[*bytes]), tags);
 		msgtags_free(tags);
-		return 0;
+	} else {
+		msgtags_process(compo, tags);
+		msgtags_free(tags);
 	}
 
-	msgtags_process(compo, tags);
-	msgtags_free(tags);
 	return 0;
 }
 
