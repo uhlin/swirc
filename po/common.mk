@@ -34,6 +34,7 @@ INPUTFILES = $(COMMANDS_DIR)colormap.cpp\
 	$(SRC_DIR)irc.c\
 	$(SRC_DIR)log.c\
 	$(SRC_DIR)main.cpp\
+	$(SRC_DIR)messagetags.c\
 	$(SRC_DIR)nestHome.c\
 	$(SRC_DIR)network.cpp\
 	$(SRC_DIR)readline.c\
