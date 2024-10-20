@@ -238,6 +238,12 @@ event_cap(struct irc_message_compo *compo)
 			return;
 		(void) net_send("CAP END");
 		printtext(&ctx, "Ended IRCv3 Client Capability Negotiation");
+	} else if (strings_match(cmd, "NEW")) {
+		ctx.spec_type = TYPE_SPEC1_SUCCESS;
+		printtext(&ctx, "%s: NEW: %s", __func__, caplist);
+	} else if (strings_match(cmd, "DEL")) {
+		ctx.spec_type = TYPE_SPEC1_WARN;
+		printtext(&ctx, "%s: DEL: %s", __func__, caplist);
 	} else {
 		printtext(&ctx, "Unknown command: %s "
 		    "(during capability negotiation)", cmd);
