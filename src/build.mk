@@ -22,6 +22,7 @@ OBJS += $(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)libUtils.o\
 	$(SRC_DIR)log.o\
 	$(SRC_DIR)main.o\
+	$(SRC_DIR)messagetags.o\
 	$(SRC_DIR)nestHome.o\
 	$(SRC_DIR)net-unix.o\
 	$(SRC_DIR)netsplit.o\
