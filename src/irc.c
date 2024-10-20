@@ -425,19 +425,6 @@ irc_extract_msg(struct irc_message_compo *compo, PIRC_WINDOW to_window,
 }
 
 static int
-get_num_semicolons(const char *str)
-{
-	int num = 0;
-
-	for (const char *cp = str; *cp != '\0'; cp++) {
-		if (*cp == ';')
-			num++;
-	}
-
-	return num;
-}
-
-static int
 handle_extension(size_t *bytes, const char *protocol_message,
     struct irc_message_compo *compo)
 {
