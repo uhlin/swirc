@@ -455,6 +455,7 @@ handle_extension(size_t *bytes, const char *protocol_message,
 	} else if (tags->batch != NULL) {
 		msgtags_handle_batch(addrof(protocol_message[*bytes]), tags);
 		msgtags_free(tags);
+		return -1;
 	} else {
 		msgtags_process(compo, tags);
 		msgtags_free(tags);
