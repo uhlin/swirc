@@ -441,47 +441,32 @@ static int
 handle_extension(size_t *bytes, const char *protocol_message,
     struct irc_message_compo *compo)
 {
-	char *substring;
+	char			*substring;
+	struct messagetags	*tags;
 
 	*bytes = strcspn(protocol_message, " ");
 	substring = xmalloc((*bytes) + 1);
 	memcpy(substring, protocol_message, *bytes);
 	substring[*bytes] = '\0';
+	tags = msgtags_get(substring);
+	free_and_null(&substring);
 
-/*
- * sscanf() is safe in this context
- */
-#if WIN32
-#pragma warning(disable: 4996)
-#endif
-	if (!strncmp(substring, "@batch=", 7)) {
-		return handle_batch(*bytes, substring, protocol_message);
-	} else if (!strncmp(substring, "@time=", 6)) {
-		if (sscanf(substring, "@time=%d-%d-%dT%d:%d:%d.%dZ",
-		    & (compo->year),
-		    & (compo->month),
-		    & (compo->day),
-		    & (compo->hour),
-		    & (compo->minute),
-		    & (compo->second),
-		    & (compo->precision)) != 7) {
-			printf_and_free(substring, _("%s: server time error"),
-			    __func__);
-			return -1;
-		}
-	} else {
-		printf_and_free(substring, _("%s: unsupported extension"),
+	if (isNull(tags->account) &&
+	    isNull(tags->batch) &&
+	    isNull(tags->srv_time)) {
+		printtext_print("err", _("%s: unsupported extension"),
 		    __func__);
+		msgtags_free(tags);
 		return -1;
 	}
-/*
- * Reset warning behavior to its default value
- */
-#if WIN32
-#pragma warning(default: 4996)
-#endif
+	if (tags->batch != NULL) {
+		msgtags_handle_batch(addrof(protocol_message[*bytes]), tags);
+		msgtags_free(tags);
+		return 0;
+	}
 
-	free(substring);
+	msgtags_process(compo, tags);
+	msgtags_free(tags);
 	return 0;
 }
 
