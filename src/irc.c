@@ -488,6 +488,8 @@ handle_extension(size_t *bytes, const char *protocol_message,
 static void
 compo_init(struct irc_message_compo *compo)
 {
+	compo->account = NULL;
+
 	compo->year = compo->month = compo->day = -1;
 	compo->hour = compo->minute = compo->second = compo->precision = -1;
 
@@ -592,6 +594,8 @@ SortMsgCompo(const char *protocol_message)
 static void
 FreeMsgCompo(struct irc_message_compo *compo)
 {
+	free(compo->account);
+
 	free(compo->prefix);
 	free(compo->command);
 	free(compo->params);
