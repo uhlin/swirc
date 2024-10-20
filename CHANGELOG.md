@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
   - Usage of initializer lists
   - `...`
 - Enabled `account_notify` by default.
+- Fixed cases of uncontrolled allocation sizes.
 
 ## [3.5.0] - 2024-09-30 ##
 - **Added** command `/wholeft` (alias `/wl`.)
