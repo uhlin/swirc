@@ -37,6 +37,7 @@
 #include "irc.h"
 #include "libUtils.h"
 #include "main.h"
+#include "messagetags.h"
 #include "nestHome.h"
 #include "network.h"
 #include "printtext.h"
