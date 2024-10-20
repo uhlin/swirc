@@ -430,8 +430,15 @@ handle_extension(size_t *bytes, const char *protocol_message,
 {
 	char			*substring;
 	struct messagetags	*tags;
+	static const size_t	 min_bytes = 1;
+	static const size_t	 max_bytes = 900;
 
-	*bytes = strcspn(protocol_message, " ");
+	if ((*bytes = strcspn(protocol_message, " ")) < min_bytes ||
+	    *bytes > max_bytes) {
+		err_log(ERANGE, "%s: too few/many message tags", __func__);
+		return -1;
+	}
+
 	substring = xmalloc((*bytes) + 1);
 	memcpy(substring, protocol_message, *bytes);
 	substring[*bytes] = '\0';
