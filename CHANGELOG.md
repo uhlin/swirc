@@ -8,7 +8,8 @@ All notable changes to this project will be documented in this file.
 - Added option `chghost` (bool). Send a notification when clients
   change their username or host. Defaults to **yes**.
 - Added option `extended_join` (bool).
-- Added the `NEW` and `DEL` CAP subcommands.
+- Added the `NEW` and `DEL` CAP subcommands. And implicitly enabled
+  the `cap-notify` extension.
 - Changed the program to:
   - Init/deinit Windows sockets once.
   - Not terminate the DCC server on IRC disconnect.
