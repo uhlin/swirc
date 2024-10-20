@@ -428,6 +428,8 @@ send_reg_cmds(const struct network_connect_context *ctx)
 {
 	PRINTTEXT_CONTEXT ptext_ctx;
 
+	(void) net_send("CAP LS 302");
+
 	if (ctx->password)
 		(void) net_send("PASS %s", ctx->password);
 	(void) net_send("NICK %s", ctx->nickname);
