@@ -441,6 +441,10 @@ send_reg_cmds(const struct network_connect_context *ctx)
 		if (net_send("CAP REQ :account-notify") > 0)
 			printtext(&ptext_ctx, "Requesting account notify");
 	}
+	if (config_bool("account_tag", true)) {
+		if (net_send("CAP REQ :account-tag") > 0)
+			printtext(&ptext_ctx, "Requesting account tag");
+	}
 	if (config_bool("away_notify", false)) {
 		if (net_send("CAP REQ :away-notify") > 0)
 			printtext(&ptext_ctx, "Requesting away notify");
