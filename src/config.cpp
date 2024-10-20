@@ -115,6 +115,7 @@ static struct tagConfDefValues {
 
 	/* IRCv3 */
 	{ "account_notify",            TYPE_BOOLEAN, 2, "yes" },
+	{ "account_tag",               TYPE_BOOLEAN, 2, "yes" },
 	{ "away_notify",               TYPE_BOOLEAN, 2, "no" },
 	{ "batch",                     TYPE_BOOLEAN, 3, "yes" },
 	{ "chghost",                   TYPE_BOOLEAN, 3, "yes" },
