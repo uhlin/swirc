@@ -4,6 +4,8 @@
 #include "window.h"
 
 struct irc_message_compo {
+	STRING account;
+
 	int year;
 	int month;
 	int day;
