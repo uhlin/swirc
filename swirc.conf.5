@@ -3,7 +3,7 @@
 .\" SPDX-FileCopyrightText: Copyright 2018-2024 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd October 8, 2024
+.Dd October 20, 2024
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -47,6 +47,11 @@ An arbitrary sequence of characters
 .It Sy account_notify Pq Em bool
 Allows a client to be notified when another client’s accountname
 changes
+.\" ----------------------------------------
+.\" ACCOUNT TAG
+.\" ----------------------------------------
+.It Sy account_tag Pq Em bool
+Turns the IRCv3 account tag extension on/off.
 .\" ----------------------------------------
 .\" ALT NICK
 .\" ----------------------------------------
