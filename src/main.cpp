@@ -113,6 +113,7 @@ bool	g_debug_logging		= false;
 bool	g_explicit_config_file	= false;
 bool	g_force_tls		= false;
 bool	g_icb_mode		= false;
+bool	g_ircv3_extensions	= true;
 bool	g_sasl_authentication	= true;
 bool	g_ssl_verify_peer	= true;
 
