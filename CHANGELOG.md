@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added command `/announce`.
+- Added command-line option `-X` (Disable all IRCv3 extensions)
 - Added event `CHGHOST` (IRCv3.)
 - Added option `account_tag` (bool).
 - Added option `chghost` (bool). Send a notification when clients
