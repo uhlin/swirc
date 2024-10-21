@@ -151,6 +151,7 @@ static stringarray_t OptionDesc = {
   "                         launched by a toast.\n",
 #endif
   N_("    -W <password>        Equal effect as flag 'p' but non-interactive\n"),
+  N_("    -X                   Disable all IRCv3 extensions\n"),
   N_("    -c <server[:port]>   Connect to IRC server\n"),
   N_("    -d                   Debug logging\n"),
   N_("    -i                   Turn on Internet Citizen's Band mode\n"),
@@ -434,6 +435,9 @@ process_options(int argc, char *argv[], const char *optstring)
 		case 'W':
 			case_password(false);
 			break;
+		case 'X':
+			g_ircv3_extensions = false;
+			break;
 		case 'c':
 			case_connect();
 			break;
@@ -655,7 +659,7 @@ main(int argc, char *argv[])
 	}
 #endif
 
-	process_options(argc, argv, "46CPRSTW:c:dh:ij:n:pr:u:x:");
+	process_options(argc, argv, "46CPRSTW:Xc:dh:ij:n:pr:u:x:");
 
 	srand(get_seed());
 
