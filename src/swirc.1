@@ -3,7 +3,7 @@
 .\" SPDX-FileCopyrightText: Copyright 2016-2024 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd March 11, 2024
+.Dd October 21, 2024
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -12,7 +12,7 @@
 .Sh SYNOPSIS
 .Nm swirc
 .Bk -words
-.Op Fl 46?CPRSdipv
+.Op Fl 46?CPRSXdipv
 .Op Fl W Ar password
 .Op Fl c Ar server[:port]
 .Op Fl j Ar join
@@ -63,6 +63,11 @@ Be careful if you are using this option on a public computer with
 multiple other users because the password will then be visible to them
 in the output of
 .Xr ps 1 .
+.It Fl X
+Disable all IRCv3 extensions.
+If you are connecting to an unmodern IRC server this flag is useful.
+Because if the IRC server sees too many unknown commands during the
+connection process it may result in a connection failure.
 .It Fl c Ar server[:port]
 Connect to given server.
 If the port is omitted port 6667 will be chosen.
