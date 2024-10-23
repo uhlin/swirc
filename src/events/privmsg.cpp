@@ -97,8 +97,10 @@ handle_special_msg(const struct special_msg_context *ctx)
 
 	if (strings_match_ignore_case(ctx->dest, g_my_nickname)) {
 		if (!strncmp(msg, "ACTION ", 7) &&
-		    (ptext_ctx.window = window_by_label(ctx->nick)) == NULL)
-			spawn_chat_window(ctx->nick, ctx->nick);
+		    (ptext_ctx.window = window_by_label(ctx->nick)) == NULL) {
+			spawn_chat_window(ctx->nick,
+			    make_window_title(ctx->nick));
+		}
 		ptext_ctx.window = window_by_label(ctx->nick);
 	} else {
 		ptext_ctx.window = window_by_label(ctx->dest);
@@ -451,9 +453,11 @@ event_privmsg(struct irc_message_compo *compo)
 				free(notice);
 			} else {
 				if (window_by_label(nick) == NULL &&
-				    spawn_chat_window(nick, nick) != 0)
+				    spawn_chat_window(nick,
+				    make_window_title(nick)) != 0) {
 					throw std::runtime_error("cannot spawn "
 					    "chat window");
+				}
 				handle_private_msgs(&ctx, nick, msg);
 			}
 		} else {

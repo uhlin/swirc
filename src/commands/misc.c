@@ -398,7 +398,7 @@ cmd_query(const char *data)
 	} else {
 		/* -------------------------------------------------- */
 
-		switch (spawn_chat_window(data, data)) {
+		switch (spawn_chat_window(data, make_window_title(data))) {
 		case EINVAL:
 			err_exit(EINVAL, "spawn_chat_window");
 			/* NOTREACHED */
