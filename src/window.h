@@ -84,6 +84,7 @@ void windowSystem_deinit(void);
 /*lint -sem(get_list_of_matching_channels, r_null) */
 /*lint -sem(get_list_of_matching_queries, r_null) */
 
+CSTRING		make_window_title(CSTRING);
 PIRC_WINDOW	window_by_label(CSTRING);
 PIRC_WINDOW	window_by_refnum(int);
 PTEXTBUF	get_list_of_matching_channels(CSTRING search_var);

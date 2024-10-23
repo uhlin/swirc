@@ -523,6 +523,33 @@ windowSystem_deinit(void)
 #endif
 }
 
+CSTRING
+make_window_title(CSTRING nick)
+{
+	static char title[400] = { '\0' };
+
+	FOREACH_HASH_TABLE_ENTRY() {
+		FOREACH_WINDOW_IN_ENTRY() {
+			PNAMES n;
+
+			if (!is_irc_channel(window->label))
+				continue;
+			n = event_names_htbl_lookup(nick, window->label);
+			if (n == NULL ||
+			    n->account == NULL ||
+			    n->rl_name == NULL)
+				continue;
+			(void) snprintf(title, sizeof title, "%s (%s): %s",
+			    nick, n->account, n->rl_name);
+			return addrof(title[0]);
+		}
+	}
+
+	if (sw_strcpy(title, nick, sizeof title) != 0)
+		BZERO(title, sizeof title);
+	return addrof(title[0]);
+}
+
 /**
  * Return the window identified by the given @label -- or NULL on
  * error
