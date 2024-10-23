@@ -523,10 +523,25 @@ windowSystem_deinit(void)
 #endif
 }
 
+static void
+set_nick_as_title(STRING title, CSTRING nick, size_t size)
+{
+	if (sw_strcpy(title, nick, size) != 0)
+		BZERO(title, size);
+}
+
 CSTRING
 make_window_title(CSTRING nick)
 {
 	static char title[400] = { '\0' };
+
+	if (!atomic_load_bool(&g_on_air) ||
+	    !config_bool("extended_join", true) ||
+	    !g_ircv3_extensions ||
+	    g_icb_mode) {
+		set_nick_as_title(title, nick, sizeof title);
+		return addrof(title[0]);
+	}
 
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
@@ -545,8 +560,7 @@ make_window_title(CSTRING nick)
 		}
 	}
 
-	if (sw_strcpy(title, nick, sizeof title) != 0)
-		BZERO(title, sizeof title);
+	set_nick_as_title(title, nick, sizeof title);
 	return addrof(title[0]);
 }
 
