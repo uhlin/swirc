@@ -189,6 +189,23 @@ handle_ack_and_nak(PPRINTTEXT_CONTEXT ctx, struct irc_message_compo *compo,
 	}
 }
 
+static void
+handle_cap_new(const char *caplist)
+{
+	if (strings_match(caplist, "account-notify") &&
+	    config_bool("account_notify", true))
+		(void)net_send("CAP REQ :account-notify");
+	else if (strings_match(caplist, "account-tag") &&
+		 config_bool("account_tag", true))
+		(void)net_send("CAP REQ :account-tag");
+	else if (strings_match(caplist, "away-notify") &&
+		 config_bool("away_notify", false))
+		(void)net_send("CAP REQ :away-notify");
+	else if (strings_match(caplist, "extended-join") &&
+		 config_bool("extended_join", true))
+		(void)net_send("CAP REQ :extended-join");
+}
+
 /**
  * event_cap()
  *
@@ -241,6 +258,7 @@ event_cap(struct irc_message_compo *compo)
 	} else if (strings_match(cmd, "NEW")) {
 		ctx.spec_type = TYPE_SPEC1_SUCCESS;
 		printtext(&ctx, "%s: NEW: %s", __func__, caplist);
+		handle_cap_new(caplist);
 	} else if (strings_match(cmd, "DEL")) {
 		ctx.spec_type = TYPE_SPEC1_WARN;
 		printtext(&ctx, "%s: DEL: %s", __func__, caplist);
