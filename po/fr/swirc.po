@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.0\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-10-20 10:36+0200\n"
+"POT-Creation-Date: 2024-10-24 23:38+0200\n"
 "PO-Revision-Date: 2024-08-29 16:59+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -1388,22 +1388,22 @@ msgstr "Taille du journal des erreurs %s%.1f KB%s"
 msgid "%s: no nickname"
 msgstr ""
 
-#: ../src/irc.c:457
+#: ../src/irc.c:451
 #, c-format
 msgid "%s: unsupported extension"
 msgstr ""
 
-#: ../src/irc.c:654
+#: ../src/irc.c:648
 #, c-format
 msgid "Unknown normal event: %s"
 msgstr ""
 
-#: ../src/irc.c:665
+#: ../src/irc.c:659
 #, c-format
 msgid "Unknown numeric event: %s"
 msgstr ""
 
-#: ../src/irc.c:673
+#: ../src/irc.c:667
 #, c-format
 msgid "Erroneous event: %s"
 msgstr ""
@@ -1423,7 +1423,7 @@ msgstr "Journalisation pour la fenêtre (refnum: %d) désormais activée"
 msgid "A duplicate of option -%c found"
 msgstr ""
 
-#: ../src/main.cpp:140
+#: ../src/main.cpp:141
 msgid ""
 "\n"
 "Options:\n"
@@ -1433,119 +1433,126 @@ msgstr ""
 "Options:\n"
 "\n"
 
-#: ../src/main.cpp:141
+#: ../src/main.cpp:142
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   IPv4 seulement\n"
 
-#: ../src/main.cpp:142
+#: ../src/main.cpp:143
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   IPv6 seulement\n"
 
-#: ../src/main.cpp:143
+#: ../src/main.cpp:144
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Afficher l'aide\n"
 
-#: ../src/main.cpp:144
+#: ../src/main.cpp:145
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Ne pas changer les couleurs\n"
 
-#: ../src/main.cpp:145
+#: ../src/main.cpp:146
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr "    -P                   Désactiver l'authentification SASL\n"
 
-#: ../src/main.cpp:146
+#: ../src/main.cpp:147
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr ""
 "    -R                   Désactivation de la vérification du certificat TLS/"
 "SSL\n"
 
-#: ../src/main.cpp:147
+#: ../src/main.cpp:148
 msgid "    -S                   Force TLS\n"
 msgstr "    -S                   Forcer TLS\n"
 
-#: ../src/main.cpp:152
+#: ../src/main.cpp:153
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
 msgstr ""
 "    -W <password>        Effet égal à celui du drapeau 'p' mais non "
 "interactif\n"
 
-#: ../src/main.cpp:153
+#: ../src/main.cpp:154
+#, fuzzy
+msgid "    -X                   Disable all IRCv3 extensions\n"
+msgstr ""
+"    -R                   Désactivation de la vérification du certificat TLS/"
+"SSL\n"
+
+#: ../src/main.cpp:155
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Se connecter à un serveur IRC\n"
 
-#: ../src/main.cpp:154
+#: ../src/main.cpp:156
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Activer les journaux de débogage\n"
 
-#: ../src/main.cpp:155
+#: ../src/main.cpp:157
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Activer le mode Internet Citizen's Band\n"
 
-#: ../src/main.cpp:156
+#: ../src/main.cpp:158
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr ""
 "    -j <join>            Liste de salons à rejoinre (séparés par des "
 "virgules)\n"
 
-#: ../src/main.cpp:157
+#: ../src/main.cpp:159
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Pseudonyme\n"
 
-#: ../src/main.cpp:158
+#: ../src/main.cpp:160
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Requête pour le mot de passe serveur (serveurs "
 "privés uniquement)\n"
 
-#: ../src/main.cpp:159
+#: ../src/main.cpp:161
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Votre nom\n"
 
-#: ../src/main.cpp:160
+#: ../src/main.cpp:162
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Votre utilisateur\n"
 
-#: ../src/main.cpp:161
+#: ../src/main.cpp:163
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Affiche la version de Swirc\n"
 
-#: ../src/main.cpp:162
+#: ../src/main.cpp:164
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Fichier de configuration\n"
 
-#: ../src/main.cpp:168
+#: ../src/main.cpp:170
 msgid "Unhandled exception!"
 msgstr ""
 
-#: ../src/main.cpp:228
+#: ../src/main.cpp:230
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Usage: %s [OPTION] ...\n"
 
-#: ../src/main.cpp:318
+#: ../src/main.cpp:320
 msgid "forbidden channel name characters"
-msgstr ""
-
-#: ../src/main.cpp:467
-#, c-format
-msgid "%s: -%c: unrecognized option"
 msgstr ""
 
 #: ../src/main.cpp:472
 #, c-format
+msgid "%s: -%c: unrecognized option"
+msgstr ""
+
+#: ../src/main.cpp:477
+#, c-format
 msgid "%s: -%c: option argument missing"
 msgstr ""
 
-#: ../src/main.cpp:629
+#: ../src/main.cpp:634
 msgid "fatal: failed to initialize signal handling"
 msgstr ""
 
-#: ../src/main.cpp:651
+#: ../src/main.cpp:656
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr ""
 
-#: ../src/main.cpp:677
+#: ../src/main.cpp:682
 msgid "Initialization of the Curses library not possible"
 msgstr ""
 
@@ -1643,16 +1650,16 @@ msgstr "Impossible d'obtenir une liste d'adresses IP"
 msgid "Get a list of IP addresses completed"
 msgstr "Obtenir une liste d'adresses IP, c'est fait"
 
-#: ../src/network.cpp:530
+#: ../src/network.cpp:539
 #, c-format
 msgid "Connecting to %s (%s)"
 msgstr "Connexion à %s (%s)"
 
-#: ../src/network.cpp:798
+#: ../src/network.cpp:807
 msgid "Connection to IRC server lost"
 msgstr "La connexion au serveur IRC a été perdue"
 
-#: ../src/network.cpp:809
+#: ../src/network.cpp:818
 msgid "Disconnected"
 msgstr "Déconnecté"
 

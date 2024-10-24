@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.0\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-10-20 10:36+0200\n"
+"POT-Creation-Date: 2024-10-24 23:38+0200\n"
 "PO-Revision-Date: 2024-08-29 16:10+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -1376,22 +1376,22 @@ msgstr "Größe des Fehlerprotokolls %s%.1f KB%s"
 msgid "%s: no nickname"
 msgstr ""
 
-#: ../src/irc.c:457
+#: ../src/irc.c:451
 #, c-format
 msgid "%s: unsupported extension"
 msgstr ""
 
-#: ../src/irc.c:654
+#: ../src/irc.c:648
 #, c-format
 msgid "Unknown normal event: %s"
 msgstr ""
 
-#: ../src/irc.c:665
+#: ../src/irc.c:659
 #, c-format
 msgid "Unknown numeric event: %s"
 msgstr ""
 
-#: ../src/irc.c:673
+#: ../src/irc.c:667
 #, c-format
 msgid "Erroneous event: %s"
 msgstr ""
@@ -1411,7 +1411,7 @@ msgstr "Die Protokollierung für das Fenster (refnum: %d) ist jetzt aktiviert"
 msgid "A duplicate of option -%c found"
 msgstr ""
 
-#: ../src/main.cpp:140
+#: ../src/main.cpp:141
 msgid ""
 "\n"
 "Options:\n"
@@ -1421,116 +1421,121 @@ msgstr ""
 "Optionen:\n"
 "\n"
 
-#: ../src/main.cpp:141
+#: ../src/main.cpp:142
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   Nur IPv4-Adressen verwenden\n"
 
-#: ../src/main.cpp:142
+#: ../src/main.cpp:143
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   Nur IPv6-Adressen verwenden\n"
 
-#: ../src/main.cpp:143
+#: ../src/main.cpp:144
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Hilfe anzeigen\n"
 
-#: ../src/main.cpp:144
+#: ../src/main.cpp:145
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Farbdefinitionen nicht ändern\n"
 
-#: ../src/main.cpp:145
+#: ../src/main.cpp:146
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr ""
 "    -P                   SASL-Authentifizierung dauerhaft deaktivieren\n"
 
-#: ../src/main.cpp:146
+#: ../src/main.cpp:147
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   TLS/SSL peer verification deaktivieren\n"
 
-#: ../src/main.cpp:147
+#: ../src/main.cpp:148
 msgid "    -S                   Force TLS\n"
 msgstr "    -S                   TLS erzwingen\n"
 
-#: ../src/main.cpp:152
+#: ../src/main.cpp:153
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
 msgstr ""
 "    -W <password>        Gleicher Effekt wie Flag 'p', aber nicht "
 "interaktiv\n"
 
-#: ../src/main.cpp:153
+#: ../src/main.cpp:154
+#, fuzzy
+msgid "    -X                   Disable all IRCv3 extensions\n"
+msgstr "    -R                   TLS/SSL peer verification deaktivieren\n"
+
+#: ../src/main.cpp:155
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Mit IRC-Server verbinden\n"
 
-#: ../src/main.cpp:154
+#: ../src/main.cpp:156
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Debug Protokollierung\n"
 
-#: ../src/main.cpp:155
+#: ../src/main.cpp:157
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Internet Citizen's Band aktivieren\n"
 
-#: ../src/main.cpp:156
+#: ../src/main.cpp:158
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr ""
 "    -j <join>            Kommata getrennte Liste von Kanälen zum joinen\n"
 
-#: ../src/main.cpp:157
+#: ../src/main.cpp:159
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Online Nickname\n"
 
-#: ../src/main.cpp:158
+#: ../src/main.cpp:160
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Server-Passwort anfordern (für private Server)\n"
 
-#: ../src/main.cpp:159
+#: ../src/main.cpp:161
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Dein echter Name\n"
 
-#: ../src/main.cpp:160
+#: ../src/main.cpp:162
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Dein Benutzername\n"
 
-#: ../src/main.cpp:161
+#: ../src/main.cpp:163
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Swirc-Version anzeigen\n"
 
-#: ../src/main.cpp:162
+#: ../src/main.cpp:164
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsdatei\n"
 
-#: ../src/main.cpp:168
+#: ../src/main.cpp:170
 msgid "Unhandled exception!"
 msgstr ""
 
-#: ../src/main.cpp:228
+#: ../src/main.cpp:230
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Anwendung: %s [FLAGGE] ...\n"
 
-#: ../src/main.cpp:318
+#: ../src/main.cpp:320
 msgid "forbidden channel name characters"
-msgstr ""
-
-#: ../src/main.cpp:467
-#, c-format
-msgid "%s: -%c: unrecognized option"
 msgstr ""
 
 #: ../src/main.cpp:472
 #, c-format
+msgid "%s: -%c: unrecognized option"
+msgstr ""
+
+#: ../src/main.cpp:477
+#, c-format
 msgid "%s: -%c: option argument missing"
 msgstr ""
 
-#: ../src/main.cpp:629
+#: ../src/main.cpp:634
 msgid "fatal: failed to initialize signal handling"
 msgstr ""
 
-#: ../src/main.cpp:651
+#: ../src/main.cpp:656
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr ""
 
-#: ../src/main.cpp:677
+#: ../src/main.cpp:682
 msgid "Initialization of the Curses library not possible"
 msgstr ""
 
@@ -1628,16 +1633,16 @@ msgstr "Es kann keine Liste mit IP-Adressen abgerufen werden"
 msgid "Get a list of IP addresses completed"
 msgstr "Holen Sie sich eine Liste der IP-Adressen, fertig"
 
-#: ../src/network.cpp:530
+#: ../src/network.cpp:539
 #, c-format
 msgid "Connecting to %s (%s)"
 msgstr "Verbindung zu %s (%s) wird hergestellt..."
 
-#: ../src/network.cpp:798
+#: ../src/network.cpp:807
 msgid "Connection to IRC server lost"
 msgstr "Die Verbindung zum IRC-Server wurde unterbrochen"
 
-#: ../src/network.cpp:809
+#: ../src/network.cpp:818
 msgid "Disconnected"
 msgstr "Offline"
 

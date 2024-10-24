@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.0\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-10-20 10:36+0200\n"
+"POT-Creation-Date: 2024-10-24 23:38+0200\n"
 "PO-Revision-Date: 2024-09-22 00:01+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -1526,22 +1526,22 @@ msgstr "Storlek på fellogg %s%.1f KB%s"
 msgid "%s: no nickname"
 msgstr "%s: inget smeknamn"
 
-#: ../src/irc.c:457
+#: ../src/irc.c:451
 #, c-format
 msgid "%s: unsupported extension"
 msgstr "%s: tillägg som inte stöds"
 
-#: ../src/irc.c:654
+#: ../src/irc.c:648
 #, c-format
 msgid "Unknown normal event: %s"
 msgstr "Okänd normal händelse: %s"
 
-#: ../src/irc.c:665
+#: ../src/irc.c:659
 #, c-format
 msgid "Unknown numeric event: %s"
 msgstr "Okänd numerisk händelse: %s"
 
-#: ../src/irc.c:673
+#: ../src/irc.c:667
 #, c-format
 msgid "Erroneous event: %s"
 msgstr "Felaktig händelse: %s"
@@ -1561,7 +1561,7 @@ msgstr "Loggning för fönstret (refnum: %d) är nu på"
 msgid "A duplicate of option -%c found"
 msgstr "En dubblett av alternativet -%c hittades"
 
-#: ../src/main.cpp:140
+#: ../src/main.cpp:141
 msgid ""
 "\n"
 "Options:\n"
@@ -1571,115 +1571,120 @@ msgstr ""
 "Flaggor:\n"
 "\n"
 
-#: ../src/main.cpp:141
+#: ../src/main.cpp:142
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   Använd enbart IPv4 adresser\n"
 
-#: ../src/main.cpp:142
+#: ../src/main.cpp:143
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   Använd enbart IPv6 adresser\n"
 
-#: ../src/main.cpp:143
+#: ../src/main.cpp:144
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Skriv ut hjälp\n"
 
-#: ../src/main.cpp:144
+#: ../src/main.cpp:145
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Ändra inte färgdefinitioner\n"
 
-#: ../src/main.cpp:145
+#: ../src/main.cpp:146
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr "    -P                   Stäng av SASL autentisering permanent\n"
 
-#: ../src/main.cpp:146
+#: ../src/main.cpp:147
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   Stäng av TLS/SSL peer verifikation\n"
 
-#: ../src/main.cpp:147
+#: ../src/main.cpp:148
 msgid "    -S                   Force TLS\n"
 msgstr "    -S                   Tvinga TLS\n"
 
-#: ../src/main.cpp:152
+#: ../src/main.cpp:153
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
 msgstr ""
 "    -W <password>        Samma effekt som flaggan 'p' men icke-interaktiv\n"
 
-#: ../src/main.cpp:153
+#: ../src/main.cpp:154
+#, fuzzy
+msgid "    -X                   Disable all IRCv3 extensions\n"
+msgstr "    -R                   Stäng av TLS/SSL peer verifikation\n"
+
+#: ../src/main.cpp:155
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Anslut till IRC server\n"
 
-#: ../src/main.cpp:154
+#: ../src/main.cpp:156
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Debug loggning\n"
 
-#: ../src/main.cpp:155
+#: ../src/main.cpp:157
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Sätt på Internet Citizen's Band läge\n"
 
-#: ../src/main.cpp:156
+#: ../src/main.cpp:158
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr ""
 "    -j <join>            En kommaseparerad lista bestående av kanaler att "
 "öppna\n"
 
-#: ../src/main.cpp:157
+#: ../src/main.cpp:159
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Online nickname\n"
 
-#: ../src/main.cpp:158
+#: ../src/main.cpp:160
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Fråga efter serverlösenord (för privata servrar)\n"
 
-#: ../src/main.cpp:159
+#: ../src/main.cpp:161
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Ditt riktiga namn\n"
 
-#: ../src/main.cpp:160
+#: ../src/main.cpp:162
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Ditt användarnamn\n"
 
-#: ../src/main.cpp:161
+#: ../src/main.cpp:163
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Visa Swirc version\n"
 
-#: ../src/main.cpp:162
+#: ../src/main.cpp:164
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsfil\n"
 
-#: ../src/main.cpp:168
+#: ../src/main.cpp:170
 msgid "Unhandled exception!"
 msgstr "Ohanterat undantag!"
 
-#: ../src/main.cpp:228
+#: ../src/main.cpp:230
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Användning: %s [FLAGGA] ...\n"
 
-#: ../src/main.cpp:318
+#: ../src/main.cpp:320
 msgid "forbidden channel name characters"
 msgstr "förbjudna kanalnamnstecken"
 
-#: ../src/main.cpp:467
+#: ../src/main.cpp:472
 #, c-format
 msgid "%s: -%c: unrecognized option"
 msgstr "%s: -%c: okänt alternativ"
 
-#: ../src/main.cpp:472
+#: ../src/main.cpp:477
 #, c-format
 msgid "%s: -%c: option argument missing"
 msgstr "%s: -%c: alternativargument saknas"
 
-#: ../src/main.cpp:629
+#: ../src/main.cpp:634
 msgid "fatal: failed to initialize signal handling"
 msgstr "fatal: misslyckades med att initiera signalhantering"
 
-#: ../src/main.cpp:651
+#: ../src/main.cpp:656
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr "fatal: att köra programmet med root privilegier är förbjudet"
 
-#: ../src/main.cpp:677
+#: ../src/main.cpp:682
 msgid "Initialization of the Curses library not possible"
 msgstr "Initiering av Curses biblioteket är inte möjlig"
 
@@ -1780,16 +1785,16 @@ msgstr "Det gick inte att få en lista över IP adresser"
 msgid "Get a list of IP addresses completed"
 msgstr "Få en lista över IP adresser färdig"
 
-#: ../src/network.cpp:530
+#: ../src/network.cpp:539
 #, c-format
 msgid "Connecting to %s (%s)"
 msgstr "Ansluter till %s (%s)"
 
-#: ../src/network.cpp:798
+#: ../src/network.cpp:807
 msgid "Connection to IRC server lost"
 msgstr "Anslutningen till IRC servern förlorad"
 
-#: ../src/network.cpp:809
+#: ../src/network.cpp:818
 msgid "Disconnected"
 msgstr "Frånkopplad"
 
