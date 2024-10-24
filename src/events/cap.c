@@ -205,8 +205,7 @@ handle_cap_new(const char *caplist)
 		 config_bool("extended_join", true))
 		(void)net_send("CAP REQ :extended-join");
 	else
-		printtext_print("warn", "%s: unrecognized capability: %s",
-		    __func__, caplist);
+		debug("%s: else branch: %s", __func__, caplist);
 }
 
 /**
