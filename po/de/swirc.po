@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.0\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-10-24 23:38+0200\n"
-"PO-Revision-Date: 2024-08-29 16:10+0200\n"
+"PO-Revision-Date: 2024-10-24 23:42+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -1457,9 +1457,8 @@ msgstr ""
 "interaktiv\n"
 
 #: ../src/main.cpp:154
-#, fuzzy
 msgid "    -X                   Disable all IRCv3 extensions\n"
-msgstr "    -R                   TLS/SSL peer verification deaktivieren\n"
+msgstr "    -X                   Alle IRCv3 Erweiterungen deaktivieren\n"
 
 #: ../src/main.cpp:155
 msgid "    -c <server[:port]>   Connect to IRC server\n"
