@@ -204,6 +204,9 @@ handle_cap_new(const char *caplist)
 	else if (strings_match(caplist, "extended-join") &&
 		 config_bool("extended_join", true))
 		(void)net_send("CAP REQ :extended-join");
+	else
+		printtext_print("warn", "%s: unrecognized capability: %s",
+		    __func__, caplist);
 }
 
 /**
