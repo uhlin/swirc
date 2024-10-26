@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.0\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2024-10-26 22:54+0200\n"
-"PO-Revision-Date: 2024-10-24 23:42+0200\n"
+"PO-Revision-Date: 2024-10-26 22:57+0200\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -273,9 +273,9 @@ msgid "Topic set by %c%s%c %s%s%s"
 msgstr "Das Thema wurde von %c%s%c festgelegt %s%s%s"
 
 #: ../src/events/chghost.cpp:61
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s has changed their hostname to %s%s@%s%s"
-msgstr "%c%s%c hat das Thema von %c%s%c geändert: %s"
+msgstr "%s%s%s hat seinen Hostnamen in %s%s@%s%s geändert"
 
 #: ../src/events/invite.cpp:56
 msgid "The invitation has been passed onto the end user"
