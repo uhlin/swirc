@@ -29,7 +29,40 @@
 
 #include "common.h"
 
+#include <stdexcept>
+
+#include "../dataClassify.h"
+#include "../irc.h"
+#include "../printtext.h"
+#include "../strHand.h"
+#include "../theme.h"
+#include "../window.h"
+
+#include "../events/names.h"
+
 #include "chghost.h"
+#include "i18n.h"
+
+static void
+print_change(CSTRING nick, CSTRING user, CSTRING host)
+{
+	PIRC_WINDOW		window;
+	PRINTTEXT_CONTEXT	ctx;
+
+	printtext_context_init(&ctx, nullptr, TYPE_SPEC1_SPEC2, true);
+
+	for (int i = 1; i <= g_ntotal_windows; i++) {
+		if ((window = window_by_refnum(i)) != nullptr &&
+		    is_irc_channel(window->label) &&
+		    event_names_htbl_lookup(nick, window->label) != nullptr) {
+			ctx.window = window;
+			printtext(&ctx, _("%s%s%s has changed their hostname "
+			    "to %s%s@%s%s"),
+			    COLOR2, nick, TXT_NORMAL,
+			    LEFT_BRKT, user, host, RIGHT_BRKT);
+		}
+	} // for
+}
 
 /* event_chghost: the change hostname event
 
@@ -38,5 +71,35 @@
 void
 event_chghost(struct irc_message_compo *compo)
 {
-	UNUSED_PARAM(compo);
+	CSTRING		nick;
+	CSTRING		old_host, new_host;
+	CSTRING		old_user, new_user;
+	STRING		last[2];
+
+	last[0] = last[1] = const_cast<STRING>("");
+
+	try {
+		if (compo->prefix == nullptr)
+			throw std::runtime_error("no prefix");
+		else if ((nick = strtok_r(compo->prefix, "!@", &last[0])) ==
+		    nullptr)
+			throw std::runtime_error("no nick");
+		old_user = strtok_r(nullptr, "!@", &last[0]);
+		old_host = strtok_r(nullptr, "!@", &last[0]);
+		if (old_user == nullptr ||
+		    old_host == nullptr)
+			throw std::runtime_error("no old user@host");
+		(void) strFeed(compo->params, 1);
+		new_user = strtok_r(compo->params, "\n", &last[1]);
+		new_host = strtok_r(nullptr, "\n", &last[1]);
+		if (new_user == nullptr ||
+		    new_host == nullptr)
+			throw std::runtime_error("no new user@host");
+		print_change(nick, (*new_user == '~' ? &new_user[1] :
+		    &new_user[0]), new_host);
+		UNUSED_VAR(old_user);
+		UNUSED_VAR(old_host);
+	} catch (const std::runtime_error &e) {
+		printtext_print("warn", "%s: %s", __func__, e.what());
+	}
 }
