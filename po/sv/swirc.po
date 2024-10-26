@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.0\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2024-10-24 23:38+0200\n"
+"POT-Creation-Date: 2024-10-26 22:54+0200\n"
 "PO-Revision-Date: 2024-10-24 23:47+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -271,6 +271,11 @@ msgstr "Ämnet satt av %c%s%c %s%s@%s%s %s%s%s"
 #, c-format
 msgid "Topic set by %c%s%c %s%s%s"
 msgstr "Ämnet satt av %c%s%c %s%s%s"
+
+#: ../src/events/chghost.cpp:61
+#, fuzzy, c-format
+msgid "%s%s%s has changed their hostname to %s%s@%s%s"
+msgstr "%c%s%c ändrade ämnet för %c%s%c till: %s"
 
 #: ../src/events/invite.cpp:56
 msgid "The invitation has been passed onto the end user"
