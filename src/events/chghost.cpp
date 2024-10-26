@@ -43,6 +43,8 @@
 #include "chghost.h"
 #include "i18n.h"
 
+static void print_change(CSTRING, CSTRING, CSTRING) NONNULL;
+
 static void
 print_change(CSTRING nick, CSTRING user, CSTRING host)
 {
