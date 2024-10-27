@@ -554,11 +554,12 @@ sasl_scram_sha_handle_serv_final_msg(CSTRING msg)
 		if ((decoded_msg = get_decoded_msg(msg, NULL)) == NULL) {
 			throw std::runtime_error("unable to get decoded "
 			    "message");
-		} else if (strncmp(decoded_msg, "v=", 2) != STRINGS_MATCH) {
-			throw std::runtime_error("expected server signature");
 		}
 
 		debug("%s: S: %s", __func__, decoded_msg);
+
+		if (strncmp(decoded_msg, "v=", 2) != STRINGS_MATCH)
+			throw std::runtime_error("expected server signature");
 
 		cp = decoded_msg;
 		cp += 2;
