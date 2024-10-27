@@ -292,6 +292,18 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 	return (ok ? 0 : -1);
 }
 
+static const EVP_MD *
+get_evp(void)
+{
+	CSTRING mech = Config("sasl_mechanism");
+
+	if (strings_match(mech, "SCRAM-SHA-256"))
+		return EVP_sha256();
+	else if (strings_match(mech, "SCRAM-SHA-512"))
+		return EVP_sha512();
+	return EVP_sha256();
+}
+
 /*
  * SaltedPassword: Hi(Normalize(password), salt, i)
  */
@@ -304,7 +316,7 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 	try {
 		CSTRING pass;
 
-		if (*outsize = EVP_MD_size(EVP_sha256()), *outsize < 0) {
+		if (*outsize = EVP_MD_size(get_evp()), *outsize < 0) {
 			throw std::runtime_error("message digest size "
 			    "negative");
 		}
@@ -315,7 +327,7 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 			throw std::runtime_error("unable to get normalized "
 			    "sasl password");
 		} else if (!PKCS5_PBKDF2_HMAC(pass, -1, salt, saltlen, iter,
-		    EVP_sha256(), *outsize, out)) {
+		    get_evp(), *outsize, out)) {
 			throw std::runtime_error("unable to get salted "
 			    "password");
 		}
@@ -336,7 +348,7 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 static int
 get_digest(struct digest_context *ctx)
 {
-	if (HMAC(EVP_sha256(), ctx->key, ctx->key_len,
+	if (HMAC(get_evp(), ctx->key, ctx->key_len,
 	    ctx->data, ctx->data_len, ctx->md, & (ctx->md_len)) == NULL)
 		return -1;
 	return 0;
@@ -406,18 +418,54 @@ get_auth_msg(CSTRING b64msg, size_t *auth_msg_len)
 	return reinterpret_cast<UCHARPTR>(out);
 }
 
+static UCHARPTR
+get_stored_key(int &digest_length, bool zero)
+{
+	CSTRING			mech = Config("sasl_mechanism");
+	static unsigned char	key256[SHA256_DIGEST_LENGTH];
+	static unsigned char	key512[SHA512_DIGEST_LENGTH];
+
+	if (zero) {
+		BZERO(key256, sizeof key256);
+		BZERO(key512, sizeof key512);
+	}
+
+	if (strings_match(mech, "SCRAM-SHA-256")) {
+		digest_length = SHA256_DIGEST_LENGTH;
+		return addrof(key256[0]);
+	} else if (strings_match(mech, "SCRAM-SHA-512")) {
+		digest_length = SHA512_DIGEST_LENGTH;
+		return addrof(key512[0]);
+	}
+
+	digest_length = SHA256_DIGEST_LENGTH;
+	return addrof(key256[0]);
+}
+
+static UCHARPTR
+hash_client_key(UCHARPTR md, unsigned int md_len, UCHARPTR stored_key)
+{
+	CSTRING mech = Config("sasl_mechanism");
+
+	if (strings_match(mech, "SCRAM-SHA-256"))
+		return SHA256(md, md_len, stored_key);
+	else if (strings_match(mech, "SCRAM-SHA-512"))
+		return SHA512(md, md_len, stored_key);
+	return SHA256(md, md_len, stored_key);
+}
+
 int
 sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 {
+	UCHARPTR	 auth_msg;
+	UCHARPTR	 pass = NULL;
+	UCHARPTR	 salt = NULL;
 	char		 proof[EVP_MAX_MD_SIZE] = { '\0' };
+	int		 digest_len = 0;
 	int		 iter = PKCS5_DEFAULT_ITER;
 	int		 passwdlen = 0;
 	int		 saltlen = 0;
 	size_t		 auth_msg_len;
-	UCHARPTR	 auth_msg;
-	UCHARPTR	 pass = NULL;
-	UCHARPTR	 salt = NULL;
-	unsigned char	 stored_key[SHA256_DIGEST_LENGTH];
 
 	if (get_sfm_components(msg, &salt, &saltlen, &iter) == -1 ||
 	    (pass = get_salted_password(salt, saltlen, iter, &passwdlen)) ==
@@ -448,7 +496,8 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 	/*
 	 * StoredKey: H(ClientKey)
 	 */
-	if (SHA256(client_key.md, client_key.md_len, stored_key) == NULL)
+	if (hash_client_key(client_key.md, client_key.md_len,
+	    get_stored_key(digest_len, true)) == NULL)
 		return -1;
 
 	auth_msg_len = 0;
@@ -461,8 +510,8 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
  *
  */
 
-	struct digest_context client_signature(stored_key, SHA256_DIGEST_LENGTH,
-	    auth_msg, auth_msg_len);
+	struct digest_context client_signature(get_stored_key(digest_len, false),
+	    digest_len, auth_msg, auth_msg_len);
 	struct digest_context server_signature(server_key.md, server_key.md_len,
 	    auth_msg, auth_msg_len);
 

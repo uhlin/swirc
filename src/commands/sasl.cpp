@@ -85,6 +85,7 @@ static stringarray_t sasl_cmds = {
 	"mechanism external",
 	"mechanism plain",
 	"mechanism scram-sha-256",
+	"mechanism scram-sha-512",
 	"username ",
 	"password ",
 	"passwd_s ",
