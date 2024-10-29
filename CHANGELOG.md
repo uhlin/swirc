@@ -11,6 +11,9 @@ All notable changes to this project will be documented in this file.
 - Added option `extended_join` (bool).
 - Added the `NEW` and `DEL` CAP subcommands. And implicitly enabled
   the `cap-notify` extension.
+- Added the following SASL auth mechanisms:
+  - `SCRAM-SHA-1`
+  - `SCRAM-SHA-512`
 - Changed the program to:
   - Init/deinit Windows sockets once.
   - Not terminate the DCC server on IRC disconnect.
