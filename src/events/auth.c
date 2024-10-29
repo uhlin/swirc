@@ -135,7 +135,8 @@ handle_else_branch(const char *mechanism, const char *params)
 	} else if (strings_match(mechanism, "PLAIN")) {
 		err_log(EPROTO, "%s: error (plain): expected '+'", __func__);
 		abort_authentication();
-	} else if (strings_match(mechanism, "SCRAM-SHA-256") ||
+	} else if (strings_match(mechanism, "SCRAM-SHA-1") ||
+		   strings_match(mechanism, "SCRAM-SHA-256") ||
 		   strings_match(mechanism, "SCRAM-SHA-512")) {
 		if (!g_sasl_scram_sha_got_first_msg) {
 			if (sasl_scram_sha_handle_serv_first_msg(params) == -1)
@@ -184,7 +185,8 @@ event_authenticate(struct irc_message_compo *compo)
 
 			(void) net_send("AUTHENTICATE %s", msg);
 			crypt_freezero(msg, xstrnlen(msg, 1000));
-		} else if (strings_match(mechanism, "SCRAM-SHA-256") ||
+		} else if (strings_match(mechanism, "SCRAM-SHA-1") ||
+			   strings_match(mechanism, "SCRAM-SHA-256") ||
 			   strings_match(mechanism, "SCRAM-SHA-512")) {
 			if (sasl_scram_sha_send_client_first_msg() == -1)
 				abort_authentication();

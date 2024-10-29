@@ -297,7 +297,9 @@ get_evp(void)
 {
 	CSTRING mech = Config("sasl_mechanism");
 
-	if (strings_match(mech, "SCRAM-SHA-256"))
+	if (strings_match(mech, "SCRAM-SHA-1"))
+		return EVP_sha1();
+	else if (strings_match(mech, "SCRAM-SHA-256"))
 		return EVP_sha256();
 	else if (strings_match(mech, "SCRAM-SHA-512"))
 		return EVP_sha512();
@@ -422,15 +424,20 @@ static UCHARPTR
 get_stored_key(int &digest_length, bool zero)
 {
 	CSTRING			mech = Config("sasl_mechanism");
+	static unsigned char	key[SHA_DIGEST_LENGTH];
 	static unsigned char	key256[SHA256_DIGEST_LENGTH];
 	static unsigned char	key512[SHA512_DIGEST_LENGTH];
 
 	if (zero) {
+		BZERO(key, sizeof key);
 		BZERO(key256, sizeof key256);
 		BZERO(key512, sizeof key512);
 	}
 
-	if (strings_match(mech, "SCRAM-SHA-256")) {
+	if (strings_match(mech, "SCRAM-SHA-1")) {
+		digest_length = SHA_DIGEST_LENGTH;
+		return addrof(key[0]);
+	} if (strings_match(mech, "SCRAM-SHA-256")) {
 		digest_length = SHA256_DIGEST_LENGTH;
 		return addrof(key256[0]);
 	} else if (strings_match(mech, "SCRAM-SHA-512")) {
@@ -447,7 +454,9 @@ hash_client_key(UCHARPTR md, unsigned int md_len, UCHARPTR stored_key)
 {
 	CSTRING mech = Config("sasl_mechanism");
 
-	if (strings_match(mech, "SCRAM-SHA-256"))
+	if (strings_match(mech, "SCRAM-SHA-1"))
+		return SHA1(md, md_len, stored_key);
+	else if (strings_match(mech, "SCRAM-SHA-256"))
 		return SHA256(md, md_len, stored_key);
 	else if (strings_match(mech, "SCRAM-SHA-512"))
 		return SHA512(md, md_len, stored_key);

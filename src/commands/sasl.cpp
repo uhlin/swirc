@@ -84,6 +84,7 @@ static stringarray_t sasl_cmds = {
 	"mechanism ecdsa-nist256p-challenge",
 	"mechanism external",
 	"mechanism plain",
+	"mechanism scram-sha-1",
 	"mechanism scram-sha-256",
 	"mechanism scram-sha-512",
 	"username ",
@@ -492,7 +493,8 @@ set_x509(const char *filename)
 
    keygen [--force]
    pubkey
-   mechanism [ecdsa-nist256p-challenge | external | plain | scram-sha-256]
+   mechanism [ecdsa-nist256p-challenge | external | plain |
+              scram-sha-1,256,512]
    username <name>
    password <pass>
    passwd_s <sasl pass> <encryption pass>
