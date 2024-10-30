@@ -437,7 +437,7 @@ get_stored_key(int &digest_length, bool zero)
 	if (strings_match(mech, "SCRAM-SHA-1")) {
 		digest_length = SHA_DIGEST_LENGTH;
 		return addrof(key[0]);
-	} if (strings_match(mech, "SCRAM-SHA-256")) {
+	} else if (strings_match(mech, "SCRAM-SHA-256")) {
 		digest_length = SHA256_DIGEST_LENGTH;
 		return addrof(key256[0]);
 	} else if (strings_match(mech, "SCRAM-SHA-512")) {
