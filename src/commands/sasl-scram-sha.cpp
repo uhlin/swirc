@@ -536,12 +536,19 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 	    server_signature.md_len);
 	signature_expected_len = server_signature.md_len;
 
+	if (client_key.md_len != client_signature.md_len)
+		err_log(0, "%s: lengths differ", __func__);
+	const unsigned int len = MIN(client_key.md_len,
+	    client_signature.md_len);
+	if (len >= ARRAY_SIZE(proof)) {
+		err_log(EOVERFLOW, "%s", __func__);
+		return -1;
+	}
+
 	/*
 	 * ClientProof: ClientKey XOR ClientSignature
 	 */
-	for (unsigned int i = 0;
-	    i < MIN(client_key.md_len, client_signature.md_len);
-	    i++)
+	for (unsigned int i = 0; i < len; i++)
 		proof[i] = client_key.md[i] ^ client_signature.md[i];
 
 	return sasl_scram_sha_send_client_final_msg(get_encoded_msg(proof));
