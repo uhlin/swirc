@@ -469,7 +469,7 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 	UCHARPTR	 auth_msg;
 	UCHARPTR	 pass = NULL;
 	UCHARPTR	 salt = NULL;
-	char		 proof[EVP_MAX_MD_SIZE] = { '\0' };
+	char		 proof[EVP_MAX_MD_SIZE + 1] = { '\0' };
 	int		 digest_len = 0;
 	int		 iter = PKCS5_DEFAULT_ITER;
 	int		 passwdlen = 0;
