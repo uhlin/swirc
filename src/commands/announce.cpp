@@ -36,6 +36,7 @@
 #include "../assertAPI.h"
 #include "../dataClassify.h"
 #include "../io-loop.h"
+#include "../irc.h"
 #include "../libUtils.h"
 #include "../main.h"
 #include "../printtext.h"
