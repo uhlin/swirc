@@ -50,9 +50,14 @@ static usage_t admin_usage = {
 };
 
 static usage_t announce_usage = {
-  "usage: /announce ...",
+  N_("usage:"),
+  "    /announce [doit|list|new|rm] [args]",
+  "    /announce doit <#>",
+  "    /announce list",
+  "    /announce new <[yes|no]> <chan1[,chan2][...]> <msg>",
+  "    /announce rm <[#|all]>",
   "",
-  "No help yet.",
+  N_("Send announcements on IRC."),
   "",
 };
 
