@@ -475,6 +475,7 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 	int		 passwdlen = 0;
 	int		 saltlen = 0;
 	size_t		 auth_msg_len;
+	static UCHARPTR	 stored_key; // XXX
 
 	if (get_sfm_components(msg, &salt, &saltlen, &iter) == -1 ||
 	    (pass = get_salted_password(salt, saltlen, iter, &passwdlen)) ==
@@ -519,8 +520,10 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
  *
  */
 
-	struct digest_context client_signature(get_stored_key(digest_len, false),
-	    digest_len, auth_msg, auth_msg_len);
+	stored_key = get_stored_key(digest_len, false);
+
+	struct digest_context client_signature(stored_key, digest_len, auth_msg,
+	    auth_msg_len);
 	struct digest_context server_signature(server_key.md, server_key.md_len,
 	    auth_msg, auth_msg_len);
 
