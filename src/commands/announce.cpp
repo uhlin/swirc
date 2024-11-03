@@ -101,6 +101,9 @@ announce::print(void)
 		chanlist.append(str).append(" ");
 	}
 
+	if (!chanlist.empty())
+		chanlist.pop_back();
+
 	printtext_print("sp1", "channels:      %s", (this->chans.empty() ?
 	    "" : chanlist.c_str()));
 	printtext_print("sp1", "message:       %s", this->msg.c_str());
