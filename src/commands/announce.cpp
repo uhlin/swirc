@@ -125,7 +125,10 @@ announce::send(void)
 
 		if (!is_irc_channel(winlabel.c_str()))
 			winlabel.insert(0, "#");
-		transmit_user_input(winlabel.c_str(), this->msg.c_str());
+		if (window_by_label(winlabel.c_str()) != nullptr) {
+			transmit_user_input(winlabel.c_str(),
+			    this->msg.c_str());
+		}
 	}
 
 	std::string arg("Broadcast");
