@@ -77,10 +77,13 @@ announce::announce(bool p_znc_broadcast, CSTRING p_chans, CSTRING p_msg)
 
 	if ((token = strtok_r(str, sep, &last)) == nullptr)
 		sw_assert_not_reached();
-	this->chans.push_back(token);
-
-	while ((token = strtok_r(nullptr, sep, &last)) != nullptr)
+	if (strpbrk(token, g_forbidden_chan_name_chars) == nullptr)
 		this->chans.push_back(token);
+
+	while ((token = strtok_r(nullptr, sep, &last)) != nullptr) {
+		if (strpbrk(token, g_forbidden_chan_name_chars) == nullptr)
+			this->chans.push_back(token);
+	}
 
 	free(str);
 	this->msg.assign(p_msg);
