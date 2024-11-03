@@ -101,7 +101,8 @@ announce::print(void)
 		chanlist.append(str).append(" ");
 	}
 
-	printtext_print("sp1", "channels:      %s", chanlist.c_str());
+	printtext_print("sp1", "channels:      %s", (this->chans.empty() ?
+	    "" : chanlist.c_str()));
 	printtext_print("sp1", "message:       %s", this->msg.c_str());
 	printtext_print("sp1", "znc broadcast: %s", (this->znc_broadcast ?
 	    "yes" : "no"));
@@ -111,6 +112,11 @@ announce::print(void)
 void
 announce::send(void)
 {
+	if (this->chans.empty()) {
+		printtext_print("err", "the announcement has no channels");
+		return;
+	}
+
 	for (const std::string &str : this->chans) {
 		std::string winlabel(str);
 
