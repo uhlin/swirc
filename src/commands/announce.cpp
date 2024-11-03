@@ -122,6 +122,9 @@ announce::send(void)
 		cmd_znc(arg.c_str());
 }
 
+static const uint32_t		MAXCHANNELS = 300;
+static const uint32_t		MAXMESSAGE = 550;
+
 static const uint32_t		MAXANNOUNCEMENTS = 30;
 static std::vector<announce>	announcements;
 
@@ -228,6 +231,12 @@ subcmd_new(CSTRING arg1, CSTRING arg2, CSTRING arg3)
 		return;
 	} else if (!(announcements.size() < MAXANNOUNCEMENTS)) {
 		printtext_print("err", "%s: too many announcements", __func__);
+		return;
+	} else if (strlen(arg2) > MAXCHANNELS) {
+		printtext_print("err", "%s: too many channels", __func__);
+		return;
+	} else if (strlen(arg3) > MAXMESSAGE) {
+		printtext_print("err", "%s: too long message", __func__);
 		return;
 	}
 
