@@ -302,7 +302,7 @@ cmd_announce(CSTRING data)
 	}
 
 	dcopy = sw_strdup(data);
-	(void) strFeed(dcopy, 2);
+	(void) strFeed(dcopy, 3);
 
 	if ((subcmd = strtok_r(dcopy, sep, &last)) == nullptr) {
 		printf_and_free(dcopy, "%s: insufficient args", cmd);
