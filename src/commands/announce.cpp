@@ -322,7 +322,7 @@ cmd_announce(CSTRING data)
 	static chararray_t	sep = "\n";
 
 	if (strings_match(data, "")) {
-		printtext_print("err", "insufficient args");
+		subcmd_list();
 		return;
 	}
 
