@@ -29,6 +29,18 @@
 
 #include "common.h"
 
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+#include "../assertAPI.h"
+#include "../dataClassify.h"
+#include "../io-loop.h"
+#include "../libUtils.h"
+#include "../main.h"
+#include "../printtext.h"
+#include "../strHand.h"
+
 #include "announce.h"
 
 void
