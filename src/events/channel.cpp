@@ -882,9 +882,9 @@ handle_quit(PIRC_WINDOW window, PPRINTTEXT_CONTEXT ptext_ctx,
 				    __func__);
 			}
 		} else {
-			const std::string str(ctx->nick);
-
 			if (!split->join_begun()) {
+				const std::string str(ctx->nick);
+
 #if defined(__cplusplus) && __cplusplus >= 201103L
 				split->nicks.emplace_back(str);
 #else
