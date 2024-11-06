@@ -101,7 +101,7 @@ static struct cmds_tag {
 	bool		 irc_only;
 } cmds[] = {
 	{ "admin",       cmd_admin,       true,  admin_usage,       ARRAY_SIZE(admin_usage),       true  },
-	{ "announce",    cmd_announce,    true,  announce_usage,    ARRAY_SIZE(announce_usage),    true  },
+	{ "announce",    cmd_announce,    false, announce_usage,    ARRAY_SIZE(announce_usage),    true  },
 	{ "away",        cmd_away,        true,  away_usage,        ARRAY_SIZE(away_usage),        true  },
 	{ "ban",         cmd_ban,         true,  ban_usage,         ARRAY_SIZE(ban_usage),         true  },
 	{ "banlist",     cmd_banlist,     true,  banlist_usage,     ARRAY_SIZE(banlist_usage),     true  },
@@ -115,7 +115,7 @@ static struct cmds_tag {
 	{ "connect",     cmd_connect,     false, connect_usage,     ARRAY_SIZE(connect_usage),     false },
 	{ "cs",          cmd_chanserv,    true,  chanserv_usage,    ARRAY_SIZE(chanserv_usage),    true  },
 	{ "cycle",       cmd_cycle,       true,  cycle_usage,       ARRAY_SIZE(cycle_usage),       true  },
-	{ "dcc",         cmd_dcc,         true,  dcc_usage,         ARRAY_SIZE(dcc_usage),         true  },
+	{ "dcc",         cmd_dcc,         false, dcc_usage,         ARRAY_SIZE(dcc_usage),         true  },
 	{ "deop",        cmd_deop,        true,  deop_usage,        ARRAY_SIZE(deop_usage),        true  },
 	{ "devoice",     cmd_devoice,     true,  devoice_usage,     ARRAY_SIZE(devoice_usage),     true  },
 	{ "die",         cmd_die,         true,  die_usage,         ARRAY_SIZE(die_usage),         true  },
