@@ -139,10 +139,8 @@ join_perform_some_tasks(CSTRING channel, CSTRING nick, CSTRING account,
 		throw std::runtime_error("unable to add user to channel list");
 	} else if (account != NULL && rl_name != NULL &&
 	    (n = event_names_htbl_lookup(nick, channel)) != NULL) {
-		if (n->account)
-			free(n->account);
-		if (n->rl_name)
-			free(n->rl_name);
+		free(n->account);
+		free(n->rl_name);
 		n->account = sw_strdup(account);
 		n->rl_name = sw_strdup(rl_name);
 	}
@@ -622,10 +620,8 @@ RemoveAndInsertNick(const char *old_nick, const char *new_nick,
 		err_log(0, "%s: event_names_htbl_insert", __func__);
 		return ERR;
 	} else if ((p = event_names_htbl_lookup(new_nick, label)) != NULL) {
-		if (p->account)
-			free(p->account);
-		if (p->rl_name)
-			free(p->rl_name);
+		free(p->account);
+		free(p->rl_name);
 		p->account = sw_strdup(array[0].c_str());
 		p->rl_name = sw_strdup(array[1].c_str());
 	} else {

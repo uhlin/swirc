@@ -287,8 +287,7 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 		err_log(0, "%s: %s", __func__, e.what());
 	}
 
-	if (decoded_msg)
-		delete[] decoded_msg;
+	delete[] decoded_msg;
 	return (ok ? 0 : -1);
 }
 
