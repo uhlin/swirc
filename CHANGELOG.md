@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
   - Added default constructors
   - Reduced duplication
   - Reduced scope of variables
+  - Removed redundant checks
   - Replaced macros for constants
   - Usage of initializer lists
   - `...`
