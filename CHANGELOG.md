@@ -2,26 +2,26 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added command `/announce`.
-- Added command-line option `-X` (Disable all IRCv3 extensions)
-- Added event `CHGHOST` (IRCv3.)
-- Added option `account_tag` (bool).
-- Added option `chghost` (bool). Send a notification when clients
+- **Added** command `/announce`.
+- **Added** command-line option `-X` (Disable all IRCv3 extensions)
+- **Added** event `CHGHOST` (IRCv3.)
+- **Added** option `account_tag` (bool).
+- **Added** option `chghost` (bool). Send a notification when clients
   change their username or host. Defaults to **yes**.
-- Added option `extended_join` (bool).
-- Added the `NEW` and `DEL` CAP subcommands. And implicitly enabled
+- **Added** option `extended_join` (bool).
+- **Added** the `NEW` and `DEL` CAP subcommands. And implicitly enabled
   the `cap-notify` extension.
-- Added the following SASL auth mechanisms:
+- **Added** the following SASL auth mechanisms:
   - `SCRAM-SHA-1`
   - `SCRAM-SHA-512`
-- Changed the program to:
+- **Changed** the program to:
   - Init/deinit Windows sockets once.
   - Not terminate the DCC server on IRC disconnect.
     It is Client-to-Client which means file transfers can
     continue. IRC is only used for the negotiation.
   - Output a reason if `SSL_connect()` fails.
   - Output a reason if `tls_server::get_accept_bio()` fails.
-- Did code improvements:
+- **Did** code improvements:
   - Added default constructors
   - Reduced duplication
   - Reduced scope of variables
@@ -29,12 +29,12 @@ All notable changes to this project will be documented in this file.
   - Replaced macros for constants
   - Usage of initializer lists
   - `...`
-- Enabled `account_notify` by default.
-- Fixed cases of uncontrolled allocation sizes.
-- Fixed potential signed integer overflows.
+- **Enabled** `account_notify` by default.
+- **Fixed** cases of uncontrolled allocation sizes.
+- **Fixed** potential signed integer overflows.
 
 ### Windows ###
-- Upgraded to [LibreSSL](https://www.libressl.org/) 4.0.0
+- **Upgraded** to [LibreSSL](https://www.libressl.org/) 4.0.0
 
 ## [3.5.0] - 2024-09-30 ##
 - **Added** command `/wholeft` (alias `/wl`.)
