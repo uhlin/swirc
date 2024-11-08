@@ -31,6 +31,7 @@ All notable changes to this project will be documented in this file.
   - `...`
 - Enabled `account_notify` by default.
 - Fixed cases of uncontrolled allocation sizes.
+- Fixed potential signed integer overflows.
 
 ## [3.5.0] - 2024-09-30 ##
 - **Added** command `/wholeft` (alias `/wl`.)
