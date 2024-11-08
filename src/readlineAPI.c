@@ -380,7 +380,7 @@ int
 readline_wcswidth(const wchar_t *str, const int fwlen)
 {
 	const wchar_t	*ptr = str;
-	int		 width = 0;
+	unsigned int	 width = 0;
 
 	while (*ptr) {
 		width += readline_wcwidth(*ptr, fwlen);

@@ -432,7 +432,7 @@ int
 xwcswidth(const wchar_t *str, const int fwlen)
 {
 	const wchar_t	*ptr = str;
-	int		 width = 0;
+	unsigned int	 width = 0;
 
 	while (*ptr) {
 		width += xwcwidth(*ptr, fwlen);
