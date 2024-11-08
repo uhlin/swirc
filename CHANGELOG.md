@@ -33,6 +33,9 @@ All notable changes to this project will be documented in this file.
 - Fixed cases of uncontrolled allocation sizes.
 - Fixed potential signed integer overflows.
 
+### Windows ###
+- Upgraded to [LibreSSL](https://www.libressl.org/) 4.0.0
+
 ## [3.5.0] - 2024-09-30 ##
 - **Added** command `/wholeft` (alias `/wl`.)
 - **Added** option `notifications` (bool). Turns notifications on/off.
