@@ -128,7 +128,7 @@ cmd_colormap(const char *data)
 	OUT_PB("\0031,8 08 \0031,9 09 \0030,10 10 \0031,11 11 "
 	       "\0030,12 12 \0031,13 13 \0031,14 14 \0031,15 15 ");
 	OUT_PB("");
-#if LINUX
+#if BSD || LINUX
 	pb_linux_colors(out);
 #else
 	pb_other_colors(out);
