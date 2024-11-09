@@ -40,9 +40,9 @@
 #include "i18n.h"
 
 #if defined(__cplusplus) && __cplusplus >= 201103L
-#define OUT_PB(str) (void)out.emplace_back(str)
+#define OUT_PB(str) out.emplace_back(str)
 #else
-#define OUT_PB(str) (void)out.push_back(str)
+#define OUT_PB(str) out.push_back(str)
 #endif
 
 void	pb_linux_colors(std::vector<std::string> &);
