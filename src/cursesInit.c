@@ -81,7 +81,7 @@ get_num_colors(void)
 static int
 init_fg_on_bg_case1(short int *pair_n)
 {
-#if BSD || LINUX
+#if BSD || LINUX || OS_X
 	FOREACH_FOREGROUND_EXTENDED() {
 		FOREACH_BACKGROUND_ANSI() {
 			if (init_pair(++ (*pair_n), *fg, *bg) == ERR)
@@ -97,7 +97,7 @@ init_fg_on_bg_case1(short int *pair_n)
 static int
 init_fg_on_bg_case2(short int *pair_n)
 {
-#if BSD || LINUX
+#if BSD || LINUX || OS_X
 	FOREACH_FOREGROUND_ANSI() {
 		FOREACH_BACKGROUND_EXTENDED() {
 			if (init_pair(++ (*pair_n), *fg, *bg) == ERR)
@@ -113,7 +113,7 @@ init_fg_on_bg_case2(short int *pair_n)
 static int
 init_extended_colors(short int *pair_n)
 {
-#if BSD || LINUX
+#if BSD || LINUX || OS_X
 	FOREACH_FOREGROUND_EXTENDED() {
 		FOREACH_BACKGROUND_EXTENDED() {
 			if (*fg != *bg && init_pair(++ (*pair_n), *fg, *bg) ==
