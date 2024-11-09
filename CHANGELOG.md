@@ -30,6 +30,7 @@ All notable changes to this project will be documented in this file.
   - Usage of initializer lists
   - `...`
 - **Enabled** `account_notify` by default.
+- **Enabled** more colors for BSD and macOS.
 - **Fixed** cases of uncontrolled allocation sizes.
 - **Fixed** potential signed integer overflows.
 
