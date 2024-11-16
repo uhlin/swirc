@@ -36,7 +36,7 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2024-10-02</em></small></p>
+<p><small><em>Updated: 2024-11-16</em></small></p>
 <h3>Configuration options in swirc.conf</h3>
 <p>
 <span class="note">NOTE</span>
@@ -57,6 +57,21 @@ don't!
 		<td class="desc">
 Allows a client to be notified when another client’s accountname
 changes
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =========== -->
+<!-- ACCOUNT TAG -->
+<!-- =========== -->
+	<tr>
+		<td>
+			<strong>account_tag</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Turns the IRCv3 account tag extension on/off.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -157,6 +172,23 @@ However, with the help of this setting, beeps can be turned on/off.
 	<tr>
 		<td class="desc">
 		ChanServ hostname
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======= -->
+<!-- CHGHOST -->
+<!-- ======= -->
+	<tr>
+		<td>
+			<strong>chghost</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Allows servers to send a notification when clients change their
+username or host (IRCv3 feature).
+Defaults to yes.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -337,6 +369,21 @@ preventing a command to be accidentally transmitted as a chat message.
 		<a href="https://man.openbsd.org/unveil.2">unveil(2)</a>.
 		However, that is done once at startup.
 		Changing it while Swirc is running will not work.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- EXTENDED JOIN -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>extended_join</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Turns the extended-join IRCv3 feature on/off.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -772,7 +819,9 @@ to get the connection working again before giving up?
 			<li>ECDSA-NIST256P-CHALLENGE</li>
 			<li>EXTERNAL</li>
 			<li>PLAIN</li>
+			<li>SCRAM-SHA-1</li>
 			<li>SCRAM-SHA-256</li>
+			<li>SCRAM-SHA-512</li>
 			</ul>
 		Be sure to write them in all uppercase!
 		</td>
