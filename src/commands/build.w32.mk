@@ -10,6 +10,7 @@ OBJS = $(COMMANDS_DIR)admin.obj\
 	$(COMMANDS_DIR)dcc.obj\
 	$(COMMANDS_DIR)echo.obj\
 	$(COMMANDS_DIR)fetchdic.obj\
+	$(COMMANDS_DIR)ftp.obj\
 	$(COMMANDS_DIR)ignore.obj\
 	$(COMMANDS_DIR)info.obj\
 	$(COMMANDS_DIR)invite.obj\

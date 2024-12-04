@@ -264,6 +264,13 @@ static usage_t fetchdic_usage = {
   "",
 };
 
+static usage_t ftp_usage = {
+  "usage: /ftp ...",
+  "",
+  "No help yet.",
+  "",
+};
+
 static usage_t gline_usage = {
   N_("usage: /gline <nick!user@host> [<duration> :<reason>]"),
   "",

@@ -60,6 +60,7 @@
 #include "commands/dcc.h"
 #include "commands/echo.h"
 #include "commands/fetchdic.h"
+#include "commands/ftp.h"
 #include "commands/ignore.h"
 #include "commands/info.h"
 #include "commands/invite.h"
@@ -123,6 +124,7 @@ static struct cmds_tag {
 	{ "echo",        cmd_echo,        false, echo_usage,        ARRAY_SIZE(echo_usage),        false },
 	{ "exlist",      cmd_exlist,      true,  exlist_usage,      ARRAY_SIZE(exlist_usage),      true  },
 	{ "fetchdic",    cmd_fetchdic,    false, fetchdic_usage,    ARRAY_SIZE(fetchdic_usage),    false },
+	{ "ftp",         cmd_ftp,         false, ftp_usage,         ARRAY_SIZE(ftp_usage),         false },
 	{ "gline",       cmd_gline,       true,  gline_usage,       ARRAY_SIZE(gline_usage),       true  },
 	{ "group",       cmd_group,       true,  group_usage,       ARRAY_SIZE(group_usage),       false },
 	{ "help",        cmd_help,        false, help_usage,        ARRAY_SIZE(help_usage),        false },

@@ -1,6 +1,9 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Added command `/ftp`
+
 ## [3.5.1] - 2024-11-09 ##
 - **Added** command `/announce`.
 - **Added** command-line option `-X` (Disable all IRCv3 extensions)

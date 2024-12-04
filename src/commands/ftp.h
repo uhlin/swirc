@@ -1,0 +1,8 @@
+#ifndef SRC_COMMANDS_FTP_H_
+#define SRC_COMMANDS_FTP_H_
+
+__SWIRC_BEGIN_DECLS
+void	cmd_ftp(CSTRING);
+__SWIRC_END_DECLS
+
+#endif
