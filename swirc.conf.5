@@ -3,7 +3,7 @@
 .\" SPDX-FileCopyrightText: Copyright 2018-2024 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd October 29, 2024
+.Dd December 6, 2024
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -148,6 +148,11 @@ Connection timeout in seconds
 .It Sy ctcp_reply Pq Em bool
 Reply to CTCP requests?
 (For example TIME and VERSION.)
+.\" ----------------------------------------
+.\" CTCP USERINFO
+.\" ----------------------------------------
+.It Sy ctcp_userinfo Pq Em string
+A string to return on a CTCP userinfo request.
 .\" ----------------------------------------
 .\" DCC
 .\" ----------------------------------------

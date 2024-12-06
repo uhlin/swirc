@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added command `/ctcp`
 - Added command `/ftp`
+- Added the following options:
+  - `ctcp_userinfo` (string)
 
 ## [3.5.1] - 2024-11-09 ##
 - **Added** command `/announce`.
