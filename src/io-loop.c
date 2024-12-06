@@ -57,6 +57,7 @@
 #include "commands/cleartoasts.h"
 #include "commands/colormap.h"
 #include "commands/connect.h"
+#include "commands/ctcp.h"
 #include "commands/dcc.h"
 #include "commands/echo.h"
 #include "commands/fetchdic.h"
@@ -115,6 +116,7 @@ static struct cmds_tag {
 	{ "colormap",    cmd_colormap,    false, colormap_usage,    ARRAY_SIZE(colormap_usage),    false },
 	{ "connect",     cmd_connect,     false, connect_usage,     ARRAY_SIZE(connect_usage),     false },
 	{ "cs",          cmd_chanserv,    true,  chanserv_usage,    ARRAY_SIZE(chanserv_usage),    true  },
+	{ "ctcp",        cmd_ctcp,        true,  ctcp_usage,        ARRAY_SIZE(ctcp_usage),        true  },
 	{ "cycle",       cmd_cycle,       true,  cycle_usage,       ARRAY_SIZE(cycle_usage),       true  },
 	{ "dcc",         cmd_dcc,         false, dcc_usage,         ARRAY_SIZE(dcc_usage),         true  },
 	{ "deop",        cmd_deop,        true,  deop_usage,        ARRAY_SIZE(deop_usage),        true  },

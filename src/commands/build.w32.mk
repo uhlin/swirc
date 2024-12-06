@@ -6,6 +6,7 @@ OBJS = $(COMMANDS_DIR)admin.obj\
 	$(COMMANDS_DIR)cleartoasts.obj\
 	$(COMMANDS_DIR)colormap.obj\
 	$(COMMANDS_DIR)connect.obj\
+	$(COMMANDS_DIR)ctcp.obj\
 	$(COMMANDS_DIR)dcc-w32.obj\
 	$(COMMANDS_DIR)dcc.obj\
 	$(COMMANDS_DIR)echo.obj\

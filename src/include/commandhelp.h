@@ -114,6 +114,13 @@ static usage_t chanserv_usage = {
   "",
 };
 
+static usage_t ctcp_usage = {
+  "usage: /ctcp ...",
+  "",
+  "No help yet.",
+  "",
+};
+
 static usage_t cap_usage = {
   N_("usage: /cap [ls | list]"),
   "",
