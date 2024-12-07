@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
   - `ftp_user` (string)
   - `ftp_pass` (string)
   - `ftp_upload_dir` (string)
+- Added the key combination `CTRL+w` (List all windows)
 - Added the possibility to switch between windows by just entering the
   reference number, i.e. `/1`, `/2`, `/3`...
 
