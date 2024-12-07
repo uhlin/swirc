@@ -723,6 +723,9 @@ process(volatile struct readline_session_context *ctx)
 		case CTRL_L:
 			log_toggle_on_off();
 			break;
+		case CTRL_W:
+			windows_list_all();
+			break;
 		case MY_KEY_DLE:
 			window_select_prev();
 			session_destroy(ctx);
