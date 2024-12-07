@@ -759,8 +759,12 @@ enter_io_loop(void)
 		} else if (*line == cmd_char && sw_isdigit(line[1])) {
 			int refnum = 0;
 
-			if (sscanf(&line[1], "%d", &refnum) != 1)
+			if (sscanf(&line[1], "%d", &refnum) != 1) {
+				free_and_null(&line);
 				continue;
+			}
+
+			free_and_null(&line);
 			(void) change_window_by_refnum(refnum);
 			continue;
 		} else if (config_bool("cmd_type_prot", true) &&
