@@ -90,6 +90,12 @@ static struct tagConfDefValues {
 	{ "dcc_port",                  TYPE_INTEGER, 2, "8080" },
 	{ "dcc_upload_dir",            TYPE_STRING,  2, "" },
 
+	{ "ftp_host",                  TYPE_STRING,  2, "" },
+	{ "ftp_port",                  TYPE_INTEGER, 2, "21" },
+	{ "ftp_user",                  TYPE_STRING,  2, "anonymous" },
+	{ "ftp_pass",                  TYPE_STRING,  2, "" },
+	{ "ftp_upload_dir",            TYPE_STRING,  2, "" },
+
 	{ "identd",                    TYPE_BOOLEAN, 3, "no" },
 	{ "identd_fakenames",          TYPE_BOOLEAN, 1, "no" },
 	{ "identd_port",               TYPE_INTEGER, 2, "113" },
