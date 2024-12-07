@@ -76,6 +76,9 @@ char	*g_log_dir = NULL;
 char	*g_dcc_download_dir = NULL;
 char	*g_dcc_upload_dir = NULL;
 
+char	*g_ftp_download_dir = NULL;
+char	*g_ftp_upload_dir = NULL;
+
 const char	g_config_filesuffix[6] = ".conf";
 const char	g_theme_filesuffix[6] = ".thm";
 
@@ -115,6 +118,9 @@ init_globals(const char *hp)
 	g_config_file = strdup_printf("%s\\swirc\\swirc%s", hp,
 	    g_config_filesuffix);
 #endif
+
+	g_ftp_download_dir = sw_strdup(g_dcc_download_dir);
+	g_ftp_upload_dir = sw_strdup(g_dcc_upload_dir);
 }
 
 static void
@@ -376,6 +382,9 @@ nestHome_deinit(void)
 
 	free_and_null(&g_dcc_download_dir);
 	free_and_null(&g_dcc_upload_dir);
+
+	free_and_null(&g_ftp_download_dir);
+	free_and_null(&g_ftp_upload_dir);
 
 	free_and_null(&g_config_file);
 	free_and_null(&g_theme_file);
