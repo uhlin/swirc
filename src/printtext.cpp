@@ -1376,6 +1376,8 @@ printtext_print(CSTRING what, CSTRING fmt, ...)
 		ctx->spec_type = TYPE_SPEC1_SUCCESS;
 	else if (strings_match(what, "warn"))
 		ctx->spec_type = TYPE_SPEC1_WARN;
+	else if (strings_match(what, "none"))
+		ctx->spec_type = TYPE_SPEC_NONE;
 
 	va_start(ap, fmt);
 	vprinttext(ctx, fmt, ap);
