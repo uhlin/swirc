@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 - Added command `/ftp`
 - Added the following options:
   - `ctcp_userinfo` (string)
+  - `ftp_host` (string)
+  - `ftp_port` (integer, defaults to 21)
+  - `ftp_user` (string)
+  - `ftp_pass` (string)
+  - `ftp_upload_dir` (string)
 - Added the possibility to switch between windows by just entering the
   reference number, i.e. `/1`, `/2`, `/3`...
 
