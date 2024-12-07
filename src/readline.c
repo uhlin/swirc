@@ -629,6 +629,7 @@ output_help(void)
 	printtext(&ctx, "%s", _("CTRL+l     Toggle logging on/off"));
 	printtext(&ctx, "%s", _("CTRL+n     Next window"));
 	printtext(&ctx, "%s", _("CTRL+p     Previous window"));
+	printtext(&ctx, "%s", _("CTRL+w     List all windows"));
 	printtext(&ctx, "%s", _("PG UP      Scroll up"));
 	printtext(&ctx, "%s", _("PG DOWN    Scroll down"));
 	printtext(&ctx, "%s", _("Up arrow   History previous"));
