@@ -34,7 +34,8 @@ enum { /* custom, additional keys */
 	MY_KEY_RESIZE = 0x1B, /* ^[, octal: 033 */
 	CTRL_A = 0x01, /* octal 001 */
 	CTRL_E = 0x05, /* octal 005 */
-	CTRL_L = 0x0C  /* octal 014 */
+	CTRL_L = 0x0C, /* octal 014 */
+	CTRL_W = 0x17  /* octal 027 */
 };
 
 #define WINDOWS_KEY_ENTER 459
