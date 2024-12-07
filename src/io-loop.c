@@ -754,8 +754,15 @@ enter_io_loop(void)
 				history_prev();
 
 			continue;
-		} else if (*line == cmd_char) {
+		} else if (*line == cmd_char && !sw_isdigit(line[1])) {
 			handle_cmds(&line[1]);
+		} else if (*line == cmd_char && sw_isdigit(line[1])) {
+			int refnum = 0;
+
+			if (sscanf(&line[1], "%d", &refnum) != 1)
+				continue;
+			(void) change_window_by_refnum(refnum);
+			continue;
 		} else if (config_bool("cmd_type_prot", true) &&
 		    atomic_load_bool(&g_on_air) &&
 		    !strings_match(ACTWINLABEL, g_status_window_label) &&
