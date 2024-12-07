@@ -84,6 +84,9 @@ static struct tagConfDefValues {
 	{ "username",                  TYPE_STRING,  2, "" },
 	{ "real_name",                 TYPE_STRING,  2, "" },
 
+	{ "ctcp_reply",                TYPE_BOOLEAN, 2, "yes" },
+	{ "ctcp_userinfo",             TYPE_STRING,  2, "No info set" },
+
 	{ "dcc",                       TYPE_BOOLEAN, 3, "yes" },
 	{ "dcc_cipher_suite",          TYPE_STRING,  1, "compat" },
 	{ "dcc_own_ip",                TYPE_STRING,  2, "" },
@@ -137,9 +140,6 @@ static struct tagConfDefValues {
 	{ "reconnect_delay",           TYPE_INTEGER, 2, STRINGIFY(RECONNECT_DELAY_DEFAULT) },
 	{ "reconnect_delay_max",       TYPE_INTEGER, 1, STRINGIFY(RECONNECT_DELAY_MAX_DEFAULT) },
 	{ "reconnect_retries",         TYPE_INTEGER, 1, STRINGIFY(RECONNECT_RETRIES_DEFAULT) },
-
-	{ "ctcp_reply",                TYPE_BOOLEAN, 2, "yes" },
-	{ "ctcp_userinfo",             TYPE_STRING,  2, "No info set" },
 
 	{ "auto_op_yourself",          TYPE_BOOLEAN, 2, "yes" },
 	{ "awaymsgs_in_privconv",      TYPE_BOOLEAN, 2, "yes" },
