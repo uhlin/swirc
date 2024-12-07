@@ -945,6 +945,22 @@ window_select_prev(void)
 		(void) change_window_by_refnum(refnum_prev);
 }
 
+static void
+print_win(PIRC_WINDOW win)
+{
+	UNUSED_PARAM(win);
+}
+
+void
+windows_list_all(void)
+{
+	FOREACH_HASH_TABLE_ENTRY() {
+		FOREACH_WINDOW_IN_ENTRY() {
+			print_win(window);
+		}
+	}
+}
+
 /**
  * Recreate all open windows by calling window_recreate() on each
  */

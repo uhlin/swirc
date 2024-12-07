@@ -102,6 +102,7 @@ void		window_scroll_down(PIRC_WINDOW, const int);
 void		window_scroll_up(PIRC_WINDOW, const int);
 void		window_select_next(void);
 void		window_select_prev(void);
+void		windows_list_all(void);
 void		windows_recreate_all(int rows, int cols);
 __SWIRC_END_DECLS
 
