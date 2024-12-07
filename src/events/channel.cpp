@@ -490,6 +490,9 @@ maintain_channel_stats(const char *channel, const char *input)
 		case 'v':
 			chg_status_for_voice(pm_state, nicks[ar_i++], channel);
 			break;
+		default:
+			/* No statements here ATM. */
+			break;
 		}
 	}
 
