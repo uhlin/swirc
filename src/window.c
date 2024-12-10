@@ -945,10 +945,26 @@ window_select_prev(void)
 		(void) change_window_by_refnum(refnum_prev);
 }
 
+static wchar_t *
+get_label(CSTRING label)
+{
+	STRING		str = sw_strdup(label);
+	static wchar_t	wcs[20] = { L'\0' };
+
+	xmbstowcs(addrof(wcs[0]), squeeze_text_deco(str), ARRAY_SIZE(wcs) - 1);
+	wcs[ARRAY_SIZE(wcs) - 1] = L'\0';
+	free(str);
+
+	return addrof(wcs[0]);
+}
+
 static void
 print_win(PIRC_WINDOW win)
 {
-	UNUSED_PARAM(win);
+	CSTRING logging = (win->logging ? "Yes" : "No");
+
+	printtext_print("none", "%6d %-20ls %s",
+	    win->refnum, get_label(win->label), logging);
 }
 
 void
