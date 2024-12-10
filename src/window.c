@@ -963,7 +963,7 @@ print_win(PIRC_WINDOW win)
 {
 	CSTRING logging = (win->logging ? "Yes" : "No");
 
-	printtext_print("none", "%6d %-20ls %s",
+	printtext_print("none", "%6d %-20ls %7s",
 	    win->refnum, get_label(win->label), logging);
 }
 
