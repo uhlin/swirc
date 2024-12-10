@@ -1090,7 +1090,12 @@ subcmd_send(const char *nick, const char *file)
 }
 
 /*
- * usage: /dcc [clear|get|list|send] [args]
+ * usage:
+ *     /dcc [clear|get|list|send] [args]
+ *     /dcc clear [get|send|completed|all]
+ *     /dcc get <nick> <file>
+ *     /dcc list [get|send|all]
+ *     /dcc send <nick> <file>
  */
 void
 cmd_dcc(const char *data)
