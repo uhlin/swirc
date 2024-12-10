@@ -954,11 +954,13 @@ print_win(PIRC_WINDOW win)
 void
 windows_list_all(void)
 {
-	FOREACH_HASH_TABLE_ENTRY() {
-		FOREACH_WINDOW_IN_ENTRY() {
-			print_win(window);
-		}
-	}
+	PIRC_WINDOW	window;
+	int		i = 1;
+
+	printtext_print("none", "%6s %-20s %s", "Refnum", "Label", "Logging");
+
+	while ((window = window_by_refnum(i++)) != NULL)
+		print_win(window);
 }
 
 /**
