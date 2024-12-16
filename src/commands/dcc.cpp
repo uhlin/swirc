@@ -41,6 +41,9 @@
 #include <arpa/inet.h>
 #endif
 
+#if HAVE_STD_FS
+#include <filesystem>
+#endif
 #include <inttypes.h>
 #if WIN32
 #include <io.h>
