@@ -43,6 +43,7 @@
 
 #if HAVE_STD_FS
 #include <filesystem>
+namespace fs = std::filesystem;
 #endif
 #include <inttypes.h>
 #if WIN32
