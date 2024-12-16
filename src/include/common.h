@@ -49,6 +49,10 @@
 #endif
 #endif
 
+#if defined(__cplusplus) && __cplusplus >= 201703L
+#define HAVE_STD_FS 1
+#endif
+
 #if defined(UNIX) && defined(__GNUC__)
 #include "gnuattrs.h"
 #elif defined(UNIX) && (defined(__SUNPRO_C) || defined(__SUNPRO_CC))
