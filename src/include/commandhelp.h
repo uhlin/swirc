@@ -193,10 +193,11 @@ static usage_t cycle_usage = {
 
 static usage_t dcc_usage = {
   N_("usage:"),
-  "    /dcc [clear|get|list|send] [args]",
+  "    /dcc [clear|get|list|ls|send] [args]",
   "    /dcc clear [get|send|completed|all]",
   "    /dcc get <nick> <file>",
   "    /dcc list [get|send|all]",
+  "    /dcc ls [up|down]",
   "    /dcc send <nick> <file>",
   "",
   N_("Get and send files. Swirc implements its own variant of DCC meaning\n"

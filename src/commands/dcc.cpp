@@ -780,6 +780,8 @@ subcmd_ok(const char *subcmd)
 		return true;
 	else if (strings_match(subcmd, "list"))
 		return true;
+	else if (strings_match(subcmd, "ls"))
+		return true;
 	else if (strings_match(subcmd, "send"))
 		return true;
 	return false;
@@ -1003,6 +1005,20 @@ subcmd_list(const char *what)
 }
 
 static void
+subcmd_ls(const char *what)
+{
+	if (what == nullptr || strings_match(what, "")) {
+		printtext_print("err", "insufficient args");
+	} else if (strings_match(what, "up")) {
+		;
+	} else if (strings_match(what, "down")) {
+		;
+	} else {
+		printtext_print("err", "what? uploads or downloads?");
+	}
+}
+
+static void
 subcmd_send(const char *nick, const char *file)
 {
 	char			*nick_lc = nullptr;
@@ -1091,10 +1107,11 @@ subcmd_send(const char *nick, const char *file)
 
 /*
  * usage:
- *     /dcc [clear|get|list|send] [args]
+ *     /dcc [clear|get|list|ls|send] [args]
  *     /dcc clear [get|send|completed|all]
  *     /dcc get <nick> <file>
  *     /dcc list [get|send|all]
+ *     /dcc ls [up|down]
  *     /dcc send <nick> <file>
  */
 void
@@ -1132,6 +1149,8 @@ cmd_dcc(const char *data)
 		subcmd_get(arg1, arg2);
 	else if (strings_match(subcmd, "list"))
 		subcmd_list(arg1);
+	else if (strings_match(subcmd, "ls"))
+		subcmd_ls(arg1);
 	else if (strings_match(subcmd, "send"))
 		subcmd_send(arg1, arg2);
 	else
