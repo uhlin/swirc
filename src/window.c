@@ -973,7 +973,7 @@ windows_list_all(void)
 	PIRC_WINDOW	window;
 	int		i = 1;
 
-	printtext_print("none", "%6s %-20s %s", "Refnum", "Label", "Logging");
+	printtext_print("none", "%6s %-20s %7s", "Refnum", "Label", "Logging");
 
 	while ((window = window_by_refnum(i++)) != NULL)
 		print_win(window);
