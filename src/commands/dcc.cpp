@@ -68,6 +68,7 @@ namespace fs = std::filesystem;
 #include "../printtext.h"
 #include "../sig.h"
 #include "../strHand.h"
+#include "../strdup_printf.h"
 #include "../theme.h"
 #include "../tls-server.h"
 
