@@ -549,12 +549,6 @@ main(int argc, char *argv[])
 	malloc_options = const_cast<char *>("S");
 #endif
 
-#if defined(UNIX)
-#define SLASH_CHAR '/'
-#elif defined(WIN32)
-#define SLASH_CHAR '\\'
-#endif
-
 	if ((cp = strrchr(argv[0], SLASH_CHAR)) == nullptr)
 		g_progname = argv[0];
 	else

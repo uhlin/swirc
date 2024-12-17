@@ -71,8 +71,10 @@
 
 #if defined(UNIX)
 #define SLASH "/"
+#define SLASH_CHAR '/'
 #elif defined(WIN32)
 #define SLASH "\\"
+#define SLASH_CHAR '\\'
 #endif
 
 #define UNUSED_PARAM(p) ((void) (p))
