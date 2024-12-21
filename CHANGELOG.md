@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added command `/ctcp`
 - Added command `/ftp`
+- Added subcommand `ls` to `/dcc` which can be used to list the
+  contents of the upload/download directories.
 - Added the following options:
   - `ctcp_userinfo` (string)
   - `ftp_host` (string)
