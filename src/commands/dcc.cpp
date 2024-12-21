@@ -1224,9 +1224,9 @@ subcmd_ls(const char *what)
 	if (what == nullptr || strings_match(what, "")) {
 		printtext_print("err", "insufficient args");
 	} else if (strings_match(what, "up")) {
-		;
+		list_dir(dcc::get_upload_dir());
 	} else if (strings_match(what, "down")) {
-		;
+		list_dir(g_dcc_download_dir);
 	} else {
 		printtext_print("err", "what? uploads or downloads?");
 	}
