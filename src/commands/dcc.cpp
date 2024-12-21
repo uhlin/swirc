@@ -1104,7 +1104,7 @@ get_file_list(const char *dir)
 		if (!dir_ent.exists())
 			continue;
 
-		name = sw_strdup(dir_ent.path().c_str());
+		name = sw_strdup(dir_ent.path().string().c_str());
 
 		if ((cp = strrchr(name, SLASH_CHAR)) == nullptr)
 			cp = name;
