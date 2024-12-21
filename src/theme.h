@@ -27,6 +27,18 @@ void		 theme_do_save(const char *path, const char *mode);
 void		 theme_readit(const char *path, const char *mode);
 __SWIRC_END_DECLS
 
+#define COLOR_device	"\00308"
+#define COLOR_directory "\00312"
+#define COLOR_exec	"\00309"
+#define COLOR_fifo	"\00307"
+#define COLOR_socket	"\00313"
+#define COLOR_symlink	"\00311"
+
+#define SYM_exec	"*"
+#define SYM_fifo	"|"
+#define SYM_socket	"="
+#define SYM_symlink	"@"
+
 #define COLOR1		Theme("primary_color")
 #define COLOR2		Theme("secondary_color")
 #define COLOR3		Theme("color3")
