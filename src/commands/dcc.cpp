@@ -1059,6 +1059,165 @@ subcmd_list(const char *what)
 	}
 }
 
+#if HAVE_STD_FS
+static FileType
+get_file_type(const fs::directory_entry &dir_ent)
+{
+	FileType out = TYPE_unknown;
+
+	if (dir_ent.is_symlink())
+		out = TYPE_symlink;
+	else if (dir_ent.is_block_file())
+		out = TYPE_block_file;
+	else if (dir_ent.is_character_file())
+		out = TYPE_character_file;
+	else if (dir_ent.is_directory())
+		out = TYPE_directory;
+	else if (dir_ent.is_fifo())
+		out = TYPE_fifo;
+	else if (dir_ent.is_regular_file())
+		out = TYPE_regular_file;
+	else if (dir_ent.is_socket())
+		out = TYPE_socket;
+	else if (dir_ent.is_other())
+		out = TYPE_other;
+	else
+		out = TYPE_unknown;
+
+	return out;
+}
+
+static std::vector<disk_file>
+get_file_list(const char *dir)
+{
+	fs::path path = dir;
+	fs::directory_iterator dir_it(path);
+	std::vector<disk_file> df_vec;
+
+	for (const fs::directory_entry &dir_ent : dir_it) {
+		FileType	 type;
+		char		*name;
+		const char	*cp;
+		fs::perms	 perms;
+		intmax_t	 size;
+
+		if (!dir_ent.exists())
+			continue;
+
+		name = sw_strdup(dir_ent.path().c_str());
+
+		if ((cp = strrchr(name, SLASH_CHAR)) == nullptr)
+			cp = name;
+		else
+			cp++;
+
+		type = get_file_type(dir_ent);
+		size = (type == TYPE_regular_file ? dir_ent.file_size() : 0);
+		perms = dir_ent.status().permissions();
+
+		disk_file file(cp, type, size, perms);
+		df_vec.push_back(file);
+		free(name);
+	}
+
+	return (df_vec);
+}
+
+static bool
+is_exec(fs::perms perms)
+{
+#define PCHK(_perms, _x) (((_perms) & (_x)) != fs::perms::none)
+	return (PCHK(perms, fs::perms::owner_exec) ||
+		PCHK(perms, fs::perms::group_exec) ||
+		PCHK(perms, fs::perms::others_exec));
+}
+#endif // HAVE_STD_FS
+
+void
+list_dir(const char *dir)
+{
+#if HAVE_STD_FS
+	std::vector<disk_file> df_vec;
+
+	if (!is_directory(dir))
+		return;
+
+	try {
+		df_vec = get_file_list(dir);
+	} catch (const std::exception &e) {
+		printtext_print("err", "%s: %s", __func__, e.what());
+		return;
+	}
+
+	printtext_print("none", "--- BEGIN: %s ---", dir);
+
+	for (disk_file &df : df_vec) {
+		char *str = nullptr;
+
+		switch (df.get_type()) {
+		case TYPE_symlink:
+			str = strdup_printf("%s%s%s%s",
+			    COLOR_symlink, df.name.c_str(), TXT_NORMAL,
+			    SYM_symlink);
+			break;
+
+		case TYPE_block_file:
+		case TYPE_character_file:
+			str = strdup_printf("%s%s%s",
+			    COLOR_device, df.name.c_str(), TXT_NORMAL);
+			break;
+		case TYPE_directory:
+			str = strdup_printf("%s%s%s%s",
+			    COLOR_directory, df.name.c_str(), TXT_NORMAL,
+			    SLASH);
+			break;
+		case TYPE_fifo:
+			str = strdup_printf("%s%s%s%s",
+			    COLOR_fifo, df.name.c_str(), TXT_NORMAL,
+			    SYM_fifo);
+			break;
+		case TYPE_regular_file:
+			if (is_exec(df.get_perms())) {
+				str = strdup_printf("%s%s%s%s",
+				    COLOR_exec, df.name.c_str(), TXT_NORMAL,
+				    SYM_exec);
+			} else {
+				double	size = 0.0;
+				char	unit = 'B';
+
+				dcc::get_file_size(df.get_size(), size, unit);
+				str = strdup_printf("%s %s%.1f%c%s",
+				    df.name.c_str(),
+				    LEFT_BRKT, size, unit, RIGHT_BRKT);
+			}
+			break;
+		case TYPE_socket:
+			str = strdup_printf("%s%s%s%s",
+			    COLOR_socket, df.name.c_str(), TXT_NORMAL,
+			    SYM_socket);
+			break;
+
+		case TYPE_other:
+			str = sw_strdup(df.name.c_str());
+			break;
+		case TYPE_unknown:
+		default:
+			break;
+		}
+
+		if (str)
+			printtext_print("sp2", "%s", str);
+		free(str);
+	} // for
+
+	printtext_print("none", "--- END: %s ---", dir);
+#else
+#pragma message("No C++ standard filesystem")
+	UNUSED_PARAM(dir);
+	printtext_print("err", "operation not supported");
+#endif
+}
+
 static void
 subcmd_ls(const char *what)
 {
