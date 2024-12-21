@@ -82,6 +82,20 @@ private:
 };
 #endif
 
+typedef enum {
+	TYPE_symlink,
+
+	TYPE_block_file,
+	TYPE_character_file,
+	TYPE_directory,
+	TYPE_fifo,
+	TYPE_regular_file,
+	TYPE_socket,
+
+	TYPE_other,
+	TYPE_unknown
+} FileType;
+
 __SWIRC_BEGIN_DECLS
 extern const int	g_one_kilo;
 extern const int	g_one_meg;
