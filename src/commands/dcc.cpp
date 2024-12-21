@@ -681,6 +681,56 @@ dcc_send::set_lock(int value)
 	this->lock = value;
 }
 
+#if HAVE_STD_FS
+class disk_file {
+public:
+	std::string name;
+
+	disk_file();
+	disk_file(const char *, FileType, intmax_t, fs::perms);
+
+	FileType
+	get_type(void) const
+	{
+		return (this->type);
+	}
+
+	intmax_t
+	get_size(void) const
+	{
+		return (this->size);
+	}
+
+	fs::perms
+	get_perms(void) const
+	{
+		return (this->perms);
+	}
+
+private:
+	FileType	type;
+	intmax_t	size;
+	fs::perms	perms;
+};
+
+disk_file::disk_file()
+    : type(TYPE_unknown)
+    , size(0)
+    , perms(fs::perms::none)
+{
+	this->name.assign("");
+}
+
+disk_file::disk_file(const char *p_name, FileType p_type, intmax_t p_size,
+    fs::perms p_perms)
+    : type(p_type)
+    , size(p_size)
+    , perms(p_perms)
+{
+	this->name.assign(p_name);
+}
+#endif // HAVE_STD_FS
+
 /****************************************************************
 *                                                               *
 *  -------------- Objects with external linkage --------------  *
