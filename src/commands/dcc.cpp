@@ -1241,9 +1241,10 @@ list_dir(const char *dir)
 			break;
 		}
 
-		if (str)
+		if (str) {
 			printtext_print("sp2", "%s", str);
-		free(str);
+			free(str);
+		}
 	} // for
 
 	printtext_print("none", "--- END: %s ---", dir);
