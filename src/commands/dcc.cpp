@@ -42,6 +42,7 @@
 #endif
 
 #if HAVE_STD_FS
+#include <algorithm>
 #include <filesystem>
 namespace fs = std::filesystem;
 #endif
@@ -1142,6 +1143,8 @@ void
 list_dir(const char *dir)
 {
 #if HAVE_STD_FS
+	static const std::string ext1(".EXE");
+	static const std::string ext2(".exe");
 	std::vector<disk_file> df_vec;
 
 	if (!is_directory(dir))
@@ -1182,7 +1185,11 @@ list_dir(const char *dir)
 			    SYM_fifo);
 			break;
 		case TYPE_regular_file:
-			if (is_exec(df.get_perms())) {
+			if (is_exec(df.get_perms()) ||
+			    std::equal(ext1.rbegin(), ext1.rend(),
+			    df.name.rbegin()) ||
+			    std::equal(ext2.rbegin(), ext2.rend(),
+			    df.name.rbegin())) {
 				str = strdup_printf("%s%s%s%s",
 				    COLOR_exec, df.name.c_str(), TXT_NORMAL,
 				    SYM_exec);
