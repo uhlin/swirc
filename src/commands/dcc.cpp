@@ -1128,6 +1128,26 @@ get_file_list(const char *dir)
 }
 
 static bool
+file_list_cmp(const disk_file &obj1, const disk_file &obj2)
+{
+	const std::string	name1(obj1.name);
+	const std::string	name2(obj2.name);
+
+	for (size_t i = 0; i < name1.length() && i < name2.length(); i++) {
+		int c1, c2;
+
+		c1 = sw_isupper(name1[i]) ? tolower(name1[i]) : name1[i];
+		c2 = sw_isupper(name2[i]) ? tolower(name2[i]) : name2[i];
+		if (c1 < c2)
+			return true;
+		else if (c1 > c2)
+			return false;
+	}
+
+	return (name1.length() < name2.length() ? true : false);
+}
+
+static bool
 is_exec(fs::perms perms)
 {
 #if defined(UNIX)
@@ -1155,6 +1175,7 @@ list_dir(const char *dir)
 
 	try {
 		df_vec = get_file_list(dir);
+		std::sort(df_vec.begin(), df_vec.end(), file_list_cmp);
 	} catch (const std::exception &e) {
 		printtext_print("err", "%s: %s", __func__, e.what());
 		return;
