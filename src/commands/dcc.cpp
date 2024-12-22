@@ -1166,9 +1166,9 @@ void
 list_dir(const char *dir)
 {
 #if HAVE_STD_FS
-	static const std::string ext1(".EXE");
-	static const std::string ext2(".exe");
-	std::vector<disk_file> df_vec;
+	static const std::string	ext1(".EXE");
+	static const std::string	ext2(".exe");
+	std::vector<disk_file>		df_vec;
 
 	if (!is_directory(dir))
 		return;
