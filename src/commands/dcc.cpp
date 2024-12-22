@@ -1126,10 +1126,15 @@ get_file_list(const char *dir)
 static bool
 is_exec(fs::perms perms)
 {
+#if defined(UNIX)
 #define PCHK(_perms, _x) (((_perms) & (_x)) != fs::perms::none)
 	return (PCHK(perms, fs::perms::owner_exec) ||
 		PCHK(perms, fs::perms::group_exec) ||
 		PCHK(perms, fs::perms::others_exec));
+#elif defined(WIN32)
+	UNUSED_PARAM(perms);
+	return false;
+#endif
 }
 #endif // HAVE_STD_FS
 
