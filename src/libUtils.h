@@ -69,13 +69,6 @@ fclose_and_null(FILE **fp)
 }
 
 static inline void
-free_not_null(void *ptr)
-{
-	if (ptr != NULL)
-		free(ptr);
-}
-
-static inline void
 free_and_null(char **ptr)
 {
 	if (ptr != NULL && *ptr != NULL) {
