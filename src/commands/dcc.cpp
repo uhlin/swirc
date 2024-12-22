@@ -1091,9 +1091,9 @@ get_file_type(const fs::directory_entry &dir_ent)
 static std::vector<disk_file>
 get_file_list(const char *dir)
 {
-	fs::path path = dir;
-	fs::directory_iterator dir_it(path);
-	std::vector<disk_file> df_vec;
+	fs::path		path = dir;
+	fs::directory_iterator	dir_it(path);
+	std::vector<disk_file>	df_vec;
 
 	for (const fs::directory_entry &dir_ent : dir_it) {
 		FileType	 type;
