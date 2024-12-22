@@ -1112,8 +1112,10 @@ get_file_list(const char *dir)
 		else
 			cp++;
 
-		type = get_file_type(dir_ent);
-		size = (type == TYPE_regular_file ? dir_ent.file_size() : 0);
+		if ((type = get_file_type(dir_ent)) == TYPE_regular_file)
+			size = dir_ent.file_size();
+		else
+			size = 0;
 		perms = dir_ent.status().permissions();
 
 		disk_file file(cp, type, size, perms);
