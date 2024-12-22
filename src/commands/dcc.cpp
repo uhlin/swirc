@@ -1116,6 +1116,7 @@ get_file_list(const char *dir)
 			size = dir_ent.file_size();
 		else
 			size = 0;
+
 		perms = dir_ent.status().permissions();
 
 		disk_file file(cp, type, size, perms);
