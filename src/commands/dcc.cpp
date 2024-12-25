@@ -1239,6 +1239,8 @@ list_dir(const char *dir)
 			break;
 		case TYPE_unknown:
 		default:
+			str = strdup_printf("%s %s%s%s", df.name.c_str(),
+			    LEFT_BRKT, "unknown", RIGHT_BRKT);
 			break;
 		}
 
