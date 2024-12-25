@@ -14,4 +14,12 @@ __SWIRC_BEGIN_DECLS
 void	cmd_ftp(CSTRING);
 __SWIRC_END_DECLS
 
+#ifdef __cplusplus
+namespace ftp
+{
+	CSTRING get_upload_dir(void);
+	bool want_unveil_uploads(void);
+}
+#endif
+
 #endif
