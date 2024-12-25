@@ -1234,7 +1234,8 @@ list_dir(const char *dir)
 			break;
 
 		case TYPE_other:
-			str = sw_strdup(df.name.c_str());
+			str = strdup_printf("%s %s%s%s", df.name.c_str(),
+			    LEFT_BRKT, "other", RIGHT_BRKT);
 			break;
 		case TYPE_unknown:
 		default:
