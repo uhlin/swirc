@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Added the key combination `CTRL+w` (List all windows)
 - Added the possibility to switch between windows by just entering the
   reference number, i.e. `/1`, `/2`, `/3`...
+- Changed the program to beep on certain window activity.
 
 ## [3.5.1] - 2024-11-09 ##
 - **Added** command `/announce`.
