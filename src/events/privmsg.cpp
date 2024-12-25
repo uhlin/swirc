@@ -44,6 +44,7 @@
 #include "../printtext.h"
 #include "../strHand.h"
 #include "../strdup_printf.h"
+#include "../terminal.h"
 #include "../theme.h"
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
@@ -150,6 +151,7 @@ broadcast_window_activity(const IRC_WINDOW *src)
 		    TYPE_SPEC1_SUCCESS, true);
 		printtext(&ctx, "activity at window %c%s%c (refnum: %d)",
 		    BOLD, src->label, BOLD, src->refnum);
+		term_beep();
 	}
 }
 
