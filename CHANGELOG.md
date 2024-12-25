@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
   - `ftp_port` (integer, defaults to 21)
   - `ftp_user` (string)
   - `ftp_pass` (string)
+  - `ftp_passive_mode` (bool, defaults to yes)
   - `ftp_upload_dir` (string)
 - Added the key combination `CTRL+w` (List all windows)
 - Added the possibility to switch between windows by just entering the
