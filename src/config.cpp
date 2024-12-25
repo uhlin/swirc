@@ -32,6 +32,9 @@
 #if UNIX
 #include <sys/mman.h>
 #endif
+#if __OpenBSD__
+#include <sys/param.h>
+#endif
 
 #include "config.h"
 #include "errHand.h"
@@ -307,8 +310,15 @@ output_values_for_all_settings(void)
 static void
 set_value_for_setting_ok_hook(const char *setting, const char *value)
 {
-	if (strings_match(setting, "mouse") ||
-	    strings_match(setting, "mouse_events")) {
+	if (strings_match(setting, "dcc_upload_dir")) {
+#if defined(OpenBSD) && OpenBSD >= 201811
+		printtext_print("warn", "OpenBSD uses unveil()  --  "
+		    "restart needed");
+#else
+		/* null */;
+#endif
+	} else if (strings_match(setting, "mouse") ||
+		   strings_match(setting, "mouse_events")) {
 		readline_mouse_init();
 	} else if (strings_match(setting, "spell_lang") ||
 		   strings_match(setting, "spell_syswide")) {
