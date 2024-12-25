@@ -74,6 +74,7 @@
 #include "window.h"
 
 #include "commands/dcc.h"
+#include "commands/ftp.h"
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 #include "DesktopNotificationManagerCompat.hpp"
@@ -733,6 +734,12 @@ main(int argc, char *argv[])
 
 	if (dcc::want_unveil_uploads()) {
 		if (unveil(dcc::get_upload_dir(), "r") == -1) {
+			err_ret("unveil");
+			return EXIT_FAILURE;
+		}
+	}
+	if (ftp::want_unveil_uploads()) {
+		if (unveil(ftp::get_upload_dir(), "r") == -1) {
 			err_ret("unveil");
 			return EXIT_FAILURE;
 		}
