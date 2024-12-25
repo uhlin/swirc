@@ -310,7 +310,8 @@ output_values_for_all_settings(void)
 static void
 set_value_for_setting_ok_hook(const char *setting, const char *value)
 {
-	if (strings_match(setting, "dcc_upload_dir")) {
+	if (strings_match(setting, "dcc_upload_dir") ||
+	    strings_match(setting, "ftp_upload_dir")) {
 #if defined(OpenBSD) && OpenBSD >= 201811
 		printtext_print("warn", "OpenBSD uses unveil()  --  "
 		    "restart needed");
