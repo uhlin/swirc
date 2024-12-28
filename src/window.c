@@ -949,12 +949,16 @@ static wchar_t *
 get_label(CSTRING label)
 {
 	STRING		str = sw_strdup(label);
+	size_t		bytes_convert;
 	static wchar_t	wcs[20] = { L'\0' };
 
-	xmbstowcs(addrof(wcs[0]), squeeze_text_deco(str), ARRAY_SIZE(wcs) - 1);
+	bytes_convert = xmbstowcs(addrof(wcs[0]), squeeze_text_deco(str),
+	    ARRAY_SIZE(wcs) - 1);
 	wcs[ARRAY_SIZE(wcs) - 1] = L'\0';
 	free(str);
 
+	if (bytes_convert == g_conversion_failed)
+		wmemset(wcs, 0L, ARRAY_SIZE(wcs));
 	return addrof(wcs[0]);
 }
 
