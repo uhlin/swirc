@@ -11,6 +11,7 @@ OBJS = $(COMMANDS_DIR)admin.o\
 	$(COMMANDS_DIR)dcc.o\
 	$(COMMANDS_DIR)echo.o\
 	$(COMMANDS_DIR)fetchdic.o\
+	$(COMMANDS_DIR)ftp-unix.o\
 	$(COMMANDS_DIR)ftp.o\
 	$(COMMANDS_DIR)ignore.o\
 	$(COMMANDS_DIR)info.o\
