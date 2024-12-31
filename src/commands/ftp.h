@@ -27,6 +27,12 @@ typedef int SOCKET;
 #define SOCKET_ERROR -1
 #endif
 
+#if defined(UNIX)
+#define ftp_closesocket(_sock) ((void) close(_sock))
+#elif defined(WIN32)
+#define ftp_closesocket(_sock) ((void) closesocket(_sock))
+#endif
+
 __SWIRC_BEGIN_DECLS
 void	cmd_ftp(CSTRING);
 __SWIRC_END_DECLS
