@@ -33,10 +33,18 @@
 #include <sys/param.h>
 #endif
 
+#include <netdb.h>
+
+#include <stdexcept>
+
 #include "../config.h"
+#include "../dataClassify.h"
 #include "../filePred.h"
 #include "../libUtils.h"
+#include "../main.h"
 #include "../nestHome.h"
+#include "../network.h"
+#include "../printtext.h"
 #include "../strHand.h"
 
 #include "ftp.h"
