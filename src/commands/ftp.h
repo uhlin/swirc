@@ -33,6 +33,12 @@ typedef int SOCKET;
 #define ftp_closesocket(_sock) ((void) closesocket(_sock))
 #endif
 
+#define FTP_DEFAULT_RECV_TIMEOUT 30
+#define FTP_DEFAULT_SEND_TIMEOUT 15
+
+#define FTP_TEMP_RECV_TIMEOUT 4
+#define FTP_TEMP_SEND_TIMEOUT 4
+
 __SWIRC_BEGIN_DECLS
 void	cmd_ftp(CSTRING);
 __SWIRC_END_DECLS
