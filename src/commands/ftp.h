@@ -14,6 +14,11 @@
 #include <ws2tcpip.h>
 #endif
 
+#ifdef __cplusplus
+#include <string>
+#include <vector>
+#endif
+
 #if defined(UNIX) && !defined(_SOCKET_DEFINED)
 #define _SOCKET_DEFINED 1
 typedef int SOCKET;
