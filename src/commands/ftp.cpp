@@ -39,6 +39,7 @@
 
 #include "../config.h"
 #include "../dataClassify.h"
+#include "../errHand.h"
 #include "../filePred.h"
 #include "../libUtils.h"
 #include "../main.h"
@@ -46,7 +47,10 @@
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
+#include "../strdup_printf.h"
+#include "../theme.h"
 
+#include "dcc.h" /* list_dir() */
 #include "ftp.h"
 
 void
