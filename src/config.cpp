@@ -1,5 +1,5 @@
 /* User configuration
-   Copyright (C) 2012-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -99,7 +99,7 @@ static struct tagConfDefValues {
 	{ "ftp_host",                  TYPE_STRING,  2, "" },
 	{ "ftp_port",                  TYPE_INTEGER, 2, "21" },
 	{ "ftp_user",                  TYPE_STRING,  2, "anonymous" },
-	{ "ftp_pass",                  TYPE_STRING,  2, "" },
+	{ "ftp_pass",                  TYPE_STRING,  2, "anonymous" },
 	{ "ftp_passive_mode",          TYPE_BOOLEAN, 1, "yes" },
 	{ "ftp_upload_dir",            TYPE_STRING,  2, "" },
 
