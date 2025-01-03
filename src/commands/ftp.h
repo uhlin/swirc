@@ -90,8 +90,16 @@ private:
 
 namespace ftp
 {
-	CSTRING get_upload_dir(void);
-	bool want_unveil_uploads(void);
+	extern ftp_ctl_conn *ctl_conn;
+
+	CSTRING	get_upload_dir(void);
+	int	send_printf(SOCKET, CSTRING, ...) PRINTFLIKE(2);
+#if defined(UNIX)
+	void	set_timeout(SOCKET, int, const time_t);
+#elif defined(WIN32)
+	void	set_timeout(SOCKET, int, const DWORD);
+#endif
+	bool	want_unveil_uploads(void);
 }
 #endif
 
