@@ -51,6 +51,43 @@ void	cmd_ftp(CSTRING);
 __SWIRC_END_DECLS
 
 #ifdef __cplusplus
+typedef struct tagFTP_REPLY {
+	int		num;
+	std::string	text;
+
+	tagFTP_REPLY() : num(0)
+	{
+		this->text.assign("");
+	}
+
+	tagFTP_REPLY(int p_num, CSTRING p_text) : num(p_num)
+	{
+		this->text.assign(p_text);
+	}
+} FTP_REPLY, *PFTP_REPLY;
+
+typedef std::vector<FTP_REPLY>::size_type numrep_t;
+
+class ftp_ctl_conn {
+public:
+	ftp_ctl_conn();
+	~ftp_ctl_conn();
+
+	std::vector<FTP_REPLY> reply_vec;
+
+	SOCKET		get_sock(void) const;
+	void		login(void);
+	void		printreps(void);
+	numrep_t	read_reply(const int);
+
+private:
+	SOCKET				 sock;
+	char				 buf[2048];
+	enum message_concat_state	 state;
+	std::string			 message_concat;
+	struct addrinfo			*res;
+};
+
 namespace ftp
 {
 	CSTRING get_upload_dir(void);
