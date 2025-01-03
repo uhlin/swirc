@@ -56,7 +56,42 @@
 void
 cmd_ftp(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	CSTRING			arg[2];
+	CSTRING			subcmd;
+	STRING			dcopy;
+	STRING			last = const_cast<STRING>("");
+	static chararray_t	cmd  = "/ftp";
+	static chararray_t	sep  = "\n";
+
+	if (strings_match(data, "")) {
+		printtext_print("err", "insufficient args");
+		return;
+	}
+
+	dcopy = sw_strdup(data);
+	(void) strFeed(dcopy, 2);
+
+	if ((subcmd = strtok_r(dcopy, sep, &last)) == nullptr) {
+		printf_and_free(dcopy, "%s: insufficient args", cmd);
+		return;
+	} else if (!subcmd_ok(subcmd)) {
+		printf_and_free(dcopy, "%s: invalid subcommand '%s'", cmd,
+		    subcmd);
+		return;
+	}
+
+	arg[0] = strtok_r(nullptr, sep, &last);
+	arg[1] = strtok_r(nullptr, sep, &last);
+
+	if (strings_match(subcmd, "exit"))
+		subcmd_exit();
+	else if (strings_match(subcmd, "login"))
+		subcmd_login();
+	else if (strings_match(subcmd, "ls"))
+		subcmd_ls(arg[0]);
+	else
+		printtext_print("err", "%s: invalid subcommand", cmd);
+	free(dcopy);
 }
 
 CSTRING
