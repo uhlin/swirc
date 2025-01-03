@@ -75,6 +75,43 @@ ftp::get_upload_dir(void)
 #endif
 }
 
+int
+ftp::send_printf(SOCKET sock, CSTRING fmt, ...)
+{
+	char	*buffer;
+	int	 n_sent;
+	va_list	 ap;
+
+	if (sock == INVALID_SOCKET)
+		return -1;
+	else if (fmt == nullptr)
+		err_exit(EINVAL, "%s", __func__);
+	else if (strings_match(fmt, ""))
+		return 0;
+
+	va_start(ap, fmt);
+	buffer = strdup_vprintf(fmt, ap);
+	va_end(ap);
+
+	errno = 0;
+
+#if defined(UNIX)
+	if ((n_sent = send(sock, buffer, strlen(buffer), 0)) == -1) {
+		free_and_null(&buffer);
+		return (errno == EAGAIN || errno == EWOULDBLOCK ? 0 : -1);
+	}
+#elif defined(WIN32)
+	if ((n_sent = send(g_socket, buffer, size_to_int(strlen(buffer)), 0)) ==
+	    SOCKET_ERROR) {
+		free_and_null(&buffer);
+		return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
+	}
+#endif
+
+	free_and_null(&buffer);
+	return n_sent;
+}
+
 bool
 ftp::want_unveil_uploads(void)
 {
