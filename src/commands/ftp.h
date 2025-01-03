@@ -19,6 +19,8 @@
 #include <vector>
 #endif
 
+#include "../irc.h"
+
 #if defined(UNIX) && !defined(_SOCKET_DEFINED)
 #define _SOCKET_DEFINED 1
 typedef int SOCKET;
