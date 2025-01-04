@@ -52,7 +52,8 @@
 #include "ftp.h"
 #include "i18n.h"
 
-ftp_ctl_conn *ftp::ctl_conn = nullptr;
+ftp_ctl_conn	*ftp::ctl_conn = nullptr;
+ftp_data_conn	*ftp::data_conn = nullptr;
 
 static void print_one_rep(const int, CSTRING);
 

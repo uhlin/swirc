@@ -109,6 +109,7 @@ private:
 namespace ftp
 {
 	extern ftp_ctl_conn *ctl_conn;
+	extern ftp_data_conn *data_conn;
 
 	CSTRING	get_upload_dir(void);
 	int	send_printf(SOCKET, CSTRING, ...) PRINTFLIKE(2);
