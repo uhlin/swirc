@@ -378,8 +378,8 @@ ftp_data_conn::ftp_data_conn(CSTRING text)
     , res(nullptr)
     , port(0)
 {
-	static CSTRING format = "Entering Passive Mode "
-	    "(%hho,%hho,%hho,%hho,%hho,%hho).";
+	static CSTRING format = " Entering Passive Mode "
+	    "(%hhu,%hhu,%hhu,%hhu,%hhu,%hhu).";
 
 	if (sscanf(text, format,
 	    &this->h[0], &this->h[1], &this->h[2], &this->h[3],
