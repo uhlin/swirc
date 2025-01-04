@@ -2,8 +2,8 @@
 #define SRC_COMMANDS_FTP_H_
 
 #if defined(UNIX)
-#include <sys/socket.h>
 #include <sys/types.h>
+#include <sys/socket.h>
 #include <netdb.h>
 
 #include <arpa/inet.h>
