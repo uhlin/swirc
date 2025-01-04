@@ -421,8 +421,48 @@ ftp_data_conn::get_sock(void) const
 numstr_t
 ftp_data_conn::list_fetch(const int timeo)
 {
-	UNUSED_PARAM(timeo);
-	return 0;
+	CSTRING				token;
+	STRING				tokstate = const_cast<STRING>("");
+	int				loop_run = 0;
+	static chararray_t		sep = "\r\n";
+	std::string			last_token("");
+
+	RECV_AND_CHECK();
+
+	this->vec.clear();
+
+	if (!is_terminated(this->buf, sizeof this->buf))
+		last_token.assign(get_last_token(this->buf));
+
+	if (this->state == CONCAT_BUFFER_CONTAIN_DATA &&
+	    this->buf[0] == '\r' &&
+	    this->buf[1] == '\n') {
+		this->vec.push_back(this->message_concat.c_str());
+
+		this->message_concat.assign("");
+		this->state = CONCAT_BUFFER_IS_EMPTY;
+	}
+
+	for (STRING str = this->buf;
+	    (token = strtok_r(str, sep, &tokstate)) != nullptr;
+	    str = nullptr) {
+		if (shall_assign_concat(token, last_token, this->state)) {
+			this->message_concat.assign(last_token);
+			this->state = CONCAT_BUFFER_CONTAIN_DATA;
+
+			return (this->vec.size());
+		} else if (shall_append_concat(loop_run, this->state)) {
+			this->message_concat.append(token);
+			this->state = CONCAT_BUFFER_IS_EMPTY;
+
+			token = this->message_concat.c_str();
+		}
+
+		this->vec.push_back(token);
+		loop_run++;
+	} /* for */
+
+	return (this->vec.size());
 }
 
 void
