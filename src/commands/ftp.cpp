@@ -369,7 +369,7 @@ ftp_data_conn::ftp_data_conn(CSTRING text)
 	if (sscanf(text, format,
 	    &this->h[0], &this->h[1], &this->h[2], &this->h[3],
 	    &this->p[0], &this->p[1]) != 6)
-		throw std::runtime_error("Failed to enter passive mode");
+		throw std::runtime_error("too few items assigned");
 
 	BZERO(this->buf, sizeof this->buf);
 
