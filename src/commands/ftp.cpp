@@ -281,7 +281,7 @@ ftp_ctl_conn::read_reply(const int timeo)
 	CSTRING				token;
 	STRING				tokstate = const_cast<STRING>("");
 	int				bytes_received;
-	int				loop_count = 0;
+	int				loop_run = 0;
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
 	struct network_recv_context	recv_ctx(this->sock, 0, timeo, 0);
@@ -321,7 +321,7 @@ ftp_ctl_conn::read_reply(const int timeo)
 			this->state = CONCAT_BUFFER_CONTAIN_DATA;
 
 			return (this->reply_vec.size());
-		} else if (loop_count == 0 && this->state ==
+		} else if (loop_run == 0 && this->state ==
 		    CONCAT_BUFFER_CONTAIN_DATA) {
 			this->message_concat.append(token);
 			this->state = CONCAT_BUFFER_IS_EMPTY;
@@ -330,7 +330,7 @@ ftp_ctl_conn::read_reply(const int timeo)
 		}
 
 		process_reply(token, this->reply_vec);
-		loop_count++;
+		loop_run++;
 	} /* for */
 
 	return (this->reply_vec.size());
