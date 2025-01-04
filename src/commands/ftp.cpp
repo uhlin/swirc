@@ -415,7 +415,19 @@ ftp_data_conn::~ftp_data_conn()
 bool
 ftp_data_conn::connect_passive(void)
 {
-	return false;
+	if (this->res == nullptr &&
+	    (this->res =
+	    net_addr_resolve(this->host_str, this->port_str)) == nullptr) {
+		printtext_print("err", "%s: %s", __func__,
+		    _("Unable to get a list of IP addresses"));
+		return false;
+	} else if (!establish_conn(this->sock, this->res)) {
+		printtext_print("err", "%s: %s", __func__,
+		    _("Failed to establish a connection"));
+		return false;
+	}
+
+	return true;
 }
 
 SOCKET
