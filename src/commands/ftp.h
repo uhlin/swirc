@@ -98,6 +98,7 @@ public:
 
 	std::vector<std::string> vec;
 
+	bool		connect_passive(void);
 	SOCKET		get_sock(void) const;
 	numstr_t	list_fetch(const int);
 	void		list_print(void);

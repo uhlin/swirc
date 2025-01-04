@@ -412,6 +412,12 @@ ftp_data_conn::~ftp_data_conn()
 	}
 }
 
+bool
+ftp_data_conn::connect_passive(void)
+{
+	return false;
+}
+
 SOCKET
 ftp_data_conn::get_sock(void) const
 {
