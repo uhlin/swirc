@@ -275,6 +275,21 @@ process_reply(CSTRING token, std::vector<FTP_REPLY> &reply_vec)
 	}
 }
 
+static inline bool
+shall_assign_concat(CSTRING token,
+    const std::string &last_token,
+    const enum message_concat_state &state)
+{
+	return (!last_token.empty() && state == CONCAT_BUFFER_IS_EMPTY &&
+	    strings_match(last_token.c_str(), token));
+}
+
+static inline bool
+shall_append_concat(const int loop_run, const enum message_concat_state &state)
+{
+	return (loop_run == 0 && state == CONCAT_BUFFER_CONTAIN_DATA);
+}
+
 numrep_t
 ftp_ctl_conn::read_reply(const int timeo)
 {
@@ -314,15 +329,12 @@ ftp_ctl_conn::read_reply(const int timeo)
 	for (STRING str = this->buf;
 	    (token = strtok_r(str, sep, &tokstate)) != nullptr;
 	    str = nullptr) {
-		if (!last_token.empty() &&
-		    this->state == CONCAT_BUFFER_IS_EMPTY &&
-		    strings_match(token, last_token.c_str())) {
+		if (shall_assign_concat(token, last_token, this->state)) {
 			this->message_concat.assign(last_token);
 			this->state = CONCAT_BUFFER_CONTAIN_DATA;
 
 			return (this->reply_vec.size());
-		} else if (loop_run == 0 && this->state ==
-		    CONCAT_BUFFER_CONTAIN_DATA) {
+		} else if (shall_append_concat(loop_run, this->state)) {
 			this->message_concat.append(token);
 			this->state = CONCAT_BUFFER_IS_EMPTY;
 
