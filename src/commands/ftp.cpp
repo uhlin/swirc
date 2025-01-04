@@ -338,6 +338,64 @@ ftp_ctl_conn::read_reply(const int timeo)
 	return (this->reply_vec.size());
 }
 
+ftp_data_conn::ftp_data_conn()
+    : sock(INVALID_SOCKET)
+    , host_str(nullptr)
+    , port_str(nullptr)
+    , state(CONCAT_BUFFER_IS_EMPTY)
+    , res(nullptr)
+    , port(0)
+{
+	BZERO(this->buf, sizeof this->buf);
+
+	this->message_concat.assign("");
+
+	this->h[0] = this->h[1] = this->h[2] = this->h[3] = 0;
+	this->p[0] = this->p[1] = 0;
+}
+
+ftp_data_conn::ftp_data_conn(CSTRING text)
+    : sock(INVALID_SOCKET)
+    , host_str(nullptr)
+    , port_str(nullptr)
+    , state(CONCAT_BUFFER_IS_EMPTY)
+    , res(nullptr)
+    , port(0)
+{
+	static CSTRING format = "Entering Passive Mode "
+	    "(%hho,%hho,%hho,%hho,%hho,%hho).";
+
+	if (sscanf(text, format,
+	    &this->h[0], &this->h[1], &this->h[2], &this->h[3],
+	    &this->p[0], &this->p[1]) != 6)
+		throw std::runtime_error("Failed to enter passive mode");
+
+	BZERO(this->buf, sizeof this->buf);
+
+	this->host_str = strdup_printf("%u.%u.%u.%u",
+	    this->h[0], this->h[1], this->h[2], this->h[3]);
+	this->port = (this->p[0] * 256 + this->p[1]);
+	this->port_str = strdup_printf("%u", this->port);
+
+	this->message_concat.assign("");
+}
+
+ftp_data_conn::~ftp_data_conn()
+{
+	if (this->sock != INVALID_SOCKET) {
+		ftp_closesocket(this->sock);
+		this->sock = INVALID_SOCKET;
+	}
+
+	free(host_str);
+	free(port_str);
+
+	if (this->res != nullptr) {
+		freeaddrinfo(this->res);
+		this->res = nullptr;
+	}
+}
+
 static bool
 subcmd_ok(CSTRING cmd)
 {

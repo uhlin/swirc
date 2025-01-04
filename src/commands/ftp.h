@@ -89,6 +89,23 @@ private:
 	struct addrinfo			*res;
 };
 
+class ftp_data_conn {
+public:
+	ftp_data_conn();
+	ftp_data_conn(CSTRING);
+	~ftp_data_conn();
+
+private:
+	SOCKET				 sock;
+	STRING				 host_str, port_str;
+	char				 buf[2048];
+	enum message_concat_state	 state;
+	std::string			 message_concat;
+	struct addrinfo			*res;
+	uint16_t			 port;
+	uint8_t				 h[4], p[2];
+};
+
 namespace ftp
 {
 	extern ftp_ctl_conn *ctl_conn;
