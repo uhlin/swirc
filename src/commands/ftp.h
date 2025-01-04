@@ -112,6 +112,7 @@ namespace ftp
 	extern ftp_data_conn *data_conn;
 
 	CSTRING	get_upload_dir(void);
+	bool	passive(void);
 	int	send_printf(SOCKET, CSTRING, ...) PRINTFLIKE(2);
 #if defined(UNIX)
 	void	set_timeout(SOCKET, int, const time_t);

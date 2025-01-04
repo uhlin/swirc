@@ -506,6 +506,63 @@ cmd_ftp(CSTRING data)
 	free(dcopy);
 }
 
+static void
+create_data_conn(CSTRING text)
+{
+	if (ftp::data_conn) {
+		delete ftp::data_conn;
+		ftp::data_conn = nullptr;
+	}
+
+	try {
+		ftp::data_conn = new ftp_data_conn(text);
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "%s: %s", __func__, e.what());
+	} catch (const std::runtime_error &e) {
+		printtext_print("err", "%s: %s", __func__, e.what());
+	} catch (...) {
+		printtext_print("err", "%s: %s", __func__, "unknown error");
+	}
+}
+
+bool
+ftp::passive(void)
+{
+	SOCKET sock;
+
+	if (ftp::ctl_conn == nullptr) {
+		printtext_print("err", "%s: %s", __func__,
+		    _("No control connection"));
+		return false;
+	} else if (ftp::data_conn != nullptr) {
+		printtext_print("err", "%s: %s", __func__,
+		    _("Already in passive mode"));
+		return false;
+	}
+
+	sock = ftp::ctl_conn->get_sock();
+
+	if (ftp::send_printf(sock, "PASV\r\n") <= 0) {
+		printtext_print("err", "%s: %s", __func__,
+		    _("Cannot send"));
+		return false;
+	}
+
+	while (ftp::ctl_conn->read_reply(3)) {
+		for (FTP_REPLY &rep : ftp::ctl_conn->reply_vec) {
+			if (rep.num == 227)
+				create_data_conn(rep.text.c_str());
+			else
+				print_one_rep(rep.num, rep.text.c_str());
+		}
+	}
+
+	if (ftp::data_conn)
+		return true;
+	printtext_print("err", "%s", _("Failed to enter passive mode"));
+	return false;
+}
+
 CSTRING
 ftp::get_upload_dir(void)
 {
