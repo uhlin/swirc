@@ -68,6 +68,7 @@ typedef struct tagFTP_REPLY {
 } FTP_REPLY, *PFTP_REPLY;
 
 typedef std::vector<FTP_REPLY>::size_type numrep_t;
+typedef std::vector<std::string>::size_type numstr_t;
 
 class ftp_ctl_conn {
 public:
