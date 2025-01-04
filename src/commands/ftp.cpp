@@ -468,6 +468,10 @@ ftp_data_conn::list_fetch(const int timeo)
 void
 ftp_data_conn::list_print(void)
 {
+	if (this->vec.empty())
+		return;
+	for (const std::string &str : this->vec)
+		print_one_rep(0, str.c_str()); // XXX
 }
 
 static bool
