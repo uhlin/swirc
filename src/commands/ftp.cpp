@@ -52,6 +52,23 @@
 #include "ftp.h"
 #include "i18n.h"
 
+#define RECV_AND_CHECK()\
+	do {\
+		int bytes_received;\
+		struct network_recv_context recv_ctx(this->sock, 0, timeo, 0);\
+\
+		BZERO(this->buf, sizeof this->buf);\
+		bytes_received = net_recv_plain(&recv_ctx, this->buf,\
+		    sizeof this->buf - 1);\
+\
+		if (bytes_received <= 0)\
+			return 0;\
+		if (memchr(this->buf, 0, bytes_received) != nullptr)\
+			destroy_null_bytes_exported(this->buf, bytes_received);\
+		if (strpbrk(this->buf, sep) == nullptr)\
+			return 0;\
+	} while (false)
+
 ftp_ctl_conn	*ftp::ctl_conn = nullptr;
 ftp_data_conn	*ftp::data_conn = nullptr;
 
@@ -295,22 +312,11 @@ ftp_ctl_conn::read_reply(const int timeo)
 {
 	CSTRING				token;
 	STRING				tokstate = const_cast<STRING>("");
-	int				bytes_received;
 	int				loop_run = 0;
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
-	struct network_recv_context	recv_ctx(this->sock, 0, timeo, 0);
 
-	BZERO(this->buf, sizeof this->buf);
-	bytes_received = net_recv_plain(&recv_ctx, this->buf,
-	    sizeof this->buf - 1);
-
-	if (bytes_received <= 0)
-		return 0;
-	if (memchr(this->buf, 0, bytes_received) != nullptr)
-		destroy_null_bytes_exported(this->buf, bytes_received);
-	if (strpbrk(this->buf, sep) == nullptr)
-		return 0;
+	RECV_AND_CHECK();
 
 	this->reply_vec.clear();
 
