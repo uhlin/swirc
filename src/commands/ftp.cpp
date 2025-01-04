@@ -180,6 +180,17 @@ ftp_ctl_conn::printreps(void)
 		print_one_rep(rep.num, rep.text.c_str());
 }
 
+static bool
+is_terminated(CSTRING buf, const size_t size)
+{
+	size_t last;
+
+	if ((last = strlen(buf) - 1) >= size)
+		err_exit(EOVERFLOW, "%s", __func__);
+
+	return (buf[last] == '\r' || buf[last] == '\n');
+}
+
 static std::string
 get_last_token(CSTRING buffer)
 {
@@ -269,10 +280,8 @@ ftp_ctl_conn::read_reply(const int timeo)
 {
 	CSTRING				token;
 	STRING				tokstate = const_cast<STRING>("");
-	bool				terminated = false;
 	int				bytes_received;
 	int				loop_count = 0;
-	size_t				last;
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
 	struct network_recv_context	recv_ctx(this->sock, 0, timeo, 0);
@@ -287,22 +296,10 @@ ftp_ctl_conn::read_reply(const int timeo)
 		destroy_null_bytes_exported(this->buf, bytes_received);
 	if (strpbrk(this->buf, sep) == nullptr)
 		return 0;
-	if ((last = strlen(this->buf) - 1) >= sizeof this->buf)
-		err_exit(EOVERFLOW, "%s", __func__);
-
-	switch (this->buf[last]) {
-	case '\r':
-	case '\n':
-		terminated = true;
-		break;
-	default:
-		terminated = false;
-		break;
-	}
 
 	this->reply_vec.clear();
 
-	if (!terminated)
+	if (!is_terminated(this->buf, sizeof this->buf))
 		last_token.assign(get_last_token(this->buf));
 
 	if (this->state == CONCAT_BUFFER_CONTAIN_DATA &&
