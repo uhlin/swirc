@@ -4,6 +4,7 @@
 #if defined(UNIX)
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <netdb.h>
 
 #include <arpa/inet.h>
 #include <netinet/in.h>

@@ -33,8 +33,6 @@
 #include <sys/param.h>
 #endif
 
-#include <netdb.h>
-
 #include <stdexcept>
 
 #include "../config.h"
