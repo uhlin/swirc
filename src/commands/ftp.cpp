@@ -54,6 +54,8 @@
 
 ftp_ctl_conn *ftp::ctl_conn = nullptr;
 
+static void print_one_rep(const int, CSTRING);
+
 ftp_ctl_conn::ftp_ctl_conn()
     : sock(INVALID_SOCKET)
     , state(CONCAT_BUFFER_IS_EMPTY)
@@ -160,18 +162,21 @@ ftp_ctl_conn::login(void)
 	}
 }
 
-void
-ftp_ctl_conn::printreps(void)
+static void
+print_one_rep(const int num, CSTRING text)
 {
 	immutable_cp_t	b1 = Theme("notice_inner_b1");
 	immutable_cp_t	b2 = Theme("notice_inner_b2");
 	immutable_cp_t	sep = Theme("notice_sep");
 
-	for (FTP_REPLY &rep : this->reply_vec) {
-		printtext_print("none", "%s%s%s%d%s %s",
-		    b1, "FTP", sep, rep.num, b2,
-		    rep.text.c_str());
-	}
+	printtext_print("none", "%s%s%s%d%s %s", b1, "FTP", sep, num, b2, text);
+}
+
+void
+ftp_ctl_conn::printreps(void)
+{
+	for (FTP_REPLY &rep : this->reply_vec)
+		print_one_rep(rep.num, rep.text.c_str());
 }
 
 static std::string
