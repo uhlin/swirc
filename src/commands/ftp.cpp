@@ -397,6 +397,24 @@ ftp_data_conn::~ftp_data_conn()
 	}
 }
 
+SOCKET
+ftp_data_conn::get_sock(void) const
+{
+	return (this->sock);
+}
+
+numstr_t
+ftp_data_conn::list_fetch(const int timeo)
+{
+	UNUSED_PARAM(timeo);
+	return 0;
+}
+
+void
+ftp_data_conn::list_print(void)
+{
+}
+
 static bool
 subcmd_ok(CSTRING cmd)
 {

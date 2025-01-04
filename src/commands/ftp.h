@@ -96,6 +96,12 @@ public:
 	ftp_data_conn(CSTRING);
 	~ftp_data_conn();
 
+	std::vector<std::string> vec;
+
+	SOCKET		get_sock(void) const;
+	numstr_t	list_fetch(const int);
+	void		list_print(void);
+
 private:
 	SOCKET				 sock;
 	STRING				 host_str, port_str;
