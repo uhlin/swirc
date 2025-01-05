@@ -629,6 +629,14 @@ subcmd_pwd(void)
 		ftp::ctl_conn->printreps();
 }
 
+/*
+ * usage:
+ *     /ftp cd <path>
+ *     /ftp exit
+ *     /ftp login
+ *     /ftp ls [dir|up|down]
+ *     /ftp pwd
+ */
 void
 cmd_ftp(CSTRING data)
 {
