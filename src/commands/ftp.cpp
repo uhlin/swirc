@@ -54,18 +54,19 @@
 
 #define RECV_AND_CHECK(p_microsec)\
 	do {\
-		int bytes_received;\
-		struct network_recv_context recv_ctx(this->sock, 0, timeo,\
+		int m_bytes_received;\
+		struct network_recv_context m_recv_ctx(this->sock, 0, timeo,\
 		    p_microsec);\
 \
 		BZERO(this->buf, sizeof this->buf);\
-		bytes_received = net_recv_plain(&recv_ctx, this->buf,\
+		m_bytes_received = net_recv_plain(&m_recv_ctx, this->buf,\
 		    sizeof this->buf - 1);\
 \
-		if (bytes_received <= 0)\
+		if (m_bytes_received <= 0)\
 			return 0;\
-		if (memchr(this->buf, 0, bytes_received) != nullptr)\
-			destroy_null_bytes_exported(this->buf, bytes_received);\
+		if (memchr(this->buf, 0, m_bytes_received) != nullptr)\
+			destroy_null_bytes_exported(this->buf,\
+			    m_bytes_received);\
 		if (strpbrk(this->buf, sep) == nullptr)\
 			return 0;\
 	} while (false)
