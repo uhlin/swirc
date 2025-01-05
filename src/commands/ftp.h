@@ -77,6 +77,9 @@ typedef int SOCKET;
 
 __SWIRC_BEGIN_DECLS
 void	cmd_ftp(CSTRING);
+
+void	ftp_init(void);
+void	ftp_deinit(void);
 __SWIRC_END_DECLS
 
 #ifdef __cplusplus

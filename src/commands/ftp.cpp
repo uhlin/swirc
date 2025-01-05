@@ -669,6 +669,22 @@ cmd_ftp(CSTRING data)
 	free(dcopy);
 }
 
+void
+ftp_init(void)
+{
+	debug("%s called", __func__);
+}
+
+void
+ftp_deinit(void)
+{
+	delete ftp::ctl_conn;
+	ftp::ctl_conn = nullptr;
+
+	delete ftp::data_conn;
+	ftp::data_conn = nullptr;
+}
+
 static void
 create_data_conn(CSTRING text)
 {
