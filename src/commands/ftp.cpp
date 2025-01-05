@@ -423,9 +423,13 @@ ftp_data_conn::connect_passive(void)
 {
 	struct sockaddr_in sin;
 
-	if (this->sock == INVALID_SOCKET &&
-	    (this->sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
+	if (this->sock != INVALID_SOCKET)
+		ftp_closesocket(this->sock);
+	if ((this->sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
+		printtext_print("err", "%s: %s", __func__,
+		    _("Failed to create an endpoint for communication"));
 		return false;
+	}
 
 	memset(&sin, 0, sizeof sin);
 	sin.sin_family = AF_INET;
