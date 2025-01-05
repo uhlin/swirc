@@ -1,7 +1,7 @@
 #ifndef COMMAND_HELP_H
 #define COMMAND_HELP_H
 /* commandhelp.h
-   Copyright (C) 2018-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -273,9 +273,15 @@ static usage_t fetchdic_usage = {
 };
 
 static usage_t ftp_usage = {
-  "usage: /ftp ...",
+  N_("usage:"),
+  "    /ftp cd <path>",
+  "    /ftp exit",
+  "    /ftp login",
+  "    /ftp ls [dir|up|down]",
+  "    /ftp pwd",
   "",
-  "No help yet.",
+  N_("Retrieve and store files on a FTP server. (The communication is done\n"
+     "in clear text, i.e. unencrypted.)"),
   "",
 };
 
