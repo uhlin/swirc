@@ -48,6 +48,7 @@
 #include "../strdup_printf.h"
 #include "../theme.h"
 
+#include "connect.h"
 #include "dcc.h" /* list_dir() */
 #include "ftp.h"
 #include "i18n.h"
@@ -673,6 +674,9 @@ void
 ftp_init(void)
 {
 	debug("%s called", __func__);
+#ifdef WIN32
+	winsock_init_doit();
+#endif
 }
 
 void
