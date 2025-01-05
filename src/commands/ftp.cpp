@@ -506,7 +506,9 @@ ftp_data_conn::list_print(void)
 static bool
 subcmd_ok(CSTRING cmd)
 {
-	if (strings_match(cmd, "exit"))
+	if (strings_match(cmd, "cd"))
+		return true;
+	else if (strings_match(cmd, "exit"))
 		return true;
 	else if (strings_match(cmd, "login"))
 		return true;
@@ -515,6 +517,30 @@ subcmd_ok(CSTRING cmd)
 	else if (strings_match(cmd, "pwd"))
 		return true;
 	return false;
+}
+
+static void
+subcmd_cd(CSTRING pathname)
+{
+	int n_sent;
+
+	if (pathname == nullptr || strings_match(pathname, "")) {
+		printtext_print("err", "insufficient args");
+		return;
+	} else if (ftp::ctl_conn == nullptr) {
+		printtext_print("err", "no control connection");
+		return;
+	}
+
+	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(), "CWD %s\r\n",
+	    pathname);
+	if (n_sent <= 0) {
+		printtext_print("err", "cannot send");
+		return;
+	}
+
+	while (ftp::ctl_conn->read_reply(0))
+		ftp::ctl_conn->printreps();
 }
 
 static void
@@ -628,7 +654,9 @@ cmd_ftp(CSTRING data)
 	arg[0] = strtok_r(nullptr, sep, &last);
 	arg[1] = strtok_r(nullptr, sep, &last);
 
-	if (strings_match(subcmd, "exit"))
+	if (strings_match(subcmd, "cd"))
+		subcmd_cd(arg[0]);
+	else if (strings_match(subcmd, "exit"))
 		subcmd_exit();
 	else if (strings_match(subcmd, "login"))
 		subcmd_login();
