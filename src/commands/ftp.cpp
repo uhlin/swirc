@@ -529,6 +529,22 @@ subcmd_ok(CSTRING cmd)
 }
 
 static void
+perform_simple_ftp_cmd(CSTRING cmd)
+{
+	int n_sent;
+
+	if (ftp::ctl_conn == nullptr)
+		return;
+
+	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(), "%s", cmd);
+	if (n_sent <= 0)
+		return;
+
+	while (ftp::ctl_conn->read_reply(0))
+		ftp::ctl_conn->printreps();
+}
+
+static void
 subcmd_cd(CSTRING pathname)
 {
 	int n_sent;
@@ -630,25 +646,13 @@ subcmd_ls(CSTRING arg)
 static void
 subcmd_pwd(void)
 {
-	if (ftp::ctl_conn == nullptr)
-		return;
-
-	(void) ftp::send_printf(ftp::ctl_conn->get_sock(), "PWD\r\n");
-
-	while (ftp::ctl_conn->read_reply(0))
-		ftp::ctl_conn->printreps();
+	perform_simple_ftp_cmd("PWD\r\n");
 }
 
 static void
 subcmd_system(void)
 {
-	if (ftp::ctl_conn == nullptr)
-		return;
-
-	(void) ftp::send_printf(ftp::ctl_conn->get_sock(), "SYST\r\n");
-
-	while (ftp::ctl_conn->read_reply(0))
-		ftp::ctl_conn->printreps();
+	perform_simple_ftp_cmd("SYST\r\n");
 }
 
 /*
