@@ -318,7 +318,7 @@ ftp_ctl_conn::read_reply(const int timeo)
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
 
-	RECV_AND_CHECK(100000);
+	RECV_AND_CHECK(222000);
 
 	this->reply_vec.clear();
 
@@ -453,7 +453,7 @@ ftp_data_conn::list_fetch(const int timeo)
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
 
-	RECV_AND_CHECK(100000);
+	RECV_AND_CHECK(222000);
 
 	this->vec.clear();
 
