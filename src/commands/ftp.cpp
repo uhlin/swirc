@@ -74,6 +74,7 @@
 ftp_ctl_conn	*ftp::ctl_conn = nullptr;
 ftp_data_conn	*ftp::data_conn = nullptr;
 
+static void delete_data_conn(void);
 static void print_one_rep(const int, CSTRING);
 
 ftp_ctl_conn::ftp_ctl_conn()
@@ -536,6 +537,13 @@ subcmd_login(void)
 		delete ftp::ctl_conn;
 	ftp::ctl_conn = new ftp_ctl_conn();
 	ftp::ctl_conn->login();
+}
+
+static void
+delete_data_conn(void)
+{
+	delete ftp::data_conn;
+	ftp::data_conn = nullptr;
 }
 
 static void
