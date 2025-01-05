@@ -121,7 +121,7 @@ private:
 class ftp_data_conn {
 public:
 	ftp_data_conn();
-	ftp_data_conn(CSTRING);
+	explicit ftp_data_conn(CSTRING);
 	~ftp_data_conn();
 
 	std::vector<std::string> vec;
