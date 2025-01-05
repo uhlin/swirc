@@ -417,7 +417,8 @@ ftp_data_conn::connect_passive(void)
 {
 	struct sockaddr_in sin;
 
-	if ((this->sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
+	if (this->sock == INVALID_SOCKET &&
+	    (this->sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
 		return false;
 
 	memset(&sin, 0, sizeof sin);
