@@ -52,10 +52,11 @@
 #include "ftp.h"
 #include "i18n.h"
 
-#define RECV_AND_CHECK()\
+#define RECV_AND_CHECK(p_microsec)\
 	do {\
 		int bytes_received;\
-		struct network_recv_context recv_ctx(this->sock, 0, timeo, 0);\
+		struct network_recv_context recv_ctx(this->sock, 0, timeo,\
+		    p_microsec);\
 \
 		BZERO(this->buf, sizeof this->buf);\
 		bytes_received = net_recv_plain(&recv_ctx, this->buf,\
@@ -316,7 +317,7 @@ ftp_ctl_conn::read_reply(const int timeo)
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
 
-	RECV_AND_CHECK();
+	RECV_AND_CHECK(100000);
 
 	this->reply_vec.clear();
 
@@ -451,7 +452,7 @@ ftp_data_conn::list_fetch(const int timeo)
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
 
-	RECV_AND_CHECK();
+	RECV_AND_CHECK(100000);
 
 	this->vec.clear();
 
