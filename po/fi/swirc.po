@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-01-05 15:41+0100\n"
+"POT-Creation-Date: 2025-01-05 17:05+0100\n"
 "PO-Revision-Date: 2025-01-04 11:07+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -166,44 +166,49 @@ msgstr "%s: onnistuneesti lähetetty tiedosto: %s"
 msgid "%s: file transfer incomplete: %s"
 msgstr "%s: tiedostonsiirto keskeneräinen: %s"
 
-#: ../src/commands/ftp.cpp:149
+#: ../src/commands/ftp.cpp:150
 msgid "Invalid username"
 msgstr "Virheellinen käyttäjänimi"
 
-#: ../src/commands/ftp.cpp:151
+#: ../src/commands/ftp.cpp:152
 msgid "Too long password"
 msgstr "Liian pitkä salasana"
 
-#: ../src/commands/ftp.cpp:153
+#: ../src/commands/ftp.cpp:154
 msgid "Invalid hostname"
 msgstr "Virheellinen isäntänimi"
 
-#: ../src/commands/ftp.cpp:155
+#: ../src/commands/ftp.cpp:156
 msgid "Invalid port number"
 msgstr "Virheellinen portin numero"
 
-#: ../src/commands/ftp.cpp:158 ../src/network.cpp:308
+#: ../src/commands/ftp.cpp:159 ../src/network.cpp:308
 msgid "Unable to get a list of IP addresses"
 msgstr "IP osoitteiden luetteloa ei voi saada"
 
-#: ../src/commands/ftp.cpp:161 ../src/commands/ftp.cpp:437
+#: ../src/commands/ftp.cpp:162 ../src/commands/ftp.cpp:442
 #: ../src/network.cpp:175
 msgid "Failed to establish a connection"
 msgstr "Yhteyden muodostaminen epäonnistui"
 
-#: ../src/commands/ftp.cpp:173 ../src/commands/ftp.cpp:710
+#: ../src/commands/ftp.cpp:174 ../src/commands/ftp.cpp:734
 msgid "Cannot send"
 msgstr "Ei voi lähettää"
 
-#: ../src/commands/ftp.cpp:698
+#: ../src/commands/ftp.cpp:430
+#, fuzzy
+msgid "Failed to create an endpoint for communication"
+msgstr "Yhteyden muodostaminen epäonnistui"
+
+#: ../src/commands/ftp.cpp:722
 msgid "No control connection"
 msgstr ""
 
-#: ../src/commands/ftp.cpp:702
+#: ../src/commands/ftp.cpp:726
 msgid "Already in passive mode"
 msgstr ""
 
-#: ../src/commands/ftp.cpp:725
+#: ../src/commands/ftp.cpp:749
 msgid "Failed to enter passive mode"
 msgstr ""
 
