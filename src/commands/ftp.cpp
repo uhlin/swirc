@@ -515,6 +515,8 @@ subcmd_ok(CSTRING cmd)
 		return true;
 	else if (strings_match(cmd, "exit"))
 		return true;
+	else if (strings_match(cmd, "get"))
+		return true;
 	else if (strings_match(cmd, "login"))
 		return true;
 	else if (strings_match(cmd, "ls"))
@@ -561,6 +563,12 @@ subcmd_exit(void)
 
 	delete ftp::ctl_conn;
 	ftp::ctl_conn = nullptr;
+}
+
+static void
+subcmd_get(CSTRING path)
+{
+	UNUSED_PARAM(path);
 }
 
 static void
@@ -633,6 +641,7 @@ subcmd_pwd(void)
  * usage:
  *     /ftp cd <path>
  *     /ftp exit
+ *     /ftp get <file>
  *     /ftp login
  *     /ftp ls [dir|up|down]
  *     /ftp pwd
@@ -671,6 +680,8 @@ cmd_ftp(CSTRING data)
 		subcmd_cd(arg[0]);
 	else if (strings_match(subcmd, "exit"))
 		subcmd_exit();
+	else if (strings_match(subcmd, "get"))
+		subcmd_get(arg[0]);
 	else if (strings_match(subcmd, "login"))
 		subcmd_login();
 	else if (strings_match(subcmd, "ls"))

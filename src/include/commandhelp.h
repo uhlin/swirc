@@ -276,6 +276,7 @@ static usage_t ftp_usage = {
   N_("usage:"),
   "    /ftp cd <path>",
   "    /ftp exit",
+  "    /ftp get <file>",
   "    /ftp login",
   "    /ftp ls [dir|up|down]",
   "    /ftp pwd",
