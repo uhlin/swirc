@@ -523,6 +523,8 @@ subcmd_ok(CSTRING cmd)
 		return true;
 	else if (strings_match(cmd, "pwd"))
 		return true;
+	else if (strings_match(cmd, "system"))
+		return true;
 	return false;
 }
 
@@ -637,6 +639,18 @@ subcmd_pwd(void)
 		ftp::ctl_conn->printreps();
 }
 
+static void
+subcmd_system(void)
+{
+	if (ftp::ctl_conn == nullptr)
+		return;
+
+	(void) ftp::send_printf(ftp::ctl_conn->get_sock(), "SYST\r\n");
+
+	while (ftp::ctl_conn->read_reply(0))
+		ftp::ctl_conn->printreps();
+}
+
 /*
  * usage:
  *     /ftp cd <path>
@@ -645,6 +659,7 @@ subcmd_pwd(void)
  *     /ftp login
  *     /ftp ls [dir|up|down]
  *     /ftp pwd
+ *     /ftp system
  */
 void
 cmd_ftp(CSTRING data)
@@ -688,6 +703,8 @@ cmd_ftp(CSTRING data)
 		subcmd_ls(arg[0]);
 	else if (strings_match(subcmd, "pwd"))
 		subcmd_pwd();
+	else if (strings_match(subcmd, "system"))
+		subcmd_system();
 	else
 		printtext_print("err", "%s: invalid subcommand", cmd);
 	free(dcopy);
