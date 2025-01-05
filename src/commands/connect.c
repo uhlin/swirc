@@ -585,7 +585,7 @@ ssl_is_enabled(void)
 }
 
 #ifdef WIN32
-static void
+void
 winsock_init_doit(void)
 {
 	static bool init_done = false;

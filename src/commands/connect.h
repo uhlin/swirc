@@ -31,6 +31,9 @@ void	do_connect(const char *server, const char *port, const char *pass);
 void	set_ssl_on(void);
 void	set_ssl_off(void);
 bool	ssl_is_enabled(void);
+#ifdef WIN32
+void	winsock_init_doit(void);
+#endif
 
 void	cmd_connect(const char *);
 void	cmd_disconnect(const char *);
