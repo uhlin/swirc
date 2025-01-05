@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-01-05 15:41+0100\n"
-"PO-Revision-Date: 2025-01-04 12:33+0100\n"
+"PO-Revision-Date: 2025-01-05 15:43+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -195,15 +195,15 @@ msgstr "Kan inte skicka"
 
 #: ../src/commands/ftp.cpp:698
 msgid "No control connection"
-msgstr ""
+msgstr "Ingen kontrollanslutning"
 
 #: ../src/commands/ftp.cpp:702
 msgid "Already in passive mode"
-msgstr ""
+msgstr "Redan i passivt läge"
 
 #: ../src/commands/ftp.cpp:725
 msgid "Failed to enter passive mode"
-msgstr ""
+msgstr "Det gick inte att gå in i passivt läge"
 
 #: ../src/commands/theme.c:313
 #, c-format
