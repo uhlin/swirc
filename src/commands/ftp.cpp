@@ -415,13 +415,18 @@ ftp_data_conn::~ftp_data_conn()
 bool
 ftp_data_conn::connect_passive(void)
 {
-	if (this->res == nullptr &&
-	    (this->res =
-	    net_addr_resolve(this->host_str, this->port_str)) == nullptr) {
-		printtext_print("err", "%s: %s", __func__,
-		    _("Unable to get a list of IP addresses"));
+	struct sockaddr_in sin;
+
+	if ((this->sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
 		return false;
-	} else if (!establish_conn(this->sock, this->res)) {
+
+	memset(&sin, 0, sizeof sin);
+	sin.sin_family = AF_INET;
+	sin.sin_port = htons(this->port);
+	sin.sin_addr.s_addr = inet_addr(this->host_str);
+
+	if (connect(this->sock, reinterpret_cast<struct sockaddr *>(&sin),
+	    sizeof sin) != 0) {
 		printtext_print("err", "%s: %s", __func__,
 		    _("Failed to establish a connection"));
 		return false;
