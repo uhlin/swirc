@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-01-05 17:05+0100\n"
-"PO-Revision-Date: 2025-01-05 15:43+0100\n"
+"PO-Revision-Date: 2025-01-05 17:09+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -194,9 +194,8 @@ msgid "Cannot send"
 msgstr "Kan inte skicka"
 
 #: ../src/commands/ftp.cpp:430
-#, fuzzy
 msgid "Failed to create an endpoint for communication"
-msgstr "Det gick inte att upprätta en anslutning"
+msgstr "Det gick inte att skapa en slutpunkt för kommunikation"
 
 #: ../src/commands/ftp.cpp:722
 msgid "No control connection"
