@@ -190,6 +190,8 @@ print_one_rep(const int num, CSTRING text)
 	immutable_cp_t	b2 = Theme("notice_inner_b2");
 	immutable_cp_t	sep = Theme("notice_sep");
 
+	if (num == 125 || num == 150)
+		return;
 	printtext_print("none", "%s%s%s%d%s %s", b1, "FTP", sep, num, b2, text);
 }
 
