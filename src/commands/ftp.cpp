@@ -170,7 +170,7 @@ ftp_ctl_conn::login(void)
 		if (n_sent <= 0)
 			throw std::runtime_error(_("Cannot send"));
 
-		while (this->read_reply(3))
+		while (this->read_reply(1))
 			this->printreps();
 	} catch (const std::exception &ex) {
 		immutable_cp_t	b1 = LEFT_BRKT;
@@ -521,7 +521,7 @@ subcmd_exit(void)
 
 	(void) ftp::send_printf(ftp::ctl_conn->get_sock(), "QUIT\r\n");
 
-	while (ftp::ctl_conn->read_reply(3))
+	while (ftp::ctl_conn->read_reply(1))
 		ftp::ctl_conn->printreps();
 
 	delete ftp::ctl_conn;
@@ -561,7 +561,7 @@ subcmd_pwd(void)
 
 	(void) ftp::send_printf(ftp::ctl_conn->get_sock(), "PWD\r\n");
 
-	while (ftp::ctl_conn->read_reply(3))
+	while (ftp::ctl_conn->read_reply(0))
 		ftp::ctl_conn->printreps();
 }
 
@@ -650,7 +650,7 @@ ftp::passive(void)
 		return false;
 	}
 
-	while (ftp::ctl_conn->read_reply(3)) {
+	while (ftp::ctl_conn->read_reply(0)) {
 		for (FTP_REPLY &rep : ftp::ctl_conn->reply_vec) {
 			if (rep.num == 227)
 				create_data_conn(rep.text.c_str());
