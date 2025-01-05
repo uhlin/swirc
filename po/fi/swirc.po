@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-01-04 07:08+0100\n"
+"POT-Creation-Date: 2025-01-05 15:41+0100\n"
 "PO-Revision-Date: 2025-01-04 11:07+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -166,33 +166,46 @@ msgstr "%s: onnistuneesti lähetetty tiedosto: %s"
 msgid "%s: file transfer incomplete: %s"
 msgstr "%s: tiedostonsiirto keskeneräinen: %s"
 
-#: ../src/commands/ftp.cpp:126
+#: ../src/commands/ftp.cpp:149
 msgid "Invalid username"
 msgstr "Virheellinen käyttäjänimi"
 
-#: ../src/commands/ftp.cpp:128
+#: ../src/commands/ftp.cpp:151
 msgid "Too long password"
 msgstr "Liian pitkä salasana"
 
-#: ../src/commands/ftp.cpp:130
+#: ../src/commands/ftp.cpp:153
 msgid "Invalid hostname"
 msgstr "Virheellinen isäntänimi"
 
-#: ../src/commands/ftp.cpp:132
+#: ../src/commands/ftp.cpp:155
 msgid "Invalid port number"
 msgstr "Virheellinen portin numero"
 
-#: ../src/commands/ftp.cpp:135 ../src/network.cpp:308
+#: ../src/commands/ftp.cpp:158 ../src/network.cpp:308
 msgid "Unable to get a list of IP addresses"
 msgstr "IP osoitteiden luetteloa ei voi saada"
 
-#: ../src/commands/ftp.cpp:138 ../src/network.cpp:175
+#: ../src/commands/ftp.cpp:161 ../src/commands/ftp.cpp:437
+#: ../src/network.cpp:175
 msgid "Failed to establish a connection"
 msgstr "Yhteyden muodostaminen epäonnistui"
 
-#: ../src/commands/ftp.cpp:150
+#: ../src/commands/ftp.cpp:173 ../src/commands/ftp.cpp:710
 msgid "Cannot send"
 msgstr "Ei voi lähettää"
+
+#: ../src/commands/ftp.cpp:698
+msgid "No control connection"
+msgstr ""
+
+#: ../src/commands/ftp.cpp:702
+msgid "Already in passive mode"
+msgstr ""
+
+#: ../src/commands/ftp.cpp:725
+msgid "Failed to enter passive mode"
+msgstr ""
 
 #: ../src/commands/theme.c:313
 #, c-format
