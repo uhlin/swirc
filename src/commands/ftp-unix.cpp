@@ -29,6 +29,11 @@
 
 #include "common.h"
 
+#include <sys/socket.h>
+
+#include <pthread.h>
+
+#include "../assertAPI.h"
 #include "../errHand.h"
 
 #include "ftp.h"
