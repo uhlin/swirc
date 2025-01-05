@@ -788,7 +788,7 @@ ftp::send_printf(SOCKET sock, CSTRING fmt, ...)
 		return (errno == EAGAIN || errno == EWOULDBLOCK ? 0 : -1);
 	}
 #elif defined(WIN32)
-	if ((n_sent = send(g_socket, buffer, size_to_int(strlen(buffer)), 0)) ==
+	if ((n_sent = send(sock, buffer, size_to_int(strlen(buffer)), 0)) ==
 	    SOCKET_ERROR) {
 		free_and_null(&buffer);
 		return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
