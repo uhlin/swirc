@@ -684,6 +684,7 @@ main(int argc, char *argv[])
 	windowSystem_init();
 	readline_init();
 	net_ssl_init();
+	ftp_init();
 
 #if defined(UNIX) && defined(NDEBUG)
 	struct rlimit rlim = { 0 };
@@ -767,6 +768,7 @@ main(int argc, char *argv[])
 	 * Reverse order...
 	 */
 	dcc_deinit();
+	ftp_deinit();
 	net_ssl_deinit();
 #ifdef WIN32
 	winsock_deinit();
