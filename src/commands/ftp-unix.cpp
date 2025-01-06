@@ -48,6 +48,8 @@ cmd_doit(void *arg)
 		ftp::login();
 	else if (strings_match(name, "ls dir"))
 		ftp::ls_dir();
+	else
+		err_log(0, "%s: incorrect command: '%s'", __func__, name);
 	free(name);
 	ftp::exit_thread();
 
