@@ -423,8 +423,8 @@ ftp_data_conn::~ftp_data_conn()
 		this->sock = INVALID_SOCKET;
 	}
 
-	free(host_str);
-	free(port_str);
+	free(this->host_str);
+	free(this->port_str);
 
 	if (this->res != nullptr) {
 		freeaddrinfo(this->res);
