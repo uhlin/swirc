@@ -478,7 +478,7 @@ ftp_data_conn::list_fetch(const int timeo)
 	if (this->state == CONCAT_BUFFER_CONTAIN_DATA &&
 	    this->buf[0] == '\r' &&
 	    this->buf[1] == '\n') {
-		this->vec.push_back(this->message_concat.c_str());
+		this->vec.push_back(this->message_concat);
 
 		this->message_concat.assign("");
 		this->state = CONCAT_BUFFER_IS_EMPTY;
