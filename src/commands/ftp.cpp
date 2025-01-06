@@ -592,10 +592,7 @@ subcmd_get(CSTRING path)
 static void
 subcmd_login(void)
 {
-	if (ftp::ctl_conn != nullptr)
-		delete ftp::ctl_conn;
-	ftp::ctl_conn = new ftp_ctl_conn();
-	ftp::ctl_conn->login();
+	ftp::do_cmd_detached("login");
 }
 
 static void
