@@ -361,7 +361,9 @@ ftp_ctl_conn::read_reply(const int timeo)
 }
 
 ftp_data_conn::ftp_data_conn()
-    : fileptr(nullptr)
+    : full_path(nullptr)
+    , path(nullptr)
+    , fileptr(nullptr)
     , sock(INVALID_SOCKET)
     , host_str(nullptr)
     , port_str(nullptr)
@@ -378,7 +380,9 @@ ftp_data_conn::ftp_data_conn()
 }
 
 ftp_data_conn::ftp_data_conn(CSTRING text)
-    : fileptr(nullptr)
+    : full_path(nullptr)
+    , path(nullptr)
+    , fileptr(nullptr)
     , sock(INVALID_SOCKET)
     , host_str(nullptr)
     , port_str(nullptr)
@@ -406,6 +410,9 @@ ftp_data_conn::ftp_data_conn(CSTRING text)
 
 ftp_data_conn::~ftp_data_conn()
 {
+	free(this->full_path);
+	free(this->path);
+
 	if (this->fileptr != nullptr) {
 		fclose(this->fileptr);
 		this->fileptr = nullptr;

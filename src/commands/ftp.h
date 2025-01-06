@@ -140,6 +140,7 @@ public:
 	explicit ftp_data_conn(CSTRING);
 	~ftp_data_conn();
 
+	STRING full_path, path;
 	std::vector<std::string> vec;
 
 	bool		connect_passive(void);
