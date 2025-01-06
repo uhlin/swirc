@@ -40,6 +40,32 @@
 
 #include "ftp.h"
 
+typedef void __cdecl VoidCdecl;
+
+static VoidCdecl
+cmd_doit(void *arg)
+{
+	STRING name = static_cast<STRING>(arg);
+
+	SELECT_AND_RUN_CMD();
+	free(name);
+	ftp::exit_thread();
+}
+
+NORETURN void
+ftp::exit_thread(void)
+{
+	_endthread();
+	sw_assert_not_reached();
+}
+
+void
+ftp::do_cmd_detached(CSTRING cmd)
+{
+	if (_beginthread(cmd_doit, 0, sw_strdup(cmd)) == g_beginthread_failed)
+		err_sys("%s: _beginthread", __func__);
+}
+
 void
 ftp::set_timeout(SOCKET sock, int optname, const DWORD seconds)
 {
