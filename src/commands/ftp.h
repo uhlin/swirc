@@ -75,6 +75,17 @@ typedef int SOCKET;
 #define FTP_TEMP_RECV_TIMEOUT 4
 #define FTP_TEMP_SEND_TIMEOUT 4
 
+#define SELECT_AND_RUN_CMD()\
+	do {\
+		if (strings_match(name, "login"))\
+			ftp::login();\
+		else if (strings_match(name, "ls dir"))\
+			ftp::ls_dir();\
+		else\
+			err_log(0, "%s: incorrect command: '%s'", __func__,\
+			    name);\
+	} while (false)
+
 __SWIRC_BEGIN_DECLS
 void	cmd_ftp(CSTRING);
 

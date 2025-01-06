@@ -44,12 +44,7 @@ cmd_doit(void *arg)
 {
 	STRING name = static_cast<STRING>(arg);
 
-	if (strings_match(name, "login"))
-		ftp::login();
-	else if (strings_match(name, "ls dir"))
-		ftp::ls_dir();
-	else
-		err_log(0, "%s: incorrect command: '%s'", __func__, name);
+	SELECT_AND_RUN_CMD();
 	free(name);
 	ftp::exit_thread();
 
