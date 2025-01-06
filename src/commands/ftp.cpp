@@ -855,6 +855,10 @@ ftp::passive(void)
 void
 ftp::get_file(void)
 {
+	if (ftp::data_conn == nullptr)
+		return;
+	ftp::data_conn->get_file();
+	delete_data_conn();
 }
 
 CSTRING
