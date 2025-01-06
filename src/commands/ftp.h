@@ -48,6 +48,8 @@
 #include <vector>
 #endif
 
+#include <stdio.h>
+
 #include "../irc.h"
 
 #if defined(UNIX) && !defined(_SOCKET_DEFINED)
@@ -146,6 +148,7 @@ public:
 	void		list_print(void);
 
 private:
+	FILE				*fileptr;
 	SOCKET				 sock;
 	STRING				 host_str, port_str;
 	char				 buf[2048];
