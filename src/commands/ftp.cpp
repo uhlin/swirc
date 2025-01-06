@@ -772,6 +772,11 @@ ftp::passive(void)
 	return false;
 }
 
+void
+ftp::get_file(void)
+{
+}
+
 CSTRING
 ftp::get_upload_dir(void)
 {

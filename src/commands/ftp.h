@@ -166,6 +166,7 @@ namespace ftp
 
 	void		do_cmd_detached(CSTRING);
 	NORETURN void	exit_thread(void);
+	void		get_file(void);
 	CSTRING		get_upload_dir(void);
 	void		login(void);
 	void		ls_dir(void);
