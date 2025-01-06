@@ -150,15 +150,17 @@ namespace ftp
 	extern ftp_ctl_conn *ctl_conn;
 	extern ftp_data_conn *data_conn;
 
-	CSTRING	get_upload_dir(void);
-	bool	passive(void);
-	int	send_printf(SOCKET, CSTRING, ...) PRINTFLIKE(2);
+	void		do_cmd_detached(CSTRING);
+	NORETURN void	exit_thread(void);
+	CSTRING		get_upload_dir(void);
+	bool		passive(void);
+	int		send_printf(SOCKET, CSTRING, ...) PRINTFLIKE(2);
 #if defined(UNIX)
-	void	set_timeout(SOCKET, int, const time_t);
+	void		set_timeout(SOCKET, int, const time_t);
 #elif defined(WIN32)
-	void	set_timeout(SOCKET, int, const DWORD);
+	void		set_timeout(SOCKET, int, const DWORD);
 #endif
-	bool	want_unveil_uploads(void);
+	bool		want_unveil_uploads(void);
 }
 #endif
 
