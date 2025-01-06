@@ -35,8 +35,42 @@
 
 #include "../assertAPI.h"
 #include "../errHand.h"
+#include "../strHand.h"
 
 #include "ftp.h"
+
+static void *
+cmd_doit(void *arg)
+{
+	STRING name = static_cast<STRING>(arg);
+
+	free(name);
+	ftp::exit_thread();
+
+	/* NOTREACHED */
+	return nullptr;
+}
+
+NORETURN void
+ftp::exit_thread(void)
+{
+	int dummy = 0;
+
+	pthread_exit(&dummy);
+	sw_assert_not_reached();
+}
+
+void
+ftp::do_cmd_detached(CSTRING cmd)
+{
+	pthread_t tid;
+
+	if ((errno = pthread_create(&tid, nullptr, cmd_doit,
+	    sw_strdup(cmd))) != 0)
+		err_sys("%s: pthread_create", __func__);
+	else if ((errno = pthread_detach(tid)) != 0)
+		err_sys("%s: pthread_detach", __func__);
+}
 
 void
 ftp::set_timeout(SOCKET sock, int optname, const time_t seconds)
