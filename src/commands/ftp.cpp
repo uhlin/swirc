@@ -673,7 +673,27 @@ subcmd_exit(void)
 static void
 subcmd_get(CSTRING path)
 {
-	UNUSED_PARAM(path);
+	int n_sent;
+
+	if (!ftp::passive())
+		return;
+	if (!ftp::data_conn->connect_passive()) {
+		delete_data_conn();
+		return;
+	}
+
+	ftp::data_conn->full_path = strdup_printf("%s%s%s", g_ftp_download_dir,
+	    SLASH, path);
+	ftp::data_conn->path = sw_strdup(path);
+
+	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(),
+	    "TYPE L 8\r\nRETR %s\r\n", path);
+	if (n_sent <= 0) {
+		delete_data_conn();
+		return;
+	}
+
+	ftp::do_cmd_detached("get file");
 }
 
 static void
