@@ -79,7 +79,9 @@ typedef int SOCKET;
 
 #define SELECT_AND_RUN_CMD()\
 	do {\
-		if (strings_match(name, "login"))\
+		if (strings_match(name, "get file"))\
+			ftp::get_file();\
+		else if (strings_match(name, "login"))\
 			ftp::login();\
 		else if (strings_match(name, "ls dir"))\
 			ftp::ls_dir();\
