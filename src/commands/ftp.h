@@ -153,6 +153,7 @@ namespace ftp
 	void		do_cmd_detached(CSTRING);
 	NORETURN void	exit_thread(void);
 	CSTRING		get_upload_dir(void);
+	void		ls_dir(void);
 	bool		passive(void);
 	int		send_printf(SOCKET, CSTRING, ...) PRINTFLIKE(2);
 #if defined(UNIX)

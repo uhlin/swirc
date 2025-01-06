@@ -806,6 +806,33 @@ ftp::get_upload_dir(void)
 #endif
 }
 
+void
+ftp::ls_dir(void)
+{
+	int n_sent;
+
+	if (!ftp::passive())
+		return;
+	if (!ftp::data_conn->connect_passive()) {
+		delete_data_conn();
+		return;
+	}
+
+	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(), "LIST\r\n");
+	if (n_sent <= 0) {
+		delete_data_conn();
+		return;
+	}
+
+	while (ftp::data_conn->list_fetch(3))
+		ftp::data_conn->list_print();
+
+	delete_data_conn();
+
+	while (ftp::ctl_conn->read_reply(1))
+		ftp::ctl_conn->printreps();
+}
+
 int
 ftp::send_printf(SOCKET sock, CSTRING fmt, ...)
 {
