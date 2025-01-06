@@ -460,6 +460,78 @@ ftp_data_conn::connect_passive(void)
 	return true;
 }
 
+void
+ftp_data_conn::get_file(void)
+{
+	bool		proceed = true;
+	char		unit = 'B';
+	double		size = 0.0;
+	int		bytes_received;
+	intmax_t	total = 0;
+
+	while (ftp::ctl_conn->read_reply(1)) {
+		for (const FTP_REPLY &rep : ftp::ctl_conn->reply_vec) {
+			if (rep.num == 450 || rep.num == 550)
+				proceed = false;
+			print_one_rep(rep.num, rep.text.c_str());
+		}
+	}
+
+	if (!proceed)
+		return;
+	if (this->full_path == nullptr || this->path == nullptr)
+		return;
+	if ((this->fileptr = xfopen(this->full_path, "ab")) == nullptr) {
+		printtext_print("err", "open failed: %s", this->full_path);
+		return;
+	}
+
+#if defined(UNIX)
+	if (ftruncate(fileno(this->fileptr), 0) != 0) {
+		printtext_print("err", "change size error");
+		return;
+	}
+#elif defined(WIN32)
+	if ((errno = _chsize_s(fileno(this->fileptr), 0)) != 0) {
+		printtext_print("err", "change size error");
+		return;
+	}
+#endif
+
+	struct network_recv_context recv_ctx(this->sock, 0, 3, 0);
+
+	printtext_print("success", "getting: %s...", this->path);
+
+	while (true) {
+		BZERO(this->buf, sizeof this->buf);
+		bytes_received = net_recv_plain(&recv_ctx, this->buf,
+		    sizeof this->buf - 1);
+		if (bytes_received > 0) {
+			if (fwrite(this->buf, 1, bytes_received,
+			    this->fileptr) !=
+			    static_cast<size_t>(bytes_received)) {
+				printtext_print("err", "file write error");
+				break;
+			} else
+				total += bytes_received;
+		} else if (bytes_received == 0) {
+			/* continue */;
+		} else if (bytes_received < 0) {
+			break;
+		} else {
+			sw_assert_not_reached();
+		}
+	}
+
+	while (ftp::ctl_conn->read_reply(1))
+		ftp::ctl_conn->printreps();
+
+	fclose_and_null(&this->fileptr);
+	dcc::get_file_size(total, size, unit);
+	printtext_print("success", "wrote: %s (%.1f%c)", this->full_path,
+	    size, unit);
+}
+
 SOCKET
 ftp_data_conn::get_sock(void) const
 {
