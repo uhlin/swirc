@@ -461,6 +461,16 @@ ftp_data_conn::connect_passive(void)
 	return true;
 }
 
+static bool
+zero_truncate(FILE *fileptr)
+{
+#if defined(UNIX)
+	return (ftruncate(fileno(fileptr), 0) == 0);
+#elif defined(WIN32)
+	return ((errno = _chsize_s(fileno(fileptr), 0)) == 0);
+#endif
+}
+
 void
 ftp_data_conn::get_file(void)
 {
@@ -486,18 +496,10 @@ ftp_data_conn::get_file(void)
 		printtext_print("err", "open failed: %s", this->full_path);
 		return;
 	}
-
-#if defined(UNIX)
-	if (ftruncate(fileno(this->fileptr), 0) != 0) {
+	if (!zero_truncate(this->fileptr)) {
 		printtext_print("err", "change size error");
 		return;
 	}
-#elif defined(WIN32)
-	if ((errno = _chsize_s(fileno(this->fileptr), 0)) != 0) {
-		printtext_print("err", "change size error");
-		return;
-	}
-#endif
 
 	struct network_recv_context recv_ctx(this->sock, 0, 3, 0);
 
