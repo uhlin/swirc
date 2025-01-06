@@ -44,6 +44,8 @@ cmd_doit(void *arg)
 {
 	STRING name = static_cast<STRING>(arg);
 
+	if (strings_match(name, "ls dir"))
+		ftp::ls_dir();
 	free(name);
 	ftp::exit_thread();
 

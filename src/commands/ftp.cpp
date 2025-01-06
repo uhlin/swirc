@@ -611,29 +611,7 @@ subcmd_ls(CSTRING arg)
 	if (arg == nullptr || strings_match(arg, "")) {
 		printtext_print("err", "insufficient args");
 	} else if (strings_match(arg, "dir")) {
-		int n_sent;
-
-		if (!ftp::passive())
-			return;
-		if (!ftp::data_conn->connect_passive()) {
-			delete_data_conn();
-			return;
-		}
-
-		n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(),
-		    "LIST\r\n");
-		if (n_sent <= 0) {
-			delete_data_conn();
-			return;
-		}
-
-		while (ftp::data_conn->list_fetch(0))
-			ftp::data_conn->list_print();
-
-		delete_data_conn();
-
-		while (ftp::ctl_conn->read_reply(0))
-			ftp::ctl_conn->printreps();
+		ftp::do_cmd_detached("ls dir");
 	} else if (strings_match(arg, "up")) {
 		list_dir(ftp::get_upload_dir());
 	} else if (strings_match(arg, "down")) {
