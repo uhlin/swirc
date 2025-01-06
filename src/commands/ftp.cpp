@@ -785,6 +785,15 @@ ftp::get_upload_dir(void)
 }
 
 void
+ftp::login(void)
+{
+	if (ftp::ctl_conn != nullptr)
+		delete ftp::ctl_conn;
+	ftp::ctl_conn = new ftp_ctl_conn();
+	ftp::ctl_conn->login();
+}
+
+void
 ftp::ls_dir(void)
 {
 	int n_sent;
