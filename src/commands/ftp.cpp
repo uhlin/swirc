@@ -199,7 +199,7 @@ print_one_rep(const int num, CSTRING text)
 void
 ftp_ctl_conn::printreps(void)
 {
-	for (FTP_REPLY &rep : this->reply_vec)
+	for (const FTP_REPLY &rep : this->reply_vec)
 		print_one_rep(rep.num, rep.text.c_str());
 }
 
@@ -758,7 +758,7 @@ ftp::passive(void)
 	}
 
 	while (ftp::ctl_conn->read_reply(0)) {
-		for (FTP_REPLY &rep : ftp::ctl_conn->reply_vec) {
+		for (const FTP_REPLY &rep : ftp::ctl_conn->reply_vec) {
 			if (rep.num == 227)
 				create_data_conn(rep.text.c_str());
 			else
