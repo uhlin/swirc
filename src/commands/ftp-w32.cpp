@@ -33,6 +33,7 @@
 
 #include "../assertAPI.h"
 #include "../errHand.h"
+#include "../sig.h"
 #include "../strHand.h"
 #include "../tls-server.h"
 
@@ -47,6 +48,7 @@ cmd_doit(void *arg)
 {
 	STRING name = static_cast<STRING>(arg);
 
+	block_signals();
 	SELECT_AND_RUN_CMD();
 	free(name);
 	ftp::exit_thread();
