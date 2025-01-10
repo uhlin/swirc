@@ -204,6 +204,13 @@ ftp_ctl_conn::printreps(void)
 		print_one_rep(rep.num, rep.text.c_str());
 }
 
+void
+ftp_ctl_conn::read_and_print(const int timeo)
+{
+	while (this->read_reply(timeo))
+		this->printreps();
+}
+
 static bool
 is_terminated(CSTRING buf, const size_t size)
 {

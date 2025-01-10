@@ -126,6 +126,7 @@ public:
 	SOCKET		get_sock(void) const;
 	void		login(void);
 	void		printreps(void);
+	void		read_and_print(const int);
 	numrep_t	read_reply(const int);
 
 private:
