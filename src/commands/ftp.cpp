@@ -164,8 +164,7 @@ ftp_ctl_conn::login(void)
 			    "connection"));
 		}
 
-		while (this->read_reply(1))
-			this->printreps();
+		this->read_and_print(1);
 
 		ftp::set_timeout(sock, SO_SNDTIMEO, 4);
 		n_sent = ftp::send_printf(this->sock, "USER %s\r\nPASS %s\r\n",
@@ -174,8 +173,7 @@ ftp_ctl_conn::login(void)
 		if (n_sent <= 0)
 			throw std::runtime_error(_("Cannot send"));
 
-		while (this->read_reply(1))
-			this->printreps();
+		this->read_and_print(1);
 	} catch (const std::exception &ex) {
 		immutable_cp_t	b1 = LEFT_BRKT;
 		immutable_cp_t	b2 = RIGHT_BRKT;
@@ -533,9 +531,7 @@ ftp_data_conn::get_file(void)
 		}
 	}
 
-	while (ftp::ctl_conn->read_reply(1))
-		ftp::ctl_conn->printreps();
-
+	ftp::ctl_conn->read_and_print(1);
 	fclose_and_null(&this->fileptr);
 	dcc::get_file_size(total, size, unit);
 	printtext_print("success", "wrote: %s (%.1f%c)", this->full_path,
@@ -638,8 +634,7 @@ perform_simple_ftp_cmd(CSTRING cmd)
 	if (n_sent <= 0)
 		return;
 
-	while (ftp::ctl_conn->read_reply(0))
-		ftp::ctl_conn->printreps();
+	ftp::ctl_conn->read_and_print(0);
 }
 
 static void
@@ -662,8 +657,7 @@ subcmd_cd(CSTRING pathname)
 		return;
 	}
 
-	while (ftp::ctl_conn->read_reply(0))
-		ftp::ctl_conn->printreps();
+	ftp::ctl_conn->read_and_print(0);
 }
 
 static void
@@ -674,8 +668,7 @@ subcmd_exit(void)
 
 	(void) ftp::send_printf(ftp::ctl_conn->get_sock(), "QUIT\r\n");
 
-	while (ftp::ctl_conn->read_reply(1))
-		ftp::ctl_conn->printreps();
+	ftp::ctl_conn->read_and_print(1);
 
 	delete ftp::ctl_conn;
 	ftp::ctl_conn = nullptr;
@@ -949,8 +942,7 @@ ftp::ls_dir(void)
 
 	delete_data_conn();
 
-	while (ftp::ctl_conn->read_reply(1))
-		ftp::ctl_conn->printreps();
+	ftp::ctl_conn->read_and_print(1);
 }
 
 int
