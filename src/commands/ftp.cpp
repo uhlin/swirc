@@ -516,9 +516,17 @@ ftp_data_conn::get_file(void)
 
 	while (ftp::ctl_conn->read_reply(1)) {
 		for (const FTP_REPLY &rep : ftp::ctl_conn->reply_vec) {
-			if (rep.num == 450 || rep.num == 550)
+			if (rep.num == 211) {
+				/* null */;
+			} else if (rep.num == 450 || rep.num == 550) {
 				proceed = false;
-			print_one_rep(rep.num, rep.text.c_str());
+				print_one_rep(rep.num, rep.text.c_str());
+			} else if (rep.num == 1000) {
+				get_bytes(rep.text);
+				print_one_rep(rep.num, rep.text.c_str());
+			} else {
+				print_one_rep(rep.num, rep.text.c_str());
+			}
 		}
 	}
 
