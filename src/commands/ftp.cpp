@@ -482,6 +482,29 @@ zero_truncate(FILE *fileptr)
 #endif
 }
 
+static void
+get_bytes(const std::string &str)
+{
+	CSTRING			bytes_str;
+	STRING			str_copy = sw_strdup(str.c_str());
+	STRING			tokstate = const_cast<STRING>("");
+	static chararray_t	sep	 = " \r\n";
+
+	(void) strtok_r(str_copy, sep, &tokstate);
+	(void) strtok_r(nullptr, sep, &tokstate);
+	(void) strtok_r(nullptr, sep, &tokstate);
+	(void) strtok_r(nullptr, sep, &tokstate);
+
+	if ((bytes_str = strtok_r(nullptr, sep, &tokstate)) == nullptr ||
+	    !is_numeric(bytes_str) ||
+	    sscanf(bytes_str, "%jd", &ftp::data_conn->filesz) != 1) {
+		printtext_print("warn", "failed to get the file size");
+		ftp::data_conn->filesz = -1;
+	}
+
+	free(str_copy);
+}
+
 void
 ftp_data_conn::get_file(void)
 {
