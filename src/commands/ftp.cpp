@@ -523,7 +523,7 @@ ftp_data_conn::get_file(void)
 				print_one_rep(rep.num, rep.text.c_str());
 			} else if (rep.num == 1000) {
 				get_bytes(rep.text);
-				print_one_rep(rep.num, rep.text.c_str());
+//				print_one_rep(rep.num, rep.text.c_str());
 			} else {
 				print_one_rep(rep.num, rep.text.c_str());
 			}
