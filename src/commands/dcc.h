@@ -101,6 +101,7 @@ extern const int	g_one_kilo;
 extern const int	g_one_meg;
 extern const int	g_one_gig;
 
+double percentage(double part, double total);
 void list_dir(const char *);
 
 void cmd_dcc(const char *);

@@ -1,5 +1,5 @@
 /* commands/dcc.cpp
-   Copyright (C) 2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024, 2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -760,7 +760,7 @@ static std::vector<dcc_send>	send_db;
 *                                                               *
 ****************************************************************/
 
-static double
+double
 percentage(double part, double total)
 {
 	return (part / total) * 100.0;
