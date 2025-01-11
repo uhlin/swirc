@@ -731,8 +731,13 @@ subcmd_exit(void)
 {
 	if (ftp::ctl_conn == nullptr)
 		return;
-
-	(void) ftp::send_printf(ftp::ctl_conn->get_sock(), "QUIT\r\n");
+	if (ftp::data_conn) {
+		(void) ftp::send_printf(ftp::ctl_conn->get_sock(),
+		    "ABOR\r\nQUIT\r\n");
+		delete_data_conn();
+	} else {
+		(void) ftp::send_printf(ftp::ctl_conn->get_sock(), "QUIT\r\n");
+	}
 
 	ftp::ctl_conn->read_and_print(1);
 
