@@ -697,7 +697,7 @@ subcmd_get(CSTRING path)
 	ftp::data_conn->path = sw_strdup(path);
 
 	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(),
-	    "TYPE L 8\r\nRETR %s\r\n", path);
+	    "STAT %s\r\nTYPE L 8\r\nRETR %s\r\n", path, path);
 	if (n_sent <= 0) {
 		delete_data_conn();
 		return;
