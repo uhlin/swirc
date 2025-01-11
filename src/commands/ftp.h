@@ -144,6 +144,7 @@ public:
 	~ftp_data_conn();
 
 	STRING full_path, path;
+	intmax_t filesz;
 	std::vector<std::string> vec;
 
 	bool		connect_passive(void);
