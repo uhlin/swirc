@@ -505,10 +505,28 @@ get_bytes(const std::string &str)
 	free(str_copy);
 }
 
+static void
+print_complete(CSTRING path, double part, double total, bool (&state)[3])
+{
+	const double val = percentage(part, total);
+
+	if (val >= 75.0 && !state[2]) {
+		printtext_print("success", "%s: %.2f%% complete", path, val);
+		state[2] = true;
+	} else if (val >= 50.0 && !state[1]) {
+		printtext_print("success", "%s: %.2f%% complete", path, val);
+		state[1] = true;
+	} else if (val >= 25.0 && !state[0]) {
+		printtext_print("success", "%s: %.2f%% complete", path, val);
+		state[0] = true;
+	}
+}
+
 void
 ftp_data_conn::get_file(void)
 {
 	bool		proceed = true;
+	bool		state[3] = { false };
 	char		unit = 'B';
 	double		size = 0.0;
 	int		bytes_received;
@@ -564,6 +582,10 @@ ftp_data_conn::get_file(void)
 				break;
 			} else
 				total += bytes_received;
+			if (this->filesz != -1) {
+				print_complete(this->path, total, this->filesz,
+				    state);
+			}
 		} else if (bytes_received == 0) {
 			/* continue */;
 		} else if (bytes_received < 0) {
