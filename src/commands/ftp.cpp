@@ -528,7 +528,7 @@ void
 ftp_data_conn::get_file(void)
 {
 	bool		proceed = true;
-	bool		state[3] = { false };
+	bool		printed[3] = { false };
 	char		unit = 'B';
 	double		size = 0.0;
 	int		bytes_received;
@@ -586,7 +586,7 @@ ftp_data_conn::get_file(void)
 				total += bytes_received;
 			if (this->filesz != -1) {
 				print_complete(this->path, total, this->filesz,
-				    state);
+				    printed);
 			}
 		} else if (bytes_received == 0) {
 			/* continue */;
