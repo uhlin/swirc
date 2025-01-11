@@ -1562,7 +1562,7 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 void
 dcc::get_file_size(const intmax_t bytes, double &size, char &unit)
 {
-	if (bytes <= 0 || bytes > DCC_FILE_MAX_SIZE) {
+	if (bytes <= 0) {
 		size = 0.0;
 		unit = 'B';
 	} else if (bytes >= g_one_gig) {
