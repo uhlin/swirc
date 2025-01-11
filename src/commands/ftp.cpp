@@ -519,6 +519,8 @@ print_complete(CSTRING path, double part, double total, bool (&state)[3])
 	} else if (val >= 25.0 && !state[0]) {
 		printtext_print("success", "%s: %.2f%% complete", path, val);
 		state[0] = true;
+	} else {
+		napms(10);
 	}
 }
 
