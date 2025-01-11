@@ -157,7 +157,7 @@ private:
 	FILE				*fileptr;
 	SOCKET				 sock;
 	STRING				 host_str, port_str;
-	char				 buf[2048];
+	char				 buf[4096];
 	enum message_concat_state	 state;
 	std::string			 message_concat;
 	struct addrinfo			*res;
