@@ -33,6 +33,9 @@
 #include <sys/param.h>
 #endif
 
+#ifdef WIN32
+#include <io.h>
+#endif
 #include <stdexcept>
 
 #include "../assertAPI.h"
