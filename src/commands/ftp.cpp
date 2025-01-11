@@ -545,7 +545,12 @@ ftp_data_conn::get_file(void)
 
 	struct network_recv_context recv_ctx(this->sock, 0, 3, 0);
 
-	printtext_print("success", "getting: %s...", this->path);
+	if (this->filesz != -1) {
+		dcc::get_file_size(this->filesz, size, unit);
+		printtext_print("success", "getting: %s (%.1f%c)...",
+		    this->path, size, unit);
+	} else
+		printtext_print("success", "getting: %s...", this->path);
 
 	while (true) {
 		BZERO(this->buf, sizeof this->buf);
