@@ -288,7 +288,11 @@ process_reply(CSTRING token, std::vector<FTP_REPLY> &reply_vec)
 	char		numstr[5] = { '\0' };
 	const size_t	len = strspn(token, "0123456789-");
 
-	if (len >= sizeof numstr) {
+	if (strspn(token, "rwx-") == 10) {
+		FTP_REPLY rep(1000, token);
+
+		reply_vec.push_back(rep);
+	} else if (len >= sizeof numstr) {
 		err_log(0, "%s: initial segment too long", __func__);
 	} else if (len == 4) {
 		handle_length_four(numstr, token, len, reply_vec);
