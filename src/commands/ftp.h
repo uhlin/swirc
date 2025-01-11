@@ -167,8 +167,8 @@ private:
 
 namespace ftp
 {
-	extern ftp_ctl_conn *ctl_conn;
-	extern ftp_data_conn *data_conn;
+	extern ftp_ctl_conn	*ctl_conn;
+	extern ftp_data_conn	*data_conn;
 
 	void		do_cmd_detached(CSTRING);
 	NORETURN void	exit_thread(void);
