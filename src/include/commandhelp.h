@@ -282,6 +282,7 @@ static usage_t ftp_usage = {
   "    /ftp ls [dir|up|down]",
   "    /ftp mkdir <path>",
   "    /ftp pwd",
+  "    /ftp rmdir <path>",
   "    /ftp system",
   "",
   N_("Retrieve and store files on a FTP server. (The communication is done\n"
