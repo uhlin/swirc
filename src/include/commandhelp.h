@@ -280,6 +280,7 @@ static usage_t ftp_usage = {
   "    /ftp get <file>",
   "    /ftp login",
   "    /ftp ls [dir|up|down]",
+  "    /ftp mkdir <path>",
   "    /ftp pwd",
   "    /ftp system",
   "",
