@@ -749,6 +749,9 @@ subcmd_exit(void)
 
 		ftp::shutdown_sock(ftp::data_conn->get_sock());
 
+		(void) atomic_swap_bool(&ftp::loop_get_file, false);
+		(void) atomic_swap_bool(&ftp::loop_send_file, false);
+
 		while (atomic_load_bool(&ftp::cmd_in_progress))
 			napms(1);
 		delete_data_conn();
