@@ -582,7 +582,9 @@ ftp_data_conn::get_file(void)
 	} else
 		printtext_print("success", "getting: %s...", this->path);
 
-	while (true) {
+	(void) atomic_swap_bool(&ftp::loop_get_file, true);
+
+	while (atomic_load_bool(&ftp::loop_get_file)) {
 		if (!isValid(this->fileptr) || this->sock == INVALID_SOCKET)
 			break;
 
