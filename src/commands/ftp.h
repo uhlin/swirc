@@ -170,6 +170,10 @@ namespace ftp
 	extern ftp_ctl_conn	*ctl_conn;
 	extern ftp_data_conn	*data_conn;
 
+	extern volatile bool	 cmd_in_progress;
+	extern volatile bool	 getting_file;
+	extern volatile bool	 sending_file;
+
 	void		do_cmd_detached(CSTRING);
 	NORETURN void	exit_thread(void);
 	void		get_file(void);

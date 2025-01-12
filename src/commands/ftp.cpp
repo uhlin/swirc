@@ -79,6 +79,10 @@
 ftp_ctl_conn	*ftp::ctl_conn = nullptr;
 ftp_data_conn	*ftp::data_conn = nullptr;
 
+volatile bool	 ftp::cmd_in_progress = false;
+volatile bool	 ftp::getting_file = false;
+volatile bool	 ftp::sending_file = false;
+
 static void delete_data_conn(void);
 static void print_one_rep(const int, CSTRING);
 
