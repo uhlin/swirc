@@ -692,8 +692,6 @@ subcmd_ok(CSTRING cmd)
 		return true;
 	else if (strings_match(cmd, "pwd"))
 		return true;
-	else if (strings_match(cmd, "stat"))
-		return true;
 	else if (strings_match(cmd, "system"))
 		return true;
 	return false;
@@ -818,12 +816,6 @@ subcmd_pwd(void)
 }
 
 static void
-subcmd_stat(CSTRING path)
-{
-	UNUSED_PARAM(path);
-}
-
-static void
 subcmd_system(void)
 {
 	perform_simple_ftp_cmd("SYST\r\n");
@@ -837,7 +829,6 @@ subcmd_system(void)
  *     /ftp login
  *     /ftp ls [dir|up|down]
  *     /ftp pwd
- *     /ftp stat [path]
  *     /ftp system
  */
 void
@@ -882,8 +873,6 @@ cmd_ftp(CSTRING data)
 		subcmd_ls(arg[0]);
 	else if (strings_match(subcmd, "pwd"))
 		subcmd_pwd();
-	else if (strings_match(subcmd, "stat"))
-		subcmd_stat(arg[0]);
 	else if (strings_match(subcmd, "system"))
 		subcmd_system();
 	else
