@@ -597,8 +597,10 @@ winsock_init_doit(void)
 		printtext_print("err", "%s", _("Cannot initiate use of the "
 		    "Winsock DLL"));
 	} else {
+#if 0
 		printtext_print("success", "%s", _("Use of the Winsock DLL "
 		    "granted"));
+#endif
 		init_done = true;
 	}
 }
