@@ -50,9 +50,17 @@ cmd_doit(void *arg)
 {
 	STRING name = static_cast<STRING>(arg);
 
+	if (atomic_load_bool(&ftp::cmd_in_progress)) {
+		printtext_print("err", "Command already in progress...");
+		free(name);
+		ftp::exit_thread();
+	}
+
+	(void) atomic_swap_bool(&ftp::cmd_in_progress, true);
 	block_signals();
 	SELECT_AND_RUN_CMD();
 	free(name);
+	(void) atomic_swap_bool(&ftp::cmd_in_progress, false);
 	ftp::exit_thread();
 }
 
