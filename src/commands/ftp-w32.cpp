@@ -33,12 +33,14 @@
 
 #include "../assertAPI.h"
 #include "../errHand.h"
+#include "../printtext.h"
 #include "../sig.h"
 #include "../strHand.h"
 #include "../tls-server.h"
 
 #include "../events/welcome-w32.h" /* dword_product() */
 
+#include "atomicops.h"
 #include "ftp.h"
 
 typedef void __cdecl VoidCdecl;

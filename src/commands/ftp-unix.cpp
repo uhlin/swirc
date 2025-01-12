@@ -35,9 +35,11 @@
 
 #include "../assertAPI.h"
 #include "../errHand.h"
+#include "../printtext.h"
 #include "../sig.h"
 #include "../strHand.h"
 
+#include "atomicops.h"
 #include "ftp.h"
 
 static void *
