@@ -429,17 +429,20 @@ ftp_data_conn::ftp_data_conn(CSTRING text)
 
 ftp_data_conn::~ftp_data_conn()
 {
+	/*
+	 * Close first...
+	 */
+	if (this->sock != INVALID_SOCKET) {
+		ftp_closesocket(this->sock);
+		this->sock = INVALID_SOCKET;
+	}
+
 	free(this->full_path);
 	free(this->path);
 
 	if (this->fileptr != nullptr) {
 		fclose(this->fileptr);
 		this->fileptr = nullptr;
-	}
-
-	if (this->sock != INVALID_SOCKET) {
-		ftp_closesocket(this->sock);
-		this->sock = INVALID_SOCKET;
 	}
 
 	free(this->host_str);
