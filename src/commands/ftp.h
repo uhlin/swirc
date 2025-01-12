@@ -187,6 +187,7 @@ namespace ftp
 #elif defined(WIN32)
 	void		set_timeout(SOCKET, int, const DWORD);
 #endif
+	void		shutdown_sock(SOCKET);
 	bool		want_unveil_uploads(void);
 }
 #endif

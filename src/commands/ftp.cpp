@@ -1053,6 +1053,21 @@ ftp::send_printf(SOCKET sock, CSTRING fmt, ...)
 	return n_sent;
 }
 
+void
+ftp::shutdown_sock(SOCKET sock)
+{
+	if (sock == INVALID_SOCKET)
+		return;
+#if defined(UNIX)
+	if (shutdown(sock, SHUT_RDWR) == -1)
+		err_log(errno, "%s: shutdown", __func__);
+#elif defined(WIN32)
+	if (shutdown(sock, SD_BOTH) != 0)
+		err_log(errno, "%s: shutdown", __func__);
+#endif
+	ftp_closesocket(sock);
+}
+
 bool
 ftp::want_unveil_uploads(void)
 {
