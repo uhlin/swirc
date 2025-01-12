@@ -576,9 +576,13 @@ ftp_data_conn::get_file(void)
 		printtext_print("success", "getting: %s...", this->path);
 
 	while (true) {
+		if (!isValid(this->fileptr) || this->sock == INVALID_SOCKET)
+			break;
+
 		BZERO(this->buf, sizeof this->buf);
 		bytes_received = net_recv_plain(&recv_ctx, this->buf,
 		    sizeof this->buf - 1);
+
 		if (bytes_received > 0) {
 			if (fwrite(this->buf, 1, bytes_received,
 			    this->fileptr) !=
