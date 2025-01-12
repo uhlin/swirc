@@ -747,7 +747,7 @@ subcmd_exit(void)
 		(void) ftp::send_printf(ftp::ctl_conn->get_sock(),
 		    "ABOR\r\nQUIT\r\n");
 
-		ftp::shutdown_sock(ftp::ctl_conn->get_sock());
+		ftp::shutdown_sock(ftp::data_conn->get_sock());
 
 		while (atomic_load_bool(&ftp::cmd_in_progress))
 			napms(1);
