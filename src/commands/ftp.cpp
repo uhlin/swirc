@@ -728,7 +728,7 @@ perform_ftp_cmd(CSTRING cmd, CSTRING arg)
 		return;
 	}
 
-	ftp::ctl_conn->read_and_print(0);
+	ftp::ctl_conn->read_and_print(1);
 }
 
 static void
@@ -743,7 +743,7 @@ perform_simple_ftp_cmd(CSTRING cmd)
 	if (n_sent <= 0)
 		return;
 
-	ftp::ctl_conn->read_and_print(0);
+	ftp::ctl_conn->read_and_print(1);
 }
 
 static void
@@ -1002,7 +1002,7 @@ ftp::passive(void)
 		return false;
 	}
 
-	while (ftp::ctl_conn->read_reply(0)) {
+	while (ftp::ctl_conn->read_reply(1)) {
 		for (const FTP_REPLY &rep : ftp::ctl_conn->reply_vec) {
 			if (rep.num == 227)
 				create_data_conn(rep.text.c_str());
