@@ -802,6 +802,12 @@ subcmd_get(CSTRING path)
 static void
 subcmd_login(void)
 {
+	if (ftp::ctl_conn) {
+		printtext_print("err", "A control connection already exists. "
+		    "/ftp exit?");
+		return;
+	}
+
 	ftp::do_cmd_detached("login");
 }
 
