@@ -295,7 +295,7 @@ process_reply(CSTRING token, std::vector<FTP_REPLY> &reply_vec)
 	char		numstr[5] = { '\0' };
 	const size_t	len = strspn(token, "0123456789-");
 
-	if (strspn(token, "rwx-") == 10) {
+	if (strspn(token, "bcdlrswx-") == 10) {
 		FTP_REPLY rep(1000, token);
 
 		reply_vec.push_back(rep);
