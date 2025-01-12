@@ -763,6 +763,9 @@ subcmd_exit(void)
 {
 	if (ftp::ctl_conn == nullptr)
 		return;
+
+	ftp::set_timeout(ftp::ctl_conn->get_sock(), SO_SNDTIMEO, 1);
+
 	if (ftp::data_conn) {
 		(void) ftp::send_printf(ftp::ctl_conn->get_sock(),
 		    "ABOR\r\nQUIT\r\n");
