@@ -1,5 +1,5 @@
 /* Miscellaneous commands
-   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -49,6 +49,7 @@
 #include "../terminal.h"
 
 #include "connect.h"
+#include "ftp.h"
 #include "misc.h"
 
 static void
@@ -421,6 +422,8 @@ void
 cmd_quit(const char *data)
 {
 	const bool has_message = !strings_match(data, "");
+
+	cmd_ftp("exit");
 
 	if (atomic_load_bool(&g_on_air)) {
 		net_request_disconnect();
