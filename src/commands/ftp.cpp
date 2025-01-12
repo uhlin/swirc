@@ -687,6 +687,8 @@ subcmd_ok(CSTRING cmd)
 {
 	if (strings_match(cmd, "cd"))
 		return true;
+	else if (strings_match(cmd, "del"))
+		return true;
 	else if (strings_match(cmd, "exit"))
 		return true;
 	else if (strings_match(cmd, "get"))
@@ -744,6 +746,12 @@ static void
 subcmd_cd(CSTRING pathname)
 {
 	perform_ftp_cmd("CWD", pathname);
+}
+
+static void
+subcmd_del(CSTRING pathname)
+{
+	perform_ftp_cmd("DELE", pathname);
 }
 
 static void
@@ -849,6 +857,7 @@ subcmd_system(void)
 /*
  * usage:
  *     /ftp cd <path>
+ *     /ftp del <path>
  *     /ftp exit
  *     /ftp get <file>
  *     /ftp login
@@ -888,6 +897,8 @@ cmd_ftp(CSTRING data)
 
 	if (strings_match(subcmd, "cd"))
 		subcmd_cd(arg[0]);
+	else if (strings_match(subcmd, "del"))
+		subcmd_del(arg[0]);
 	else if (strings_match(subcmd, "exit"))
 		subcmd_exit();
 	else if (strings_match(subcmd, "get"))

@@ -275,6 +275,7 @@ static usage_t fetchdic_usage = {
 static usage_t ftp_usage = {
   N_("usage:"),
   "    /ftp cd <path>",
+  "    /ftp del <path>",
   "    /ftp exit",
   "    /ftp get <file>",
   "    /ftp login",
