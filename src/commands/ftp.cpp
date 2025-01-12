@@ -703,6 +703,29 @@ subcmd_ok(CSTRING cmd)
 }
 
 static void
+perform_ftp_cmd(CSTRING cmd, CSTRING arg)
+{
+	int n_sent;
+
+	if (arg == nullptr || strings_match(arg, "")) {
+		printtext_print("err", "insufficient args");
+		return;
+	} else if (ftp::ctl_conn == nullptr) {
+		printtext_print("err", "no control connection");
+		return;
+	}
+
+	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(), "%s %s\r\n",
+	    cmd, arg);
+	if (n_sent <= 0) {
+		printtext_print("err", "cannot send");
+		return;
+	}
+
+	ftp::ctl_conn->read_and_print(0);
+}
+
+static void
 perform_simple_ftp_cmd(CSTRING cmd)
 {
 	int n_sent;
@@ -720,24 +743,7 @@ perform_simple_ftp_cmd(CSTRING cmd)
 static void
 subcmd_cd(CSTRING pathname)
 {
-	int n_sent;
-
-	if (pathname == nullptr || strings_match(pathname, "")) {
-		printtext_print("err", "insufficient args");
-		return;
-	} else if (ftp::ctl_conn == nullptr) {
-		printtext_print("err", "no control connection");
-		return;
-	}
-
-	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(), "CWD %s\r\n",
-	    pathname);
-	if (n_sent <= 0) {
-		printtext_print("err", "cannot send");
-		return;
-	}
-
-	ftp::ctl_conn->read_and_print(0);
+	perform_ftp_cmd("CWD", pathname);
 }
 
 static void
