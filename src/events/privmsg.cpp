@@ -1,5 +1,5 @@
 /* Handles event PRIVMSG
-   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -89,8 +89,8 @@ acknowledge_ctcp_request(CSTRING cmd, const struct special_msg_context *ctx)
 static void
 handle_special_msg(const struct special_msg_context *ctx)
 {
-	PRINTTEXT_CONTEXT ptext_ctx;
-	STRING msg = sw_strdup(ctx->msg);
+	PRINTTEXT_CONTEXT	ptext_ctx;
+	STRING			msg = sw_strdup(ctx->msg);
 
 	printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
 	squeeze(msg, "\x01");
