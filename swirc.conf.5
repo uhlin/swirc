@@ -1,9 +1,9 @@
 .\" -*- mode: nroff; -*-
 .\"
-.\" SPDX-FileCopyrightText: Copyright 2018-2024 Markus Uhlin
+.\" SPDX-FileCopyrightText: Copyright 2018-2025 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd December 6, 2024
+.Dd January 13, 2025
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -217,6 +217,33 @@ Changing it while Swirc is running will not work.
 Turns the
 .Em extended-join
 IRCv3 feature on/off.
+.\" ----------------------------------------
+.\" FTP HOST
+.\" ----------------------------------------
+.It Sy ftp_host Pq Em string
+FTP hostname.
+.\" ----------------------------------------
+.\" FTP PORT
+.\" ----------------------------------------
+.It Sy ftp_port Pq Em int
+FTP port number (1-65535).
+Defaults to 21.
+.\" ----------------------------------------
+.\" FTP USER
+.\" ----------------------------------------
+.It Sy ftp_user Pq Em string
+FTP username.
+Defaults to anonymous.
+.\" ----------------------------------------
+.\" FTP PASS
+.\" ----------------------------------------
+.It Sy ftp_pass Pq Em string
+FTP password.
+.\" ----------------------------------------
+.\" FTP UPLOAD DIR
+.\" ----------------------------------------
+.It Sy ftp_upload_dir Pq Em string
+FTP upload directory.
 .\" ----------------------------------------
 .\" HOSTNAME CHECKING
 .\" ----------------------------------------
