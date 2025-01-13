@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-01-05 17:05+0100\n"
+"POT-Creation-Date: 2025-01-13 17:48+0100\n"
 "PO-Revision-Date: 2025-01-05 17:09+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -63,7 +63,7 @@ msgstr "Återanslutningen avbröts!"
 msgid "Cannot initiate use of the Winsock DLL"
 msgstr "Kan inte initiera användning av Winsock DLL"
 
-#: ../src/commands/connect.c:600
+#: ../src/commands/connect.c:601
 msgid "Use of the Winsock DLL granted"
 msgstr "Användning av Winsock DLL beviljad"
 
@@ -164,48 +164,54 @@ msgstr "%s: skickad fil: %s"
 msgid "%s: file transfer incomplete: %s"
 msgstr "%s: filöverföringen ofullständig: %s"
 
-#: ../src/commands/ftp.cpp:150
+#: ../src/commands/ftp.cpp:158
 msgid "Invalid username"
 msgstr "Ogiltigt användarnamn"
 
-#: ../src/commands/ftp.cpp:152
+#: ../src/commands/ftp.cpp:160
 msgid "Too long password"
 msgstr "För långt lösenord"
 
-#: ../src/commands/ftp.cpp:154
+#: ../src/commands/ftp.cpp:162
 msgid "Invalid hostname"
 msgstr "Ogiltigt värdnamn"
 
-#: ../src/commands/ftp.cpp:156
+#: ../src/commands/ftp.cpp:164
 msgid "Invalid port number"
 msgstr "Ogiltigt portnummer"
 
-#: ../src/commands/ftp.cpp:159 ../src/network.cpp:308
+#: ../src/commands/ftp.cpp:167 ../src/network.cpp:308
 msgid "Unable to get a list of IP addresses"
 msgstr "Det gick inte att få en lista över IP adresser"
 
-#: ../src/commands/ftp.cpp:162 ../src/commands/ftp.cpp:442
+#: ../src/commands/ftp.cpp:170 ../src/commands/ftp.cpp:478
 #: ../src/network.cpp:175
 msgid "Failed to establish a connection"
 msgstr "Det gick inte att upprätta en anslutning"
 
-#: ../src/commands/ftp.cpp:174 ../src/commands/ftp.cpp:734
+#: ../src/commands/ftp.cpp:181 ../src/commands/ftp.cpp:727
+#: ../src/commands/ftp.cpp:1001
 msgid "Cannot send"
 msgstr "Kan inte skicka"
 
-#: ../src/commands/ftp.cpp:430
+#: ../src/commands/ftp.cpp:466
 msgid "Failed to create an endpoint for communication"
 msgstr "Det gick inte att skapa en slutpunkt för kommunikation"
 
-#: ../src/commands/ftp.cpp:722
+#: ../src/commands/ftp.cpp:717 ../src/commands/ftp.cpp:840
+#: ../src/commands/ftp.cpp:900
+msgid "Insufficient arguments"
+msgstr ""
+
+#: ../src/commands/ftp.cpp:720 ../src/commands/ftp.cpp:989
 msgid "No control connection"
 msgstr "Ingen kontrollanslutning"
 
-#: ../src/commands/ftp.cpp:726
+#: ../src/commands/ftp.cpp:993
 msgid "Already in passive mode"
 msgstr "Redan i passivt läge"
 
-#: ../src/commands/ftp.cpp:749
+#: ../src/commands/ftp.cpp:1016
 msgid "Failed to enter passive mode"
 msgstr "Det gick inte att gå in i passivt läge"
 
@@ -392,6 +398,7 @@ msgstr ""
 "lämnas."
 
 #: ../src/include/commandhelp.h:53 ../src/include/commandhelp.h:195
+#: ../src/include/commandhelp.h:276
 msgid "usage:"
 msgstr "användning:"
 
@@ -663,15 +670,21 @@ msgstr ""
 msgid "Fetch the american english dictionary:"
 msgstr "Hämta den amerikansk engelska ordboken:"
 
-#: ../src/include/commandhelp.h:283
+#: ../src/include/commandhelp.h:288
+msgid ""
+"Retrieve and store files on a FTP server. (The communication is done\n"
+"in clear text, i.e. unencrypted.)"
+msgstr ""
+
+#: ../src/include/commandhelp.h:294
 msgid "usage: /gline <nick!user@host> [<duration> :<reason>]"
 msgstr "användning: /gline <nick!user@host> [<duration> :<reason>]"
 
-#: ../src/include/commandhelp.h:285
+#: ../src/include/commandhelp.h:296
 msgid "Network-wide bans."
 msgstr "Nätverksomfattande förbud."
 
-#: ../src/include/commandhelp.h:287
+#: ../src/include/commandhelp.h:298
 msgid ""
 "When a client matches a G-line it cannot connect to ANY server on the\n"
 "IRC network for 'duration' seconds. If the duration is zero then the\n"
@@ -681,35 +694,35 @@ msgstr ""
 "server på IRC nätverket under 'varaktighet' sekunder. Om varaktigheten\n"
 "är noll kommer G-linjen att vara permanent."
 
-#: ../src/include/commandhelp.h:291
+#: ../src/include/commandhelp.h:302
 msgid "(If no duration and no reason is given the G-line is deleted.)"
 msgstr "(Om ingen varaktighet och ingen anledning anges raderas G-linjen.)"
 
-#: ../src/include/commandhelp.h:300
+#: ../src/include/commandhelp.h:311
 msgid "usage: /group <name>"
 msgstr "användning: /group <namn>"
 
-#: ../src/include/commandhelp.h:302
+#: ../src/include/commandhelp.h:313
 msgid "Changes ICB group."
 msgstr "Byter ICB grupp."
 
-#: ../src/include/commandhelp.h:307
+#: ../src/include/commandhelp.h:318
 msgid "usage: /help [command]"
 msgstr "användning: /help [kommando]"
 
-#: ../src/include/commandhelp.h:309
+#: ../src/include/commandhelp.h:320
 msgid "Outputs a list of all available commands."
 msgstr "Matar ut en lista över alla tillgängliga kommandon."
 
-#: ../src/include/commandhelp.h:310
+#: ../src/include/commandhelp.h:321
 msgid "(Or help for a specific command.)"
 msgstr "(Eller hjälp för ett specifikt kommando.)"
 
-#: ../src/include/commandhelp.h:315
+#: ../src/include/commandhelp.h:326
 msgid "usage: /ignore [regex]"
 msgstr "användning: /ignore [reguljärt uttryck]"
 
-#: ../src/include/commandhelp.h:317
+#: ../src/include/commandhelp.h:328
 msgid ""
 "Ignores all 'nick!user@host' that matches the given regular\n"
 "expression, this by using the POSIX basic regular expression\n"
@@ -722,43 +735,43 @@ msgstr ""
 "och jag råder dig att vara försiktig när du använder det.\n"
 "Jag rekommenderar starkt användningen av:"
 
-#: ../src/include/commandhelp.h:322
+#: ../src/include/commandhelp.h:333
 msgid "    1. ^  Matches the starting position within the string, if it is"
 msgstr "    1. ^  Matchar startpositionen inom strängen, om det är"
 
-#: ../src/include/commandhelp.h:323
+#: ../src/include/commandhelp.h:334
 msgid "          the first character of the regular expression."
 msgstr "          det första tecknet i det reguljära uttrycket."
 
-#: ../src/include/commandhelp.h:324
+#: ../src/include/commandhelp.h:335
 msgid "    2. $  Matches the ending position of the string, if it is the last"
 msgstr "    2. $  Matchar strängens slutposition, om det är det sista"
 
-#: ../src/include/commandhelp.h:325
+#: ../src/include/commandhelp.h:336
 msgid "          character of the regular expression."
 msgstr "          tecknet i det reguljära uttrycket."
 
-#: ../src/include/commandhelp.h:329
+#: ../src/include/commandhelp.h:340
 msgid "Ignore nickname 'troll':"
 msgstr "Ignorera smeknamnet 'troll':"
 
-#: ../src/include/commandhelp.h:332
+#: ../src/include/commandhelp.h:343
 msgid "Ignore all users with username 'troll':"
 msgstr "Ignorera alla användare med användarnamnet 'troll':"
 
-#: ../src/include/commandhelp.h:335
+#: ../src/include/commandhelp.h:346
 msgid "Ignore all users with hostname 'insecure.org':"
 msgstr "Ignorera alla användare med värdnamnet 'insecure.org':"
 
-#: ../src/include/commandhelp.h:338
+#: ../src/include/commandhelp.h:349
 msgid "Ignore all users with a Chinese domain (.cn):"
 msgstr "Ignorera alla användare med en kinesisk domän (.cn):"
 
-#: ../src/include/commandhelp.h:344
+#: ../src/include/commandhelp.h:355
 msgid "usage: /ilist [channel]"
 msgstr "användning: /ilist [kanal]"
 
-#: ../src/include/commandhelp.h:346
+#: ../src/include/commandhelp.h:357
 msgid ""
 "Outputs a channel's invitation list. An invitation mask (+I) overrides\n"
 "the invite-only flag (+i). If the channel argument is omitted and the\n"
@@ -770,51 +783,51 @@ msgstr ""
 "utelämnas och det aktiva fönstret är en IRC kanal, kommer klienten att\n"
 "mata ut inbjudningslistan för den kanalen."
 
-#: ../src/include/commandhelp.h:354
+#: ../src/include/commandhelp.h:365
 msgid "usage: /info [target]"
 msgstr "användning: /info [mål]"
 
-#: ../src/include/commandhelp.h:356
+#: ../src/include/commandhelp.h:367
 msgid "The info command returns information about the server."
 msgstr "Kommandot info returnerar information om servern."
 
-#: ../src/include/commandhelp.h:361
+#: ../src/include/commandhelp.h:372
 msgid "usage: /invite <targ_nick> <channel>"
 msgstr "användning: /invite <smeknamn> <kanal>"
 
-#: ../src/include/commandhelp.h:363
+#: ../src/include/commandhelp.h:374
 msgid "Invites 'targ_nick' to a channel."
 msgstr "Bjuder in 'smeknamn' till en kanal."
 
-#: ../src/include/commandhelp.h:368
+#: ../src/include/commandhelp.h:379
 msgid "usage: /ison <nick1> [nick2] [nick3] [...]"
 msgstr "användning: /ison <nick1> [nick2] [nick3] [...]"
 
-#: ../src/include/commandhelp.h:370
+#: ../src/include/commandhelp.h:381
 msgid "Checks whether users are on IRC."
 msgstr "Kontrollerar om användare är på IRC."
 
-#: ../src/include/commandhelp.h:375
+#: ../src/include/commandhelp.h:386
 msgid "usage: /join <channel> [key]"
 msgstr "användning: /join <kanal> [nyckel]"
 
-#: ../src/include/commandhelp.h:377
+#: ../src/include/commandhelp.h:388
 msgid "Joins a channel (optionally by using a key)."
 msgstr "Går med i en kanal (valfritt genom att använda en nyckel)."
 
-#: ../src/include/commandhelp.h:381
+#: ../src/include/commandhelp.h:392
 msgid "Join a channel with name 'libera':"
 msgstr "Gå med i en kanal med namnet 'libera':"
 
-#: ../src/include/commandhelp.h:384
+#: ../src/include/commandhelp.h:395
 msgid "Join a key-protected channel:"
 msgstr "Gå med i en nyckelskyddad kanal:"
 
-#: ../src/include/commandhelp.h:390
+#: ../src/include/commandhelp.h:401
 msgid "usage: /kick <nick1[,nick2][,nick3][...]> [reason]"
 msgstr "användning: /kick <nick1[,nick2][,nick3][...]> [anledning]"
 
-#: ../src/include/commandhelp.h:392
+#: ../src/include/commandhelp.h:403
 msgid ""
 "Kicks one or more users out of a channel. The users are given in a\n"
 "comma-separated list. A reason is optional and the active window must\n"
@@ -824,11 +837,11 @@ msgstr ""
 "en kommaseparerad lista. En anledning är valfri och det aktiva\n"
 "fönstret måste vara en IRC kanal."
 
-#: ../src/include/commandhelp.h:399
+#: ../src/include/commandhelp.h:410
 msgid "usage: /kickban <nick> <mask> [reason]"
 msgstr "användning: /kickban <nick> <mask> [anledning]"
 
-#: ../src/include/commandhelp.h:401
+#: ../src/include/commandhelp.h:412
 msgid ""
 "Set a channel ban with given 'mask' and kick the user 'nick' out of a\n"
 "channel. A reason is optional and the active window must be an IRC\n"
@@ -838,27 +851,27 @@ msgstr ""
 "'nick' från en kanal. En anledning är valfri och det aktiva fönstret\n"
 "måste vara en IRC kanal."
 
-#: ../src/include/commandhelp.h:408
+#: ../src/include/commandhelp.h:419
 msgid "usage: /kill <nickname> <comment>"
 msgstr "användning: /kill <smeknamn> <kommentar>"
 
-#: ../src/include/commandhelp.h:410
+#: ../src/include/commandhelp.h:421
 msgid "Disconnect a user from the connected network."
 msgstr "Koppla bort en användare från det anslutna nätverket."
 
-#: ../src/include/commandhelp.h:411
+#: ../src/include/commandhelp.h:422
 msgid "(Requires IRC op privilege.)"
 msgstr "(Kräver IRC op-behörighet.)"
 
-#: ../src/include/commandhelp.h:416
+#: ../src/include/commandhelp.h:427
 msgid "usage: /kline <nick!user@host> [<duration> :<reason>]"
 msgstr "användning: /kline <nick!user@host> [<duration> :<reason>]"
 
-#: ../src/include/commandhelp.h:418
+#: ../src/include/commandhelp.h:429
 msgid "Server-local bans."
 msgstr "Serverlokala förbud."
 
-#: ../src/include/commandhelp.h:420
+#: ../src/include/commandhelp.h:431
 msgid ""
 "When a client matches a K-line it cannot connect to the local server\n"
 "for 'duration' seconds. If the duration is zero then the K-line will\n"
@@ -868,15 +881,15 @@ msgstr ""
 "servern under 'varaktighet' sekunder. Om varaktigheten är noll kommer\n"
 "K-linjen att vara permanent."
 
-#: ../src/include/commandhelp.h:424
+#: ../src/include/commandhelp.h:435
 msgid "(If no duration and no reason is given the K-line is deleted.)"
 msgstr "(Om ingen varaktighet och ingen anledning anges tas K-linjen bort.)"
 
-#: ../src/include/commandhelp.h:433
+#: ../src/include/commandhelp.h:444
 msgid "usage: /list [<max_users[,>min_users][,pattern][...]]"
 msgstr "användning: /list [<max_users[,>min_users][,mönster][...]]"
 
-#: ../src/include/commandhelp.h:435
+#: ../src/include/commandhelp.h:446
 msgid ""
 "Lists channels and their topics. Without any arguments the list is\n"
 "HUGE. For example, '/list >1500' will only list channels that have\n"
@@ -886,7 +899,7 @@ msgstr ""
 "ENORM. Till exempel kommer '/list >1500' bara att lista kanaler som\n"
 "har fler än 1500 användare."
 
-#: ../src/include/commandhelp.h:439
+#: ../src/include/commandhelp.h:450
 msgid ""
 "Depending on the IRC server software used by your network the usage\n"
 "may differ."
@@ -894,113 +907,113 @@ msgstr ""
 "Beroende på vilken IRC serverprogramvara som används av ditt nätverk\n"
 "kan användningen variera."
 
-#: ../src/include/commandhelp.h:445
+#: ../src/include/commandhelp.h:456
 msgid "usage: /me <message>"
 msgstr "användning: /me <meddelande>"
 
-#: ../src/include/commandhelp.h:447
+#: ../src/include/commandhelp.h:458
 msgid "Send an 'action' message. (Used to simulate role playing on IRC.)"
 msgstr ""
 "Skicka ett 'action'-meddelande. (Används för att simulera rollspel på IRC.)"
 
-#: ../src/include/commandhelp.h:452
+#: ../src/include/commandhelp.h:463
 msgid "usage: /mode <modes> [...]"
 msgstr "användning: /mode <lägen> [...]"
 
-#: ../src/include/commandhelp.h:454
+#: ../src/include/commandhelp.h:465
 msgid "Alter modes."
 msgstr "Ändra lägen."
 
-#: ../src/include/commandhelp.h:458
+#: ../src/include/commandhelp.h:469
 msgid "    o - give/take the channel operator privilege"
 msgstr "    o - ge/ta kanaloperatörsprivilegiet"
 
-#: ../src/include/commandhelp.h:459
+#: ../src/include/commandhelp.h:470
 msgid "    v - give/take the channel voice privilege"
 msgstr "    v - ge/ta kanal-röst-privilegiet"
 
-#: ../src/include/commandhelp.h:461
+#: ../src/include/commandhelp.h:472
 msgid "    i - invite-only channel"
 msgstr "    i - invite-only kanal"
 
-#: ../src/include/commandhelp.h:462
+#: ../src/include/commandhelp.h:473
 msgid "    m - moderated channel"
 msgstr "    m - modererad kanal"
 
-#: ../src/include/commandhelp.h:463
+#: ../src/include/commandhelp.h:474
 msgid "    n - no messages to a channel from clients on the outside"
 msgstr "    n - inga meddelanden till en kanal från klienter på utsidan"
 
-#: ../src/include/commandhelp.h:464
+#: ../src/include/commandhelp.h:475
 msgid "    p - private channel"
 msgstr "    p - privat kanal"
 
-#: ../src/include/commandhelp.h:465
+#: ../src/include/commandhelp.h:476
 msgid "    s - secret channel"
 msgstr "    s - hemlig kanal"
 
-#: ../src/include/commandhelp.h:466
+#: ../src/include/commandhelp.h:477
 msgid "    t - topic settable by channel operators only"
 msgstr "    t - ämne kan endast ställas in av kanaloperatörer"
 
-#: ../src/include/commandhelp.h:468
+#: ../src/include/commandhelp.h:479
 msgid "    k - set/remove the channel key (password)"
 msgstr "    k - ställ in/ta bort kanalnyckeln (lösenordet)"
 
-#: ../src/include/commandhelp.h:469
+#: ../src/include/commandhelp.h:480
 msgid "    l - set/remove the channel user limit"
 msgstr "    l - ställ in/ta bort kanalanvändargränsen"
 
-#: ../src/include/commandhelp.h:471
+#: ../src/include/commandhelp.h:482
 msgid "    b - set/remove a ban mask"
 msgstr "    b - ställ in/ta bort en förbudsmask"
 
-#: ../src/include/commandhelp.h:472
+#: ../src/include/commandhelp.h:483
 msgid "    e - set/remove an exception mask to override a ban mask"
 msgstr ""
 "    e - ställ in/ta bort en undantagsmask för att åsidosätta en förbudsmask"
 
-#: ../src/include/commandhelp.h:473
+#: ../src/include/commandhelp.h:484
 msgid "    I - set/remove an invitation mask to override the invite-only flag"
 msgstr ""
 "    I - ställ in/ta bort en inbjudningsmask för att åsidosätta flaggan "
 "endast för inbjudan"
 
-#: ../src/include/commandhelp.h:477
+#: ../src/include/commandhelp.h:488
 msgid "    i - marks a user as invisible"
 msgstr "    i - markerar en användare som osynlig"
 
-#: ../src/include/commandhelp.h:478
+#: ../src/include/commandhelp.h:489
 msgid "    w - the user receives wallops messages"
 msgstr "    w - användaren får wallops-meddelanden"
 
-#: ../src/include/commandhelp.h:482
+#: ../src/include/commandhelp.h:493
 msgid "    Give channel operator privilege to 'Companion' in #foo:"
 msgstr "    Ge kanaloperatörsprivilegium till 'Companion' i #foo:"
 
-#: ../src/include/commandhelp.h:485
+#: ../src/include/commandhelp.h:496
 msgid "    Restrict messaging to channel #linux:"
 msgstr "    Begränsa meddelanden till kanal #linux:"
 
-#: ../src/include/commandhelp.h:488
+#: ../src/include/commandhelp.h:499
 msgid "    Limit user count for #freenode to 10:"
 msgstr "    Begränsa antalet användare för #freenode till 10:"
 
-#: ../src/include/commandhelp.h:491
+#: ../src/include/commandhelp.h:502
 msgid "    Deny all users with hostname spammers.net from joining #chatzone:"
 msgstr ""
 "    Neka alla användare med värdnamnet spammers.net från att gå med i "
 "#chatzone:"
 
-#: ../src/include/commandhelp.h:494
+#: ../src/include/commandhelp.h:505
 msgid "    Turn on reception of WALLOPS messages:"
 msgstr "    Slå på mottagning av WALLOPS meddelanden:"
 
-#: ../src/include/commandhelp.h:500
+#: ../src/include/commandhelp.h:511
 msgid "usage: /msg <recipient> <message>"
 msgstr "användning: /msg <mottagare> <meddelande>"
 
-#: ../src/include/commandhelp.h:502
+#: ../src/include/commandhelp.h:513
 msgid ""
 "Used to send private messages between users, as well as to send\n"
 "messages to channels."
@@ -1008,45 +1021,45 @@ msgstr ""
 "Används för att skicka privata meddelanden mellan användare, samt för\n"
 "att skicka meddelanden till kanaler."
 
-#: ../src/include/commandhelp.h:508
+#: ../src/include/commandhelp.h:519
 msgid "usage: /nick <new nickname>"
 msgstr "användning: /nick <nytt smeknamn>"
 
-#: ../src/include/commandhelp.h:510
+#: ../src/include/commandhelp.h:521
 msgid "Sets your nickname."
 msgstr "Ställer in ditt smeknamn."
 
-#: ../src/include/commandhelp.h:515
+#: ../src/include/commandhelp.h:526
 msgid "usage: /nickserv <[service hostname | --]> <command> [...]"
 msgstr "användning: /nickserv <[tjänstens värdnamn | --]> <kommando> [...]"
 
-#: ../src/include/commandhelp.h:517
+#: ../src/include/commandhelp.h:528
 msgid "Communicate with your IRC network's nickname service."
 msgstr "Kommunicera med ditt IRC nätverks smeknamnstjänst."
 
-#: ../src/include/commandhelp.h:519
+#: ../src/include/commandhelp.h:530
 msgid "If the initial argument equals to '--' then the:"
 msgstr "Om det initiala argumentet är lika med '--' så kommer:"
 
-#: ../src/include/commandhelp.h:521
+#: ../src/include/commandhelp.h:532
 msgid "    1) Value of setting 'nickserv_host' will be used as service"
 msgstr ""
 "    1) Värdet för inställningen 'nickserv_host' att användas som tjänstens"
 
-#: ../src/include/commandhelp.h:522
+#: ../src/include/commandhelp.h:533
 msgid "       hostname."
 msgstr "       värdnamn."
 
-#: ../src/include/commandhelp.h:523
+#: ../src/include/commandhelp.h:534
 msgid "    2) Command call won't be added to the command history provided"
 msgstr ""
 "    2) Kommandoanropet inte att läggas till kommandohistoriken förutsatt"
 
-#: ../src/include/commandhelp.h:524
+#: ../src/include/commandhelp.h:535
 msgid "       that the second argument is 'identify'."
 msgstr "       att det andra argumentet är 'identify'."
 
-#: ../src/include/commandhelp.h:526
+#: ../src/include/commandhelp.h:537
 msgid ""
 "The correct service hostname is not always the same as the visible\n"
 "hostname of NickServ. FYI at the AnonOps IRC network the visible\n"
@@ -1059,17 +1072,17 @@ msgstr ""
 "(när denna text skrevs) men du bör använda 'services.anonops.com'.\n"
 "Som en reserv:"
 
-#: ../src/include/commandhelp.h:530
+#: ../src/include/commandhelp.h:541
 msgid ""
 "'/query NickServ' can be used in order to communicate with the\n"
 "service."
 msgstr "'/query NickServ' kan användas för att kommunicera med tjänsten."
 
-#: ../src/include/commandhelp.h:536
+#: ../src/include/commandhelp.h:547
 msgid "usage: /notice <recipient> <message>"
 msgstr "användning: /notice <mottagare> <meddelande>"
 
-#: ../src/include/commandhelp.h:538
+#: ../src/include/commandhelp.h:549
 msgid ""
 "Used to send private messages between users, as well as to send\n"
 "messages to channels. (In notice form.)"
@@ -1077,27 +1090,27 @@ msgstr ""
 "Används för att skicka privata meddelanden mellan användare, samt för\n"
 "att skicka meddelanden till kanaler. (I notisform.)"
 
-#: ../src/include/commandhelp.h:544
+#: ../src/include/commandhelp.h:555
 msgid "usage: /op <nick>"
 msgstr "användning: /op <smeknamn>"
 
-#: ../src/include/commandhelp.h:546
+#: ../src/include/commandhelp.h:557
 msgid "Gives the channel operator privilege to another user."
 msgstr "Ger kanaloperatörsprivilegiet till en annan användare."
 
-#: ../src/include/commandhelp.h:551
+#: ../src/include/commandhelp.h:562
 msgid "usage: /oper <name> <password>"
 msgstr "användning: /oper <namn> <lösenord>"
 
-#: ../src/include/commandhelp.h:553
+#: ../src/include/commandhelp.h:564
 msgid "Identifies yourself as an IRC operator."
 msgstr "Identifierar dig själv som IRC operatör."
 
-#: ../src/include/commandhelp.h:558
+#: ../src/include/commandhelp.h:569
 msgid "usage: /part [channel] [message]"
 msgstr "användning: /part [kanal] [meddelande]"
 
-#: ../src/include/commandhelp.h:560
+#: ../src/include/commandhelp.h:571
 msgid ""
 "Leaves a channel (optionally with a message). If the command is called\n"
 "without any arguments and the current window is an IRC channel, that\n"
@@ -1107,27 +1120,27 @@ msgstr ""
 "utan några argument och det aktuella fönstret är en IRC kanal, kommer\n"
 "den kanalen att vara målet."
 
-#: ../src/include/commandhelp.h:566
+#: ../src/include/commandhelp.h:577
 msgid "  Leave channel #chatzone with message 'bye':"
 msgstr "  Lämna kanal #chatzone med meddelandet 'Hej då':"
 
-#: ../src/include/commandhelp.h:567
+#: ../src/include/commandhelp.h:578
 msgid "    /part #chatzone bye"
 msgstr "    /part #chatzone Hej då"
 
-#: ../src/include/commandhelp.h:572
+#: ../src/include/commandhelp.h:583
 msgid "usage: /passmod <nickname>"
 msgstr "användning: /passmod <smeknamn>"
 
-#: ../src/include/commandhelp.h:574
+#: ../src/include/commandhelp.h:585
 msgid "Pass the ICB moderation privilege to another group member."
 msgstr "Överlämna ICB modereringsprivilegiet till en annan gruppmedlem."
 
-#: ../src/include/commandhelp.h:579
+#: ../src/include/commandhelp.h:590
 msgid "usage: /qbot <[service hostname | --]> <command> [...]"
 msgstr "användning: /qbot <[tjänstens värdnamn | --]> <kommando> [...]"
 
-#: ../src/include/commandhelp.h:581
+#: ../src/include/commandhelp.h:592
 msgid ""
 "Communicate with QuakeNet's network service, the Q bot. If the initial\n"
 "argument equals to '--', then the value of setting 'qbot_host' is used\n"
@@ -1137,11 +1150,11 @@ msgstr ""
 "argumentet är lika med '--' används värdet för inställningen\n"
 "'qbot_host' som ett tjänstvärdnamn."
 
-#: ../src/include/commandhelp.h:588
+#: ../src/include/commandhelp.h:599
 msgid "usage: /query [nick]"
 msgstr "användning: /query [nick]"
 
-#: ../src/include/commandhelp.h:590
+#: ../src/include/commandhelp.h:601
 msgid ""
 "Starts a private conversation with 'nick'. If 'nick' is omitted and\n"
 "the active window is a private conversation, the action will be to\n"
@@ -1151,11 +1164,11 @@ msgstr ""
 "aktiva fönstret är en privat konversation, kommer åtgärden att vara\n"
 "att stänga den."
 
-#: ../src/include/commandhelp.h:597
+#: ../src/include/commandhelp.h:608
 msgid "usage: /quit [message]"
 msgstr "användning: /quit [meddelande]"
 
-#: ../src/include/commandhelp.h:599
+#: ../src/include/commandhelp.h:610
 msgid ""
 "Disconnect from IRC and quit the program. A disconnect message is\n"
 "optional."
@@ -1163,11 +1176,11 @@ msgstr ""
 "Koppla från IRC och avsluta programmet. Ett frånkopplingsmeddelande är\n"
 "valfritt."
 
-#: ../src/include/commandhelp.h:605
+#: ../src/include/commandhelp.h:616
 msgid "usage: /rehash"
 msgstr "användning: /rehash"
 
-#: ../src/include/commandhelp.h:607
+#: ../src/include/commandhelp.h:618
 msgid ""
 "The rehash command is an administrative command which can be used by\n"
 "an IRC operator to force the server to re-read and process its conf-\n"
@@ -1177,11 +1190,11 @@ msgstr ""
 "IRC operatör för att tvinga servern att läsa om och bearbeta sin konf-\n"
 "igurationsfil."
 
-#: ../src/include/commandhelp.h:614
+#: ../src/include/commandhelp.h:625
 msgid "usage: /resize"
 msgstr "användning: /resize"
 
-#: ../src/include/commandhelp.h:616
+#: ../src/include/commandhelp.h:627
 msgid ""
 "Resize the terminal. For example, Windows doesn't send 'SIGWINCH',\n"
 "instead this command can be used. First resize the window then run\n"
@@ -1191,11 +1204,11 @@ msgstr ""
 "'SIGWINCH', istället kan detta kommando användas. Ändra först\n"
 "storleken på fönstret och kör sedan det här kommandot."
 
-#: ../src/include/commandhelp.h:623
+#: ../src/include/commandhelp.h:634
 msgid "usage: /restart [--I-am-sure]"
 msgstr "användning: /restart [--I-am-sure]"
 
-#: ../src/include/commandhelp.h:625
+#: ../src/include/commandhelp.h:636
 msgid ""
 "An IRC operator can use the 'restart'-command to force the server to\n"
 "restart itself."
@@ -1203,11 +1216,11 @@ msgstr ""
 "En IRC operatör kan använda kommandot 'restart' för att tvinga servern\n"
 "att starta om sig själv."
 
-#: ../src/include/commandhelp.h:631
+#: ../src/include/commandhelp.h:642
 msgid "usage: /rules"
 msgstr "användning: /rules"
 
-#: ../src/include/commandhelp.h:633
+#: ../src/include/commandhelp.h:644
 msgid ""
 "Outputs network/server rules. Not all IRC server software supports\n"
 "this command. (It's actually quite rare.)"
@@ -1215,19 +1228,19 @@ msgstr ""
 "Matar ut nätverks-/serverregler. Inte all IRC serverprogramvara\n"
 "stödjer detta kommando. (Det är faktiskt ganska sällsynt.)"
 
-#: ../src/include/commandhelp.h:639
+#: ../src/include/commandhelp.h:650
 msgid "usage: /sasl <operation> [...]"
 msgstr "användning: /sasl <operation> [...]"
 
-#: ../src/include/commandhelp.h:641
+#: ../src/include/commandhelp.h:652
 msgid "Simple Authentication and Security Layer."
 msgstr "Enkelt autentiserings- och säkerhetslager. (SASL)"
 
-#: ../src/include/commandhelp.h:642
+#: ../src/include/commandhelp.h:653
 msgid "Operation can be either:"
 msgstr "Operation kan vara antingen:"
 
-#: ../src/include/commandhelp.h:654
+#: ../src/include/commandhelp.h:665
 msgid ""
 "SASL is a method that lets you identify with NickServ during the\n"
 "connection process eliminating the need to do it manually."
@@ -1236,15 +1249,15 @@ msgstr ""
 "anslutningsprocessen, vilket eliminerar behovet av att göra det\n"
 "manuellt."
 
-#: ../src/include/commandhelp.h:656
+#: ../src/include/commandhelp.h:667
 msgid "(To use SASL you must register your nickname.)"
 msgstr "(För att använda SASL måste du registrera ditt smeknamn.)"
 
-#: ../src/include/commandhelp.h:660
+#: ../src/include/commandhelp.h:671
 msgid "  Identification using mechanism ecdsa-nist256p-challenge:"
 msgstr "  Identifiering med mekanism ecdsa-nist256p-challenge:"
 
-#: ../src/include/commandhelp.h:668
+#: ../src/include/commandhelp.h:679
 msgid ""
 "  (The only IRC network that I know of that is supporting this\n"
 "  mechanism is Libera Chat.)"
@@ -1252,15 +1265,15 @@ msgstr ""
 "  (Det enda IRC nätverket som jag känner till som stödjer denna\n"
 "  mekanism är Libera Chat.)"
 
-#: ../src/include/commandhelp.h:671
+#: ../src/include/commandhelp.h:682
 msgid "  Identification using mechanism 'plain':"
 msgstr "  Identifiering med mekanism 'plain':"
 
-#: ../src/include/commandhelp.h:680
+#: ../src/include/commandhelp.h:691
 msgid "usage: /say <message>"
 msgstr "användning: /say <meddelande>"
 
-#: ../src/include/commandhelp.h:682
+#: ../src/include/commandhelp.h:693
 msgid ""
 "Say a message. This command can be used if you want say something with\n"
 "a leading command-character, i.e. a slash."
@@ -1268,15 +1281,15 @@ msgstr ""
 "Säg ett meddelande. Detta kommando kan användas om du vill säga något\n"
 "med ett ledande kommandotecken, dvs ett snedstreck."
 
-#: ../src/include/commandhelp.h:687
+#: ../src/include/commandhelp.h:698
 msgid "    /say // A single-line comment in C++"
 msgstr "    /say // En enradskommentar i C++"
 
-#: ../src/include/commandhelp.h:692
+#: ../src/include/commandhelp.h:703
 msgid "usage: /servlist [<mask> [<type>]]"
 msgstr "användning: /servlist [<mask> [<typ>]]"
 
-#: ../src/include/commandhelp.h:694
+#: ../src/include/commandhelp.h:705
 msgid ""
 "Lists services currently connected to your IRC network. Arguments,\n"
 "if given, can be used to restrict the output result."
@@ -1285,39 +1298,39 @@ msgstr ""
 "IRC nätverk. Argument, om de ges, kan användas för att begränsa\n"
 "resultatet."
 
-#: ../src/include/commandhelp.h:704
+#: ../src/include/commandhelp.h:715
 msgid "usage: /servstats [<query> [<target>]]"
 msgstr "användning: /servstats [<fråga> [<mål>]]"
 
-#: ../src/include/commandhelp.h:706
+#: ../src/include/commandhelp.h:717
 msgid "This command is used to query statistics of a certain IRC server."
 msgstr ""
 "Detta kommando används för att fråga efter statistik för en viss IRC\n"
 "server."
 
-#: ../src/include/commandhelp.h:711
+#: ../src/include/commandhelp.h:722
 msgid "usage: /set [[setting] [value]]"
 msgstr "användning: /set [[inställning] [värde]]"
 
-#: ../src/include/commandhelp.h:713
+#: ../src/include/commandhelp.h:724
 msgid "Alter Swirc settings."
 msgstr "Ändra Swirc-inställningar."
 
-#: ../src/include/commandhelp.h:718
+#: ../src/include/commandhelp.h:729
 msgid ""
 "    Bools are case insensitive and can have one of the following\n"
 "    values:"
 msgstr "    Bools är skiftlägesokänsliga och kan ha ett av följande värden:"
 
-#: ../src/include/commandhelp.h:720
+#: ../src/include/commandhelp.h:731
 msgid "    - on, true or yes"
 msgstr "    - on, true eller yes"
 
-#: ../src/include/commandhelp.h:721
+#: ../src/include/commandhelp.h:732
 msgid "    - off, false or no"
 msgstr "    - off, false eller no"
 
-#: ../src/include/commandhelp.h:724
+#: ../src/include/commandhelp.h:735
 msgid ""
 "    Integers. Swirc implements a min/max value for each integer in\n"
 "    order to keep its value safe. The error log will tell if the\n"
@@ -1329,27 +1342,27 @@ msgstr ""
 "    begränsningarna för ett heltal inte är inom gränserna och i så\n"
 "    fall att ett förprogrammerat reservvärde används istället."
 
-#: ../src/include/commandhelp.h:730
+#: ../src/include/commandhelp.h:741
 msgid "    An arbitrary sequence of characters"
 msgstr "    En godtycklig sekvens av tecken"
 
-#: ../src/include/commandhelp.h:734
+#: ../src/include/commandhelp.h:745
 msgid "  Output the current values of all settings:"
 msgstr "  Mata ut de aktuella värdena för alla inställningar:"
 
-#: ../src/include/commandhelp.h:735
+#: ../src/include/commandhelp.h:746
 msgid "    /set (without any arguments)"
 msgstr "    /set (utan några argument)"
 
-#: ../src/include/commandhelp.h:737
+#: ../src/include/commandhelp.h:748
 msgid "  Turn beeps on/off:"
 msgstr "  Slå pip på/av:"
 
-#: ../src/include/commandhelp.h:744
+#: ../src/include/commandhelp.h:755
 msgid "usage: /squery <servicename> <text>"
 msgstr "användning: /squery <tjänstens namn> <text>"
 
-#: ../src/include/commandhelp.h:746
+#: ../src/include/commandhelp.h:757
 msgid ""
 "This command is used similarly to '/msg'. The only difference is that\n"
 "the recipient MUST be a service."
@@ -1357,11 +1370,11 @@ msgstr ""
 "Detta kommando används på samma sätt som '/msg'. Den enda skillnaden\n"
 "är att mottagaren MÅSTE vara en tjänst."
 
-#: ../src/include/commandhelp.h:752
+#: ../src/include/commandhelp.h:763
 msgid "usage: /stats [channel]"
 msgstr "användning: /stats [kanal]"
 
-#: ../src/include/commandhelp.h:754
+#: ../src/include/commandhelp.h:765
 msgid ""
 "Outputs a channel's user statistics. If the channel argument is left\n"
 "empty and the active window is an IRC channel, Swirc will output the\n"
@@ -1371,31 +1384,31 @@ msgstr ""
 "och det aktiva fönstret är en IRC kanal, kommer Swirc att mata ut\n"
 "användarstatistiken för den kanalen."
 
-#: ../src/include/commandhelp.h:761
+#: ../src/include/commandhelp.h:772
 msgid "usage: /theme [install <name> | list-remote | set <name>]"
 msgstr "användning: /theme [install <namn> | list-remote | set <namn>]"
 
-#: ../src/include/commandhelp.h:763
+#: ../src/include/commandhelp.h:774
 msgid "Management of themes on-the-fly."
 msgstr "Hantering av teman."
 
-#: ../src/include/commandhelp.h:767
+#: ../src/include/commandhelp.h:778
 msgid "    Install a theme named 'bx':"
 msgstr "    Installera ett tema som heter 'bx':"
 
-#: ../src/include/commandhelp.h:770
+#: ../src/include/commandhelp.h:781
 msgid "    List all available themes:"
 msgstr "    Lista alla tillgängliga teman:"
 
-#: ../src/include/commandhelp.h:773
+#: ../src/include/commandhelp.h:784
 msgid "    Activate an installed theme with name 'bx':"
 msgstr "    Aktivera ett installerat tema med namnet 'bx':"
 
-#: ../src/include/commandhelp.h:779
+#: ../src/include/commandhelp.h:790
 msgid "usage: /time <target>"
 msgstr "användning: /time <mål>"
 
-#: ../src/include/commandhelp.h:781
+#: ../src/include/commandhelp.h:792
 msgid ""
 "Send a CTCP TIME request to 'target', which is either a nickname or an\n"
 "IRC channel."
@@ -1403,11 +1416,11 @@ msgstr ""
 "Skicka en CTCP TIME förfrågan till 'mål', som antingen är ett smeknamn\n"
 "eller en IRC kanal."
 
-#: ../src/include/commandhelp.h:787
+#: ../src/include/commandhelp.h:798
 msgid "usage: /topic [new topic]"
 msgstr "användning: /topic [nytt ämne]"
 
-#: ../src/include/commandhelp.h:789
+#: ../src/include/commandhelp.h:800
 msgid ""
 "Sets a new topic for a channel. If 'new topic' is omitted the action\n"
 "will be to display the current topic. (The active window must be an\n"
@@ -1417,29 +1430,29 @@ msgstr ""
 "åtgärden att vara att visa det aktuella ämnet. (Det aktiva fönstret\n"
 "måste vara en IRC kanal.)"
 
-#: ../src/include/commandhelp.h:796
+#: ../src/include/commandhelp.h:807
 msgid "usage: /unban <mask>"
 msgstr "användning: /unban <mask>"
 
-#: ../src/include/commandhelp.h:798
+#: ../src/include/commandhelp.h:809
 msgid "Removes a channel ban. (The active window must be an IRC channel.)"
 msgstr ""
 "Tar bort ett kanalförbud.\n"
 "(Det aktiva fönstret måste vara en IRC kanal.)"
 
-#: ../src/include/commandhelp.h:808
+#: ../src/include/commandhelp.h:819
 msgid "usage: /unignore [#]"
 msgstr "användning: /unignore [#]"
 
-#: ../src/include/commandhelp.h:810
+#: ../src/include/commandhelp.h:821
 msgid "Deletes a regular expression from the ignore list."
 msgstr "Tar bort ett reguljärt uttryck från ignoreringslistan."
 
-#: ../src/include/commandhelp.h:819
+#: ../src/include/commandhelp.h:830
 msgid "usage: /version <target>"
 msgstr "användning: /version <mål>"
 
-#: ../src/include/commandhelp.h:821
+#: ../src/include/commandhelp.h:832
 msgid ""
 "Send a CTCP VERSION request to 'target', which is either a nickname or\n"
 "an IRC channel."
@@ -1447,19 +1460,19 @@ msgstr ""
 "Skicka en CTCP VERSION förfrågan till 'mål', vilket antingen är ett\n"
 "smeknamn eller en IRC kanal."
 
-#: ../src/include/commandhelp.h:827
+#: ../src/include/commandhelp.h:838
 msgid "usage: /voice <nick>"
 msgstr "användning: /voice <nick>"
 
-#: ../src/include/commandhelp.h:829
+#: ../src/include/commandhelp.h:840
 msgid "Gives the channel voice privilege to another user."
 msgstr "Ger kanal-röst-privilegiet till en annan användare."
 
-#: ../src/include/commandhelp.h:834
+#: ../src/include/commandhelp.h:845
 msgid "usage: /wallops <message>"
 msgstr "användning: /wallops <meddelande>"
 
-#: ../src/include/commandhelp.h:836
+#: ../src/include/commandhelp.h:847
 msgid ""
 "The 'wallops'-command is used to send a message to all currently\n"
 "connected users who have set the 'w' user mode for themselves."
@@ -1468,11 +1481,11 @@ msgstr ""
 "för närvarande anslutna användare som har ställt in användarläget 'w'\n"
 "för sig själva."
 
-#: ../src/include/commandhelp.h:842
+#: ../src/include/commandhelp.h:853
 msgid "usage: /who <mask>"
 msgstr "användning: /who <mask>"
 
-#: ../src/include/commandhelp.h:844
+#: ../src/include/commandhelp.h:855
 msgid ""
 "Generates a query which returns a list of information which matches\n"
 "the provided 'mask'."
@@ -1480,27 +1493,27 @@ msgstr ""
 "Genererar en fråga som returnerar en lista med information som matchar\n"
 "den angivna 'masken'."
 
-#: ../src/include/commandhelp.h:849
+#: ../src/include/commandhelp.h:860
 msgid "  Show the Libera Chat crew:"
 msgstr "  Visa Libera Chat teamet:"
 
-#: ../src/include/commandhelp.h:852
+#: ../src/include/commandhelp.h:863
 msgid "  Show users with a German domain name:"
 msgstr "  Visa användare med ett tyskt domännamn:"
 
-#: ../src/include/commandhelp.h:858
+#: ../src/include/commandhelp.h:869
 msgid "usage: /whois <nick>"
 msgstr "användning: /whois <smeknamn>"
 
-#: ../src/include/commandhelp.h:860
+#: ../src/include/commandhelp.h:871
 msgid "Asks after information about another user."
 msgstr "Frågar efter information om en annan användare."
 
-#: ../src/include/commandhelp.h:865
+#: ../src/include/commandhelp.h:876
 msgid "usage: /wholeft"
 msgstr "användning: /wholeft"
 
-#: ../src/include/commandhelp.h:867
+#: ../src/include/commandhelp.h:878
 msgid ""
 "By using this command you can see who left during a network server\n"
 "split. The command takes no arguments and the active window must be an\n"
@@ -1510,21 +1523,21 @@ msgstr ""
 "nätverksserveruppdelning. Kommandot tar inga argument och det aktiva\n"
 "fönstret måste vara en IRC kanal."
 
-#: ../src/include/commandhelp.h:874
+#: ../src/include/commandhelp.h:885
 msgid "usage: /znc [*module] <command>"
 msgstr "användning: /znc [*modul] <kommando>"
 
-#: ../src/include/commandhelp.h:876
+#: ../src/include/commandhelp.h:887
 msgid ""
 "Simplifies the communication with ZNC which is a popular\n"
 "'IRC bouncer'."
 msgstr "Förenklar kommunikationen med ZNC som är en populär 'IRC studsare'."
 
-#: ../src/include/commandhelp.h:881
+#: ../src/include/commandhelp.h:892
 msgid "  Output your ZNC version:"
 msgstr "  Mata ut din ZNC version:"
 
-#: ../src/include/commandhelp.h:884
+#: ../src/include/commandhelp.h:895
 msgid "  Identical to the previous example:"
 msgstr "  Identiskt med föregående exempel:"
 
