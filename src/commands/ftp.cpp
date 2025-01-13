@@ -546,7 +546,7 @@ ftp_data_conn::get_file(void)
 
 	while (ftp::ctl_conn->read_reply(1)) {
 		for (const FTP_REPLY &rep : ftp::ctl_conn->reply_vec) {
-			if (rep.num == 211) {
+			if (rep.num == 211 || rep.num == 213) {
 				/* null */;
 			} else if (rep.num == 450 || rep.num == 550) {
 				proceed = false;
