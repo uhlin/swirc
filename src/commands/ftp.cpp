@@ -714,17 +714,17 @@ perform_ftp_cmd(CSTRING cmd, CSTRING arg)
 	int n_sent;
 
 	if (arg == nullptr || strings_match(arg, "")) {
-		printtext_print("err", "insufficient args");
+		printtext_print("err", "%s", _("Insufficient arguments"));
 		return;
 	} else if (ftp::ctl_conn == nullptr) {
-		printtext_print("err", "no control connection");
+		printtext_print("err", "%s", _("No control connection"));
 		return;
 	}
 
 	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(), "%s %s\r\n",
 	    cmd, arg);
 	if (n_sent <= 0) {
-		printtext_print("err", "cannot send");
+		printtext_print("err", "%s", _("Cannot send"));
 		return;
 	}
 
@@ -837,7 +837,7 @@ static void
 subcmd_ls(CSTRING arg)
 {
 	if (arg == nullptr || strings_match(arg, "")) {
-		printtext_print("err", "insufficient args");
+		printtext_print("err", "%s", _("Insufficient arguments"));
 	} else if (strings_match(arg, "dir")) {
 		ftp::do_cmd_detached("ls dir");
 	} else if (strings_match(arg, "up")) {
@@ -897,7 +897,7 @@ cmd_ftp(CSTRING data)
 	static chararray_t	sep  = "\n";
 
 	if (strings_match(data, "")) {
-		printtext_print("err", "insufficient args");
+		printtext_print("err", "%s", _("Insufficient arguments"));
 		return;
 	}
 
