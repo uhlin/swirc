@@ -2,6 +2,8 @@
 #define CMDS_MISC_H
 
 __SWIRC_BEGIN_DECLS
+void confirm_ctcp_sent(const char *cmd, const char *target);
+
 void	cmd_away	(const char *);
 void	cmd_banlist	(const char *);
 void	cmd_beep	(const char *);

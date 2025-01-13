@@ -468,7 +468,7 @@ cmd_rules(const char *data)
 		(void) atomic_swap_bool(&g_connection_lost, true);
 }
 
-static void
+void
 confirm_ctcp_sent(const char *cmd, const char *target)
 {
 	PRINTTEXT_CONTEXT	ctx;
