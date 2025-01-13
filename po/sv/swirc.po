@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-01-13 17:48+0100\n"
-"PO-Revision-Date: 2025-01-05 17:09+0100\n"
+"PO-Revision-Date: 2025-01-13 17:54+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -201,7 +201,7 @@ msgstr "Det gick inte att skapa en slutpunkt för kommunikation"
 #: ../src/commands/ftp.cpp:717 ../src/commands/ftp.cpp:840
 #: ../src/commands/ftp.cpp:900
 msgid "Insufficient arguments"
-msgstr ""
+msgstr "Otillräckliga argument"
 
 #: ../src/commands/ftp.cpp:720 ../src/commands/ftp.cpp:989
 msgid "No control connection"
@@ -675,6 +675,8 @@ msgid ""
 "Retrieve and store files on a FTP server. (The communication is done\n"
 "in clear text, i.e. unencrypted.)"
 msgstr ""
+"Hämta och lagra filer på en FTP server. (Kommunikationen sker i\n"
+"klartext, dvs okrypterad.)"
 
 #: ../src/include/commandhelp.h:294
 msgid "usage: /gline <nick!user@host> [<duration> :<reason>]"
