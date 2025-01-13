@@ -518,7 +518,12 @@ get_bytes(const std::string &str)
 static void
 print_complete(CSTRING path, double part, double total, bool (&state)[3])
 {
-	const double val = percentage(part, total);
+	double val;
+
+	if (state[2])
+		return;
+
+	val = percentage(part, total);
 
 	if (val >= 75.0 && !state[2]) {
 		printtext_print("success", "%s: %.2f%% complete", path, val);
