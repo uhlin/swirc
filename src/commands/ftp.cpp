@@ -708,6 +708,8 @@ subcmd_ok(CSTRING cmd)
 		return true;
 	else if (strings_match(cmd, "rmdir"))
 		return true;
+	else if (strings_match(cmd, "send"))
+		return true;
 	else if (strings_match(cmd, "system"))
 		return true;
 	return false;
@@ -873,6 +875,12 @@ subcmd_rmdir(CSTRING path)
 }
 
 static void
+subcmd_send(CSTRING path)
+{
+	UNUSED_PARAM(path);
+}
+
+static void
 subcmd_system(void)
 {
 	perform_simple_ftp_cmd("SYST\r\n");
@@ -889,6 +897,7 @@ subcmd_system(void)
  *     /ftp mkdir <path>
  *     /ftp pwd
  *     /ftp rmdir <path>
+ *     /ftp send <file>
  *     /ftp system
  */
 void
@@ -939,6 +948,8 @@ cmd_ftp(CSTRING data)
 		subcmd_pwd();
 	else if (strings_match(subcmd, "rmdir"))
 		subcmd_rmdir(arg[0]);
+	else if (strings_match(subcmd, "send"))
+		subcmd_send(arg[0]);
 	else if (strings_match(subcmd, "system"))
 		subcmd_system();
 	else
