@@ -124,6 +124,17 @@ handle_special_msg(const struct special_msg_context *ctx)
 		    g_ascii_soh) < 0)
 			(void) atomic_swap_bool(&g_connection_lost, true);
 		acknowledge_ctcp_request("TIME", ctx);
+	} else if (!strncmp(msg, "USERINFO", 9) &&
+		   config_bool("ctcp_reply", true)) {
+		CSTRING ui_str = Config("ctcp_userinfo");
+
+		if (net_send("NOTICE %s :%cUSERINFO %s%c",
+		    ctx->nick,
+		    g_ascii_soh,
+		    (strings_match(ui_str, "") ? "No info set" : ui_str),
+		    g_ascii_soh) < 0)
+			(void) atomic_swap_bool(&g_connection_lost, true);
+		acknowledge_ctcp_request("USERINFO", ctx);
 	} else if (!strncmp(msg, "VERSION", 8) &&
 		   config_bool("ctcp_reply", true)) {
 		if (net_send("NOTICE %s :%cVERSION Swirc %s by %s  --  %s%c",
