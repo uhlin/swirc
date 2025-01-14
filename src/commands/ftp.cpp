@@ -734,6 +734,9 @@ perform_ftp_cmd(CSTRING cmd, CSTRING arg)
 	} else if (ftp::ctl_conn == nullptr) {
 		printtext_print("err", "%s", _("No control connection"));
 		return;
+	} else if (ftp::ctl_conn->get_sock() == INVALID_SOCKET) {
+		printtext_print("err", "%s", _("Invalid network socket"));
+		return;
 	}
 
 	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(), "%s %s\r\n",
@@ -753,6 +756,10 @@ perform_simple_ftp_cmd(CSTRING cmd)
 
 	if (ftp::ctl_conn == nullptr)
 		return;
+	else if (ftp::ctl_conn->get_sock() == INVALID_SOCKET) {
+		printtext_print("err", "%s", _("Invalid network socket"));
+		return;
+	}
 
 	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(), "%s", cmd);
 	if (n_sent <= 0)
@@ -1016,11 +1023,11 @@ ftp::passive(void)
 		printtext_print("err", "%s: %s", __func__,
 		    _("Already in passive mode"));
 		return false;
-	}
-
-	sock = ftp::ctl_conn->get_sock();
-
-	if (ftp::send_printf(sock, "PASV\r\n") <= 0) {
+	} else if ((sock = ftp::ctl_conn->get_sock()) == INVALID_SOCKET) {
+		printtext_print("err", "%s: %s", __func__,
+		    _("Invalid network socket"));
+		return false;
+	} else if (ftp::send_printf(sock, "PASV\r\n") <= 0) {
 		printtext_print("err", "%s: %s", __func__,
 		    _("Cannot send"));
 		return false;
