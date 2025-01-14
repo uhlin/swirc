@@ -212,6 +212,8 @@ ftp_ctl_conn::printreps(void)
 void
 ftp_ctl_conn::read_and_print(const int timeo)
 {
+	if (this->sock == INVALID_SOCKET)
+		return;
 	while (this->read_reply(timeo))
 		this->printreps();
 }
@@ -338,6 +340,9 @@ ftp_ctl_conn::read_reply(const int timeo)
 	int				loop_run = 0;
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
+
+	if (this->sock == INVALID_SOCKET)
+		return 0;
 
 	RECV_AND_CHECK(333000);
 
@@ -639,6 +644,9 @@ ftp_data_conn::list_fetch(const int timeo)
 	int				loop_run = 0;
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
+
+	if (this->sock == INVALID_SOCKET)
+		return 0;
 
 	RECV_AND_CHECK(222000);
 
