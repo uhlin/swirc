@@ -7,6 +7,8 @@ os_LINUX () {
 CC = gcc
 CFLAGS = -O2\\
 	-Wall\\
+	-Wformat-security\\
+	-Wshadow\\
 	-Wsign-compare\\
 	-Wstrict-prototypes\\
 	-fstack-protector-strong\\
