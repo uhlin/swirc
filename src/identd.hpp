@@ -1,7 +1,7 @@
 #ifndef IDENT_DAEMON_HPP
 #define IDENT_DAEMON_HPP
 /* identd.hpp
-   Copyright (C) 2022-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -84,16 +84,16 @@ public:
 		this->sin6 = nullptr;
 	}
 
-	ident_client(const SOCKET clisock, const struct sockaddr_storage &ss)
+	ident_client(const SOCKET p_clisock, const struct sockaddr_storage &p_ss)
 	{
-		this->sock	= clisock;
-		this->ss	= ss;
+		this->sock	= p_clisock;
+		this->ss	= p_ss;
 
-		if (ss.ss_family == AF_INET) {
+		if (p_ss.ss_family == AF_INET) {
 			this->sin = reinterpret_cast<struct sockaddr_in *>
 			    (&this->ss);
 			this->sin6 = nullptr;
-		} else if (ss.ss_family == AF_INET6) {
+		} else if (p_ss.ss_family == AF_INET6) {
 			this->sin = nullptr;
 			this->sin6 = reinterpret_cast<struct sockaddr_in6 *>
 			    (&this->ss);
