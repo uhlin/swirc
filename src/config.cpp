@@ -210,7 +210,8 @@ get_string(const char *name, const char *type)
 	(void) str.append(B1).append(type).append(B2);
 	(void) str.append(" ").append(Theme("notice_sep")).append(" ");
 
-	if (!strings_match(name, "sasl_password"))
+	if (!strings_match(name, "ftp_pass") &&
+	    !strings_match(name, "sasl_password"))
 		str.append(Config(name));
 	else
 		str.append(xstrnlen(Config(name), 80), '*');
