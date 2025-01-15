@@ -17,7 +17,14 @@ CFLAGS = -O2\\
 	-std=c11
 
 CXX = g++
-CXXFLAGS = -O2 -Wall -fstack-protector-strong -g -pipe -std=c++17
+CXXFLAGS = -O2\\
+	-Wall\\
+	-Wformat-security\\
+	-Wshadow\\
+	-fstack-protector-strong\\
+	-g\\
+	-pipe\\
+	-std=c++17
 
 # C preprocessor flags
 CPPFLAGS = -DLINUX=1\\
