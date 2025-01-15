@@ -1,5 +1,5 @@
 /* fetchdic.cpp
-   Copyright (C) 2023-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2023-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -77,33 +77,32 @@ dictionary::dictionary()
 
 dictionary::dictionary(const char *line)
 {
-	char			*author, *license;
-	char			*lang, *name, *date, *url;
 	char			*last = const_cast<char *>("");
 	char			*line_copy = sw_strdup(line);
+	const char		*token[6];
 	static const char	 sep[] = "|";
 
-	lang        = strtok_r(line_copy, sep, &last);
-	name        = strtok_r(nullptr, sep, &last);
-	date        = strtok_r(nullptr, sep, &last);
-	url         = strtok_r(nullptr, sep, &last);
-	author      = strtok_r(nullptr, sep, &last);
-	license     = strtok_r(nullptr, sep, &last);
+	token[0] = strtok_r(line_copy, sep, &last);    /* lang    */
+	token[1] = strtok_r(nullptr, sep, &last);      /* name    */
+	token[2] = strtok_r(nullptr, sep, &last);      /* date    */
+	token[3] = strtok_r(nullptr, sep, &last);      /* url     */
+	token[4] = strtok_r(nullptr, sep, &last);      /* author  */
+	token[5] = strtok_r(nullptr, sep, &last);      /* license */
 
-	if (lang == nullptr || name == nullptr || date == nullptr ||
-	    url == nullptr || author == nullptr || license == nullptr) {
+	if (token[0] == nullptr || token[1] == nullptr || token[2] == nullptr ||
+	    token[3] == nullptr || token[4] == nullptr || token[5] == nullptr) {
 		free(line_copy);
 		throw std::runtime_error("missing tokens");
 	}
 
 	try {
-		this->lang.assign(lang);
-		this->name.assign(name);
-		this->date.assign(date);
-		this->url.assign(url);
+		this->lang.assign(token[0]);
+		this->name.assign(token[1]);
+		this->date.assign(token[2]);
+		this->url.assign(token[3]);
 
-		this->author.assign(author);
-		this->license.assign(license);
+		this->author.assign(token[4]);
+		this->license.assign(token[5]);
 	} catch (...) {
 		/* null */;
 	}
