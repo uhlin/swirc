@@ -79,7 +79,7 @@ dictionary::dictionary(const char *line)
 {
 	char			*last = const_cast<char *>("");
 	char			*line_copy = sw_strdup(line);
-	const char		*token[6];
+	const char		*token[6] = { nullptr };
 	static const char	 sep[] = "|";
 
 	token[0] = strtok_r(line_copy, sep, &last);    /* lang    */
