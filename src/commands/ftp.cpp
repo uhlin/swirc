@@ -1114,6 +1114,25 @@ ftp::ls_dir(void)
 }
 
 int
+ftp::send_bytes(SOCKET sock, const void *buf, const int len)
+{
+	int bytes_sent;
+
+	errno = 0;
+
+#if defined(UNIX)
+	if ((bytes_sent = send(sock, buf, len, 0)) == SOCKET_ERROR)
+		return (errno == EAGAIN || errno == EWOULDBLOCK ? 0 : -1);
+#elif defined(WIN32)
+	if ((bytes_sent = send(sock, static_cast<CSTRING>(buf), len, 0)) ==
+	    SOCKET_ERROR)
+		return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
+#endif
+
+	return bytes_sent;
+}
+
+int
 ftp::send_printf(SOCKET sock, CSTRING fmt, ...)
 {
 	char	*buffer;
