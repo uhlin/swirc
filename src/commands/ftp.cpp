@@ -32,6 +32,7 @@
 #if __OpenBSD__
 #include <sys/param.h>
 #endif
+#include <sys/stat.h>
 
 #ifdef WIN32
 #include <io.h>
@@ -56,6 +57,10 @@
 #include "dcc.h" /* list_dir() */
 #include "ftp.h"
 #include "i18n.h"
+
+#ifdef WIN32
+#define stat _stat
+#endif
 
 #define RECV_AND_CHECK(p_microsec)\
 	do {\
