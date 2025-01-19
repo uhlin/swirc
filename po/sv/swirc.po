@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-01-19 02:19+0100\n"
-"PO-Revision-Date: 2025-01-19 02:21+0100\n"
+"PO-Revision-Date: 2025-01-19 13:21+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -201,7 +201,7 @@ msgstr "Det gick inte att skapa en slutpunkt för kommunikation"
 #: ../src/commands/ftp.cpp:758
 #, c-format
 msgid "%s: bytes sent mismatch bytes read"
-msgstr "%s: bytes skickade inte matchade bytes lästa"
+msgstr "%s: bytes skickade matchade inte bytes lästa"
 
 #: ../src/commands/ftp.cpp:817 ../src/commands/ftp.cpp:904
 #: ../src/commands/ftp.cpp:951 ../src/commands/ftp.cpp:988
