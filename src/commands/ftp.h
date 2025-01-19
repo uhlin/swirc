@@ -85,6 +85,8 @@ typedef int SOCKET;
 			ftp::login();\
 		else if (strings_match(name, "ls dir"))\
 			ftp::ls_dir();\
+		else if (strings_match(name, "send file"))\
+			ftp::send_file();\
 		else\
 			err_log(0, "%s: incorrect command: '%s'", __func__,\
 			    name);\
