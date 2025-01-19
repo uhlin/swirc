@@ -758,6 +758,8 @@ ftp_data_conn::send_file(void)
 	    total != this->filesz) {
 		static const size_t bufsize = sizeof this->buf;
 
+		if (bytes_rem > SIZE_MAX)
+			err_exit(EOVERFLOW, "%s", __func__);
 		bytes = (bytes_rem < bufsize ? bytes_rem : bufsize);
 		if (!isValid(this->fileptr) || this->sock == INVALID_SOCKET)
 			break;
