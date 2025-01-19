@@ -900,6 +900,10 @@ subcmd_get(CSTRING path)
 {
 	int n_sent;
 
+	if (path == nullptr || strings_match(path, "")) {
+		printtext_print("err", "%s", _("Insufficient arguments"));
+		return;
+	}
 	if (!ftp::passive())
 		return;
 	if (!ftp::data_conn->connect_passive()) {
@@ -980,6 +984,10 @@ subcmd_send(CSTRING path)
 	int		n_sent;
 	struct stat	sb = { 0 };
 
+	if (path == nullptr || strings_match(path, "")) {
+		printtext_print("err", "%s", _("Insufficient arguments"));
+		return;
+	}
 	if (!ftp::passive())
 		return;
 	if (!ftp::data_conn->connect_passive()) {
