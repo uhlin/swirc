@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - Added the possibility to switch between windows by just entering the
   reference number, i.e. `/1`, `/2`, `/3`...
 - Added usage of `emplace_back()`. Performance. Multiple occurrences.
+- Changed `is_valid_filename()` to disallow ".."
 - Changed the program to beep on certain window activity.
 - Fixed `-Wshadow` warnings
 - Fixed a resource leak found by Coverity.
