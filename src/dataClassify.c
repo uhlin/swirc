@@ -1,5 +1,5 @@
 /* Data classification utilities
-   Copyright (C) 2012-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -153,7 +153,8 @@ is_valid_filename(const char *filename)
 	    "0123456789 ()+-._[]";
 
 	if (filename == NULL || *filename == '\0' ||
-	    xstrnlen(filename, filename_len_max + 1) > filename_len_max)
+	    xstrnlen(filename, filename_len_max + 1) > filename_len_max ||
+	    strstr(filename, "..") != NULL)
 		return false;
 
 	for (const char *cp = &filename[0]; *cp != '\0'; cp++) {
