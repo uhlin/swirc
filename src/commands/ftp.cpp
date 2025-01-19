@@ -758,8 +758,7 @@ ftp_data_conn::send_file(void)
 	    total != this->filesz) {
 		static const size_t bufsize = sizeof this->buf;
 
-		bytes = static_cast<size_t>(bytes_rem < bufsize ? bytes_rem :
-		    bufsize);
+		bytes = (bytes_rem < bufsize ? bytes_rem : bufsize);
 		if (!isValid(this->fileptr) || this->sock == INVALID_SOCKET)
 			break;
 		BZERO(this->buf, bufsize);
