@@ -1064,7 +1064,7 @@ cmd_ftp(CSTRING data)
 	}
 
 	dcopy = sw_strdup(data);
-	(void) strFeed(dcopy, 2);
+	(void) strFeed(dcopy, 1);
 
 	if ((subcmd = strtok_r(dcopy, sep, &last)) == nullptr) {
 		printf_and_free(dcopy, "%s: insufficient args", cmd);
@@ -1076,7 +1076,6 @@ cmd_ftp(CSTRING data)
 	}
 
 	arg[0] = strtok_r(nullptr, sep, &last);
-	arg[1] = strtok_r(nullptr, sep, &last);
 
 	if (strings_match(subcmd, "cd"))
 		subcmd_cd(arg[0]);
