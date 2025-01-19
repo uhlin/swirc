@@ -723,10 +723,10 @@ ftp_data_conn::send_file(void)
 	bool		proceed = true;
 	char		unit = 'B';
 	double		size = 0.0;
-	int		bytes = 0;
 	int		bytes_sent = 0;
 	intmax_t	bytes_rem = this->filesz;
 	intmax_t	total = 0;
+	size_t		bytes = 0;
 	size_t		bytes_read = 0;
 
 	while (ftp::ctl_conn->read_reply(1)) {
