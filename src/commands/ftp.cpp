@@ -1172,6 +1172,15 @@ ftp::send_bytes(SOCKET sock, const void *buf, const int len)
 	return bytes_sent;
 }
 
+void
+ftp::send_file(void)
+{
+	if (ftp::data_conn == nullptr)
+		return;
+	ftp::data_conn->send_file();
+	delete_data_conn();
+}
+
 int
 ftp::send_printf(SOCKET sock, CSTRING fmt, ...)
 {
