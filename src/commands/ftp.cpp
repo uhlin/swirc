@@ -37,6 +37,7 @@
 #ifdef WIN32
 #include <io.h>
 #endif
+#include <limits.h>
 #include <stdexcept>
 
 #include "../assertAPI.h"
