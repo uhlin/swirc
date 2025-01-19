@@ -700,6 +700,86 @@ ftp_data_conn::list_print(void)
 		print_one_rep(0, str.c_str()); // XXX
 }
 
+void
+ftp_data_conn::send_file(void)
+{
+	bool		printed[3] = { false };
+	bool		proceed = true;
+	char		unit = 'B';
+	double		size = 0.0;
+	int		bytes = 0;
+	int		bytes_sent = 0;
+	intmax_t	bytes_rem = this->filesz;
+	intmax_t	total = 0;
+	size_t		bytes_read = 0;
+
+	while (ftp::ctl_conn->read_reply(1)) {
+		for (const FTP_REPLY &rep : ftp::ctl_conn->reply_vec)
+			print_one_rep(rep.num, rep.text.c_str());
+	}
+
+	if (!proceed)
+		return;
+	if (this->full_path == nullptr || this->path == nullptr)
+		return;
+	if ((this->fileptr = xfopen(this->full_path, "r")) == nullptr) {
+		printtext_print("err", "open failed: %s", this->full_path);
+		return;
+	}
+
+	dcc::get_file_size(this->filesz, size, unit);
+	printtext_print("success", "sending: %s (%.1f%c)...", this->path,
+	    size, unit);
+
+	(void) atomic_swap_bool(&ftp::loop_send_file, true);
+
+	while (atomic_load_bool(&ftp::loop_send_file) &&
+	    bytes_rem > 0 &&
+	    total != this->filesz) {
+		static const int bufsize = static_cast<int>(sizeof this->buf);
+
+		bytes = ((bytes_rem < bufsize)
+			 ? bytes_rem
+			 : bufsize);
+		if (!isValid(this->fileptr) || this->sock == INVALID_SOCKET)
+			break;
+		BZERO(this->buf, bufsize);
+
+		if ((bytes_read =
+		    fread(this->buf, 1, bytes, this->fileptr)) == 0) {
+			printtext_print("err", _("%s: file read error"),
+			    __func__);
+			break;
+		} else if ((bytes_sent = ftp::send_bytes(this->sock, this->buf,
+		    bytes_read)) <= 0) {
+			break;
+		} else if (static_cast<unsigned int>(bytes_sent) !=
+		    bytes_read) {
+			printtext_print("err", _("%s: bytes sent mismatch "
+			    "bytes read"), __func__);
+			break;
+		} else {
+			bytes_rem -= bytes_sent;
+			total += bytes_sent;
+
+			print_complete(this->path, total, this->filesz,
+			    printed);
+		}
+	}
+
+	ftp::ctl_conn->read_and_print(1);
+	fclose_and_null(&this->fileptr);
+	dcc::get_file_size(total, size, unit);
+
+	if (bytes_rem > 0 || total != this->filesz) {
+		printtext_print("warn", "sent: %s (%.1f%c, incomplete)",
+		    this->path, size, unit);
+	} else {
+		printtext_print("success", "sent: %s (%.1f%c)",
+		    this->path, size, unit);
+	}
+}
+
 static bool
 subcmd_ok(CSTRING cmd)
 {

@@ -154,6 +154,7 @@ public:
 	SOCKET		get_sock(void) const;
 	numstr_t	list_fetch(const int);
 	void		list_print(void);
+	void		send_file(void);
 
 private:
 	FILE				*fileptr;
