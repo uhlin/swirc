@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-01-19 02:19+0100\n"
+"POT-Creation-Date: 2025-01-19 14:14+0100\n"
 "PO-Revision-Date: 2025-01-05 17:09+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -91,75 +91,75 @@ msgstr "%sDémarré%s: %s"
 msgid "%sStopped%s: %s"
 msgstr "%sArrêté%s: %s"
 
-#: ../src/commands/dcc.cpp:1348
+#: ../src/commands/dcc.cpp:1352
 #, c-format
 msgid "sending '%s' to %s (%.1f%c)..."
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1439
+#: ../src/commands/dcc.cpp:1443
 msgid "Missing certs. Not starting the DCC server. Please create them."
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1546
+#: ../src/commands/dcc.cpp:1550
 #, c-format
 msgid "%s: added: '%s' (%.1f%c)"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1548
+#: ../src/commands/dcc.cpp:1552
 #, c-format
 msgid "%s: from: %s <%s@%s>"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1550
+#: ../src/commands/dcc.cpp:1554
 msgid "To get the file, type:"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1801 ../src/commands/ftp.cpp:750
+#: ../src/commands/dcc.cpp:1805 ../src/commands/ftp.cpp:770
 #, c-format
 msgid "%s: file read error"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1806
+#: ../src/commands/dcc.cpp:1810
 #, c-format
 msgid "%s: tls write error"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1823
+#: ../src/commands/dcc.cpp:1827
 #, c-format
 msgid "started: %s"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1824
+#: ../src/commands/dcc.cpp:1828
 #, c-format
 msgid "stopped: %s"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1841
+#: ../src/commands/dcc.cpp:1845
 msgid "read request error"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1848
+#: ../src/commands/dcc.cpp:1852
 msgid "unable to find the send object"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1856
+#: ../src/commands/dcc.cpp:1860
 msgid "already sent file"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1859
+#: ../src/commands/dcc.cpp:1863
 msgid "the send object is in a locked state"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1864
+#: ../src/commands/dcc.cpp:1868
 msgid "file open error"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1883
+#: ../src/commands/dcc.cpp:1887
 #, c-format
 msgid "%s: successfully sent file: %s"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1887
+#: ../src/commands/dcc.cpp:1891
 #, c-format
 msgid "%s: file transfer incomplete: %s"
 msgstr ""
@@ -184,45 +184,49 @@ msgstr ""
 msgid "Unable to get a list of IP addresses"
 msgstr "Impossible d'obtenir une liste d'adresses IP"
 
-#: ../src/commands/ftp.cpp:175 ../src/commands/ftp.cpp:488
+#: ../src/commands/ftp.cpp:175 ../src/commands/ftp.cpp:504
 #: ../src/network.cpp:175
 msgid "Failed to establish a connection"
 msgstr "Impossible d'établir une connexion"
 
-#: ../src/commands/ftp.cpp:186 ../src/commands/ftp.cpp:830
-#: ../src/commands/ftp.cpp:1164
+#: ../src/commands/ftp.cpp:186 ../src/commands/ftp.cpp:850
+#: ../src/commands/ftp.cpp:1188
 msgid "Cannot send"
 msgstr ""
 
-#: ../src/commands/ftp.cpp:476
+#: ../src/commands/ftp.cpp:492
 msgid "Failed to create an endpoint for communication"
 msgstr ""
 
-#: ../src/commands/ftp.cpp:758
+#: ../src/commands/ftp.cpp:778
 #, c-format
 msgid "%s: bytes sent mismatch bytes read"
 msgstr ""
 
-#: ../src/commands/ftp.cpp:817 ../src/commands/ftp.cpp:904
-#: ../src/commands/ftp.cpp:951 ../src/commands/ftp.cpp:988
-#: ../src/commands/ftp.cpp:1062
+#: ../src/commands/ftp.cpp:837 ../src/commands/ftp.cpp:924
+#: ../src/commands/ftp.cpp:973 ../src/commands/ftp.cpp:1010
+#: ../src/commands/ftp.cpp:1086
 msgid "Insufficient arguments"
 msgstr ""
 
-#: ../src/commands/ftp.cpp:820 ../src/commands/ftp.cpp:1152
+#: ../src/commands/ftp.cpp:840 ../src/commands/ftp.cpp:1176
 msgid "No control connection"
 msgstr ""
 
-#: ../src/commands/ftp.cpp:823 ../src/commands/ftp.cpp:845
-#: ../src/commands/ftp.cpp:1160
+#: ../src/commands/ftp.cpp:843 ../src/commands/ftp.cpp:865
+#: ../src/commands/ftp.cpp:1184
 msgid "Invalid network socket"
 msgstr ""
 
-#: ../src/commands/ftp.cpp:1156
+#: ../src/commands/ftp.cpp:927 ../src/commands/ftp.cpp:1013
+msgid "Blank file path"
+msgstr ""
+
+#: ../src/commands/ftp.cpp:1180
 msgid "Already in passive mode"
 msgstr ""
 
-#: ../src/commands/ftp.cpp:1179
+#: ../src/commands/ftp.cpp:1203
 msgid "Failed to enter passive mode"
 msgstr ""
 
