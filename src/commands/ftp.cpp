@@ -897,7 +897,47 @@ subcmd_rmdir(CSTRING path)
 static void
 subcmd_send(CSTRING path)
 {
-	UNUSED_PARAM(path);
+	int		n_sent;
+	struct stat	sb = { 0 };
+
+	if (!ftp::passive())
+		return;
+	if (!ftp::data_conn->connect_passive()) {
+		delete_data_conn();
+		return;
+	}
+
+	ftp::data_conn->full_path = strdup_printf("%s%s%s", g_ftp_upload_dir,
+	    SLASH, path);
+	ftp::data_conn->path = sw_strdup(path);
+
+	if (!is_regular_file(ftp::data_conn->full_path)) {
+		printtext_print("err", "%s: file doesn't exist or isn't a "
+		    "regular file", ftp::data_conn->full_path);
+		delete_data_conn();
+		return;
+	} else if (stat(ftp::data_conn->full_path, &sb) != 0) {
+		printtext_print("err", "%s: couldn't stat file",
+		    ftp::data_conn->full_path);
+		delete_data_conn();
+		return;
+	} else if (sb.st_size == 0) {
+		printtext_print("err", "%s: zero size",
+		    ftp::data_conn->full_path);
+		delete_data_conn();
+		return;
+	} else {
+		ftp::data_conn->filesz = static_cast<intmax_t>(sb.st_size);
+	}
+
+	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(),
+	    "TYPE L 8\r\nSTOR %s\r\n", path);
+	if (n_sent <= 0) {
+		delete_data_conn();
+		return;
+	}
+
+	ftp::do_cmd_detached("send file");
 }
 
 static void
