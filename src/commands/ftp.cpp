@@ -732,8 +732,15 @@ ftp_data_conn::send_file(void)
 
 	while (ftp::ctl_conn->read_reply(1)) {
 		for (const FTP_REPLY &rep : ftp::ctl_conn->reply_vec) {
-			if (rep.num == 550 ||
-			    rep.num == 553) // Permission denied
+			if (rep.num == 421 ||
+			    rep.num == 450 ||
+			    rep.num == 452 ||
+			    rep.num == 500 ||
+			    rep.num == 501 ||
+			    rep.num == 530 ||
+			    rep.num == 532 ||
+			    rep.num == 550 ||
+			    rep.num == 553)
 				proceed = false;
 			print_one_rep(rep.num, rep.text.c_str());
 		}
