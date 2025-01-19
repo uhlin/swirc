@@ -923,10 +923,12 @@ subcmd_get(CSTRING path)
 	if (path == nullptr || strings_match(path, "")) {
 		printtext_print("err", "%s", _("Insufficient arguments"));
 		return;
-	}
-	if (!ftp::passive())
+	} else if (is_whitespace(path)) {
+		printtext_print("err", "%s", _("Blank file path"));
 		return;
-	if (!ftp::data_conn->connect_passive()) {
+	} else if (!ftp::passive()) {
+		return;
+	} else if (!ftp::data_conn->connect_passive()) {
 		delete_data_conn();
 		return;
 	}
@@ -1007,10 +1009,12 @@ subcmd_send(CSTRING path)
 	if (path == nullptr || strings_match(path, "")) {
 		printtext_print("err", "%s", _("Insufficient arguments"));
 		return;
-	}
-	if (!ftp::passive())
+	} else if (is_whitespace(path)) {
+		printtext_print("err", "%s", _("Blank file path"));
 		return;
-	if (!ftp::data_conn->connect_passive()) {
+	} else if (!ftp::passive()) {
+		return;
+	} else if (!ftp::data_conn->connect_passive()) {
 		delete_data_conn();
 		return;
 	}
