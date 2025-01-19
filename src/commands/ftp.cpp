@@ -756,7 +756,7 @@ ftp_data_conn::send_file(void)
 	while (atomic_load_bool(&ftp::loop_send_file) &&
 	    bytes_rem > 0 &&
 	    total != this->filesz) {
-		static const int bufsize = static_cast<int>(sizeof this->buf);
+		static const size_t bufsize = sizeof this->buf;
 
 		bytes = static_cast<size_t>(bytes_rem < bufsize ? bytes_rem :
 		    bufsize);
