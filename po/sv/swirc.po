@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-01-15 21:33+0100\n"
+"POT-Creation-Date: 2025-01-19 02:19+0100\n"
 "PO-Revision-Date: 2025-01-15 21:39+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -114,7 +114,7 @@ msgstr "%s: från: %s <%s@%s>"
 msgid "To get the file, type:"
 msgstr "För att hämta filen, skriv:"
 
-#: ../src/commands/dcc.cpp:1801
+#: ../src/commands/dcc.cpp:1801 ../src/commands/ftp.cpp:750
 #, c-format
 msgid "%s: file read error"
 msgstr "%s: filläsfel"
@@ -164,59 +164,65 @@ msgstr "%s: skickad fil: %s"
 msgid "%s: file transfer incomplete: %s"
 msgstr "%s: filöverföringen ofullständig: %s"
 
-#: ../src/commands/ftp.cpp:158
+#: ../src/commands/ftp.cpp:163
 msgid "Invalid username"
 msgstr "Ogiltigt användarnamn"
 
-#: ../src/commands/ftp.cpp:160
+#: ../src/commands/ftp.cpp:165
 msgid "Too long password"
 msgstr "För långt lösenord"
 
-#: ../src/commands/ftp.cpp:162
+#: ../src/commands/ftp.cpp:167
 msgid "Invalid hostname"
 msgstr "Ogiltigt värdnamn"
 
-#: ../src/commands/ftp.cpp:164
+#: ../src/commands/ftp.cpp:169
 msgid "Invalid port number"
 msgstr "Ogiltigt portnummer"
 
-#: ../src/commands/ftp.cpp:167 ../src/network.cpp:308
+#: ../src/commands/ftp.cpp:172 ../src/network.cpp:308
 msgid "Unable to get a list of IP addresses"
 msgstr "Det gick inte att få en lista över IP adresser"
 
-#: ../src/commands/ftp.cpp:170 ../src/commands/ftp.cpp:483
+#: ../src/commands/ftp.cpp:175 ../src/commands/ftp.cpp:488
 #: ../src/network.cpp:175
 msgid "Failed to establish a connection"
 msgstr "Det gick inte att upprätta en anslutning"
 
-#: ../src/commands/ftp.cpp:181 ../src/commands/ftp.cpp:745
-#: ../src/commands/ftp.cpp:1032
+#: ../src/commands/ftp.cpp:186 ../src/commands/ftp.cpp:830
+#: ../src/commands/ftp.cpp:1164
 msgid "Cannot send"
 msgstr "Kan inte skicka"
 
-#: ../src/commands/ftp.cpp:471
+#: ../src/commands/ftp.cpp:476
 msgid "Failed to create an endpoint for communication"
 msgstr "Det gick inte att skapa en slutpunkt för kommunikation"
 
-#: ../src/commands/ftp.cpp:732 ../src/commands/ftp.cpp:862
-#: ../src/commands/ftp.cpp:929
+#: ../src/commands/ftp.cpp:758
+#, c-format
+msgid "%s: bytes sent mismatch bytes read"
+msgstr ""
+
+#: ../src/commands/ftp.cpp:817 ../src/commands/ftp.cpp:904
+#: ../src/commands/ftp.cpp:951 ../src/commands/ftp.cpp:988
+#: ../src/commands/ftp.cpp:1062
 msgid "Insufficient arguments"
 msgstr "Otillräckliga argument"
 
-#: ../src/commands/ftp.cpp:735 ../src/commands/ftp.cpp:1020
+#: ../src/commands/ftp.cpp:820 ../src/commands/ftp.cpp:1152
 msgid "No control connection"
 msgstr "Ingen kontrollanslutning"
 
-#: ../src/commands/ftp.cpp:738 ../src/commands/ftp.cpp:760
-#: ../src/commands/ftp.cpp:1028
+#: ../src/commands/ftp.cpp:823 ../src/commands/ftp.cpp:845
+#: ../src/commands/ftp.cpp:1160
 msgid "Invalid network socket"
 msgstr "Ogiltig nätverkssocket"
 
-#: ../src/commands/ftp.cpp:1024
+#: ../src/commands/ftp.cpp:1156
 msgid "Already in passive mode"
 msgstr "Redan i passivt läge"
 
-#: ../src/commands/ftp.cpp:1047
+#: ../src/commands/ftp.cpp:1179
 msgid "Failed to enter passive mode"
 msgstr "Det gick inte att gå in i passivt läge"
 
