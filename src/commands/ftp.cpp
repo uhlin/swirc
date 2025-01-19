@@ -272,7 +272,11 @@ handle_length_four(char (&numstr)[5], CSTRING token, const size_t len,
 	} else {
 		FTP_REPLY rep(num, token + len);
 
+#if defined(__cplusplus) && __cplusplus >= 201103L
+		reply_vec.emplace_back(rep);
+#else
 		reply_vec.push_back(rep);
+#endif
 	}
 }
 
@@ -292,7 +296,11 @@ handle_length_three(char (&numstr)[5], CSTRING token, const size_t len,
 	} else {
 		FTP_REPLY rep(num, token + len);
 
+#if defined(__cplusplus) && __cplusplus >= 201103L
+		reply_vec.emplace_back(rep);
+#else
 		reply_vec.push_back(rep);
+#endif
 	}
 }
 
@@ -305,7 +313,11 @@ process_reply(CSTRING token, std::vector<FTP_REPLY> &reply_vec)
 	if (strspn(token, "bcdlrswx-") == 10) {
 		FTP_REPLY rep(1000, token);
 
+#if defined(__cplusplus) && __cplusplus >= 201103L
+		reply_vec.emplace_back(rep);
+#else
 		reply_vec.push_back(rep);
+#endif
 	} else if (len >= sizeof numstr) {
 		err_log(0, "%s: initial segment too long", __func__);
 	} else if (len == 4) {
@@ -315,7 +327,11 @@ process_reply(CSTRING token, std::vector<FTP_REPLY> &reply_vec)
 	} else if (len == 0) {
 		FTP_REPLY rep(0, token);
 
+#if defined(__cplusplus) && __cplusplus >= 201103L
+		reply_vec.emplace_back(rep);
+#else
 		reply_vec.push_back(rep);
+#endif
 	} else {
 		err_log(0, "%s: unexpected length %zu: \"%s\"", __func__, len,
 		    token);

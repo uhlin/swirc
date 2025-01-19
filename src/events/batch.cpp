@@ -1,5 +1,5 @@
 /* batch.cpp
-   Copyright (C) 2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024, 2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -127,7 +127,11 @@ create_batch(STRING params)
 	while ((token = strtok_r(nullptr, " ", &last)) != nullptr)
 		batch_obj.params.push_back(token);
 
+#if defined(__cplusplus) && __cplusplus >= 201103L
+	batch_db.emplace_back(batch_obj);
+#else
 	batch_db.push_back(batch_obj);
+#endif
 }
 
 static void

@@ -187,7 +187,12 @@ read_db(const char *path, std::vector<dictionary> &vec)
 
 		try {
 			dictionary dic(cp);
+
+#if defined(__cplusplus) && __cplusplus >= 201103L
+			vec.emplace_back(dic);
+#else
 			vec.push_back(dic);
+#endif
 		} catch (...) {
 			fclose(fp);
 			free(line);

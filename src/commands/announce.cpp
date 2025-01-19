@@ -1,5 +1,5 @@
 /* Send announcements on IRC
-   Copyright (C) 2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024, 2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -261,7 +261,11 @@ subcmd_new(CSTRING arg1, CSTRING arg2, CSTRING arg3)
 	try {
 		announce obj(znc_broadcast, arg2, arg3);
 
+#if defined(__cplusplus) && __cplusplus >= 201103L
+		announcements.emplace_back(obj);
+#else
 		announcements.push_back(obj);
+#endif
 	} catch (...) {
 		printtext_print("err", "%s: error while creating the "
 		    "announcement", __func__);

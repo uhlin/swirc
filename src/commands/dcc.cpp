@@ -1120,7 +1120,11 @@ get_file_list(const char *dir)
 		perms = dir_ent.status().permissions();
 
 		disk_file file(cp, type, size, perms);
+#if defined(__cplusplus) && __cplusplus >= 201103L
+		df_vec.emplace_back(file);
+#else
 		df_vec.push_back(file);
+#endif
 		free(name);
 	}
 
