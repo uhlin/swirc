@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - Added usage of `emplace_back()`. Performance. Multiple occurrences.
 - Changed the program to beep on certain window activity.
 - Fixed `-Wshadow` warnings
+- Fixed a resource leak found by Coverity.
 
 ## [3.5.1] - 2024-11-09 ##
 - **Added** command `/announce`.
