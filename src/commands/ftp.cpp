@@ -945,6 +945,12 @@ subcmd_get(CSTRING path)
 	    SLASH, path);
 	ftp::data_conn->path = sw_strdup(path);
 
+	if (check_path(g_ftp_download_dir, ftp::data_conn->full_path) == ERR) {
+		printtext_print("err", "check path error");
+		delete_data_conn();
+		return;
+	}
+
 	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(),
 	    "STAT %s\r\nTYPE L 8\r\nRETR %s\r\n", path, path);
 	if (n_sent <= 0) {
@@ -1034,6 +1040,11 @@ subcmd_send(CSTRING path)
 	if (!is_regular_file(ftp::data_conn->full_path)) {
 		printtext_print("err", "%s: file doesn't exist or isn't a "
 		    "regular file", ftp::data_conn->full_path);
+		delete_data_conn();
+		return;
+	} else if (check_path(g_ftp_upload_dir, ftp::data_conn->full_path) ==
+	    ERR) {
+		printtext_print("err", "check path error");
 		delete_data_conn();
 		return;
 	} else if (stat(ftp::data_conn->full_path, &sb) != 0) {
