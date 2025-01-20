@@ -1,5 +1,5 @@
 /* netsplit.cpp
-   Copyright (C) 2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024, 2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -79,12 +79,12 @@ netsplit::announce_netjoin(void) const
 
 	if ((ctx.window = window_by_label(chan)) == nullptr)
 		ctx.window = g_status_window;
-	printtext(&ctx, "%sNetJoin%s %s%s%s %s %s %s (%ju users returned "
-	    "out of %ju)",
+	printtext(&ctx, "%sNetJoin%s %s%s%s %s %s %s %s%ju users returned "
+	    "out of %ju%s",
 	    COLOR3, TXT_NORMAL,
 	    LEFT_BRKT, chan, RIGHT_BRKT,
 	    host[0], THE_SPEC2, host[1],
-	    array[1], array[2]);
+	    LEFT_BRKT, array[1], array[2], RIGHT_BRKT);
 }
 
 void
@@ -104,11 +104,11 @@ netsplit::announce_split(void)
 
 	if ((ctx.window = window_by_label(chan)) == nullptr)
 		ctx.window = g_status_window;
-	printtext(&ctx, "%sNetSplit%s %s%s%s %s %s %s (%ju nicks)",
+	printtext(&ctx, "%sNetSplit%s %s%s%s %s %s %s %s%ju nicks%s",
 	    COLOR3, TXT_NORMAL,
 	    LEFT_BRKT, chan, RIGHT_BRKT,
 	    host[0], THE_SPEC2, host[1],
-	    no_nicks);
+	    LEFT_BRKT, no_nicks, RIGHT_BRKT);
 	this->announced = true;
 }
 
