@@ -23,6 +23,7 @@ bool	is_cjk(const wchar_t);
 bool	is_combined(const wchar_t);
 bool	is_irc_channel(const char *);
 bool	is_numeric(const char *);
+bool	is_printable(const char *);
 bool	is_valid_filename(const char *);
 bool	is_valid_hostname(const char *);
 bool	is_valid_nickname(const char *);

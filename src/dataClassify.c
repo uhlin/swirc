@@ -145,6 +145,20 @@ is_numeric(const char *string)
 }
 
 bool
+is_printable(const char *str)
+{
+	if (str == NULL || *str == '\0')
+		return false;
+
+	for (const char *cp = str; *cp != '\0'; cp++) {
+		if (!sw_isprint(*cp))
+			return false;
+	}
+
+	return true;
+}
+
+bool
 is_valid_filename(const char *filename)
 {
 	static const char legal_index[] =
