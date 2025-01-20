@@ -239,6 +239,25 @@ getuser(void)
 	return addrof(buf[0]);
 }
 
+int
+check_path(const char *p_base_dir, const char *p_full_path)
+{
+	char res[PATH_MAX] = { '\0' };
+
+	if (p_base_dir == NULL || p_full_path == NULL ||
+	    strings_match(p_base_dir, "") ||
+	    strings_match(p_full_path, ""))
+		return ERR;
+#if defined(UNIX)
+	if (realpath(p_full_path, res) == NULL)
+		return ERR;
+#elif defined(WIN32)
+	if (_fullpath(res, p_full_path, ARRAY_SIZE(res)) == NULL)
+		return ERR;
+#endif
+	return (strncmp(p_base_dir, res, strlen(p_base_dir)) == 0 ? OK : ERR);
+}
+
 /* Return the difference of 'a - b' */
 int
 int_diff(const int a, const int b)

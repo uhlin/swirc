@@ -29,6 +29,7 @@ const char *
 	 current_time(const char *fmt);
 const char *
 	 getuser(void);
+int	 check_path(const char *p_base_dir, const char *p_full_path);
 int	 int_diff(const int, const int);
 int	 int_sum(const int, const int);
 int	 size_to_int(const size_t);
