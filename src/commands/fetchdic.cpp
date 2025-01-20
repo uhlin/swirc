@@ -124,6 +124,16 @@ dictionary::fetch(void) const
 	aff_url.append(this->name).append(g_aff_suffix);
 	dic_url.append(this->name).append(g_dic_suffix);
 
+	if (check_path(g_home_dir, aff_file.c_str()) != OK) {
+		printtext_print("err", "fatal: %s: base dir mismatch",
+		    aff_file.c_str());
+		return;
+	} else if (check_path(g_home_dir, dic_file.c_str()) != OK) {
+		printtext_print("err", "fatal: %s: base dir mismatch",
+		    dic_file.c_str());
+		return;
+	}
+
 	printtext_print(nullptr, " - Fetching...");
 	url_to_file(aff_url.c_str(), aff_file.c_str());
 
