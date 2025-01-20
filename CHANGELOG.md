@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - Changed the program to beep on certain window activity.
 - Fixed `-Wshadow` warnings
 - Fixed a resource leak found by Coverity.
+- Fixed uncontrolled data used in path expressions.
 
 ## [3.5.1] - 2024-11-09 ##
 - **Added** command `/announce`.
