@@ -1,5 +1,5 @@
 /* libUtils.c  --  Library Utilities
-   Copyright (C) 2012-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include <limits.h>
 #include <stdint.h>
 #include <string.h>
 #include <time.h>
