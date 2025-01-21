@@ -121,6 +121,13 @@ dictionary::fetch(void) const
 	aff_file.append(SLASH).append(this->name).append(g_aff_suffix);
 	dic_file.append(SLASH).append(this->name).append(g_dic_suffix);
 
+	if (strstr(aff_file.c_str(), "..") ||
+	    strstr(dic_file.c_str(), "..")) {
+		printtext_print("err", "Possible path traversal detected. "
+		    "Cannot continue.");
+		return;
+	}
+
 	aff_url.append(this->name).append(g_aff_suffix);
 	dic_url.append(this->name).append(g_dic_suffix);
 
