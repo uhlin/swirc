@@ -945,12 +945,6 @@ subcmd_get(CSTRING path)
 	    SLASH, path);
 	ftp::data_conn->path = sw_strdup(path);
 
-	if (check_path(g_ftp_download_dir, ftp::data_conn->full_path) == ERR) {
-		printtext_print("err", "check path error");
-		delete_data_conn();
-		return;
-	}
-
 	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(),
 	    "STAT %s\r\nTYPE L 8\r\nRETR %s\r\n", path, path);
 	if (n_sent <= 0) {
