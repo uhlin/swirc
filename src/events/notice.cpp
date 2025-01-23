@@ -1,5 +1,5 @@
 /* Handles event NOTICE
-   Copyright (C) 2014-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -118,10 +118,12 @@ handle_special_msg(const struct special_msg_context *ctx)
 
 	squeeze(msg, "\x01");
 	msg = trim(msg);
-	if (!strncmp(msg, "VERSION ", 8))
-		output_ctcp_reply("VERSION", ctx, &msg[8]);
-	else if (!strncmp(msg, "TIME ", 5))
+	if (!strncmp(msg, "TIME ", 5))
 		output_ctcp_reply("TIME", ctx, &msg[5]);
+	else if (!strncmp(msg, "USERINFO ", 9))
+		output_ctcp_reply("USERINFO", ctx, &msg[9]);
+	else if (!strncmp(msg, "VERSION ", 8))
+		output_ctcp_reply("VERSION", ctx, &msg[8]);
 	free(msg);
 }
 
