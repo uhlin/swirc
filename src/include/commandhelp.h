@@ -115,9 +115,15 @@ static usage_t chanserv_usage = {
 };
 
 static usage_t ctcp_usage = {
-  "usage: /ctcp ...",
+  N_("usage: /ctcp <query> <target>"),
   "",
-  "No help yet.",
+  N_("Send a CTCP query to 'target', which is either a nickname or an IRC\n"
+     "channel."),
+  "",
+  N_("Query can be either:"),
+  "  - time",
+  "  - userinfo",
+  "  - version",
   "",
 };
 
