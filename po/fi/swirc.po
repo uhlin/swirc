@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-01-23 06:17+0100\n"
-"PO-Revision-Date: 2025-01-23 05:48+0100\n"
+"PO-Revision-Date: 2025-01-23 06:20+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -514,9 +514,8 @@ msgstr ""
 "arvoa."
 
 #: ../src/include/commandhelp.h:118
-#, fuzzy
 msgid "usage: /ctcp <query> <target>"
-msgstr "käyttö: /echo <teksti>"
+msgstr "käyttö: /ctcp <kysely> <kohde>"
 
 #: ../src/include/commandhelp.h:120
 msgid ""

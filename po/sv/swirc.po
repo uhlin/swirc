@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-01-23 06:17+0100\n"
-"PO-Revision-Date: 2025-01-23 05:54+0100\n"
+"PO-Revision-Date: 2025-01-23 06:25+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -512,23 +512,20 @@ msgstr ""
 "'chanserv_host' som ett tjänstvärdnamn."
 
 #: ../src/include/commandhelp.h:118
-#, fuzzy
 msgid "usage: /ctcp <query> <target>"
-msgstr "användning: /servstats [<fråga> [<mål>]]"
+msgstr "användning: /ctcp <query> <target>"
 
 #: ../src/include/commandhelp.h:120
-#, fuzzy
 msgid ""
 "Send a CTCP query to 'target', which is either a nickname or an IRC\n"
 "channel."
 msgstr ""
-"Skicka en CTCP TIME förfrågan till 'mål', som antingen är ett smeknamn\n"
-"eller en IRC kanal."
+"Skicka en CTCP fråga till 'target', som antingen är ett smeknamn eller\n"
+"en IRC kanal."
 
 #: ../src/include/commandhelp.h:123
-#, fuzzy
 msgid "Query can be either:"
-msgstr "Operation kan vara antingen:"
+msgstr "Fråga kan vara antingen:"
 
 #: ../src/include/commandhelp.h:131
 msgid "usage: /cap [ls | list]"
