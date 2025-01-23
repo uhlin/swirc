@@ -21,6 +21,7 @@ XGTFLAGS = --add-comments\
 
 INPUTFILES = $(COMMANDS_DIR)colormap.cpp\
 	$(COMMANDS_DIR)connect.c\
+	$(COMMANDS_DIR)ctcp.c\
 	$(COMMANDS_DIR)dcc.cpp\
 	$(COMMANDS_DIR)ftp.cpp\
 	$(COMMANDS_DIR)theme.c\
