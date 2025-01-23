@@ -118,11 +118,11 @@ handle_special_msg(const struct special_msg_context *ctx)
 
 	squeeze(msg, "\x01");
 	msg = trim(msg);
-	if (!strncmp(msg, "TIME ", 5))
+	if (strncmp(msg, "TIME ", 5) == STRINGS_MATCH)
 		output_ctcp_reply("TIME", ctx, &msg[5]);
-	else if (!strncmp(msg, "USERINFO ", 9))
+	else if (strncmp(msg, "USERINFO ", 9) == STRINGS_MATCH)
 		output_ctcp_reply("USERINFO", ctx, &msg[9]);
-	else if (!strncmp(msg, "VERSION ", 8))
+	else if (strncmp(msg, "VERSION ", 8) == STRINGS_MATCH)
 		output_ctcp_reply("VERSION", ctx, &msg[8]);
 	free(msg);
 }
