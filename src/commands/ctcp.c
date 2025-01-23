@@ -43,19 +43,22 @@
 static void
 query_time(CSTRING p_target)
 {
-	UNUSED_PARAM(p_target);
+	if (net_send("PRIVMSG %s :\001TIME\001", p_target) > 0)
+		confirm_ctcp_sent("TIME", p_target);
 }
 
 static void
 query_userinfo(CSTRING p_target)
 {
-	UNUSED_PARAM(p_target);
+	if (net_send("PRIVMSG %s :\001USERINFO\001", p_target) > 0)
+		confirm_ctcp_sent("USERINFO", p_target);
 }
 
 static void
 query_version(CSTRING p_target)
 {
-	UNUSED_PARAM(p_target);
+	if (net_send("PRIVMSG %s :\001VERSION\001", p_target) > 0)
+		confirm_ctcp_sent("VERSION", p_target);
 }
 
 /*
