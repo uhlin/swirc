@@ -32,11 +32,13 @@
 #include "../dataClassify.h"
 #include "../irc.h"
 #include "../main.h"
+#include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
 
 #include "ctcp.h"
 #include "i18n.h"
+#include "misc.h"
 
 static void
 query_time(CSTRING p_target)
