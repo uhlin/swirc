@@ -342,14 +342,14 @@ process_reply(CSTRING token, std::vector<FTP_REPLY> &reply_vec)
 static inline bool
 shall_assign_concat(CSTRING token,
     const std::string &last_token,
-    const enum message_concat_state &state)
+    const enum message_concat_state state)
 {
 	return (!last_token.empty() && state == CONCAT_BUFFER_IS_EMPTY &&
 	    strings_match(last_token.c_str(), token));
 }
 
 static inline bool
-shall_append_concat(const int loop_run, const enum message_concat_state &state)
+shall_append_concat(const int loop_run, const enum message_concat_state state)
 {
 	return (loop_run == 0 && state == CONCAT_BUFFER_CONTAIN_DATA);
 }
@@ -1243,8 +1243,7 @@ ftp::get_upload_dir(void)
 void
 ftp::login(void)
 {
-	if (ftp::ctl_conn != nullptr)
-		delete ftp::ctl_conn;
+	delete ftp::ctl_conn;
 	ftp::ctl_conn = new ftp_ctl_conn();
 	ftp::ctl_conn->login();
 }
