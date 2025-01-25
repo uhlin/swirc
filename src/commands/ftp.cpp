@@ -750,7 +750,7 @@ ftp_data_conn::send_file(void)
 		return;
 	if (this->full_path == nullptr || this->path == nullptr)
 		return;
-	if ((this->fileptr = xfopen(this->full_path, "r")) == nullptr) {
+	if ((this->fileptr = xfopen(this->full_path, "rb")) == nullptr) {
 		printtext_print("err", "open failed: %s", this->full_path);
 		return;
 	}
