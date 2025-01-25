@@ -2,26 +2,26 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added command `/ctcp`
-- Added command `/ftp`
-- Added subcommand `ls` to `/dcc` which can be used to list the
+- **Added** command `/ctcp`
+- **Added** command `/ftp`
+- **Added** subcommand `ls` to `/dcc` which can be used to list the
   contents of the upload/download directories.
-- Added the following options:
+- **Added** the following options:
   - `ctcp_userinfo` (string)
   - `ftp_host` (string)
   - `ftp_port` (integer, defaults to 21)
   - `ftp_user` (string)
   - `ftp_pass` (string)
   - `ftp_upload_dir` (string)
-- Added the key combination `CTRL+w` (List all windows)
-- Added the possibility to switch between windows by just entering the
+- **Added** the key combination `CTRL+w` (List all windows)
+- **Added** the possibility to switch between windows by just entering the
   reference number, i.e. `/1`, `/2`, `/3`...
-- Added usage of `emplace_back()`. Performance. Multiple occurrences.
-- Changed `is_valid_filename()` to disallow ".."
-- Changed the program to beep on certain window activity.
-- Fixed `-Wshadow` warnings
-- Fixed a resource leak found by Coverity.
-- Fixed uncontrolled data used in path expressions.
+- **Added** usage of `emplace_back()`. Performance. Multiple occurrences.
+- **Changed** `is_valid_filename()` to disallow `..`
+- **Changed** the program to beep on certain window activity.
+- **Fixed** `-Wshadow` warnings
+- **Fixed** a resource leak found by Coverity.
+- **Fixed** uncontrolled data used in path expressions.
 
 ## [3.5.1] - 2024-11-09 ##
 - **Added** command `/announce`.
