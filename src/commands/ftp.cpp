@@ -777,7 +777,7 @@ ftp_data_conn::send_file(void)
 			    __func__);
 			break;
 		} else if ((bytes_sent = ftp::send_bytes(this->sock, this->buf,
-		    bytes_read)) <= 0) {
+		    size_to_int(bytes_read))) <= 0) {
 			break;
 		} else if (static_cast<unsigned int>(bytes_sent) !=
 		    bytes_read) {
