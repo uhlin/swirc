@@ -1,7 +1,7 @@
 # Finnish translations for swirc package
 # Suomenkielinen käännös swirc-paketille.
 # This file is put in the public domain.
-#  <markus.uhlin@bredband.net>, 2021.
+#  <markus@nifty-networks.net>, 2021.
 #
 msgid ""
 msgstr ""
