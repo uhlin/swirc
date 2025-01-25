@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-01-23 06:17+0100\n"
-"PO-Revision-Date: 2025-01-25 08:40+0100\n"
+"PO-Revision-Date: 2025-01-25 08:59+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -1855,25 +1855,25 @@ msgstr "Beendet"
 #: ../src/spell.cpp:137 ../src/spell.cpp:141
 #, c-format
 msgid "%s: %s not found"
-msgstr ""
+msgstr "%s: %s nicht gefunden"
 
 #: ../src/spell.cpp:313
 msgid "no more suggestions"
-msgstr ""
+msgstr "keine Vorschläge mehr"
 
 #: ../src/spell.cpp:342
 msgid "suggestions:"
-msgstr ""
+msgstr "Vorschläge:"
 
 #: ../src/spell.cpp:370
 #, c-format
 msgid "%ls is correct"
-msgstr ""
+msgstr "%ls ist korrekt"
 
 #: ../src/spell.cpp:375
 #, c-format
 msgid "%ls is incorrect"
-msgstr ""
+msgstr "%ls ist falsch"
 
 #: ../src/statusbar.cpp:222
 msgid "Log: "
@@ -1885,17 +1885,17 @@ msgstr "-- MEHR --"
 
 #: ../src/tls-server.cpp:205
 msgid "Already accepting DCC connections..."
-msgstr ""
+msgstr "Es werden bereits DCC Verbindungen akzeptiert..."
 
 #: ../src/tls-server.cpp:229
 #, c-format
 msgid "Accepting DCC connections at port: %d"
-msgstr ""
+msgstr "DCC Verbindungen werden am Port akzeptiert: %d"
 
 #: ../src/tls-server.cpp:241
 msgid "Out of memory"
-msgstr ""
+msgstr "Nicht genügend Arbeitsspeicher"
 
 #: ../src/tls-server.cpp:250
 msgid "Stopped accepting DCC connections"
-msgstr ""
+msgstr "DCC Verbindungen werden nicht mehr akzeptiert"
