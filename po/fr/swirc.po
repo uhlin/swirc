@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-01-23 06:17+0100\n"
-"PO-Revision-Date: 2025-01-23 05:49+0100\n"
+"PO-Revision-Date: 2025-01-25 08:32+0100\n"
 "Last-Translator: Markus Uhlin <markus.uhlin@bredband.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -71,12 +71,12 @@ msgstr "Utilisation de la DLL Winsock accordée"
 #: ../src/commands/ftp.cpp:932 ../src/commands/ftp.cpp:981
 #: ../src/commands/ftp.cpp:1018 ../src/commands/ftp.cpp:1099
 msgid "Insufficient arguments"
-msgstr ""
+msgstr "Arguments insuffisants"
 
 #: ../src/commands/ctcp.c:86
 #, c-format
 msgid "%s: insufficient arguments"
-msgstr ""
+msgstr "%s: arguments insuffisants"
 
 #: ../src/commands/ctcp.c:89
 #, c-format
@@ -86,11 +86,11 @@ msgstr "%s: cible non valide"
 #: ../src/commands/ctcp.c:94
 #, c-format
 msgid "%s: forbidden channel name characters"
-msgstr ""
+msgstr "%s: caractères de nom de canal interdits"
 
 #: ../src/commands/ctcp.c:105
 msgid "Invalid CTCP query"
-msgstr ""
+msgstr "Requête CTCP non valide"
 
 #: ../src/commands/dcc.cpp:211
 msgid "Write error"
