@@ -562,7 +562,7 @@ print_complete(CSTRING path, double part, double total, bool (&state)[3])
 		printtext_print("success", "%s: %.2f%% complete", path, val);
 		state[0] = true;
 	} else {
-		napms(10);
+		napms(1);
 	}
 }
 
