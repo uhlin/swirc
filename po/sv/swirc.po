@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.1\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-01-23 06:17+0100\n"
+"POT-Creation-Date: 2025-01-25 10:20+0100\n"
 "PO-Revision-Date: 2025-01-23 06:25+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -67,9 +67,9 @@ msgstr "Kan inte initiera användning av Winsock DLL"
 msgid "Use of the Winsock DLL granted"
 msgstr "Användning av Winsock DLL beviljad"
 
-#: ../src/commands/ctcp.c:77 ../src/commands/ftp.cpp:845
-#: ../src/commands/ftp.cpp:932 ../src/commands/ftp.cpp:981
-#: ../src/commands/ftp.cpp:1018 ../src/commands/ftp.cpp:1099
+#: ../src/commands/ctcp.c:77 ../src/commands/ftp.cpp:843
+#: ../src/commands/ftp.cpp:930 ../src/commands/ftp.cpp:979
+#: ../src/commands/ftp.cpp:1016 ../src/commands/ftp.cpp:1097
 msgid "Insufficient arguments"
 msgstr "Otillräckliga argument"
 
@@ -139,7 +139,7 @@ msgstr "%s: från: %s <%s@%s>"
 msgid "To get the file, type:"
 msgstr "För att hämta filen, skriv:"
 
-#: ../src/commands/dcc.cpp:1805 ../src/commands/ftp.cpp:778
+#: ../src/commands/dcc.cpp:1805 ../src/commands/ftp.cpp:776
 #, c-format
 msgid "%s: file read error"
 msgstr "%s: filläsfel"
@@ -214,8 +214,8 @@ msgstr "Det gick inte att få en lista över IP adresser"
 msgid "Failed to establish a connection"
 msgstr "Det gick inte att upprätta en anslutning"
 
-#: ../src/commands/ftp.cpp:187 ../src/commands/ftp.cpp:858
-#: ../src/commands/ftp.cpp:1201
+#: ../src/commands/ftp.cpp:187 ../src/commands/ftp.cpp:856
+#: ../src/commands/ftp.cpp:1199
 msgid "Cannot send"
 msgstr "Kan inte skicka"
 
@@ -223,29 +223,29 @@ msgstr "Kan inte skicka"
 msgid "Failed to create an endpoint for communication"
 msgstr "Det gick inte att skapa en slutpunkt för kommunikation"
 
-#: ../src/commands/ftp.cpp:786
+#: ../src/commands/ftp.cpp:784
 #, c-format
 msgid "%s: bytes sent mismatch bytes read"
 msgstr "%s: bytes skickade matchade inte bytes lästa"
 
-#: ../src/commands/ftp.cpp:848 ../src/commands/ftp.cpp:1189
+#: ../src/commands/ftp.cpp:846 ../src/commands/ftp.cpp:1187
 msgid "No control connection"
 msgstr "Ingen kontrollanslutning"
 
-#: ../src/commands/ftp.cpp:851 ../src/commands/ftp.cpp:873
-#: ../src/commands/ftp.cpp:1197
+#: ../src/commands/ftp.cpp:849 ../src/commands/ftp.cpp:871
+#: ../src/commands/ftp.cpp:1195
 msgid "Invalid network socket"
 msgstr "Ogiltig nätverkssocket"
 
-#: ../src/commands/ftp.cpp:935 ../src/commands/ftp.cpp:1021
+#: ../src/commands/ftp.cpp:933 ../src/commands/ftp.cpp:1019
 msgid "Blank file path"
 msgstr "Tom filsökväg"
 
-#: ../src/commands/ftp.cpp:1193
+#: ../src/commands/ftp.cpp:1191
 msgid "Already in passive mode"
 msgstr "Redan i passivt läge"
 
-#: ../src/commands/ftp.cpp:1216
+#: ../src/commands/ftp.cpp:1214
 msgid "Failed to enter passive mode"
 msgstr "Det gick inte att gå in i passivt läge"
 
