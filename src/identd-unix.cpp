@@ -1,5 +1,5 @@
 /* identd-unix.cpp
-   Copyright (C) 2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -81,13 +81,13 @@ identd::exit_thread(void)
 }
 
 void
-identd::set_reuseaddr(SOCKET sock)
+identd::set_reuseaddr(SOCKET p_sock)
 {
 	int val = 1;
 
 	errno = 0;
 
-	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(int)) != 0)
+	if (setsockopt(p_sock, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(int)) != 0)
 		err_log(errno, "%s: setsockopt error", __func__);
 }
 

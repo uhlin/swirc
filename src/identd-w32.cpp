@@ -1,5 +1,5 @@
 /* identd-w32.cpp
-   Copyright (C) 2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -72,11 +72,11 @@ identd::exit_thread(void)
 }
 
 void
-identd::set_reuseaddr(SOCKET sock)
+identd::set_reuseaddr(SOCKET p_sock)
 {
 	BOOL val = TRUE;
 
-	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<char *>
+	if (setsockopt(p_sock, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<char *>
 	    (&val), sizeof(BOOL)) != 0) {
 		err_log(0, "%s: setsockopt error (code = %d)", __func__,
 		    WSAGetLastError());
