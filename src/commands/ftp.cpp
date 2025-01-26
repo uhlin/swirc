@@ -1025,8 +1025,8 @@ subcmd_send(CSTRING path)
 		return;
 	}
 
-	ftp::data_conn->full_path = strdup_printf("%s%s%s", g_ftp_upload_dir,
-	    SLASH, path);
+	ftp::data_conn->full_path = strdup_printf("%s%s%s",
+	    ftp::get_upload_dir(), SLASH, path);
 	ftp::data_conn->path = sw_strdup(path);
 
 	if (!is_regular_file(ftp::data_conn->full_path)) {
@@ -1034,8 +1034,8 @@ subcmd_send(CSTRING path)
 		    "regular file", ftp::data_conn->full_path);
 		delete_data_conn();
 		return;
-	} else if (check_path(g_ftp_upload_dir, ftp::data_conn->full_path) ==
-	    ERR) {
+	} else if (check_path(ftp::get_upload_dir(), ftp::data_conn->full_path)
+	    == ERR) {
 		printtext_print("err", "check path error");
 		delete_data_conn();
 		return;
