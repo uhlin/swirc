@@ -670,7 +670,7 @@ ftp_data_conn::list_fetch(const int timeo)
 	if (this->sock == INVALID_SOCKET)
 		return 0;
 
-	RECV_AND_CHECK(222000);
+	RECV_AND_CHECK(233000);
 
 	this->vec.clear();
 
