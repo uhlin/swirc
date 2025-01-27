@@ -1090,8 +1090,9 @@ cmd_ftp(CSTRING data)
 	CSTRING			subcmd;
 	STRING			dcopy;
 	STRING			last = const_cast<STRING>("");
-	static chararray_t	cmd  = "/ftp";
-	static chararray_t	sep  = "\n";
+	static chararray_t	cmd = "/ftp";
+	static chararray_t	sep = "\n";
+	static const size_t	MAXARG = 255;
 
 	if (strings_match(data, "")) {
 		printtext_print("err", "%s", _("Insufficient arguments"));
