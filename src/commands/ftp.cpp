@@ -366,7 +366,7 @@ ftp_ctl_conn::read_reply(const int timeo)
 	if (this->sock == INVALID_SOCKET)
 		return 0;
 
-	RECV_AND_CHECK(333000);
+	RECV_AND_CHECK(345000);
 
 	this->reply_vec.clear();
 
