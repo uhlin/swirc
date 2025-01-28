@@ -1092,7 +1092,7 @@ cmd_ftp(CSTRING data)
 	STRING			last = const_cast<STRING>("");
 	static chararray_t	cmd = "/ftp";
 	static chararray_t	sep = "\n";
-	static const size_t	MAXARG = 255;
+	static const size_t	MAXARG = 300;
 
 	if (strings_match(data, "")) {
 		printtext_print("err", "%s", _("Insufficient arguments"));
