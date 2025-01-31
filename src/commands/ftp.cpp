@@ -1112,11 +1112,7 @@ cmd_ftp(CSTRING data)
 	}
 
 	if ((arg[0] = strtok_r(nullptr, sep, &last)) != nullptr) {
-		if (!is_printable(arg[0])) {
-			printf_and_free(dcopy, "%s: arg not entirely printable",
-			    cmd);
-			return;
-		} else if (strlen(arg[0]) > MAXARG) {
+		if (strlen(arg[0]) > MAXARG) {
 			printf_and_free(dcopy, "%s: arg too long (exceeds %zu)",
 			    cmd, MAXARG);
 			return;
