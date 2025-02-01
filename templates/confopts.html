@@ -36,7 +36,7 @@
 
 <div id="mid">
 <h2>Documentation</h2>
-<p><small><em>Updated: 2024-11-16</em></small></p>
+<p><small><em>Updated: 2025-02-01</em></small></p>
 <h3>Configuration options in swirc.conf</h3>
 <p>
 <span class="note">NOTE</span>
@@ -277,6 +277,22 @@ preventing a command to be accidentally transmitted as a chat message.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- CTCP USERINFO -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>ctcp_userinfo</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		A string to return on a CTCP userinfo request.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
 <!-- === -->
 <!-- DCC -->
 <!-- === -->
@@ -384,6 +400,83 @@ preventing a command to be accidentally transmitted as a chat message.
 	<tr>
 		<td class="desc">
 Turns the extended-join IRCv3 feature on/off.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- FTP HOST -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>ftp_host</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		FTP hostname.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- FTP PORT -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>ftp_port</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		FTP port number (1-65535).
+		Defaults to 21.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- FTP USER -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>ftp_user</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		FTP username.
+		Defaults to anonymous.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- FTP PASS -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>ftp_pass</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		FTP password.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============== -->
+<!-- FTP UPLOAD DIR -->
+<!-- ============== -->
+	<tr>
+		<td>
+			<strong>ftp_upload_dir</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		FTP upload directory.
 		</td>
 	</tr>
 	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
