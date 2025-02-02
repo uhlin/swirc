@@ -407,13 +407,13 @@ event_privmsg(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char *dest, *msg;
-		char *nick, *user, *host;
-		char *prefix;
-		char *state1 = const_cast<char *>("");
-		char *state2 = const_cast<char *>("");
+		STRING	dest, msg;
+		STRING	nick, user, host;
+		STRING	prefix;
+		STRING	state[2];
 
 		printtext_context_init(&ctx, nullptr, TYPE_SPEC_NONE, true);
+		state[0] = state[1] = const_cast<STRING>("");
 
 		if (has_server_time(compo)) {
 			set_timestamp(ctx.server_time,
@@ -428,9 +428,10 @@ event_privmsg(struct irc_message_compo *compo)
 
 		if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
-		if ((dest = strtok_r(compo->params, "\n", &state2)) == nullptr)
+		if ((dest = strtok_r(compo->params, "\n", &state[1])) ==
+		    nullptr)
 			throw std::runtime_error("no destination");
-		else if ((msg = strtok_r(nullptr, "\n", &state2)) == nullptr)
+		else if ((msg = strtok_r(nullptr, "\n", &state[1])) == nullptr)
 			throw std::runtime_error("no message");
 		else if (*msg == ':')
 			msg++;
@@ -441,12 +442,12 @@ event_privmsg(struct irc_message_compo *compo)
 			return;
 		}
 
-		if ((nick = strtok_r(prefix, "!@", &state1)) == nullptr)
+		if ((nick = strtok_r(prefix, "!@", &state[0])) == nullptr)
 			throw std::runtime_error("no nickname");
-		if ((user = strtok_r(nullptr, "!@", &state1)) == nullptr)
-			user = const_cast<char *>("<no user>");
-		if ((host = strtok_r(nullptr, "!@", &state1)) == nullptr)
-			host = const_cast<char *>("<no host>");
+		if ((user = strtok_r(nullptr, "!@", &state[0])) == nullptr)
+			user = const_cast<STRING>("<no user>");
+		if ((host = strtok_r(nullptr, "!@", &state[0])) == nullptr)
+			host = const_cast<STRING>("<no host>");
 		if (is_in_ignore_list(nick, user, host))
 			return;
 
@@ -460,7 +461,7 @@ event_privmsg(struct irc_message_compo *compo)
 
 		if (strings_match_ignore_case(dest, g_my_nickname)) {
 			if (*nick == '*' && !g_icb_mode) {
-				char *notice;
+				STRING notice;
 
 				notice = get_notice(nick + 1, "znc", "znc.in");
 				handle_znc_msgs(&ctx, notice, msg);
