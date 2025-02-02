@@ -92,13 +92,14 @@ handle_special_msg(const struct special_msg_context *ctx)
 	PRINTTEXT_CONTEXT	ptext_ctx;
 	STRING			msg = sw_strdup(ctx->msg);
 
-	printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
+	printtext_context_init(&ptext_ctx, nullptr, TYPE_SPEC_NONE, true);
 	squeeze(msg, "\x01");
 	msg = trim(msg);
 
 	if (strings_match_ignore_case(ctx->dest, g_my_nickname)) {
 		if (!strncmp(msg, "ACTION ", 7) &&
-		    (ptext_ctx.window = window_by_label(ctx->nick)) == NULL) {
+		    (ptext_ctx.window = window_by_label(ctx->nick)) ==
+		    nullptr) {
 			spawn_chat_window(ctx->nick,
 			    make_window_title(ctx->nick));
 		}
@@ -178,7 +179,7 @@ shouldHighlightMessage_case1(CSTRING msg)
 	if (!strncasecmp(msg, s1, strlen(s1)) ||
 	    !strncasecmp(msg, s2, strlen(s2)) ||
 	    !strncasecmp(msg, s3, strlen(s3)) ||
-	    strcasestr(msg, s4) != NULL ||
+	    strcasestr(msg, s4) != nullptr ||
 	    strings_match_ignore_case(msg, g_my_nickname))
 		result = true;
 	free(s1);
@@ -195,10 +196,10 @@ shouldHighlightMessage_case2(CSTRING msg)
 	char	*last = const_cast<char *>("");
 	char	*nickname_aliases = sw_strdup(Config("nickname_aliases"));
 
-	for (char *cp = &nickname_aliases[0];; cp = NULL) {
+	for (char *cp = &nickname_aliases[0];; cp = nullptr) {
 		CSTRING token;
 
-		if ((token = strtok_r(cp, " ", &last)) == NULL) {
+		if ((token = strtok_r(cp, " ", &last)) == nullptr) {
 			result = false;
 			break;
 		} else if (!is_valid_nickname(token)) {
@@ -268,7 +269,7 @@ handle_msgs_from_my_server(PPRINTTEXT_CONTEXT ctx, CSTRING dest,
 {
 	if (g_my_nickname && strings_match_ignore_case(dest, g_my_nickname))
 		ctx->window = g_active_window;
-	else if ((ctx->window = window_by_label(dest)) == NULL)
+	else if ((ctx->window = window_by_label(dest)) == nullptr)
 		ctx->window = g_active_window;
 	printtext(ctx, "%s!%s%s %s", COLOR3, g_server_hostname, TXT_NORMAL,
 	    msg);
@@ -286,7 +287,7 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 {
 	STRING msg_copy;
 
-	if ((ctx->window = window_by_label(nick)) == NULL)
+	if ((ctx->window = window_by_label(nick)) == nullptr)
 		throw std::runtime_error("window lookup error");
 
 	printtext(ctx, "%s%s%s%c%s %s", NICK_S1, COLOR2, nick, NORMAL, NICK_S2,
@@ -308,7 +309,7 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 	NotifyNotification *notification = notify_notification_new(SUMMARY_TEXT,
 	    body, SWIRC_ICON_PATH);
 
-	notify_notification_show(notification, NULL);
+	notify_notification_show(notification, nullptr);
 
 	free(body);
 	g_object_unref(G_OBJECT(notification));
@@ -323,12 +324,12 @@ static void
 handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING dest,
     CSTRING msg)
 {
-	PNAMES	n = NULL;
+	PNAMES	n = nullptr;
 	char	c = '!';
 
-	if ((ctx->window = window_by_label(dest)) == NULL) {
+	if ((ctx->window = window_by_label(dest)) == nullptr) {
 		throw std::runtime_error("bogus window label");
-	} else if ((n = event_names_htbl_lookup(nick, dest)) != NULL) {
+	} else if ((n = event_names_htbl_lookup(nick, dest)) != nullptr) {
 		if (n->is_owner)
 			c = '~';
 		else if (n->is_superop)
@@ -377,7 +378,7 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING dest,
 		    (SUMMARY_TEXT, body, SWIRC_ICON_PATH);
 
 		if (config_bool("notifications", true))
-			notify_notification_show(notification, NULL);
+			notify_notification_show(notification, nullptr);
 
 		free(body);
 		g_object_unref(G_OBJECT(notification));
@@ -412,7 +413,7 @@ event_privmsg(struct irc_message_compo *compo)
 		char *state1 = const_cast<char *>("");
 		char *state2 = const_cast<char *>("");
 
-		printtext_context_init(&ctx, NULL, TYPE_SPEC_NONE, true);
+		printtext_context_init(&ctx, nullptr, TYPE_SPEC_NONE, true);
 
 		if (has_server_time(compo)) {
 			set_timestamp(ctx.server_time,
@@ -420,16 +421,16 @@ event_privmsg(struct irc_message_compo *compo)
 			ctx.has_server_time = true;
 		}
 
-		if ((prefix = compo->prefix) == NULL)
+		if ((prefix = compo->prefix) == nullptr)
 			throw std::runtime_error("no prefix");
 		else if (*prefix == ':')
 			prefix++;
 
 		if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
-		if ((dest = strtok_r(compo->params, "\n", &state2)) == NULL)
+		if ((dest = strtok_r(compo->params, "\n", &state2)) == nullptr)
 			throw std::runtime_error("no destination");
-		else if ((msg = strtok_r(NULL, "\n", &state2)) == NULL)
+		else if ((msg = strtok_r(nullptr, "\n", &state2)) == nullptr)
 			throw std::runtime_error("no message");
 		else if (*msg == ':')
 			msg++;
@@ -440,11 +441,11 @@ event_privmsg(struct irc_message_compo *compo)
 			return;
 		}
 
-		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
+		if ((nick = strtok_r(prefix, "!@", &state1)) == nullptr)
 			throw std::runtime_error("no nickname");
-		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
+		if ((user = strtok_r(nullptr, "!@", &state1)) == nullptr)
 			user = const_cast<char *>("<no user>");
-		if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
+		if ((host = strtok_r(nullptr, "!@", &state1)) == nullptr)
 			host = const_cast<char *>("<no host>");
 		if (is_in_ignore_list(nick, user, host))
 			return;
@@ -465,7 +466,7 @@ event_privmsg(struct irc_message_compo *compo)
 				handle_znc_msgs(&ctx, notice, msg);
 				free(notice);
 			} else {
-				if (window_by_label(nick) == NULL &&
+				if (window_by_label(nick) == nullptr &&
 				    spawn_chat_window(nick,
 				    make_window_title(nick)) != 0) {
 					throw std::runtime_error("cannot spawn "
@@ -478,7 +479,7 @@ event_privmsg(struct irc_message_compo *compo)
 			 * Dest is an IRC channel
 			 */
 
-			if (window_by_label(dest) == NULL &&
+			if (window_by_label(dest) == nullptr &&
 			    spawn_chat_window(dest, "No title.") != 0)
 				throw std::runtime_error("spawn_chat_window");
 			handle_chan_msgs(&ctx, nick, dest, msg);
