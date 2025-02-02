@@ -69,7 +69,7 @@
 /*
  * Notification message max length
  */
-static const size_t nmsg_maxlen = 150;
+static const size_t NMSG_MAXLEN = 150;
 
 static bool	shouldHighlightMessage_case1(CSTRING) NONNULL;
 static bool	shouldHighlightMessage_case2(CSTRING) NONNULL;
@@ -292,8 +292,8 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 	printtext(ctx, "%s%s%s%c%s %s", NICK_S1, COLOR2, nick, NORMAL, NICK_S2,
 	    msg);
 	msg_copy = sw_strdup(msg);
-	if (strlen(msg_copy) > nmsg_maxlen)
-		msg_copy[nmsg_maxlen] = '\0';
+	if (strlen(msg_copy) > NMSG_MAXLEN)
+		msg_copy[NMSG_MAXLEN] = '\0';
 
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 	wchar_t *wNick = get_converted_wcs(nick);
@@ -351,8 +351,8 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING dest,
 		    NICK_S1, c, COLOR4, nick, NORMAL, NICK_S2,
 		    msg);
 		msg_copy = sw_strdup(msg);
-		if (strlen(msg_copy) > nmsg_maxlen)
-			msg_copy[nmsg_maxlen] = '\0';
+		if (strlen(msg_copy) > NMSG_MAXLEN)
+			msg_copy[NMSG_MAXLEN] = '\0';
 
 		if (ctx->window != g_active_window)
 			broadcast_window_activity(ctx->window);
