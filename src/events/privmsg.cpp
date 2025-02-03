@@ -310,6 +310,7 @@ notify_pm(CSTRING p_nick, CSTRING p_msg)
 #else
 		UNUSED_PARAM(p_nick);
 		UNUSED_PARAM(p_msg);
+		debug("%s called", __func__);
 #endif
 	}
 }
@@ -366,6 +367,7 @@ notify_cm(CSTRING p_nick, CSTRING p_dest, CSTRING p_msg)
 		UNUSED_PARAM(p_nick);
 		UNUSED_PARAM(p_dest);
 		UNUSED_PARAM(p_msg);
+		debug("%s called", __func__);
 #endif
 	}
 }
