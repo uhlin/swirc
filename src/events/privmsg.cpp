@@ -324,14 +324,15 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 
 	printtext(ctx, "%s%s%s%c%s %s", NICK_S1, COLOR2, nick, NORMAL, NICK_S2,
 	    msg);
-	msg_copy = sw_strdup(msg);
-	if (strlen(msg_copy) > NMSG_MAXLEN)
-		msg_copy[NMSG_MAXLEN] = '\0';
-
-	notify_pm(nick, msg_copy);
-	free(msg_copy);
 	if (ctx->window != g_active_window)
 		broadcast_window_activity(ctx->window);
+
+	msg_copy = sw_strdup(msg);
+
+	if (strlen(msg_copy) > NMSG_MAXLEN)
+		msg_copy[NMSG_MAXLEN] = '\0';
+	notify_pm(nick, msg_copy);
+	free(msg_copy);
 }
 
 /*
