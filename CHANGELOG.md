@@ -1,6 +1,10 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Fixed option `notifications`.
+  (Did not take affect on private messages).
+
 ## [3.5.2] - 2025-02-01 ##
 - **Added** command `/ctcp`
 - **Added** command `/ftp`
