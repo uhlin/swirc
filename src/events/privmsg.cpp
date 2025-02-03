@@ -407,8 +407,8 @@ event_privmsg(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		STRING	dest, msg;
-		STRING	nick, user, host;
+		CSTRING	dest, msg;
+		CSTRING	nick, user, host;
 		STRING	prefix;
 		STRING	state[2];
 
