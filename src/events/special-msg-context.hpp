@@ -6,11 +6,11 @@ struct special_msg_context {
 	CSTRING dest;
 	CSTRING msg;
 
-	special_msg_context() : nick(NULL)
-	    , user(NULL)
-	    , host(NULL)
-	    , dest(NULL)
-	    , msg(NULL)
+	special_msg_context() : nick(nullptr)
+	    , user(nullptr)
+	    , host(nullptr)
+	    , dest(nullptr)
+	    , msg(nullptr)
 	{
 		/* empty */;
 	}
