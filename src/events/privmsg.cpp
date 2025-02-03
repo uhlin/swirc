@@ -282,6 +282,38 @@ handle_znc_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING notice, CSTRING msg)
 	printtext(ctx, "%s %s", notice, msg);
 }
 
+/*
+ * Private message
+ */
+static void
+notify_pm(CSTRING p_nick, CSTRING p_msg)
+{
+	if (config_bool("notifications", true)) {
+#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
+		wchar_t *wNick = get_converted_wcs(p_nick);
+		wchar_t *wMsg = get_converted_wcs(p_msg);
+
+		Toasts::SendBasicToast(get_message(L"[PM]", L" <", wNick, L"> ",
+		    wMsg));
+		delete[] wNick;
+		delete[] wMsg;
+#elif defined(UNIX) && USE_LIBNOTIFY
+		STRING			 body;
+		NotifyNotification	*notification;
+
+		body = strdup_printf("[PM] &lt;%s&gt; %s", p_nick, p_msg);
+		notification = notify_notification_new(SUMMARY_TEXT, body,
+		    SWIRC_ICON_PATH);
+		notify_notification_show(notification, nullptr);
+		free(body);
+		g_object_unref(G_OBJECT(notification));
+#else
+		UNUSED_PARAM(p_nick);
+		UNUSED_PARAM(p_msg);
+#endif
+	}
+}
+
 static void
 handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 {
@@ -296,28 +328,45 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 	if (strlen(msg_copy) > NMSG_MAXLEN)
 		msg_copy[NMSG_MAXLEN] = '\0';
 
-#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
-	wchar_t *wNick = get_converted_wcs(nick);
-	wchar_t *wMsg = get_converted_wcs(msg_copy);
-
-	Toasts::SendBasicToast(get_message(L"[PM]", L" <", wNick, L"> ", wMsg));
-
-	delete[] wNick;
-	delete[] wMsg;
-#elif defined(UNIX) && USE_LIBNOTIFY
-	STRING body = strdup_printf("[PM] &lt;%s&gt; %s", nick, msg_copy);
-	NotifyNotification *notification = notify_notification_new(SUMMARY_TEXT,
-	    body, SWIRC_ICON_PATH);
-
-	notify_notification_show(notification, nullptr);
-
-	free(body);
-	g_object_unref(G_OBJECT(notification));
-#endif
-
+	notify_pm(nick, msg_copy);
 	free(msg_copy);
 	if (ctx->window != g_active_window)
 		broadcast_window_activity(ctx->window);
+}
+
+/*
+ * Channel message
+ */
+static void
+notify_cm(CSTRING p_nick, CSTRING p_dest, CSTRING p_msg)
+{
+	if (config_bool("notifications", true)) {
+#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
+		wchar_t *wNick = get_converted_wcs(p_nick);
+		wchar_t *wDest = get_converted_wcs(p_dest);
+		wchar_t *wMsg = get_converted_wcs(p_msg);
+
+		Toasts::SendBasicToast(get_message(wNick, L" @ ", wDest, L": ",
+		    wMsg));
+		delete[] wNick;
+		delete[] wDest;
+		delete[] wMsg;
+#elif defined(UNIX) && USE_LIBNOTIFY
+		STRING			 body;
+		NotifyNotification	*notification;
+
+		body = strdup_printf("%s @ %s: %s", p_nick, p_dest, p_msg);
+		notification = notify_notification_new(SUMMARY_TEXT, body,
+		    SWIRC_ICON_PATH);
+		notify_notification_show(notification, nullptr);
+		free(body);
+		g_object_unref(G_OBJECT(notification));
+#else
+		UNUSED_PARAM(p_nick);
+		UNUSED_PARAM(p_dest);
+		UNUSED_PARAM(p_msg);
+#endif
+	}
 }
 
 static void
@@ -358,31 +407,7 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING dest,
 		if (ctx->window != g_active_window)
 			broadcast_window_activity(ctx->window);
 
-#if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
-		wchar_t *wNick = get_converted_wcs(nick);
-		wchar_t *wDest = get_converted_wcs(dest);
-		wchar_t *wMsg = get_converted_wcs(msg_copy);
-
-		if (config_bool("notifications", true)) {
-			Toasts::SendBasicToast(get_message(wNick, L" @ ", wDest,
-			    L": ", wMsg));
-		}
-
-		delete[] wNick;
-		delete[] wDest;
-		delete[] wMsg;
-#elif defined(UNIX) && USE_LIBNOTIFY
-		STRING body = strdup_printf("%s @ %s: %s", nick, dest,
-		    msg_copy);
-		NotifyNotification *notification = notify_notification_new
-		    (SUMMARY_TEXT, body, SWIRC_ICON_PATH);
-
-		if (config_bool("notifications", true))
-			notify_notification_show(notification, nullptr);
-
-		free(body);
-		g_object_unref(G_OBJECT(notification));
-#endif
+		notify_cm(nick, dest, msg_copy);
 		free(msg_copy);
 	} else {
 		/*
