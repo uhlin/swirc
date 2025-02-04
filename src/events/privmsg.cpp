@@ -327,6 +327,8 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 	    msg);
 	if (ctx->window != g_active_window)
 		broadcast_window_activity(ctx->window);
+	if (!config_bool("notifications", true))
+		return;
 
 	msg_copy = sw_strdup(msg);
 
@@ -405,6 +407,8 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING dest,
 		    msg);
 		if (ctx->window != g_active_window)
 			broadcast_window_activity(ctx->window);
+		if (!config_bool("notifications", true))
+			return;
 
 		msg_copy = sw_strdup(msg);
 
