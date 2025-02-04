@@ -482,9 +482,9 @@ event_privmsg(struct irc_message_compo *compo)
 		if ((nick = strtok_r(prefix, "!@", &state[0])) == nullptr)
 			throw std::runtime_error("no nickname");
 		if ((user = strtok_r(nullptr, "!@", &state[0])) == nullptr)
-			user = const_cast<STRING>("<no user>");
+			user = "<no user>";
 		if ((host = strtok_r(nullptr, "!@", &state[0])) == nullptr)
-			host = const_cast<STRING>("<no host>");
+			host = "<no host>";
 		if (is_in_ignore_list(nick, user, host))
 			return;
 
