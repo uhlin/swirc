@@ -42,6 +42,7 @@
 #include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
+#include "../squeeze_text_deco.h"
 #include "../strHand.h"
 #include "../strdup_printf.h"
 #include "../terminal.h"
@@ -334,6 +335,8 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 
 	if (strlen(msg_copy) > NMSG_MAXLEN)
 		msg_copy[NMSG_MAXLEN] = '\0';
+	if (strpbrk(msg_copy, g_textdeco_chars) != nullptr)
+		(void)squeeze_text_deco(msg_copy);
 	notify_pm(nick, msg_copy);
 	free(msg_copy);
 }
@@ -414,6 +417,8 @@ handle_chan_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING dest,
 
 		if (strlen(msg_copy) > NMSG_MAXLEN)
 			msg_copy[NMSG_MAXLEN] = '\0';
+		if (strpbrk(msg_copy, g_textdeco_chars) != nullptr)
+			(void)squeeze_text_deco(msg_copy);
 		notify_cm(nick, dest, msg_copy);
 		free(msg_copy);
 	} else {
