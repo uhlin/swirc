@@ -284,7 +284,7 @@ handle_znc_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING notice, CSTRING msg)
 }
 
 /*
- * Private message
+ * Notify private message
  */
 static void
 notify_pm(CSTRING p_nick, CSTRING p_msg)
@@ -342,7 +342,7 @@ handle_private_msgs(PPRINTTEXT_CONTEXT ctx, CSTRING nick, CSTRING msg)
 }
 
 /*
- * Channel message
+ * Notify channel message
  */
 static void
 notify_cm(CSTRING p_nick, CSTRING p_dest, CSTRING p_msg)
