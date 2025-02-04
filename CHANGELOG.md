@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Changed the program to squeeze text decoration in notification
+  messages.
 - Fixed option `notifications`.
   (Did not take affect on private messages).
 
