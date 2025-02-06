@@ -108,12 +108,9 @@ event_welcome(struct irc_message_compo *compo)
 		if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
 
-		nick = strtok_r(compo->params, "\n", &state);
-		msg = strtok_r(nullptr, "\n", &state);
-
-		if (nick == nullptr)
+		if ((nick = strtok_r(compo->params, "\n", &state)) == nullptr)
 			throw std::runtime_error("no nickname");
-		else if (msg == nullptr)
+		else if ((msg = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("no message");
 
 		irc_set_my_nickname(nick);
