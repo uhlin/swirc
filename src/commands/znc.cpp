@@ -1,5 +1,5 @@
 /* commands/znc.cpp
-   Copyright (C) 2020-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -41,6 +41,8 @@
 #include "../strHand.h"
 
 #include "znc.h"
+
+volatile bool g_invoked_by_znc_jump_net = false;
 
 static stringarray_t znc_commands = {
 	"Version",
