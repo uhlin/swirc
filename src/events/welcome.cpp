@@ -41,6 +41,8 @@
 #include "../printtext.h"
 #include "../strHand.h"
 
+#include "../commands/znc.h"
+
 #include "welcome.h"
 
 static void
@@ -69,9 +71,15 @@ event_welcome(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	if (g_received_welcome) {
-		err_log(EPROTO, "event_welcome(%s): fatal: "
-		    "already received welcome!", compo->command);
-		return;
+		if (g_invoked_by_znc_jump_net) {
+			irc_deinit();
+			irc_init();
+			g_invoked_by_znc_jump_net = false;
+		} else {
+			err_log(EPROTO, "event_welcome(%s): warning: "
+			    "already received welcome", compo->command);
+			return;
+		}
 	}
 
 	try {
