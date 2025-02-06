@@ -240,7 +240,7 @@ event_notice(struct irc_message_compo *compo)
 	}
 }
 
-char *
+STRING
 get_notice(const char *nick, const char *user, const char *host)
 {
 	std::string str("");
