@@ -61,7 +61,7 @@ struct notice_context {
 	    , msg(NULL)
 	{}
 
-	notice_context(char *p_srv_name, char *p_dest, char *p_msg)
+	notice_context(CSTRING p_srv_name, CSTRING p_dest, CSTRING p_msg)
 	    : srv_name(p_srv_name)
 	    , dest(p_dest)
 	    , msg(p_msg)
