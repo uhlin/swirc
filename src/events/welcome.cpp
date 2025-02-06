@@ -56,7 +56,7 @@ autojoin()
 
 		str = sw_strdup(it->c_str());
 
-		if (window_by_label(str) == NULL)
+		if (window_by_label(str) == nullptr)
 			(void) net_send("JOIN %s", strToLower(str));
 
 		free(str);
@@ -75,15 +75,15 @@ event_welcome(struct irc_message_compo *compo)
 	}
 
 	try {
-		CSTRING		msg = NULL;
-		CSTRING		nick = NULL;
-		CSTRING		srv_host = NULL;
+		CSTRING		msg = nullptr;
+		CSTRING		nick = nullptr;
+		CSTRING		srv_host = nullptr;
 		STRING		state = const_cast<STRING>("");
 
 		if (config_bool("identd", false))
 			identd::stop();
 
-		if (compo->prefix == NULL)
+		if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix!");
 
 		srv_host = addrof(compo->prefix[0]);
@@ -101,11 +101,11 @@ event_welcome(struct irc_message_compo *compo)
 			throw std::runtime_error("strFeed");
 
 		nick = strtok_r(compo->params, "\n", &state);
-		msg = strtok_r(NULL, "\n", &state);
+		msg = strtok_r(nullptr, "\n", &state);
 
-		if (nick == NULL)
+		if (nick == nullptr)
 			throw std::runtime_error("no nickname");
-		else if (msg == NULL)
+		else if (msg == nullptr)
 			throw std::runtime_error("no message");
 
 		irc_set_my_nickname(nick);
