@@ -115,7 +115,7 @@ output_ctcp_reply(CSTRING cmd, const struct special_msg_context *ctx,
 static void
 handle_special_msg(const struct special_msg_context *ctx)
 {
-	char	*msg = sw_strdup(ctx->msg);
+	STRING msg = sw_strdup(ctx->msg);
 
 	squeeze(msg, "\x01");
 	msg = trim(msg);
@@ -213,7 +213,7 @@ event_notice(struct irc_message_compo *compo)
 
 			printtext(&ptext_ctx, "%s %s", str.c_str(), msg);
 		} else {
-			char *str;
+			STRING str;
 
 			if (strings_match_ignore_case(dest, g_my_nickname)) {
 				if ((ptext_ctx.window = window_by_label(nick))
