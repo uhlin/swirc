@@ -51,9 +51,9 @@
 #define NCOLOR2		Theme("notice_color2")
 
 struct notice_context {
-	char	*srv_name;
-	char	*dest;
-	char	*msg;
+	CSTRING srv_name;
+	CSTRING dest;
+	CSTRING msg;
 
 	notice_context()
 	    : srv_name(NULL)
