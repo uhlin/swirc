@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
   messages.
 - Fixed option `notifications`.
   (Did not take affect on private messages).
+- Fixed so that `/znc JumpNetwork` works. (It didn't until now due to
+  the lack of reinitialization of the IRC module).
 
 ## [3.5.2] - 2025-02-01 ##
 - **Added** command `/ctcp`
