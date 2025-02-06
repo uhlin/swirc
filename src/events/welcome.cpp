@@ -37,6 +37,7 @@
 #include "../identd.hpp"
 #include "../irc.h"
 #include "../main.h"
+#include "../netsplit.h"
 #include "../network.h"
 #include "../printtext.h"
 #include "../strHand.h"
@@ -73,7 +74,11 @@ event_welcome(struct irc_message_compo *compo)
 	if (g_received_welcome) {
 		if (g_invoked_by_znc_jump_net) {
 			irc_deinit();
+			netsplit_deinit();
+
 			irc_init();
+			netsplit_init();
+
 			g_invoked_by_znc_jump_net = false;
 		} else {
 			err_log(EPROTO, "event_welcome(%s): warning: "
