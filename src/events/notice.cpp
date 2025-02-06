@@ -56,9 +56,9 @@ struct notice_context {
 	CSTRING msg;
 
 	notice_context()
-	    : srv_name(NULL)
-	    , dest(NULL)
-	    , msg(NULL)
+	    : srv_name(nullptr)
+	    , dest(nullptr)
+	    , msg(nullptr)
 	{}
 
 	notice_context(CSTRING p_srv_name, CSTRING p_dest, CSTRING p_msg)
@@ -75,7 +75,7 @@ handle_notice_while_connecting(struct irc_message_compo *compo)
 	const char *msg = strchr(compo->params, ':');
 	const char *srv_host = (compo->prefix ? &compo->prefix[1] : "auth");
 
-	if (msg == NULL || strings_match(++msg, ""))
+	if (msg == nullptr || strings_match(++msg, ""))
 		return;
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
 	printtext(&ctx, "%s!%s%c %s", COLOR3, srv_host, NORMAL, msg);
@@ -143,7 +143,8 @@ event_notice(struct irc_message_compo *compo)
 		STRING	prefix;
 		STRING	state[2];
 
-		printtext_context_init(&ptext_ctx, NULL, TYPE_SPEC_NONE, true);
+		printtext_context_init(&ptext_ctx, nullptr, TYPE_SPEC_NONE,
+		    true);
 		state[0] = state[1] = const_cast<STRING>("");
 
 		if (has_server_time(compo)) {
@@ -153,16 +154,17 @@ event_notice(struct irc_message_compo *compo)
 		}
 
 		if (atomic_load_bool(&g_connection_in_progress) ||
-		    g_server_hostname == NULL) {
+		    g_server_hostname == nullptr) {
 			handle_notice_while_connecting(compo);
 			return;
-		} else if ((prefix = compo->prefix) == NULL)
+		} else if ((prefix = compo->prefix) == nullptr)
 			throw std::runtime_error("no prefix!");
 		else if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
-		else if ((dest = strtok_r(compo->params, "\n", &state[0])) == NULL)
+		else if ((dest = strtok_r(compo->params, "\n", &state[0])) ==
+		    nullptr)
 			throw std::runtime_error("no destination");
-		else if ((msg = strtok_r(NULL, "\n", &state[0])) == NULL)
+		else if ((msg = strtok_r(nullptr, "\n", &state[0])) == nullptr)
 			throw std::runtime_error("no message");
 
 		if (*prefix == ':')
@@ -176,11 +178,11 @@ event_notice(struct irc_message_compo *compo)
 			return;
 		}
 
-		if ((nick = strtok_r(prefix, "!@", &state[1])) == NULL)
+		if ((nick = strtok_r(prefix, "!@", &state[1])) == nullptr)
 			throw std::runtime_error("no nickname");
-		if ((user = strtok_r(NULL, "!@", &state[1])) == NULL)
+		if ((user = strtok_r(nullptr, "!@", &state[1])) == nullptr)
 			user = const_cast<char *>("<no user>");
-		if ((host = strtok_r(NULL, "!@", &state[1])) == NULL)
+		if ((host = strtok_r(nullptr, "!@", &state[1])) == nullptr)
 			host = const_cast<char *>("<no host>");
 		if (is_in_ignore_list(nick, user, host))
 			return;
@@ -195,8 +197,8 @@ event_notice(struct irc_message_compo *compo)
 
 			handle_special_msg(&msg_ctx);
 			return;
-		} else if ((ptext_ctx.window = window_by_label(dest)) != NULL &&
-		    is_irc_channel(dest)) {
+		} else if ((ptext_ctx.window =
+		    window_by_label(dest)) != nullptr && is_irc_channel(dest)) {
 			/*
 			 * Output notice in IRC channel
 			 */
@@ -214,11 +216,11 @@ event_notice(struct irc_message_compo *compo)
 
 			if (strings_match_ignore_case(dest, g_my_nickname)) {
 				if ((ptext_ctx.window = window_by_label(nick))
-				    == NULL)
+				    == nullptr)
 					ptext_ctx.window = g_active_window;
 			} else {
 				if ((ptext_ctx.window = window_by_label(dest))
-				    == NULL)
+				    == nullptr)
 					ptext_ctx.window = g_status_window;
 			}
 
@@ -242,7 +244,7 @@ get_notice(const char *nick, const char *user, const char *host)
 {
 	std::string str("");
 
-	if (nick == NULL || user == NULL || host == NULL)
+	if (nick == nullptr || user == nullptr || host == nullptr)
 		return sw_strdup("");
 
 	(void) str.append(Theme("notice_lb"));
