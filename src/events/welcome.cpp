@@ -1,5 +1,5 @@
 /* Handle event welcome (001)
-   Copyright (C) 2014-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -75,10 +75,10 @@ event_welcome(struct irc_message_compo *compo)
 	}
 
 	try {
-		char	*msg = NULL;
-		char	*nick = NULL;
-		char	*srv_host = NULL;
-		char	*state = const_cast<char *>("");
+		CSTRING		msg = NULL;
+		CSTRING		nick = NULL;
+		CSTRING		srv_host = NULL;
+		STRING		state = const_cast<STRING>("");
 
 		if (config_bool("identd", false))
 			identd::stop();
