@@ -116,6 +116,26 @@ add_cmd(PTEXTBUF matches, CSTRING str)
 	}
 }
 
+static void
+send_cmd(CSTRING p_module, CSTRING p_command)
+{
+	char			v_module[80] = { '\0' };
+	static chararray_t	array = "JumpNetwork ";
+	static const size_t	size = sizeof array - 1;
+
+	if (sw_strcpy(v_module, p_module, sizeof v_module) != 0)
+		throw std::runtime_error("string copying error");
+	else if (net_send("PRIVMSG %s :%s",
+	    strToLower(v_module), p_command) < 0)
+		throw std::runtime_error("cannot send");
+	else if (!strncasecmp(p_command, array, size) &&
+	    !strings_match(&p_command[size], "") &&
+	    strings_match(v_module, "*status"))
+		g_invoked_by_znc_jump_net = true;
+	else
+		return;
+}
+
 /*
  * usage: /znc [*module] <command>
  */
@@ -137,7 +157,6 @@ cmd_znc(CSTRING data)
 	free(dcopy);
 
 	try {
-		STRING				 module;
 		std::string			 token;
 		std::vector<std::string>	 tokens;
 
@@ -148,20 +167,15 @@ cmd_znc(CSTRING data)
 			if (tokens.size() != 1) {
 				throw std::runtime_error("bogus number of "
 				    "tokens (expected 1)");
-			} else if (net_send("PRIVMSG *status :%s",
-			    tokens.at(0).c_str()) < 0) {
-				throw std::runtime_error("cannot send");
-			}
+			} else
+				send_cmd("*status", tokens.at(0).c_str());
 		} else if (tokens.size() != 2) {
 			throw std::runtime_error("bogus number of tokens "
 			    "(expected 2)");
 		} else if (tokens.at(0).at(0) != '*') {
 			throw std::runtime_error("bogus module name");
 		} else {
-			module = sw_strdup(tokens.at(0).c_str());
-			(void) net_send("PRIVMSG %s :%s", strToLower(module),
-			    tokens.at(1).c_str());
-			free(module);
+			send_cmd(tokens.at(0).c_str(), tokens.at(1).c_str());
 		}
 	} catch (const std::runtime_error &e) {
 		printtext_print("err", "%s: %s", cmd, e.what());
