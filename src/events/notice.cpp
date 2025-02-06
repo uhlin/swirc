@@ -97,8 +97,8 @@ handle_notice_from_my_server(const struct notice_context *ctx)
 }
 
 static void
-output_ctcp_reply(const char *cmd, const struct special_msg_context *ctx,
-    const char *msg)
+output_ctcp_reply(CSTRING cmd, const struct special_msg_context *ctx,
+    CSTRING msg)
 {
 	PRINTTEXT_CONTEXT	ptext_ctx;
 
