@@ -71,9 +71,10 @@ struct notice_context {
 static void
 handle_notice_while_connecting(struct irc_message_compo *compo)
 {
-	PRINTTEXT_CONTEXT ctx;
-	const char *msg = strchr(compo->params, ':');
-	const char *srv_host = (compo->prefix ? &compo->prefix[1] : "auth");
+	CSTRING			msg = strchr(compo->params, ':');
+	CSTRING			srv_host = (compo->prefix ? &compo->prefix[1] :
+				    "auth");
+	PRINTTEXT_CONTEXT	ctx;
 
 	if (msg == nullptr || strings_match(++msg, ""))
 		return;
