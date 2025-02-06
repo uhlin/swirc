@@ -1,10 +1,12 @@
 #ifndef CMD_ZNC_H
 #define CMD_ZNC_H
 
+#include "atomicops.h"
+
 #include "../textBuffer.h"
 
 __SWIRC_BEGIN_DECLS
-extern volatile bool g_invoked_by_znc_jump_net;
+extern _Atomic(bool) g_invoked_by_znc_jump_net;
 
 void cmd_znc(CSTRING);
 

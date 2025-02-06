@@ -42,7 +42,7 @@
 
 #include "znc.h"
 
-volatile bool g_invoked_by_znc_jump_net = false;
+_Atomic(bool) g_invoked_by_znc_jump_net = false;
 
 static stringarray_t znc_commands = {
 	"Version",
