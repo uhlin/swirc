@@ -181,9 +181,9 @@ event_notice(struct irc_message_compo *compo)
 		if ((nick = strtok_r(prefix, "!@", &state[1])) == nullptr)
 			throw std::runtime_error("no nickname");
 		if ((user = strtok_r(nullptr, "!@", &state[1])) == nullptr)
-			user = const_cast<char *>("<no user>");
+			user = "<no user>";
 		if ((host = strtok_r(nullptr, "!@", &state[1])) == nullptr)
-			host = const_cast<char *>("<no host>");
+			host = "<no host>";
 		if (is_in_ignore_list(nick, user, host))
 			return;
 
