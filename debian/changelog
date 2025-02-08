@@ -1,3 +1,9 @@
+swirc (3.5.3-1) unstable; urgency=medium
+
+  * New upstream version. Bug fixes and small improvements.
+
+ -- Markus Uhlin <markus@nifty-networks.net>  Sat, 08 Feb 2025 17:24:08 +0100
+
 swirc (3.5.2-1) unstable; urgency=medium
 
   * New upstream version.
