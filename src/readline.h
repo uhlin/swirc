@@ -53,8 +53,10 @@ typedef struct tagTAB_COMPLETION {
 		bool Cmds;
 		bool Connect;
 		bool Cs;
+		bool Dcc;
 		bool Deop;
 		bool Devoice;
+		bool Ftp;
 		bool Help;
 		bool Kick;
 		bool Kickban;

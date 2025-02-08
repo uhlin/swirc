@@ -1,5 +1,5 @@
 /* Readline tab completion
-   Copyright (C) 2020-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -30,6 +30,8 @@
 #include "common.h"
 
 #include "commands/connect.h"
+#include "commands/dcc.h"
+#include "commands/ftp.h"
 #include "commands/sasl.h"
 #include "commands/services.h"
 #include "commands/squery.h"
@@ -80,6 +82,13 @@ auto_complete_cs(volatile struct readline_session_context *ctx,
 }
 
 static void
+auto_complete_dcc(volatile struct readline_session_context *ctx,
+    CSTRING s)
+{
+	do_work(ctx, L"/dcc ", s);
+}
+
+static void
 auto_complete_deop(volatile struct readline_session_context *ctx,
     CSTRING s)
 {
@@ -91,6 +100,13 @@ auto_complete_devoice(volatile struct readline_session_context *ctx,
     CSTRING s)
 {
 	do_work(ctx, L"/devoice ", s);
+}
+
+static void
+auto_complete_ftp(volatile struct readline_session_context *ctx,
+    CSTRING s)
+{
+	do_work(ctx, L"/ftp ", s);
 }
 
 static void
@@ -310,8 +326,10 @@ readline_tab_comp_ctx_new(void)
 	ctx.isInCirculationModeFor.Cmds =
 	ctx.isInCirculationModeFor.Connect =
 	ctx.isInCirculationModeFor.Cs =
+	ctx.isInCirculationModeFor.Dcc =
 	ctx.isInCirculationModeFor.Deop =
 	ctx.isInCirculationModeFor.Devoice =
+	ctx.isInCirculationModeFor.Ftp =
 	ctx.isInCirculationModeFor.Help =
 	ctx.isInCirculationModeFor.Kick =
 	ctx.isInCirculationModeFor.Kickban =
@@ -354,8 +372,10 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 		ctx->isInCirculationModeFor.Cmds =
 		ctx->isInCirculationModeFor.Connect =
 		ctx->isInCirculationModeFor.Cs =
+		ctx->isInCirculationModeFor.Dcc =
 		ctx->isInCirculationModeFor.Deop =
 		ctx->isInCirculationModeFor.Devoice =
+		ctx->isInCirculationModeFor.Ftp =
 		ctx->isInCirculationModeFor.Help =
 		ctx->isInCirculationModeFor.Kick =
 		ctx->isInCirculationModeFor.Kickban =
@@ -416,6 +436,21 @@ init_mode_for_cs(volatile struct readline_session_context *ctx,
 }
 
 static void
+init_mode_for_dcc(volatile struct readline_session_context *ctx)
+{
+	immutable_cp_t cp = addrof(ctx->tc->search_var[5]);
+
+	if ((ctx->tc->matches = get_list_of_matching_dcc_cmds(cp)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_dcc(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeFor.Dcc = true;
+}
+
+static void
 init_mode_for_deop(volatile struct readline_session_context *ctx)
 {
 	const char *cp;
@@ -459,6 +494,21 @@ init_mode_for_devoice(volatile struct readline_session_context *ctx)
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_devoice(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Devoice = true;
+}
+
+static void
+init_mode_for_ftp(volatile struct readline_session_context *ctx)
+{
+	immutable_cp_t cp = addrof(ctx->tc->search_var[5]);
+
+	if ((ctx->tc->matches = get_list_of_matching_ftp_cmds(cp)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_ftp(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeFor.Ftp = true;
 }
 
 static void
@@ -862,10 +912,14 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_connect(ctx);
 	else if (var_matches_cs(sv, &off1))
 		init_mode_for_cs(ctx, off1);
+	else if (!strncmp(sv, "/dcc ", 5))
+		init_mode_for_dcc(ctx);
 	else if (!strncmp(sv, "/deop ", 6))
 		init_mode_for_deop(ctx);
 	else if (!strncmp(sv, "/devoice ", 9))
 		init_mode_for_devoice(ctx);
+	else if (!strncmp(sv, "/ftp ", 5))
+		init_mode_for_ftp(ctx);
 	else if (!strncmp(sv, "/help ", 6))
 		init_mode_for_help(ctx);
 	else if (!strncmp(sv, "/kick ", 6))
@@ -936,10 +990,14 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		ac_doit(auto_complete_connect, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Cs) {
 		ac_doit(auto_complete_cs, ctx);
+	} else if (ctx->tc->isInCirculationModeFor.Dcc) {
+		ac_doit(auto_complete_dcc, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Deop) {
 		ac_doit(auto_complete_deop, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Devoice) {
 		ac_doit(auto_complete_devoice, ctx);
+	} else if (ctx->tc->isInCirculationModeFor.Ftp) {
+		ac_doit(auto_complete_ftp, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Help) {
 		ac_doit(auto_complete_help, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Kick) {
