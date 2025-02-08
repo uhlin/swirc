@@ -101,8 +101,11 @@ extern const int	g_one_kilo;
 extern const int	g_one_meg;
 extern const int	g_one_gig;
 
-double percentage(double part, double total);
-void list_dir(const char *);
+//lint -sem(get_list_of_matching_dcc_cmds, r_null)
+
+double		percentage(double part, double total);
+void		list_dir(const char *);
+PTEXTBUF	get_list_of_matching_dcc_cmds(const char *);
 
 void cmd_dcc(const char *);
 

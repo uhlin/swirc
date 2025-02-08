@@ -751,6 +751,23 @@ const int	g_one_gig = 1000000000;
 static const std::vector<dcc_get>::size_type	GET_DB_MAX = 100;
 static const std::vector<dcc_send>::size_type	SEND_DB_MAX = 100;
 
+static stringarray_t dcc_cmds = {
+	"clear ",
+	"clear get",
+	"clear send",
+	"clear completed",
+	"clear all",
+	"get ",
+	"list ",
+	"list get",
+	"list send",
+	"list all",
+	"ls ",
+	"ls up",
+	"ls down",
+	"send ",
+};
+
 static std::vector<dcc_get>	get_db;
 static std::vector<dcc_send>	send_db;
 
@@ -1260,6 +1277,40 @@ list_dir(const char *dir)
 	UNUSED_PARAM(dir);
 	printtext_print("err", "operation not supported");
 #endif
+}
+
+static void
+add_cmd(PTEXTBUF matches, const char *cmd)
+{
+	if (textBuf_size(matches) == 0) {
+		if ((errno = textBuf_ins_next(matches, nullptr, cmd, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	} else {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
+		    cmd, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	}
+}
+
+PTEXTBUF
+get_list_of_matching_dcc_cmds(const char *search_var)
+{
+	PTEXTBUF	matches = textBuf_new();
+	const size_t	varlen = strlen(search_var);
+
+	for (size_t i = 0; i < ARRAY_SIZE(dcc_cmds); i++) {
+		const char *cmd = dcc_cmds[i];
+
+		if (!strncmp(search_var, cmd, varlen))
+			add_cmd(matches, cmd);
+	}
+
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return nullptr;
+	}
+
+	return matches;
 }
 
 static void
