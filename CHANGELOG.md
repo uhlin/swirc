@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.5.3] - 2025-02-08 ##
 - **Added** tab completion for:
   - `/dcc`
   - `/ftp`
