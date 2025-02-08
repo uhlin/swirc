@@ -15,6 +15,8 @@
 #endif
 #include <time.h>
 
+#include "../textBuffer.h"
+
 #if defined(UNIX)
 #define PATH_SEP '/'
 #elif defined(WIN32)
