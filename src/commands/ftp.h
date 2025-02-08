@@ -51,6 +51,7 @@
 #include <stdio.h>
 
 #include "../irc.h"
+#include "../textBuffer.h"
 
 #if defined(UNIX) && !defined(_SOCKET_DEFINED)
 #define _SOCKET_DEFINED 1
@@ -97,6 +98,9 @@ void	cmd_ftp(CSTRING);
 
 void	ftp_init(void);
 void	ftp_deinit(void);
+
+//lint -sem(get_list_of_matching_ftp_cmds, r_null)
+PTEXTBUF get_list_of_matching_ftp_cmds(CSTRING);
 __SWIRC_END_DECLS
 
 #ifdef __cplusplus

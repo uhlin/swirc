@@ -89,6 +89,23 @@ volatile bool	 ftp::cmd_in_progress = false;
 volatile bool	 ftp::loop_get_file = false;
 volatile bool	 ftp::loop_send_file = false;
 
+static stringarray_t ftp_cmds = {
+	"cd ",
+	"del ",
+	"exit",
+	"get ",
+	"login",
+	"ls ",
+	"ls dir",
+	"ls up",
+	"ls down",
+	"mkdir ",
+	"pwd",
+	"rmdir ",
+	"send ",
+	"system",
+};
+
 static void delete_data_conn(void);
 static void print_one_rep(const int, CSTRING);
 
@@ -1163,6 +1180,40 @@ ftp_deinit(void)
 
 	delete ftp::data_conn;
 	ftp::data_conn = nullptr;
+}
+
+static void
+add_cmd(PTEXTBUF matches, CSTRING str)
+{
+	if (textBuf_size(matches) != 0) {
+		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
+		    str, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	} else {
+		if ((errno = textBuf_ins_next(matches, nullptr, str, -1)) != 0)
+			err_sys("%s: textBuf_ins_next", __func__);
+	}
+}
+
+PTEXTBUF
+get_list_of_matching_ftp_cmds(CSTRING search_var)
+{
+	PTEXTBUF	matches = textBuf_new();
+	const size_t	varlen = strlen(search_var);
+
+	for (size_t i = 0; i < ARRAY_SIZE(ftp_cmds); i++) {
+		CSTRING cmd = ftp_cmds[i];
+
+		if (!strncmp(search_var, cmd, varlen))
+			add_cmd(matches, cmd);
+	}
+
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return nullptr;
+	}
+
+	return matches;
 }
 
 static void
