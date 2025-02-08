@@ -2,14 +2,14 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added tab completion for:
+- **Added** tab completion for:
   - `/dcc`
   - `/ftp`
-- Changed the program to squeeze text decoration in notification
+- **Changed** the program to squeeze text decoration in notification
   messages.
-- Fixed option `notifications`.
+- **Fixed** option `notifications`.
   (Did not take effect on private messages).
-- Fixed so that `/znc JumpNetwork` works. (It didn't until now due to
+- **Fixed** so that `/znc JumpNetwork` works. (It didn't until now due to
   the lack of reinitialization of the IRC module).
 
 ## [3.5.2] - 2025-02-01 ##
