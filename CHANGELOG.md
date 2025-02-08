@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added tab completion for:
+  - `/dcc`
+  - `/ftp`
 - Changed the program to squeeze text decoration in notification
   messages.
 - Fixed option `notifications`.
