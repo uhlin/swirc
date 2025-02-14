@@ -190,6 +190,36 @@ deal_with_setlocale()
 	xsetlocale = setlocale;
 }
 
+#if defined(HAVE_LIBINTL_H) && defined(WIN32)
+static void
+W32_have_libintl()
+{
+#define PEM_FILE "trusted_roots.pem"
+	char *cp, *pgm, *str;
+
+	cp = pgm = str = nullptr;
+
+	if (_get_pgmptr(&pgm) == 0 && pgm != nullptr &&
+	    !strings_match(pgm, "") &&
+	    !strings_match(&pgm[strspn(pgm, " \t")], "")) {
+		str = sw_strdup(pgm);
+		if ((cp = strcasestr(str, "\\swirc.exe")) == nullptr)
+			err_quit("renamed executable");
+		*cp = '\0';
+		g_progpath = sw_strdup(str);
+		while ((cp = strchr(str, SLASH_CHAR)) != nullptr)
+			*cp = '/';
+	}
+	if (bindtextdomain("swirc", (str ? str : "")) == nullptr)
+		err_sys("bindtextdomain");
+	if (str)
+		g_ca_file = strdup_printf("%s/%s", str, PEM_FILE);
+	else
+		g_ca_file = sw_strdup(PEM_FILE);
+	free(str);
+}
+#endif
+
 static void
 swirc_terminate()
 {
@@ -654,33 +684,9 @@ main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 #elif defined(WIN32)
-#define PEM_FILE "trusted_roots.pem"
-	char	*pgm = nullptr,
-		*str = nullptr;
-
-	if (_get_pgmptr(&pgm) == 0 && pgm != nullptr &&
-	    !strings_match(pgm, "") &&
-	    !strings_match(&pgm[strspn(pgm, " \t")], "")) {
-		str = sw_strdup(pgm);
-		if ((cp = strcasestr(str, "\\swirc.exe")) == nullptr) {
-			err_msg("renamed executable");
-			return EXIT_FAILURE;
-		}
-		*cp = '\0';
-		g_progpath = sw_strdup(str);
-		while ((cp = strchr(str, SLASH_CHAR)) != nullptr)
-			*cp = '/';
-	}
-	if (bindtextdomain("swirc", (str ? str : "")) == nullptr) {
-		err_ret("bindtextdomain");
-		return EXIT_FAILURE;
-	}
-	if (str)
-		g_ca_file = strdup_printf("%s/%s", str, PEM_FILE);
-	else
-		g_ca_file = sw_strdup(PEM_FILE);
-	free(str);
+	W32_have_libintl();
 #endif
+
 	(void) bind_textdomain_codeset("swirc", "UTF-8");
 
 	if (textdomain("swirc") == nullptr) {
