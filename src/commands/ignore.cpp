@@ -94,8 +94,8 @@ print_ignore_list()
 void
 cmd_ignore(const char *data)
 {
-	PRINTTEXT_CONTEXT ctx;
-	char *err_reason = NULL;
+	PRINTTEXT_CONTEXT	 ctx;
+	char			*err_reason = nullptr;
 
 	if (strings_match(data, "")) {
 		print_ignore_list();
@@ -104,7 +104,7 @@ cmd_ignore(const char *data)
 		print_and_free(err_reason, err_reason);
 		return;
 	} else if (ignore_list.size() >= MAXIGNORES) {
-		print_and_free("too many ignores!", NULL);
+		print_and_free("too many ignores!", nullptr);
 		return;
 	}
 
@@ -122,8 +122,8 @@ cmd_ignore(const char *data)
 void
 cmd_unignore(const char *data)
 {
-	PRINTTEXT_CONTEXT ctx;
-	char *regex = NULL;
+	PRINTTEXT_CONTEXT	 ctx;
+	char			*regex = nullptr;
 
 	if (strings_match(data, "")) {
 		print_ignore_list();
@@ -155,7 +155,7 @@ cmd_unignore(const char *data)
 		    TYPE_SPEC1_SUCCESS, true);
 		printtext(&ctx, "Deleted \"%s\" from ignore list.", regex);
 		free(regex);
-		regex = NULL;
+		regex = nullptr;
 		print_ignore_list();
 		return;
 	} catch (const std::out_of_range &e) {
@@ -176,7 +176,8 @@ cmd_unignore(const char *data)
 bool
 is_in_ignore_list(const char *nick, const char *user, const char *host)
 {
-	if (nick == NULL || user == NULL || host == NULL || ignore_list.empty())
+	if (nick == nullptr || user == nullptr || host == nullptr ||
+	    ignore_list.empty())
 		return false;
 
 	std::string nuh(nick);
@@ -213,6 +214,6 @@ is_valid_regex(const char *str, char **err_reason)
 		return false;
 	}
 
-	*err_reason = NULL;
+	*err_reason = nullptr;
 	return true;
 }
