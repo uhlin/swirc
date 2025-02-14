@@ -104,7 +104,7 @@ cmd_ignore(const char *data)
 		print_and_free(err_reason, err_reason);
 		return;
 	} else if (ignore_list.size() >= MAXIGNORES) {
-		print_and_free("too many ignores!", nullptr);
+		printtext_print("err", "too many ignores!");
 		return;
 	}
 
