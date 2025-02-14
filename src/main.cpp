@@ -166,6 +166,31 @@ static stringarray_t OptionDesc = {
 };
 
 static void
+deal_with_setlocale()
+{
+#ifdef setlocale
+#undef setlocale
+#endif
+	xsetlocale = setlocale;
+
+	if (sw_strcpy(g_locale, xsetlocale(LC_ALL, ""), ARRAY_SIZE(g_locale)) ==
+	    0) {
+#ifdef HAVE_LIBINTL_SETLOCALE
+		xsetlocale = libintl_setlocale;
+
+		if (xsetlocale(LC_ALL, g_locale) == nullptr) {
+			err_quit("error setting character encoding '%s' for "
+			    "libintl", g_locale);
+		}
+#else
+		debug("set locale ok");
+#endif
+	}
+
+	xsetlocale = setlocale;
+}
+
+static void
 swirc_terminate()
 {
 	err_msg("%s", _("Unhandled exception!"));
@@ -620,24 +645,7 @@ main(int argc, char *argv[])
 	g_pid = _getpid();
 #endif
 
-#ifdef setlocale
-#undef setlocale
-#endif
-	xsetlocale = setlocale;
-	if (sw_strcpy(g_locale, xsetlocale(LC_ALL, ""), ARRAY_SIZE(g_locale)) ==
-	    0) {
-#ifdef HAVE_LIBINTL_SETLOCALE
-		xsetlocale = libintl_setlocale;
-		if (xsetlocale(LC_ALL, g_locale) == nullptr) {
-			err_msg("error setting character encoding '%s' for "
-			    "libintl", g_locale);
-			return EXIT_FAILURE;
-		}
-#else
-		debug("set locale ok");
-#endif
-	}
-	xsetlocale = setlocale;
+	deal_with_setlocale();
 
 #ifdef HAVE_LIBINTL_H
 #if defined(UNIX)
