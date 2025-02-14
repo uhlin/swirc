@@ -738,10 +738,6 @@ main(int argc, char *argv[])
 
 	if ((g_dev_null = xfopen(DEV_NULL, "w")) == nullptr)
 		debug("dev null error");
-#if WIN32
-	if (pgm)
-		debug("_get_pgmptr: \"%s\"", pgm);
-#endif
 
 	if (curses_init() != OK) {
 		err_msg("%s", _("Initialization of the Curses library not "
