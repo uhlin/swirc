@@ -536,6 +536,47 @@ toast_notifications_init()
 }
 #endif
 
+#if defined(OpenBSD) && OpenBSD >= 201811
+static void
+unveil_doit()
+{
+	struct whitelist_tag {
+		const char	*path;
+		const char	*permissions;
+	} whitelist[] = {
+		{ "/etc/ssl/cert.pem", "r" },
+		{ LC_MSGS_DE, "r" },
+		{ LC_MSGS_FI, "r" },
+		{ LC_MSGS_FR, "r" },
+		{ LC_MSGS_SV, "r" },
+	};
+
+	if (unveil(g_home_dir, "rwc") == -1)
+		err_sys("unveil");
+
+	for (struct whitelist_tag *wl_p = addrof(whitelist[0]);
+	    wl_p < &whitelist[ARRAY_SIZE(whitelist)];
+	    wl_p++) {
+		errno = 0;
+
+		if (unveil(wl_p->path, wl_p->permissions) == -1 &&
+		    errno != ENOENT) {
+			err_sys("unveil(%s, %s)", wl_p->path,
+			    wl_p->permissions);
+		}
+	}
+
+	if (dcc::want_unveil_uploads()) {
+		if (unveil(dcc::get_upload_dir(), "r") == -1)
+			err_sys("unveil");
+	}
+	if (ftp::want_unveil_uploads()) {
+		if (unveil(ftp::get_upload_dir(), "r") == -1)
+			err_sys("unveil");
+	}
+}
+#endif
+
 /**
  * Starts execution
  */
@@ -704,47 +745,7 @@ main(int argc, char *argv[])
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201811
-	struct whitelist_tag {
-		const char	*path;
-		const char	*permissions;
-	} whitelist[] = {
-		{ "/etc/ssl/cert.pem", "r" },
-		{ LC_MSGS_DE, "r" },
-		{ LC_MSGS_FI, "r" },
-		{ LC_MSGS_FR, "r" },
-		{ LC_MSGS_SV, "r" },
-	};
-
-	if (unveil(g_home_dir, "rwc") == -1) {
-		err_ret("unveil");
-		return EXIT_FAILURE;
-	}
-
-	for (struct whitelist_tag *wl_p = addrof(whitelist[0]);
-	    wl_p < &whitelist[ARRAY_SIZE(whitelist)];
-	    wl_p++) {
-		errno = 0;
-
-		if (unveil(wl_p->path, wl_p->permissions) == -1 &&
-		    errno != ENOENT) {
-			err_ret("unveil(%s, %s)", wl_p->path,
-			    wl_p->permissions);
-			return EXIT_FAILURE;
-		}
-	}
-
-	if (dcc::want_unveil_uploads()) {
-		if (unveil(dcc::get_upload_dir(), "r") == -1) {
-			err_ret("unveil");
-			return EXIT_FAILURE;
-		}
-	}
-	if (ftp::want_unveil_uploads()) {
-		if (unveil(ftp::get_upload_dir(), "r") == -1) {
-			err_ret("unveil");
-			return EXIT_FAILURE;
-		}
-	}
+	unveil_doit();
 #endif
 
 #if defined(OpenBSD) && OpenBSD >= 201605
