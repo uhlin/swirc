@@ -49,9 +49,7 @@
 static void
 autojoin()
 {
-	std::vector<std::string>::iterator	it;
-
-	for (it = g_join_list.begin(); it != g_join_list.end(); ++it) {
+	for (auto it = g_join_list.begin(); it != g_join_list.end(); ++it) {
 		STRING str;
 
 		if (!is_irc_channel(it->c_str()))

@@ -1,5 +1,5 @@
 /* The wholeft command
-   Copyright (C) 2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -42,10 +42,9 @@
 static bool
 netsplit_chk(CSTRING channel)
 {
-	const std::vector<netsplit *>		&netsplit_db = netsplit_get_db();
-	std::vector<netsplit *>::const_iterator	 it;
+	const std::vector<netsplit *> &netsplit_db = netsplit_get_db();
 
-	for (it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
+	for (auto it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
 		immutable_cp_t db_chan = (*it)->channel.c_str();
 
 		if (strings_match_ignore_case(channel, db_chan))
@@ -92,10 +91,9 @@ pr_wholeft(const netsplit *ns)
 static void
 wholeft(CSTRING channel)
 {
-	const std::vector<netsplit *>		&netsplit_db = netsplit_get_db();
-	std::vector<netsplit *>::const_iterator	 it;
+	const std::vector<netsplit *> &netsplit_db = netsplit_get_db();
 
-	for (it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
+	for (auto it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
 		immutable_cp_t db_chan = (*it)->channel.c_str();
 
 		if (strings_match_ignore_case(channel, db_chan) &&

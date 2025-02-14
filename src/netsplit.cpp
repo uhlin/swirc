@@ -1,5 +1,5 @@
 /* netsplit.cpp
-   Copyright (C) 2024, 2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -115,9 +115,7 @@ netsplit::announce_split(void)
 bool
 netsplit::find_nick(CSTRING p_nick)
 {
-	std::vector<std::string>::iterator it;
-
-	for (it = this->nicks.begin(); it != this->nicks.end(); ++it) {
+	for (auto it = this->nicks.begin(); it != this->nicks.end(); ++it) {
 		if (strings_match_ignore_case(it->c_str(), p_nick))
 			return true;
 	}
@@ -187,11 +185,9 @@ netsplit_db_empty(void)
 void
 netsplit_destroy_all(void)
 {
-	std::vector<netsplit *>::iterator it;
-
 	if (netsplit_db.empty())
 		return;
-	for (it = netsplit_db.begin(); it != netsplit_db.end(); ++it)
+	for (auto it = netsplit_db.begin(); it != netsplit_db.end(); ++it)
 		delete *it;
 	netsplit_db.clear();
 }
@@ -199,9 +195,7 @@ netsplit_destroy_all(void)
 netsplit *
 netsplit_find(CSTRING nick, CSTRING channel)
 {
-	std::vector<netsplit *>::iterator it;
-
-	for (it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
+	for (auto it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
 		immutable_cp_t db_chan = (*it)->channel.c_str();
 
 		if (strings_match_ignore_case(db_chan, channel) &&
@@ -221,9 +215,7 @@ netsplit_get_db(void)
 netsplit *
 netsplit_get_split(const struct netsplit_context *ctx)
 {
-	std::vector<netsplit *>::iterator it;
-
-	for (it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
+	for (auto it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
 		CSTRING		db_chan = (*it)->channel.c_str();
 		CSTRING		serv1, serv2;
 

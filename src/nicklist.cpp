@@ -1,5 +1,5 @@
 /* nicklist.cpp
-   Copyright (C) 2021-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -260,14 +260,11 @@ static void
 list_fits_yes(PIRC_WINDOW win, WINDOW *nl_win, const int HEIGHT,
     std::list<std::string> &list)
 {
-	std::list<std::string>::iterator it;
-	int count;
-
 	(void) werase(nl_win);
 	win->nicklist.scroll_pos = 0;
 
-	it = list.begin();
-	count = 0;
+	auto	it = list.begin();
+	int	count = 0;
 
 	while (it != list.end() && count < HEIGHT) {
 		printnick(nl_win, count, 0, it->c_str());

@@ -1,5 +1,5 @@
 /* spell.cpp
-   Copyright (C) 2023-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2023-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -166,9 +166,7 @@ void
 spell_destroy_suggs(std::vector<sugg_ptr> *suggs)
 {
 	if (suggs) {
-		std::vector<sugg_ptr>::iterator it;
-
-		for (it = suggs->begin(); it != suggs->end(); ++it)
+		for (auto it = suggs->begin(); it != suggs->end(); ++it)
 			delete *it;
 
 		delete suggs;
@@ -250,14 +248,13 @@ spell_get_suggs(CSTRING mbs, const wchar_t *wcs)
 void
 spell_test1(CSTRING word)
 {
-	std::vector<sugg_ptr>			*suggs;
-	std::vector<sugg_ptr>::iterator		 it;
+	std::vector<sugg_ptr> *suggs;
 
 	printtext_print(nullptr, " -- %s is %s", word, (spell_word(word) ?
 	    "correct" : "incorrect"));
 
 	if ((suggs = spell_get_suggs(word, nullptr)) != nullptr) {
-		for (it = suggs->begin(); it != suggs->end(); ++it)
+		for (auto it = suggs->begin(); it != suggs->end(); ++it)
 			printtext_print(nullptr, "%s", (*it)->get_word());
 		spell_destroy_suggs(suggs);
 	}
@@ -266,14 +263,13 @@ spell_test1(CSTRING word)
 void
 spell_test2(const wchar_t *word)
 {
-	std::vector<sugg_ptr>			*suggs;
-	std::vector<sugg_ptr>::iterator		 it;
+	std::vector<sugg_ptr> *suggs;
 
 	printtext_print(nullptr, " -- %ls is %s", word, (spell_wide_word(word) ?
 	    "correct" : "incorrect"));
 
 	if ((suggs = spell_get_suggs(nullptr, word)) != nullptr) {
-		for (it = suggs->begin(); it != suggs->end(); ++it)
+		for (auto it = suggs->begin(); it != suggs->end(); ++it)
 			printtext_print(nullptr, "%ls", (*it)->get_wide_word());
 		spell_destroy_suggs(suggs);
 	}
@@ -337,11 +333,9 @@ auto_complete_next_sugg(volatile struct readline_session_context *ctx)
 static void
 print_suggestions(std::vector<sugg_ptr> *suggs)
 {
-	std::vector<sugg_ptr>::iterator it;
-
 	printtext_print(nullptr, "%s", _("suggestions:"));
 
-	for (it = suggs->begin(); it != suggs->end(); ++it)
+	for (auto it = suggs->begin(); it != suggs->end(); ++it)
 		printtext_print(nullptr, "  %ls", (*it)->get_wide_word());
 }
 

@@ -1,5 +1,5 @@
 /* Ignore commands
-   Copyright (C) 2021-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -74,19 +74,17 @@ static void
 print_ignore_list()
 {
 	PRINTTEXT_CONTEXT ctx;
-	int no;
-	std::vector<ignore>::iterator it;
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 	printtext(&ctx, "List of ignores:");
 
-	no = 0;
-	it = ignore_list.begin();
+	int	no = 0;
+	auto	it = ignore_list.begin();
 
 	while (it != ignore_list.end()) {
 		printtext(&ctx, "%d: %s", no, it->get_str().c_str());
-		++ no;
-		++ it;
+		++no;
+		++it;
 	}
 }
 
@@ -178,8 +176,6 @@ cmd_unignore(const char *data)
 bool
 is_in_ignore_list(const char *nick, const char *user, const char *host)
 {
-	std::vector<ignore>::iterator	it;
-
 	if (nick == NULL || user == NULL || host == NULL || ignore_list.empty())
 		return false;
 
@@ -187,7 +183,7 @@ is_in_ignore_list(const char *nick, const char *user, const char *host)
 	nuh.append("!");
 	nuh.append(user).append("@").append(host);
 
-	for (it = ignore_list.begin(); it != ignore_list.end(); ++it) {
+	for (auto it = ignore_list.begin(); it != ignore_list.end(); ++it) {
 		if (std::regex_match(nuh, it->get_regex())) {
 			debug("is_in_ignore_list: \"%s\" matches \"%s\": "
 			    "returning true...", it->get_str().c_str(),
