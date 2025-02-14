@@ -509,6 +509,21 @@ get_seed()
 #endif
 }
 
+#if defined(UNIX) && defined(NDEBUG)
+static void
+forbid_core_dumps()
+{
+	struct rlimit rlim = { 0 };
+
+	if (getrlimit(RLIMIT_CORE, &rlim) == 0) {
+		rlim.rlim_cur = 0;
+		rlim.rlim_max = 0;
+		if (setrlimit(RLIMIT_CORE, &rlim) == 0)
+			debug("Core dumps are now forbidden");
+	}
+}
+#endif
+
 #if defined(WIN32) && defined(TOAST_NOTIFICATIONS)
 static void
 toast_notifications_init()
@@ -728,14 +743,7 @@ main(int argc, char *argv[])
 	ftp_init();
 
 #if defined(UNIX) && defined(NDEBUG)
-	struct rlimit rlim = { 0 };
-
-	if (getrlimit(RLIMIT_CORE, &rlim) == 0) {
-		rlim.rlim_cur = 0;
-		rlim.rlim_max = 0;
-		if (setrlimit(RLIMIT_CORE, &rlim) == 0)
-			debug("Core dumps are now forbidden");
-	}
+	forbid_core_dumps();
 #else
 #pragma message("Omitted code to forbid core dumps")
 #endif
