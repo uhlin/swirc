@@ -482,7 +482,8 @@ maintain_channel_stats(const char *channel, const char *input)
 			chg_status_for_owner(pm_state, nicks[ar_i++], channel);
 			break;
 		case 'a':
-			chg_status_for_superop(pm_state, nicks[ar_i++], channel);
+			chg_status_for_superop(pm_state, nicks[ar_i++],
+			    channel);
 			break;
 		case 'o':
 			chg_status_for_op(pm_state, nicks[ar_i++], channel);
