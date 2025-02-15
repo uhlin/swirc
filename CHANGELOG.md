@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Did code improvements:
+  - Atomic vars.
   - Null checks.
   - Refactoring.
   - Usage of `auto` for iterators.
