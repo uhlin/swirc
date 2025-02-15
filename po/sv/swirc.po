@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-02-08 15:52+0100\n"
+"POT-Creation-Date: 2025-02-15 20:09+0100\n"
 "PO-Revision-Date: 2025-01-23 06:25+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -1771,38 +1771,38 @@ msgstr "    -v, --version        Visa Swirc version\n"
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsfil\n"
 
-#: ../src/main.cpp:171
+#: ../src/main.cpp:228
 msgid "Unhandled exception!"
 msgstr "Ohanterat undantag!"
 
-#: ../src/main.cpp:231
+#: ../src/main.cpp:288
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Användning: %s [FLAGGA] ...\n"
 
-#: ../src/main.cpp:321
+#: ../src/main.cpp:378
 msgid "forbidden channel name characters"
 msgstr "förbjudna kanalnamnstecken"
 
-#: ../src/main.cpp:473
+#: ../src/main.cpp:530
 #, c-format
 msgid "%s: -%c: unrecognized option"
 msgstr "%s: -%c: okänt alternativ"
 
-#: ../src/main.cpp:478
+#: ../src/main.cpp:535
 #, c-format
 msgid "%s: -%c: option argument missing"
 msgstr "%s: -%c: alternativargument saknas"
 
-#: ../src/main.cpp:629
+#: ../src/main.cpp:701
 msgid "fatal: failed to initialize signal handling"
 msgstr "fatal: misslyckades med att initiera signalhantering"
 
-#: ../src/main.cpp:651
+#: ../src/main.cpp:723
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr "fatal: att köra programmet med root privilegier är förbjudet"
 
-#: ../src/main.cpp:677
+#: ../src/main.cpp:745
 msgid "Initialization of the Curses library not possible"
 msgstr "Initiering av Curses biblioteket är inte möjlig"
 
@@ -2013,20 +2013,20 @@ msgstr "Avslutad"
 msgid "%s: %s not found"
 msgstr "%s: %s hittades inte"
 
-#: ../src/spell.cpp:313
+#: ../src/spell.cpp:309
 msgid "no more suggestions"
 msgstr "inga fler förslag"
 
-#: ../src/spell.cpp:342
+#: ../src/spell.cpp:336
 msgid "suggestions:"
 msgstr "förslag:"
 
-#: ../src/spell.cpp:370
+#: ../src/spell.cpp:364
 #, c-format
 msgid "%ls is correct"
 msgstr "%ls är korrekt"
 
-#: ../src/spell.cpp:375
+#: ../src/spell.cpp:369
 #, c-format
 msgid "%ls is incorrect"
 msgstr "%ls är felaktigt"

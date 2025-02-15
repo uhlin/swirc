@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-02-08 15:52+0100\n"
+"POT-Creation-Date: 2025-02-15 20:09+0100\n"
 "PO-Revision-Date: 2025-01-25 09:04+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -1633,38 +1633,38 @@ msgstr "    -v, --version        Affiche la version de Swirc\n"
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Fichier de configuration\n"
 
-#: ../src/main.cpp:171
+#: ../src/main.cpp:228
 msgid "Unhandled exception!"
 msgstr ""
 
-#: ../src/main.cpp:231
+#: ../src/main.cpp:288
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Usage: %s [OPTION] ...\n"
 
-#: ../src/main.cpp:321
+#: ../src/main.cpp:378
 msgid "forbidden channel name characters"
 msgstr ""
 
-#: ../src/main.cpp:473
+#: ../src/main.cpp:530
 #, c-format
 msgid "%s: -%c: unrecognized option"
 msgstr ""
 
-#: ../src/main.cpp:478
+#: ../src/main.cpp:535
 #, c-format
 msgid "%s: -%c: option argument missing"
 msgstr ""
 
-#: ../src/main.cpp:629
+#: ../src/main.cpp:701
 msgid "fatal: failed to initialize signal handling"
 msgstr ""
 
-#: ../src/main.cpp:651
+#: ../src/main.cpp:723
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr ""
 
-#: ../src/main.cpp:677
+#: ../src/main.cpp:745
 msgid "Initialization of the Curses library not possible"
 msgstr ""
 
@@ -1872,20 +1872,20 @@ msgstr "Complété"
 msgid "%s: %s not found"
 msgstr "%s: %s non trouvé"
 
-#: ../src/spell.cpp:313
+#: ../src/spell.cpp:309
 msgid "no more suggestions"
 msgstr "plus aucune suggestion"
 
-#: ../src/spell.cpp:342
+#: ../src/spell.cpp:336
 msgid "suggestions:"
 msgstr "suggestions:"
 
-#: ../src/spell.cpp:370
+#: ../src/spell.cpp:364
 #, c-format
 msgid "%ls is correct"
 msgstr "%ls est correct"
 
-#: ../src/spell.cpp:375
+#: ../src/spell.cpp:369
 #, c-format
 msgid "%ls is incorrect"
 msgstr "%ls est incorrect"
