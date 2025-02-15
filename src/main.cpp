@@ -217,6 +217,8 @@ W32_have_libintl()
 	else
 		g_ca_file = sw_strdup(PEM_FILE);
 	free(str);
+	if (pgm)
+		debug("_get_pgmptr: \"%s\"", pgm);
 }
 #endif
 
