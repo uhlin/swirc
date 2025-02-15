@@ -1,7 +1,7 @@
 #ifndef SRC_INCLUDE_COMMON_H_
 #define SRC_INCLUDE_COMMON_H_
 /* common.h
-   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -119,9 +119,10 @@ typedef long int ssize_t;
 #include <stddef.h>
 #include <stdlib.h>
 
-#ifdef __NetBSD__
 #include <wchar.h>
-#endif
+
+typedef wchar_t *WSTRING;
+typedef const wchar_t *CWSTRING;
 
 #if defined(__cplusplus) && __cplusplus >= 201103L
 template <typename T, size_t N>
