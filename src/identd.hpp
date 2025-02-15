@@ -62,6 +62,7 @@
 #endif
 
 #include "assertAPI.h"
+#include "atomicops.h"
 
 #if defined(UNIX) && !defined(_SOCKET_DEFINED)
 #define _SOCKET_DEFINED 1
@@ -141,8 +142,8 @@ private:
 namespace identd
 {
 	extern char		 fakename[FAKENAME_LEN];
-	extern volatile bool	 listening;
-	extern volatile bool	 loop;
+	extern _Atomic(bool)	 listening;
+	extern _Atomic(bool)	 loop;
 	extern const char	*name;
 	extern SOCKET		 sock;
 
