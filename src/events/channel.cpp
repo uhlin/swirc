@@ -1,5 +1,5 @@
 /* Channel related events
-   Copyright (C) 2015-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -84,16 +84,17 @@ event_chan_hp(struct irc_message_compo *compo)
 		/* unused */
 		(void) strtok_r(compo->params, "\n", &state);
 
-		if ((channel = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((channel = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("unable to get channel");
-		else if ((homepage = strtok_r(NULL, "\n", &state)) == NULL)
+		else if ((homepage = strtok_r(nullptr, "\n", &state)) ==
+		    nullptr)
 			throw std::runtime_error("unable to get homepage");
 		else if (*homepage == ':')
 			homepage++;
 
-		printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
+		printtext_context_init(&ctx, nullptr, TYPE_SPEC1, true);
 
-		if ((ctx.window = window_by_label(channel)) == NULL)
+		if ((ctx.window = window_by_label(channel)) == nullptr)
 			throw std::runtime_error("window lookup error");
 
 		printtext(&ctx, _("Homepage for %s%s%s%c%s: %s"),
@@ -121,15 +122,15 @@ static void
 join_perform_some_tasks(CSTRING channel, CSTRING nick, CSTRING account,
     CSTRING rl_name)
 {
-	PNAMES n = NULL;
+	PNAMES n = nullptr;
 
-	if (account != NULL && *account == ':')
+	if (account != nullptr && *account == ':')
 		account++;
-	if (rl_name != NULL && *rl_name == ':')
+	if (rl_name != nullptr && *rl_name == ':')
 		rl_name++;
 
 	if (!is_irc_channel(channel) ||
-	    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL) {
+	    strpbrk(channel + 1, g_forbidden_chan_name_chars) != nullptr) {
 		throw std::runtime_error("bogus irc channel");
 	} else if (strings_match_ignore_case(nick, g_my_nickname)) {
 		if (spawn_chat_window(channel, "No title.") != 0)
@@ -137,8 +138,8 @@ join_perform_some_tasks(CSTRING channel, CSTRING nick, CSTRING account,
 		auto_op(channel, nick);
 	} else if (event_names_htbl_insert(nick, channel) != OK) {
 		throw std::runtime_error("unable to add user to channel list");
-	} else if (account != NULL && rl_name != NULL &&
-	    (n = event_names_htbl_lookup(nick, channel)) != NULL) {
+	} else if (account != nullptr && rl_name != nullptr &&
+	    (n = event_names_htbl_lookup(nick, channel)) != nullptr) {
 		free(n->account);
 		free(n->rl_name);
 		n->account = sw_strdup(account);
@@ -150,10 +151,10 @@ static void
 chk_split(CSTRING nick, CSTRING channel, netsplit *&split)
 {
 	if (!netsplit_db_empty() &&
-	    (split = netsplit_find(nick, channel)) != NULL) {
+	    (split = netsplit_find(nick, channel)) != nullptr) {
 		if (split->remove_nick(nick)) {
 			if (!split->join_begun())
-				split->set_join_time(time(NULL));
+				split->set_join_time(time(nullptr));
 		} else {
 			throw std::runtime_error("failed to remove nick from "
 			    "split");
@@ -175,35 +176,35 @@ event_join(struct irc_message_compo *compo)
 	try {
 		CSTRING		 channel, account, rl_name;
 		CSTRING		 nick, user, host;
-		STRING		 prefix = NULL;
+		STRING		 prefix = nullptr;
 		STRING		 state[2];
-		netsplit	*split = NULL;
+		netsplit	*split = nullptr;
 
-		if (compo == NULL)
+		if (compo == nullptr)
 			throw std::runtime_error("no components");
-		else if (compo->prefix == NULL)
+		else if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix");
 
-		channel = account = rl_name = NULL;
+		channel = account = rl_name = nullptr;
 		prefix = &compo->prefix[1];
 		state[0] = state[1] = const_cast<STRING>("");
 
-		if ((nick = strtok_r(prefix, "!@", &state[0])) == NULL)
+		if ((nick = strtok_r(prefix, "!@", &state[0])) == nullptr)
 			throw std::runtime_error("no nickname");
-		if ((user = strtok_r(NULL, "!@", &state[0])) == NULL)
+		if ((user = strtok_r(nullptr, "!@", &state[0])) == nullptr)
 			user = "<no user>";
-		if ((host = strtok_r(NULL, "!@", &state[0])) == NULL)
+		if ((host = strtok_r(nullptr, "!@", &state[0])) == nullptr)
 			host = "<no host>";
 
 		const int num = strFeed(compo->params, 2);
 
 		channel = strtok_r(compo->params, "\n", &state[1]);
-		account = strtok_r(NULL, "\n", &state[1]);
-		rl_name = strtok_r(NULL, "\n", &state[1]);
+		account = strtok_r(nullptr, "\n", &state[1]);
+		rl_name = strtok_r(nullptr, "\n", &state[1]);
 
-		if (!num && (account != NULL || rl_name != NULL))
+		if (!num && (account != nullptr || rl_name != nullptr))
 			throw std::runtime_error("too many tokens");
-		else if (channel == NULL)
+		else if (channel == nullptr)
 			throw std::runtime_error("no channel");
 		else if (*channel == ':')
 			channel++;
@@ -211,11 +212,12 @@ event_join(struct irc_message_compo *compo)
 		join_perform_some_tasks(channel, nick, account, rl_name);
 		chk_split(nick, channel, split);
 
-		if (split == NULL && config_bool("joins_parts_quits", true)) {
-			printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2,
+		if (split == nullptr &&
+		    config_bool("joins_parts_quits", true)) {
+			printtext_context_init(&ctx, nullptr, TYPE_SPEC1_SPEC2,
 			    true);
 
-			if ((ctx.window = window_by_label(channel)) == NULL)
+			if ((ctx.window = window_by_label(channel)) == nullptr)
 				throw std::runtime_error("window lookup error");
 
 			printtext(&ctx, _("%s%s%c %s%s@%s%s has joined %s%s%c"),
@@ -247,22 +249,22 @@ event_kick(struct irc_message_compo *compo)
 	try {
 		CSTRING channel, victim, reason;
 		CSTRING nick, user, host;
-		STRING prefix = NULL;
+		STRING prefix = nullptr;
 		STRING state1 = const_cast<STRING>("");
 		STRING state2 = const_cast<STRING>("");
 
-		if (compo == NULL)
+		if (compo == nullptr)
 			throw std::runtime_error("no components");
-		else if (compo->prefix == NULL)
+		else if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix");
 
 		prefix = &compo->prefix[1];
 
-		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
+		if ((nick = strtok_r(prefix, "!@", &state1)) == nullptr)
 			throw std::runtime_error("no nickname");
-		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
+		if ((user = strtok_r(nullptr, "!@", &state1)) == nullptr)
 			user = "<no user>";
-		if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
+		if ((host = strtok_r(nullptr, "!@", &state1)) == nullptr)
 			host = "<no host>";
 
 		UNUSED_VAR(user);
@@ -270,13 +272,14 @@ event_kick(struct irc_message_compo *compo)
 
 		(void) strFeed(compo->params, 2);
 
-		if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL)
+		if ((channel = strtok_r(compo->params, "\n", &state2)) ==
+		    nullptr)
 			throw std::runtime_error("no channel");
-		else if ((victim = strtok_r(NULL, "\n", &state2)) == NULL)
+		else if ((victim = strtok_r(nullptr, "\n", &state2)) == nullptr)
 			throw std::runtime_error("no victim");
 
-		const bool has_reason = ((reason = strtok_r(NULL, "\n",
-		    &state2)) != NULL);
+		const bool has_reason = ((reason = strtok_r(nullptr, "\n",
+		    &state2)) != nullptr);
 		if (has_reason && *reason == ':')
 			reason++;
 
@@ -296,9 +299,9 @@ event_kick(struct irc_message_compo *compo)
 			    "channel");
 		}
 
-		printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+		printtext_context_init(&ctx, nullptr, TYPE_SPEC1_SPEC2, true);
 
-		if ((ctx.window = window_by_label(channel)) == NULL)
+		if ((ctx.window = window_by_label(channel)) == nullptr)
 			ctx.window = g_active_window;
 
 		printtext(&ctx, _("%s was kicked from %s%s%c by %s%s%c %s%s%s"),
@@ -430,7 +433,7 @@ static void
 maintain_channel_stats(const char *channel, const char *input)
 {
 	char			*input_copy;
-	char			*nicks[15] = { NULL };
+	char			*nicks[15] = { nullptr };
 	char			*state = const_cast<char *>("");
 	const char		*modes = "";
 	plus_minus_state_t	 pm_state = STATE_NEITHER_PM;
@@ -440,7 +443,7 @@ maintain_channel_stats(const char *channel, const char *input)
 
 	input_copy = sw_strdup(input);
 
-	if ((modes = strtok_r(input_copy, " ", &state)) == NULL) {
+	if ((modes = strtok_r(input_copy, " ", &state)) == nullptr) {
 		err_log(EINVAL, "%s", __func__);
 		free(input_copy);
 		return;
@@ -449,7 +452,7 @@ maintain_channel_stats(const char *channel, const char *input)
 	for (nicks_assigned = 0;; nicks_assigned++) {
 		const char	*token;
 
-		if ((token = strtok_r(NULL, " ", &state)) != NULL &&
+		if ((token = strtok_r(nullptr, " ", &state)) != nullptr &&
 		    nicks_assigned < ar_sz)
 			nicks[nicks_assigned] = sw_strdup(token);
 		else
@@ -507,7 +510,7 @@ maintain_channel_stats(const char *channel, const char *input)
 	 */
 	for (char **ar_p = &nicks[0]; ar_p < &nicks[ar_sz]; ar_p++) {
 		free(*ar_p);
-		*ar_p = NULL;
+		*ar_p = nullptr;
 	}
 }
 
@@ -520,41 +523,43 @@ void
 event_mode(struct irc_message_compo *compo)
 {
 	PRINTTEXT_CONTEXT ctx;
-	char *next_token_copy = NULL;
+	char *next_token_copy = nullptr;
 
 	try {
 		char		*channel, *next_token;
-		char		*cp = NULL;
-		char		*prefix = NULL;
+		char		*cp = nullptr;
+		char		*prefix = nullptr;
 		char		*state1 = const_cast<char *>("");
 		char		*state2 = const_cast<char *>("");
 		const char	*nick, *user, *host;
 
-		if (compo->prefix == NULL)
+		if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix");
 
 		prefix = &compo->prefix[1];
 
-		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL) {
+		if ((nick = strtok_r(prefix, "!@", &state1)) == nullptr) {
 			throw std::runtime_error("unable to get nickname in "
 			    "prefix");
 		} else if (strFeed(compo->params, 1) != 1) {
 			throw std::runtime_error("strFeed");
 		}
 
-		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
+		if ((user = strtok_r(nullptr, "!@", &state1)) == nullptr)
 			user = "";
-		if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
+		if ((host = strtok_r(nullptr, "!@", &state1)) == nullptr)
 			host = "";
 		UNUSED_VAR(user);
 		UNUSED_VAR(host);
 
-		if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL ||
-		    (next_token = strtok_r(NULL, "\n", &state2)) == NULL) {
+		if ((channel = strtok_r(compo->params, "\n", &state2)) ==
+		    nullptr ||
+		    (next_token = strtok_r(nullptr, "\n", &state2)) ==
+		    nullptr) {
 			throw std::runtime_error("insufficient data");
 		} else if (*next_token == ':') {
 			next_token ++;
-		} else if ((cp = strstr(next_token, " :")) != NULL) {
+		} else if ((cp = strstr(next_token, " :")) != nullptr) {
 			*++cp = ' ';
 			(void) memmove(cp - 1, cp, strlen(cp) + 1);
 		}
@@ -576,7 +581,7 @@ event_mode(struct irc_message_compo *compo)
 			if (net_send("MODE %s", g_my_nickname) < 0)
 				throw std::runtime_error("cannot send");
 		} else if (is_irc_channel(channel) &&
-		    (ctx.window = window_by_label(channel)) != NULL) {
+		    (ctx.window = window_by_label(channel)) != nullptr) {
 			printtext(&ctx, _("mode/%s%s%s%c%s %s%s%s by %s%s%c"),
 			    LEFT_BRKT, COLOR1, channel, NORMAL, RIGHT_BRKT,
 			    LEFT_BRKT, next_token_copy, RIGHT_BRKT,
@@ -604,7 +609,7 @@ RemoveAndInsertNick(const char *old_nick, const char *new_nick,
 	bool		is_owner, is_superop, is_op, is_halfop, is_voice;
 	std::string	array[2];
 
-	if ((p = event_names_htbl_lookup(old_nick, label)) == NULL)
+	if ((p = event_names_htbl_lookup(old_nick, label)) == nullptr)
 		return ERR; /* non-fatal: old_nick not found on channel */
 
 	array[0].assign(p->account ? p->account : "<no account>");
@@ -622,7 +627,7 @@ RemoveAndInsertNick(const char *old_nick, const char *new_nick,
 	} else if (event_names_htbl_insert(new_nick, label) != OK) {
 		err_log(0, "%s: event_names_htbl_insert", __func__);
 		return ERR;
-	} else if ((p = event_names_htbl_lookup(new_nick, label)) != NULL) {
+	} else if ((p = event_names_htbl_lookup(new_nick, label)) != nullptr) {
 		free(p->account);
 		free(p->rl_name);
 		p->account = sw_strdup(array[0].c_str());
@@ -661,32 +666,32 @@ event_nick(struct irc_message_compo *compo)
 	try {
 		CSTRING new_nick;
 		CSTRING nick, user, host;
-		STRING prefix = NULL;
+		STRING prefix = nullptr;
 		STRING state = const_cast<STRING>("");
 
-		if (compo->prefix == NULL)
+		if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix");
 
 		new_nick = (*(compo->params) == ':' ? &compo->params[1] :
 		    &compo->params[0]);
 		prefix = &compo->prefix[1];
 
-		if ((nick = strtok_r(prefix, "!@", &state)) == NULL)
+		if ((nick = strtok_r(prefix, "!@", &state)) == nullptr)
 			throw std::runtime_error("no nickname");
 
-		if ((user = strtok_r(NULL, "!@", &state)) == NULL)
+		if ((user = strtok_r(nullptr, "!@", &state)) == nullptr)
 			user = "";
-		if ((host = strtok_r(NULL, "!@", &state)) == NULL)
+		if ((host = strtok_r(nullptr, "!@", &state)) == nullptr)
 			host = "";
 		UNUSED_VAR(user);
 		UNUSED_VAR(host);
 
-		printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+		printtext_context_init(&ctx, nullptr, TYPE_SPEC1_SPEC2, true);
 
 		for (int i = 1; i <= g_ntotal_windows; i++) {
 			PIRC_WINDOW	window;
 
-			if ((window = window_by_refnum(i)) != NULL &&
+			if ((window = window_by_refnum(i)) != nullptr &&
 			    is_irc_channel(window->label) &&
 			    RemoveAndInsertNick(nick, new_nick, window->label)
 			    == OK) {
@@ -719,32 +724,33 @@ event_part(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char		*prefix = NULL;
+		char		*prefix = nullptr;
 		char		*state1 = const_cast<char *>("");
 		char		*state2 = const_cast<char *>("");
 		const char	*channel, *message;
 		const char	*nick, *user, *host;
 
-		if (compo->prefix == NULL)
+		if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix!");
 
 		prefix = &compo->prefix[1];
 
-		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
+		if ((nick = strtok_r(prefix, "!@", &state1)) == nullptr)
 			throw std::runtime_error("unable to get nickname");
-		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
+		if ((user = strtok_r(nullptr, "!@", &state1)) == nullptr)
 			user = "<no user>";
-		if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
+		if ((host = strtok_r(nullptr, "!@", &state1)) == nullptr)
 			host = "<no host>";
 
 		const bool has_message = strFeed(compo->params, 1) == 1;
 
-		if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL)
+		if ((channel = strtok_r(compo->params, "\n", &state2)) ==
+		    nullptr)
 			throw std::runtime_error("unable to get channel");
 		else if (*channel == ':')
 			channel++;
 
-		message = strtok_r(NULL, "\n", &state2);
+		message = strtok_r(nullptr, "\n", &state2);
 
 		if (strings_match_ignore_case(nick, g_my_nickname)) {
 			if (destroy_chat_window(channel) != 0) {
@@ -761,14 +767,16 @@ event_part(struct irc_message_compo *compo)
 		}
 
 		if (config_bool("joins_parts_quits", true)) {
-			printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2,
+			printtext_context_init(&ctx, nullptr, TYPE_SPEC1_SPEC2,
 			    true);
 
-			if ((ctx.window = window_by_label(channel)) == NULL)
+			if ((ctx.window = window_by_label(channel)) == nullptr)
 				throw std::runtime_error("window lookup error");
-			if (!has_message || message == NULL)
+			if (!has_message || message == nullptr)
 				message = "";
-			if (has_message && message != NULL && *message == ':')
+			if (has_message &&
+			    message != nullptr &&
+			    *message == ':')
 				message++;
 
 			printtext(&ctx, _("%s%s%c %s%s@%s%s has left %s%s%c "
@@ -798,12 +806,12 @@ is_valid_server(const char *str)
 	    "abcdefghijklmnopqrstuvwxyz.0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ*";
 	static const size_t	maxlen = 255;
 
-	if (str == NULL || strings_match(str, "") ||
+	if (str == nullptr || strings_match(str, "") ||
 	    xstrnlen(str, maxlen + 1) > maxlen)
 		return false;
 
 	for (const char *cp = &str[0]; *cp != '\0'; cp++) {
-		if (strchr(serv_chars, *cp) == NULL)
+		if (strchr(serv_chars, *cp) == nullptr)
 			return false;
 		if (*cp == '.')
 			dots++;
@@ -811,7 +819,7 @@ is_valid_server(const char *str)
 
 	immutable_cp_t last = &str[strlen(str) - 1];
 
-	if (strstr(str, "..") != NULL || strstr(str, "**") != NULL)
+	if (strstr(str, "..") != nullptr || strstr(str, "**") != nullptr)
 		return false;
 	else if (*str == '.' || *str == '-')
 		return false;
@@ -833,7 +841,7 @@ is_netsplit(CSTRING msg, std::string &serv1, std::string &serv2)
 {
 	CSTRING     token[2];
 	STRING      last = const_cast<STRING>("");
-	STRING      msg_copy = NULL;
+	STRING      msg_copy = nullptr;
 
 	if (g_icb_mode ||
 	    strncmp(msg, "Quit: ", 6) == STRINGS_MATCH) {
@@ -849,8 +857,8 @@ is_netsplit(CSTRING msg, std::string &serv1, std::string &serv2)
 	msg_copy = sw_strdup(msg);
 
 	if (strFeed(msg_copy, 2) != 1 ||
-	    (token[0] = strtok_r(msg_copy, "\n", &last)) == NULL ||
-	    (token[1] = strtok_r(NULL, "\n", &last)) == NULL ||
+	    (token[0] = strtok_r(msg_copy, "\n", &last)) == nullptr ||
+	    (token[1] = strtok_r(nullptr, "\n", &last)) == nullptr ||
 	    !is_valid_server(token[0]) ||
 	    !is_valid_server(token[1])) {
 		free(msg_copy);
@@ -879,7 +887,7 @@ handle_quit(PIRC_WINDOW window, PPRINTTEXT_CONTEXT ptext_ctx,
 		struct netsplit_context ns_ctx(window->label,
 		    host[0].c_str(), host[1].c_str());
 
-		if ((split = netsplit_get_split(&ns_ctx)) == NULL) {
+		if ((split = netsplit_get_split(&ns_ctx)) == nullptr) {
 			if (netsplit_create(&ns_ctx, ctx->nick) == ERR) {
 				err_log(0, "%s: netsplit_create() error",
 				    __func__);
@@ -924,26 +932,26 @@ event_quit(struct irc_message_compo *compo)
 		STRING prefix;
 		STRING state = const_cast<STRING>("");
 
-		if (compo->prefix == NULL)
+		if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix");
 
 		message = (*(compo->params) == ':' ? &compo->params[1] :
 		    &compo->params[0]);
 		prefix = &compo->prefix[1];
 
-		if ((nick = strtok_r(prefix, "!@", &state)) == NULL)
+		if ((nick = strtok_r(prefix, "!@", &state)) == nullptr)
 			throw std::runtime_error("unable to get nickname");
-		if ((user = strtok_r(NULL, "!@", &state)) == NULL)
+		if ((user = strtok_r(nullptr, "!@", &state)) == nullptr)
 			user = "<no user>";
-		if ((host = strtok_r(NULL, "!@", &state)) == NULL)
+		if ((host = strtok_r(nullptr, "!@", &state)) == nullptr)
 			host = "<no host>";
 
-		printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+		printtext_context_init(&ctx, nullptr, TYPE_SPEC1_SPEC2, true);
 
 		for (int i = 1; i <= g_ntotal_windows; i++) {
 			PIRC_WINDOW	window;
 
-			if ((window = window_by_refnum(i)) != NULL &&
+			if ((window = window_by_refnum(i)) != nullptr &&
 			    is_irc_channel(window->label) &&
 			    event_names_htbl_remove(nick, window->label) ==
 			    OK) {
@@ -984,16 +992,16 @@ event_topic(struct irc_message_compo *compo)
 		/* unused */
 		(void) strtok_r(compo->params, "\n", &state);
 
-		if ((channel = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((channel = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("unable to get channel");
-		else if ((topic = strtok_r(NULL, "\n", &state)) == NULL)
+		else if ((topic = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("unable to get topic");
 		else if (*topic == ':')
 			topic++;
 
-		printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
+		printtext_context_init(&ctx, nullptr, TYPE_SPEC1, true);
 
-		if ((ctx.window = window_by_label(channel)) == NULL)
+		if ((ctx.window = window_by_label(channel)) == nullptr)
 			throw std::runtime_error("window lookup error");
 
 		new_window_title(channel, topic);
@@ -1018,23 +1026,23 @@ event_topic_chg(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char		*prefix = NULL;
+		char		*prefix = nullptr;
 		char		*state1 = const_cast<char *>("");
 		char		*state2 = const_cast<char *>("");
 		const char	*channel, *new_topic;
 		const char	*nick, *user, *host;
 
-		if (compo->prefix == NULL)
+		if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix");
 
 		prefix = &compo->prefix[1];
 
-		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
+		if ((nick = strtok_r(prefix, "!@", &state1)) == nullptr)
 			throw std::runtime_error("no nickname");
 
-		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
+		if ((user = strtok_r(nullptr, "!@", &state1)) == nullptr)
 			user = "";
-		if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
+		if ((host = strtok_r(nullptr, "!@", &state1)) == nullptr)
 			host = "";
 		UNUSED_VAR(user);
 		UNUSED_VAR(host);
@@ -1042,16 +1050,18 @@ event_topic_chg(struct irc_message_compo *compo)
 		if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
 
-		if ((channel = strtok_r(compo->params, "\n", &state2)) == NULL)
+		if ((channel = strtok_r(compo->params, "\n", &state2)) ==
+		    nullptr)
 			throw std::runtime_error("unable to get channel");
-		else if ((new_topic = strtok_r(NULL, "\n", &state2)) == NULL)
+		else if ((new_topic = strtok_r(nullptr, "\n", &state2)) ==
+		    nullptr)
 			throw std::runtime_error("unable to get new topic");
 		else if (*new_topic == ':')
 			new_topic++;
 
-		printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
+		printtext_context_init(&ctx, nullptr, TYPE_SPEC1, true);
 
-		if ((ctx.window = window_by_label(channel)) == NULL)
+		if ((ctx.window = window_by_label(channel)) == nullptr)
 			throw std::runtime_error("window lookup error");
 
 		new_window_title(channel, new_topic);
@@ -1076,7 +1086,7 @@ void
 event_topic_creator(struct irc_message_compo *compo)
 {
 	PRINTTEXT_CONTEXT ctx;
-	char *string_copy = NULL;
+	char *string_copy = nullptr;
 
 	try {
 		char		 tbuf[100] = { '\0' };
@@ -1092,27 +1102,29 @@ event_topic_creator(struct irc_message_compo *compo)
 		/* ignore */
 		(void) strtok_r(compo->params, "\n", &state1);
 
-		if ((channel = strtok_r(NULL, "\n", &state1)) == NULL)
+		if ((channel = strtok_r(nullptr, "\n", &state1)) == nullptr)
 			throw std::runtime_error("no channel");
-		else if ((creator = strtok_r(NULL, "\n", &state1)) == NULL)
+		else if ((creator = strtok_r(nullptr, "\n", &state1)) ==
+		    nullptr)
 			throw std::runtime_error("no creator");
-		else if ((time_str = strtok_r(NULL, "\n", &state1)) == NULL)
+		else if ((time_str = strtok_r(nullptr, "\n", &state1)) ==
+		    nullptr)
 			throw std::runtime_error("no time!");
 		else if (*time_str == ':')
 			time_str++; /* Remove leading colon */
 
-		printtext_context_init(&ctx, NULL, TYPE_SPEC1, true);
+		printtext_context_init(&ctx, nullptr, TYPE_SPEC1, true);
 
-		if ((ctx.window = window_by_label(channel)) == NULL)
+		if ((ctx.window = window_by_label(channel)) == nullptr)
 			throw std::runtime_error("window lookup error");
 		else if (!is_numeric(time_str))
 			throw std::runtime_error("expected numeric string");
 
 		const time_t timestamp = static_cast<time_t>(strtol(time_str,
-		    NULL, 10));
+		    nullptr, 10));
 
 #if defined(UNIX)
-		if (localtime_r(&timestamp, &result) == NULL)
+		if (localtime_r(&timestamp, &result) == nullptr)
 			throw std::runtime_error("localtime_r: " TM_STRUCT_MSG);
 #elif defined(WIN32)
 		if (localtime_s(&result, &timestamp) != 0)
@@ -1124,10 +1136,10 @@ event_topic_creator(struct irc_message_compo *compo)
 
 		string_copy = sw_strdup(creator);
 
-		if ((nick = strtok_r(string_copy, "!@", &state2)) == NULL) {
+		if ((nick = strtok_r(string_copy, "!@", &state2)) == nullptr) {
 			throw std::runtime_error("no nickname");
-		} else if ((user = strtok_r(NULL, "!@", &state2)) != NULL &&
-		    (host = strtok_r(NULL, "!@", &state2)) != NULL) {
+		} else if ((user = strtok_r(nullptr, "!@", &state2)) != nullptr
+		    && (host = strtok_r(nullptr, "!@", &state2)) != nullptr) {
 			printtext(&ctx, _("Topic set by %c%s%c %s%s@%s%s "
 			    "%s%s%s"),
 			    BOLD, nick, BOLD,
