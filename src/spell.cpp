@@ -104,7 +104,7 @@ suggestion::get_word(void) const
 	return (this->word);
 }
 
-const wchar_t *
+CWSTRING
 suggestion::get_wide_word(void) const
 {
 	return (this->wide_word);
@@ -175,7 +175,7 @@ spell_destroy_suggs(std::vector<sugg_ptr> *suggs)
 
 //lint -sem(get_mbs, r_null)
 static STRING
-get_mbs(const wchar_t *wcs)
+get_mbs(CWSTRING wcs)
 {
 	STRING	 out;
 	size_t	 bytes_convert, size;
@@ -194,7 +194,7 @@ get_mbs(const wchar_t *wcs)
 }
 
 std::vector<sugg_ptr> *
-spell_get_suggs(CSTRING mbs, const wchar_t *wcs)
+spell_get_suggs(CSTRING mbs, CWSTRING wcs)
 {
 	char**			 list;
 	int			 nsuggs;
@@ -261,7 +261,7 @@ spell_test1(CSTRING word)
 }
 
 void
-spell_test2(const wchar_t *word)
+spell_test2(CWSTRING word)
 {
 	std::vector<sugg_ptr> *suggs;
 
@@ -386,7 +386,7 @@ spell_word_readline(volatile struct readline_session_context *ctx)
 }
 
 bool
-spell_wide_word(const wchar_t *word)
+spell_wide_word(CWSTRING word)
 {
 	STRING	mbs;
 	bool	ret;
