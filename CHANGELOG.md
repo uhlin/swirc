@@ -1,6 +1,14 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Did code improvements:
+  - Null checks.
+  - Refactoring.
+  - Usage of `auto` for iterators.
+  - Usage of `nullptr`.
+  - `...`
+
 ## [3.5.3] - 2025-02-08 ##
 - **Added** tab completion for:
   - `/dcc`
