@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file.
   - Usage of `nullptr`.
   - `...`
 
+### Windows ###
+- Fixed `/znc JumpNetwork`.
+
 ## [3.5.3] - 2025-02-08 ##
 - **Added** tab completion for:
   - `/dcc`
