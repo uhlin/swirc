@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-02-15 20:09+0100\n"
-"PO-Revision-Date: 2025-01-25 09:04+0100\n"
+"PO-Revision-Date: 2025-02-15 20:27+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -119,35 +119,35 @@ msgstr "%sArrêté%s: %s"
 #: ../src/commands/dcc.cpp:1403
 #, c-format
 msgid "sending '%s' to %s (%.1f%c)..."
-msgstr ""
+msgstr "envoi de '%s' à %s (%.1f%c)..."
 
 #: ../src/commands/dcc.cpp:1494
 msgid "Missing certs. Not starting the DCC server. Please create them."
-msgstr ""
+msgstr "Certificats manquants. Le serveur DCC ne démarre pas. Veuillez les créer."
 
 #: ../src/commands/dcc.cpp:1601
 #, c-format
 msgid "%s: added: '%s' (%.1f%c)"
-msgstr ""
+msgstr "%s: ajouté: '%s' (%.1f%c)"
 
 #: ../src/commands/dcc.cpp:1603
 #, c-format
 msgid "%s: from: %s <%s@%s>"
-msgstr ""
+msgstr "%s: de: %s <%s@%s>"
 
 #: ../src/commands/dcc.cpp:1605
 msgid "To get the file, type:"
-msgstr ""
+msgstr "Pour obtenir le fichier, tapez:"
 
 #: ../src/commands/dcc.cpp:1856 ../src/commands/ftp.cpp:793
 #, c-format
 msgid "%s: file read error"
-msgstr ""
+msgstr "%s: erreur de lecture du fichier"
 
 #: ../src/commands/dcc.cpp:1861
 #, c-format
 msgid "%s: tls write error"
-msgstr ""
+msgstr "%s: erreur d'écriture tls"
 
 #: ../src/commands/dcc.cpp:1878
 #, c-format
