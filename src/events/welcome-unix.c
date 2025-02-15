@@ -1,4 +1,4 @@
-/* Copyright (C) 2014-2024 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2014-2025 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -7,8 +7,10 @@
 #include "../assertAPI.h"
 #include "../config.h"
 #include "../errHand.h"
+#include "../network.h"
 #include "../pthrMutex.h"
 
+#include "atomicops.h"
 #include "errno-type.h"
 #include "welcome-unix.h"
 
@@ -87,6 +89,9 @@ void
 event_welcome_signalit(void)
 {
 	errno_t ret;
+
+	if (!atomic_load_bool(&g_connection_in_progress))
+		return;
 
 	mutex_lock(&cond_mtx);
 	ret = pthread_cond_broadcast(&welcome_cond);

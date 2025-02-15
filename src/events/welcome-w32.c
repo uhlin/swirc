@@ -5,7 +5,9 @@
 #include "../config.h"
 #include "../errHand.h"
 #include "../libUtils.h"
+#include "../network.h"
 
+#include "atomicops.h"
 #include "welcome-w32.h"
 
 static HANDLE welcome_cond = NULL;
@@ -67,6 +69,8 @@ event_welcome_cond_destroy(void)
 void
 event_welcome_signalit(void)
 {
+	if (!atomic_load_bool(&g_connection_in_progress))
+		return;
 	if (welcome_cond != NULL && !SetEvent(welcome_cond))
 		err_quit("%s: SetEvent: %s", __func__, errdesc_by_last_err());
 }
