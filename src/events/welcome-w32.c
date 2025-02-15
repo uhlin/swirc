@@ -1,4 +1,4 @@
-/* Copyright (C) 2014-2022 Markus Uhlin. All rights reserved. */
+/* Copyright (C) 2014-2025 Markus Uhlin. All rights reserved. */
 
 #include "common.h"
 
@@ -8,7 +8,7 @@
 
 #include "welcome-w32.h"
 
-static HANDLE welcome_cond;
+static HANDLE welcome_cond = NULL;
 
 /* -------------------------------------------------- */
 
@@ -60,12 +60,13 @@ event_welcome_cond_destroy(void)
 	if (!CloseHandle(welcome_cond)) {
 		err_quit("%s: CloseHandle: %s", __func__,
 		    errdesc_by_last_err());
-	}
+	} else
+		welcome_cond = NULL;
 }
 
 void
 event_welcome_signalit(void)
 {
-	if (!SetEvent(welcome_cond))
+	if (welcome_cond != NULL && !SetEvent(welcome_cond))
 		err_quit("%s: SetEvent: %s", __func__, errdesc_by_last_err());
 }
