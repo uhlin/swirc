@@ -249,9 +249,8 @@ event_kick(struct irc_message_compo *compo)
 	try {
 		CSTRING channel, victim, reason;
 		CSTRING nick, user, host;
-		STRING prefix = nullptr;
-		STRING state1 = const_cast<STRING>("");
-		STRING state2 = const_cast<STRING>("");
+		STRING	prefix = nullptr;
+		STRING	state[2];
 
 		if (compo == nullptr)
 			throw std::runtime_error("no components");
@@ -259,12 +258,13 @@ event_kick(struct irc_message_compo *compo)
 			throw std::runtime_error("no prefix");
 
 		prefix = &compo->prefix[1];
+		state[0] = state[1] = const_cast<STRING>("");
 
-		if ((nick = strtok_r(prefix, "!@", &state1)) == nullptr)
+		if ((nick = strtok_r(prefix, "!@", &state[0])) == nullptr)
 			throw std::runtime_error("no nickname");
-		if ((user = strtok_r(nullptr, "!@", &state1)) == nullptr)
+		if ((user = strtok_r(nullptr, "!@", &state[0])) == nullptr)
 			user = "<no user>";
-		if ((host = strtok_r(nullptr, "!@", &state1)) == nullptr)
+		if ((host = strtok_r(nullptr, "!@", &state[0])) == nullptr)
 			host = "<no host>";
 
 		UNUSED_VAR(user);
@@ -272,14 +272,15 @@ event_kick(struct irc_message_compo *compo)
 
 		(void) strFeed(compo->params, 2);
 
-		if ((channel = strtok_r(compo->params, "\n", &state2)) ==
+		if ((channel = strtok_r(compo->params, "\n", &state[1])) ==
 		    nullptr)
 			throw std::runtime_error("no channel");
-		else if ((victim = strtok_r(nullptr, "\n", &state2)) == nullptr)
+		else if ((victim = strtok_r(nullptr, "\n", &state[1])) ==
+		    nullptr)
 			throw std::runtime_error("no victim");
 
 		const bool has_reason = ((reason = strtok_r(nullptr, "\n",
-		    &state2)) != nullptr);
+		    &state[1])) != nullptr);
 		if (has_reason && *reason == ':')
 			reason++;
 
