@@ -727,33 +727,33 @@ event_part(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char		*prefix = nullptr;
-		char		*state1 = const_cast<char *>("");
-		char		*state2 = const_cast<char *>("");
-		const char	*channel, *message;
-		const char	*nick, *user, *host;
+		CSTRING channel, message;
+		CSTRING nick, user, host;
+		STRING	prefix = nullptr;
+		STRING	state[2];
 
 		if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix!");
 
 		prefix = &compo->prefix[1];
+		state[0] = state[1] = const_cast<STRING>("");
 
-		if ((nick = strtok_r(prefix, "!@", &state1)) == nullptr)
+		if ((nick = strtok_r(prefix, "!@", &state[0])) == nullptr)
 			throw std::runtime_error("unable to get nickname");
-		if ((user = strtok_r(nullptr, "!@", &state1)) == nullptr)
+		if ((user = strtok_r(nullptr, "!@", &state[0])) == nullptr)
 			user = "<no user>";
-		if ((host = strtok_r(nullptr, "!@", &state1)) == nullptr)
+		if ((host = strtok_r(nullptr, "!@", &state[0])) == nullptr)
 			host = "<no host>";
 
 		const bool has_message = strFeed(compo->params, 1) == 1;
 
-		if ((channel = strtok_r(compo->params, "\n", &state2)) ==
+		if ((channel = strtok_r(compo->params, "\n", &state[1])) ==
 		    nullptr)
 			throw std::runtime_error("unable to get channel");
 		else if (*channel == ':')
 			channel++;
 
-		message = strtok_r(nullptr, "\n", &state2);
+		message = strtok_r(nullptr, "\n", &state[1]);
 
 		if (strings_match_ignore_case(nick, g_my_nickname)) {
 			if (destroy_chat_window(channel) != 0) {
