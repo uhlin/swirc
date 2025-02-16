@@ -524,43 +524,44 @@ maintain_channel_stats(const char *channel, const char *input)
 void
 event_mode(struct irc_message_compo *compo)
 {
-	PRINTTEXT_CONTEXT ctx;
-	char *next_token_copy = nullptr;
+	PRINTTEXT_CONTEXT	ctx;
+	STRING			next_token_copy = nullptr;
 
 	try {
-		char		*channel, *next_token;
-		char		*cp = nullptr;
-		char		*prefix = nullptr;
-		char		*state1 = const_cast<char *>("");
-		char		*state2 = const_cast<char *>("");
-		const char	*nick, *user, *host;
+		CSTRING	 channel;
+		CSTRING	 nick, user, host;
+		STRING	 next_token;
+		STRING	 prefix = nullptr;
+		STRING	 state[2];
+		char	*cp = nullptr;
 
 		if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix");
 
 		prefix = &compo->prefix[1];
+		state[0] = state[1] = const_cast<STRING>("");
 
-		if ((nick = strtok_r(prefix, "!@", &state1)) == nullptr) {
+		if ((nick = strtok_r(prefix, "!@", &state[0])) == nullptr) {
 			throw std::runtime_error("unable to get nickname in "
 			    "prefix");
 		} else if (strFeed(compo->params, 1) != 1) {
 			throw std::runtime_error("strFeed");
 		}
 
-		if ((user = strtok_r(nullptr, "!@", &state1)) == nullptr)
+		if ((user = strtok_r(nullptr, "!@", &state[0])) == nullptr)
 			user = "";
-		if ((host = strtok_r(nullptr, "!@", &state1)) == nullptr)
+		if ((host = strtok_r(nullptr, "!@", &state[0])) == nullptr)
 			host = "";
 		UNUSED_VAR(user);
 		UNUSED_VAR(host);
 
-		if ((channel = strtok_r(compo->params, "\n", &state2)) ==
+		if ((channel = strtok_r(compo->params, "\n", &state[1])) ==
 		    nullptr ||
-		    (next_token = strtok_r(nullptr, "\n", &state2)) ==
+		    (next_token = strtok_r(nullptr, "\n", &state[1])) ==
 		    nullptr) {
 			throw std::runtime_error("insufficient data");
 		} else if (*next_token == ':') {
-			next_token ++;
+			next_token++;
 		} else if ((cp = strstr(next_token, " :")) != nullptr) {
 			*++cp = ' ';
 			(void) memmove(cp - 1, cp, strlen(cp) + 1);
