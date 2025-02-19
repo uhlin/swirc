@@ -1088,29 +1088,30 @@ event_topic_chg(struct irc_message_compo *compo)
 void
 event_topic_creator(struct irc_message_compo *compo)
 {
-	PRINTTEXT_CONTEXT ctx;
-	char *string_copy = nullptr;
+	PRINTTEXT_CONTEXT	ctx;
+	STRING			string_copy = nullptr;
 
 	try {
-		char		 tbuf[100] = { '\0' };
-		char		*state1 = const_cast<char *>("");
-		char		*state2 = const_cast<char *>("");
-		const char	*channel, *creator, *time_str;
-		const char	*nick, *user, *host;
-		struct tm	 result = { 0 };
+		CSTRING		channel, creator, time_str;
+		CSTRING		nick, user, host;
+		STRING		state[2];
+		char		tbuf[100] = { '\0' };
+		struct tm	result	  = { 0 };
+
+		state[0] = state[1] = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 3) != 3)
 			throw std::runtime_error("strFeed");
 
 		/* ignore */
-		(void) strtok_r(compo->params, "\n", &state1);
+		(void) strtok_r(compo->params, "\n", &state[0]);
 
-		if ((channel = strtok_r(nullptr, "\n", &state1)) == nullptr)
+		if ((channel = strtok_r(nullptr, "\n", &state[0])) == nullptr)
 			throw std::runtime_error("no channel");
-		else if ((creator = strtok_r(nullptr, "\n", &state1)) ==
+		else if ((creator = strtok_r(nullptr, "\n", &state[0])) ==
 		    nullptr)
 			throw std::runtime_error("no creator");
-		else if ((time_str = strtok_r(nullptr, "\n", &state1)) ==
+		else if ((time_str = strtok_r(nullptr, "\n", &state[0])) ==
 		    nullptr)
 			throw std::runtime_error("no time!");
 		else if (*time_str == ':')
@@ -1139,10 +1140,12 @@ event_topic_creator(struct irc_message_compo *compo)
 
 		string_copy = sw_strdup(creator);
 
-		if ((nick = strtok_r(string_copy, "!@", &state2)) == nullptr) {
+		if ((nick = strtok_r(string_copy, "!@", &state[1])) ==
+		    nullptr) {
 			throw std::runtime_error("no nickname");
-		} else if ((user = strtok_r(nullptr, "!@", &state2)) != nullptr
-		    && (host = strtok_r(nullptr, "!@", &state2)) != nullptr) {
+		} else if ((user = strtok_r(nullptr, "!@", &state[1])) !=
+		    nullptr &&
+		    (host = strtok_r(nullptr, "!@", &state[1])) != nullptr) {
 			printtext(&ctx, _("Topic set by %c%s%c %s%s@%s%s "
 			    "%s%s%s"),
 			    BOLD, nick, BOLD,
