@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added translations.
 - Did code improvements:
   - Atomic vars.
   - Null checks.
