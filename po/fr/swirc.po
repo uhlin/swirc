@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-02-15 20:09+0100\n"
-"PO-Revision-Date: 2025-02-15 20:27+0100\n"
+"PO-Revision-Date: 2025-02-19 03:45+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -152,16 +152,16 @@ msgstr "%s: erreur d'écriture tls"
 #: ../src/commands/dcc.cpp:1878
 #, c-format
 msgid "started: %s"
-msgstr ""
+msgstr "commencé: %s"
 
 #: ../src/commands/dcc.cpp:1879
 #, c-format
 msgid "stopped: %s"
-msgstr ""
+msgstr "arrêté: %s"
 
 #: ../src/commands/dcc.cpp:1896
 msgid "read request error"
-msgstr ""
+msgstr "erreur de demande de lecture"
 
 #: ../src/commands/dcc.cpp:1903
 msgid "unable to find the send object"
