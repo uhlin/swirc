@@ -577,19 +577,19 @@ event_names(struct irc_message_compo *compo)
 	STRING names_copy = nullptr;
 
 	try {
-		PIRC_WINDOW win = nullptr;
-		STRING chan_type, channel, names;
-		STRING state1 = const_cast<STRING>("");
-		STRING state2 = const_cast<STRING>("");
+		PIRC_WINDOW	win = nullptr;
+		STRING		chan_type, channel, names;
+		STRING		state[2];
 
 		if (strFeed(compo->params, 3) != 3)
 			throw std::runtime_error("strFeed");
 
-		(void) strtok_r(compo->params, "\n", &state1); /* recipient */
+		state[0] = state[1] = const_cast<STRING>("");
+		(void) strtok_r(compo->params, "\n", &state[0]); /* recipient */
 
-		chan_type	= strtok_r(nullptr, "\n", &state1);
-		channel		= strtok_r(nullptr, "\n", &state1);
-		names		= strtok_r(nullptr, "\n", &state1);
+		chan_type	= strtok_r(nullptr, "\n", &state[0]);
+		channel		= strtok_r(nullptr, "\n", &state[0]);
+		names		= strtok_r(nullptr, "\n", &state[0]);
 
 		if (chan_type == nullptr) {
 			throw std::runtime_error("no channel type");
@@ -625,7 +625,7 @@ event_names(struct irc_message_compo *compo)
 			char	privs[6] = { '\0' };
 			size_t	ret;
 
-			if ((token = strtok_r(cp, " ", &state2)) == nullptr)
+			if ((token = strtok_r(cp, " ", &state[1])) == nullptr)
 				break;
 
 			ret = strspn(token, "~&@%+");
