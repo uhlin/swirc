@@ -932,8 +932,8 @@ event_quit(struct irc_message_compo *compo)
 	try {
 		CSTRING message;
 		CSTRING nick, user, host;
-		STRING prefix;
-		STRING state = const_cast<STRING>("");
+		STRING	prefix;
+		STRING	state = const_cast<STRING>("");
 
 		if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix");
