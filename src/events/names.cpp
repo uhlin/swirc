@@ -1,5 +1,5 @@
 /* Handle event names (353) and event EOF names (366)
-   Copyright (C) 2015-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -64,8 +64,8 @@ struct hInstall_context {
 	bool	 is_voice;
 
 	hInstall_context()
-	    : channel(NULL)
-	    , nick(NULL)
+	    : channel(nullptr)
+	    , nick(nullptr)
 	    , is_owner(false)
 	    , is_superop(false)
 	    , is_op(false)
@@ -140,7 +140,7 @@ add_match(PTEXTBUF matches, CSTRING user)
 		    user, -1)) != 0)
 			err_sys("%s", msg);
 	} else {
-		if ((errno = textBuf_ins_next(matches, NULL, user, -1)) != 0)
+		if ((errno = textBuf_ins_next(matches, nullptr, user, -1)) != 0)
 			err_sys("%s", msg);
 	}
 }
@@ -149,7 +149,7 @@ static inline bool
 already_is_in_names_hash(CSTRING nick, PIRC_WINDOW window)
 {
 	for (PNAMES names = window->names_hash[hash(nick)];
-	    names != NULL;
+	    names != nullptr;
 	    names = names->next) {
 		if (strings_match_ignore_case(nick, names->nick))
 			return true;
@@ -172,7 +172,7 @@ name_chars_ok(CSTRING name)
 	    "abcdefghijklmnopqrstuvwxyz{|}";
 
 	for (const char *cp = name; *cp != '\0'; cp++) {
-		if (strchr(chars, *cp) == NULL)
+		if (strchr(chars, *cp) == nullptr)
 			return false;
 	}
 
@@ -194,13 +194,13 @@ hInstall(const struct hInstall_context *ctx)
 	PNAMES		names;
 	unsigned int	hashval;
 
-	if (ctx == NULL || ctx->channel == NULL) {
+	if (ctx == nullptr || ctx->channel == nullptr) {
 		return ERR;
-	} else if ((window = window_by_label(ctx->channel)) == NULL) {
+	} else if ((window = window_by_label(ctx->channel)) == nullptr) {
 		debug("%s: %s: cannot find window labelled \"%s\"", __FILE__,
 		    __func__, ctx->channel);
 		return ERR;
-	} else if (ctx->nick == NULL || strings_match(ctx->nick, "")) {
+	} else if (ctx->nick == nullptr || strings_match(ctx->nick, "")) {
 		debug("%s: %s: no nickname (channel=%s)", __FILE__, __func__,
 		    ctx->channel);
 		return ERR;
@@ -218,8 +218,8 @@ hInstall(const struct hInstall_context *ctx)
 
 	names = static_cast<PNAMES>(xcalloc(sizeof *names, 1));
 	names->nick		= sw_strdup(ctx->nick);
-	names->account		= NULL;
-	names->rl_name		= NULL;
+	names->account		= nullptr;
+	names->rl_name		= nullptr;
 	names->is_owner		= ctx->is_owner;
 	names->is_superop	= ctx->is_superop;
 	names->is_op		= ctx->is_op;
@@ -251,7 +251,7 @@ hUndef(PIRC_WINDOW window, PNAMES entry)
 {
 	PNAMES *indirect;
 
-	if (window == NULL || entry == NULL || entry->nick == NULL ||
+	if (window == nullptr || entry == nullptr || entry->nick == nullptr ||
 	    strings_match(entry->nick, ""))
 		return;
 
@@ -353,7 +353,7 @@ cmd_stats(CSTRING data)
 	if (strings_match(data, "")) {
 		if (!is_irc_channel(ACTWINLABEL))
 			printtext_print("err", "%s: not an irc channel", cmd);
-		else if ((win = window_by_label(ACTWINLABEL)) == NULL)
+		else if ((win = window_by_label(ACTWINLABEL)) == nullptr)
 			printtext_print("err", "%s: no such channel", cmd);
 		else {
 			printtext_context_init(&ptext_ctx, win, TYPE_SPEC3,
@@ -363,7 +363,7 @@ cmd_stats(CSTRING data)
 	} else {
 		if (!is_irc_channel(data))
 			printtext_print("err", "%s: bogus irc channel", cmd);
-		else if ((win = window_by_label(data)) == NULL)
+		else if ((win = window_by_label(data)) == nullptr)
 			printtext_print("err", "%s: no such channel", cmd);
 		else {
 			printtext_context_init(&ptext_ctx, g_active_window,
@@ -380,15 +380,15 @@ get_list_of_matching_channel_users(CSTRING chan, CSTRING search_var)
 	PTEXTBUF	matches;
 	size_t		varlen;
 
-	if ((window = window_by_label(chan)) == NULL)
-		return NULL;
+	if ((window = window_by_label(chan)) == nullptr)
+		return nullptr;
 
 	matches = textBuf_new();
 	varlen = strlen(search_var);
 
 	for (size_t n = 0; n < ARRAY_SIZE(window->names_hash); n++) {
 		for (PNAMES names = window->names_hash[n];
-		    names != NULL;
+		    names != nullptr;
 		    names = names->next) {
 			if (!strncmp(search_var, names->nick, varlen))
 				add_match(matches, names->nick);
@@ -397,7 +397,7 @@ get_list_of_matching_channel_users(CSTRING chan, CSTRING search_var)
 
 	if (textBuf_size(matches) == 0) {
 		textBuf_destroy(matches);
-		return NULL;
+		return nullptr;
 	}
 
 	return matches;
@@ -427,24 +427,24 @@ event_names_htbl_lookup(CSTRING nick, CSTRING channel)
 	PIRC_WINDOW	window;
 	PNAMES		names;
 
-	if (nick == NULL || strings_match(nick, "") ||
-	    (window = window_by_label(channel)) == NULL)
-		return NULL;
+	if (nick == nullptr || strings_match(nick, "") ||
+	    (window = window_by_label(channel)) == nullptr)
+		return nullptr;
 
 	for (names = window->names_hash[hash(nick)];
-	    names != NULL;
+	    names != nullptr;
 	    names = names->next) {
 		if (strings_match_ignore_case(nick, names->nick))
 			return names;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 int
 event_names_htbl_insert(CSTRING nick, CSTRING channel)
 {
-	if (nick == NULL || strings_match(nick, ""))
+	if (nick == nullptr || strings_match(nick, ""))
 		return ERR;
 
 	struct hInstall_context ctx; /* calls constructor */
@@ -465,12 +465,12 @@ event_names_htbl_remove(CSTRING nick, CSTRING channel)
 	PIRC_WINDOW	window;
 	PNAMES		names;
 
-	if (nick == NULL || strings_match(nick, "") ||
-	    (window = window_by_label(channel)) == NULL)
+	if (nick == nullptr || strings_match(nick, "") ||
+	    (window = window_by_label(channel)) == nullptr)
 		return ERR;
 
 	for (names = window->names_hash[hash(nick)];
-	    names != NULL;
+	    names != nullptr;
 	    names = names->next) {
 		if (strings_match_ignore_case(nick, names->nick)) {
 			hUndef(window, names);
@@ -497,7 +497,7 @@ event_eof_names(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT ptext_ctx;
 
 	try {
-		PIRC_WINDOW win = NULL;
+		PIRC_WINDOW win = nullptr;
 		STRING channel, eof_msg;
 		STRING state = const_cast<STRING>("");
 
@@ -506,15 +506,15 @@ event_eof_names(struct irc_message_compo *compo)
 
 		(void) strtok_r(compo->params, "\n", &state);
 
-		channel = strtok_r(NULL, "\n", &state);
-		eof_msg = strtok_r(NULL, "\n", &state);
+		channel = strtok_r(nullptr, "\n", &state);
+		eof_msg = strtok_r(nullptr, "\n", &state);
 
-		if (channel == NULL) {
+		if (channel == nullptr) {
 			throw std::runtime_error("null channel");
 		} else if (!is_irc_channel(channel) || strpbrk(channel + 1,
-		    g_forbidden_chan_name_chars) != NULL) {
+		    g_forbidden_chan_name_chars) != nullptr) {
 			throw std::runtime_error("invalid channel");
-		} else if (eof_msg == NULL) {
+		} else if (eof_msg == nullptr) {
 			throw std::runtime_error("null message");
 		} else if (!strings_match_ignore_case(channel, names_channel)) {
 			throw std::runtime_error("unable to parse names of two "
@@ -523,7 +523,7 @@ event_eof_names(struct irc_message_compo *compo)
 			BZERO(names_channel, sizeof names_channel);
 		}
 
-		if ((win = window_by_label(channel)) == NULL) {
+		if ((win = window_by_label(channel)) == nullptr) {
 			throw std::runtime_error("window lookup error");
 		} else if (win->received_names) {
 			err_log(0, "warning: server sent event 366 "
@@ -574,10 +574,10 @@ event_eof_names(struct irc_message_compo *compo)
 void
 event_names(struct irc_message_compo *compo)
 {
-	STRING names_copy = NULL;
+	STRING names_copy = nullptr;
 
 	try {
-		PIRC_WINDOW win = NULL;
+		PIRC_WINDOW win = nullptr;
 		STRING chan_type, channel, names;
 		STRING state1 = const_cast<STRING>("");
 		STRING state2 = const_cast<STRING>("");
@@ -587,18 +587,18 @@ event_names(struct irc_message_compo *compo)
 
 		(void) strtok_r(compo->params, "\n", &state1); /* recipient */
 
-		chan_type	= strtok_r(NULL, "\n", &state1);
-		channel		= strtok_r(NULL, "\n", &state1);
-		names		= strtok_r(NULL, "\n", &state1);
+		chan_type	= strtok_r(nullptr, "\n", &state1);
+		channel		= strtok_r(nullptr, "\n", &state1);
+		names		= strtok_r(nullptr, "\n", &state1);
 
-		if (chan_type == NULL) {
+		if (chan_type == nullptr) {
 			throw std::runtime_error("no channel type");
-		} else if (channel == NULL) {
+		} else if (channel == nullptr) {
 			throw std::runtime_error("no channel");
 		} else if (!is_irc_channel(channel) || strpbrk(channel + 1,
-		    g_forbidden_chan_name_chars) != NULL) {
+		    g_forbidden_chan_name_chars) != nullptr) {
 			throw std::runtime_error("invalid channel");
-		} else if (names == NULL) {
+		} else if (names == nullptr) {
 			throw std::runtime_error("no names");
 		} else if (strings_match(names_channel, "") &&
 		    sw_strcpy(names_channel, channel, ARRAY_SIZE(names_channel))
@@ -608,7 +608,7 @@ event_names(struct irc_message_compo *compo)
 		} else if (!strings_match_ignore_case(names_channel, channel)) {
 			throw std::runtime_error("unable to parse names of two "
 			    "(or more) channels simultaneously");
-		} else if ((win = window_by_label(channel)) == NULL) {
+		} else if ((win = window_by_label(channel)) == nullptr) {
 			throw std::runtime_error("window lookup error");
 		} else if (win->received_names) {
 			err_log(0, "warning: server sent event 353 "
@@ -620,12 +620,12 @@ event_names(struct irc_message_compo *compo)
 			    &names[0]);
 		}
 
-		for (char *cp = &names_copy[0];; cp = NULL) {
+		for (char *cp = &names_copy[0];; cp = nullptr) {
 			STRING	token, nick;
 			char	privs[6] = { '\0' };
 			size_t	ret;
 
-			if ((token = strtok_r(cp, " ", &state2)) == NULL)
+			if ((token = strtok_r(cp, " ", &state2)) == nullptr)
 				break;
 
 			ret = strspn(token, "~&@%+");
@@ -675,12 +675,12 @@ event_names_htbl_remove_all(PIRC_WINDOW window)
 	PNAMES *entry_p;
 	PNAMES p, tmp;
 
-	if (window == NULL || !is_irc_channel(window->label))
+	if (window == nullptr || !is_irc_channel(window->label))
 		return;
 	for (entry_p = &window->names_hash[0];
 	    entry_p < &window->names_hash[NAMES_HASH_TABLE_SIZE];
 	    entry_p++) {
-		for (p = *entry_p; p != NULL; p = tmp) {
+		for (p = *entry_p; p != nullptr; p = tmp) {
 			tmp = p->next;
 			hUndef(window, p);
 		}
