@@ -1029,23 +1029,23 @@ event_topic_chg(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char		*prefix = nullptr;
-		char		*state1 = const_cast<char *>("");
-		char		*state2 = const_cast<char *>("");
-		const char	*channel, *new_topic;
-		const char	*nick, *user, *host;
+		CSTRING channel, new_topic;
+		CSTRING nick, user, host;
+		STRING	prefix = nullptr;
+		STRING	state[2];
 
 		if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix");
 
 		prefix = &compo->prefix[1];
+		state[0] = state[1] = const_cast<STRING>("");
 
-		if ((nick = strtok_r(prefix, "!@", &state1)) == nullptr)
+		if ((nick = strtok_r(prefix, "!@", &state[0])) == nullptr)
 			throw std::runtime_error("no nickname");
 
-		if ((user = strtok_r(nullptr, "!@", &state1)) == nullptr)
+		if ((user = strtok_r(nullptr, "!@", &state[0])) == nullptr)
 			user = "";
-		if ((host = strtok_r(nullptr, "!@", &state1)) == nullptr)
+		if ((host = strtok_r(nullptr, "!@", &state[0])) == nullptr)
 			host = "";
 		UNUSED_VAR(user);
 		UNUSED_VAR(host);
@@ -1053,10 +1053,10 @@ event_topic_chg(struct irc_message_compo *compo)
 		if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
 
-		if ((channel = strtok_r(compo->params, "\n", &state2)) ==
+		if ((channel = strtok_r(compo->params, "\n", &state[1])) ==
 		    nullptr)
 			throw std::runtime_error("unable to get channel");
-		else if ((new_topic = strtok_r(nullptr, "\n", &state2)) ==
+		else if ((new_topic = strtok_r(nullptr, "\n", &state[1])) ==
 		    nullptr)
 			throw std::runtime_error("unable to get new topic");
 		else if (*new_topic == ':')
