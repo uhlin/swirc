@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-02-15 20:09+0100\n"
+"POT-Creation-Date: 2025-02-19 04:04+0100\n"
 "PO-Revision-Date: 2025-02-19 04:03+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -123,7 +123,9 @@ msgstr "sende '%s' an %s (%.1f%c)..."
 
 #: ../src/commands/dcc.cpp:1494
 msgid "Missing certs. Not starting the DCC server. Please create them."
-msgstr "Fehlende Zertifikate. DCC Server wird nicht gestartet. Bitte erstellen Sie sie."
+msgstr ""
+"Fehlende Zertifikate. DCC Server wird nicht gestartet. Bitte erstellen Sie "
+"sie."
 
 #: ../src/commands/dcc.cpp:1601
 #, c-format
@@ -294,17 +296,17 @@ msgstr ""
 msgid "%s%s%c %s%s@%s%s has been marked as being away (%s)"
 msgstr "%s%s%c %s%s@%s%s wurde als abwesend markiert (%s)"
 
-#: ../src/events/channel.cpp:99
+#: ../src/events/channel.cpp:100
 #, c-format
 msgid "Homepage for %s%s%s%c%s: %s"
 msgstr "Startseite für %s%s%s%c%s: %s"
 
-#: ../src/events/channel.cpp:221
+#: ../src/events/channel.cpp:223
 #, c-format
 msgid "%s%s%c %s%s@%s%s has joined %s%s%c"
 msgstr "%s%s%c %s%s@%s%s ist %s%s%c beigetreten"
 
-#: ../src/events/channel.cpp:304
+#: ../src/events/channel.cpp:308
 #, c-format
 msgid "%s was kicked from %s%s%c by %s%s%c %s%s%s"
 msgstr "%s wurde aus %s%s%c geschmissen / %s%s%c %s%s%s"
@@ -312,47 +314,47 @@ msgstr "%s wurde aus %s%s%c geschmissen / %s%s%c %s%s%s"
 #.
 #. * User mode
 #.
-#: ../src/events/channel.cpp:572
+#: ../src/events/channel.cpp:580
 #, c-format
 msgid "Mode change %s%s%s for user %c%s%c"
 msgstr "Modusänderung %s%s%s für Benutzer %c%s%c"
 
-#: ../src/events/channel.cpp:580
+#: ../src/events/channel.cpp:588
 #, c-format
 msgid "mode/%s%s%s%c%s %s%s%s by %s%s%c"
 msgstr "mode/%s%s%s%c%s %s%s%s von %s%s%c"
 
-#: ../src/events/channel.cpp:695
+#: ../src/events/channel.cpp:703
 #, c-format
 msgid "%s%s%c is now known as %s %s%s%c"
 msgstr "%s%s%c heißt jetzt %s %s%s%c"
 
-#: ../src/events/channel.cpp:774
+#: ../src/events/channel.cpp:785
 #, c-format
 msgid "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s"
 msgstr "%s%s%c %s%s@%s%s hat %s%s%c verlassen %s%s%s"
 
-#: ../src/events/channel.cpp:905
+#: ../src/events/channel.cpp:916
 #, c-format
 msgid "%s%s%c %s%s@%s%s has quit %s%s%s"
 msgstr "%s%s%c %s%s@%s%s hat sich abgemeldet %s%s%s"
 
-#: ../src/events/channel.cpp:1000
+#: ../src/events/channel.cpp:1011
 #, c-format
 msgid "Topic for %s%s%s%c%s: %s"
 msgstr "Thema für %s%s%s%c%s: %s"
 
-#: ../src/events/channel.cpp:1058
+#: ../src/events/channel.cpp:1071
 #, c-format
 msgid "%c%s%c changed the topic of %c%s%c to: %s"
 msgstr "%c%s%c hat das Thema von %c%s%c geändert: %s"
 
-#: ../src/events/channel.cpp:1131
+#: ../src/events/channel.cpp:1149
 #, c-format
 msgid "Topic set by %c%s%c %s%s@%s%s %s%s%s"
 msgstr "Das Thema wurde von %c%s%c %s%s@%s%s festgelegt %s%s%s"
 
-#: ../src/events/channel.cpp:1137
+#: ../src/events/channel.cpp:1155
 #, c-format
 msgid "Topic set by %c%s%c %s%s%s"
 msgstr "Das Thema wurde von %c%s%c festgelegt %s%s%s"
