@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added lowercase `/znc` subcommands used for auto complete.
 - Added translations.
 - Changed the program set the DCC and FTP download dirs differently.
 - Did code improvements:
