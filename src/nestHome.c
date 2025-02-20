@@ -396,10 +396,17 @@ nestHome_deinit(void)
 char *
 path_to_downloads(void)
 {
+	char buf[PATH_MAX] = { '\0' };
+
 #if defined(UNIX)
-	return (NULL);
+	if (sw_strcpy(buf, path_to_home(), ARRAY_SIZE(buf)) != 0 ||
+	    sw_strcat(buf, SLASH, ARRAY_SIZE(buf)) != 0 ||
+	    sw_strcat(buf, "Downloads", ARRAY_SIZE(buf)) != 0 ||
+	    !is_directory(buf))
+		return (NULL);
+
+	return (sw_strdup(buf));
 #elif defined(WIN32)
-	char			buf[PATH_MAX] = { '\0' };
 	size_t			ret = 0;
 	static const char	var[] = "USERPROFILE";
 
