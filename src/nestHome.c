@@ -1,5 +1,5 @@
 /* Create the home directory and read its configuration files
-   Copyright (C) 2012-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -104,7 +104,15 @@ init_globals(const char *hp)
 	g_home_dir = strdup_printf("%s/.swirc", hp);
 	g_tmp_dir = strdup_printf("%s/.swirc/tmp", hp);
 	g_log_dir = strdup_printf("%s/.swirc/log", hp);
+#if __OpenBSD__
+	/*
+	 * OpenBSD uses unveil()
+	 */
 	g_dcc_download_dir = strdup_printf("%s/.swirc/downloads", hp);
+#else
+	if ((g_dcc_download_dir = path_to_downloads()) == NULL)
+		g_dcc_download_dir = strdup_printf("%s/.swirc/downloads", hp);
+#endif
 	g_dcc_upload_dir = strdup_printf("%s/.swirc/uploads", hp);
 	g_config_file = strdup_printf("%s/.swirc/swirc%s", hp,
 	    g_config_filesuffix);
