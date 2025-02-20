@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added translations.
+- Changed the program set the DCC and FTP download dirs differently.
 - Did code improvements:
   - Atomic vars.
   - Null checks.
