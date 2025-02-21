@@ -2,10 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added lowercase `/znc` subcommands used for auto complete.
-- Added translations.
-- Changed the program set the DCC and FTP download dirs differently.
-- Did code improvements:
+- **Added** lowercase `/znc` subcommands used for auto complete.
+- **Added** translations.
+- **Changed** the program set the DCC and FTP download dirs differently.
+- **Did** code improvements:
   - Atomic vars.
   - Null checks.
   - Refactoring.
@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
   - `...`
 
 ### Windows ###
-- Fixed `/znc JumpNetwork`.
+- **Fixed** `/znc JumpNetwork`.
 
 ## [3.5.3] - 2025-02-08 ##
 - **Added** tab completion for:
