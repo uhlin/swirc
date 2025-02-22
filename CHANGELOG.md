@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.5.4] - 2025-02-22 ##
 - **Added** lowercase `/znc` subcommands used for auto complete.
 - **Added** translations.
 - **Changed** the program set the DCC and FTP download dirs differently.
