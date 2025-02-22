@@ -56,10 +56,10 @@ event_liststart(struct irc_message_compo *compo)
 void
 event_list(struct irc_message_compo *compo)
 {
-	PRINTTEXT_CONTEXT	 ctx;
-	char			*channel, *num_visible, *topic;
-	char			*state = const_cast<char *>("");
-	std::string		 str("");
+	CSTRING			channel, num_visible, topic;
+	PRINTTEXT_CONTEXT	ctx;
+	STRING			state = const_cast<STRING>("");
+	std::string		str("");
 
 	if (strFeed(compo->params, 3) != 3)
 		return;
