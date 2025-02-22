@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-02-19 04:04+0100\n"
-"PO-Revision-Date: 2025-01-25 08:36+0100\n"
+"PO-Revision-Date: 2025-02-22 09:26+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -228,28 +228,28 @@ msgstr "Viestinnän päätepisteen luominen epäonnistui"
 #: ../src/commands/ftp.cpp:801
 #, c-format
 msgid "%s: bytes sent mismatch bytes read"
-msgstr ""
+msgstr "%s: lähetetyt tavut eivät täsmää luettuina"
 
 #: ../src/commands/ftp.cpp:863 ../src/commands/ftp.cpp:1245
 msgid "No control connection"
-msgstr ""
+msgstr "Ei ohjausliitäntää"
 
 #: ../src/commands/ftp.cpp:866 ../src/commands/ftp.cpp:888
 #: ../src/commands/ftp.cpp:1253
 msgid "Invalid network socket"
-msgstr ""
+msgstr "Virheellinen verkkoliitäntä"
 
 #: ../src/commands/ftp.cpp:950 ../src/commands/ftp.cpp:1036
 msgid "Blank file path"
-msgstr ""
+msgstr "Tyhjä tiedostopolku"
 
 #: ../src/commands/ftp.cpp:1249
 msgid "Already in passive mode"
-msgstr ""
+msgstr "Jo passiivisessa tilassa"
 
 #: ../src/commands/ftp.cpp:1272
 msgid "Failed to enter passive mode"
-msgstr ""
+msgstr "Passiiviseen tilaan siirtyminen epäonnistui"
 
 #: ../src/commands/theme.c:313
 #, c-format
