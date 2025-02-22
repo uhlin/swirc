@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-02-19 04:04+0100\n"
+"POT-Creation-Date: 2025-02-22 09:28+0100\n"
 "PO-Revision-Date: 2025-02-22 09:26+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -32,7 +32,7 @@ msgid "Connect using password? [Y/n]: "
 msgstr "Yhdistä salasanalla? [Y/n]: "
 
 #: ../src/commands/connect.c:219 ../src/commands/connect.c:280
-#: ../src/commands/connect.c:333 ../src/nestHome.c:194
+#: ../src/commands/connect.c:333 ../src/nestHome.c:202
 msgid "input too big"
 msgstr "käyttäjän syöte liian suuri"
 
@@ -1711,58 +1711,58 @@ msgstr ""
 msgid "%s: server time error"
 msgstr "%s: palvelinaikavirhe"
 
-#: ../src/nestHome.c:135
+#: ../src/nestHome.c:143
 #, c-format
 msgid "%s exists. However; it isn't a directory."
 msgstr "%s on olemassa. Kuitenkin; se ei ole hakemisto."
 
-#: ../src/nestHome.c:139 ../src/nestHome.c:142
+#: ../src/nestHome.c:147 ../src/nestHome.c:150
 msgid "Cannot make directory"
 msgstr "Hakemistoa ei voi tehdä"
 
-#: ../src/nestHome.c:169
+#: ../src/nestHome.c:177
 msgid "Please decrypt your SASL password..."
 msgstr "Ole hyvä ja pura SASL salasanasi salaus..."
 
-#: ../src/nestHome.c:170
+#: ../src/nestHome.c:178
 msgid "(One attempt)"
 msgstr "(Yksi yritys)"
 
-#: ../src/nestHome.c:178
+#: ../src/nestHome.c:186
 msgid "Password: "
 msgstr "Salasana: "
 
-#: ../src/nestHome.c:208
+#: ../src/nestHome.c:216
 msgid "Decryption failed"
 msgstr "Salauksen purku epäonnistui"
 
-#: ../src/nestHome.c:211
+#: ../src/nestHome.c:219
 msgid "Wrong password"
 msgstr "Väärä salasana"
 
-#: ../src/nestHome.c:222
+#: ../src/nestHome.c:230
 msgid "The password seems reasonable"
 msgstr "Salasana vaikuttaa järkevältä"
 
-#: ../src/nestHome.c:234
+#: ../src/nestHome.c:242
 msgid "Press <RETURN>"
 msgstr "Paina <RETURN>"
 
-#: ../src/nestHome.c:259 ../src/nestHome.c:270 ../src/nestHome.c:329
+#: ../src/nestHome.c:267 ../src/nestHome.c:278 ../src/nestHome.c:337
 #, c-format
 msgid "%s exists  --  but isn't a regular file."
 msgstr "%s on olemassa  --  mutta se ei ole tavallinen tiedosto."
 
-#: ../src/nestHome.c:262 ../src/nestHome.c:337
+#: ../src/nestHome.c:270 ../src/nestHome.c:345
 #, c-format
 msgid "%s no such file or directory. Exiting..."
 msgstr "%s ei tällaista tiedostoa tai hakemistoa. Poistuu..."
 
-#: ../src/nestHome.c:293
+#: ../src/nestHome.c:301
 msgid "Warning!"
 msgstr "Varoitus!"
 
-#: ../src/nestHome.c:294
+#: ../src/nestHome.c:302
 msgid ""
 "A decrypted SASL password was found in the read configuration file  --  "
 "cannot continue!"
@@ -1770,11 +1770,11 @@ msgstr ""
 "Luetusta määritystiedostosta löytyi salauksesta purettu SASL salasana  --  "
 "ei voi jatkaa!"
 
-#: ../src/nestHome.c:325
+#: ../src/nestHome.c:333
 msgid "The item 'theme' in the user configuration file holds no data. Error."
 msgstr ""
 
-#: ../src/nestHome.c:350
+#: ../src/nestHome.c:358
 msgid "Can't resolve the home path!"
 msgstr ""
 

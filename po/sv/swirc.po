@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.3\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-02-19 04:04+0100\n"
+"POT-Creation-Date: 2025-02-22 09:28+0100\n"
 "PO-Revision-Date: 2025-01-23 06:25+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -32,7 +32,7 @@ msgid "Connect using password? [Y/n]: "
 msgstr "Ansluta med lösenord? [Y/n]: "
 
 #: ../src/commands/connect.c:219 ../src/commands/connect.c:280
-#: ../src/commands/connect.c:333 ../src/nestHome.c:194
+#: ../src/commands/connect.c:333 ../src/nestHome.c:202
 msgid "input too big"
 msgstr "input för stor"
 
@@ -1811,58 +1811,58 @@ msgstr "Initiering av Curses biblioteket är inte möjlig"
 msgid "%s: server time error"
 msgstr "%s: servertidsfel"
 
-#: ../src/nestHome.c:135
+#: ../src/nestHome.c:143
 #, c-format
 msgid "%s exists. However; it isn't a directory."
 msgstr "%s finns. Dock; det är inte en katalog."
 
-#: ../src/nestHome.c:139 ../src/nestHome.c:142
+#: ../src/nestHome.c:147 ../src/nestHome.c:150
 msgid "Cannot make directory"
 msgstr "Kan inte skapa katalog"
 
-#: ../src/nestHome.c:169
+#: ../src/nestHome.c:177
 msgid "Please decrypt your SASL password..."
 msgstr "Vänligen dekryptera ditt SASL lösenord..."
 
-#: ../src/nestHome.c:170
+#: ../src/nestHome.c:178
 msgid "(One attempt)"
 msgstr "(Ett försök)"
 
-#: ../src/nestHome.c:178
+#: ../src/nestHome.c:186
 msgid "Password: "
 msgstr "Lösenord: "
 
-#: ../src/nestHome.c:208
+#: ../src/nestHome.c:216
 msgid "Decryption failed"
 msgstr "Dekrypteringen misslyckades"
 
-#: ../src/nestHome.c:211
+#: ../src/nestHome.c:219
 msgid "Wrong password"
 msgstr "Fel lösenord"
 
-#: ../src/nestHome.c:222
+#: ../src/nestHome.c:230
 msgid "The password seems reasonable"
 msgstr "Lösenordet verkar rimligt"
 
-#: ../src/nestHome.c:234
+#: ../src/nestHome.c:242
 msgid "Press <RETURN>"
 msgstr "Tryck på <RETURN>"
 
-#: ../src/nestHome.c:259 ../src/nestHome.c:270 ../src/nestHome.c:329
+#: ../src/nestHome.c:267 ../src/nestHome.c:278 ../src/nestHome.c:337
 #, c-format
 msgid "%s exists  --  but isn't a regular file."
 msgstr "%s finns  --  men är inte en vanlig fil."
 
-#: ../src/nestHome.c:262 ../src/nestHome.c:337
+#: ../src/nestHome.c:270 ../src/nestHome.c:345
 #, c-format
 msgid "%s no such file or directory. Exiting..."
 msgstr "%s ingen sådan fil eller katalog. Avslutar..."
 
-#: ../src/nestHome.c:293
+#: ../src/nestHome.c:301
 msgid "Warning!"
 msgstr "Varning!"
 
-#: ../src/nestHome.c:294
+#: ../src/nestHome.c:302
 msgid ""
 "A decrypted SASL password was found in the read configuration file  --  "
 "cannot continue!"
@@ -1870,12 +1870,12 @@ msgstr ""
 "Ett dekrypterat SASL lösenord hittades i den lästa konfigurationsfilen  --  "
 "kan inte fortsätta!"
 
-#: ../src/nestHome.c:325
+#: ../src/nestHome.c:333
 msgid "The item 'theme' in the user configuration file holds no data. Error."
 msgstr ""
 "Objektet 'theme' i användarkonfigurationsfilen innehåller inga data. Fel."
 
-#: ../src/nestHome.c:350
+#: ../src/nestHome.c:358
 msgid "Can't resolve the home path!"
 msgstr "Kan inte lösa hemvägen!"
 
