@@ -1,5 +1,5 @@
 /* event 321 (RPL_LISTSTART) and 322 (RPL_LIST)
-   Copyright (C) 2016-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -69,9 +69,9 @@ event_list(struct irc_message_compo *compo)
 	 */
 	(void) strtok_r(compo->params, "\n", &state);
 
-	if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
-	    (num_visible = strtok_r(NULL, "\n", &state)) == NULL ||
-	    (topic = strtok_r(NULL, "\n", &state)) == NULL)
+	if ((channel = strtok_r(nullptr, "\n", &state)) == nullptr ||
+	    (num_visible = strtok_r(nullptr, "\n", &state)) == nullptr ||
+	    (topic = strtok_r(nullptr, "\n", &state)) == nullptr)
 		return;
 
 	if (*topic == ':')
