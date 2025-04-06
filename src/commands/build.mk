@@ -1,4 +1,41 @@
 COMMANDS_DIR := src/commands/
+COMMANDS_SRCS = $(COMMANDS_DIR)admin.cpp\
+	$(COMMANDS_DIR)announce.cpp\
+	$(COMMANDS_DIR)ban.c\
+	$(COMMANDS_DIR)cap.cpp\
+	$(COMMANDS_DIR)cleartoasts.cpp\
+	$(COMMANDS_DIR)colormap.cpp\
+	$(COMMANDS_DIR)connect.c\
+	$(COMMANDS_DIR)ctcp.c\
+	$(COMMANDS_DIR)dcc-unix.cpp\
+	$(COMMANDS_DIR)dcc.cpp\
+	$(COMMANDS_DIR)echo.c\
+	$(COMMANDS_DIR)fetchdic.cpp\
+	$(COMMANDS_DIR)ftp-unix.cpp\
+	$(COMMANDS_DIR)ftp.cpp\
+	$(COMMANDS_DIR)ignore.cpp\
+	$(COMMANDS_DIR)info.cpp\
+	$(COMMANDS_DIR)invite.c\
+	$(COMMANDS_DIR)jp.cpp\
+	$(COMMANDS_DIR)kick.c\
+	$(COMMANDS_DIR)me.c\
+	$(COMMANDS_DIR)misc.c\
+	$(COMMANDS_DIR)msg.c\
+	$(COMMANDS_DIR)nick.c\
+	$(COMMANDS_DIR)notice.cpp\
+	$(COMMANDS_DIR)op.c\
+	$(COMMANDS_DIR)sasl-scram-sha.cpp\
+	$(COMMANDS_DIR)sasl.cpp\
+	$(COMMANDS_DIR)say.c\
+	$(COMMANDS_DIR)services.cpp\
+	$(COMMANDS_DIR)servlist.cpp\
+	$(COMMANDS_DIR)squery.cpp\
+	$(COMMANDS_DIR)theme.c\
+	$(COMMANDS_DIR)topic.c\
+	$(COMMANDS_DIR)voice.c\
+	$(COMMANDS_DIR)wholeft.cpp\
+	$(COMMANDS_DIR)znc.cpp
+
 OBJS = $(COMMANDS_DIR)admin.o\
 	$(COMMANDS_DIR)announce.o\
 	$(COMMANDS_DIR)ban.o\

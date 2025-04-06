@@ -59,6 +59,64 @@ OBJS += $(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)window.o\
 	$(SRC_DIR)x509_check_host.o
 
+SRCS = $(SRC_DIR)assertAPI.c\
+	$(SRC_DIR)b64_decode.c\
+	$(SRC_DIR)b64_encode.c\
+	$(SRC_DIR)config.cpp\
+	$(SRC_DIR)crypt.cpp\
+	$(SRC_DIR)curses-funcs.c\
+	$(SRC_DIR)cursesInit.c\
+	$(SRC_DIR)dataClassify.c\
+	$(SRC_DIR)errHand.c\
+	$(SRC_DIR)filePred.c\
+	$(SRC_DIR)get_x509_fp.cpp\
+	$(SRC_DIR)icb.c\
+	$(SRC_DIR)identd-unix.cpp\
+	$(SRC_DIR)identd.cpp\
+	$(SRC_DIR)initcolors.c\
+	$(SRC_DIR)interpreter.cpp\
+	$(SRC_DIR)io-loop.c\
+	$(SRC_DIR)irc.c\
+	$(SRC_DIR)libUtils.c\
+	$(SRC_DIR)log.c\
+	$(SRC_DIR)main.cpp\
+	$(SRC_DIR)messagetags.c\
+	$(SRC_DIR)nestHome.c\
+	$(SRC_DIR)net-unix.c\
+	$(SRC_DIR)netsplit.cpp\
+	$(SRC_DIR)network-openssl.c\
+	$(SRC_DIR)network.cpp\
+	$(SRC_DIR)nicklist.cpp\
+	$(SRC_DIR)options.c\
+	$(SRC_DIR)ossl-scripts.c\
+	$(SRC_DIR)printtext.cpp\
+	$(SRC_DIR)pthrMutex.c\
+	$(SRC_DIR)readline.c\
+	$(SRC_DIR)readlineAPI.c\
+	$(SRC_DIR)readlineTabCompletion.c\
+	$(SRC_DIR)sig-unix.c\
+	$(SRC_DIR)socks.cpp\
+	$(SRC_DIR)spell.cpp\
+	$(SRC_DIR)squeeze_text_deco.cpp\
+	$(SRC_DIR)statusbar.cpp\
+	$(SRC_DIR)strHand.c\
+	$(SRC_DIR)strcasestr.c\
+	$(SRC_DIR)strcat.c\
+	$(SRC_DIR)strcpy.c\
+	$(SRC_DIR)strdup_printf.c\
+	$(SRC_DIR)strnlen.c\
+	$(SRC_DIR)term-unix.c\
+	$(SRC_DIR)terminal.c\
+	$(SRC_DIR)textBuffer.c\
+	$(SRC_DIR)theme.c\
+	$(SRC_DIR)titlebar.c\
+	$(SRC_DIR)tls-server-unix.cpp\
+	$(SRC_DIR)tls-server.cpp\
+	$(SRC_DIR)wcscat.c\
+	$(SRC_DIR)wcscpy.c\
+	$(SRC_DIR)window.c\
+	$(SRC_DIR)x509_check_host.c
+
 $(SRC_DIR)include/swircpaths.h:
 	./gen-hdr.sh "$(PREFIX)"
 
