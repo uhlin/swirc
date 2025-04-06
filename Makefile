@@ -30,6 +30,9 @@ check: $(SRC_DIR)include/swircpaths.h $(OBJS)
 # install target
 include install.mk
 
+# clang tidy
+include tidy.mk
+
 clean:
 	$(E) "  CLEAN"
 	$(RM) $(COMMANDS_DIR)*.c.smatch
