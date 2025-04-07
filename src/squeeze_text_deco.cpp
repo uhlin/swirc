@@ -1,5 +1,5 @@
 /* squeeze_text_deco.cpp
-   Copyright (C) 2022-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -191,7 +191,7 @@ wchar_t *
 squeeze_text_deco_wide(wchar_t *buffer)
 {
 	char		 str_copy[4096] = { '\0' };
-	size_t		 buflen, newlen, num;
+	size_t		 buflen, newlen = 0, num = 0;
 	std::string	 str("");
 	std::wstring	 wstr(L"");
 
@@ -201,7 +201,6 @@ squeeze_text_deco_wide(wchar_t *buffer)
 		return buffer;
 
 	buflen = wcslen(buffer);
-	newlen = num = 0;
 
 	try {
 		(void) wstr.assign(buffer);
