@@ -174,7 +174,7 @@ textBuf_destroy(PTEXTBUF buf)
 {
 	while (textBuf_size(buf) > 0) {
 		if ((errno = textBuf_remove(buf, textBuf_tail(buf))) != 0)
-			err_sys("textBuf_destroy: textBuf_remove");
+			err_sys("%s: textBuf_remove", __func__);
 	}
 
 	free(buf);
