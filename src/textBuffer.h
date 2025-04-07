@@ -47,7 +47,7 @@ textBuf_head(const TEXTBUF *buf)
 static SW_INLINE PTEXTBUF_ELMT
 textBuf_tail(const TEXTBUF *buf)
 {
-	return (buf->tail);
+	return (buf->tail); // NOLINT: false positive
 }
 
 #endif
