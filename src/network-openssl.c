@@ -1,4 +1,4 @@
-/* Copyright (c) 2016-2024 Markus Uhlin <markus@nifty-networks.net>
+/* Copyright (c) 2016-2025 Markus Uhlin <markus@nifty-networks.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -116,7 +116,7 @@ static void
 load_x509(void)
 {
 	char		*file = NULL;
-	const char	*err_reason = "";
+	const char	*err_reason = ""; // NOLINT: dead store
 
 	if ((file = get_filepath()) == NULL) {
 		err_reason = "unable to get the file path";
@@ -198,7 +198,7 @@ int
 net_ssl_begin(void)
 {
 	PRINTTEXT_CONTEXT	 ptext_ctx;
-	const char		*err_reason = "";
+	const char		*err_reason = ""; // NOLINT: dead store
 	static const int	 VALUE_HANDSHAKE_OK = 1;
 	unsigned long int	 err_code = 0;
 
