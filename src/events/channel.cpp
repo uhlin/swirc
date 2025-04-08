@@ -436,7 +436,7 @@ maintain_channel_stats(const char *channel, const char *input)
 	char			*input_copy;
 	char			*nicks[15] = { nullptr };
 	char			*state = const_cast<char *>("");
-	const char		*modes = "";
+	const char		*modes = nullptr;
 	plus_minus_state_t	 pm_state = STATE_NEITHER_PM;
 	size_t			 ar_i = 0;
 	size_t			 nicks_assigned = 0;
