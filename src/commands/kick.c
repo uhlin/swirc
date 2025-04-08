@@ -1,5 +1,5 @@
 /* Command kick and kickban
-   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -77,10 +77,10 @@ cmd_kick(const char *data)
 void
 cmd_kickban(const char *data)
 {
-	char	*dcopy = sw_strdup(data);
-	char	*nick, *mask;
-	char	*reason = "";
-	char	*state = "";
+	char		*dcopy = sw_strdup(data);
+	char		*state = "";
+	const char	*nick = NULL, *mask = NULL;
+	const char	*reason = NULL;
 
 	if (strings_match(dcopy, "")) {
 		print_and_free("/kickban: missing arguments", dcopy);
