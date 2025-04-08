@@ -1,5 +1,5 @@
 /* commands/theme.c  --  management of themes on-the-fly
-   Copyright (C) 2017-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -140,7 +140,7 @@ url_to_file(const char *url, const char *path)
 	CURL		*curl_handle = NULL;
 	CURLcode	 ret = CURLE_OK;
 	FILE		*pagefile = NULL;
-	const char	*failed_op = "";
+	const char	*failed_op = ""; // NOLINT
 
 	errno = 0;
 
