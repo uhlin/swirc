@@ -721,7 +721,7 @@ get_sasl(const char *what, char *buf, size_t bufsize)
 		return NULL;
 	}
 
-	flags = static_cast<Stringprep_profile_flags>(0);
+	flags = static_cast<Stringprep_profile_flags>(0); // NOLINT
 
 	if ((ret = stringprep_profile(str, &sp_out, "SASLprep", flags)) ==
 	    STRINGPREP_OK && sw_strcpy(buf, sp_out, bufsize) == 0) {

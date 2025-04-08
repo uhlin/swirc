@@ -1,5 +1,5 @@
 /* ICB protocol handling
-   Copyright (C) 2019-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -215,7 +215,7 @@ deal_with_category_idle_mod(const char *data)
 	char		*group = NULL;
 	char		*nick = NULL;
 	const char	*dataptr = &data[0];
-	const char	*err_reason = "";
+	const char	*err_reason = ""; // NOLINT
 
 	if (strncmp(data, "A piano suddenly falls on ", 26) != STRINGS_MATCH) {
 		err_reason = "unexpected leading string";
@@ -374,7 +374,7 @@ deal_with_category_timeout(const char *data)
 	PNAMES		 names;
 	char		*cp;
 	char		*new_mod = NULL;
-	const char	*err_reason = "";
+	const char	*err_reason = ""; // NOLINT
 
 	new_mod = sw_strdup(data);
 
