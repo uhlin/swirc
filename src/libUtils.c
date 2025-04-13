@@ -41,7 +41,7 @@
 #include "libUtils.h"
 #include "strHand.h"
 
-#if defined(WIN32) && !defined(PATH_MAX)
+#ifndef PATH_MAX
 #define PATH_MAX 1024
 #endif
 
