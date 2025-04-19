@@ -27,11 +27,8 @@ check: $(SRC_DIR)include/swircpaths.h $(OBJS)
 	$(Q) strip --strip-symbol=main $(SRC_DIR)main.o
 	$(MAKE) -Ctests
 
-# install target
-include install.mk
-
-# clang tidy
-include tidy.mk
+include maketargets/install.mk
+include maketargets/tidy.mk
 
 clean:
 	$(E) "  CLEAN"
