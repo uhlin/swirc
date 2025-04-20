@@ -10,4 +10,4 @@ CHM_DEPS = $(HTMLHELP_DIR)about.htm\
 	$(HTMLHELP_DIR)swirc.hhp
 
 $(HTMLHELP_DIR)swirc.chm: $(CHM_DEPS)
-	hhc $(HTMLHELP_DIR)swirc.hhp
+	-hhc $(HTMLHELP_DIR)swirc.hhp
