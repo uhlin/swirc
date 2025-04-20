@@ -1,0 +1,21 @@
+body {
+	background-color: white;
+	color: black;
+	font-family: sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+	color: royalblue;
+	font-family:
+	    'Comic Sans MS',
+	    'Chalkboard SE',
+	    'Comic Neue',
+	    sans-serif;
+}
+a {
+	color: darkgoldenrod;
+	text-decoration: none;
+}
+a:hover {
+	color: darkgoldenrod;
+	text-decoration: underline;
+}

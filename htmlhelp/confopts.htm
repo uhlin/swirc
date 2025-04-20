@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="AUTHOR" content="Markus Uhlin">
+<meta name="GENERATOR" content="GNU Emacs">
+<title>Configuration options</title>
+<link rel="stylesheet" href="style.css">
+<style>
+#conf {}
+#conf td.desc {}
+#conf span.opttype {
+	color: royalblue;
+	text-decoration: underline;
+}
+.note {
+	color: red;
+	font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+<h1>Configuration options in swirc.conf</h1>
+<p>
+<span class="note">NOTE</span>
+Certain settings take effect first after program restart while others
+don't!
+</p>
+<table id="conf">
+<!-- ============== -->
+<!-- ACCOUNT NOTIFY -->
+<!-- ============== -->
+	<tr>
+		<td>
+			<strong>account_notify</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Allows a client to be notified when another client’s accountname
+changes
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =========== -->
+<!-- ACCOUNT TAG -->
+<!-- =========== -->
+	<tr>
+		<td>
+			<strong>account_tag</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Turns the IRCv3 account tag extension on/off.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- ALT NICK -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>alt_nick</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Alternative nickname.
+This nickname is used when processing a connection to a server and the
+default nickname is busy.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- AUTO OP YOURSELF -->
+<!-- ================ -->
+	<tr>
+		<td>
+			<strong>auto_op_yourself</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Automatically op yourself on channel join when you're identified as an
+IRC operator
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ==================== -->
+<!-- AWAYMSGS IN PRIVCONV -->
+<!-- ==================== -->
+	<tr>
+		<td>
+			<strong>awaymsgs_in_privconv</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Output away messages in private conversations?
+		Away messages are often displayed each time you
+		message the user who's marked as being away which can
+		be annoying if the user isn't really away, i.e. he/she
+		just forgot to unset the status.
+		This setting defaults to YES.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =========== -->
+<!-- AWAY NOTIFY -->
+<!-- =========== -->
+	<tr>
+		<td>
+			<strong>away_notify</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Allows a client to specify that it would like to be notified when
+users are marked/unmarked as away
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ===== -->
+<!-- BEEPS -->
+<!-- ===== -->
+	<tr>
+		<td>
+			<strong>beeps</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+<strong>swirc</strong> alerts the user by sending a beep in certain cases.
+However, with the help of this setting, beeps can be turned on/off.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- CHANSERV HOST -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>chanserv_host</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		ChanServ hostname
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======= -->
+<!-- CHGHOST -->
+<!-- ======= -->
+	<tr>
+		<td>
+			<strong>chghost</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Allows servers to send a notification when clients change their
+username or host (IRCv3 feature).
+Defaults to yes.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============ -->
+<!-- CIPHER SUITE -->
+<!-- ============ -->
+	<tr>
+		<td>
+			<strong>cipher_suite</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Cipher suite. Which can have one of the following values:
+			<ul>
+				<li>secure</li>
+				<li>compat</li>
+				<li>legacy</li>
+				<li>all</li>
+			</ul>
+		</td>
+	</tr>
+	<!--<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>-->
+<!-- ============= -->
+<!-- CMD HIST SIZE -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>cmd_hist_size</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Command history size.
+No more than this number of commands will be stored in the memory.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- CMD TYPE PROT -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>cmd_type_prot</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Command type protection.
+Detects up to 5 leading spaces followed by a command character
+preventing a command to be accidentally transmitted as a chat message.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================== -->
+<!-- CONNECTION TIMEOUT -->
+<!-- ================== -->
+	<tr>
+		<td>
+			<strong>connection_timeout</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Connection timeout in seconds
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========== -->
+<!-- CTCP REPLY -->
+<!-- ========== -->
+	<tr>
+		<td>
+			<strong>ctcp_reply</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Reply to CTCP requests?
+		(For example TIME and VERSION.)
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- CTCP USERINFO -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>ctcp_userinfo</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		A string to return on a CTCP userinfo request.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- === -->
+<!-- DCC -->
+<!-- === -->
+	<tr>
+		<td>
+			<strong>dcc</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Use DCC (Direct Client-to-Client)?
+		Swirc implements its own variant of DCC meaning it's
+		incompatible with other IRC clients.
+		Transport Layer Security is forced and for now the DCC
+		feature isn't available in ICB mode.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- DCC CIPHER SUITE -->
+<!-- ================ -->
+	<tr>
+		<td>
+			<strong>dcc_cipher_suite</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		DCC cipher suite.
+		Which can be:
+		<strong>secure</strong>,
+		<strong>compat</strong>,
+		<strong>legacy</strong> or
+		<strong>all</strong>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========== -->
+<!-- DCC OWN IP -->
+<!-- ========== -->
+	<tr>
+		<td>
+			<strong>dcc_own_ip</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		IPv4 address for incoming DCC connections.
+		If empty Swirc attempts to resovle the address
+		automatically.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- DCC PORT -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>dcc_port</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Port number for incoming DCC connections (1024-65535),
+		defaults to 8080.
+		Must not be blocked by a firewall.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============== -->
+<!-- DCC UPLOAD DIR -->
+<!-- ============== -->
+	<tr>
+		<td>
+			<strong>dcc_upload_dir</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Where shall Swirc look for DCC uploads?
+		If empty it defaults to <em>uploads</em> in the home
+		dir of Swirc.
+		On OpenBSD this dir is made available with read-only
+		permissions by using
+		<a href="https://man.openbsd.org/unveil.2">unveil(2)</a>.
+		However, that is done once at startup.
+		Changing it while Swirc is running will not work.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- EXTENDED JOIN -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>extended_join</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Turns the extended-join IRCv3 feature on/off.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- FTP HOST -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>ftp_host</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		FTP hostname.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- FTP PORT -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>ftp_port</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		FTP port number (1-65535).
+		Defaults to 21.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- FTP USER -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>ftp_user</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		FTP username.
+		Defaults to anonymous.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- FTP PASS -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>ftp_pass</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		FTP password.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============== -->
+<!-- FTP UPLOAD DIR -->
+<!-- ============== -->
+	<tr>
+		<td>
+			<strong>ftp_upload_dir</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		FTP upload directory.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================= -->
+<!-- HOSTNAME CHECKING -->
+<!-- ================= -->
+	<tr>
+		<td>
+			<strong>hostname_checking</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Enable or disable TLS/SSL hostname verification
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- ICONV CONVERSION -->
+<!-- ================ -->
+	<tr>
+		<td>
+			<strong>iconv_conversion</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Perform character conversion using GNU libiconv?
+If having this option set to 'on' causes troubles or if you don't need
+it, it can safely be switched off.
+Switching it off boosts the performance of the printtext module
+significantly.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ====== -->
+<!-- IDENTD -->
+<!-- ====== -->
+	<tr>
+		<td>
+			<strong>identd</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Use the built-in ident protocol daemon/server?
+It's automatically started and stopped during the connection process
+if this option is enabled.
+During the connection process to an IRC server the IRC server often
+attempts to send an ident query to port 113 on your computer.
+You might have seen something like:
+<pre>
+	*** Processing connection to irc.server.com
+	*** Looking up your hostname...
+	*** Checking Ident
+	*** No Ident response &lt;---
+	*** Found your hostname
+</pre>
+(This requires port 113 to be open, i.e. not behind a firewall.)
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- IDENTD FAKENAMES -->
+<!-- ================ -->
+	<tr>
+		<td>
+			<strong>identd_fakenames</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Respond to ident queries with fake (randomized) names?
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =========== -->
+<!-- IDENTD PORT -->
+<!-- =========== -->
+	<tr>
+		<td>
+			<strong>identd_port</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Which port shall the ident server listen on?
+In general, on Unix only root can listen on ports below 1024.
+Since you neither CAN or SHOULD run Swirc as root you should specify a
+different port using this setting and configure your firewall to
+redirect connections to port 113 to this one.
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+If you&apos;re using
+<a href="http://www.openbsd.org/">OpenBSD</a>
+and
+<a href="https://man.openbsd.org/pf.4">pf(4)</a>,
+pose that you want use port 6500 and that the name of the target
+interface is vio0.
+You could then add the following lines to your
+<a href="https://man.openbsd.org/pf.conf.5">pf.conf(5)</a>:
+			<pre>
+	pass in on vio0 inet  proto tcp from any to any port auth \
+	    rdr-to 127.0.0.1 port 6500
+	pass in on vio0 inet6 proto tcp from any to any port auth \
+	    rdr-to ::1 port 6500
+			</pre>
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- INVITE NOTIFY -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>invite_notify</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Allows a client to specify that it would like to be notified when
+users are invited to channels
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================= -->
+<!-- JOINS PARTS QUITS -->
+<!-- ================= -->
+	<tr>
+		<td>
+			<strong>joins_parts_quits</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Show JOIN/PART/QUIT events?
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================= -->
+<!-- KICK CLOSE WINDOW -->
+<!-- ================= -->
+	<tr>
+		<td>
+			<strong>kick_close_window</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+If the active user gets kicked out from a channel, should the channel
+window be terminated?
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- MAX CHAT WINDOWS -->
+<!-- ================ -->
+	<tr>
+		<td>
+			<strong>max_chat_windows</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Max chat windows that can be open simultaneously
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ===== -->
+<!-- MOUSE -->
+<!-- ===== -->
+	<tr>
+		<td>
+			<strong>mouse</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Use the mouse?
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============ -->
+<!-- MOUSE EVENTS -->
+<!-- ============ -->
+	<tr>
+		<td>
+			<strong>mouse_events</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Which mouse events shall be reported?
+		<ul>
+			<li>all</li>
+			<li>wheel (default)</li>
+		</ul>
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- NICKNAME -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>nickname</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Online nickname
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- NICKNAME ALIASES -->
+<!-- ================ -->
+	<tr>
+		<td>
+			<strong>nickname_aliases</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+A space separated list of nickname aliases which are used, in addition
+to the default nickname, to highlight a message if it matches any of
+the aliases given by this setting.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- NICKSERV HOST -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>nickserv_host</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		NickServ hostname
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- NOTIFICATIONS -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>notifications</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Turns notifications on/off.
+		Takes effect at once.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============ -->
+<!-- PART MESSAGE -->
+<!-- ============ -->
+	<tr>
+		<td>
+			<strong>part_message</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Message when leaving a channel
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========= -->
+<!-- QBOT HOST -->
+<!-- ========= -->
+	<tr>
+		<td>
+			<strong>qbot_host</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Q bot hostname.
+		The Q bot is a
+		<a href="https://www.quakenet.org/">QuakeNet</a>
+		service.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============ -->
+<!-- QUIT MESSAGE -->
+<!-- ============ -->
+	<tr>
+		<td>
+			<strong>quit_message</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Message when disconnecting from a server
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========= -->
+<!-- REAL NAME -->
+<!-- ========= -->
+	<tr>
+		<td>
+			<strong>real_name</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Specifies the real name.<br>
+		But can be set to anything.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======================= -->
+<!-- RECONNECT BACKOFF DELAY -->
+<!-- ======================= -->
+	<tr>
+		<td>
+			<strong>reconnect_backoff_delay</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		The number of seconds that should be added to each reconnect attempt
+		(0-99)
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =============== -->
+<!-- RECONNECT DELAY -->
+<!-- =============== -->
+	<tr>
+		<td>
+			<strong>reconnect_delay</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Seconds to consume before the first reconnect attempt (0-999)
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =================== -->
+<!-- RECONNECT DELAY MAX -->
+<!-- =================== -->
+	<tr>
+		<td>
+			<strong>reconnect_delay_max</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Maximum reconnect delay in seconds (0-999).
+Regardless of the other related reconnect settings.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================= -->
+<!-- RECONNECT RETRIES -->
+<!-- ================= -->
+	<tr>
+		<td>
+			<strong>reconnect_retries</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+If the IRC connection is lost, how many attempts should be performed
+to get the connection working again before giving up?
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ==== -->
+<!-- SASL -->
+<!-- ==== -->
+	<tr>
+		<td>
+			<strong>sasl</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Request SASL authentication on connection to a server?
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============== -->
+<!-- SASL MECHANISM -->
+<!-- ============== -->
+	<tr>
+		<td>
+			<strong>sasl_mechanism</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		SASL mechanism.
+		Available mechanisms are:
+			<ul>
+			<li>ECDSA-NIST256P-CHALLENGE</li>
+			<li>EXTERNAL</li>
+			<li>PLAIN</li>
+			<li>SCRAM-SHA-1</li>
+			<li>SCRAM-SHA-256</li>
+			<li>SCRAM-SHA-512</li>
+			</ul>
+		Be sure to write them in all uppercase!
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- SASL PASSWORD -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>sasl_password</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		SASL password.
+		(For mechanism PLAIN and SCRAM-SHA-256.)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+It is recommended to set this setting using the interactive sasl
+command.
+However, if the initial character is a question mark (‘?’) it
+symbolizes that the password is in plain text/unencrypted; while a
+hash mark (‘#’) symbolizes that the password is encrypted.
+The initial character must be either of them and is not interpreted as
+a part of the password.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- SASL USERNAME -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>sasl_username</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		SASL username
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========= -->
+<!-- SASL X509 -->
+<!-- ========= -->
+	<tr>
+		<td>
+			<strong>sasl_x509</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Filename for your certificate chain file.
+The file shall be located in Swirc&apos;s home dir and be in PEM
+format.
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+The certificate chain file is used for automatic NickServ
+authentication using the external SASL auth mechanism.
+		<ul>
+			<li>1-root-ca.sh (Create the root CA)</li>
+			<li>
+			4-client-cert.sh
+			(Create the client certificate and sign it with the root CA)
+			</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+After running the scripts stated above in given order you can set this
+setting to
+<em>client.pem</em>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =========== -->
+<!-- SERVER TIME -->
+<!-- =========== -->
+	<tr>
+		<td>
+			<strong>server_time</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Enable or disable IRCv3 server time extension.
+The server time extension is particularly useful if you&apos;re using an
+IRC bouncer like
+<a href="https://znc.in/">ZNC</a>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============== -->
+<!-- SHOW PING PONG -->
+<!-- ============== -->
+	<tr>
+		<td>
+			<strong>show_ping_pong</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Show ping pong events?<br>
+		The default is NO.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========= -->
+<!-- SKIP MOTD -->
+<!-- ========= -->
+	<tr>
+		<td>
+			<strong>skip_motd</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Skip message of the day (MOTD) on connection to a server?
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ===== -->
+<!-- SOCKS -->
+<!-- ===== -->
+	<tr>
+		<td>
+			<strong>socks</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Use the SOCKS proxy client?
+		The SOCKS proxy client is particularly suited for use
+		with Tor.
+		Examples of IRC networks that are accessible via Tor
+		are Libera Chat and OFTC.
+		In order to access Libera Chat or OFTC using the
+		previously mentioned technique you can add the
+		following lines to your torrc(5):
+		<pre>
+# Libera Chat
+MapAddress palladium.libera.chat libera75jm6of4wxpxt4aynol3xjmbtxgfyjpu34ss4d7r7q2v5zrpyd.onion
+
+# OFTC
+MapAddress irc.oftc.net oftcnet6xg6roj6d7id4y4cu6dchysacqj2ldgea73qzdagufflqxrid.onion
+		</pre>
+		After this has been done (and after restarting Tor)
+		you should be able to connect to one of the mapped
+		addresses inside Swirc.
+		The socks host setting should point to the machine
+		where the Tor service is running.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========== -->
+<!-- SOCKS ATYP -->
+<!-- ========== -->
+	<tr>
+		<td>
+			<strong>socks_atyp</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		SOCKS address type.
+		Which can have one of the following values:
+		<ul>
+			<li>(0) FQDN. (The default.)</li>
+			<li>(1) IPv4 address</li>
+			<li>(2) IPv6 address</li>
+		</ul>
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========== -->
+<!-- SOCKS HOST -->
+<!-- ========== -->
+	<tr>
+		<td>
+			<strong>socks_host</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		SOCKS hostname.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========== -->
+<!-- SOCKS PORT -->
+<!-- ========== -->
+	<tr>
+		<td>
+			<strong>socks_port</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		SOCKS port.
+		The default is 9050 which is used by
+		<a href="https://www.torproject.org/">Tor</a>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ===== -->
+<!-- SPELL -->
+<!-- ===== -->
+	<tr>
+		<td>
+			<strong>spell</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Use spelling?
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========== -->
+<!-- SPELL LANG -->
+<!-- ========== -->
+	<tr>
+		<td>
+			<strong>spell_lang</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Spelling language.
+		The default is <strong>en_US</strong>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============= -->
+<!-- SPELL SYSWIDE -->
+<!-- ============= -->
+	<tr>
+		<td>
+			<strong>spell_syswide</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Where shall Swirc look for spelling dictionaries?
+		(System wide or in the program settings dir.)
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =============== -->
+<!-- SSL VERIFY PEER -->
+<!-- =============== -->
+	<tr>
+		<td>
+			<strong>ssl_verify_peer</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Verify peer?
+		Setting it to NO decreases TLS/SSL security significantly, but is a
+		must on servers with trusted self signed certificates.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- STARTUP GREETING -->
+<!-- ================ -->
+	<tr>
+		<td>
+			<strong>startup_greeting</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Enable or disable Swirc startup greeting
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======================== -->
+<!-- TEXTBUFFER SIZE ABSOLUTE -->
+<!-- ======================== -->
+	<tr>
+		<td>
+			<strong>textbuffer_size_absolute</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Max number of elements in a text buffer before head gets removed from scroll back history.
+Each open window is assigned a buffer with this size, so set a sane value!
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ===== -->
+<!-- THEME -->
+<!-- ===== -->
+	<tr>
+		<td>
+			<strong>theme</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		<strong>swirc</strong> theme.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======== -->
+<!-- USERNAME -->
+<!-- ======== -->
+	<tr>
+		<td>
+			<strong>username</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		User identity.
+		Preferably to be set to the same as the nickname.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!--
+	<tr>
+		<td>
+			<strong></strong>
+			(<span class="opttype"></span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+-->
+</table> <!-- conf -->
+</body>
+</html>

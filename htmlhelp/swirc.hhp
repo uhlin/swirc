@@ -1,0 +1,20 @@
+[OPTIONS]
+Binary Index=No
+Compatibility=1.1 or later
+Compiled file=swirc.chm
+Contents file=swirc.hhc
+Default Font=Comic Sans MS,8,0
+Default topic=about.htm
+Display compile progress=Yes
+Index file=swirc.hhk
+Language=0x409 Engelska (USA)
+Title=Swirc IRC client
+
+
+[FILES]
+about.htm
+confopts.htm
+progopts.htm
+
+[INFOTYPES]
+

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="AUTHOR" content="Markus Uhlin">
+<meta name="GENERATOR" content="GNU Emacs">
+<title>Program options and keys</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<h1>Program options</h1>
+<p>
+<kbd>usage: swirc [-46?CPRSXdipv] [-W password] [-c server[:port]] [-j join] [-n nickname] [-r rl name] [-u username] [-x config]</kbd>
+</p>
+<table>
+	<tr>
+		<td><kbd>-4</kbd></td>
+		<td>Use IPv4 addresses only</td>
+	</tr>
+	<tr>
+		<td><kbd>-6</kbd></td>
+		<td>Use IPv6 addresses only</td>
+	</tr>
+	<tr>
+		<td><kbd>-?</kbd>, <kbd>--help</kbd></td>
+		<td>Output help</td>
+	</tr>
+	<tr>
+		<td><kbd>-C</kbd></td>
+		<td>
+Do not change color definitions.
+If the terminal used to run
+<strong>swirc</strong>
+supports >= 256 colors and
+<a href="https://man.openbsd.org/can_change_color.3">can_change_color(3)</a>
+is true
+<strong>swirc</strong>
+uses
+<a href="https://man.openbsd.org/init_color.3">init_color(3)</a>
+to initialize the extended IRC color palette.
+Which may or may not already be set correctly by the terminal.
+This option is useful in case the terminal look strange after exit,
+which is possible to fix by simply restarting it.
+		</td>
+	</tr>
+	<tr>
+		<td><kbd>-P</kbd></td>
+		<td>
+Permanently disable SASL authentication.
+If specified, the effect is
+<u>final</u>
+(i.e. it overrides any config file value.)
+		</td>
+	</tr>
+	<tr>
+		<td><kbd>-R</kbd></td>
+		<td>Disable TLS/SSL peer verification</td>
+	</tr>
+	<tr>
+		<td><kbd>-S</kbd></td>
+		<td>Force TLS (Transport Layer Security)</td>
+	</tr>
+	<tr>
+		<td><kbd>-W&nbsp;&lt;password&gt;</kbd></td>
+		<td>Equal effect as flag 'p' but non-interactive</td>
+	</tr>
+	<tr>
+		<td><kbd>-X</kbd></td>
+		<td>Disable all IRCv3 extensions</td>
+	</tr>
+	<tr>
+		<td><kbd>-c&nbsp;&lt;server[:port]&gt;</kbd></td>
+		<td>
+Connect to given server.
+If the port is omitted port 6667 will be chosen.
+And if the port is 7326 ICB mode is turned on automatically.
+Further, if the port is 6697 <strong>swirc</strong> attempts to
+initiate a TLS/SSL connection.
+		</td>
+	</tr>
+	<tr>
+		<td><kbd>-d</kbd></td>
+		<td>Debug logging</td>
+	</tr>
+	<tr>
+		<td><kbd>-i</kbd></td>
+		<td>Turn on Internet Citizen's Band mode</td>
+	</tr>
+	<tr>
+		<td><kbd>-j&nbsp;&lt;join&gt;</kbd></td>
+		<td>A comma-separated list of channels to join</td>
+	</tr>
+	<tr>
+		<td><kbd>-n&nbsp;&lt;nickname&gt;</kbd></td>
+		<td>Online nickname</td>
+	</tr>
+	<tr>
+		<td><kbd>-p</kbd></td>
+		<td>
+Server password (for private servers).
+However: InspIRCd has a module called password forward, which means
+that if a server password is specified by this flag, it will be used
+to identify to <em>NickServ</em>.
+If so: connect with a TLS/SSL connection, i.e. an encrypted
+connection, to prevent your password from being disclosed in clear
+text.
+<strong>swirc</strong> also supports IRCv3 SASL authentication which
+is probably a better alternative.
+		</td>
+	</tr>
+	<tr>
+		<td><kbd>-r&nbsp;&lt;rl&nbsp;name&gt;</kbd></td>
+		<td>Your real name</td>
+	</tr>
+	<tr>
+		<td><kbd>-u&nbsp;&lt;username&gt;</kbd></td>
+		<td>Your username</td>
+	</tr>
+	<tr>
+		<td><kbd>-v</kbd>, <kbd>--version</kbd></td>
+		<td>Output <strong>swirc</strong> version</td>
+	</tr>
+	<tr>
+		<td><kbd>-x&nbsp;&lt;config&gt;</kbd></td>
+		<td>Config file</td>
+	</tr>
+</table>
+<h1>Keys</h1>
+<table>
+	<tr><td><kbd><b>CTRL+a</b></kbd></td><td>Move to beginning of line</td></tr>
+	<tr><td><kbd><b>CTRL+e</b></kbd></td><td>Move to end of line</td></tr>
+	<tr><td><kbd><b>CTRL+b</b></kbd></td><td>Move cursor backward</td></tr>
+	<tr><td><kbd><b>CTRL+f</b></kbd></td><td>Move cursor forward</td></tr>
+	<tr><td><kbd><b>CTRL+d</b></kbd></td><td>Delete</td></tr>
+	<tr><td><kbd><b>CTRL+g</b></kbd></td><td>Clear readline input</td></tr>
+	<tr><td><kbd><b>CTRL+n</b></kbd></td><td>Next window</td></tr>
+	<tr><td><kbd><b>CTRL+p</b></kbd></td><td>Previous window</td></tr>
+	<tr><td><kbd><b>PG UP</b></kbd></td><td>Scroll up</td></tr>
+	<tr><td><kbd><b>PG DOWN</b></kbd></td><td>Scroll down</td></tr>
+	<tr><td><kbd><b>Up arrow</b></kbd></td><td>History previous</td></tr>
+	<tr><td><kbd><b>Down arrow</b></kbd></td><td>History next</td></tr>
+	<tr><td><kbd><b>F2</b></kbd></td><td>Spell word</td></tr>
+	<tr><td><kbd><b>F3</b></kbd></td><td>Scroll nicklist up</td></tr>
+	<tr><td><kbd><b>F4</b></kbd></td><td>Scroll nicklist down</td></tr>
+	<tr><td><kbd><b>F11</b></kbd></td><td>Close window</td></tr>
+	<tr><td><kbd><b>F12</b></kbd></td><td>Close all private conversations</td></tr>
+</table>
+<h1>Inserting text-decoration</h1>
+<table>
+	<tr><td><kbd><b>F5</b></kbd></td><td>Blink</td></tr>
+	<tr><td><kbd><b>F6</b></kbd></td><td>Bold</td></tr>
+	<tr><td><kbd><b>F7</b></kbd></td><td>Color</td></tr>
+	<tr><td><kbd><b>F8</b></kbd></td><td>Normal</td></tr>
+	<tr><td><kbd><b>F9</b></kbd></td><td>Reverse</td></tr>
+	<tr><td><kbd><b>F10</b></kbd></td><td>Underline</td></tr>
+</table>
+</body>
+</html>
