@@ -49,7 +49,7 @@ DIST_DEPS = swirc.exe\
 	"pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll"\
 	"src\trusted_roots.pem"
 
-dist: $(DIST_DEPS)
+dist: $(DIST_DEPS) $(HTMLHELP_DIR)swirc.chm
 !	if exists($(DEST))
 		rmdir /s /q $(DEST)
 !	endif
@@ -72,6 +72,7 @@ dist: $(DIST_DEPS)
 	copy "pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll" $(DEST)
 	copy "src\trusted_roots.pem" $(DEST)
 	copy "swirc.exe" $(DEST)
+	copy $(HTMLHELP_DIR)swirc.chm $(DEST)
 	copy swirc-locales-$(LOCALES_SNAP)\de\$(LOCLOC) $(DEST)\de\LC_MESSAGES
 	copy swirc-locales-$(LOCALES_SNAP)\fi\$(LOCLOC) $(DEST)\fi\LC_MESSAGES
 	copy swirc-locales-$(LOCALES_SNAP)\fr\$(LOCLOC) $(DEST)\fr\LC_MESSAGES
