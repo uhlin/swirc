@@ -6,6 +6,7 @@ tests/fuzz/out/
 
 *.c.smatch
 *.cab
+*.chm
 *.dll
 *.ico
 *.mo
