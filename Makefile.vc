@@ -26,6 +26,8 @@ all: main
 !include src/events/build.w32.mk
 !include src/build.w32.mk
 
+!include htmlhelp/build.mk
+
 main: $(TGTS)
 
 .c.obj:
