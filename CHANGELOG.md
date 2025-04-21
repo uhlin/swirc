@@ -1,6 +1,12 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Fixed a few Clang Tidy warnings.
+
+### Windows ###
+- Added a help file with documentation.
+
 ## [3.5.4] - 2025-02-22 ##
 - **Added** lowercase `/znc` subcommands used for auto complete.
 - **Added** translations.
