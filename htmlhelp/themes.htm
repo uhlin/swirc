@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="AUTHOR" content="Markus Uhlin">
+<meta name="GENERATOR" content="GNU Emacs">
+<title>Writing themes</title>
+<link rel="stylesheet" href="style.css">
+<style>
+#sets {}
+#sets td.desc {}
+#sets span.opttype {
+	color: royalblue;
+	text-decoration: underline;
+}
+.note {
+	color: red;
+	font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+<h1>Writing themes</h1>
+<p>
+This manual page is the ultimate reference to consult when writing
+themes for
+<a href="https://www.nifty-networks.net/swirc/">Swirc</a>.
+</p>
+<h2>TEXT DECORATION</h2>
+<table>
+	<tr>
+		<th>What</th>
+		<th>Hex</th>
+		<th>Octal</th>
+		<th>Appearance</th>
+	</tr>
+	<tr>
+		<td>Blink</td>
+		<td>1d</td>
+		<td>035</td>
+		<td>^]</td>
+	</tr>
+	<tr>
+		<td>Bold</td>
+		<td>02</td>
+		<td>002</td>
+		<td>^B</td>
+	</tr>
+	<tr>
+		<td>Color</td>
+		<td>03</td>
+		<td>003</td>
+		<td>^C</td>
+	</tr>
+	<tr>
+		<td>Normal</td>
+		<td>0f</td>
+		<td>017</td>
+		<td>^O</td>
+	</tr>
+	<tr>
+		<td>Reverse</td>
+		<td>16</td>
+		<td>026</td>
+		<td>^V</td>
+	</tr>
+	<tr>
+		<td>Underline</td>
+		<td>1f</td>
+		<td>037</td>
+		<td>^_</td>
+	</tr>
+</table>
+<p>Example usage:</p>
+<pre>
+	blabla ^Bbold text^B blabla
+	blabla ^Vreversed text^V blabla
+	blabla ^_underlined text^_ blabla
+</pre>
+<p>
+Always use the
+<em>literal</em>
+control characters because else it won't work!
+</p>
+<p>Blink is a no operation because it's annoying.</p>
+<h2>COLORS</h2>
+<table>
+	<tr>
+		<th>Number</th>
+		<th>Name</th>
+		<th>&nbsp;</th>
+	</tr>
+	<tr>
+		<td>00</td>
+		<td>white</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>01</td>
+		<td>black</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>02</td>
+		<td>blue</td>
+		<td>(navy)</td>
+	</tr>
+	<tr>
+		<td>03</td>
+		<td>green</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>04</td>
+		<td>red</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>05</td>
+		<td>brown</td>
+		<td>(maroon)</td>
+	</tr>
+	<tr>
+		<td>06</td>
+		<td>purple</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>07</td>
+		<td>orange</td>
+		<td>(olive)</td>
+	</tr>
+	<tr>
+		<td>08</td>
+		<td>yellow</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>09</td>
+		<td>lt.green</td>
+		<td>(lime)</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>teal</td>
+		<td>(a kinda green/blue cyan)</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>lt.cyan</td>
+		<td>(cyan ?) (aqua)</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>lt.blue</td>
+		<td>(royal)</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>pink</td>
+		<td>(light purple) (fuchsia)</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>grey</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>15</td>
+		<td>lt.grey</td>
+		<td>(silver)</td>
+	</tr>
+</table>
+<p>
+For the colors 16-99 see the output of the command
+<kbd>/colormap</kbd>.
+Enough color pairs must've been initialized.
+(193 color pairs are too few for the colors 16-99 to be used as backgrounds.)
+</p>
+<p>
+The syntax of the color attribute in text has the format
+<kbd>^CN[,M]</kbd>.
+<b>N</b> will be the text (foreground) color and <b>M</b> the background color.
+A background color (<b>M</b>) is optional and is not always included.
+</p>
+<p>
+<b>N</b> and <b>M</b> can maximally be two digits long.
+Although the colors {0,1,2,...,9} are supported you are highly
+encouraged to use {00,01,02,...,09}.
+</p>
+<p>
+A plain <kbd>^C</kbd> can be used to turn the color effect off.
+While typing
+<kbd>^O</kbd>
+will make sure ALL the text effects gets reset.
+For example:
+</p>
+<pre>
+	blabla ^C05,02red text on blue background^C blabla
+	blabla ^C09green text^O blabla
+</pre>
+<p>
+Of course settings can start with colored text and a closing
+<kbd>^C</kbd>
+is not essential.
+</p>
+<h2>SETTINGS</h2>
+<table id="sets">
+<!-- =============== -->
+<!-- TERM BACKGROUND -->
+<!-- =============== -->
+	<tr>
+		<td>
+			<strong>term_background</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Which background color (0-15) is this theme written for?
+<pre>
+	0 = white
+	1 = black
+</pre>
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================== -->
+<!-- TERM ENABLE COLORS -->
+<!-- ================== -->
+	<tr>
+		<td>
+			<strong>term_enable_colors</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Enable colors (yes/no)?
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======================= -->
+<!-- TERM USE DEFAULT COLORS -->
+<!-- ======================= -->
+	<tr>
+		<td>
+			<strong>term_use_default_colors</strong>
+			(<span class="opttype">bool</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Use terminal's default colors?
+I.e. call
+<a href="https://man.openbsd.org/use_default_colors.3">use_default_colors(3)</a>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============== -->
+<!-- COLOR3, COLOR4 -->
+<!-- ============== -->
+	<tr>
+		<td>
+			<strong>color3</strong>,
+			<strong>color4</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Colors used in uncategorized contexts.
+Must begin with <kbd>^C</kbd>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =========================== -->
+<!-- GFX FAILURE/SUCCESS/WARNING -->
+<!-- =========================== -->
+	<tr>
+		<td>
+			<strong>gfx_failure</strong>,
+			<strong>gfx_success</strong>,
+			<strong>gfx_warning</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Used in contexts where to flag failures, successes and warnings
+respectively.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================== -->
+<!-- LEFT/RIGHT BRACKET -->
+<!-- ================== -->
+	<tr>
+		<td>
+			<strong>left_bracket</strong>,
+			<strong>right_bracket</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Left and right bracket.
+		Frequently used.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========== -->
+<!-- LOGO COLOR -->
+<!-- ========== -->
+	<tr>
+		<td>
+			<strong>logo_color</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Swirc ASCII logo color displayed at startup.
+		(Must begin with <kbd>^C</kbd>.)
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========== -->
+<!-- NICK S1/S2 -->
+<!-- ========== -->
+	<tr>
+		<td>
+			<strong>nick_s1</strong>,
+			<strong>nick_s2</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		When you or another user types something the nickname
+		will be enclosed by s1 and s2.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =================== -->
+<!-- NICKLIST DECORATION -->
+<!-- =================== -->
+	<tr>
+		<td>
+			<strong>nicklist_my_nick_color</strong>,
+			<strong>nicklist_nick_color</strong>,
+			<strong>nicklist_privilege_color</strong>,
+			<strong>nicklist_vline_color</strong>
+			(<span class="opttype">int</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Nicklist decoration.
+All of these settings are of type <em>int</em> (0-99)
+thus <kbd>^C</kbd> is not needed and should not be used.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ==================== -->
+<!-- NOTICE COLOR1/COLOR2 -->
+<!-- ==================== -->
+	<tr>
+		<td>
+			<strong>notice_color1</strong>,
+			<strong>notice_color2</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Notice colors.
+		<kbd>^C</kbd> <u>should be used</u>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================ -->
+<!-- NOTICE LB/RB/SEP -->
+<!-- ================ -->
+	<tr>
+		<td>
+			<strong>notice_lb</strong>,
+			<strong>notice_rb</strong>,
+			<strong>notice_sep</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Notice left/right bracket and separator.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ================== -->
+<!-- NOTICE INNER B1/B2 -->
+<!-- ================== -->
+	<tr>
+		<td>
+			<strong>notice_inner_b1</strong>,
+			<strong>notice_inner_b2</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Notice inner bracket 1 and 2.
+		(I.e. left and right.)
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ======================= -->
+<!-- PRIMARY/SECONDARY COLOR -->
+<!-- ======================= -->
+	<tr>
+		<td>
+			<strong>primary_color</strong>,
+			<strong>secondary_color</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Primary and secondary color for the theme.
+		Frequently used.
+		(Begin with <kbd>^C</kbd>.)
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ====== -->
+<!-- SLOGAN -->
+<!-- ====== -->
+	<tr>
+		<td>
+			<strong>slogan</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Swirc slogan displayed in the statusbar.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =============== -->
+<!-- SPECIFIER 1/2/3 -->
+<!-- =============== -->
+	<tr>
+		<td>
+			<strong>specifier1</strong>,
+			<strong>specifier2</strong>,
+			<strong>specifier3</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Specifiers used in various contexts.
+		Number 1 is frequently used.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =============== -->
+<!-- STATUSBAR BG/FG -->
+<!-- =============== -->
+	<tr>
+		<td>
+			<strong>statusbar_bg</strong>,
+			<strong>statusbar_fg</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Statusbar background and foreground.
+Valid values are
+<b>black</b>,
+<b>red</b>,
+<b>green</b>,
+<b>yellow</b>,
+<b>blue</b>,
+<b>magenta</b>,
+<b>cyan</b>,
+<b>white</b>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ==================== -->
+<!-- STATUSBAR LB/RB/SPEC -->
+<!-- ==================== -->
+	<tr>
+		<td>
+			<strong>statusbar_leftBracket</strong>,
+			<strong>statusbar_rightBracket</strong>,
+			<strong>statusbar_spec</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+		Statusbar left/right bracket and specifier.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- =========== -->
+<!-- TIME FORMAT -->
+<!-- =========== -->
+	<tr>
+		<td>
+			<strong>time_format</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Time format passed to
+<a href="https://man.openbsd.org/strftime.3">strftime(3)</a>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ============== -->
+<!-- TITLEBAR BG/FG -->
+<!-- ============== -->
+	<tr>
+		<td>
+			<strong>titlebar_bg</strong>,
+			<strong>titlebar_fg</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc">
+Titlebar background and foreground.
+Valid values are
+<b>black</b>,
+<b>red</b>,
+<b>green</b>,
+<b>yellow</b>,
+<b>blue</b>,
+<b>magenta</b>,
+<b>cyan</b>,
+<b>white</b>.
+		</td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<!-- ========= -->
+<!-- WHOIS ... -->
+<!-- ========= -->
+
+	<!-- 'whois_acc' -->
+	<tr>
+		<td>
+			<strong>whois_acc</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_away' -->
+	<tr>
+		<td>
+			<strong>whois_away</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_bot' -->
+	<tr>
+		<td>
+			<strong>whois_bot</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_cert' -->
+	<tr>
+		<td>
+			<strong>whois_cert</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_channels' -->
+	<tr>
+		<td>
+			<strong>whois_channels</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_conn' -->
+	<tr>
+		<td>
+			<strong>whois_conn</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_host' -->
+	<tr>
+		<td>
+			<strong>whois_host</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_idle' -->
+	<tr>
+		<td>
+			<strong>whois_idle</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_ircName' -->
+	<tr>
+		<td>
+			<strong>whois_ircName</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_ircOp' -->
+	<tr>
+		<td>
+			<strong>whois_ircOp</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_modes' -->
+	<tr>
+		<td>
+			<strong>whois_modes</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_server' -->
+	<tr>
+		<td>
+			<strong>whois_server</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_service' -->
+	<tr>
+		<td>
+			<strong>whois_service</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+
+	<!-- 'whois_ssl' -->
+	<tr>
+		<td>
+			<strong>whois_ssl</strong>
+			(<span class="opttype">string</span>)
+		</td>
+	</tr>
+	<tr>
+		<td class="desc"></td>
+	</tr>
+	<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+</table> <!-- sets -->
+<h2>CAVEATS</h2>
+<p>
+If you want to give color to
+<em>numbers</em>
+be sure to use
+<em>two</em>
+digits for <b>N</b> nor <b>M</b>!
+</p>
+</body>
+</html>

@@ -20,5 +20,9 @@
 		<param name="Name" value="Program options and keys">
 		<param name="Local" value="progopts.htm">
 		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Writing themes">
+		<param name="Local" value="themes.htm">
+		</OBJECT>
 </UL>
 </BODY></HTML>
