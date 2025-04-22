@@ -79,7 +79,7 @@ dist: $(DIST_DEPS) $(HTMLHELP_DIR)swirc.chm
 	copy swirc-locales-$(LOCALES_SNAP)\sv\$(LOCLOC) $(DEST)\sv\LC_MESSAGES
 
 ALG = SHA256
-
+MSI_ARCH = x64
 SIGNTOOL_FLAGS = -f "C:\CERTS\SwircDevelopmentTeam.pfx"\
 	-fd $(ALG)\
 	-tr "http://timestamp.sectigo.com"\
@@ -98,11 +98,12 @@ setupfile: dist Swirc.wxs
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\libcurl.dll"
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\pdcurses.dll"
 	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\swirc.exe"
-	candle Swirc.wxs
-	light "-cultures:en-us"\
-	    -ext WixUIExtension\
-	    -out "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"\
-	    Swirc.wixobj
+#	candle Swirc.wxs
+#	light "-cultures:en-us"\
+#	    -ext WixUIExtension\
+#	    -out "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"\
+#	    Swirc.wixobj
+	wix build -arch $(MSI_ARCH) -culture "en-us" -ext WixToolset.UI.wixext Swirc.wxs -out "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"
 	signtool sign $(SIGNTOOL_FLAGS)\
 	    "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"
 

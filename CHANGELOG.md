@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Windows ###
 - Added a help file with documentation.
+- `Swirc.wxs`: converted v3 source to v4 source.
 
 ## [3.5.4] - 2025-02-22 ##
 - **Added** lowercase `/znc` subcommands used for auto complete.
