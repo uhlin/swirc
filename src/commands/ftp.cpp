@@ -288,7 +288,7 @@ handle_length_four(char (&numstr)[5], CSTRING token, const size_t len,
 		err_log(0, "%s: expected digits", __func__);
 	}
 #ifdef HAVE_BCI
-	else if (sscanf_s(numstr, "%d%c", &num, &ch, sizeof(char)) != 2 ||
+	else if (sscanf_s(numstr, "%d%c", &num, &ch, (UINT)sizeof(char)) != 2 ||
 		 ch != '-') {
 		err_log(errno, "%s: sscanf_s() error", __func__);
 	}
