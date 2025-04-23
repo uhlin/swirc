@@ -61,8 +61,8 @@ struct cmdline_opt_values {
 };
 
 typedef char *(*SETLOCALE_FN)(int, const char *);
-typedef const char chararray_t[];
 typedef const char *stringarray_t[];
+typedef const char chararray_t[];
 typedef int (*SSCANF_FN)(const char *, const char *, ...);
 
 /*lint -sem(xsetlocale, r_null) */
