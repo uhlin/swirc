@@ -200,6 +200,18 @@
 			    Type="integer"
 			    Value="1" />
 		</Component>
+
+		<Component
+		    Guid="C8A05C9E-A23E-453A-A620-0A62332C0158"
+		    Id="HelpShortcut">
+			<Shortcut
+			    Description="Swirc Help"
+			    Id="HelpStartMenuShortcut"
+			    Name="Swirc Help"
+			    Target="[#swirc_chm_file]"
+			    WorkingDirectory="APPLICATIONROOTDIRECTORY">
+			</Shortcut>
+		</Component>
 	</DirectoryRef>
 
 	<Feature Id="MainApplication" Title="Main Application" Level="1">
@@ -226,8 +238,8 @@
 		<ComponentRef Id="swirc_exe" />
 		<ComponentRef Id="trusted_roots_pem" />
 
-		<!-- Tell WiX to install the shortcut -->
 		<ComponentRef Id="ApplicationShortcut" />
+		<ComponentRef Id="HelpShortcut" />
 	</Feature>
 
 	<CustomAction
