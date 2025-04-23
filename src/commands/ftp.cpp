@@ -1,5 +1,5 @@
 /* The FTP command
-   Copyright (C) 2024, 2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -309,7 +309,7 @@ handle_length_three(char (&numstr)[5], CSTRING token, const size_t len,
 
 	if (!has_three_digits(numstr)) {
 		err_log(0, "%s: expected digits", __func__);
-	} else if (sscanf(numstr, "%d", &num) != 1) {
+	} else if (xsscanf(numstr, "%d", &num) != 1) {
 		err_log(0, "%s: sscanf() error", __func__);
 	} else {
 		FTP_REPLY rep(num, token + len);
@@ -456,7 +456,7 @@ ftp_data_conn::ftp_data_conn(CSTRING text)
 	static CSTRING format = " Entering Passive Mode "
 	    "(%hhu,%hhu,%hhu,%hhu,%hhu,%hhu).";
 
-	if (sscanf(text, format,
+	if (xsscanf(text, format,
 	    &this->h[0], &this->h[1], &this->h[2], &this->h[3],
 	    &this->p[0], &this->p[1]) != 6)
 		throw std::runtime_error("too few items assigned");
@@ -551,7 +551,7 @@ get_bytes(const std::string &str)
 
 	if ((bytes_str = strtok_r(nullptr, sep, &tokstate)) == nullptr ||
 	    !is_numeric(bytes_str) ||
-	    sscanf(bytes_str, "%jd", &ftp::data_conn->filesz) != 1) {
+	    xsscanf(bytes_str, "%jd", &ftp::data_conn->filesz) != 1) {
 		printtext_print("warn", "failed to get the file size");
 		ftp::data_conn->filesz = -1;
 	}
