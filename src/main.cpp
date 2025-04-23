@@ -101,6 +101,8 @@ long int	 g_pid = -1;
 int	 g_stderr_fd = -1;
 int	 g_stdout_fd = -1;
 
+SSCANF_FN xsscanf = sscanf;
+
 SETLOCALE_FN	 xsetlocale = nullptr;
 char		 g_locale[200] = { '\0' };
 
@@ -661,6 +663,9 @@ main(int argc, char *argv[])
 	extern char *malloc_options;
 
 	malloc_options = const_cast<char *>("S");
+#endif
+#ifdef HAVE_BCI
+	xsscanf = sscanf_s;
 #endif
 
 	if ((cp = strrchr(argv[0], SLASH_CHAR)) == nullptr)
