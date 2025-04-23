@@ -1,5 +1,5 @@
 /* messagetags.c
-   Copyright (C) 2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -35,6 +35,7 @@
 #include "assertAPI.h"
 #include "i18n.h"
 #include "libUtils.h"
+#include "main.h"
 #include "messagetags.h"
 #include "printtext.h"
 #include "strHand.h"
@@ -138,7 +139,7 @@ msgtags_process(struct irc_message_compo *compo, struct messagetags *tags)
 		compo->account = sw_strdup(tags->account);
 	}
 	if (tags->srv_time) {
-		if (sscanf(tags->srv_time, "%d-%d-%dT%d:%d:%d.%dZ",
+		if (xsscanf(tags->srv_time, "%d-%d-%dT%d:%d:%d.%dZ",
 		    & (compo->year),
 		    & (compo->month),
 		    & (compo->day),

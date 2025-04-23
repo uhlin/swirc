@@ -1,5 +1,5 @@
 /* Input output loop
-   Copyright (C) 2014-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -759,7 +759,7 @@ enter_io_loop(void)
 		} else if (*line == cmd_char && sw_isdigit(line[1])) {
 			int refnum = 0;
 
-			if (sscanf(&line[1], "%d", &refnum) != 1) {
+			if (xsscanf(&line[1], "%d", &refnum) != 1) {
 				free_and_null(&line);
 				continue;
 			}
