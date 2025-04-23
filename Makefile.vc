@@ -98,11 +98,6 @@ setupfile: dist Swirc.wxs
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\libcurl.dll"
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\pdcurses.dll"
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\swirc.exe"
-#	candle Swirc.wxs
-#	light "-cultures:en-us"\
-#	    -ext WixUIExtension\
-#	    -out "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"\
-#	    Swirc.wixobj
 	wix build -arch $(MSI_ARCH) -culture "en-us" -ext WixToolset.UI.wixext Swirc.wxs -out "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" \
 	    "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"
