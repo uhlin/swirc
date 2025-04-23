@@ -223,6 +223,7 @@ const char *
 getuser(void)
 {
 	const char		*var_data;
+	size_t			 retval = 0;
 	static char		 buf[100] = { '\0' };
 	static const char	 var[] =
 #if defined(UNIX)
@@ -231,9 +232,18 @@ getuser(void)
 	    "USERNAME";
 #endif
 
+#ifdef HAVE_BCI
+	if (getenv_s(&retval, buf, ARRAY_SIZE(buf), var) != 0)
+		return "";
+#else
 	if ((var_data = getenv(var)) == NULL ||
 	    sw_strcpy(buf, var_data, ARRAY_SIZE(buf)) != 0)
 		return "";
+#endif
+
+	// maybe unused
+	UNUSED_VAR(var_data);
+	UNUSED_VAR(retval);
 
 	buf[strcspn(buf, " \f\n\r\t\v")] = '\0';
 	return addrof(buf[0]);
