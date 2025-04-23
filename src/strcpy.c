@@ -1,4 +1,4 @@
-/* Copyright (c) 2014, 2022 Markus Uhlin <markus.uhlin@bredband.net>
+/* Copyright (c) 2014, 2022 Markus Uhlin <markus@nifty-networks.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
