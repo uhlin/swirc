@@ -100,6 +100,10 @@ typedef const char *const immutable_cp_t;
 typedef long int ssize_t;
 #endif
 
+#ifdef UNIX
+typedef unsigned int UINT;
+#endif
+
 #if defined(WIN32) && !defined(__func__)
 #define __func__ __FUNCTION__
 #endif
