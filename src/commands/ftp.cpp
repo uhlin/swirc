@@ -282,12 +282,23 @@ handle_length_four(char (&numstr)[5], CSTRING token, const size_t len,
 	memcpy(numstr, token, len);
 	numstr[len] = '\0';
 
+	errno = 0;
+
 	if (!has_three_digits(numstr)) {
 		err_log(0, "%s: expected digits", __func__);
-	} else if (sscanf(numstr, "%d%c", &num, &ch) != 2 ||
-		   ch != '-') {
+	}
+#ifdef HAVE_BCI
+	else if (sscanf_s(numstr, "%d%c", &num, &ch, sizeof(char)) != 2 ||
+		 ch != '-') {
+		err_log(errno, "%s: sscanf_s() error", __func__);
+	}
+#else
+	else if (sscanf(numstr, "%d%c", &num, &ch) != 2 ||
+		 ch != '-') {
 		err_log(0, "%s: sscanf() error", __func__);
-	} else {
+	}
+#endif
+	else {
 		FTP_REPLY rep(num, token + len);
 
 #if defined(__cplusplus) && __cplusplus >= 201103L
