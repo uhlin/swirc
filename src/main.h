@@ -65,6 +65,7 @@ typedef const char *stringarray_t[];
 typedef const char chararray_t[];
 typedef int (*SSCANF_FN)(const char *, const char *, ...) SCANFLIKE(2);
 
+/*lint -scanf(2, xsscanf) */
 /*lint -sem(xsetlocale, r_null) */
 
 __SWIRC_BEGIN_DECLS
