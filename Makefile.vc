@@ -87,24 +87,24 @@ SIGNTOOL_FLAGS = -f "C:\CERTS\SwircDevelopmentTeam.pfx"\
 	-v
 
 setupfile: dist Swirc.wxs
-	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(DLL_libgcc)"
-	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(DLL_libstdcpp)"
-	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(DLL_libwinpthread)"
-	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libcharset).dll"
-	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libhunspell).dll"
-	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libiconv).dll"
-	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libidn).dll"
-	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\$(NAME_libintl).dll"
-	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\libcurl.dll"
-	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\pdcurses.dll"
-	signtool sign $(SIGNTOOL_FLAGS) "$(DEST)\swirc.exe"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_libgcc)"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_libstdcpp)"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_libwinpthread)"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(NAME_libcharset).dll"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(NAME_libhunspell).dll"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(NAME_libiconv).dll"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(NAME_libidn).dll"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(NAME_libintl).dll"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\libcurl.dll"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\pdcurses.dll"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\swirc.exe"
 #	candle Swirc.wxs
 #	light "-cultures:en-us"\
 #	    -ext WixUIExtension\
 #	    -out "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"\
 #	    Swirc.wixobj
 	wix build -arch $(MSI_ARCH) -culture "en-us" -ext WixToolset.UI.wixext Swirc.wxs -out "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"
-	signtool sign $(SIGNTOOL_FLAGS)\
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" \
 	    "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"
 
 clean:
