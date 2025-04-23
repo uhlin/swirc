@@ -162,10 +162,10 @@
 	<!-- ========================================= -->
 
 	<DirectoryRef Id="ApplicationProgramsFolder">
-		<Component Guid="*" Id="ApplicationShortcut">
+		<Component Guid="*" Id="swirc_exe_shortcut">
 			<Shortcut
 			    Description="Curses IRC client"
-			    Id="ApplicationStartMenuShortcut"
+			    Id="swirc_exe_shortcut_element"
 			    Name="Swirc"
 			    Target="[#swirc_exe_file]"
 			    WorkingDirectory="APPLICATIONROOTDIRECTORY">
@@ -203,10 +203,10 @@
 
 		<Component
 		    Guid="C8A05C9E-A23E-453A-A620-0A62332C0158"
-		    Id="HelpShortcut">
+		    Id="swirc_chm_shortcut">
 			<Shortcut
 			    Description="Swirc Help"
-			    Id="HelpStartMenuShortcut"
+			    Id="swirc_chm_shortcut_element"
 			    Name="Swirc Help"
 			    Target="[#swirc_chm_file]"
 			    WorkingDirectory="APPLICATIONROOTDIRECTORY">
@@ -238,8 +238,8 @@
 		<ComponentRef Id="swirc_exe" />
 		<ComponentRef Id="trusted_roots_pem" />
 
-		<ComponentRef Id="ApplicationShortcut" />
-		<ComponentRef Id="HelpShortcut" />
+		<ComponentRef Id="swirc_exe_shortcut" />
+		<ComponentRef Id="swirc_chm_shortcut" />
 	</Feature>
 
 	<CustomAction
