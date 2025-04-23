@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Fixed a few Clang Tidy warnings.
+- Replaced calls to `getenv()` with `getenv_s()`.
 
 ### Windows ###
 - Added a help file with documentation.
