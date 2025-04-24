@@ -129,22 +129,6 @@ static char names_channel[1000] = { '\0' };
 *                                                               *
 ****************************************************************/
 
-static void
-add_match(PTEXTBUF matches, CSTRING user)
-{
-	static chararray_t msg = "get_list_of_matching_channel_users: "
-	    "textBuf_ins_next";
-
-	if (textBuf_size(matches) != 0) {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
-		    user, -1)) != 0)
-			err_sys("%s", msg);
-	} else {
-		if ((errno = textBuf_ins_next(matches, nullptr, user, -1)) != 0)
-			err_sys("%s", msg);
-	}
-}
-
 static inline bool
 already_is_in_names_hash(CSTRING nick, PIRC_WINDOW window)
 {
@@ -390,8 +374,10 @@ get_list_of_matching_channel_users(CSTRING chan, CSTRING search_var)
 		for (PNAMES names = window->names_hash[n];
 		    names != nullptr;
 		    names = names->next) {
-			if (!strncmp(search_var, names->nick, varlen))
-				add_match(matches, names->nick);
+			if (!strncmp(search_var, names->nick, varlen)) {
+				textBuf_emplace_back(__func__, matches,
+				    names->nick, 0);
+			}
 		}
 	}
 

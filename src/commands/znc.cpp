@@ -162,19 +162,6 @@ static stringarray_t znc_commands = {
 };
 
 static void
-add_cmd(PTEXTBUF matches, CSTRING str)
-{
-	if (textBuf_size(matches) != 0) {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
-		    str, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	} else {
-		if ((errno = textBuf_ins_next(matches, NULL, str, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	}
-}
-
-static void
 send_cmd(CSTRING p_module, CSTRING p_command)
 {
 	char			v_module[80] = { '\0' };
@@ -252,7 +239,7 @@ get_list_of_matching_znc_commands(CSTRING search_var)
 		CSTRING cmd = znc_commands[i];
 
 		if (!strncmp(search_var, cmd, varlen))
-			add_cmd(matches, cmd);
+			textBuf_emplace_back(__func__, matches, cmd, 0);
 	}
 
 	if (textBuf_size(matches) == 0) {

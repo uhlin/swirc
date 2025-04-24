@@ -1193,19 +1193,6 @@ ftp_deinit(void)
 	ftp::data_conn = nullptr;
 }
 
-static void
-add_cmd(PTEXTBUF matches, CSTRING str)
-{
-	if (textBuf_size(matches) != 0) {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
-		    str, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	} else {
-		if ((errno = textBuf_ins_next(matches, nullptr, str, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	}
-}
-
 PTEXTBUF
 get_list_of_matching_ftp_cmds(CSTRING search_var)
 {
@@ -1216,7 +1203,7 @@ get_list_of_matching_ftp_cmds(CSTRING search_var)
 		CSTRING cmd = ftp_cmds[i];
 
 		if (!strncmp(search_var, cmd, varlen))
-			add_cmd(matches, cmd);
+			textBuf_emplace_back(__func__, matches, cmd, 0);
 	}
 
 	if (textBuf_size(matches) == 0) {

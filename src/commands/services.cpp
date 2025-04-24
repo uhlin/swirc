@@ -1,5 +1,5 @@
 /* Communicate with IRC services
-   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -154,19 +154,6 @@ cmd_qbot(CSTRING data)
 	run_command("/qbot", "Q", "qbot_host", data);
 }
 
-static void
-add_cmd(PTEXTBUF matches, CSTRING str)
-{
-	if (textBuf_size(matches) != 0) {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
-		    str, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	} else {
-		if ((errno = textBuf_ins_next(matches, NULL, str, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	}
-}
-
 static PTEXTBUF
 get_list(CSTRING search_var, stringarray_t array, const size_t size)
 {
@@ -177,7 +164,7 @@ get_list(CSTRING search_var, stringarray_t array, const size_t size)
 		CSTRING cmd = array[i];
 
 		if (!strncmp(search_var, cmd, varlen))
-			add_cmd(matches, cmd);
+			textBuf_emplace_back(__func__, matches, cmd, 0);
 	}
 
 	return matches;

@@ -512,19 +512,6 @@ cmd_theme(const char *data)
 	clean_up(url, db_path);
 }
 
-static void
-add_cmd(PTEXTBUF matches, const char *cmd)
-{
-	if (textBuf_size(matches) == 0) {
-		if ((errno = textBuf_ins_next(matches, NULL, cmd, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	} else {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
-		    cmd, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	}
-}
-
 PTEXTBUF
 get_list_of_matching_theme_cmds(const char *search_var)
 {
@@ -535,7 +522,7 @@ get_list_of_matching_theme_cmds(const char *search_var)
 		const char *cmd = theme_cmds[i];
 
 		if (!strncmp(search_var, cmd, varlen))
-			add_cmd(matches, cmd);
+			textBuf_emplace_back(__func__, matches, cmd, 0);
 	}
 
 	if (textBuf_size(matches) == 0) {

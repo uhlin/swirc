@@ -1,5 +1,5 @@
 /* commands/squery.cpp
-   Copyright (C) 2020-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -83,19 +83,6 @@ static stringarray_t squery_commands = {
 	//lint +e786
 };
 
-static void
-add_squery_cmd(PTEXTBUF matches, CSTRING str)
-{
-	if (textBuf_size(matches) != 0) {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
-		    str, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	} else {
-		if ((errno = textBuf_ins_next(matches, NULL, str, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	}
-}
-
 /*
  * usage: /squery <servicename> <text>
  */
@@ -147,7 +134,7 @@ get_list_of_matching_squery_commands(CSTRING search_var)
 		CSTRING cmd = squery_commands[i];
 
 		if (!strncmp(search_var, cmd, varlen))
-			add_squery_cmd(matches, cmd);
+			textBuf_emplace_back(__func__, matches, cmd, 0);
 	}
 
 	if (textBuf_size(matches) == 0) {

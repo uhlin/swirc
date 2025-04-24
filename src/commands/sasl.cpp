@@ -1,5 +1,5 @@
 /* commands/sasl.cpp
-   Copyright (C) 2017-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -573,19 +573,6 @@ sign_decoded_data(EC_KEY *key, const uint8_t *data, int datalen, uint8_t **sig,
 	return true;
 }
 
-static void
-add_cmd(PTEXTBUF matches, const char *cmd)
-{
-	if (textBuf_size(matches) == 0) {
-		if ((errno = textBuf_ins_next(matches, NULL, cmd, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	} else {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
-		    cmd, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	}
-}
-
 PTEXTBUF
 get_list_of_matching_sasl_cmds(const char *search_var)
 {
@@ -596,7 +583,7 @@ get_list_of_matching_sasl_cmds(const char *search_var)
 		const char *cmd = sasl_cmds[i];
 
 		if (!strncmp(search_var, cmd, varlen))
-			add_cmd(matches, cmd);
+			textBuf_emplace_back(__func__, matches, cmd, 0);
 	}
 
 	if (textBuf_size(matches) == 0) {
