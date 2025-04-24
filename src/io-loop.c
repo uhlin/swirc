@@ -217,9 +217,7 @@ add_to_history(CSTRING string)
 		 * Buffer full. Remove head...
 		 */
 
-		if ((errno =
-		    textBuf_remove(history, textBuf_head(history))) != 0)
-			err_sys("%s: textBuf_remove", __func__);
+		textBuf_pop_head(__func__, history);
 	}
 
 	textBuf_emplace_back(__func__, history, string, 0);

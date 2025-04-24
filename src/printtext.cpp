@@ -1625,13 +1625,6 @@ vprinttext_mutex_init_doit()
 #endif
 }
 
-static void
-remove_head_from_buffer(PTEXTBUF buf)
-{
-	if ((errno = textBuf_remove(buf, textBuf_head(buf))) != 0)
-		err_sys("%s: %s: textBuf_remove", __FILE__, __func__);
-}
-
 /**
  * Variable argument list version of Swirc messenger
  *
@@ -1657,7 +1650,8 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 	free(fmt_copy);
 
 	if (tbszp1 > config_integer(&intctx)) /* Buffer full... */
-		remove_head_from_buffer(ctx->window->buf);
+		textBuf_pop_head(__func__, ctx->window->buf);
+
 	textBuf_emplace_back(__func__, ctx->window->buf, pout.text,
 	    pout.indent);
 
