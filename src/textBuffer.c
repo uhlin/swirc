@@ -179,3 +179,16 @@ textBuf_destroy(PTEXTBUF buf)
 
 	free(buf);
 }
+
+void
+textBuf_emplace_back(const char *fn, PTEXTBUF buf, const char *text, int indent)
+{
+	if (textBuf_size(buf) != 0) {
+		if ((errno = textBuf_ins_next(buf, textBuf_tail(buf), text,
+		    indent)) != 0)
+			err_sys("%s: textBuf_ins_next", fn);
+	} else {
+		if ((errno = textBuf_ins_next(buf, NULL, text, indent)) != 0)
+			err_sys("%s: textBuf_ins_next", fn);
+	}
+}

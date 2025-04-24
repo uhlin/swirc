@@ -27,6 +27,8 @@ errno_t		textBuf_ins_prev(PTEXTBUF, PTEXTBUF_ELMT, const char *text,
 		    int indent);
 errno_t		textBuf_remove(PTEXTBUF, PTEXTBUF_ELMT);
 void		textBuf_destroy(PTEXTBUF);
+void		textBuf_emplace_back(const char *fn, PTEXTBUF, const char *text,
+		    int indent);
 __SWIRC_END_DECLS
 
 /* Inline function definitions
