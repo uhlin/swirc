@@ -192,3 +192,10 @@ textBuf_emplace_back(const char *fn, PTEXTBUF buf, const char *text, int indent)
 			err_sys("%s: textBuf_ins_next", fn);
 	}
 }
+
+void
+textBuf_pop_head(const char *fn, PTEXTBUF buf)
+{
+	if ((errno = textBuf_remove(buf, textBuf_head(buf))) != 0)
+		err_sys("%s: textBuf_remove", fn);
+}

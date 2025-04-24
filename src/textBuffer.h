@@ -29,6 +29,7 @@ errno_t		textBuf_remove(PTEXTBUF, PTEXTBUF_ELMT);
 void		textBuf_destroy(PTEXTBUF);
 void		textBuf_emplace_back(const char *fn, PTEXTBUF, const char *text,
 		    int indent);
+void		textBuf_pop_head(const char *fn, PTEXTBUF);
 __SWIRC_END_DECLS
 
 /* Inline function definitions
