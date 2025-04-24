@@ -195,19 +195,6 @@ static void	set_array(struct cmds_tag *, struct cmds_tag **, const int,
 		    const int);
 
 static void
-add_cmd(PTEXTBUF matches, CSTRING cmd)
-{
-	if (textBuf_size(matches) == 0) {
-		if ((errno = textBuf_ins_next(matches, NULL, cmd, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	} else {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
-		    cmd, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	}
-}
-
-static void
 add_to_history(CSTRING string)
 {
 	const int tbszp1 = textBuf_size(history) + 1;
@@ -224,24 +211,18 @@ add_to_history(CSTRING string)
 	    !strncasecmp(string, "/sasl password ", 15) ||
 	    !strncasecmp(string, "/sasl passwd_s ", 15))
 		return;
+
 	if (tbszp1 > config_integer(&intctx)) {
 		/*
 		 * Buffer full. Remove head...
 		 */
 
-		if ((errno = textBuf_remove(history, textBuf_head(history))) !=
-		    0)
+		if ((errno =
+		    textBuf_remove(history, textBuf_head(history))) != 0)
 			err_sys("%s: textBuf_remove", __func__);
 	}
 
-	if (textBuf_size(history) == 0) {
-		if ((errno = textBuf_ins_next(history, NULL, string, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	} else {
-		if ((errno = textBuf_ins_next(history, textBuf_tail(history),
-		    string, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	}
+	textBuf_emplace_back(__func__, history, string, 0);
 }
 
 static void
@@ -647,7 +628,7 @@ get_list_of_matching_commands(CSTRING search_var)
 
 	FOREACH_COMMAND() {
 		if (!strncmp(search_var, sp->cmd, varlen))
-			add_cmd(matches, sp->cmd);
+			textBuf_emplace_back(__func__, matches, sp->cmd, 0);
 	}
 
 	if (textBuf_size(matches) == 0) {

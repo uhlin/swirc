@@ -1,5 +1,5 @@
 /* Window functions
-   Copyright (C) 2012-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -100,19 +100,6 @@ volatile bool	g_redrawing_window = false;
 static PIRC_WINDOW hash_table[200] = { NULL };
 
 /* -------------------------------------------------- */
-
-static void
-add_match(PTEXTBUF matches, CSTRING what)
-{
-	if (textBuf_size(matches) != 0) {
-		if ((errno = textBuf_ins_next(matches, textBuf_tail(matches),
-		    what, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	} else {
-		if ((errno = textBuf_ins_next(matches, NULL, what, -1)) != 0)
-			err_sys("%s: textBuf_ins_next", __func__);
-	}
-}
 
 /**
  * Apply window options
@@ -612,8 +599,10 @@ get_list_of_matching_channels(CSTRING search_var)
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
 			if (is_irc_channel(window->label) &&
-			    !strncasecmp(search_var, window->label, varlen))
-				add_match(matches, window->label);
+			    !strncasecmp(search_var, window->label, varlen)) {
+				textBuf_emplace_back(__func__, matches,
+				    window->label, 0);
+			}
 		}
 	}
 	if (textBuf_size(matches) == 0) {
@@ -633,8 +622,10 @@ get_list_of_matching_queries(CSTRING search_var)
 		FOREACH_WINDOW_IN_ENTRY() {
 			if (!is_irc_channel(window->label) &&
 			    window != g_status_window &&
-			    !strncasecmp(search_var, window->label, varlen))
-				add_match(matches, window->label);
+			    !strncasecmp(search_var, window->label, varlen)) {
+				textBuf_emplace_back(__func__, matches,
+				    window->label, 0);
+			}
 		}
 	}
 	if (textBuf_size(matches) == 0) {

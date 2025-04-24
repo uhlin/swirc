@@ -1632,19 +1632,6 @@ remove_head_from_buffer(PTEXTBUF buf)
 		err_sys("%s: %s: textBuf_remove", __FILE__, __func__);
 }
 
-static void
-add_to_buffer(PTEXTBUF buf, CSTRING text, const int indent)
-{
-	if (textBuf_size(buf) == 0) {
-		if ((errno = textBuf_ins_next(buf, nullptr, text, indent)) != 0)
-			err_sys("%s: %s: textBuf_ins_next", __FILE__, __func__);
-	} else {
-		if ((errno = textBuf_ins_next(buf, textBuf_tail(buf), text,
-		    indent)) != 0)
-			err_sys("%s: %s: textBuf_ins_next", __FILE__, __func__);
-	}
-}
-
 /**
  * Variable argument list version of Swirc messenger
  *
@@ -1671,7 +1658,8 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 
 	if (tbszp1 > config_integer(&intctx)) /* Buffer full... */
 		remove_head_from_buffer(ctx->window->buf);
-	add_to_buffer(ctx->window->buf, pout.text, pout.indent);
+	textBuf_emplace_back(__func__, ctx->window->buf, pout.text,
+	    pout.indent);
 
 	const bool shouldOutData = !(ctx->window->scroll_mode);
 
