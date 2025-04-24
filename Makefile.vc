@@ -121,6 +121,9 @@ clean:
 	$(RM) pdcurses-$(PDCURSES_VERSION).cab
 	$(RM) swirc-locales-$(LOCALES_SNAP).cab
 	$(RM) swirc.res
+!	if exists(cov-int)
+		rmdir /s /q cov-int
+!	endif
 !	if exists(cppcheck-data)
 		rmdir /s /q cppcheck-data
 !	endif
