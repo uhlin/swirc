@@ -880,6 +880,12 @@ redir_stderr(void)
 {
 	const bool is_valid_fd = (g_stderr_fd != -1);
 
+/*
+ * The POSIX names are needed for portability reasons
+ */
+#if WIN32
+#pragma warning(disable: 4996)
+#endif
 	if (is_valid_fd)
 		err_log(EBUSY, "%s: valid file descriptor", __func__);
 	else if (!isValid(g_dev_null))
@@ -890,6 +896,12 @@ redir_stderr(void)
 		err_sys("%s: dup2() error", __func__);
 	else
 		return;
+/*
+ * Reset warning behavior to its default value
+ */
+#if WIN32
+#pragma warning(default: 4996)
+#endif
 }
 
 void
@@ -897,6 +909,12 @@ restore_stderr(void)
 {
 	const bool is_valid_fd = (g_stderr_fd != -1);
 
+/*
+ * The POSIX names are needed for portability reasons
+ */
+#if WIN32
+#pragma warning(disable: 4996)
+#endif
 	if (!is_valid_fd)
 		err_log(EBADF, "%s", __func__);
 	else if (dup2(g_stderr_fd, fileno(stderr)) == -1)
@@ -905,4 +923,10 @@ restore_stderr(void)
 		err_log(errno, "%s: close() error", __func__);
 	else
 		g_stderr_fd = -1;
+/*
+ * Reset warning behavior to its default value
+ */
+#if WIN32
+#pragma warning(default: 4996)
+#endif
 }
