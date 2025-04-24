@@ -206,8 +206,23 @@ squeeze_text_deco_wide(wchar_t *buffer)
 		(void) wstr.assign(buffer);
 		(void) str.assign(wstr.begin(), wstr.end());
 
+#if defined(UNIX)
 		strncpy(str_copy, str.c_str(), sizeof str_copy - 1);
 		str_copy[sizeof str_copy - 1] = '\0';
+#elif defined(WIN32)
+		switch (strncpy_s(str_copy, ARRAY_SIZE(str_copy), str.c_str(),
+		    _TRUNCATE)) {
+		case 0:
+			/* copying ok */
+			break;
+		case STRUNCATE:
+			err_log(0, "%s: strncpy_s: truncated", __func__);
+			break;
+		default:
+			sw_assert_not_reached();
+			break;
+		}
+#endif
 
 		(void) str.assign(squeeze_text_deco(str_copy));
 		(void) wstr.assign(str.begin(), str.end());
