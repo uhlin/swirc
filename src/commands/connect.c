@@ -319,12 +319,6 @@ get_server_v2(PIRC_SERVER ptr, const size_t size, const char *hdr)
 		fflush(stdout);
 		free(msg);
 
-/*
- * sscanf() is safe in this context
- */
-#if WIN32
-#pragma warning(disable: 4996)
-#endif
 		if (fgets(ans, sizeof ans, stdin) == NULL) {
 			err_sys("%s: fgets", __func__);
 		} else if (strchr(ans, '\n') == NULL) {
@@ -334,18 +328,12 @@ get_server_v2(PIRC_SERVER ptr, const size_t size, const char *hdr)
 
 			while (c = getchar(), c != '\n' && c != EOF)
 				/* discard */;
-		} else if (sscanf(ans, "%d", &srvno) != 1 || srvno < 0 ||
+		} else if (xsscanf(ans, "%d", &srvno) != 1 || srvno < 0 ||
 		    srvno > i) {
 			;
 		} else {
 			break;
 		}
-/*
- * Reset warning behavior to its default value
- */
-#if WIN32
-#pragma warning(default: 4996)
-#endif
 	} /* while */
 
 	UNUSED_PARAM(size);

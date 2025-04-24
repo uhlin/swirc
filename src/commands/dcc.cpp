@@ -1554,30 +1554,16 @@ dcc::add_file(const char *nick, const char *user, const char *host,
 		uint16_t	port = 0;
 		intmax_t	filesize = 0;
 
-/*
- * sscanf() is safe in this context
- */
-#if WIN32
-#pragma warning(disable: 4996)
-#endif
-
 		if (!(get_db.size() < GET_DB_MAX))
 			throw std::runtime_error("database full");
-		else if (sscanf(token[0], "%" SCNu32, &addr) != 1)
+		else if (xsscanf(token[0], "%" SCNu32, &addr) != 1)
 			throw std::runtime_error("error getting the address");
-		else if (sscanf(token[1], "%" SCNu16, &port) != 1)
+		else if (xsscanf(token[1], "%" SCNu16, &port) != 1)
 			throw std::runtime_error("error getting the port");
-		else if (sscanf(token[2], "%" SCNdMAX, &filesize) != 1)
+		else if (xsscanf(token[2], "%" SCNdMAX, &filesize) != 1)
 			throw std::runtime_error("error getting the file size");
 		else if (filesize > DCC_FILE_MAX_SIZE)
 			throw std::runtime_error("too large file");
-
-/*
- * Reset warning behavior to its default value
- */
-#if WIN32
-#pragma warning(default: 4996)
-#endif
 
 		nick_lc = strToLower(sw_strdup(nick));
 		dup_check_get(nick_lc, token[3]);
