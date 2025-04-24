@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added usage of `textBuf_emplace_back()` in multiple places thus
+- Added usage of `textBuf_emplace_back()` in _multiple_ places thus
   reduced duplication.
 - Fixed a few Clang Tidy warnings.
 - Replaced calls to `getenv()` with `getenv_s()`.
