@@ -207,8 +207,14 @@ squeeze_text_deco_wide(wchar_t *buffer)
 		(void) str.assign(wstr.begin(), wstr.end());
 
 #if defined(UNIX)
+#if BSD || OS_X
+		if (strlcpy(str_copy, str.c_str(), sizeof(str_copy)) >=
+		    sizeof(str_copy))
+			err_log(0, "%s: strlcpy: truncated", __func__);
+#else
 		strncpy(str_copy, str.c_str(), sizeof str_copy - 1);
 		str_copy[sizeof str_copy - 1] = '\0';
+#endif
 #elif defined(WIN32)
 		switch (strncpy_s(str_copy, ARRAY_SIZE(str_copy), str.c_str(),
 		    _TRUNCATE)) {
