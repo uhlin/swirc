@@ -1545,8 +1545,23 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 				if ((diff = (wcp - wc_bufp)) > ARSZ - 1)
 					diff = ARSZ - 1;
 				sw_assert(diff > 0);
+#if defined(UNIX)
 				(void) wcsncpy(str, wc_bufp, diff);
 				str[diff] = L'\0';
+#elif defined(WIN32)
+				switch (wcsncpy_s(str, ARSZ, wc_bufp, diff)) {
+				case 0:
+					/* copying ok */
+					break;
+				case STRUNCATE:
+					err_log(0, "%s: wcsncpy_s: truncated",
+					    __func__);
+					break;
+				default:
+					sw_assert_not_reached();
+					break;
+				}
+#endif
 				if ((diff = xwcswidth(wcspbrk(str,
 				    L"\035\002\003\017\026\037") ?
 				    squeeze_text_deco_wide(str) : str, 2)) < 0)
