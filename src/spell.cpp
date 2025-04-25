@@ -178,18 +178,26 @@ static STRING
 get_mbs(CWSTRING wcs)
 {
 	STRING	 out;
-	size_t	 bytes_convert, size;
+	size_t	 bytes_convert = 0, size;
 
 	size		= size_product(wcslen(wcs) + 1, MB_LEN_MAX);
 	out		= static_cast<STRING>(xmalloc(size));
-	bytes_convert	= wcstombs(out, wcs, size - 1);
 
-	if (bytes_convert == g_conversion_failed) {
+#if defined(UNIX)
+	if ((bytes_convert = wcstombs(out, wcs, size - 1)) ==
+	    g_conversion_failed) {
+		free(out);
+		return nullptr;
+	} else
+		out[bytes_convert] = '\0';
+#elif defined(WIN32)
+	if ((errno = wcstombs_s(&bytes_convert, out, size, wcs,
+	    size - 1)) != 0) {
 		free(out);
 		return nullptr;
 	}
+#endif
 
-	out[bytes_convert] = '\0';
 	return out;
 }
 
