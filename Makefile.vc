@@ -148,6 +148,9 @@ clean:
 !	if exists(swirc-locales-$(LOCALES_SNAP))
 		rmdir /s /q swirc-locales-$(LOCALES_SNAP)
 !	endif
+!	if exists(tmp)
+		rmdir /s /q tmp
+!	endif
 	$(Q) cd po
 	$(Q) $(MAKE) -f Makefile.vc clean
 	$(Q) cd ..
