@@ -10,9 +10,10 @@ All notable changes to this project will be documented in this file.
 
 ### Windows ###
 - Added a help file with documentation.
-- Replaced calls to `strncpy()` with `strncpy_s()`.
-- Replaced calls to `wcsncpy()` with `wcsncpy_s()`.
-- Replaced calls to `wcstombs()` with `wcstombs_s()`.
+- Replaced calls to:
+  - `strncpy()` with `strncpy_s()`.
+  - `wcsncpy()` with `wcsncpy_s()`.
+  - `wcstombs()` with `wcstombs_s()`.
 - `Swirc.wxs`: converted v3 source to v4 source.
 
 ## [3.5.4] - 2025-02-22 ##
