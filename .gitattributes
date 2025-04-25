@@ -10,5 +10,6 @@ doc/rfc2812.txt export-ignore
 htmlhelp/ export-ignore
 maketgz export-ignore
 openbsd/ export-ignore
+runpvs.bat export-ignore
 setver export-ignore
 voidlinux/ export-ignore
