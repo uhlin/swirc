@@ -38,4 +38,5 @@ swirc.res
 swirc.static.html
 swircpaths.h
 tests/*.run
+tmp/
 trusted_roots.pem
