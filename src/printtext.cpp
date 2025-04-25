@@ -350,7 +350,7 @@ convert_wc(wchar_t wc, size_t &bytes_out)
 	    size, wc, &ps)) != 0 ||
 	    bytes_written == g_conversion_failed ||
 	    bytes_written > size) {
-		if (wc != L'\0')
+		if (wc != L'\0' && errno != 0)
 			err_log(errno, "printtext: %s: wcrtomb_s", __func__);
 		*mbs = '\0';
 		bytes_out = 0;
