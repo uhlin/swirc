@@ -42,6 +42,9 @@
 #define PRINT_SIZE	"%Iu"
 #endif
 
+#define MBS_SIZE 6144
+#define TMP_SIZE 4096
+
 static const char reject[] =
     TXT_BLINK
     TXT_BOLD
