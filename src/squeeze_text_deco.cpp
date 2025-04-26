@@ -193,11 +193,17 @@ static bool
 store_mbs(char (&mbs)[MBS_SIZE], const wchar_t *wcs)
 {
 	const size_t	MAXBYTES = ARRAY_SIZE(mbs) - 1;
-	size_t		bytes_stored;
+	size_t		bytes_stored = 0;
 
+#if defined(UNIX)
 	if ((bytes_stored = wcstombs(mbs, wcs, MAXBYTES)) ==
 	    g_conversion_failed)
 		return false;
+#elif defined(WIN32)
+	if ((errno = wcstombs_s(&bytes_stored, mbs, ARRAY_SIZE(mbs), wcs,
+	    MAXBYTES)) != 0)
+		return false;
+#endif
 	mbs[MAXBYTES] = '\0';
 
 	if (bytes_stored >= MAXBYTES)
@@ -209,11 +215,17 @@ static bool
 store_tmp(wchar_t (&tmp)[TMP_SIZE], const char *mbs)
 {
 	const size_t	MAXELEMENTS = ARRAY_SIZE(tmp) - 1;
-	size_t		elements_stored;
+	size_t		elements_stored = 0;
 
+#if defined(UNIX)
 	if ((elements_stored = mbstowcs(tmp, mbs, MAXELEMENTS)) ==
 	    g_conversion_failed)
 		return false;
+#elif defined(WIN32)
+	if ((errno = mbstowcs_s(&elements_stored, tmp, ARRAY_SIZE(tmp), mbs,
+	    MAXELEMENTS)) != 0)
+		return false;
+#endif
 	tmp[MAXELEMENTS] = L'\0';
 
 	if (elements_stored >= MAXELEMENTS)
