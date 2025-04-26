@@ -200,7 +200,7 @@ store_mbs(char (&mbs)[MBS_SIZE], const wchar_t *wcs)
 		return false;
 	mbs[MAXBYTES] = '\0';
 
-	if (bytes_stored == MAXBYTES)
+	if (bytes_stored >= MAXBYTES)
 		err_log(0, "%s: maximum number of bytes stored", __func__);
 	return true;
 }
@@ -216,7 +216,7 @@ store_tmp(wchar_t (&tmp)[TMP_SIZE], const char *mbs)
 		return false;
 	tmp[MAXELEMENTS] = L'\0';
 
-	if (elements_stored == MAXELEMENTS)
+	if (elements_stored >= MAXELEMENTS)
 		err_log(0, "%s: maximum number of elements stored", __func__);
 	return true;
 }
