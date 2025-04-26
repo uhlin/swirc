@@ -189,13 +189,34 @@ squeeze_text_deco(char *buffer)
 	return buffer;
 }
 
+static bool
+store_mbs(char (&mbs)[MBS_SIZE], const wchar_t *wcs)
+{
+	if (wcstombs(mbs, wcs, ARRAY_SIZE(mbs) - 1) == g_conversion_failed)
+		return false;
+	mbs[ARRAY_SIZE(mbs) - 1] = '\0';
+	return true;
+}
+
+static bool
+store_tmp(wchar_t (&tmp)[TMP_SIZE], const char *mbs)
+{
+	if (mbstowcs(tmp, mbs, ARRAY_SIZE(tmp) - 1) == g_conversion_failed)
+		return false;
+	tmp[ARRAY_SIZE(tmp) - 1] = L'\0';
+	return true;
+}
+
+/*
+ * This function is to be used in a special context in the printtext
+ * module. It may not meet the requirements elsewhere.
+ */
 wchar_t *
 squeeze_text_deco_wide(wchar_t *buffer)
 {
-	char		 str_copy[4096] = { '\0' };
-	size_t		 buflen, newlen = 0, num = 0;
-	std::string	 str("");
-	std::wstring	 wstr(L"");
+	size_t      buflen, newlen, num;
+	char        mbs[MBS_SIZE] = {'\0'};
+	wchar_t     tmp[TMP_SIZE] = {L'\0'};
 
 	if (buffer == nullptr)
 		err_exit(EINVAL, "%s", __func__);
@@ -204,47 +225,21 @@ squeeze_text_deco_wide(wchar_t *buffer)
 
 	buflen = wcslen(buffer);
 
-	try {
-		(void) wstr.assign(buffer);
-		(void) str.assign(wstr.begin(), wstr.end());
+	if (!store_mbs(mbs, buffer))
+		return buffer;
 
-#if defined(UNIX)
-#if BSD || OS_X
-		if (strlcpy(str_copy, str.c_str(), sizeof(str_copy)) >=
-		    sizeof(str_copy))
-			err_log(0, "%s: strlcpy: truncated", __func__);
-#else
-		strncpy(str_copy, str.c_str(), sizeof str_copy - 1);
-		str_copy[sizeof str_copy - 1] = '\0';
-#endif
-#elif defined(WIN32)
-		switch (strncpy_s(str_copy, ARRAY_SIZE(str_copy), str.c_str(),
-		    _TRUNCATE)) {
-		case 0:
-			/* copying ok */
-			break;
-		case STRUNCATE:
-			err_log(0, "%s: strncpy_s: truncated", __func__);
-			break;
-		default:
-			sw_assert_not_reached();
-			break;
-		}
-#endif
+	squeeze_text_deco(mbs);
 
-		(void) str.assign(squeeze_text_deco(str_copy));
-		(void) wstr.assign(str.begin(), str.end());
-
-		newlen	= wstr.size();
-		num	= (newlen < buflen ? newlen : buflen);
-
-		wmemcpy(buffer, wstr.data(), num);
-		buffer[num] = L'\0';
-	} catch (...) {
-		err_log(0, "%s: fatal error", __func__);
-		err_log(0, "buflen: " PRINT_SIZE, buflen);
-		err_log(0, "newlen: " PRINT_SIZE, newlen);
+	if (!store_tmp(tmp, mbs))
+		return buffer;
+	if ((newlen = wcslen(tmp)) > buflen) {
+		err_log(0, "%s: " PRINT_SIZE " greater than " PRINT_SIZE,
+		    __func__, newlen, buflen);
 	}
+
+	num = (newlen < buflen ? newlen : buflen);
+	wmemcpy(buffer, tmp, num);
+	buffer[num] = L'\0';
 
 	return buffer;
 }
