@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added usage of `textBuf_emplace_back()` in _multiple_ places thus
   reduced duplication.
+- Changed `squeeze_text_deco_wide()` in order to make it more accurate
+  for its task.
 - Fixed a few Clang Tidy warnings.
 - Replaced calls to `getenv()` with `getenv_s()`.
 - Replaced calls to `sscanf()` with `sscanf_s()`.
