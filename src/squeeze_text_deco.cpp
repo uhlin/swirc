@@ -192,18 +192,32 @@ squeeze_text_deco(char *buffer)
 static bool
 store_mbs(char (&mbs)[MBS_SIZE], const wchar_t *wcs)
 {
-	if (wcstombs(mbs, wcs, ARRAY_SIZE(mbs) - 1) == g_conversion_failed)
+	const size_t	MAXBYTES = ARRAY_SIZE(mbs) - 1;
+	size_t		bytes_stored;
+
+	if ((bytes_stored = wcstombs(mbs, wcs, MAXBYTES)) ==
+	    g_conversion_failed)
 		return false;
-	mbs[ARRAY_SIZE(mbs) - 1] = '\0';
+	mbs[MAXBYTES] = '\0';
+
+	if (bytes_stored == MAXBYTES)
+		err_log(0, "%s: maximum number of bytes stored", __func__);
 	return true;
 }
 
 static bool
 store_tmp(wchar_t (&tmp)[TMP_SIZE], const char *mbs)
 {
-	if (mbstowcs(tmp, mbs, ARRAY_SIZE(tmp) - 1) == g_conversion_failed)
+	const size_t	MAXELEMENTS = ARRAY_SIZE(tmp) - 1;
+	size_t		elements_stored;
+
+	if ((elements_stored = mbstowcs(tmp, mbs, MAXELEMENTS)) ==
+	    g_conversion_failed)
 		return false;
-	tmp[ARRAY_SIZE(tmp) - 1] = L'\0';
+	tmp[MAXELEMENTS] = L'\0';
+
+	if (elements_stored == MAXELEMENTS)
+		err_log(0, "%s: maximum number of elements stored", __func__);
 	return true;
 }
 
