@@ -57,7 +57,7 @@ handle_foo_situation(char *buffer, long int &i, long int &j)
 		return;
 	else if (buffer[i] == COLOR)
 		i--;
-	else if (strchr(reject, buffer[i]) == NULL)
+	else if (strchr(reject, buffer[i]) == nullptr)
 		buffer[j++] = buffer[i];
 }
 
@@ -167,7 +167,7 @@ squeeze_text_deco(char *buffer)
 {
 	long int i, j;
 
-	if (buffer == NULL)
+	if (buffer == nullptr)
 		err_exit(EINVAL, "%s", __func__);
 	else if (strings_match(buffer, ""))
 		return buffer;
@@ -176,7 +176,7 @@ squeeze_text_deco(char *buffer)
 
 	while (buffer[i] != '\0') {
 		if (buffer[i] != COLOR) {
-			if (strchr(reject, buffer[i]) == NULL)
+			if (strchr(reject, buffer[i]) == nullptr)
 				buffer[j++] = buffer[i];
 		} else
 			color(buffer, i, j);
@@ -195,7 +195,7 @@ squeeze_text_deco_wide(wchar_t *buffer)
 	std::string	 str("");
 	std::wstring	 wstr(L"");
 
-	if (buffer == NULL)
+	if (buffer == nullptr)
 		err_exit(EINVAL, "%s", __func__);
 	else if (wcscmp(buffer, L"") == STRINGS_MATCH)
 		return buffer;
