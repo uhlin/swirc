@@ -26,7 +26,7 @@ bool	 time_format_ok(const char *);
 char	 rot13_byte(char);
 char	*rot13_str(char *);
 const char *
-	 current_time(const char *fmt);
+	 current_time(const char *fmt) FMT_STRFTIME(1);
 const char *
 	 getuser(void);
 int	 check_path(const char *p_base_dir, const char *p_full_path);
