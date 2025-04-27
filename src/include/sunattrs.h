@@ -47,6 +47,7 @@
 
 #define NONNULL
 #define NORETURN			__attribute__((noreturn))
+#define FMT_STRFTIME(arg_no)
 #define PRINTFLIKE(arg_no)
 #define SCANFLIKE(arg_no)
 #define SW_INLINE			inline
