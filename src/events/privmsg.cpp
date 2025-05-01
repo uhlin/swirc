@@ -539,6 +539,10 @@ event_privmsg(struct irc_message_compo *compo)
 	}
 }
 
+/*
+ * Replaces all occurrences of less than/greater than signs with
+ * '&lt;' and '&gt;' respectively, in the given string.
+ */
 void
 replace_signs(std::string &str)
 {
