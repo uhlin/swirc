@@ -303,10 +303,13 @@ notify_pm(CSTRING p_nick, CSTRING p_msg)
 		NotifyNotification	*notification;
 
 		body = strdup_printf("[PM] &lt;%s&gt; %s", p_nick, p_msg);
-		notification = notify_notification_new(SUMMARY_TEXT, body,
+		std::string str(body);
+		free(body);
+		replace_signs(str);
+		notification = notify_notification_new(SUMMARY_TEXT,
+		    str.c_str(),
 		    SWIRC_ICON_PATH);
 		notify_notification_show(notification, nullptr);
-		free(body);
 		g_object_unref(G_OBJECT(notification));
 #else
 		UNUSED_PARAM(p_nick);
@@ -363,10 +366,13 @@ notify_cm(CSTRING p_nick, CSTRING p_dest, CSTRING p_msg)
 		NotifyNotification	*notification;
 
 		body = strdup_printf("%s @ %s: %s", p_nick, p_dest, p_msg);
-		notification = notify_notification_new(SUMMARY_TEXT, body,
+		std::string str(body);
+		free(body);
+		replace_signs(str);
+		notification = notify_notification_new(SUMMARY_TEXT,
+		    str.c_str(),
 		    SWIRC_ICON_PATH);
 		notify_notification_show(notification, nullptr);
-		free(body);
 		g_object_unref(G_OBJECT(notification));
 #else
 		UNUSED_PARAM(p_nick);
