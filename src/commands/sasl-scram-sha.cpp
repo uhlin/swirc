@@ -1,5 +1,5 @@
 /* SASL auth mechanism SCRAM-SHA-256
-   Copyright (C) 2019-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -30,7 +30,7 @@
 #include "base64.h"
 #include "common.h"
 
-#if !defined(BSD) && !defined(WIN32)
+#ifndef BSD
 #include <random>
 #endif
 #include <stdexcept>
@@ -38,12 +38,6 @@
 
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
-
-#if WIN32
-extern "C" {
-#include "compat/stdlib.h" /* arc4random_uniform() */
-}
-#endif
 
 #include "../assertAPI.h"
 #include "../config.h"
@@ -110,7 +104,7 @@ generate_and_store_nonce(void)
 	    "!\"#$%&'()*+-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`"
 	    "abcdefghijklmnopqrstuvwxyz{|}~";
 
-#if defined(BSD) || defined(WIN32)
+#ifdef BSD
 	for (size_t i = 0; i < ARRAY_SIZE(nonce); i++) {
 		nonce[i] = legal_index[arc4random_uniform
 		    (sizeof legal_index - 1)];

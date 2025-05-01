@@ -34,16 +34,10 @@
 #endif
 
 #include <inttypes.h>
-#if !defined(BSD) && !defined(WIN32)
+#ifndef BSD
 #include <random>
 #endif
 #include <stdexcept>
-
-#if WIN32
-extern "C" {
-#include "compat/stdlib.h" /* arc4random_uniform() */
-}
-#endif
 
 #include "config.h"
 #include "dataClassify.h"
@@ -173,7 +167,7 @@ get_username_fake(void)
 	    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	    "abcdefghijklmnopqrstuvwxyz";
 
-#if defined(BSD) || defined(WIN32)
+#ifdef BSD
 	for (size_t i = 0; i < ARRAY_SIZE(identd::fakename); i++) {
 		identd::fakename[i] = legal_index[arc4random_uniform
 		    (sizeof legal_index - 1)];
