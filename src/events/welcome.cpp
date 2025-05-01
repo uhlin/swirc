@@ -81,6 +81,10 @@ event_welcome(struct irc_message_compo *compo)
 		} else {
 			err_log(EPROTO, "event_welcome(%s): warning: "
 			    "already received welcome", compo->command);
+			printtext_print("warn", "The IRC server sent event "
+			    "welcome (%s) twice! Killing the connection...",
+			    compo->command);
+			net_kill_connection();
 			return;
 		}
 	}
