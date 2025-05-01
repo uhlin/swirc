@@ -532,3 +532,16 @@ event_privmsg(struct irc_message_compo *compo)
 		err_log(0, "%s: error: unknown exception", __func__);
 	}
 }
+
+void
+replace_signs(std::string &str)
+{
+	const std::string lt("&lt;");
+	const std::string gt("&gt;");
+	size_t pos;
+
+	while ((pos = str.find("<", 0)) != std::string::npos)
+		str.replace(pos, 1, lt);
+	while ((pos = str.find(">", 0)) != std::string::npos)
+		str.replace(pos, 1, gt);
+}
