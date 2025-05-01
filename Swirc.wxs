@@ -72,6 +72,21 @@
 			    Source="c:\out\swirc-x64\en_US.dic" />
 		</Component>
 
+		<!-- BEGIN LibreSSL -->
+		<Component Id="crypto_dll" Bitness="always64">
+			<File
+			    Id="crypto_dll_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\crypto-56.dll" />
+		</Component>
+		<Component Id="ssl_dll" Bitness="always64">
+			<File
+			    Id="ssl_dll_file"
+			    KeyPath="yes"
+			    Source="c:\out\swirc-x64\ssl-59.dll" />
+		</Component>
+		<!-- END LibreSSL -->
+
 		<!-- BEGIN MINGW -->
 		<Component Id="libgcc_dll" Bitness="always64">
 			<File
@@ -222,6 +237,9 @@
 
 		<ComponentRef Id="en_US_aff" />
 		<ComponentRef Id="en_US_dic" />
+
+		<ComponentRef Id="crypto_dll" />
+		<ComponentRef Id="ssl_dll" />
 
 		<ComponentRef Id="libgcc_dll" />
 		<ComponentRef Id="libstdcpp_dll" />

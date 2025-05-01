@@ -69,6 +69,8 @@ dist: $(DIST_DEPS) $(HTMLHELP_DIR)swirc.chm
 	copy "hunspell-$(HUNSPELL_VERSION)\$(MACHINE)\$(DLL_libwinpthread)" $(DEST)
 	copy "hunspell-en-us\en_US.aff" $(DEST)
 	copy "hunspell-en-us\en_US.dic" $(DEST)
+	copy "libressl-$(LIBRESSL_VERSION)\$(MACHINE)\$(DLL_crypto)" $(DEST)
+	copy "libressl-$(LIBRESSL_VERSION)\$(MACHINE)\$(DLL_ssl)" $(DEST)
 	copy "pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll" $(DEST)
 	copy "src\trusted_roots.pem" $(DEST)
 	copy "swirc.exe" $(DEST)
@@ -96,6 +98,8 @@ setupfile: dist Swirc.wxs
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(NAME_libidn).dll"
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(NAME_libintl).dll"
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\libcurl.dll"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_crypto)"
+	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_ssl)"
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\pdcurses.dll"
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\swirc.exe"
 	wix build -arch $(MSI_ARCH) -culture "en-us" -ext WixToolset.UI.wixext Swirc.wxs -out "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"

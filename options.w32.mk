@@ -41,6 +41,10 @@ NAME_libidn = libidn-12
 NAME_libintl = libintl-8
 NAME_libssl = ssl
 
+# LibreSSL DLLs
+DLL_crypto = crypto-56.dll
+DLL_ssl = ssl-59.dll
+
 # MINGW hunspell
 DLL_libgcc = libgcc_s_seh-1.dll
 DLL_libstdcpp = libstdc++-6.dll
