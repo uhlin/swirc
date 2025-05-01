@@ -52,7 +52,7 @@ namespace DesktopNotificationManagerCompat {
 			 * LocalServer32 key is also registered
 			 * through their manifest.
 			 */
-			s_aumid = L"";
+			s_aumid.clear();
 			s_registeredAumidAndComServer = true;
 			return S_OK;
 		}
@@ -211,8 +211,8 @@ namespace DesktopNotificationManagerCompat {
 		    &toastStatics));
 		RETURN_IF_FAILED(toastStatics.As(&toastStatics2));
 		RETURN_IF_FAILED(toastStatics2->get_History(&nativeHistory));
-		*history = std::unique_ptr<DesktopNotificationHistoryCompat>
-		    (new DesktopNotificationHistoryCompat(s_aumid.c_str(),
+		*history = std::make_unique<DesktopNotificationHistoryCompat>
+		    (DesktopNotificationHistoryCompat(s_aumid.c_str(),
 		    nativeHistory));
 		return S_OK;
 	}
@@ -284,9 +284,10 @@ namespace DesktopNotificationManagerCompat {
 
 DesktopNotificationHistoryCompat::DesktopNotificationHistoryCompat
     (const wchar_t *aumid, ComPtr<IToastNotificationHistory> history)
+    : m_history(history)
 {
 	m_aumid		= std::wstring(aumid);
-	m_history	= history;
+//	m_history	= history;
 }
 
 HRESULT
