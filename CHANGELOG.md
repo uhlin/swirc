@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 - Changed the program to kill the IRC server connection if event
   welcome is received more than once. Which for example can happen if
   ZNC loses its IRC server connection, and that causes troubles.
+- Changed the program to replace less than/greater than signs with
+  `&lt;` and `&gt;` respectively, this in notifications.
 - Fixed a few Clang Tidy warnings.
 - Replaced calls to `getenv()` with `getenv_s()`.
 - Replaced calls to `sscanf()` with `sscanf_s()`.
