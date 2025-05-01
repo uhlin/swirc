@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
   - `wcsncpy()` with `wcsncpy_s()`.
   - `wcstombs()` with `wcstombs_s()`.
 - `Swirc.wxs`: converted v3 source to v4 source.
+- Upgraded to [LibreSSL](https://www.libressl.org/) 4.1.0
 
 ## [3.5.4] - 2025-02-22 ##
 - **Added** lowercase `/znc` subcommands used for auto complete.
