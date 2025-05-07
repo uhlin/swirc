@@ -22,6 +22,8 @@ main: $(TGTS)
 
 include tests/recompile.mk
 
+$(OBJS): $(SRC_DIR)include/swircpaths.h
+
 check: $(SRC_DIR)include/swircpaths.h $(OBJS)
 	$(RM) $(RECOMPILE)
 	$(Q) strip --strip-symbol=main $(SRC_DIR)main.o
