@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
 - Changed the program to replace less than/greater than signs with
   `&lt;` and `&gt;` respectively, this in notifications.
 - Fixed a few Clang Tidy warnings.
+- Fixed building with `GNUMAKEFLAGS=--shuffle=reverse`. Reported by
+  Lucas Nussbaum. Thanks!
 - Replaced calls to `getenv()` with `getenv_s()`.
 - Replaced calls to `sscanf()` with `sscanf_s()`.
 
