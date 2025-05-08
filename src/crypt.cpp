@@ -143,9 +143,9 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 		    1)));
 		out_str[decdat_len] = '\0';
 		memcpy(out_str, decdat, static_cast<size_t>(decdat_len));
-	} catch (const std::runtime_error &e) {
+	} catch (const std::exception &ex) {
 		error = true;
-		err_log(0, "%s: %s", __func__, e.what());
+		err_log(0, "%s: %s", __func__, ex.what());
 	} catch (...) {
 		error = true;
 		err_log(0, "%s: %s", __func__, "unknown exception!");
@@ -231,9 +231,9 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 
 		if (b64_encode(encdat, encdat_len, b64str, size) == -1)
 			throw std::runtime_error("base64 error");
-	} catch (const std::runtime_error &e) {
+	} catch (const std::exception &ex) {
 		error = true;
-		err_log(0, "%s: %s", __func__, e.what());
+		err_log(0, "%s: %s", __func__, ex.what());
 	} catch (...) {
 		error = true;
 		err_log(0, "%s: %s", __func__, "unknown exception!");
