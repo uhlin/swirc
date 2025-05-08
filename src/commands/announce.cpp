@@ -353,16 +353,21 @@ cmd_announce(CSTRING data)
 	arg[1] = strtok_r(nullptr, sep, &last);
 	arg[2] = strtok_r(nullptr, sep, &last);
 
-	if (strings_match(subcmd, "doit"))
-		subcmd_doit(arg[0]);
-	else if (strings_match(subcmd, "list"))
-		subcmd_list();
-	else if (strings_match(subcmd, "new"))
-		subcmd_new(arg[0], arg[1], arg[2]);
-	else if (strings_match(subcmd, "rm"))
-		subcmd_rm(arg[0]);
-	else
-		printtext_print("err", "%s: invalid subcommand", cmd);
+	try {
+		if (strings_match(subcmd, "doit"))
+			subcmd_doit(arg[0]);
+		else if (strings_match(subcmd, "list"))
+			subcmd_list();
+		else if (strings_match(subcmd, "new"))
+			subcmd_new(arg[0], arg[1], arg[2]);
+		else if (strings_match(subcmd, "rm"))
+			subcmd_rm(arg[0]);
+		else
+			printtext_print("err", "%s: invalid subcommand", cmd);
+	} catch (const std::exception &ex) {
+		printtext_print("err", "%s: exception: %s", cmd, ex.what());
+	}
+
 	free(dcopy);
 }
 
