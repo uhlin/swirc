@@ -177,7 +177,9 @@ subcmd_doit(CSTRING arg)
 	} else if (!is_numeric(arg)) {
 		printtext_print("err", "%s: bad argument", __func__);
 		return;
-	} else if (!getval_strtol(arg, 0, announcements.size() - 1, &val)) {
+	} else if (!getval_strtol(arg,
+	    0, size_to_long(__func__, announcements.size() - 1),
+	    &val)) {
 		printtext_print("err", "%s: bad number", __func__);
 		return;
 	}
@@ -288,7 +290,9 @@ subcmd_rm(CSTRING arg)
 	} else if (is_numeric(arg)) {
 		long int num = 0;
 
-		if (!getval_strtol(arg, 0, announcements.size() - 1, &num)) {
+		if (!getval_strtol(arg,
+		    0, size_to_long(__func__, announcements.size() - 1),
+		    &num)) {
 			printtext_print("err", "%s: bad number", __func__);
 			return;
 		}
