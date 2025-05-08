@@ -1,5 +1,5 @@
 /* Send announcements on IRC
-   Copyright (C) 2024, 2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include <climits>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -359,4 +360,17 @@ cmd_announce(CSTRING data)
 	else
 		printtext_print("err", "%s: invalid subcommand", cmd);
 	free(dcopy);
+}
+
+long int
+size_to_long(CSTRING fn, const size_t size)
+{
+	if (size > LONG_MAX) {
+		char buf[200] = { '\0' };
+
+		(void)snprintf(buf, sizeof buf, "%s: long maximum exceeded",
+		    fn);
+		throw std::overflow_error(&buf[0]);
+	}
+	return static_cast<long int>(size);
 }
