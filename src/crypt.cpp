@@ -1,5 +1,5 @@
 /* crypt.cpp
-   Copyright (C) 2022-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -29,6 +29,7 @@
 
 #include "common.h"
 
+#include <climits>
 #include <stdexcept>
 
 #include "base64.h"
@@ -291,5 +292,7 @@ crypt_strlen(cryptstr_const_t str)
 
 	while (*ptr != '\0')
 		ptr++;
-	return (ptr - str);
+	if ((ptr - str) > INT_MAX)
+		throw std::overflow_error("integer maximum exceeded");
+	return static_cast<int>(ptr - str);
 }
