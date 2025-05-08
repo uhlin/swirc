@@ -15,6 +15,8 @@ All notable changes to this project will be documented in this file.
 - Fixed a few Clang Tidy warnings.
 - Fixed building with `GNUMAKEFLAGS=--shuffle=reverse`. Reported by
   Lucas Nussbaum. Thanks!
+- Fixed conversion from type `A` -> `B`, possible loss of
+  data. Multiple occurrences.
 - Replaced calls to `getenv()` with `getenv_s()`.
 - Replaced calls to `sscanf()` with `sscanf_s()`.
 
@@ -22,7 +24,6 @@ All notable changes to this project will be documented in this file.
 - Added a help file with documentation.
 - Changed to static linking of the exe.
 - Replaced calls to:
-  - `strncpy()` with `strncpy_s()`.
   - `wcsncpy()` with `wcsncpy_s()`.
   - `wcstombs()` with `wcstombs_s()`.
 - `Swirc.wxs`: converted v3 source to v4 source.
