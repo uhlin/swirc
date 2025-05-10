@@ -205,7 +205,7 @@ read_and_write(SOCKET sock, SSL *ssl, FILE *fp, intmax_t &bytes_rem)
 		if (!isValid(ssl))
 			throw std::runtime_error("ssl object invalid");
 		if ((ret = SSL_read(ssl, addrof(buf[0]), (bytes_rem < bufsize ?
-		    bytes_rem : bufsize))) > 0) {
+		    static_cast<int>(bytes_rem) : bufsize))) > 0) {
 			if (!isValid(fp) ||
 			    fwrite(addrof(buf[0]), 1, ret, fp) !=
 			    static_cast<size_t>(ret))
@@ -1835,7 +1835,7 @@ send_doit(SSL *ssl, dcc_send *send_obj)
 		static const int	bufsize = static_cast<int>(sizeof buf);
 
 		bytes = ((send_obj->bytes_rem < bufsize)
-			 ? send_obj->bytes_rem
+			 ? static_cast<int>(send_obj->bytes_rem)
 			 : bufsize);
 		if (!isValid(send_obj->fileptr))
 			break;
