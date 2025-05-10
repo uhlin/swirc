@@ -115,6 +115,8 @@ void cmd_dcc(const char *);
 
 void dcc_init(void);
 void dcc_deinit(void);
+
+int imax_to_int(const char *, const intmax_t);
 __SWIRC_END_DECLS
 
 #ifdef __cplusplus

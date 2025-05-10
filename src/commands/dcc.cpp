@@ -50,6 +50,7 @@ namespace fs = std::filesystem;
 #if WIN32
 #include <io.h>
 #endif
+#include <limits.h>
 #include <stdexcept>
 #if UNIX
 #include <unistd.h>
@@ -1503,6 +1504,19 @@ dcc_deinit(void)
 		send_db.clear();
 
 	(void) napms(100);
+}
+
+int
+imax_to_int(const char *fn, const intmax_t i)
+{
+	if (i > INT_MAX) {
+		char buf[200] = { '\0' };
+
+		(void)snprintf(buf, sizeof buf, "%s: integer maximum exceeded",
+		    fn);
+		throw std::overflow_error(&buf[0]);
+	}
+	return static_cast<int>(i);
 }
 
 void
