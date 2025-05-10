@@ -661,7 +661,8 @@ ftp_data_conn::get_file(void)
 			} else
 				total += bytes_received;
 			if (this->filesz != -1) {
-				print_complete(this->path, total, this->filesz,
+				print_complete(this->path,
+				    TO_DBL(total), TO_DBL(this->filesz),
 				    printed);
 			}
 		} else if (bytes_received == 0) {
@@ -816,7 +817,8 @@ ftp_data_conn::send_file(void)
 			bytes_rem -= bytes_sent;
 			total += bytes_sent;
 
-			print_complete(this->path, total, this->filesz,
+			print_complete(this->path,
+			    TO_DBL(total), TO_DBL(this->filesz),
 			    printed);
 		}
 	}

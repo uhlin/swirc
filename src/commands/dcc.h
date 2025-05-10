@@ -36,6 +36,8 @@ typedef int SOCKET;
 #define SOCKET_ERROR -1
 #endif
 
+#define TO_DBL(_var) static_cast<double>(_var)
+
 #ifdef __cplusplus
 //lint -sem(dcc_get::destroy,cleanup)
 class dcc_get {

@@ -1007,7 +1007,8 @@ list_get(void)
 		printtext(&ctx, "%sHas completed%s: %s (%.2f%%)",
 		    COLOR2, TXT_NORMAL,
 		    (x.has_completed() ? _("Yes") : _("No")),
-		    percentage(x.filesize - x.bytes_rem, x.filesize));
+		    percentage(TO_DBL(x.filesize - x.bytes_rem),
+		    TO_DBL(x.filesize)));
 
 		get_time(str1, x.start);
 		get_time(str2, x.stop);
@@ -1049,7 +1050,8 @@ list_send(void)
 		printtext(&ctx, "%sHas completed%s: %s (%.2f%%)",
 		    COLOR2, TXT_NORMAL,
 		    (x.has_completed() ? _("Yes") : _("No")),
-		    percentage(filesize - x.bytes_rem, filesize));
+		    percentage(TO_DBL(filesize - x.bytes_rem),
+		    TO_DBL(filesize)));
 
 		objnum++;
 	}
