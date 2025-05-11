@@ -311,6 +311,44 @@ output_values_for_all_settings(void)
 }
 
 static void
+output_values_for_all_settings_v2(void)
+{
+	char		*cp[2];
+	char		 fmt[2][100];
+	const int	 i = static_cast<int>(longest_set_count);
+	int		 ret[2];
+
+	cp[0] = &fmt[0][0];
+	cp[1] = &fmt[1][0];
+
+	ret[0] = snprintf(cp[0], sizeof(fmt[0]), "%%%ds %%7s %%s", i);
+	ret[1] = snprintf(cp[1], sizeof(fmt[1]), "%%%ds %%7s %%s", i);
+
+	if (ret[0] < 0 || static_cast<size_t>(ret[0]) >= sizeof(fmt[0]) ||
+	    ret[1] < 0 || static_cast<size_t>(ret[1]) >= sizeof(fmt[1])) {
+		printtext_print("err", "snprintf() error");
+		return;
+	}
+
+	printtext_print("none", cp[0], "Name", "Type", "Value");
+	printtext_print("none", cp[0], "----", "----", "-----");
+
+	FOREACH_CDV() {
+		const char	*name = cdv_p->setting_name;
+		const char	*type = get_setting_type(cdv_p);
+		std::string	 value("");
+
+		if (!strings_match(name, "ftp_pass") &&
+		    !strings_match(name, "sasl_password"))
+			value.assign(Config(name));
+		else
+			value.assign(xstrnlen(Config(name), 20), '*');
+
+		printtext_print("none", cp[1], name, type, value.c_str());
+	}
+}
+
+static void
 set_value_for_setting_ok_hook(const char *setting, const char *value)
 {
 	if (strings_match(setting, "dcc_upload_dir") ||
@@ -784,7 +822,7 @@ cmd_set(const char *data)
 	const char	*setting, *value;
 
 	if (strings_match(data, "")) {
-		output_values_for_all_settings();
+		output_values_for_all_settings_v2();
 		return;
 	}
 
