@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
   reduced duplication.
 - Changed `squeeze_text_deco_wide()` in order to make it more accurate
   for its task.
+- Changed the output of `/set`. When called without any arguments it
+  lists all settings by columns.
 - Changed the program to kill the IRC server connection if event
   welcome is received more than once. Which for example can happen if
   ZNC loses its IRC server connection, and that causes troubles.
