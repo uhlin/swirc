@@ -75,6 +75,8 @@
 
 static PCONF_HTBL_ENTRY hash_table[300] = { NULL };
 
+static size_t longest_set_count = 0;
+
 static struct tagConfDefValues {
 	const char		*setting_name;
 	enum setting_type	 type;
@@ -428,8 +430,14 @@ get_list_of_matching_settings(const char *search_var)
 void
 config_init(void)
 {
+	size_t len = 0;
+
 	ENTRY_FOREACH() {
 		*entry_p = NULL;
+	}
+	FOREACH_CDV() {
+		if ((len = strlen(cdv_p->setting_name)) > longest_set_count)
+			longest_set_count = len;
 	}
 }
 
