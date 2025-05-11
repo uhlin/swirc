@@ -16,6 +16,8 @@ typedef struct tagCONF_HTBL_ENTRY {
 } CONF_HTBL_ENTRY, *PCONF_HTBL_ENTRY;
 
 __SWIRC_BEGIN_DECLS
+void output_values_for_all_settings(void);
+void output_values_for_all_settings_v2(void);
 
 /*lint -sem(get_list_of_matching_settings, r_null) */
 

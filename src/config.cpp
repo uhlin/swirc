@@ -297,7 +297,7 @@ output_value_for_specific_setting(const char *setting)
 	print_and_free("/set: no such setting", NULL);
 }
 
-static void
+void
 output_values_for_all_settings(void)
 {
 	PRINTTEXT_CONTEXT	ctx;
@@ -310,7 +310,7 @@ output_values_for_all_settings(void)
 	}
 }
 
-static void
+void
 output_values_for_all_settings_v2(void)
 {
 	char		*cp[2];
