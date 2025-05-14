@@ -2,7 +2,7 @@
 
 # Swirc configure script
 #
-# SPDX-FileCopyrightText: Copyright 2016-2024 Markus Uhlin
+# SPDX-FileCopyrightText: Copyright 2016-2025 Markus Uhlin
 # SPDX-License-Identifier: BSD-3-Clause
 
 MAKE_DEF_FILE=options.mk
@@ -95,7 +95,7 @@ case "$(uname -s)" in
 "Darwin")
 	os_MAC
 	;;
-"FreeBSD" | "OpenBSD")
+"FreeBSD")
 	os_BSD
 	;;
 "GNU")
@@ -118,6 +118,15 @@ EOF
 	;;
 "NetBSD")
 	os_NETBSD
+	;;
+"OpenBSD")
+	os_BSD
+
+	if [ "$(uname -m)" = "sparc64" ]; then
+		cat <<EOF >>$MAKE_DEF_FILE
+LDLIBS += -lstdc++fs
+EOF
+	fi
 	;;
 *)
 	echo "OS not supported!"
