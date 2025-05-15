@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-02-22 09:28+0100\n"
-"PO-Revision-Date: 2025-02-19 03:45+0100\n"
+"PO-Revision-Date: 2025-05-15 19:32+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -170,7 +170,7 @@ msgstr ""
 
 #: ../src/commands/dcc.cpp:1911
 msgid "already sent file"
-msgstr ""
+msgstr "fichier déjà envoyé"
 
 #: ../src/commands/dcc.cpp:1914
 msgid "the send object is in a locked state"
@@ -178,33 +178,33 @@ msgstr ""
 
 #: ../src/commands/dcc.cpp:1919
 msgid "file open error"
-msgstr ""
+msgstr "erreur d'ouverture du fichier"
 
 #: ../src/commands/dcc.cpp:1938
 #, c-format
 msgid "%s: successfully sent file: %s"
-msgstr ""
+msgstr "%s: fichier envoyé avec succès: %s"
 
 #: ../src/commands/dcc.cpp:1942
 #, c-format
 msgid "%s: file transfer incomplete: %s"
-msgstr ""
+msgstr "%s: transfert de fichier incomplet: %s"
 
 #: ../src/commands/ftp.cpp:181
 msgid "Invalid username"
-msgstr ""
+msgstr "Nom d'utilisateur invalide"
 
 #: ../src/commands/ftp.cpp:183
 msgid "Too long password"
-msgstr ""
+msgstr "Mot de passe trop long"
 
 #: ../src/commands/ftp.cpp:185
 msgid "Invalid hostname"
-msgstr ""
+msgstr "Nom d'hôte invalide"
 
 #: ../src/commands/ftp.cpp:187
 msgid "Invalid port number"
-msgstr ""
+msgstr "Numéro de port invalide"
 
 #: ../src/commands/ftp.cpp:190 ../src/network.cpp:308
 msgid "Unable to get a list of IP addresses"
@@ -218,62 +218,62 @@ msgstr "Impossible d'établir une connexion"
 #: ../src/commands/ftp.cpp:204 ../src/commands/ftp.cpp:873
 #: ../src/commands/ftp.cpp:1257
 msgid "Cannot send"
-msgstr ""
+msgstr "Ne peut pas envoyer"
 
 #: ../src/commands/ftp.cpp:510
 msgid "Failed to create an endpoint for communication"
-msgstr ""
+msgstr "Échec de la création d'un point de terminaison pour la communication"
 
 #: ../src/commands/ftp.cpp:801
 #, c-format
 msgid "%s: bytes sent mismatch bytes read"
-msgstr ""
+msgstr "%s: les octets envoyés ne correspondent pas aux octets lus"
 
 #: ../src/commands/ftp.cpp:863 ../src/commands/ftp.cpp:1245
 msgid "No control connection"
-msgstr ""
+msgstr "Aucune connexion de contrôle"
 
 #: ../src/commands/ftp.cpp:866 ../src/commands/ftp.cpp:888
 #: ../src/commands/ftp.cpp:1253
 msgid "Invalid network socket"
-msgstr ""
+msgstr "Socket réseau non valide"
 
 #: ../src/commands/ftp.cpp:950 ../src/commands/ftp.cpp:1036
 msgid "Blank file path"
-msgstr ""
+msgstr "Chemin du fichier vierge"
 
 #: ../src/commands/ftp.cpp:1249
 msgid "Already in passive mode"
-msgstr ""
+msgstr "Déjà en mode passif"
 
 #: ../src/commands/ftp.cpp:1272
 msgid "Failed to enter passive mode"
-msgstr ""
+msgstr "Échec de l'entrée en mode passif"
 
 #: ../src/commands/theme.c:313
 #, c-format
 msgid "failed to remove: %s"
-msgstr ""
+msgstr "échec de la suppression: %s"
 
 #: ../src/commands/theme.c:333
 msgid "no such theme in the database"
-msgstr ""
+msgstr "aucun thème de ce type dans la base de données"
 
 #: ../src/commands/theme.c:353
 msgid "theme installed (use 'set' to activate it)"
-msgstr ""
+msgstr "thème installé (utilisez 'set' pour l'activer)"
 
 #: ../src/commands/theme.c:356
 msgid "failed to install the theme :-("
-msgstr ""
+msgstr "échec de l'installation du thème :-("
 
 #: ../src/commands/theme.c:404
 msgid "non-existent"
-msgstr ""
+msgstr "inexistant"
 
 #: ../src/commands/theme.c:417
 msgid "theme activated"
-msgstr ""
+msgstr "thème activé"
 
 #: ../src/events/account.cpp:56
 #, c-format
@@ -288,7 +288,7 @@ msgstr "%s%s%c %s%s@%s%s s'est déconnecté de son compte"
 #: ../src/events/away.cpp:55
 #, c-format
 msgid "%s%s%c %s%s@%s%s is no longer marked as being away!"
-msgstr ""
+msgstr "%s%s%c %s%s@%s%s n'est plus marqué comme étant absent!"
 
 #: ../src/events/away.cpp:68
 #, c-format
@@ -365,7 +365,7 @@ msgstr "%s%s%s a changé son nom d'hôte en %s%s@%s%s"
 
 #: ../src/events/invite.cpp:56
 msgid "The invitation has been passed onto the end user"
-msgstr ""
+msgstr "L'invitation a été transmise à l'utilisateur final"
 
 #: ../src/events/invite.cpp:103
 #, c-format
@@ -439,7 +439,7 @@ msgstr ""
 
 #: ../src/include/commandhelp.h:60
 msgid "Send announcements on IRC."
-msgstr ""
+msgstr "Envoyer des annonces sur IRC."
 
 #: ../src/include/commandhelp.h:65
 msgid "usage: /away [reason]"
