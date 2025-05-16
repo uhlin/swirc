@@ -2,34 +2,34 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added a few micro-optimizations.
-- Added usage of `textBuf_emplace_back()` in _multiple_ places thus
+- **Added** a few micro-optimizations.
+- **Added** usage of `textBuf_emplace_back()` in _multiple_ places thus
   reduced duplication.
-- Changed `squeeze_text_deco_wide()` in order to make it more accurate
+- **Changed** `squeeze_text_deco_wide()` in order to make it more accurate
   for its task.
-- Changed the output of `/set`. When called without any arguments it
+- **Changed** the output of `/set`. When called without any arguments it
   lists all settings by columns.
-- Changed the program to kill the IRC server connection if event
+- **Changed** the program to kill the IRC server connection if event
   welcome is received more than once. Which for example can happen if
   ZNC loses its IRC server connection, and that causes troubles.
-- Changed the program to replace less than/greater than signs with
+- **Changed** the program to replace less than/greater than signs with
   `&lt;` and `&gt;` respectively, this in notifications.
-- Fixed a few Clang Tidy warnings.
-- Fixed building with `GNUMAKEFLAGS=--shuffle=reverse`. Reported by
+- **Fixed** a few Clang Tidy warnings.
+- **Fixed** building with `GNUMAKEFLAGS=--shuffle=reverse`. Reported by
   Lucas Nussbaum. Thanks!
-- Fixed conversion from type `A` -> `B`, possible loss of
+- **Fixed** conversion from type `A` -> `B`, possible loss of
   data. Multiple occurrences.
-- Replaced calls to `getenv()` with `getenv_s()`.
-- Replaced calls to `sscanf()` with `sscanf_s()`.
+- **Replaced** calls to `getenv()` with `getenv_s()`.
+- **Replaced** calls to `sscanf()` with `sscanf_s()`.
 
 ### Windows ###
-- Added a help file with documentation.
-- Changed to static linking of the exe.
-- Replaced calls to:
+- **Added** a help file with documentation.
+- **Changed** to static linking of the exe.
+- **Replaced** calls to:
   - `wcsncpy()` with `wcsncpy_s()`.
   - `wcstombs()` with `wcstombs_s()`.
 - `Swirc.wxs`: converted v3 source to v4 source.
-- Upgraded to [LibreSSL](https://www.libressl.org/) 4.1.0
+- **Upgraded** to [LibreSSL](https://www.libressl.org/) 4.1.0
 
 ## [3.5.4] - 2025-02-22 ##
 - **Added** lowercase `/znc` subcommands used for auto complete.
