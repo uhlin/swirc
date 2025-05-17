@@ -84,7 +84,7 @@ ALG = SHA256
 MSI_ARCH = x64
 SIGNTOOL_FLAGS = -f "C:\CERTS\SwircDevelopmentTeam.pfx"\
 	-fd $(ALG)\
-	-tr "http://timestamp.sectigo.com"\
+	-tr "http://timestamp.digicert.com"\
 	-td $(ALG)\
 	-v
 
