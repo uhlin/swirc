@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.5.5] - 2025-05-17 ##
 - **Added** a few micro-optimizations.
 - **Added** usage of `textBuf_emplace_back()` in _multiple_ places thus
   reduced duplication.
