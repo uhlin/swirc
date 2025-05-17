@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-02-22 09:28+0100\n"
-"PO-Revision-Date: 2025-02-22 09:26+0100\n"
+"PO-Revision-Date: 2025-05-17 12:18+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -440,7 +440,7 @@ msgstr "käyttö:"
 
 #: ../src/include/commandhelp.h:60
 msgid "Send announcements on IRC."
-msgstr ""
+msgstr "Lähetä ilmoituksia IRC:ssä."
 
 #: ../src/include/commandhelp.h:65
 msgid "usage: /away [reason]"

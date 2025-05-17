@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-02-22 09:28+0100\n"
-"PO-Revision-Date: 2025-02-19 04:03+0100\n"
+"PO-Revision-Date: 2025-05-17 12:27+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -144,7 +144,7 @@ msgstr "Um die Datei abzurufen, geben Sie Folgendes ein:"
 #: ../src/commands/dcc.cpp:1856 ../src/commands/ftp.cpp:793
 #, c-format
 msgid "%s: file read error"
-msgstr ""
+msgstr "%s: Fehler beim Lesen der Datei"
 
 #: ../src/commands/dcc.cpp:1861
 #, c-format
@@ -154,58 +154,58 @@ msgstr ""
 #: ../src/commands/dcc.cpp:1878
 #, c-format
 msgid "started: %s"
-msgstr ""
+msgstr "gestartet: %s"
 
 #: ../src/commands/dcc.cpp:1879
 #, c-format
 msgid "stopped: %s"
-msgstr ""
+msgstr "gestoppt: %s"
 
 #: ../src/commands/dcc.cpp:1896
 msgid "read request error"
-msgstr ""
+msgstr "Leseanforderungsfehler"
 
 #: ../src/commands/dcc.cpp:1903
 msgid "unable to find the send object"
-msgstr ""
+msgstr "Das Sendeobjekt konnte nicht gefunden werden"
 
 #: ../src/commands/dcc.cpp:1911
 msgid "already sent file"
-msgstr ""
+msgstr "bereits gesendete Datei"
 
 #: ../src/commands/dcc.cpp:1914
 msgid "the send object is in a locked state"
-msgstr ""
+msgstr "das Sendeobjekt befindet sich im gesperrten Zustand"
 
 #: ../src/commands/dcc.cpp:1919
 msgid "file open error"
-msgstr ""
+msgstr "Fehler beim Öffnen der Datei"
 
 #: ../src/commands/dcc.cpp:1938
 #, c-format
 msgid "%s: successfully sent file: %s"
-msgstr ""
+msgstr "%s: Datei erfolgreich gesendet: %s"
 
 #: ../src/commands/dcc.cpp:1942
 #, c-format
 msgid "%s: file transfer incomplete: %s"
-msgstr ""
+msgstr "%s: Dateiübertragung unvollständig: %s"
 
 #: ../src/commands/ftp.cpp:181
 msgid "Invalid username"
-msgstr ""
+msgstr "Ungültiger Benutzername"
 
 #: ../src/commands/ftp.cpp:183
 msgid "Too long password"
-msgstr ""
+msgstr "Zu langes Passwort"
 
 #: ../src/commands/ftp.cpp:185
 msgid "Invalid hostname"
-msgstr ""
+msgstr "Ungültiger Hostname"
 
 #: ../src/commands/ftp.cpp:187
 msgid "Invalid port number"
-msgstr ""
+msgstr "Ungültige Portnummer"
 
 #: ../src/commands/ftp.cpp:190 ../src/network.cpp:308
 msgid "Unable to get a list of IP addresses"
@@ -219,16 +219,16 @@ msgstr "Fehler beim Herstellen einer Verbindung"
 #: ../src/commands/ftp.cpp:204 ../src/commands/ftp.cpp:873
 #: ../src/commands/ftp.cpp:1257
 msgid "Cannot send"
-msgstr ""
+msgstr "Senden nicht möglich"
 
 #: ../src/commands/ftp.cpp:510
 msgid "Failed to create an endpoint for communication"
-msgstr ""
+msgstr "Es konnte kein Endpunkt für die Kommunikation erstellt werden"
 
 #: ../src/commands/ftp.cpp:801
 #, c-format
 msgid "%s: bytes sent mismatch bytes read"
-msgstr ""
+msgstr "%s: gesendete Bytes stimmen nicht mit gelesenen Bytes überein"
 
 #: ../src/commands/ftp.cpp:863 ../src/commands/ftp.cpp:1245
 msgid "No control connection"
@@ -237,24 +237,24 @@ msgstr ""
 #: ../src/commands/ftp.cpp:866 ../src/commands/ftp.cpp:888
 #: ../src/commands/ftp.cpp:1253
 msgid "Invalid network socket"
-msgstr ""
+msgstr "Ungültiger Netzwerk Socket"
 
 #: ../src/commands/ftp.cpp:950 ../src/commands/ftp.cpp:1036
 msgid "Blank file path"
-msgstr ""
+msgstr "Leerer Dateipfad"
 
 #: ../src/commands/ftp.cpp:1249
 msgid "Already in passive mode"
-msgstr ""
+msgstr "Bereits im passiven Modus"
 
 #: ../src/commands/ftp.cpp:1272
 msgid "Failed to enter passive mode"
-msgstr ""
+msgstr "Der Wechsel in den passiven Modus ist fehlgeschlagen"
 
 #: ../src/commands/theme.c:313
 #, c-format
 msgid "failed to remove: %s"
-msgstr ""
+msgstr "Entfernen fehlgeschlagen: %s"
 
 #: ../src/commands/theme.c:333
 msgid "no such theme in the database"
@@ -270,11 +270,11 @@ msgstr ""
 
 #: ../src/commands/theme.c:404
 msgid "non-existent"
-msgstr ""
+msgstr "nicht existent"
 
 #: ../src/commands/theme.c:417
 msgid "theme activated"
-msgstr ""
+msgstr "Thema aktiviert"
 
 #: ../src/events/account.cpp:56
 #, c-format
