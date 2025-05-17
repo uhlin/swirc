@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-02-22 09:28+0100\n"
-"PO-Revision-Date: 2025-05-15 19:32+0200\n"
+"PO-Revision-Date: 2025-05-17 12:12+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -166,7 +166,7 @@ msgstr "erreur de demande de lecture"
 
 #: ../src/commands/dcc.cpp:1903
 msgid "unable to find the send object"
-msgstr ""
+msgstr "impossible de trouver l'objet d'envoi"
 
 #: ../src/commands/dcc.cpp:1911
 msgid "already sent file"
@@ -174,7 +174,7 @@ msgstr "fichier déjà envoyé"
 
 #: ../src/commands/dcc.cpp:1914
 msgid "the send object is in a locked state"
-msgstr ""
+msgstr "l'objet d'envoi est dans un état verrouillé"
 
 #: ../src/commands/dcc.cpp:1919
 msgid "file open error"
