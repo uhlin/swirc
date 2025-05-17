@@ -1,3 +1,11 @@
+swirc (3.5.5-1) unstable; urgency=medium
+
+  * New upstream version.
+  * Closes: #1104756.
+  * Closes: #1105609.
+
+ -- Markus Uhlin <markus@nifty-networks.net>  Sat, 17 May 2025 18:35:46 +0200
+
 swirc (3.5.4-1) unstable; urgency=medium
 
   * New upstream version.
