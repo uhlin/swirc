@@ -7,7 +7,6 @@ doc/ export-ignore
 doc/rfc1413.txt export-ignore
 doc/rfc2811.txt export-ignore
 doc/rfc2812.txt export-ignore
-htmlhelp/ export-ignore
 maketgz export-ignore
 openbsd/ export-ignore
 runpvs.bat export-ignore
