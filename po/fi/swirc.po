@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-02-22 09:28+0100\n"
+"POT-Creation-Date: 2025-05-17 12:31+0200\n"
 "PO-Revision-Date: 2025-05-17 12:18+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1009
-#: ../src/commands/dcc.cpp:1051 ../src/statusbar.cpp:222
+#: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1010
+#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:222
 msgid "Yes"
 msgstr "Kyllä"
 
-#: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1009
-#: ../src/commands/dcc.cpp:1051 ../src/statusbar.cpp:223
+#: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1010
+#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:223
 msgid "No"
 msgstr "Ei"
 
@@ -32,7 +32,7 @@ msgid "Connect using password? [Y/n]: "
 msgstr "Yhdistä salasanalla? [Y/n]: "
 
 #: ../src/commands/connect.c:219 ../src/commands/connect.c:280
-#: ../src/commands/connect.c:333 ../src/nestHome.c:202
+#: ../src/commands/connect.c:327 ../src/nestHome.c:202
 msgid "input too big"
 msgstr "käyttäjän syöte liian suuri"
 
@@ -50,26 +50,26 @@ msgstr "Palvelimen salasana (ei kaiku): "
 msgid "Your choice (0-%d): "
 msgstr "Valintasi (0-%d): "
 
-#: ../src/commands/connect.c:545
+#: ../src/commands/connect.c:520
 #, c-format
 msgid "Next reconnect attempt in %ld seconds..."
 msgstr "Seuraava uudelleenyhteysyritys %ld sekunnin kuluttua..."
 
-#: ../src/commands/connect.c:557
+#: ../src/commands/connect.c:532
 msgid "Reconnection aborted!"
 msgstr "Uudelleenkytkentä keskeytetty!"
 
-#: ../src/commands/connect.c:597
+#: ../src/commands/connect.c:572
 msgid "Cannot initiate use of the Winsock DLL"
 msgstr "Winsock DLL:n käyttöä ei voi aloittaa"
 
-#: ../src/commands/connect.c:601
+#: ../src/commands/connect.c:576
 msgid "Use of the Winsock DLL granted"
 msgstr "Winsock DLL:n käyttö myönnetty"
 
-#: ../src/commands/ctcp.c:77 ../src/commands/ftp.cpp:860
-#: ../src/commands/ftp.cpp:947 ../src/commands/ftp.cpp:996
-#: ../src/commands/ftp.cpp:1033 ../src/commands/ftp.cpp:1115
+#: ../src/commands/ctcp.c:77 ../src/commands/ftp.cpp:873
+#: ../src/commands/ftp.cpp:960 ../src/commands/ftp.cpp:1009
+#: ../src/commands/ftp.cpp:1046 ../src/commands/ftp.cpp:1128
 msgid "Insufficient arguments"
 msgstr "Riittämättömät argumentit"
 
@@ -92,101 +92,101 @@ msgstr "%s: kielletyt kanavan nimen merkit"
 msgid "Invalid CTCP query"
 msgstr "Virheellinen CTCP kysely"
 
-#: ../src/commands/dcc.cpp:211
+#: ../src/commands/dcc.cpp:212
 msgid "Write error"
 msgstr "Tiedoston kirjoitusvirhe"
 
-#: ../src/commands/dcc.cpp:336
+#: ../src/commands/dcc.cpp:337
 #, c-format
 msgid "%s: wrote: %s"
 msgstr "%s: kirjoitti: %s"
 
-#: ../src/commands/dcc.cpp:339
+#: ../src/commands/dcc.cpp:340
 #, c-format
 msgid "%s: did not complete: %s"
 msgstr "%s: ei suoritettu loppuun: %s"
 
-#: ../src/commands/dcc.cpp:1015
+#: ../src/commands/dcc.cpp:1017
 #, c-format
 msgid "%sStarted%s: %s"
 msgstr "%sAlkoi%s: %s"
 
-#: ../src/commands/dcc.cpp:1017
+#: ../src/commands/dcc.cpp:1019
 #, c-format
 msgid "%sStopped%s: %s"
 msgstr "%sLopetti%s: %s"
 
-#: ../src/commands/dcc.cpp:1403
+#: ../src/commands/dcc.cpp:1393
 #, c-format
 msgid "sending '%s' to %s (%.1f%c)..."
 msgstr "lähetetään '%s' osoitteeseen %s (%.1f%c)..."
 
-#: ../src/commands/dcc.cpp:1494
+#: ../src/commands/dcc.cpp:1484
 msgid "Missing certs. Not starting the DCC server. Please create them."
 msgstr ""
 "SSL sertifikaatit puuttuvat. DCC palvelinta ei käynnistetä. Ole hyvä ja luo "
 "ne."
 
-#: ../src/commands/dcc.cpp:1601
+#: ../src/commands/dcc.cpp:1590
 #, c-format
 msgid "%s: added: '%s' (%.1f%c)"
 msgstr "%s: lisätty: '%s' (%.1f%c)"
 
-#: ../src/commands/dcc.cpp:1603
+#: ../src/commands/dcc.cpp:1592
 #, c-format
 msgid "%s: from: %s <%s@%s>"
 msgstr "%s: lähettäjä: %s <%s@%s>"
 
-#: ../src/commands/dcc.cpp:1605
+#: ../src/commands/dcc.cpp:1594
 msgid "To get the file, type:"
 msgstr "Saadaksesi tiedoston, kirjoita:"
 
-#: ../src/commands/dcc.cpp:1856 ../src/commands/ftp.cpp:793
+#: ../src/commands/dcc.cpp:1845 ../src/commands/ftp.cpp:805
 #, c-format
 msgid "%s: file read error"
 msgstr "%s: tiedostolukuvirhe"
 
-#: ../src/commands/dcc.cpp:1861
+#: ../src/commands/dcc.cpp:1850
 #, c-format
 msgid "%s: tls write error"
 msgstr "%s: tls kirjoitusvirhe"
 
-#: ../src/commands/dcc.cpp:1878
+#: ../src/commands/dcc.cpp:1867
 #, c-format
 msgid "started: %s"
 msgstr "alkoi: %s"
 
-#: ../src/commands/dcc.cpp:1879
+#: ../src/commands/dcc.cpp:1868
 #, c-format
 msgid "stopped: %s"
 msgstr "lopetti: %s"
 
-#: ../src/commands/dcc.cpp:1896
+#: ../src/commands/dcc.cpp:1885
 msgid "read request error"
 msgstr "lukupyynnön virhe"
 
-#: ../src/commands/dcc.cpp:1903
+#: ../src/commands/dcc.cpp:1892
 msgid "unable to find the send object"
 msgstr "lähetysobjektia ei löydy"
 
-#: ../src/commands/dcc.cpp:1911
+#: ../src/commands/dcc.cpp:1900
 msgid "already sent file"
 msgstr "tiedosto on jo lähetetty"
 
-#: ../src/commands/dcc.cpp:1914
+#: ../src/commands/dcc.cpp:1903
 msgid "the send object is in a locked state"
 msgstr "lähetysobjekti on lukitussa tilassa"
 
-#: ../src/commands/dcc.cpp:1919
+#: ../src/commands/dcc.cpp:1908
 msgid "file open error"
 msgstr "tiedoston avaamisvirhe"
 
-#: ../src/commands/dcc.cpp:1938
+#: ../src/commands/dcc.cpp:1927
 #, c-format
 msgid "%s: successfully sent file: %s"
 msgstr "%s: onnistuneesti lähetetty tiedosto: %s"
 
-#: ../src/commands/dcc.cpp:1942
+#: ../src/commands/dcc.cpp:1931
 #, c-format
 msgid "%s: file transfer incomplete: %s"
 msgstr "%s: tiedostonsiirto keskeneräinen: %s"
@@ -211,35 +211,35 @@ msgstr "Virheellinen portin numero"
 msgid "Unable to get a list of IP addresses"
 msgstr "IP osoitteiden luetteloa ei voi saada"
 
-#: ../src/commands/ftp.cpp:193 ../src/commands/ftp.cpp:522
+#: ../src/commands/ftp.cpp:193 ../src/commands/ftp.cpp:533
 #: ../src/network.cpp:175
 msgid "Failed to establish a connection"
 msgstr "Yhteyden muodostaminen epäonnistui"
 
-#: ../src/commands/ftp.cpp:204 ../src/commands/ftp.cpp:873
+#: ../src/commands/ftp.cpp:204 ../src/commands/ftp.cpp:886
 #: ../src/commands/ftp.cpp:1257
 msgid "Cannot send"
 msgstr "Ei voi lähettää"
 
-#: ../src/commands/ftp.cpp:510
+#: ../src/commands/ftp.cpp:521
 msgid "Failed to create an endpoint for communication"
 msgstr "Viestinnän päätepisteen luominen epäonnistui"
 
-#: ../src/commands/ftp.cpp:801
+#: ../src/commands/ftp.cpp:813
 #, c-format
 msgid "%s: bytes sent mismatch bytes read"
 msgstr "%s: lähetetyt tavut eivät täsmää luettuina"
 
-#: ../src/commands/ftp.cpp:863 ../src/commands/ftp.cpp:1245
+#: ../src/commands/ftp.cpp:876 ../src/commands/ftp.cpp:1245
 msgid "No control connection"
 msgstr "Ei ohjausliitäntää"
 
-#: ../src/commands/ftp.cpp:866 ../src/commands/ftp.cpp:888
+#: ../src/commands/ftp.cpp:879 ../src/commands/ftp.cpp:901
 #: ../src/commands/ftp.cpp:1253
 msgid "Invalid network socket"
 msgstr "Virheellinen verkkoliitäntä"
 
-#: ../src/commands/ftp.cpp:950 ../src/commands/ftp.cpp:1036
+#: ../src/commands/ftp.cpp:963 ../src/commands/ftp.cpp:1049
 msgid "Blank file path"
 msgstr "Tyhjä tiedostopolku"
 
@@ -1498,44 +1498,44 @@ msgstr ""
 msgid "%s: fatal: string was truncated"
 msgstr "%s: kohtalokas: merkkijono katkaistiin"
 
-#: ../src/io-loop.c:617
+#: ../src/io-loop.c:596
 #, c-format
 msgid "    Swirc %s by %s"
 msgstr "    Swirc %s, kirjoittanut %s"
 
-#: ../src/io-loop.c:618
+#: ../src/io-loop.c:597
 #, c-format
 msgid "    Compiled on %s%s %s%s"
 msgstr "    Kokoonpantu %s%s %s%s"
 
-#: ../src/io-loop.c:624
+#: ../src/io-loop.c:603
 #, c-format
 msgid "Current language %s%s%s"
 msgstr "Nykyinen kieli %s%s%s"
 
-#: ../src/io-loop.c:627
+#: ../src/io-loop.c:606
 #, c-format
 msgid "Program settings are stored in %s%s%s"
 msgstr "Ohjelman asetukset tallennetaan kansioon %s%s%s"
 
-#: ../src/io-loop.c:629
+#: ../src/io-loop.c:608
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
 msgstr "%c%hd%c väriparia on alustettu"
 
-#: ../src/io-loop.c:631
+#: ../src/io-loop.c:610
 msgid "Type /help for a list of commands; or /help <command>"
 msgstr "Kirjoita /help nähdäksesi komentoluettelon; tai /help <komento>"
 
-#: ../src/io-loop.c:633
+#: ../src/io-loop.c:612
 msgid "for help of a specific command"
 msgstr "saadaksesi apua tietyn komennon suorittamiseen"
 
-#: ../src/io-loop.c:634
+#: ../src/io-loop.c:613
 msgid "Type F1 for keys"
 msgstr "Kirjoita F1 näppäimistön näppäimiä varten"
 
-#: ../src/io-loop.c:636
+#: ../src/io-loop.c:615
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr "Virhelokin koko %s%.1f KB%s"
@@ -1580,7 +1580,7 @@ msgstr "Ikkunan kirjaaminen (refnum: %d) on nyt päällä"
 msgid "A duplicate of option -%c found"
 msgstr "Vaihtoehdosta -%c löytyi kopio"
 
-#: ../src/main.cpp:142
+#: ../src/main.cpp:144
 msgid ""
 "\n"
 "Options:\n"
@@ -1590,123 +1590,123 @@ msgstr ""
 "Vaihtoehdot:\n"
 "\n"
 
-#: ../src/main.cpp:143
+#: ../src/main.cpp:145
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   Käytä IPv4 osoitteita vain\n"
 
-#: ../src/main.cpp:144
+#: ../src/main.cpp:146
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   Käytä IPv6 osoitteita vain\n"
 
-#: ../src/main.cpp:145
+#: ../src/main.cpp:147
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Lähtö help\n"
 
-#: ../src/main.cpp:146
+#: ../src/main.cpp:148
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Älä muuta värimääritysten\n"
 
-#: ../src/main.cpp:147
+#: ../src/main.cpp:149
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr "    -P                   Poista SASL todennus pysyvästi käytöstä\n"
 
-#: ../src/main.cpp:148
+#: ../src/main.cpp:150
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   Poista käytöstä TLS/SSL vertaisvahvistus\n"
 
-#: ../src/main.cpp:149
+#: ../src/main.cpp:151
 msgid "    -S                   Force TLS\n"
 msgstr "    -S                   Pakota TLS\n"
 
-#: ../src/main.cpp:154
+#: ../src/main.cpp:156
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
 msgstr ""
 "    -W <password>        Sama vaikutus kuin lipulla 'p', mutta ei "
 "interaktiivinen\n"
 
-#: ../src/main.cpp:155
+#: ../src/main.cpp:157
 msgid "    -X                   Disable all IRCv3 extensions\n"
 msgstr "    -X                   Poista kaikki IRCv3 laajennukset käytöstä\n"
 
-#: ../src/main.cpp:156
+#: ../src/main.cpp:158
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Muodosta yhteys IRC palvelimeen\n"
 
-#: ../src/main.cpp:157
+#: ../src/main.cpp:159
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Kirjaa virheenkorjausviestejä\n"
 
-#: ../src/main.cpp:158
+#: ../src/main.cpp:160
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Ota Internet Citizen's Band tila käyttöön\n"
 
-#: ../src/main.cpp:159
+#: ../src/main.cpp:161
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr "    -j <join>            Pilkuilla erotettu luettelo kanavista\n"
 
-#: ../src/main.cpp:160
+#: ../src/main.cpp:162
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Online nickname\n"
 
-#: ../src/main.cpp:161
+#: ../src/main.cpp:163
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Kyselyn palvelimen salasanaa (yksityisten "
 "palvelimien)\n"
 
-#: ../src/main.cpp:162
+#: ../src/main.cpp:164
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Oikea nimesi\n"
 
-#: ../src/main.cpp:163
+#: ../src/main.cpp:165
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Sinun käyttäjä nimesi\n"
 
-#: ../src/main.cpp:164
+#: ../src/main.cpp:166
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Lähtö Swirc versio\n"
 
-#: ../src/main.cpp:165
+#: ../src/main.cpp:167
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Config tiedosto\n"
 
-#: ../src/main.cpp:228
+#: ../src/main.cpp:230
 msgid "Unhandled exception!"
 msgstr "Käsittelemätön poikkeus!"
 
-#: ../src/main.cpp:288
+#: ../src/main.cpp:290
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Käyttö: %s [VAIHTOEHTO] ...\n"
 
-#: ../src/main.cpp:378
+#: ../src/main.cpp:380
 msgid "forbidden channel name characters"
 msgstr ""
 
-#: ../src/main.cpp:530
+#: ../src/main.cpp:532
 #, c-format
 msgid "%s: -%c: unrecognized option"
 msgstr "%s: -%c: tunnistamaton vaihtoehto"
 
-#: ../src/main.cpp:535
+#: ../src/main.cpp:537
 #, c-format
 msgid "%s: -%c: option argument missing"
 msgstr "%s: -%c: vaihtoehdon argumentti puuttuu"
 
-#: ../src/main.cpp:701
+#: ../src/main.cpp:706
 msgid "fatal: failed to initialize signal handling"
 msgstr ""
 
-#: ../src/main.cpp:723
+#: ../src/main.cpp:728
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr "fataali: ohjelman suorittaminen pääkäyttäjän oikeuksilla on kielletty"
 
-#: ../src/main.cpp:745
+#: ../src/main.cpp:750
 msgid "Initialization of the Curses library not possible"
 msgstr ""
 
-#: ../src/messagetags.c:149
+#: ../src/messagetags.c:150
 #, c-format
 msgid "%s: server time error"
 msgstr "%s: palvelinaikavirhe"
@@ -1912,20 +1912,20 @@ msgstr "Päätetty"
 msgid "%s: %s not found"
 msgstr "%s: %s ei löydy"
 
-#: ../src/spell.cpp:309
+#: ../src/spell.cpp:317
 msgid "no more suggestions"
 msgstr "ei enempää ehdotuksia"
 
-#: ../src/spell.cpp:336
+#: ../src/spell.cpp:344
 msgid "suggestions:"
 msgstr "ehdotuksia:"
 
-#: ../src/spell.cpp:364
+#: ../src/spell.cpp:372
 #, c-format
 msgid "%ls is correct"
 msgstr "%ls on oikein"
 
-#: ../src/spell.cpp:369
+#: ../src/spell.cpp:377
 #, c-format
 msgid "%ls is incorrect"
 msgstr "%ls on väärä"

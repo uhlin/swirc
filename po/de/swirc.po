@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.4\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-02-22 09:28+0100\n"
+"POT-Creation-Date: 2025-05-17 12:31+0200\n"
 "PO-Revision-Date: 2025-05-17 12:27+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1009
-#: ../src/commands/dcc.cpp:1051 ../src/statusbar.cpp:222
+#: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1010
+#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:222
 msgid "Yes"
 msgstr "Ja"
 
-#: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1009
-#: ../src/commands/dcc.cpp:1051 ../src/statusbar.cpp:223
+#: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1010
+#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:223
 msgid "No"
 msgstr "Nein"
 
@@ -32,7 +32,7 @@ msgid "Connect using password? [Y/n]: "
 msgstr "Mit Passwort verbinden? [Y/n]: "
 
 #: ../src/commands/connect.c:219 ../src/commands/connect.c:280
-#: ../src/commands/connect.c:333 ../src/nestHome.c:202
+#: ../src/commands/connect.c:327 ../src/nestHome.c:202
 msgid "input too big"
 msgstr "Benutzereingabe zu groß"
 
@@ -50,26 +50,26 @@ msgstr "Server Passwort (wird nicht widerhallen): "
 msgid "Your choice (0-%d): "
 msgstr "Ihre Wahl (0-%d): "
 
-#: ../src/commands/connect.c:545
+#: ../src/commands/connect.c:520
 #, c-format
 msgid "Next reconnect attempt in %ld seconds..."
 msgstr "Nächster Wiederverbindungsversuch in %ld Sekunden..."
 
-#: ../src/commands/connect.c:557
+#: ../src/commands/connect.c:532
 msgid "Reconnection aborted!"
 msgstr "Wiederverbindung abgebrochen!"
 
-#: ../src/commands/connect.c:597
+#: ../src/commands/connect.c:572
 msgid "Cannot initiate use of the Winsock DLL"
 msgstr "Verwendung der Winsock DLL kann nicht initiiert werden"
 
-#: ../src/commands/connect.c:601
+#: ../src/commands/connect.c:576
 msgid "Use of the Winsock DLL granted"
 msgstr "Nutzung der Winsock DLL gewährt"
 
-#: ../src/commands/ctcp.c:77 ../src/commands/ftp.cpp:860
-#: ../src/commands/ftp.cpp:947 ../src/commands/ftp.cpp:996
-#: ../src/commands/ftp.cpp:1033 ../src/commands/ftp.cpp:1115
+#: ../src/commands/ctcp.c:77 ../src/commands/ftp.cpp:873
+#: ../src/commands/ftp.cpp:960 ../src/commands/ftp.cpp:1009
+#: ../src/commands/ftp.cpp:1046 ../src/commands/ftp.cpp:1128
 msgid "Insufficient arguments"
 msgstr "Unzureichende Argumente"
 
@@ -92,101 +92,101 @@ msgstr "%s: verbotene Zeichen im Kanalnamen"
 msgid "Invalid CTCP query"
 msgstr "Ungültige CTCP Abfrage"
 
-#: ../src/commands/dcc.cpp:211
+#: ../src/commands/dcc.cpp:212
 msgid "Write error"
 msgstr "Dateischreibfehler"
 
-#: ../src/commands/dcc.cpp:336
+#: ../src/commands/dcc.cpp:337
 #, c-format
 msgid "%s: wrote: %s"
 msgstr "%s: schrieb: %s"
 
-#: ../src/commands/dcc.cpp:339
+#: ../src/commands/dcc.cpp:340
 #, c-format
 msgid "%s: did not complete: %s"
 msgstr "%s: wurde nicht abgeschlossen: %s"
 
-#: ../src/commands/dcc.cpp:1015
+#: ../src/commands/dcc.cpp:1017
 #, c-format
 msgid "%sStarted%s: %s"
 msgstr "%sGestartet%s: %s"
 
-#: ../src/commands/dcc.cpp:1017
+#: ../src/commands/dcc.cpp:1019
 #, c-format
 msgid "%sStopped%s: %s"
 msgstr "%sGestoppt%s: %s"
 
-#: ../src/commands/dcc.cpp:1403
+#: ../src/commands/dcc.cpp:1393
 #, c-format
 msgid "sending '%s' to %s (%.1f%c)..."
 msgstr "sende '%s' an %s (%.1f%c)..."
 
-#: ../src/commands/dcc.cpp:1494
+#: ../src/commands/dcc.cpp:1484
 msgid "Missing certs. Not starting the DCC server. Please create them."
 msgstr ""
 "Fehlende Zertifikate. DCC Server wird nicht gestartet. Bitte erstellen Sie "
 "sie."
 
-#: ../src/commands/dcc.cpp:1601
+#: ../src/commands/dcc.cpp:1590
 #, c-format
 msgid "%s: added: '%s' (%.1f%c)"
 msgstr "%s: hinzugefügt: '%s' (%.1f%c)"
 
-#: ../src/commands/dcc.cpp:1603
+#: ../src/commands/dcc.cpp:1592
 #, c-format
 msgid "%s: from: %s <%s@%s>"
 msgstr "%s: von: %s <%s@%s>"
 
-#: ../src/commands/dcc.cpp:1605
+#: ../src/commands/dcc.cpp:1594
 msgid "To get the file, type:"
 msgstr "Um die Datei abzurufen, geben Sie Folgendes ein:"
 
-#: ../src/commands/dcc.cpp:1856 ../src/commands/ftp.cpp:793
+#: ../src/commands/dcc.cpp:1845 ../src/commands/ftp.cpp:805
 #, c-format
 msgid "%s: file read error"
 msgstr "%s: Fehler beim Lesen der Datei"
 
-#: ../src/commands/dcc.cpp:1861
+#: ../src/commands/dcc.cpp:1850
 #, c-format
 msgid "%s: tls write error"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:1878
+#: ../src/commands/dcc.cpp:1867
 #, c-format
 msgid "started: %s"
 msgstr "gestartet: %s"
 
-#: ../src/commands/dcc.cpp:1879
+#: ../src/commands/dcc.cpp:1868
 #, c-format
 msgid "stopped: %s"
 msgstr "gestoppt: %s"
 
-#: ../src/commands/dcc.cpp:1896
+#: ../src/commands/dcc.cpp:1885
 msgid "read request error"
 msgstr "Leseanforderungsfehler"
 
-#: ../src/commands/dcc.cpp:1903
+#: ../src/commands/dcc.cpp:1892
 msgid "unable to find the send object"
 msgstr "Das Sendeobjekt konnte nicht gefunden werden"
 
-#: ../src/commands/dcc.cpp:1911
+#: ../src/commands/dcc.cpp:1900
 msgid "already sent file"
 msgstr "bereits gesendete Datei"
 
-#: ../src/commands/dcc.cpp:1914
+#: ../src/commands/dcc.cpp:1903
 msgid "the send object is in a locked state"
 msgstr "das Sendeobjekt befindet sich im gesperrten Zustand"
 
-#: ../src/commands/dcc.cpp:1919
+#: ../src/commands/dcc.cpp:1908
 msgid "file open error"
 msgstr "Fehler beim Öffnen der Datei"
 
-#: ../src/commands/dcc.cpp:1938
+#: ../src/commands/dcc.cpp:1927
 #, c-format
 msgid "%s: successfully sent file: %s"
 msgstr "%s: Datei erfolgreich gesendet: %s"
 
-#: ../src/commands/dcc.cpp:1942
+#: ../src/commands/dcc.cpp:1931
 #, c-format
 msgid "%s: file transfer incomplete: %s"
 msgstr "%s: Dateiübertragung unvollständig: %s"
@@ -211,35 +211,35 @@ msgstr "Ungültige Portnummer"
 msgid "Unable to get a list of IP addresses"
 msgstr "Es kann keine Liste mit IP-Adressen abgerufen werden"
 
-#: ../src/commands/ftp.cpp:193 ../src/commands/ftp.cpp:522
+#: ../src/commands/ftp.cpp:193 ../src/commands/ftp.cpp:533
 #: ../src/network.cpp:175
 msgid "Failed to establish a connection"
 msgstr "Fehler beim Herstellen einer Verbindung"
 
-#: ../src/commands/ftp.cpp:204 ../src/commands/ftp.cpp:873
+#: ../src/commands/ftp.cpp:204 ../src/commands/ftp.cpp:886
 #: ../src/commands/ftp.cpp:1257
 msgid "Cannot send"
 msgstr "Senden nicht möglich"
 
-#: ../src/commands/ftp.cpp:510
+#: ../src/commands/ftp.cpp:521
 msgid "Failed to create an endpoint for communication"
 msgstr "Es konnte kein Endpunkt für die Kommunikation erstellt werden"
 
-#: ../src/commands/ftp.cpp:801
+#: ../src/commands/ftp.cpp:813
 #, c-format
 msgid "%s: bytes sent mismatch bytes read"
 msgstr "%s: gesendete Bytes stimmen nicht mit gelesenen Bytes überein"
 
-#: ../src/commands/ftp.cpp:863 ../src/commands/ftp.cpp:1245
+#: ../src/commands/ftp.cpp:876 ../src/commands/ftp.cpp:1245
 msgid "No control connection"
 msgstr ""
 
-#: ../src/commands/ftp.cpp:866 ../src/commands/ftp.cpp:888
+#: ../src/commands/ftp.cpp:879 ../src/commands/ftp.cpp:901
 #: ../src/commands/ftp.cpp:1253
 msgid "Invalid network socket"
 msgstr "Ungültiger Netzwerk Socket"
 
-#: ../src/commands/ftp.cpp:950 ../src/commands/ftp.cpp:1036
+#: ../src/commands/ftp.cpp:963 ../src/commands/ftp.cpp:1049
 msgid "Blank file path"
 msgstr "Leerer Dateipfad"
 
@@ -1446,44 +1446,44 @@ msgstr ""
 msgid "%s: fatal: string was truncated"
 msgstr ""
 
-#: ../src/io-loop.c:617
+#: ../src/io-loop.c:596
 #, c-format
 msgid "    Swirc %s by %s"
 msgstr "    Swirc %s von %s"
 
-#: ../src/io-loop.c:618
+#: ../src/io-loop.c:597
 #, c-format
 msgid "    Compiled on %s%s %s%s"
 msgstr "    Kompiliert %s%s %s%s"
 
-#: ../src/io-loop.c:624
+#: ../src/io-loop.c:603
 #, c-format
 msgid "Current language %s%s%s"
 msgstr "Aktuelle Sprache %s%s%s"
 
-#: ../src/io-loop.c:627
+#: ../src/io-loop.c:606
 #, c-format
 msgid "Program settings are stored in %s%s%s"
 msgstr "Programmeinstellungen werden in %s%s%s gespeichert"
 
-#: ../src/io-loop.c:629
+#: ../src/io-loop.c:608
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
 msgstr "Es wurden %c%hd%c Farbpaare initialisiert"
 
-#: ../src/io-loop.c:631
+#: ../src/io-loop.c:610
 msgid "Type /help for a list of commands; or /help <command>"
 msgstr "Geben Sie /help für eine Liste von Befehlen ein; oder /help <Befehl>"
 
-#: ../src/io-loop.c:633
+#: ../src/io-loop.c:612
 msgid "for help of a specific command"
 msgstr "für Hilfe zu einem bestimmten Befehl"
 
-#: ../src/io-loop.c:634
+#: ../src/io-loop.c:613
 msgid "Type F1 for keys"
 msgstr "Geben Sie F1 für Tastaturtasten ein"
 
-#: ../src/io-loop.c:636
+#: ../src/io-loop.c:615
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr "Größe des Fehlerprotokolls %s%.1f KB%s"
@@ -1528,7 +1528,7 @@ msgstr "Die Protokollierung für das Fenster (refnum: %d) ist jetzt aktiviert"
 msgid "A duplicate of option -%c found"
 msgstr ""
 
-#: ../src/main.cpp:142
+#: ../src/main.cpp:144
 msgid ""
 "\n"
 "Options:\n"
@@ -1538,124 +1538,124 @@ msgstr ""
 "Optionen:\n"
 "\n"
 
-#: ../src/main.cpp:143
+#: ../src/main.cpp:145
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   Nur IPv4-Adressen verwenden\n"
 
-#: ../src/main.cpp:144
+#: ../src/main.cpp:146
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   Nur IPv6-Adressen verwenden\n"
 
-#: ../src/main.cpp:145
+#: ../src/main.cpp:147
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Hilfe anzeigen\n"
 
-#: ../src/main.cpp:146
+#: ../src/main.cpp:148
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Farbdefinitionen nicht ändern\n"
 
-#: ../src/main.cpp:147
+#: ../src/main.cpp:149
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr ""
 "    -P                   SASL-Authentifizierung dauerhaft deaktivieren\n"
 
-#: ../src/main.cpp:148
+#: ../src/main.cpp:150
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   TLS/SSL peer verification deaktivieren\n"
 
-#: ../src/main.cpp:149
+#: ../src/main.cpp:151
 msgid "    -S                   Force TLS\n"
 msgstr "    -S                   TLS erzwingen\n"
 
-#: ../src/main.cpp:154
+#: ../src/main.cpp:156
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
 msgstr ""
 "    -W <password>        Gleicher Effekt wie Flag 'p', aber nicht "
 "interaktiv\n"
 
-#: ../src/main.cpp:155
+#: ../src/main.cpp:157
 msgid "    -X                   Disable all IRCv3 extensions\n"
 msgstr "    -X                   Alle IRCv3 Erweiterungen deaktivieren\n"
 
-#: ../src/main.cpp:156
+#: ../src/main.cpp:158
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Mit IRC-Server verbinden\n"
 
-#: ../src/main.cpp:157
+#: ../src/main.cpp:159
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Debug Protokollierung\n"
 
-#: ../src/main.cpp:158
+#: ../src/main.cpp:160
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Internet Citizen's Band aktivieren\n"
 
-#: ../src/main.cpp:159
+#: ../src/main.cpp:161
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr ""
 "    -j <join>            Kommata getrennte Liste von Kanälen zum joinen\n"
 
-#: ../src/main.cpp:160
+#: ../src/main.cpp:162
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Online Nickname\n"
 
-#: ../src/main.cpp:161
+#: ../src/main.cpp:163
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Server-Passwort anfordern (für private Server)\n"
 
-#: ../src/main.cpp:162
+#: ../src/main.cpp:164
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Dein echter Name\n"
 
-#: ../src/main.cpp:163
+#: ../src/main.cpp:165
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Dein Benutzername\n"
 
-#: ../src/main.cpp:164
+#: ../src/main.cpp:166
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Swirc-Version anzeigen\n"
 
-#: ../src/main.cpp:165
+#: ../src/main.cpp:167
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsdatei\n"
 
-#: ../src/main.cpp:228
+#: ../src/main.cpp:230
 msgid "Unhandled exception!"
 msgstr ""
 
-#: ../src/main.cpp:288
+#: ../src/main.cpp:290
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Anwendung: %s [FLAGGE] ...\n"
 
-#: ../src/main.cpp:378
+#: ../src/main.cpp:380
 msgid "forbidden channel name characters"
 msgstr ""
 
-#: ../src/main.cpp:530
+#: ../src/main.cpp:532
 #, c-format
 msgid "%s: -%c: unrecognized option"
 msgstr ""
 
-#: ../src/main.cpp:535
+#: ../src/main.cpp:537
 #, c-format
 msgid "%s: -%c: option argument missing"
 msgstr ""
 
-#: ../src/main.cpp:701
+#: ../src/main.cpp:706
 msgid "fatal: failed to initialize signal handling"
 msgstr ""
 
-#: ../src/main.cpp:723
+#: ../src/main.cpp:728
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr ""
 
-#: ../src/main.cpp:745
+#: ../src/main.cpp:750
 msgid "Initialization of the Curses library not possible"
 msgstr ""
 
-#: ../src/messagetags.c:149
+#: ../src/messagetags.c:150
 #, c-format
 msgid "%s: server time error"
 msgstr ""
@@ -1859,20 +1859,20 @@ msgstr "Beendet"
 msgid "%s: %s not found"
 msgstr "%s: %s nicht gefunden"
 
-#: ../src/spell.cpp:309
+#: ../src/spell.cpp:317
 msgid "no more suggestions"
 msgstr "keine Vorschläge mehr"
 
-#: ../src/spell.cpp:336
+#: ../src/spell.cpp:344
 msgid "suggestions:"
 msgstr "Vorschläge:"
 
-#: ../src/spell.cpp:364
+#: ../src/spell.cpp:372
 #, c-format
 msgid "%ls is correct"
 msgstr "%ls ist korrekt"
 
-#: ../src/spell.cpp:369
+#: ../src/spell.cpp:377
 #, c-format
 msgid "%ls is incorrect"
 msgstr "%ls ist falsch"
