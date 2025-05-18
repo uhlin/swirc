@@ -143,3 +143,15 @@ License: OpenSSL
  STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Files: tests/fuzz/append-log.c
+Copyright: 2023 Markus Uhlin
+License: ISC
+
+Files: tests/fuzz/ircfuzz.py
+Copyright: 2017 Joseph Bisch
+License: Expat
+
+Files: tests/swirc.msg.py
+Copyright: 2021 Michael Ortmann
+License: Expat
