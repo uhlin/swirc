@@ -72,6 +72,13 @@ Files: src/network-openssl.c
 Copyright: 2016-2024 Markus Uhlin
 License: ISC
 
+Files: src/strcat.c
+       src/strcpy.c
+       src/wcscat.c
+       src/wcscpy.c
+Copyright: 2014, 2022 Markus Uhlin
+License: ISC
+
 Files: debian/*
 Copyright: 2019-2025 Markus Uhlin <markus@nifty-networks.net>
 License: ISC
