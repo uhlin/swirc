@@ -5,7 +5,7 @@ Source: https://github.com/uhlin/swirc
 
 Files: *
 Copyright: 2012-2025 Markus Uhlin <markus@nifty-networks.net>
-License: BSD-3
+License: BSD-3-clause
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are
  met:
@@ -39,7 +39,7 @@ Files: src/DesktopNotificationManagerCompat.cpp
        src/ToastsAPI.cpp
        src/ToastsAPI.hpp
 Copyright: Microsoft
-License: MIT
+License: Expat
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
