@@ -3,8 +3,10 @@ swirc (3.5.5-1) unstable; urgency=medium
   * New upstream version.
     - Closes: #1104756.
     - Closes: #1105609.
+  * Updated the 'Standards-Version' to 4.7.2.0.
+  * Fixed the debian/copyright file with the 'lrc' tool.
 
- -- Markus Uhlin <markus@nifty-networks.net>  Sun, 18 May 2025 09:48:02 +0200
+ -- Markus Uhlin <markus@nifty-networks.net>  Sun, 18 May 2025 12:20:01 +0200
 
 swirc (3.5.4-1) unstable; urgency=medium
 
