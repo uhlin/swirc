@@ -69,7 +69,7 @@ Copyright: 2012-2024 Markus Uhlin
 License: ISC
 
 Files: src/network-openssl.c
-Copyright: 2016-2024 Markus Uhlin
+Copyright: 2016-2025 Markus Uhlin
 License: ISC
 
 Files: src/strcat.c
