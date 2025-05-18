@@ -41,6 +41,10 @@ Files: po/de/swirc.po
 Copyright: Markus Uhlin
 License: public-domain
 
+Files: po/makecab.sh
+Copyright: 2023 Markus Uhlin
+License: ISC
+
 Files: src/DesktopNotificationManagerCompat.cpp
        src/DesktopNotificationManagerCompat.hpp
        src/ToastsAPI.cpp
@@ -69,6 +73,14 @@ License: Expat
 Files: src/b64_decode.c
        src/b64_encode.c
 Copyright: 1996 1998 Internet Software Consortium
+License: ISC
+
+Files: src/colors.c
+Copyright: 2020 Markus Uhlin
+License: ISC
+
+Files: src/include/colors.h
+Copyright: 2019 Markus Uhlin
 License: ISC
 
 Files: src/interpreter.cpp
