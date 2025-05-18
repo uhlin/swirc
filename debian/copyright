@@ -34,6 +34,13 @@ License: BSD-3-clause
  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  DAMAGE.
 
+Files: po/de/swirc.po
+       po/fi/swirc.po
+       po/fr/swirc.po
+       po/sv/swirc.po
+Copyright: Markus Uhlin
+License: public-domain
+
 Files: src/DesktopNotificationManagerCompat.cpp
        src/DesktopNotificationManagerCompat.hpp
        src/ToastsAPI.cpp
