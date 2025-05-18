@@ -79,6 +79,10 @@ Files: src/strcat.c
 Copyright: 2014, 2022 Markus Uhlin
 License: ISC
 
+Files: src/strnlen.c
+Copyright: 2021 Markus Uhlin
+License: ISC
+
 Files: src/swirc.1
 Copyright: 2016-2024 Markus Uhlin
 License: ISC
