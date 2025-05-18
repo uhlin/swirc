@@ -38,8 +38,9 @@ Files: po/de/swirc.po
        po/fi/swirc.po
        po/fr/swirc.po
        po/sv/swirc.po
-Copyright: Markus Uhlin
+Copyright: n/a
 License: public-domain
+ The .po files are public domain.
 
 Files: po/makecab.sh
 Copyright: 2023 Markus Uhlin
