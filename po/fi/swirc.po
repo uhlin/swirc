@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.5\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-05-17 12:31+0200\n"
-"PO-Revision-Date: 2025-05-17 12:18+0200\n"
+"PO-Revision-Date: 2025-06-08 23:19+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -522,10 +522,12 @@ msgid ""
 "Send a CTCP query to 'target', which is either a nickname or an IRC\n"
 "channel."
 msgstr ""
+"Lähetä CTCP kysely kohteelle 'target', joka on joko lempinimi tai IRC\n"
+"kanava."
 
 #: ../src/include/commandhelp.h:123
 msgid "Query can be either:"
-msgstr ""
+msgstr "Kysely voi olla joko:"
 
 #: ../src/include/commandhelp.h:131
 msgid "usage: /cap [ls | list]"
@@ -725,6 +727,8 @@ msgid ""
 "Retrieve and store files on a FTP server. (The communication is done\n"
 "in clear text, i.e. unencrypted.)"
 msgstr ""
+"Hae ja tallenna tiedostoja FTP palvelimelle. (Viestintä tapahtuu\n"
+"selkotekstinä eli salaamattomana.)"
 
 #: ../src/include/commandhelp.h:301
 msgid "usage: /gline <nick!user@host> [<duration> :<reason>]"
