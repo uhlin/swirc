@@ -51,6 +51,7 @@
 #include "io-loop.h"		/* get_prompt() */
 #include "libUtils.h"
 #include "main.h"
+#include "mutex.h"
 #include "network.h"
 #include "nicklist.h"
 #include "printtext.h"		/* includes window.h */
@@ -96,6 +97,15 @@ volatile bool	g_redrawing_window = false;
 
 /* Objects with internal linkage
    ============================= */
+
+/*
+ * Hash table mutex
+ */
+#if defined(UNIX)
+static pthread_mutex_t	htbl_mtx;
+#elif defined(WIN32)
+static HANDLE		htbl_mtx;
+#endif
 
 static PIRC_WINDOW hash_table[200] = { NULL };
 
@@ -469,17 +479,39 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
 	    false);
 }
 
+static void
+create_htbl_mtx(void)
+{
+	mutex_new(&htbl_mtx);
+}
+
 void
 windowSystem_init(void)
 {
+#if defined(UNIX)
+	static pthread_once_t	init_done = PTHREAD_ONCE_INIT;
+#elif defined(WIN32)
+	static init_once_t	init_done = ONCE_INITIALIZER;
+#endif
+
 #if defined(UNIX) && USE_LIBNOTIFY
 	if (!notify_init("Swirc IRC client"))
 		err_log(0, "%s: notify_init: error", __func__);
 #endif
 
+#if defined(UNIX)
+	if ((errno = pthread_once(&init_done, create_htbl_mtx)) != 0)
+		err_sys("%s: pthread_once", __func__);
+#elif defined(WIN32)
+	if ((errno = init_once(&init_done, create_htbl_mtx)) != 0)
+		err_sys("%s: init_once", __func__);
+#endif
+
+	mutex_lock(&htbl_mtx);
 	FOREACH_HASH_TABLE_ENTRY() {
 		*entry_p = NULL;
 	}
+	mutex_unlock(&htbl_mtx);
 
 	g_status_window = g_active_window = NULL;
 	g_ntotal_windows = 0;
@@ -498,12 +530,14 @@ windowSystem_deinit(void)
 {
 	PIRC_WINDOW p, tmp;
 
+	mutex_lock(&htbl_mtx);
 	FOREACH_HASH_TABLE_ENTRY() {
 		for (p = *entry_p; p != NULL; p = tmp) {
 			tmp = p->next;
 			hUndef(p);
 		}
 	}
+	mutex_unlock(&htbl_mtx);
 
 #if defined(UNIX) && USE_LIBNOTIFY
 	notify_uninit();
@@ -667,7 +701,9 @@ destroy_chat_window(CSTRING label)
 	else if ((window = window_by_label(label)) == NULL)
 		return ENOENT;
 
+	mutex_lock(&htbl_mtx);
 	hUndef(window);
+	mutex_unlock(&htbl_mtx);
 	reassign_window_refnums();
 	const errno_t ret = change_window_by_refnum(g_ntotal_windows);
 	(void) ret;
@@ -705,7 +741,9 @@ spawn_chat_window(CSTRING label, CSTRING title)
 	inst_ctx.pan    = term_new_panel(LINES - 2, 0, 1, 0);
 	inst_ctx.refnum = g_ntotal_windows + 1;
 
+	mutex_lock(&htbl_mtx);
 	entry = hInstall(&inst_ctx);
+	mutex_unlock(&htbl_mtx);
 	apply_window_options(panel_window(entry->pan));
 	const errno_t ret = change_window_by_label(entry->label);
 	(void) ret;
@@ -806,12 +844,14 @@ window_foreach_destroy_names(void)
 void
 window_foreach_rejoin_all_channels(void)
 {
+	mutex_lock(&htbl_mtx);
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
 			if (is_irc_channel(window->label))
 				(void) net_send("JOIN %s", window->label);
 		}
 	}
+	mutex_unlock(&htbl_mtx);
 }
 
 void
