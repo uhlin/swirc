@@ -138,7 +138,7 @@ change_window(PIRC_WINDOW window)
 
 	g_active_window = window;
 	titlebar(" %s ", (window->title != NULL ? window->title : ""));
-	statusbar_update_display_beta();
+	statusbar_update();
 
 	if ((pwin = readline_get_active_pwin()) != NULL) {
 		STRING prompt;
@@ -392,7 +392,7 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 		(void) atomic_swap_bool(&g_redrawing_window, false);
 	}
 
-	statusbar_update_display_beta();
+	statusbar_update();
 	readline_top_panel();
 }
 

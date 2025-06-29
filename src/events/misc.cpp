@@ -1,5 +1,5 @@
 /* Miscellaneous events
-   Copyright (C) 2014-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -307,7 +307,7 @@ event_channelModeIs(struct irc_message_compo *compo)
 			ctx.window->received_chanmodes = true;
 		}
 
-		statusbar_update_display_beta();
+		statusbar_update();
 		readline_top_panel();
 	} catch (const std::runtime_error &e) {
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1_WARN,
@@ -486,7 +486,7 @@ event_userModeIs(struct irc_message_compo *compo)
 		    ARRAY_SIZE(g_user_modes)) != 0)
 			throw std::runtime_error("unable to store user modes!");
 
-		statusbar_update_display_beta();
+		statusbar_update();
 		readline_top_panel();
 	} catch (const std::runtime_error &e) {
 		PRINTTEXT_CONTEXT	ctx;

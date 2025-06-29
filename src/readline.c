@@ -678,7 +678,7 @@ process(volatile struct readline_session_context *ctx)
 			    g_readline_pos->y != ctx->numins) {
 				g_readline_pos->x = ctx->bufpos;
 				g_readline_pos->y = ctx->numins;
-				statusbar_update_display_beta();
+				statusbar_update();
 				readline_top_panel();
 			}
 		}

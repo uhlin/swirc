@@ -411,7 +411,7 @@ set_theme(const char *name)
 
 	titlebar(" %s ", (g_active_window->title ? g_active_window->title :
 	    ""));
-	statusbar_update_display_beta();
+	statusbar_update();
 
 	ctx.spec_type = TYPE_SPEC1_SUCCESS;
 	printtext(&ctx, "%s", _("theme activated"));

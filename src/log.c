@@ -1,5 +1,5 @@
 /* IRC logs i.e. not logs for system messages
-   Copyright (C) 2020-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -223,6 +223,6 @@ log_toggle_on_off(void)
 		g_active_window->logging = true;
 	}
 
-	statusbar_update_display_beta();
+	statusbar_update();
 	readline_top_panel();
 }

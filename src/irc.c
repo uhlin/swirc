@@ -359,7 +359,7 @@ irc_deinit(void)
 	event_batch_deinit();
 	event_names_deinit();
 
-	statusbar_update_display_beta();
+	statusbar_update();
 	readline_top_panel();
 }
 
@@ -816,7 +816,7 @@ irc_set_my_nickname(const char *nick)
 	g_my_nickname = sw_strdup(nick);
 	mutex_unlock(&nickname_mtx);
 
-	statusbar_update_display_beta();
+	statusbar_update();
 	readline_top_panel();
 }
 
