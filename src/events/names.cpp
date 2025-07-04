@@ -430,6 +430,8 @@ event_names_htbl_lookup(CSTRING nick, CSTRING channel)
 int
 event_names_htbl_insert(CSTRING nick, CSTRING channel)
 {
+	int ret;
+
 	if (nick == nullptr || strings_match(nick, ""))
 		return ERR;
 
@@ -438,7 +440,11 @@ event_names_htbl_insert(CSTRING nick, CSTRING channel)
 	ctx.channel	= const_cast<STRING>(channel);
 	ctx.nick	= const_cast<STRING>(nick);
 
-	if (hInstall(&ctx) == ERR)
+	mutex_lock(&g_win_htbl_mtx);
+	ret = hInstall(&ctx);
+	mutex_unlock(&g_win_htbl_mtx);
+
+	if (ret == ERR)
 		return ERR;
 	if (nicklist_update(window_by_label(channel)) != 0)
 		debug("event_names_htbl_insert: nicklist_update: error");
