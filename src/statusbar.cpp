@@ -202,6 +202,7 @@ statusbar_update(void)
 	(void) werase(win);
 	(void) wbkgd(win, (blank | COLOR_PAIR(pair_n) | A_NORMAL));
 
+	mutex_lock(&g_actwin_mtx);
 	(void) str.append(" ");
 	(void) str.append(lb);
 	(void) str.append(int_to_str(g_active_window->refnum));
@@ -225,6 +226,7 @@ statusbar_update(void)
 
 	(void) str.append(" ");
 	(void) str.append(g_active_window->scroll_mode ? _("-- MORE --") : "");
+	mutex_unlock(&g_actwin_mtx);
 
 	out_s = sw_strdup(str.c_str());
 	printtext_puts(win, (g_no_colors ? squeeze_text_deco(out_s) : out_s),

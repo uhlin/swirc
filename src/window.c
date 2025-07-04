@@ -144,7 +144,9 @@ change_window(PIRC_WINDOW window)
 	if (window->nicklist.pan != NULL)
 		(void) top_panel(window->nicklist.pan);
 
+	mutex_lock(&g_actwin_mtx);
 	g_active_window = window;
+	mutex_unlock(&g_actwin_mtx);
 	titlebar(" %s ", (window->title != NULL ? window->title : ""));
 	statusbar_update();
 
