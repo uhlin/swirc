@@ -94,6 +94,15 @@ const int	g_scroll_amount = 6;
 _Atomic(int)	g_ntotal_windows = 0;
 volatile bool	g_redrawing_window = false;
 
+/*
+ * Active window mutex
+ */
+#if defined(UNIX)
+pthread_mutex_t		g_actwin_mtx;
+#elif defined(WIN32)
+HANDLE			g_actwin_mtx;
+#endif
+
 /* Objects with internal linkage
    ============================= */
 
@@ -479,8 +488,9 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
 }
 
 static void
-create_htbl_mtx(void)
+create_mutexes(void)
 {
+	mutex_new(&g_actwin_mtx);
 	mutex_new(&htbl_mtx);
 }
 
@@ -499,10 +509,10 @@ windowSystem_init(void)
 #endif
 
 #if defined(UNIX)
-	if ((errno = pthread_once(&init_done, create_htbl_mtx)) != 0)
+	if ((errno = pthread_once(&init_done, create_mutexes)) != 0)
 		err_sys("%s: pthread_once", __func__);
 #elif defined(WIN32)
-	if ((errno = init_once(&init_done, create_htbl_mtx)) != 0)
+	if ((errno = init_once(&init_done, create_mutexes)) != 0)
 		err_sys("%s: init_once", __func__);
 #endif
 

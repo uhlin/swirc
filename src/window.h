@@ -77,6 +77,15 @@ extern const int	g_scroll_amount;
 extern _Atomic(int)	g_ntotal_windows;
 extern volatile bool	g_redrawing_window;
 
+/*
+ * Active window mutex
+ */
+#if defined(UNIX)
+extern pthread_mutex_t	g_actwin_mtx;
+#elif defined(WIN32)
+extern HANDLE		g_actwin_mtx;
+#endif
+
 void windowSystem_init(void);
 void windowSystem_deinit(void);
 
