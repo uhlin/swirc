@@ -12,6 +12,7 @@
 #endif
 
 #include "atomicops.h"
+#include "mutex.h"
 #include "textBuffer.h"
 
 #define ACTWINLABEL g_active_window->label

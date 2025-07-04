@@ -51,7 +51,6 @@
 #include "io-loop.h"		/* get_prompt() */
 #include "libUtils.h"
 #include "main.h"
-#include "mutex.h"
 #include "network.h"
 #include "nicklist.h"
 #include "printtext.h"		/* includes window.h */
