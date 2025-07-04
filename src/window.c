@@ -332,6 +332,8 @@ reassign_window_refnums(void)
 {
 	int ref_count = 1;
 
+	mutex_lock(&htbl_mtx);
+
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
 			/*
@@ -342,6 +344,8 @@ reassign_window_refnums(void)
 				window->refnum = ++ref_count;
 		}
 	}
+
+	mutex_unlock(&htbl_mtx);
 
 	sw_assert(g_status_window->refnum == 1);
 	sw_assert(ref_count == g_ntotal_windows);
