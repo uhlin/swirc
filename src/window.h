@@ -82,8 +82,10 @@ extern volatile bool	g_redrawing_window;
  */
 #if defined(UNIX)
 extern pthread_mutex_t	g_actwin_mtx;
+extern pthread_mutex_t	g_win_htbl_mtx;
 #elif defined(WIN32)
 extern HANDLE		g_actwin_mtx;
+extern HANDLE		g_win_htbl_mtx;
 #endif
 
 void windowSystem_init(void);

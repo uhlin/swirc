@@ -94,26 +94,16 @@ const int	g_scroll_amount = 6;
 _Atomic(int)	g_ntotal_windows = 0;
 volatile bool	g_redrawing_window = false;
 
-/*
- * Active window mutex
- */
 #if defined(UNIX)
 pthread_mutex_t		g_actwin_mtx;
+pthread_mutex_t		g_win_htbl_mtx;
 #elif defined(WIN32)
 HANDLE			g_actwin_mtx;
+HANDLE			g_win_htbl_mtx;
 #endif
 
 /* Objects with internal linkage
    ============================= */
-
-/*
- * Hash table mutex
- */
-#if defined(UNIX)
-static pthread_mutex_t	htbl_mtx;
-#elif defined(WIN32)
-static HANDLE		htbl_mtx;
-#endif
 
 static PIRC_WINDOW hash_table[200] = { NULL };
 
@@ -332,7 +322,7 @@ reassign_window_refnums(void)
 {
 	int ref_count = 1;
 
-	mutex_lock(&htbl_mtx);
+	mutex_lock(&g_win_htbl_mtx);
 
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
@@ -345,7 +335,7 @@ reassign_window_refnums(void)
 		}
 	}
 
-	mutex_unlock(&htbl_mtx);
+	mutex_unlock(&g_win_htbl_mtx);
 
 	sw_assert(g_status_window->refnum == 1);
 	sw_assert(ref_count == g_ntotal_windows);
@@ -497,7 +487,7 @@ static void
 create_mutexes(void)
 {
 	mutex_new(&g_actwin_mtx);
-	mutex_new(&htbl_mtx);
+	mutex_new(&g_win_htbl_mtx);
 }
 
 void
@@ -522,11 +512,11 @@ windowSystem_init(void)
 		err_sys("%s: init_once", __func__);
 #endif
 
-	mutex_lock(&htbl_mtx);
+	mutex_lock(&g_win_htbl_mtx);
 	FOREACH_HASH_TABLE_ENTRY() {
 		*entry_p = NULL;
 	}
-	mutex_unlock(&htbl_mtx);
+	mutex_unlock(&g_win_htbl_mtx);
 
 	g_status_window = g_active_window = NULL;
 	g_ntotal_windows = 0;
@@ -545,14 +535,14 @@ windowSystem_deinit(void)
 {
 	PIRC_WINDOW p, tmp;
 
-	mutex_lock(&htbl_mtx);
+	mutex_lock(&g_win_htbl_mtx);
 	FOREACH_HASH_TABLE_ENTRY() {
 		for (p = *entry_p; p != NULL; p = tmp) {
 			tmp = p->next;
 			hUndef(p);
 		}
 	}
-	mutex_unlock(&htbl_mtx);
+	mutex_unlock(&g_win_htbl_mtx);
 
 #if defined(UNIX) && USE_LIBNOTIFY
 	notify_uninit();
@@ -716,9 +706,9 @@ destroy_chat_window(CSTRING label)
 	else if ((window = window_by_label(label)) == NULL)
 		return ENOENT;
 
-	mutex_lock(&htbl_mtx);
+	mutex_lock(&g_win_htbl_mtx);
 	hUndef(window);
-	mutex_unlock(&htbl_mtx);
+	mutex_unlock(&g_win_htbl_mtx);
 	reassign_window_refnums();
 	const errno_t ret = change_window_by_refnum(g_ntotal_windows);
 	(void) ret;
@@ -756,9 +746,9 @@ spawn_chat_window(CSTRING label, CSTRING title)
 	inst_ctx.pan    = term_new_panel(LINES - 2, 0, 1, 0);
 	inst_ctx.refnum = g_ntotal_windows + 1;
 
-	mutex_lock(&htbl_mtx);
+	mutex_lock(&g_win_htbl_mtx);
 	entry = hInstall(&inst_ctx);
-	mutex_unlock(&htbl_mtx);
+	mutex_unlock(&g_win_htbl_mtx);
 	apply_window_options(panel_window(entry->pan));
 	const errno_t ret = change_window_by_label(entry->label);
 	(void) ret;
@@ -859,14 +849,14 @@ window_foreach_destroy_names(void)
 void
 window_foreach_rejoin_all_channels(void)
 {
-	mutex_lock(&htbl_mtx);
+	mutex_lock(&g_win_htbl_mtx);
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
 			if (is_irc_channel(window->label))
 				(void) net_send("JOIN %s", window->label);
 		}
 	}
-	mutex_unlock(&htbl_mtx);
+	mutex_unlock(&g_win_htbl_mtx);
 }
 
 void
