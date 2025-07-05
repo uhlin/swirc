@@ -121,7 +121,10 @@ typedef unsigned int UINT;
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
+
+typedef FILE *STREAM;
 
 #include <wchar.h>
 
