@@ -797,6 +797,8 @@ window_close_all_priv_conv(void)
 	char	*priv_conv[200] = { NULL };
 	size_t	 pc_assigned = 0;
 
+	mutex_lock(&g_win_htbl_mtx);
+
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
 			if (window == g_status_window ||
@@ -813,6 +815,7 @@ window_close_all_priv_conv(void)
 	}
 
   out_of_both_loops:
+	mutex_unlock(&g_win_htbl_mtx);
 
 	if (pc_assigned == 0) {
 		(void) napms(222);
