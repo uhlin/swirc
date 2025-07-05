@@ -569,6 +569,7 @@ make_window_title(CSTRING nick)
 		return addrof(title[0]);
 	}
 
+	mutex_lock(&g_win_htbl_mtx);
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
 			PNAMES n;
@@ -582,9 +583,11 @@ make_window_title(CSTRING nick)
 				continue;
 			(void) snprintf(title, sizeof title, "%s (%s): %s",
 			    nick, n->account, n->rl_name);
+			mutex_unlock(&g_win_htbl_mtx);
 			return addrof(title[0]);
 		}
 	}
+	mutex_unlock(&g_win_htbl_mtx);
 
 	set_nick_as_title(title, nick, sizeof title);
 	return addrof(title[0]);
