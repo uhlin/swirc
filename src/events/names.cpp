@@ -635,7 +635,11 @@ event_names(struct irc_message_compo *compo)
 			struct hInstall_context ctx(channel, nick, (ret > 0
 			    ? privs : ""));
 
-			if (hInstall(&ctx) != OK)
+			mutex_lock(&g_win_htbl_mtx);
+			const int iret = hInstall(&ctx);
+			mutex_unlock(&g_win_htbl_mtx);
+
+			if (iret != OK)
 				continue;
 		}
 	} catch (const std::runtime_error &e) {
