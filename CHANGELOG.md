@@ -1,6 +1,9 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Improved the thread safety. Fixed potential data races found by TSan.
+
 ## [3.5.5] - 2025-05-17 ##
 - **Added** a few micro-optimizations.
 - **Added** usage of `textBuf_emplace_back()` in _multiple_ places thus
