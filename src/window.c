@@ -547,6 +547,9 @@ windowSystem_deinit(void)
 #if defined(UNIX) && USE_LIBNOTIFY
 	notify_uninit();
 #endif
+
+	mutex_destroy(&g_actwin_mtx);
+	mutex_destroy(&g_win_htbl_mtx);
 }
 
 static void
