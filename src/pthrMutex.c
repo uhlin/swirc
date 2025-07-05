@@ -1,5 +1,5 @@
 /* Wrapper functions for POSIX threads dealing with mutexes
-   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -35,21 +35,21 @@ void
 mutex_lock(pthread_mutex_t *mutex)
 {
 	if ((errno = pthread_mutex_lock(mutex)) != 0)
-		err_sys("mutex_lock: pthread_mutex_lock");
+		err_sys("%s: pthread_mutex_lock", __func__);
 }
 
 void
 mutex_unlock(pthread_mutex_t *mutex)
 {
 	if ((errno = pthread_mutex_unlock(mutex)) != 0)
-		err_sys("mutex_unlock: pthread_mutex_unlock");
+		err_sys("%s: pthread_mutex_unlock", __func__);
 }
 
 void
 mutex_destroy(pthread_mutex_t *mutex)
 {
 	if ((errno = pthread_mutex_destroy(mutex)) != 0)
-		err_sys("mutex_destroy: pthread_mutex_destroy");
+		err_sys("%s: pthread_mutex_destroy", __func__);
 }
 
 void
@@ -58,12 +58,12 @@ mutex_new(pthread_mutex_t *mutex)
 	pthread_mutexattr_t attr;
 
 	if ((errno = pthread_mutexattr_init(&attr)) != 0)
-		err_sys("mutex_new: pthread_mutexattr_init");
+		err_sys("%s: pthread_mutexattr_init", __func__);
 	else if ((errno = pthread_mutexattr_settype(&attr,
 		    PTHREAD_MUTEX_RECURSIVE)) != 0)
-		err_sys("mutex_new: pthread_mutexattr_settype");
+		err_sys("%s: pthread_mutexattr_settype", __func__);
 	else if ((errno = pthread_mutex_init(mutex, &attr)) != 0)
-		err_sys("mutex_new: pthread_mutex_init");
+		err_sys("%s: pthread_mutex_init", __func__);
 	else if ((errno = pthread_mutexattr_destroy(&attr)) != 0)
-		err_sys("mutex_new: pthread_mutexattr_destroy");
+		err_sys("%s: pthread_mutexattr_destroy", __func__);
 }
