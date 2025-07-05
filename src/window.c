@@ -608,11 +608,15 @@ window_by_label(CSTRING label)
 	if (label == NULL || strings_match(label, ""))
 		return NULL;
 
+	mutex_lock(&g_win_htbl_mtx);
 	for (window = hash_table[hash(label)]; window != NULL;
 	     window = window->next) {
-		if (strings_match_ignore_case(label, window->label))
+		if (strings_match_ignore_case(label, window->label)) {
+			mutex_unlock(&g_win_htbl_mtx);
 			return window;
+		}
 	}
+	mutex_unlock(&g_win_htbl_mtx);
 
 	return NULL;
 }
@@ -626,12 +630,18 @@ window_by_refnum(int refnum)
 {
 	if (refnum < 1 || refnum > g_ntotal_windows)
 		return NULL;
+
+	mutex_lock(&g_win_htbl_mtx);
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
-			if (refnum == window->refnum)
+			if (refnum == window->refnum) {
+				mutex_unlock(&g_win_htbl_mtx);
 				return window;
+			}
 		}
 	}
+	mutex_unlock(&g_win_htbl_mtx);
+
 	return NULL;
 }
 
