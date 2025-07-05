@@ -651,6 +651,7 @@ get_list_of_matching_channels(CSTRING search_var)
 	PTEXTBUF	matches = textBuf_new();
 	const size_t	varlen = strlen(search_var);
 
+	mutex_lock(&g_win_htbl_mtx);
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
 			if (is_irc_channel(window->label) &&
@@ -660,10 +661,13 @@ get_list_of_matching_channels(CSTRING search_var)
 			}
 		}
 	}
+	mutex_unlock(&g_win_htbl_mtx);
+
 	if (textBuf_size(matches) == 0) {
 		textBuf_destroy(matches);
 		return NULL;
 	}
+
 	return matches;
 }
 
@@ -673,6 +677,7 @@ get_list_of_matching_queries(CSTRING search_var)
 	PTEXTBUF	matches = textBuf_new();
 	const size_t	varlen = strlen(search_var);
 
+	mutex_lock(&g_win_htbl_mtx);
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
 			if (!is_irc_channel(window->label) &&
@@ -683,10 +688,13 @@ get_list_of_matching_queries(CSTRING search_var)
 			}
 		}
 	}
+	mutex_unlock(&g_win_htbl_mtx);
+
 	if (textBuf_size(matches) == 0) {
 		textBuf_destroy(matches);
 		return NULL;
 	}
+
 	return matches;
 }
 
@@ -845,6 +853,7 @@ window_close_all_priv_conv(void)
 void
 window_foreach_destroy_names(void)
 {
+	mutex_lock(&g_win_htbl_mtx);
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
 			if (is_irc_channel(window->label)) {
@@ -860,6 +869,7 @@ window_foreach_destroy_names(void)
 			}
 		}
 	}
+	mutex_unlock(&g_win_htbl_mtx);
 }
 
 /**
@@ -1044,9 +1054,11 @@ windows_list_all(void)
 void
 windows_recreate_all(int rows, int cols)
 {
+	mutex_lock(&g_win_htbl_mtx);
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
 			window_recreate(window, rows, cols);
 		}
 	}
+	mutex_unlock(&g_win_htbl_mtx);
 }
