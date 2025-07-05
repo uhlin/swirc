@@ -98,8 +98,8 @@ volatile bool	g_redrawing_window = false;
 pthread_mutex_t		g_actwin_mtx;
 pthread_mutex_t		g_win_htbl_mtx;
 #elif defined(WIN32)
-HANDLE			g_actwin_mtx;
-HANDLE			g_win_htbl_mtx;
+HANDLE			g_actwin_mtx;   // Active window mutex
+HANDLE			g_win_htbl_mtx; // Window hash table mutex
 #endif
 
 /* Objects with internal linkage
