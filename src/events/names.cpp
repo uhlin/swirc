@@ -665,6 +665,9 @@ event_names(struct irc_message_compo *compo)
 	free(names_copy);
 }
 
+/*
+ * XXX: Do NOT lock/unlock 'g_win_htbl_mtx' here...
+ */
 void
 event_names_htbl_remove_all(PIRC_WINDOW window)
 {
