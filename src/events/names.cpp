@@ -465,7 +465,9 @@ event_names_htbl_remove(CSTRING nick, CSTRING channel)
 	    names != nullptr;
 	    names = names->next) {
 		if (strings_match_ignore_case(nick, names->nick)) {
+			mutex_lock(&g_win_htbl_mtx);
 			hUndef(window, names);
+			mutex_unlock(&g_win_htbl_mtx);
 
 			if (nicklist_update(window) != 0) {
 				debug("event_names_htbl_remove: "
