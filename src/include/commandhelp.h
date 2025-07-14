@@ -833,6 +833,13 @@ static usage_t unignore_usage = {
   "",
 };
 
+static usage_t utctime_usage = {
+  N_("usage: /utctime"),
+  "",
+  N_("Prints out the coordinated universal time (UTC)."),
+  "",
+};
+
 static usage_t version_usage = {
   N_("usage: /version <target>"),
   "",

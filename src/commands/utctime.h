@@ -1,0 +1,8 @@
+#ifndef SRC_COMMANDS_UTCTIME_H_
+#define SRC_COMMANDS_UTCTIME_H_
+
+__SWIRC_BEGIN_DECLS
+void cmd_utctime(CSTRING);
+__SWIRC_END_DECLS
+
+#endif

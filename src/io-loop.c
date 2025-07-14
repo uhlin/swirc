@@ -80,6 +80,7 @@
 #include "commands/squery.h"
 #include "commands/theme.h"
 #include "commands/topic.h"
+#include "commands/utctime.h"
 #include "commands/voice.h"
 #include "commands/wholeft.h"
 #include "commands/znc.h"
@@ -173,6 +174,7 @@ static struct cmds_tag {
 	{ "topic",       cmd_topic,       true,  topic_usage,       ARRAY_SIZE(topic_usage),       false },
 	{ "unban",       cmd_unban,       true,  unban_usage,       ARRAY_SIZE(unban_usage),       true  },
 	{ "unignore",    cmd_unignore,    false, unignore_usage,    ARRAY_SIZE(unignore_usage),    false },
+	{ "utctime",     cmd_utctime,     false, utctime_usage,     ARRAY_SIZE(utctime_usage),     false },
 	{ "version",     cmd_version,     true,  version_usage,     ARRAY_SIZE(version_usage),     true  },
 	{ "voice",       cmd_voice,       true,  voice_usage,       ARRAY_SIZE(voice_usage),       true  },
 	{ "wallops",     cmd_wallops,     true,  wallops_usage,     ARRAY_SIZE(wallops_usage),     true  },

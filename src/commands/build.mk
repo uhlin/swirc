@@ -32,6 +32,7 @@ COMMANDS_SRCS = $(COMMANDS_DIR)admin.cpp\
 	$(COMMANDS_DIR)squery.cpp\
 	$(COMMANDS_DIR)theme.c\
 	$(COMMANDS_DIR)topic.c\
+	$(COMMANDS_DIR)utctime.cpp\
 	$(COMMANDS_DIR)voice.c\
 	$(COMMANDS_DIR)wholeft.cpp\
 	$(COMMANDS_DIR)znc.cpp
@@ -69,6 +70,7 @@ OBJS = $(COMMANDS_DIR)admin.o\
 	$(COMMANDS_DIR)squery.o\
 	$(COMMANDS_DIR)theme.o\
 	$(COMMANDS_DIR)topic.o\
+	$(COMMANDS_DIR)utctime.o\
 	$(COMMANDS_DIR)voice.o\
 	$(COMMANDS_DIR)wholeft.o\
 	$(COMMANDS_DIR)znc.o
