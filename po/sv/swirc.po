@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.5\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-05-17 12:31+0200\n"
+"POT-Creation-Date: 2025-07-14 12:32+0200\n"
 "PO-Revision-Date: 2025-01-23 06:25+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -18,12 +18,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1010
-#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:222
+#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:224
 msgid "Yes"
 msgstr "Ja"
 
 #: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1010
-#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:223
+#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:225
 msgid "No"
 msgstr "Nej"
 
@@ -1501,10 +1501,19 @@ msgid "Deletes a regular expression from the ignore list."
 msgstr "Tar bort ett reguljärt uttryck från ignoreringslistan."
 
 #: ../src/include/commandhelp.h:837
+#, fuzzy
+msgid "usage: /utctime"
+msgstr "användning: /boot <offer>"
+
+#: ../src/include/commandhelp.h:839
+msgid "Prints out the coordinated universal time (UTC)."
+msgstr ""
+
+#: ../src/include/commandhelp.h:844
 msgid "usage: /version <target>"
 msgstr "användning: /version <mål>"
 
-#: ../src/include/commandhelp.h:839
+#: ../src/include/commandhelp.h:846
 msgid ""
 "Send a CTCP VERSION request to 'target', which is either a nickname or\n"
 "an IRC channel."
@@ -1512,19 +1521,19 @@ msgstr ""
 "Skicka en CTCP VERSION förfrågan till 'mål', vilket antingen är ett\n"
 "smeknamn eller en IRC kanal."
 
-#: ../src/include/commandhelp.h:845
+#: ../src/include/commandhelp.h:852
 msgid "usage: /voice <nick>"
 msgstr "användning: /voice <nick>"
 
-#: ../src/include/commandhelp.h:847
+#: ../src/include/commandhelp.h:854
 msgid "Gives the channel voice privilege to another user."
 msgstr "Ger kanal-röst-privilegiet till en annan användare."
 
-#: ../src/include/commandhelp.h:852
+#: ../src/include/commandhelp.h:859
 msgid "usage: /wallops <message>"
 msgstr "användning: /wallops <meddelande>"
 
-#: ../src/include/commandhelp.h:854
+#: ../src/include/commandhelp.h:861
 msgid ""
 "The 'wallops'-command is used to send a message to all currently\n"
 "connected users who have set the 'w' user mode for themselves."
@@ -1533,11 +1542,11 @@ msgstr ""
 "för närvarande anslutna användare som har ställt in användarläget 'w'\n"
 "för sig själva."
 
-#: ../src/include/commandhelp.h:860
+#: ../src/include/commandhelp.h:867
 msgid "usage: /who <mask>"
 msgstr "användning: /who <mask>"
 
-#: ../src/include/commandhelp.h:862
+#: ../src/include/commandhelp.h:869
 msgid ""
 "Generates a query which returns a list of information which matches\n"
 "the provided 'mask'."
@@ -1545,27 +1554,27 @@ msgstr ""
 "Genererar en fråga som returnerar en lista med information som matchar\n"
 "den angivna 'masken'."
 
-#: ../src/include/commandhelp.h:867
+#: ../src/include/commandhelp.h:874
 msgid "  Show the Libera Chat crew:"
 msgstr "  Visa Libera Chat teamet:"
 
-#: ../src/include/commandhelp.h:870
+#: ../src/include/commandhelp.h:877
 msgid "  Show users with a German domain name:"
 msgstr "  Visa användare med ett tyskt domännamn:"
 
-#: ../src/include/commandhelp.h:876
+#: ../src/include/commandhelp.h:883
 msgid "usage: /whois <nick>"
 msgstr "användning: /whois <smeknamn>"
 
-#: ../src/include/commandhelp.h:878
+#: ../src/include/commandhelp.h:885
 msgid "Asks after information about another user."
 msgstr "Frågar efter information om en annan användare."
 
-#: ../src/include/commandhelp.h:883
+#: ../src/include/commandhelp.h:890
 msgid "usage: /wholeft"
 msgstr "användning: /wholeft"
 
-#: ../src/include/commandhelp.h:885
+#: ../src/include/commandhelp.h:892
 msgid ""
 "By using this command you can see who left during a network server\n"
 "split. The command takes no arguments and the active window must be an\n"
@@ -1575,21 +1584,21 @@ msgstr ""
 "nätverksserveruppdelning. Kommandot tar inga argument och det aktiva\n"
 "fönstret måste vara en IRC kanal."
 
-#: ../src/include/commandhelp.h:892
+#: ../src/include/commandhelp.h:899
 msgid "usage: /znc [*module] <command>"
 msgstr "användning: /znc [*modul] <kommando>"
 
-#: ../src/include/commandhelp.h:894
+#: ../src/include/commandhelp.h:901
 msgid ""
 "Simplifies the communication with ZNC which is a popular\n"
 "'IRC bouncer'."
 msgstr "Förenklar kommunikationen med ZNC som är en populär 'IRC studsare'."
 
-#: ../src/include/commandhelp.h:899
+#: ../src/include/commandhelp.h:906
 msgid "  Output your ZNC version:"
 msgstr "  Mata ut din ZNC version:"
 
-#: ../src/include/commandhelp.h:902
+#: ../src/include/commandhelp.h:909
 msgid "  Identical to the previous example:"
 msgstr "  Identiskt med föregående exempel:"
 
@@ -1598,44 +1607,44 @@ msgstr "  Identiskt med föregående exempel:"
 msgid "%s: fatal: string was truncated"
 msgstr "%s: fatal: strängen trunkerades"
 
-#: ../src/io-loop.c:596
+#: ../src/io-loop.c:598
 #, c-format
 msgid "    Swirc %s by %s"
 msgstr "    Swirc %s av %s"
 
-#: ../src/io-loop.c:597
+#: ../src/io-loop.c:599
 #, c-format
 msgid "    Compiled on %s%s %s%s"
 msgstr "    Kompilerat %s%s %s%s"
 
-#: ../src/io-loop.c:603
+#: ../src/io-loop.c:605
 #, c-format
 msgid "Current language %s%s%s"
 msgstr "Aktuellt språk %s%s%s"
 
-#: ../src/io-loop.c:606
+#: ../src/io-loop.c:608
 #, c-format
 msgid "Program settings are stored in %s%s%s"
 msgstr "Programinställningar lagras i %s%s%s"
 
-#: ../src/io-loop.c:608
+#: ../src/io-loop.c:610
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
 msgstr "%c%hd%c färgpar har initierats"
 
-#: ../src/io-loop.c:610
+#: ../src/io-loop.c:612
 msgid "Type /help for a list of commands; or /help <command>"
 msgstr "Skriv /help för en lista med kommandon; eller /help <kommando>"
 
-#: ../src/io-loop.c:612
+#: ../src/io-loop.c:614
 msgid "for help of a specific command"
 msgstr "för hjälp av ett specifikt kommando"
 
-#: ../src/io-loop.c:613
+#: ../src/io-loop.c:615
 msgid "Type F1 for keys"
 msgstr "Skriv F1 för tangenter"
 
-#: ../src/io-loop.c:615
+#: ../src/io-loop.c:617
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr "Storlek på fellogg %s%.1f KB%s"
@@ -2031,11 +2040,11 @@ msgstr "%ls är korrekt"
 msgid "%ls is incorrect"
 msgstr "%ls är felaktigt"
 
-#: ../src/statusbar.cpp:222
+#: ../src/statusbar.cpp:224
 msgid "Log: "
 msgstr "Logg: "
 
-#: ../src/statusbar.cpp:227
+#: ../src/statusbar.cpp:229
 msgid "-- MORE --"
 msgstr "-- MER --"
 

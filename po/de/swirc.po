@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.5\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-05-17 12:31+0200\n"
+"POT-Creation-Date: 2025-07-14 12:32+0200\n"
 "PO-Revision-Date: 2025-05-17 12:27+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -18,12 +18,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1010
-#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:222
+#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:224
 msgid "Yes"
 msgstr "Ja"
 
 #: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1010
-#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:223
+#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:225
 msgid "No"
 msgstr "Nein"
 
@@ -1359,85 +1359,93 @@ msgid "Deletes a regular expression from the ignore list."
 msgstr ""
 
 #: ../src/include/commandhelp.h:837
-msgid "usage: /version <target>"
+msgid "usage: /utctime"
 msgstr ""
 
 #: ../src/include/commandhelp.h:839
+msgid "Prints out the coordinated universal time (UTC)."
+msgstr ""
+
+#: ../src/include/commandhelp.h:844
+msgid "usage: /version <target>"
+msgstr ""
+
+#: ../src/include/commandhelp.h:846
 msgid ""
 "Send a CTCP VERSION request to 'target', which is either a nickname or\n"
 "an IRC channel."
 msgstr ""
 
-#: ../src/include/commandhelp.h:845
+#: ../src/include/commandhelp.h:852
 msgid "usage: /voice <nick>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:847
+#: ../src/include/commandhelp.h:854
 msgid "Gives the channel voice privilege to another user."
 msgstr ""
 
-#: ../src/include/commandhelp.h:852
+#: ../src/include/commandhelp.h:859
 msgid "usage: /wallops <message>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:854
+#: ../src/include/commandhelp.h:861
 msgid ""
 "The 'wallops'-command is used to send a message to all currently\n"
 "connected users who have set the 'w' user mode for themselves."
 msgstr ""
 
-#: ../src/include/commandhelp.h:860
+#: ../src/include/commandhelp.h:867
 msgid "usage: /who <mask>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:862
+#: ../src/include/commandhelp.h:869
 msgid ""
 "Generates a query which returns a list of information which matches\n"
 "the provided 'mask'."
 msgstr ""
 
-#: ../src/include/commandhelp.h:867
+#: ../src/include/commandhelp.h:874
 msgid "  Show the Libera Chat crew:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:870
+#: ../src/include/commandhelp.h:877
 msgid "  Show users with a German domain name:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:876
+#: ../src/include/commandhelp.h:883
 msgid "usage: /whois <nick>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:878
+#: ../src/include/commandhelp.h:885
 msgid "Asks after information about another user."
 msgstr ""
 
-#: ../src/include/commandhelp.h:883
+#: ../src/include/commandhelp.h:890
 msgid "usage: /wholeft"
 msgstr ""
 
-#: ../src/include/commandhelp.h:885
+#: ../src/include/commandhelp.h:892
 msgid ""
 "By using this command you can see who left during a network server\n"
 "split. The command takes no arguments and the active window must be an\n"
 "IRC channel."
 msgstr ""
 
-#: ../src/include/commandhelp.h:892
+#: ../src/include/commandhelp.h:899
 msgid "usage: /znc [*module] <command>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:894
+#: ../src/include/commandhelp.h:901
 msgid ""
 "Simplifies the communication with ZNC which is a popular\n"
 "'IRC bouncer'."
 msgstr ""
 
-#: ../src/include/commandhelp.h:899
+#: ../src/include/commandhelp.h:906
 msgid "  Output your ZNC version:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:902
+#: ../src/include/commandhelp.h:909
 msgid "  Identical to the previous example:"
 msgstr ""
 
@@ -1446,44 +1454,44 @@ msgstr ""
 msgid "%s: fatal: string was truncated"
 msgstr ""
 
-#: ../src/io-loop.c:596
+#: ../src/io-loop.c:598
 #, c-format
 msgid "    Swirc %s by %s"
 msgstr "    Swirc %s von %s"
 
-#: ../src/io-loop.c:597
+#: ../src/io-loop.c:599
 #, c-format
 msgid "    Compiled on %s%s %s%s"
 msgstr "    Kompiliert %s%s %s%s"
 
-#: ../src/io-loop.c:603
+#: ../src/io-loop.c:605
 #, c-format
 msgid "Current language %s%s%s"
 msgstr "Aktuelle Sprache %s%s%s"
 
-#: ../src/io-loop.c:606
+#: ../src/io-loop.c:608
 #, c-format
 msgid "Program settings are stored in %s%s%s"
 msgstr "Programmeinstellungen werden in %s%s%s gespeichert"
 
-#: ../src/io-loop.c:608
+#: ../src/io-loop.c:610
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
 msgstr "Es wurden %c%hd%c Farbpaare initialisiert"
 
-#: ../src/io-loop.c:610
+#: ../src/io-loop.c:612
 msgid "Type /help for a list of commands; or /help <command>"
 msgstr "Geben Sie /help für eine Liste von Befehlen ein; oder /help <Befehl>"
 
-#: ../src/io-loop.c:612
+#: ../src/io-loop.c:614
 msgid "for help of a specific command"
 msgstr "für Hilfe zu einem bestimmten Befehl"
 
-#: ../src/io-loop.c:613
+#: ../src/io-loop.c:615
 msgid "Type F1 for keys"
 msgstr "Geben Sie F1 für Tastaturtasten ein"
 
-#: ../src/io-loop.c:615
+#: ../src/io-loop.c:617
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr "Größe des Fehlerprotokolls %s%.1f KB%s"
@@ -1877,11 +1885,11 @@ msgstr "%ls ist korrekt"
 msgid "%ls is incorrect"
 msgstr "%ls ist falsch"
 
-#: ../src/statusbar.cpp:222
+#: ../src/statusbar.cpp:224
 msgid "Log: "
 msgstr "Log: "
 
-#: ../src/statusbar.cpp:227
+#: ../src/statusbar.cpp:229
 msgid "-- MORE --"
 msgstr "-- MEHR --"
 
