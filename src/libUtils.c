@@ -45,12 +45,6 @@
 #define PATH_MAX 1024
 #endif
 
-#if defined(UNIX)
-#define PRINT_SIZE	"%zu"
-#elif defined(WIN32)
-#define PRINT_SIZE	"%Iu"
-#endif
-
 const char	g_alphabet_upcase[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const char	g_alphabet_downcase[27] = "abcdefghijklmnopqrstuvwxyz";
 

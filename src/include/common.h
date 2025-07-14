@@ -70,6 +70,12 @@
 #endif
 
 #if defined(UNIX)
+#define PRINT_SIZE	"%zu"
+#elif defined(WIN32)
+#define PRINT_SIZE	"%Iu"
+#endif
+
+#if defined(UNIX)
 #define SLASH "/"
 #define SLASH_CHAR '/'
 #elif defined(WIN32)
