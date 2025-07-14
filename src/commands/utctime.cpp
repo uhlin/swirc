@@ -29,6 +29,11 @@
 
 #include "common.h"
 
+#include <ctime>
+
+#include "../printtext.h"
+#include "../strHand.h"
+
 #include "utctime.h"
 
 /*
