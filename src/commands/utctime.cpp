@@ -42,5 +42,40 @@
 void
 cmd_utctime(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	CSTRING		str[2];
+	char		buf[2][100];
+	struct tm	tm[2];
+
+	if (!strings_match(data, "")) {
+		printtext_print("err", "implicit data");
+		return;
+	}
+
+	const time_t now = time(nullptr);
+
+#if defined(UNIX)
+	if (gmtime_r(&now, &tm[0]) == nullptr ||
+	    localtime_r(&now, &tm[1]) == nullptr) {
+		printtext_print("err", "time conversion failed");
+		return;
+	}
+#elif defined(WIN32)
+	if ((errno = gmtime_s(&tm[0], &now)) != 0 ||
+	    (errno = localtime_s(&tm[1], &now)) != 0) {
+		printtext_print("err", "time conversion failed");
+		return;
+	}
+#endif
+
+	if (strftime(buf[0], ARRAY_SIZE(buf[0]), "%c", &tm[0]) == 0 ||
+	    strftime(buf[1], ARRAY_SIZE(buf[1]), "%c", &tm[1]) == 0) {
+		printtext_print("err", "failed to format date and time");
+		return;
+	}
+
+	str[0] = &buf[0][0];
+	str[1] = &buf[1][0];
+
+	printtext_print("success", "UTC time:   %s", str[0]);
+	printtext_print("success", "Local time: %s", str[1]);
 }
