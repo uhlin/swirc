@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added command `/utctime`.
 - Improved the thread safety. Fixed potential data races found by TSan.
 
 ## [3.5.5] - 2025-05-17 ##
