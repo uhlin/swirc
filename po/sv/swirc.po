@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.5\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-07-14 12:32+0200\n"
-"PO-Revision-Date: 2025-01-23 06:25+0100\n"
+"PO-Revision-Date: 2025-07-14 12:39+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1501,13 +1501,12 @@ msgid "Deletes a regular expression from the ignore list."
 msgstr "Tar bort ett reguljärt uttryck från ignoreringslistan."
 
 #: ../src/include/commandhelp.h:837
-#, fuzzy
 msgid "usage: /utctime"
-msgstr "användning: /boot <offer>"
+msgstr "användning: /utctime"
 
 #: ../src/include/commandhelp.h:839
 msgid "Prints out the coordinated universal time (UTC)."
-msgstr ""
+msgstr "Skriver ut koordinerad universell tid (UTC)."
 
 #: ../src/include/commandhelp.h:844
 msgid "usage: /version <target>"
