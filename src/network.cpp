@@ -192,7 +192,7 @@ conn_check()
 		if (net_send("%cn", msglen) == -1)
 			return -1;
 	} else {
-		if (g_server_hostname != NULL) {
+		if (g_server_hostname != nullptr) {
 			if (net_send("PING %s", g_server_hostname) == -1)
 				return -1;
 		}
@@ -227,7 +227,7 @@ connect_hook(void)
 static void
 establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
 {
-	struct addrinfo *bind_res = NULL;
+	struct addrinfo *bind_res = nullptr;
 
 	if (g_bind_hostname) {
 		int gai_ret;
@@ -239,11 +239,11 @@ establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
 		hints.ai_socktype  = res->ai_socktype;
 		hints.ai_protocol  = 0;
 		hints.ai_addrlen   = 0;
-		hints.ai_addr      = NULL;
-		hints.ai_canonname = NULL;
-		hints.ai_next      = NULL;
+		hints.ai_addr      = nullptr;
+		hints.ai_canonname = nullptr;
+		hints.ai_next      = nullptr;
 
-		if ((gai_ret = getaddrinfo(g_cmdline_opts->hostname, NULL,
+		if ((gai_ret = getaddrinfo(g_cmdline_opts->hostname, nullptr,
 		    &hints, &bind_res)) != 0) {
 			printtext_print("err", "%s: getaddrinfo: %s: %s",
 			    __func__,
@@ -295,14 +295,14 @@ static int
 get_and_handle_remaining_bytes(const int bytes_remaining,
     struct network_recv_context *ctx, const char *recvbuf, const int length)
 {
-	char	*tmp = NULL;
-	char	*concat = NULL;
+	char	*tmp = nullptr;
+	char	*concat = nullptr;
 
 	try {
 		int	bytes_received;
 		size_t	concatSize;
 
-		if (bytes_remaining <= 0 || ctx == NULL || recvbuf == NULL ||
+		if (bytes_remaining <= 0 || ctx == nullptr || recvbuf == nullptr ||
 		    length < 0 || length > UCHAR_MAX)
 			throw std::runtime_error("invalid arguments");
 
@@ -314,7 +314,7 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 			throw std::runtime_error("read bytes mismatch "
 			    "remaining");
 		}
-		if (memchr(tmp, 0, bytes_received) != NULL)
+		if (memchr(tmp, 0, bytes_received) != nullptr)
 			destroy_null_bytes(tmp, bytes_received);
 
 		concatSize = strlen(recvbuf) + strlen(tmp) + 1;
@@ -342,7 +342,7 @@ static void
 get_ip_addresses(struct addrinfo *&res, const char *server, const char *port,
     PPRINTTEXT_CONTEXT ctx)
 {
-	if ((res = net_addr_resolve(server, port)) == NULL) {
+	if ((res = net_addr_resolve(server, port)) == nullptr) {
 		throw std::runtime_error(_("Unable to get a list of IP "
 		    "addresses"));
 	} else {
@@ -558,10 +558,10 @@ net_connect(const struct network_connect_context *ctx,
 {
 	PRINTTEXT_CONTEXT	 ptext_ctx;
 	conn_res_t		 conn_res = CONNECTION_FAILED;
-	struct addrinfo		*res = NULL;
+	struct addrinfo		*res = nullptr;
 	struct integer_context	 intctx("identd_port", 113, 65535, 113);
 
-	if (ctx == NULL || sleep_time_seconds == NULL)
+	if (ctx == nullptr || sleep_time_seconds == nullptr)
 		err_exit(EINVAL, "%s", __func__);
 	else if (atomic_load_bool(&g_connection_in_progress))
 		return CONNECTION_FAILED;
@@ -659,11 +659,11 @@ net_send_fake(const char *fmt, ...)
 struct addrinfo *
 net_addr_resolve(const char *host, const char *port)
 {
-	struct addrinfo *res = NULL;
+	struct addrinfo *res = nullptr;
 	struct addrinfo hints;
 
-	if (host == NULL || port == NULL)
-		return NULL;
+	if (host == nullptr || port == nullptr)
+		return nullptr;
 
 	BZERO(&hints, sizeof hints);
 	hints.ai_flags     = AI_CANONNAME;
@@ -671,11 +671,11 @@ net_addr_resolve(const char *host, const char *port)
 	hints.ai_socktype  = SOCK_STREAM;
 	hints.ai_protocol  = 0;
 	hints.ai_addrlen   = 0;
-	hints.ai_addr      = NULL;
-	hints.ai_canonname = NULL;
-	hints.ai_next      = NULL;
+	hints.ai_addr      = nullptr;
+	hints.ai_canonname = nullptr;
+	hints.ai_next      = nullptr;
 
-	return (getaddrinfo(host, port, &hints, &res) != 0 ? NULL : res);
+	return (getaddrinfo(host, port, &hints, &res) != 0 ? nullptr : res);
 }
 
 struct server *
@@ -686,7 +686,7 @@ server_new(const char *host, const char *port, const char *pass)
 
 	server->host = sw_strdup(host);
 	server->port = sw_strdup(port);
-	server->pass = (pass ? sw_strdup(pass) : NULL);
+	server->pass = (pass ? sw_strdup(pass) : nullptr);
 
 	return server;
 }
@@ -736,7 +736,7 @@ icb(int &bytes_received, struct network_recv_context *ctx, char *recvbuf)
 			return ERR;
 		}
 	} else if (bytes_received > 0) {
-		if (memchr(recvbuf, 0, bytes_received) != NULL)
+		if (memchr(recvbuf, 0, bytes_received) != nullptr)
 			destroy_null_bytes(recvbuf, bytes_received);
 
 		try {
@@ -756,7 +756,7 @@ irc(int &bytes_received, struct network_recv_context *ctx, char *recvbuf,
 	if ((bytes_received = net_recv(ctx, recvbuf, RECVBUF_SIZE)) == -1) {
 		(void) atomic_swap_bool(&g_connection_lost, true);
 	} else if (bytes_received > 0) {
-		if (memchr(recvbuf, 0, bytes_received) != NULL)
+		if (memchr(recvbuf, 0, bytes_received) != nullptr)
 			destroy_null_bytes(recvbuf, bytes_received);
 
 		try {
@@ -772,8 +772,8 @@ void
 net_irc_listen(bool *connection_lost)
 {
 	PRINTTEXT_CONTEXT		 ptext_ctx;
-	char				*message_concat = NULL;
-	char				*recvbuf = NULL;
+	char				*message_concat = nullptr;
+	char				*recvbuf = nullptr;
 	enum message_concat_state	 state = CONCAT_BUFFER_IS_EMPTY;
 	int				 bytes_received = -1;
 	struct network_recv_context	 ctx(g_socket, 0, 5, 0);
@@ -887,7 +887,7 @@ net_request_disconnect(void)
 void
 server_destroy(struct server *server)
 {
-	if (server == NULL)
+	if (server == nullptr)
 		return;
 	free(server->host);
 	free(server->port);
