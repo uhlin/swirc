@@ -202,7 +202,7 @@ conn_check()
 }
 
 static inline void
-destroy_null_bytes(char *recvbuf, const int bytes_received)
+destroy_null_bytes(STRING recvbuf, const int bytes_received)
 {
 	int	i, j;
 
@@ -295,8 +295,8 @@ static int
 get_and_handle_remaining_bytes(const int bytes_remaining,
     struct network_recv_context *ctx, CSTRING recvbuf, const int length)
 {
-	char	*tmp = nullptr;
-	char	*concat = nullptr;
+	STRING	tmp    = nullptr;
+	STRING	concat = nullptr;
 
 	try {
 		int	bytes_received;
@@ -309,7 +309,7 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 		    length > UCHAR_MAX)
 			throw std::runtime_error("invalid arguments");
 
-		tmp = static_cast<char *>(xmalloc(bytes_remaining + 1));
+		tmp = static_cast<STRING>(xmalloc(bytes_remaining + 1));
 		tmp[bytes_remaining] = '\0';
 
 		if ((bytes_received = net_recv(ctx, tmp, bytes_remaining)) !=
@@ -321,7 +321,7 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 			destroy_null_bytes(tmp, bytes_received);
 
 		concatSize = strlen(recvbuf) + strlen(tmp) + 1;
-		concat = static_cast<char *>(xmalloc(concatSize));
+		concat = static_cast<STRING>(xmalloc(concatSize));
 
 		if (sw_strcpy(concat, recvbuf, concatSize) == 0 &&
 		    sw_strcat(concat, tmp, concatSize) == 0)
@@ -647,7 +647,7 @@ net_connect(const struct network_connect_context *ctx,
 }
 
 int
-net_send_fake(const char *fmt, ...)
+net_send_fake(CSTRING fmt, ...)
 {
 	int bytes_sent;
 	va_list ap;
@@ -660,7 +660,7 @@ net_send_fake(const char *fmt, ...)
 }
 
 struct addrinfo *
-net_addr_resolve(const char *host, const char *port)
+net_addr_resolve(CSTRING host, CSTRING port)
 {
 	struct addrinfo *res = nullptr;
 	struct addrinfo hints;
@@ -682,7 +682,7 @@ net_addr_resolve(const char *host, const char *port)
 }
 
 struct server *
-server_new(const char *host, const char *port, const char *pass)
+server_new(CSTRING host, CSTRING port, CSTRING pass)
 {
 	struct server *server =
 	    static_cast<struct server *>(xmalloc(sizeof *server));
@@ -702,13 +702,13 @@ net_connect_clean_up(void)
 }
 
 void
-destroy_null_bytes_exported(char *buf, const int len)
+destroy_null_bytes_exported(STRING buf, const int len)
 {
 	destroy_null_bytes(buf, len);
 }
 
 static int
-icb(int &bytes_received, struct network_recv_context *ctx, char *recvbuf)
+icb(int &bytes_received, struct network_recv_context *ctx, STRING recvbuf)
 {
 	char	array[10] = { '\0' };
 	int	length, ret;
@@ -753,7 +753,7 @@ icb(int &bytes_received, struct network_recv_context *ctx, char *recvbuf)
 }
 
 static void
-irc(int &bytes_received, struct network_recv_context *ctx, char *recvbuf,
+irc(int &bytes_received, struct network_recv_context *ctx, STRING recvbuf,
     char **message_concat, enum message_concat_state *state)
 {
 	if ((bytes_received = net_recv(ctx, recvbuf, RECVBUF_SIZE)) == -1) {
@@ -775,8 +775,8 @@ void
 net_irc_listen(bool *connection_lost)
 {
 	PRINTTEXT_CONTEXT		 ptext_ctx;
+	STRING				 recvbuf = nullptr;
 	char				*message_concat = nullptr;
-	char				*recvbuf = nullptr;
 	enum message_concat_state	 state = CONCAT_BUFFER_IS_EMPTY;
 	int				 bytes_received = -1;
 	struct network_recv_context	 ctx(g_socket, 0, 5, 0);
@@ -789,7 +789,7 @@ net_irc_listen(bool *connection_lost)
 	block_signals();
 	*connection_lost = false;
 	atomic_swap_bool(&g_connection_lost, false);
-	recvbuf = static_cast<char *>(xmalloc(RECVBUF_SIZE + 1));
+	recvbuf = static_cast<STRING>(xmalloc(RECVBUF_SIZE + 1));
 	recvbuf[RECVBUF_SIZE] = '\0';
 	irc_init();
 	netsplit_init();
