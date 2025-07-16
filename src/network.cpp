@@ -79,16 +79,13 @@ public:
 	long int	retries;
 	long int	retry;
 
-	reconnect_context()
-	{
-		this->backoff_delay	= 0;
-		this->delay		= 0;
-		this->delay_max		= 0;
-		this->retries		= 0;
-		this->retry		= 0;
-
-		this->initialized = false;
-	}
+	reconnect_context() : backoff_delay(0)
+	    , delay(0)
+	    , delay_max(0)
+	    , retries(0)
+	    , retry(0)
+	    , initialized(false)
+	{}
 
 	void
 	init(void)
