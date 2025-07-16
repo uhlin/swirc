@@ -227,6 +227,31 @@ connect_hook(void)
 static void
 establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
 {
+	struct addrinfo *bind_res = NULL;
+
+	if (g_bind_hostname) {
+		int gai_ret;
+		struct addrinfo hints;
+
+		BZERO(&hints, sizeof hints);
+		hints.ai_flags     = res->ai_flags;
+		hints.ai_family    = res->ai_family;
+		hints.ai_socktype  = res->ai_socktype;
+		hints.ai_protocol  = 0;
+		hints.ai_addrlen   = 0;
+		hints.ai_addr      = NULL;
+		hints.ai_canonname = NULL;
+		hints.ai_next      = NULL;
+
+		if ((gai_ret = getaddrinfo(g_cmdline_opts->hostname, NULL,
+		    &hints, &bind_res)) != 0) {
+			printtext_print("err", "%s: getaddrinfo: %s: %s",
+			    __func__,
+			    g_cmdline_opts->hostname,
+			    gai_strerror(gai_ret));
+			return;
+		}
+	}
 	for (struct addrinfo *rp = res; rp; rp = rp->ai_next) {
 		if ((g_socket = socket(rp->ai_family, rp->ai_socktype,
 		    rp->ai_protocol)) == INVALID_SOCKET)
@@ -235,6 +260,20 @@ establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
 		net_set_recv_timeout(TEMP_RECV_TIMEOUT);
 		net_set_send_timeout(TEMP_SEND_TIMEOUT);
 
+		if (bind_res) {
+			errno = 0;
+
+			if (bind(g_socket, bind_res->ai_addr,
+			    bind_res->ai_addrlen) != 0) {
+				char strerrbuf[MAXERROR] = { '\0' };
+
+				printtext_print("err", "bind() error: %s",
+				    xstrerror(errno, strerrbuf, MAXERROR));
+				CLOSE_GLOBAL_SOCKET();
+				g_socket = INVALID_SOCKET;
+				break;
+			}
+		}
 		if (connect(g_socket, rp->ai_addr, rp->ai_addrlen) == 0) {
 			printtext(ctx, "%s", _("Connected!"));
 
@@ -248,6 +287,8 @@ establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
 			g_socket = INVALID_SOCKET;
 		}
 	} /* for */
+	if (bind_res)
+		freeaddrinfo(bind_res);
 }
 
 static int
