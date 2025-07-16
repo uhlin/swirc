@@ -1273,8 +1273,8 @@ print_and_free(CSTRING msg, char *cp)
 void
 printf_and_free(char *cp, CSTRING fmt, ...)
 {
-	PPRINTTEXT_CONTEXT ctx;
-	va_list ap;
+	PPRINTTEXT_CONTEXT	ctx;
+	va_list			ap;
 
 	ctx = printtext_context_new(g_active_window, TYPE_SPEC1_FAILURE, true);
 
@@ -1352,8 +1352,8 @@ printtext_convert_wc_test2(void **state)
 void
 printtext_print(CSTRING what, CSTRING fmt, ...)
 {
-	PPRINTTEXT_CONTEXT ctx;
-	va_list ap;
+	PPRINTTEXT_CONTEXT	ctx;
+	va_list			ap;
 
 	if (fmt == nullptr)
 		err_exit(EINVAL, "%s", __func__);
