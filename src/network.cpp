@@ -173,7 +173,7 @@ check_conn_fail()
 }
 
 static void
-check_hostname(const char *host, PPRINTTEXT_CONTEXT ctx)
+check_hostname(CSTRING host, PPRINTTEXT_CONTEXT ctx)
 {
 	if (ssl_is_enabled() && config_bool("hostname_checking", true)) {
 		if (net_ssl_check_hostname(host, 0) != OK)
@@ -293,7 +293,7 @@ establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
 
 static int
 get_and_handle_remaining_bytes(const int bytes_remaining,
-    struct network_recv_context *ctx, const char *recvbuf, const int length)
+    struct network_recv_context *ctx, CSTRING recvbuf, const int length)
 {
 	char	*tmp = nullptr;
 	char	*concat = nullptr;
@@ -342,7 +342,7 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 }
 
 static void
-get_ip_addresses(struct addrinfo *&res, const char *server, const char *port,
+get_ip_addresses(struct addrinfo *&res, CSTRING server, CSTRING port,
     PPRINTTEXT_CONTEXT ctx)
 {
 	if ((res = net_addr_resolve(server, port)) == nullptr) {
@@ -354,7 +354,7 @@ get_ip_addresses(struct addrinfo *&res, const char *server, const char *port,
 }
 
 static void
-handle_conn_err(PPRINTTEXT_CONTEXT ptext_ctx, const char *what,
+handle_conn_err(PPRINTTEXT_CONTEXT ptext_ctx, CSTRING what,
     long int *sleep_time_seconds, conn_res_t &conn_res)
 {
 	ptext_ctx->spec_type = TYPE_SPEC1_FAILURE;
@@ -390,7 +390,7 @@ handle_conn_err(PPRINTTEXT_CONTEXT ptext_ctx, const char *what,
 }
 
 static void
-save_last_server(const char *server, const char *port, const char *password)
+save_last_server(CSTRING server, CSTRING port, CSTRING password)
 {
 	int ret;
 
