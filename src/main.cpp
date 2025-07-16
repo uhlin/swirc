@@ -342,6 +342,8 @@ case_hostname()
 
 	if (been_case)
 		DUP_OPTION_ERR('h');
+	else if (!is_valid_hostname(g_option_arg))
+		err_quit("invalid hostname: %s", g_option_arg);
 
 	g_cmdline_opts->hostname = sw_strdup(g_option_arg);
 	g_bind_hostname = been_case = true;
