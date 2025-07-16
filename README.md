@@ -15,7 +15,7 @@ client written in C/C++, whose goals are to be portable and secure.
 
 ## Program options ##
 
-usage: swirc [-46?CPRSXdipv] [-W password] [-c server[:port]] [-j join] [-n nickname] [-r rl name] [-u username] [-x config]
+usage: swirc [-46?CPRSXdipv] [-W password] [-c server[:port]] [-h hostname] [-j join] [-n nickname] [-r rl name] [-u username] [-x config]
 
     -4                   Use IPv4 addresses only
     -6                   Use IPv6 addresses only
@@ -28,6 +28,7 @@ usage: swirc [-46?CPRSXdipv] [-W password] [-c server[:port]] [-j join] [-n nick
     -X                   Disable all IRCv3 extensions
     -c <server[:port]>   Connect to IRC server
     -d                   Debug logging
+    -h <hostname>        Sets the bind host
     -i                   Turn on Internet Citizen's Band mode
     -j <join>            A comma-separated list of channels to join
     -n <nickname>        Online nickname

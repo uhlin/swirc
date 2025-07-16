@@ -157,6 +157,7 @@ static stringarray_t OptionDesc = {
   N_("    -X                   Disable all IRCv3 extensions\n"),
   N_("    -c <server[:port]>   Connect to IRC server\n"),
   N_("    -d                   Debug logging\n"),
+  N_("    -h <hostname>        Sets the bind host\n"),
   N_("    -i                   Turn on Internet Citizen's Band mode\n"),
   N_("    -j <join>            A comma-separated list of channels to join\n"),
   N_("    -n <nickname>        Online nickname\n"),
