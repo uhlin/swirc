@@ -302,8 +302,11 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 		int	bytes_received;
 		size_t	concatSize;
 
-		if (bytes_remaining <= 0 || ctx == nullptr || recvbuf == nullptr ||
-		    length < 0 || length > UCHAR_MAX)
+		if (bytes_remaining <= 0 ||
+		    ctx == nullptr ||
+		    recvbuf == nullptr ||
+		    length < 0 ||
+		    length > UCHAR_MAX)
 			throw std::runtime_error("invalid arguments");
 
 		tmp = static_cast<char *>(xmalloc(bytes_remaining + 1));
