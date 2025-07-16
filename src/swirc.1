@@ -1,9 +1,9 @@
 .\" -*- mode: nroff; -*-
 .\"
-.\" SPDX-FileCopyrightText: Copyright 2016-2024 Markus Uhlin
+.\" SPDX-FileCopyrightText: Copyright 2016-2025 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd October 21, 2024
+.Dd July 16, 2025
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -15,6 +15,7 @@
 .Op Fl 46?CPRSXdipv
 .Op Fl W Ar password
 .Op Fl c Ar server[:port]
+.Op Fl h Ar hostname
 .Op Fl j Ar join
 .Op Fl n Ar nickname
 .Op Fl r Ar rl name
@@ -77,6 +78,14 @@ Further, if the port is 6697
 attempts to initiate a TLS/SSL connection.
 .It Fl d
 Debug logging
+.It Fl h Ar hostname
+Controls the hostname which
+.Nm
+will attempt to make connection to the ICB/IRC server from.
+Can happily be combined with
+.Fl 4
+and
+.Fl 6 .
 .It Fl i
 Turn on Internet Citizen's Band mode
 .It Fl j Ar join
