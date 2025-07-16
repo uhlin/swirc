@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.5\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-07-16 21:51+0200\n"
-"PO-Revision-Date: 2025-05-17 12:27+0200\n"
+"PO-Revision-Date: 2025-07-16 21:54+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -1594,9 +1594,8 @@ msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Debug Protokollierung\n"
 
 #: ../src/main.cpp:160
-#, fuzzy
 msgid "    -h <hostname>        Sets the bind host\n"
-msgstr "    -u <username>        Dein Benutzername\n"
+msgstr "    -h <hostname>        Legt den Bind-Host fest\n"
 
 #: ../src/main.cpp:161
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
