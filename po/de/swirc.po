@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.5\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-07-14 12:32+0200\n"
+"POT-Creation-Date: 2025-07-16 21:51+0200\n"
 "PO-Revision-Date: 2025-05-17 12:27+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -207,12 +207,12 @@ msgstr "Ungültiger Hostname"
 msgid "Invalid port number"
 msgstr "Ungültige Portnummer"
 
-#: ../src/commands/ftp.cpp:190 ../src/network.cpp:308
+#: ../src/commands/ftp.cpp:190 ../src/network.cpp:349
 msgid "Unable to get a list of IP addresses"
 msgstr "Es kann keine Liste mit IP-Adressen abgerufen werden"
 
 #: ../src/commands/ftp.cpp:193 ../src/commands/ftp.cpp:533
-#: ../src/network.cpp:175
+#: ../src/network.cpp:172
 msgid "Failed to establish a connection"
 msgstr "Fehler beim Herstellen einer Verbindung"
 
@@ -1594,72 +1594,77 @@ msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Debug Protokollierung\n"
 
 #: ../src/main.cpp:160
+#, fuzzy
+msgid "    -h <hostname>        Sets the bind host\n"
+msgstr "    -u <username>        Dein Benutzername\n"
+
+#: ../src/main.cpp:161
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Internet Citizen's Band aktivieren\n"
 
-#: ../src/main.cpp:161
+#: ../src/main.cpp:162
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr ""
 "    -j <join>            Kommata getrennte Liste von Kanälen zum joinen\n"
 
-#: ../src/main.cpp:162
+#: ../src/main.cpp:163
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Online Nickname\n"
 
-#: ../src/main.cpp:163
+#: ../src/main.cpp:164
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Server-Passwort anfordern (für private Server)\n"
 
-#: ../src/main.cpp:164
+#: ../src/main.cpp:165
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Dein echter Name\n"
 
-#: ../src/main.cpp:165
+#: ../src/main.cpp:166
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Dein Benutzername\n"
 
-#: ../src/main.cpp:166
+#: ../src/main.cpp:167
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Swirc-Version anzeigen\n"
 
-#: ../src/main.cpp:167
+#: ../src/main.cpp:168
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsdatei\n"
 
-#: ../src/main.cpp:230
+#: ../src/main.cpp:231
 msgid "Unhandled exception!"
 msgstr ""
 
-#: ../src/main.cpp:290
+#: ../src/main.cpp:291
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Anwendung: %s [FLAGGE] ...\n"
 
-#: ../src/main.cpp:380
+#: ../src/main.cpp:383
 msgid "forbidden channel name characters"
 msgstr ""
 
-#: ../src/main.cpp:532
+#: ../src/main.cpp:535
 #, c-format
 msgid "%s: -%c: unrecognized option"
 msgstr ""
 
-#: ../src/main.cpp:537
+#: ../src/main.cpp:540
 #, c-format
 msgid "%s: -%c: option argument missing"
 msgstr ""
 
-#: ../src/main.cpp:706
+#: ../src/main.cpp:709
 msgid "fatal: failed to initialize signal handling"
 msgstr ""
 
-#: ../src/main.cpp:728
+#: ../src/main.cpp:731
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr ""
 
-#: ../src/main.cpp:750
+#: ../src/main.cpp:753
 msgid "Initialization of the Curses library not possible"
 msgstr ""
 
@@ -1733,32 +1738,32 @@ msgstr ""
 msgid "Can't resolve the home path!"
 msgstr ""
 
-#: ../src/network.cpp:183
+#: ../src/network.cpp:180
 msgid "Hostname checking failed!"
 msgstr "Hostnamenprüfung fehlgeschlagen!"
 
-#: ../src/network.cpp:185
+#: ../src/network.cpp:182
 msgid "Hostname checking OK!"
 msgstr "Hostnamenprüfung OK!"
 
-#: ../src/network.cpp:242
+#: ../src/network.cpp:278
 msgid "Connected!"
 msgstr "In Verbindung gebracht!"
 
-#: ../src/network.cpp:311
+#: ../src/network.cpp:352
 msgid "Get a list of IP addresses completed"
 msgstr "Holen Sie sich eine Liste der IP-Adressen, fertig"
 
-#: ../src/network.cpp:539
+#: ../src/network.cpp:580
 #, c-format
 msgid "Connecting to %s (%s)"
 msgstr "Verbindung zu %s (%s) wird hergestellt..."
 
-#: ../src/network.cpp:807
+#: ../src/network.cpp:848
 msgid "Connection to IRC server lost"
 msgstr "Die Verbindung zum IRC-Server wurde unterbrochen"
 
-#: ../src/network.cpp:818
+#: ../src/network.cpp:859
 msgid "Disconnected"
 msgstr "Offline"
 
