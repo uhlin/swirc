@@ -53,7 +53,7 @@ typedef enum {
 __SWIRC_BEGIN_DECLS
 
 /* From network-openssl.c */
-extern char *g_ca_file;
+extern STRING g_ca_file;
 
 /*
  * net_send_fake() store the sent data into this buffer
@@ -94,10 +94,10 @@ void	net_set_sock_addr_family_ipv6(void);
 
 int	 net_ssl_begin(void);
 void	 net_ssl_end(void);
-int	 net_ssl_check_hostname(const char *, unsigned int);
+int	 net_ssl_check_hostname(CSTRING, unsigned int);
 SSL	*net_ssl_getobj(void);
-int	 net_ssl_send(const char *, ...);
-int	 net_ssl_recv(struct network_recv_context *, char *, int);
+int	 net_ssl_send(CSTRING, ...);
+int	 net_ssl_recv(struct network_recv_context *, STRING, int);
 void	 net_ssl_init(void);
 void	 net_ssl_deinit(void);
 

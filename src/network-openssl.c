@@ -49,7 +49,7 @@
 #pragma message("No atomics")
 #endif
 
-char *g_ca_file = NULL;
+STRING g_ca_file = NULL;
 
 static SSL_CTX *ssl_ctx = NULL;
 static SSL *ssl = NULL;
@@ -104,7 +104,7 @@ create_ssl_context_obj_insecure(void)
 }
 #endif
 
-static char *
+static STRING
 get_filepath(void)
 {
 	if (g_home_dir == NULL || strings_match(Config("sasl_x509"), ""))
@@ -115,8 +115,8 @@ get_filepath(void)
 static void
 load_x509(void)
 {
-	char		*file = NULL;
-	const char	*err_reason = ""; // NOLINT: dead store
+	CSTRING err_reason = ""; // NOLINT: dead store
+	STRING file = NULL;
 
 	if ((file = get_filepath()) == NULL) {
 		err_reason = "unable to get the file path";
@@ -145,7 +145,7 @@ load_x509(void)
 }
 
 static void
-set_ciphers(const char *list)
+set_ciphers(CSTRING list)
 {
 	if (ssl_ctx && list && !SSL_CTX_set_cipher_list(ssl_ctx, list)) {
 		PRINTTEXT_CONTEXT ptext_ctx;
@@ -197,10 +197,10 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
 int
 net_ssl_begin(void)
 {
-	PRINTTEXT_CONTEXT	 ptext_ctx;
-	const char		*err_reason = ""; // NOLINT: dead store
-	static const int	 VALUE_HANDSHAKE_OK = 1;
-	unsigned long int	 err_code = 0;
+	CSTRING			err_reason = ""; // NOLINT: dead store
+	PRINTTEXT_CONTEXT	ptext_ctx;
+	static const int	VALUE_HANDSHAKE_OK = 1;
+	unsigned long int	err_code = 0;
 
 	if (ssl != NULL) {
 		err_reason = "SSL object nonnull";
@@ -275,7 +275,7 @@ net_ssl_end(void)
 }
 
 int
-net_ssl_check_hostname(const char *host, unsigned int flags)
+net_ssl_check_hostname(CSTRING host, unsigned int flags)
 {
 	X509	*cert = NULL;
 	int	 ret = ERR;
@@ -308,7 +308,7 @@ conn_is_closed(const SSL *obj)
 }
 
 int
-net_ssl_send(const char *fmt, ...)
+net_ssl_send(CSTRING fmt, ...)
 {
 	char *buf = NULL;
 	char *bufptr = NULL;
@@ -391,7 +391,7 @@ net_ssl_send(const char *fmt, ...)
 }
 
 int
-net_ssl_recv(struct network_recv_context *ctx, char *recvbuf, int recvbuf_size)
+net_ssl_recv(struct network_recv_context *ctx, STRING recvbuf, int recvbuf_size)
 {
 #ifdef UNIX
 #define SOCKET_ERROR -1
@@ -512,7 +512,7 @@ net_ssl_init(void)
 		    "disabled: Option set to NO?", __func__);
 	}
 
-	const char *cs = Config("cipher_suite");
+	CSTRING cs = Config("cipher_suite");
 
 	if (strings_match(cs, "secure") || strings_match(cs, "SECURE"))
 		set_ciphers(g_suite_secure);
