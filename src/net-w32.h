@@ -30,11 +30,10 @@ extern SOCKET g_socket;
 
 bool	winsock_deinit(void);
 bool	winsock_init(void);
-int	net_recv_plain(struct network_recv_context *, char *recvbuf,
+int	net_recv_plain(struct network_recv_context *, STRING recvbuf,
 	    int recvbuf_size);
-int	net_send_plain(const char *, ...);
-void	net_do_connect_detached(const char *host, const char *port,
-	    const char *pass);
+int	net_send_plain(CSTRING, ...);
+void	net_do_connect_detached(CSTRING host, CSTRING port, CSTRING pass);
 void	net_listen_thread_join(void);
 void	net_spawn_listen_thread(void);
 

@@ -1,5 +1,5 @@
 /* Networking for UNIX
-   Copyright (C) 2014-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -51,7 +51,7 @@ int g_socket = -1;
 static pthread_t listen_thread_id;
 
 int
-net_recv_plain(struct network_recv_context *ctx, char *recvbuf,
+net_recv_plain(struct network_recv_context *ctx, STRING recvbuf,
     int recvbuf_size)
 {
 	const int	maxfdp1 = (ctx->sock + 1);
@@ -81,11 +81,11 @@ net_recv_plain(struct network_recv_context *ctx, char *recvbuf,
 }
 
 int
-net_send_plain(const char *fmt, ...)
+net_send_plain(CSTRING fmt, ...)
 {
-	char	*buffer;
-	int	 n_sent;
-	va_list	 ap;
+	STRING	buffer;
+	int	n_sent;
+	va_list ap;
 
 	if (g_socket == INVALID_SOCKET)
 		return -1;
@@ -124,7 +124,7 @@ do_connect_wrapper(void *arg)
 }
 
 void
-net_do_connect_detached(const char *host, const char *port, const char *pass)
+net_do_connect_detached(CSTRING host, CSTRING port, CSTRING pass)
 {
 	pthread_t	 thread;
 	struct server	*server = server_new(host, port, pass);
