@@ -191,12 +191,21 @@ log_get_path(const char *server_host, const char *label)
 void
 log_msg(const char *path, const char *text)
 {
-	FILE *fp;
+	FILE	*fp;
+	int	 fd;
 
 	if (path == NULL || text == NULL)
 		return;
 
-	if ((fp = xfopen(path, "a")) != NULL) {
+#if defined(UNIX)
+	if ((fd = open(path, g_open_flags, g_open_modes)) < 0)
+		return;
+#elif defined(WIN32)
+	if ((errno = _sopen_s(&fd, path, g_open_flags, _SH_DENYNO,
+	    g_open_modes)) != 0)
+		return;
+#endif
+	else if ((fp = fdopen(fd, "a")) != NULL) {
 		char *text_copy;
 
 		text_copy = sw_strdup(text);
@@ -209,6 +218,8 @@ log_msg(const char *path, const char *text)
 #endif
 		(void) fclose(fp);
 		free(text_copy);
+	} else {
+		(void) close(fd);
 	}
 }
 
