@@ -20,6 +20,8 @@ typedef int mode_t;
 
 __SWIRC_BEGIN_DECLS
 extern const char	g_log_filesuffix[5];
+extern const int	g_open_flags;
+extern const mode_t	g_open_modes;
 
 char	*log_get_path(const char *, const char *);
 void	 log_msg(const char *, const char *);

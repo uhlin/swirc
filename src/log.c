@@ -46,6 +46,14 @@
 
 const char	g_log_filesuffix[5] = ".txt";
 
+#if defined(UNIX)
+const int	g_open_flags = (O_WRONLY | O_CREAT);
+const mode_t	g_open_modes = (S_IWUSR | S_IRUSR);
+#elif defined(WIN32)
+const int	g_open_flags = (_O_WRONLY | _O_CREAT);
+const mode_t	g_open_modes = (_S_IREAD | _S_IWRITE);
+#endif
+
 static const char *get_modified_server_host(const char *) NONNULL;
 static const char *get_logtype(const char *) NONNULL;
 
