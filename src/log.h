@@ -13,6 +13,11 @@
 #include <unistd.h>
 #endif
 
+#if defined(WIN32) && !defined(_MODE_T_DEFINED)
+#define _MODE_T_DEFINED 1
+typedef int mode_t;
+#endif
+
 __SWIRC_BEGIN_DECLS
 extern const char	g_log_filesuffix[5];
 
