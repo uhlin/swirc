@@ -47,10 +47,16 @@
 const char	g_log_filesuffix[5] = ".txt";
 
 #if defined(UNIX)
-const int	g_open_flags = (O_WRONLY | O_CREAT);
+const int	g_open_flags[2] = {
+	(O_WRONLY|O_CREAT|O_APPEND),
+	(O_WRONLY|O_CREAT|O_TRUNC),
+};
 const mode_t	g_open_modes = (S_IWUSR | S_IRUSR);
 #elif defined(WIN32)
-const int	g_open_flags = (_O_WRONLY | _O_CREAT);
+const int	g_open_flags[2] = {
+	(_O_WRONLY|_O_CREAT|_O_APPEND),
+	(_O_WRONLY|_O_CREAT|_O_TRUNC),
+};
 const mode_t	g_open_modes = (_S_IREAD | _S_IWRITE);
 #endif
 
@@ -198,10 +204,10 @@ log_msg(const char *path, const char *text)
 		return;
 
 #if defined(UNIX)
-	if ((fd = open(path, g_open_flags, g_open_modes)) < 0)
+	if ((fd = open(path, g_open_flags[0], g_open_modes)) < 0)
 		return;
 #elif defined(WIN32)
-	if ((errno = _sopen_s(&fd, path, g_open_flags, _SH_DENYNO,
+	if ((errno = _sopen_s(&fd, path, g_open_flags[0], _SH_DENYNO,
 	    g_open_modes)) != 0)
 		return;
 #endif
