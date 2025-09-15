@@ -98,6 +98,7 @@ PIRC_WINDOW	window_by_label(CSTRING);
 PIRC_WINDOW	window_by_refnum(int);
 PTEXTBUF	get_list_of_matching_channels(CSTRING search_var);
 PTEXTBUF	get_list_of_matching_queries(CSTRING search_var);
+bool		is_the_active_window(PIRC_WINDOW);
 errno_t		change_window_by_label(CSTRING);
 errno_t		change_window_by_refnum(int);
 errno_t		destroy_chat_window(CSTRING label);

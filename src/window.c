@@ -126,7 +126,7 @@ change_window(PIRC_WINDOW window)
 
 	if (window == NULL)
 		return ENOENT; /* window not found */
-	else if (window == g_active_window)
+	else if (is_the_active_window(window))
 		return 0; /* window already active */
 	else if (top_panel(window->pan) == ERR)
 		return EPERM;
@@ -696,6 +696,18 @@ get_list_of_matching_queries(CSTRING search_var)
 	}
 
 	return matches;
+}
+
+bool
+is_the_active_window(PIRC_WINDOW which)
+{
+	bool yesno;
+
+	mutex_lock(&g_actwin_mtx);
+	yesno = (which == g_active_window);
+	mutex_unlock(&g_actwin_mtx);
+
+	return yesno;
 }
 
 /**
