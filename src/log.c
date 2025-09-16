@@ -47,15 +47,19 @@
 const char	g_log_filesuffix[5] = ".txt";
 
 #if defined(UNIX)
-const int	g_open_flags[2] = {
-	(O_WRONLY|O_CREAT|O_APPEND),
-	(O_WRONLY|O_CREAT|O_TRUNC),
+const int	g_open_flags[4] = {
+	[OPFL_APPEND] = (O_WRONLY|O_CREAT|O_APPEND),
+	[OPFL_WRITE] = (O_WRONLY|O_CREAT|O_TRUNC),
+	[OPFL_APLUS] = (O_RDWR|O_CREAT|O_APPEND),
+	[OPFL_WPLUS] = (O_RDWR|O_CREAT|O_TRUNC),
 };
 const mode_t	g_open_modes = (S_IWUSR | S_IRUSR);
 #elif defined(WIN32)
-const int	g_open_flags[2] = {
-	(_O_WRONLY|_O_CREAT|_O_APPEND),
-	(_O_WRONLY|_O_CREAT|_O_TRUNC),
+const int	g_open_flags[4] = {
+	[OPFL_APPEND] = (_O_WRONLY|_O_CREAT|_O_APPEND),
+	[OPFL_WRITE] = (_O_WRONLY|_O_CREAT|_O_TRUNC),
+	[OPFL_APLUS] = (_O_RDWR|_O_CREAT|_O_APPEND),
+	[OPFL_WPLUS] = (_O_RDWR|_O_CREAT|_O_TRUNC),
 };
 const mode_t	g_open_modes = (_S_IREAD | _S_IWRITE);
 #endif

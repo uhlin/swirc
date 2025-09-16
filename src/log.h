@@ -18,9 +18,16 @@
 typedef int mode_t;
 #endif
 
+enum {
+	OPFL_APPEND,
+	OPFL_WRITE,
+	OPFL_APLUS,
+	OPFL_WPLUS
+};
+
 __SWIRC_BEGIN_DECLS
 extern const char	g_log_filesuffix[5];
-extern const int	g_open_flags[2];
+extern const int	g_open_flags[4];
 extern const mode_t	g_open_modes;
 
 char	*log_get_path(const char *, const char *);
