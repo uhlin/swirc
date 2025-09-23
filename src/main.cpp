@@ -662,7 +662,7 @@ main(int argc, char *argv[])
 {
 	char *cp;
 
-#if __OpenBSD__
+#if defined(OpenBSD) && OpenBSD < 202510
 	extern char *malloc_options;
 
 	malloc_options = const_cast<char *>("S");
