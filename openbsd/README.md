@@ -19,7 +19,7 @@
 The sequence to make a patch for a file is usually:
 
 - `cd $(make show=WRKSRC)`
-- `cp foo/bar.c{,.orig}`
+- `cp foo/bar.c{,.orig.port}`
 - Edit `foo/bar.c`
 - `cd -`
 - `make update-patches`
