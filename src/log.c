@@ -211,7 +211,7 @@ log_msg(const char *path, const char *text)
 	if ((fd = open(path, g_open_flags[OPFL_APPEND], g_open_modes)) < 0)
 		return;
 #elif defined(WIN32)
-	if ((errno = _sopen_s(&fd, path, g_open_flags[OPFL_APPEND], _SH_DENYNO,
+	if ((errno = _sopen_s(&fd, path, g_open_flags[OPFL_APPEND], _SH_DENYWR,
 	    g_open_modes)) != 0)
 		return;
 #endif

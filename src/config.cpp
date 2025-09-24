@@ -672,7 +672,7 @@ config_create(const char *path, const char *mode)
 	if ((fd = open(path, get_flags(mode), g_open_modes)) < 0)
 		err_sys("%s: open", __func__);
 #elif defined(WIN32)
-	if ((errno = _sopen_s(&fd, path, get_flags(mode), _SH_DENYNO,
+	if ((errno = _sopen_s(&fd, path, get_flags(mode), _SH_DENYWR,
 	    g_open_modes)) != 0)
 		err_sys("%s: _sopen_s", __func__);
 #endif
@@ -699,7 +699,7 @@ config_do_save(const char *path, const char *mode)
 	if ((fd = open(path, get_flags(mode), g_open_modes)) < 0)
 		err_sys("%s: open", __func__);
 #elif defined(WIN32)
-	if ((errno = _sopen_s(&fd, path, get_flags(mode), _SH_DENYNO,
+	if ((errno = _sopen_s(&fd, path, get_flags(mode), _SH_DENYWR,
 	    g_open_modes)) != 0)
 		err_sys("%s: _sopen_s", __func__);
 #endif
