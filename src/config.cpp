@@ -40,6 +40,7 @@
 #include "errHand.h"
 #include "interpreter.h"
 #include "libUtils.h"
+#include "log.h"
 #include "main.h"
 #include "nestHome.h"
 #include "printtext.h"
