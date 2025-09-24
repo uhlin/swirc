@@ -642,12 +642,43 @@ config_integer(const struct integer_context *ctx)
 	return ctx->fallback_default;
 }
 
+static int
+get_flags(const char *mode)
+{
+	int flags = 0;
+
+	if (mode == NULL)
+		err_exit(EINVAL, "%s: null mode", __func__);
+	else if (strings_match(mode, "a"))
+		flags = g_open_flags[OPFL_APPEND];
+	else if (strings_match(mode, "w"))
+		flags = g_open_flags[OPFL_WRITE];
+	else if (strings_match(mode, "a+"))
+		flags = g_open_flags[OPFL_APLUS];
+	else if (strings_match(mode, "w+"))
+		flags = g_open_flags[OPFL_WPLUS];
+	else
+		err_exit(EINVAL, "%s: unsupported mode", __func__);
+	return (flags);
+}
+
 void
 config_create(const char *path, const char *mode)
 {
 	FILE	*fp;
+	int	 fd;
 
-	fp = fopen_exit_on_error(path, mode);
+#if defined(UNIX)
+	if ((fd = open(path, get_flags(mode), g_open_modes)) < 0)
+		err_sys("%s: open", __func__);
+#elif defined(WIN32)
+	if ((errno = _sopen_s(&fd, path, get_flags(mode), _SH_DENYNO,
+	    g_open_modes)) != 0)
+		err_sys("%s: _sopen_s", __func__);
+#endif
+	else if ((fp = fdopen(fd, mode)) == NULL)
+		err_sys("%s: fdopen", __func__);
+
 	write_config_header(fp);
 
 	FOREACH_CDV() {
@@ -662,8 +693,19 @@ void
 config_do_save(const char *path, const char *mode)
 {
 	FILE	*fp;
+	int	 fd;
 
-	fp = fopen_exit_on_error(path, mode);
+#if defined(UNIX)
+	if ((fd = open(path, get_flags(mode), g_open_modes)) < 0)
+		err_sys("%s: open", __func__);
+#elif defined(WIN32)
+	if ((errno = _sopen_s(&fd, path, get_flags(mode), _SH_DENYNO,
+	    g_open_modes)) != 0)
+		err_sys("%s: _sopen_s", __func__);
+#endif
+	else if ((fp = fdopen(fd, mode)) == NULL)
+		err_sys("%s: fdopen", __func__);
+
 	write_config_header(fp);
 
 	FOREACH_CDV() {
