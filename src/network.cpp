@@ -229,6 +229,8 @@ establish_conn(struct addrinfo *res, PPRINTTEXT_CONTEXT ctx)
 {
 	struct addrinfo *bind_res = nullptr;
 
+	if (res == nullptr)
+		return;
 	if (g_bind_hostname) {
 		int gai_ret;
 		struct addrinfo hints;
