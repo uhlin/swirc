@@ -1,5 +1,5 @@
 /* events/auth.c
-   Copyright (C) 2017-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -58,8 +58,8 @@ static char *
 get_b64_encoded_username(void)
 {
 	char		*encoded_username;
-	const char	*username = Config("sasl_username");
 	const size_t	 namesize = 500;
+	immutable_cp_t	 username = Config("sasl_username");
 
 	if (strings_match(username, ""))
 		return NULL;
@@ -80,8 +80,8 @@ static bool
 build_auth_message(char **msg)
 {
 	char		*msg_unencoded;
-	const char	*username = Config("sasl_username");
-	const char	*password = Config("sasl_password");
+	immutable_cp_t	 username = Config("sasl_username");
+	immutable_cp_t	 password = Config("sasl_password");
 	const size_t	 msgsize = 1000;
 	size_t		 len;
 
@@ -159,7 +159,7 @@ handle_else_branch(const char *mechanism, const char *params)
 void
 event_authenticate(struct irc_message_compo *compo)
 {
-	const char *mechanism = get_sasl_mechanism();
+	immutable_cp_t mechanism = get_sasl_mechanism();
 
 	if (strings_match(compo->params, "+")) {
 		if (strings_match(mechanism, "ECDSA-NIST256P-CHALLENGE")) {
