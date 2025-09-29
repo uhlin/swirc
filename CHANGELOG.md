@@ -7,8 +7,11 @@ All notable changes to this project will be documented in this file.
 - During file creation, took care to give it the most restrictive
   permissions possible. Two occurrences.
 - Fixed segmentation fault on OpenBSD 7.8 and greater due to a type
-  change of the global variable 'malloc_options' which is now an
-  immutable char pointer. Better to not set it at all.
+  change of the global variable `malloc_options` which is now an
+  immutable char pointer. Better to not set it at all, not even at
+  file scope. It had been good if the declaration of `malloc_options`
+  had been provided within a system header, the segmentation fault had
+  instead resulted in a compilation error.
 - Improved the thread safety. Fixed potential data races found by TSan.
 
 ## [3.5.5] - 2025-05-17 ##
