@@ -54,6 +54,7 @@
 #include "../filePred.h"
 #include "../get_x509_fp.hpp"
 #include "../libUtils.h"
+#include "../log.h"
 #include "../main.h"
 #include "../nestHome.h"
 #include "../printtext.h"
@@ -128,6 +129,7 @@ sasl_keygen(const bool force)
 {
 	EC_KEY	*key = NULL;
 	FILE	*fp = NULL;
+	int	 fd = -1;
 
 	try {
 		char	*path;
@@ -146,11 +148,22 @@ sasl_keygen(const bool force)
 
 		if (!EC_KEY_generate_key(key))
 			throw std::runtime_error("key generation failed");
-		else if ((fp = xfopen(path, "w")) == NULL)
+#if defined(UNIX)
+		else if ((fd = open(path, g_open_flags[OPFL_WRITE],
+		    g_open_modes)) < 0)
 			throw std::runtime_error("unable to open file");
-		else if (!PEM_write_ECPrivateKey(fp, key, NULL, NULL, 0, NULL,
-		    NULL))
+#elif defined(WIN32)
+		else if ((errno = _sopen_s(&fd, path, g_open_flags[OPFL_WRITE],
+		    _SH_DENYRW, g_open_modes)) != 0)
+			throw std::runtime_error("unable to open file");
+#endif
+		else if ((fp = fdopen(fd, "w")) == NULL) {
+			(void) close(fd);
+			throw std::runtime_error("unable to open file");
+		} else if (!PEM_write_ECPrivateKey(fp, key, NULL, NULL, 0, NULL,
+		    NULL)) {
 			throw std::runtime_error("unable to write private key");
+		}
 
 		output_message(false, "key generation successful");
 	} catch (const std::runtime_error &e) {
