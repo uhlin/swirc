@@ -46,6 +46,8 @@
 #include "auth.h"
 #include "cap.h" /* get_sasl_mechanism() */
 
+static const size_t AUTH_MSG_SIZE = 1000;
+
 static void
 abort_authentication(void)
 {
@@ -82,7 +84,6 @@ build_auth_message(char **msg)
 	char		*msg_unencoded;
 	immutable_cp_t	 username = Config("sasl_username");
 	immutable_cp_t	 password = Config("sasl_password");
-	const size_t	 msgsize = 1000;
 	size_t		 len;
 
 	if (strings_match(username, "") || strings_match(password, "")) {
@@ -94,9 +95,10 @@ build_auth_message(char **msg)
 	len = size_product(strlen(username), 2);
 	len += 2;
 	len += strlen(password);
-	*msg = xmalloc(msgsize + 1);
-	(*msg)[msgsize] = '\0';
-	if (b64_encode((uint8_t *) msg_unencoded, len, *msg, msgsize) == -1) {
+	*msg = xmalloc(AUTH_MSG_SIZE + 1);
+	(*msg)[AUTH_MSG_SIZE] = '\0';
+	if (b64_encode((uint8_t *)msg_unencoded, len, *msg,
+	    AUTH_MSG_SIZE) == -1) {
 		free(msg_unencoded);
 		free(*msg);
 		*msg = NULL;
@@ -184,7 +186,7 @@ event_authenticate(struct irc_message_compo *compo)
 			}
 
 			(void) net_send("AUTHENTICATE %s", msg);
-			crypt_freezero(msg, xstrnlen(msg, 1000));
+			crypt_freezero(msg, xstrnlen(msg, AUTH_MSG_SIZE));
 		} else if (strings_match(mechanism, "SCRAM-SHA-1") ||
 			   strings_match(mechanism, "SCRAM-SHA-256") ||
 			   strings_match(mechanism, "SCRAM-SHA-512")) {
