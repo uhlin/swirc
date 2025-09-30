@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 - Added command `/utctime`.
 - Added command-line option `-h`. (Sets the bind host)
 - During file creation, took care to give it the most restrictive
-  permissions possible. Two occurrences.
+  permissions possible. Multiple occurrences.
 - Fixed segmentation fault on OpenBSD 7.8 and greater due to a type
   change of the global variable `malloc_options` which is now an
   immutable char pointer. Better to not set it at all, not even at
