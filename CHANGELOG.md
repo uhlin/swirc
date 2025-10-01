@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added command `/nsid` (NickServ identify).
 - Added command `/utctime`.
 - Added command-line option `-h`. (Sets the bind host)
 - During file creation, took care to give it the most restrictive
