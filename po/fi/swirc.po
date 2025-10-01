@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.5\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2025-10-01 21:16+0200\n"
-"PO-Revision-Date: 2025-07-16 21:55+0200\n"
+"PO-Revision-Date: 2025-10-01 21:43+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -1106,9 +1106,8 @@ msgid ""
 msgstr ""
 
 #: ../src/include/commandhelp.h:562
-#, fuzzy
 msgid "usage: /nsid [--force]"
-msgstr "käyttö: /die [--I-am-sure]"
+msgstr ""
 
 #: ../src/include/commandhelp.h:564
 msgid "NickServ identify."
