@@ -558,6 +558,17 @@ static usage_t notice_usage = {
   "",
 };
 
+static usage_t nsid_usage = {
+  N_("usage: /nsid [--force]"),
+  "",
+  N_("NickServ identify."),
+  "",
+  N_("The username and password used for the identification are read from\n"
+     "'sasl_username' and 'sasl_password' respectively. And the service\n"
+     "hostname from 'nickserv_host'."),
+  "",
+};
+
 static usage_t op_usage = {
   N_("usage: /op <nick>"),
   "",

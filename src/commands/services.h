@@ -4,6 +4,7 @@
 __SWIRC_BEGIN_DECLS
 void	cmd_chanserv(CSTRING);
 void	cmd_nickserv(CSTRING);
+void	cmd_nsid(CSTRING);
 void	cmd_qbot(CSTRING);
 
 //lint -sem(get_list_of_matching_cs_cmds, r_null)

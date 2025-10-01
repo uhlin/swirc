@@ -150,6 +150,7 @@ static struct cmds_tag {
 	{ "nickserv",    cmd_nickserv,    true,  nickserv_usage,    ARRAY_SIZE(nickserv_usage),    true  },
 	{ "notice",      cmd_notice,      true,  notice_usage,      ARRAY_SIZE(notice_usage),      true  },
 	{ "ns",          cmd_nickserv,    true,  nickserv_usage,    ARRAY_SIZE(nickserv_usage),    true  },
+	{ "nsid",        cmd_nsid,        true,  nsid_usage,        ARRAY_SIZE(nsid_usage),        true  },
 	{ "op",          cmd_op,          true,  op_usage,          ARRAY_SIZE(op_usage),          true  },
 	{ "oper",        cmd_oper,        true,  oper_usage,        ARRAY_SIZE(oper_usage),        true  },
 	{ "p",           cmd_part,        true,  part_usage,        ARRAY_SIZE(part_usage),        true  },

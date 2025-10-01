@@ -146,6 +146,15 @@ cmd_nickserv(CSTRING data)
 }
 
 /*
+ * usage: /nsid [--force]
+ */
+void
+cmd_nsid(CSTRING data)
+{
+	UNUSED_PARAM(data);
+}
+
+/*
  * usage: /qbot <[service hostname | --]> <command> [...]
  */
 void
