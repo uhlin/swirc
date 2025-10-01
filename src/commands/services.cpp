@@ -163,10 +163,12 @@ cmd_nsid(CSTRING data)
 		    "%s: communication are done in plain text: "
 		    "use --force to override", __func__);
 		return;
+	} else if ((str[0] = config_get_normalized_sasl_username()) == NULL ||
+		   (str[1] = config_get_normalized_sasl_password()) == NULL) {
+		printtext_print("err", "%s: unable to get username/password",
+		    __func__);
+		return;
 	}
-
-	str[0] = config_get_normalized_sasl_username();
-	str[1] = config_get_normalized_sasl_password();
 
 	ret = snprintf(buf, sizeof buf, "-- identify %s %s", str[0], str[1]);
 
