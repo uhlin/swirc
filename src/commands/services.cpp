@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <openssl/crypto.h> /* OPENSSL_cleanse() */
+
 #include <stdexcept>
 #include <string>
 
@@ -175,6 +177,7 @@ cmd_nsid(CSTRING data)
 	}
 
 	run_command("/nickserv", "NickServ", "nickserv_host", &buf[0]);
+	OPENSSL_cleanse(buf, sizeof buf);
 }
 
 /*
