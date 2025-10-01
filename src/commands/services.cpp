@@ -40,6 +40,7 @@
 #include "../printtext.h"
 #include "../strHand.h"
 
+#include "connect.h"
 #include "services.h"
 #include "squery.h"
 
@@ -151,7 +152,29 @@ cmd_nickserv(CSTRING data)
 void
 cmd_nsid(CSTRING data)
 {
-	UNUSED_PARAM(data);
+	CSTRING str[2];
+	char	buf[800];
+	int	ret;
+
+	if (!ssl_is_enabled() && !strings_match(data, "--force")) {
+		printtext_print("err",
+		    "%s: communication are done in plain text: "
+		    "use --force to override", __func__);
+		return;
+	}
+
+	str[0] = config_get_normalized_sasl_username();
+	str[1] = config_get_normalized_sasl_password();
+
+	ret = snprintf(buf, sizeof buf, "-- identify %s %s", str[0], str[1]);
+
+	if (ret < 0 || static_cast<size_t>(ret) >= sizeof buf) {
+		printtext_print("err", "%s: insufficient buffer space",
+		    __func__);
+		return;
+	}
+
+	run_command("/nickserv", "NickServ", "nickserv_host", &buf[0]);
 }
 
 /*
