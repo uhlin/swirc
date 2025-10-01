@@ -1148,7 +1148,7 @@ msgstr "användning: /nsid [--force]"
 
 #: ../src/include/commandhelp.h:564
 msgid "NickServ identify."
-msgstr ""
+msgstr "NickServ identifiering."
 
 #: ../src/include/commandhelp.h:566
 msgid ""
@@ -1156,6 +1156,9 @@ msgid ""
 "'sasl_username' and 'sasl_password' respectively. And the service\n"
 "hostname from 'nickserv_host'."
 msgstr ""
+"Användarnamnet och lösenordet som används för identifieringen läses\n"
+"från 'sasl_username' respektive 'sasl_password'. Och tjänstens värd-\n"
+"namn från 'nickserv_host'."
 
 #: ../src/include/commandhelp.h:573
 msgid "usage: /op <nick>"
