@@ -559,7 +559,7 @@ static usage_t notice_usage = {
 };
 
 static usage_t nsid_usage = {
-  N_("usage: /nsid [--force]"),
+  N_("usage: /nsid [--force] [--swap] [--pass-only]"),
   "",
   N_("NickServ identify."),
   "",

@@ -149,16 +149,50 @@ cmd_nickserv(CSTRING data)
 }
 
 /*
- * usage: /nsid [--force]
+ * usage: /nsid [--force] [--swap] [--pass-only]
  */
 void
 cmd_nsid(CSTRING data)
 {
 	CSTRING str[2];
+	bool	o_force = false;
+	bool	o_swap = false;
+	bool	o_pass_only = false;
 	char	buf[800];
 	int	ret;
 
-	if (!ssl_is_enabled() && !strings_match(data, "--force")) {
+	if (!strings_match(data, "")) {
+		CSTRING token;
+		STRING dcopy = sw_strdup(data);
+		STRING last = const_cast<STRING>("");
+
+		for (STRING args = dcopy;
+		    (token = strtok_r(args, " ", &last)) != NULL;
+		    args = NULL) {
+			if (strings_match(token, "--force"))
+				o_force = true;
+			else if (strings_match(token, "--swap"))
+				o_swap = true;
+			else if (strings_match(token, "--pass-only"))
+				o_pass_only = true;
+			else {
+				free(dcopy);
+				printtext_print("warn", "%s: implicit data: %s",
+				    __func__, token);
+				return;
+			}
+		}
+
+		free(dcopy);
+	}
+
+	if (o_swap && o_pass_only) {
+		printtext_print("err", "%s: --swap cannot be combined with "
+		    "--pass-only", __func__);
+		return;
+	}
+
+	if (!ssl_is_enabled() && !o_force) {
 		printtext_print("err",
 		    "%s: communication are done in plain text: "
 		    "use --force to override", __func__);
@@ -170,7 +204,15 @@ cmd_nsid(CSTRING data)
 		return;
 	}
 
-	ret = snprintf(buf, sizeof buf, "-- identify %s %s", str[0], str[1]);
+	if (o_swap) {
+		ret = snprintf(buf, sizeof buf, "-- identify %s %s", str[1],
+		    str[0]);
+	} else if (o_pass_only) {
+		ret = snprintf(buf, sizeof buf, "-- identify %s", str[1]);
+	} else {
+		ret = snprintf(buf, sizeof buf, "-- identify %s %s", str[0],
+		    str[1]);
+	}
 
 	if (ret < 0 || static_cast<size_t>(ret) >= sizeof buf) {
 		printtext_print("err", "%s: insufficient buffer space",
