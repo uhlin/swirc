@@ -15,6 +15,9 @@ All notable changes to this project will be documented in this file.
   instead resulted in a compilation error.
 - Improved the thread safety. Fixed potential data races found by TSan.
 
+### Windows ###
+- Upgraded to [LibreSSL](https://www.libressl.org/) 4.1.1
+
 ## [3.5.5] - 2025-05-17 ##
 - **Added** a few micro-optimizations.
 - **Added** usage of `textBuf_emplace_back()` in _multiple_ places thus
