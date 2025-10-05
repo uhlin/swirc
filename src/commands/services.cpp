@@ -176,9 +176,9 @@ cmd_nsid(CSTRING data)
 			else if (strings_match(token, "--pass-only"))
 				o_pass_only = true;
 			else {
-				free(dcopy);
 				printtext_print("warn", "%s: implicit data: %s",
 				    __func__, token);
+				free(dcopy);
 				return;
 			}
 		}
