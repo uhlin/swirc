@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 - Added command `/nsid` (NickServ identify).
 - Added command `/utctime`.
 - Added command-line option `-h`. (Sets the bind host)
+- Added small tab completion improvements.
 - During file creation, took care to give it the most restrictive
   permissions possible. Multiple occurrences.
 - Fixed segmentation fault on OpenBSD 7.8 and greater due to a type
@@ -13,7 +14,6 @@ All notable changes to this project will be documented in this file.
   file scope. It had been good if the declaration of `malloc_options`
   had been provided within a system header, the segmentation fault had
   instead resulted in a compilation error.
-- Improved tab completion.
 - Improved the thread safety. Fixed potential data races found by TSan.
 
 ### Windows ###
