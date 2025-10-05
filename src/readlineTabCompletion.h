@@ -1,6 +1,13 @@
 #ifndef READLINE_TAB_COMPLETION_H
 #define READLINE_TAB_COMPLETION_H
 
+#define servhost_macro(x)\
+	(#x " services."),\
+	(#x " services.alphachat.net"),\
+	(#x " services.anonops.com"),\
+	(#x " services.irc.ircnow.org"),\
+	(#x " services.oftc.net")
+
 typedef void (*AC_FUNC)(volatile struct readline_session_context *, CSTRING);
 
 __SWIRC_BEGIN_DECLS
