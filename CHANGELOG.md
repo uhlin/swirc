@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
   file scope. It had been good if the declaration of `malloc_options`
   had been provided within a system header, the segmentation fault had
   instead resulted in a compilation error.
+- Improved tab completion.
 - Improved the thread safety. Fixed potential data races found by TSan.
 
 ### Windows ###
