@@ -18,6 +18,6 @@ get_file("https://www.nifty-networks.net/swirc/curl-8.8.0.cab", "curl-8.8.0.cab"
 get_file("https://www.nifty-networks.net/swirc/gnu-bundle-202205.cab", "gnu-bundle-202205.cab");
 get_file("https://www.nifty-networks.net/swirc/hunspell-1.7.2-dlls.cab", "hunspell-1.7.2.cab");
 get_file("https://www.nifty-networks.net/swirc/hunspell-en-us.cab", "hunspell-en-us.cab");
-get_file("https://www.nifty-networks.net/swirc/libressl-4.1.0.cab", "libressl-4.1.0.cab");
+get_file("https://www.nifty-networks.net/swirc/libressl-4.1.1.cab", "libressl-4.1.1.cab");
 get_file("https://www.nifty-networks.net/swirc/pdcurses-3.9-utf8-colors.cab", "pdcurses-3.9.cab");
 get_file("https://www.nifty-networks.net/swirc/swirc-locales-20251002.cab", "swirc-locales-20251002.cab");
