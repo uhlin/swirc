@@ -701,12 +701,41 @@ init_mode_for_sasl(volatile struct readline_session_context *ctx)
 	ctx->tc->isInCirculationModeFor.Sasl = true;
 }
 
+//lint -sem(get_service_hosts, r_null)
+static PTEXTBUF
+get_service_hosts(const char *search_var)
+{
+	PTEXTBUF	matches = textBuf_new();
+	const size_t	varlen = strlen(search_var);
+
+	for (size_t i = 0; i < ARRAY_SIZE(service_hosts); i++) {
+		if (!strncmp(search_var, service_hosts[i], varlen)) {
+			textBuf_emplace_back(__func__, matches,
+			    service_hosts[i], 0);
+		}
+	}
+
+	if (textBuf_size(matches) == 0) {
+		textBuf_destroy(matches);
+		return NULL;
+	}
+
+	return matches;
+}
+
 static void
 init_mode_for_set(volatile struct readline_session_context *ctx)
 {
 	immutable_cp_t cp = addrof(ctx->tc->search_var[5]);
 
-	if ((ctx->tc->matches = get_list_of_matching_settings(cp)) == NULL) {
+	if (strncmp(cp, "chanserv_host ", 14) == 0 ||
+	    strncmp(cp, "nickserv_host ", 14) == 0) {
+		if ((ctx->tc->matches = get_service_hosts(cp)) == NULL) {
+			output_error("no magic");
+			return;
+		}
+	} else if ((ctx->tc->matches = get_list_of_matching_settings(cp)) ==
+	    NULL) {
 		output_error("no magic");
 		return;
 	}
