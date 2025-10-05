@@ -51,6 +51,13 @@
 #include "strHand.h"
 #include "terminal.h"
 
+static CSTRING service_hosts[] = {
+	//lint -e786
+	servhost_macro(chanserv_host),
+	servhost_macro(nickserv_host),
+	//lint +e786
+};
+
 static void
 do_work(volatile struct readline_session_context *ctx, const wchar_t *cmd,
     CSTRING s)
