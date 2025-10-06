@@ -567,6 +567,24 @@ static usage_t nsid_usage = {
      "'sasl_username' and 'sasl_password' respectively. And the service\n"
      "hostname from 'nickserv_host'."),
   "",
+  (TXT_BOLD "--force" TXT_BOLD),
+  N_("    Forces identification when connected via an unencrypted\n"
+     "    connection. The username and password will be disclosed in clear\n"
+     "    text."),
+  "",
+  (TXT_BOLD "--swap" TXT_BOLD),
+  N_("    By default the username is sent followed by the password. With\n"
+     "    this flag the password is instead sent followed by the\n"
+     "    username. The syntax depends on the IRC server software used by\n"
+     "    your network. No rules for the syntax exists, it isn't defined by\n"
+     "    a standard. Most common is the default approach."),
+  "",
+  (TXT_BOLD "--pass-only" TXT_BOLD),
+  N_("    With this flag no username is used for the identification,\n"
+     "    i.e. only the password. It's not recommended but completely valid\n"
+     "    on some IRC networks. Your current nickname is then used as an\n"
+     "    username."),
+  "",
 };
 
 static usage_t op_usage = {
