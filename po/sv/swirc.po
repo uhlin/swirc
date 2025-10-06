@@ -1166,6 +1166,8 @@ msgid ""
 "    connection. The username and password will be disclosed in clear\n"
 "    text."
 msgstr ""
+"    Tvingar fram identifiering vid anslutning via en okrypterad\n"
+"    anslutning. Användarnamn och lösenord visas i klartext."
 
 #: ../src/include/commandhelp.h:576
 msgid ""
@@ -1175,6 +1177,11 @@ msgid ""
 "    your network. No rules for the syntax exists, it isn't defined by\n"
 "    a standard. Most common is the default approach."
 msgstr ""
+"    Som standard skickas användarnamnet följt av lösenordet. Med denna\n"
+"    flagga skickas istället lösenordet följt av användar-\n"
+"    namnet. Syntaxen beror på IRC serverprogramvaran som\n"
+"    används av ditt nätverk. Inga regler för syntaxen finns, den är\n"
+"    inte definierad av en standard. Vanligast är standardmetoden."
 
 #: ../src/include/commandhelp.h:583
 msgid ""
@@ -1183,6 +1190,10 @@ msgid ""
 "    on some IRC networks. Your current nickname is then used as an\n"
 "    username."
 msgstr ""
+"    Med denna flagga används inget användarnamn för identifiering,\n"
+"    d.v.s. endast lösenordet. Det rekommenderas inte men är helt\n"
+"    giltigt på vissa IRC nätverk. Ditt nuvarande smeknamn används då\n"
+"    som användarnamn."
 
 #: ../src/include/commandhelp.h:591
 msgid "usage: /op <nick>"
