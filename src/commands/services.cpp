@@ -80,8 +80,8 @@ public:
 
 irc_service_cmd::irc_service_cmd(CSTRING data)
 {
+	CSTRING	 token[2];
 	STRING	 dcopy;
-	STRING	 token1, token2;
 	char	*last = const_cast<char *>("");
 
 	if (strings_match(data, ""))
@@ -90,13 +90,13 @@ irc_service_cmd::irc_service_cmd(CSTRING data)
 	dcopy = sw_strdup(data);
 	(void) strFeed(dcopy, 1);
 
-	if ((token1 = strtok_r(dcopy, "\n", &last)) != NULL)
-		(void) this->srv_host.assign(token1);
-	if ((token2 = strtok_r(NULL, "\n", &last)) != NULL)
-		(void) this->msg.assign(token2);
+	if ((token[0] = strtok_r(dcopy, "\n", &last)) != NULL)
+		(void) this->srv_host.assign(token[0]);
+	if ((token[1] = strtok_r(NULL, "\n", &last)) != NULL)
+		(void) this->msg.assign(token[1]);
 	free(dcopy);
 
-	if (token1 == NULL || token2 == NULL)
+	if (token[0] == NULL || token[1] == NULL)
 		throw std::runtime_error("too few tokens");
 }
 
