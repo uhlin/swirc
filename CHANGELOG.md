@@ -2,22 +2,22 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added command `/nsid` (NickServ identify).
-- Added command `/utctime`.
-- Added command-line option `-h`. (Sets the bind host)
-- Added small tab completion improvements.
+- **Added** command `/nsid` (NickServ identify).
+- **Added** command `/utctime`.
+- **Added** command-line option `-h`. (Sets the bind host)
+- **Added** small tab completion improvements.
 - During file creation, took care to give it the most restrictive
   permissions possible. Multiple occurrences.
-- Fixed segmentation fault on OpenBSD 7.8 and greater due to a type
+- **Fixed** segmentation fault on OpenBSD 7.8 and greater due to a type
   change of the global variable `malloc_options` which is now an
   immutable char pointer. Better to not set it at all, not even at
   file scope. It had been good if the declaration of `malloc_options`
   had been provided within a system header, the segmentation fault had
   instead resulted in a compilation error.
-- Improved the thread safety. Fixed potential data races found by TSan.
+- **Improved** the thread safety. Fixed potential data races found by TSan.
 
 ### Windows ###
-- Upgraded to [LibreSSL](https://www.libressl.org/) 4.1.1
+- **Upgraded** to [LibreSSL](https://www.libressl.org/) 4.1.1
 
 ## [3.5.5] - 2025-05-17 ##
 - **Added** a few micro-optimizations.
