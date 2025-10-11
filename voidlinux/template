@@ -17,7 +17,7 @@ license="BSD-3-Clause, ISC, MIT"
 homepage="https://www.nifty-networks.net/swirc"
 changelog="https://raw.githubusercontent.com/uhlin/swirc/master/CHANGELOG.md"
 distfiles="https://www.nifty-networks.net/swirc/releases/swirc-${version}.tgz"
-checksum=09fbd13b26f16fe375f79052d2be679013803ae6b2fa6f0e315c32dfd81ee4a4
+checksum=27b978fb88e807e4c8581b7f8a65d1da57c0c98eac3f3e93b17807deb06d88d8
 
 build_options="notify"
 build_options_default="notify"
