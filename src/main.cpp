@@ -88,7 +88,7 @@
 /* Things with external linkage
    ============================ */
 
-chararray_t	g_swircVersion	= "v3.5.5";
+chararray_t	g_swircVersion	= "v3.5.6";
 chararray_t	g_swircYear	= "2012-2025";
 chararray_t	g_swircAuthor	= "Markus Uhlin";
 chararray_t	g_swircWebAddr	= "https://www.nifty-networks.net/swirc/";

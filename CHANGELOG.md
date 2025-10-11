@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.5.6] - 2025-10-11 ##
 - **Added** command `/nsid` (NickServ identify).
 - **Added** command `/utctime`.
 - **Added** command-line option `-h`. (Sets the bind host)
