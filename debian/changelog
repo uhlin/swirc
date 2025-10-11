@@ -1,3 +1,9 @@
+swirc (3.5.6-1) unstable; urgency=medium
+
+  * New upstream version.
+
+ -- Markus Uhlin <markus@nifty-networks.net>  Sat, 11 Oct 2025 11:31:44 +0200
+
 swirc (3.5.5-1~exp1) experimental; urgency=medium
 
   * New upstream version.
