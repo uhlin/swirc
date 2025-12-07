@@ -3,6 +3,18 @@
 
 #include <stdint.h> /* SIZE_MAX */
 
+#ifndef __has_attribute
+#define __has_attribute(x) 0
+#endif
+
+#if defined(__OpenBSD__) && __has_attribute(bounded)
+#define BOUNDED_STR(buf,len) __attribute__((__bounded__(__string__,buf,len)))
+#define BOUNDED_WSTR(buf,len) __attribute__((__bounded__(__wcstring__,buf,len)))
+#else
+#define BOUNDED_STR(buf,len)
+#define BOUNDED_WSTR(buf,len)
+#endif
+
 /*lint -sem(strColor, pure) */
 /*lint -sem(strcasestr, r_null) */
 /*lint -printf(3, sw_snprintf) */
@@ -20,10 +32,10 @@ int	 strFeed(char *string, int count);
 #if defined(HAVE_STRCASESTR) && HAVE_STRCASESTR == 0
 char	*strcasestr(const char *, const char *);
 #endif
-errno_t	 sw_strcat(char *dest, const char *src, size_t);
-errno_t	 sw_strcpy(char *dest, const char *src, size_t);
-errno_t	 sw_wcscat(wchar_t *dest, const wchar_t *src, size_t);
-errno_t	 sw_wcscpy(wchar_t *dest, const wchar_t *src, size_t);
+errno_t	 sw_strcat(char *dest, const char *src, size_t) BOUNDED_STR(1,3);
+errno_t	 sw_strcpy(char *dest, const char *src, size_t) BOUNDED_STR(1,3);
+errno_t	 sw_wcscat(wchar_t *dest, const wchar_t *src, size_t) BOUNDED_WSTR(1,3);
+errno_t	 sw_wcscpy(wchar_t *dest, const wchar_t *src, size_t) BOUNDED_WSTR(1,3);
 size_t	 xstrnlen(const char *, size_t);
 void	 squeeze(char *, const char *);
 void	 sw_snprintf(char *, size_t, const char *, ...) PRINTFLIKE(3);
