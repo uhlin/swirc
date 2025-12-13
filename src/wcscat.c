@@ -25,7 +25,7 @@
 
    NOTE: 'size' is the full size of the destination buffer */
 errno_t
-sw_wcscat(wchar_t *dest, const wchar_t *src, size_t size)
+sw_wcscat(wchar_t *__restrict dest, const wchar_t *__restrict src, size_t size)
 {
 	if (dest == NULL || src == NULL || size == 0)
 		return EINVAL;

@@ -23,7 +23,7 @@
 /* sw_strcpy()  --  copy a string
    Returns 0 on success; and an error number on failure. */
 errno_t
-sw_strcpy(char *dest, const char *src, size_t size)
+sw_strcpy(char *__restrict dest, const char *__restrict src, size_t size)
 {
 	if (dest == NULL || src == NULL || size == 0)
 		return EINVAL;

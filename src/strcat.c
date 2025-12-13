@@ -25,7 +25,7 @@
 
    NOTE: 'size' is the full size of the destination buffer */
 errno_t
-sw_strcat(char *dest, const char *src, size_t size)
+sw_strcat(char *__restrict dest, const char *__restrict src, size_t size)
 {
 	if (dest == NULL || src == NULL || size == 0)
 		return EINVAL;

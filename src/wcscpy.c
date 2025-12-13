@@ -23,7 +23,7 @@
 /* sw_wcscpy()  --  copy a wide-character string
    Returns 0 on success; and an error number on failure. */
 errno_t
-sw_wcscpy(wchar_t *dest, const wchar_t *src, size_t size)
+sw_wcscpy(wchar_t *__restrict dest, const wchar_t *__restrict src, size_t size)
 {
 	if (dest == NULL || src == NULL || size == 0)
 		return EINVAL;
