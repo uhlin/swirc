@@ -1,6 +1,16 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Added usage of `__restrict`.
+- Changed the program to during the make phase perform basic checks on
+  functions which accept buffers and sizes.
+- For classes that declares a destructor, also declare a:
+  1. copy assignment operator
+  2. copy constructor
+  3. move assignment operator
+  4. move constructor
+
 ## [3.5.6] - 2025-10-11 ##
 - **Added** command `/nsid` (NickServ identify).
 - **Added** command `/utctime`.
