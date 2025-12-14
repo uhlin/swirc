@@ -847,6 +847,64 @@ locale_info::~locale_info()
 	free(this->codeset);
 }
 
+/*
+ * Copy assignment operator
+ */
+locale_info &locale_info::operator=(const locale_info &obj)
+{
+	if (&obj == this)
+		return *this;
+	if (obj.lang_and_territory)
+		this->lang_and_territory = sw_strdup(obj.lang_and_territory);
+	if (obj.codeset)
+		this->codeset = sw_strdup(obj.codeset);
+	return *this;
+}
+
+/*
+ * Copy constructor
+ */
+locale_info::locale_info(const locale_info &obj)
+    : lang_and_territory(nullptr)
+    , codeset(nullptr)
+{
+	if (obj.lang_and_territory)
+		this->lang_and_territory = sw_strdup(obj.lang_and_territory);
+	if (obj.codeset)
+		this->codeset = sw_strdup(obj.codeset);
+}
+
+/*
+ * Move assignment operator
+ */
+locale_info &locale_info::operator=(locale_info &&obj)
+{
+	if (&obj == this)
+		return *this;
+
+	free(this->lang_and_territory);
+	free(this->codeset);
+
+	this->lang_and_territory = obj.lang_and_territory;
+	this->codeset = obj.codeset;
+
+	obj.lang_and_territory = nullptr;
+	obj.codeset = nullptr;
+
+	return *this;
+}
+
+/*
+ * Move constructor
+ */
+locale_info::locale_info(locale_info &&obj)
+    : lang_and_territory(obj.lang_and_territory)
+    , codeset(obj.codeset)
+{
+	obj.lang_and_territory = nullptr;
+	obj.codeset = nullptr;
+}
+
 /**
  * Free locale info
  */
