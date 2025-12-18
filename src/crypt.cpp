@@ -38,6 +38,21 @@
 #include "libUtils.h"
 #include "strHand.h"
 
+static cryptstr_t
+crypt_malloc(const int size)
+{
+	return static_cast<cryptstr_t>(xmalloc(size));
+}
+
+static cryptstr_t
+crypt_malloc_memset(const int c, const int size)
+{
+	void *out;
+
+	out = xmalloc(size);
+	return static_cast<cryptstr_t>(memset(out, c, size));
+}
+
 static void
 clean_up(EVP_CIPHER_CTX *ctx1, PCRYPT_CTX ctx2, cryptstr_t str, size_t size)
 {
@@ -98,7 +113,7 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 		    crypt_get_base64_decode_length(str_copy)) <= 0)
 			throw std::runtime_error("length error");
 
-		decoded_str = static_cast<cryptstr_t>(xcalloc(decode_len, 1));
+		decoded_str = crypt_malloc_memset(0, decode_len);
 
 		if ((decode_ret = b64_decode(str_copy, decoded_str, static_cast
 		    <size_t>(decode_len))) == -1)
@@ -121,7 +136,7 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 
 		decdat_size = decode_len +
 		    EVP_CIPHER_CTX_block_size(cipher_ctx);
-		decdat = static_cast<cryptstr_t>(xcalloc(decdat_size, 1));
+		decdat = crypt_malloc_memset(0, decdat_size);
 
 		if (!EVP_DecryptUpdate(cipher_ctx, decdat, &decdat_len,
 		    decoded_str, decode_len)) {
@@ -139,8 +154,7 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 		EVP_CIPHER_CTX_free(cipher_ctx);
 		cipher_ctx = nullptr;
 
-		out_str = static_cast<cryptstr_t>(xmalloc(int_sum(decdat_len,
-		    1)));
+		out_str = crypt_malloc(int_sum(decdat_len, 1));
 		out_str[decdat_len] = '\0';
 		memcpy(out_str, decdat, static_cast<size_t>(decdat_len));
 	} catch (const std::exception &ex) {
@@ -206,7 +220,7 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 
 		encdat_size = crypt_strlen(str) +
 		    EVP_CIPHER_CTX_block_size(cipher_ctx) + 1;
-		encdat = static_cast<cryptstr_t>(xmalloc(encdat_size));
+		encdat = crypt_malloc(encdat_size);
 
 		if (!EVP_EncryptUpdate(cipher_ctx, encdat, &encdat_len, str,
 		    crypt_strlen(str) + 1)) {
