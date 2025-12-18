@@ -1,4 +1,3 @@
-# link_with_libnotify.sh:
 # Link with LibNotify
 #
 # SPDX-FileCopyrightText: Copyright 2021-2023 Markus Uhlin

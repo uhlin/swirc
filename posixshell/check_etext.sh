@@ -1,4 +1,3 @@
-# check_etext.sh:
 # Check whether the etext segment is usable
 #
 # SPDX-FileCopyrightText: Copyright 2023 Markus Uhlin

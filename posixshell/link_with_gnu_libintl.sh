@@ -1,4 +1,3 @@
-# link_with_gnu_libintl.sh:
 # Link with GNU LibIntl
 #
 # SPDX-FileCopyrightText: Copyright 2022-2023 Markus Uhlin

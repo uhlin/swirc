@@ -1,5 +1,3 @@
-# fix_cflags.sh
-
 fix_cflags()
 {
 	if [ -x "$(which pkg-config)" ]; then

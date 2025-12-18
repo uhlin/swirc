@@ -1,4 +1,3 @@
-# link_with_hunspell.sh:
 # Link with Hunspell
 #
 # SPDX-FileCopyrightText: Copyright 2023 Markus Uhlin

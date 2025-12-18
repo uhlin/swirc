@@ -1,4 +1,3 @@
-# link_with_libiconv.sh:
 # Link with GNU LibIconv
 #
 # SPDX-FileCopyrightText: Copyright 2022-2023 Markus Uhlin

@@ -1,4 +1,3 @@
-# link_with_gnu_libidn.sh:
 # Link with GNU libidn
 #
 # SPDX-FileCopyrightText: Copyright 2021-2023 Markus Uhlin

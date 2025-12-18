@@ -1,4 +1,3 @@
-# check_strcasestr.sh:
 # Check whether strcasestr() exists
 #
 # SPDX-FileCopyrightText: Copyright 2022-2023 Markus Uhlin
