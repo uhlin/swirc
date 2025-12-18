@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
   2. copy constructor
   3. move assignment operator
   4. move constructor
+- Replaced `memcmp()` with `timingsafe_memcmp()` - one occurrence.
 
 ## [3.5.6] - 2025-10-11 ##
 - **Added** command `/nsid` (NickServ identify).
