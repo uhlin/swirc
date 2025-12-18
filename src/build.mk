@@ -51,6 +51,7 @@ OBJS += $(SRC_DIR)assertAPI.o\
 	$(SRC_DIR)terminal.o\
 	$(SRC_DIR)textBuffer.o\
 	$(SRC_DIR)theme.o\
+	$(SRC_DIR)timingsafe_memcmp.o\
 	$(SRC_DIR)titlebar.o\
 	$(SRC_DIR)tls-server-unix.o\
 	$(SRC_DIR)tls-server.o\
@@ -109,6 +110,7 @@ SRCS = $(SRC_DIR)assertAPI.c\
 	$(SRC_DIR)terminal.c\
 	$(SRC_DIR)textBuffer.c\
 	$(SRC_DIR)theme.c\
+	$(SRC_DIR)timingsafe_memcmp.c\
 	$(SRC_DIR)titlebar.c\
 	$(SRC_DIR)tls-server-unix.cpp\
 	$(SRC_DIR)tls-server.cpp\

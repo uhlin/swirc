@@ -41,6 +41,9 @@ unsigned int
 	 hash_pjw_g(const char *str, const bool lc, const size_t upper_bound);
 void	 fclose_ensure_success(FILE *);
 void	 realloc_strcat(char **dest, const char *src);
+#if defined(HAVE_TIMINGSAFE_MEMCMP) && HAVE_TIMINGSAFE_MEMCMP == 0
+int	 timingsafe_memcmp(const void *, const void *, size_t);
+#endif
 void	 write_setting(FILE *stream, const char *name, const char *value,
 	     const bool do_padding_using_tabs, const short int count);
 void	 write_to_stream(FILE *, const char *fmt, ...) PRINTFLIKE(2);

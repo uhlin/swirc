@@ -54,6 +54,7 @@ OBJS = $(OBJS)\
 	$(SRC_DIR)terminal.obj\
 	$(SRC_DIR)textBuffer.obj\
 	$(SRC_DIR)theme.obj\
+	$(SRC_DIR)timingsafe_memcmp.obj\
 	$(SRC_DIR)titlebar.obj\
 	$(SRC_DIR)tls-server-w32.obj\
 	$(SRC_DIR)tls-server.obj\
