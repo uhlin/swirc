@@ -115,8 +115,8 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 
 		decoded_str = crypt_malloc_memset(0, decode_len);
 
-		if ((decode_ret = b64_decode(str_copy, decoded_str, static_cast
-		    <size_t>(decode_len))) == -1)
+		if ((decode_ret = b64_decode(str_copy, decoded_str,
+		    static_cast<size_t>(decode_len))) == -1)
 			throw std::runtime_error("base 64 error");
 
 		debug("decode_ret = %d", decode_ret);
@@ -165,8 +165,8 @@ crypt_decrypt_str(CSTRING str, cryptstr_const_t password, const bool rot13)
 		err_log(0, "%s: %s", __func__, "unknown exception!");
 	}
 
-	clean_up(cipher_ctx, &crypt_ctx, decdat, static_cast<size_t>
-	    (decdat_size));
+	clean_up(cipher_ctx, &crypt_ctx, decdat,
+	    static_cast<size_t>(decdat_size));
 
 	free(str_copy);
 	free(decoded_str);
