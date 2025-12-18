@@ -583,7 +583,7 @@ sasl_scram_sha_handle_serv_final_msg(CSTRING msg)
 			    "signature!");
 		}
 
-		signature_ok = (memcmp(signature, signature_expected,
+		signature_ok = (timingsafe_memcmp(signature, signature_expected,
 		    signature_expected_len) == 0);
 
 		delete[] signature;
