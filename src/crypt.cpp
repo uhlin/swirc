@@ -253,8 +253,8 @@ crypt_encrypt_str(cryptstr_const_t str, cryptstr_const_t password,
 		err_log(0, "%s: %s", __func__, "unknown exception!");
 	}
 
-	clean_up(cipher_ctx, &crypt_ctx, encdat, static_cast<size_t>
-	    (encdat_size));
+	clean_up(cipher_ctx, &crypt_ctx, encdat,
+	    static_cast<size_t>(encdat_size));
 
 	if (error) {
 		free(b64str);
