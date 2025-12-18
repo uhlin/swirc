@@ -9,6 +9,7 @@ MAKE_DEF_FILE=options.mk
 
 . "posixshell/check_etext.sh"
 . "posixshell/check_strcasestr.sh"
+. "posixshell/check_timingsafe_memcmp.sh"
 . "posixshell/fix_cflags.sh"
 . "posixshell/link_with_gnu_libidn.sh"
 . "posixshell/link_with_gnu_libintl.sh"
@@ -136,6 +137,7 @@ esac
 
 check_etext
 check_strcasestr
+check_timingsafe_memcmp
 
 if [ ${_sanitize_address} -eq 1 ]; then
 	cat <<EOF >>$MAKE_DEF_FILE
