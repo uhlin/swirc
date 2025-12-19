@@ -12,6 +12,9 @@ All notable changes to this project will be documented in this file.
   4. move constructor
 - Replaced `memcmp()` with `timingsafe_memcmp()` - one occurrence.
 
+### Windows ###
+- **Upgraded** to [LibreSSL](https://www.libressl.org/) 4.2.1
+
 ## [3.5.6] - 2025-10-11 ##
 - **Added** command `/nsid` (NickServ identify).
 - **Added** command `/utctime`.
