@@ -23,7 +23,7 @@ CPPFLAGS = -DHAVE_ATLSTR_H=1\
 # Versions
 CURL_VERSION = 8.8.0
 HUNSPELL_VERSION = 1.7.2
-LIBRESSL_VERSION = 4.1.1
+LIBRESSL_VERSION = 4.2.1
 PDCURSES_VERSION = 3.9
 
 GNU_BUNDLE_DATE = 202205
@@ -43,8 +43,8 @@ NAME_libintl = libintl-8
 NAME_libssl = ssl
 
 # LibreSSL DLLs
-DLL_crypto = crypto-56.dll
-DLL_ssl = ssl-59.dll
+DLL_crypto = crypto-57.dll
+DLL_ssl = ssl-60.dll
 
 # MINGW hunspell
 DLL_libgcc = libgcc_s_seh-1.dll
