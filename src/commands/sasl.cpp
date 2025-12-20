@@ -196,12 +196,12 @@ public_key_blob(EC_KEY *key)
 	if (key == NULL || (length = public_key_length(key)) <= 0)
 		return NULL;
 
-	out = static_cast<unsigned char *>(xmalloc(length));
+	out = new unsigned char[length];
 	out[length - 1] = '\0';
 	out_p = &out[0];
 
 	if (i2o_ECPublicKey(key, &out_p) < 0) {
-		free(out);
+		delete[] out;
 		return NULL;
 	}
 
@@ -249,7 +249,7 @@ sasl_pubkey(void)
 			throw std::runtime_error("encode length error");
 		}
 
-		encoded_blob = static_cast<char *>(xmalloc(encode_len));
+		encoded_blob = new char[encode_len];
 		encoded_blob[encode_len - 1] = '\0';
 
 		if ((encode_ret = b64_encode(blob, static_cast<size_t>(length),
@@ -270,8 +270,8 @@ sasl_pubkey(void)
 		EC_KEY_free(key);
 	if (fp != NULL)
 		(void) fclose(fp);
-	free(encoded_blob);
-	free(blob);
+	delete[] encoded_blob;
+	delete[] blob;
 }
 
 static bool
@@ -572,11 +572,11 @@ sign_decoded_data(EC_KEY *key, const uint8_t *data, int datalen, uint8_t **sig,
 		return false;
 	}
 
-	*sig = static_cast<uint8_t *>(xmalloc(len));
+	*sig = new uint8_t[len];
 	(*sig)[len - 1] = '\0';
 
 	if (!ECDSA_sign(0, data, datalen, *sig, &len, key)) {
-		free(*sig);
+		delete[] *sig;
 		*sig = NULL;
 		*siglen = 0;
 		return false;
@@ -615,9 +615,9 @@ clean_up(EC_KEY *key, FILE *fp, char *out, uint8_t *decoded_chl, uint8_t *sig)
 		EC_KEY_free(key);
 	if (fp != NULL && fclose(fp) != 0)
 		err_log(errno, "solve_ecdsa_nist256p_challenge: fclose");
-	free(out);
-	free(decoded_chl);
-	free(sig);
+	delete[] out;
+	delete[] decoded_chl;
+	delete[] sig;
 }
 
 char *
@@ -656,7 +656,7 @@ solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
 		    crypt_get_base64_decode_length(challenge)) <= 0)
 			throw std::runtime_error("decode length error");
 
-		decoded_chl = static_cast<uint8_t *>(xmalloc(decode_len));
+		decoded_chl = new uint8_t[decode_len];
 		decoded_chl[decode_len - 1] = '\0';
 
 		if ((decode_ret = b64_decode(challenge, decoded_chl, static_cast
@@ -669,7 +669,7 @@ solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
 		    (static_cast<int>(siglen))) <= 0)
 			throw std::runtime_error("encode length error");
 
-		out = static_cast<char *>(xmalloc(encode_len));
+		out = new char[encode_len];
 		out[encode_len - 1] = '\0';
 
 		if (b64_encode(sig, siglen, out, static_cast<size_t>
