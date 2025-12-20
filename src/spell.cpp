@@ -100,6 +100,84 @@ suggestion::~suggestion()
 	}
 }
 
+/*
+ * Copy assignment operator
+ */
+suggestion &suggestion::operator=(const suggestion &other)
+{
+	size_t size = 0;
+
+	if (&other == this)
+		return *this;
+	if (other.word) {
+		size = strlen(other.word) + 1;
+		this->word = new char[size];
+		errno = sw_strcpy(this->word, other.word, size);
+		sw_assert_perror(errno);
+	}
+	if (other.wide_word) {
+		size = wcslen(other.wide_word) + 1;
+		this->wide_word = new wchar_t[size];
+		errno = sw_wcscpy(this->wide_word, other.wide_word, size);
+		sw_assert_perror(errno);
+	}
+	return *this;
+}
+
+/*
+ * Copy constructor
+ */
+suggestion::suggestion(const suggestion &other)
+    : word(nullptr)
+    , wide_word(nullptr)
+{
+	size_t size = 0;
+
+	if (other.word) {
+		size = strlen(other.word) + 1;
+		this->word = new char[size];
+		errno = sw_strcpy(this->word, other.word, size);
+		sw_assert_perror(errno);
+	}
+	if (other.wide_word) {
+		size = wcslen(other.wide_word) + 1;
+		this->wide_word = new wchar_t[size];
+		errno = sw_wcscpy(this->wide_word, other.wide_word, size);
+		sw_assert_perror(errno);
+	}
+}
+
+/*
+ * Move assignment operator
+ */
+suggestion &suggestion::operator=(suggestion &&other)
+{
+	if (&other == this)
+		return *this;
+
+	delete[] this->word;
+	delete[] this->wide_word;
+
+	this->word = other.word;
+	this->wide_word = other.wide_word;
+
+	other.word = nullptr;
+	other.wide_word = nullptr;
+
+	return *this;
+}
+
+/*
+ * Move constructor
+ */
+suggestion::suggestion(suggestion &&other)
+    : word(other.word)
+    , wide_word(other.wide_word)
+{
+	other.word = nullptr;
+	other.wide_word = nullptr;
+}
+
 CSTRING
 suggestion::get_word(void) const
 {
