@@ -615,7 +615,7 @@ clean_up(EC_KEY *key, FILE *fp, char *out, uint8_t *decoded_chl, uint8_t *sig)
 		EC_KEY_free(key);
 	if (fp != NULL && fclose(fp) != 0)
 		err_log(errno, "solve_ecdsa_nist256p_challenge: fclose");
-	delete[] out;
+	free(out);
 	delete[] decoded_chl;
 	delete[] sig;
 }
@@ -669,7 +669,7 @@ solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
 		    (static_cast<int>(siglen))) <= 0)
 			throw std::runtime_error("encode length error");
 
-		out = new char[encode_len];
+		out = static_cast<char *>(xmalloc(encode_len));
 		out[encode_len - 1] = '\0';
 
 		if (b64_encode(sig, siglen, out, static_cast<size_t>
