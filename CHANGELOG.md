@@ -11,7 +11,8 @@ All notable changes to this project will be documented in this file.
   3. move assignment operator
   4. move constructor
 - Replaced `memcmp()` with `timingsafe_memcmp()` - one occurrence.
-- Switched memory allocation method to new/delete for C++ files.
+- Switched memory allocation/deallocation method to new/delete for C++
+  files. A few occurrences.
 
 ### Windows ###
 - Upgraded to [LibreSSL](https://www.libressl.org/) 4.2.1
