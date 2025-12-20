@@ -12,7 +12,7 @@ All notable changes to this project will be documented in this file.
   4. move constructor
 - Replaced `memcmp()` with `timingsafe_memcmp()` - one occurrence.
 - Switched memory allocation/deallocation method to new/delete for C++
-  files. A few occurrences.
+  files. A few occurrences only.
 
 ### Windows ###
 - Upgraded to [LibreSSL](https://www.libressl.org/) 4.2.1
