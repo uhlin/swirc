@@ -926,6 +926,126 @@ cmdline_opt_values::~cmdline_opt_values()
 	free(this->config_file);
 }
 
+/*
+ * Copy assignment operator
+ */
+cmdline_opt_values &cmdline_opt_values::operator=(const cmdline_opt_values &obj)
+{
+	if (&obj == this)
+		return *this;
+
+	if (obj.server)
+		this->server = sw_strdup(obj.server);
+	if (obj.port)
+		this->port = sw_strdup(obj.port);
+	if (obj.passwd)
+		this->passwd = sw_strdup(obj.passwd);
+	if (obj.nickname)
+		this->nickname = sw_strdup(obj.nickname);
+	if (obj.username)
+		this->username = sw_strdup(obj.username);
+	if (obj.rl_name)
+		this->rl_name = sw_strdup(obj.rl_name);
+	if (obj.hostname)
+		this->hostname = sw_strdup(obj.hostname);
+	if (obj.config_file)
+		this->config_file = sw_strdup(obj.config_file);
+
+	return *this;
+}
+
+/*
+ * Copy constructor
+ */
+cmdline_opt_values::cmdline_opt_values(const cmdline_opt_values &obj)
+    : server(nullptr)
+    , port(nullptr)
+    , passwd(nullptr)
+    , nickname(nullptr)
+    , username(nullptr)
+    , rl_name(nullptr)
+    , hostname(nullptr)
+    , config_file(nullptr)
+{
+	if (obj.server)
+		this->server = sw_strdup(obj.server);
+	if (obj.port)
+		this->port = sw_strdup(obj.port);
+	if (obj.passwd)
+		this->passwd = sw_strdup(obj.passwd);
+	if (obj.nickname)
+		this->nickname = sw_strdup(obj.nickname);
+	if (obj.username)
+		this->username = sw_strdup(obj.username);
+	if (obj.rl_name)
+		this->rl_name = sw_strdup(obj.rl_name);
+	if (obj.hostname)
+		this->hostname = sw_strdup(obj.hostname);
+	if (obj.config_file)
+		this->config_file = sw_strdup(obj.config_file);
+}
+
+/*
+ * Move assignment operator
+ */
+cmdline_opt_values &cmdline_opt_values::operator=(cmdline_opt_values &&obj)
+{
+	if (&obj == this)
+		return *this;
+
+	free(this->server);
+	free(this->port);
+	free(this->passwd);
+	free(this->nickname);
+	free(this->username);
+	free(this->rl_name);
+	free(this->hostname);
+	free(this->config_file);
+
+	this->server	  = obj.server;
+	this->port	  = obj.port;
+	this->passwd	  = obj.passwd;
+	this->nickname	  = obj.nickname;
+	this->username	  = obj.username;
+	this->rl_name	  = obj.rl_name;
+	this->hostname	  = obj.hostname;
+	this->config_file = obj.config_file;
+
+	obj.server =
+	obj.port =
+	obj.passwd =
+	obj.nickname =
+	obj.username =
+	obj.rl_name =
+	obj.hostname =
+	obj.config_file = nullptr;
+
+	return *this;
+}
+
+/*
+ * Move constructor
+ */
+cmdline_opt_values::cmdline_opt_values(cmdline_opt_values &&obj)
+    : server(obj.server)
+    , port(obj.port)
+    , passwd(obj.passwd)
+    , nickname(obj.nickname)
+    , username(obj.username)
+    , rl_name(obj.rl_name)
+    , hostname(obj.hostname)
+    , config_file(obj.config_file)
+{
+	obj.server =
+	obj.port =
+	obj.passwd =
+	obj.nickname =
+	obj.username =
+	obj.rl_name =
+	obj.hostname =
+	obj.config_file = nullptr;
+}
+
 /**
  * Command-line options destroy
  */

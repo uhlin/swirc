@@ -61,6 +61,10 @@ struct cmdline_opt_values {
 	}
 
 	~cmdline_opt_values();
+	cmdline_opt_values &operator=(const cmdline_opt_values &);
+	cmdline_opt_values(const cmdline_opt_values &);
+	cmdline_opt_values &operator=(cmdline_opt_values &&);
+	cmdline_opt_values(cmdline_opt_values &&);
 #endif
 };
 
