@@ -260,6 +260,8 @@ sasl_pubkey(void)
 		msg = strdup_printf("public key is: %s", encoded_blob);
 		output_message(false, msg);
 		free(msg);
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "%s: error: %s", __func__, e.what());
 	} catch (const std::runtime_error &e) {
 		output_message(true, e.what());
 	} catch (...) {
@@ -675,6 +677,8 @@ solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
 		if (b64_encode(sig, siglen, out, static_cast<size_t>
 		    (encode_len)) == -1)
 			throw std::runtime_error("encoding error");
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "%s: error: %s", __func__, e.what());
 	} catch (const std::runtime_error &e) {
 		clean_up(key, fp, out, decoded_chl, sig);
 		*err_reason = sw_strdup(e.what());
