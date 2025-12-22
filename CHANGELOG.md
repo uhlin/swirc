@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
   2. copy constructor
   3. move assignment operator
   4. move constructor
+- Improved the C++ exception handling.
 - Replaced `memcmp()` with `timingsafe_memcmp()` - one occurrence.
 - Switched memory allocation/deallocation method to new/delete for C++
   files. A few occurrences only.
