@@ -37,6 +37,7 @@
 
 #include "cursesInit.h"
 #include "dataClassify.h"
+#include "errHand.h"
 #include "i18n.h"
 #include "irc.h"
 #include "printtext.h"
@@ -185,8 +186,8 @@ statusbar_top_panel(void)
 		(void) top_panel(statusbar_pan);
 }
 
-void
-statusbar_update(void)
+static void
+update_doit()
 {
 	WINDOW			*win = panel_window(statusbar_pan);
 	char			*out_s;
@@ -195,9 +196,6 @@ statusbar_update(void)
 	const std::string	 rb(Theme("statusbar_rightBracket"));
 	short int		 pair_n = get_pair_num();
 	std::string		 str(Theme("statusbar_spec"));
-
-	if (term_is_too_small())
-		return;
 
 	(void) werase(win);
 	(void) wbkgd(win, (blank | COLOR_PAIR(pair_n) | A_NORMAL));
@@ -236,4 +234,19 @@ statusbar_update(void)
 	free(out_s);
 
 	statusbar_top_panel();
+}
+
+void
+statusbar_update(void)
+{
+	if (term_is_too_small())
+		return;
+
+	try {
+		update_doit();
+	} catch (const std::bad_alloc &e) {
+		err_exit(ENOMEM, "%s: fatal: %s", __func__, e.what());
+	} catch (...) {
+		/* null */;
+	}
 }
