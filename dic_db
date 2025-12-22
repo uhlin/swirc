@@ -1,13 +1,13 @@
 # DICTIONARY DATABASE
 # lang|name|date|url|author|license
 
-Danish|da_DK|2023-02-12|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/da_DK/|NA|NA
-English|en_GB|2023-02-07|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/|NA|NA
-English|en_US|2023-02-07|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/|NA|NA
+Danish|da_DK|2025-12-22|https://raw.githubusercontent.com/LibreOffice/dictionaries/master/da_DK/|NA|NA
+English|en_GB|2025-12-22|https://raw.githubusercontent.com/LibreOffice/dictionaries/master/en/|NA|NA
+English|en_US|2025-12-22|https://raw.githubusercontent.com/LibreOffice/dictionaries/master/en/|NA|NA
 Finnish|fi_FI|2023-02-25|https://raw.githubusercontent.com/uhlin/hunspell-fi/main/|NA|NA
-French|fr|2023-02-07|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/fr_FR/|Olivier R.|MPL 2.0
-German|de_DE_frami|2023-02-07|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/de/|Björn Jacke|GNU GPL
-Italian|it_IT|2023-02-12|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/it_IT/|Marina Latini|GNU GPL
-Spanish|es_ES|2023-02-12|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/es/|NA|NA
-Swedish|sv_SE|2023-02-07|https://cgit.freedesktop.org/libreoffice/dictionaries/plain/sv_SE/|Göran Andersson|GNU LGPL
+French|fr|2025-12-22|https://raw.githubusercontent.com/LibreOffice/dictionaries/master/fr_FR/|Olivier R.|MPL 2.0
+German|de_DE_frami|2025-12-22|https://raw.githubusercontent.com/LibreOffice/dictionaries/master/de/|Björn Jacke|GNU GPL
+Italian|it_IT|2025-12-22|https://raw.githubusercontent.com/LibreOffice/dictionaries/master/it_IT/|Marina Latini|GNU GPL
+Spanish|es_ES|2025-12-22|https://raw.githubusercontent.com/LibreOffice/dictionaries/master/es/|NA|NA
+Swedish|sv_SE|2025-12-22|https://raw.githubusercontent.com/LibreOffice/dictionaries/master/sv_SE/|Göran Andersson|GNU LGPL
 # EOF
