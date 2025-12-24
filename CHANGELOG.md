@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
   4. move constructor
 - Improved the C++ exception handling.
 - Replaced `memcmp()` with `timingsafe_memcmp()` - one occurrence.
+- Replaced macros with vars.
 - Switched memory allocation/deallocation method to new/delete for C++
   files. A few occurrences only.
 
