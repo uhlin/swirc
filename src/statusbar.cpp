@@ -186,22 +186,13 @@ statusbar_top_panel(void)
 		(void) top_panel(statusbar_pan);
 }
 
-static void
-update_doit()
+static char *
+get_out_s()
 {
-	WINDOW			*win = panel_window(statusbar_pan);
-	char			*out_s;
-	const chtype		 blank = ' ';
 	const std::string	 lb(Theme("statusbar_leftBracket"));
 	const std::string	 rb(Theme("statusbar_rightBracket"));
-	short int		 pair_n = get_pair_num();
 	std::string		 str(Theme("statusbar_spec"));
 
-	(void) werase(win);
-	(void) wbkgd(win, (blank | COLOR_PAIR(pair_n) | A_NORMAL));
-
-	mutex_lock(&g_actwin_mtx);
-	mutex_lock(&g_win_htbl_mtx);
 	(void) str.append(" ");
 	(void) str.append(lb);
 	(void) str.append(int_to_str(g_active_window->refnum));
@@ -225,28 +216,46 @@ update_doit()
 
 	(void) str.append(" ");
 	(void) str.append(g_active_window->scroll_mode ? _("-- MORE --") : "");
-	mutex_unlock(&g_win_htbl_mtx);
-	mutex_unlock(&g_actwin_mtx);
 
-	out_s = sw_strdup(str.c_str());
-	printtext_puts(win, (g_no_colors ? squeeze_text_deco(out_s) : out_s),
-	    -1, -1, NULL);
-	free(out_s);
-
-	statusbar_top_panel();
+	return sw_strdup(str.c_str());
 }
 
 void
 statusbar_update(void)
 {
+	WINDOW			*win;
+	char			*out_s = NULL;
+	constexpr chtype	 blank = ' ';
+	short int		 pair_n;
+
 	if (term_is_too_small())
 		return;
 
+	pair_n = get_pair_num();
+	win = panel_window(statusbar_pan);
+
+	(void) werase(win);
+	(void) wbkgd(win, (blank | COLOR_PAIR(pair_n) | A_NORMAL));
+
+	mutex_lock(&g_actwin_mtx);
+	mutex_lock(&g_win_htbl_mtx);
+
 	try {
-		update_doit();
+		out_s = get_out_s();
 	} catch (const std::bad_alloc &e) {
 		err_exit(ENOMEM, "%s: fatal: %s", __func__, e.what());
 	} catch (...) {
 		/* null */;
 	}
+
+	mutex_unlock(&g_win_htbl_mtx);
+	mutex_unlock(&g_actwin_mtx);
+
+	if (out_s == NULL)
+		return;
+	printtext_puts(win, (g_no_colors ? squeeze_text_deco(out_s) : out_s),
+	    -1, -1, NULL);
+	free(out_s);
+
+	statusbar_top_panel();
 }
