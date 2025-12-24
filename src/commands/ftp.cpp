@@ -131,6 +131,119 @@ ftp_ctl_conn::~ftp_ctl_conn()
 	}
 }
 
+/*
+ * Copy assignment operator
+ */
+ftp_ctl_conn &ftp_ctl_conn::operator=(const ftp_ctl_conn &obj)
+{
+	if (&obj == this)
+		return *this;
+
+	if (!obj.reply_vec.empty()) {
+		this->reply_vec.assign(obj.reply_vec.begin(),
+				       obj.reply_vec.end());
+	}
+	if (!obj.message_concat.empty())
+		this->message_concat.assign(obj.message_concat);
+
+	this->sock  = obj.sock;
+	this->state = obj.state;
+	this->res   = nullptr;
+
+	memmove(this->buf, obj.buf, sizeof(this->buf));
+
+	return *this;
+}
+
+/*
+ * Copy constructor
+ */
+ftp_ctl_conn::ftp_ctl_conn(const ftp_ctl_conn &obj)
+    : sock(INVALID_SOCKET)
+    , state(CONCAT_BUFFER_IS_EMPTY)
+    , res(nullptr)
+{
+	if (!obj.reply_vec.empty()) {
+		this->reply_vec.assign(obj.reply_vec.begin(),
+				       obj.reply_vec.end());
+	}
+	if (!obj.message_concat.empty())
+		this->message_concat.assign(obj.message_concat);
+
+	this->sock  = obj.sock;
+	this->state = obj.state;
+	this->res   = nullptr;
+
+	memmove(this->buf, obj.buf, sizeof(this->buf));
+}
+
+/*
+ * Move assignment operator
+ */
+ftp_ctl_conn &ftp_ctl_conn::operator=(ftp_ctl_conn &&obj)
+{
+	if (&obj == this)
+		return *this;
+
+	if (this->res)
+		freeaddrinfo(this->res);
+
+	if (!obj.reply_vec.empty()) {
+		this->reply_vec.assign(obj.reply_vec.begin(),
+				       obj.reply_vec.end());
+	}
+	if (!obj.message_concat.empty())
+		this->message_concat.assign(obj.message_concat);
+
+	this->sock  = obj.sock;
+	this->state = obj.state;
+	this->res   = obj.res;
+
+	memmove(this->buf, obj.buf, sizeof(this->buf));
+
+	/* ------------------------------------------------------------ */
+
+	obj.reply_vec.clear();
+	obj.message_concat.clear();
+
+	obj.sock  = INVALID_SOCKET;
+	obj.state = CONCAT_BUFFER_IS_EMPTY;
+	obj.res	  = nullptr;
+
+	BZERO(obj.buf, sizeof(obj.buf));
+
+	return *this;
+}
+
+/*
+ * Move constructor
+ */
+ftp_ctl_conn::ftp_ctl_conn(ftp_ctl_conn &&obj)
+    : sock(obj.sock)
+    , state(obj.state)
+    , res(obj.res)
+{
+	if (!obj.reply_vec.empty()) {
+		this->reply_vec.assign(obj.reply_vec.begin(),
+				       obj.reply_vec.end());
+	}
+	if (!obj.message_concat.empty())
+		this->message_concat.assign(obj.message_concat);
+
+	memmove(this->buf, obj.buf, sizeof(this->buf));
+
+	/* ------------------------------------------------------------ */
+
+	obj.reply_vec.clear();
+	obj.message_concat.clear();
+
+	obj.sock  = INVALID_SOCKET;
+	obj.state = CONCAT_BUFFER_IS_EMPTY;
+	obj.res	  = nullptr;
+
+	BZERO(obj.buf, sizeof(obj.buf));
+}
+
 SOCKET
 ftp_ctl_conn::get_sock(void) const
 {

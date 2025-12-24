@@ -127,6 +127,11 @@ public:
 	ftp_ctl_conn();
 	~ftp_ctl_conn();
 
+	ftp_ctl_conn &operator=(const ftp_ctl_conn &);
+	ftp_ctl_conn(const ftp_ctl_conn &);
+	ftp_ctl_conn &operator=(ftp_ctl_conn &&);
+	ftp_ctl_conn(ftp_ctl_conn &&);
+
 	std::vector<FTP_REPLY> reply_vec;
 
 	SOCKET		get_sock(void) const;
