@@ -1599,11 +1599,13 @@ void
 set_timestamp(char *dest, size_t destsize,
 	      const struct irc_message_compo *compo)
 {
-#define B1	Theme("statusbar_leftBracket")
-#define B2	Theme("statusbar_rightBracket")
-#define SEP	Theme("notice_sep")
-	const int ret = snprintf(dest, destsize, "%s%02d%s%02d%s%02d%s",
-	    B1, compo->hour, SEP, compo->minute, SEP, compo->second, B2);
+	immutable_cp_t	b1  = Theme("statusbar_leftBracket");
+	immutable_cp_t	b2  = Theme("statusbar_rightBracket");
+	immutable_cp_t	sep = Theme("notice_sep");
+	int		ret;
+
+	ret = snprintf(dest, destsize, "%s%02d%s%02d%s%02d%s",
+	    b1, compo->hour, sep, compo->minute, sep, compo->second, b2);
 
 	if (ret < 0 || static_cast<size_t>(ret) >= destsize)
 		debug("%s: snprintf: error", __func__);
