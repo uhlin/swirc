@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
   files. A few occurrences only.
 
 ### Windows ###
+- Upgraded to [Curl](https://curl.se/) 8.17.0
 - Upgraded to [LibreSSL](https://www.libressl.org/) 4.2.1
 
 ## [3.5.6] - 2025-10-11 ##
