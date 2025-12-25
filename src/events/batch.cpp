@@ -34,6 +34,7 @@
 #include <string>
 #include <vector>
 
+#include "../config.h"
 #include "../dataClassify.h"
 #include "../errHand.h"
 #include "../irc.h"
@@ -81,6 +82,27 @@ private:
 };
 
 static std::vector<batch> batch_db;
+
+static bool
+save_backlogs_to_disk_yesno(CSTRING label)
+{
+	CSTRING val = Config("save_backlogs_to_disk");
+
+	if (strings_match_ignore_case(val, "no")) {
+		return false;
+	} else if (strings_match_ignore_case(val, "both")) {
+		return true;
+	} else if (strings_match_ignore_case(val, "channels")) {
+		return (is_irc_channel(label) ? true : false);
+	} else if (strings_match_ignore_case(val, "private")) {
+		return (is_irc_channel(label) ? false : true);
+	} else {
+		err_log(EINVAL, "%s: warning: unrecognized setting value: "
+		    "must be 'no', 'both', 'channels' or 'private'", __func__);
+	}
+
+	return false;
+}
 
 static bool
 get_obj_by_ref(CSTRING ref, batch &obj, std::vector<batch>::size_type &pos)
@@ -215,6 +237,7 @@ znc_in_playback(batch &obj)
 {
 	PIRC_WINDOW		win;
 	PRINTTEXT_CONTEXT	ctx;
+	bool			logging_save = false;
 	std::string		label("");
 
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
@@ -227,11 +250,19 @@ znc_in_playback(batch &obj)
 	    (win = window_by_label(label.c_str())) != nullptr)
 		ctx.window = win;
 
+	if (win) {
+		logging_save = win->logging;
+		win->logging = save_backlogs_to_disk_yesno(win->label);
+	}
 	printtext(&ctx, "--- BEGIN playback (%s) ---", label.c_str());
+
 	for (const std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
+
 	printtext(&ctx, "--- END playback (%s, %ju msgs) ---", label.c_str(),
 	    static_cast<uintmax_t>(obj.irc_msgs.size()));
+	if (win)
+		win->logging = logging_save;
 }
 
 static void
