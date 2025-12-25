@@ -162,6 +162,7 @@ static struct tagConfDefValues {
 	{ "mouse",                     TYPE_BOOLEAN, 4, "no" },
 	{ "mouse_events",              TYPE_STRING,  3, "wheel" },
 	{ "notifications",             TYPE_BOOLEAN, 3, "yes" },
+	{ "save_backlogs_to_disk",     TYPE_STRING,  2, "both" },
 	{ "show_ping_pong",            TYPE_BOOLEAN, 3, "no" },
 	{ "skip_motd",                 TYPE_BOOLEAN, 3, "no" },
 	{ "ssl_verify_peer",           TYPE_BOOLEAN, 3, "yes" },

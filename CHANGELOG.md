@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added option `save_backlogs_to_disk` (string). Can be `no`, `both`,
+  `channels` or `private`. Defaults to `both`.
 - Added usage of `__restrict`.
 - Changed the program to during the make phase perform basic checks on
   functions which accept buffers and sizes.
