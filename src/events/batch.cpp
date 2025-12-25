@@ -152,8 +152,10 @@ chathistory(batch &obj)
 		ctx.window = win;
 
 	printtext(&ctx, "--- BEGIN chathistory (%s) ---", label.c_str());
+
 	for (const std::string &str : obj.irc_msgs)
 		irc_process_proto_msg(str.c_str());
+
 	printtext(&ctx, "--- END chathistory (%s, %ju msgs) ---", label.c_str(),
 	    static_cast<uintmax_t>(obj.irc_msgs.size()));
 }
