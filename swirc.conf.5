@@ -3,7 +3,7 @@
 .\" SPDX-FileCopyrightText: Copyright 2018-2025 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd December 25, 2025
+.Dd December 26, 2025
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -499,6 +499,10 @@ setting to \fIclient.pem\fR.
 .\" ----------------------------------------
 .It Sy save_backlogs_to_disk Pq Em string
 Save backlogs to disk?
+This setting only makes sense either if you are using
+.Lk https://znc.in/ ZNC ,
+or if the IRCv3 batch type \fIchathistory\fR is supported by the
+active IRC server software.
 The following values are recognized:
 .Bl -bullet -compact
 .It
