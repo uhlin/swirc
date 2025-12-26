@@ -42,6 +42,7 @@ clean:
 	$(RM) $(TGTS)
 	$(RM) -R cov-int
 	$(RM) -R swirc.analyze
+	$(RM) -R tmp
 	$(RM) PVS-Studio.log
 	$(RM) report.tasks
 	$(RM) strace_out
