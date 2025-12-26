@@ -48,5 +48,6 @@ clean:
 	$(RM) strace_out
 	$(RM) swirc.html
 	$(RM) swirc.static.html
+	$(RM) swirc.tgz
 	$(MAKE) -Cpo clean
 	$(MAKE) -Ctests clean
