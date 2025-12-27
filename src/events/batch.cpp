@@ -166,7 +166,7 @@ chathistory(batch &obj)
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
 
 	if (!obj.params.empty())
-		label.assign(obj.params.at(0));
+		label.assign(obj.params[0]);
 	if ((win = window_by_label(label.c_str())) != nullptr)
 		ctx.window = win;
 	else if (spawn_chat_window(label.c_str(), "") == 0 &&
@@ -243,7 +243,7 @@ znc_in_playback(batch &obj)
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
 
 	if (!obj.params.empty())
-		label.assign(obj.params.at(0));
+		label.assign(obj.params[0]);
 	if ((win = window_by_label(label.c_str())) != nullptr)
 		ctx.window = win;
 	else if (spawn_chat_window(label.c_str(), "") == 0 &&

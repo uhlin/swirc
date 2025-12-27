@@ -550,8 +550,8 @@ replace_signs(std::string &str)
 	const std::string gt("&gt;");
 	size_t pos;
 
-	while ((pos = str.find("<", 0)) != std::string::npos)
+	while ((pos = str.find('<', 0)) != std::string::npos)
 		str.replace(pos, 1, lt);
-	while ((pos = str.find(">", 0)) != std::string::npos)
+	while ((pos = str.find('>', 0)) != std::string::npos)
 		str.replace(pos, 1, gt);
 }
