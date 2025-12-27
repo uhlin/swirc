@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added micro optimizations.
 - Added option `save_backlogs_to_disk` (string). Can be `no`, `both`,
   `channels` or `private`. Defaults to `both`.
 - Added usage of `__restrict`.
