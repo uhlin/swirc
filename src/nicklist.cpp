@@ -196,8 +196,8 @@ addvline(WINDOW *win, short int bg)
 	bool state = false;
 	struct integer_context color("nicklist_vline_color", 0, 99, 0);
 
-	printtext_set_color(win, &state, static_cast<short int>
-	    (theme_integer(&color)), bg);
+	printtext_set_color(win, &state,
+	    static_cast<short int>(theme_integer(&color)), bg);
 	(void) waddch(win, ACS_VLINE);
 }
 
@@ -210,8 +210,8 @@ addnick(WINDOW *win, short int bg, const char *nick)
 	struct integer_context	 priv_color("nicklist_privilege_color",
 	    0, 99, 0);
 
-	printtext_set_color(win, &state1, static_cast<short int>
-	    (theme_integer(&priv_color)), bg);
+	printtext_set_color(win, &state1,
+	    static_cast<short int>(theme_integer(&priv_color)), bg);
 	(void) waddch(win, *nick);
 
 	cp = &nick[1];
@@ -244,8 +244,8 @@ printnick(WINDOW *win, const int row, const int col, const char *nick)
 	short int bg;
 	struct integer_context term_bg("term_background", 0, 15, 1);
 
-	bg = (theme_bool("term_use_default_colors", true) ? -1 : static_cast
-	    <short int>(theme_integer(&term_bg)));
+	bg = (theme_bool("term_use_default_colors", true) ? -1 :
+	    static_cast<short int>(theme_integer(&term_bg)));
 
 	(void) wmove(win, row, col);
 	addvline(win, bg);
