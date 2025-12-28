@@ -622,6 +622,204 @@ ftp_data_conn::~ftp_data_conn()
 	}
 }
 
+/*
+ * Copy assignment operator
+ */
+ftp_data_conn &ftp_data_conn::operator=(const ftp_data_conn &obj)
+{
+	if (&obj == this)
+		return *this;
+
+	if (obj.full_path)
+		this->full_path = sw_strdup(obj.full_path);
+	if (obj.path)
+		this->path = sw_strdup(obj.path);
+
+	this->filesz = obj.filesz;
+
+	if (!obj.vec.empty())
+		this->vec.assign(obj.vec.begin(), obj.vec.end());
+	if (!obj.message_concat.empty())
+		this->message_concat.assign(obj.message_concat);
+
+	this->fileptr = nullptr;
+	this->sock    = obj.sock;
+
+	if (obj.host_str)
+		this->host_str = sw_strdup(obj.host_str);
+	if (obj.port_str)
+		this->port_str = sw_strdup(obj.port_str);
+
+	memmove(this->buf, obj.buf, sizeof(this->buf));
+
+	this->state = obj.state;
+	this->res   = nullptr;
+	this->port  = obj.port;
+
+	memmove(this->h, obj.h, sizeof(this->h));
+	memmove(this->p, obj.p, sizeof(this->p));
+
+	return *this;
+}
+
+/*
+ * Copy constructor
+ */
+ftp_data_conn::ftp_data_conn(const ftp_data_conn &obj)
+    : full_path(nullptr)
+    , path(nullptr)
+    , filesz(0)
+    , fileptr(nullptr)
+    , sock(INVALID_SOCKET)
+    , host_str(nullptr)
+    , port_str(nullptr)
+    , state(CONCAT_BUFFER_IS_EMPTY)
+    , res(nullptr)
+    , port(0)
+{
+	if (obj.full_path)
+		this->full_path = sw_strdup(obj.full_path);
+	if (obj.path)
+		this->path = sw_strdup(obj.path);
+
+	this->filesz = obj.filesz;
+
+	if (!obj.vec.empty())
+		this->vec.assign(obj.vec.begin(), obj.vec.end());
+	if (!obj.message_concat.empty())
+		this->message_concat.assign(obj.message_concat);
+
+	this->fileptr = nullptr;
+	this->sock    = obj.sock;
+
+	if (obj.host_str)
+		this->host_str = sw_strdup(obj.host_str);
+	if (obj.port_str)
+		this->port_str = sw_strdup(obj.port_str);
+
+	memmove(this->buf, obj.buf, sizeof(this->buf));
+
+	this->state = obj.state;
+	this->res   = nullptr;
+	this->port  = obj.port;
+
+	memmove(this->h, obj.h, sizeof(this->h));
+	memmove(this->p, obj.p, sizeof(this->p));
+}
+
+/*
+ * Move assignment operator
+ */
+ftp_data_conn &ftp_data_conn::operator=(ftp_data_conn &&obj)
+{
+	if (&obj == this)
+		return *this;
+
+	free(this->full_path);
+	free(this->path);
+
+	if (this->fileptr)
+		fclose(this->fileptr);
+	if (this->sock != INVALID_SOCKET)
+		ftp_closesocket(this->sock);
+	if (this->res)
+		freeaddrinfo(this->res);
+
+	if (!obj.vec.empty())
+		this->vec.assign(obj.vec.begin(), obj.vec.end());
+	if (!obj.message_concat.empty())
+		this->message_concat.assign(obj.message_concat);
+
+	this->full_path = obj.full_path;
+	this->path	= obj.path;
+	this->filesz	= obj.filesz;
+	this->fileptr	= obj.fileptr;
+	this->sock	= obj.sock;
+	this->host_str	= obj.host_str;
+	this->port_str	= obj.port_str;
+
+	memmove(this->buf, obj.buf, sizeof(this->buf));
+
+	this->state = obj.state;
+	this->res   = obj.res;
+	this->port  = obj.port;
+
+	memmove(this->h, obj.h, sizeof(this->h));
+	memmove(this->p, obj.p, sizeof(this->p));
+
+	/* ------------------------------------------------------------ */
+
+	obj.vec.clear();
+	obj.message_concat.clear();
+
+	obj.full_path = nullptr;
+	obj.path      = nullptr;
+	obj.filesz    = 0;
+	obj.fileptr   = nullptr;
+	obj.sock      = INVALID_SOCKET;
+	obj.host_str  = nullptr;
+	obj.port_str  = nullptr;
+
+	BZERO(obj.buf, sizeof(obj.buf));
+
+	obj.state = CONCAT_BUFFER_IS_EMPTY;
+	obj.res	  = nullptr;
+	obj.port  = 0;
+
+	BZERO(obj.h, sizeof(obj.h));
+	BZERO(obj.p, sizeof(obj.p));
+
+	return *this;
+}
+
+/*
+ * Move constructor
+ */
+ftp_data_conn::ftp_data_conn(ftp_data_conn &&obj)
+    : full_path(obj.full_path)
+    , path(obj.path)
+    , filesz(obj.filesz)
+    , fileptr(obj.fileptr)
+    , sock(obj.sock)
+    , host_str(obj.host_str)
+    , port_str(obj.port_str)
+    , state(obj.state)
+    , res(obj.res)
+    , port(obj.port)
+{
+	if (!obj.vec.empty())
+		this->vec.assign(obj.vec.begin(), obj.vec.end());
+	if (!obj.message_concat.empty())
+		this->message_concat.assign(obj.message_concat);
+
+	memmove(this->buf, obj.buf, sizeof(this->buf));
+
+	memmove(this->h, obj.h, sizeof(this->h));
+	memmove(this->p, obj.p, sizeof(this->p));
+
+	/* ------------------------------------------------------------ */
+
+	obj.vec.clear();
+	obj.message_concat.clear();
+
+	obj.full_path = nullptr;
+	obj.path      = nullptr;
+	obj.filesz    = 0;
+	obj.fileptr   = nullptr;
+	obj.sock      = INVALID_SOCKET;
+	obj.host_str  = nullptr;
+	obj.port_str  = nullptr;
+
+	BZERO(obj.buf, sizeof(obj.buf));
+
+	obj.state = CONCAT_BUFFER_IS_EMPTY;
+	obj.res	  = nullptr;
+	obj.port  = 0;
+
+	BZERO(obj.h, sizeof(obj.h));
+	BZERO(obj.p, sizeof(obj.p));
+}
+
 bool
 ftp_data_conn::connect_passive(void)
 {

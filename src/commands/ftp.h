@@ -154,6 +154,11 @@ public:
 	explicit ftp_data_conn(CSTRING);
 	~ftp_data_conn();
 
+	ftp_data_conn &operator=(const ftp_data_conn &);
+	ftp_data_conn(const ftp_data_conn &);
+	ftp_data_conn &operator=(ftp_data_conn &&);
+	ftp_data_conn(ftp_data_conn &&);
+
 	STRING full_path, path;
 	intmax_t filesz;
 	std::vector<std::string> vec;
