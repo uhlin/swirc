@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.6\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-10-06 20:03+0200\n"
+"POT-Creation-Date: 2025-12-30 22:02+0100\n"
 "PO-Revision-Date: 2025-10-01 21:43+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -18,12 +18,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1010
-#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:224
+#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:213
 msgid "Yes"
 msgstr "Kyllä"
 
 #: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1010
-#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:225
+#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:214
 msgid "No"
 msgstr "Ei"
 
@@ -67,9 +67,9 @@ msgstr "Winsock DLL:n käyttöä ei voi aloittaa"
 msgid "Use of the Winsock DLL granted"
 msgstr "Winsock DLL:n käyttö myönnetty"
 
-#: ../src/commands/ctcp.c:77 ../src/commands/ftp.cpp:873
-#: ../src/commands/ftp.cpp:960 ../src/commands/ftp.cpp:1009
-#: ../src/commands/ftp.cpp:1046 ../src/commands/ftp.cpp:1128
+#: ../src/commands/ctcp.c:77 ../src/commands/ftp.cpp:1184
+#: ../src/commands/ftp.cpp:1271 ../src/commands/ftp.cpp:1320
+#: ../src/commands/ftp.cpp:1357 ../src/commands/ftp.cpp:1439
 msgid "Insufficient arguments"
 msgstr "Riittämättömät argumentit"
 
@@ -141,7 +141,7 @@ msgstr "%s: lähettäjä: %s <%s@%s>"
 msgid "To get the file, type:"
 msgstr "Saadaksesi tiedoston, kirjoita:"
 
-#: ../src/commands/dcc.cpp:1845 ../src/commands/ftp.cpp:805
+#: ../src/commands/dcc.cpp:1845 ../src/commands/ftp.cpp:1116
 #, c-format
 msgid "%s: file read error"
 msgstr "%s: tiedostolukuvirhe"
@@ -191,63 +191,63 @@ msgstr "%s: onnistuneesti lähetetty tiedosto: %s"
 msgid "%s: file transfer incomplete: %s"
 msgstr "%s: tiedostonsiirto keskeneräinen: %s"
 
-#: ../src/commands/ftp.cpp:181
+#: ../src/commands/ftp.cpp:294
 msgid "Invalid username"
 msgstr "Virheellinen käyttäjänimi"
 
-#: ../src/commands/ftp.cpp:183
+#: ../src/commands/ftp.cpp:296
 msgid "Too long password"
 msgstr "Liian pitkä salasana"
 
-#: ../src/commands/ftp.cpp:185
+#: ../src/commands/ftp.cpp:298
 msgid "Invalid hostname"
 msgstr "Virheellinen isäntänimi"
 
-#: ../src/commands/ftp.cpp:187
+#: ../src/commands/ftp.cpp:300
 msgid "Invalid port number"
 msgstr "Virheellinen portin numero"
 
-#: ../src/commands/ftp.cpp:190 ../src/network.cpp:351
+#: ../src/commands/ftp.cpp:303 ../src/network.cpp:351
 msgid "Unable to get a list of IP addresses"
 msgstr "IP osoitteiden luetteloa ei voi saada"
 
-#: ../src/commands/ftp.cpp:193 ../src/commands/ftp.cpp:533
+#: ../src/commands/ftp.cpp:306 ../src/commands/ftp.cpp:844
 #: ../src/network.cpp:172
 msgid "Failed to establish a connection"
 msgstr "Yhteyden muodostaminen epäonnistui"
 
-#: ../src/commands/ftp.cpp:204 ../src/commands/ftp.cpp:886
-#: ../src/commands/ftp.cpp:1257
+#: ../src/commands/ftp.cpp:317 ../src/commands/ftp.cpp:1197
+#: ../src/commands/ftp.cpp:1568
 msgid "Cannot send"
 msgstr "Ei voi lähettää"
 
-#: ../src/commands/ftp.cpp:521
+#: ../src/commands/ftp.cpp:832
 msgid "Failed to create an endpoint for communication"
 msgstr "Viestinnän päätepisteen luominen epäonnistui"
 
-#: ../src/commands/ftp.cpp:813
+#: ../src/commands/ftp.cpp:1124
 #, c-format
 msgid "%s: bytes sent mismatch bytes read"
 msgstr "%s: lähetetyt tavut eivät täsmää luettuina"
 
-#: ../src/commands/ftp.cpp:876 ../src/commands/ftp.cpp:1245
+#: ../src/commands/ftp.cpp:1187 ../src/commands/ftp.cpp:1556
 msgid "No control connection"
 msgstr "Ei ohjausliitäntää"
 
-#: ../src/commands/ftp.cpp:879 ../src/commands/ftp.cpp:901
-#: ../src/commands/ftp.cpp:1253
+#: ../src/commands/ftp.cpp:1190 ../src/commands/ftp.cpp:1212
+#: ../src/commands/ftp.cpp:1564
 msgid "Invalid network socket"
 msgstr "Virheellinen verkkoliitäntä"
 
-#: ../src/commands/ftp.cpp:963 ../src/commands/ftp.cpp:1049
+#: ../src/commands/ftp.cpp:1274 ../src/commands/ftp.cpp:1360
 msgid "Blank file path"
 msgstr "Tyhjä tiedostopolku"
 
-#: ../src/commands/ftp.cpp:1249
+#: ../src/commands/ftp.cpp:1560
 msgid "Already in passive mode"
 msgstr "Jo passiivisessa tilassa"
 
-#: ../src/commands/ftp.cpp:1272
+#: ../src/commands/ftp.cpp:1583
 msgid "Failed to enter passive mode"
 msgstr "Passiiviseen tilaan siirtyminen epäonnistui"
 
@@ -1962,34 +1962,34 @@ msgstr "Muistialueen ylitys"
 msgid "Termination request"
 msgstr "Päätetty"
 
-#: ../src/spell.cpp:137 ../src/spell.cpp:141
+#: ../src/spell.cpp:217 ../src/spell.cpp:221
 #, c-format
 msgid "%s: %s not found"
 msgstr "%s: %s ei löydy"
 
-#: ../src/spell.cpp:317
+#: ../src/spell.cpp:397
 msgid "no more suggestions"
 msgstr "ei enempää ehdotuksia"
 
-#: ../src/spell.cpp:344
+#: ../src/spell.cpp:424
 msgid "suggestions:"
 msgstr "ehdotuksia:"
 
-#: ../src/spell.cpp:372
+#: ../src/spell.cpp:452
 #, c-format
 msgid "%ls is correct"
 msgstr "%ls on oikein"
 
-#: ../src/spell.cpp:377
+#: ../src/spell.cpp:457
 #, c-format
 msgid "%ls is incorrect"
 msgstr "%ls on väärä"
 
-#: ../src/statusbar.cpp:224
+#: ../src/statusbar.cpp:213
 msgid "Log: "
 msgstr "Loki: "
 
-#: ../src/statusbar.cpp:229
+#: ../src/statusbar.cpp:218
 msgid "-- MORE --"
 msgstr "-- LISÄÄ --"
 
