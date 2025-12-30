@@ -24,3 +24,5 @@ clean:
 	$(E) "  CLEAN"
 	$(RM) $(PKG).pot
 	$(RM) $(MOFILES)
+	$(RM) swirc-locales-*.cab
+	$(RM) -R swirc-locales-*
