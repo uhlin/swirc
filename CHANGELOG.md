@@ -2,26 +2,26 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added micro optimizations.
-- Added option `save_backlogs_to_disk` (string). Can be `no`, `both`,
+- **Added** micro optimizations.
+- **Added** option `save_backlogs_to_disk` (string). Can be `no`, `both`,
   `channels` or `private`. Defaults to `both`.
-- Added usage of `__restrict`.
-- Changed the program to during the make phase perform basic checks on
+- **Added** usage of `__restrict`.
+- **Changed** the program to during the make phase perform basic checks on
   functions which accept buffers and sizes.
 - For classes that declares a destructor, also declare a:
   1. copy assignment operator
   2. copy constructor
   3. move assignment operator
   4. move constructor
-- Improved the C++ exception handling.
-- Replaced `memcmp()` with `timingsafe_memcmp()` - one occurrence.
-- Replaced preprocessor defines with regular variables.
-- Switched memory allocation/deallocation method to new/delete for C++
+- **Improved** the C++ exception handling.
+- **Replaced** `memcmp()` with `timingsafe_memcmp()` - one occurrence.
+- **Replaced** preprocessor defines with regular variables.
+- **Switched** memory allocation/deallocation method to new/delete for C++
   files. A few occurrences only.
 
 ### Windows ###
-- Upgraded to [Curl](https://curl.se/) 8.17.0
-- Upgraded to [LibreSSL](https://www.libressl.org/) 4.2.1
+- **Upgraded** to [Curl](https://curl.se/) 8.17.0
+- **Upgraded** to [LibreSSL](https://www.libressl.org/) 4.2.1
 
 ## [3.5.6] - 2025-10-11 ##
 - **Added** command `/nsid` (NickServ identify).
