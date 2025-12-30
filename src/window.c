@@ -745,10 +745,10 @@ destroy_chat_window(CSTRING label)
 	mutex_lock(&g_win_htbl_mtx);
 	hUndef(window);
 	mutex_unlock(&g_win_htbl_mtx);
+
 	reassign_window_refnums();
-	const errno_t ret = change_window_by_refnum(g_ntotal_windows);
-	(void) ret;
-	sw_assert_perror(ret);
+	errno = change_window_by_refnum(g_ntotal_windows);
+	sw_assert_perror(errno);
 
 	return 0;
 }
@@ -785,10 +785,10 @@ spawn_chat_window(CSTRING label, CSTRING title)
 	mutex_lock(&g_win_htbl_mtx);
 	entry = hInstall(&inst_ctx);
 	mutex_unlock(&g_win_htbl_mtx);
+
 	apply_window_options(panel_window(entry->pan));
-	const errno_t ret = change_window_by_label(entry->label);
-	(void) ret;
-	sw_assert_perror(ret);
+	errno = change_window_by_label(entry->label);
+	sw_assert_perror(errno);
 
 	/*
 	 * send whois
