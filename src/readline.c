@@ -654,7 +654,7 @@ session_destroy(volatile struct readline_session_context *ctx)
 		free(ctx->buffer);
 		free(ctx->prompt);
 		readline_tab_comp_ctx_destroy(ctx->tc);
-		free((struct readline_session_context *) ctx);
+		free((struct readline_session_context *)ctx);
 	}
 }
 
