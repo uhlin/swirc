@@ -69,8 +69,8 @@ get_b64_encoded_username(void)
 	encoded_username = xmalloc(namesize + 1);
 	encoded_username[namesize] = '\0';
 
-	if (b64_encode((uint8_t *)username, strlen(username), encoded_username,
-	    namesize) == -1) {
+	if (b64_encode((uint8_t const *)username, strlen(username),
+	    encoded_username, namesize) == -1) {
 		free(encoded_username);
 		return NULL;
 	}
