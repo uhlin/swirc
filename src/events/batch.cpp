@@ -161,6 +161,7 @@ chathistory(batch &obj)
 {
 	PIRC_WINDOW		win;
 	PRINTTEXT_CONTEXT	ctx;
+	bool			logging_save = false;
 	std::string		label("");
 
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE, true);
@@ -173,6 +174,10 @@ chathistory(batch &obj)
 	    (win = window_by_label(label.c_str())) != nullptr)
 		ctx.window = win;
 
+	if (win) {
+		logging_save = win->logging;
+		win->logging = save_backlogs_to_disk_yesno(win->label);
+	}
 	printtext(&ctx, "--- BEGIN chathistory (%s) ---", label.c_str());
 
 	for (const std::string &str : obj.irc_msgs)
@@ -180,6 +185,8 @@ chathistory(batch &obj)
 
 	printtext(&ctx, "--- END chathistory (%s, %ju msgs) ---", label.c_str(),
 	    static_cast<uintmax_t>(obj.irc_msgs.size()));
+	if (win)
+		win->logging = logging_save;
 }
 
 static void
