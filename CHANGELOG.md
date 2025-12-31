@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.5.7] - 2026-01-01 ##
 - **Added** micro optimizations. Multiple occurrences.
 - **Added** option `save_backlogs_to_disk` (string). Can be `no`, `both`,
   `channels` or `private`. Defaults to `both`.
