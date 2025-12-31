@@ -1,5 +1,5 @@
 /* get_x509_fp.cpp
-   Copyright (C) 2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2023-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -40,15 +40,19 @@
 #include "printtext.h"
 
 x509_fingerprint::x509_fingerprint()
+    : bio(nullptr)
+    , cert(nullptr)
+    , alg(nullptr)
+    , md_len(0)
 {
-	this->bio = nullptr;
-	this->cert = nullptr;
-	this->alg = nullptr;
 	BZERO(&this->md[0], sizeof this->md);
-	this->md_len = 0;
 }
 
 x509_fingerprint::x509_fingerprint(const char *path)
+    : bio(nullptr)
+    , cert(nullptr)
+    , alg(nullptr)
+    , md_len(0)
 {
 	if (!file_exists(path))
 		throw std::runtime_error("file non-existent");
