@@ -38,6 +38,9 @@
 #endif
 
 #include <openssl/opensslv.h>
+#ifndef OPENSSL_VERSION_TEXT
+#define OPENSSL_VERSION_TEXT "Unknown"
+#endif
 
 #include <locale.h>
 
