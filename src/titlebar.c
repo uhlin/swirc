@@ -1,5 +1,5 @@
 /* Swirc titlebar
-   Copyright (C) 2012-2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2025 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -80,10 +80,10 @@ titlebar_deinit(void)
 void
 titlebar(const char *fmt, ...)
 {
-	WINDOW		*win = panel_window(titlebar_pan);
+	WINDOW		*win;
 	char		*fmt_copy;
 	const chtype	 blank = ' ';
-	short int	 pair_n = get_pair_num();
+	short int	 pair_n;
 	va_list		 ap;
 
 	if (term_is_too_small())
@@ -92,6 +92,9 @@ titlebar(const char *fmt, ...)
 	va_start(ap, fmt);
 	fmt_copy = strdup_vprintf(fmt, ap);
 	va_end(ap);
+
+	win = panel_window(titlebar_pan);
+	pair_n = get_pair_num();
 
 	(void) werase(win);
 	(void) wbkgd(win, (blank | COLOR_PAIR(pair_n) | A_NORMAL));
