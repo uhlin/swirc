@@ -77,13 +77,13 @@
 			<File
 			    Id="crypto_dll_file"
 			    KeyPath="yes"
-			    Source="c:\out\swirc-x64\crypto-56.dll" />
+			    Source="c:\out\swirc-x64\crypto-57.dll" />
 		</Component>
 		<Component Id="ssl_dll" Bitness="always64">
 			<File
 			    Id="ssl_dll_file"
 			    KeyPath="yes"
-			    Source="c:\out\swirc-x64\ssl-59.dll" />
+			    Source="c:\out\swirc-x64\ssl-60.dll" />
 		</Component>
 		<!-- END LibreSSL -->
 
