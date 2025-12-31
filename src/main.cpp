@@ -252,9 +252,9 @@ view_version()
 	PUTS(MessageVersion);
 	free(MessageVersion);
 
-	printf("--\n");
-	printf("Curses version: %s\n", curses_version());
-	printf("TLS library:    %s\n", OPENSSL_VERSION_TEXT);
+	write_to_stream(stdout, "--\n");
+	write_to_stream(stdout, "Curses version: %s\n", curses_version());
+	write_to_stream(stdout, "TLS library:    %s\n", OPENSSL_VERSION_TEXT);
 
 	while (true) {
 		char	answer[100] = { '\0' };
