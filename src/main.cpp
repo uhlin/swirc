@@ -37,6 +37,8 @@
 #include <sys/time.h>
 #endif
 
+#include <openssl/opensslv.h>
+
 #include <locale.h>
 
 #if UNIX
@@ -246,6 +248,10 @@ view_version()
 	    __DATE__, __TIME__);
 	PUTS(MessageVersion);
 	free(MessageVersion);
+
+	printf("--\n");
+	printf("Curses version: %s\n", curses_version());
+	printf("TLS library:    %s\n", OPENSSL_VERSION_TEXT);
 
 	while (true) {
 		char	answer[100] = { '\0' };
