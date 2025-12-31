@@ -2,12 +2,14 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- **Added** micro optimizations.
+- **Added** micro optimizations. Multiple occurrences.
 - **Added** option `save_backlogs_to_disk` (string). Can be `no`, `both`,
   `channels` or `private`. Defaults to `both`.
 - **Added** usage of `__restrict`.
 - **Changed** the program to during the make phase perform basic checks on
   functions which accept buffers and sizes.
+- **Changed** the program to, additionally, display the Curses and TLS
+  library versions when called by the `-v` flag.
 - For classes that declares a destructor, also declare a:
   1. copy assignment operator
   2. copy constructor
