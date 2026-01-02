@@ -1,5 +1,5 @@
 /* Input output loop
-   Copyright (C) 2014-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -67,6 +67,7 @@
 #include "commands/invite.h"
 #include "commands/jp.h"
 #include "commands/kick.h"
+#include "commands/log.h"
 #include "commands/me.h"
 #include "commands/misc.h"
 #include "commands/msg.h"
@@ -143,6 +144,7 @@ static struct cmds_tag {
 	{ "kill",        cmd_kill,        true,  kill_usage,        ARRAY_SIZE(kill_usage),        true  },
 	{ "kline",       cmd_kline,       true,  kline_usage,       ARRAY_SIZE(kline_usage),       true  },
 	{ "list",        cmd_list,        true,  list_usage,        ARRAY_SIZE(list_usage),        false },
+	{ "log",         cmd_log,         false, log_usage,         ARRAY_SIZE(log_usage),         false },
 	{ "me",          cmd_me,          true,  me_usage,          ARRAY_SIZE(me_usage),          true  },
 	{ "mode",        cmd_mode,        true,  mode_usage,        ARRAY_SIZE(mode_usage),        true  },
 	{ "msg",         cmd_msg,         true,  msg_usage,         ARRAY_SIZE(msg_usage),         true  },

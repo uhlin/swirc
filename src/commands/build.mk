@@ -18,6 +18,7 @@ COMMANDS_SRCS = $(COMMANDS_DIR)admin.cpp\
 	$(COMMANDS_DIR)invite.c\
 	$(COMMANDS_DIR)jp.cpp\
 	$(COMMANDS_DIR)kick.c\
+	$(COMMANDS_DIR)log.cpp\
 	$(COMMANDS_DIR)me.c\
 	$(COMMANDS_DIR)misc.c\
 	$(COMMANDS_DIR)msg.c\
@@ -56,6 +57,7 @@ OBJS = $(COMMANDS_DIR)admin.o\
 	$(COMMANDS_DIR)invite.o\
 	$(COMMANDS_DIR)jp.o\
 	$(COMMANDS_DIR)kick.o\
+	$(COMMANDS_DIR)log.o\
 	$(COMMANDS_DIR)me.o\
 	$(COMMANDS_DIR)misc.o\
 	$(COMMANDS_DIR)msg.o\

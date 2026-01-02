@@ -18,6 +18,7 @@ OBJS = $(COMMANDS_DIR)admin.obj\
 	$(COMMANDS_DIR)invite.obj\
 	$(COMMANDS_DIR)jp.obj\
 	$(COMMANDS_DIR)kick.obj\
+	$(COMMANDS_DIR)log.obj\
 	$(COMMANDS_DIR)me.obj\
 	$(COMMANDS_DIR)misc.obj\
 	$(COMMANDS_DIR)msg.obj\
