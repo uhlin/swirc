@@ -9,6 +9,8 @@ doc/rfc2811.txt export-ignore
 doc/rfc2812.txt export-ignore
 maketgz export-ignore
 openbsd/ export-ignore
+runcov.sh export-ignore
 runpvs.bat export-ignore
+runpvs.sh export-ignore
 setver export-ignore
 voidlinux/ export-ignore
