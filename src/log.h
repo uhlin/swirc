@@ -1,5 +1,5 @@
-#ifndef LOG_H
-#define LOG_H
+#ifndef SRC_LOG_H_
+#define SRC_LOG_H_
 
 #include <sys/types.h>
 #include <sys/stat.h>
