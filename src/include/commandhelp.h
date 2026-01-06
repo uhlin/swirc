@@ -460,9 +460,15 @@ static usage_t list_usage = {
 };
 
 static usage_t log_usage = {
-  "usage: /log ...",
+  N_("usage:"),
+  "    /log <[clear|ls|rm|scandir|view]> [args]",
+  "    /log clear",
+  "    /log ls <[dir|scanned]>",
+  "    /log rm <#>",
+  "    /log scandir",
+  "    /log view <#>",
   "",
-  "No help yet.",
+  N_("Management of log files."),
   "",
 };
 
