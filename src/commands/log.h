@@ -3,9 +3,13 @@
 
 #include "../textBuffer.h"
 
+#define SYM_logwin_str "="
+
 //lint -sem(get_list_of_matching_log_cmds, r_null)
 
 __SWIRC_BEGIN_DECLS
+extern const char g_sym_logwin;
+
 void		cmd_log(CSTRING);
 PTEXTBUF	get_list_of_matching_log_cmds(CSTRING) NONNULL;
 __SWIRC_END_DECLS

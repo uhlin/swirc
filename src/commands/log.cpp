@@ -99,6 +99,8 @@ irc_logfile::irc_logfile(const std::string &p_filename,
 	}
 }
 
+const char g_sym_logwin = '=';
+
 static stringarray_t log_cmds = {
 	"clear",
 	"ls ",
@@ -285,7 +287,7 @@ subcmd_scandir(void)
 static void
 set_logwin_label(CSTRING filename, std::string &strout)
 {
-	strout.assign("=").append(filename).append("=");
+	strout.assign(SYM_logwin_str).append(filename).append(SYM_logwin_str);
 }
 
 static void
