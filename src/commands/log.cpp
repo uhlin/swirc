@@ -339,7 +339,8 @@ subcmd_view(CSTRING p_no)
 	if (ptext_ctx.window == nullptr) {
 		fclose(fp);
 		errno = destroy_chat_window(label.c_str());
-		err_log(errno, "%s: destroy_chat_window", __func__);
+		if (errno)
+			err_log(errno, "%s: destroy_chat_window", __func__);
 		printtext_print("err", "unable to locate the new window "
 		    "(shouldn't happen)");
 		return;
