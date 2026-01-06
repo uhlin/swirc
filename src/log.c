@@ -1,5 +1,5 @@
 /* IRC logs i.e. not logs for system messages
-   Copyright (C) 2020-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -240,7 +240,12 @@ log_toggle_on_off(void)
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC_NONE, true);
 
-	if (g_active_window->logging) {
+	if (g_active_window->is_logwin) {
+		ctx.spec_type = TYPE_SPEC1_FAILURE;
+		printtext(&ctx, "Forbidden to toggle logging on/off for this "
+		    "window");
+		return;
+	} else if (g_active_window->logging) {
 		g_active_window->logging = false;
 		ctx.spec_type = TYPE_SPEC1_WARN;
 		printtext(&ctx, _("Logging for window (refnum: %d) now off"),

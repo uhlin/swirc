@@ -1,5 +1,5 @@
 /* Prints and handles text
-   Copyright (C) 2012-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -1672,7 +1672,7 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 		}
 	}
 
-	if (ctx->window->logging) {
+	if (ctx->window->logging && !ctx->window->is_logwin) {
 		STRING logpath;
 
 		if ((logpath = log_get_path(g_server_hostname,
