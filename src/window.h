@@ -40,6 +40,7 @@ typedef struct tagIRC_WINDOW {
 	PANEL		*pan;
 	PNAMES		 names_hash[NAMES_HASH_TABLE_SIZE];
 	PTEXTBUF	 buf;
+	bool		 is_logwin;
 	bool		 logging;
 	bool		 received_chancreated;
 	bool		 received_chanmodes;
