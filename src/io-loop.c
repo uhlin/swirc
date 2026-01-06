@@ -651,6 +651,8 @@ get_prompt(void)
 	static const size_t	 minimum_cols = sizeof "#abc...: ";
 
 	if (strings_match_ignore_case(ACTWINLABEL, g_status_window_label) ||
+	    *(g_active_window->label) == '=' ||
+	    g_active_window->is_logwin ||
 	    COLS < size_to_int(minimum_cols))
 		return sw_strdup("");
 
