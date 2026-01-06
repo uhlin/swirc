@@ -63,6 +63,12 @@ namespace fs = std::filesystem;
 #define stat _stat
 #endif
 
+/****************************************************************
+*                                                               *
+*  ------------------ Structure definitions ------------------  *
+*                                                               *
+****************************************************************/
+
 class irc_logfile {
 public:
 	std::string filename;
@@ -99,7 +105,19 @@ irc_logfile::irc_logfile(const std::string &p_filename,
 	}
 }
 
+/****************************************************************
+*                                                               *
+*  -------------- Objects with external linkage --------------  *
+*                                                               *
+****************************************************************/
+
 const char g_sym_logwin = '=';
+
+/****************************************************************
+*                                                               *
+*  -------------- Objects with internal linkage --------------  *
+*                                                               *
+****************************************************************/
 
 static stringarray_t log_cmds = {
 	"clear",
@@ -112,6 +130,12 @@ static stringarray_t log_cmds = {
 };
 
 static std::vector<irc_logfile> log_vec;
+
+/****************************************************************
+*                                                               *
+*  ---------------------    Functions    ---------------------  *
+*                                                               *
+****************************************************************/
 
 static void	subcmd_scandir(void);
 static void	set_logwin_label(CSTRING, std::string &) NONNULL;
