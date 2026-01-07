@@ -78,6 +78,7 @@ public:
 	irc_logfile(const std::string &, const std::string &);
 
 	void print(const size_t) const;
+	void remove_file(void);
 
 private:
 	struct stat sb;
@@ -189,6 +190,22 @@ irc_logfile::print(const size_t p_no) const
 	printtext_print("sp1", "%slast mod%s:    %s", COLOR2, TXT_NORMAL,
 	    str[1].c_str());
 	printtext_print("sp1", " ");
+}
+
+void
+irc_logfile::remove_file(void)
+{
+	if (this->fullpath.compare("") == 0) {
+		printtext_print("err", "%s: empty path", __func__);
+		return;
+	} else if (remove(this->fullpath.c_str()) != 0) {
+		printtext_print("err", "%s: error removing: %s", __func__,
+		    this->fullpath.c_str());
+		return;
+	} else {
+		printtext_print("success", "removed %s",
+		    this->filename.c_str());
+	}
 }
 
 static void
