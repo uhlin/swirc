@@ -391,6 +391,9 @@ subcmd_view(CSTRING p_no)
 	if (obj.is_too_large()) {
 		printtext_print("err", "the file is too large");
 		return;
+	} else if (!is_valid_filename(obj.filename.c_str())) {
+		printtext_print("err", "bad filename");
+		return;
 	} else if ((fp = fopen(obj.fullpath.c_str(), "r")) == nullptr) {
 		printtext_print("err", "error opening file");
 		return;
