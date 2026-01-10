@@ -372,9 +372,7 @@ subcmd_view(CSTRING p_no)
 	} else if (xsscanf(p_no, "%" SCNu32, &val) != 1) {
 		printtext_print("err", "bad number");
 		return;
-	}
-
-	if (val > (log_vec.size() - 1)) {
+	} else if (val > (log_vec.size() - 1)) {
 		printtext_print("err", "too high number");
 		return;
 	}
