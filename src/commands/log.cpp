@@ -77,6 +77,7 @@ public:
 	irc_logfile();
 	irc_logfile(const std::string &, const std::string &);
 
+	bool is_too_large(void) const;
 	void print(const size_t) const;
 	void remove_file(void) const;
 
@@ -165,6 +166,14 @@ get_time(std::string &str, const time_t *secs)
 	}
 
 	str.assign(&buf[0]);
+}
+
+bool
+irc_logfile::is_too_large(void) const
+{
+	static const int32_t maxbytes = 5000000;
+
+	return (this->sb.st_size > maxbytes);
 }
 
 void
@@ -379,7 +388,10 @@ subcmd_view(CSTRING p_no)
 
 	const irc_logfile &obj = log_vec[val];
 
-	if ((fp = fopen(obj.fullpath.c_str(), "r")) == nullptr) {
+	if (obj.is_too_large()) {
+		printtext_print("err", "the file is too large");
+		return;
+	} else if ((fp = fopen(obj.fullpath.c_str(), "r")) == nullptr) {
 		printtext_print("err", "error opening file");
 		return;
 	}
