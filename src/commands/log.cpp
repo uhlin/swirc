@@ -251,7 +251,28 @@ subcmd_ls(CSTRING p_what)
 static void
 subcmd_rm(CSTRING p_no)
 {
-	UNUSED_PARAM(p_no);
+	uint32_t val = 0;
+
+	if (p_no == nullptr || strings_match(p_no, "")) {
+		printtext_print("err", "too few arguments");
+		return;
+	} else if (!is_numeric(p_no)) {
+		printtext_print("err", "argument not a number");
+		return;
+	} else if (log_vec.empty()) {
+		printtext_print("err", "vector empty");
+		return;
+	} else if (xsscanf(p_no, "%" SCNu32, &val) != 1) {
+		printtext_print("err", "bad number");
+		return;
+	} else if (val > (log_vec.size() - 1)) {
+		printtext_print("err", "too high number");
+		return;
+	}
+
+	irc_logfile &obj = log_vec[val];
+	obj.remove_file();
+	log_vec.erase(log_vec.begin() + val);
 }
 
 static bool
