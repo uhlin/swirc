@@ -1,5 +1,5 @@
 /* Readline tab completion
-   Copyright (C) 2020-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -32,6 +32,7 @@
 #include "commands/connect.h"
 #include "commands/dcc.h"
 #include "commands/ftp.h"
+#include "commands/log.h"
 #include "commands/sasl.h"
 #include "commands/services.h"
 #include "commands/squery.h"
@@ -135,6 +136,13 @@ auto_complete_kickban(volatile struct readline_session_context *ctx,
     CSTRING s)
 {
 	do_work(ctx, L"/kickban ", s);
+}
+
+static void
+auto_complete_log(volatile struct readline_session_context *ctx,
+    CSTRING s)
+{
+	do_work(ctx, L"/log ", s);
 }
 
 static void
@@ -340,6 +348,7 @@ readline_tab_comp_ctx_new(void)
 	ctx.isInCirculationModeFor.Help =
 	ctx.isInCirculationModeFor.Kick =
 	ctx.isInCirculationModeFor.Kickban =
+	ctx.isInCirculationModeFor.Log =
 	ctx.isInCirculationModeFor.Mode =
 	ctx.isInCirculationModeFor.Msg =
 	ctx.isInCirculationModeFor.Notice =
@@ -386,6 +395,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 		ctx->isInCirculationModeFor.Help =
 		ctx->isInCirculationModeFor.Kick =
 		ctx->isInCirculationModeFor.Kickban =
+		ctx->isInCirculationModeFor.Log =
 		ctx->isInCirculationModeFor.Mode =
 		ctx->isInCirculationModeFor.Msg =
 		ctx->isInCirculationModeFor.Notice =
@@ -577,6 +587,21 @@ init_mode_for_kickban(volatile struct readline_session_context *ctx)
 	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
 	auto_complete_kickban(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Kickban = true;
+}
+
+static void
+init_mode_for_log(volatile struct readline_session_context *ctx)
+{
+	immutable_cp_t cp = addrof(ctx->tc->search_var[5]);
+
+	if ((ctx->tc->matches = get_list_of_matching_log_cmds(cp)) == NULL) {
+		output_error("no magic");
+		return;
+	}
+
+	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	auto_complete_log(ctx, ctx->tc->elmt->text);
+	ctx->tc->isInCirculationModeFor.Log = true;
 }
 
 static void
@@ -962,6 +987,8 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_kick(ctx);
 	else if (!strncmp(sv, "/kickban ", 9))
 		init_mode_for_kickban(ctx);
+	else if (!strncmp(sv, "/log ", 5))
+		init_mode_for_log(ctx);
 	else if (!strncmp(sv, "/mode ", 6))
 		init_mode_for_mode(ctx);
 	else if (!strncmp(sv, "/msg ", 5))
@@ -1040,6 +1067,8 @@ readline_handle_tab(volatile struct readline_session_context *ctx)
 		ac_doit(auto_complete_kick, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Kickban) {
 		ac_doit(auto_complete_kickban, ctx);
+	} else if (ctx->tc->isInCirculationModeFor.Log) {
+		ac_doit(auto_complete_log, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Mode) {
 		ac_doit(auto_complete_mode, ctx);
 	} else if (ctx->tc->isInCirculationModeFor.Msg) {

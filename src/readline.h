@@ -60,6 +60,7 @@ typedef struct tagTAB_COMPLETION {
 		bool Help;
 		bool Kick;
 		bool Kickban;
+		bool Log;
 		bool Mode;
 		bool Msg;
 		bool Notice;
