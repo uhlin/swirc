@@ -792,6 +792,9 @@ transmit_user_input(CSTRING winlabel, CSTRING input)
 	if (ctx.window == NULL) {
 		err_log(0, "%s: window %s not found", __func__, winlabel);
 		return;
+	} else if (ctx.window->is_logwin) {
+		printtext_print("warn", "cannot transmit to a log window");
+		return;
 	}
 
 	if (g_icb_mode) {
