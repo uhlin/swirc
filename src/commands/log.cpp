@@ -78,7 +78,7 @@ public:
 	irc_logfile(const std::string &, const std::string &);
 
 	void print(const size_t) const;
-	void remove_file(void);
+	void remove_file(void) const;
 
 private:
 	struct stat sb;
@@ -193,7 +193,7 @@ irc_logfile::print(const size_t p_no) const
 }
 
 void
-irc_logfile::remove_file(void)
+irc_logfile::remove_file(void) const
 {
 	if (this->fullpath.compare("") == 0) {
 		printtext_print("err", "%s: empty path", __func__);
