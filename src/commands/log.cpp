@@ -171,7 +171,7 @@ get_time(std::string &str, const time_t *secs)
 bool
 irc_logfile::is_too_large(void) const
 {
-	static const int32_t maxbytes = 5000000;
+	static const int maxbytes = (g_one_meg * 5);
 
 	return (this->sb.st_size > maxbytes);
 }
