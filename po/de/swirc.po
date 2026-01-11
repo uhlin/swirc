@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2025-12-30 22:02+0100\n"
+"POT-Creation-Date: 2026-01-11 15:24+0100\n"
 "PO-Revision-Date: 2025-07-16 21:54+0200\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -251,6 +251,107 @@ msgstr "Bereits im passiven Modus"
 msgid "Failed to enter passive mode"
 msgstr "Der Wechsel in den passiven Modus ist fehlgeschlagen"
 
+#: ../src/commands/log.cpp:208
+#, c-format
+msgid "%s: empty path"
+msgstr ""
+
+#: ../src/commands/log.cpp:211
+#, fuzzy, c-format
+msgid "%s: error removing: %s"
+msgstr "%s: schrieb: %s"
+
+#: ../src/commands/log.cpp:215
+#, fuzzy, c-format
+msgid "removed %s"
+msgstr "Entfernen fehlgeschlagen: %s"
+
+#: ../src/commands/log.cpp:224
+msgid "nothing scanned"
+msgstr ""
+
+#: ../src/commands/log.cpp:249 ../src/commands/log.cpp:266
+#: ../src/commands/log.cpp:373
+#, fuzzy
+msgid "too few arguments"
+msgstr "Unzureichende Argumente"
+
+#: ../src/commands/log.cpp:255
+#, c-format
+msgid "unrecognized argument: %s (must be 'dir' or 'scanned')"
+msgstr ""
+
+#: ../src/commands/log.cpp:269 ../src/commands/log.cpp:376
+msgid "argument not a number"
+msgstr ""
+
+#: ../src/commands/log.cpp:272 ../src/commands/log.cpp:379
+msgid "vector empty"
+msgstr ""
+
+#: ../src/commands/log.cpp:275 ../src/commands/log.cpp:382
+#, fuzzy
+msgid "bad number"
+msgstr "Ungültige Portnummer"
+
+#: ../src/commands/log.cpp:278 ../src/commands/log.cpp:385
+msgid "too high number"
+msgstr ""
+
+#: ../src/commands/log.cpp:350
+msgid "A total of "
+msgstr ""
+
+#: ../src/commands/log.cpp:352
+msgid "No files found"
+msgstr ""
+
+#: ../src/commands/log.cpp:392
+msgid "the file is too large"
+msgstr ""
+
+#: ../src/commands/log.cpp:395
+msgid "bad filename"
+msgstr ""
+
+#: ../src/commands/log.cpp:398
+msgid "error opening file"
+msgstr ""
+
+#: ../src/commands/log.cpp:407
+msgid "error creating window"
+msgstr ""
+
+#: ../src/commands/log.cpp:429
+#, fuzzy, c-format
+msgid "wrote %s"
+msgstr "%s: schrieb: %s"
+
+#: ../src/commands/log.cpp:431
+#, fuzzy, c-format
+msgid "write incomplete (%s)"
+msgstr "%s: Dateiübertragung unvollständig: %s"
+
+#: ../src/commands/log.cpp:458 ../src/commands/log.cpp:465
+#, fuzzy, c-format
+msgid "%s: too few arguments"
+msgstr "%s: nicht genügend Argumente"
+
+#: ../src/commands/log.cpp:473
+#, fuzzy, c-format
+msgid "%s: too many arguments"
+msgstr "%s: nicht genügend Argumente"
+
+#: ../src/commands/log.cpp:489
+#, c-format
+msgid "%s: invalid subcommand: %s"
+msgstr ""
+
+#: ../src/commands/log.cpp:493
+#, fuzzy, c-format
+msgid "%s: exception: %s"
+msgstr "%s: schrieb: %s"
+
 #: ../src/commands/theme.c:313
 #, c-format
 msgid "failed to remove: %s"
@@ -431,7 +532,7 @@ msgid ""
 msgstr ""
 
 #: ../src/include/commandhelp.h:53 ../src/include/commandhelp.h:201
-#: ../src/include/commandhelp.h:282
+#: ../src/include/commandhelp.h:282 ../src/include/commandhelp.h:463
 msgid "usage:"
 msgstr ""
 
@@ -883,149 +984,153 @@ msgid ""
 "may differ."
 msgstr ""
 
-#: ../src/include/commandhelp.h:463
-msgid "usage: /me <message>"
-msgstr ""
-
-#: ../src/include/commandhelp.h:465
-msgid "Send an 'action' message. (Used to simulate role playing on IRC.)"
-msgstr ""
-
-#: ../src/include/commandhelp.h:470
-msgid "usage: /mode <modes> [...]"
-msgstr ""
-
-#: ../src/include/commandhelp.h:472
-msgid "Alter modes."
+#: ../src/include/commandhelp.h:471
+msgid "Management of log files."
 msgstr ""
 
 #: ../src/include/commandhelp.h:476
-msgid "    o - give/take the channel operator privilege"
+msgid "usage: /me <message>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:477
-msgid "    v - give/take the channel voice privilege"
-msgstr ""
-
-#: ../src/include/commandhelp.h:479
-msgid "    i - invite-only channel"
-msgstr ""
-
-#: ../src/include/commandhelp.h:480
-msgid "    m - moderated channel"
-msgstr ""
-
-#: ../src/include/commandhelp.h:481
-msgid "    n - no messages to a channel from clients on the outside"
-msgstr ""
-
-#: ../src/include/commandhelp.h:482
-msgid "    p - private channel"
+#: ../src/include/commandhelp.h:478
+msgid "Send an 'action' message. (Used to simulate role playing on IRC.)"
 msgstr ""
 
 #: ../src/include/commandhelp.h:483
-msgid "    s - secret channel"
+msgid "usage: /mode <modes> [...]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:484
-msgid "    t - topic settable by channel operators only"
-msgstr ""
-
-#: ../src/include/commandhelp.h:486
-msgid "    k - set/remove the channel key (password)"
-msgstr ""
-
-#: ../src/include/commandhelp.h:487
-msgid "    l - set/remove the channel user limit"
+#: ../src/include/commandhelp.h:485
+msgid "Alter modes."
 msgstr ""
 
 #: ../src/include/commandhelp.h:489
-msgid "    b - set/remove a ban mask"
+msgid "    o - give/take the channel operator privilege"
 msgstr ""
 
 #: ../src/include/commandhelp.h:490
-msgid "    e - set/remove an exception mask to override a ban mask"
+msgid "    v - give/take the channel voice privilege"
 msgstr ""
 
-#: ../src/include/commandhelp.h:491
-msgid "    I - set/remove an invitation mask to override the invite-only flag"
+#: ../src/include/commandhelp.h:492
+msgid "    i - invite-only channel"
+msgstr ""
+
+#: ../src/include/commandhelp.h:493
+msgid "    m - moderated channel"
+msgstr ""
+
+#: ../src/include/commandhelp.h:494
+msgid "    n - no messages to a channel from clients on the outside"
 msgstr ""
 
 #: ../src/include/commandhelp.h:495
-msgid "    i - marks a user as invisible"
+msgid "    p - private channel"
 msgstr ""
 
 #: ../src/include/commandhelp.h:496
-msgid "    w - the user receives wallops messages"
+msgid "    s - secret channel"
+msgstr ""
+
+#: ../src/include/commandhelp.h:497
+msgid "    t - topic settable by channel operators only"
+msgstr ""
+
+#: ../src/include/commandhelp.h:499
+msgid "    k - set/remove the channel key (password)"
 msgstr ""
 
 #: ../src/include/commandhelp.h:500
-msgid "    Give channel operator privilege to 'Companion' in #foo:"
+msgid "    l - set/remove the channel user limit"
+msgstr ""
+
+#: ../src/include/commandhelp.h:502
+msgid "    b - set/remove a ban mask"
 msgstr ""
 
 #: ../src/include/commandhelp.h:503
-msgid "    Restrict messaging to channel #linux:"
+msgid "    e - set/remove an exception mask to override a ban mask"
 msgstr ""
 
-#: ../src/include/commandhelp.h:506
-msgid "    Limit user count for #freenode to 10:"
+#: ../src/include/commandhelp.h:504
+msgid "    I - set/remove an invitation mask to override the invite-only flag"
+msgstr ""
+
+#: ../src/include/commandhelp.h:508
+msgid "    i - marks a user as invisible"
 msgstr ""
 
 #: ../src/include/commandhelp.h:509
+msgid "    w - the user receives wallops messages"
+msgstr ""
+
+#: ../src/include/commandhelp.h:513
+msgid "    Give channel operator privilege to 'Companion' in #foo:"
+msgstr ""
+
+#: ../src/include/commandhelp.h:516
+msgid "    Restrict messaging to channel #linux:"
+msgstr ""
+
+#: ../src/include/commandhelp.h:519
+msgid "    Limit user count for #freenode to 10:"
+msgstr ""
+
+#: ../src/include/commandhelp.h:522
 msgid "    Deny all users with hostname spammers.net from joining #chatzone:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:512
+#: ../src/include/commandhelp.h:525
 msgid "    Turn on reception of WALLOPS messages:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:518
+#: ../src/include/commandhelp.h:531
 msgid "usage: /msg <recipient> <message>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:520
+#: ../src/include/commandhelp.h:533
 msgid ""
 "Used to send private messages between users, as well as to send\n"
 "messages to channels."
 msgstr ""
 
-#: ../src/include/commandhelp.h:526
+#: ../src/include/commandhelp.h:539
 msgid "usage: /nick <new nickname>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:528
+#: ../src/include/commandhelp.h:541
 msgid "Sets your nickname."
 msgstr ""
 
-#: ../src/include/commandhelp.h:533
+#: ../src/include/commandhelp.h:546
 msgid "usage: /nickserv <[service hostname | --]> <command> [...]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:535
+#: ../src/include/commandhelp.h:548
 msgid "Communicate with your IRC network's nickname service."
 msgstr ""
 
-#: ../src/include/commandhelp.h:537
+#: ../src/include/commandhelp.h:550
 msgid "If the initial argument equals to '--' then the:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:539
+#: ../src/include/commandhelp.h:552
 msgid "    1) Value of setting 'nickserv_host' will be used as service"
 msgstr ""
 
-#: ../src/include/commandhelp.h:540
+#: ../src/include/commandhelp.h:553
 msgid "       hostname."
 msgstr ""
 
-#: ../src/include/commandhelp.h:541
+#: ../src/include/commandhelp.h:554
 msgid "    2) Command call won't be added to the command history provided"
 msgstr ""
 
-#: ../src/include/commandhelp.h:542
+#: ../src/include/commandhelp.h:555
 msgid "       that the second argument is 'identify'."
 msgstr ""
 
-#: ../src/include/commandhelp.h:544
+#: ../src/include/commandhelp.h:557
 msgid ""
 "The correct service hostname is not always the same as the visible\n"
 "hostname of NickServ. FYI at the AnonOps IRC network the visible\n"
@@ -1033,45 +1138,45 @@ msgid ""
 "but you should use 'services.anonops.com'. As a fallback:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:548
+#: ../src/include/commandhelp.h:561
 msgid ""
 "'/query NickServ' can be used in order to communicate with the\n"
 "service."
 msgstr ""
 
-#: ../src/include/commandhelp.h:554
+#: ../src/include/commandhelp.h:567
 msgid "usage: /notice <recipient> <message>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:556
+#: ../src/include/commandhelp.h:569
 msgid ""
 "Used to send private messages between users, as well as to send\n"
 "messages to channels. (In notice form.)"
 msgstr ""
 
-#: ../src/include/commandhelp.h:562
+#: ../src/include/commandhelp.h:575
 msgid "usage: /nsid [--force] [--swap] [--pass-only]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:564
+#: ../src/include/commandhelp.h:577
 msgid "NickServ identify."
 msgstr ""
 
-#: ../src/include/commandhelp.h:566
+#: ../src/include/commandhelp.h:579
 msgid ""
 "The username and password used for the identification are read from\n"
 "'sasl_username' and 'sasl_password' respectively. And the service\n"
 "hostname from 'nickserv_host'."
 msgstr ""
 
-#: ../src/include/commandhelp.h:571
+#: ../src/include/commandhelp.h:584
 msgid ""
 "    Forces identification when connected via an unencrypted\n"
 "    connection. The username and password will be disclosed in clear\n"
 "    text."
 msgstr ""
 
-#: ../src/include/commandhelp.h:576
+#: ../src/include/commandhelp.h:589
 msgid ""
 "    By default the username is sent followed by the password. With\n"
 "    this flag the password is instead sent followed by the\n"
@@ -1080,7 +1185,7 @@ msgid ""
 "    a standard. Most common is the default approach."
 msgstr ""
 
-#: ../src/include/commandhelp.h:583
+#: ../src/include/commandhelp.h:596
 msgid ""
 "    With this flag no username is used for the identification,\n"
 "    i.e. only the password. It's not recommended but completely valid\n"
@@ -1088,214 +1193,214 @@ msgid ""
 "    username."
 msgstr ""
 
-#: ../src/include/commandhelp.h:591
+#: ../src/include/commandhelp.h:604
 msgid "usage: /op <nick>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:593
+#: ../src/include/commandhelp.h:606
 msgid "Gives the channel operator privilege to another user."
 msgstr ""
 
-#: ../src/include/commandhelp.h:598
+#: ../src/include/commandhelp.h:611
 msgid "usage: /oper <name> <password>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:600
+#: ../src/include/commandhelp.h:613
 msgid "Identifies yourself as an IRC operator."
 msgstr ""
 
-#: ../src/include/commandhelp.h:605
+#: ../src/include/commandhelp.h:618
 msgid "usage: /part [channel] [message]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:607
+#: ../src/include/commandhelp.h:620
 msgid ""
 "Leaves a channel (optionally with a message). If the command is called\n"
 "without any arguments and the current window is an IRC channel, that\n"
 "channel will be the target."
 msgstr ""
 
-#: ../src/include/commandhelp.h:613
+#: ../src/include/commandhelp.h:626
 msgid "  Leave channel #chatzone with message 'bye':"
 msgstr ""
 
-#: ../src/include/commandhelp.h:614
+#: ../src/include/commandhelp.h:627
 msgid "    /part #chatzone bye"
 msgstr ""
 
-#: ../src/include/commandhelp.h:619
+#: ../src/include/commandhelp.h:632
 msgid "usage: /passmod <nickname>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:621
+#: ../src/include/commandhelp.h:634
 msgid "Pass the ICB moderation privilege to another group member."
 msgstr ""
 
-#: ../src/include/commandhelp.h:626
+#: ../src/include/commandhelp.h:639
 msgid "usage: /qbot <[service hostname | --]> <command> [...]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:628
+#: ../src/include/commandhelp.h:641
 msgid ""
 "Communicate with QuakeNet's network service, the Q bot. If the initial\n"
 "argument equals to '--', then the value of setting 'qbot_host' is used\n"
 "as a service hostname."
 msgstr ""
 
-#: ../src/include/commandhelp.h:635
+#: ../src/include/commandhelp.h:648
 msgid "usage: /query [nick]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:637
+#: ../src/include/commandhelp.h:650
 msgid ""
 "Starts a private conversation with 'nick'. If 'nick' is omitted and\n"
 "the active window is a private conversation, the action will be to\n"
 "close it."
 msgstr ""
 
-#: ../src/include/commandhelp.h:644
+#: ../src/include/commandhelp.h:657
 msgid "usage: /quit [message]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:646
+#: ../src/include/commandhelp.h:659
 msgid ""
 "Disconnect from IRC and quit the program. A disconnect message is\n"
 "optional."
 msgstr ""
 
-#: ../src/include/commandhelp.h:652
+#: ../src/include/commandhelp.h:665
 msgid "usage: /rehash"
 msgstr ""
 
-#: ../src/include/commandhelp.h:654
+#: ../src/include/commandhelp.h:667
 msgid ""
 "The rehash command is an administrative command which can be used by\n"
 "an IRC operator to force the server to re-read and process its conf-\n"
 "iguration file."
 msgstr ""
 
-#: ../src/include/commandhelp.h:661
+#: ../src/include/commandhelp.h:674
 msgid "usage: /resize"
 msgstr ""
 
-#: ../src/include/commandhelp.h:663
+#: ../src/include/commandhelp.h:676
 msgid ""
 "Resize the terminal. For example, Windows doesn't send 'SIGWINCH',\n"
 "instead this command can be used. First resize the window then run\n"
 "this command."
 msgstr ""
 
-#: ../src/include/commandhelp.h:670
+#: ../src/include/commandhelp.h:683
 msgid "usage: /restart [--I-am-sure]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:672
+#: ../src/include/commandhelp.h:685
 msgid ""
 "An IRC operator can use the 'restart'-command to force the server to\n"
 "restart itself."
 msgstr ""
 
-#: ../src/include/commandhelp.h:678
+#: ../src/include/commandhelp.h:691
 msgid "usage: /rules"
 msgstr ""
 
-#: ../src/include/commandhelp.h:680
+#: ../src/include/commandhelp.h:693
 msgid ""
 "Outputs network/server rules. Not all IRC server software supports\n"
 "this command. (It's actually quite rare.)"
 msgstr ""
 
-#: ../src/include/commandhelp.h:686
+#: ../src/include/commandhelp.h:699
 msgid "usage: /sasl <operation> [...]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:688
+#: ../src/include/commandhelp.h:701
 msgid "Simple Authentication and Security Layer."
 msgstr ""
 
-#: ../src/include/commandhelp.h:689
+#: ../src/include/commandhelp.h:702
 msgid "Operation can be either:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:701
+#: ../src/include/commandhelp.h:714
 msgid ""
 "SASL is a method that lets you identify with NickServ during the\n"
 "connection process eliminating the need to do it manually."
 msgstr ""
 
-#: ../src/include/commandhelp.h:703
+#: ../src/include/commandhelp.h:716
 msgid "(To use SASL you must register your nickname.)"
 msgstr ""
 
-#: ../src/include/commandhelp.h:707
+#: ../src/include/commandhelp.h:720
 msgid "  Identification using mechanism ecdsa-nist256p-challenge:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:715
+#: ../src/include/commandhelp.h:728
 msgid ""
 "  (The only IRC network that I know of that is supporting this\n"
 "  mechanism is Libera Chat.)"
 msgstr ""
 
-#: ../src/include/commandhelp.h:718
+#: ../src/include/commandhelp.h:731
 msgid "  Identification using mechanism 'plain':"
 msgstr ""
 
-#: ../src/include/commandhelp.h:727
+#: ../src/include/commandhelp.h:740
 msgid "usage: /say <message>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:729
+#: ../src/include/commandhelp.h:742
 msgid ""
 "Say a message. This command can be used if you want say something with\n"
 "a leading command-character, i.e. a slash."
 msgstr ""
 
-#: ../src/include/commandhelp.h:734
+#: ../src/include/commandhelp.h:747
 msgid "    /say // A single-line comment in C++"
 msgstr ""
 
-#: ../src/include/commandhelp.h:739
+#: ../src/include/commandhelp.h:752
 msgid "usage: /servlist [<mask> [<type>]]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:741
+#: ../src/include/commandhelp.h:754
 msgid ""
 "Lists services currently connected to your IRC network. Arguments,\n"
 "if given, can be used to restrict the output result."
 msgstr ""
 
-#: ../src/include/commandhelp.h:751
+#: ../src/include/commandhelp.h:764
 msgid "usage: /servstats [<query> [<target>]]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:753
+#: ../src/include/commandhelp.h:766
 msgid "This command is used to query statistics of a certain IRC server."
 msgstr ""
 
-#: ../src/include/commandhelp.h:758
+#: ../src/include/commandhelp.h:771
 msgid "usage: /set [[setting] [value]]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:760
+#: ../src/include/commandhelp.h:773
 msgid "Alter Swirc settings."
 msgstr ""
 
-#: ../src/include/commandhelp.h:765
+#: ../src/include/commandhelp.h:778
 msgid ""
 "    Bools are case insensitive and can have one of the following\n"
 "    values:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:767
+#: ../src/include/commandhelp.h:780
 msgid "    - on, true or yes"
 msgstr ""
 
-#: ../src/include/commandhelp.h:768
+#: ../src/include/commandhelp.h:781
 msgid "    - off, false or no"
 msgstr ""
 
-#: ../src/include/commandhelp.h:771
+#: ../src/include/commandhelp.h:784
 msgid ""
 "    Integers. Swirc implements a min/max value for each integer in\n"
 "    order to keep its value safe. The error log will tell if the\n"
@@ -1303,188 +1408,188 @@ msgid ""
 "    a preprogrammed fallback value is being used instead."
 msgstr ""
 
-#: ../src/include/commandhelp.h:777
+#: ../src/include/commandhelp.h:790
 msgid "    An arbitrary sequence of characters"
 msgstr ""
 
-#: ../src/include/commandhelp.h:781
+#: ../src/include/commandhelp.h:794
 msgid "  Output the current values of all settings:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:782
+#: ../src/include/commandhelp.h:795
 msgid "    /set (without any arguments)"
 msgstr ""
 
-#: ../src/include/commandhelp.h:784
+#: ../src/include/commandhelp.h:797
 msgid "  Turn beeps on/off:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:791
+#: ../src/include/commandhelp.h:804
 msgid "usage: /squery <servicename> <text>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:793
+#: ../src/include/commandhelp.h:806
 msgid ""
 "This command is used similarly to '/msg'. The only difference is that\n"
 "the recipient MUST be a service."
 msgstr ""
 
-#: ../src/include/commandhelp.h:799
+#: ../src/include/commandhelp.h:812
 msgid "usage: /stats [channel]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:801
+#: ../src/include/commandhelp.h:814
 msgid ""
 "Outputs a channel's user statistics. If the channel argument is left\n"
 "empty and the active window is an IRC channel, Swirc will output the\n"
 "user statistics for that channel."
 msgstr ""
 
-#: ../src/include/commandhelp.h:808
+#: ../src/include/commandhelp.h:821
 msgid "usage: /theme [install <name> | list-remote | set <name>]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:810
+#: ../src/include/commandhelp.h:823
 msgid "Management of themes on-the-fly."
 msgstr ""
 
-#: ../src/include/commandhelp.h:814
+#: ../src/include/commandhelp.h:827
 msgid "    Install a theme named 'bx':"
 msgstr ""
 
-#: ../src/include/commandhelp.h:817
+#: ../src/include/commandhelp.h:830
 msgid "    List all available themes:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:820
+#: ../src/include/commandhelp.h:833
 msgid "    Activate an installed theme with name 'bx':"
 msgstr ""
 
-#: ../src/include/commandhelp.h:826
+#: ../src/include/commandhelp.h:839
 msgid "usage: /time <target>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:828
+#: ../src/include/commandhelp.h:841
 msgid ""
 "Send a CTCP TIME request to 'target', which is either a nickname or an\n"
 "IRC channel."
 msgstr ""
 
-#: ../src/include/commandhelp.h:834
+#: ../src/include/commandhelp.h:847
 msgid "usage: /topic [new topic]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:836
+#: ../src/include/commandhelp.h:849
 msgid ""
 "Sets a new topic for a channel. If 'new topic' is omitted the action\n"
 "will be to display the current topic. (The active window must be an\n"
 "IRC channel.)"
 msgstr ""
 
-#: ../src/include/commandhelp.h:843
+#: ../src/include/commandhelp.h:856
 msgid "usage: /unban <mask>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:845
+#: ../src/include/commandhelp.h:858
 msgid "Removes a channel ban. (The active window must be an IRC channel.)"
 msgstr ""
 
-#: ../src/include/commandhelp.h:855
+#: ../src/include/commandhelp.h:868
 msgid "usage: /unignore [#]"
 msgstr ""
 
-#: ../src/include/commandhelp.h:857
+#: ../src/include/commandhelp.h:870
 msgid "Deletes a regular expression from the ignore list."
 msgstr ""
 
-#: ../src/include/commandhelp.h:866
+#: ../src/include/commandhelp.h:879
 msgid "usage: /utctime"
 msgstr ""
 
-#: ../src/include/commandhelp.h:868
+#: ../src/include/commandhelp.h:881
 msgid "Prints out the coordinated universal time (UTC)."
 msgstr ""
 
-#: ../src/include/commandhelp.h:873
+#: ../src/include/commandhelp.h:886
 msgid "usage: /version <target>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:875
+#: ../src/include/commandhelp.h:888
 msgid ""
 "Send a CTCP VERSION request to 'target', which is either a nickname or\n"
 "an IRC channel."
 msgstr ""
 
-#: ../src/include/commandhelp.h:881
+#: ../src/include/commandhelp.h:894
 msgid "usage: /voice <nick>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:883
+#: ../src/include/commandhelp.h:896
 msgid "Gives the channel voice privilege to another user."
 msgstr ""
 
-#: ../src/include/commandhelp.h:888
+#: ../src/include/commandhelp.h:901
 msgid "usage: /wallops <message>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:890
+#: ../src/include/commandhelp.h:903
 msgid ""
 "The 'wallops'-command is used to send a message to all currently\n"
 "connected users who have set the 'w' user mode for themselves."
 msgstr ""
 
-#: ../src/include/commandhelp.h:896
+#: ../src/include/commandhelp.h:909
 msgid "usage: /who <mask>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:898
+#: ../src/include/commandhelp.h:911
 msgid ""
 "Generates a query which returns a list of information which matches\n"
 "the provided 'mask'."
 msgstr ""
 
-#: ../src/include/commandhelp.h:903
+#: ../src/include/commandhelp.h:916
 msgid "  Show the Libera Chat crew:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:906
+#: ../src/include/commandhelp.h:919
 msgid "  Show users with a German domain name:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:912
+#: ../src/include/commandhelp.h:925
 msgid "usage: /whois <nick>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:914
+#: ../src/include/commandhelp.h:927
 msgid "Asks after information about another user."
 msgstr ""
 
-#: ../src/include/commandhelp.h:919
+#: ../src/include/commandhelp.h:932
 msgid "usage: /wholeft"
 msgstr ""
 
-#: ../src/include/commandhelp.h:921
+#: ../src/include/commandhelp.h:934
 msgid ""
 "By using this command you can see who left during a network server\n"
 "split. The command takes no arguments and the active window must be an\n"
 "IRC channel."
 msgstr ""
 
-#: ../src/include/commandhelp.h:928
+#: ../src/include/commandhelp.h:941
 msgid "usage: /znc [*module] <command>"
 msgstr ""
 
-#: ../src/include/commandhelp.h:930
+#: ../src/include/commandhelp.h:943
 msgid ""
 "Simplifies the communication with ZNC which is a popular\n"
 "'IRC bouncer'."
 msgstr ""
 
-#: ../src/include/commandhelp.h:935
+#: ../src/include/commandhelp.h:948
 msgid "  Output your ZNC version:"
 msgstr ""
 
-#: ../src/include/commandhelp.h:938
+#: ../src/include/commandhelp.h:951
 msgid "  Identical to the previous example:"
 msgstr ""
 
@@ -1493,44 +1598,44 @@ msgstr ""
 msgid "%s: fatal: string was truncated"
 msgstr ""
 
-#: ../src/io-loop.c:599
+#: ../src/io-loop.c:601
 #, c-format
 msgid "    Swirc %s by %s"
 msgstr "    Swirc %s von %s"
 
-#: ../src/io-loop.c:600
+#: ../src/io-loop.c:602
 #, c-format
 msgid "    Compiled on %s%s %s%s"
 msgstr "    Kompiliert %s%s %s%s"
 
-#: ../src/io-loop.c:606
+#: ../src/io-loop.c:608
 #, c-format
 msgid "Current language %s%s%s"
 msgstr "Aktuelle Sprache %s%s%s"
 
-#: ../src/io-loop.c:609
+#: ../src/io-loop.c:611
 #, c-format
 msgid "Program settings are stored in %s%s%s"
 msgstr "Programmeinstellungen werden in %s%s%s gespeichert"
 
-#: ../src/io-loop.c:611
+#: ../src/io-loop.c:613
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
 msgstr "Es wurden %c%hd%c Farbpaare initialisiert"
 
-#: ../src/io-loop.c:613
+#: ../src/io-loop.c:615
 msgid "Type /help for a list of commands; or /help <command>"
 msgstr "Geben Sie /help für eine Liste von Befehlen ein; oder /help <Befehl>"
 
-#: ../src/io-loop.c:615
+#: ../src/io-loop.c:617
 msgid "for help of a specific command"
 msgstr "für Hilfe zu einem bestimmten Befehl"
 
-#: ../src/io-loop.c:616
+#: ../src/io-loop.c:618
 msgid "Type F1 for keys"
 msgstr "Geben Sie F1 für Tastaturtasten ein"
 
-#: ../src/io-loop.c:618
+#: ../src/io-loop.c:620
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr "Größe des Fehlerprotokolls %s%.1f KB%s"
@@ -1560,22 +1665,22 @@ msgstr ""
 msgid "Erroneous event: %s"
 msgstr ""
 
-#: ../src/log.c:246
+#: ../src/log.c:251
 #, c-format
 msgid "Logging for window (refnum: %d) now off"
 msgstr "Die Protokollierung für das Fenster (refnum: %d) ist jetzt deaktiviert"
 
-#: ../src/log.c:250
+#: ../src/log.c:255
 #, c-format
 msgid "Logging for window (refnum: %d) now on"
 msgstr "Die Protokollierung für das Fenster (refnum: %d) ist jetzt aktiviert"
 
-#: ../src/main.cpp:84
+#: ../src/main.cpp:89
 #, c-format
 msgid "A duplicate of option -%c found"
 msgstr ""
 
-#: ../src/main.cpp:144
+#: ../src/main.cpp:149
 msgid ""
 "\n"
 "Options:\n"
@@ -1585,124 +1690,124 @@ msgstr ""
 "Optionen:\n"
 "\n"
 
-#: ../src/main.cpp:145
+#: ../src/main.cpp:150
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   Nur IPv4-Adressen verwenden\n"
 
-#: ../src/main.cpp:146
+#: ../src/main.cpp:151
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   Nur IPv6-Adressen verwenden\n"
 
-#: ../src/main.cpp:147
+#: ../src/main.cpp:152
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Hilfe anzeigen\n"
 
-#: ../src/main.cpp:148
+#: ../src/main.cpp:153
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Farbdefinitionen nicht ändern\n"
 
-#: ../src/main.cpp:149
+#: ../src/main.cpp:154
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr ""
 "    -P                   SASL-Authentifizierung dauerhaft deaktivieren\n"
 
-#: ../src/main.cpp:150
+#: ../src/main.cpp:155
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   TLS/SSL peer verification deaktivieren\n"
 
-#: ../src/main.cpp:151
+#: ../src/main.cpp:156
 msgid "    -S                   Force TLS\n"
 msgstr "    -S                   TLS erzwingen\n"
 
-#: ../src/main.cpp:156
+#: ../src/main.cpp:161
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
 msgstr ""
 "    -W <password>        Gleicher Effekt wie Flag 'p', aber nicht "
 "interaktiv\n"
 
-#: ../src/main.cpp:157
+#: ../src/main.cpp:162
 msgid "    -X                   Disable all IRCv3 extensions\n"
 msgstr "    -X                   Alle IRCv3 Erweiterungen deaktivieren\n"
 
-#: ../src/main.cpp:158
+#: ../src/main.cpp:163
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Mit IRC-Server verbinden\n"
 
-#: ../src/main.cpp:159
+#: ../src/main.cpp:164
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Debug Protokollierung\n"
 
-#: ../src/main.cpp:160
+#: ../src/main.cpp:165
 msgid "    -h <hostname>        Sets the bind host\n"
 msgstr "    -h <hostname>        Legt den Bind-Host fest\n"
 
-#: ../src/main.cpp:161
+#: ../src/main.cpp:166
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Internet Citizen's Band aktivieren\n"
 
-#: ../src/main.cpp:162
+#: ../src/main.cpp:167
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr ""
 "    -j <join>            Kommata getrennte Liste von Kanälen zum joinen\n"
 
-#: ../src/main.cpp:163
+#: ../src/main.cpp:168
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Online Nickname\n"
 
-#: ../src/main.cpp:164
+#: ../src/main.cpp:169
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Server-Passwort anfordern (für private Server)\n"
 
-#: ../src/main.cpp:165
+#: ../src/main.cpp:170
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Dein echter Name\n"
 
-#: ../src/main.cpp:166
+#: ../src/main.cpp:171
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Dein Benutzername\n"
 
-#: ../src/main.cpp:167
+#: ../src/main.cpp:172
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Swirc-Version anzeigen\n"
 
-#: ../src/main.cpp:168
+#: ../src/main.cpp:173
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsdatei\n"
 
-#: ../src/main.cpp:231
+#: ../src/main.cpp:236
 msgid "Unhandled exception!"
 msgstr ""
 
-#: ../src/main.cpp:291
+#: ../src/main.cpp:300
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Anwendung: %s [FLAGGE] ...\n"
 
-#: ../src/main.cpp:383
+#: ../src/main.cpp:392
 msgid "forbidden channel name characters"
 msgstr ""
 
-#: ../src/main.cpp:535
+#: ../src/main.cpp:544
 #, c-format
 msgid "%s: -%c: unrecognized option"
 msgstr ""
 
-#: ../src/main.cpp:540
+#: ../src/main.cpp:549
 #, c-format
 msgid "%s: -%c: option argument missing"
 msgstr ""
 
-#: ../src/main.cpp:709
+#: ../src/main.cpp:718
 msgid "fatal: failed to initialize signal handling"
 msgstr ""
 
-#: ../src/main.cpp:731
+#: ../src/main.cpp:740
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr ""
 
-#: ../src/main.cpp:753
+#: ../src/main.cpp:762
 msgid "Initialization of the Curses library not possible"
 msgstr ""
 
@@ -1805,83 +1910,83 @@ msgstr "Die Verbindung zum IRC-Server wurde unterbrochen"
 msgid "Disconnected"
 msgstr "Offline"
 
-#: ../src/readline.c:623
+#: ../src/readline.c:624
 msgid "--------------- Keys ---------------"
 msgstr ""
 
-#: ../src/readline.c:625
+#: ../src/readline.c:626
 msgid "CTRL+a     Move to beginning of line"
 msgstr ""
 
-#: ../src/readline.c:626
+#: ../src/readline.c:627
 msgid "CTRL+e     Move to end of line"
 msgstr ""
 
-#: ../src/readline.c:627
+#: ../src/readline.c:628
 msgid "CTRL+b     Move cursor backward"
 msgstr ""
 
-#: ../src/readline.c:628
+#: ../src/readline.c:629
 msgid "CTRL+f     Move cursor forward"
 msgstr ""
 
-#: ../src/readline.c:629
+#: ../src/readline.c:630
 msgid "CTRL+d     Delete"
 msgstr ""
 
-#: ../src/readline.c:630
+#: ../src/readline.c:631
 msgid "CTRL+g     Clear readline input"
 msgstr ""
 
-#: ../src/readline.c:631
+#: ../src/readline.c:632
 msgid "CTRL+l     Toggle logging on/off"
 msgstr ""
 
-#: ../src/readline.c:632
+#: ../src/readline.c:633
 msgid "CTRL+n     Next window"
 msgstr ""
 
-#: ../src/readline.c:633
+#: ../src/readline.c:634
 msgid "CTRL+p     Previous window"
 msgstr ""
 
-#: ../src/readline.c:634
+#: ../src/readline.c:635
 msgid "CTRL+w     List all windows"
 msgstr ""
 
-#: ../src/readline.c:635
+#: ../src/readline.c:636
 msgid "PG UP      Scroll up"
 msgstr ""
 
-#: ../src/readline.c:636
+#: ../src/readline.c:637
 msgid "PG DOWN    Scroll down"
 msgstr ""
 
-#: ../src/readline.c:637
+#: ../src/readline.c:638
 msgid "Up arrow   History previous"
 msgstr ""
 
-#: ../src/readline.c:638
+#: ../src/readline.c:639
 msgid "Down arrow History next"
 msgstr ""
 
-#: ../src/readline.c:639
+#: ../src/readline.c:640
 msgid "F2         Spell word"
 msgstr ""
 
-#: ../src/readline.c:640
+#: ../src/readline.c:641
 msgid "F3         Scroll nicklist up"
 msgstr ""
 
-#: ../src/readline.c:641
+#: ../src/readline.c:642
 msgid "F4         Scroll nicklist down"
 msgstr ""
 
-#: ../src/readline.c:642
+#: ../src/readline.c:643
 msgid "F11        Close window"
 msgstr ""
 
-#: ../src/readline.c:643
+#: ../src/readline.c:644
 msgid "F12        Close all private conversations"
 msgstr ""
 
