@@ -205,14 +205,14 @@ void
 irc_logfile::remove_file(void) const
 {
 	if (this->fullpath.compare("") == 0) {
-		printtext_print("err", "%s: empty path", __func__);
+		printtext_print("err", _("%s: empty path"), __func__);
 		return;
 	} else if (remove(this->fullpath.c_str()) != 0) {
-		printtext_print("err", "%s: error removing: %s", __func__,
+		printtext_print("err", _("%s: error removing: %s"), __func__,
 		    this->fullpath.c_str());
 		return;
 	} else {
-		printtext_print("success", "removed %s",
+		printtext_print("success", _("removed %s"),
 		    this->filename.c_str());
 	}
 }
@@ -221,7 +221,7 @@ static void
 list_scanned()
 {
 	if (log_vec.empty()) {
-		printtext_print("err", "nothing scanned");
+		printtext_print("err", "%s", _("nothing scanned"));
 		return;
 	}
 
@@ -246,14 +246,14 @@ static void
 subcmd_ls(CSTRING p_what)
 {
 	if (p_what == nullptr || strings_match(p_what, "")) {
-		printtext_print("err", "too few arguments");
+		printtext_print("err", "%s", _("too few arguments"));
 	} else if (strings_match(p_what, "dir")) {
 		list_dir(g_log_dir);
 	} else if (strings_match(p_what, "scanned")) {
 		list_scanned();
 	} else {
-		printtext_print("err", "unrecognized argument: %s "
-		    "(must be 'dir' or 'scanned')", p_what);
+		printtext_print("err", _("unrecognized argument: %s "
+		    "(must be 'dir' or 'scanned')"), p_what);
 	}
 }
 
@@ -263,19 +263,19 @@ subcmd_rm(CSTRING p_no)
 	uint32_t val = 0;
 
 	if (p_no == nullptr || strings_match(p_no, "")) {
-		printtext_print("err", "too few arguments");
+		printtext_print("err", "%s", _("too few arguments"));
 		return;
 	} else if (!is_numeric(p_no)) {
-		printtext_print("err", "argument not a number");
+		printtext_print("err", "%s", _("argument not a number"));
 		return;
 	} else if (log_vec.empty()) {
-		printtext_print("err", "vector empty");
+		printtext_print("err", "%s", _("vector empty"));
 		return;
 	} else if (xsscanf(p_no, "%" SCNu32, &val) != 1) {
-		printtext_print("err", "bad number");
+		printtext_print("err", "%s", _("bad number"));
 		return;
 	} else if (val > (log_vec.size() - 1)) {
-		printtext_print("err", "too high number");
+		printtext_print("err", "%s", _("too high number"));
 		return;
 	}
 
@@ -347,9 +347,9 @@ subcmd_scandir(void)
 	if (sz > 0) {
 		std::sort(log_vec.begin(), log_vec.end(), log_vec_cmp);
 		printtext_print("success",
-		    "A total of " PRINT_SIZE " files found", sz);
+		    _("A total of " PRINT_SIZE " files found"), sz);
 	} else
-		printtext_print("err", "No files found");
+		printtext_print("err", "%s", _("No files found"));
 #else	// !HAVE_STD_FS
 	printtext_print("err", "operation not supported");
 #endif
@@ -370,32 +370,32 @@ subcmd_view(CSTRING p_no)
 	uint32_t	 val = 0;
 
 	if (p_no == nullptr || strings_match(p_no, "")) {
-		printtext_print("err", "too few arguments");
+		printtext_print("err", "%s", _("too few arguments"));
 		return;
 	} else if (!is_numeric(p_no)) {
-		printtext_print("err", "argument not a number");
+		printtext_print("err", "%s", _("argument not a number"));
 		return;
 	} else if (log_vec.empty()) {
-		printtext_print("err", "vector empty");
+		printtext_print("err", "%s", _("vector empty"));
 		return;
 	} else if (xsscanf(p_no, "%" SCNu32, &val) != 1) {
-		printtext_print("err", "bad number");
+		printtext_print("err", "%s", _("bad number"));
 		return;
 	} else if (val > (log_vec.size() - 1)) {
-		printtext_print("err", "too high number");
+		printtext_print("err", "%s", _("too high number"));
 		return;
 	}
 
 	const irc_logfile &obj = log_vec[val];
 
 	if (obj.is_too_large()) {
-		printtext_print("err", "the file is too large");
+		printtext_print("err", "%s", _("the file is too large"));
 		return;
 	} else if (!is_valid_filename(obj.filename.c_str())) {
-		printtext_print("err", "bad filename");
+		printtext_print("err", "%s", _("bad filename"));
 		return;
 	} else if ((fp = fopen(obj.fullpath.c_str(), "r")) == nullptr) {
-		printtext_print("err", "error opening file");
+		printtext_print("err", "%s", _("error opening file"));
 		return;
 	}
 
@@ -404,7 +404,7 @@ subcmd_view(CSTRING p_no)
 
 	if (errno) {
 		fclose(fp);
-		printtext_print("err", "error creating window");
+		printtext_print("err", "%s", _("error creating window"));
 		return;
 	}
 
@@ -426,9 +426,9 @@ subcmd_view(CSTRING p_no)
 		printtext(&ptext_ctx, "%s", trim(line));
 
 	if (feof(fp))
-		printtext_print("success", "wrote %s", obj.filename.c_str());
+		printtext_print("success", _("wrote %s"), obj.filename.c_str());
 	else {
-		printtext_print("warn", "write incomplete (%s)",
+		printtext_print("warn", _("write incomplete (%s)"),
 		    obj.filename.c_str());
 	}
 	fclose(fp);
@@ -455,14 +455,14 @@ cmd_log(CSTRING p_data)
 	static chararray_t	sep = " ";
 
 	if (strings_match(p_data, "")) {
-		printtext_print("err", "%s: too few arguments", cmd);
+		printtext_print("err", _("%s: too few arguments"), cmd);
 		return;
 	}
 
 	dcopy = sw_strdup(p_data);
 
 	if ((subcmd = strtok_r(dcopy, sep, &last)) == nullptr) {
-		printf_and_free(dcopy, "%s: too few arguments", cmd);
+		printf_and_free(dcopy, _("%s: too few arguments"), cmd);
 		return;
 	}
 
@@ -470,7 +470,7 @@ cmd_log(CSTRING p_data)
 	arg[1] = strtok_r(nullptr, sep, &last);
 
 	if (arg[1]) {
-		printf_and_free(dcopy, "%s: too many arguments", cmd);
+		printf_and_free(dcopy, _("%s: too many arguments"), cmd);
 		return;
 	}
 
@@ -486,11 +486,11 @@ cmd_log(CSTRING p_data)
 		else if (strings_match(subcmd, "view"))
 			subcmd_view(arg[0]);
 		else {
-			printtext_print("err", "%s: invalid subcommand: %s",
+			printtext_print("err", _("%s: invalid subcommand: %s"),
 			    cmd, subcmd);
 		}
 	} catch (const std::exception &ex) {
-		printtext_print("err", "%s: exception: %s", cmd, ex.what());
+		printtext_print("err", _("%s: exception: %s"), cmd, ex.what());
 	}
 
 	free(dcopy);
