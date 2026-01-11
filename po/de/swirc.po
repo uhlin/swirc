@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2026-01-11 15:24+0100\n"
-"PO-Revision-Date: 2025-07-16 21:54+0200\n"
+"PO-Revision-Date: 2026-01-11 16:26+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -257,14 +257,14 @@ msgid "%s: empty path"
 msgstr ""
 
 #: ../src/commands/log.cpp:211
-#, fuzzy, c-format
+#, c-format
 msgid "%s: error removing: %s"
-msgstr "%s: schrieb: %s"
+msgstr "%s: Fehler beim Entfernen von: %s"
 
 #: ../src/commands/log.cpp:215
-#, fuzzy, c-format
+#, c-format
 msgid "removed %s"
-msgstr "Entfernen fehlgeschlagen: %s"
+msgstr "%s entfernt"
 
 #: ../src/commands/log.cpp:224
 msgid "nothing scanned"
@@ -272,9 +272,8 @@ msgstr ""
 
 #: ../src/commands/log.cpp:249 ../src/commands/log.cpp:266
 #: ../src/commands/log.cpp:373
-#, fuzzy
 msgid "too few arguments"
-msgstr "Unzureichende Argumente"
+msgstr "zu wenige Argumente"
 
 #: ../src/commands/log.cpp:255
 #, c-format
@@ -290,9 +289,8 @@ msgid "vector empty"
 msgstr ""
 
 #: ../src/commands/log.cpp:275 ../src/commands/log.cpp:382
-#, fuzzy
 msgid "bad number"
-msgstr "Ungültige Portnummer"
+msgstr "schlechte Zahl"
 
 #: ../src/commands/log.cpp:278 ../src/commands/log.cpp:385
 msgid "too high number"
@@ -323,24 +321,24 @@ msgid "error creating window"
 msgstr ""
 
 #: ../src/commands/log.cpp:429
-#, fuzzy, c-format
+#, c-format
 msgid "wrote %s"
-msgstr "%s: schrieb: %s"
+msgstr "schrieb %s"
 
 #: ../src/commands/log.cpp:431
-#, fuzzy, c-format
+#, c-format
 msgid "write incomplete (%s)"
-msgstr "%s: Dateiübertragung unvollständig: %s"
+msgstr ""
 
 #: ../src/commands/log.cpp:458 ../src/commands/log.cpp:465
-#, fuzzy, c-format
+#, c-format
 msgid "%s: too few arguments"
-msgstr "%s: nicht genügend Argumente"
+msgstr "%s: Zu wenige Argumente"
 
 #: ../src/commands/log.cpp:473
-#, fuzzy, c-format
+#, c-format
 msgid "%s: too many arguments"
-msgstr "%s: nicht genügend Argumente"
+msgstr "%s: Zu viele Argumente"
 
 #: ../src/commands/log.cpp:489
 #, c-format
@@ -348,9 +346,9 @@ msgid "%s: invalid subcommand: %s"
 msgstr ""
 
 #: ../src/commands/log.cpp:493
-#, fuzzy, c-format
+#, c-format
 msgid "%s: exception: %s"
-msgstr "%s: schrieb: %s"
+msgstr "%s: Ausnahme: %s"
 
 #: ../src/commands/theme.c:313
 #, c-format
