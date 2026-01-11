@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2026-01-11 15:24+0100\n"
-"PO-Revision-Date: 2025-10-01 21:43+0200\n"
+"PO-Revision-Date: 2026-01-11 20:09+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -252,19 +252,19 @@ msgid "Failed to enter passive mode"
 msgstr "Passiiviseen tilaan siirtyminen epäonnistui"
 
 #: ../src/commands/log.cpp:208
-#, fuzzy, c-format
+#, c-format
 msgid "%s: empty path"
-msgstr "%s: tyhjä viesti"
+msgstr "%s: tyhjä polku"
 
 #: ../src/commands/log.cpp:211
-#, fuzzy, c-format
+#, c-format
 msgid "%s: error removing: %s"
-msgstr "%s: kirjoitti: %s"
+msgstr "%s: virhe poistettaessa: %s"
 
 #: ../src/commands/log.cpp:215
-#, fuzzy, c-format
+#, c-format
 msgid "removed %s"
-msgstr "ei onnistunut poistamaan: %s"
+msgstr "poisti %s"
 
 #: ../src/commands/log.cpp:224
 msgid "nothing scanned"
@@ -272,9 +272,8 @@ msgstr ""
 
 #: ../src/commands/log.cpp:249 ../src/commands/log.cpp:266
 #: ../src/commands/log.cpp:373
-#, fuzzy
 msgid "too few arguments"
-msgstr "Riittämättömät argumentit"
+msgstr "liian vähän argumentteja"
 
 #: ../src/commands/log.cpp:255
 #, c-format
@@ -290,9 +289,8 @@ msgid "vector empty"
 msgstr ""
 
 #: ../src/commands/log.cpp:275 ../src/commands/log.cpp:382
-#, fuzzy
 msgid "bad number"
-msgstr "Virheellinen portin numero"
+msgstr "huono numero"
 
 #: ../src/commands/log.cpp:278 ../src/commands/log.cpp:385
 msgid "too high number"
@@ -323,24 +321,24 @@ msgid "error creating window"
 msgstr ""
 
 #: ../src/commands/log.cpp:429
-#, fuzzy, c-format
+#, c-format
 msgid "wrote %s"
-msgstr "%s: kirjoitti: %s"
+msgstr "kirjoitti %s"
 
 #: ../src/commands/log.cpp:431
-#, fuzzy, c-format
+#, c-format
 msgid "write incomplete (%s)"
-msgstr "%s: tiedostonsiirto keskeneräinen: %s"
+msgstr "kirjoitus keskeneräinen (%s)"
 
 #: ../src/commands/log.cpp:458 ../src/commands/log.cpp:465
-#, fuzzy, c-format
+#, c-format
 msgid "%s: too few arguments"
-msgstr "%s: riittämättömät argumentit"
+msgstr "%s: liian vähän argumentteja"
 
 #: ../src/commands/log.cpp:473
-#, fuzzy, c-format
+#, c-format
 msgid "%s: too many arguments"
-msgstr "%s: liian monta puolipistettä"
+msgstr "%s: liian monta argumenttia"
 
 #: ../src/commands/log.cpp:489
 #, c-format
@@ -348,9 +346,9 @@ msgid "%s: invalid subcommand: %s"
 msgstr ""
 
 #: ../src/commands/log.cpp:493
-#, fuzzy, c-format
+#, c-format
 msgid "%s: exception: %s"
-msgstr "%s: kirjoitti: %s"
+msgstr "%s: poikkeus: %s"
 
 #: ../src/commands/theme.c:313
 #, c-format
