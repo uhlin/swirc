@@ -24,6 +24,7 @@ INPUTFILES = $(COMMANDS_DIR)colormap.cpp\
 	$(COMMANDS_DIR)ctcp.c\
 	$(COMMANDS_DIR)dcc.cpp\
 	$(COMMANDS_DIR)ftp.cpp\
+	$(COMMANDS_DIR)log.cpp\
 	$(COMMANDS_DIR)theme.c\
 	$(EVENTS_DIR)account.cpp\
 	$(EVENTS_DIR)away.cpp\
