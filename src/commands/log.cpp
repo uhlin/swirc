@@ -71,15 +71,15 @@ namespace fs = std::filesystem;
 
 class irc_logfile {
 public:
-	std::string filename;
-	std::string fullpath;
+	std::string	filename;
+	std::string	fullpath;
 
 	irc_logfile();
 	irc_logfile(const std::string &, const std::string &);
 
-	bool is_too_large(void) const;
-	void print(const size_t) const;
-	void remove_file(void) const;
+	bool	is_too_large(void) const;
+	void	print(const size_t) const;
+	void	remove_file(void) const;
 
 private:
 	struct stat sb;
