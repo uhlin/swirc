@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2026-01-11 15:24+0100\n"
-"PO-Revision-Date: 2026-01-11 22:26+0100\n"
+"PO-Revision-Date: 2026-01-12 21:27+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -266,7 +266,7 @@ msgstr "tog bort %s"
 
 #: ../src/commands/log.cpp:224
 msgid "nothing scanned"
-msgstr ""
+msgstr "inget skannat"
 
 #: ../src/commands/log.cpp:249 ../src/commands/log.cpp:266
 #: ../src/commands/log.cpp:373
@@ -276,15 +276,15 @@ msgstr "för få argument"
 #: ../src/commands/log.cpp:255
 #, c-format
 msgid "unrecognized argument: %s (must be 'dir' or 'scanned')"
-msgstr ""
+msgstr "okänt argument: %s (måste vara 'dir' eller 'scanned')"
 
 #: ../src/commands/log.cpp:269 ../src/commands/log.cpp:376
 msgid "argument not a number"
-msgstr ""
+msgstr "argument inte ett tal"
 
 #: ../src/commands/log.cpp:272 ../src/commands/log.cpp:379
 msgid "vector empty"
-msgstr ""
+msgstr "vektor tom"
 
 #: ../src/commands/log.cpp:275 ../src/commands/log.cpp:382
 msgid "bad number"
@@ -292,7 +292,7 @@ msgstr "dåligt nummer"
 
 #: ../src/commands/log.cpp:278 ../src/commands/log.cpp:385
 msgid "too high number"
-msgstr ""
+msgstr "för högt tal"
 
 #: ../src/commands/log.cpp:350
 msgid "A total of "
@@ -300,23 +300,23 @@ msgstr ""
 
 #: ../src/commands/log.cpp:352
 msgid "No files found"
-msgstr ""
+msgstr "Inga filer hittades"
 
 #: ../src/commands/log.cpp:392
 msgid "the file is too large"
-msgstr ""
+msgstr "filen är för stor"
 
 #: ../src/commands/log.cpp:395
 msgid "bad filename"
-msgstr ""
+msgstr "dåligt filnamn"
 
 #: ../src/commands/log.cpp:398
 msgid "error opening file"
-msgstr ""
+msgstr "fel vid öppning av fil"
 
 #: ../src/commands/log.cpp:407
 msgid "error creating window"
-msgstr ""
+msgstr "fel vid skapande av fönster"
 
 #: ../src/commands/log.cpp:429
 #, c-format
@@ -341,7 +341,7 @@ msgstr "%s: för många argument"
 #: ../src/commands/log.cpp:489
 #, c-format
 msgid "%s: invalid subcommand: %s"
-msgstr ""
+msgstr "%s: ogiltigt delkommando: %s"
 
 #: ../src/commands/log.cpp:493
 #, c-format
