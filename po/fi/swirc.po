@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.7\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2026-01-11 15:24+0100\n"
+"POT-Creation-Date: 2026-01-12 23:19+0100\n"
 "PO-Revision-Date: 2026-01-11 20:09+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -294,10 +294,6 @@ msgstr "huono numero"
 
 #: ../src/commands/log.cpp:278 ../src/commands/log.cpp:385
 msgid "too high number"
-msgstr ""
-
-#: ../src/commands/log.cpp:350
-msgid "A total of "
 msgstr ""
 
 #: ../src/commands/log.cpp:352
