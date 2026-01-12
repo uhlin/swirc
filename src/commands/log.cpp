@@ -347,7 +347,7 @@ subcmd_scandir(void)
 	if (sz > 0) {
 		std::sort(log_vec.begin(), log_vec.end(), log_vec_cmp);
 		printtext_print("success",
-		    _("A total of " PRINT_SIZE " files found"), sz);
+		    "A total of " PRINT_SIZE " files found", sz);
 	} else
 		printtext_print("err", "%s", _("No files found"));
 #else	// !HAVE_STD_FS
