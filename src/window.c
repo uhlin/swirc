@@ -833,7 +833,8 @@ window_close_all_priv_conv(void)
 	FOREACH_HASH_TABLE_ENTRY() {
 		FOREACH_WINDOW_IN_ENTRY() {
 			if (window == g_status_window ||
-			    is_irc_channel(window->label))
+			    is_irc_channel(window->label) ||
+			    window->is_logwin)
 				continue;
 			if (window->label &&
 			    pc_assigned < ARRAY_SIZE(priv_conv)) {
