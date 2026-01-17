@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added command `/log` (management of log files).
+- **Added** command `/log` (management of log files).
 
 ## [3.5.7] - 2026-01-01 ##
 - **Added** micro optimizations. Multiple occurrences.
