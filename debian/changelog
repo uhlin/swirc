@@ -1,3 +1,9 @@
+swirc (3.5.8-1) unstable; urgency=medium
+
+  * New upstream version. (Added command '/log').
+
+ -- Markus Uhlin <markus@nifty-networks.net>  Sat, 17 Jan 2026 17:05:44 +0100
+
 swirc (3.5.7-1) unstable; urgency=medium
 
   * New upstream version.
