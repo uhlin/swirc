@@ -31,6 +31,7 @@
 #if defined(UNIX) && USE_LIBNOTIFY
 #include <libnotify/notify.h>
 #endif
+#include "commands/log.h"
 #include "commands/misc.h"
 #ifdef WIN32
 #include "compat/stdlib.h" /* arc4random() */
@@ -796,7 +797,9 @@ spawn_chat_window(CSTRING label, CSTRING title)
 	 */
 	if (atomic_load_bool(&g_on_air) &&
 	    !is_irc_channel(entry->label) &&
-	    !g_icb_mode)
+	    !g_icb_mode &&
+	    *(entry->label) != g_sym_logwin &&
+	    !entry->is_logwin)
 		cmd_whois(entry->label);
 
 	return 0;
