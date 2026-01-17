@@ -1,7 +1,7 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] ##
+## [3.5.8] - 2026-01-17 ##
 - **Added** command `/log` (management of log files).
 
 ## [3.5.7] - 2026-01-01 ##
