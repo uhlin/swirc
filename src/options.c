@@ -56,7 +56,7 @@ options(int argc, char * const argv[], const char *optstring)
 		return EOF;
 	}
 
-	g_option_save = opt = *nextchar++;
+	g_option_save = opt = (unsigned char) *nextchar++;
 
 	if ((cp = strchr(optstring, opt)) == NULL) {
 		if (!*nextchar)

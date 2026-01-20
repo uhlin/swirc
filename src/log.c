@@ -77,7 +77,7 @@ check_label(const char *label, int *ip)
 
 	for (const char *cp = &label[0]; *cp != '\0'; cp++) {
 		if (strchr(legal_index, *cp) == NULL) {
-			*ip = *cp;
+			*ip = (unsigned char) *cp;
 			return ERR;
 		}
 	}
