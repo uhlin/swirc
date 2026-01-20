@@ -1,5 +1,5 @@
 /* The FTP command
-   Copyright (C) 2024-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -609,7 +609,8 @@ ftp_data_conn::~ftp_data_conn()
 	free(this->path);
 
 	if (this->fileptr != nullptr) {
-		fclose(this->fileptr);
+		if (fclose(this->fileptr) != 0)
+			err_log(errno, "%s: fclose error", __func__);
 		this->fileptr = nullptr;
 	}
 
@@ -719,7 +720,7 @@ ftp_data_conn &ftp_data_conn::operator=(ftp_data_conn &&obj)
 	free(this->path);
 
 	if (this->fileptr)
-		fclose(this->fileptr);
+		(void) fclose(this->fileptr);
 	if (this->sock != INVALID_SOCKET)
 		ftp_closesocket(this->sock);
 	if (this->res)
