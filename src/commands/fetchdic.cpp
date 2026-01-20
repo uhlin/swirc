@@ -1,5 +1,5 @@
 /* fetchdic.cpp
-   Copyright (C) 2023-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2023-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -201,7 +201,8 @@ read_db(const char *path, std::vector<dictionary> &vec)
 			vec.push_back(dic);
 #endif
 		} catch (...) {
-			fclose(fp);
+			if (fclose(fp) != 0)
+				err_log(errno, "%s: fclose error", __func__);
 			free(line);
 			return PARSE_ERROR;
 		}
@@ -209,7 +210,8 @@ read_db(const char *path, std::vector<dictionary> &vec)
 
 	res = (feof(fp) ? READ_DB_OK : READ_INCOMPLETE);
 
-	fclose(fp);
+	if (fclose(fp) != 0)
+		err_log(errno, "%s: fclose error", __func__);
 	free(line);
 
 	return res;
