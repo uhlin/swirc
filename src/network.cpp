@@ -138,9 +138,9 @@ volatile bool	g_connection_lost = false;
 volatile bool	g_irc_listening = false;
 volatile bool	g_on_air = false;
 
-char	g_last_server[1024] = { 0 };
-char	g_last_port[32] = { 0 };
-char	g_last_pass[256] = { 0 };
+char	g_last_server[1024] = { '\0' };
+char	g_last_port[32] = { '\0' };
+char	g_last_pass[256] = { '\0' };
 
 int g_socket_address_family = AF_UNSPEC;
 
