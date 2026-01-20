@@ -1,5 +1,5 @@
 /* Connect and Disconnect commands
-   Copyright (C) 2016-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -208,8 +208,8 @@ shouldConnectUsingPassword(void)
 	char answer[20] = { '\0' };
 
 	while (true) {
-		fputs(_("Connect using password? [Y/n]: "), stdout);
-		fflush(stdout);
+		(void) fputs(_("Connect using password? [Y/n]: "), stdout);
+		(void) fflush(stdout);
 
 		if (fgets(answer, sizeof answer, stdin) == NULL) {
 			err_sys("%s: fgets", __func__);
@@ -261,8 +261,8 @@ get_password(void)
 		bool	fgets_error;
 		int	errno_save;
 
-		fputs(_("Server password (will not echo): "), stdout);
-		fflush(stdout);
+		(void) fputs(_("Server password (will not echo): "), stdout);
+		(void) fflush(stdout);
 
 		term_toggle_echo(OFF);
 		errno = 0;
@@ -270,7 +270,7 @@ get_password(void)
 		errno_save = errno;
 		term_toggle_echo(ON);
 
-		putchar('\n');
+		(void) putchar('\n');
 
 		if (fgets_error) {
 			err_exit(errno_save, "%s: fgets", __func__);
@@ -315,8 +315,8 @@ get_server_v2(PIRC_SERVER ptr, const size_t size, const char *hdr)
 	srvno = 0;
 	while (true) {
 		msg = strdup_printf(_("Your choice (0-%d): "), i);
-		fputs(msg, stdout);
-		fflush(stdout);
+		(void) fputs(msg, stdout);
+		(void) fflush(stdout);
 		free(msg);
 
 		if (fgets(ans, sizeof ans, stdin) == NULL) {
