@@ -1,5 +1,5 @@
 /* Platform independent networking routines
-   Copyright (C) 2014-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -150,7 +150,18 @@ int g_socket_address_family = AF_UNSPEC;
 *                                                               *
 ****************************************************************/
 
-static reconnect_context reconn_ctx;
+static reconnect_context &reconn_ctx()
+{
+	try {
+		static reconnect_context ctx;
+
+		return ctx;
+	} catch (...) {
+		err_msg("%s: cannot continue", __func__);
+		abort();
+	}
+}
+
 static const int RECVBUF_SIZE = 2048;
 
 /****************************************************************
@@ -371,16 +382,16 @@ handle_conn_err(PPRINTTEXT_CONTEXT ptext_ctx, CSTRING what,
 		g_socket = INVALID_SOCKET;
 	}
 
-	if (reconn_ctx.retry++ < reconn_ctx.retries) {
-		if (reconn_ctx.is_initial_attempt())
-			*sleep_time_seconds = reconn_ctx.delay;
+	if (reconn_ctx().retry++ < reconn_ctx().retries) {
+		if (reconn_ctx().is_initial_attempt())
+			*sleep_time_seconds = reconn_ctx().delay;
 		else
-			*sleep_time_seconds += reconn_ctx.backoff_delay;
+			*sleep_time_seconds += reconn_ctx().backoff_delay;
 
 		/* --------------------------------------------- */
 
-		if (*sleep_time_seconds > reconn_ctx.delay_max)
-			*sleep_time_seconds = reconn_ctx.delay_max;
+		if (*sleep_time_seconds > reconn_ctx().delay_max)
+			*sleep_time_seconds = reconn_ctx().delay_max;
 
 		(void) atomic_swap_bool(&g_connection_in_progress, false);
 		conn_res = SHOULD_RETRY_TO_CONNECT;
@@ -573,9 +584,9 @@ net_connect(const struct network_connect_context *ctx,
 	else
 		(void) atomic_swap_bool(&g_connection_in_progress, true);
 
-	if (!reconn_ctx.is_initialized()) {
-		reconn_ctx.init();
-		reconn_ctx.set_init(true);
+	if (!reconn_ctx().is_initialized()) {
+		reconn_ctx().init();
+		reconn_ctx().set_init(true);
 	}
 
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1, true);
@@ -699,7 +710,7 @@ server_new(CSTRING host, CSTRING port, CSTRING pass)
 void
 net_connect_clean_up(void)
 {
-	reconn_ctx.init();
+	reconn_ctx().init();
 	atomic_swap_bool(&g_connection_in_progress, false);
 }
 

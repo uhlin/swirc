@@ -125,7 +125,21 @@ bool	g_ircv3_extensions	= true;
 bool	g_sasl_authentication	= true;
 bool	g_ssl_verify_peer	= true;
 
-struct cmdline_opt_values *g_cmdline_opts = new cmdline_opt_values();
+static struct cmdline_opt_values *
+cmdline_opts_init(void) noexcept
+{
+	try {
+		struct cmdline_opt_values *opts;
+
+		opts = new cmdline_opt_values();
+		return opts;
+	} catch (...) {
+		err_msg("%s: cannot continue", __func__);
+		abort();
+	}
+}
+
+struct cmdline_opt_values *g_cmdline_opts = cmdline_opts_init();
 
 /* Things with internal linkage
    ============================ */
