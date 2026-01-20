@@ -94,7 +94,7 @@ textBuf_ins_next(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
 	} else {
 		sw_assert(element != NULL);
 
-		new_element->next = element->next;
+		new_element->next = element->next; // NOLINT: false positive
 		new_element->prev = element;
 
 		if (element->next == NULL)
