@@ -150,7 +150,8 @@ int g_socket_address_family = AF_UNSPEC;
 *                                                               *
 ****************************************************************/
 
-static reconnect_context &reconn_ctx()
+static reconnect_context &
+reconn_ctx() noexcept
 {
 	try {
 		static reconnect_context ctx;
