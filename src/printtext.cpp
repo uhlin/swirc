@@ -613,10 +613,10 @@ init_numbers(CSTRING fg, CSTRING bg, short int &num1, short int &num2)
 {
 	struct integer_context intctx("term_background", 0, 15, 1);
 
-	num1 = static_cast<short int>(atoi(fg));
+	num1 = static_cast<short int>(strtol(fg, nullptr, 10));
 
 	if (!isEmpty(bg))
-		num2 = static_cast<short int>(atoi(bg));
+		num2 = static_cast<short int>(strtol(bg, nullptr, 10));
 	else if (isEmpty(bg) && theme_bool("term_use_default_colors", true))
 		num2 = -1;
 	else
