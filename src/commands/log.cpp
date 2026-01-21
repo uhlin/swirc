@@ -403,7 +403,8 @@ subcmd_view(CSTRING p_no)
 	errno = spawn_chat_window(label.c_str(), obj.filename.c_str());
 
 	if (errno) {
-		fclose(fp);
+		if (fclose(fp) != 0)
+			err_log(errno, "%s: fclose error", __func__);
 		printtext_print("err", "%s", _("error creating window"));
 		return;
 	}
@@ -412,7 +413,8 @@ subcmd_view(CSTRING p_no)
 	printtext_context_init(&ptext_ctx, window_by_label(label.c_str()),
 	    TYPE_SPEC_NONE, false);
 	if (ptext_ctx.window == nullptr) {
-		fclose(fp);
+		if (fclose(fp) != 0)
+			err_log(errno, "%s: fclose error", __func__);
 		errno = destroy_chat_window(label.c_str());
 		if (errno)
 			err_log(errno, "%s: destroy_chat_window", __func__);
@@ -431,7 +433,10 @@ subcmd_view(CSTRING p_no)
 		printtext_print("warn", _("write incomplete (%s)"),
 		    obj.filename.c_str());
 	}
-	fclose(fp);
+
+	if (fclose(fp) != 0)
+		err_log(errno, "%s: fclose error", __func__);
+
 	free(line);
 }
 
