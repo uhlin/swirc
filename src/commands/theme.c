@@ -1,5 +1,5 @@
 /* commands/theme.c  --  management of themes on-the-fly
-   Copyright (C) 2017-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -179,14 +179,17 @@ url_to_file(const char *url, const char *path)
 	}
 
 	curl_easy_cleanup(curl_handle);
-	fclose(pagefile);
+
+	if (fclose(pagefile) != 0)
+		err_log(errno, "%s: fclose error", __func__);
+
 	return;
 
   err:
 	if (curl_handle)
 		curl_easy_cleanup(curl_handle);
 	if (pagefile)
-		fclose(pagefile);
+		(void) fclose(pagefile);
 	err_log(errno, "%s: %s: %s", __func__, failed_op,
 	    curl_easy_strerror(ret));
 }
@@ -286,7 +289,8 @@ read_db(const char *path, int *themes_read)
 			continue;
 
 		if (!add_to_array(tokenize(cp))) {
-			fclose(fp);
+			if (fclose(fp) != 0)
+				err_log(errno, "%s: fclose error", __func__);
 			free(line);
 			return PARSE_ERROR;
 		}
@@ -297,7 +301,8 @@ read_db(const char *path, int *themes_read)
 
 	res = (feof(fp) ? READ_DB_OK : READ_INCOMPLETE);
 
-	fclose(fp);
+	if (fclose(fp) != 0)
+		err_log(errno, "%s: fclose error", __func__);
 	free(line);
 
 	return res;
