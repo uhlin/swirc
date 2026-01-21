@@ -735,7 +735,7 @@ icb(int &bytes_received, struct network_recv_context *ctx, STRING recvbuf)
 		return ERR;
 	}
 
-	length = atoi(array);
+	length = (int) strtol(array, nullptr, 10);
 	sw_assert(length >= 0 && length <= UCHAR_MAX);
 
 	if ((bytes_received = net_recv(ctx, recvbuf, length)) == -1) {

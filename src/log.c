@@ -178,7 +178,7 @@ log_get_path(const char *server_host, const char *label)
 	realloc_strcat(&path, get_logtype(label));
 	realloc_strcat(&path, "-");
 
-	switch (atoi(get_logtype(label))) {
+	switch (strtol(get_logtype(label), NULL, 10)) {
 	case 1:
 		realloc_strcat(&path, "console");
 		break;
