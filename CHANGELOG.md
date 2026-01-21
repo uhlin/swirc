@@ -1,6 +1,12 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Fixed unchecked function return values.
+- Improved the C++ exception handling. Namely handle all exceptions
+  thrown before `main()` begins executing.
+- Replaced `atoi()` with `strtol()`. Multiple occurrences.
+
 ## [3.5.8] - 2026-01-17 ##
 - **Added** command `/log` (management of log files).
 
