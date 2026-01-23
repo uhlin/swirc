@@ -258,7 +258,8 @@ static struct ptext_colorMap_tag {
 *                                                               *
 ****************************************************************/
 
-static char *get_buffer(CSTRING) NONNULL;
+static void	 set_indent(int *, CSTRING, ...) PRINTFLIKE(2);
+static char	*get_buffer(CSTRING) NONNULL;
 
 static void
 addmbs(WINDOW *win, const uint8_t *mbs)
