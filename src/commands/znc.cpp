@@ -34,7 +34,6 @@
 #include <string>
 #include <vector>
 
-#include "../errHand.h"
 #include "../main.h"
 #include "../network.h"
 #include "../printtext.h"
