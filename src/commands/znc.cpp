@@ -187,7 +187,7 @@ send_cmd(CSTRING p_module, CSTRING p_command)
 void
 cmd_znc(CSTRING data)
 {
-	STRING			 dcopy;
+	STRING			 dcopy = nullptr;
 	bool			 written_linefeed = false;
 	static chararray_t	 cmd = "/znc";
 
@@ -228,6 +228,8 @@ cmd_znc(CSTRING data)
 	} catch (...) {
 		printtext_print("err", "%s: %s", cmd, "unknown exception");
 	}
+
+	free(dcopy);
 }
 
 PTEXTBUF
