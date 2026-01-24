@@ -1,5 +1,5 @@
 /* commands/znc.cpp
-   Copyright (C) 2020-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -196,14 +196,15 @@ cmd_znc(CSTRING data)
 		return;
 	}
 
-	if (*(dcopy = sw_strdup(data)) == '*')
-		written_linefeed = (strFeed(dcopy, 1) == 1);
-	std::istringstream input(dcopy);
-	free(dcopy);
-
 	try {
 		std::string			 token;
 		std::vector<std::string>	 tokens;
+
+		if (*(dcopy = sw_strdup(data)) == '*')
+			written_linefeed = (strFeed(dcopy, 1) == 1);
+		std::istringstream input(dcopy);
+		free(dcopy);
+		dcopy = nullptr;
 
 		while (std::getline(input, token))
 			tokens.push_back(token);
