@@ -1,5 +1,5 @@
 /* commands/squery.cpp
-   Copyright (C) 2020-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -89,7 +89,7 @@ static stringarray_t squery_commands = {
 void
 cmd_squery(CSTRING data)
 {
-	STRING			 dcopy;
+	STRING			 dcopy = nullptr;
 	static const char	 cmd[] = "/squery";
 
 	if (strings_match(data, "")) {
@@ -97,14 +97,15 @@ cmd_squery(CSTRING data)
 		return;
 	}
 
-	dcopy = sw_strdup(data);
-	(void) strFeed(dcopy, 1);
-	std::istringstream input(dcopy);
-	free(dcopy);
-
 	try {
 		std::string			token;
 		std::vector<std::string>	tokens;
+
+		dcopy = sw_strdup(data);
+		(void) strFeed(dcopy, 1);
+		std::istringstream input(dcopy);
+		free(dcopy);
+		dcopy = nullptr;
 
 		while (std::getline(input, token))
 			tokens.push_back(token);
@@ -122,6 +123,8 @@ cmd_squery(CSTRING data)
 	} catch (...) {
 		printtext_print("err", "%s: %s", cmd, "unknown exception");
 	}
+
+	free(dcopy);
 }
 
 PTEXTBUF
