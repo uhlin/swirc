@@ -78,7 +78,7 @@ term_get_pos(WINDOW *win)
 bool
 term_is_too_small(void)
 {
-	struct winsize size = term_get_size();
+	const struct winsize size = term_get_size();
 
 	return (size.ws_row < TermMinimumRows || size.ws_col < TermMinimumCols);
 }
@@ -117,8 +117,8 @@ term_remove_panel(PANEL *pan)
 void
 term_resize_all(void)
 {
-	struct winsize size = term_get_size();
-	int rows, cols;
+	const struct winsize	size = term_get_size();
+	int			rows, cols;
 
 	if (size.ws_row < TermMinimumRows || size.ws_col < TermMinimumCols ||
 	    !is_term_resized(size.ws_row, size.ws_col) ||
