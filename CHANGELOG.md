@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Fixed hardcoded function names (in error messages).
 - Fixed unchecked function return values.
 - Improved the C++ exception handling. Namely handle all exceptions
   thrown before `main()` begins executing.
