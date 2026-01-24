@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added usage of `emplace_back()` when dealing with vector
+  insertions. (Performance).
 - Deleted unused includes.
 - Fixed hardcoded function names (in error messages).
 - Fixed unchecked function return values.
