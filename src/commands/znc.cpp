@@ -205,8 +205,13 @@ cmd_znc(CSTRING data)
 		free(dcopy);
 		dcopy = nullptr;
 
-		while (std::getline(input, token))
+		while (std::getline(input, token)) {
+#if defined(__cplusplus) && __cplusplus >= 201103L
+			tokens.emplace_back(token);
+#else
 			tokens.push_back(token);
+#endif
+		}
 
 		if (!written_linefeed) {
 			if (tokens.size() != 1) {
