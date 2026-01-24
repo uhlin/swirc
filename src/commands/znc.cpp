@@ -188,7 +188,6 @@ void
 cmd_znc(CSTRING data)
 {
 	STRING			 dcopy = nullptr;
-	bool			 written_linefeed = false;
 	static chararray_t	 cmd = "/znc";
 
 	if (strings_match(data, "")) {
@@ -197,6 +196,7 @@ cmd_znc(CSTRING data)
 	}
 
 	try {
+		bool				 written_linefeed = false;
 		std::string			 token;
 		std::vector<std::string>	 tokens;
 
