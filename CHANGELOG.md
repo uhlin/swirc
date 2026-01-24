@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Deleted unused includes.
 - Fixed hardcoded function names (in error messages).
 - Fixed unchecked function return values.
 - Improved the C++ exception handling. Namely handle all exceptions
