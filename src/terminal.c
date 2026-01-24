@@ -1,5 +1,5 @@
 /* OS-independent terminal stuff
-   Copyright (C) 2012-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -90,12 +90,14 @@ term_new_panel(int rows, int cols, int start_row, int start_col)
 	PANEL	*pan;
 
 	if ((win = newwin(rows, cols, start_row, start_col)) == NULL) {
-		err_quit("term_new_panel: newwin(%d, %d, %d, %d): "
-		    "unable to create new window", rows, cols,
+		err_quit("%s: newwin(%d, %d, %d, %d): "
+		    "unable to create new window", __func__,
+		    rows, cols,
 		    start_row, start_col);
 	} else if ((pan = new_panel(win)) == NULL) {
-		err_quit("term_new_panel: new_panel error "
-		    "(could not associate window with a panel)");
+		err_quit("%s: new_panel error "
+		    "(could not associate window with a panel)",
+		    __func__);
 	}
 
 	return pan;
@@ -107,9 +109,9 @@ term_remove_panel(PANEL *pan)
 	WINDOW *win = panel_window(pan);
 
 	if (del_panel(pan) == ERR)
-		err_quit("term_remove_panel: del_panel error");
+		err_quit("%s: del_panel error", __func__);
 	else if (delwin(win) == ERR)
-		err_quit("term_remove_panel: delwin error");
+		err_quit("%s: delwin error", __func__);
 }
 
 void
@@ -130,10 +132,10 @@ term_resize_all(void)
 	cols = (int) size.ws_col;
 
 	if (resize_term(rows, cols) == ERR)
-		err_quit("term_resize_all: ERROR resize_term()");
+		err_quit("%s: ERROR resize_term()", __func__);
 #elif defined(WIN32)
 	if (resize_term(0, 0) == ERR)
-		err_quit("term_resize_all: ERROR resize_term()");
+		err_quit("%s: ERROR resize_term()", __func__);
 
 	rows = getmaxy(stdscr);
 	cols = getmaxx(stdscr);
@@ -160,13 +162,14 @@ term_resize_panel(PANEL *pan, const struct term_window_size *newsize)
 
 	if ((repl_win = newwin(newsize->rows, newsize->cols, newsize->start_row,
 	    newsize->start_col)) == NULL) {
-		err_quit("term_resize_panel: newwin(%d, %d, %d, %d): "
-		    "unable to create new window", newsize->rows, newsize->cols,
+		err_quit("%s: newwin(%d, %d, %d, %d): "
+		    "unable to create new window", __func__,
+		    newsize->rows, newsize->cols,
 		    newsize->start_row, newsize->start_col);
 	} else if (replace_panel(pan, repl_win) == ERR) {
-		err_quit("term_resize_panel: replace_panel error");
+		err_quit("%s: replace_panel error", __func__);
 	} else if (delwin(old_window) == ERR) {
-		err_quit("term_resize_panel: delwin error");
+		err_quit("%s: delwin error", __func__);
 	}
 
 	return pan;
