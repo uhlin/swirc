@@ -1,5 +1,5 @@
 /* libUtils.c  --  Library Utilities
-   Copyright (C) 2012-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -49,6 +49,9 @@ const char	g_alphabet_upcase[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const char	g_alphabet_downcase[27] = "abcdefghijklmnopqrstuvwxyz";
 
 const size_t	g_conversion_failed = ((size_t) -1);
+#ifdef HAVE_LIBICONV
+const iconv_t	g_iconv_error = ((iconv_t) -1);
+#endif
 const time_t	g_time_error = ((time_t) -1);
 
 /* Check for vulnerabilities */

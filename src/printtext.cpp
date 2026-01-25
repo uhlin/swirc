@@ -1408,8 +1408,7 @@ get_buffer(CSTRING orig)
 		iconv_t		 cd;
 		size_t		 inbytes, outbytes, outsize;
 
-		if ((cd = iconv_open("UTF-8", str)) == reinterpret_cast
-		    <iconv_t>(-1))
+		if ((cd = iconv_open("UTF-8", str)) == g_iconv_error)
 			continue;
 		orig_copy = sw_strdup(orig);
 		in = addrof(orig_copy[0]);

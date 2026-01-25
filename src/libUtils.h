@@ -1,6 +1,10 @@
 #ifndef LIBRARY_UTILITIES_H
 #define LIBRARY_UTILITIES_H
 
+#ifdef HAVE_LIBICONV
+#include <iconv.h>
+#endif
+
 #include <stdio.h> /* FILE */
 #include <time.h>
 
@@ -9,6 +13,9 @@ extern const char	g_alphabet_upcase[27];
 extern const char	g_alphabet_downcase[27];
 
 extern const size_t	g_conversion_failed;
+#ifdef HAVE_LIBICONV
+extern const iconv_t	g_iconv_error;
+#endif
 extern const time_t	g_time_error;
 __SWIRC_END_DECLS
 
