@@ -1,5 +1,5 @@
 /* spell.cpp
-   Copyright (C) 2023-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2023-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -150,7 +150,8 @@ suggestion::suggestion(const suggestion &other)
 /*
  * Move assignment operator
  */
-suggestion &suggestion::operator=(suggestion &&other)
+suggestion &
+suggestion::operator=(suggestion &&other) noexcept
 {
 	if (&other == this)
 		return *this;
@@ -170,7 +171,7 @@ suggestion &suggestion::operator=(suggestion &&other)
 /*
  * Move constructor
  */
-suggestion::suggestion(suggestion &&other)
+suggestion::suggestion(suggestion &&other) noexcept
     : word(other.word)
     , wide_word(other.wide_word)
 {

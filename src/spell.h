@@ -14,8 +14,8 @@ public:
 
 	suggestion &operator=(const suggestion &);
 	suggestion(const suggestion &);
-	suggestion &operator=(suggestion &&);
-	suggestion(suggestion &&);
+	suggestion &operator=(suggestion &&) noexcept;
+	suggestion(suggestion &&) noexcept;
 
 	CSTRING		get_word(void) const;
 	CWSTRING	get_wide_word(void) const;
