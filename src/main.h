@@ -32,8 +32,8 @@ struct locale_info {
 	~locale_info();
 	locale_info &operator=(const locale_info &);
 	locale_info(const locale_info &);
-	locale_info &operator=(locale_info &&);
-	locale_info(locale_info &&);
+	locale_info &operator=(locale_info &&) noexcept;
+	locale_info(locale_info &&) noexcept;
 #endif
 };
 
@@ -63,8 +63,8 @@ struct cmdline_opt_values {
 	~cmdline_opt_values();
 	cmdline_opt_values &operator=(const cmdline_opt_values &);
 	cmdline_opt_values(const cmdline_opt_values &);
-	cmdline_opt_values &operator=(cmdline_opt_values &&);
-	cmdline_opt_values(cmdline_opt_values &&);
+	cmdline_opt_values &operator=(cmdline_opt_values &&) noexcept;
+	cmdline_opt_values(cmdline_opt_values &&) noexcept;
 #endif
 };
 

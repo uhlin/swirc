@@ -900,7 +900,8 @@ locale_info::locale_info(const locale_info &obj)
 /*
  * Move assignment operator
  */
-locale_info &locale_info::operator=(locale_info &&obj)
+locale_info &
+locale_info::operator=(locale_info &&obj) noexcept
 {
 	if (&obj == this)
 		return *this;
@@ -920,7 +921,7 @@ locale_info &locale_info::operator=(locale_info &&obj)
 /*
  * Move constructor
  */
-locale_info::locale_info(locale_info &&obj)
+locale_info::locale_info(locale_info &&obj) noexcept
     : lang_and_territory(obj.lang_and_territory)
     , codeset(obj.codeset)
 {
@@ -1011,7 +1012,8 @@ cmdline_opt_values::cmdline_opt_values(const cmdline_opt_values &obj)
 /*
  * Move assignment operator
  */
-cmdline_opt_values &cmdline_opt_values::operator=(cmdline_opt_values &&obj)
+cmdline_opt_values &
+cmdline_opt_values::operator=(cmdline_opt_values &&obj) noexcept
 {
 	if (&obj == this)
 		return *this;
@@ -1049,7 +1051,7 @@ cmdline_opt_values &cmdline_opt_values::operator=(cmdline_opt_values &&obj)
 /*
  * Move constructor
  */
-cmdline_opt_values::cmdline_opt_values(cmdline_opt_values &&obj)
+cmdline_opt_values::cmdline_opt_values(cmdline_opt_values &&obj) noexcept
     : server(obj.server)
     , port(obj.port)
     , passwd(obj.passwd)
