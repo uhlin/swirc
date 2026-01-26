@@ -1,5 +1,5 @@
 /* commands/dcc.cpp
-   Copyright (C) 2024-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -573,7 +573,7 @@ public:
 
 	dcc_send();
 	dcc_send(const char *, const std::string);
-	~dcc_send();
+	~dcc_send() noexcept;
 
 	const char	*get_filename(void);
 	intmax_t	 get_filesize(void) const;
@@ -631,7 +631,7 @@ dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
 	dcc::get_file_size(this->get_filesize(), this->size, this->unit);
 }
 
-dcc_send::~dcc_send()
+dcc_send::~dcc_send() noexcept
 {
 	fclose_and_null(addrof(this->fileptr));
 }
