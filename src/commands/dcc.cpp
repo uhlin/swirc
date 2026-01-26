@@ -572,7 +572,7 @@ public:
 	time_t	stop;
 
 	dcc_send();
-	dcc_send(const char *, const std::string);
+	dcc_send(const char *, const std::string &);
 	~dcc_send() noexcept;
 
 	const char	*get_filename(void);
@@ -603,7 +603,7 @@ dcc_send::dcc_send() : fileptr(nullptr)
 	BZERO(addrof(this->sb), sizeof this->sb);
 }
 
-dcc_send::dcc_send(const char *p_nick, const std::string p_full_path)
+dcc_send::dcc_send(const char *p_nick, const std::string &p_full_path)
     : fileptr(nullptr)
     , bytes_rem(0)
     , size(0.0)
@@ -1367,14 +1367,12 @@ subcmd_send(const char *nick, const char *file)
 		nick_lc = strToLower(sw_strdup(nick));
 		dup_check_send(nick_lc, file);
 
-#if defined(__cplusplus) && __cplusplus >= 201103L
-		dcc_send send_obj(nick_lc, std::move(full_path));
-#else
 		dcc_send send_obj(nick_lc, full_path);
-#endif
+
 		if (send_obj.get_filesize() > DCC_FILE_MAX_SIZE)
 			throw std::runtime_error("too large file");
-		send_db.push_back(send_obj);
+		else
+			send_db.push_back(send_obj);
 
 		ret = net_send("PRIVMSG %s :%cSW_DCC SEND " "%" PRIu32 " %ld "
 		    "%" PRIdMAX " %s%c",
