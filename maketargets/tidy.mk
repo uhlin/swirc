@@ -5,7 +5,6 @@ CHKS = cert-*,$\
 	-clang-analyzer-optin.performance.Padding,$\
 	-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,$\
 	hicpp-deprecated-headers,$\
-	hicpp-member-init,$\
 	hicpp-multiway-paths-covered,$\
 	hicpp-special-member-functions,$\
 	hicpp-use-auto,$\
