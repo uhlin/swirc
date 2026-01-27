@@ -338,9 +338,9 @@ static UCHARPTR
 convert_wc(wchar_t wc, size_t &bytes_out)
 {
 	const size_t	 size = MB_LEN_MAX;
+	auto		 mbs = static_cast<UCHARPTR>(xmalloc(size + 1));
 	mbstate_t	 ps;
 	size_t		 bytes_written = 0;
-	UCHARPTR	 mbs = static_cast<UCHARPTR>(xmalloc(size + 1));
 
 	BZERO(&ps, sizeof(mbstate_t));
 	mbs[size] = '\0';
@@ -577,10 +577,11 @@ map_color(short int *inout, const short int i, const short int colorMap_size,
 void
 printtext_set_color(WINDOW *win, bool *is_color, short int num1, short int num2)
 {
-	attr_t attr = 0xff;
-	const short int num_colorMap_entries = static_cast<short int>
-	    (COLORS >= 256 ? ARRAY_SIZE(ptext_colorMap) : 16);
-	short int fg, bg, resolved_pair;
+	attr_t		attr = 0xff;
+	const auto	num_colorMap_entries =
+			    static_cast<short int>(COLORS >= 256 ?
+			    ARRAY_SIZE(ptext_colorMap) : 16);
+	short int	fg, bg, resolved_pair;
 
 	sw_assert(num1 >= 0);
 
@@ -1539,8 +1540,8 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 			if (wc == L' ' && (wcp = wcschr(wc_bufp + 1, L' ')) !=
 			    nullptr) {
 				static wchar_t		str[4096] = { L'\0' };
-				static const ptrdiff_t	ARSZ = static_cast
-				    <ptrdiff_t>(ARRAY_SIZE(str));
+				static const auto	ARSZ =
+				    static_cast<ptrdiff_t>(ARRAY_SIZE(str));
 
 				if ((diff = (wcp - wc_bufp)) > ARSZ - 1)
 					diff = ARSZ - 1;
