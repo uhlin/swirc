@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
   `noexcept`. (Performance).
 - Reduced the scope of variables.
 - Replaced `atoi()` with `strtol()`. Multiple occurrences.
+- Usage of `auto` in order to avoid duplicating the type name.
 
 ## [3.5.8] - 2026-01-17 ##
 - **Added** command `/log` (management of log files).
