@@ -1,5 +1,5 @@
 /* netsplit.cpp
-   Copyright (C) 2024-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -54,7 +54,11 @@ netsplit::netsplit(const struct netsplit_context *ctx, CSTRING nick)
 	this->channel.assign(ctx->chan);
 	this->server[0].assign(ctx->serv1);
 	this->server[1].assign(ctx->serv2);
+#if defined(__cplusplus) && __cplusplus >= 201103L
+	this->nicks.emplace_back(nick);
+#else
 	this->nicks.push_back(nick);
+#endif
 	this->announced = false;
 	this->secs[0] = time(nullptr);
 	this->secs[1] = g_time_error;
