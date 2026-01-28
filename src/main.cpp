@@ -399,12 +399,18 @@ case_join()
 	for (cp = g_option_arg;; cp = nullptr) {
 		char *token;
 
-		if ((token = strtok_r(cp, ",", &last)) == nullptr)
+		if ((token = strtok_r(cp, ",", &last)) == nullptr) {
 			break;
-		else if (strpbrk(token, g_forbidden_chan_name_chars) != nullptr)
+		} else if (strpbrk(token, g_forbidden_chan_name_chars) !=
+		    nullptr) {
 			err_quit("%s", _("forbidden channel name characters"));
-		else
+		} else {
+#if defined(__cplusplus) && __cplusplus >= 201103L
+			g_join_list.emplace_back(token);
+#else
 			g_join_list.push_back(token);
+#endif
+		}
 	}
 
 	been_case = true;
