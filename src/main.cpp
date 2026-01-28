@@ -337,7 +337,7 @@ static void
 case_connect()
 {
 	CSTRING		token[2];
-	STRING		last = const_cast<STRING>("");
+	auto		last = const_cast<STRING>("");
 	static bool	been_case = false;
 
 	if (been_case)
