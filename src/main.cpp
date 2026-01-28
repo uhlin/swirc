@@ -850,10 +850,10 @@ main(int argc, char *argv[])
 struct locale_info *
 get_locale_info(int category)
 {
-	char			*last = const_cast<char *>("");
-	char			*tok;
-	char			 buf[200] = { '\0' };
-	struct locale_info	*li = new locale_info();
+	auto	 li = new locale_info();
+	char	 buf[200] = { '\0' };
+	char	*last = const_cast<char *>("");
+	char	*tok;
 
 	if (sw_strcpy(buf, xsetlocale(category, nullptr), ARRAY_SIZE(buf)) != 0)
 		return (li);
