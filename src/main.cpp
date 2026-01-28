@@ -42,8 +42,6 @@
 #define OPENSSL_VERSION_TEXT "Unknown"
 #endif
 
-#include <locale.h>
-
 #if UNIX
 #include <swircpaths.h>
 #include <unistd.h> /* geteuid() pledge() */
@@ -54,6 +52,7 @@
 #include <process.h> /* _getpid() */
 #endif
 
+#include <clocale>
 #include <exception>
 
 #include "assertAPI.h"
