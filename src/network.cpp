@@ -37,9 +37,9 @@
 #include <unistd.h> /* close() */
 #endif
 
+#include <cstring>
 #include <exception>
 #include <stdexcept>
-#include <string.h>
 
 #include "assertAPI.h"
 #include "config.h"
