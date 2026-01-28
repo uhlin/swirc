@@ -1,5 +1,5 @@
 /* identd-w32.cpp
-   Copyright (C) 2022-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -50,7 +50,7 @@ accept_thread(void *arg)
 static VoidCdecl
 com_thread(void *arg)
 {
-	ident_client *cli = static_cast<ident_client *>(arg);
+	auto cli = static_cast<ident_client *>(arg);
 
 	identd::enter_loop(cli);
 	delete cli;
