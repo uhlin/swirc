@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 - Added usage of `emplace_back()` when dealing with vector
   insertions. (Performance).
 - Deleted unused includes.
+- Fixed C-style headers in C++ files.
 - Fixed hardcoded function names (in error messages).
 - Fixed unchecked function return values.
 - Improved the C++ exception handling. Namely handle all exceptions
