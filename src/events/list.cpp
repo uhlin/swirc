@@ -77,11 +77,11 @@ event_list(struct irc_message_compo *compo)
 	if (*topic == ':')
 		topic++;
 
-#define B1	Theme("notice_inner_b1")
-#define B2	Theme("notice_inner_b2")
+	immutable_cp_t	b1 = Theme("notice_inner_b1");
+	immutable_cp_t	b2 = Theme("notice_inner_b2");
 
 	(void) str.append(COLOR1).append(channel).append(TXT_NORMAL);
-	(void) str.append(B1).append(num_visible).append(B2);
+	(void) str.append(b1).append(num_visible).append(b2);
 
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC3, true);
 	printtext(&ctx, "%s: %s", str.c_str(), topic);
