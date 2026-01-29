@@ -1,5 +1,5 @@
 /* event 321 (RPL_LISTSTART) and 322 (RPL_LIST)
-   Copyright (C) 2016-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -58,7 +58,7 @@ event_list(struct irc_message_compo *compo)
 {
 	CSTRING			channel, num_visible, topic;
 	PRINTTEXT_CONTEXT	ctx;
-	STRING			state = const_cast<STRING>("");
+	auto			state = const_cast<STRING>("");
 	std::string		str("");
 
 	if (strFeed(compo->params, 3) != 3)

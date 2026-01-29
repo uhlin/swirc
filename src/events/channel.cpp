@@ -1,5 +1,5 @@
 /* Channel related events
-   Copyright (C) 2015-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -669,8 +669,8 @@ event_nick(struct irc_message_compo *compo)
 	try {
 		CSTRING new_nick;
 		CSTRING nick, user, host;
-		STRING prefix = nullptr;
-		STRING state = const_cast<STRING>("");
+		STRING	prefix = nullptr;
+		auto	state  = const_cast<STRING>("");
 
 		if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix");
@@ -842,9 +842,9 @@ is_valid_server(const char *str)
 static bool
 is_netsplit(CSTRING msg, std::string &serv1, std::string &serv2)
 {
-	CSTRING     token[2];
-	STRING      last = const_cast<STRING>("");
-	STRING      msg_copy = nullptr;
+	CSTRING token[2];
+	STRING	msg_copy = nullptr;
+	auto	last	 = const_cast<STRING>("");
 
 	if (g_icb_mode ||
 	    strncmp(msg, "Quit: ", 6) == STRINGS_MATCH) {
@@ -933,7 +933,7 @@ event_quit(struct irc_message_compo *compo)
 		CSTRING message;
 		CSTRING nick, user, host;
 		STRING	prefix;
-		STRING	state = const_cast<STRING>("");
+		auto	state = const_cast<STRING>("");
 
 		if (compo->prefix == nullptr)
 			throw std::runtime_error("no prefix");
@@ -1124,7 +1124,7 @@ event_topic_creator(struct irc_message_compo *compo)
 		else if (!is_numeric(time_str))
 			throw std::runtime_error("expected numeric string");
 
-		const time_t timestamp = static_cast<time_t>(strtol(time_str,
+		const auto timestamp = static_cast<time_t>(strtol(time_str,
 		    nullptr, 10));
 
 #if defined(UNIX)

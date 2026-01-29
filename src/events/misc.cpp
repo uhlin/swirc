@@ -1,5 +1,5 @@
 /* Miscellaneous events
-   Copyright (C) 2014-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -229,8 +229,8 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 		else if (ctx.window->received_chancreated)
 			return;
 
-		const time_t date_of_creation = static_cast<time_t>
-		    (strtol(seconds, NULL, 10));
+		const auto date_of_creation =
+		    static_cast<time_t>(strtol(seconds, NULL, 10));
 
 #if defined(UNIX)
 		if (localtime_r(&date_of_creation, &result) == NULL)

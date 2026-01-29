@@ -1,5 +1,5 @@
 /* wallops.cpp
-   Copyright (C) 2018-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -73,8 +73,8 @@ event_wallops(struct irc_message_compo *compo)
 			return;
 		} else {
 			CSTRING nick, user, host;
-			STRING last = const_cast<STRING>("");
-			STRING str;
+			STRING	str;
+			auto	last = const_cast<STRING>("");
 
 			if ((nick = strtok_r(prefix, "!@", &last)) == NULL)
 				throw std::runtime_error("no nick");

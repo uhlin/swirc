@@ -1,5 +1,5 @@
 /* Handle event names (353) and event EOF names (366)
-   Copyright (C) 2015-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2015-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -491,9 +491,9 @@ event_eof_names(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT ptext_ctx;
 
 	try {
-		PIRC_WINDOW win = nullptr;
-		STRING channel, eof_msg;
-		STRING state = const_cast<STRING>("");
+		PIRC_WINDOW	win   = nullptr;
+		STRING		channel, eof_msg;
+		auto		state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 2) != 2)
 			throw std::runtime_error("strFeed");
