@@ -29,9 +29,9 @@
 
 #include "common.h"
 
+#include <ctime>
 #include <stdexcept>
 #include <string>
-#include <time.h>
 
 #include "../dataClassify.h"
 #include "../errHand.h"
