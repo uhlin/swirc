@@ -1,5 +1,5 @@
 /* batch.cpp
-   Copyright (C) 2024, 2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -146,8 +146,13 @@ create_batch(STRING params)
 
 	batch batch_obj(ref, type);
 
-	while ((token = strtok_r(nullptr, " ", &last)) != nullptr)
+	while ((token = strtok_r(nullptr, " ", &last)) != nullptr) {
+#if defined(__cplusplus) && __cplusplus >= 201103L
+		batch_obj.params.emplace_back(token);
+#else
 		batch_obj.params.push_back(token);
+#endif
+	}
 
 #if defined(__cplusplus) && __cplusplus >= 201103L
 	batch_db.emplace_back(batch_obj);
@@ -347,7 +352,12 @@ event_batch_add_irc_msgs(CSTRING ref, CSTRING msg)
 		if (!get_obj_by_ref(ref, dummy, pos))
 			throw std::runtime_error("cannot find batch");
 
+#if defined(__cplusplus) && __cplusplus >= 201103L
+		batch_db.at(pos).irc_msgs.emplace_back(msg);
+#else
 		batch_db.at(pos).irc_msgs.push_back(msg);
+#endif
+
 	} catch (const std::bad_alloc &e) {
 		err_exit(ENOMEM, "%s: error: %s", __func__, e.what());
 	} catch (const std::out_of_range &e) {
