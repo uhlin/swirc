@@ -698,7 +698,7 @@ net_addr_resolve(CSTRING host, CSTRING port)
 struct server *
 server_new(CSTRING host, CSTRING port, CSTRING pass)
 {
-	struct server *server =
+	struct server *server = // NOLINT
 	    static_cast<struct server *>(xmalloc(sizeof *server));
 
 	server->host = sw_strdup(host);

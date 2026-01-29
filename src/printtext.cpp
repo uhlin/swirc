@@ -828,7 +828,7 @@ case_underline(WINDOW *win, bool *is_underline)
 }
 
 static void
-set_indent(int *indent, CSTRING fmt, ...)
+set_indent(int *indent, CSTRING fmt, ...) // NOLINT
 {
 	STRING		 str = nullptr;
 	size_t		 bytes_convert;
@@ -1196,7 +1196,7 @@ PPRINTTEXT_CONTEXT
 printtext_context_new(PIRC_WINDOW window, enum message_specifier_type spec_type,
     bool include_ts)
 {
-	PPRINTTEXT_CONTEXT ctx =
+	PPRINTTEXT_CONTEXT ctx = // NOLINT
 	    static_cast<PPRINTTEXT_CONTEXT>(xcalloc(sizeof *ctx, 1));
 
 	ctx->window     = window;

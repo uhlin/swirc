@@ -50,7 +50,7 @@ const char	g_alphabet_downcase[27] = "abcdefghijklmnopqrstuvwxyz";
 
 const size_t	g_conversion_failed = ((size_t) -1);
 #ifdef HAVE_LIBICONV
-const iconv_t	g_iconv_error = ((iconv_t) -1);
+const iconv_t	g_iconv_error = ((iconv_t) -1); // NOLINT
 #endif
 const time_t	g_time_error = ((time_t) -1);
 
