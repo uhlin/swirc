@@ -1,5 +1,5 @@
 /* Event 367 (RPL_BANLIST) and 368 (RPL_ENDOFBANLIST)
-   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -99,7 +99,7 @@ feeds_written_4(PPRINTTEXT_CONTEXT ctx, char *params)
 	if ((issuer_userhost = strtok_r(NULL, "!", &state2)) == NULL)
 		issuer_userhost = const_cast<char *>("");
 
-	const time_t date_of_issue = static_cast<time_t>(strtol(seconds, NULL,
+	const auto date_of_issue = static_cast<time_t>(strtol(seconds, NULL,
 	    10));
 
 #if defined(UNIX)
