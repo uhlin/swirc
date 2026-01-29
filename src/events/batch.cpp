@@ -29,8 +29,8 @@
 
 #include "common.h"
 
+#include <cstdint>
 #include <stdexcept>
-#include <stdint.h>
 #include <string>
 #include <vector>
 
