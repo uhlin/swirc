@@ -37,12 +37,11 @@
 namespace fs = std::filesystem;
 #endif
 
+#include <cinttypes>
+#include <cstdint>
 #include <stdexcept>
 #include <string>
 #include <vector>
-
-#include <inttypes.h>
-#include <stdint.h>
 
 #include "../dataClassify.h"
 #include "../errHand.h"
