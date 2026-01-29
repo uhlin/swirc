@@ -455,7 +455,7 @@ cmd_log(CSTRING p_data)
 	CSTRING			arg[2];
 	CSTRING			subcmd;
 	STRING			dcopy;
-	STRING			last = const_cast<STRING>("");
+	auto			last = const_cast<STRING>("");
 	static chararray_t	cmd = "/log";
 	static chararray_t	sep = " ";
 

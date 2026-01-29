@@ -1,5 +1,5 @@
 /* Communicate with IRC services
-   Copyright (C) 2016-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -163,8 +163,8 @@ cmd_nsid(CSTRING data)
 
 	if (!strings_match(data, "")) {
 		CSTRING token;
-		STRING dcopy = sw_strdup(data);
-		STRING last = const_cast<STRING>("");
+		STRING	dcopy = sw_strdup(data);
+		auto	last  = const_cast<STRING>("");
 
 		for (STRING args = dcopy;
 		    (token = strtok_r(args, " ", &last)) != NULL;
