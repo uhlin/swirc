@@ -29,8 +29,8 @@
 
 #include "common.h"
 
+#include <ctime>
 #include <stdexcept>
-#include <time.h>
 
 #include "../config.h"
 #include "../dataClassify.h"
