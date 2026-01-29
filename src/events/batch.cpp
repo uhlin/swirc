@@ -124,10 +124,10 @@ get_obj_by_ref(CSTRING ref, batch &obj, std::vector<batch>::size_type &pos)
 static void
 create_batch(STRING params)
 {
-	CSTRING     ref, type_str;
-	CSTRING     token;
-	STRING      last = const_cast<STRING>("");
-	batch_t     type;
+	CSTRING ref, type_str;
+	CSTRING token;
+	auto	last = const_cast<STRING>("");
+	batch_t type;
 
 	if ((ref = strtok_r(params, " ", &last)) == nullptr)
 		throw std::runtime_error("null ref");
