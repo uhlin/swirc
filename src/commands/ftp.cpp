@@ -34,10 +34,10 @@
 #endif
 #include <sys/stat.h>
 
+#include <climits>
 #ifdef WIN32
 #include <io.h>
 #endif
-#include <limits.h>
 #include <stdexcept>
 
 #include "../assertAPI.h"
