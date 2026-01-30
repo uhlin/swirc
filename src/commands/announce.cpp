@@ -1,5 +1,5 @@
 /* Send announcements on IRC
-   Copyright (C) 2024-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -71,7 +71,7 @@ announce::announce(bool p_znc_broadcast, CSTRING p_chans, CSTRING p_msg)
 {
 	CSTRING			token;
 	STRING			str;
-	STRING			last = const_cast<STRING>("");
+	auto			last = const_cast<STRING>("");
 	static chararray_t	sep = ",";
 
 	str = sw_strdup(p_chans);
@@ -328,7 +328,7 @@ cmd_announce(CSTRING data)
 	CSTRING			arg[3];
 	CSTRING			subcmd;
 	STRING			dcopy;
-	STRING			last = const_cast<STRING>("");
+	auto			last = const_cast<STRING>("");
 	static chararray_t	cmd = "/announce";
 	static chararray_t	sep = "\n";
 
