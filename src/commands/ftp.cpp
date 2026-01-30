@@ -1042,7 +1042,11 @@ ftp_data_conn::list_fetch(const int timeo)
 			token = this->message_concat.c_str();
 		}
 
+#if defined(__cplusplus) && __cplusplus >= 201103L
+		this->vec.emplace_back(token);
+#else
 		this->vec.push_back(token);
+#endif
 		loop_run++;
 	} /* for */
 
