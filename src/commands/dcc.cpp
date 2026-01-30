@@ -865,7 +865,7 @@ subcmd_ok(const char *subcmd)
 static void
 clear_completed_get_jobs(void)
 {
-	std::vector<dcc_get>::iterator it = get_db.begin();
+	auto it = get_db.begin();
 
 	while (it != get_db.end()) {
 		if (it->has_completed())
@@ -878,7 +878,7 @@ clear_completed_get_jobs(void)
 static void
 clear_completed_send_jobs(void)
 {
-	std::vector<dcc_send>::iterator it = send_db.begin();
+	auto it = send_db.begin();
 
 	while (it != send_db.end()) {
 		if (it->has_completed())
