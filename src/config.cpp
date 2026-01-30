@@ -1,5 +1,5 @@
 /* User configuration
-   Copyright (C) 2012-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -74,7 +74,7 @@
 /* Objects with internal linkage
    ============================= */
 
-static PCONF_HTBL_ENTRY hash_table[300] = { NULL };
+static PCONF_HTBL_ENTRY hash_table[300] = { nullptr };
 
 static size_t longest_set_count = 0;
 
@@ -179,17 +179,17 @@ get_hash_table_entry(const char *name)
 {
 	PCONF_HTBL_ENTRY entry;
 
-	if (name == NULL)
-		return NULL;
+	if (name == nullptr)
+		return nullptr;
 
 	for (entry = hash_table[hash(name)];
-	    entry != NULL;
+	    entry != nullptr;
 	    entry = entry->next) {
 		if (strings_match(name, entry->name))
 			return entry;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 static const char *
@@ -227,7 +227,7 @@ static void
 hInstall(const char *name, const char *value)
 {
 	PCONF_HTBL_ENTRY item;
-	const bool has_no_value = (value == NULL || *value == '\0');
+	const bool has_no_value = (value == nullptr || *value == '\0');
 	unsigned int hashval;
 
 	item        = static_cast<PCONF_HTBL_ENTRY>(xcalloc(sizeof *item, 1));
@@ -262,7 +262,7 @@ static void
 init_missing_to_defs(void)
 {
 	FOREACH_CDV() {
-		if (get_hash_table_entry(cdv_p->setting_name) == NULL)
+		if (get_hash_table_entry(cdv_p->setting_name) == nullptr)
 			hInstall(cdv_p->setting_name, cdv_p->value);
 	}
 }
@@ -270,7 +270,7 @@ init_missing_to_defs(void)
 static bool
 is_recognized_setting(const char *setting_name)
 {
-	if (setting_name == NULL || strings_match(setting_name, ""))
+	if (setting_name == nullptr || strings_match(setting_name, ""))
 		return false;
 
 	FOREACH_CDV() {
@@ -296,7 +296,7 @@ output_value_for_specific_setting(const char *setting)
 		}
 	}
 
-	print_and_free("/set: no such setting", NULL);
+	print_and_free("/set: no such setting", nullptr);
 }
 
 void
@@ -425,14 +425,14 @@ try_to_set_value_for_setting(const char *setting, const char *value)
 	FOREACH_CDV() {
 		if (strings_match(setting, cdv_p->setting_name)) {
 			if (!set_value_for_setting(setting, value, &err_reason))
-				print_and_free(err_reason, NULL);
+				print_and_free(err_reason, nullptr);
 			else
 				printtext(&ctx, "ok");
 			return;
 		}
 	}
 
-	print_and_free("/set: no such setting", NULL);
+	print_and_free("/set: no such setting", nullptr);
 }
 
 static void
@@ -461,7 +461,7 @@ get_list_of_matching_settings(const char *search_var)
 
 	if (textBuf_size(matches) == 0) {
 		textBuf_destroy(matches);
-		return NULL;
+		return nullptr;
 	}
 
 	return matches;
@@ -473,7 +473,7 @@ config_init(void)
 	size_t len = 0;
 
 	ENTRY_FOREACH() {
-		*entry_p = NULL;
+		*entry_p = nullptr;
 	}
 	FOREACH_CDV() {
 		if ((len = strlen(cdv_p->setting_name)) > longest_set_count)
@@ -487,7 +487,7 @@ config_deinit(void)
 	PCONF_HTBL_ENTRY p, tmp;
 
 	ENTRY_FOREACH() {
-		for (p = *entry_p; p != NULL; p = tmp) {
+		for (p = *entry_p; p != nullptr; p = tmp) {
 			tmp = p->next;
 			hUndef(p);
 		}
@@ -527,11 +527,11 @@ config_bool(const char *setting_name, bool fallback_default)
 {
 	PCONF_HTBL_ENTRY item;
 
-	if (setting_name == NULL)
+	if (setting_name == nullptr)
 		err_exit(EINVAL, "%s", __func__);
 
 	for (item = hash_table[hash(setting_name)];
-	    item != NULL;
+	    item != nullptr;
 	    item = item->next) {
 		if (strings_match(setting_name, item->name)) {
 			if (bool_true(item->value))
@@ -553,17 +553,17 @@ Config_mod(const char *setting_name)
 {
 	PCONF_HTBL_ENTRY item;
 
-	if (setting_name == NULL)
-		return NULL;
+	if (setting_name == nullptr)
+		return nullptr;
 
 	for (item = hash_table[hash(setting_name)];
-	    item != NULL;
+	    item != nullptr;
 	    item = item->next) {
 		if (strings_match(setting_name, item->name))
 			return item->value;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 const char *
@@ -571,11 +571,11 @@ Config(const char *setting_name)
 {
 	PCONF_HTBL_ENTRY item;
 
-	if (setting_name == NULL)
+	if (setting_name == nullptr)
 		return "";
 
 	for (item = hash_table[hash(setting_name)];
-	    item != NULL;
+	    item != nullptr;
 	    item = item->next) {
 		if (strings_match(setting_name, item->name)) {
 			if (!strings_match(setting_name, "sasl_password"))
@@ -595,7 +595,7 @@ Config(const char *setting_name)
 errno_t
 config_item_install(const char *name, const char *value)
 {
-	if (name == NULL || value == NULL)
+	if (name == nullptr || value == nullptr)
 		return EINVAL;
 	else if (get_hash_table_entry(name))
 		return EBUSY;
@@ -609,7 +609,7 @@ config_item_undef(const char *name)
 {
 	PCONF_HTBL_ENTRY entry;
 
-	if ((entry = get_hash_table_entry(name)) == NULL)
+	if ((entry = get_hash_table_entry(name)) == nullptr)
 		return ENOENT;
 
 	hUndef(entry);
@@ -622,11 +622,11 @@ config_integer(const struct integer_context *ctx)
 	PCONF_HTBL_ENTRY item;
 	long int val;
 
-	if (ctx == NULL)
+	if (ctx == nullptr)
 		err_exit(EINVAL, "%s", __func__);
 
 	for (item = hash_table[hash(ctx->setting_name)];
-	    item != NULL;
+	    item != nullptr;
 	    item = item->next) {
 		if (strings_match(ctx->setting_name, item->name)) {
 			if (getval_strtol(item->value,
@@ -648,7 +648,7 @@ get_flags(const char *mode)
 {
 	int flags = 0;
 
-	if (mode == NULL)
+	if (mode == nullptr)
 		err_exit(EINVAL, "%s: null mode", __func__);
 	else if (strings_match(mode, "a"))
 		flags = g_open_flags[OPFL_APPEND];
@@ -677,7 +677,7 @@ config_create(const char *path, const char *mode)
 	    g_open_modes)) != 0)
 		err_sys("%s: _sopen_s", __func__);
 #endif
-	else if ((fp = fdopen(fd, mode)) == NULL)
+	else if ((fp = fdopen(fd, mode)) == nullptr)
 		err_sys("%s: fdopen", __func__);
 
 	write_config_header(fp);
@@ -704,7 +704,7 @@ config_do_save(const char *path, const char *mode)
 	    g_open_modes)) != 0)
 		err_sys("%s: _sopen_s", __func__);
 #endif
-	else if ((fp = fdopen(fd, mode)) == NULL)
+	else if ((fp = fdopen(fd, mode)) == nullptr)
 		err_sys("%s: fdopen", __func__);
 
 	write_config_header(fp);
@@ -767,7 +767,7 @@ get_sasl_passwd_type(void)
 	static const char	setting_name[] = "sasl_password";
 
 	for (item = hash_table[hash(setting_name)];
-	    item != NULL;
+	    item != nullptr;
 	    item = item->next) {
 		if (strings_match(setting_name, item->name)) {
 			if (*(item->value) == g_decrypted_pass_sym ||
@@ -788,16 +788,16 @@ static const char *
 get_sasl(const char *what, char *buf, size_t bufsize)
 {
 	Stringprep_profile_flags flags;
-	char *sp_out = NULL;
-	char *str = NULL;
+	char *sp_out = nullptr;
+	char *str = nullptr;
 	int ret;
 
 	if (strings_match(Config(what), "")) {
-		return NULL;
-	} else if ((str = stringprep_locale_to_utf8(Config(what))) == NULL ||
-	    sw_strcpy(buf, str, bufsize) != 0) {
+		return nullptr;
+	} else if ((str = stringprep_locale_to_utf8(Config(what))) == nullptr ||
+		    sw_strcpy(buf, str, bufsize) != 0) {
 		idn_free(str);
-		return NULL;
+		return nullptr;
 	}
 
 	flags = static_cast<Stringprep_profile_flags>(0); // NOLINT
@@ -831,7 +831,7 @@ config_get_normalized_sasl_username(void)
 	 */
 
 	if (strings_match(Config("sasl_username"), ""))
-		return NULL;
+		return nullptr;
 	return Config("sasl_username");
 #endif
 }
@@ -848,7 +848,7 @@ config_get_normalized_sasl_password(void)
 	 */
 
 	if (strings_match(Config("sasl_password"), ""))
-		return NULL;
+		return nullptr;
 	return Config("sasl_password");
 #endif
 }
@@ -873,9 +873,9 @@ cmd_set(const char *data)
 	dcopy = sw_strdup(data);
 	(void) strFeed(dcopy, 1);
 
-	if ((setting = strtok_r(dcopy, "\n", &state)) == NULL)
+	if ((setting = strtok_r(dcopy, "\n", &state)) == nullptr)
 		printtext_print("err", "fatal error (shouldn't happen)");
-	else if ((value = strtok_r(NULL, "\n", &state)) == NULL)
+	else if ((value = strtok_r(nullptr, "\n", &state)) == nullptr)
 		output_value_for_specific_setting(setting);
 	else if (strings_match(setting, "sasl_password"))
 		printtext_print("err", "please use /sasl");

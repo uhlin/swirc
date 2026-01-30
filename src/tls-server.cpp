@@ -1,5 +1,5 @@
 /* TLS server for DCC (Direct Client-to-Client)
-   Copyright (C) 2021-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -59,8 +59,8 @@ const char g_suite_all[] = "ALL:!aNULL:!eNULL";
 
 volatile bool tls_server::accepting_new_connections = false;
 
-static DH	*dh2048 = NULL;
-static DH	*dh4096 = NULL;
+static DH	*dh2048 = nullptr;
+static DH	*dh4096 = nullptr;
 
 /*lint -sem(tmp_dh_callback, r_null) */
 /*lint -sem(tls_server::setup_context, r_null) */
@@ -89,11 +89,11 @@ init_dhparams()
 		/*
 		 * DH 2048
 		 */
-		if ((bio = BIO_new_file(name1, "r")) == NULL)
+		if ((bio = BIO_new_file(name1, "r")) == nullptr)
 			throw std::runtime_error("cannot open file");
-		dh2048 = PEM_read_bio_DHparams(bio, NULL, NULL, NULL);
+		dh2048 = PEM_read_bio_DHparams(bio, nullptr, nullptr, nullptr);
 		BIO_vfree(bio);
-		if (dh2048 == NULL) {
+		if (dh2048 == nullptr) {
 			throw std::runtime_error("failed to read dh parameters "
 			    "(2048)");
 		}
@@ -101,11 +101,11 @@ init_dhparams()
 		/*
 		 * DH 4096
 		 */
-		if ((bio = BIO_new_file(name2, "r")) == NULL)
+		if ((bio = BIO_new_file(name2, "r")) == nullptr)
 			throw std::runtime_error("cannot open file");
-		dh4096 = PEM_read_bio_DHparams(bio, NULL, NULL, NULL);
+		dh4096 = PEM_read_bio_DHparams(bio, nullptr, nullptr, nullptr);
 		BIO_vfree(bio);
-		if (dh4096 == NULL) {
+		if (dh4096 == nullptr) {
 			throw std::runtime_error("failed to read dh parameters "
 			    "(4096)");
 		}
@@ -137,9 +137,9 @@ tmp_dh_callback(SSL *ssl, int is_export, int keylength)
 	(void) ssl;
 	(void) is_export;
 
-	if (dh2048 == NULL || dh4096 == NULL) {
+	if (dh2048 == nullptr || dh4096 == nullptr) {
 		if (init_dhparams() == -1)
-			return NULL;
+			return nullptr;
 	}
 
 	switch (keylength) {
@@ -192,11 +192,11 @@ verify_callback(int ok, X509_STORE_CTX *ctx)
 void
 tls_server::accept_new_connections(const int port)
 {
-	BIO			*abio = NULL;
-	BIO			*cbio = NULL;
+	BIO			*abio = nullptr;
+	BIO			*cbio = nullptr;
 	PRINTTEXT_CONTEXT	 ptext_ctx;
-	SSL			*ssl = NULL;
-	SSL_CTX			*ctx = NULL;
+	SSL			*ssl = nullptr;
+	SSL_CTX			*ctx = nullptr;
 
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_FAILURE,
 	    true);
@@ -211,10 +211,11 @@ tls_server::accept_new_connections(const int port)
 	}
 
 	try {
-		if ((ctx = tls_server::setup_context()) == NULL) {
+		if ((ctx = tls_server::setup_context()) == nullptr) {
 			throw std::runtime_error("Error setting up TLS server "
 			    "context. Check the error log.");
-		} else if ((abio = tls_server::get_accept_bio(port)) == NULL) {
+		} else if ((abio = tls_server::get_accept_bio(port)) ==
+			    nullptr) {
 			throw std::runtime_error("Operation failed");
 		}
 	} catch (const std::runtime_error &e) {
@@ -237,7 +238,7 @@ tls_server::accept_new_connections(const int port)
 
 		cbio = BIO_pop(abio);
 
-		if ((ssl = SSL_new(ctx)) == NULL)
+		if ((ssl = SSL_new(ctx)) == nullptr)
 			err_exit(ENOMEM, "%s", _("Out of memory"));
 		SSL_set_accept_state(ssl);
 		SSL_set_bio(ssl, cbio, cbio);
@@ -259,8 +260,8 @@ tls_server::end(void)
 BIO *
 tls_server::get_accept_bio(const int port)
 {
-	BIO	*bio = NULL;
-	char	*port_str = NULL;
+	BIO	*bio = nullptr;
+	char	*port_str = nullptr;
 
 	ERR_clear_error();
 
@@ -268,7 +269,7 @@ tls_server::get_accept_bio(const int port)
 		if (port < SERVER_MIN_PORT || port > SERVER_MAX_PORT)
 			throw std::runtime_error("Port out of range");
 		port_str = strdup_printf("%d", port);
-		if ((bio = BIO_new_accept(port_str)) == NULL)
+		if ((bio = BIO_new_accept(port_str)) == nullptr)
 			throw std::runtime_error("Error creating accept BIO");
 		free_and_null(&port_str);
 		if (BIO_set_nbio_accept(bio, 1) != 1) {
@@ -290,8 +291,8 @@ tls_server::get_accept_bio(const int port)
 		printtext_context_init(&ctx, g_status_window,
 		    TYPE_SPEC1_FAILURE, true);
 		printtext(&ctx, "%s (%s)", e.what(), (err != 0 ?
-		    ERR_error_string(err, NULL) : ""));
-		return NULL;
+		    ERR_error_string(err, nullptr) : ""));
+		return nullptr;
 	}
 
 	return bio;
@@ -322,9 +323,9 @@ set_server_ciphers_doit(SSL_CTX *ctx)
 SSL_CTX *
 tls_server::setup_context(void)
 {
-	SSL_CTX	*ctx = NULL;
-	char	*cafile = NULL;
-	char	*certfile = NULL;
+	SSL_CTX	*ctx = nullptr;
+	char	*cafile = nullptr;
+	char	*certfile = nullptr;
 
 	ERR_clear_error();
 
@@ -334,9 +335,10 @@ tls_server::setup_context(void)
 
 		cafile = get_filename(ROOT_PEM);
 
-		if ((ctx = SSL_CTX_new(TLS_server_method())) == NULL) {
+		if ((ctx = SSL_CTX_new(TLS_server_method())) == nullptr) {
 			throw std::runtime_error("Out of memory");
-		} else if (!SSL_CTX_load_verify_locations(ctx, cafile, NULL)) {
+		} else if (!SSL_CTX_load_verify_locations(ctx, cafile,
+			    nullptr)) {
 			throw std::runtime_error("Error loading CA file and/or "
 			    "directory");
 		} else if (!SSL_CTX_set_default_verify_paths(ctx)) {
@@ -379,12 +381,12 @@ tls_server::setup_context(void)
 		const unsigned long err = ERR_peek_last_error();
 
 		if (err)
-			err_log(0, "%s", ERR_error_string(err, NULL));
+			err_log(0, "%s", ERR_error_string(err, nullptr));
 		err_log(0, "%s: %s", __func__, ex.what());
 		SSL_CTX_free(ctx);
 		free(cafile);
 		free(certfile);
-		return NULL;
+		return nullptr;
 	}
 
 	return ctx;

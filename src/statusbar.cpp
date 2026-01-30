@@ -1,5 +1,5 @@
 /* Swirc statusbar
-   Copyright (C) 2012-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -49,7 +49,7 @@
 
 char g_user_modes[100] = { '\0' };
 
-static PANEL *statusbar_pan = NULL;
+static PANEL *statusbar_pan = nullptr;
 
 static void
 apply_statusbar_options(WINDOW *win)
@@ -78,7 +78,7 @@ get_chanmodes()
 	PIRC_WINDOW	win;
 	std::string	str("");
 
-	if ((win = g_active_window) != NULL) {
+	if ((win = g_active_window) != nullptr) {
 		if (strings_match_ignore_case(win->label,
 		    g_status_window_label)) {
 			(void) str.append(Theme("slogan"));
@@ -224,7 +224,7 @@ void
 statusbar_update(void)
 {
 	WINDOW			*win;
-	char			*out_s = NULL;
+	char			*out_s = nullptr;
 	constexpr chtype	 blank = ' ';
 	short int		 pair_n;
 
@@ -251,10 +251,10 @@ statusbar_update(void)
 	mutex_unlock(&g_win_htbl_mtx);
 	mutex_unlock(&g_actwin_mtx);
 
-	if (out_s == NULL)
+	if (out_s == nullptr)
 		return;
 	printtext_puts(win, (g_no_colors ? squeeze_text_deco(out_s) : out_s),
-	    -1, -1, NULL);
+	    -1, -1, nullptr);
 	free(out_s);
 
 	statusbar_top_panel();

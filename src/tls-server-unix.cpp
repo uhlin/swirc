@@ -1,5 +1,5 @@
 /* TLS server (Unix specific functions)
-   Copyright (C) 2021-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -47,7 +47,7 @@ accept_thread(void *arg)
 	tls_server::exit_thread();
 
 	/* NOTREACHED */
-	return NULL;
+	return nullptr;
 }
 
 static void *
@@ -57,7 +57,7 @@ com_thread(void *arg)
 
 	dcc::handle_incoming_conn(ssl);
 	SSL_free(ssl);
-	return NULL;
+	return nullptr;
 }
 
 void
@@ -68,7 +68,7 @@ tls_server::begin(const int port)
 
 	i = port;
 
-	if ((errno = pthread_create(&tid, NULL, accept_thread, &i)) != 0)
+	if ((errno = pthread_create(&tid, nullptr, accept_thread, &i)) != 0)
 		err_sys("%s: pthread_create", __func__);
 	else if ((errno = pthread_detach(tid)) != 0)
 		err_sys("%s: pthread_detach", __func__);
@@ -79,7 +79,7 @@ tls_server::com_with_client(SSL *ssl)
 {
 	pthread_t tid;
 
-	if ((errno = pthread_create(&tid, NULL, com_thread, ssl)) != 0)
+	if ((errno = pthread_create(&tid, nullptr, com_thread, ssl)) != 0)
 		err_sys("%s: pthread_create", __func__);
 	else if ((errno = pthread_detach(tid)) != 0)
 		err_sys("%s: pthread_detach", __func__);
