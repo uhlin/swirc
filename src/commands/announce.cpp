@@ -78,12 +78,22 @@ announce::announce(bool p_znc_broadcast, CSTRING p_chans, CSTRING p_msg)
 
 	if ((token = strtok_r(str, sep, &last)) == nullptr)
 		sw_assert_not_reached();
-	if (strpbrk(token, g_forbidden_chan_name_chars) == nullptr)
+	if (strpbrk(token, g_forbidden_chan_name_chars) == nullptr) {
+#if defined(__cplusplus) && __cplusplus >= 201103L
+		this->chans.emplace_back(token);
+#else
 		this->chans.push_back(token);
+#endif
+	}
 
 	while ((token = strtok_r(nullptr, sep, &last)) != nullptr) {
-		if (strpbrk(token, g_forbidden_chan_name_chars) == nullptr)
+		if (strpbrk(token, g_forbidden_chan_name_chars) == nullptr) {
+#if defined(__cplusplus) && __cplusplus >= 201103L
+			this->chans.emplace_back(token);
+#else
 			this->chans.push_back(token);
+#endif
+		}
 	}
 
 	free(str);
