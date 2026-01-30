@@ -1,5 +1,5 @@
 /* The FTP command  --  W32 specific functions
-   Copyright (C) 2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2025-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -48,7 +48,7 @@ typedef void __cdecl VoidCdecl;
 static VoidCdecl
 cmd_doit(void *arg)
 {
-	STRING name = static_cast<STRING>(arg);
+	auto name = static_cast<STRING>(arg);
 
 	if (atomic_load_bool(&ftp::cmd_in_progress)) {
 		printtext_print("err", "Command already in progress...");

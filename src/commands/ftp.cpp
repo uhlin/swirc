@@ -499,7 +499,7 @@ numrep_t
 ftp_ctl_conn::read_reply(const int timeo)
 {
 	CSTRING				token;
-	STRING				tokstate = const_cast<STRING>("");
+	auto				tokstate = const_cast<STRING>("");
 	int				loop_run = 0;
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
@@ -864,7 +864,7 @@ get_bytes(const std::string &str)
 {
 	CSTRING			bytes_str;
 	STRING			str_copy = sw_strdup(str.c_str());
-	STRING			tokstate = const_cast<STRING>("");
+	auto			tokstate = const_cast<STRING>("");
 	static chararray_t	sep	 = " \r\n";
 
 	(void) strtok_r(str_copy, sep, &tokstate);
@@ -1003,7 +1003,7 @@ numstr_t
 ftp_data_conn::list_fetch(const int timeo)
 {
 	CSTRING				token;
-	STRING				tokstate = const_cast<STRING>("");
+	auto				tokstate = const_cast<STRING>("");
 	int				loop_run = 0;
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
@@ -1431,7 +1431,7 @@ cmd_ftp(CSTRING data)
 	CSTRING			arg[2];
 	CSTRING			subcmd;
 	STRING			dcopy;
-	STRING			last = const_cast<STRING>("");
+	auto			last = const_cast<STRING>("");
 	static chararray_t	cmd = "/ftp";
 	static chararray_t	sep = "\n";
 	static const size_t	MAXARG = 300;
