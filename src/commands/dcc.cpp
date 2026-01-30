@@ -41,16 +41,17 @@
 #include <arpa/inet.h>
 #endif
 
+#include <cinttypes>
+#include <climits>
+
 #if HAVE_STD_FS
 #include <algorithm>
 #include <filesystem>
 namespace fs = std::filesystem;
 #endif
-#include <inttypes.h>
 #if WIN32
 #include <io.h>
 #endif
-#include <limits.h>
 #include <stdexcept>
 #if UNIX
 #include <unistd.h>
