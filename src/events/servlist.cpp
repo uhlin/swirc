@@ -53,9 +53,9 @@ event_servlist(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char		*name, *server, *mask, *type, *hopcount, *info;
-		char		*state = const_cast<char *>("");
-		std::string	 str("");
+		CSTRING		name, server, mask, type, hopcount, info;
+		auto		state = const_cast<STRING>("");
+		std::string	str("");
 
 		if (strFeed(compo->params, 6) != 6)
 			throw std::runtime_error("strFeed");
