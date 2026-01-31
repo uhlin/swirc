@@ -1,7 +1,7 @@
 #ifndef SRC_COMMANDS_FTP_H_
 #define SRC_COMMANDS_FTP_H_
 /* ftp.h
-   Copyright (C) 2024, 2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -129,8 +129,8 @@ public:
 
 	ftp_ctl_conn &operator=(const ftp_ctl_conn &);
 	ftp_ctl_conn(const ftp_ctl_conn &);
-	ftp_ctl_conn &operator=(ftp_ctl_conn &&);
-	ftp_ctl_conn(ftp_ctl_conn &&);
+	ftp_ctl_conn &operator=(ftp_ctl_conn &&) noexcept;
+	ftp_ctl_conn(ftp_ctl_conn &&) noexcept;
 
 	std::vector<FTP_REPLY> reply_vec;
 
@@ -156,8 +156,8 @@ public:
 
 	ftp_data_conn &operator=(const ftp_data_conn &);
 	ftp_data_conn(const ftp_data_conn &);
-	ftp_data_conn &operator=(ftp_data_conn &&);
-	ftp_data_conn(ftp_data_conn &&);
+	ftp_data_conn &operator=(ftp_data_conn &&) noexcept;
+	ftp_data_conn(ftp_data_conn &&) noexcept;
 
 	STRING full_path, path;
 	intmax_t filesz;

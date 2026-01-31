@@ -180,7 +180,7 @@ ftp_ctl_conn::ftp_ctl_conn(const ftp_ctl_conn &obj)
 /*
  * Move assignment operator
  */
-ftp_ctl_conn &ftp_ctl_conn::operator=(ftp_ctl_conn &&obj)
+ftp_ctl_conn &ftp_ctl_conn::operator=(ftp_ctl_conn &&obj) noexcept
 {
 	if (&obj == this)
 		return *this;
@@ -218,7 +218,7 @@ ftp_ctl_conn &ftp_ctl_conn::operator=(ftp_ctl_conn &&obj)
 /*
  * Move constructor
  */
-ftp_ctl_conn::ftp_ctl_conn(ftp_ctl_conn &&obj)
+ftp_ctl_conn::ftp_ctl_conn(ftp_ctl_conn &&obj) noexcept
     : sock(obj.sock)
     , state(obj.state)
     , res(obj.res)
@@ -711,7 +711,7 @@ ftp_data_conn::ftp_data_conn(const ftp_data_conn &obj)
 /*
  * Move assignment operator
  */
-ftp_data_conn &ftp_data_conn::operator=(ftp_data_conn &&obj)
+ftp_data_conn &ftp_data_conn::operator=(ftp_data_conn &&obj) noexcept
 {
 	if (&obj == this)
 		return *this;
@@ -776,7 +776,7 @@ ftp_data_conn &ftp_data_conn::operator=(ftp_data_conn &&obj)
 /*
  * Move constructor
  */
-ftp_data_conn::ftp_data_conn(ftp_data_conn &&obj)
+ftp_data_conn::ftp_data_conn(ftp_data_conn &&obj) noexcept
     : full_path(obj.full_path)
     , path(obj.path)
     , filesz(obj.filesz)
