@@ -75,7 +75,7 @@ public:
 		return this->secs;
 	}
 
-	const char *
+	CSTRING
 	getBuf(void) const
 	{
 		return (&this->buf[0]);
@@ -113,10 +113,10 @@ time_idle::time_idle(long int sec_idle, long int signon_time)
 }
 
 static bool
-get_msg(char *params, std::string &str)
+get_msg(STRING params, std::string &str)
 {
-	char *msg;
-	char *state = const_cast<char *>("");
+	CSTRING msg;
+	auto	state = const_cast<STRING>("");
 
 	if (strFeed(params, 2) != 2) {
 		(void) str.assign("");
@@ -160,9 +160,9 @@ event_whoReply(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
 	try {
-		char	*channel, *user, *host, *server, *nick, *symbol,
-			*hopcount, *rl_name;
-		char	*state = const_cast<char *>("");
+		CSTRING channel, user, host, server, nick, symbol, hopcount,
+			rl_name;
+		auto state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 8) != 8)
 			throw std::runtime_error("strFeed");
@@ -228,9 +228,9 @@ event_whois_acc(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*account_name;
-		char	*comment;
-		char	*state = const_cast<char *>("");
+		CSTRING account_name;
+		CSTRING comment;
+		auto	state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 3) != 3)
 			throw std::runtime_error("strFeed");
@@ -271,8 +271,8 @@ event_whois_away(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*away_reason;
-		char	*state = const_cast<char *>("");
+		CSTRING away_reason;
+		auto	state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 2) != 2)
 			throw std::runtime_error("strFeed");
@@ -340,9 +340,9 @@ event_whois_cert(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*msg;
-		char	*state = const_cast<char *>("");
-		char	*tnick;
+		CSTRING msg;
+		CSTRING tnick;
+		auto	state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 2) != 2)
 			throw std::runtime_error("strFeed");
@@ -381,8 +381,8 @@ event_whois_channels(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*chan_list;
-		char	*state = const_cast<char *>("");
+		CSTRING chan_list;
+		auto	state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 2) != 2)
 			throw std::runtime_error("strFeed");
@@ -451,8 +451,8 @@ event_whois_host(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*state = const_cast<char *>("");
-		char	*str;
+		STRING	 str;
+		auto	 state = const_cast<STRING>("");
 		char	*str_copy, *cp;
 
 		if (strFeed(compo->params, 2) != 2)
@@ -499,13 +499,13 @@ event_whois_idle(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char		*ep1 = const_cast<char *>("");
-		char		*ep2 = const_cast<char *>("");
-		char		*state = const_cast<char *>("");
-		const char	*sec_idle_str = nullptr;
-		const char	*signon_time_str = nullptr;
-		long int	 sec_idle = LONG_MAX;
-		long int	 signon_time = LONG_MAX;
+		CSTRING		sec_idle_str	= nullptr;
+		CSTRING		signon_time_str = nullptr;
+		auto		ep1		= const_cast<STRING>("");
+		auto		ep2		= const_cast<STRING>("");
+		auto		state		= const_cast<STRING>("");
+		long int	sec_idle	= LONG_MAX;
+		long int	signon_time	= LONG_MAX;
 
 		if (strFeed(compo->params, 4) != 4)
 			throw std::runtime_error("strFeed");
@@ -628,8 +628,8 @@ event_whois_server(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*srv, *info;
-		char	*state = const_cast<char *>("");
+		CSTRING srv, info;
+		auto	state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 3) != 3)
 			throw std::runtime_error("strFeed");
@@ -700,8 +700,8 @@ event_whois_ssl(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*tnick, *msg;
-		char	*state = const_cast<char *>("");
+		CSTRING tnick, msg;
+		auto	state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 2) != 2)
 			throw std::runtime_error("strFeed");
@@ -742,8 +742,8 @@ event_whois_user(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
 	try {
-		char	*nick, *user, *host, *rl_name;
-		char	*state = const_cast<char *>("");
+		CSTRING nick, user, host, rl_name;
+		auto	state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 5) != 5)
 			throw std::runtime_error("strFeed");
