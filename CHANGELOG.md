@@ -3,8 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
 - Added usage of `emplace_back()` when dealing with vector
-  insertions. (Performance).
-- Added usage of `nullptr`.
+  insertions. (Performance). Whole tree completed.
+- Added usage of `nullptr`. Whole tree completed.
 - Added usage of type aliases.
 - Deleted unused includes.
 - Fixed C-style headers in C++ files.
