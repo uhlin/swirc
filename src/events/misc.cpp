@@ -61,7 +61,7 @@ event_allaround_extract_find_colon(struct irc_message_compo *compo)
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 
-	if ((cp = strchr(compo->params, ':')) == NULL) {
+	if ((cp = strchr(compo->params, ':')) == nullptr) {
 		printtext(&ctx, "on issuing event %s: no colon found",
 		    compo->command);
 		return;
@@ -89,7 +89,7 @@ void
 event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 {
 	PRINTTEXT_CONTEXT	 ctx;
-	char			*msg_copy = NULL;
+	char			*msg_copy = nullptr;
 
 	try {
 		char		*cp;
@@ -104,12 +104,12 @@ event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 		/* unused */
 		(void) strtok_r(compo->params, "\n", &state);
 
-		if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((msg = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("unable to get message");
 
 		msg_copy = sw_strdup(msg);
 
-		if ((cp = strchr(msg_copy, ':')) == NULL)
+		if ((cp = strchr(msg_copy, ':')) == nullptr)
 			throw std::runtime_error("no colon found!");
 
 		cp++;
@@ -138,10 +138,10 @@ event_serverFeatures(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char		*cp = NULL;
-		char		*msg_copy = NULL;
+		char		*cp = nullptr;
+		char		*msg_copy = nullptr;
 		char		*state = const_cast<char *>("");
-		const char	*msg = NULL;
+		const char	*msg = nullptr;
 
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
@@ -151,7 +151,7 @@ event_serverFeatures(struct irc_message_compo *compo)
 		/* unused */
 		(void) strtok_r(compo->params, "\n", &state);
 
-		if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((msg = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("no message!");
 		if (*msg == ':')
 			msg++;
@@ -167,7 +167,8 @@ event_serverFeatures(struct irc_message_compo *compo)
 			for (const char **ar_p = &ar[0];
 			    ar_p < &ar[ARRAY_SIZE(ar)];
 			    ar_p++) {
-				while ((cp = strstr(msg_copy, *ar_p)) != NULL) {
+				while ((cp = strstr(msg_copy, *ar_p)) !=
+				       nullptr) {
 					/*
 					 * Delete the colon
 					 */
@@ -212,28 +213,28 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 		/* my nickname */
 		(void) strtok_r(compo->params, "\n", &state);
 
-		if ((channel = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((channel = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("unable to get channel");
-		else if ((seconds = strtok_r(NULL, "\n", &state)) == NULL)
+		else if ((seconds = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("unable to get seconds");
 		else if (*seconds == ':')
 			seconds++; /* Remove leading colon */
 
 		if (!is_irc_channel(channel) ||
-		    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL)
+		    strpbrk(channel + 1, g_forbidden_chan_name_chars) != nullptr)
 			throw std::runtime_error("invalid irc channel");
 		else if (!is_numeric(seconds))
 			throw std::runtime_error("expected numeric string");
-		else if ((ctx.window = window_by_label(channel)) == NULL)
+		else if ((ctx.window = window_by_label(channel)) == nullptr)
 			throw std::runtime_error("couldn't find channel window");
 		else if (ctx.window->received_chancreated)
 			return;
 
 		const auto date_of_creation =
-		    static_cast<time_t>(strtol(seconds, NULL, 10));
+		    static_cast<time_t>(strtol(seconds, nullptr, 10));
 
 #if defined(UNIX)
-		if (localtime_r(&date_of_creation, &result) == NULL)
+		if (localtime_r(&date_of_creation, &result) == nullptr)
 			throw std::runtime_error("localtime_r: " TM_STRUCT_MSG);
 #elif defined(WIN32)
 		if (localtime_s(&result, &date_of_creation) != 0)
@@ -268,7 +269,7 @@ event_channelModeIs(struct irc_message_compo *compo)
 
 	try {
 		char	*channel, *data;
-		char	*cp = NULL;
+		char	*cp = nullptr;
 		char	*state = const_cast<char *>("");
 
 		printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
@@ -279,16 +280,16 @@ event_channelModeIs(struct irc_message_compo *compo)
 		/* my nickname */
 		(void) strtok_r(compo->params, "\n", &state);
 
-		if ((channel = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((channel = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("no channel");
-		else if ((data = strtok_r(NULL, "\n", &state)) == NULL)
+		else if ((data = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("no data");
-		else if ((ctx.window = window_by_label(channel)) == NULL)
+		else if ((ctx.window = window_by_label(channel)) == nullptr)
 			throw std::runtime_error("couldn't find channel window");
 
 		if (*data == ':') {
 			data++;
-		} else if ((cp = strstr(data, " :")) != NULL) {
+		} else if ((cp = strstr(data, " :")) != nullptr) {
 			*++cp = ' ';
 			(void) memmove(cp - 1, cp, strlen(cp) + 1);
 		}
@@ -341,11 +342,12 @@ event_channel_forward(struct irc_message_compo *compo)
 		/* my nickname */
 		(void) strtok_r(params, "\n", &state);
 
-		if ((from_channel = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((from_channel = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("no origin channel");
-		else if ((to_channel = strtok_r(NULL, "\n", &state)) == NULL)
+		else if ((to_channel = strtok_r(nullptr, "\n", &state)) ==
+			 nullptr)
 			throw std::runtime_error("no destination channel");
-		else if ((msg = strtok_r(NULL, "\n", &state)) == NULL)
+		else if ((msg = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("no message");
 
 		(void) msg; /* unused */
@@ -396,7 +398,7 @@ event_local_and_global_users(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	 ctx;
 	const char		*cp;
 
-	if ((cp = strchr(compo->params, ':')) == NULL ||
+	if ((cp = strchr(compo->params, ':')) == nullptr ||
 	    strings_match(++cp, ""))
 		return;
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
@@ -413,7 +415,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char	*nick = NULL;
+		char	*nick = nullptr;
 		char	*params = compo->params;
 		char	*state = const_cast<char *>("");
 
@@ -423,7 +425,7 @@ event_nicknameInUse(struct irc_message_compo *compo)
 		/* unused */
 		(void) strtok_r(params, "\n", &state);
 
-		if ((nick = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((nick = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("no nickname");
 
 		printtext_context_init(&ctx, g_status_window,
@@ -470,7 +472,7 @@ event_userModeIs(struct irc_message_compo *compo)
 {
 	try {
 		char		*state = const_cast<char *>("");
-		const char	*modes = NULL;
+		const char	*modes = nullptr;
 
 		if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
@@ -478,7 +480,7 @@ event_userModeIs(struct irc_message_compo *compo)
 		/* my nickname */
 		(void) strtok_r(compo->params, "\n", &state);
 
-		if ((modes = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((modes = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("no modes");
 		else if (strings_match(modes, g_user_modes))
 			return; /* no change */

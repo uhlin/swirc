@@ -1,5 +1,5 @@
 /* names-htbl-modify.cpp
-   Copyright (C) 2022-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -42,8 +42,8 @@
 static int
 check_args(const char *nick, const char *channel, PIRC_WINDOW &window)
 {
-	if (nick == NULL || strings_match(nick, "") ||
-	    (window = window_by_label(channel)) == NULL ||
+	if (nick == nullptr || strings_match(nick, "") ||
+	    (window = window_by_label(channel)) == nullptr ||
 	    (!window->received_names && !g_icb_mode)) /* XXX */
 		return ERR;
 	return OK;
@@ -59,7 +59,7 @@ names_htbl_modify::owner(const char *nick, const char *channel, bool is_owner)
 		return ERR;
 
 	for (names = window->names_hash[hash(nick)];
-	    names != NULL;
+	    names != nullptr;
 	    names = names->next) {
 		if (strings_match_ignore_case(nick, names->nick)) {
 			if (names->is_owner && is_owner)
@@ -117,7 +117,7 @@ names_htbl_modify::superop(const char *nick, const char *channel,
 		return ERR;
 
 	for (names = window->names_hash[hash(nick)];
-	    names != NULL;
+	    names != nullptr;
 	    names = names->next) {
 		if (strings_match_ignore_case(nick, names->nick)) {
 			if (names->is_superop && is_superop)
@@ -173,7 +173,7 @@ names_htbl_modify::op(const char *nick, const char *channel, bool is_op)
 		return ERR;
 
 	for (names = window->names_hash[hash(nick)];
-	    names != NULL;
+	    names != nullptr;
 	    names = names->next) {
 		if (strings_match_ignore_case(nick, names->nick)) {
 			if (names->is_op && is_op)
@@ -225,7 +225,7 @@ names_htbl_modify::halfop(const char *nick, const char *channel, bool is_halfop)
 		return ERR;
 
 	for (names = window->names_hash[hash(nick)];
-	    names != NULL;
+	    names != nullptr;
 	    names = names->next) {
 		if (strings_match_ignore_case(nick, names->nick)) {
 			if (names->is_halfop && is_halfop)
@@ -274,7 +274,7 @@ names_htbl_modify::voice(const char *nick, const char *channel, bool is_voice)
 		return ERR;
 
 	for (names = window->names_hash[hash(nick)];
-	    names != NULL;
+	    names != nullptr;
 	    names = names->next) {
 		if (strings_match_ignore_case(nick, names->nick)) {
 			if (names->is_voice && is_voice)
