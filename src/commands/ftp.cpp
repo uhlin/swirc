@@ -1677,7 +1677,7 @@ ftp::send_file(void)
 }
 
 int
-ftp::send_printf(SOCKET sock, CSTRING fmt, ...)
+ftp::send_printf(SOCKET sock, CSTRING fmt, ...) // NOLINT
 {
 	char	*buffer;
 	int	 n_sent;
