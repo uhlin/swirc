@@ -56,8 +56,8 @@
 void
 event_allaround_extract_find_colon(struct irc_message_compo *compo)
 {
-	PRINTTEXT_CONTEXT ctx;
-	char *cp;
+	PRINTTEXT_CONTEXT	 ctx;
+	char			*cp;
 
 	printtext_context_init(&ctx, g_active_window, TYPE_SPEC1_FAILURE, true);
 
@@ -88,13 +88,13 @@ event_allaround_extract_find_colon(struct irc_message_compo *compo)
 void
 event_allaround_extract_remove_colon(struct irc_message_compo *compo)
 {
-	PRINTTEXT_CONTEXT	 ctx;
-	char			*msg_copy = nullptr;
+	PRINTTEXT_CONTEXT	ctx;
+	STRING			msg_copy = nullptr;
 
 	try {
-		char		*cp;
-		char		*state = const_cast<char *>("");
-		const char	*msg;
+		CSTRING	 msg;
+		auto	 state = const_cast<STRING>("");
+		char	*cp;
 
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
@@ -138,10 +138,10 @@ event_serverFeatures(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char		*cp = nullptr;
-		char		*msg_copy = nullptr;
-		char		*state = const_cast<char *>("");
-		const char	*msg = nullptr;
+		CSTRING	 msg	  = nullptr;
+		STRING	 msg_copy = nullptr;
+		auto	 state	  = const_cast<STRING>("");
+		char	*cp	  = nullptr;
 
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
@@ -200,10 +200,10 @@ event_channelCreatedWhen(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char		*channel, *seconds;
-		char		*state = const_cast<char *>("");
-		char		 tbuf[100] = { '\0' };
-		struct tm	 result = { 0 };
+		CSTRING		channel, seconds;
+		auto		state	  = const_cast<STRING>("");
+		char		tbuf[100] = { '\0' };
+		struct tm	result	  = { 0 };
 
 		printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
@@ -268,9 +268,9 @@ event_channelModeIs(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char	*channel, *data;
-		char	*cp = nullptr;
-		char	*state = const_cast<char *>("");
+		STRING	 channel, data;
+		auto	 state = const_cast<STRING>("");
+		char	*cp    = nullptr;
 
 		printtext_context_init(&ctx, g_active_window, TYPE_SPEC1, true);
 
@@ -332,9 +332,9 @@ event_channel_forward(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char	*from_channel, *to_channel, *msg;
-		char	*params = compo->params;
-		char	*state = const_cast<char *>("");
+		CSTRING from_channel, to_channel, msg;
+		STRING	params = compo->params;
+		auto	state  = const_cast<STRING>("");
 
 		if (strFeed(params, 3) != 3)
 			throw std::runtime_error("strFeed");
@@ -415,9 +415,9 @@ event_nicknameInUse(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char	*nick = nullptr;
-		char	*params = compo->params;
-		char	*state = const_cast<char *>("");
+		CSTRING nick   = nullptr;
+		STRING	params = compo->params;
+		auto	state  = const_cast<STRING>("");
 
 		if (strFeed(params, 2) != 2)
 			throw std::runtime_error("strFeed");
@@ -471,8 +471,8 @@ void
 event_userModeIs(struct irc_message_compo *compo)
 {
 	try {
-		char		*state = const_cast<char *>("");
-		const char	*modes = nullptr;
+		CSTRING modes = nullptr;
+		auto	state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
