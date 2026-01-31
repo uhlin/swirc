@@ -18,7 +18,8 @@ void
 cmd_cleartoasts(const char *data)
 {
 	if (!strings_match(data, "")) {
-		print_and_free("/cleartoasts: implicit trailing data", NULL);
+		printtext_print("err", "%s: implicit trailing data",
+				"/cleartoasts");
 		return;
 	}
 
