@@ -9,6 +9,7 @@ CHKS = cert-*,$\
 	hicpp-special-member-functions,$\
 	hicpp-use-auto,$\
 	hicpp-use-emplace,$\
+	hicpp-use-nullptr,$\
 	performance-*,$\
 	portability-*
 
