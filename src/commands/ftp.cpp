@@ -134,7 +134,8 @@ ftp_ctl_conn::~ftp_ctl_conn()
 /*
  * Copy assignment operator
  */
-ftp_ctl_conn &ftp_ctl_conn::operator=(const ftp_ctl_conn &obj)
+ftp_ctl_conn &
+ftp_ctl_conn::operator=(const ftp_ctl_conn &obj)
 {
 	if (&obj == this)
 		return *this;
@@ -180,7 +181,8 @@ ftp_ctl_conn::ftp_ctl_conn(const ftp_ctl_conn &obj)
 /*
  * Move assignment operator
  */
-ftp_ctl_conn &ftp_ctl_conn::operator=(ftp_ctl_conn &&obj) noexcept
+ftp_ctl_conn &
+ftp_ctl_conn::operator=(ftp_ctl_conn &&obj) noexcept
 {
 	if (&obj == this)
 		return *this;
@@ -642,7 +644,8 @@ ftp_data_conn::~ftp_data_conn()
 /*
  * Copy assignment operator
  */
-ftp_data_conn &ftp_data_conn::operator=(const ftp_data_conn &obj)
+ftp_data_conn &
+ftp_data_conn::operator=(const ftp_data_conn &obj)
 {
 	if (&obj == this)
 		return *this;
@@ -727,7 +730,8 @@ ftp_data_conn::ftp_data_conn(const ftp_data_conn &obj)
 /*
  * Move assignment operator
  */
-ftp_data_conn &ftp_data_conn::operator=(ftp_data_conn &&obj) noexcept
+ftp_data_conn &
+ftp_data_conn::operator=(ftp_data_conn &&obj) noexcept
 {
 	if (&obj == this)
 		return *this;
