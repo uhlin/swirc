@@ -806,7 +806,9 @@ is_valid_server(const char *str)
 {
 	int			dots = 0;
 	static const char	serv_chars[] =
-	    "abcdefghijklmnopqrstuvwxyz.0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ*";
+				  "abcdefghijklmnopqrstuvwxyz."
+				  "0123456789-"
+				  "ABCDEFGHIJKLMNOPQRSTUVWXYZ*";
 	static const size_t	maxlen = 255;
 
 	if (str == nullptr || strings_match(str, "") ||
