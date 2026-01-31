@@ -1,5 +1,5 @@
 /* Whois events
-   Copyright (C) 2014-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -48,13 +48,6 @@
 #define NO_MSG "no message"
 
 class time_idle {
-	long int	days;
-	long int	hours;
-	long int	mins;
-	long int	secs;
-
-	char buf[200];
-
 public:
 	time_idle(long int, long int);
 
@@ -87,6 +80,14 @@ public:
 	{
 		return (&this->buf[0]);
 	}
+
+private:
+	long int	days;
+	long int	hours;
+	long int	mins;
+	long int	secs;
+
+	char buf[200];
 };
 
 time_idle::time_idle(long int sec_idle, long int signon_time)
