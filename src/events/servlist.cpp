@@ -1,5 +1,5 @@
 /* events/servlist.cpp
-   Copyright (C) 2020-2022 Markus Uhlin. All rights reserved.
+   Copyright (C) 2020-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -62,12 +62,12 @@ event_servlist(struct irc_message_compo *compo)
 
 		(void) strtok_r(compo->params, "\n", &state); /* me */
 
-		if ((name = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (server = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (mask = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (type = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (hopcount = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (info = strtok_r(NULL, "\n", &state)) == NULL) {
+		if ((name     = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (server   = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (mask     = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (type     = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (hopcount = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (info     = strtok_r(nullptr, "\n", &state)) == nullptr) {
 			throw std::runtime_error("unable to retrieve event "
 			    "components");
 		}
