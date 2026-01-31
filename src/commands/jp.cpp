@@ -1,5 +1,5 @@
 /* Command join and part
-   Copyright (C) 2016-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -54,17 +54,18 @@ cmd_join(const char *data)
 		char	*state = const_cast<char *>("");
 
 		if (strings_match(dcopy, "") ||
-		    (channel = strtok_r(dcopy, " ", &state)) == NULL)
+		    (channel = strtok_r(dcopy, " ", &state)) == nullptr)
 			throw std::runtime_error("missing arguments");
 
 		const bool has_channel_key =
-		    (key = strtok_r(NULL, " ", &state)) != NULL;
+		    (key = strtok_r(nullptr, " ", &state)) != nullptr;
 
-		if (strtok_r(NULL, " ", &state) != NULL)
+		if (strtok_r(nullptr, " ", &state) != nullptr)
 			throw std::runtime_error("implicit trailing data");
-		else if (strpbrk(channel, g_forbidden_chan_name_chars) != NULL)
+		else if (strpbrk(channel, g_forbidden_chan_name_chars) !=
+		    nullptr)
 			throw std::runtime_error("bogus irc channel");
-		else if (has_channel_key && strchr(key, ',') != NULL)
+		else if (has_channel_key && strchr(key, ',') != nullptr)
 			throw std::runtime_error("commas aren't allowed in a key");
 
 		(void) strToLower(channel);
@@ -107,7 +108,7 @@ cmd_part(const char *data)
 		(void) strFeed(dcopy, 1);
 
 		if (strings_match(dcopy, "") ||
-		    (channel = strtok_r(dcopy, "\n", &state)) == NULL) {
+		    (channel = strtok_r(dcopy, "\n", &state)) == nullptr) {
 			if (is_irc_channel(ACTWINLABEL)) {
 				if (net_send("PART %s :%s", ACTWINLABEL,
 				    Config("part_message")) < 0)
@@ -121,12 +122,13 @@ cmd_part(const char *data)
 		}
 
 		const bool has_message =
-		    (message = strtok_r(NULL, "\n", &state)) != NULL;
+		    (message = strtok_r(nullptr, "\n", &state)) != nullptr;
 
-		if (strtok_r(NULL, "\n", &state) != NULL) {
+		if (strtok_r(nullptr, "\n", &state) != nullptr) {
 			throw std::runtime_error("implicit trailing data");
 		} else if (!is_irc_channel(channel) ||
-		    strpbrk(channel + 1, g_forbidden_chan_name_chars) != NULL) {
+		    strpbrk(channel + 1, g_forbidden_chan_name_chars) !=
+		    nullptr) {
 			throw std::runtime_error("bogus irc channel");
 		} else if (has_message) {
 			if (net_send("PART %s :%s", strToLower(channel),

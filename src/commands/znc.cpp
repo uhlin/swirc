@@ -251,7 +251,7 @@ get_list_of_matching_znc_commands(CSTRING search_var)
 
 	if (textBuf_size(matches) == 0) {
 		textBuf_destroy(matches);
-		return NULL;
+		return nullptr;
 	}
 
 	return matches;

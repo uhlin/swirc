@@ -90,13 +90,13 @@ irc_service_cmd::irc_service_cmd(CSTRING data)
 	dcopy = sw_strdup(data);
 	(void) strFeed(dcopy, 1);
 
-	if ((token[0] = strtok_r(dcopy, "\n", &last)) != NULL)
+	if ((token[0] = strtok_r(dcopy, "\n", &last)) != nullptr)
 		(void) this->srv_host.assign(token[0]);
-	if ((token[1] = strtok_r(NULL, "\n", &last)) != NULL)
+	if ((token[1] = strtok_r(nullptr, "\n", &last)) != nullptr)
 		(void) this->msg.assign(token[1]);
 	free(dcopy);
 
-	if (token[0] == NULL || token[1] == NULL)
+	if (token[0] == nullptr || token[1] == nullptr)
 		throw std::runtime_error("too few tokens");
 }
 
@@ -167,8 +167,8 @@ cmd_nsid(CSTRING data)
 		auto	last  = const_cast<STRING>("");
 
 		for (STRING args = dcopy;
-		    (token = strtok_r(args, " ", &last)) != NULL;
-		    args = NULL) {
+		    (token = strtok_r(args, " ", &last)) != nullptr;
+		    args = nullptr) {
 			if (strings_match(token, "--force"))
 				o_force = true;
 			else if (strings_match(token, "--swap"))
@@ -197,8 +197,8 @@ cmd_nsid(CSTRING data)
 		    "%s: communication are done in plain text: "
 		    "use --force to override", __func__);
 		return;
-	} else if ((str[0] = config_get_normalized_sasl_username()) == NULL ||
-		   (str[1] = config_get_normalized_sasl_password()) == NULL) {
+	} else if ((str[0] = config_get_normalized_sasl_username()) == nullptr ||
+		   (str[1] = config_get_normalized_sasl_password()) == nullptr) {
 		printtext_print("err", "%s: unable to get username/password",
 		    __func__);
 		return;
@@ -256,7 +256,7 @@ get_list_of_matching_cs_cmds(CSTRING search_var)
 
 	if (textBuf_size(matches) == 0) {
 		textBuf_destroy(matches);
-		return NULL;
+		return nullptr;
 	}
 
 	return matches;
@@ -269,7 +269,7 @@ get_list_of_matching_ns_cmds(CSTRING search_var)
 
 	if (textBuf_size(matches) == 0) {
 		textBuf_destroy(matches);
-		return NULL;
+		return nullptr;
 	}
 
 	return matches;

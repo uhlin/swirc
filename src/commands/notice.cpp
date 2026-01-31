@@ -1,5 +1,5 @@
 /* Notice command
-   Copyright (C) 2016-2024 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -54,8 +54,8 @@ cmd_notice(const char *data)
 	char	*state = const_cast<char *>("");
 
 	if (strings_match(dcopy, "") || strFeed(dcopy, 1) != 1 ||
-	    (recipient = strtok_r(dcopy, "\n", &state)) == NULL ||
-	    (message = strtok_r(NULL, "\n", &state)) == NULL) {
+	    (recipient = strtok_r(dcopy, "\n", &state)) == nullptr ||
+	    (message = strtok_r(nullptr, "\n", &state)) == nullptr) {
 		print_and_free("/notice: missing arguments", dcopy);
 		return;
 	} else if (!is_valid_nickname(recipient) &&
@@ -63,7 +63,7 @@ cmd_notice(const char *data)
 		print_and_free("/notice: neither a nickname or irc channel",
 		    dcopy);
 		return;
-	} else if (window_by_label(recipient) == NULL &&
+	} else if (window_by_label(recipient) == nullptr &&
 	    is_irc_channel(recipient)) {
 		print_and_free("/notice: not on that channel", dcopy);
 		return;

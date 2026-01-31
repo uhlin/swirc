@@ -1,5 +1,5 @@
 /* commands/sasl.cpp
-   Copyright (C) 2017-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2017-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -105,12 +105,12 @@ get_filepath(const bool is_public)
 	static char	path[PATH_MAX] = { '\0' };
 
 	if (sw_strcpy(path, g_home_dir, sizeof path) != 0)
-		return NULL;
+		return nullptr;
 	else if (sw_strcat(path, SLASH, sizeof path) != 0)
-		return NULL;
+		return nullptr;
 	else if (sw_strcat(path, (is_public ? "ec_key.pub" : "ec_key"),
 	    sizeof path) != 0)
-		return NULL;
+		return nullptr;
 	return (&path[0]);
 }
 
@@ -127,20 +127,20 @@ output_message(const bool is_error, const char *message)
 static void
 sasl_keygen(const bool force)
 {
-	EC_KEY	*key = NULL;
-	FILE	*fp = NULL;
+	EC_KEY	*key = nullptr;
+	FILE	*fp = nullptr;
 	int	 fd = -1;
 
 	try {
 		char	*path;
 
-		if ((path = get_filepath(false)) == NULL) {
+		if ((path = get_filepath(false)) == nullptr) {
 			throw std::runtime_error("unable to get file path");
 		} else if (file_exists(path) && !force) {
 			throw std::runtime_error("file exists! add --force to "
 			    "overwrite it");
 		} else if ((key = EC_KEY_new_by_curve_name
-		    (NID_X9_62_prime256v1)) == NULL) {
+		    (NID_X9_62_prime256v1)) == nullptr) {
 			throw std::runtime_error("unable to construct ec key");
 		} else {
 			EC_KEY_set_conv_form(key, POINT_CONVERSION_COMPRESSED);
@@ -157,11 +157,11 @@ sasl_keygen(const bool force)
 		    _SH_DENYRW, g_open_modes)) != 0)
 			throw std::runtime_error("unable to open file");
 #endif
-		else if ((fp = fdopen(fd, "w")) == NULL) {
+		else if ((fp = fdopen(fd, "w")) == nullptr) {
 			(void) close(fd);
 			throw std::runtime_error("unable to open file");
-		} else if (!PEM_write_ECPrivateKey(fp, key, NULL, NULL, 0, NULL,
-		    NULL)) {
+		} else if (!PEM_write_ECPrivateKey(fp, key, nullptr, nullptr, 0,
+		    nullptr, nullptr)) {
 			throw std::runtime_error("unable to write private key");
 		}
 
@@ -181,9 +181,9 @@ sasl_keygen(const bool force)
 static int
 public_key_length(EC_KEY *key)
 {
-	if (key == NULL)
+	if (key == nullptr)
 		return -1;
-	return (i2o_ECPublicKey(key, NULL));
+	return (i2o_ECPublicKey(key, nullptr));
 }
 
 /*lint -sem(public_key_blob, r_null) */
@@ -193,8 +193,8 @@ public_key_blob(EC_KEY *key)
 	int		 length;
 	unsigned char	*out, *out_p;
 
-	if (key == NULL || (length = public_key_length(key)) <= 0)
-		return NULL;
+	if (key == nullptr || (length = public_key_length(key)) <= 0)
+		return nullptr;
 
 	out = new unsigned char[length];
 	out[length - 1] = '\0';
@@ -202,7 +202,7 @@ public_key_blob(EC_KEY *key)
 
 	if (i2o_ECPublicKey(key, &out_p) < 0) {
 		delete[] out;
-		return NULL;
+		return nullptr;
 	}
 
 	return out;
@@ -211,10 +211,10 @@ public_key_blob(EC_KEY *key)
 static void
 sasl_pubkey(void)
 {
-	EC_KEY		*key = NULL;
-	FILE		*fp = NULL;
-	char		*encoded_blob = NULL;
-	unsigned char	*blob = NULL;
+	EC_KEY		*key = nullptr;
+	FILE		*fp = nullptr;
+	char		*encoded_blob = nullptr;
+	unsigned char	*blob = nullptr;
 
 	try {
 		char	*msg, *path;
@@ -223,26 +223,26 @@ sasl_pubkey(void)
 		int	 length = -1;
 
 		if ((key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1)) ==
-		    NULL)
+		    nullptr)
 			throw std::runtime_error("unable to construct ec key");
 		else
 			EC_KEY_set_conv_form(key, POINT_CONVERSION_COMPRESSED);
 
-		if ((path = get_filepath(false)) == NULL) {
+		if ((path = get_filepath(false)) == nullptr) {
 			throw std::runtime_error("unable to get file path");
 		} else if (!file_exists(path)) {
 			throw std::runtime_error("unable to find private key "
 			    "(doesn't exist  --  use keygen)");
-		} else if ((fp = xfopen(path, "r")) == NULL) {
+		} else if ((fp = xfopen(path, "r")) == nullptr) {
 			throw std::runtime_error("unable to open private key");
-		} else if (PEM_read_ECPrivateKey(fp, &key, NULL, NULL) ==
-		    NULL) {
+		} else if (PEM_read_ECPrivateKey(fp, &key, nullptr, nullptr) ==
+		    nullptr) {
 			throw std::runtime_error("unable to read private key");
 		} else if (!EC_KEY_check_key(key)) {
 			throw std::runtime_error("bogus key");
 		} else if ((length = public_key_length(key)) <= 0) {
 			throw std::runtime_error("public key length error");
-		} else if ((blob = public_key_blob(key)) == NULL) {
+		} else if ((blob = public_key_blob(key)) == nullptr) {
 			throw std::runtime_error("public key blob error");
 		} else if ((encode_len = crypt_get_base64_encode_length(length))
 		    <= 0) {
@@ -270,7 +270,7 @@ sasl_pubkey(void)
 
 	if (key)
 		EC_KEY_free(key);
-	if (fp != NULL)
+	if (fp != nullptr)
 		(void) fclose(fp);
 	delete[] encoded_blob;
 	delete[] blob;
@@ -291,7 +291,7 @@ save_to_config(void)
 	char	 path[PATH_MAX] = { '\0' };
 	size_t	 len = 0;
 
-	if (g_home_dir == NULL)
+	if (g_home_dir == nullptr)
 		return;
 
 	len += strlen(g_home_dir);
@@ -361,7 +361,7 @@ set_password(const char *password)
 static bool
 passwd_ok_check(const char *str, std::string &err_reason)
 {
-	if (str == NULL) {
+	if (str == nullptr) {
 		err_reason.assign("is null");
 		return false;
 	} else if (strings_match(str, "")) {
@@ -370,7 +370,7 @@ passwd_ok_check(const char *str, std::string &err_reason)
 	}
 
 	for (const char *cp = str; *cp != '\0'; cp++) {
-		if (strchr(g_sasl_pass_allowed_chars, *cp) == NULL) {
+		if (strchr(g_sasl_pass_allowed_chars, *cp) == nullptr) {
 			err_reason.assign("contains forbidden chars");
 			return false;
 		}
@@ -392,9 +392,9 @@ static void
 set_passwd_s(const char *data)
 {
 	bool	 error = false;
-	char	*cout = NULL;
-	char	*data_copy = NULL;
-	char	*val = NULL;
+	char	*cout = nullptr;
+	char	*data_copy = nullptr;
+	char	*val = nullptr;
 	size_t	 data_len = 0;
 
 	try {
@@ -404,16 +404,18 @@ set_passwd_s(const char *data)
 		std::string	 err_reason("");
 		std::string	 msg("");
 
-		if (data == NULL || strings_match(data, ""))
+		if (data == nullptr || strings_match(data, ""))
 			throw std::runtime_error("no data");
 
 		data_copy = sw_strdup(data);
 		data_len = strlen(data);
 
-		if ((sasl_pass = strtok_r(data_copy, " ", &last)) == NULL ||
-		    (encryption_pass = strtok_r(NULL, " ", &last)) == NULL) {
+		if ((sasl_pass = strtok_r(data_copy, " ", &last)) ==
+		    nullptr ||
+		    (encryption_pass = strtok_r(nullptr, " ", &last)) ==
+		    nullptr) {
 			throw std::runtime_error("too few args");
-		} else if (strtok_r(NULL, " ", &last) != NULL) {
+		} else if (strtok_r(nullptr, " ", &last) != nullptr) {
 			throw std::runtime_error("too many args");
 		} else if (!passwd_ok_check(sasl_pass, err_reason)) {
 			msg.assign("SASL pass: ").append(err_reason);
@@ -426,7 +428,7 @@ set_passwd_s(const char *data)
 		str1 = reinterpret_cast<cryptstr_t>(sasl_pass);
 		str2 = reinterpret_cast<cryptstr_t>(encryption_pass);
 
-		if ((cout = crypt_encrypt_str(str1, str2, true)) == NULL)
+		if ((cout = crypt_encrypt_str(str1, str2, true)) == nullptr)
 			throw std::runtime_error("encryption failed");
 
 		val = strdup_printf("%c%s", g_encrypted_pass_sym, cout);
@@ -567,9 +569,9 @@ sign_decoded_data(EC_KEY *key, const uint8_t *data, int datalen, uint8_t **sig,
 {
 	unsigned int	len = 0;
 
-	if (key == NULL ||
+	if (key == nullptr ||
 	    (len = static_cast<unsigned int>(ECDSA_size(key))) == 0) {
-		*sig = NULL;
+		*sig = nullptr;
 		*siglen = 0;
 		return false;
 	}
@@ -579,7 +581,7 @@ sign_decoded_data(EC_KEY *key, const uint8_t *data, int datalen, uint8_t **sig,
 
 	if (!ECDSA_sign(0, data, datalen, *sig, &len, key)) {
 		delete[] *sig;
-		*sig = NULL;
+		*sig = nullptr;
 		*siglen = 0;
 		return false;
 	}
@@ -603,7 +605,7 @@ get_list_of_matching_sasl_cmds(const char *search_var)
 
 	if (textBuf_size(matches) == 0) {
 		textBuf_destroy(matches);
-		return NULL;
+		return nullptr;
 	}
 
 	return matches;
@@ -615,7 +617,7 @@ clean_up(EC_KEY *key, FILE *fp, char *out, uint8_t *decoded_chl, uint8_t *sig)
 {
 	if (key)
 		EC_KEY_free(key);
-	if (fp != NULL && fclose(fp) != 0)
+	if (fp != nullptr && fclose(fp) != 0)
 		err_log(errno, "solve_ecdsa_nist256p_challenge: fclose");
 	free(out);
 	delete[] decoded_chl;
@@ -625,32 +627,33 @@ clean_up(EC_KEY *key, FILE *fp, char *out, uint8_t *decoded_chl, uint8_t *sig)
 char *
 solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
 {
-	EC_KEY		*key = NULL;
-	FILE		*fp = NULL;
-	char		*out = NULL;
-	uint8_t		*decoded_chl = NULL;
-	uint8_t		*sig = NULL;
+	EC_KEY		*key = nullptr;
+	FILE		*fp = nullptr;
+	char		*out = nullptr;
+	uint8_t		*decoded_chl = nullptr;
+	uint8_t		*sig = nullptr;
 
 	try {
-		char		*path = NULL;
+		char		*path = nullptr;
 		int		 decode_len,
 				 encode_len;
 		int		 decode_ret = -1;
 		unsigned int	 siglen = 0;
 
 		if ((key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1)) ==
-		    NULL)
+		    nullptr)
 			throw std::runtime_error("unable to construct ec key");
 		else
 			EC_KEY_set_conv_form(key, POINT_CONVERSION_COMPRESSED);
 
-		if ((path = get_filepath(false)) == NULL)
+		if ((path = get_filepath(false)) == nullptr)
 			throw std::runtime_error("unable to get file path");
 		else if (!file_exists(path))
 			throw std::runtime_error("unable to find private key");
-		else if ((fp = xfopen(path, "r")) == NULL)
+		else if ((fp = xfopen(path, "r")) == nullptr)
 			throw std::runtime_error("unable to open private key");
-		else if (PEM_read_ECPrivateKey(fp, &key, NULL, NULL) == NULL)
+		else if (PEM_read_ECPrivateKey(fp, &key, nullptr, nullptr) ==
+		    nullptr)
 			throw std::runtime_error("unable to read private key");
 		else if (!EC_KEY_check_key(key))
 			throw std::runtime_error("bogus key");
@@ -682,14 +685,14 @@ solve_ecdsa_nist256p_challenge(const char *challenge, char **err_reason)
 	} catch (const std::runtime_error &e) {
 		clean_up(key, fp, out, decoded_chl, sig);
 		*err_reason = sw_strdup(e.what());
-		return NULL;
+		return nullptr;
 	} catch (...) {
 		clean_up(key, fp, out, decoded_chl, sig);
 		*err_reason = sw_strdup("unknown exception was thrown!");
-		return NULL;
+		return nullptr;
 	}
 
-	clean_up(key, fp, NULL, decoded_chl, sig);
-	*err_reason = NULL;
+	clean_up(key, fp, nullptr, decoded_chl, sig);
+	*err_reason = nullptr;
 	return out;
 }

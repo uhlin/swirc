@@ -1,5 +1,5 @@
 /* SASL auth mechanism SCRAM-SHA-256
-   Copyright (C) 2019-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2019-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -64,9 +64,9 @@ struct digest_context {
 };
 
 digest_context::digest_context()
-    : key(NULL)
+    : key(nullptr)
     , key_len(0)
-    , data(NULL)
+    , data(nullptr)
     , data_len(0)
     , md_len(0)
 {
@@ -86,7 +86,7 @@ digest_context::digest_context(UCHARPTR p_key, int p_key_len,
 
 volatile bool	g_sasl_scram_sha_got_first_msg = false;
 
-static STRING	complete_nonce = NULL;
+static STRING	complete_nonce = nullptr;
 static char	nonce[64] = { '\0' };
 
 static const unsigned char	client_key_str[] = "Client Key";
@@ -165,7 +165,7 @@ sasl_scram_sha_send_client_final_msg(CSTRING proof)
 	size_t		 size;
 	std::string	 str("c=biws,r=");
 
-	if (complete_nonce == NULL || proof == NULL)
+	if (complete_nonce == nullptr || proof == nullptr)
 		return -1;
 
 	(void) str.append(complete_nonce);
@@ -188,12 +188,12 @@ sasl_scram_sha_send_client_final_msg(CSTRING proof)
 static STRING
 get_decoded_msg(CSTRING source, int *outlen)
 {
-	STRING	 decoded_msg = NULL;
+	STRING	 decoded_msg = nullptr;
 	int	 length_needed, tmp;
 
-	if (source == NULL || strings_match(source, "") ||
-	    (tmp = b64_decode(source, NULL, 0)) < 0)
-		return NULL;
+	if (source == nullptr || strings_match(source, "") ||
+	    (tmp = b64_decode(source, nullptr, 0)) < 0)
+		return nullptr;
 	if (outlen)
 		*outlen = tmp;
 
@@ -204,7 +204,7 @@ get_decoded_msg(CSTRING source, int *outlen)
 	if (b64_decode(source, reinterpret_cast<uint8_t *>(decoded_msg),
 	    length_needed) == -1) {
 		delete[] decoded_msg;
-		return NULL;
+		return nullptr;
 	}
 
 	return decoded_msg;
@@ -216,10 +216,10 @@ static int
 get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
     int *iter)
 {
-	STRING	 decoded_msg = NULL;
+	STRING	 decoded_msg = nullptr;
 	bool	 ok = false;
 
-	*salt = NULL;
+	*salt = nullptr;
 	*saltlen = 0;
 	*iter = PKCS5_DEFAULT_ITER;
 
@@ -227,7 +227,7 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 		char *cp, *b64salt;
 		size_t n;
 
-		if ((decoded_msg = get_decoded_msg(msg, NULL)) == NULL) {
+		if ((decoded_msg = get_decoded_msg(msg, nullptr)) == nullptr) {
 			throw std::runtime_error("unable to get decoded "
 			    "message");
 		}
@@ -249,7 +249,7 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 		complete_nonce = sw_strdup(cp);
 		cp[n] = ',';
 
-		if ((cp = strstr(cp, ",s=")) == NULL)
+		if ((cp = strstr(cp, ",s=")) == nullptr)
 			throw std::runtime_error("no base64-encoded salt");
 
 		cp += 3;
@@ -261,9 +261,9 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 		    saltlen));
 		free(b64salt);
 
-		if (*salt == NULL)
+		if (*salt == nullptr)
 			throw std::runtime_error("unable to decode salt");
-		else if ((cp = strstr(cp, ",i=")) == NULL)
+		else if ((cp = strstr(cp, ",i=")) == nullptr)
 			throw std::runtime_error("no iteration count");
 
 		cp += 3;
@@ -271,11 +271,11 @@ get_sfm_components(CSTRING msg, unsigned char **salt, int *saltlen,
 		if (!is_numeric(cp))
 			throw std::runtime_error("iteration count not numeric");
 
-		*iter = static_cast<int>(strtol(cp, NULL, 10));
+		*iter = static_cast<int>(strtol(cp, nullptr, 10));
 		ok = true;
 	} catch (const std::runtime_error &e) {
 		delete[] *salt;
-		*salt = NULL;
+		*salt = nullptr;
 		*saltlen = 0;
 		*iter = PKCS5_DEFAULT_ITER;
 		err_log(0, "%s: %s", __func__, e.what());
@@ -306,7 +306,7 @@ static UCHARPTR
 get_salted_password(const unsigned char *salt, int saltlen, int iter,
     int *outsize)
 {
-	UCHARPTR out = NULL;
+	UCHARPTR out = nullptr;
 
 	try {
 		CSTRING pass;
@@ -318,7 +318,7 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 
 		out = new unsigned char[*outsize];
 
-		if ((pass = config_get_normalized_sasl_password()) == NULL) {
+		if ((pass = config_get_normalized_sasl_password()) == nullptr) {
 			throw std::runtime_error("unable to get normalized "
 			    "sasl password");
 		} else if (!PKCS5_PBKDF2_HMAC(pass, -1, salt, saltlen, iter,
@@ -332,7 +332,7 @@ get_salted_password(const unsigned char *salt, int saltlen, int iter,
 		*outsize = 0;
 		delete[] out;
 		err_log(0, "%s: %s", __func__, e.what());
-		return NULL;
+		return nullptr;
 	} catch (...) {
 		sw_assert_not_reached();
 	}
@@ -344,7 +344,7 @@ static int
 get_digest(struct digest_context *ctx)
 {
 	if (HMAC(get_evp(), ctx->key, ctx->key_len,
-	    ctx->data, ctx->data_len, ctx->md, & (ctx->md_len)) == NULL)
+	    ctx->data, ctx->data_len, ctx->md, & (ctx->md_len)) == nullptr)
 		return -1;
 	return 0;
 }
@@ -398,7 +398,7 @@ get_auth_msg(CSTRING b64msg, size_t *auth_msg_len)
 	try {
 		msg_bare = get_client_first_msg_bare();
 		msg_wo_proof = get_client_final_msg_wo_proof();
-		serv_first_msg = get_decoded_msg(b64msg, NULL);
+		serv_first_msg = get_decoded_msg(b64msg, nullptr);
 	} catch (const std::bad_alloc &e) {
 		err_exit(ENOMEM, "%s: fatal: %s", __func__, e.what());
 	}
@@ -460,8 +460,8 @@ int
 sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 {
 	UCHARPTR	 auth_msg;
-	UCHARPTR	 pass = NULL;
-	UCHARPTR	 salt = NULL;
+	UCHARPTR	 pass = nullptr;
+	UCHARPTR	 salt = nullptr;
 	char		 proof[EVP_MAX_MD_SIZE + 1] = { '\0' };
 	int		 digest_len = 0;
 	int		 iter = PKCS5_DEFAULT_ITER;
@@ -472,7 +472,7 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 
 	if (get_sfm_components(msg, &salt, &saltlen, &iter) == -1 ||
 	    (pass = get_salted_password(salt, saltlen, iter, &passwdlen)) ==
-	    NULL) {
+	    nullptr) {
 		delete[] salt;
 		return -1;
 	}
@@ -500,7 +500,7 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 	 * StoredKey: H(ClientKey)
 	 */
 	if (hash_client_key(client_key.md, client_key.md_len,
-	    get_stored_key(digest_len, true)) == NULL)
+	    get_stored_key(digest_len, true)) == nullptr)
 		return -1;
 
 	auth_msg_len = 0;
@@ -556,14 +556,14 @@ sasl_scram_sha_handle_serv_first_msg(CSTRING msg)
 int
 sasl_scram_sha_handle_serv_final_msg(CSTRING msg)
 {
-	STRING	 decoded_msg = NULL;
+	STRING	 decoded_msg = nullptr;
 	bool	 signature_ok = false;
 
 	try {
 		char		*cp;
 		UCHARPTR	 signature;
 
-		if ((decoded_msg = get_decoded_msg(msg, NULL)) == NULL) {
+		if ((decoded_msg = get_decoded_msg(msg, nullptr)) == nullptr) {
 			throw std::runtime_error("unable to get decoded "
 			    "message");
 		}
@@ -577,8 +577,8 @@ sasl_scram_sha_handle_serv_final_msg(CSTRING msg)
 		cp += 2;
 
 		if ((signature =
-		    reinterpret_cast<UCHARPTR>(get_decoded_msg(cp, NULL))) ==
-		    NULL) {
+		    reinterpret_cast<UCHARPTR>(get_decoded_msg(cp, nullptr))) ==
+		    nullptr) {
 			throw std::runtime_error("cannot decode server "
 			    "signature!");
 		}
