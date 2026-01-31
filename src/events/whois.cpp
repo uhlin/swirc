@@ -254,8 +254,8 @@ event_whois_acc(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_acc(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -293,8 +293,8 @@ event_whois_away(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_away(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -322,8 +322,8 @@ event_whois_bot(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_bot(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -364,8 +364,8 @@ event_whois_cert(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_cert(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -402,8 +402,8 @@ event_whois_channels(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_channels(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -432,8 +432,8 @@ event_whois_conn(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_conn(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -481,8 +481,8 @@ event_whois_host(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_host(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -550,8 +550,8 @@ event_whois_idle(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_idle(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -579,8 +579,8 @@ event_whois_ircOp(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_ircOp(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -611,8 +611,8 @@ event_whois_modes(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_modes(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -652,8 +652,8 @@ event_whois_server(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_server(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -681,8 +681,8 @@ event_whois_service(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_service(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -724,8 +724,8 @@ event_whois_ssl(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_ssl(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -774,7 +774,7 @@ event_whois_user(struct irc_message_compo *compo)
 		ctx.window	= g_status_window;
 		ctx.spec_type	= TYPE_SPEC1_WARN;
 
-		printtext(&ctx, "event_whois_user(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
