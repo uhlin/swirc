@@ -188,12 +188,16 @@ ftp_ctl_conn &ftp_ctl_conn::operator=(ftp_ctl_conn &&obj) noexcept
 	if (this->res)
 		freeaddrinfo(this->res);
 
-	if (!obj.reply_vec.empty()) {
-		this->reply_vec.assign(obj.reply_vec.begin(),
-				       obj.reply_vec.end());
+	try {
+		if (!obj.reply_vec.empty()) {
+			this->reply_vec.assign(obj.reply_vec.begin(),
+					       obj.reply_vec.end());
+		}
+		if (!obj.message_concat.empty())
+			this->message_concat.assign(obj.message_concat);
+	} catch (...) {
+		err_quit("%s: unexpected exception thrown", __func__);
 	}
-	if (!obj.message_concat.empty())
-		this->message_concat.assign(obj.message_concat);
 
 	this->sock  = obj.sock;
 	this->state = obj.state;
@@ -203,8 +207,12 @@ ftp_ctl_conn &ftp_ctl_conn::operator=(ftp_ctl_conn &&obj) noexcept
 
 	/* ------------------------------------------------------------ */
 
-	obj.reply_vec.clear();
-	obj.message_concat.clear();
+	try {
+		obj.reply_vec.clear();
+		obj.message_concat.clear();
+	} catch (...) {
+		err_quit("%s: unexpected exception thrown", __func__);
+	}
 
 	obj.sock  = INVALID_SOCKET;
 	obj.state = CONCAT_BUFFER_IS_EMPTY;
@@ -223,19 +231,27 @@ ftp_ctl_conn::ftp_ctl_conn(ftp_ctl_conn &&obj) noexcept
     , state(obj.state)
     , res(obj.res)
 {
-	if (!obj.reply_vec.empty()) {
-		this->reply_vec.assign(obj.reply_vec.begin(),
-				       obj.reply_vec.end());
+	try {
+		if (!obj.reply_vec.empty()) {
+			this->reply_vec.assign(obj.reply_vec.begin(),
+					       obj.reply_vec.end());
+		}
+		if (!obj.message_concat.empty())
+			this->message_concat.assign(obj.message_concat);
+	} catch (...) {
+		err_quit("%s: unexpected exception thrown", __func__);
 	}
-	if (!obj.message_concat.empty())
-		this->message_concat.assign(obj.message_concat);
 
 	memmove(this->buf, obj.buf, sizeof(this->buf));
 
 	/* ------------------------------------------------------------ */
 
-	obj.reply_vec.clear();
-	obj.message_concat.clear();
+	try {
+		obj.reply_vec.clear();
+		obj.message_concat.clear();
+	} catch (...) {
+		err_quit("%s: unexpected exception thrown", __func__);
+	}
 
 	obj.sock  = INVALID_SOCKET;
 	obj.state = CONCAT_BUFFER_IS_EMPTY;
@@ -726,10 +742,14 @@ ftp_data_conn &ftp_data_conn::operator=(ftp_data_conn &&obj) noexcept
 	if (this->res)
 		freeaddrinfo(this->res);
 
-	if (!obj.vec.empty())
-		this->vec.assign(obj.vec.begin(), obj.vec.end());
-	if (!obj.message_concat.empty())
-		this->message_concat.assign(obj.message_concat);
+	try {
+		if (!obj.vec.empty())
+			this->vec.assign(obj.vec.begin(), obj.vec.end());
+		if (!obj.message_concat.empty())
+			this->message_concat.assign(obj.message_concat);
+	} catch (...) {
+		err_quit("%s: unexpected exception thrown", __func__);
+	}
 
 	this->full_path = obj.full_path;
 	this->path	= obj.path;
@@ -750,8 +770,12 @@ ftp_data_conn &ftp_data_conn::operator=(ftp_data_conn &&obj) noexcept
 
 	/* ------------------------------------------------------------ */
 
-	obj.vec.clear();
-	obj.message_concat.clear();
+	try {
+		obj.vec.clear();
+		obj.message_concat.clear();
+	} catch (...) {
+		err_quit("%s: unexpected exception thrown", __func__);
+	}
 
 	obj.full_path = nullptr;
 	obj.path      = nullptr;
@@ -788,10 +812,14 @@ ftp_data_conn::ftp_data_conn(ftp_data_conn &&obj) noexcept
     , res(obj.res)
     , port(obj.port)
 {
-	if (!obj.vec.empty())
-		this->vec.assign(obj.vec.begin(), obj.vec.end());
-	if (!obj.message_concat.empty())
-		this->message_concat.assign(obj.message_concat);
+	try {
+		if (!obj.vec.empty())
+			this->vec.assign(obj.vec.begin(), obj.vec.end());
+		if (!obj.message_concat.empty())
+			this->message_concat.assign(obj.message_concat);
+	} catch (...) {
+		err_quit("%s: unexpected exception thrown", __func__);
+	}
 
 	memmove(this->buf, obj.buf, sizeof(this->buf));
 
@@ -800,8 +828,12 @@ ftp_data_conn::ftp_data_conn(ftp_data_conn &&obj) noexcept
 
 	/* ------------------------------------------------------------ */
 
-	obj.vec.clear();
-	obj.message_concat.clear();
+	try {
+		obj.vec.clear();
+		obj.message_concat.clear();
+	} catch (...) {
+		err_quit("%s: unexpected exception thrown", __func__);
+	}
 
 	obj.full_path = nullptr;
 	obj.path      = nullptr;
