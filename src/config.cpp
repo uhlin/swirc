@@ -226,9 +226,10 @@ get_string(const char *name, const char *type)
 static void
 hInstall(const char *name, const char *value)
 {
-	PCONF_HTBL_ENTRY item;
-	const bool has_no_value = (value == nullptr || *value == '\0');
-	unsigned int hashval;
+	PCONF_HTBL_ENTRY	item;
+	const bool		has_no_value = (value == nullptr ||
+						*value == '\0');
+	unsigned int		hashval;
 
 	item        = static_cast<PCONF_HTBL_ENTRY>(xcalloc(sizeof *item, 1));
 	item->name  = sw_strdup(name);
@@ -787,10 +788,10 @@ get_sasl_passwd_type(void)
 static const char *
 get_sasl(const char *what, char *buf, size_t bufsize)
 {
-	Stringprep_profile_flags flags;
-	char *sp_out = nullptr;
-	char *str = nullptr;
-	int ret;
+	Stringprep_profile_flags	 flags;
+	char				*sp_out = nullptr;
+	char				*str = nullptr;
+	int				 ret;
 
 	if (strings_match(Config(what), "")) {
 		return nullptr;
