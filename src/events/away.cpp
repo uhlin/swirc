@@ -1,5 +1,5 @@
 /* events/away.cpp
-   Copyright (C) 2018-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -86,36 +86,36 @@ event_away(struct irc_message_compo *compo)
 		char		*prefix, *message;
 		const char	*nick, *user, *host;
 
-		if (compo == NULL)
+		if (compo == nullptr)
 			throw std::runtime_error("no components");
-		else if ((prefix = compo->prefix) == NULL)
+		else if ((prefix = compo->prefix) == nullptr)
 			throw std::runtime_error("null prefix");
 		else
 			prefix++;
 
-		if ((message = compo->params) != NULL) {
+		if ((message = compo->params) != nullptr) {
 			if (*message == ':')
 				message++;
 			(void) squeeze_text_deco(message);
 		}
 
-		if ((nick = strtok_r(prefix, "!@", &last)) == NULL ||
-		    (user = strtok_r(NULL, "!@", &last)) == NULL ||
-		    (host = strtok_r(NULL, "!@", &last)) == NULL)
+		if ((nick = strtok_r(prefix, "!@", &last)) == nullptr ||
+		    (user = strtok_r(nullptr, "!@", &last)) == nullptr ||
+		    (host = strtok_r(nullptr, "!@", &last)) == nullptr)
 			throw std::runtime_error("no nick or user@host");
 
-		printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+		printtext_context_init(&ctx, nullptr, TYPE_SPEC1_SPEC2, true);
 
 		for (int i = 1; i <= g_ntotal_windows; i++) {
 			PIRC_WINDOW	window;
 
-			if ((window = window_by_refnum(i)) != NULL &&
+			if ((window = window_by_refnum(i)) != nullptr &&
 			    is_irc_channel(window->label) &&
 			    event_names_htbl_lookup(nick, window->label) !=
-			    NULL) {
+			    nullptr) {
 				ctx.window = window;
 
-				if (message != NULL) {
+				if (message != nullptr) {
 					print_nowAway(&ctx, nick, user, host,
 					    message);
 				} else {

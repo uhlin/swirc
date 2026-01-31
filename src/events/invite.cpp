@@ -1,5 +1,5 @@
 /* events/invite.cpp
-   Copyright (C) 2016-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -74,30 +74,31 @@ event_invite(struct irc_message_compo *compo)
 		const char	*nick, *user, *host;
 		const char	*target, *channel;
 
-		if ((prefix = compo->prefix) == NULL)
+		if ((prefix = compo->prefix) == nullptr)
 			throw std::runtime_error("no prefix");
 		else if (*prefix == ':')
 			prefix++;
 
-		if ((nick = strtok_r(prefix, "!@", &state1)) == NULL)
+		if ((nick = strtok_r(prefix, "!@", &state1)) == nullptr)
 			throw std::runtime_error("unable to get nick");
-		if ((user = strtok_r(NULL, "!@", &state1)) == NULL)
+		if ((user = strtok_r(nullptr, "!@", &state1)) == nullptr)
 			user = "<no user>";
-		if ((host = strtok_r(NULL, "!@", &state1)) == NULL)
+		if ((host = strtok_r(nullptr, "!@", &state1)) == nullptr)
 			host = "<no host>";
 
 		if (strFeed(compo->params, 1) != 1)
 			throw std::runtime_error("strFeed");
 		else if ((target = strtok_r(compo->params, "\n", &state2)) ==
-		    NULL)
+		    nullptr)
 			throw std::runtime_error("null target");
-		else if ((channel = strtok_r(NULL, "\n", &state2)) == NULL)
+		else if ((channel = strtok_r(nullptr, "\n", &state2)) ==
+		    nullptr)
 			throw std::runtime_error("null channel");
 		else if (*channel == ':')
 			channel++;
 
 		if (!is_irc_channel(channel) || strpbrk(channel + 1,
-		    g_forbidden_chan_name_chars) != NULL) {
+		    g_forbidden_chan_name_chars) != nullptr) {
 			throw std::runtime_error("bogus irc channel");
 		} else if (strings_match_ignore_case(target, g_my_nickname)) {
 			printtext(&ctx, _("%c%s%c %s%s@%s%s invites you to "

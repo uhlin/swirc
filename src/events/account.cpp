@@ -1,5 +1,5 @@
 /* events/account.cpp
-   Copyright (C) 2018-2023 Markus Uhlin. All rights reserved.
+   Copyright (C) 2018-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -88,29 +88,29 @@ event_account(struct irc_message_compo *compo)
 		const char	*accountname;
 		const char	*nick, *user, *host;
 
-		if ((prefix = compo->prefix) == NULL)
+		if ((prefix = compo->prefix) == nullptr)
 			throw std::runtime_error("no prefix");
 		else
 			prefix++;
 
-		if ((nick = strtok_r(prefix, "!@", &last)) == NULL ||
-		    (user = strtok_r(NULL, "!@", &last)) == NULL ||
-		    (host = strtok_r(NULL, "!@", &last)) == NULL)
+		if ((nick = strtok_r(prefix, "!@", &last)) == nullptr ||
+		    (user = strtok_r(nullptr, "!@", &last)) == nullptr ||
+		    (host = strtok_r(nullptr, "!@", &last)) == nullptr)
 			throw std::runtime_error("no nick or user@host");
 		else if (*(accountname = compo->params) == ':')
 			accountname++;
 
 		const bool logged_out = strings_match(accountname, "*");
 
-		printtext_context_init(&ctx, NULL, TYPE_SPEC1_SPEC2, true);
+		printtext_context_init(&ctx, nullptr, TYPE_SPEC1_SPEC2, true);
 
 		for (int i = 1; i <= g_ntotal_windows; i++) {
 			PIRC_WINDOW	window;
 
-			if ((window = window_by_refnum(i)) != NULL &&
+			if ((window = window_by_refnum(i)) != nullptr &&
 			    is_irc_channel(window->label) &&
 			    event_names_htbl_lookup(nick, window->label) !=
-			    NULL) {
+			    nullptr) {
 				ctx.window = window;
 
 				if (logged_out) {

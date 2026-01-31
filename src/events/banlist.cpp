@@ -79,31 +79,31 @@ feeds_written_4(PPRINTTEXT_CONTEXT ctx, char *params)
 	/* recipient */
 	(void) strtok_r(params, "\n", &state1);
 
-	if ((channel = strtok_r(NULL, "\n", &state1)) == NULL)
+	if ((channel = strtok_r(nullptr, "\n", &state1)) == nullptr)
 		throw std::runtime_error("unable to get channel");
-	else if ((mask = strtok_r(NULL, "\n", &state1)) == NULL)
+	else if ((mask = strtok_r(nullptr, "\n", &state1)) == nullptr)
 		throw std::runtime_error("unable to get mask");
-	else if ((issuer = strtok_r(NULL, "\n", &state1)) == NULL)
+	else if ((issuer = strtok_r(nullptr, "\n", &state1)) == nullptr)
 		throw std::runtime_error("unable to get issuer");
-	else if ((seconds = strtok_r(NULL, "\n", &state1)) == NULL)
+	else if ((seconds = strtok_r(nullptr, "\n", &state1)) == nullptr)
 		throw std::runtime_error("unable to get seconds");
 	else if (sw_strcpy(buf, issuer, ARRAY_SIZE(buf)) != 0)
 		throw std::runtime_error("cannot copy issuer");
 	else if (!is_numeric(seconds))
 		throw std::runtime_error("seconds not a number");
 
-	if ((ctx->window = window_by_label(channel)) == NULL)
+	if ((ctx->window = window_by_label(channel)) == nullptr)
 		ctx->window = g_status_window;
-	if ((issuer_name = strtok_r(buf, "!", &state2)) == NULL)
+	if ((issuer_name = strtok_r(buf, "!", &state2)) == nullptr)
 		throw std::runtime_error("unable to get issuer name");
-	if ((issuer_userhost = strtok_r(NULL, "!", &state2)) == NULL)
+	if ((issuer_userhost = strtok_r(nullptr, "!", &state2)) == nullptr)
 		issuer_userhost = const_cast<char *>("");
 
-	const auto date_of_issue = static_cast<time_t>(strtol(seconds, NULL,
+	const auto date_of_issue = static_cast<time_t>(strtol(seconds, nullptr,
 	    10));
 
 #if defined(UNIX)
-	if (localtime_r(&date_of_issue, &result) == NULL)
+	if (localtime_r(&date_of_issue, &result) == nullptr)
 		throw std::runtime_error("localtime_r: " TM_STRUCT_MSG);
 #elif defined(WIN32)
 	if (localtime_s(&result, &date_of_issue) != 0)
@@ -128,12 +128,12 @@ feeds_written_2(PPRINTTEXT_CONTEXT ctx, char *params)
 
 	(void) strtok_r(params, "\n", &last);
 
-	if ((channel = strtok_r(NULL, "\n", &last)) == NULL)
+	if ((channel = strtok_r(nullptr, "\n", &last)) == nullptr)
 		throw std::runtime_error("unable to get channel");
-	else if ((mask = strtok_r(NULL, "\n", &last)) == NULL)
+	else if ((mask = strtok_r(nullptr, "\n", &last)) == nullptr)
 		throw std::runtime_error("unable to get mask");
 
-	if ((ctx->window = window_by_label(channel)) == NULL)
+	if ((ctx->window = window_by_label(channel)) == nullptr)
 		ctx->window = g_status_window;
 
 	printtext(ctx, "%s: %s", get_channel(channel).c_str(),
@@ -195,7 +195,7 @@ event_quietlist(struct irc_message_compo *compo)
 	try {
 		char	*cp;
 
-		if ((cp = strstr(compo->params, " q ")) == NULL)
+		if ((cp = strstr(compo->params, " q ")) == nullptr)
 			throw std::runtime_error("cannot find substring");
 		else if (strings_match(&cp[3], ""))
 			throw std::runtime_error("parse error");
@@ -230,13 +230,13 @@ event_eof_banlist(struct irc_message_compo *compo)
 
 		(void) strtok_r(compo->params, "\n", &state); /* recipient */
 
-		if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (msg = strtok_r(NULL, "\n", &state)) == NULL) {
+		if ((channel = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (msg = strtok_r(nullptr, "\n", &state)) == nullptr) {
 			throw std::runtime_error("unable to retrieve event "
 			    "components");
 		}
 
-		if ((ctx.window = window_by_label(channel)) == NULL)
+		if ((ctx.window = window_by_label(channel)) == nullptr)
 			ctx.window = g_status_window;
 
 		if (*msg == ':')
@@ -263,7 +263,7 @@ event_eof_quietlist(struct irc_message_compo *compo)
 	try {
 		char	*cp;
 
-		if ((cp = strstr(compo->params, " q ")) == NULL)
+		if ((cp = strstr(compo->params, " q ")) == nullptr)
 			throw std::runtime_error("cannot find substring");
 		else if (strings_match(&cp[3], ""))
 			throw std::runtime_error("parse error");
