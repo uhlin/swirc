@@ -130,7 +130,7 @@ netsplit::find_nick(CSTRING p_nick)
 bool
 netsplit::remove_nick(CSTRING p_nick)
 {
-	std::vector<std::string>::iterator	it = this->nicks.begin();
+	std::vector<std::string>::iterator	it = this->nicks.begin(); // NOLINT
 	std::vector<std::string>::size_type	count = 0;
 
 	while (it != this->nicks.end()) {

@@ -422,7 +422,7 @@ handle_length_four(char (&numstr)[5], CSTRING token, const size_t len,
 		err_log(errno, "%s: sscanf_s() error", __func__);
 	}
 #else
-	else if (sscanf(numstr, "%d%c", &num, &ch) != 2 ||
+	else if (sscanf(numstr, "%d%c", &num, &ch) != 2 || // NOLINT
 		 ch != '-') {
 		err_log(0, "%s: sscanf() error", __func__);
 	}
