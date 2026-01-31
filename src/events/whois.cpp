@@ -96,7 +96,7 @@ time_idle::time_idle(long int sec_idle, long int signon_time)
 	time_t		elapsed = signon_time;
 
 #if defined(UNIX)
-	if (localtime_r(&elapsed, &res) == NULL)
+	if (localtime_r(&elapsed, &res) == nullptr)
 		throw std::runtime_error("cannot retrieve tm structure");
 #elif defined(WIN32)
 	if (localtime_s(&res, &elapsed) != 0)
@@ -124,9 +124,9 @@ get_msg(char *params, std::string &str)
 	}
 
 	(void) strtok_r(params, "\n", &state);
-	(void) strtok_r(NULL, "\n", &state);
+	(void) strtok_r(nullptr, "\n", &state);
 
-	if ((msg = strtok_r(NULL, "\n", &state)) == NULL) {
+	if ((msg = strtok_r(nullptr, "\n", &state)) == nullptr) {
 		(void) str.assign("");
 		return false;
 	}
@@ -169,19 +169,19 @@ event_whoReply(struct irc_message_compo *compo)
 
 		(void) strtok_r(compo->params, "\n", &state); /* my nick */
 
-		if ((channel = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (user = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (host = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (server = strtok_r(NULL, "\n", &state)) == NULL || // unused
-		    (nick = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (symbol = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (hopcount = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (rl_name = strtok_r(NULL, "\n", &state)) == NULL) {
+		if ((channel  = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (user     = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (host     = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (server   = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (nick     = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (symbol   = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (hopcount = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (rl_name  = strtok_r(nullptr, "\n", &state)) == nullptr) {
 			throw std::runtime_error("unable to retrieve event "
 			    "components");
 		}
 
-		(void) server;
+		UNUSED_VAR(server);
 
 		if (*hopcount == ':')
 			hopcount++;
@@ -236,10 +236,11 @@ event_whois_acc(struct irc_message_compo *compo)
 			throw std::runtime_error("strFeed");
 
 		(void) strtok_r(compo->params, "\n", &state);
-		(void) strtok_r(NULL, "\n", &state);
+		(void) strtok_r(nullptr, "\n", &state);
 
-		if ((account_name = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (comment = strtok_r(NULL, "\n", &state)) == NULL) {
+		if ((account_name = strtok_r(nullptr, "\n", &state)) ==
+		    nullptr ||
+		    (comment = strtok_r(nullptr, "\n", &state)) == nullptr) {
 			throw std::runtime_error("unable to retrieve event "
 			    "components");
 		}
@@ -277,9 +278,9 @@ event_whois_away(struct irc_message_compo *compo)
 			throw std::runtime_error("strFeed");
 
 		(void) strtok_r(compo->params, "\n", &state);
-		(void) strtok_r(NULL, "\n", &state);
+		(void) strtok_r(nullptr, "\n", &state);
 
-		if ((away_reason = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((away_reason = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("no away reason");
 		if (*away_reason == ':')
 			away_reason++;
@@ -348,8 +349,8 @@ event_whois_cert(struct irc_message_compo *compo)
 
 		(void) strtok_r(compo->params, "\n", &state);
 
-		if ((tnick = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (msg = strtok_r(NULL, "\n", &state)) == NULL) {
+		if ((tnick = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (msg = strtok_r(nullptr, "\n", &state)) == nullptr) {
 			throw std::runtime_error("unable to retrieve event "
 			    "components");
 		}
@@ -387,9 +388,9 @@ event_whois_channels(struct irc_message_compo *compo)
 			throw std::runtime_error("strFeed");
 
 		(void) strtok_r(compo->params, "\n", &state);
-		(void) strtok_r(NULL, "\n", &state);
+		(void) strtok_r(nullptr, "\n", &state);
 
-		if ((chan_list = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((chan_list = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("no chan list");
 		if (*chan_list == ':')
 			chan_list++;
@@ -458,16 +459,17 @@ event_whois_host(struct irc_message_compo *compo)
 			throw std::runtime_error("strFeed");
 
 		(void) strtok_r(compo->params, "\n", &state);
-		(void) strtok_r(NULL, "\n", &state);
+		(void) strtok_r(nullptr, "\n", &state);
 
-		if ((str = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((str = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("null string");
 		else if (*str == ':')
 			str++;
 
 		str_copy = sw_strdup(str);
 
-		if ((cp = strstr(str_copy, ":actually using host")) != NULL &&
+		if ((cp = strstr(str_copy, ":actually using host")) !=
+		    nullptr &&
 		    strlen(cp) == 20) {
 			cp++;
 			memmove(cp - 1, cp, strlen(cp) + 1);
@@ -500,8 +502,8 @@ event_whois_idle(struct irc_message_compo *compo)
 		char		*ep1 = const_cast<char *>("");
 		char		*ep2 = const_cast<char *>("");
 		char		*state = const_cast<char *>("");
-		const char	*sec_idle_str = NULL;
-		const char	*signon_time_str = NULL;
+		const char	*sec_idle_str = nullptr;
+		const char	*signon_time_str = nullptr;
 		long int	 sec_idle = LONG_MAX;
 		long int	 signon_time = LONG_MAX;
 
@@ -509,10 +511,12 @@ event_whois_idle(struct irc_message_compo *compo)
 			throw std::runtime_error("strFeed");
 
 		(void) strtok_r(compo->params, "\n", &state);
-		(void) strtok_r(NULL, "\n", &state);
+		(void) strtok_r(nullptr, "\n", &state);
 
-		if ((sec_idle_str = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (signon_time_str = strtok_r(NULL, "\n", &state)) == NULL) {
+		if ((sec_idle_str = strtok_r(nullptr, "\n", &state)) ==
+		    nullptr ||
+		    (signon_time_str = strtok_r(nullptr, "\n", &state)) ==
+		    nullptr) {
 			throw std::runtime_error("unable to retrieve event "
 			    "components");
 		}
@@ -631,11 +635,11 @@ event_whois_server(struct irc_message_compo *compo)
 			throw std::runtime_error("strFeed");
 
 		(void) strtok_r(compo->params, "\n", &state);
-		(void) strtok_r(NULL, "\n", &state);
+		(void) strtok_r(nullptr, "\n", &state);
 
-		if ((srv = strtok_r(NULL, "\n", &state)) == NULL)
+		if ((srv = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("no server");
-		else if ((info = strtok_r(NULL, "\n", &state)) == NULL)
+		else if ((info = strtok_r(nullptr, "\n", &state)) == nullptr)
 			throw std::runtime_error("no info");
 
 		if (*info == ':')
@@ -704,8 +708,8 @@ event_whois_ssl(struct irc_message_compo *compo)
 
 		(void) strtok_r(compo->params, "\n", &state);
 
-		if ((tnick = strtok_r(NULL, "\n", &state)) == NULL ||
-		    (msg = strtok_r(NULL, "\n", &state)) == NULL) {
+		if ((tnick = strtok_r(nullptr, "\n", &state)) == nullptr ||
+		    (msg = strtok_r(nullptr, "\n", &state)) == nullptr) {
 			throw std::runtime_error("unable to retrieve event "
 			    "components");
 		}
@@ -745,14 +749,14 @@ event_whois_user(struct irc_message_compo *compo)
 			throw std::runtime_error("strFeed");
 
 		(void) strtok_r(compo->params, "\n", &state); /* <issuer> */
-		nick = strtok_r(NULL, "\n", &state);
-		user = strtok_r(NULL, "\n", &state);
-		host = strtok_r(NULL, "\n", &state);
-		(void) strtok_r(NULL, "\n", &state);
-		rl_name = strtok_r(NULL, "\n", &state);
+		nick = strtok_r(nullptr, "\n", &state);
+		user = strtok_r(nullptr, "\n", &state);
+		host = strtok_r(nullptr, "\n", &state);
+		(void) strtok_r(nullptr, "\n", &state);
+		rl_name = strtok_r(nullptr, "\n", &state);
 
-		if (nick == NULL || user == NULL || host == NULL || rl_name ==
-		    NULL) {
+		if (nick == nullptr || user == nullptr || host == nullptr ||
+		    rl_name == nullptr) {
 			throw std::runtime_error("unable to retrieve event "
 			    "components");
 		}
