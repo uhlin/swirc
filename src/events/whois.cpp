@@ -91,6 +91,10 @@ private:
 };
 
 time_idle::time_idle(long int sec_idle, long int signon_time)
+    : days(0)
+    , hours(0)
+    , mins(0)
+    , secs(0)
 {
 	struct tm	res = { 0 };
 	time_t		elapsed = signon_time;
