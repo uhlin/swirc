@@ -92,6 +92,67 @@ struct message_components {
 		this->text = nullptr;
 	}
 
+	/*
+	 * Copy assignment operator
+	 */
+	message_components &
+	operator=(const message_components &obj)
+	{
+		if (&obj == this)
+			return (*this);
+
+		if (obj.text)
+			this->text = sw_strdup(obj.text);
+
+		this->indent = obj.indent;
+
+		return (*this);
+	}
+
+	/*
+	 * Copy constructor
+	 */
+	message_components(const message_components &obj)
+	    : text(nullptr)
+	    , indent(0)
+	{
+		if (obj.text)
+			this->text = sw_strdup(obj.text);
+
+		this->indent = obj.indent;
+	}
+
+	/*
+	 * Move assignment operator
+	 */
+	message_components &
+	operator=(message_components &&obj) noexcept
+	{
+		if (&obj == this)
+			return (*this);
+
+		free(this->text);
+
+		this->text   = obj.text;
+		this->indent = obj.indent;
+
+		obj.text   = nullptr;
+		obj.indent = 0;
+
+		return (*this);
+	}
+
+	/*
+	 * Move constructor
+	 */
+	message_components(message_components &&obj) noexcept
+	    : text(obj.text)
+	    , indent(obj.indent)
+	{
+		obj.text   = nullptr;
+		obj.indent = 0;
+	}
+
 	void get_msg(CSTRING, enum message_specifier_type, bool, CSTRING);
 };
 
