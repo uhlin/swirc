@@ -96,8 +96,8 @@ time_idle::time_idle(long int sec_idle, long int signon_time)
     , mins(0)
     , secs(0)
 {
-	struct tm	res = { 0 };
-	time_t		elapsed = signon_time;
+	const time_t	elapsed = signon_time;
+	struct tm	res	= { 0 };
 
 #if defined(UNIX)
 	if (localtime_r(&elapsed, &res) == nullptr)
