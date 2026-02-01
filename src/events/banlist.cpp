@@ -170,16 +170,16 @@ event_banlist(struct irc_message_compo *compo)
 			    "written");
 		}
 	} catch (const std::bad_alloc &e) {
-		err_exit(ENOMEM, "event_banlist(%s): error: %s", compo->command,
-		    e.what());
+		err_exit(ENOMEM, "%s(%s): error: %s", __func__, compo->command,
+			 e.what());
 	} catch (const std::runtime_error &e) {
 		ctx.spec_type = TYPE_SPEC1_FAILURE;
 
-		printtext(&ctx, "event_banlist(%s): error: %s", compo->command,
-		    e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	} catch (...) {
-		err_log(0, "event_banlist(%s): error: unknown exception",
-		    compo->command);
+		err_log(0, "%s(%s): error: unknown exception", __func__,
+			compo->command);
 	}
 }
 
@@ -202,7 +202,7 @@ event_quietlist(struct irc_message_compo *compo)
 		(void) memmove(cp, &cp[2], strlen(&cp[2]) + 1);
 		event_banlist(compo);
 	} catch (const std::runtime_error &e) {
-		err_log(0, "event_quietlist(%s): %s", compo->command, e.what());
+		err_log(0, "%s(%s): %s", __func__, compo->command, e.what());
 	}
 }
 
@@ -246,8 +246,8 @@ event_eof_banlist(struct irc_message_compo *compo)
 	} catch (const std::runtime_error &e) {
 		ctx.spec_type = TYPE_SPEC1_FAILURE;
 
-		printtext(&ctx, "event_eof_banlist(%s): error: %s",
-		    compo->command, e.what());
+		printtext(&ctx, "%s(%s): error: %s", __func__, compo->command,
+			  e.what());
 	}
 }
 
@@ -270,7 +270,6 @@ event_eof_quietlist(struct irc_message_compo *compo)
 		(void) memmove(cp, &cp[2], strlen(&cp[2]) + 1);
 		event_eof_banlist(compo);
 	} catch (const std::runtime_error &e) {
-		err_log(0, "event_eof_quietlist(%s): %s", compo->command,
-		    e.what());
+		err_log(0, "%s(%s): %s", __func__, compo->command, e.what());
 	}
 }
