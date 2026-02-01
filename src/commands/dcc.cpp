@@ -576,6 +576,11 @@ public:
 	dcc_send(const char *, const std::string &);
 	~dcc_send() noexcept;
 
+	dcc_send &operator=(const dcc_send &);
+	dcc_send(const dcc_send &);
+	dcc_send &operator=(dcc_send &&) noexcept;
+	dcc_send(dcc_send &&) noexcept;
+
 	const char	*get_filename(void);
 	intmax_t	 get_filesize(void) const;
 	bool		 has_completed(void) const;
@@ -635,6 +640,42 @@ dcc_send::dcc_send(const char *p_nick, const std::string &p_full_path)
 dcc_send::~dcc_send() noexcept
 {
 	fclose_and_null(addrof(this->fileptr));
+}
+
+/*
+ * Copy assignment operator
+ */
+dcc_send &
+dcc_send::operator=(const dcc_send &obj)
+{
+	if (&obj == this)
+		return *this;
+	return *this;
+}
+
+/*
+ * Copy constructor
+ */
+dcc_send::dcc_send(const dcc_send &obj)
+{
+}
+
+/*
+ * Move assignment operator
+ */
+dcc_send &
+dcc_send::operator=(dcc_send &&obj) noexcept
+{
+	if (&obj == this)
+		return *this;
+	return *this;
+}
+
+/*
+ * Move constructor
+ */
+dcc_send::dcc_send(dcc_send &&obj) noexcept
+{
 }
 
 const char *
