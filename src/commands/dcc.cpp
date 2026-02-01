@@ -656,7 +656,12 @@ dcc_send::operator=(const dcc_send &obj)
 	if (!obj.full_path.empty())
 		this->full_path.assign(obj.full_path);
 
-	this->fileptr	= nullptr;	// XXX
+	if (obj.fileptr) {
+		if ((this->fileptr = fdopen(dup(fileno(obj.fileptr)), "rb")) ==
+		    nullptr)
+			err_log(errno, "%s: fdopen", __func__);
+	} else
+		this->fileptr = nullptr;
 	this->bytes_rem = obj.bytes_rem;
 
 	this->size = obj.size;
@@ -689,7 +694,12 @@ dcc_send::dcc_send(const dcc_send &obj) : fileptr(nullptr)
 	if (!obj.full_path.empty())
 		this->full_path.assign(obj.full_path);
 
-	this->fileptr	= nullptr;	// XXX
+	if (obj.fileptr) {
+		if ((this->fileptr = fdopen(dup(fileno(obj.fileptr)), "rb")) ==
+		    nullptr)
+			err_log(errno, "%s: fdopen", __func__);
+	} else
+		this->fileptr = nullptr;
 	this->bytes_rem = obj.bytes_rem;
 
 	this->size = obj.size;
