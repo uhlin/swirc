@@ -75,8 +75,8 @@ event_chan_hp(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char	*channel, *homepage;
-		char	*state = const_cast<char *>("");
+		CSTRING channel, homepage;
+		auto	state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 2) != 2)
 			throw std::runtime_error("strFeed");
@@ -988,8 +988,8 @@ event_topic(struct irc_message_compo *compo)
 	PRINTTEXT_CONTEXT	ctx;
 
 	try {
-		char	*channel, *topic;
-		char	*state = const_cast<char *>("");
+		CSTRING channel, topic;
+		auto	state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 2) != 2)
 			throw std::runtime_error("strFeed");
