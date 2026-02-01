@@ -68,13 +68,13 @@ get_mask(const char *mask)
 static void
 feeds_written_4(PPRINTTEXT_CONTEXT ctx, char *params)
 {
-	char		*channel, *mask, *issuer, *seconds;
-	char		*issuer_name, *issuer_userhost;
-	char		*state1 = const_cast<char *>("");
-	char		*state2 = const_cast<char *>("");
-	char		 buf[500] = { '\0' };
-	char		 tbuf[100] = { '\0' };
-	struct tm	 result = { 0 };
+	CSTRING		channel, mask, issuer, seconds;
+	CSTRING		issuer_name, issuer_userhost;
+	auto		state1	  = const_cast<STRING>("");
+	auto		state2	  = const_cast<STRING>("");
+	char		buf[500]  = { '\0' };
+	char		tbuf[100] = { '\0' };
+	struct tm	result	  = { 0 };
 
 	/* recipient */
 	(void) strtok_r(params, "\n", &state1);
@@ -97,7 +97,7 @@ feeds_written_4(PPRINTTEXT_CONTEXT ctx, char *params)
 	if ((issuer_name = strtok_r(buf, "!", &state2)) == nullptr)
 		throw std::runtime_error("unable to get issuer name");
 	if ((issuer_userhost = strtok_r(nullptr, "!", &state2)) == nullptr)
-		issuer_userhost = const_cast<char *>("");
+		issuer_userhost = "";
 
 	const auto date_of_issue = static_cast<time_t>(strtol(seconds, nullptr,
 	    10));
@@ -123,8 +123,8 @@ feeds_written_4(PPRINTTEXT_CONTEXT ctx, char *params)
 static void
 feeds_written_2(PPRINTTEXT_CONTEXT ctx, char *params)
 {
-	char *channel, *mask;
-	char *last = const_cast<char *>("");
+	CSTRING channel, mask;
+	auto	last = const_cast<STRING>("");
 
 	(void) strtok_r(params, "\n", &last);
 
@@ -222,8 +222,8 @@ event_eof_banlist(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
 	try {
-		char	*channel, *msg;
-		char	*state = const_cast<char *>("");
+		CSTRING channel, msg;
+		auto	state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 2) != 2)
 			throw std::runtime_error("strFeed");
