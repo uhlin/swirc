@@ -650,14 +650,58 @@ dcc_send::operator=(const dcc_send &obj)
 {
 	if (&obj == this)
 		return *this;
+
+	if (!obj.nick.empty())
+		this->nick.assign(obj.nick);
+	if (!obj.full_path.empty())
+		this->full_path.assign(obj.full_path);
+
+	this->fileptr	= nullptr;	// XXX
+	this->bytes_rem = obj.bytes_rem;
+
+	this->size = obj.size;
+	this->unit = obj.unit;
+
+	this->start = obj.start;
+	this->stop  = obj.stop;
+
+	memmove(this->buf, obj.buf, sizeof(this->buf));
+
+	this->lock = obj.lock;
+	this->sb   = obj.sb;
+
 	return *this;
 }
 
 /*
  * Copy constructor
  */
-dcc_send::dcc_send(const dcc_send &obj)
+dcc_send::dcc_send(const dcc_send &obj) : fileptr(nullptr)
+    , bytes_rem(0)
+    , size(0.0)
+    , unit('B')
+    , start(g_time_error)
+    , stop(g_time_error)
+    , lock(0)
 {
+	if (!obj.nick.empty())
+		this->nick.assign(obj.nick);
+	if (!obj.full_path.empty())
+		this->full_path.assign(obj.full_path);
+
+	this->fileptr	= nullptr;	// XXX
+	this->bytes_rem = obj.bytes_rem;
+
+	this->size = obj.size;
+	this->unit = obj.unit;
+
+	this->start = obj.start;
+	this->stop  = obj.stop;
+
+	memmove(this->buf, obj.buf, sizeof(this->buf));
+
+	this->lock = obj.lock;
+	this->sb   = obj.sb;
 }
 
 /*
@@ -668,6 +712,50 @@ dcc_send::operator=(dcc_send &&obj) noexcept
 {
 	if (&obj == this)
 		return *this;
+
+	try {
+		if (!obj.nick.empty())
+			this->nick.assign(obj.nick);
+		if (!obj.full_path.empty())
+			this->full_path.assign(obj.full_path);
+	} catch (...) {
+		err_quit("%s: unexpected exception thrown", __func__);
+	}
+
+	this->fileptr	= obj.fileptr;
+	this->bytes_rem = obj.bytes_rem;
+
+	this->size = obj.size;
+	this->unit = obj.unit;
+
+	this->start = obj.start;
+	this->stop  = obj.stop;
+
+	memmove(this->buf, obj.buf, sizeof(this->buf));
+
+	this->lock = obj.lock;
+	this->sb   = obj.sb;
+
+	/* ------------------------------------------------------------ */
+
+	try {
+		if (!obj.nick.empty())
+			obj.nick.clear();
+		if (!obj.full_path.empty())
+			obj.full_path.clear();
+	} catch (...) {
+		err_quit("%s: unexpected exception thrown", __func__);
+	}
+
+	obj.fileptr   = nullptr;
+	obj.bytes_rem = 0;
+
+	obj.size = 0.0;
+	obj.unit = 'B';
+
+	obj.start = g_time_error;
+	obj.stop  = g_time_error;
+
 	return *this;
 }
 
@@ -675,7 +763,45 @@ dcc_send::operator=(dcc_send &&obj) noexcept
  * Move constructor
  */
 dcc_send::dcc_send(dcc_send &&obj) noexcept
+    : fileptr(obj.fileptr)
+    , bytes_rem(obj.bytes_rem)
+    , size(obj.size)
+    , unit(obj.unit)
+    , start(obj.start)
+    , stop(obj.stop)
+    , lock(obj.lock)
+    , sb(obj.sb)
 {
+	try {
+		if (!obj.nick.empty())
+			this->nick.assign(obj.nick);
+		if (!obj.full_path.empty())
+			this->full_path.assign(obj.full_path);
+	} catch (...) {
+		err_quit("%s: unexpected exception thrown", __func__);
+	}
+
+	memmove(this->buf, obj.buf, sizeof(this->buf));
+
+	/* ------------------------------------------------------------ */
+
+	try {
+		if (!obj.nick.empty())
+			obj.nick.clear();
+		if (!obj.full_path.empty())
+			obj.full_path.clear();
+	} catch (...) {
+		err_quit("%s: unexpected exception thrown", __func__);
+	}
+
+	obj.fileptr   = nullptr;
+	obj.bytes_rem = 0;
+
+	obj.size = 0.0;
+	obj.unit = 'B';
+
+	obj.start = g_time_error;
+	obj.stop  = g_time_error;
 }
 
 const char *
