@@ -2,21 +2,21 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- Added usage of `emplace_back()` when dealing with vector
+- **Added** usage of `emplace_back()` when dealing with vector
   insertions. (Performance). Whole tree completed.
-- Added usage of `nullptr`. Whole tree completed.
-- Added usage of type aliases.
-- Deleted unused includes.
-- Fixed C-style headers in C++ files.
-- Fixed hardcoded function names (in error messages).
-- Fixed unchecked function return values.
-- Improved the C++ exception handling. Namely handle all exceptions
+- **Added** usage of `nullptr`. Whole tree completed.
+- **Added** usage of type aliases.
+- **Deleted** unused includes.
+- **Fixed** C-style headers in C++ files.
+- **Fixed** hardcoded function names (in error messages).
+- **Fixed** unchecked function return values.
+- **Improved** the C++ exception handling. Namely handle all exceptions
   thrown before `main()` begins executing.
-- Made move assignment operators and move constructors
+- **Made** move assignment operators and move constructors
   `noexcept`. (Performance).
-- Reduced the scope of variables.
-- Replaced `atoi()` with `strtol()`. Multiple occurrences.
-- Usage of `auto` in order to avoid duplicating the type name.
+- **Reduced** the scope of variables.
+- **Replaced** `atoi()` with `strtol()`. Multiple occurrences.
+- **Usage** of `auto` in order to avoid duplicating the type name.
 
 ## [3.5.8] - 2026-01-17 ##
 - **Added** command `/log` (management of log files).
