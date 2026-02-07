@@ -145,15 +145,15 @@ tmp_dh_callback(SSL *ssl, int is_export, int keylength)
 	switch (keylength) {
 	case 2048:
 		ret = dh2048;
-		debug("tmp_dh_callback: keylength = %d", keylength);
+		debug("%s: keylength = %d", __func__, keylength);
 		break;
 	case 4096:
 		ret = dh4096;
-		debug("tmp_dh_callback: keylength = %d", keylength);
+		debug("%s: keylength = %d", __func__, keylength);
 		break;
 	default:
 		ret = dh2048;
-		debug("tmp_dh_callback: keylength = %d: using 2048 ...",
+		debug("%s: keylength = %d: using 2048 ...", __func__,
 		    keylength);
 		break;
 	}
