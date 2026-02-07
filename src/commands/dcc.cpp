@@ -657,9 +657,17 @@ dcc_send::operator=(const dcc_send &obj)
 		this->full_path.assign(obj.full_path);
 
 	if (obj.fileptr) {
-		if ((this->fileptr = fdopen(dup(fileno(obj.fileptr)), "rb")) ==
-		    nullptr)
+		int fd[2];
+
+		if ((fd[0] = fileno(obj.fileptr)) == -1) {
+			err_log(errno, "%s: fileno", __func__);
+			this->fileptr = nullptr;
+		} else if ((fd[1] = dup(fd[0])) == -1) {
+			err_log(errno, "%s: dup", __func__);
+			this->fileptr = nullptr;
+		} else if ((this->fileptr = fdopen(fd[1], "rb")) == nullptr) {
 			err_log(errno, "%s: fdopen", __func__);
+		}
 	} else
 		this->fileptr = nullptr;
 	this->bytes_rem = obj.bytes_rem;
@@ -695,9 +703,17 @@ dcc_send::dcc_send(const dcc_send &obj) : fileptr(nullptr)
 		this->full_path.assign(obj.full_path);
 
 	if (obj.fileptr) {
-		if ((this->fileptr = fdopen(dup(fileno(obj.fileptr)), "rb")) ==
-		    nullptr)
+		int fd[2];
+
+		if ((fd[0] = fileno(obj.fileptr)) == -1) {
+			err_log(errno, "%s: fileno", __func__);
+			this->fileptr = nullptr;
+		} else if ((fd[1] = dup(fd[0])) == -1) {
+			err_log(errno, "%s: dup", __func__);
+			this->fileptr = nullptr;
+		} else if ((this->fileptr = fdopen(fd[1], "rb")) == nullptr) {
 			err_log(errno, "%s: fdopen", __func__);
+		}
 	} else
 		this->fileptr = nullptr;
 	this->bytes_rem = obj.bytes_rem;
