@@ -1,5 +1,5 @@
 /* Wrappers that deals with WIN32 mutexes
-   Copyright (C) 2012, 2013, 2021 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -38,7 +38,7 @@ mutex_lock(HANDLE *mutex)
 {
 	switch (WaitForSingleObject(*mutex, INFINITE)) {
 	case WAIT_ABANDONED:
-		debug("mutex_lock: WaitForSingleObject: wait abandoned");
+		debug("%s: WaitForSingleObject: wait abandoned", __func__);
 		break;
 	case WAIT_OBJECT_0:
 		break;
@@ -47,7 +47,7 @@ mutex_lock(HANDLE *mutex)
 		break;
 	case WAIT_FAILED:
 	default:
-		err_quit("mutex_lock: WaitForSingleObject: %s",
+		err_quit("%s: WaitForSingleObject: %s", __func__,
 		    errdesc_by_last_err());
 		break;
 	}
@@ -57,7 +57,7 @@ void
 mutex_unlock(HANDLE *mutex)
 {
 	if (!ReleaseMutex(*mutex)) {
-		err_quit("mutex_unlock: ReleaseMutex: %s",
+		err_quit("%s: ReleaseMutex: %s", __func__,
 		    errdesc_by_last_err());
 	}
 }
@@ -66,7 +66,7 @@ void
 mutex_destroy(HANDLE *mutex)
 {
 	if (!CloseHandle(*mutex)) {
-		err_quit("mutex_destroy: CloseHandle: %s",
+		err_quit("%s: CloseHandle: %s", __func__,
 		    errdesc_by_last_err());
 	}
 }
@@ -74,6 +74,8 @@ mutex_destroy(HANDLE *mutex)
 void
 mutex_new(HANDLE *mutex)
 {
-	if ((*mutex = CreateMutex(NULL, FALSE, NULL)) == NULL)
-		err_quit("mutex_new: CreateMutex: %s", errdesc_by_last_err());
+	if ((*mutex = CreateMutex(NULL, FALSE, NULL)) == NULL) {
+		err_quit("%s: CreateMutex: %s", __func__,
+		    errdesc_by_last_err());
+	}
 }
