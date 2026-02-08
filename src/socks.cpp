@@ -192,12 +192,11 @@ read_conn_req_resp(std::string &err)
 	return 0;
 }
 
-socks_conn_req::socks_conn_req()
+socks_conn_req::socks_conn_req() : net16(0)
 {
 	BZERO(this->dst_port, sizeof this->dst_port);
 	BZERO(this->ipv4_addr, sizeof this->ipv4_addr);
 	BZERO(this->ipv6_addr, sizeof this->ipv6_addr);
-	this->net16 = 0;
 }
 
 static void

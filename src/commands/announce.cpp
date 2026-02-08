@@ -61,10 +61,9 @@ private:
 	bool znc_broadcast;
 };
 
-announce::announce()
+announce::announce() : znc_broadcast(false)
 {
 	this->msg.assign("");
-	this->znc_broadcast = false;
 }
 
 announce::announce(bool p_znc_broadcast, CSTRING p_chans, CSTRING p_msg)

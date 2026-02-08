@@ -68,12 +68,13 @@ static std::vector<sugg_ptr>::iterator	 suggs_it;
 static std::wstring			 rl_word;
 
 suggestion::suggestion()
-{
-	this->word = nullptr;
-	this->wide_word = nullptr;
-}
+    : word(nullptr)
+    , wide_word(nullptr)
+{}
 
 suggestion::suggestion(CSTRING p_word)
+    : word(nullptr)
+    , wide_word(nullptr)
 {
 	const size_t size = strlen(p_word) + 1;
 

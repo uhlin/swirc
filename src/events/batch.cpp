@@ -52,16 +52,14 @@ public:
 	std::vector<std::string>	params;
 	std::vector<std::string>	irc_msgs;
 
-	batch()
+	batch() : type(BATCH_UNKNOWN)
 	{
 		this->ref.assign("");
-		this->type = BATCH_UNKNOWN;
 	}
 
-	batch(CSTRING p_ref, const batch_t p_type)
+	batch(CSTRING p_ref, const batch_t p_type) : type(p_type)
 	{
 		this->ref.assign(p_ref);
-		this->type = p_type;
 	}
 
 	CSTRING

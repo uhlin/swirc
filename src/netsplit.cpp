@@ -39,17 +39,17 @@
 #include "strdup_printf.h"
 #include "theme.h"
 
-netsplit::netsplit()
+netsplit::netsplit() : announced(false)
 {
 	this->channel.assign("");
 	this->server[0].assign("*.net");
 	this->server[1].assign("*.split");
-	this->announced = false;
 	this->secs[0] = g_time_error;
 	this->secs[1] = g_time_error;
 }
 
 netsplit::netsplit(const struct netsplit_context *ctx, CSTRING nick)
+    : announced(false)
 {
 	this->channel.assign(ctx->chan);
 	this->server[0].assign(ctx->serv1);
@@ -59,7 +59,6 @@ netsplit::netsplit(const struct netsplit_context *ctx, CSTRING nick)
 #else
 	this->nicks.push_back(nick);
 #endif
-	this->announced = false;
 	this->secs[0] = time(nullptr);
 	this->secs[1] = g_time_error;
 }
