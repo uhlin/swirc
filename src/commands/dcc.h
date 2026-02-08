@@ -61,6 +61,8 @@ public:
 
 	dcc_get &operator=(const dcc_get &);
 	dcc_get(const dcc_get &);
+	dcc_get &operator=(dcc_get &&) noexcept;
+	dcc_get(dcc_get &&) noexcept;
 
 	void	destroy(void);
 	void	finalize_download(void);

@@ -197,6 +197,17 @@ dcc_get::dcc_get(const dcc_get &obj) : nick(obj.nick)
 	debug("%s: copy constructor called", __func__);
 }
 
+/*
+ * Move assignment operator
+ */
+dcc_get &
+dcc_get::operator=(dcc_get &&obj) noexcept = default;
+
+/*
+ * Move constructor
+ */
+dcc_get::dcc_get(dcc_get &&obj) noexcept = default;
+
 static void
 read_and_write(SOCKET sock, SSL *ssl, FILE *fp, intmax_t &bytes_rem)
 {
