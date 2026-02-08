@@ -146,25 +146,6 @@ dcc_get::~dcc_get()
 	}
 }
 
-dcc_get::dcc_get(const dcc_get &obj) : nick(obj.nick)
-    , filename(obj.filename)
-    , filesize(obj.filesize)
-    , bytes_rem(obj.bytes_rem)
-    , size(obj.size)
-    , unit(obj.unit)
-    , start(g_time_error)
-    , stop(g_time_error)
-    , fileptr(nullptr)
-    , sock(INVALID_SOCKET)
-    , ssl(nullptr)
-    , ssl_ctx(nullptr)
-    , addr(obj.addr)
-    , port(obj.port)
-    , lock(obj.lock)
-{
-	debug("%s: copy constructor called", __func__);
-}
-
 dcc_get &dcc_get::operator=(const dcc_get &obj)
 {
 	if (&obj == this)
@@ -188,6 +169,25 @@ dcc_get &dcc_get::operator=(const dcc_get &obj)
 
 	debug("%s: copy assignment called", __func__);
 	return *this;
+}
+
+dcc_get::dcc_get(const dcc_get &obj) : nick(obj.nick)
+    , filename(obj.filename)
+    , filesize(obj.filesize)
+    , bytes_rem(obj.bytes_rem)
+    , size(obj.size)
+    , unit(obj.unit)
+    , start(g_time_error)
+    , stop(g_time_error)
+    , fileptr(nullptr)
+    , sock(INVALID_SOCKET)
+    , ssl(nullptr)
+    , ssl_ctx(nullptr)
+    , addr(obj.addr)
+    , port(obj.port)
+    , lock(obj.lock)
+{
+	debug("%s: copy constructor called", __func__);
 }
 
 static void
