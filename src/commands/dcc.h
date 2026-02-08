@@ -57,9 +57,10 @@ public:
 
 	dcc_get();
 	dcc_get(const char *, const char *, intmax_t, uint32_t, uint16_t);
-	dcc_get(const dcc_get &);
-	dcc_get &operator=(const dcc_get &);
 	~dcc_get();
+
+	dcc_get &operator=(const dcc_get &);
+	dcc_get(const dcc_get &);
 
 	void	destroy(void);
 	void	finalize_download(void);
