@@ -146,7 +146,11 @@ dcc_get::~dcc_get()
 	}
 }
 
-dcc_get &dcc_get::operator=(const dcc_get &obj)
+/*
+ * Copy assignment operator
+ */
+dcc_get &
+dcc_get::operator=(const dcc_get &obj)
 {
 	if (&obj == this)
 		return *this;
@@ -171,6 +175,9 @@ dcc_get &dcc_get::operator=(const dcc_get &obj)
 	return *this;
 }
 
+/*
+ * Copy constructor
+ */
 dcc_get::dcc_get(const dcc_get &obj) : nick(obj.nick)
     , filename(obj.filename)
     , filesize(obj.filesize)
