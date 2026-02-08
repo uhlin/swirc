@@ -10,6 +10,11 @@ public:
 	explicit x509_fingerprint(const char *);
 	~x509_fingerprint();
 
+	x509_fingerprint &operator=(const x509_fingerprint &);
+	x509_fingerprint(const x509_fingerprint &);
+	x509_fingerprint &operator=(x509_fingerprint &&) noexcept;
+	x509_fingerprint(x509_fingerprint &&) noexcept;
+
 	void show_fp(void) const;
 
 private:

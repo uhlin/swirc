@@ -1,5 +1,5 @@
 /* get_x509_fp.cpp
-   Copyright (C) 2023-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2023-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -76,6 +76,28 @@ x509_fingerprint::~x509_fingerprint()
 	if (this->cert)
 		X509_free(this->cert);
 }
+
+/*
+ * Copy assignment operator
+ */
+x509_fingerprint &
+x509_fingerprint::operator=(const x509_fingerprint &obj) = default;
+
+/*
+ * Copy constructor
+ */
+x509_fingerprint::x509_fingerprint(const x509_fingerprint &obj) = default;
+
+/*
+ * Move assignment operator
+ */
+x509_fingerprint &
+x509_fingerprint::operator=(x509_fingerprint &&obj) noexcept = default;
+
+/*
+ * Move constructor
+ */
+x509_fingerprint::x509_fingerprint(x509_fingerprint &&obj) noexcept = default;
 
 void
 x509_fingerprint::show_fp(void) const
