@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- **Added** custom copy assignment operators, copy constructors, move
+  assignment operators and move constructors.
 - **Added** usage of `emplace_back()` when dealing with vector
   insertions. (Performance). Whole tree completed.
 - **Added** usage of `nullptr`. Whole tree completed.
