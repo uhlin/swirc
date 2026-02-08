@@ -135,6 +135,17 @@ dcc_get::dcc_get(const char *p_nick,
 	dcc::get_file_size(p_filesize, this->size, this->unit);
 }
 
+dcc_get::~dcc_get()
+{
+	debug("%s: destructor called", __func__);
+
+	try {
+		this->destroy();
+	} catch (...) {
+		/* null */;
+	}
+}
+
 dcc_get::dcc_get(const dcc_get &obj) : nick(obj.nick)
     , filename(obj.filename)
     , filesize(obj.filesize)
@@ -177,17 +188,6 @@ dcc_get &dcc_get::operator=(const dcc_get &obj)
 
 	debug("%s: copy assignment called", __func__);
 	return *this;
-}
-
-dcc_get::~dcc_get()
-{
-	debug("%s: destructor called", __func__);
-
-	try {
-		this->destroy();
-	} catch (...) {
-		/* null */;
-	}
 }
 
 static void
