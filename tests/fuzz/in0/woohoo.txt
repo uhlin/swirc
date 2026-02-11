@@ -1,1 +1,2 @@
+:csd.bu.edu WALLOPS :Connect '*.uiuc.edu 6667' from Joshua
 :incal!incal@ds.org WALLOPS woohoo!

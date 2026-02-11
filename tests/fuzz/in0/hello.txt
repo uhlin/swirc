@@ -1,1 +1,2 @@
+:Angel!wings@irc.org PRIVMSG Wiz :Are you receiving this message ?
 :nn!nn@nn.pp.se PRIVMSG #swirc :hello

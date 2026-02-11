@@ -1,1 +1,2 @@
+:Angel!wings@irc.org INVITE Wiz #Dust
 :maxxe!u@h INVITE Mo :#ircii

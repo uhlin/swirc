@@ -1,1 +1,2 @@
+:WiZ!jto@tolsun.oulu.fi MODE #swirc -l
 MODE Mo :+i

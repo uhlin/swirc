@@ -1,0 +1,1 @@
+:ircd.stealth.net 302 yournick :syrk=+syrk@millennium.stealth.net
