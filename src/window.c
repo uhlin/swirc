@@ -765,8 +765,8 @@ spawn_chat_window(CSTRING label, CSTRING title)
 	struct integer_context intctx = {
 		.setting_name = "max_chat_windows",
 		.lo_limit = 10,
-		.hi_limit = 200,
-		.fallback_default = 60,
+		.hi_limit = 800,
+		.fallback_default = 140,
 	};
 
 	if (label == NULL || strings_match(label, ""))
