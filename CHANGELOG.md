@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - **Fixed** unchecked function return values.
 - **Improved** the C++ exception handling. Namely handle all exceptions
   thrown before `main()` begins executing.
+- **Increased** `max_chat_windows` default and its upper limit.
 - **Initialized** variables in a member initializer of a constructor.
 - **Made** move assignment operators and move constructors
   `noexcept`. (Performance).
