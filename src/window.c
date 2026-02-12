@@ -106,7 +106,7 @@ HANDLE			g_win_htbl_mtx; // Window hash table mutex
 /* Objects with internal linkage
    ============================= */
 
-static PIRC_WINDOW hash_table[200] = { NULL };
+static PIRC_WINDOW hash_table[800] = { NULL };
 
 /* -------------------------------------------------- */
 
@@ -828,7 +828,7 @@ new_window_title(CSTRING label, CSTRING title)
 void
 window_close_all_priv_conv(void)
 {
-	char	*priv_conv[200] = { NULL };
+	char	*priv_conv[800] = { NULL };
 	size_t	 pc_assigned = 0;
 
 	mutex_lock(&g_win_htbl_mtx);
