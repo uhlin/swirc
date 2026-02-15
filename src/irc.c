@@ -1,5 +1,5 @@
 /* Handle and interpret IRC events
-   Copyright (C) 2014-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2014-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -166,6 +166,7 @@ static struct numeric_events_tag {
 	{ "275", "",                        NO_WINDOW,      0, event_whois_ssl },
 	{ "276", "",                        NO_WINDOW,      0, event_whois_cert },
 	{ "301", "RPL_AWAY",                NO_WINDOW,      0, event_whois_away },
+	{ "302", "RPL_USERHOST",            NO_WINDOW,      0, event_userhost },
 	{ "303", "RPL_ISON",                ACTIVE_WINDOW,  1, NULL },
 	{ "305", "RPL_UNAWAY",              NO_WINDOW,      0, event_unaway },
 	{ "306", "RPL_NOWAWAY",             NO_WINDOW,      0, event_nowAway },

@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
-- **Added** command `/userhost`.
+- **Added** command `/userhost` and event 302 (`RPL_USERHOST`).
 - **Added** custom copy assignment operators, copy constructors, move
   assignment operators and move constructors.
 - **Added** usage of `emplace_back()` when dealing with vector

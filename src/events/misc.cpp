@@ -500,6 +500,21 @@ event_userModeIs(struct irc_message_compo *compo)
 	}
 }
 
+/* event_userhost: 302 (RPL_USERHOST)
+
+   From the RFC:
+     "The '*' indicates whether the client has registered as an
+     Operator. The '-' or '+' characters represent whether the client
+     has set an AWAY message or not respectively."
+
+   Example:
+     :irc.server.com 302 <my nickname> :syrk=+syrk@millennium.stealth.net */
+void
+event_userhost(struct irc_message_compo *compo)
+{
+	(void) compo;
+}
+
 /* event_youAreOper: 381 (RPL_YOUREOPER)
 
    Example:
