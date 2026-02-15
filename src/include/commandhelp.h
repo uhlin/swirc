@@ -875,6 +875,13 @@ static usage_t unignore_usage = {
   "",
 };
 
+static usage_t userhost_usage = {
+  "usage: /userhost ...",
+  "",
+  "No help yet.",
+  "",
+};
+
 static usage_t utctime_usage = {
   N_("usage: /utctime"),
   "",
