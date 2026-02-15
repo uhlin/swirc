@@ -411,7 +411,7 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
 	const int HEIGHT = rows - 3;
 
 	if (!is_irc_channel(window->label)) {
-		struct term_window_size newsize = {
+		const struct term_window_size newsize = {
 			.rows = rows - 2,
 			.cols = cols,
 			.start_row = 1,
