@@ -1,5 +1,5 @@
 /* Swirc titlebar
-   Copyright (C) 2012-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2012-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -110,7 +110,7 @@ titlebar(const char *fmt, ...)
 void
 titlebar_recreate(int cols)
 {
-	struct term_window_size newsize = {
+	const struct term_window_size newsize = {
 		.rows = 1,
 		.cols = cols,
 		.start_row = 0,
