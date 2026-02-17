@@ -811,12 +811,11 @@ transmit_user_input(CSTRING winlabel, CSTRING input)
 		}
 	}
 
-#define S1 Theme("nick_s1")
-#define S2 Theme("nick_s2")
+	immutable_cp_t	cp[2] = { Theme("nick_s1"), Theme("nick_s2") };
 
 	if (!is_irc_channel(winlabel)) {
 		printtext(&ctx, "%s%s%s%c%s %s",
-		    S1, COLOR1, g_my_nickname, NORMAL, S2,
+		    cp[0], COLOR1, g_my_nickname, NORMAL, cp[1],
 		    input);
 	} else {
 		PNAMES	n;
@@ -842,7 +841,7 @@ transmit_user_input(CSTRING winlabel, CSTRING input)
 			c = ' ';
 
 		printtext(&ctx, "%s%c%s%s%c%s %s",
-		    S1, c, COLOR1, g_my_nickname, NORMAL, S2,
+		    cp[0], c, COLOR1, g_my_nickname, NORMAL, cp[1],
 		    input);
 	}
 }
