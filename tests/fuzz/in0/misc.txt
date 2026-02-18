@@ -9,5 +9,4 @@
 :ircd.stealth.net 324 Mo #swirc +l 10
 :ircd.stealth.net 329 Mo #swirc 123456789
 :ircd.stealth.net 396 incal ds.org :is now your displayed host
-:ircd.stealth.net 433 * Mo :Nickname is already in use.
 :ircd.stealth.net 470 Mo #ircii #swirc :Forwarding to another channel
