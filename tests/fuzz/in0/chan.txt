@@ -1,0 +1,4 @@
+:irc.server.com 328 maxxe #swirc :www.openbsd.org
+:irc.server.com 333 maxxe #swirc solene!solene@ds.org 789456123
+:irc.server.com 333 maxxe #swirc solene 789456123
+:michi!michi@ds.org PART #dataswamp
