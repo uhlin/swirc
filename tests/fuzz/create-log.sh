@@ -42,5 +42,5 @@ if [ "${INCLUDE_COMMON}" = "y" ]; then
 EOF
 fi
 
-afl-fuzz -i "in" -o "out" -n -x "${DICT_FILE}" -E "${NEXECS}" -- \
+afl-fuzz -i "in0" -o "out" -n -x "${DICT_FILE}" -E "${NEXECS}" -- \
     ./append-log "${TMPFILE}"
