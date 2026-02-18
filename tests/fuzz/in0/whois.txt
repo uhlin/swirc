@@ -1,0 +1,15 @@
+:irc.server.com 275 Mo incal :
+:irc.server.com 276 Mo incal :has client certificate fingerprint <string>
+:irc.server.com 301 Mo incal :drinking coffee
+:irc.server.com 307 Mo incal :user has identified to services
+:irc.server.com 311 Mo incal foo bar * :baz
+:irc.server.com 312 Mo incal irc.rpblc.net :republic
+:irc.server.com 313 Mo incal :is an IRC Operator
+:irc.server.com 317 Mo incal 123456789 987654321 :what
+:irc.server.com 319 Mo incal :#chatzone
+:irc.server.com 330 Mo incal lanci :is logged in as
+:irc.server.com 335 Mo incal :
+:irc.server.com 338 Mo incal :is actually foo@bar
+:irc.server.com 352 Mo #ircii u h s incal H :8888 EMBE
+:irc.server.com 378 Mo incal :is connecting from localhost 127.0.0.1
+:irc.server.com 379 Mo incal :is using modes +w
