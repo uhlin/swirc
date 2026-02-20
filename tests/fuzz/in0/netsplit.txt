@@ -1,0 +1,16 @@
+:localhost 332 Mo #swirc :Welcome to Swirc IRC client support channel
+:localhost 333 Mo #swirc maxxe@nifty-networks.net 1234567890
+:localhost 353 Mo = #swirc :&maxxe ~Mo
+:localhost 353 Mo = #swirc :hhvn incal james
+:localhost 353 Mo = #swirc :john josk katzeilla
+:localhost 353 Mo = #swirc :lich pmjv quag7
+:localhost 353 Mo = #swirc :rjc solene vrl
+:localhost 366 Mo #swirc :End of NAMES list.
+:hhvn!~hhvn@ds.org QUIT :irc.nifty-networks.net irc.dataswamp.org
+:john!~john@ds.org QUIT :irc.nifty-networks.net irc.dataswamp.org
+:lich!~lich@ds.org QUIT :irc.nifty-networks.net irc.dataswamp.org
+:rjc!~rjc@ds.org QUIT :irc.nifty-networks.net irc.dataswamp.org
+:james!~james@ds.org QUIT :irc.nifty-networks.net irc.dataswamp.org
+:katzeilla!~katzeilla@ds.org QUIT :irc.nifty-networks.net irc.dataswamp.org
+:quag7!~quag7@ds.org QUIT :irc.nifty-networks.net irc.dataswamp.org
+:vrl!~vrl@ds.org QUIT :irc.nifty-networks.net irc.dataswamp.org
