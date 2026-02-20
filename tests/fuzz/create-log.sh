@@ -17,6 +17,7 @@ if [ "${INCLUDE_COMMON}" != "y" ] && [ "${INCLUDE_COMMON}" != "n" ]; then
 fi
 
 DICT_FILE=irc.dict
+MEGABYTES=40
 NEXECS=471859
 TMPFILE=$(mktemp log.XXXXXXXXXX)
 
@@ -43,4 +44,4 @@ EOF
 fi
 
 afl-fuzz -i "in0" -o "out" -n -x "${DICT_FILE}" -E "${NEXECS}" -- \
-    ./append-log "${TMPFILE}"
+    ./append-log "${TMPFILE}" "${MEGABYTES}"
