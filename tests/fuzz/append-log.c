@@ -28,22 +28,45 @@
 //lint -sem(err, r_no)
 //lint -sem(errx, r_no)
 
+static const off_t one_megabyte = 1048576;
+
+static void
+usage(const char *exe)
+{
+	(void) fprintf(stderr, "usage: %s <filename> <megabytes>\n", exe);
+	exit(1);
+}
+
 int
 main(int argc, char *argv[])
 {
-	FILE		*fp;
+	FILE		*fp = NULL;
+	char		*ep = NULL;
 	const int	 maxchars = 1024;
-	const off_t	 maxfile = 18874368; // 18 MB
 	int		 c, i;
+	long int	 lval = 0;
+	off_t		 maxfile = 0;
 	struct stat	 sb = { 0 };
 
-	if (argc != 2)
-		errx(1, "bogus number of args");
+	if (argc != 3)
+		usage(argv[0]);
 	else if (geteuid() == 0)
 		errx(1, "running the program as root is forbidden");
-	else if ((fp = fopen(argv[1], "a")) == NULL)
+
+	errno = 0;
+	lval = strtol(argv[2], &ep, 10);
+	if (argv[2][0] == '\0' || *ep != '\0')
+		errx(1, "argument 2 not a number");
+	else if (errno == ERANGE && (lval == LONG_MAX || lval == LONG_MIN))
+		errx(1, "megabytes out of range");
+	else if (lval < 1 || lval > 300)
+		errx(1, "megabytes out of range");
+
+	maxfile = (lval * one_megabyte);
+
+	if ((fp = fopen(argv[1], "a")) == NULL) {
 		err(1, "fopen");
-	else if (stat(argv[1], &sb) == -1) {
+	} else if (stat(argv[1], &sb) == -1) {
 		warn("stat");
 		(void) fclose(fp);
 		return 1;
