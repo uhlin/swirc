@@ -72,7 +72,7 @@ validate_nicks(const std::vector<std::string> &p_nicks,
  * usage: /userhost <nick1[,nick2][,nick3][...]>
  */
 void
-cmd_userhost(CSTRING p_data)
+cmd_userhost(CSTRING p_data) noexcept
 {
 	CSTRING				token;
 	STRING				dcopy;
