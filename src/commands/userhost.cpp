@@ -91,6 +91,7 @@ cmd_userhost(CSTRING p_data) noexcept
 	}
 
 	dcopy = sw_strdup(p_data);
+	nicks.reserve(NICKS_MAX);
 
 	for (STRING str = dcopy;
 	    (token = strtok_r(str, sep, &last)) != nullptr;
