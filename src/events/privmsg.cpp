@@ -1,5 +1,5 @@
 /* Handles event PRIVMSG
-   Copyright (C) 2016-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -171,22 +171,24 @@ broadcast_window_activity(const IRC_WINDOW *src)
 static bool
 shouldHighlightMessage_case1(CSTRING msg)
 {
+	STRING	 s[4];
 	bool	 result = false;
-	STRING	 s1 = strdup_printf("%s:", g_my_nickname);
-	STRING	 s2 = strdup_printf("%s,", g_my_nickname);
-	STRING	 s3 = strdup_printf("%s ", g_my_nickname);
-	STRING	 s4 = strdup_printf(" %s ", g_my_nickname);
 
-	if (!strncasecmp(msg, s1, strlen(s1)) ||
-	    !strncasecmp(msg, s2, strlen(s2)) ||
-	    !strncasecmp(msg, s3, strlen(s3)) ||
-	    strcasestr(msg, s4) != nullptr ||
+	s[0] = strdup_printf("%s:", g_my_nickname);
+	s[1] = strdup_printf("%s,", g_my_nickname);
+	s[2] = strdup_printf("%s ", g_my_nickname);
+	s[3] = strdup_printf(" %s ", g_my_nickname);
+
+	if (!strncasecmp(msg, s[0], strlen(s[0])) ||
+	    !strncasecmp(msg, s[1], strlen(s[1])) ||
+	    !strncasecmp(msg, s[2], strlen(s[2])) ||
+	    strcasestr(msg, s[3]) != nullptr ||
 	    strings_match_ignore_case(msg, g_my_nickname))
 		result = true;
-	free(s1);
-	free(s2);
-	free(s3);
-	free(s4);
+	free(s[0]);
+	free(s[1]);
+	free(s[2]);
+	free(s[3]);
 	return result;
 }
 
@@ -210,19 +212,21 @@ shouldHighlightMessage_case2(CSTRING msg)
 #endif
 			continue;
 		} else {
-			STRING	 s1 = strdup_printf("%s:", token);
-			STRING	 s2 = strdup_printf("%s,", token);
-			STRING	 s3 = strdup_printf("%s ", token);
+			STRING s[3];
 
-			if (!strncasecmp(msg, s1, strlen(s1)) ||
-			    !strncasecmp(msg, s2, strlen(s2)) ||
-			    !strncasecmp(msg, s3, strlen(s3)) ||
+			s[0] = strdup_printf("%s:", token);
+			s[1] = strdup_printf("%s,", token);
+			s[2] = strdup_printf("%s ", token);
+
+			if (!strncasecmp(msg, s[0], strlen(s[0])) ||
+			    !strncasecmp(msg, s[1], strlen(s[1])) ||
+			    !strncasecmp(msg, s[2], strlen(s[2])) ||
 			    strings_match_ignore_case(msg, token))
 				result = true;
 
-			free_and_null(&s1);
-			free_and_null(&s2);
-			free_and_null(&s3);
+			free_and_null(&s[0]);
+			free_and_null(&s[1]);
+			free_and_null(&s[2]);
 
 			if (result)
 				break;
