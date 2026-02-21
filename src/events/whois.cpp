@@ -190,22 +190,20 @@ event_whoReply(struct irc_message_compo *compo)
 		if (*hopcount == ':')
 			hopcount++;
 
-		std::string	str1("");
-		std::string	str2("");
-		std::string	str3("");
+		std::string s[3];
 
-		str1.append(LEFT_BRKT);
-		str1.append(COLOR1).append(channel).append(TXT_NORMAL);
-		str1.append(RIGHT_BRKT);
+		s[0].assign(LEFT_BRKT);
+		s[0].append(COLOR1).append(channel).append(TXT_NORMAL);
+		s[0].append(RIGHT_BRKT);
 
-		str2.append(COLOR2).append(nick).append(TXT_NORMAL);
+		s[1].assign(COLOR2).append(nick).append(TXT_NORMAL);
 
-		str3.append(LEFT_BRKT);
-		str3.append(COLOR2).append(rl_name).append(TXT_NORMAL);
-		str3.append(RIGHT_BRKT);
+		s[2].assign(LEFT_BRKT);
+		s[2].append(COLOR2).append(rl_name).append(TXT_NORMAL);
+		s[2].append(RIGHT_BRKT);
 
-		printtext(&ctx, "%s: %s %s %s %s@%s %s", str1.c_str(),
-		    str2.c_str(), symbol, hopcount, user, host, str3.c_str());
+		printtext(&ctx, "%s: %s %s %s %s@%s %s", s[0].c_str(),
+		    s[1].c_str(), symbol, hopcount, user, host, s[2].c_str());
 	} catch (const std::bad_alloc &e) {
 		err_exit(ENOMEM, "%s(%s): error: %s", __func__, compo->command,
 		    e.what());
