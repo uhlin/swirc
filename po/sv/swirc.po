@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.8\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2026-02-21 19:04+0100\n"
-"PO-Revision-Date: 2026-01-12 21:27+0100\n"
+"PO-Revision-Date: 2026-02-21 19:15+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -371,14 +371,14 @@ msgid "theme activated"
 msgstr "tema aktiverat"
 
 #: ../src/commands/userhost.cpp:114
-#, fuzzy, c-format
+#, c-format
 msgid "%s: invalid nickname: %s"
-msgstr "%s: ogiltigt delkommando: %s"
+msgstr "%s: ogiltigt smeknamn: %s"
 
 #: ../src/commands/userhost.cpp:122
-#, fuzzy, c-format
+#, c-format
 msgid "%s: cannot send"
-msgstr "Kan inte skicka"
+msgstr "%s: kan inte skicka"
 
 #: ../src/events/account.cpp:56
 #, c-format
@@ -1664,9 +1664,8 @@ msgid "Deletes a regular expression from the ignore list."
 msgstr "Tar bort ett reguljärt uttryck från ignoreringslistan."
 
 #: ../src/include/commandhelp.h:879
-#, fuzzy
 msgid "usage: /userhost <nick1[,nick2][,nick3][...]>"
-msgstr "användning: /ison <nick1> [nick2] [nick3] [...]"
+msgstr "användning: /userhost <nick1[,nick2][,nick3][...]>"
 
 #: ../src/include/commandhelp.h:881
 msgid ""

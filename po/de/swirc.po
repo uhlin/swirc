@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.8\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2026-02-21 19:04+0100\n"
-"PO-Revision-Date: 2026-01-11 16:26+0100\n"
+"PO-Revision-Date: 2026-02-21 19:08+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -373,14 +373,14 @@ msgid "theme activated"
 msgstr "Thema aktiviert"
 
 #: ../src/commands/userhost.cpp:114
-#, fuzzy, c-format
+#, c-format
 msgid "%s: invalid nickname: %s"
-msgstr "%s: ungültiges Target"
+msgstr "%s: Ungültiger Nickname: %s"
 
 #: ../src/commands/userhost.cpp:122
-#, fuzzy, c-format
+#, c-format
 msgid "%s: cannot send"
-msgstr "Senden nicht möglich"
+msgstr "%s: Kann nicht senden"
 
 #: ../src/events/account.cpp:56
 #, c-format
