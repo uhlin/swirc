@@ -31,6 +31,9 @@
 
 #include "userhost.h"
 
+/*
+ * usage: /userhost <nick1[,nick2][,nick3][...]>
+ */
 void
 cmd_userhost(CSTRING p_data)
 {
