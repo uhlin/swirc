@@ -40,6 +40,7 @@
 #include "../printtext.h"
 #include "../strHand.h"
 
+#include "i18n.h"
 #include "userhost.h"
 
 static STRING
@@ -85,7 +86,7 @@ cmd_userhost(CSTRING p_data)
 	std::vector<std::string>	nicks;
 
 	if (strings_match(p_data, "")) {
-		printtext_print("err", "%s: too few arguments", cmd);
+		printtext_print("err", _("%s: too few arguments"), cmd);
 		return;
 	}
 
@@ -110,7 +111,7 @@ cmd_userhost(CSTRING p_data)
 				cmd, NICKS_MAX);
 		return;
 	} else if (!validate_nicks(nicks, invalid_nick)) {
-		printf_and_free(dcopy, "%s: invalid nickname: %s", cmd,
+		printf_and_free(dcopy, _("%s: invalid nickname: %s"), cmd,
 		    invalid_nick.c_str());
 		return;
 	}
@@ -118,7 +119,7 @@ cmd_userhost(CSTRING p_data)
 	nicklist = get_nicklist(nicks);
 
 	if (net_send("USERHOST %s", nicklist) < 0)
-		printtext_print("warn", "%s: cannot send", cmd);
+		printtext_print("warn", _("%s: cannot send"), cmd);
 
 	free(dcopy);
 	free(nicklist);
