@@ -26,6 +26,7 @@ INPUTFILES = $(COMMANDS_DIR)colormap.cpp\
 	$(COMMANDS_DIR)ftp.cpp\
 	$(COMMANDS_DIR)log.cpp\
 	$(COMMANDS_DIR)theme.c\
+	$(COMMANDS_DIR)userhost.cpp\
 	$(EVENTS_DIR)account.cpp\
 	$(EVENTS_DIR)away.cpp\
 	$(EVENTS_DIR)channel.cpp\
