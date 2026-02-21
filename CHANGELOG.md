@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file.
   thrown before `main()` begins executing.
 - **Increased** `max_chat_windows` default and its upper limit.
 - **Initialized** variables in a member initializer of a constructor.
+- Instead of defining multiple variables of the same type, switched to
+  array usage.
 - Instead of terminating the program on a state that shouldn't happen,
   just shutdown the IRC connection.
 - **Made** move assignment operators and move constructors
