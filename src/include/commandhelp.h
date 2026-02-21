@@ -876,9 +876,11 @@ static usage_t unignore_usage = {
 };
 
 static usage_t userhost_usage = {
-  "usage: /userhost ...",
+  N_("usage: /userhost <nick1[,nick2][,nick3][...]>"),
   "",
-  "No help yet.",
+  N_("The command takes a list of up to 5 nicknames, each separated by a\n"
+     "space and/or comma character and returns a list of information about\n"
+     "each nickname that it found."),
   "",
 };
 
