@@ -29,7 +29,43 @@
 
 #include "common.h"
 
+#include <cinttypes>
+#include <cstdint>
+#include <string>
+#include <vector>
+
+#include "../dataClassify.h"
+#include "../main.h"
+#include "../network.h"
+#include "../printtext.h"
+#include "../strHand.h"
+
 #include "userhost.h"
+
+static STRING
+get_nicklist(const std::vector<std::string> &p_nicks)
+{
+	std::string list("");
+
+	for (const std::string &nick : p_nicks)
+		list.append(nick).append(" ");
+
+	return trim(sw_strdup(list.c_str()));
+}
+
+static bool
+validate_nicks(const std::vector<std::string> &p_nicks,
+	       std::string &p_invalid_nick)
+{
+	for (const std::string &nick : p_nicks) {
+		if (!is_valid_nickname(nick.c_str())) {
+			p_invalid_nick.assign(nick);
+			return false;
+		}
+	}
+
+	return true;
+}
 
 /*
  * usage: /userhost <nick1[,nick2][,nick3][...]>
@@ -37,5 +73,53 @@
 void
 cmd_userhost(CSTRING p_data)
 {
-	UNUSED_PARAM(p_data);
+	CSTRING				token;
+	STRING				dcopy;
+	STRING				nicklist;
+	auto				last = const_cast<STRING>("");
+	static chararray_t		cmd = "/userhost";
+	static chararray_t		sep = " ,";
+	static const uint32_t		NICKS_MIN = 1;
+	static const uint32_t		NICKS_MAX = 5;
+	std::string			invalid_nick("");
+	std::vector<std::string>	nicks;
+
+	if (strings_match(p_data, "")) {
+		printtext_print("err", "%s: too few arguments", cmd);
+		return;
+	}
+
+	dcopy = sw_strdup(p_data);
+
+	for (STRING str = dcopy;
+	    (token = strtok_r(str, sep, &last)) != nullptr;
+	    str = nullptr) {
+#if defined(__cplusplus) && __cplusplus >= 201103L
+		nicks.emplace_back(token);
+#else
+		nicks.push_back(token);
+#endif
+	}
+
+	if (nicks.size() < NICKS_MIN) {
+		printf_and_free(dcopy, "%s: too few nicknames: min=%" PRIu32,
+				cmd, NICKS_MIN);
+		return;
+	} else if (nicks.size() > NICKS_MAX) {
+		printf_and_free(dcopy, "%s: too many nicknames: max=%" PRIu32,
+				cmd, NICKS_MAX);
+		return;
+	} else if (!validate_nicks(nicks, invalid_nick)) {
+		printf_and_free(dcopy, "%s: invalid nickname: %s", cmd,
+		    invalid_nick.c_str());
+		return;
+	}
+
+	nicklist = get_nicklist(nicks);
+
+	if (net_send("USERHOST %s", nicklist) < 0)
+		printtext_print("warn", "%s: cannot send", cmd);
+
+	free(dcopy);
+	free(nicklist);
 }
