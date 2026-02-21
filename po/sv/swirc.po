@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.8\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2026-01-12 23:19+0100\n"
+"POT-Creation-Date: 2026-02-21 19:04+0100\n"
 "PO-Revision-Date: 2026-01-12 21:27+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1010
-#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:213
+#: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1222
+#: ../src/commands/dcc.cpp:1265 ../src/statusbar.cpp:213
 msgid "Yes"
 msgstr "Ja"
 
-#: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1010
-#: ../src/commands/dcc.cpp:1053 ../src/statusbar.cpp:214
+#: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1222
+#: ../src/commands/dcc.cpp:1265 ../src/statusbar.cpp:214
 msgid "No"
 msgstr "Nej"
 
@@ -67,9 +67,9 @@ msgstr "Kan inte initiera användning av Winsock DLL"
 msgid "Use of the Winsock DLL granted"
 msgstr "Användning av Winsock DLL beviljad"
 
-#: ../src/commands/ctcp.c:77 ../src/commands/ftp.cpp:1184
-#: ../src/commands/ftp.cpp:1271 ../src/commands/ftp.cpp:1320
-#: ../src/commands/ftp.cpp:1357 ../src/commands/ftp.cpp:1439
+#: ../src/commands/ctcp.c:77 ../src/commands/ftp.cpp:1225
+#: ../src/commands/ftp.cpp:1312 ../src/commands/ftp.cpp:1361
+#: ../src/commands/ftp.cpp:1398 ../src/commands/ftp.cpp:1480
 msgid "Insufficient arguments"
 msgstr "Otillräckliga argument"
 
@@ -92,221 +92,221 @@ msgstr "%s: förbjudna kanalnamnstecken"
 msgid "Invalid CTCP query"
 msgstr "Ogiltig CTCP fråga"
 
-#: ../src/commands/dcc.cpp:212
+#: ../src/commands/dcc.cpp:231
 msgid "Write error"
 msgstr "Skrivfel"
 
-#: ../src/commands/dcc.cpp:337
+#: ../src/commands/dcc.cpp:356
 #, c-format
 msgid "%s: wrote: %s"
 msgstr "%s: skrev: %s"
 
-#: ../src/commands/dcc.cpp:340
+#: ../src/commands/dcc.cpp:359
 #, c-format
 msgid "%s: did not complete: %s"
 msgstr "%s: slutfördes inte: %s"
 
-#: ../src/commands/dcc.cpp:1017
+#: ../src/commands/dcc.cpp:1229
 #, c-format
 msgid "%sStarted%s: %s"
 msgstr "%sBörjade%s: %s"
 
-#: ../src/commands/dcc.cpp:1019
+#: ../src/commands/dcc.cpp:1231
 #, c-format
 msgid "%sStopped%s: %s"
 msgstr "%sSlutade%s: %s"
 
-#: ../src/commands/dcc.cpp:1393
+#: ../src/commands/dcc.cpp:1603
 #, c-format
 msgid "sending '%s' to %s (%.1f%c)..."
 msgstr "skickar '%s' till %s (%.1f%c)..."
 
-#: ../src/commands/dcc.cpp:1484
+#: ../src/commands/dcc.cpp:1694
 msgid "Missing certs. Not starting the DCC server. Please create them."
 msgstr "Saknar certifikat. Startar inte DCC servern. Vänligen skapa dem."
 
-#: ../src/commands/dcc.cpp:1590
+#: ../src/commands/dcc.cpp:1800
 #, c-format
 msgid "%s: added: '%s' (%.1f%c)"
 msgstr "%s: lade till: '%s' (%.1f%c)"
 
-#: ../src/commands/dcc.cpp:1592
+#: ../src/commands/dcc.cpp:1802
 #, c-format
 msgid "%s: from: %s <%s@%s>"
 msgstr "%s: från: %s <%s@%s>"
 
-#: ../src/commands/dcc.cpp:1594
+#: ../src/commands/dcc.cpp:1804
 msgid "To get the file, type:"
 msgstr "För att hämta filen, skriv:"
 
-#: ../src/commands/dcc.cpp:1845 ../src/commands/ftp.cpp:1116
+#: ../src/commands/dcc.cpp:2055 ../src/commands/ftp.cpp:1157
 #, c-format
 msgid "%s: file read error"
 msgstr "%s: filläsfel"
 
-#: ../src/commands/dcc.cpp:1850
+#: ../src/commands/dcc.cpp:2060
 #, c-format
 msgid "%s: tls write error"
 msgstr "%s: tls skrivfel"
 
-#: ../src/commands/dcc.cpp:1867
+#: ../src/commands/dcc.cpp:2077
 #, c-format
 msgid "started: %s"
 msgstr "började: %s"
 
-#: ../src/commands/dcc.cpp:1868
+#: ../src/commands/dcc.cpp:2078
 #, c-format
 msgid "stopped: %s"
 msgstr "slutade: %s"
 
-#: ../src/commands/dcc.cpp:1885
+#: ../src/commands/dcc.cpp:2095
 msgid "read request error"
 msgstr "läsförfrågan fel"
 
-#: ../src/commands/dcc.cpp:1892
+#: ../src/commands/dcc.cpp:2102
 msgid "unable to find the send object"
 msgstr "kan inte hitta sändningsobjektet"
 
-#: ../src/commands/dcc.cpp:1900
+#: ../src/commands/dcc.cpp:2110
 msgid "already sent file"
 msgstr "redan skickad fil"
 
-#: ../src/commands/dcc.cpp:1903
+#: ../src/commands/dcc.cpp:2113
 msgid "the send object is in a locked state"
 msgstr "sändningsobjektet är i låst tillstånd"
 
-#: ../src/commands/dcc.cpp:1908
+#: ../src/commands/dcc.cpp:2118
 msgid "file open error"
 msgstr "filöppningsfel"
 
-#: ../src/commands/dcc.cpp:1927
+#: ../src/commands/dcc.cpp:2137
 #, c-format
 msgid "%s: successfully sent file: %s"
 msgstr "%s: skickad fil: %s"
 
-#: ../src/commands/dcc.cpp:1931
+#: ../src/commands/dcc.cpp:2141
 #, c-format
 msgid "%s: file transfer incomplete: %s"
 msgstr "%s: filöverföringen ofullständig: %s"
 
-#: ../src/commands/ftp.cpp:294
+#: ../src/commands/ftp.cpp:312
 msgid "Invalid username"
 msgstr "Ogiltigt användarnamn"
 
-#: ../src/commands/ftp.cpp:296
+#: ../src/commands/ftp.cpp:314
 msgid "Too long password"
 msgstr "För långt lösenord"
 
-#: ../src/commands/ftp.cpp:298
+#: ../src/commands/ftp.cpp:316
 msgid "Invalid hostname"
 msgstr "Ogiltigt värdnamn"
 
-#: ../src/commands/ftp.cpp:300
+#: ../src/commands/ftp.cpp:318
 msgid "Invalid port number"
 msgstr "Ogiltigt portnummer"
 
-#: ../src/commands/ftp.cpp:303 ../src/network.cpp:351
+#: ../src/commands/ftp.cpp:321 ../src/network.cpp:363
 msgid "Unable to get a list of IP addresses"
 msgstr "Det gick inte att få en lista över IP adresser"
 
-#: ../src/commands/ftp.cpp:306 ../src/commands/ftp.cpp:844
-#: ../src/network.cpp:172
+#: ../src/commands/ftp.cpp:324 ../src/commands/ftp.cpp:881
+#: ../src/network.cpp:184
 msgid "Failed to establish a connection"
 msgstr "Det gick inte att upprätta en anslutning"
 
-#: ../src/commands/ftp.cpp:317 ../src/commands/ftp.cpp:1197
-#: ../src/commands/ftp.cpp:1568
+#: ../src/commands/ftp.cpp:335 ../src/commands/ftp.cpp:1238
+#: ../src/commands/ftp.cpp:1609
 msgid "Cannot send"
 msgstr "Kan inte skicka"
 
-#: ../src/commands/ftp.cpp:832
+#: ../src/commands/ftp.cpp:869
 msgid "Failed to create an endpoint for communication"
 msgstr "Det gick inte att skapa en slutpunkt för kommunikation"
 
-#: ../src/commands/ftp.cpp:1124
+#: ../src/commands/ftp.cpp:1165
 #, c-format
 msgid "%s: bytes sent mismatch bytes read"
 msgstr "%s: bytes skickade matchade inte bytes lästa"
 
-#: ../src/commands/ftp.cpp:1187 ../src/commands/ftp.cpp:1556
+#: ../src/commands/ftp.cpp:1228 ../src/commands/ftp.cpp:1597
 msgid "No control connection"
 msgstr "Ingen kontrollanslutning"
 
-#: ../src/commands/ftp.cpp:1190 ../src/commands/ftp.cpp:1212
-#: ../src/commands/ftp.cpp:1564
+#: ../src/commands/ftp.cpp:1231 ../src/commands/ftp.cpp:1253
+#: ../src/commands/ftp.cpp:1605
 msgid "Invalid network socket"
 msgstr "Ogiltig nätverkssocket"
 
-#: ../src/commands/ftp.cpp:1274 ../src/commands/ftp.cpp:1360
+#: ../src/commands/ftp.cpp:1315 ../src/commands/ftp.cpp:1401
 msgid "Blank file path"
 msgstr "Tom filsökväg"
 
-#: ../src/commands/ftp.cpp:1560
+#: ../src/commands/ftp.cpp:1601
 msgid "Already in passive mode"
 msgstr "Redan i passivt läge"
 
-#: ../src/commands/ftp.cpp:1583
+#: ../src/commands/ftp.cpp:1624
 msgid "Failed to enter passive mode"
 msgstr "Det gick inte att gå in i passivt läge"
 
-#: ../src/commands/log.cpp:208
+#: ../src/commands/log.cpp:207
 #, c-format
 msgid "%s: empty path"
 msgstr "%s: tom sökväg"
 
-#: ../src/commands/log.cpp:211
+#: ../src/commands/log.cpp:210
 #, c-format
 msgid "%s: error removing: %s"
 msgstr "%s: fel vid borttagning av: %s"
 
-#: ../src/commands/log.cpp:215
+#: ../src/commands/log.cpp:214
 #, c-format
 msgid "removed %s"
 msgstr "tog bort %s"
 
-#: ../src/commands/log.cpp:224
+#: ../src/commands/log.cpp:223
 msgid "nothing scanned"
 msgstr "inget skannat"
 
-#: ../src/commands/log.cpp:249 ../src/commands/log.cpp:266
-#: ../src/commands/log.cpp:373
+#: ../src/commands/log.cpp:248 ../src/commands/log.cpp:265
+#: ../src/commands/log.cpp:372
 msgid "too few arguments"
 msgstr "för få argument"
 
-#: ../src/commands/log.cpp:255
+#: ../src/commands/log.cpp:254
 #, c-format
 msgid "unrecognized argument: %s (must be 'dir' or 'scanned')"
 msgstr "okänt argument: %s (måste vara 'dir' eller 'scanned')"
 
-#: ../src/commands/log.cpp:269 ../src/commands/log.cpp:376
+#: ../src/commands/log.cpp:268 ../src/commands/log.cpp:375
 msgid "argument not a number"
 msgstr "argument inte ett tal"
 
-#: ../src/commands/log.cpp:272 ../src/commands/log.cpp:379
+#: ../src/commands/log.cpp:271 ../src/commands/log.cpp:378
 msgid "vector empty"
 msgstr "vektor tom"
 
-#: ../src/commands/log.cpp:275 ../src/commands/log.cpp:382
+#: ../src/commands/log.cpp:274 ../src/commands/log.cpp:381
 msgid "bad number"
 msgstr "dåligt nummer"
 
-#: ../src/commands/log.cpp:278 ../src/commands/log.cpp:385
+#: ../src/commands/log.cpp:277 ../src/commands/log.cpp:384
 msgid "too high number"
 msgstr "för högt tal"
 
-#: ../src/commands/log.cpp:352
+#: ../src/commands/log.cpp:351
 msgid "No files found"
 msgstr "Inga filer hittades"
 
-#: ../src/commands/log.cpp:392
+#: ../src/commands/log.cpp:391
 msgid "the file is too large"
 msgstr "filen är för stor"
 
-#: ../src/commands/log.cpp:395
+#: ../src/commands/log.cpp:394
 msgid "bad filename"
 msgstr "dåligt filnamn"
 
-#: ../src/commands/log.cpp:398
+#: ../src/commands/log.cpp:397
 msgid "error opening file"
 msgstr "fel vid öppning av fil"
 
@@ -314,60 +314,71 @@ msgstr "fel vid öppning av fil"
 msgid "error creating window"
 msgstr "fel vid skapande av fönster"
 
-#: ../src/commands/log.cpp:429
+#: ../src/commands/log.cpp:430
 #, c-format
 msgid "wrote %s"
 msgstr "skrev %s"
 
-#: ../src/commands/log.cpp:431
+#: ../src/commands/log.cpp:432
 #, c-format
 msgid "write incomplete (%s)"
 msgstr "skrivning ofullständig (%s)"
 
-#: ../src/commands/log.cpp:458 ../src/commands/log.cpp:465
+#: ../src/commands/log.cpp:462 ../src/commands/log.cpp:469
+#: ../src/commands/userhost.cpp:89
 #, c-format
 msgid "%s: too few arguments"
 msgstr "%s: för få argument"
 
-#: ../src/commands/log.cpp:473
+#: ../src/commands/log.cpp:477
 #, c-format
 msgid "%s: too many arguments"
 msgstr "%s: för många argument"
 
-#: ../src/commands/log.cpp:489
+#: ../src/commands/log.cpp:493
 #, c-format
 msgid "%s: invalid subcommand: %s"
 msgstr "%s: ogiltigt delkommando: %s"
 
-#: ../src/commands/log.cpp:493
+#: ../src/commands/log.cpp:497
 #, c-format
 msgid "%s: exception: %s"
 msgstr "%s: undantag: %s"
 
-#: ../src/commands/theme.c:313
+#: ../src/commands/theme.c:318
 #, c-format
 msgid "failed to remove: %s"
 msgstr "misslyckades med att ta bort: %s"
 
-#: ../src/commands/theme.c:333
+#: ../src/commands/theme.c:338
 msgid "no such theme in the database"
 msgstr "inget sådant tema i databasen"
 
-#: ../src/commands/theme.c:353
+#: ../src/commands/theme.c:358
 msgid "theme installed (use 'set' to activate it)"
 msgstr "tema installerat (använd 'set' för att aktivera det)"
 
-#: ../src/commands/theme.c:356
+#: ../src/commands/theme.c:361
 msgid "failed to install the theme :-("
 msgstr "misslyckades med att installera temat :-("
 
-#: ../src/commands/theme.c:404
+#: ../src/commands/theme.c:409
 msgid "non-existent"
 msgstr "obefintlig"
 
-#: ../src/commands/theme.c:417
+#: ../src/commands/theme.c:422
 msgid "theme activated"
 msgstr "tema aktiverat"
+
+#: ../src/commands/userhost.cpp:114
+#, fuzzy, c-format
+msgid "%s: invalid nickname: %s"
+msgstr "%s: ogiltigt delkommando: %s"
+
+#: ../src/commands/userhost.cpp:122
+#, fuzzy, c-format
+msgid "%s: cannot send"
+msgstr "Kan inte skicka"
 
 #: ../src/events/account.cpp:56
 #, c-format
@@ -427,27 +438,27 @@ msgstr "%s%s%c har bytt namn till %s %s%s%c"
 msgid "%s%s%c %s%s@%s%s has left %s%s%c %s%s%s"
 msgstr "%s%s%c %s%s@%s%s har lämnat %s%s%c %s%s%s"
 
-#: ../src/events/channel.cpp:916
+#: ../src/events/channel.cpp:918
 #, c-format
 msgid "%s%s%c %s%s@%s%s has quit %s%s%s"
 msgstr "%s%s%c %s%s@%s%s har avslutat %s%s%s"
 
-#: ../src/events/channel.cpp:1011
+#: ../src/events/channel.cpp:1013
 #, c-format
 msgid "Topic for %s%s%s%c%s: %s"
 msgstr "Ämne för %s%s%s%c%s: %s"
 
-#: ../src/events/channel.cpp:1071
+#: ../src/events/channel.cpp:1073
 #, c-format
 msgid "%c%s%c changed the topic of %c%s%c to: %s"
 msgstr "%c%s%c ändrade ämnet för %c%s%c till: %s"
 
-#: ../src/events/channel.cpp:1149
+#: ../src/events/channel.cpp:1151
 #, c-format
 msgid "Topic set by %c%s%c %s%s@%s%s %s%s%s"
 msgstr "Ämnet satt av %c%s%c %s%s@%s%s %s%s%s"
 
-#: ../src/events/channel.cpp:1155
+#: ../src/events/channel.cpp:1157
 #, c-format
 msgid "Topic set by %c%s%c %s%s%s"
 msgstr "Ämnet satt av %c%s%c %s%s%s"
@@ -461,7 +472,7 @@ msgstr "%s%s%s har ändrat sitt värdnamn till %s%s@%s%s"
 msgid "The invitation has been passed onto the end user"
 msgstr "Inbjudan har skickats till slutanvändaren"
 
-#: ../src/events/invite.cpp:103
+#: ../src/events/invite.cpp:104
 #, c-format
 msgid "%c%s%c %s%s@%s%s invites you to %c%s%c"
 msgstr "%c%s%c %s%s@%s%s bjuder in dig till %c%s%c"
@@ -470,45 +481,45 @@ msgstr "%c%s%c %s%s@%s%s bjuder in dig till %c%s%c"
 #. * TODO: Write to the channels where the user
 #. * that's doing the invite is in
 #.
-#: ../src/events/invite.cpp:113
+#: ../src/events/invite.cpp:114
 #, c-format
 msgid "%c%s%c %s%s@%s%s invites %c%s%c to %c%s%c"
 msgstr "%c%s%c %s%s@%s%s bjuder in %c%s%c till %c%s%c"
 
-#: ../src/events/misc.cpp:246
+#: ../src/events/misc.cpp:247
 #, c-format
 msgid "Channel %s%s%s%c%s created %s"
 msgstr "Kanalen %s%s%s%c%s skapades %s"
 
-#: ../src/events/misc.cpp:303
+#: ../src/events/misc.cpp:304
 #, c-format
 msgid "mode/%s%s%s%c%s %s%s%s"
 msgstr "läge/%s%s%s%c%s %s%s%s"
 
-#: ../src/events/misc.cpp:354
+#: ../src/events/misc.cpp:356
 #, c-format
 msgid "Channel forwarding from %c%s%c to %c%s%c"
 msgstr "Kanalvidarebefordran från %c%s%c till %c%s%c"
 
-#: ../src/events/misc.cpp:431
+#: ../src/events/misc.cpp:433
 #, c-format
 msgid "Nickname %c%s%c is already in use"
 msgstr "Smeknamnet %c%s%c används redan"
 
-#: ../src/events/misc.cpp:439
+#: ../src/events/misc.cpp:441
 msgid "Alternative nickname already tested. Disconnecting..."
 msgstr "Alternativt smeknamn har redan testats. Kopplar från..."
 
-#: ../src/events/misc.cpp:444
+#: ../src/events/misc.cpp:446
 #, c-format
 msgid "Attempting to use alt_nick (%s) instead..."
 msgstr "Försöker använda alt_nick (%s) istället..."
 
-#: ../src/events/misc.cpp:452
+#: ../src/events/misc.cpp:454
 msgid "Disconnecting..."
 msgstr "Kopplar från..."
 
-#: ../src/events/misc.cpp:513
+#: ../src/events/misc.cpp:530
 msgid "You're now an IRC operator!"
 msgstr "Du är nu en IRC operatör!"
 
@@ -1653,18 +1664,30 @@ msgid "Deletes a regular expression from the ignore list."
 msgstr "Tar bort ett reguljärt uttryck från ignoreringslistan."
 
 #: ../src/include/commandhelp.h:879
+#, fuzzy
+msgid "usage: /userhost <nick1[,nick2][,nick3][...]>"
+msgstr "användning: /ison <nick1> [nick2] [nick3] [...]"
+
+#: ../src/include/commandhelp.h:881
+msgid ""
+"The command takes a list of up to 5 nicknames, each separated by a\n"
+"space and/or comma character and returns a list of information about\n"
+"each nickname that it found."
+msgstr ""
+
+#: ../src/include/commandhelp.h:888
 msgid "usage: /utctime"
 msgstr "användning: /utctime"
 
-#: ../src/include/commandhelp.h:881
+#: ../src/include/commandhelp.h:890
 msgid "Prints out the coordinated universal time (UTC)."
 msgstr "Skriver ut koordinerad universell tid (UTC)."
 
-#: ../src/include/commandhelp.h:886
+#: ../src/include/commandhelp.h:895
 msgid "usage: /version <target>"
 msgstr "användning: /version <mål>"
 
-#: ../src/include/commandhelp.h:888
+#: ../src/include/commandhelp.h:897
 msgid ""
 "Send a CTCP VERSION request to 'target', which is either a nickname or\n"
 "an IRC channel."
@@ -1672,19 +1695,19 @@ msgstr ""
 "Skicka en CTCP VERSION förfrågan till 'mål', vilket antingen är ett\n"
 "smeknamn eller en IRC kanal."
 
-#: ../src/include/commandhelp.h:894
+#: ../src/include/commandhelp.h:903
 msgid "usage: /voice <nick>"
 msgstr "användning: /voice <nick>"
 
-#: ../src/include/commandhelp.h:896
+#: ../src/include/commandhelp.h:905
 msgid "Gives the channel voice privilege to another user."
 msgstr "Ger kanal-röst-privilegiet till en annan användare."
 
-#: ../src/include/commandhelp.h:901
+#: ../src/include/commandhelp.h:910
 msgid "usage: /wallops <message>"
 msgstr "användning: /wallops <meddelande>"
 
-#: ../src/include/commandhelp.h:903
+#: ../src/include/commandhelp.h:912
 msgid ""
 "The 'wallops'-command is used to send a message to all currently\n"
 "connected users who have set the 'w' user mode for themselves."
@@ -1693,11 +1716,11 @@ msgstr ""
 "för närvarande anslutna användare som har ställt in användarläget 'w'\n"
 "för sig själva."
 
-#: ../src/include/commandhelp.h:909
+#: ../src/include/commandhelp.h:918
 msgid "usage: /who <mask>"
 msgstr "användning: /who <mask>"
 
-#: ../src/include/commandhelp.h:911
+#: ../src/include/commandhelp.h:920
 msgid ""
 "Generates a query which returns a list of information which matches\n"
 "the provided 'mask'."
@@ -1705,27 +1728,27 @@ msgstr ""
 "Genererar en fråga som returnerar en lista med information som matchar\n"
 "den angivna 'masken'."
 
-#: ../src/include/commandhelp.h:916
+#: ../src/include/commandhelp.h:925
 msgid "  Show the Libera Chat crew:"
 msgstr "  Visa Libera Chat teamet:"
 
-#: ../src/include/commandhelp.h:919
+#: ../src/include/commandhelp.h:928
 msgid "  Show users with a German domain name:"
 msgstr "  Visa användare med ett tyskt domännamn:"
 
-#: ../src/include/commandhelp.h:925
+#: ../src/include/commandhelp.h:934
 msgid "usage: /whois <nick>"
 msgstr "användning: /whois <smeknamn>"
 
-#: ../src/include/commandhelp.h:927
+#: ../src/include/commandhelp.h:936
 msgid "Asks after information about another user."
 msgstr "Frågar efter information om en annan användare."
 
-#: ../src/include/commandhelp.h:932
+#: ../src/include/commandhelp.h:941
 msgid "usage: /wholeft"
 msgstr "användning: /wholeft"
 
-#: ../src/include/commandhelp.h:934
+#: ../src/include/commandhelp.h:943
 msgid ""
 "By using this command you can see who left during a network server\n"
 "split. The command takes no arguments and the active window must be an\n"
@@ -1735,21 +1758,21 @@ msgstr ""
 "nätverksserveruppdelning. Kommandot tar inga argument och det aktiva\n"
 "fönstret måste vara en IRC kanal."
 
-#: ../src/include/commandhelp.h:941
+#: ../src/include/commandhelp.h:950
 msgid "usage: /znc [*module] <command>"
 msgstr "användning: /znc [*modul] <kommando>"
 
-#: ../src/include/commandhelp.h:943
+#: ../src/include/commandhelp.h:952
 msgid ""
 "Simplifies the communication with ZNC which is a popular\n"
 "'IRC bouncer'."
 msgstr "Förenklar kommunikationen med ZNC som är en populär 'IRC studsare'."
 
-#: ../src/include/commandhelp.h:948
+#: ../src/include/commandhelp.h:957
 msgid "  Output your ZNC version:"
 msgstr "  Mata ut din ZNC version:"
 
-#: ../src/include/commandhelp.h:951
+#: ../src/include/commandhelp.h:960
 msgid "  Identical to the previous example:"
 msgstr "  Identiskt med föregående exempel:"
 
@@ -1758,69 +1781,69 @@ msgstr "  Identiskt med föregående exempel:"
 msgid "%s: fatal: string was truncated"
 msgstr "%s: fatal: strängen trunkerades"
 
-#: ../src/io-loop.c:601
+#: ../src/io-loop.c:603
 #, c-format
 msgid "    Swirc %s by %s"
 msgstr "    Swirc %s av %s"
 
-#: ../src/io-loop.c:602
+#: ../src/io-loop.c:604
 #, c-format
 msgid "    Compiled on %s%s %s%s"
 msgstr "    Kompilerat %s%s %s%s"
 
-#: ../src/io-loop.c:608
+#: ../src/io-loop.c:610
 #, c-format
 msgid "Current language %s%s%s"
 msgstr "Aktuellt språk %s%s%s"
 
-#: ../src/io-loop.c:611
+#: ../src/io-loop.c:613
 #, c-format
 msgid "Program settings are stored in %s%s%s"
 msgstr "Programinställningar lagras i %s%s%s"
 
-#: ../src/io-loop.c:613
+#: ../src/io-loop.c:615
 #, c-format
 msgid "%c%hd%c color pairs have been initialized"
 msgstr "%c%hd%c färgpar har initierats"
 
-#: ../src/io-loop.c:615
+#: ../src/io-loop.c:617
 msgid "Type /help for a list of commands; or /help <command>"
 msgstr "Skriv /help för en lista med kommandon; eller /help <kommando>"
 
-#: ../src/io-loop.c:617
+#: ../src/io-loop.c:619
 msgid "for help of a specific command"
 msgstr "för hjälp av ett specifikt kommando"
 
-#: ../src/io-loop.c:618
+#: ../src/io-loop.c:620
 msgid "Type F1 for keys"
 msgstr "Skriv F1 för tangenter"
 
-#: ../src/io-loop.c:620
+#: ../src/io-loop.c:622
 #, c-format
 msgid "Error log size %s%.1f KB%s"
 msgstr "Storlek på fellogg %s%.1f KB%s"
 
-#: ../src/irc.c:332
+#: ../src/irc.c:334
 #, c-format
 msgid "%s: no nickname"
 msgstr "%s: inget smeknamn"
 
-#: ../src/irc.c:451
+#: ../src/irc.c:453
 #, c-format
 msgid "%s: unsupported extension"
 msgstr "%s: tillägg som inte stöds"
 
-#: ../src/irc.c:648
+#: ../src/irc.c:650
 #, c-format
 msgid "Unknown normal event: %s"
 msgstr "Okänd normal händelse: %s"
 
-#: ../src/irc.c:659
+#: ../src/irc.c:661
 #, c-format
 msgid "Unknown numeric event: %s"
 msgstr "Okänd numerisk händelse: %s"
 
-#: ../src/irc.c:667
+#: ../src/irc.c:669
 #, c-format
 msgid "Erroneous event: %s"
 msgstr "Felaktig händelse: %s"
@@ -1835,12 +1858,12 @@ msgstr "Loggning för fönstret (refnum: %d) är nu av"
 msgid "Logging for window (refnum: %d) now on"
 msgstr "Loggning för fönstret (refnum: %d) är nu på"
 
-#: ../src/main.cpp:89
+#: ../src/main.cpp:88
 #, c-format
 msgid "A duplicate of option -%c found"
 msgstr "En dubblett av alternativet -%c hittades"
 
-#: ../src/main.cpp:149
+#: ../src/main.cpp:162
 msgid ""
 "\n"
 "Options:\n"
@@ -1850,123 +1873,123 @@ msgstr ""
 "Flaggor:\n"
 "\n"
 
-#: ../src/main.cpp:150
+#: ../src/main.cpp:163
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   Använd enbart IPv4 adresser\n"
 
-#: ../src/main.cpp:151
+#: ../src/main.cpp:164
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   Använd enbart IPv6 adresser\n"
 
-#: ../src/main.cpp:152
+#: ../src/main.cpp:165
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Skriv ut hjälp\n"
 
-#: ../src/main.cpp:153
+#: ../src/main.cpp:166
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Ändra inte färgdefinitioner\n"
 
-#: ../src/main.cpp:154
+#: ../src/main.cpp:167
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr "    -P                   Stäng av SASL autentisering permanent\n"
 
-#: ../src/main.cpp:155
+#: ../src/main.cpp:168
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   Stäng av TLS/SSL peer verifikation\n"
 
-#: ../src/main.cpp:156
+#: ../src/main.cpp:169
 msgid "    -S                   Force TLS\n"
 msgstr "    -S                   Tvinga TLS\n"
 
-#: ../src/main.cpp:161
+#: ../src/main.cpp:174
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
 msgstr ""
 "    -W <password>        Samma effekt som flaggan 'p' men icke-interaktiv\n"
 
-#: ../src/main.cpp:162
+#: ../src/main.cpp:175
 msgid "    -X                   Disable all IRCv3 extensions\n"
 msgstr "    -X                   Inaktivera alla IRCv3 tillägg\n"
 
-#: ../src/main.cpp:163
+#: ../src/main.cpp:176
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Anslut till IRC server\n"
 
-#: ../src/main.cpp:164
+#: ../src/main.cpp:177
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Debug loggning\n"
 
-#: ../src/main.cpp:165
+#: ../src/main.cpp:178
 msgid "    -h <hostname>        Sets the bind host\n"
 msgstr "    -h <hostname>        Ställer in bindningsvärdnamnet\n"
 
-#: ../src/main.cpp:166
+#: ../src/main.cpp:179
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Sätt på Internet Citizen's Band läge\n"
 
-#: ../src/main.cpp:167
+#: ../src/main.cpp:180
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr ""
 "    -j <join>            En kommaseparerad lista bestående av kanaler att gå "
 "med i\n"
 
-#: ../src/main.cpp:168
+#: ../src/main.cpp:181
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Online nickname\n"
 
-#: ../src/main.cpp:169
+#: ../src/main.cpp:182
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Fråga efter serverlösenord (för privata servrar)\n"
 
-#: ../src/main.cpp:170
+#: ../src/main.cpp:183
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Ditt riktiga namn\n"
 
-#: ../src/main.cpp:171
+#: ../src/main.cpp:184
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Ditt användarnamn\n"
 
-#: ../src/main.cpp:172
+#: ../src/main.cpp:185
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Visa Swirc version\n"
 
-#: ../src/main.cpp:173
+#: ../src/main.cpp:186
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsfil\n"
 
-#: ../src/main.cpp:236
+#: ../src/main.cpp:249
 msgid "Unhandled exception!"
 msgstr "Ohanterat undantag!"
 
-#: ../src/main.cpp:300
+#: ../src/main.cpp:313
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Användning: %s [FLAGGA] ...\n"
 
-#: ../src/main.cpp:392
+#: ../src/main.cpp:406
 msgid "forbidden channel name characters"
 msgstr "förbjudna kanalnamnstecken"
 
-#: ../src/main.cpp:544
+#: ../src/main.cpp:563
 #, c-format
 msgid "%s: -%c: unrecognized option"
 msgstr "%s: -%c: okänt alternativ"
 
-#: ../src/main.cpp:549
+#: ../src/main.cpp:568
 #, c-format
 msgid "%s: -%c: option argument missing"
 msgstr "%s: -%c: alternativargument saknas"
 
-#: ../src/main.cpp:718
+#: ../src/main.cpp:737
 msgid "fatal: failed to initialize signal handling"
 msgstr "fatal: misslyckades med att initiera signalhantering"
 
-#: ../src/main.cpp:740
+#: ../src/main.cpp:759
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr "fatal: att köra programmet med root privilegier är förbjudet"
 
-#: ../src/main.cpp:762
+#: ../src/main.cpp:781
 msgid "Initialization of the Curses library not possible"
 msgstr "Initiering av Curses biblioteket är inte möjlig"
 
@@ -2043,32 +2066,32 @@ msgstr ""
 msgid "Can't resolve the home path!"
 msgstr "Kan inte lösa hemvägen!"
 
-#: ../src/network.cpp:180
+#: ../src/network.cpp:192
 msgid "Hostname checking failed!"
 msgstr "Värdnamnskontrollen misslyckades!"
 
-#: ../src/network.cpp:182
+#: ../src/network.cpp:194
 msgid "Hostname checking OK!"
 msgstr "Värdnamnskontrollen OK!"
 
-#: ../src/network.cpp:280
+#: ../src/network.cpp:292
 msgid "Connected!"
 msgstr "Ansluten!"
 
-#: ../src/network.cpp:354
+#: ../src/network.cpp:366
 msgid "Get a list of IP addresses completed"
 msgstr "Få en lista över IP adresser färdig"
 
-#: ../src/network.cpp:582
+#: ../src/network.cpp:594
 #, c-format
 msgid "Connecting to %s (%s)"
 msgstr "Ansluter till %s (%s)"
 
-#: ../src/network.cpp:850
+#: ../src/network.cpp:862
 msgid "Connection to IRC server lost"
 msgstr "Anslutningen till IRC servern förlorad"
 
-#: ../src/network.cpp:861
+#: ../src/network.cpp:873
 msgid "Disconnected"
 msgstr "Frånkopplad"
 
@@ -2172,25 +2195,25 @@ msgstr "Segmenteringsfel"
 msgid "Termination request"
 msgstr "Avslutad"
 
-#: ../src/spell.cpp:217 ../src/spell.cpp:221
+#: ../src/spell.cpp:219 ../src/spell.cpp:223
 #, c-format
 msgid "%s: %s not found"
 msgstr "%s: %s hittades inte"
 
-#: ../src/spell.cpp:397
+#: ../src/spell.cpp:399
 msgid "no more suggestions"
 msgstr "inga fler förslag"
 
-#: ../src/spell.cpp:424
+#: ../src/spell.cpp:426
 msgid "suggestions:"
 msgstr "förslag:"
 
-#: ../src/spell.cpp:452
+#: ../src/spell.cpp:454
 #, c-format
 msgid "%ls is correct"
 msgstr "%ls är korrekt"
 
-#: ../src/spell.cpp:457
+#: ../src/spell.cpp:459
 #, c-format
 msgid "%ls is incorrect"
 msgstr "%ls är felaktigt"
@@ -2207,16 +2230,16 @@ msgstr "-- MER --"
 msgid "Already accepting DCC connections..."
 msgstr "Accepterar redan DCC anslutningar..."
 
-#: ../src/tls-server.cpp:229
+#: ../src/tls-server.cpp:230
 #, c-format
 msgid "Accepting DCC connections at port: %d"
 msgstr "Accepterar DCC anslutningar på port: %d"
 
-#: ../src/tls-server.cpp:241
+#: ../src/tls-server.cpp:242
 msgid "Out of memory"
 msgstr "Slut på minne"
 
-#: ../src/tls-server.cpp:250
+#: ../src/tls-server.cpp:251
 msgid "Stopped accepting DCC connections"
 msgstr "Slutade acceptera DCC anslutningar"
 
