@@ -298,10 +298,12 @@ static struct numeric_events_tag {
 ****************************************************************/
 
 //lint -sem(SortMsgCompo, r_null)
+//lint -sem(get_last_token, r_null)
 
 static struct irc_message_compo *
 		 SortMsgCompo(const char *);
 static void	 FreeMsgCompo(struct irc_message_compo *);
+static char	*get_last_token(const char *) NONNULL;
 
 static int
 cmp_fn(const void *vp1, const void *vp2)
@@ -693,13 +695,10 @@ get_last_token(const char *buffer)
 {
 	const char *last_token;
 
-	if ((last_token = strrchr(buffer, '\n')) == NULL) {
-		err_msg("%s error. (this is a bug and shouldn't happen!)",
-		    __func__);
-		abort();
-	}
+	if ((last_token = strrchr(buffer, '\n')) == NULL)
+		return NULL;
 
-	return sw_strdup(++ last_token);
+	return sw_strdup(++last_token);
 }
 
 static inline bool
@@ -733,8 +732,13 @@ irc_handle_interpret_events(char *recvbuffer, char **message_concat,
 		*state = CONCAT_BUFFER_IS_EMPTY;
 	}
 
-	if (!is_terminated_recvchunk(recvbuffer[strlen(recvbuffer) - 1]))
-		last_token = get_last_token(recvbuffer); /* Must be freed */
+	if (!is_terminated_recvchunk(recvbuffer[strlen(recvbuffer) - 1]) &&
+	    (last_token = get_last_token(recvbuffer)) == NULL) {
+		printtext_print("err", "%s: unable to get the last token: "
+		    "requesting disconnect...", __func__);
+		net_request_disconnect();
+		return;
+	}
 
 	cp = &recvbuffer[0];
 	loop_count = 0;
