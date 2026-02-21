@@ -512,7 +512,7 @@ event_userModeIs(struct irc_message_compo *compo)
 void
 event_userhost(struct irc_message_compo *compo)
 {
-	(void) compo;
+	irc_extract_msg(compo, g_active_window, 1, false);
 }
 
 /* event_youAreOper: 381 (RPL_YOUREOPER)
