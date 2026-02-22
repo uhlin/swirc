@@ -81,12 +81,35 @@ x509_fingerprint::~x509_fingerprint()
  * Copy assignment operator
  */
 x509_fingerprint &
-x509_fingerprint::operator=(const x509_fingerprint &obj) = default;
+x509_fingerprint::operator=(const x509_fingerprint &obj)
+{
+	if (&obj == this)
+		return *this;
+
+	this->bio  = nullptr;
+	this->cert = nullptr;
+	this->alg  = nullptr;
+
+	memmove(this->md, obj.md, sizeof(this->md));
+
+	this->md_len = obj.md_len;
+
+	return *this;
+}
 
 /*
  * Copy constructor
  */
-x509_fingerprint::x509_fingerprint(const x509_fingerprint &obj) = default;
+x509_fingerprint::x509_fingerprint(const x509_fingerprint &obj)
+    : bio(nullptr)
+    , cert(nullptr)
+    , alg(nullptr)
+    , md_len(0)
+{
+	memmove(this->md, obj.md, sizeof(this->md));
+
+	this->md_len = obj.md_len;
+}
 
 /*
  * Move assignment operator
