@@ -104,11 +104,9 @@ x509_fingerprint::x509_fingerprint(const x509_fingerprint &obj)
     : bio(nullptr)
     , cert(nullptr)
     , alg(nullptr)
-    , md_len(0)
+    , md_len(obj.md_len)
 {
 	memmove(this->md, obj.md, sizeof(this->md));
-
-	this->md_len = obj.md_len;
 }
 
 /*
