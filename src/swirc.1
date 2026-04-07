@@ -1,9 +1,9 @@
 .\" -*- mode: nroff; -*-
 .\"
-.\" SPDX-FileCopyrightText: Copyright 2016-2025 Markus Uhlin
+.\" SPDX-FileCopyrightText: Copyright 2016-2026 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd July 16, 2025
+.Dd April 8, 2026
 .Dt SWIRC 1
 .Os
 .Sh NAME
@@ -115,8 +115,15 @@ Your username
 Output
 .Nm
 version
-.It Fl x Ar config
-Config file
+.It Fl x Ar filepath
+Read a
+.Nm
+configuration file from a non-standard location.
+Different from
+.Em ~/.swirc/swirc.conf ,
+which is the default.
+The configuration file given by this flag will not be overwritten by
+.Nm .
 .El
 .Sh KEYS
 .Bl -tag -width "          " -compact
