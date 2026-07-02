@@ -105,7 +105,10 @@ long int	 g_pid = -1;
 int	 g_stderr_fd = -1;
 int	 g_stdout_fd = -1;
 
-SSCANF_FN xsscanf = sscanf;
+int		 g_stderr_fd = -1;
+int		 g_stdout_fd = -1;
+
+SSCANF_FN	 xsscanf = sscanf;
 
 SETLOCALE_FN	 xsetlocale = nullptr;
 char		 g_locale[200] = { '\0' };

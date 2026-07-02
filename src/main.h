@@ -77,10 +77,10 @@ typedef int (*SSCANF_FN)(const char *, const char *, ...) SCANFLIKE(2);
 /*lint -sem(xsetlocale, r_null) */
 
 __SWIRC_BEGIN_DECLS
-extern chararray_t	g_swircVersion;
-extern chararray_t	g_swircYear;
-extern chararray_t	g_swircAuthor;
-extern chararray_t	g_swircWebAddr;
+extern chararray_t	 g_swircVersion;
+extern chararray_t	 g_swircYear;
+extern chararray_t	 g_swircAuthor;
+extern chararray_t	 g_swircWebAddr;
 
 extern FILE		*g_dev_null;
 extern STRING		 g_progname;
@@ -90,7 +90,10 @@ extern long int		 g_pid;
 extern int	 g_stderr_fd;
 extern int	 g_stdout_fd;
 
-extern SSCANF_FN xsscanf;
+extern int		 g_stderr_fd;
+extern int		 g_stdout_fd;
+
+extern SSCANF_FN	 xsscanf;
 
 extern SETLOCALE_FN	 xsetlocale;
 extern char		 g_locale[200];
