@@ -868,6 +868,10 @@ main(int argc, char *argv[])
 	try {
 		elapsed_time et(g_prog_start, g_prog_stop);
 
+#if defined(_WIN32) && defined(ENABLE_VIRTUAL_TERMINAL_PROCESSING)
+		VirtualTerminalProcessing();
+#endif
+
 		write_to_stream(stdout, "(%s)\n", et.get_uptime_decorated());
 	} catch (const std::exception &e) {
 		err_ret("%s", e.what());
