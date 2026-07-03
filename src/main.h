@@ -7,6 +7,7 @@
 #endif
 
 #include <stdio.h> /* FILE */
+#include <time.h>
 
 #if defined(UNIX)
 #define DEV_NULL "/dev/null"
@@ -87,8 +88,8 @@ extern STRING		 g_progname;
 extern STRING		 g_progpath;
 extern long int		 g_pid;
 
-extern int	 g_stderr_fd;
-extern int	 g_stdout_fd;
+extern time_t		 g_prog_start;
+extern time_t		 g_prog_stop;
 
 extern int		 g_stderr_fd;
 extern int		 g_stdout_fd;
