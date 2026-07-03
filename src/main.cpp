@@ -59,6 +59,7 @@
 #include "curses-funcs.h"
 #include "cursesInit.h"
 #include "dataClassify.h"
+#include "elapsed-time.hpp"
 #include "errHand.h"
 #include "i18n.h"
 #include "io-loop.h"
@@ -863,6 +864,14 @@ main(int argc, char *argv[])
 	cmdline_options_destroy();
 
 	set_prog_stop_time();
+
+	try {
+		elapsed_time et(g_prog_start, g_prog_stop);
+
+		printf("(%s)\n", et.get_uptime_decorated());
+	} catch (const std::exception &e) {
+		err_ret("%s", e.what());
+	}
 
 	puts("- Exit Success! -");
 	return (EXIT_SUCCESS);
