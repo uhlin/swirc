@@ -94,9 +94,8 @@ extern time_t		 g_prog_stop;
 extern int		 g_stderr_fd;
 extern int		 g_stdout_fd;
 
-extern SSCANF_FN	 xsscanf;
-
 extern SETLOCALE_FN	 xsetlocale;
+extern SSCANF_FN	 xsscanf;
 extern char		 g_locale[200];
 
 #ifdef __cplusplus

@@ -108,9 +108,8 @@ time_t		 g_prog_stop = 0;
 int		 g_stderr_fd = -1;
 int		 g_stdout_fd = -1;
 
-SSCANF_FN	 xsscanf = sscanf;
-
 SETLOCALE_FN	 xsetlocale = nullptr;
+SSCANF_FN	 xsscanf = sscanf;
 char		 g_locale[200] = { '\0' };
 
 std::vector<std::string> g_join_list;
