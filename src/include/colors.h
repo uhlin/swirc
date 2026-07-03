@@ -65,12 +65,14 @@
 #define BGWHITE		"\x1b[47m"
 #define BGDEFAULT	"\x1b[49m"
 
-#if defined(_WIN32) && defined(ENABLE_VIRTUAL_TERMINAL_PROCESSING)
+#if defined(_WIN32)
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN 1
 #endif
 #include <windows.h>
+#endif
 
+#if defined(_WIN32) && defined(ENABLE_VIRTUAL_TERMINAL_PROCESSING)
 static void
 VirtualTerminalProcessing(void)
 {
