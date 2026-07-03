@@ -1,6 +1,9 @@
 # Change Log #
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] ##
+- Changed the program to output its uptime right before exit.
+
 ## [3.5.9] - 2026-02-22 ##
 - **Added** command `/userhost` and event 302 (`RPL_USERHOST`).
 - **Added** custom copy assignment operators, copy constructors, move
