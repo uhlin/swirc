@@ -189,6 +189,18 @@ static stringarray_t OptionDesc = {
 };
 
 static void
+set_prog_start_time()
+{
+	g_prog_start = time(nullptr);
+}
+
+static void
+set_prog_stop_time()
+{
+	g_prog_stop = time(nullptr);
+}
+
+static void
 deal_with_setlocale()
 {
 #ifdef setlocale
@@ -766,6 +778,7 @@ main(int argc, char *argv[])
 
 	process_options(argc, argv, "46CPRSTW:Xc:dh:ij:n:pr:u:x:");
 
+	set_prog_start_time();
 	srand(get_seed());
 
 #if TEST_XWCWIDTH
@@ -846,7 +859,11 @@ main(int argc, char *argv[])
 		else
 			g_dev_null = nullptr;
 	}
+
 	cmdline_options_destroy();
+
+	set_prog_stop_time();
+
 	puts("- Exit Success! -");
 	return (EXIT_SUCCESS);
 }
