@@ -117,6 +117,10 @@ elapsed_time::elapsed_time(int64_t p_start, int64_t p_stop)
 	char		*cp[2];
 	const char	*conv_fail_msg = "time conversion failed";
 	struct tm	 res[2];
+	time_t		 tval[2] = {
+		static_cast<time_t>(p_start),
+		static_cast<time_t>(p_stop)
+	};
 
 	if (p_start > p_stop) {
 		char reason[600] = { '\0' };
@@ -136,12 +140,12 @@ elapsed_time::elapsed_time(int64_t p_start, int64_t p_stop)
 	this->secs	= ((this->diff % (60 * 60 * 24)) % (60 * 60)) % 60;
 
 #if defined(UNIX)
-	if (localtime_r(&p_start, &res[0]) == nullptr ||
-	    localtime_r(&p_stop, &res[1]) == nullptr)
+	if (localtime_r(&tval[0], &res[0]) == nullptr ||
+	    localtime_r(&tval[1], &res[1]) == nullptr)
 		throw std::runtime_error(conv_fail_msg);
 #elif defined(WIN32)
-	if ((errno = localtime_s(&res[0], &p_start)) != 0 ||
-	    (errno = localtime_s(&res[1], &p_stop)) != 0)
+	if ((errno = localtime_s(&res[0], &tval[0])) != 0 ||
+	    (errno = localtime_s(&res[1], &tval[1])) != 0)
 		throw std::runtime_error(conv_fail_msg);
 #endif
 
