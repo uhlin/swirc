@@ -86,3 +86,4 @@ VirtualTerminalProcessing(void)
 #endif
 
 #endif
+#endif	// _COLORS_H_
