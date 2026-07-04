@@ -177,7 +177,7 @@ elapsed_time::get_uptime(void)
 	    this->mins, (this->mins == 1 ? "" : "s"),
 	    this->secs, (this->secs == 1 ? "" : "s"));
 
-	if (ret < 0 || (size_t)ret >= sizeof(this->upmsg))
+	if (ret < 0 || static_cast<size_t>(ret) >= sizeof(this->upmsg))
 		return "";
 	return (&this->upmsg[0]);
 }
@@ -201,7 +201,7 @@ elapsed_time::get_uptime_decorated(void)
 	    BOLDGREEN, this->secs, NORMAL,
 	    BOLDBLACK, (this->secs == 1 ? "" : "s"), NORMAL);
 
-	if (ret < 0 || (size_t)ret >= sizeof(this->upmsg))
+	if (ret < 0 || static_cast<size_t>(ret) >= sizeof(this->upmsg))
 		return "";
 	return (&this->upmsg[0]);
 }
