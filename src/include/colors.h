@@ -73,17 +73,22 @@
 #endif
 
 #if defined(_WIN32) && defined(ENABLE_VIRTUAL_TERMINAL_PROCESSING)
-static void
+static int
 VirtualTerminalProcessing(void)
 {
-	HANDLE	 output_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE	 output_handle;
 	DWORD	 modes = 0;
 
-	GetConsoleMode(output_handle, &modes);
-	modes |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-	SetConsoleMode(output_handle, modes);
-}
-#endif
+	if ((output_handle = GetStdHandle(STD_OUTPUT_HANDLE)) ==
+	    INVALID_HANDLE_VALUE ||
+	    !GetConsoleMode(output_handle, &modes))
+		return 0;
 
+	modes |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+
+	if (!SetConsoleMode(output_handle, modes))
+		return 0;
+	return 1;
+}
 #endif
 #endif	// _COLORS_H_
