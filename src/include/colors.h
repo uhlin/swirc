@@ -1,4 +1,4 @@
-/* Copyright (c) 2019 Markus Uhlin <markus.uhlin@icloud.com>
+/* Copyright (c) 2019, 2026 Markus Uhlin <markus.uhlin@icloud.com>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
