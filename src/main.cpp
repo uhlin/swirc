@@ -54,6 +54,7 @@
 
 #include <clocale>
 #include <exception>
+#include <stdexcept>
 
 #include "assertAPI.h"
 #include "curses-funcs.h"
