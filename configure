@@ -122,12 +122,6 @@ EOF
 	;;
 "OpenBSD")
 	os_BSD
-
-	if [ "$(uname -m)" = "sparc64" ]; then
-		cat <<EOF >>$MAKE_DEF_FILE
-LDLIBS += -lstdc++fs
-EOF
-	fi
 	;;
 *)
 	echo "OS not supported!"
