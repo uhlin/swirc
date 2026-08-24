@@ -150,6 +150,7 @@ static struct tagConfDefValues {
 	{ "auto_op_yourself",          TYPE_BOOLEAN, 2, "yes" },
 	{ "awaymsgs_in_privconv",      TYPE_BOOLEAN, 2, "yes" },
 	{ "beeps",                     TYPE_BOOLEAN, 4, "yes" },
+	{ "chg_guest_nick",            TYPE_BOOLEAN, 3, "yes" },
 	{ "cipher_suite",              TYPE_STRING,  3, "compat" },
 	{ "cmd_hist_size",             TYPE_INTEGER, 3, "50" },
 	{ "cmd_type_prot",             TYPE_BOOLEAN, 3, "yes" },
