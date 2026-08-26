@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added option `chg_guest_nick` (bool). Defaults to yes.
 - Changed the program to output its uptime right before exit.
 
 ## [3.5.9] - 2026-02-22 ##
