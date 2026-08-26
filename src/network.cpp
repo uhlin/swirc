@@ -848,7 +848,8 @@ chg_guest_nick_task()
 
 	std::vector<std::string> nicks(get_nicknames());
 
-	if (nicks.empty())
+	if (nicks.empty() ||
+	    nicks[0].compare(0, 5, "Guest", 5) == STRINGS_MATCH)
 		return;
 	printtext_print("warn", "Guest nickname detected! "
 	    "Attempting to change it to: %s ...", nicks[0].c_str());
