@@ -1,9 +1,9 @@
 .\" -*- mode: nroff; -*-
 .\"
-.\" SPDX-FileCopyrightText: Copyright 2018-2025 Markus Uhlin
+.\" SPDX-FileCopyrightText: Copyright 2018-2026 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd December 26, 2025
+.Dd August 26, 2026
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -101,6 +101,28 @@ However, with the help of this setting, beeps can be turned on/off.
 .\" ----------------------------------------
 .It Sy chanserv_host Pq Em string
 ChanServ hostname
+.\" ----------------------------------------
+.\" CHG GUEST NICK
+.\" ----------------------------------------
+.It Sy chg_guest_nick Pq Em bool
+On IRC servers that have a nickname service, the server usually
+changes your nickname on an automatic basis, if the nickname in
+question is registered and is unidentified.
+.Pp
+The server often forcefully changes your nickname to
+\fIGuestXXX\fR, where \fIXXX\fR is a random number.
+.Pp
+If this setting is on, which is the default,
+.Xr swirc 1
+will attempt change the guest nickname to a better name.
+.Pp
+It uses the
+.Sy alt_nick
+and
+.Sy nickname_aliases
+settings for the task.
+.Pp
+(The task will be run in the background while IRC connected.)
 .\" ----------------------------------------
 .\" CHGHOST
 .\" ----------------------------------------
