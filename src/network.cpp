@@ -850,6 +850,8 @@ chg_guest_nick_task()
 
 	if (nicks.empty())
 		return;
+	printtext_print("warn", "Guest nickname detected! "
+	    "Attempting to change it to: %s ...", nicks[0].c_str());
 	cmd_nick(nicks[0].c_str());
 }
 
