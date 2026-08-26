@@ -60,6 +60,7 @@
 
 #include "commands/connect.h"
 #include "commands/dcc.h"
+#include "commands/nick.h"
 #include "commands/sasl-scram-sha.h"
 
 #include "events/cap.h"
@@ -785,6 +786,73 @@ irc(int &bytes_received, struct network_recv_context *ctx, STRING recvbuf,
 	}
 }
 
+/*
+ * Detects a nickname of format: GuestXXX
+ */
+static bool
+shall_change_nick()
+{
+	char		*cp = nullptr;
+	size_t		 len[2] = {0,5};
+	static CSTRING	 chk_nick = "Guest";
+
+	if (g_my_nickname == nullptr ||
+	    (len[0] = strlen(g_my_nickname)) <= len[1] ||
+	    strncmp(g_my_nickname, chk_nick, MIN(len[0], len[1])) !=
+	    STRINGS_MATCH)
+		return false;
+	cp = &g_my_nickname[len[1]];
+	if (!is_numeric(cp))
+		return false;
+	return true;
+}
+
+static std::vector<std::string>
+get_nicknames()
+{
+	CSTRING				token;
+	STRING				aliases;
+	auto				last = const_cast<STRING>("");
+	chararray_t			sep = " ";
+	std::string			alt_nick(Config("alt_nick"));
+	std::vector<std::string>	nick_vec;
+
+	aliases = sw_strdup(Config("nickname_aliases"));
+
+	for (STRING str = aliases;
+	    (token = strtok_r(str, sep, &last)) != nullptr;
+	    str = nullptr) {
+		if (is_valid_nickname(token)) {
+#if defined(__cplusplus) && __cplusplus >= 201103L
+			nick_vec.emplace_back(token);
+#else
+			nick_vec.push_back(token);
+#endif
+		}
+	}
+
+	free(aliases);
+
+	if (is_valid_nickname(alt_nick.c_str()))
+		nick_vec.insert(nick_vec.begin(), alt_nick);
+
+	return (nick_vec);
+}
+
+static void
+chg_guest_nick_task()
+{
+	if (!config_bool("chg_guest_nick", true) ||
+	    !shall_change_nick())
+		return;
+
+	std::vector<std::string> nicks(get_nicknames());
+
+	if (nicks.empty())
+		return;
+	cmd_nick(nicks.at(0).c_str());
+}
+
 void
 net_irc_listen(bool *connection_lost)
 {
@@ -851,6 +919,8 @@ net_irc_listen(bool *connection_lost)
 			err_log(0, "%s: netsplit_run_bkgd_task: %s", __func__,
 			    e.what());
 		}
+
+		chg_guest_nick_task();
 	} while (atomic_load_bool(&g_on_air) &&
 		 !atomic_load_bool(&g_connection_lost));
 
