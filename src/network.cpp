@@ -853,6 +853,19 @@ chg_guest_nick_task()
 	cmd_nick(nicks.at(0).c_str());
 }
 
+static void
+run_background_tasks()
+{
+	try {
+		chg_guest_nick_task();
+
+		// Handle Netsplits
+		netsplit_run_bkgd_task();
+	} catch (const std::exception &e) {
+		err_log(0, "%s: %s", __func__, e.what());
+	}
+}
+
 void
 net_irc_listen(bool *connection_lost)
 {
@@ -912,15 +925,7 @@ net_irc_listen(bool *connection_lost)
 			}
 		}
 
-		try {
-			// Handle Netsplits
-			netsplit_run_bkgd_task();
-		} catch (const std::exception &e) {
-			err_log(0, "%s: netsplit_run_bkgd_task: %s", __func__,
-			    e.what());
-		}
-
-		chg_guest_nick_task();
+		run_background_tasks();
 	} while (atomic_load_bool(&g_on_air) &&
 		 !atomic_load_bool(&g_connection_lost));
 
