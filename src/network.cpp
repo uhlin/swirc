@@ -850,7 +850,7 @@ chg_guest_nick_task()
 
 	if (nicks.empty())
 		return;
-	cmd_nick(nicks.at(0).c_str());
+	cmd_nick(nicks[0].c_str());
 }
 
 static void
