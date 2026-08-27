@@ -841,6 +841,8 @@ get_nicknames()
 static void
 chg_guest_nick_task()
 {
+	PRINTTEXT_CONTEXT ptext_ctx;
+
 	if (!config_bool("chg_guest_nick", true) ||
 	    !shall_change_nick())
 		return;
@@ -850,8 +852,10 @@ chg_guest_nick_task()
 	if (nicks.empty() ||
 	    nicks[0].compare(0, 5, "Guest", 5) == STRINGS_MATCH)
 		return;
-	printtext_print("warn", "Guest nickname detected! "
-	    "Attempting to change it to: %s ...", nicks[0].c_str());
+	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_WARN,
+	    true);
+	printtext(&ptext_ctx, "Guest nickname detected! "
+	    "Attempting to change it to: %s", nicks[0].c_str());
 	cmd_nick(nicks[0].c_str());
 	(void) napms(100);
 }
