@@ -785,9 +785,11 @@ irc(int &bytes_received, struct network_recv_context *ctx, STRING recvbuf,
 static bool
 shall_change_nick()
 {
+#define MAX_COUNTER 40
 	char		*cp = nullptr;
 	size_t		 len[2] = {0,5};
 	static CSTRING	 chk_nick = "Guest";
+	static int	 counter = MAX_COUNTER;
 
 	if (g_my_nickname == nullptr ||
 	    (len[0] = strlen(g_my_nickname)) <= len[1] ||
@@ -797,7 +799,11 @@ shall_change_nick()
 	cp = &g_my_nickname[len[1]];
 	if (!is_numeric(cp))
 		return false;
-	return true;
+	if (++counter > MAX_COUNTER) {
+		counter = 0;
+		return true;
+	}
+	return false;
 }
 
 static std::vector<std::string>
@@ -847,6 +853,7 @@ chg_guest_nick_task()
 	printtext_print("warn", "Guest nickname detected! "
 	    "Attempting to change it to: %s ...", nicks[0].c_str());
 	cmd_nick(nicks[0].c_str());
+	(void) napms(100);
 }
 
 static void
