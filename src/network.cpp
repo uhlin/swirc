@@ -483,6 +483,22 @@ static void
 send_reg_cmds(const struct network_connect_context *ctx)
 {
 	PRINTTEXT_CONTEXT ptext_ctx;
+	struct requests_tag {
+		CSTRING       setting_name;
+		bool          fb_def;
+		CSTRING       ext;
+		CSTRING       req_what;
+	} requests[] = {
+		{"account_notify", true,  "account-notify", "account notify"},
+		{"account_tag",    true,  "account-tag",    "account tag"},
+		{"away_notify",    false, "away-notify",    "away notify"},
+		{"batch",          true,  "batch",          "batch"},
+		{"chghost",        true,  "chghost",        "change host"},
+		{"extended_join",  true,  "extended-join",  "extended join"},
+		{"invite_notify",  false, "invite-notify",  "invite notify"},
+		{"multi_prefix",   true,  "multi-prefix",   "multi prefix"},
+		{"server_time",    true,  "server-time",    "server time"},
+	};
 
 	if (g_ircv3_extensions)
 		(void) net_send("CAP LS 302");
@@ -494,44 +510,21 @@ send_reg_cmds(const struct network_connect_context *ctx)
 
 	if (!g_ircv3_extensions)
 		return;
+
 	printtext_context_init(&ptext_ctx, g_status_window, TYPE_SPEC1_SUCCESS,
 	    true);
-	if (config_bool("account_notify", true)) {
-		if (net_send("CAP REQ :account-notify") > 0)
-			printtext(&ptext_ctx, "Requesting account notify");
+
+	for (struct requests_tag *req_p = addrof(requests[0]);
+	    req_p < &requests[ARRAY_SIZE(requests)];
+	    req_p++) {
+		if (config_bool(req_p->setting_name, req_p->fb_def)) {
+			if (net_send("CAP REQ :%s", req_p->ext) > 0) {
+				printtext(&ptext_ctx, "Requesting %s",
+				    req_p->req_what);
+			}
+		}
 	}
-	if (config_bool("account_tag", true)) {
-		if (net_send("CAP REQ :account-tag") > 0)
-			printtext(&ptext_ctx, "Requesting account tag");
-	}
-	if (config_bool("away_notify", false)) {
-		if (net_send("CAP REQ :away-notify") > 0)
-			printtext(&ptext_ctx, "Requesting away notify");
-	}
-	if (config_bool("batch", true)) {
-		if (net_send("CAP REQ :batch") > 0)
-			printtext(&ptext_ctx, "Requesting batch");
-	}
-	if (config_bool("chghost", true)) {
-		if (net_send("CAP REQ :chghost") > 0)
-			printtext(&ptext_ctx, "Requesting change host");
-	}
-	if (config_bool("extended_join", true)) {
-		if (net_send("CAP REQ :extended-join") > 0)
-			printtext(&ptext_ctx, "Requesting extended join");
-	}
-	if (config_bool("invite_notify", false)) {
-		if (net_send("CAP REQ :invite-notify") > 0)
-			printtext(&ptext_ctx, "Requesting invite notify");
-	}
-	if (config_bool("multi_prefix", true)) {
-		if (net_send("CAP REQ :multi-prefix") > 0)
-			printtext(&ptext_ctx, "Requesting multi prefix");
-	}
-	if (config_bool("server_time", true)) {
-		if (net_send("CAP REQ :server-time") > 0)
-			printtext(&ptext_ctx, "Requesting server time");
-	}
+
 	if (sasl_is_enabled()) {
 		if (strings_match(get_sasl_mechanism(), "PLAIN") &&
 		    !ssl_is_enabled()) {
