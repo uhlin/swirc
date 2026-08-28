@@ -701,7 +701,7 @@ unveil_doit()
 static void
 set_global_program_name(char *arg)
 {
-	char *cp;
+	static char *cp;
 
 	if ((cp = strrchr(arg, SLASH_CHAR)) == nullptr)
 		g_progname = arg;
