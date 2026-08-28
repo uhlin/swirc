@@ -699,6 +699,17 @@ unveil_doit()
 #endif
 
 static void
+set_global_program_name(char *arg)
+{
+	char *cp;
+
+	if ((cp = strrchr(arg, SLASH_CHAR)) == nullptr)
+		g_progname = arg;
+	else
+		g_progname = cp + 1;
+}
+
+static void
 set_global_process_id()
 {
 #if defined(UNIX)
@@ -734,8 +745,6 @@ output_run_time()
 int
 main(int argc, char *argv[])
 {
-	char *cp;
-
 #if defined(OpenBSD) && OpenBSD <= 202504
 	extern char *malloc_options;
 
@@ -745,11 +754,7 @@ main(int argc, char *argv[])
 	xsscanf = sscanf_s;
 #endif
 
-	if ((cp = strrchr(argv[0], SLASH_CHAR)) == nullptr)
-		g_progname = argv[0];
-	else
-		g_progname = cp + 1;
-
+	set_global_program_name(argv[0]);
 	set_global_process_id();
 	deal_with_setlocale();
 
