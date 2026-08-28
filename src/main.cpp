@@ -698,6 +698,23 @@ unveil_doit()
 }
 #endif
 
+static void
+output_run_time()
+{
+	try {
+		elapsed_time et(g_prog_start, g_prog_stop);
+
+#if defined(_WIN32) && defined(ENABLE_VIRTUAL_TERMINAL_PROCESSING)
+		if (!VirtualTerminalProcessing())
+			throw std::runtime_error("VTP error");
+#endif
+
+		write_to_stream(stdout, "(%s)\n", et.get_uptime_decorated());
+	} catch (const std::exception &e) {
+		err_ret("%s", e.what());
+	}
+}
+
 /**
  * Starts execution
  */
@@ -866,18 +883,7 @@ main(int argc, char *argv[])
 
 	set_prog_stop_time();
 
-	try {
-		elapsed_time et(g_prog_start, g_prog_stop);
-
-#if defined(_WIN32) && defined(ENABLE_VIRTUAL_TERMINAL_PROCESSING)
-		if (!VirtualTerminalProcessing())
-			throw std::runtime_error("VTP error");
-#endif
-
-		write_to_stream(stdout, "(%s)\n", et.get_uptime_decorated());
-	} catch (const std::exception &e) {
-		err_ret("%s", e.what());
-	}
+	output_run_time();
 
 	puts("- Exit Success! -");
 	return (EXIT_SUCCESS);
