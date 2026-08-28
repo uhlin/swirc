@@ -699,6 +699,19 @@ unveil_doit()
 #endif
 
 static void
+set_global_process_id()
+{
+#if defined(UNIX)
+	sw_static_assert(sizeof(pid_t) <= sizeof(long int),
+	    "pid type unexpectedly large");
+
+	g_pid = getpid();
+#elif defined(WIN32)
+	g_pid = _getpid();
+#endif
+}
+
+static void
 output_run_time()
 {
 	try {
@@ -737,15 +750,7 @@ main(int argc, char *argv[])
 	else
 		g_progname = cp + 1;
 
-#if defined(UNIX)
-	sw_static_assert(sizeof(pid_t) <= sizeof(long int),
-	    "pid type unexpectedly large");
-
-	g_pid = getpid();
-#elif defined(WIN32)
-	g_pid = _getpid();
-#endif
-
+	set_global_process_id();
 	deal_with_setlocale();
 
 #ifdef HAVE_LIBINTL_H
