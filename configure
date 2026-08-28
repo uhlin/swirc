@@ -2,7 +2,7 @@
 
 # Swirc configure script
 #
-# SPDX-FileCopyrightText: Copyright 2016-2025 Markus Uhlin
+# SPDX-FileCopyrightText: Copyright 2016-2026 Markus Uhlin
 # SPDX-License-Identifier: BSD-3-Clause
 
 MAKE_DEF_FILE=options.mk
@@ -122,6 +122,17 @@ EOF
 	;;
 "OpenBSD")
 	os_BSD
+
+	if [ "$(uname -m)" = "sparc64" ]; then
+		# OpenBSD sparc64 has now (vers >= 8.0) moved to clang
+		# as its base compiler. Since stdc++fs is for GCC,
+		# this is no longer needed and keeps it from building.
+		if printf "%s\n%s\n" "$(uname -r)" "7.9" | sort -V -C; then
+			cat <<EOF >>$MAKE_DEF_FILE
+LDLIBS += -lstdc++fs
+EOF
+		fi
+	fi
 	;;
 *)
 	echo "OS not supported!"
