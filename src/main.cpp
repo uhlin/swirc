@@ -723,6 +723,24 @@ set_global_process_id()
 }
 
 static void
+open_dev_null()
+{
+	if ((g_dev_null = xfopen(DEV_NULL, "w")) == nullptr)
+		debug("dev null error");
+}
+
+static void
+close_dev_null()
+{
+	if (isValid(g_dev_null)) {
+		if (fclose(g_dev_null) != 0)
+			err_ret("fclose");
+		else
+			g_dev_null = nullptr;
+	}
+}
+
+static void
 output_run_time()
 {
 	try {
@@ -817,9 +835,7 @@ main(int argc, char *argv[])
 
 	term_init();
 	nestHome_init();
-
-	if ((g_dev_null = xfopen(DEV_NULL, "w")) == nullptr)
-		debug("dev null error");
+	open_dev_null();
 
 	if (curses_init() != OK) {
 		err_msg("%s", _("Initialization of the Curses library not "
@@ -882,17 +898,9 @@ main(int argc, char *argv[])
 	nestHome_deinit();
 	term_deinit();
 
-	if (isValid(g_dev_null)) {
-		if (fclose(g_dev_null) != 0)
-			err_ret("fclose");
-		else
-			g_dev_null = nullptr;
-	}
-
+	close_dev_null();
 	cmdline_options_destroy();
-
 	set_prog_stop_time();
-
 	output_run_time();
 
 	puts("- Exit Success! -");
