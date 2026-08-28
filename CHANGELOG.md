@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] ##
 - Added option `chg_guest_nick` (bool). Defaults to yes.
 - Changed the program to output its uptime right before exit.
+- Fixed building on OpenBSD/sparc64 vers >= 8.0. Contributed by
+  [Kurt Mosiejczuk](https://github.com/kmosiejczuk)  --  thanks!
 
 ## [3.5.9] - 2026-02-22 ##
 - **Added** command `/userhost` and event 302 (`RPL_USERHOST`).
