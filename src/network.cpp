@@ -873,28 +873,12 @@ run_background_tasks()
 	}
 }
 
-void
-net_irc_listen(bool *connection_lost)
+static void
+run_do_while_loop(STRING recvbuf, char **message_concat)
 {
-	PRINTTEXT_CONTEXT		 ptext_ctx;
-	STRING				 recvbuf = nullptr;
-	char				*message_concat = nullptr;
-	enum message_concat_state	 state = CONCAT_BUFFER_IS_EMPTY;
-	int				 bytes_received = -1;
-	struct network_recv_context	 ctx(g_socket, 0, 5, 0);
-
-	if (atomic_load_bool(&g_irc_listening))
-		return;
-	else
-		(void) atomic_swap_bool(&g_irc_listening, true);
-
-	block_signals();
-	*connection_lost = false;
-	atomic_swap_bool(&g_connection_lost, false);
-	recvbuf = static_cast<STRING>(xmalloc(RECVBUF_SIZE + 1));
-	recvbuf[RECVBUF_SIZE] = '\0';
-	irc_init();
-	netsplit_init();
+	enum message_concat_state	state = CONCAT_BUFFER_IS_EMPTY;
+	int				bytes_received = -1;
+	struct network_recv_context	ctx(g_socket, 0, 5, 0);
 
 	do {
 		OPENSSL_cleanse(recvbuf, RECVBUF_SIZE);
@@ -920,7 +904,7 @@ net_irc_listen(bool *connection_lost)
 			 * IRC
 			 */
 
-			irc(bytes_received, &ctx, recvbuf, &message_concat,
+			irc(bytes_received, &ctx, recvbuf, message_concat,
 			    &state);
 		}
 
@@ -935,6 +919,29 @@ net_irc_listen(bool *connection_lost)
 		run_background_tasks();
 	} while (atomic_load_bool(&g_on_air) &&
 		 !atomic_load_bool(&g_connection_lost));
+}
+
+void
+net_irc_listen(bool *connection_lost)
+{
+	PRINTTEXT_CONTEXT	 ptext_ctx;
+	STRING			 recvbuf = nullptr;
+	char			*message_concat = nullptr;
+
+	if (atomic_load_bool(&g_irc_listening))
+		return;
+	else
+		(void) atomic_swap_bool(&g_irc_listening, true);
+
+	block_signals();
+	*connection_lost = false;
+	atomic_swap_bool(&g_connection_lost, false);
+	recvbuf = static_cast<STRING>(xmalloc(RECVBUF_SIZE + 1));
+	recvbuf[RECVBUF_SIZE] = '\0';
+	irc_init();
+	netsplit_init();
+
+	run_do_while_loop(recvbuf, &message_concat);
 
 	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_WARN,
 	    true);
