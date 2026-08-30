@@ -921,6 +921,15 @@ run_do_while_loop(STRING recvbuf, char **message_concat)
 		 !atomic_load_bool(&g_connection_lost));
 }
 
+static void
+check_and_close_sock()
+{
+	if (g_socket != INVALID_SOCKET) {
+		CLOSE_GLOBAL_SOCKET();
+		g_socket = INVALID_SOCKET;
+	}
+}
+
 void
 net_irc_listen(bool *connection_lost)
 {
@@ -951,10 +960,7 @@ net_irc_listen(bool *connection_lost)
 		printtext(&ptext_ctx, "%s", _("Connection to IRC server lost"));
 	atomic_swap_bool(&g_on_air, false);
 	net_ssl_end();
-	if (g_socket != INVALID_SOCKET) {
-		CLOSE_GLOBAL_SOCKET();
-		g_socket = INVALID_SOCKET;
-	}
+	check_and_close_sock();
 	irc_deinit();
 	netsplit_deinit();
 	free_and_null(&recvbuf);
