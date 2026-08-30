@@ -968,7 +968,7 @@ net_irc_listen(bool *connection_lost)
 			    atomic_load_bool(&g_connection_lost));
 	if (*connection_lost)
 		printtext(&ptext_ctx, "%s", _("Connection to IRC server lost"));
-	atomic_swap_bool(&g_on_air, false);
+	(void) atomic_swap_bool(&g_on_air, false);
 	net_ssl_end();
 	check_and_close_sock();
 	irc_deinit();
