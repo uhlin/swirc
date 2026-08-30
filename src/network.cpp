@@ -921,6 +921,17 @@ run_do_while_loop(STRING recvbuf, char **message_concat)
 		 !atomic_load_bool(&g_connection_lost));
 }
 
+static STRING
+allocate_buffer()
+{
+	STRING buf;
+
+	buf = static_cast<STRING>(xmalloc(RECVBUF_SIZE + 1));
+	buf[RECVBUF_SIZE] = '\0';
+
+	return (buf);
+}
+
 static void
 check_and_close_sock()
 {
@@ -945,8 +956,7 @@ net_irc_listen(bool *connection_lost)
 	block_signals();
 	*connection_lost = false;
 	atomic_swap_bool(&g_connection_lost, false);
-	recvbuf = static_cast<STRING>(xmalloc(RECVBUF_SIZE + 1));
-	recvbuf[RECVBUF_SIZE] = '\0';
+	recvbuf = allocate_buffer();
 	irc_init();
 	netsplit_init();
 
