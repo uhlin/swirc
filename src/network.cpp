@@ -941,6 +941,18 @@ check_and_close_sock()
 	}
 }
 
+static void
+listen_clean_up(STRING p_recvbuf, char *p_message_concat)
+{
+	atomic_swap_bool(&g_on_air, false);
+	net_ssl_end();
+	check_and_close_sock();
+	irc_deinit();
+	netsplit_deinit();
+	free(p_recvbuf);
+	free(p_message_concat);
+}
+
 void
 net_irc_listen(bool *connection_lost)
 {
@@ -968,13 +980,7 @@ net_irc_listen(bool *connection_lost)
 			    atomic_load_bool(&g_connection_lost));
 	if (*connection_lost)
 		printtext(&ptext_ctx, "%s", _("Connection to IRC server lost"));
-	(void) atomic_swap_bool(&g_on_air, false);
-	net_ssl_end();
-	check_and_close_sock();
-	irc_deinit();
-	netsplit_deinit();
-	free_and_null(&recvbuf);
-	free_and_null(&message_concat);
+	listen_clean_up(recvbuf, message_concat);
 	printtext(&ptext_ctx, "%s", _("Disconnected"));
 	(void) atomic_swap_bool(&g_irc_listening, false);
 }
