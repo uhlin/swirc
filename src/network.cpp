@@ -715,6 +715,17 @@ destroy_null_bytes_exported(STRING buf, const int len)
 	destroy_null_bytes(buf, len);
 }
 
+static STRING
+allocate_buffer()
+{
+	STRING buf;
+
+	buf = static_cast<STRING>(xmalloc(RECVBUF_SIZE + 1));
+	buf[RECVBUF_SIZE] = '\0';
+
+	return (buf);
+}
+
 static int
 icb(int &bytes_received, struct network_recv_context *ctx, STRING recvbuf)
 {
@@ -919,17 +930,6 @@ run_do_while_loop(STRING recvbuf, char **message_concat)
 		run_background_tasks();
 	} while (atomic_load_bool(&g_on_air) &&
 		 !atomic_load_bool(&g_connection_lost));
-}
-
-static STRING
-allocate_buffer()
-{
-	STRING buf;
-
-	buf = static_cast<STRING>(xmalloc(RECVBUF_SIZE + 1));
-	buf[RECVBUF_SIZE] = '\0';
-
-	return (buf);
 }
 
 static void
