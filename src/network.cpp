@@ -145,6 +145,9 @@ char		g_last_pass[256] = { '\0' };
 
 int		g_socket_address_family = AF_UNSPEC;
 
+time_t		g_irc_start_time = 0;
+time_t		g_irc_stop_time = 0;
+
 /****************************************************************
 *                                                               *
 *  -------------- Objects with internal linkage --------------  *

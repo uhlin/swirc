@@ -1,6 +1,8 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
+#include <time.h>
+
 #include "atomicops.h"
 #include "mutex.h"
 
@@ -73,6 +75,9 @@ extern char g_last_port[32];
 extern char g_last_pass[256];
 
 extern int g_socket_address_family;
+
+extern time_t g_irc_start_time;
+extern time_t g_irc_stop_time;
 
 /*lint -sem(net_addr_resolve, r_null) */
 
