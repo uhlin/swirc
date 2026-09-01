@@ -936,6 +936,18 @@ run_do_while_loop(STRING recvbuf, char **message_concat)
 }
 
 static void
+set_irc_start_time()
+{
+	g_irc_start_time = time(nullptr);
+}
+
+static void
+set_irc_stop_time()
+{
+	g_irc_stop_time = time(nullptr);
+}
+
+static void
 check_and_close_sock()
 {
 	if (g_socket != INVALID_SOCKET) {
@@ -975,7 +987,9 @@ net_irc_listen(bool *connection_lost)
 	irc_init();
 	netsplit_init();
 
+	set_irc_start_time();
 	run_do_while_loop(recvbuf, &message_concat);
+	set_irc_stop_time();
 
 	printtext_context_init(&ptext_ctx, g_active_window, TYPE_SPEC1_WARN,
 	    true);
