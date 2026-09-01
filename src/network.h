@@ -55,29 +55,29 @@ typedef enum {
 __SWIRC_BEGIN_DECLS
 
 /* From network-openssl.c */
-extern STRING g_ca_file;
+extern STRING		g_ca_file;
 
 /*
  * net_send_fake() store the sent data into this buffer
  */
-extern char g_sent[600];
+extern char		g_sent[600];
 
-extern NET_SEND_FN net_send;
-extern NET_RECV_FN net_recv;
+extern NET_SEND_FN	net_send;
+extern NET_RECV_FN	net_recv;
 
-extern volatile bool g_connection_in_progress;
-extern volatile bool g_connection_lost;
-extern volatile bool g_irc_listening;
-extern volatile bool g_on_air;
+extern volatile bool	g_connection_in_progress;
+extern volatile bool	g_connection_lost;
+extern volatile bool	g_irc_listening;
+extern volatile bool	g_on_air;
 
-extern char g_last_server[1024];
-extern char g_last_port[32];
-extern char g_last_pass[256];
+extern char		g_last_server[1024];
+extern char		g_last_port[32];
+extern char		g_last_pass[256];
 
-extern int g_socket_address_family;
+extern int		g_socket_address_family;
 
-extern time_t g_irc_start_time;
-extern time_t g_irc_stop_time;
+extern time_t		g_irc_start_time;
+extern time_t		g_irc_stop_time;
 
 /*lint -sem(net_addr_resolve, r_null) */
 
