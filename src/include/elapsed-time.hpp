@@ -38,6 +38,7 @@
 
 #include "colors.h"
 
+namespace {
 class elapsed_time {
 public:
 	elapsed_time();
@@ -93,6 +94,7 @@ private:
 	char		buf[2][200];
 	char		upmsg[800];
 };
+}	// anonymous namespace
 
 elapsed_time::elapsed_time()
     : diff(0)
