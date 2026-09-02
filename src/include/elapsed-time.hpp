@@ -38,6 +38,14 @@
 
 #include "colors.h"
 
+#ifndef MAYBE_UNUSED
+#  if defined(__cplusplus) && __cplusplus >= 201703L
+#    define MAYBE_UNUSED [[maybe_unused]]
+#  else
+#    define MAYBE_UNUSED
+#  endif
+#endif // MAYBE_UNUSED
+
 namespace {
 class elapsed_time {
 public:
@@ -96,6 +104,7 @@ private:
 };
 }	// anonymous namespace
 
+MAYBE_UNUSED
 elapsed_time::elapsed_time()
     : diff(0)
     , days(0)
@@ -109,6 +118,7 @@ elapsed_time::elapsed_time()
 	(void) memset(this->upmsg, 0, sizeof(this->upmsg));
 }
 
+MAYBE_UNUSED
 elapsed_time::elapsed_time(int64_t p_start, int64_t p_stop)
     : diff(0)
     , days(0)
@@ -164,7 +174,7 @@ elapsed_time::elapsed_time(int64_t p_start, int64_t p_stop)
 		throw std::runtime_error("cannot format date and time");
 }
 
-const char *
+MAYBE_UNUSED const char *
 elapsed_time::get_uptime(void)
 {
 	int ret;
@@ -184,7 +194,7 @@ elapsed_time::get_uptime(void)
 	return (&this->upmsg[0]);
 }
 
-const char *
+MAYBE_UNUSED const char *
 elapsed_time::get_uptime_decorated(void)
 {
 	int ret;
