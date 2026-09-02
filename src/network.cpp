@@ -40,10 +40,12 @@
 #include <cstring>
 #include <exception>
 #include <stdexcept>
+#include <string>
 
 #include "assertAPI.h"
 #include "config.h"
 #include "dataClassify.h"
+#include "elapsed-time.hpp"
 #include "errHand.h"
 #include "i18n.h"
 #include "icb.h"
