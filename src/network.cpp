@@ -971,6 +971,28 @@ listen_clean_up(STRING p_recvbuf, char *p_message_concat)
 	free(p_message_concat);
 }
 
+static void
+pr_start_and_stop()
+{
+	PRINTTEXT_CONTEXT ctx;
+
+	try {
+		const std::string	proto(g_icb_mode ? "ICB" : "IRC");
+		elapsed_time		et(g_irc_start_time, g_irc_stop_time);
+
+		printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE,
+		    true);
+		ctx.spec_type = TYPE_SPEC1_SUCCESS;
+		printtext(&ctx, "%s start: %s", proto.c_str(),
+		    et.get_start_time());
+		ctx.spec_type = TYPE_SPEC1_WARN;
+		printtext(&ctx, "%s stop:  %s", proto.c_str(),
+		    et.get_stop_time());
+	} catch (const std::exception &e) {
+		err_log(0, "%s: %s", __func__, e.what());
+	}
+}
+
 void
 net_irc_listen(bool *connection_lost)
 {
@@ -1002,6 +1024,7 @@ net_irc_listen(bool *connection_lost)
 		printtext(&ptext_ctx, "%s", _("Connection to IRC server lost"));
 	listen_clean_up(recvbuf, message_concat);
 	printtext(&ptext_ctx, "%s", _("Disconnected"));
+	pr_start_and_stop();
 	(void) atomic_swap_bool(&g_irc_listening, false);
 }
 
