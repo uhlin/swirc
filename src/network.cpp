@@ -46,6 +46,7 @@
 #include "config.h"
 #include "dataClassify.h"
 #include "elapsed-time.hpp"
+#undef NORMAL
 #include "errHand.h"
 #include "i18n.h"
 #include "icb.h"
