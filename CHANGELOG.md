@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 - Changed the program to output its uptime right before exit.
 - Changed the program to output the ICB/IRC start and stop time.
 - Did code improvements.
+- Enumerated the dirs and files, starting from 0, in the output of
+  multiple commands, commands which are used to list contents on the
+  hard disk.
 - Fixed building on OpenBSD/sparc64 vers >= 8.0. Contributed by
   [Kurt Mosiejczuk](https://github.com/kmosiejczuk)  --  thanks!
 
