@@ -1405,6 +1405,7 @@ list_dir(const char *dir)
 	static const std::string	ext1(".EXE");
 	static const std::string	ext2(".exe");
 	std::vector<disk_file>		df_vec;
+	uint32_t			df_no;
 
 	if (!is_directory(dir))
 		return;
@@ -1418,6 +1419,7 @@ list_dir(const char *dir)
 	}
 
 	printtext_print("none", "--- BEGIN: %s ---", dir);
+	df_no = 0;
 
 	for (disk_file &df : df_vec) {
 		char *str = nullptr;
@@ -1481,8 +1483,11 @@ list_dir(const char *dir)
 		}
 
 		if (str) {
-			printtext_print("sp2", "%s", str);
+			printtext_print("none", ("%s" "%" PRIu32 "%s %s"),
+			    LEFT_BRKT, df_no, RIGHT_BRKT,
+			    str);
 			free(str);
+			df_no++;
 		}
 	} // for
 
