@@ -400,7 +400,7 @@ set_passwd_s(const char *data)
 	try {
 		char		*last = const_cast<char *>("");
 		char		*sasl_pass, *encryption_pass;
-		cryptstr_t	 str1, str2;
+		cryptstr_t	 str[2];
 		std::string	 err_reason("");
 		std::string	 msg("");
 
@@ -425,10 +425,10 @@ set_passwd_s(const char *data)
 			throw std::runtime_error(msg.c_str());
 		}
 
-		str1 = reinterpret_cast<cryptstr_t>(sasl_pass);
-		str2 = reinterpret_cast<cryptstr_t>(encryption_pass);
+		str[0] = reinterpret_cast<cryptstr_t>(sasl_pass);
+		str[1] = reinterpret_cast<cryptstr_t>(encryption_pass);
 
-		if ((cout = crypt_encrypt_str(str1, str2, true)) == nullptr)
+		if ((cout = crypt_encrypt_str(str[0], str[1], true)) == nullptr)
 			throw std::runtime_error("encryption failed");
 
 		val = strdup_printf("%c%s", g_encrypted_pass_sym, cout);
