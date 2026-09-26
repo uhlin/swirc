@@ -78,18 +78,20 @@ get_filename(const char *filename)
 static int
 init_dhparams()
 {
-	char	*name1 = get_filename(DH_PEM1);
-	char	*name2 = get_filename(DH_PEM2);
+	char	*name[2] = {nullptr, nullptr};
 
 	try {
 		BIO *bio;
+
+		name[0] = get_filename(DH_PEM1);
+		name[1] = get_filename(DH_PEM2);
 
 		errno = 0;
 
 		/*
 		 * DH 2048
 		 */
-		if ((bio = BIO_new_file(name1, "r")) == nullptr)
+		if ((bio = BIO_new_file(name[0], "r")) == nullptr)
 			throw std::runtime_error("cannot open file");
 		dh2048 = PEM_read_bio_DHparams(bio, nullptr, nullptr, nullptr);
 		BIO_vfree(bio);
@@ -101,7 +103,7 @@ init_dhparams()
 		/*
 		 * DH 4096
 		 */
-		if ((bio = BIO_new_file(name2, "r")) == nullptr)
+		if ((bio = BIO_new_file(name[1], "r")) == nullptr)
 			throw std::runtime_error("cannot open file");
 		dh4096 = PEM_read_bio_DHparams(bio, nullptr, nullptr, nullptr);
 		BIO_vfree(bio);
@@ -111,13 +113,13 @@ init_dhparams()
 		}
 	} catch (const std::runtime_error &e) {
 		err_log(errno, "%s: %s", __func__, e.what());
-		free(name1);
-		free(name2);
+		free(name[0]);
+		free(name[1]);
 		return -1;
 	}
 
-	free(name1);
-	free(name2);
+	free(name[0]);
+	free(name[1]);
 	return 0;
 }
 
