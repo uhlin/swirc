@@ -1,5 +1,5 @@
 /* nicklist.cpp
-   Copyright (C) 2021-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -130,13 +130,13 @@ cmp_fn(const std::string &nick1, const std::string &nick2)
 	}
 
 	for (size_t i = 1; i < nick1.length() && i < nick2.length(); i++) {
-		int c1, c2;
+		int c[2];
 
-		c1 = sw_isupper(nick1[i]) ? tolower(nick1[i]) : nick1[i];
-		c2 = sw_isupper(nick2[i]) ? tolower(nick2[i]) : nick2[i];
-		if (c1 < c2)
+		c[0] = sw_isupper(nick1[i]) ? tolower(nick1[i]) : nick1[i];
+		c[1] = sw_isupper(nick2[i]) ? tolower(nick2[i]) : nick2[i];
+		if (c[0] < c[1])
 			return true;
-		else if (c1 > c2)
+		else if (c[0] > c[1])
 			return false;
 	}
 
