@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
   hard disk.
 - Fixed building on OpenBSD/sparc64 vers >= 8.0. Contributed by
   [Kurt Mosiejczuk](https://github.com/kmosiejczuk)  --  thanks!
+- Improved the C++ exception handling.
 
 ## [3.5.9] - 2026-02-22 ##
 - **Added** command `/userhost` and event 302 (`RPL_USERHOST`).
