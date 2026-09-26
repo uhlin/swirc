@@ -116,6 +116,11 @@ init_dhparams()
 		free(name[0]);
 		free(name[1]);
 		return -1;
+	} catch (...) {
+		err_log(errno, "%s: %s", __func__, "unknown exception");
+		free(name[0]);
+		free(name[1]);
+		return -1;
 	}
 
 	free(name[0]);
