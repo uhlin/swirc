@@ -307,11 +307,11 @@ static char	*get_last_token(const char *) NONNULL;
 static int
 cmp_fn(const void *vp1, const void *vp2)
 {
-	const struct numeric_events_tag *evt1, *evt2;
+	const struct numeric_events_tag *evt[2];
 
-	evt1 = vp1;
-	evt2 = vp2;
-	return strcmp(evt1->numeric_event, evt2->numeric_event);
+	evt[0] = vp1;
+	evt[1] = vp2;
+	return strcmp(evt[0]->numeric_event, evt[1]->numeric_event);
 }
 
 /**
