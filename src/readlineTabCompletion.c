@@ -967,12 +967,12 @@ static void
 init_mode(volatile struct readline_session_context *ctx)
 {
 	immutable_cp_t	sv = get_search_var(ctx);
-	int		off1, off2;
+	int		off[2] = { 0, 0 };
 
 	if (!strncmp(sv, "/connect ", 9))
 		init_mode_for_connect(ctx);
-	else if (var_matches_cs(sv, &off1))
-		init_mode_for_cs(ctx, off1);
+	else if (var_matches_cs(sv, &off[0]))
+		init_mode_for_cs(ctx, off[0]);
 	else if (!strncmp(sv, "/dcc ", 5))
 		init_mode_for_dcc(ctx);
 	else if (!strncmp(sv, "/deop ", 6))
@@ -995,8 +995,8 @@ init_mode(volatile struct readline_session_context *ctx)
 		init_mode_for_msg(ctx);
 	else if (!strncmp(sv, "/notice ", 8))
 		init_mode_for_notice(ctx);
-	else if (var_matches_ns(sv, &off2))
-		init_mode_for_ns(ctx, off2);
+	else if (var_matches_ns(sv, &off[1]))
+		init_mode_for_ns(ctx, off[1]);
 	else if (!strncmp(sv, "/op ", 4))
 		init_mode_for_op(ctx);
 	else if (!strncmp(sv, "/query ", 7))
