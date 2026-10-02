@@ -1370,13 +1370,13 @@ file_list_cmp(const disk_file &obj1, const disk_file &obj2)
 	const std::string	name2(obj2.name);
 
 	for (size_t i = 0; i < name1.length() && i < name2.length(); i++) {
-		int c1, c2;
+		int c[2] = { 0, 0 };
 
-		c1 = sw_isupper(name1[i]) ? tolower(name1[i]) : name1[i];
-		c2 = sw_isupper(name2[i]) ? tolower(name2[i]) : name2[i];
-		if (c1 < c2)
+		c[0] = sw_isupper(name1[i]) ? tolower(name1[i]) : name1[i];
+		c[1] = sw_isupper(name2[i]) ? tolower(name2[i]) : name2[i];
+		if (c[0] < c[1])
 			return true;
-		else if (c1 > c2)
+		else if (c[0] > c[1])
 			return false;
 	}
 

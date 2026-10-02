@@ -220,14 +220,14 @@ netsplit_get_split(const struct netsplit_context *ctx)
 {
 	for (auto it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
 		CSTRING		db_chan = (*it)->channel.c_str();
-		CSTRING		serv1, serv2;
+		CSTRING		serv[2] = { nullptr, nullptr };
 
-		serv1 = (*it)->server[0].c_str();
-		serv2 = (*it)->server[1].c_str();
+		serv[0] = (*it)->server[0].c_str();
+		serv[1] = (*it)->server[1].c_str();
 
 		if (strings_match_ignore_case(db_chan, ctx->chan) &&
-		    strings_match_ignore_case(serv1, ctx->serv1) &&
-		    strings_match_ignore_case(serv2, ctx->serv2))
+		    strings_match_ignore_case(serv[0], ctx->serv1) &&
+		    strings_match_ignore_case(serv[1], ctx->serv2))
 			return (*it);
 	}
 
