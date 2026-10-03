@@ -1768,15 +1768,15 @@ bool
 ftp::want_unveil_uploads(void)
 {
 	CSTRING		dir = Config("ftp_upload_dir");
-	size_t		len1, len2;
+	size_t		len[2] = { 0, 0 };
 
 	if (strings_match(dir, ""))
 		return false;
 
-	len1 = strlen(dir);
-	len2 = strlen(g_home_dir);
+	len[0] = strlen(dir);
+	len[1] = strlen(g_home_dir);
 
-	if (len1 >= len2 && strncmp(dir, g_home_dir, MIN(len1, len2)) ==
+	if (len[0] >= len[1] && strncmp(dir, g_home_dir, MIN(len[0], len[1])) ==
 	    STRINGS_MATCH)
 		return false;
 	return true;
