@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2026-02-21 19:04+0100\n"
+"POT-Creation-Date: 2026-10-04 11:35+0200\n"
 "PO-Revision-Date: 2026-02-21 19:20+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -116,75 +116,75 @@ msgstr "%sBörjade%s: %s"
 msgid "%sStopped%s: %s"
 msgstr "%sSlutade%s: %s"
 
-#: ../src/commands/dcc.cpp:1603
+#: ../src/commands/dcc.cpp:1608
 #, c-format
 msgid "sending '%s' to %s (%.1f%c)..."
 msgstr "skickar '%s' till %s (%.1f%c)..."
 
-#: ../src/commands/dcc.cpp:1694
+#: ../src/commands/dcc.cpp:1699
 msgid "Missing certs. Not starting the DCC server. Please create them."
 msgstr "Saknar certifikat. Startar inte DCC servern. Vänligen skapa dem."
 
-#: ../src/commands/dcc.cpp:1800
+#: ../src/commands/dcc.cpp:1805
 #, c-format
 msgid "%s: added: '%s' (%.1f%c)"
 msgstr "%s: lade till: '%s' (%.1f%c)"
 
-#: ../src/commands/dcc.cpp:1802
+#: ../src/commands/dcc.cpp:1807
 #, c-format
 msgid "%s: from: %s <%s@%s>"
 msgstr "%s: från: %s <%s@%s>"
 
-#: ../src/commands/dcc.cpp:1804
+#: ../src/commands/dcc.cpp:1809
 msgid "To get the file, type:"
 msgstr "För att hämta filen, skriv:"
 
-#: ../src/commands/dcc.cpp:2055 ../src/commands/ftp.cpp:1157
+#: ../src/commands/dcc.cpp:2060 ../src/commands/ftp.cpp:1157
 #, c-format
 msgid "%s: file read error"
 msgstr "%s: filläsfel"
 
-#: ../src/commands/dcc.cpp:2060
+#: ../src/commands/dcc.cpp:2065
 #, c-format
 msgid "%s: tls write error"
 msgstr "%s: tls skrivfel"
 
-#: ../src/commands/dcc.cpp:2077
+#: ../src/commands/dcc.cpp:2082
 #, c-format
 msgid "started: %s"
 msgstr "började: %s"
 
-#: ../src/commands/dcc.cpp:2078
+#: ../src/commands/dcc.cpp:2083
 #, c-format
 msgid "stopped: %s"
 msgstr "slutade: %s"
 
-#: ../src/commands/dcc.cpp:2095
+#: ../src/commands/dcc.cpp:2100
 msgid "read request error"
 msgstr "läsförfrågan fel"
 
-#: ../src/commands/dcc.cpp:2102
+#: ../src/commands/dcc.cpp:2107
 msgid "unable to find the send object"
 msgstr "kan inte hitta sändningsobjektet"
 
-#: ../src/commands/dcc.cpp:2110
+#: ../src/commands/dcc.cpp:2115
 msgid "already sent file"
 msgstr "redan skickad fil"
 
-#: ../src/commands/dcc.cpp:2113
+#: ../src/commands/dcc.cpp:2118
 msgid "the send object is in a locked state"
 msgstr "sändningsobjektet är i låst tillstånd"
 
-#: ../src/commands/dcc.cpp:2118
+#: ../src/commands/dcc.cpp:2123
 msgid "file open error"
 msgstr "filöppningsfel"
 
-#: ../src/commands/dcc.cpp:2137
+#: ../src/commands/dcc.cpp:2142
 #, c-format
 msgid "%s: successfully sent file: %s"
 msgstr "%s: skickad fil: %s"
 
-#: ../src/commands/dcc.cpp:2141
+#: ../src/commands/dcc.cpp:2146
 #, c-format
 msgid "%s: file transfer incomplete: %s"
 msgstr "%s: filöverföringen ofullständig: %s"
@@ -205,12 +205,12 @@ msgstr "Ogiltigt värdnamn"
 msgid "Invalid port number"
 msgstr "Ogiltigt portnummer"
 
-#: ../src/commands/ftp.cpp:321 ../src/network.cpp:363
+#: ../src/commands/ftp.cpp:321 ../src/network.cpp:370
 msgid "Unable to get a list of IP addresses"
 msgstr "Det gick inte att få en lista över IP adresser"
 
 #: ../src/commands/ftp.cpp:324 ../src/commands/ftp.cpp:881
-#: ../src/network.cpp:184
+#: ../src/network.cpp:191
 msgid "Failed to establish a connection"
 msgstr "Det gick inte att upprätta en anslutning"
 
@@ -370,12 +370,12 @@ msgstr "obefintlig"
 msgid "theme activated"
 msgstr "tema aktiverat"
 
-#: ../src/commands/userhost.cpp:114
+#: ../src/commands/userhost.cpp:115
 #, c-format
 msgid "%s: invalid nickname: %s"
 msgstr "%s: ogiltigt smeknamn: %s"
 
-#: ../src/commands/userhost.cpp:122
+#: ../src/commands/userhost.cpp:123
 #, c-format
 msgid "%s: cannot send"
 msgstr "%s: kan inte skicka"
@@ -1860,12 +1860,12 @@ msgstr "Loggning för fönstret (refnum: %d) är nu av"
 msgid "Logging for window (refnum: %d) now on"
 msgstr "Loggning för fönstret (refnum: %d) är nu på"
 
-#: ../src/main.cpp:88
+#: ../src/main.cpp:90
 #, c-format
 msgid "A duplicate of option -%c found"
 msgstr "En dubblett av alternativet -%c hittades"
 
-#: ../src/main.cpp:162
+#: ../src/main.cpp:166
 msgid ""
 "\n"
 "Options:\n"
@@ -1875,123 +1875,123 @@ msgstr ""
 "Flaggor:\n"
 "\n"
 
-#: ../src/main.cpp:163
+#: ../src/main.cpp:167
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   Använd enbart IPv4 adresser\n"
 
-#: ../src/main.cpp:164
+#: ../src/main.cpp:168
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   Använd enbart IPv6 adresser\n"
 
-#: ../src/main.cpp:165
+#: ../src/main.cpp:169
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Skriv ut hjälp\n"
 
-#: ../src/main.cpp:166
+#: ../src/main.cpp:170
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Ändra inte färgdefinitioner\n"
 
-#: ../src/main.cpp:167
+#: ../src/main.cpp:171
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr "    -P                   Stäng av SASL autentisering permanent\n"
 
-#: ../src/main.cpp:168
+#: ../src/main.cpp:172
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   Stäng av TLS/SSL peer verifikation\n"
 
-#: ../src/main.cpp:169
+#: ../src/main.cpp:173
 msgid "    -S                   Force TLS\n"
 msgstr "    -S                   Tvinga TLS\n"
 
-#: ../src/main.cpp:174
+#: ../src/main.cpp:178
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
 msgstr ""
 "    -W <password>        Samma effekt som flaggan 'p' men icke-interaktiv\n"
 
-#: ../src/main.cpp:175
+#: ../src/main.cpp:179
 msgid "    -X                   Disable all IRCv3 extensions\n"
 msgstr "    -X                   Inaktivera alla IRCv3 tillägg\n"
 
-#: ../src/main.cpp:176
+#: ../src/main.cpp:180
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Anslut till IRC server\n"
 
-#: ../src/main.cpp:177
+#: ../src/main.cpp:181
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Debug loggning\n"
 
-#: ../src/main.cpp:178
+#: ../src/main.cpp:182
 msgid "    -h <hostname>        Sets the bind host\n"
 msgstr "    -h <hostname>        Ställer in bindningsvärdnamnet\n"
 
-#: ../src/main.cpp:179
+#: ../src/main.cpp:183
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Sätt på Internet Citizen's Band läge\n"
 
-#: ../src/main.cpp:180
+#: ../src/main.cpp:184
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr ""
 "    -j <join>            En kommaseparerad lista bestående av kanaler att gå "
 "med i\n"
 
-#: ../src/main.cpp:181
+#: ../src/main.cpp:185
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Online nickname\n"
 
-#: ../src/main.cpp:182
+#: ../src/main.cpp:186
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Fråga efter serverlösenord (för privata servrar)\n"
 
-#: ../src/main.cpp:183
+#: ../src/main.cpp:187
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Ditt riktiga namn\n"
 
-#: ../src/main.cpp:184
+#: ../src/main.cpp:188
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Ditt användarnamn\n"
 
-#: ../src/main.cpp:185
+#: ../src/main.cpp:189
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Visa Swirc version\n"
 
-#: ../src/main.cpp:186
+#: ../src/main.cpp:190
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Konfigurationsfil\n"
 
-#: ../src/main.cpp:249
+#: ../src/main.cpp:265
 msgid "Unhandled exception!"
 msgstr "Ohanterat undantag!"
 
-#: ../src/main.cpp:313
+#: ../src/main.cpp:329
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Användning: %s [FLAGGA] ...\n"
 
-#: ../src/main.cpp:406
+#: ../src/main.cpp:422
 msgid "forbidden channel name characters"
 msgstr "förbjudna kanalnamnstecken"
 
-#: ../src/main.cpp:563
+#: ../src/main.cpp:579
 #, c-format
 msgid "%s: -%c: unrecognized option"
 msgstr "%s: -%c: okänt alternativ"
 
-#: ../src/main.cpp:568
+#: ../src/main.cpp:584
 #, c-format
 msgid "%s: -%c: option argument missing"
 msgstr "%s: -%c: alternativargument saknas"
 
-#: ../src/main.cpp:737
+#: ../src/main.cpp:798
 msgid "fatal: failed to initialize signal handling"
 msgstr "fatal: misslyckades med att initiera signalhantering"
 
-#: ../src/main.cpp:759
+#: ../src/main.cpp:820
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr "fatal: att köra programmet med root privilegier är förbjudet"
 
-#: ../src/main.cpp:781
+#: ../src/main.cpp:841
 msgid "Initialization of the Curses library not possible"
 msgstr "Initiering av Curses biblioteket är inte möjlig"
 
@@ -2068,19 +2068,19 @@ msgstr ""
 msgid "Can't resolve the home path!"
 msgstr "Kan inte lösa hemvägen!"
 
-#: ../src/network.cpp:192
+#: ../src/network.cpp:199
 msgid "Hostname checking failed!"
 msgstr "Värdnamnskontrollen misslyckades!"
 
-#: ../src/network.cpp:194
+#: ../src/network.cpp:201
 msgid "Hostname checking OK!"
 msgstr "Värdnamnskontrollen OK!"
 
-#: ../src/network.cpp:292
+#: ../src/network.cpp:299
 msgid "Connected!"
 msgstr "Ansluten!"
 
-#: ../src/network.cpp:366
+#: ../src/network.cpp:373
 msgid "Get a list of IP addresses completed"
 msgstr "Få en lista över IP adresser färdig"
 
@@ -2089,11 +2089,11 @@ msgstr "Få en lista över IP adresser färdig"
 msgid "Connecting to %s (%s)"
 msgstr "Ansluter till %s (%s)"
 
-#: ../src/network.cpp:862
+#: ../src/network.cpp:1024
 msgid "Connection to IRC server lost"
 msgstr "Anslutningen till IRC servern förlorad"
 
-#: ../src/network.cpp:873
+#: ../src/network.cpp:1026
 msgid "Disconnected"
 msgstr "Frånkopplad"
 
@@ -2228,20 +2228,20 @@ msgstr "Logg: "
 msgid "-- MORE --"
 msgstr "-- MER --"
 
-#: ../src/tls-server.cpp:205
+#: ../src/tls-server.cpp:212
 msgid "Already accepting DCC connections..."
 msgstr "Accepterar redan DCC anslutningar..."
 
-#: ../src/tls-server.cpp:230
+#: ../src/tls-server.cpp:237
 #, c-format
 msgid "Accepting DCC connections at port: %d"
 msgstr "Accepterar DCC anslutningar på port: %d"
 
-#: ../src/tls-server.cpp:242
+#: ../src/tls-server.cpp:249
 msgid "Out of memory"
 msgstr "Slut på minne"
 
-#: ../src/tls-server.cpp:251
+#: ../src/tls-server.cpp:258
 msgid "Stopped accepting DCC connections"
 msgstr "Slutade acceptera DCC anslutningar"
 

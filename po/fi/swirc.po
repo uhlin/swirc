@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2026-02-21 19:04+0100\n"
+"POT-Creation-Date: 2026-10-04 11:35+0200\n"
 "PO-Revision-Date: 2026-02-21 19:10+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -116,77 +116,77 @@ msgstr "%sAlkoi%s: %s"
 msgid "%sStopped%s: %s"
 msgstr "%sLopetti%s: %s"
 
-#: ../src/commands/dcc.cpp:1603
+#: ../src/commands/dcc.cpp:1608
 #, c-format
 msgid "sending '%s' to %s (%.1f%c)..."
 msgstr "lähetetään '%s' osoitteeseen %s (%.1f%c)..."
 
-#: ../src/commands/dcc.cpp:1694
+#: ../src/commands/dcc.cpp:1699
 msgid "Missing certs. Not starting the DCC server. Please create them."
 msgstr ""
 "SSL sertifikaatit puuttuvat. DCC palvelinta ei käynnistetä. Ole hyvä ja luo "
 "ne."
 
-#: ../src/commands/dcc.cpp:1800
+#: ../src/commands/dcc.cpp:1805
 #, c-format
 msgid "%s: added: '%s' (%.1f%c)"
 msgstr "%s: lisätty: '%s' (%.1f%c)"
 
-#: ../src/commands/dcc.cpp:1802
+#: ../src/commands/dcc.cpp:1807
 #, c-format
 msgid "%s: from: %s <%s@%s>"
 msgstr "%s: lähettäjä: %s <%s@%s>"
 
-#: ../src/commands/dcc.cpp:1804
+#: ../src/commands/dcc.cpp:1809
 msgid "To get the file, type:"
 msgstr "Saadaksesi tiedoston, kirjoita:"
 
-#: ../src/commands/dcc.cpp:2055 ../src/commands/ftp.cpp:1157
+#: ../src/commands/dcc.cpp:2060 ../src/commands/ftp.cpp:1157
 #, c-format
 msgid "%s: file read error"
 msgstr "%s: tiedostolukuvirhe"
 
-#: ../src/commands/dcc.cpp:2060
+#: ../src/commands/dcc.cpp:2065
 #, c-format
 msgid "%s: tls write error"
 msgstr "%s: tls kirjoitusvirhe"
 
-#: ../src/commands/dcc.cpp:2077
+#: ../src/commands/dcc.cpp:2082
 #, c-format
 msgid "started: %s"
 msgstr "alkoi: %s"
 
-#: ../src/commands/dcc.cpp:2078
+#: ../src/commands/dcc.cpp:2083
 #, c-format
 msgid "stopped: %s"
 msgstr "lopetti: %s"
 
-#: ../src/commands/dcc.cpp:2095
+#: ../src/commands/dcc.cpp:2100
 msgid "read request error"
 msgstr "lukupyynnön virhe"
 
-#: ../src/commands/dcc.cpp:2102
+#: ../src/commands/dcc.cpp:2107
 msgid "unable to find the send object"
 msgstr "lähetysobjektia ei löydy"
 
-#: ../src/commands/dcc.cpp:2110
+#: ../src/commands/dcc.cpp:2115
 msgid "already sent file"
 msgstr "tiedosto on jo lähetetty"
 
-#: ../src/commands/dcc.cpp:2113
+#: ../src/commands/dcc.cpp:2118
 msgid "the send object is in a locked state"
 msgstr "lähetysobjekti on lukitussa tilassa"
 
-#: ../src/commands/dcc.cpp:2118
+#: ../src/commands/dcc.cpp:2123
 msgid "file open error"
 msgstr "tiedoston avaamisvirhe"
 
-#: ../src/commands/dcc.cpp:2137
+#: ../src/commands/dcc.cpp:2142
 #, c-format
 msgid "%s: successfully sent file: %s"
 msgstr "%s: onnistuneesti lähetetty tiedosto: %s"
 
-#: ../src/commands/dcc.cpp:2141
+#: ../src/commands/dcc.cpp:2146
 #, c-format
 msgid "%s: file transfer incomplete: %s"
 msgstr "%s: tiedostonsiirto keskeneräinen: %s"
@@ -207,12 +207,12 @@ msgstr "Virheellinen isäntänimi"
 msgid "Invalid port number"
 msgstr "Virheellinen portin numero"
 
-#: ../src/commands/ftp.cpp:321 ../src/network.cpp:363
+#: ../src/commands/ftp.cpp:321 ../src/network.cpp:370
 msgid "Unable to get a list of IP addresses"
 msgstr "IP osoitteiden luetteloa ei voi saada"
 
 #: ../src/commands/ftp.cpp:324 ../src/commands/ftp.cpp:881
-#: ../src/network.cpp:184
+#: ../src/network.cpp:191
 msgid "Failed to establish a connection"
 msgstr "Yhteyden muodostaminen epäonnistui"
 
@@ -372,12 +372,12 @@ msgstr "olematon"
 msgid "theme activated"
 msgstr "teema aktivoitu"
 
-#: ../src/commands/userhost.cpp:114
+#: ../src/commands/userhost.cpp:115
 #, c-format
 msgid "%s: invalid nickname: %s"
 msgstr "%s: virheellinen lempinimi: %s"
 
-#: ../src/commands/userhost.cpp:122
+#: ../src/commands/userhost.cpp:123
 #, c-format
 msgid "%s: cannot send"
 msgstr "%s: ei voida lähettää"
@@ -1747,12 +1747,12 @@ msgstr "Ikkunan kirjaaminen (refnum: %d) on nyt pois päältä"
 msgid "Logging for window (refnum: %d) now on"
 msgstr "Ikkunan kirjaaminen (refnum: %d) on nyt päällä"
 
-#: ../src/main.cpp:88
+#: ../src/main.cpp:90
 #, c-format
 msgid "A duplicate of option -%c found"
 msgstr "Vaihtoehdosta -%c löytyi kopio"
 
-#: ../src/main.cpp:162
+#: ../src/main.cpp:166
 msgid ""
 "\n"
 "Options:\n"
@@ -1762,123 +1762,123 @@ msgstr ""
 "Vaihtoehdot:\n"
 "\n"
 
-#: ../src/main.cpp:163
+#: ../src/main.cpp:167
 msgid "    -4                   Use IPv4 addresses only\n"
 msgstr "    -4                   Käytä IPv4 osoitteita vain\n"
 
-#: ../src/main.cpp:164
+#: ../src/main.cpp:168
 msgid "    -6                   Use IPv6 addresses only\n"
 msgstr "    -6                   Käytä IPv6 osoitteita vain\n"
 
-#: ../src/main.cpp:165
+#: ../src/main.cpp:169
 msgid "    -?, --help           Output help\n"
 msgstr "    -?, --help           Lähtö help\n"
 
-#: ../src/main.cpp:166
+#: ../src/main.cpp:170
 msgid "    -C                   Do not change color definitions\n"
 msgstr "    -C                   Älä muuta värimääritysten\n"
 
-#: ../src/main.cpp:167
+#: ../src/main.cpp:171
 msgid "    -P                   Permanently disable SASL authentication\n"
 msgstr "    -P                   Poista SASL todennus pysyvästi käytöstä\n"
 
-#: ../src/main.cpp:168
+#: ../src/main.cpp:172
 msgid "    -R                   Disable TLS/SSL peer verification\n"
 msgstr "    -R                   Poista käytöstä TLS/SSL vertaisvahvistus\n"
 
-#: ../src/main.cpp:169
+#: ../src/main.cpp:173
 msgid "    -S                   Force TLS\n"
 msgstr "    -S                   Pakota TLS\n"
 
-#: ../src/main.cpp:174
+#: ../src/main.cpp:178
 msgid "    -W <password>        Equal effect as flag 'p' but non-interactive\n"
 msgstr ""
 "    -W <password>        Sama vaikutus kuin lipulla 'p', mutta ei "
 "interaktiivinen\n"
 
-#: ../src/main.cpp:175
+#: ../src/main.cpp:179
 msgid "    -X                   Disable all IRCv3 extensions\n"
 msgstr "    -X                   Poista kaikki IRCv3 laajennukset käytöstä\n"
 
-#: ../src/main.cpp:176
+#: ../src/main.cpp:180
 msgid "    -c <server[:port]>   Connect to IRC server\n"
 msgstr "    -c <server[:port]>   Muodosta yhteys IRC palvelimeen\n"
 
-#: ../src/main.cpp:177
+#: ../src/main.cpp:181
 msgid "    -d                   Debug logging\n"
 msgstr "    -d                   Kirjaa virheenkorjausviestejä\n"
 
-#: ../src/main.cpp:178
+#: ../src/main.cpp:182
 msgid "    -h <hostname>        Sets the bind host\n"
 msgstr "    -h <hostname>        Asettaa sidonta-isännän\n"
 
-#: ../src/main.cpp:179
+#: ../src/main.cpp:183
 msgid "    -i                   Turn on Internet Citizen's Band mode\n"
 msgstr "    -i                   Ota Internet Citizen's Band tila käyttöön\n"
 
-#: ../src/main.cpp:180
+#: ../src/main.cpp:184
 msgid "    -j <join>            A comma-separated list of channels to join\n"
 msgstr "    -j <join>            Pilkuilla erotettu luettelo kanavista\n"
 
-#: ../src/main.cpp:181
+#: ../src/main.cpp:185
 msgid "    -n <nickname>        Online nickname\n"
 msgstr "    -n <nickname>        Online nickname\n"
 
-#: ../src/main.cpp:182
+#: ../src/main.cpp:186
 msgid ""
 "    -p                   Query for server password (for private servers)\n"
 msgstr ""
 "    -p                   Kyselyn palvelimen salasanaa (yksityisten "
 "palvelimien)\n"
 
-#: ../src/main.cpp:183
+#: ../src/main.cpp:187
 msgid "    -r <rl name>         Your real name\n"
 msgstr "    -r <rl name>         Oikea nimesi\n"
 
-#: ../src/main.cpp:184
+#: ../src/main.cpp:188
 msgid "    -u <username>        Your username\n"
 msgstr "    -u <username>        Sinun käyttäjä nimesi\n"
 
-#: ../src/main.cpp:185
+#: ../src/main.cpp:189
 msgid "    -v, --version        Output Swirc version\n"
 msgstr "    -v, --version        Lähtö Swirc versio\n"
 
-#: ../src/main.cpp:186
+#: ../src/main.cpp:190
 msgid "    -x <config>          Config file\n"
 msgstr "    -x <config>          Config tiedosto\n"
 
-#: ../src/main.cpp:249
+#: ../src/main.cpp:265
 msgid "Unhandled exception!"
 msgstr "Käsittelemätön poikkeus!"
 
-#: ../src/main.cpp:313
+#: ../src/main.cpp:329
 #, c-format
 msgid "Usage: %s [OPTION] ...\n"
 msgstr "Käyttö: %s [VAIHTOEHTO] ...\n"
 
-#: ../src/main.cpp:406
+#: ../src/main.cpp:422
 msgid "forbidden channel name characters"
 msgstr ""
 
-#: ../src/main.cpp:563
+#: ../src/main.cpp:579
 #, c-format
 msgid "%s: -%c: unrecognized option"
 msgstr "%s: -%c: tunnistamaton vaihtoehto"
 
-#: ../src/main.cpp:568
+#: ../src/main.cpp:584
 #, c-format
 msgid "%s: -%c: option argument missing"
 msgstr "%s: -%c: vaihtoehdon argumentti puuttuu"
 
-#: ../src/main.cpp:737
+#: ../src/main.cpp:798
 msgid "fatal: failed to initialize signal handling"
 msgstr ""
 
-#: ../src/main.cpp:759
+#: ../src/main.cpp:820
 msgid "fatal: running the program with root privileges is forbidden"
 msgstr "fataali: ohjelman suorittaminen pääkäyttäjän oikeuksilla on kielletty"
 
-#: ../src/main.cpp:781
+#: ../src/main.cpp:841
 msgid "Initialization of the Curses library not possible"
 msgstr ""
 
@@ -1954,19 +1954,19 @@ msgstr ""
 msgid "Can't resolve the home path!"
 msgstr ""
 
-#: ../src/network.cpp:192
+#: ../src/network.cpp:199
 msgid "Hostname checking failed!"
 msgstr "Isäntänimen tarkistus epäonnistui!"
 
-#: ../src/network.cpp:194
+#: ../src/network.cpp:201
 msgid "Hostname checking OK!"
 msgstr "Isäntänimen tarkistus OK!"
 
-#: ../src/network.cpp:292
+#: ../src/network.cpp:299
 msgid "Connected!"
 msgstr "Kytkettynä!"
 
-#: ../src/network.cpp:366
+#: ../src/network.cpp:373
 msgid "Get a list of IP addresses completed"
 msgstr "Hanki luettelo IP osoitteista, valmis"
 
@@ -1975,11 +1975,11 @@ msgstr "Hanki luettelo IP osoitteista, valmis"
 msgid "Connecting to %s (%s)"
 msgstr "Yhdistetään kohteeseen %s (%s)"
 
-#: ../src/network.cpp:862
+#: ../src/network.cpp:1024
 msgid "Connection to IRC server lost"
 msgstr "Yhteys IRC palvelimeen katkesi"
 
-#: ../src/network.cpp:873
+#: ../src/network.cpp:1026
 msgid "Disconnected"
 msgstr "Yhteys katkaistu"
 
@@ -2114,20 +2114,20 @@ msgstr "Loki: "
 msgid "-- MORE --"
 msgstr "-- LISÄÄ --"
 
-#: ../src/tls-server.cpp:205
+#: ../src/tls-server.cpp:212
 msgid "Already accepting DCC connections..."
 msgstr "DCC yhteyksiä jo hyväksytään..."
 
-#: ../src/tls-server.cpp:230
+#: ../src/tls-server.cpp:237
 #, c-format
 msgid "Accepting DCC connections at port: %d"
 msgstr "Hyväksytään DCC yhteyksiä portissa: %d"
 
-#: ../src/tls-server.cpp:242
+#: ../src/tls-server.cpp:249
 msgid "Out of memory"
 msgstr "Muisti loppu"
 
-#: ../src/tls-server.cpp:251
+#: ../src/tls-server.cpp:258
 msgid "Stopped accepting DCC connections"
 msgstr "DCC yhteyksien hyväksyminen lopetettu"
 
