@@ -1483,8 +1483,8 @@ list_dir(const char *dir)
 		}
 
 		if (str) {
-			printtext_print("none", ("%s" "%" PRIu32 "%s %s"),
-			    LEFT_BRKT, df_no, RIGHT_BRKT,
+			printtext_print("none", ("%s%s" "%" PRIu32 "%s%s %s"),
+			    LEFT_BRKT, COLOR3, df_no, TXT_NORMAL, RIGHT_BRKT,
 			    str);
 			free(str);
 			df_no++;
