@@ -196,20 +196,19 @@ static void
 netjoin(batch &obj)
 {
 #if PRINT_NETJOIN_MSGS
-	CSTRING host1, host2;
-
-	host1 = host2 = nullptr;
+	CSTRING host[2] = { nullptr, nullptr };
 
 	if (obj.params.size() >= 2) {
-		host1 = obj.params.at(0).c_str();
-		host2 = obj.params.at(1).c_str();
+		host[0] = obj.params.at(0).c_str();
+		host[1] = obj.params.at(1).c_str();
 	}
 
-	if (host1 != nullptr && host2 != nullptr) {
+	if (host[0] != nullptr &&
+	    host[1] != nullptr) {
 		printtext_print("warn", "%sNetJoin%s (%ju nicks) %s %s %s",
 		    COLOR3, TXT_NORMAL,
 		    static_cast<uintmax_t>(obj.irc_msgs.size()),
-		    host1, THE_SPEC2, host2);
+		    host[0], THE_SPEC2, host[1]);
 	}
 #endif // PRINT_NETJOIN_MSGS
 
@@ -221,20 +220,19 @@ static void
 netsplit(batch &obj)
 {
 #if PRINT_NETSPLIT_MSGS
-	CSTRING host1, host2;
-
-	host1 = host2 = nullptr;
+	CSTRING host[2] = { nullptr, nullptr };
 
 	if (obj.params.size() >= 2) {
-		host1 = obj.params.at(0).c_str();
-		host2 = obj.params.at(1).c_str();
+		host[0] = obj.params.at(0).c_str();
+		host[1] = obj.params.at(1).c_str();
 	}
 
-	if (host1 != nullptr && host2 != nullptr) {
+	if (host[0] != nullptr &&
+	    host[1] != nullptr) {
 		printtext_print("warn", "%sNetSplit%s (%ju nicks) %s %s %s",
 		    COLOR3, TXT_NORMAL,
 		    static_cast<uintmax_t>(obj.irc_msgs.size()),
-		    host1, THE_SPEC2, host2);
+		    host[0], THE_SPEC2, host[1]);
 	}
 #endif // PRINT_NETSPLIT_MSGS
 

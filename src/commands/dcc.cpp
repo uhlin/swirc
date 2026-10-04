@@ -1633,7 +1633,7 @@ cmd_dcc(const char *data)
 {
 	char			*dcopy;
 	char			*last = const_cast<char *>("");
-	const char		*subcmd, *arg1, *arg2;
+	const char		*subcmd, *arg[2] = { nullptr };
 	static const char	 cmd[] = "/dcc";
 	static const char	 sep[] = "\n";
 
@@ -1654,19 +1654,19 @@ cmd_dcc(const char *data)
 		return;
 	}
 
-	arg1 = strtok_r(nullptr, sep, &last);
-	arg2 = strtok_r(nullptr, sep, &last);
+	arg[0] = strtok_r(nullptr, sep, &last);
+	arg[1] = strtok_r(nullptr, sep, &last);
 
 	if (strings_match(subcmd, "clear"))
-		subcmd_clear(arg1);
+		subcmd_clear(arg[0]);
 	else if (strings_match(subcmd, "get"))
-		subcmd_get(arg1, arg2);
+		subcmd_get(arg[0], arg[1]);
 	else if (strings_match(subcmd, "list"))
-		subcmd_list(arg1);
+		subcmd_list(arg[0]);
 	else if (strings_match(subcmd, "ls"))
-		subcmd_ls(arg1);
+		subcmd_ls(arg[0]);
 	else if (strings_match(subcmd, "send"))
-		subcmd_send(arg1, arg2);
+		subcmd_send(arg[0], arg[1]);
 	else
 		printtext_print("err", "%s: invalid subcommand", cmd);
 	free(dcopy);
