@@ -413,7 +413,7 @@ case_join()
 		DUP_OPTION_ERR('j');
 
 	for (cp = g_option_arg;; cp = nullptr) {
-		char *token;
+		const char *token;
 
 		if ((token = strtok_r(cp, ",", &last)) == nullptr) {
 			break;
