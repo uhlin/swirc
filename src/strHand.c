@@ -57,7 +57,7 @@ strToLower(char *s)
 	size_t	len = 0;
 
 	if (s == NULL)
-		err_exit(EINVAL, "strToLower");
+		err_exit(EINVAL, "%s", __func__);
 	else if (! (*s))
 		return s;
 	else
@@ -81,7 +81,7 @@ strToUpper(char *s)
 	size_t	len = 0;
 
 	if (s == NULL)
-		err_exit(EINVAL, "strToUpper");
+		err_exit(EINVAL, "%s", __func__);
 	else if (! (*s))
 		return s;
 	else
