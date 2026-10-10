@@ -13,6 +13,10 @@ CHKS = cert-*,$\
 	hicpp-use-equals-default,$\
 	hicpp-use-equals-delete,$\
 	hicpp-use-nullptr,$\
+	modernize-*,$\
+	-modernize-avoid-c-arrays,$\
+	-modernize-redundant-void-arg,$\
+	-modernize-use-trailing-return-type,$\
 	performance-*,$\
 	portability-*
 
