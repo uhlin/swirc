@@ -1,5 +1,5 @@
 /* squeeze_text_deco.cpp
-   Copyright (C) 2022-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+#include <cstdint>
+
 #include "assertAPI.h"
 #include "dataClassify.h"
 #include "errHand.h"
@@ -36,8 +38,7 @@
 #include "printtext.h"
 #include "strHand.h"
 
-#define MBS_SIZE 6144
-#define TMP_SIZE 4096
+enum {MBS_SIZE = 6144, TMP_SIZE = 4096};
 
 static const char reject[] =
     TXT_BLINK
@@ -47,7 +48,7 @@ static const char reject[] =
     TXT_UNDERLINE;
 
 static void
-handle_foo_situation(char *buffer, long int &i, long int &j)
+handle_foo_situation(char *buffer, int64_t &i, int64_t &j)
 {
 	if (!buffer[i])
 		return;
@@ -61,7 +62,7 @@ handle_foo_situation(char *buffer, long int &i, long int &j)
  * check for ^CN
  */
 static cc_check_t
-check1(char *buffer, long int &i, long int &j)
+check1(char *buffer, int64_t &i, int64_t &j)
 {
 	if (!sw_isdigit(buffer[++i])) {
 		handle_foo_situation(buffer, i, j);
@@ -74,7 +75,7 @@ check1(char *buffer, long int &i, long int &j)
  * check for ^CNN or ^CN,
  */
 static cc_check_t
-check2(char *buffer, long int &i, long int &j)
+check2(char *buffer, int64_t &i, int64_t &j)
 {
 	if (!sw_isdigit(buffer[++i]) && buffer[i] != ',') {
 		handle_foo_situation(buffer, i, j);
@@ -87,7 +88,7 @@ check2(char *buffer, long int &i, long int &j)
  * check for ^CNN, or ^CN,N
  */
 static cc_check_t
-check3(char *buffer, long int &i, long int &j, bool &has_comma)
+check3(char *buffer, int64_t &i, int64_t &j, bool &has_comma)
 {
 	if (!has_comma && buffer[i] == ',') {
 		has_comma = true;
@@ -108,7 +109,7 @@ check3(char *buffer, long int &i, long int &j, bool &has_comma)
  * check for ^CNN,N or ^CN,NN
  */
 static cc_check_t
-check4(char *buffer, long int &i, long int &j)
+check4(char *buffer, int64_t &i, int64_t &j)
 {
 	if (buffer[i] == ',') { /* ^CNN, */
 		if (!sw_isdigit(buffer[++i])) {
@@ -130,7 +131,7 @@ check4(char *buffer, long int &i, long int &j)
  * check for ^CNN,NN
  */
 static cc_check_t
-check5(char *buffer, long int &i, long int &j)
+check5(char *buffer, int64_t &i, int64_t &j)
 {
 	if (!sw_isdigit(buffer[++i])) {
 		handle_foo_situation(buffer, i, j);
@@ -140,7 +141,7 @@ check5(char *buffer, long int &i, long int &j)
 }
 
 static void
-color(char *buffer, long int &i, long int &j)
+color(char *buffer, int64_t &i, int64_t &j)
 {
 	bool has_comma;
 
@@ -161,7 +162,7 @@ color(char *buffer, long int &i, long int &j)
 char *
 squeeze_text_deco(char *buffer)
 {
-	long int i, j;
+	int64_t i, j;
 
 	if (buffer == nullptr)
 		err_exit(EINVAL, "%s", __func__);
