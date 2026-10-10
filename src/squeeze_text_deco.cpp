@@ -38,7 +38,8 @@
 #include "printtext.h"
 #include "strHand.h"
 
-enum {MBS_SIZE = 6144, TMP_SIZE = 4096};
+static const uint16_t	MBS_SIZE = 6144;
+static const uint16_t	TMP_SIZE = 4096;
 
 static const char reject[] =
     TXT_BLINK
