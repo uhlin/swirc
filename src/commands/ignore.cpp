@@ -67,7 +67,7 @@ ignore::ignore(const char *_str)
 	this->regex.assign(_str, std::regex::basic);
 }
 
-static const size_t		regex_maxlen = 60;
+static const size_t		REGEX_MAXLEN = 60;
 static std::vector<ignore>	ignore_list;
 
 static void
@@ -202,7 +202,7 @@ is_valid_regex(const char *str, char **err_reason)
 	if (strings_match(str, "")) {
 		*err_reason = sw_strdup("no regex");
 		return false;
-	} else if (xstrnlen(str, (regex_maxlen + 1)) > regex_maxlen) {
+	} else if (xstrnlen(str, (REGEX_MAXLEN + 1)) > REGEX_MAXLEN) {
 		*err_reason = sw_strdup("regex too long");
 		return false;
 	}
