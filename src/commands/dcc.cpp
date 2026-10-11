@@ -1505,9 +1505,7 @@ get_list_of_matching_dcc_cmds(const char *search_var)
 	PTEXTBUF	matches = textBuf_new();
 	const size_t	varlen = strlen(search_var);
 
-	for (size_t i = 0; i < ARRAY_SIZE(dcc_cmds); i++) {
-		const char *cmd = dcc_cmds[i];
-
+	for (auto cmd : dcc_cmds) {
 		if (!strncmp(search_var, cmd, varlen))
 			textBuf_emplace_back(__func__, matches, cmd, 0);
 	}

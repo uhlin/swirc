@@ -1553,9 +1553,7 @@ get_list_of_matching_ftp_cmds(CSTRING search_var)
 	PTEXTBUF	matches = textBuf_new();
 	const size_t	varlen = strlen(search_var);
 
-	for (size_t i = 0; i < ARRAY_SIZE(ftp_cmds); i++) {
-		CSTRING cmd = ftp_cmds[i];
-
+	for (auto cmd : ftp_cmds) {
 		if (!strncmp(search_var, cmd, varlen))
 			textBuf_emplace_back(__func__, matches, cmd, 0);
 	}
