@@ -164,8 +164,7 @@ event_whoReply(struct irc_message_compo *compo)
 	printtext_context_init(&ctx, g_status_window, TYPE_SPEC1, true);
 
 	try {
-		CSTRING channel, user, host, server, nick, symbol, hopcount,
-			rl_name;
+		CSTRING token[8] = { nullptr };
 		auto state = const_cast<STRING>("");
 
 		if (strFeed(compo->params, 8) != 8)
@@ -173,37 +172,37 @@ event_whoReply(struct irc_message_compo *compo)
 
 		(void) strtok_r(compo->params, "\n", &state); /* my nick */
 
-		if ((channel  = strtok_r(nullptr, "\n", &state)) == nullptr ||
-		    (user     = strtok_r(nullptr, "\n", &state)) == nullptr ||
-		    (host     = strtok_r(nullptr, "\n", &state)) == nullptr ||
-		    (server   = strtok_r(nullptr, "\n", &state)) == nullptr ||
-		    (nick     = strtok_r(nullptr, "\n", &state)) == nullptr ||
-		    (symbol   = strtok_r(nullptr, "\n", &state)) == nullptr ||
-		    (hopcount = strtok_r(nullptr, "\n", &state)) == nullptr ||
-		    (rl_name  = strtok_r(nullptr, "\n", &state)) == nullptr) {
+/* channel  */	if ((token[0] = strtok_r(nullptr, "\n", &state)) == nullptr ||
+/* user     */	    (token[1] = strtok_r(nullptr, "\n", &state)) == nullptr ||
+/* host     */	    (token[2] = strtok_r(nullptr, "\n", &state)) == nullptr ||
+/* server   */	    (token[3] = strtok_r(nullptr, "\n", &state)) == nullptr ||
+/* nick     */	    (token[4] = strtok_r(nullptr, "\n", &state)) == nullptr ||
+/* symbol   */	    (token[5] = strtok_r(nullptr, "\n", &state)) == nullptr ||
+/* hopcount */	    (token[6] = strtok_r(nullptr, "\n", &state)) == nullptr ||
+/* rl name  */	    (token[7] = strtok_r(nullptr, "\n", &state)) == nullptr) {
 			throw std::runtime_error("unable to retrieve event "
 			    "components");
 		}
 
-		UNUSED_VAR(server);
-
-		if (*hopcount == ':')
-			hopcount++;
+		if (*token[6] == ':')
+			token[6]++;
 
 		std::string s[3];
 
 		s[0].assign(LEFT_BRKT);
-		s[0].append(COLOR1).append(channel).append(TXT_NORMAL);
+		s[0].append(COLOR1).append(token[0]).append(TXT_NORMAL);
 		s[0].append(RIGHT_BRKT);
 
-		s[1].assign(COLOR2).append(nick).append(TXT_NORMAL);
+		s[1].assign(COLOR2).append(token[4]).append(TXT_NORMAL);
 
 		s[2].assign(LEFT_BRKT);
-		s[2].append(COLOR2).append(rl_name).append(TXT_NORMAL);
+		s[2].append(COLOR2).append(token[7]).append(TXT_NORMAL);
 		s[2].append(RIGHT_BRKT);
 
 		printtext(&ctx, "%s: %s %s %s %s@%s %s", s[0].c_str(),
-		    s[1].c_str(), symbol, hopcount, user, host, s[2].c_str());
+		    s[1].c_str(),
+		    token[5], token[6], token[1], token[2],
+		    s[2].c_str());
 	} catch (const std::bad_alloc &e) {
 		err_exit(ENOMEM, "%s(%s): error: %s", __func__, compo->command,
 		    e.what());
