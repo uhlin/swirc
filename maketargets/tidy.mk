@@ -16,6 +16,7 @@ CHKS = cert-*,$\
 	modernize-*,$\
 	-modernize-avoid-c-arrays,$\
 	-modernize-redundant-void-arg,$\
+	-modernize-use-default-member-init,$\
 	-modernize-use-trailing-return-type,$\
 	performance-*,$\
 	portability-*
