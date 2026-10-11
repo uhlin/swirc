@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2026-10-04 11:35+0200\n"
+"POT-Creation-Date: 2026-10-11 19:02+0200\n"
 "PO-Revision-Date: 2026-02-21 19:08+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1222
-#: ../src/commands/dcc.cpp:1265 ../src/statusbar.cpp:213
+#: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1225
+#: ../src/commands/dcc.cpp:1268 ../src/statusbar.cpp:213
 msgid "Yes"
 msgstr "Ja"
 
-#: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1222
-#: ../src/commands/dcc.cpp:1265 ../src/statusbar.cpp:214
+#: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1225
+#: ../src/commands/dcc.cpp:1268 ../src/statusbar.cpp:214
 msgid "No"
 msgstr "Nein"
 
@@ -106,87 +106,87 @@ msgstr "%s: schrieb: %s"
 msgid "%s: did not complete: %s"
 msgstr "%s: wurde nicht abgeschlossen: %s"
 
-#: ../src/commands/dcc.cpp:1229
+#: ../src/commands/dcc.cpp:1232
 #, c-format
 msgid "%sStarted%s: %s"
 msgstr "%sGestartet%s: %s"
 
-#: ../src/commands/dcc.cpp:1231
+#: ../src/commands/dcc.cpp:1234
 #, c-format
 msgid "%sStopped%s: %s"
 msgstr "%sGestoppt%s: %s"
 
-#: ../src/commands/dcc.cpp:1608
+#: ../src/commands/dcc.cpp:1609
 #, c-format
 msgid "sending '%s' to %s (%.1f%c)..."
 msgstr "sende '%s' an %s (%.1f%c)..."
 
-#: ../src/commands/dcc.cpp:1699
+#: ../src/commands/dcc.cpp:1700
 msgid "Missing certs. Not starting the DCC server. Please create them."
 msgstr ""
 "Fehlende Zertifikate. DCC Server wird nicht gestartet. Bitte erstellen Sie "
 "sie."
 
-#: ../src/commands/dcc.cpp:1805
+#: ../src/commands/dcc.cpp:1806
 #, c-format
 msgid "%s: added: '%s' (%.1f%c)"
 msgstr "%s: hinzugefügt: '%s' (%.1f%c)"
 
-#: ../src/commands/dcc.cpp:1807
+#: ../src/commands/dcc.cpp:1808
 #, c-format
 msgid "%s: from: %s <%s@%s>"
 msgstr "%s: von: %s <%s@%s>"
 
-#: ../src/commands/dcc.cpp:1809
+#: ../src/commands/dcc.cpp:1810
 msgid "To get the file, type:"
 msgstr "Um die Datei abzurufen, geben Sie Folgendes ein:"
 
-#: ../src/commands/dcc.cpp:2060 ../src/commands/ftp.cpp:1157
+#: ../src/commands/dcc.cpp:2061 ../src/commands/ftp.cpp:1157
 #, c-format
 msgid "%s: file read error"
 msgstr "%s: Fehler beim Lesen der Datei"
 
-#: ../src/commands/dcc.cpp:2065
+#: ../src/commands/dcc.cpp:2066
 #, c-format
 msgid "%s: tls write error"
 msgstr ""
 
-#: ../src/commands/dcc.cpp:2082
+#: ../src/commands/dcc.cpp:2083
 #, c-format
 msgid "started: %s"
 msgstr "gestartet: %s"
 
-#: ../src/commands/dcc.cpp:2083
+#: ../src/commands/dcc.cpp:2084
 #, c-format
 msgid "stopped: %s"
 msgstr "gestoppt: %s"
 
-#: ../src/commands/dcc.cpp:2100
+#: ../src/commands/dcc.cpp:2101
 msgid "read request error"
 msgstr "Leseanforderungsfehler"
 
-#: ../src/commands/dcc.cpp:2107
+#: ../src/commands/dcc.cpp:2108
 msgid "unable to find the send object"
 msgstr "Das Sendeobjekt konnte nicht gefunden werden"
 
-#: ../src/commands/dcc.cpp:2115
+#: ../src/commands/dcc.cpp:2116
 msgid "already sent file"
 msgstr "bereits gesendete Datei"
 
-#: ../src/commands/dcc.cpp:2118
+#: ../src/commands/dcc.cpp:2119
 msgid "the send object is in a locked state"
 msgstr "das Sendeobjekt befindet sich im gesperrten Zustand"
 
-#: ../src/commands/dcc.cpp:2123
+#: ../src/commands/dcc.cpp:2124
 msgid "file open error"
 msgstr "Fehler beim Öffnen der Datei"
 
-#: ../src/commands/dcc.cpp:2142
+#: ../src/commands/dcc.cpp:2143
 #, c-format
 msgid "%s: successfully sent file: %s"
 msgstr "%s: Datei erfolgreich gesendet: %s"
 
-#: ../src/commands/dcc.cpp:2146
+#: ../src/commands/dcc.cpp:2147
 #, c-format
 msgid "%s: file transfer incomplete: %s"
 msgstr "%s: Dateiübertragung unvollständig: %s"
@@ -217,7 +217,7 @@ msgid "Failed to establish a connection"
 msgstr "Fehler beim Herstellen einer Verbindung"
 
 #: ../src/commands/ftp.cpp:335 ../src/commands/ftp.cpp:1238
-#: ../src/commands/ftp.cpp:1609
+#: ../src/commands/ftp.cpp:1607
 msgid "Cannot send"
 msgstr "Senden nicht möglich"
 
@@ -230,12 +230,12 @@ msgstr "Es konnte kein Endpunkt für die Kommunikation erstellt werden"
 msgid "%s: bytes sent mismatch bytes read"
 msgstr "%s: gesendete Bytes stimmen nicht mit gelesenen Bytes überein"
 
-#: ../src/commands/ftp.cpp:1228 ../src/commands/ftp.cpp:1597
+#: ../src/commands/ftp.cpp:1228 ../src/commands/ftp.cpp:1595
 msgid "No control connection"
 msgstr ""
 
 #: ../src/commands/ftp.cpp:1231 ../src/commands/ftp.cpp:1253
-#: ../src/commands/ftp.cpp:1605
+#: ../src/commands/ftp.cpp:1603
 msgid "Invalid network socket"
 msgstr "Ungültiger Netzwerk Socket"
 
@@ -243,11 +243,11 @@ msgstr "Ungültiger Netzwerk Socket"
 msgid "Blank file path"
 msgstr "Leerer Dateipfad"
 
-#: ../src/commands/ftp.cpp:1601
+#: ../src/commands/ftp.cpp:1599
 msgid "Already in passive mode"
 msgstr "Bereits im passiven Modus"
 
-#: ../src/commands/ftp.cpp:1624
+#: ../src/commands/ftp.cpp:1622
 msgid "Failed to enter passive mode"
 msgstr "Der Wechsel in den passiven Modus ist fehlgeschlagen"
 
