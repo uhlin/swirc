@@ -51,31 +51,31 @@ class time_idle {
 public:
 	time_idle(long int, long int);
 
-	long int
+	NODISCARD long int
 	getDays(void) const
 	{
 		return this->days;
 	}
 
-	long int
+	NODISCARD long int
 	getHours(void) const
 	{
 		return this->hours;
 	}
 
-	long int
+	NODISCARD long int
 	getMins(void) const
 	{
 		return this->mins;
 	}
 
-	long int
+	NODISCARD long int
 	getSecs(void) const
 	{
 		return this->secs;
 	}
 
-	CSTRING
+	NODISCARD CSTRING
 	getBuf(void) const
 	{
 		return (&this->buf[0]);
