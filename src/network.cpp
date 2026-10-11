@@ -101,13 +101,13 @@ public:
 		this->retry		= 0;
 	}
 
-	bool
+	NODISCARD bool
 	is_initial_attempt(void) const
 	{
 		return (this->retry <= 1);
 	}
 
-	bool
+	NODISCARD bool
 	is_initialized(void)
 	{
 		return atomic_load_bool(&this->initialized);
