@@ -43,6 +43,7 @@
 
 #include <cinttypes>
 #include <climits>
+#include <cstdint>
 
 #if HAVE_STD_FS
 #include <algorithm>
@@ -79,13 +80,12 @@ namespace fs = std::filesystem;
 #include "i18n.h"
 #include "theme.h" /* url_to_file() */
 
-#define DCC_FILE_MAX_SIZE	(g_one_gig * static_cast<intmax_t>(10))
-#define DCC_FILE_REQ_SIZE	130
-#define DCC_IO_BYTES		2048
-
 #if WIN32
 #define stat _stat
 #endif
+
+static const uint16_t	DCC_FILE_REQ_SIZE = 130;
+static const uint16_t	DCC_IO_BYTES = 2048;
 
 /****************************************************************
 *                                                               *
@@ -960,6 +960,9 @@ const int	g_one_gig = 1000000000;
 *  -------------- Objects with internal linkage --------------  *
 *                                                               *
 ****************************************************************/
+
+static constexpr int64_t DCC_FILE_MAX_SIZE =
+    (g_one_gig * static_cast<int64_t>(10));
 
 static const std::vector<dcc_get>::size_type	GET_DB_MAX = 100;
 static const std::vector<dcc_send>::size_type	SEND_DB_MAX = 100;
