@@ -11,7 +11,10 @@ All notable changes to this project will be documented in this file.
   hard disk.
 - Fixed building on OpenBSD/sparc64 vers >= 8.0. Contributed by
   [Kurt Mosiejczuk](https://github.com/kmosiejczuk)  --  thanks!
+- Fixed hardcoded function names (in error messages).
 - Improved the C++ exception handling.
+- Replaced preprocessor defines with regular variables.
+- Usage of fixed width integer types.
 
 ## [3.5.9] - 2026-02-22 ##
 - **Added** command `/userhost` and event 302 (`RPL_USERHOST`).
