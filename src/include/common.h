@@ -1,7 +1,7 @@
 #ifndef SRC_INCLUDE_COMMON_H_
 #define SRC_INCLUDE_COMMON_H_
 /* common.h
-   Copyright (C) 2016-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2016-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -65,8 +65,10 @@
 
 #if defined(__cplusplus) && __cplusplus >= 201703L
 #define MAYBE_UNUSED [[maybe_unused]]
+#define NODISCARD [[nodiscard]]
 #else
 #define MAYBE_UNUSED
+#define NODISCARD
 #endif
 
 #if defined(UNIX)
