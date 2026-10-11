@@ -49,9 +49,8 @@
 #include "printtext.h"
 #include "socks.hpp"
 
-#define RESERVED 0x00
-
-static const size_t FQDN_MAX = 255;
+static const size_t		FQDN_MAX = 255;
+static const socks_byte_t	RESERVED = 0x00;
 
 /*
  * Send the version identifier
