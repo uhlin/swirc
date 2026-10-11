@@ -76,9 +76,9 @@ public:
 	irc_logfile();
 	irc_logfile(const std::string &, const std::string &);
 
-	bool	is_too_large(void) const;
-	void	print(const size_t) const;
-	void	remove_file(void) const;
+	NODISCARD bool	is_too_large(void) const;
+	void		print(const size_t) const;
+	void		remove_file(void) const;
 
 private:
 	struct stat sb;

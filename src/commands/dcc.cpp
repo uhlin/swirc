@@ -599,12 +599,12 @@ public:
 	dcc_send &operator=(dcc_send &&) noexcept;
 	dcc_send(dcc_send &&) noexcept;
 
-	const char	*get_filename(void);
-	intmax_t	 get_filesize(void) const;
-	bool		 has_completed(void) const;
+	const char		*get_filename(void);
+	NODISCARD intmax_t	 get_filesize(void) const;
+	NODISCARD bool		 has_completed(void) const;
 
-	bool	is_locked(void) const;
-	void	set_lock(int);
+	NODISCARD bool		 is_locked(void) const;
+	void			 set_lock(int);
 
 private:
 	char		 buf[255];
