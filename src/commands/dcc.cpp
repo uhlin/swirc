@@ -903,19 +903,19 @@ public:
 	disk_file();
 	disk_file(const char *, FileType, intmax_t, fs::perms);
 
-	FileType
+	NODISCARD FileType
 	get_type(void) const
 	{
 		return (this->type);
 	}
 
-	intmax_t
+	NODISCARD intmax_t
 	get_size(void) const
 	{
 		return (this->size);
 	}
 
-	fs::perms
+	NODISCARD fs::perms
 	get_perms(void) const
 	{
 		return (this->perms);

@@ -48,13 +48,13 @@ class ignore {
 public:
 	explicit ignore(const char *);
 
-	const std::string &
+	NODISCARD const std::string &
 	get_str(void) const
 	{
 		return this->str;
 	}
 
-	const std::regex &
+	NODISCARD const std::regex &
 	get_regex(void) const
 	{
 		return this->regex;
