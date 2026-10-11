@@ -58,12 +58,11 @@
 #endif
 #endif // HAVE_HUNSPELL
 
-static const uint8_t MAXWORDLEN = 50;
-
 bool g_suggs_mode = false;
 
 #ifdef HAVE_HUNSPELL
 static Hunhandle			*pHunspell = nullptr;
+static const uint8_t			 MAXWORDLEN = 50;
 static std::vector<sugg_ptr>		*rl_suggs = nullptr;
 static std::vector<sugg_ptr>::iterator	 suggs_it;
 static std::wstring			 rl_word;
