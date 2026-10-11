@@ -158,12 +158,12 @@ init_color_pairs(void)
 
 	if (COLORS >= 16 && can_change_color()) {
 		if (init_color(GREY, 498,498,498) == ERR) {
-			err_log(0, "init_color_pairs: init_color: "
-			    "GREY error");
+			err_log(0, "%s: init_color: "
+			    "GREY error", __func__);
 		}
 		if (init_color(LIGHT_GREY, 824,824,824) == ERR) {
-			err_log(0, "init_color_pairs: init_color: "
-			    "LIGHT_GREY error");
+			err_log(0, "%s: init_color: "
+			    "LIGHT_GREY error", __func__);
 		}
 		initcolors();
 	}
@@ -236,7 +236,7 @@ init_color_pairs(void)
 #endif
 	}
 
-	debug("init_color_pairs: all ok: %hd initialized pairs", pair_n);
+	debug("%s: all ok: %hd initialized pairs", __func__, pair_n);
 	return pair_n;
 }
 
