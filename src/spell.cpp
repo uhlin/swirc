@@ -34,6 +34,7 @@
 
 #include <climits>
 #include <clocale>
+#include <cstdint>
 #include <cwchar>
 #include <cwctype>
 #include <stdexcept>
@@ -57,7 +58,7 @@
 #endif
 #endif // HAVE_HUNSPELL
 
-#define MAXWORDLEN 50
+static const uint8_t MAXWORDLEN = 50;
 
 bool g_suggs_mode = false;
 
