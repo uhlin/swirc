@@ -506,9 +506,7 @@ get_list_of_matching_log_cmds(CSTRING search_var)
 	PTEXTBUF	matches = textBuf_new();
 	const size_t	varlen = strlen(search_var);
 
-	for (size_t i = 0; i < ARRAY_SIZE(log_cmds); i++) {
-		CSTRING cmd = log_cmds[i];
-
+	for (auto cmd : log_cmds) {
 		if (!strncmp(search_var, cmd, varlen))
 			textBuf_emplace_back(__func__, matches, cmd, 0);
 	}

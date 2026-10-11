@@ -1,5 +1,5 @@
 /* Ignore commands
-   Copyright (C) 2021-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2021-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -184,10 +184,10 @@ is_in_ignore_list(const char *nick, const char *user, const char *host)
 	nuh.append("!");
 	nuh.append(user).append("@").append(host);
 
-	for (auto it = ignore_list.begin(); it != ignore_list.end(); ++it) {
-		if (std::regex_match(nuh, it->get_regex())) {
+	for (auto & elmt : ignore_list) {
+		if (std::regex_match(nuh, elmt.get_regex())) {
 			debug("is_in_ignore_list: \"%s\" matches \"%s\": "
-			    "returning true...", it->get_str().c_str(),
+			    "returning true...", elmt.get_str().c_str(),
 			    nuh.c_str());
 			return true;
 		}
