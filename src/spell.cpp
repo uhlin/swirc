@@ -248,8 +248,8 @@ void
 spell_destroy_suggs(std::vector<sugg_ptr> *suggs)
 {
 	if (suggs) {
-		for (auto it = suggs->begin(); it != suggs->end(); ++it)
-			delete *it;
+		for (auto & sugg : *suggs)
+			delete sugg;
 
 		delete suggs;
 	}
@@ -344,8 +344,8 @@ spell_test1(CSTRING word)
 	    "correct" : "incorrect"));
 
 	if ((suggs = spell_get_suggs(word, nullptr)) != nullptr) {
-		for (auto it = suggs->begin(); it != suggs->end(); ++it)
-			printtext_print(nullptr, "%s", (*it)->get_word());
+		for (auto & sugg : *suggs)
+			printtext_print(nullptr, "%s", sugg->get_word());
 		spell_destroy_suggs(suggs);
 	}
 }
@@ -359,8 +359,8 @@ spell_test2(CWSTRING word)
 	    "correct" : "incorrect"));
 
 	if ((suggs = spell_get_suggs(nullptr, word)) != nullptr) {
-		for (auto it = suggs->begin(); it != suggs->end(); ++it)
-			printtext_print(nullptr, "%ls", (*it)->get_wide_word());
+		for (auto & sugg : *suggs)
+			printtext_print(nullptr, "%ls", sugg->get_wide_word());
 		spell_destroy_suggs(suggs);
 	}
 }
@@ -385,8 +385,8 @@ static void
 type_word(volatile struct readline_session_context *ctx,
     const std::wstring &word)
 {
-	for (size_t i = 0; i < word.size(); i++)
-		readline_handle_key_exported(ctx, word.at(i));
+	for (wchar_t wc : word)
+		readline_handle_key_exported(ctx, wc);
 }
 
 static void
@@ -425,8 +425,8 @@ print_suggestions(std::vector<sugg_ptr> *suggs)
 {
 	printtext_print(nullptr, "%s", _("suggestions:"));
 
-	for (auto it = suggs->begin(); it != suggs->end(); ++it)
-		printtext_print(nullptr, "  %ls", (*it)->get_wide_word());
+	for (auto & sugg : *suggs)
+		printtext_print(nullptr, "  %ls", sugg->get_wide_word());
 }
 
 void
