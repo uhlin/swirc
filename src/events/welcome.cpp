@@ -49,13 +49,13 @@
 static void
 autojoin()
 {
-	for (auto it = g_join_list.begin(); it != g_join_list.end(); ++it) {
+	for (auto & chan : g_join_list) {
 		STRING str;
 
-		if (!is_irc_channel(it->c_str()))
-			(void) it->insert(0, "#");
+		if (!is_irc_channel(chan.c_str()))
+			(void) chan.insert(0, "#");
 
-		str = sw_strdup(it->c_str());
+		str = sw_strdup(chan.c_str());
 
 		if (window_by_label(str) == nullptr)
 			(void) net_send("JOIN %s", strToLower(str));
