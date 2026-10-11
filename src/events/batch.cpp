@@ -62,13 +62,13 @@ public:
 		this->ref.assign(p_ref);
 	}
 
-	CSTRING
+	NODISCARD CSTRING
 	get_ref(void) const
 	{
 		return this->ref.c_str();
 	}
 
-	batch_t
+	NODISCARD batch_t
 	get_type(void) const
 	{
 		return this->type;
