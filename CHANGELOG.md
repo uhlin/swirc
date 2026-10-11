@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - Improved the C++ exception handling.
 - Replaced preprocessor defines with regular variables.
 - Usage of fixed width integer types.
+- Usage of range-based for loops.
 
 ## [3.5.9] - 2026-02-22 ##
 - **Added** command `/userhost` and event 302 (`RPL_USERHOST`).
