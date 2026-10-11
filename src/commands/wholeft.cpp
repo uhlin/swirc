@@ -1,5 +1,5 @@
 /* The wholeft command
-   Copyright (C) 2024-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2024-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -44,8 +44,8 @@ netsplit_chk(CSTRING channel)
 {
 	const std::vector<netsplit *> &netsplit_db = netsplit_get_db();
 
-	for (auto it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
-		immutable_cp_t db_chan = (*it)->channel.c_str();
+	for (auto ns : netsplit_db) {
+		immutable_cp_t db_chan = ns->channel.c_str();
 
 		if (strings_match_ignore_case(channel, db_chan))
 			return true;
@@ -93,13 +93,13 @@ wholeft(CSTRING channel)
 {
 	const std::vector<netsplit *> &netsplit_db = netsplit_get_db();
 
-	for (auto it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
-		immutable_cp_t db_chan = (*it)->channel.c_str();
+	for (auto ns : netsplit_db) {
+		immutable_cp_t db_chan = ns->channel.c_str();
 
 		if (strings_match_ignore_case(channel, db_chan) &&
-		    (*it)->has_announced_split() &&
-		    !(*it)->join_begun())
-			pr_wholeft(*it);
+		    ns->has_announced_split() &&
+		    !ns->join_begun())
+			pr_wholeft(ns);
 	}
 }
 
