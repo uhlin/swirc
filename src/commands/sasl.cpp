@@ -596,9 +596,7 @@ get_list_of_matching_sasl_cmds(const char *search_var)
 	PTEXTBUF	matches = textBuf_new();
 	const size_t	varlen = strlen(search_var);
 
-	for (size_t i = 0; i < ARRAY_SIZE(sasl_cmds); i++) {
-		const char *cmd = sasl_cmds[i];
-
+	for (auto cmd : sasl_cmds) {
 		if (!strncmp(search_var, cmd, varlen))
 			textBuf_emplace_back(__func__, matches, cmd, 0);
 	}

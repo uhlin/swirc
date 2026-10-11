@@ -105,17 +105,15 @@ generate_and_store_nonce(void)
 	    "abcdefghijklmnopqrstuvwxyz{|}~";
 
 #ifdef BSD
-	for (size_t i = 0; i < ARRAY_SIZE(nonce); i++) {
-		nonce[i] = legal_index[arc4random_uniform
-		    (sizeof legal_index - 1)];
-	}
+	for (char & c : nonce)
+		c = legal_index[arc4random_uniform(sizeof legal_index - 1)];
 #else
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<size_t> dist(0, strlen(legal_index) - 1);
 
-	for (size_t i = 0; i < ARRAY_SIZE(nonce); i++)
-		nonce[i] = legal_index[dist(gen)];
+	for (char & c : nonce)
+		c = legal_index[dist(gen)];
 #endif
 
 	nonce[ARRAY_SIZE(nonce) - 1] = '\0';
