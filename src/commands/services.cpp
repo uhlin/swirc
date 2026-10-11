@@ -65,13 +65,13 @@ class irc_service_cmd {
 public:
 	explicit irc_service_cmd(CSTRING);
 
-	const std::string &
+	NODISCARD const std::string &
 	get_srv_host(void) const
 	{
 		return this->srv_host;
 	}
 
-	CSTRING
+	NODISCARD CSTRING
 	get_msg(void) const
 	{
 		return this->msg.c_str();
