@@ -118,8 +118,8 @@ netsplit::announce_split(void)
 bool
 netsplit::find_nick(CSTRING p_nick)
 {
-	for (auto it = this->nicks.begin(); it != this->nicks.end(); ++it) {
-		if (strings_match_ignore_case(it->c_str(), p_nick))
+	for (auto & nick : this->nicks) {
+		if (strings_match_ignore_case(nick.c_str(), p_nick))
 			return true;
 	}
 
@@ -190,20 +190,20 @@ netsplit_destroy_all(void)
 {
 	if (netsplit_db.empty())
 		return;
-	for (auto it = netsplit_db.begin(); it != netsplit_db.end(); ++it)
-		delete *it;
+	for (auto & ns : netsplit_db)
+		delete ns;
 	netsplit_db.clear();
 }
 
 netsplit *
 netsplit_find(CSTRING nick, CSTRING channel)
 {
-	for (auto it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
-		immutable_cp_t db_chan = (*it)->channel.c_str();
+	for (auto & ns : netsplit_db) {
+		immutable_cp_t db_chan = ns->channel.c_str();
 
 		if (strings_match_ignore_case(db_chan, channel) &&
-		    (*it)->find_nick(nick))
-			return (*it);
+		    ns->find_nick(nick))
+			return ns;
 	}
 
 	return nullptr;
@@ -218,17 +218,17 @@ netsplit_get_db(void)
 netsplit *
 netsplit_get_split(const struct netsplit_context *ctx)
 {
-	for (auto it = netsplit_db.begin(); it != netsplit_db.end(); ++it) {
-		CSTRING		db_chan = (*it)->channel.c_str();
+	for (auto & ns : netsplit_db) {
+		CSTRING		db_chan = ns->channel.c_str();
 		CSTRING		serv[2] = { nullptr, nullptr };
 
-		serv[0] = (*it)->server[0].c_str();
-		serv[1] = (*it)->server[1].c_str();
+		serv[0] = ns->server[0].c_str();
+		serv[1] = ns->server[1].c_str();
 
 		if (strings_match_ignore_case(db_chan, ctx->chan) &&
 		    strings_match_ignore_case(serv[0], ctx->serv1) &&
 		    strings_match_ignore_case(serv[1], ctx->serv2))
-			return (*it);
+			return ns;
 	}
 
 	return nullptr;
