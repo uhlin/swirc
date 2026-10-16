@@ -1623,6 +1623,12 @@ ftp::passive(void)
 	return false;
 }
 
+bool
+ftp::secure(void)
+{
+	return (config_bool("ftp_secure", false));
+}
+
 void
 ftp::get_file(void)
 {

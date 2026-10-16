@@ -198,6 +198,7 @@ namespace ftp
 	void		login(void);
 	void		ls_dir(void);
 	bool		passive(void);
+	bool		secure(void);
 	int		send_bytes(SOCKET, const void *, const int);
 	void		send_file(void);
 	int		send_printf(SOCKET, CSTRING, ...) PRINTFLIKE(2);
