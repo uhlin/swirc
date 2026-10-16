@@ -133,7 +133,7 @@ trim(char *string)
 	char	*p = NULL;
 
 	if (isNull(string)) {
-		err_exit(EINVAL, "trim");
+		err_exit(EINVAL, "%s", __func__);
 	} else if (isEmpty(string)) {
 		return string;
 	} else {
