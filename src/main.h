@@ -15,6 +15,8 @@
 #define DEV_NULL "nul"
 #endif
 
+#define PEM_FILE "trusted_roots.pem"
+
 struct locale_info {
 	char	*lang_and_territory;
 	char	*codeset;

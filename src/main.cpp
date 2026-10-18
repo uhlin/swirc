@@ -231,7 +231,6 @@ deal_with_setlocale()
 static void
 W32_have_libintl()
 {
-#define PEM_FILE "trusted_roots.pem"
 	char *cp, *pgm, *str;
 
 	cp = pgm = str = nullptr;
