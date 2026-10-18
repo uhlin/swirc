@@ -136,11 +136,12 @@ public:
 
 	std::vector<FTP_REPLY> reply_vec;
 
-	SOCKET		get_sock(void) const;
-	void		login(void);
-	void		printreps(void);
-	void		read_and_print(const int);
-	numrep_t	read_reply(const int);
+	SOCKET		 get_sock(void) const;
+	SSL		*get_ssl(void);
+	void		 login(void);
+	void		 printreps(void);
+	void		 read_and_print(const int);
+	numrep_t	 read_reply(const int);
 
 private:
 	SOCKET				 sock;
