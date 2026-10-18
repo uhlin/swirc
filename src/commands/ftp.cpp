@@ -127,7 +127,14 @@ ftp_ctl_conn::~ftp_ctl_conn()
 		ftp_closesocket(this->sock);
 		this->sock = INVALID_SOCKET;
 	}
-
+	if (this->ssl) {
+		SSL_free(this->ssl);
+		this->ssl = nullptr;
+	}
+	if (this->ssl_ctx) {
+		SSL_CTX_free(this->ssl_ctx);
+		this->ssl_ctx = nullptr;
+	}
 	if (this->res != nullptr) {
 		freeaddrinfo(this->res);
 		this->res = nullptr;
