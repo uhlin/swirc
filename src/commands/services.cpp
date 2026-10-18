@@ -236,14 +236,14 @@ cmd_qbot(CSTRING data)
 static PTEXTBUF
 get_list(CSTRING search_var, stringarray_t array, const size_t size)
 {
-	PTEXTBUF	matches = textBuf_new();
+	PTEXTBUF	matches = textbuf_new();
 	const size_t	varlen = strlen(search_var);
 
 	for (size_t i = 0; i < size; i++) {
 		CSTRING cmd = array[i];
 
 		if (!strncmp(search_var, cmd, varlen))
-			textBuf_emplace_back(__func__, matches, cmd, 0);
+			textbuf_emplace_back(__func__, matches, cmd, 0);
 	}
 
 	return matches;
@@ -254,8 +254,8 @@ get_list_of_matching_cs_cmds(CSTRING search_var)
 {
 	PTEXTBUF matches = get_list(search_var, cs_cmds, ARRAY_SIZE(cs_cmds));
 
-	if (textBuf_size(matches) == 0) {
-		textBuf_destroy(matches);
+	if (textbuf_size(matches) == 0) {
+		textbuf_destroy(matches);
 		return nullptr;
 	}
 
@@ -267,8 +267,8 @@ get_list_of_matching_ns_cmds(CSTRING search_var)
 {
 	PTEXTBUF matches = get_list(search_var, ns_cmds, ARRAY_SIZE(ns_cmds));
 
-	if (textBuf_size(matches) == 0) {
-		textBuf_destroy(matches);
+	if (textbuf_size(matches) == 0) {
+		textbuf_destroy(matches);
 		return nullptr;
 	}
 

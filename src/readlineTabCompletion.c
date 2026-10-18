@@ -375,7 +375,7 @@ void
 readline_tab_comp_ctx_destroy(PTAB_COMPLETION ctx)
 {
 	if (ctx != NULL && ctx->matches != NULL)
-		textBuf_destroy(ctx->matches);
+		textbuf_destroy(ctx->matches);
 }
 
 void
@@ -413,7 +413,7 @@ readline_tab_comp_ctx_reset(PTAB_COMPLETION ctx)
 		ctx->isInCirculationModeFor.ZncCmds = false;
 
 		if (ctx->matches != NULL)
-			textBuf_destroy(ctx->matches);
+			textbuf_destroy(ctx->matches);
 
 		ctx->matches = NULL;
 		ctx->elmt = NULL;
@@ -431,7 +431,7 @@ init_mode_for_connect(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_connect(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Connect = true;
 }
@@ -447,7 +447,7 @@ init_mode_for_cs(volatile struct readline_session_context *ctx,
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_cs(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Cs = true;
 }
@@ -462,7 +462,7 @@ init_mode_for_dcc(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_dcc(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Dcc = true;
 }
@@ -485,7 +485,7 @@ init_mode_for_deop(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_deop(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Deop = true;
 }
@@ -508,7 +508,7 @@ init_mode_for_devoice(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_devoice(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Devoice = true;
 }
@@ -523,7 +523,7 @@ init_mode_for_ftp(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_ftp(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Ftp = true;
 }
@@ -538,7 +538,7 @@ init_mode_for_help(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_help(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Help = true;
 }
@@ -561,7 +561,7 @@ init_mode_for_kick(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_kick(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Kick = true;
 }
@@ -584,7 +584,7 @@ init_mode_for_kickban(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_kickban(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Kickban = true;
 }
@@ -599,7 +599,7 @@ init_mode_for_log(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_log(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Log = true;
 }
@@ -614,7 +614,7 @@ init_mode_for_mode(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_mode(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Mode = true;
 }
@@ -629,7 +629,7 @@ init_mode_for_msg(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_msg(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Msg = true;
 }
@@ -644,7 +644,7 @@ init_mode_for_notice(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_notice(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Notice = true;
 }
@@ -660,7 +660,7 @@ init_mode_for_ns(volatile struct readline_session_context *ctx,
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_ns(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Ns = true;
 }
@@ -683,7 +683,7 @@ init_mode_for_op(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_op(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Op = true;
 }
@@ -706,7 +706,7 @@ init_mode_for_query(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_query(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Query = true;
 }
@@ -721,7 +721,7 @@ init_mode_for_sasl(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_sasl(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Sasl = true;
 }
@@ -730,18 +730,18 @@ init_mode_for_sasl(volatile struct readline_session_context *ctx)
 static PTEXTBUF
 get_service_hosts(const char *search_var)
 {
-	PTEXTBUF	matches = textBuf_new();
+	PTEXTBUF	matches = textbuf_new();
 	const size_t	varlen = strlen(search_var);
 
 	for (size_t i = 0; i < ARRAY_SIZE(service_hosts); i++) {
 		if (!strncmp(search_var, service_hosts[i], varlen)) {
-			textBuf_emplace_back(__func__, matches,
+			textbuf_emplace_back(__func__, matches,
 			    service_hosts[i], 0);
 		}
 	}
 
-	if (textBuf_size(matches) == 0) {
-		textBuf_destroy(matches);
+	if (textbuf_size(matches) == 0) {
+		textbuf_destroy(matches);
 		return NULL;
 	}
 
@@ -765,7 +765,7 @@ init_mode_for_set(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_setting(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Settings = true;
 }
@@ -781,7 +781,7 @@ init_mode_for_squery(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_squery(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Squery = true;
 }
@@ -796,7 +796,7 @@ init_mode_for_theme(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_theme(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Theme = true;
 }
@@ -811,7 +811,7 @@ init_mode_for_time(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_time(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Time = true;
 }
@@ -826,7 +826,7 @@ init_mode_for_version(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_version(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Version = true;
 }
@@ -849,7 +849,7 @@ init_mode_for_voice(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_voice(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Voice = true;
 }
@@ -871,7 +871,7 @@ init_mode_for_whois(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_whois(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Whois = true;
 }
@@ -887,7 +887,7 @@ init_mode_for_znc_cmds(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_znc_cmd(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.ZncCmds = true;
 }
@@ -904,7 +904,7 @@ init_mode_for_commands(volatile struct readline_session_context *ctx,
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_command(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.Cmds = true;
 }
@@ -918,7 +918,7 @@ init_mode_for_channel_users(volatile struct readline_session_context *ctx)
 		return;
 	}
 
-	ctx->tc->elmt = textBuf_head(ctx->tc->matches);
+	ctx->tc->elmt = textbuf_head(ctx->tc->matches);
 	auto_complete_channel_user(ctx, ctx->tc->elmt->text);
 	ctx->tc->isInCirculationModeFor.ChanUsers = true;
 }
@@ -1028,7 +1028,7 @@ init_mode(volatile struct readline_session_context *ctx)
 static void
 ac_doit(AC_FUNC ac, volatile struct readline_session_context *ctx)
 {
-	if (ctx->tc->elmt == textBuf_tail(ctx->tc->matches))
+	if (ctx->tc->elmt == textbuf_tail(ctx->tc->matches))
 		no_more_matches(ctx);
 	else
 		ac(ctx, next_text(ctx->tc));

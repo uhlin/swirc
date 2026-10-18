@@ -1578,16 +1578,16 @@ ftp_deinit(void)
 PTEXTBUF
 get_list_of_matching_ftp_cmds(CSTRING search_var)
 {
-	PTEXTBUF	matches = textBuf_new();
+	PTEXTBUF	matches = textbuf_new();
 	const size_t	varlen = strlen(search_var);
 
 	for (auto cmd : ftp_cmds) {
 		if (!strncmp(search_var, cmd, varlen))
-			textBuf_emplace_back(__func__, matches, cmd, 0);
+			textbuf_emplace_back(__func__, matches, cmd, 0);
 	}
 
-	if (textBuf_size(matches) == 0) {
-		textBuf_destroy(matches);
+	if (textbuf_size(matches) == 0) {
+		textbuf_destroy(matches);
 		return nullptr;
 	}
 

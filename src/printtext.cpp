@@ -1701,7 +1701,7 @@ void
 vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 {
 	STRING			 fmt_copy;
-	const int		 tbszp1 = textBuf_size(ctx->window->buf) + 1;
+	const int		 tbszp1 = textbuf_size(ctx->window->buf) + 1;
 	struct integer_context	 intctx("textbuffer_size_absolute", 350, 4700,
 				     1000);
 	struct message_components pout;
@@ -1714,9 +1714,9 @@ vprinttext(PPRINTTEXT_CONTEXT ctx, CSTRING fmt, va_list ap)
 	free(fmt_copy);
 
 	if (tbszp1 > config_integer(&intctx)) /* Buffer full... */
-		textBuf_pop_head(__func__, ctx->window->buf);
+		textbuf_pop_head(__func__, ctx->window->buf);
 
-	textBuf_emplace_back(__func__, ctx->window->buf, pout.text,
+	textbuf_emplace_back(__func__, ctx->window->buf, pout.text,
 	    pout.indent);
 
 	const bool shouldOutData = !(ctx->window->scroll_mode);

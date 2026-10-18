@@ -239,16 +239,16 @@ cmd_znc(CSTRING data)
 PTEXTBUF
 get_list_of_matching_znc_commands(CSTRING search_var)
 {
-	PTEXTBUF	matches = textBuf_new();
+	PTEXTBUF	matches = textbuf_new();
 	const size_t	varlen = strlen(search_var);
 
 	for (auto cmd : znc_commands) {
 		if (!strncmp(search_var, cmd, varlen))
-			textBuf_emplace_back(__func__, matches, cmd, 0);
+			textbuf_emplace_back(__func__, matches, cmd, 0);
 	}
 
-	if (textBuf_size(matches) == 0) {
-		textBuf_destroy(matches);
+	if (textbuf_size(matches) == 0) {
+		textbuf_destroy(matches);
 		return nullptr;
 	}
 

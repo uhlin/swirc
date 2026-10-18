@@ -11,7 +11,7 @@ static int
 check_args(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text)
 {
 	if (buf == NULL || text == NULL || (element == NULL &&
-	    textBuf_size(buf) != 0))
+	    textbuf_size(buf) != 0))
 		return -1;
 	return 0;
 }
@@ -38,7 +38,7 @@ init_buf(PTEXTBUF buf, PTEXTBUF_ELMT new_element)
 }
 
 PTEXTBUF
-textBuf_new(void)
+textbuf_new(void)
 {
 	PTEXTBUF	buf = xcalloc(sizeof *buf, 1);
 
@@ -57,7 +57,7 @@ textBuf_new(void)
  * @return The element (or NULL if not found)
  */
 PTEXTBUF_ELMT
-textBuf_get_element_by_pos(const TEXTBUF *buf, int pos)
+textbuf_get_element_by_pos(const TEXTBUF *buf, int pos)
 {
 	PTEXTBUF_ELMT element;
 	int i;
@@ -65,7 +65,7 @@ textBuf_get_element_by_pos(const TEXTBUF *buf, int pos)
 	if (buf == NULL || pos < 0)
 		return NULL;
 
-	element = textBuf_head(buf);
+	element = textbuf_head(buf);
 	i = 0;
 
 	while (element != NULL) {
@@ -79,7 +79,7 @@ textBuf_get_element_by_pos(const TEXTBUF *buf, int pos)
 }
 
 errno_t
-textBuf_ins_next(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
+textbuf_ins_next(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
     int indent)
 {
 	PTEXTBUF_ELMT	new_element;
@@ -89,7 +89,7 @@ textBuf_ins_next(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
 
 	new_element = get_new_elmt(text, indent);
 
-	if (textBuf_size(buf) == 0) {
+	if (textbuf_size(buf) == 0) {
 		init_buf(buf, new_element);
 	} else {
 		sw_assert(element != NULL);
@@ -110,7 +110,7 @@ textBuf_ins_next(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
 }
 
 errno_t
-textBuf_ins_prev(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
+textbuf_ins_prev(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
     int indent)
 {
 	PTEXTBUF_ELMT	new_element;
@@ -120,7 +120,7 @@ textBuf_ins_prev(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
 
 	new_element = get_new_elmt(text, indent);
 
-	if (textBuf_size(buf) == 0) {
+	if (textbuf_size(buf) == 0) {
 		init_buf(buf, new_element);
 	} else {
 		sw_assert(element != NULL);
@@ -141,9 +141,9 @@ textBuf_ins_prev(PTEXTBUF buf, PTEXTBUF_ELMT element, const char *text,
 }
 
 errno_t
-textBuf_remove(PTEXTBUF buf, PTEXTBUF_ELMT element)
+textbuf_remove(PTEXTBUF buf, PTEXTBUF_ELMT element)
 {
-	if (buf == NULL || element == NULL || textBuf_size(buf) == 0)
+	if (buf == NULL || element == NULL || textbuf_size(buf) == 0)
 		return EINVAL;
 
 	if (element == buf->head) {
@@ -170,32 +170,32 @@ textBuf_remove(PTEXTBUF buf, PTEXTBUF_ELMT element)
 }
 
 void
-textBuf_destroy(PTEXTBUF buf)
+textbuf_destroy(PTEXTBUF buf)
 {
-	while (textBuf_size(buf) > 0) {
-		if ((errno = textBuf_remove(buf, textBuf_tail(buf))) != 0)
-			err_sys("%s: textBuf_remove", __func__);
+	while (textbuf_size(buf) > 0) {
+		if ((errno = textbuf_remove(buf, textbuf_tail(buf))) != 0)
+			err_sys("%s: textbuf_remove", __func__);
 	}
 
 	free(buf);
 }
 
 void
-textBuf_emplace_back(const char *fn, PTEXTBUF buf, const char *text, int indent)
+textbuf_emplace_back(const char *fn, PTEXTBUF buf, const char *text, int indent)
 {
-	if (textBuf_size(buf) != 0) {
-		if ((errno = textBuf_ins_next(buf, textBuf_tail(buf), text,
+	if (textbuf_size(buf) != 0) {
+		if ((errno = textbuf_ins_next(buf, textbuf_tail(buf), text,
 		    indent)) != 0)
-			err_sys("%s: textBuf_ins_next", fn);
+			err_sys("%s: textbuf_ins_next", fn);
 	} else {
-		if ((errno = textBuf_ins_next(buf, NULL, text, indent)) != 0)
-			err_sys("%s: textBuf_ins_next", fn);
+		if ((errno = textbuf_ins_next(buf, NULL, text, indent)) != 0)
+			err_sys("%s: textbuf_ins_next", fn);
 	}
 }
 
 void
-textBuf_pop_head(const char *fn, PTEXTBUF buf)
+textbuf_pop_head(const char *fn, PTEXTBUF buf)
 {
-	if ((errno = textBuf_remove(buf, textBuf_head(buf))) != 0)
-		err_sys("%s: textBuf_remove", fn);
+	if ((errno = textbuf_remove(buf, textbuf_head(buf))) != 0)
+		err_sys("%s: textbuf_remove", fn);
 }

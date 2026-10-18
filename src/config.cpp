@@ -453,18 +453,18 @@ write_config_header(FILE *fp)
 PTEXTBUF
 get_list_of_matching_settings(const char *search_var)
 {
-	PTEXTBUF	matches = textBuf_new();
+	PTEXTBUF	matches = textbuf_new();
 	const size_t	varlen = strlen(search_var);
 
 	FOREACH_CDV() {
 		if (!strncmp(search_var, cdv_p->setting_name, varlen)) {
-			textBuf_emplace_back(__func__, matches,
+			textbuf_emplace_back(__func__, matches,
 			    cdv_p->setting_name, 0);
 		}
 	}
 
-	if (textBuf_size(matches) == 0) {
-		textBuf_destroy(matches);
+	if (textbuf_size(matches) == 0) {
+		textbuf_destroy(matches);
 		return nullptr;
 	}
 

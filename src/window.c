@@ -165,7 +165,7 @@ first_page_up(PIRC_WINDOW window)
 	int		 i = 0;
 	int		 rep_count;
 
-	element = textBuf_tail(window->buf);
+	element = textbuf_tail(window->buf);
 
 	if ((tmp = dupwin(panel_window(window->pan))) == NULL)
 		err_exit(ENOMEM, "%s: dupwin", __func__);
@@ -202,7 +202,7 @@ get_dynamic_scroll_amount(PIRC_WINDOW window, plus_minus_t pm)
 	goal -= overlap;
 	pos = int_diff(window->saved_size, window->scroll_count);
 
-	if ((element = textBuf_get_element_by_pos(window->buf, pos)) == NULL) {
+	if ((element = textbuf_get_element_by_pos(window->buf, pos)) == NULL) {
 		debug("error getting element by position");
 		return g_scroll_amount;
 	} else if ((tmp = dupwin(panel_window(window->pan))) == NULL) {
@@ -251,7 +251,7 @@ hInstall(const struct hInstall_context *ctx)
 		*n_ent = NULL;
 	}
 
-	entry->buf                  = textBuf_new();
+	entry->buf                  = textbuf_new();
 	entry->is_logwin            = false;
 	entry->logging              = false;
 	entry->received_chancreated = false;
@@ -304,7 +304,7 @@ hUndef(PIRC_WINDOW entry)
 
 	term_remove_panel(entry->pan);
 	event_names_htbl_remove_all(entry);
-	textBuf_destroy(entry->buf);
+	textbuf_destroy(entry->buf);
 
 	free(entry->label);
 	free(entry->title);
@@ -369,7 +369,7 @@ window_redraw(PIRC_WINDOW window, const int rows, const int pos,
 	int i = 0;
 	int rep_count = 0;
 
-	if ((element = textBuf_get_element_by_pos(window->buf,
+	if ((element = textbuf_get_element_by_pos(window->buf,
 	    pos < 0 ? 0 : pos)) == NULL)
 		return; /* Nothing stored in the buffer */
 	if (werase(pwin) != ERR)
@@ -473,7 +473,7 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
 			window->scroll_count = 0;
 			window->scroll_mode = false;
 			window_redraw(window, HEIGHT,
-			    textBuf_size(window->buf) - HEIGHT, false);
+			    textbuf_size(window->buf) - HEIGHT, false);
 		} else {
 			window_redraw(window, HEIGHT,
 			    (window->saved_size - window->scroll_count), true);
@@ -481,7 +481,7 @@ window_recreate(PIRC_WINDOW window, int rows, int cols)
 		return;
 	}
 
-	window_redraw(window, HEIGHT, textBuf_size(window->buf) - HEIGHT,
+	window_redraw(window, HEIGHT, textbuf_size(window->buf) - HEIGHT,
 	    false);
 }
 
@@ -650,7 +650,7 @@ window_by_refnum(int refnum)
 PTEXTBUF
 get_list_of_matching_channels(CSTRING search_var)
 {
-	PTEXTBUF	matches = textBuf_new();
+	PTEXTBUF	matches = textbuf_new();
 	const size_t	varlen = strlen(search_var);
 
 	mutex_lock(&g_win_htbl_mtx);
@@ -658,15 +658,15 @@ get_list_of_matching_channels(CSTRING search_var)
 		FOREACH_WINDOW_IN_ENTRY() {
 			if (is_irc_channel(window->label) &&
 			    !strncasecmp(search_var, window->label, varlen)) {
-				textBuf_emplace_back(__func__, matches,
+				textbuf_emplace_back(__func__, matches,
 				    window->label, 0);
 			}
 		}
 	}
 	mutex_unlock(&g_win_htbl_mtx);
 
-	if (textBuf_size(matches) == 0) {
-		textBuf_destroy(matches);
+	if (textbuf_size(matches) == 0) {
+		textbuf_destroy(matches);
 		return NULL;
 	}
 
@@ -676,7 +676,7 @@ get_list_of_matching_channels(CSTRING search_var)
 PTEXTBUF
 get_list_of_matching_queries(CSTRING search_var)
 {
-	PTEXTBUF	matches = textBuf_new();
+	PTEXTBUF	matches = textbuf_new();
 	const size_t	varlen = strlen(search_var);
 
 	mutex_lock(&g_win_htbl_mtx);
@@ -685,15 +685,15 @@ get_list_of_matching_queries(CSTRING search_var)
 			if (!is_irc_channel(window->label) &&
 			    window != g_status_window &&
 			    !strncasecmp(search_var, window->label, varlen)) {
-				textBuf_emplace_back(__func__, matches,
+				textbuf_emplace_back(__func__, matches,
 				    window->label, 0);
 			}
 		}
 	}
 	mutex_unlock(&g_win_htbl_mtx);
 
-	if (textBuf_size(matches) == 0) {
-		textBuf_destroy(matches);
+	if (textbuf_size(matches) == 0) {
+		textbuf_destroy(matches);
 		return NULL;
 	}
 
@@ -936,7 +936,7 @@ window_scroll_down(PIRC_WINDOW window, const int amount)
 		window->scroll_count = 0;
 		window->scroll_mode = false;
 		window_redraw(window, HEIGHT,
-		    textBuf_size(window->buf) - HEIGHT, false);
+		    textbuf_size(window->buf) - HEIGHT, false);
 		return;
 	}
 
@@ -954,13 +954,13 @@ window_scroll_up(PIRC_WINDOW window, const int amount)
 	const int MIN_SIZE = LINES - 3;
 
 	if (window == NULL || MIN_SIZE < 0 ||
-	    !(textBuf_size(window->buf) > MIN_SIZE) || IS_AT_TOP) {
+	    !(textbuf_size(window->buf) > MIN_SIZE) || IS_AT_TOP) {
 		term_beep();
 		return;
 	}
 
 	if (!window->scroll_mode) {
-		window->saved_size = textBuf_size(window->buf);
+		window->saved_size = textbuf_size(window->buf);
 		window->scroll_mode = true;
 	}
 

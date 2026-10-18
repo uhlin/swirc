@@ -367,7 +367,7 @@ get_list_of_matching_channel_users(CSTRING chan, CSTRING search_var)
 	if ((window = window_by_label(chan)) == nullptr)
 		return nullptr;
 
-	matches = textBuf_new();
+	matches = textbuf_new();
 	varlen = strlen(search_var);
 
 	for (size_t n = 0; n < ARRAY_SIZE(window->names_hash); n++) {
@@ -375,14 +375,14 @@ get_list_of_matching_channel_users(CSTRING chan, CSTRING search_var)
 		    names != nullptr;
 		    names = names->next) {
 			if (!strncmp(search_var, names->nick, varlen)) {
-				textBuf_emplace_back(__func__, matches,
+				textbuf_emplace_back(__func__, matches,
 				    names->nick, 0);
 			}
 		}
 	}
 
-	if (textBuf_size(matches) == 0) {
-		textBuf_destroy(matches);
+	if (textbuf_size(matches) == 0) {
+		textbuf_destroy(matches);
 		return nullptr;
 	}
 

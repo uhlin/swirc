@@ -204,7 +204,7 @@ static void	set_array(struct cmds_tag *, struct cmds_tag **, const int,
 static void
 add_to_history(CSTRING string)
 {
-	const int tbszp1 = textBuf_size(history) + 1;
+	const int tbszp1 = textbuf_size(history) + 1;
 	struct integer_context intctx = {
 		.setting_name = "cmd_hist_size",
 		.lo_limit = 0,
@@ -224,10 +224,10 @@ add_to_history(CSTRING string)
 		 * Buffer full. Remove head...
 		 */
 
-		textBuf_pop_head(__func__, history);
+		textbuf_pop_head(__func__, history);
 	}
 
-	textBuf_emplace_back(__func__, history, string, 0);
+	textbuf_emplace_back(__func__, history, string, 0);
 }
 
 static void
@@ -416,9 +416,9 @@ history_next(void)
 	size_t bytes_convert;
 	static const size_t size = ARRAY_SIZE(g_push_back_buf);
 
-	if (textBuf_size(history) == 0 || element == NULL)
+	if (textbuf_size(history) == 0 || element == NULL)
 		return;
-	else if (element != textBuf_tail(history))
+	else if (element != textbuf_tail(history))
 		element = element->next;
 
 	bold_fix(element->text);
@@ -436,7 +436,7 @@ history_prev(void)
 	size_t bytes_convert;
 	static const size_t size = ARRAY_SIZE(g_push_back_buf);
 
-	if (textBuf_size(history) == 0 || element == NULL)
+	if (textbuf_size(history) == 0 || element == NULL)
 		return;
 
 	bold_fix(element->text);
@@ -446,7 +446,7 @@ history_prev(void)
 		(void) wmemset(g_push_back_buf, 0L, size);
 	else if (bytes_convert >= (size - 1))
 		g_push_back_buf[size - 1] = 0L;
-	if (element != textBuf_head(history))
+	if (element != textbuf_head(history))
 		element = element->prev;
 }
 
@@ -628,16 +628,16 @@ swirc_greeting(void)
 PTEXTBUF
 get_list_of_matching_commands(CSTRING search_var)
 {
-	PTEXTBUF	matches = textBuf_new();
+	PTEXTBUF	matches = textbuf_new();
 	const size_t	varlen = strlen(search_var);
 
 	FOREACH_COMMAND() {
 		if (!strncmp(search_var, sp->cmd, varlen))
-			textBuf_emplace_back(__func__, matches, sp->cmd, 0);
+			textbuf_emplace_back(__func__, matches, sp->cmd, 0);
 	}
 
-	if (textBuf_size(matches) == 0) {
-		textBuf_destroy(matches);
+	if (textbuf_size(matches) == 0) {
+		textbuf_destroy(matches);
 		return NULL;
 	}
 
@@ -719,7 +719,7 @@ enter_io_loop(void)
 		}
 	}
 
-	history = textBuf_new();
+	history = textbuf_new();
 
 	do {
 		STRING			 prompt, line;
@@ -774,10 +774,10 @@ enter_io_loop(void)
 		free(line);
 		line = NULL;
 
-		element = textBuf_tail(history);
+		element = textbuf_tail(history);
 	} while (g_io_loop);
 
-	textBuf_destroy(history);
+	textbuf_destroy(history);
 
 	while (atomic_load_bool(&g_irc_listening))
 		(void) napms(1);
