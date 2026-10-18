@@ -201,6 +201,7 @@ namespace ftp
 	CSTRING		get_upload_dir(void);
 	void		login(void);
 	void		ls_dir(void);
+	bool		new_ssl_ctx(SSL_CTX *&);
 	bool		passive(void);
 	bool		secure(void);
 	int		send_bytes(SOCKET, const void *, const int);

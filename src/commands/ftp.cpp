@@ -53,6 +53,7 @@
 #include "../strHand.h"
 #include "../strdup_printf.h"
 #include "../theme.h"
+#include "../tls-server.h"
 
 #include "connect.h"
 #include "dcc.h" /* list_dir() */
@@ -1601,6 +1602,129 @@ create_data_conn(CSTRING text)
 	} catch (...) {
 		printtext_print("err", "%s: %s", __func__, "unknown error");
 	}
+}
+
+static int
+verify_callback(int ok, X509_STORE_CTX *ctx)
+{
+	if (!ok) {
+		PRINTTEXT_CONTEXT ptext_ctx;
+		X509 *cert = X509_STORE_CTX_get_current_cert(ctx);
+		char issuer[256]  = { '\0' };
+		char subject[256] = { '\0' };
+		const int depth = X509_STORE_CTX_get_error_depth(ctx);
+		const int err   = X509_STORE_CTX_get_error(ctx);
+
+		if (err == X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT ||
+		    err == X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN)
+			return 1;
+
+		(void) X509_NAME_oneline(X509_get_issuer_name(cert), issuer,
+		    sizeof issuer);
+		(void) X509_NAME_oneline(X509_get_subject_name(cert), subject,
+		    sizeof subject);
+
+		printtext_context_init(&ptext_ctx, g_status_window,
+		    TYPE_SPEC1_WARN, true);
+
+		printtext(&ptext_ctx, "Error with certificate at depth: %d",
+		    depth);
+		printtext(&ptext_ctx, "  issuer  = %s", issuer);
+		printtext(&ptext_ctx, "  subject = %s", subject);
+		printtext(&ptext_ctx, "Reason: %s",
+		    X509_verify_cert_error_string(err));
+	}
+
+	return ok;
+}
+
+static void
+set_ciphers_doit(SSL_CTX *ctx, const char *list, bool &ok)
+{
+	if (!SSL_CTX_set_cipher_list(ctx, list))
+		ok = false;
+}
+
+static void
+set_ciphers(SSL_CTX *ctx)
+{
+	bool		assignment_ok = true;
+	immutable_cp_t	cs = Config("ftp_cipher_suite");
+
+	if (strings_match(cs, "secure") || strings_match(cs, "SECURE"))
+		set_ciphers_doit(ctx, g_suite_secure, assignment_ok);
+	else if (strings_match(cs, "compat") || strings_match(cs, "COMPAT"))
+		set_ciphers_doit(ctx, g_suite_compat, assignment_ok);
+	else if (strings_match(cs, "legacy") || strings_match(cs, "LEGACY"))
+		set_ciphers_doit(ctx, g_suite_legacy, assignment_ok);
+	else if (strings_match(cs, "all") || strings_match(cs, "ALL"))
+		set_ciphers_doit(ctx, g_suite_all, assignment_ok);
+	else
+		set_ciphers_doit(ctx, g_suite_compat, assignment_ok);
+
+	if (!assignment_ok)
+		throw std::runtime_error("no valid ciphers");
+}
+
+bool
+ftp::new_ssl_ctx(SSL_CTX *&p_ssl_ctx)
+{
+	if (p_ssl_ctx != nullptr)
+		return true;
+
+	try {
+		if ((p_ssl_ctx = SSL_CTX_new(TLS_client_method())) ==
+		    nullptr)
+			throw std::runtime_error("out of memory");
+
+		std::string ca_file(g_home_dir);
+		std::string certfile(g_home_dir);
+
+		(void) ca_file.append(SLASH).append(PEM_FILE);
+		(void) certfile.append(SLASH).append(CLIENT_PEM);
+
+		if (is_regular_file(ca_file.c_str()) &&
+		    !SSL_CTX_load_verify_locations(p_ssl_ctx, ca_file.c_str(),
+		    nullptr))
+			throw std::runtime_error("load verify locations error");
+		if (!SSL_CTX_set_default_verify_paths(p_ssl_ctx))
+			throw std::runtime_error("set default verify paths "
+			    "error");
+		if (is_regular_file(certfile.c_str())) {
+			if (SSL_CTX_use_certificate_chain_file(p_ssl_ctx,
+			    certfile.c_str()) != 1) {
+				throw std::runtime_error("use certificate "
+				    "chain file error");
+			}
+			if (SSL_CTX_use_PrivateKey_file(p_ssl_ctx,
+			    certfile.c_str(), SSL_FILETYPE_PEM) != 1) {
+				throw std::runtime_error("use private key file "
+				    "error");
+			}
+		}
+
+		SSL_CTX_set_verify(p_ssl_ctx, SSL_VERIFY_PEER,
+		    verify_callback);
+		SSL_CTX_set_verify_depth(p_ssl_ctx, 4);
+
+		if (!SSL_CTX_set_min_proto_version(p_ssl_ctx,
+		    TLS1_2_VERSION)) {
+			throw std::runtime_error("error setting minimum "
+			    "supported protocol version");
+		}
+
+		set_ciphers(p_ssl_ctx);
+	} catch (const std::runtime_error &e) {
+		if (p_ssl_ctx != nullptr) {
+			SSL_CTX_free(p_ssl_ctx);
+			p_ssl_ctx = nullptr;
+		}
+
+		printtext_print("warn", "%s: %s", __func__, e.what());
+		return false;
+	}
+
+	return true;
 }
 
 bool
