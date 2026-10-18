@@ -112,6 +112,8 @@ static void print_one_rep(const int, CSTRING);
 
 ftp_ctl_conn::ftp_ctl_conn()
     : sock(INVALID_SOCKET)
+    , ssl(nullptr)
+    , ssl_ctx(nullptr)
     , state(CONCAT_BUFFER_IS_EMPTY)
     , res(nullptr)
 {
