@@ -36,6 +36,8 @@
 
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <openssl/err.h>
+#include <openssl/ssl.h>
 
 #include <unistd.h>
 #elif defined(WIN32)
@@ -142,6 +144,8 @@ public:
 
 private:
 	SOCKET				 sock;
+	SSL				*ssl;
+	SSL_CTX				*ssl_ctx;
 	char				 buf[2048];
 	enum message_concat_state	 state;
 	std::string			 message_concat;

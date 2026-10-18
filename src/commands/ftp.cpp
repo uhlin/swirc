@@ -147,9 +147,11 @@ ftp_ctl_conn::operator=(const ftp_ctl_conn &obj)
 	if (!obj.message_concat.empty())
 		this->message_concat.assign(obj.message_concat);
 
-	this->sock  = obj.sock;
-	this->state = obj.state;
-	this->res   = nullptr;
+	this->sock    = obj.sock;
+	this->ssl     = nullptr;
+	this->ssl_ctx = nullptr;
+	this->state   = obj.state;
+	this->res     = nullptr;
 
 	memmove(this->buf, obj.buf, sizeof(this->buf));
 
@@ -161,6 +163,8 @@ ftp_ctl_conn::operator=(const ftp_ctl_conn &obj)
  */
 ftp_ctl_conn::ftp_ctl_conn(const ftp_ctl_conn &obj)
     : sock(INVALID_SOCKET)
+    , ssl(nullptr)
+    , ssl_ctx(nullptr)
     , state(CONCAT_BUFFER_IS_EMPTY)
     , res(nullptr)
 {
@@ -171,9 +175,11 @@ ftp_ctl_conn::ftp_ctl_conn(const ftp_ctl_conn &obj)
 	if (!obj.message_concat.empty())
 		this->message_concat.assign(obj.message_concat);
 
-	this->sock  = obj.sock;
-	this->state = obj.state;
-	this->res   = nullptr;
+	this->sock    = obj.sock;
+	this->ssl     = nullptr;
+	this->ssl_ctx = nullptr;
+	this->state   = obj.state;
+	this->res     = nullptr;
 
 	memmove(this->buf, obj.buf, sizeof(this->buf));
 }
@@ -187,6 +193,10 @@ ftp_ctl_conn::operator=(ftp_ctl_conn &&obj) noexcept
 	if (&obj == this)
 		return *this;
 
+	if (this->ssl)
+		SSL_free(this->ssl);
+	if (this->ssl_ctx)
+		SSL_CTX_free(this->ssl_ctx);
 	if (this->res)
 		freeaddrinfo(this->res);
 
@@ -201,9 +211,11 @@ ftp_ctl_conn::operator=(ftp_ctl_conn &&obj) noexcept
 		err_quit("%s: unexpected exception thrown", __func__);
 	}
 
-	this->sock  = obj.sock;
-	this->state = obj.state;
-	this->res   = obj.res;
+	this->sock    = obj.sock;
+	this->ssl     = obj.ssl;
+	this->ssl_ctx = obj.ssl_ctx;
+	this->state   = obj.state;
+	this->res     = obj.res;
 
 	memmove(this->buf, obj.buf, sizeof(this->buf));
 
@@ -216,9 +228,11 @@ ftp_ctl_conn::operator=(ftp_ctl_conn &&obj) noexcept
 		err_quit("%s: unexpected exception thrown", __func__);
 	}
 
-	obj.sock  = INVALID_SOCKET;
-	obj.state = CONCAT_BUFFER_IS_EMPTY;
-	obj.res	  = nullptr;
+	obj.sock    = INVALID_SOCKET;
+	obj.ssl	    = nullptr;
+	obj.ssl_ctx = nullptr;
+	obj.state   = CONCAT_BUFFER_IS_EMPTY;
+	obj.res	    = nullptr;
 
 	BZERO(obj.buf, sizeof(obj.buf));
 
@@ -230,6 +244,8 @@ ftp_ctl_conn::operator=(ftp_ctl_conn &&obj) noexcept
  */
 ftp_ctl_conn::ftp_ctl_conn(ftp_ctl_conn &&obj) noexcept
     : sock(obj.sock)
+    , ssl(obj.ssl)
+    , ssl_ctx(obj.ssl_ctx)
     , state(obj.state)
     , res(obj.res)
 {
@@ -255,9 +271,11 @@ ftp_ctl_conn::ftp_ctl_conn(ftp_ctl_conn &&obj) noexcept
 		err_quit("%s: unexpected exception thrown", __func__);
 	}
 
-	obj.sock  = INVALID_SOCKET;
-	obj.state = CONCAT_BUFFER_IS_EMPTY;
-	obj.res	  = nullptr;
+	obj.sock    = INVALID_SOCKET;
+	obj.ssl	    = nullptr;
+	obj.ssl_ctx = nullptr;
+	obj.state   = CONCAT_BUFFER_IS_EMPTY;
+	obj.res	    = nullptr;
 
 	BZERO(obj.buf, sizeof(obj.buf));
 }
