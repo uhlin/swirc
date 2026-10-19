@@ -362,9 +362,8 @@ ftp_ctl_conn::login(void)
 		this->read_and_print(1);
 
 		ftp::set_timeout(sock, SO_SNDTIMEO, 4);
-		n_sent = ftp::send_printf(this->sock, "USER %s\r\nPASS %s\r\n",
-		    array[0],
-		    array[1]);
+		n_sent = ftp::send_printf(this->sock, this->ssl,
+		    "USER %s\r\nPASS %s\r\n", array[0], array[1]);
 		if (n_sent <= 0)
 			throw std::runtime_error(_("Cannot send"));
 
@@ -1253,7 +1252,9 @@ subcmd_ok(CSTRING cmd)
 static void
 perform_ftp_cmd(CSTRING cmd, CSTRING arg)
 {
-	int n_sent;
+	SOCKET	 sock;
+	SSL	*ssl;
+	int	 n_sent;
 
 	if (arg == nullptr || strings_match(arg, "")) {
 		printtext_print("err", "%s", _("Insufficient arguments"));
@@ -1266,8 +1267,10 @@ perform_ftp_cmd(CSTRING cmd, CSTRING arg)
 		return;
 	}
 
-	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(), "%s %s\r\n",
-	    cmd, arg);
+	sock   = ftp::ctl_conn->get_sock();
+	ssl    = ftp::ctl_conn->get_ssl();
+	n_sent = ftp::send_printf(sock, ssl, "%s %s\r\n", cmd, arg);
+
 	if (n_sent <= 0) {
 		printtext_print("err", "%s", _("Cannot send"));
 		return;
@@ -1279,7 +1282,9 @@ perform_ftp_cmd(CSTRING cmd, CSTRING arg)
 static void
 perform_simple_ftp_cmd(CSTRING cmd)
 {
-	int n_sent;
+	SOCKET	 sock;
+	SSL	*ssl;
+	int	 n_sent;
 
 	if (ftp::ctl_conn == nullptr)
 		return;
@@ -1288,7 +1293,10 @@ perform_simple_ftp_cmd(CSTRING cmd)
 		return;
 	}
 
-	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(), "%s", cmd);
+	sock   = ftp::ctl_conn->get_sock();
+	ssl    = ftp::ctl_conn->get_ssl();
+	n_sent = ftp::send_printf(sock, ssl, "%s", cmd);
+
 	if (n_sent <= 0)
 		return;
 
@@ -1310,14 +1318,19 @@ subcmd_del(CSTRING pathname)
 static void
 subcmd_exit(void)
 {
+	SOCKET	 sock;
+	SSL	*ssl;
+
 	if (ftp::ctl_conn == nullptr)
 		return;
 
-	ftp::set_timeout(ftp::ctl_conn->get_sock(), SO_SNDTIMEO, 1);
+	sock = ftp::ctl_conn->get_sock();
+	ssl  = ftp::ctl_conn->get_ssl();
+
+	ftp::set_timeout(sock, SO_SNDTIMEO, 1);
 
 	if (ftp::data_conn) {
-		(void) ftp::send_printf(ftp::ctl_conn->get_sock(),
-		    "ABOR\r\nQUIT\r\n");
+		(void) ftp::send_printf(sock, ssl, "ABOR\r\nQUIT\r\n");
 
 		ftp::shutdown_sock(ftp::data_conn->get_sock());
 
@@ -1328,7 +1341,7 @@ subcmd_exit(void)
 			napms(1);
 		delete_data_conn();
 	} else {
-		(void) ftp::send_printf(ftp::ctl_conn->get_sock(), "QUIT\r\n");
+		(void) ftp::send_printf(sock, ssl, "QUIT\r\n");
 	}
 
 	ftp::ctl_conn->read_and_print(1);
@@ -1340,7 +1353,9 @@ subcmd_exit(void)
 static void
 subcmd_get(CSTRING path)
 {
-	int n_sent;
+	SOCKET	 sock;
+	SSL	*ssl;
+	int	 n_sent;
 
 	if (path == nullptr || strings_match(path, "")) {
 		printtext_print("err", "%s", _("Insufficient arguments"));
@@ -1359,8 +1374,11 @@ subcmd_get(CSTRING path)
 	    SLASH, path);
 	ftp::data_conn->path = sw_strdup(path);
 
-	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(),
+	sock   = ftp::ctl_conn->get_sock();
+	ssl    = ftp::ctl_conn->get_ssl();
+	n_sent = ftp::send_printf(sock, ssl,
 	    "STAT %s\r\nTYPE L 8\r\nRETR %s\r\n", path, path);
+
 	if (n_sent <= 0) {
 		delete_data_conn();
 		return;
@@ -1425,8 +1443,10 @@ subcmd_rmdir(CSTRING path)
 static void
 subcmd_send(CSTRING path)
 {
-	int		n_sent;
-	struct stat	sb = { 0 };
+	SOCKET		 sock;
+	SSL		*ssl;
+	int		 n_sent;
+	struct stat	 sb = { 0 };
 
 	if (path == nullptr || strings_match(path, "")) {
 		printtext_print("err", "%s", _("Insufficient arguments"));
@@ -1469,8 +1489,10 @@ subcmd_send(CSTRING path)
 		ftp::data_conn->filesz = static_cast<intmax_t>(sb.st_size);
 	}
 
-	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(),
-	    "TYPE L 8\r\nSTOR %s\r\n", path);
+	sock   = ftp::ctl_conn->get_sock();
+	ssl    = ftp::ctl_conn->get_ssl();
+	n_sent = ftp::send_printf(sock, ssl, "TYPE L 8\r\nSTOR %s\r\n", path);
+
 	if (n_sent <= 0) {
 		delete_data_conn();
 		return;
@@ -1759,7 +1781,8 @@ ftp::passive(void)
 		printtext_print("err", "%s: %s", __func__,
 		    _("Invalid network socket"));
 		return false;
-	} else if (ftp::send_printf(sock, "PASV\r\n") <= 0) {
+	} else if (ftp::send_printf(sock, ftp::ctl_conn->get_ssl(),
+	    "PASV\r\n") <= 0) {
 		printtext_print("err", "%s: %s", __func__,
 		    _("Cannot send"));
 		return false;
@@ -1822,7 +1845,9 @@ ftp::login(void)
 void
 ftp::ls_dir(void)
 {
-	int n_sent;
+	SOCKET	 sock;
+	SSL	*ssl;
+	int	 n_sent;
 
 	if (!ftp::passive())
 		return;
@@ -1831,7 +1856,10 @@ ftp::ls_dir(void)
 		return;
 	}
 
-	n_sent = ftp::send_printf(ftp::ctl_conn->get_sock(), "LIST\r\n");
+	sock   = ftp::ctl_conn->get_sock();
+	ssl    = ftp::ctl_conn->get_ssl();
+	n_sent = ftp::send_printf(sock, ssl, "LIST\r\n");
+
 	if (n_sent <= 0) {
 		delete_data_conn();
 		return;
@@ -1874,7 +1902,7 @@ ftp::send_file(void)
 }
 
 int
-ftp::send_printf(SOCKET sock, CSTRING fmt, ...) // NOLINT
+ftp::send_printf(SOCKET sock, SSL *ssl, CSTRING fmt, ...) // NOLINT
 {
 	char	*buffer;
 	int	 n_sent;
