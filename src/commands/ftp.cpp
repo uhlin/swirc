@@ -361,7 +361,7 @@ ftp_ctl_conn::login(void)
 
 		this->read_and_print(1);
 
-		ftp::set_timeout(sock, SO_SNDTIMEO, 4);
+		ftp::set_timeout(this->sock, SO_SNDTIMEO, 4);
 		n_sent = ftp::send_printf(this->sock, this->ssl,
 		    "USER %s\r\nPASS %s\r\n", array[0], array[1]);
 		if (n_sent <= 0)
