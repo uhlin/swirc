@@ -300,7 +300,7 @@ net_ssl_getobj(void)
 	return ssl;
 }
 
-static bool
+bool
 conn_is_closed(const SSL *obj)
 {
 	return ((SSL_get_shutdown(obj) & SSL_SENT_SHUTDOWN) ||

@@ -101,6 +101,7 @@ int	 net_ssl_begin(void);
 void	 net_ssl_end(void);
 int	 net_ssl_check_hostname(CSTRING, unsigned int);
 SSL	*net_ssl_getobj(void);
+bool	 conn_is_closed(const SSL *);
 int	 net_ssl_send(CSTRING, ...);
 int	 net_ssl_recv(struct network_recv_context *, STRING, int);
 void	 net_ssl_init(void);
