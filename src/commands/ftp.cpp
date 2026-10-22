@@ -110,6 +110,110 @@ static stringarray_t ftp_cmds = {
 static void delete_data_conn(void);
 static void print_one_rep(const int, CSTRING);
 
+static bool
+recv_and_check_plain(struct network_recv_context *p_ctx, char *p_buf,
+    size_t p_sz, CSTRING p_sep)
+{
+	int bytes_received;
+
+	BZERO(p_buf, p_sz);
+	bytes_received = net_recv_plain(p_ctx, p_buf, p_sz - 1);
+
+	if (bytes_received <= 0)
+		return false;
+	if (memchr(p_buf, 0, bytes_received) != nullptr)
+		destroy_null_bytes_exported(p_buf, bytes_received);
+	if (strpbrk(p_buf, p_sep) == nullptr)
+		return false;
+	return true;
+}
+
+static bool
+recv_and_check_tls(struct network_recv_context *p_ctx, char *p_buf,
+    size_t p_sz, CSTRING p_sep, SSL *p_ssl)
+{
+#ifdef UNIX
+#define SOCKET_ERROR -1
+#endif
+	char	*bufptr;
+	int	 buflen;
+	int	 bytes_received;
+
+	if (p_ssl == nullptr ||
+	    conn_is_closed(p_ssl) ||
+	    p_ctx->sock == INVALID_SOCKET)
+		return false;
+	else if (!SSL_pending(p_ssl)) {
+		const int	maxfdp1 = p_ctx->sock + 1;
+		fd_set		readset;
+		struct timeval	tv;
+
+		tv.tv_sec = p_ctx->sec;
+		tv.tv_usec = p_ctx->microsec;
+
+		FD_ZERO(&readset);
+		FD_SET(p_ctx->sock, &readset);
+
+		errno = 0;
+
+		if (select(maxfdp1, &readset, nullptr, nullptr, &tv) ==
+		    SOCKET_ERROR) {
+			if (errno != EINTR)
+				err_log(errno, "%s: select", __func__);
+			return false;
+		} else if (!FD_ISSET(p_ctx->sock, &readset))
+			return false;
+	}
+
+	BZERO(p_buf, p_sz);
+
+	bufptr = p_buf;
+	buflen = p_sz;
+	bytes_received = 0;
+
+	do {
+		int ret;
+
+		if (p_ssl == nullptr ||
+		    conn_is_closed(p_ssl) ||
+		    p_ctx->sock == INVALID_SOCKET)
+			return false;
+
+		ERR_clear_error();
+
+		if ((ret = SSL_read(p_ssl, bufptr, buflen)) > 0) {
+			if (BIO_flush(SSL_get_rbio(p_ssl)) != 1)
+				debug("%s: error flushing read bio", __func__);
+			bytes_received += ret;
+			bufptr += ret;
+			buflen -= ret;
+		} else {
+			switch (SSL_get_error(p_ssl, ret)) {
+			case SSL_ERROR_NONE:
+				sw_assert_not_reached();
+				break;
+			case SSL_ERROR_WANT_READ:
+			case SSL_ERROR_WANT_WRITE:
+				debug("%s: want read / want write", __func__);
+				break;
+			default:
+				return false;
+			}
+		}
+
+		UNUSED_VAR(bufptr);
+		UNUSED_VAR(buflen);
+	} while (false); /* buflen > 0 && SSL_pending(p_ssl) */
+
+	if (bytes_received <= 0)
+		return false;
+	if (memchr(p_buf, 0, bytes_received) != nullptr)
+		destroy_null_bytes_exported(p_buf, bytes_received);
+	if (strpbrk(p_buf, p_sep) == nullptr)
+		return false;
+	return true;
+}
+
 ftp_ctl_conn::ftp_ctl_conn()
     : sock(INVALID_SOCKET)
     , ssl(nullptr)
@@ -552,13 +656,22 @@ ftp_ctl_conn::read_reply(const int timeo)
 	CSTRING				token;
 	auto				tokstate = const_cast<STRING>("");
 	int				loop_run = 0;
+	network_recv_context		ctx(this->sock, 0, timeo, 345000);
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
 
 	if (this->sock == INVALID_SOCKET)
 		return 0;
 
-	RECV_AND_CHECK(345000);
+	if (ftp::secure()) {
+		if (!recv_and_check_tls(&ctx, this->buf, sizeof this->buf, sep,
+		    this->ssl))
+			return 0;
+	} else {
+		if (!recv_and_check_plain(&ctx, this->buf, sizeof this->buf,
+		    sep))
+			return 0;
+	}
 
 	this->reply_vec.clear();
 
