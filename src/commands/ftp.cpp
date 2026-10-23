@@ -715,6 +715,8 @@ ftp_data_conn::ftp_data_conn()
     , filesz(-1)
     , fileptr(nullptr)
     , sock(INVALID_SOCKET)
+    , ssl(nullptr)
+    , ssl_ctx(nullptr)
     , host_str(nullptr)
     , port_str(nullptr)
     , state(CONCAT_BUFFER_IS_EMPTY)
@@ -735,6 +737,8 @@ ftp_data_conn::ftp_data_conn(CSTRING text)
     , filesz(-1)
     , fileptr(nullptr)
     , sock(INVALID_SOCKET)
+    , ssl(nullptr)
+    , ssl_ctx(nullptr)
     , host_str(nullptr)
     , port_str(nullptr)
     , state(CONCAT_BUFFER_IS_EMPTY)
@@ -767,6 +771,15 @@ ftp_data_conn::~ftp_data_conn()
 	if (this->sock != INVALID_SOCKET) {
 		ftp_closesocket(this->sock);
 		this->sock = INVALID_SOCKET;
+	}
+
+	if (this->ssl != nullptr) {
+		SSL_free(this->ssl);
+		this->ssl = nullptr;
+	}
+	if (this->ssl_ctx != nullptr) {
+		SSL_CTX_free(this->ssl_ctx);
+		this->ssl_ctx = nullptr;
 	}
 
 	free(this->full_path);
@@ -810,6 +823,8 @@ ftp_data_conn::operator=(const ftp_data_conn &obj)
 
 	this->fileptr = nullptr;
 	this->sock    = obj.sock;
+	this->ssl     = nullptr;
+	this->ssl_ctx = nullptr;
 
 	if (obj.host_str)
 		this->host_str = sw_strdup(obj.host_str);
@@ -837,6 +852,8 @@ ftp_data_conn::ftp_data_conn(const ftp_data_conn &obj)
     , filesz(0)
     , fileptr(nullptr)
     , sock(INVALID_SOCKET)
+    , ssl(nullptr)
+    , ssl_ctx(nullptr)
     , host_str(nullptr)
     , port_str(nullptr)
     , state(CONCAT_BUFFER_IS_EMPTY)
@@ -857,6 +874,8 @@ ftp_data_conn::ftp_data_conn(const ftp_data_conn &obj)
 
 	this->fileptr = nullptr;
 	this->sock    = obj.sock;
+	this->ssl     = nullptr;
+	this->ssl_ctx = nullptr;
 
 	if (obj.host_str)
 		this->host_str = sw_strdup(obj.host_str);
@@ -889,6 +908,10 @@ ftp_data_conn::operator=(ftp_data_conn &&obj) noexcept
 		(void) fclose(this->fileptr);
 	if (this->sock != INVALID_SOCKET)
 		ftp_closesocket(this->sock);
+	if (this->ssl)
+		SSL_free(this->ssl);
+	if (this->ssl_ctx)
+		SSL_CTX_free(this->ssl_ctx);
 	if (this->res)
 		freeaddrinfo(this->res);
 
@@ -906,6 +929,8 @@ ftp_data_conn::operator=(ftp_data_conn &&obj) noexcept
 	this->filesz	= obj.filesz;
 	this->fileptr	= obj.fileptr;
 	this->sock	= obj.sock;
+	this->ssl       = obj.ssl;
+	this->ssl_ctx   = obj.ssl_ctx;
 	this->host_str	= obj.host_str;
 	this->port_str	= obj.port_str;
 
@@ -932,6 +957,8 @@ ftp_data_conn::operator=(ftp_data_conn &&obj) noexcept
 	obj.filesz    = 0;
 	obj.fileptr   = nullptr;
 	obj.sock      = INVALID_SOCKET;
+	obj.ssl       = nullptr;
+	obj.ssl_ctx   = nullptr;
 	obj.host_str  = nullptr;
 	obj.port_str  = nullptr;
 
@@ -956,6 +983,8 @@ ftp_data_conn::ftp_data_conn(ftp_data_conn &&obj) noexcept
     , filesz(obj.filesz)
     , fileptr(obj.fileptr)
     , sock(obj.sock)
+    , ssl(obj.ssl)
+    , ssl_ctx(obj.ssl_ctx)
     , host_str(obj.host_str)
     , port_str(obj.port_str)
     , state(obj.state)
@@ -990,6 +1019,8 @@ ftp_data_conn::ftp_data_conn(ftp_data_conn &&obj) noexcept
 	obj.filesz    = 0;
 	obj.fileptr   = nullptr;
 	obj.sock      = INVALID_SOCKET;
+	obj.ssl       = nullptr;
+	obj.ssl_ctx   = nullptr;
 	obj.host_str  = nullptr;
 	obj.port_str  = nullptr;
 

@@ -178,6 +178,8 @@ public:
 private:
 	FILE				*fileptr;
 	SOCKET				 sock;
+	SSL				*ssl;
+	SSL_CTX				*ssl_ctx;
 	STRING				 host_str, port_str;
 	char				 buf[4096];
 	enum message_concat_state	 state;
