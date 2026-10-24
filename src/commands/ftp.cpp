@@ -64,25 +64,6 @@
 #define stat _stat
 #endif
 
-#define RECV_AND_CHECK(p_microsec)\
-	do {\
-		int m_bytes_received;\
-		struct network_recv_context m_recv_ctx(this->sock, 0, timeo,\
-		    p_microsec);\
-\
-		BZERO(this->buf, sizeof this->buf);\
-		m_bytes_received = net_recv_plain(&m_recv_ctx, this->buf,\
-		    sizeof this->buf - 1);\
-\
-		if (m_bytes_received <= 0)\
-			return 0;\
-		if (memchr(this->buf, 0, m_bytes_received) != nullptr)\
-			destroy_null_bytes_exported(this->buf,\
-			    m_bytes_received);\
-		if (strpbrk(this->buf, sep) == nullptr)\
-			return 0;\
-	} while (false)
-
 ftp_ctl_conn	*ftp::ctl_conn = nullptr;
 ftp_data_conn	*ftp::data_conn = nullptr;
 
@@ -1216,13 +1197,22 @@ ftp_data_conn::list_fetch(const int timeo)
 	CSTRING				token;
 	auto				tokstate = const_cast<STRING>("");
 	int				loop_run = 0;
+	network_recv_context		ctx(this->sock, 0, timeo, 233000);
 	static chararray_t		sep = "\r\n";
 	std::string			last_token("");
 
 	if (this->sock == INVALID_SOCKET)
 		return 0;
 
-	RECV_AND_CHECK(233000);
+	if (ftp::secure()) {
+		if (!recv_and_check_tls(&ctx, this->buf, sizeof this->buf, sep,
+		    this->ssl))
+			return 0;
+	} else {
+		if (!recv_and_check_plain(&ctx, this->buf, sizeof this->buf,
+		    sep))
+			return 0;
+	}
 
 	this->vec.clear();
 
