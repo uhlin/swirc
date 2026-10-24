@@ -138,6 +138,7 @@ public:
 
 	SOCKET		 get_sock(void) const;
 	SSL		*get_ssl(void);
+	SSL_CTX		*get_ssl_ctx(void);
 	void		 login(void);
 	void		 printreps(void);
 	void		 read_and_print(const int);

@@ -387,6 +387,12 @@ ftp_ctl_conn::get_ssl(void)
 	return (this->ssl);
 }
 
+SSL_CTX *
+ftp_ctl_conn::get_ssl_ctx(void)
+{
+	return (this->ssl_ctx);
+}
+
 static bool
 establish_conn(SOCKET &sock, const struct addrinfo *res)
 {
