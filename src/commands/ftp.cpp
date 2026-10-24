@@ -2017,23 +2017,79 @@ ftp::ls_dir(void)
 	ftp::ctl_conn->read_and_print(1);
 }
 
-int
-ftp::send_bytes(SOCKET sock, SSL *ssl, const void *buf, const int len)
+static int
+send_bytes_plain(SOCKET p_sock, CSTRING p_buf, const int p_len)
 {
 	int bytes_sent;
 
 	errno = 0;
 
 #if defined(UNIX)
-	if ((bytes_sent = send(sock, buf, len, 0)) == SOCKET_ERROR)
+	if ((bytes_sent = send(p_sock, p_buf, p_len, 0)) == SOCKET_ERROR)
 		return (errno == EAGAIN || errno == EWOULDBLOCK ? 0 : -1);
 #elif defined(WIN32)
-	if ((bytes_sent = send(sock, static_cast<CSTRING>(buf), len, 0)) ==
-	    SOCKET_ERROR)
+	if ((bytes_sent = send(p_sock, p_buf, p_len, 0)) == SOCKET_ERROR)
 		return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
 #endif
 
 	return bytes_sent;
+}
+
+static int
+send_bytes_tls(SOCKET p_sock, SSL *p_ssl, CSTRING p_buf, const int p_len)
+{
+	const char	*bufptr = nullptr;
+	int		 buflen = 0;
+	int		 bytes_sent = 0;
+
+	if (p_ssl == nullptr ||
+	    conn_is_closed(p_ssl) ||
+	    p_sock == INVALID_SOCKET ||
+	    strlen(p_buf) > INT_MAX)
+		return -1;
+
+	bufptr = p_buf;
+	buflen = p_len;
+
+	while (buflen > 0) {
+		int ret;
+
+		if (p_ssl == nullptr ||
+		    conn_is_closed(p_ssl) ||
+		    p_sock == INVALID_SOCKET)
+			break;
+
+		ERR_clear_error();
+
+		if ((ret = SSL_write(p_ssl, bufptr, buflen)) > 0) {
+			if (BIO_flush(SSL_get_wbio(p_ssl)) != 1)
+				debug("%s: error flushing write bio", __func__);
+			bytes_sent += ret;
+			bufptr += ret;
+			buflen -= ret;
+		} else {
+			switch (SSL_get_error(p_ssl, ret)) {
+			case SSL_ERROR_NONE:
+				sw_assert_not_reached();
+				break;
+			case SSL_ERROR_WANT_READ:
+			case SSL_ERROR_WANT_WRITE:
+				debug("%s: want read / want write", __func__);
+				continue;
+			}
+
+			return -1;
+		}
+	}
+
+	return bytes_sent;
+}
+
+int
+ftp::send_bytes(SOCKET sock, SSL *ssl, CSTRING buf, const int len)
+{
+	return (ssl ? send_bytes_tls(sock, ssl, buf, len) :
+	    send_bytes_plain(sock, buf, len));
 }
 
 void
@@ -2048,8 +2104,8 @@ ftp::send_file(void)
 int
 ftp::send_printf(SOCKET sock, SSL *ssl, CSTRING fmt, ...) // NOLINT
 {
-	char	*buffer;
-	int	 n_sent;
+	char	*buffer = nullptr;
+	int	 n_sent = 0;
 	va_list	 ap;
 
 	if (sock == INVALID_SOCKET)
@@ -2063,20 +2119,13 @@ ftp::send_printf(SOCKET sock, SSL *ssl, CSTRING fmt, ...) // NOLINT
 	buffer = strdup_vprintf(fmt, ap);
 	va_end(ap);
 
-	errno = 0;
-
-#if defined(UNIX)
-	if ((n_sent = send(sock, buffer, strlen(buffer), 0)) == -1) {
-		free_and_null(&buffer);
-		return (errno == EAGAIN || errno == EWOULDBLOCK ? 0 : -1);
+	if (ssl) {
+		n_sent = send_bytes_tls(sock, ssl, buffer,
+		    static_cast<int>(strlen(buffer)));
+	} else {
+		n_sent = send_bytes_plain(sock, buffer,
+		    static_cast<int>(strlen(buffer)));
 	}
-#elif defined(WIN32)
-	if ((n_sent = send(sock, buffer, size_to_int(strlen(buffer)), 0)) ==
-	    SOCKET_ERROR) {
-		free_and_null(&buffer);
-		return (WSAGetLastError() == WSAEWOULDBLOCK ? 0 : -1);
-	}
-#endif
 
 	free_and_null(&buffer);
 	return n_sent;
