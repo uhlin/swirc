@@ -71,6 +71,8 @@ volatile bool	 ftp::cmd_in_progress = false;
 volatile bool	 ftp::loop_get_file = false;
 volatile bool	 ftp::loop_send_file = false;
 
+static const int VALUE_HANDSHAKE_OK = 1;
+
 static stringarray_t ftp_cmds = {
 	"cd ",
 	"del ",
@@ -446,8 +448,7 @@ ftp_ctl_conn::login(void)
 		ftp::set_timeout(this->sock, SO_SNDTIMEO, 4);
 
 		if (ftp::secure()) {
-			bool			auth_tls = false;
-			static const int	VALUE_HANDSHAKE_OK = 1;
+			bool auth_tls = false;
 
 			n_sent = ftp::send_printf(this->sock, nullptr,
 			    "AUTH TLS\r\n");
