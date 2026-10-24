@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased] ##
+- Added FTPS (FTP secure) support for encrypted file transfers.
 - Added option `chg_guest_nick` (bool). Defaults to yes.
 - Added option `ftp_cipher_suite` (string).
 - Added option `ftp_secure` (bool).
