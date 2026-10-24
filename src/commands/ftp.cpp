@@ -642,7 +642,7 @@ ftp_ctl_conn::read_reply(const int timeo)
 	if (this->sock == INVALID_SOCKET)
 		return 0;
 
-	if (ftp::secure()) {
+	if (this->ssl) {
 		if (!recv_and_check_tls(&ctx, this->buf, sizeof this->buf, sep,
 		    this->ssl))
 			return 0;
@@ -1204,7 +1204,7 @@ ftp_data_conn::list_fetch(const int timeo)
 	if (this->sock == INVALID_SOCKET)
 		return 0;
 
-	if (ftp::secure()) {
+	if (this->ssl) {
 		if (!recv_and_check_tls(&ctx, this->buf, sizeof this->buf, sep,
 		    this->ssl))
 			return 0;
