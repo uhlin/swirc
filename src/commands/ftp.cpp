@@ -1334,8 +1334,8 @@ ftp_data_conn::send_file(void)
 			printtext_print("err", _("%s: file read error"),
 			    __func__);
 			break;
-		} else if ((bytes_sent = ftp::send_bytes(this->sock, this->buf,
-		    size_to_int(bytes_read))) <= 0) {
+		} else if ((bytes_sent = ftp::send_bytes(this->sock, this->ssl,
+		    this->buf, size_to_int(bytes_read))) <= 0) {
 			break;
 		} else if (static_cast<unsigned int>(bytes_sent) !=
 		    bytes_read) {
@@ -2018,7 +2018,7 @@ ftp::ls_dir(void)
 }
 
 int
-ftp::send_bytes(SOCKET sock, const void *buf, const int len)
+ftp::send_bytes(SOCKET sock, SSL *ssl, const void *buf, const int len)
 {
 	int bytes_sent;
 

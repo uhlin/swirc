@@ -207,7 +207,7 @@ namespace ftp
 	bool		new_ssl_ctx(SSL_CTX *&);
 	bool		passive(void);
 	bool		secure(void);
-	int		send_bytes(SOCKET, const void *, const int);
+	int		send_bytes(SOCKET, SSL *, const void *, const int);
 	void		send_file(void);
 	int		send_printf(SOCKET, SSL *, CSTRING, ...) PRINTFLIKE(3);
 #if defined(UNIX)
