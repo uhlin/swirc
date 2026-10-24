@@ -444,6 +444,40 @@ ftp_ctl_conn::login(void)
 
 		this->read_and_print(1);
 
+		if (ftp::secure()) {
+			bool			auth_tls = false;
+			static const int	VALUE_HANDSHAKE_OK = 1;
+
+			n_sent = ftp::send_printf(this->sock, nullptr,
+			    "AUTH TLS\r\n");
+			if (n_sent <= 0)
+				throw std::runtime_error(_("Cannot send"));
+			while (this->read_reply(1)) {
+				for (const FTP_REPLY &rep : this->reply_vec) {
+					if (rep.num == 234)
+						auth_tls = true;
+					print_one_rep(rep.num,
+					    rep.text.c_str());
+				}
+			}
+
+			if (!auth_tls)
+				throw std::runtime_error("Auth TLS error");
+
+			if (!ftp::new_ssl_ctx(this->ssl_ctx))
+				throw std::runtime_error("SSL context error");
+			if ((this->ssl = SSL_new(this->ssl_ctx)) == nullptr)
+				throw std::runtime_error("SSL error");
+			if (!SSL_set_fd(this->ssl, this->sock))
+				 throw std::runtime_error("Set FD error");
+
+			SSL_set_connect_state(this->ssl);
+			ERR_clear_error();
+
+			if (SSL_connect(this->ssl) != VALUE_HANDSHAKE_OK)
+				throw std::runtime_error("TLS handshake error");
+		}
+
 		ftp::set_timeout(this->sock, SO_SNDTIMEO, 4);
 		n_sent = ftp::send_printf(this->sock, this->ssl,
 		    "USER %s\r\nPASS %s\r\n", array[0], array[1]);
