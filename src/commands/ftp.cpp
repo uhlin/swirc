@@ -480,7 +480,8 @@ ftp_ctl_conn::login(void)
 		}
 
 		n_sent = ftp::send_printf(this->sock, this->ssl,
-		    "USER %s\r\nPASS %s\r\n", array[0], array[1]);
+		    "USER %s\r\nPASS %s\r\n%s", array[0], array[1],
+		    (this->ssl ? "PBSZ 0\r\nPROT P\r\n" : ""));
 		if (n_sent <= 0)
 			throw std::runtime_error(_("Cannot send"));
 
