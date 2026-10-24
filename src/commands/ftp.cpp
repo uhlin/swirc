@@ -174,9 +174,7 @@ recv_and_check_tls(struct network_recv_context *p_ctx, char *p_buf,
 	do {
 		int ret;
 
-		if (p_ssl == nullptr ||
-		    conn_is_closed(p_ssl) ||
-		    p_ctx->sock == INVALID_SOCKET)
+		if (conn_is_closed(p_ssl))
 			return false;
 
 		ERR_clear_error();
@@ -2054,9 +2052,7 @@ send_bytes_tls(SOCKET p_sock, SSL *p_ssl, CSTRING p_buf, const int p_len)
 	while (buflen > 0) {
 		int ret;
 
-		if (p_ssl == nullptr ||
-		    conn_is_closed(p_ssl) ||
-		    p_sock == INVALID_SOCKET)
+		if (conn_is_closed(p_ssl))
 			break;
 
 		ERR_clear_error();
