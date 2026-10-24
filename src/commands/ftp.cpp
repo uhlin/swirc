@@ -1132,6 +1132,81 @@ print_complete(CSTRING path, double part, double total, bool (&state)[3])
 	}
 }
 
+static int
+recv_bytes_tls(struct network_recv_context *p_ctx, char *p_buf, size_t p_sz,
+    SSL *p_ssl)
+{
+	char	*bufptr;
+	int	 buflen;
+	int	 bytes_received;
+
+	if (p_ssl == nullptr ||
+	    conn_is_closed(p_ssl) ||
+	    p_ctx->sock == INVALID_SOCKET)
+		return 0;
+	else if (!SSL_pending(p_ssl)) {
+		const int	maxfdp1 = p_ctx->sock + 1;
+		fd_set		readset;
+		struct timeval	tv;
+
+		tv.tv_sec = p_ctx->sec;
+		tv.tv_usec = p_ctx->microsec;
+
+		FD_ZERO(&readset);
+		FD_SET(p_ctx->sock, &readset);
+
+		errno = 0;
+
+		if (select(maxfdp1, &readset, nullptr, nullptr, &tv) ==
+		    SOCKET_ERROR) {
+			if (errno != EINTR)
+				err_log(errno, "%s: select", __func__);
+			return 0;
+		} else if (!FD_ISSET(p_ctx->sock, &readset))
+			return 0;
+	}
+
+	BZERO(p_buf, p_sz);
+
+	bufptr = p_buf;
+	buflen = p_sz;
+	bytes_received = 0;
+
+	do {
+		int ret;
+
+		if (conn_is_closed(p_ssl))
+			return -1;
+
+		ERR_clear_error();
+
+		if ((ret = SSL_read(p_ssl, bufptr, buflen)) > 0) {
+			if (BIO_flush(SSL_get_rbio(p_ssl)) != 1)
+				debug("%s: error flushing read bio", __func__);
+			bytes_received += ret;
+			bufptr += ret;
+			buflen -= ret;
+		} else {
+			switch (SSL_get_error(p_ssl, ret)) {
+			case SSL_ERROR_NONE:
+				sw_assert_not_reached();
+				break;
+			case SSL_ERROR_WANT_READ:
+			case SSL_ERROR_WANT_WRITE:
+				debug("%s: want read / want write", __func__);
+				break;
+			default:
+				return -1;
+			}
+		}
+
+		UNUSED_VAR(bufptr);
+		UNUSED_VAR(buflen);
+	} while (false); /* buflen > 0 && SSL_pending(p_ssl) */
+
+	return bytes_received;
+}
+
 void
 ftp_data_conn::get_file(void)
 {
@@ -1187,8 +1262,14 @@ ftp_data_conn::get_file(void)
 			break;
 
 		BZERO(this->buf, sizeof this->buf);
-		bytes_received = net_recv_plain(&recv_ctx, this->buf,
-		    sizeof this->buf - 1);
+
+		if (this->ssl) {
+			bytes_received = recv_bytes_tls(&recv_ctx, this->buf,
+			    sizeof this->buf - 1, this->ssl);
+		} else {
+			bytes_received = net_recv_plain(&recv_ctx, this->buf,
+			    sizeof this->buf - 1);
+		}
 
 		if (bytes_received > 0) {
 			if (fwrite(this->buf, 1, bytes_received,
