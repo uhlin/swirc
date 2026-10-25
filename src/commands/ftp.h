@@ -175,6 +175,7 @@ public:
 	numstr_t	list_fetch(const int);
 	void		list_print(void);
 	void		send_file(void);
+	bool		shake_hands(void);
 
 private:
 	FILE				*fileptr;

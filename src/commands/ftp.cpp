@@ -1474,6 +1474,27 @@ ftp_data_conn::send_file(void)
 	}
 }
 
+bool
+ftp_data_conn::shake_hands(void)
+{
+	if (this->ssl_ctx == nullptr) {
+		if (!ftp::new_ssl_ctx(this->ssl_ctx))
+			return false;
+	}
+	if (this->ssl == nullptr) {
+		if ((this->ssl = SSL_new(this->ssl_ctx)) == nullptr)
+			return false;
+	}
+
+	if (!SSL_set_fd(this->ssl, this->sock))
+		return false;
+
+	SSL_set_connect_state(this->ssl);
+	ERR_clear_error();
+
+	return (SSL_connect(this->ssl) == VALUE_HANDSHAKE_OK);
+}
+
 static bool
 subcmd_ok(CSTRING cmd)
 {
