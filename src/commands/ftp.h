@@ -220,6 +220,7 @@ namespace ftp
 	void		set_timeout(SOCKET, int, const DWORD);
 #endif
 	void		shutdown_sock(SOCKET);
+	void		shutdown_ssl(SSL *);
 	bool		want_unveil_uploads(void);
 }
 #endif
