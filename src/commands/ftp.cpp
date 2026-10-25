@@ -1299,6 +1299,9 @@ ftp_data_conn::get_file(void)
 		}
 	}
 
+	if (this->ssl)
+		ftp::shutdown_ssl(this->ssl);
+
 	ftp::ctl_conn->read_and_print(1);
 	fclose_and_null(&this->fileptr);
 	dcc::get_file_size(total, size, unit);
@@ -1472,6 +1475,9 @@ ftp_data_conn::send_file(void)
 			    printed);
 		}
 	}
+
+	if (this->ssl)
+		ftp::shutdown_ssl(this->ssl);
 
 	ftp::ctl_conn->read_and_print(1);
 	fclose_and_null(&this->fileptr);
