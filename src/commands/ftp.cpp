@@ -1658,6 +1658,15 @@ subcmd_get(CSTRING path)
 		return;
 	}
 
+	if (ftp::secure()) {
+		if (!ftp::data_conn->shake_hands()) {
+			printtext_print("err", "%s: TLS handshake failed",
+			    __func__);
+			delete_data_conn();
+			return;
+		}
+	}
+
 	ftp::do_cmd_detached("get file");
 }
 
@@ -1770,6 +1779,15 @@ subcmd_send(CSTRING path)
 	if (n_sent <= 0) {
 		delete_data_conn();
 		return;
+	}
+
+	if (ftp::secure()) {
+		if (!ftp::data_conn->shake_hands()) {
+			printtext_print("err", "%s: TLS handshake failed",
+			    __func__);
+			delete_data_conn();
+			return;
+		}
 	}
 
 	ftp::do_cmd_detached("send file");
@@ -2137,6 +2155,15 @@ ftp::ls_dir(void)
 	if (n_sent <= 0) {
 		delete_data_conn();
 		return;
+	}
+
+	if (ftp::secure()) {
+		if (!ftp::data_conn->shake_hands()) {
+			printtext_print("err", "%s: TLS handshake failed",
+			    __func__);
+			delete_data_conn();
+			return;
+		}
 	}
 
 	while (ftp::data_conn->list_fetch(3))
