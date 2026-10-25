@@ -1509,6 +1509,12 @@ ftp_data_conn::shake_hands(void)
 	if (!SSL_set_fd(this->ssl, this->sock))
 		return false;
 
+	if (ftp::ctl_conn_sess != nullptr) {
+		if (!SSL_set_session(this->ssl, ftp::ctl_conn_sess))
+			debug("%s: SSL_set_session() error", __func__);
+	} else
+		debug("%s: no session", __func__);
+
 	SSL_set_connect_state(this->ssl);
 	ERR_clear_error();
 
