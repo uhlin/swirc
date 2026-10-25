@@ -165,9 +165,9 @@ public:
 	ftp_data_conn &operator=(ftp_data_conn &&) noexcept;
 	ftp_data_conn(ftp_data_conn &&) noexcept;
 
-	STRING full_path, path;
-	intmax_t filesz;
-	std::vector<std::string> vec;
+	STRING				full_path, path;
+	intmax_t			filesz;
+	std::vector<std::string>	vec;
 
 	bool		 connect_passive(void);
 	void		 get_file(void);
