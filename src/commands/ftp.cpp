@@ -1397,7 +1397,7 @@ ftp_data_conn::send_file(void)
 	size_t		bytes_read = 0;
 	uintmax_t	bytes_rem = this->filesz;
 
-	while (ftp::ctl_conn->read_reply(1)) {
+	while (ftp::ctl_conn->read_reply(3)) {
 		for (const FTP_REPLY &rep : ftp::ctl_conn->reply_vec) {
 			if (rep.num == 421 ||
 			    rep.num == 450 ||
