@@ -64,6 +64,8 @@
 #define stat _stat
 #endif
 
+SSL_SESSION	*ftp::ctl_conn_sess = nullptr;
+
 ftp_ctl_conn	*ftp::ctl_conn = nullptr;
 ftp_data_conn	*ftp::data_conn = nullptr;
 

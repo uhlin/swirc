@@ -195,6 +195,8 @@ private:
 
 namespace ftp
 {
+	extern SSL_SESSION	*ctl_conn_sess;
+
 	extern ftp_ctl_conn	*ctl_conn;
 	extern ftp_data_conn	*data_conn;
 
