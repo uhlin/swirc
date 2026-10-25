@@ -1312,6 +1312,18 @@ ftp_data_conn::get_sock(void) const
 	return (this->sock);
 }
 
+SSL *
+ftp_data_conn::get_ssl(void)
+{
+	return (this->ssl);
+}
+
+SSL_CTX *
+ftp_data_conn::get_ssl_ctx(void)
+{
+	return (this->ssl_ctx);
+}
+
 numstr_t
 ftp_data_conn::list_fetch(const int timeo)
 {

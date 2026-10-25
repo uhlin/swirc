@@ -169,13 +169,15 @@ public:
 	intmax_t filesz;
 	std::vector<std::string> vec;
 
-	bool		connect_passive(void);
-	void		get_file(void);
-	SOCKET		get_sock(void) const;
-	numstr_t	list_fetch(const int);
-	void		list_print(void);
-	void		send_file(void);
-	bool		shake_hands(void);
+	bool		 connect_passive(void);
+	void		 get_file(void);
+	SOCKET		 get_sock(void) const;
+	SSL		*get_ssl(void);
+	SSL_CTX		*get_ssl_ctx(void);
+	numstr_t	 list_fetch(const int);
+	void		 list_print(void);
+	void		 send_file(void);
+	bool		 shake_hands(void);
 
 private:
 	FILE				*fileptr;
