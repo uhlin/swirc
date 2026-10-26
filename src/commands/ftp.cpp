@@ -486,6 +486,15 @@ ftp_ctl_conn::login(void)
 
 			if (SSL_connect(this->ssl) != VALUE_HANDSHAKE_OK)
 				throw std::runtime_error("TLS handshake error");
+			if (ftp::ssl_reuse()) {
+				if (ftp::ctl_conn_sess)
+					SSL_SESSION_free(ftp::ctl_conn_sess);
+				if ((ftp::ctl_conn_sess =
+				    SSL_get1_session(this->ssl)) == nullptr) {
+					throw std::runtime_error("No TLS "
+					    "session available");
+				}
+			}
 		}
 
 		n_sent = ftp::send_printf(this->sock, this->ssl,
@@ -1919,6 +1928,11 @@ ftp_deinit(void)
 
 	delete ftp::data_conn;
 	ftp::data_conn = nullptr;
+
+	if (ftp::ctl_conn_sess) {
+		SSL_SESSION_free(ftp::ctl_conn_sess);
+		ftp::ctl_conn_sess = nullptr;
+	}
 }
 
 PTEXTBUF
