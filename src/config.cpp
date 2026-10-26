@@ -105,6 +105,7 @@ static struct tagConfDefValues {
 	{ "ftp_user",                  TYPE_STRING,  2, "anonymous" },
 	{ "ftp_pass",                  TYPE_STRING,  2, "anonymous" },
 	{ "ftp_secure",                TYPE_BOOLEAN, 2, "no" },
+	{ "ftp_ssl_reuse",             TYPE_BOOLEAN, 2, "yes" },
 	{ "ftp_upload_dir",            TYPE_STRING,  2, "" },
 
 	{ "identd",                    TYPE_BOOLEAN, 3, "no" },
