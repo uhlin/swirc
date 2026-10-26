@@ -2068,6 +2068,14 @@ ftp::new_ssl_ctx(SSL_CTX *&p_ssl_ctx)
 			    "supported protocol version");
 		}
 
+		if (ftp::ssl_reuse()) {
+			if (!SSL_CTX_set_max_proto_version(p_ssl_ctx,
+			    TLS1_2_VERSION)) {
+				throw std::runtime_error("error setting "
+				    "maximum supported protocol version");
+			}
+		}
+
 		set_ciphers(p_ssl_ctx);
 	} catch (const std::runtime_error &e) {
 		if (p_ssl_ctx != nullptr) {
