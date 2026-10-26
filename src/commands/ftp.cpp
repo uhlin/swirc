@@ -2349,6 +2349,12 @@ ftp::shutdown_ssl(SSL *ssl)
 }
 
 bool
+ftp::ssl_reuse(void)
+{
+	return (config_bool("ftp_ssl_reuse", true));
+}
+
+bool
 ftp::want_unveil_uploads(void)
 {
 	CSTRING		dir = Config("ftp_upload_dir");

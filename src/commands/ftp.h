@@ -223,6 +223,7 @@ namespace ftp
 #endif
 	void		shutdown_sock(SOCKET);
 	void		shutdown_ssl(SSL *);
+	bool		ssl_reuse(void);
 	bool		want_unveil_uploads(void);
 }
 #endif
