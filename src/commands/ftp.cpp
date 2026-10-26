@@ -476,6 +476,9 @@ ftp_ctl_conn::login(void)
 
 			if (!ftp::new_ssl_ctx(this->ssl_ctx))
 				throw std::runtime_error("SSL context error");
+			(void) SSL_CTX_set_session_cache_mode(this->ssl_ctx,
+			    (SSL_SESS_CACHE_CLIENT |
+			    SSL_SESS_CACHE_NO_INTERNAL_STORE));
 			if ((this->ssl = SSL_new(this->ssl_ctx)) == nullptr)
 				throw std::runtime_error("SSL error");
 			if (!SSL_set_fd(this->ssl, this->sock))
