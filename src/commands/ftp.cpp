@@ -1648,6 +1648,7 @@ subcmd_exit(void)
 	if (ftp::data_conn) {
 		(void) ftp::send_printf(sock, ssl, "ABOR\r\nQUIT\r\n");
 
+		ftp::shutdown_ssl(ftp::data_conn->get_ssl());
 		ftp::shutdown_sock(ftp::data_conn->get_sock());
 
 		(void) atomic_swap_bool(&ftp::loop_get_file, false);
