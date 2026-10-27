@@ -3,7 +3,7 @@
 .\" SPDX-FileCopyrightText: Copyright 2018-2026 Markus Uhlin
 .\" SPDX-License-Identifier: ISC
 .\"
-.Dd August 26, 2026
+.Dd October 27, 2026
 .Dt SWIRC.CONF 5
 .Os
 .Sh NAME
@@ -245,6 +245,22 @@ Turns the
 .Em extended-join
 IRCv3 feature on/off.
 .\" ----------------------------------------
+.\" FTP CIPHER SUITE
+.\" ----------------------------------------
+.It Sy ftp_cipher_suite Pq Em string
+FTP cipher suite.
+Which can have one of the following values:
+.Bl -bullet -compact
+.It
+secure
+.It
+compat
+.It
+legacy
+.It
+all
+.El
+.\" ----------------------------------------
 .\" FTP HOST
 .\" ----------------------------------------
 .It Sy ftp_host Pq Em string
@@ -266,6 +282,37 @@ Defaults to anonymous.
 .\" ----------------------------------------
 .It Sy ftp_pass Pq Em string
 FTP password.
+.\" ----------------------------------------
+.\" FTP SECURE
+.\" ----------------------------------------
+.It Sy ftp_secure Pq Em bool
+By setting this option to 'yes', all FTP connections are encrypted,
+with minimum TLS v1.2.
+Explicit FTPS is used, which means
+.Nm
+initially starts a plain text connection and then upgrades the
+connection to a TLS connection ASAP.
+Both the control connection and the data connection are encrypted.
+.\" ----------------------------------------
+.\" FTP SSL REUSE
+.\" ----------------------------------------
+.It Sy ftp_ssl_reuse Pq Em bool
+Require all FTP SSL data connections to exhibit SSL session reuse.
+.Pp
+The default is yes because
+.Do
+it proves that they know the same master secret as the control channel
+.Dc ,
+which is a security enhancement and prevents the file transfers from
+being hijacked.
+.Pp
+It however limits the TLS standard to TLS v1.2, but isn't a problem
+because TLS v1.2 is still considered safe and secure at the time of
+writing this (late 2026).
+.Pp
+If this option is set to 'no' TLS v1.3 can be used as well.
+But it isn't recommended because the usage of TLS v1.2 in combination
+with session reuse wins from a security standpoint (in my opinion).
 .\" ----------------------------------------
 .\" FTP UPLOAD DIR
 .\" ----------------------------------------
