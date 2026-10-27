@@ -210,6 +210,8 @@ ftp_ctl_conn::ftp_ctl_conn()
 
 ftp_ctl_conn::~ftp_ctl_conn()
 {
+	ftp::shutdown_ssl(this->ssl);
+
 	if (this->sock != INVALID_SOCKET) {
 		ftp_closesocket(this->sock);
 		this->sock = INVALID_SOCKET;
@@ -800,6 +802,8 @@ ftp_data_conn::ftp_data_conn(CSTRING text)
 
 ftp_data_conn::~ftp_data_conn()
 {
+	ftp::shutdown_ssl(this->ssl);
+
 	/*
 	 * Close first...
 	 */
@@ -2220,8 +2224,6 @@ ftp::ls_dir(void)
 	while (ftp::data_conn->list_fetch(3))
 		ftp::data_conn->list_print();
 
-	if (ftp::secure())
-		ftp::shutdown_ssl(ftp::data_conn->get_ssl());
 	delete_data_conn();
 
 	ftp::ctl_conn->read_and_print(1);
