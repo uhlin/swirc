@@ -204,6 +204,7 @@ namespace ftp
 	extern volatile bool	 loop_get_file;
 	extern volatile bool	 loop_send_file;
 
+	bool		can_change_opts(void);
 	void		do_cmd_detached(CSTRING);
 	NORETURN void	exit_thread(void);
 	void		get_file(void);

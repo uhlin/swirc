@@ -2157,6 +2157,12 @@ ftp::secure(void)
 	return (config_bool("ftp_secure", false));
 }
 
+bool
+ftp::can_change_opts(void)
+{
+	return (ftp::ctl_conn == nullptr && ftp::data_conn == nullptr);
+}
+
 void
 ftp::get_file(void)
 {
