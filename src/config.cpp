@@ -58,6 +58,7 @@
 #pragma message("No GNU libidn")
 #endif
 
+#include "commands/ftp.h"
 #include "commands/sasl.h"
 
 #define ENTRY_FOREACH()\
@@ -882,6 +883,10 @@ cmd_set(const char *data)
 		printtext_print("err", "fatal error (shouldn't happen)");
 	else if ((value = strtok_r(nullptr, "\n", &state)) == nullptr)
 		output_value_for_specific_setting(setting);
+	else if ((strings_match(setting, "ftp_secure") ||
+	    strings_match(setting, "ftp_ssl_reuse")) &&
+	    !ftp::can_change_opts())
+		printtext_print("err", "not possible (connection active)");
 	else if (strings_match(setting, "sasl_password"))
 		printtext_print("err", "please use /sasl");
 	else
