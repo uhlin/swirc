@@ -117,9 +117,6 @@ static bool
 recv_and_check_tls(struct network_recv_context *p_ctx, char *p_buf,
     size_t p_sz, CSTRING p_sep, SSL *p_ssl)
 {
-#ifdef UNIX
-#define SOCKET_ERROR -1
-#endif
 	char	*bufptr;
 	int	 buflen;
 	int	 bytes_received;
