@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: swirc 3.5.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
 "POT-Creation-Date: 2026-10-31 09:11+0100\n"
-"PO-Revision-Date: 2026-02-21 19:20+0100\n"
+"PO-Revision-Date: 2026-10-31 09:13+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -828,7 +828,7 @@ msgstr "Hämta den amerikansk engelska ordboken:"
 
 #: ../src/include/commandhelp.h:295
 msgid "Retrieve and store files on a FTP server."
-msgstr ""
+msgstr "Hämta och lagra filer på en FTP server."
 
 #: ../src/include/commandhelp.h:300
 msgid "usage: /gline <nick!user@host> [<duration> :<reason>]"
