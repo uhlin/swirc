@@ -23,6 +23,9 @@ All notable changes to this project will be documented in this file.
 - Usage of fixed width integer types.
 - Usage of range-based for loops.
 
+### Windows ###
+- Upgraded to [LibreSSL](https://www.libressl.org/) 4.4.0
+
 ## [3.5.9] - 2026-02-22 ##
 - **Added** command `/userhost` and event 302 (`RPL_USERHOST`).
 - **Added** custom copy assignment operators, copy constructors, move
