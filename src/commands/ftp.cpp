@@ -292,6 +292,10 @@ ftp_ctl_conn::operator=(ftp_ctl_conn &&obj) noexcept
 	if (&obj == this)
 		return *this;
 
+	ftp::shutdown_ssl(this->ssl);
+
+	if (this->sock != INVALID_SOCKET)
+		ftp_closesocket(this->sock);
 	if (this->ssl)
 		SSL_free(this->ssl);
 	if (this->ssl_ctx)
@@ -945,6 +949,9 @@ ftp_data_conn::operator=(ftp_data_conn &&obj) noexcept
 
 	if (this->fileptr)
 		(void) fclose(this->fileptr);
+
+	ftp::shutdown_ssl(this->ssl);
+
 	if (this->sock != INVALID_SOCKET)
 		ftp_closesocket(this->sock);
 	if (this->ssl)
