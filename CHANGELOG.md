@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file.
   [Kurt Mosiejczuk](https://github.com/kmosiejczuk)  --  thanks!
 - Fixed hardcoded function names (in error messages).
 - Improved the C++ exception handling.
+- On window activity, added a description how to change to that
+  window, i.e. with /no#.
 - Replaced preprocessor defines with regular variables.
 - Usage of fixed width integer types.
 - Usage of range-based for loops.
