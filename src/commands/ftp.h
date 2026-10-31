@@ -36,14 +36,15 @@
 
 #include <arpa/inet.h>
 #include <netinet/in.h>
-#include <openssl/err.h>
-#include <openssl/ssl.h>
 
 #include <unistd.h>
 #elif defined(WIN32)
 #include <intsafe.h> /* DWORD */
 #include <ws2tcpip.h>
 #endif
+
+#include <openssl/err.h>
+#include <openssl/ssl.h>
 
 #ifdef __cplusplus
 #include <string>
