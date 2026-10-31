@@ -158,12 +158,15 @@ static void
 broadcast_window_activity(const IRC_WINDOW *src)
 {
 	PRINTTEXT_CONTEXT	ctx;
+	static const char	cmd_char = '/';
 
 	if (src) {
 		printtext_context_init(&ctx, g_active_window,
 		    TYPE_SPEC1_SUCCESS, true);
-		printtext(&ctx, "activity at window %c%s%c (refnum: %d)",
-		    BOLD, src->label, BOLD, src->refnum);
+		printtext(&ctx, "activity at window %c%s%c (refnum: %d)  --  "
+		    "change with %c%d",
+		    BOLD, src->label, BOLD,
+		    src->refnum, cmd_char, src->refnum);
 		term_beep();
 	}
 }
