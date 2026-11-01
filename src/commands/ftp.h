@@ -224,7 +224,7 @@ namespace ftp
 	void		set_timeout(SOCKET, int, const DWORD);
 #endif
 	void		shutdown_sock(SOCKET);
-	void		shutdown_ssl(SSL *);
+	void		shutdown_ssl(SSL *) noexcept;
 	bool		ssl_reuse(void);
 	bool		want_unveil_uploads(void);
 }

@@ -2368,7 +2368,7 @@ ftp::shutdown_sock(SOCKET sock)
 }
 
 void
-ftp::shutdown_ssl(SSL *ssl)
+ftp::shutdown_ssl(SSL *ssl) noexcept
 {
 	if (ssl == nullptr)
 		return;
