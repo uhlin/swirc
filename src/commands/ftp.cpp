@@ -64,6 +64,12 @@
 #define stat _stat
 #endif
 
+/****************************************************************
+*                                                               *
+*  -------------- Objects with external linkage --------------  *
+*                                                               *
+****************************************************************/
+
 SSL_SESSION	*ftp::ctl_conn_sess = nullptr;
 
 ftp_ctl_conn	*ftp::ctl_conn = nullptr;
@@ -72,6 +78,12 @@ ftp_data_conn	*ftp::data_conn = nullptr;
 volatile bool	 ftp::cmd_in_progress = false;
 volatile bool	 ftp::loop_get_file = false;
 volatile bool	 ftp::loop_send_file = false;
+
+/****************************************************************
+*                                                               *
+*  -------------- Objects with internal linkage --------------  *
+*                                                               *
+****************************************************************/
 
 static const int VALUE_HANDSHAKE_OK = 1;
 
@@ -91,6 +103,12 @@ static stringarray_t ftp_cmds = {
 	"send ",
 	"system",
 };
+
+/****************************************************************
+*                                                               *
+*  ---------------------    Functions    ---------------------  *
+*                                                               *
+****************************************************************/
 
 static void delete_data_conn(void);
 static void print_one_rep(const int, CSTRING);
