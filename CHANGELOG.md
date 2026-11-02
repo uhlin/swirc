@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file.
 
 ### Windows ###
 - Upgraded to [Curl](https://curl.se/) 8.23.0
+- Upgraded to [Hunspell](https://hunspell.github.io/) 1.7.6
 - Upgraded to [LibreSSL](https://www.libressl.org/) 4.4.0
 
 ## [3.5.9] - 2026-02-22 ##
