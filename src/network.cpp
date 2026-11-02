@@ -363,14 +363,15 @@ get_and_handle_remaining_bytes(const int bytes_remaining,
 }
 
 static void
-get_ip_addresses(struct addrinfo *&res, CSTRING server, CSTRING port,
-    PPRINTTEXT_CONTEXT ctx)
+get_ip_addresses(struct addrinfo *&p_res, CSTRING p_server, CSTRING p_port,
+    PPRINTTEXT_CONTEXT p_ctx)
 {
-	if ((res = net_addr_resolve(server, port)) == nullptr) {
+	if ((p_res = net_addr_resolve(p_server, p_port)) == nullptr) {
 		throw std::runtime_error(_("Unable to get a list of IP "
 		    "addresses"));
 	} else {
-		printtext(ctx, "%s", _("Get a list of IP addresses completed"));
+		printtext(p_ctx, "%s",
+		    _("Get a list of IP addresses completed"));
 	}
 }
 
@@ -411,17 +412,20 @@ handle_conn_err(PPRINTTEXT_CONTEXT ptext_ctx, CSTRING what,
 }
 
 static void
-save_last_server(CSTRING server, CSTRING port, CSTRING password)
+save_last_server(CSTRING p_server, CSTRING p_port, CSTRING p_password)
 {
 	int ret;
 
-	if ((ret = snprintf(g_last_server, sizeof g_last_server, "%s", server)) < 0 ||
+	if ((ret = snprintf(g_last_server, sizeof g_last_server, "%s",
+	    p_server)) < 0 ||
 	    static_cast<size_t>(ret) >= sizeof g_last_server)
 		err_log(EOVERFLOW, "%s: cannot save server", __func__);
-	if ((ret = snprintf(g_last_port, sizeof g_last_port, "%s", port)) < 0 ||
+	if ((ret = snprintf(g_last_port, sizeof g_last_port, "%s",
+	    p_port)) < 0 ||
 	    static_cast<size_t>(ret) >= sizeof g_last_port)
 		err_log(EOVERFLOW, "%s: cannot save port", __func__);
-	if ((ret = snprintf(g_last_pass, sizeof g_last_pass, "%s", password)) < 0 ||
+	if ((ret = snprintf(g_last_pass, sizeof g_last_pass, "%s",
+	    p_password)) < 0 ||
 	    static_cast<size_t>(ret) >= sizeof g_last_pass)
 		err_log(EOVERFLOW, "%s: cannot save password", __func__);
 }
@@ -698,14 +702,14 @@ net_addr_resolve(CSTRING host, CSTRING port)
 struct server *
 server_new(CSTRING host, CSTRING port, CSTRING pass)
 {
-	struct server *server = // NOLINT
-	    static_cast<struct server *>(xmalloc(sizeof *server));
+	struct server *v_server = // NOLINT
+	    static_cast<struct server *>(xmalloc(sizeof *v_server));
 
-	server->host = sw_strdup(host);
-	server->port = sw_strdup(port);
-	server->pass = (pass ? sw_strdup(pass) : nullptr);
+	v_server->host = sw_strdup(host);
+	v_server->port = sw_strdup(port);
+	v_server->pass = (pass ? sw_strdup(pass) : nullptr);
 
-	return server;
+	return v_server;
 }
 
 void
@@ -1056,14 +1060,14 @@ net_request_disconnect(void)
 }
 
 void
-server_destroy(struct server *server)
+server_destroy(struct server *p_server)
 {
-	if (server == nullptr)
+	if (p_server == nullptr)
 		return;
-	free(server->host);
-	free(server->port);
-	free(server->pass);
-	free(server);
+	free(p_server->host);
+	free(p_server->port);
+	free(p_server->pass);
+	free(p_server);
 }
 
 void
