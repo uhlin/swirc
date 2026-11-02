@@ -393,7 +393,13 @@ subcmd_view(CSTRING p_no)
 	} else if (!is_valid_filename(obj.filename.c_str())) {
 		printtext_print("err", "%s", _("bad filename"));
 		return;
-	} else if ((fp = fopen(obj.fullpath.c_str(), "r")) == nullptr) {
+	}
+#if defined(UNIX)
+	else if ((fp = fopen(obj.fullpath.c_str(), "r")) == nullptr)
+#elif defined(WIN32)
+	else if ((errno = fopen_s(&fp, obj.fullpath.c_str(), "r")) != 0)
+#endif
+	{
 		printtext_print("err", "%s", _("error opening file"));
 		return;
 	}
