@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - On window activity, added a description how to change to that
   window, i.e. with /no#.
 - Replaced preprocessor defines with regular variables.
+- Usage of `fopen_s()`.
 - Usage of fixed width integer types.
 - Usage of initializer lists.
 - Usage of range-based for loops.
