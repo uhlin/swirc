@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - Improved the C++ exception handling.
 - On window activity, added a description how to change to that
   window, i.e. with /no#.
+- Reduced code duplication.
 - Replaced preprocessor defines with regular variables.
 - Usage of `fopen_s()`.
 - Usage of fixed width integer types.
