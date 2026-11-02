@@ -112,6 +112,7 @@ void readline_deinit(void);
 /*lint -sem(readline_get_active_pwin, r_null) */
 /*lint -sem(readline, r_null) */
 
+void	 locked_wrefresh(WINDOW *) NONNULL;
 WINDOW	*readline_get_active_pwin(void);
 STRING	 readline(CSTRING prompt);
 STRING	 readline_finalize_out_string_exported(const wchar_t *);

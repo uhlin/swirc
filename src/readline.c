@@ -222,9 +222,7 @@ compute_new_window_entry(const volatile struct readline_session_context *ctx,
 		readline_waddnstr(ctx->act, str[0], -1);
 	}
 
-	mutex_lock(&g_puts_mutex);
-	(void) wrefresh(ctx->act);
-	mutex_unlock(&g_puts_mutex);
+	locked_wrefresh(ctx->act);
 }
 
 /**
@@ -317,9 +315,7 @@ case_key_backspace(volatile struct readline_session_context *ctx)
 			readline_ferror(EIO, "%s: wclrtoeol", __func__);
 	}
 
-	mutex_lock(&g_puts_mutex);
-	(void) wrefresh(ctx->act);
-	mutex_unlock(&g_puts_mutex);
+	locked_wrefresh(ctx->act);
 }
 
 /**
@@ -353,9 +349,7 @@ case_key_dc(volatile struct readline_session_context *ctx)
 
 	readline_winsnstr(ctx->act, &ctx->buffer[ctx->bufpos], -1);
 
-	mutex_lock(&g_puts_mutex);
-	(void) wrefresh(ctx->act);
-	mutex_unlock(&g_puts_mutex);
+	locked_wrefresh(ctx->act);
 }
 
 /**
@@ -558,9 +552,7 @@ handle_key(volatile struct readline_session_context *ctx, wint_t wc,
 		readline_waddch(ctx->act, wc);
 	}
 
-	mutex_lock(&g_puts_mutex);
-	(void) wrefresh(ctx->act);
-	mutex_unlock(&g_puts_mutex);
+	locked_wrefresh(ctx->act);
 
 	if (check_reset) {
 		if (isInCirculationMode(ctx->tc))
@@ -930,6 +922,14 @@ readline_deinit(void)
 
 	term_remove_panel(readline_pan[0]);
 	term_remove_panel(readline_pan[1]);
+}
+
+void
+locked_wrefresh(WINDOW *p_win)
+{
+	mutex_lock(&g_puts_mutex);
+	(void) wrefresh(p_win);
+	mutex_unlock(&g_puts_mutex);
 }
 
 /**
