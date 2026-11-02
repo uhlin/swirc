@@ -1,7 +1,7 @@
 #ifndef IDENT_DAEMON_HPP
 #define IDENT_DAEMON_HPP
 /* identd.hpp
-   Copyright (C) 2022-2025 Markus Uhlin. All rights reserved.
+   Copyright (C) 2022-2026 Markus Uhlin. All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
@@ -77,19 +77,20 @@ typedef int SOCKET;
 
 class ident_client {
 public:
-	ident_client()
+	ident_client() : sock(INVALID_SOCKET)
+	    , sin(nullptr)
+	    , sin6(nullptr)
 	{
-		this->sock = INVALID_SOCKET;
 		memset(&this->ss, 0, sizeof this->ss);
-		this->sin = nullptr;
-		this->sin6 = nullptr;
 	}
 
-	ident_client(const SOCKET p_clisock, const struct sockaddr_storage &p_ss)
+	ident_client(const SOCKET p_clisock,
+		     const struct sockaddr_storage &p_ss)
+	    : sock(p_clisock)
+	    , ss(p_ss)
+	    , sin(nullptr)
+	    , sin6(nullptr)
 	{
-		this->sock	= p_clisock;
-		this->ss	= p_ss;
-
 		if (p_ss.ss_family == AF_INET) {
 			this->sin = reinterpret_cast<struct sockaddr_in *>
 			    (&this->ss);
