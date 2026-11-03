@@ -1,3 +1,8 @@
+/*
+ * Downloads multiple Windows specific build files.
+ * Written by Markus Uhlin.
+ */
+
 function append_file(target, source)
 {
 	var ForReading = 1;
