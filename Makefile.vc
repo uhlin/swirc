@@ -113,6 +113,7 @@ clean:
 	$(RM) "src\*.obj"
 	$(RM) "src\commands\*.obj"
 	$(RM) "src\events\*.obj"
+	$(RM) "src\letsencrypt.pem"
 	$(RM) "src\trusted_roots.pem"
 	$(RM) $(BUILD_LOG)
 	$(RM) $(TGTS)
