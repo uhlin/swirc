@@ -41,7 +41,10 @@ function get_file(url, name)
 	stream.SaveToFile(name);
 }
 
+get_file("https://www.nifty-networks.net/swirc/letsencrypt.pem", "src/letsencrypt.pem");
 get_file("https://curl.haxx.se/ca/cacert.pem", "src/trusted_roots.pem");
+append_file("src/trusted_roots.pem", "src/letsencrypt.pem");
+
 get_file("https://www.nifty-networks.net/swirc/curl-8.23.0.cab", "curl-8.23.0.cab");
 get_file("https://www.nifty-networks.net/swirc/gnu-bundle-202205.cab", "gnu-bundle-202205.cab");
 get_file("https://www.nifty-networks.net/swirc/hunspell-1.7.6.cab", "hunspell-1.7.6.cab");
