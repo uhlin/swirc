@@ -1,3 +1,26 @@
+function append_file(target, source)
+{
+	var ForReading = 1;
+	var ForAppending = 8;
+
+	try {
+		var fso = new ActiveXObject("Scripting.FileSystemObject");
+
+		var targetFile = fso.OpenTextFile(target, ForAppending);
+		var sourceFile = fso.OpenTextFile(source, ForReading);
+
+		var content = sourceFile.ReadAll();
+		sourceFile.Close();
+
+		targetFile.Write(content);
+		targetFile.Close();
+
+		WScript.Echo("append_file: succeeded!");
+	} catch (ex) {
+		WScript.Echo("append_file: " + ex.message);
+	}
+}
+
 function get_file(url, name)
 {
 	var http_req = new ActiveXObject("WinHttp.WinHttpRequest.5.1");
