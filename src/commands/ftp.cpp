@@ -477,7 +477,8 @@ ftp_ctl_conn::login(void)
 		ftp::set_timeout(this->sock, SO_SNDTIMEO, 4);
 
 		if (ftp::secure()) {
-			bool auth_tls = false;
+			bool	auth_tls = false;
+			int	iout = 0;
 
 			n_sent = ftp::send_printf(this->sock, nullptr,
 			    "AUTH TLS\r\n");
@@ -502,7 +503,8 @@ ftp_ctl_conn::login(void)
 			    SSL_SESS_CACHE_NO_INTERNAL_STORE));
 			if ((this->ssl = SSL_new(this->ssl_ctx)) == nullptr)
 				throw std::runtime_error("SSL error");
-			if (!SSL_set_fd(this->ssl, this->sock))
+			if (!socket_to_int(this->sock, &iout) ||
+			    !SSL_set_fd(this->ssl, iout))
 				 throw std::runtime_error("Set FD error");
 
 			SSL_set_connect_state(this->ssl);
@@ -1535,6 +1537,8 @@ ftp_data_conn::send_file(void)
 bool
 ftp_data_conn::shake_hands(void)
 {
+	int iout = 0;
+
 	if (this->ssl_ctx == nullptr) {
 		if (!ftp::new_ssl_ctx(this->ssl_ctx))
 			return false;
@@ -1544,7 +1548,8 @@ ftp_data_conn::shake_hands(void)
 			return false;
 	}
 
-	if (!SSL_set_fd(this->ssl, this->sock))
+	if (!socket_to_int(this->sock, &iout) ||
+	    !SSL_set_fd(this->ssl, iout))
 		return false;
 
 	if (ftp::ctl_conn_sess != nullptr) {
