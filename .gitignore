@@ -25,6 +25,7 @@ cppcheck-data
 curl-*
 gnu-bundle-*
 hunspell-*
+letsencrypt.pem
 libressl-*
 options.mk
 pdcurses-*
