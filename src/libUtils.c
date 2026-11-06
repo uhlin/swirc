@@ -153,6 +153,15 @@ getval_strtol(const char *str, const long int lo, const long int hi,
 }
 
 bool
+size_to_int_v2(const size_t p_size, int *p_iout)
+{
+	if (p_size > INT_MAX || p_iout == NULL)
+		return false;
+	*p_iout = (int) (p_size);
+	return true;
+}
+
+bool
 time_format_ok(const char *fmt)
 {
 	return format_codes_are_ok(fmt);

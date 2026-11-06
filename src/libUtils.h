@@ -29,6 +29,7 @@ bool	 bool_false(const char *str);
 bool	 bool_true(const char *str);
 bool	 getval_strtol(const char *str, const long int lo, const long int hi,
 	     long int *val) NONNULL;
+bool	 size_to_int_v2(const size_t, int *);
 bool	 time_format_ok(const char *);
 char	 rot13_byte(char);
 char	*rot13_str(char *);
