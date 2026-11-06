@@ -82,6 +82,7 @@ extern time_t		g_irc_stop_time;
 /*lint -sem(net_addr_resolve, r_null) */
 
 bool		 sasl_is_enabled(void);
+bool		 socket_to_int(const SOCKET, int *);
 conn_res_t	 net_connect(const struct network_connect_context *,
 		     long int *sleep_time_seconds);
 int		 net_send_fake(CSTRING, ...);

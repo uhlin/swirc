@@ -8,6 +8,11 @@
 #define INVALID_SOCKET -1
 #endif
 
+#if defined(UNIX) && !defined(_SOCKET_DEFINED)
+#define _SOCKET_DEFINED 1
+typedef int SOCKET;
+#endif
+
 struct network_recv_context {
 	int		sock;
 	int		flags;

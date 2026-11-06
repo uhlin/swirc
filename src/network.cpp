@@ -37,6 +37,7 @@
 #include <unistd.h> /* close() */
 #endif
 
+#include <climits>
 #include <cstring>
 #include <exception>
 #include <stdexcept>
@@ -571,6 +572,19 @@ sasl_is_enabled(void)
 	if (!g_sasl_authentication)
 		return false;
 	return config_bool("sasl", false);
+}
+
+/*
+ * Socket handles may take any value in the range 0 to INVALID_SOCKET-1.
+ * On Unix, socket handles are a type alias for int.
+ */
+bool
+socket_to_int(const SOCKET p_sock, int *p_iout)
+{
+	if (p_sock > INT_MAX || p_iout == nullptr)
+		return false;
+	*p_iout = static_cast<int>(p_sock);
+	return true;
 }
 
 conn_res_t
