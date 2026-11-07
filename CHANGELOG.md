@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
   [Kurt Mosiejczuk](https://github.com/kmosiejczuk)  --  thanks!
 - Fixed hardcoded function names (in error messages).
 - Fixed hidden declarations.
+- Fixed possibly unsafe integer conversions. Multiple occurrences.
 - Improved the C++ exception handling.
 - On window activity, added a description how to change to that
   window, i.e. with /no#.
