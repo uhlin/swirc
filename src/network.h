@@ -87,6 +87,7 @@ conn_res_t	 net_connect(const struct network_connect_context *,
 		     long int *sleep_time_seconds);
 int		 net_send_fake(CSTRING, ...);
 struct addrinfo *net_addr_resolve(CSTRING host, CSTRING port);
+int		 net_get_maxfdp1(const SOCKET);
 struct server	*server_new(CSTRING host, CSTRING port, CSTRING pass);
 void		 destroy_null_bytes_exported(STRING, const int);
 void		 net_connect_clean_up(void);

@@ -713,6 +713,17 @@ net_addr_resolve(CSTRING host, CSTRING port)
 	return (getaddrinfo(host, port, &hints, &res) != 0 ? nullptr : res);
 }
 
+int
+net_get_maxfdp1(const SOCKET p_fd)
+{
+#if defined(UNIX)
+	return (p_fd + 1);
+#elif defined(WIN32)
+	UNUSED_PARAM(p_fd);
+	return -1;
+#endif
+}
+
 struct server *
 server_new(CSTRING host, CSTRING port, CSTRING pass)
 {
