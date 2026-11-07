@@ -51,4 +51,4 @@ get_file("https://www.nifty-networks.net/swirc/hunspell-1.7.6.cab", "hunspell-1.
 get_file("https://www.nifty-networks.net/swirc/hunspell-en-us.cab", "hunspell-en-us.cab");
 get_file("https://www.nifty-networks.net/swirc/libressl-4.4.0.cab", "libressl-4.4.0.cab");
 get_file("https://www.nifty-networks.net/swirc/pdcurses-3.9-utf8-colors.cab", "pdcurses-3.9.cab");
-get_file("https://www.nifty-networks.net/swirc/swirc-locales-20261031.cab", "swirc-locales-20261031.cab");
+get_file("https://www.nifty-networks.net/swirc/swirc-locales-20261107.cab", "swirc-locales-20261107.cab");
