@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: swirc 3.5.9\n"
 "Report-Msgid-Bugs-To: https://github.com/uhlin/swirc/issues\n"
-"POT-Creation-Date: 2026-10-31 15:32+0100\n"
+"POT-Creation-Date: 2026-11-07 20:41+0100\n"
 "PO-Revision-Date: 2026-10-31 09:13+0100\n"
 "Last-Translator: Markus Uhlin <markus@nifty-networks.net>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1225
-#: ../src/commands/dcc.cpp:1268 ../src/statusbar.cpp:213
+#: ../src/commands/colormap.cpp:153 ../src/commands/dcc.cpp:1227
+#: ../src/commands/dcc.cpp:1270 ../src/statusbar.cpp:213
 msgid "Yes"
 msgstr "Ja"
 
-#: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1225
-#: ../src/commands/dcc.cpp:1268 ../src/statusbar.cpp:214
+#: ../src/commands/colormap.cpp:154 ../src/commands/dcc.cpp:1227
+#: ../src/commands/dcc.cpp:1270 ../src/statusbar.cpp:214
 msgid "No"
 msgstr "Nej"
 
@@ -67,9 +67,9 @@ msgstr "Kan inte initiera användning av Winsock DLL"
 msgid "Use of the Winsock DLL granted"
 msgstr "Användning av Winsock DLL beviljad"
 
-#: ../src/commands/ctcp.c:77 ../src/commands/ftp.cpp:1580
-#: ../src/commands/ftp.cpp:1682 ../src/commands/ftp.cpp:1743
-#: ../src/commands/ftp.cpp:1782 ../src/commands/ftp.cpp:1875
+#: ../src/commands/ctcp.c:77 ../src/commands/ftp.cpp:1613
+#: ../src/commands/ftp.cpp:1715 ../src/commands/ftp.cpp:1776
+#: ../src/commands/ftp.cpp:1815 ../src/commands/ftp.cpp:1908
 msgid "Insufficient arguments"
 msgstr "Otillräckliga argument"
 
@@ -96,156 +96,156 @@ msgstr "Ogiltig CTCP fråga"
 msgid "Write error"
 msgstr "Skrivfel"
 
-#: ../src/commands/dcc.cpp:356
+#: ../src/commands/dcc.cpp:358
 #, c-format
 msgid "%s: wrote: %s"
 msgstr "%s: skrev: %s"
 
-#: ../src/commands/dcc.cpp:359
+#: ../src/commands/dcc.cpp:361
 #, c-format
 msgid "%s: did not complete: %s"
 msgstr "%s: slutfördes inte: %s"
 
-#: ../src/commands/dcc.cpp:1232
+#: ../src/commands/dcc.cpp:1234
 #, c-format
 msgid "%sStarted%s: %s"
 msgstr "%sBörjade%s: %s"
 
-#: ../src/commands/dcc.cpp:1234
+#: ../src/commands/dcc.cpp:1236
 #, c-format
 msgid "%sStopped%s: %s"
 msgstr "%sSlutade%s: %s"
 
-#: ../src/commands/dcc.cpp:1609
+#: ../src/commands/dcc.cpp:1611
 #, c-format
 msgid "sending '%s' to %s (%.1f%c)..."
 msgstr "skickar '%s' till %s (%.1f%c)..."
 
-#: ../src/commands/dcc.cpp:1700
+#: ../src/commands/dcc.cpp:1702
 msgid "Missing certs. Not starting the DCC server. Please create them."
 msgstr "Saknar certifikat. Startar inte DCC servern. Vänligen skapa dem."
 
-#: ../src/commands/dcc.cpp:1806
+#: ../src/commands/dcc.cpp:1808
 #, c-format
 msgid "%s: added: '%s' (%.1f%c)"
 msgstr "%s: lade till: '%s' (%.1f%c)"
 
-#: ../src/commands/dcc.cpp:1808
+#: ../src/commands/dcc.cpp:1810
 #, c-format
 msgid "%s: from: %s <%s@%s>"
 msgstr "%s: från: %s <%s@%s>"
 
-#: ../src/commands/dcc.cpp:1810
+#: ../src/commands/dcc.cpp:1812
 msgid "To get the file, type:"
 msgstr "För att hämta filen, skriv:"
 
-#: ../src/commands/dcc.cpp:2061 ../src/commands/ftp.cpp:1480
+#: ../src/commands/dcc.cpp:2063 ../src/commands/ftp.cpp:1510
 #, c-format
 msgid "%s: file read error"
 msgstr "%s: filläsfel"
 
-#: ../src/commands/dcc.cpp:2066
+#: ../src/commands/dcc.cpp:2068
 #, c-format
 msgid "%s: tls write error"
 msgstr "%s: tls skrivfel"
 
-#: ../src/commands/dcc.cpp:2083
+#: ../src/commands/dcc.cpp:2085
 #, c-format
 msgid "started: %s"
 msgstr "började: %s"
 
-#: ../src/commands/dcc.cpp:2084
+#: ../src/commands/dcc.cpp:2086
 #, c-format
 msgid "stopped: %s"
 msgstr "slutade: %s"
 
-#: ../src/commands/dcc.cpp:2101
+#: ../src/commands/dcc.cpp:2103
 msgid "read request error"
 msgstr "läsförfrågan fel"
 
-#: ../src/commands/dcc.cpp:2108
+#: ../src/commands/dcc.cpp:2110
 msgid "unable to find the send object"
 msgstr "kan inte hitta sändningsobjektet"
 
-#: ../src/commands/dcc.cpp:2116
+#: ../src/commands/dcc.cpp:2118
 msgid "already sent file"
 msgstr "redan skickad fil"
 
-#: ../src/commands/dcc.cpp:2119
+#: ../src/commands/dcc.cpp:2121
 msgid "the send object is in a locked state"
 msgstr "sändningsobjektet är i låst tillstånd"
 
-#: ../src/commands/dcc.cpp:2124
+#: ../src/commands/dcc.cpp:2126
 msgid "file open error"
 msgstr "filöppningsfel"
 
-#: ../src/commands/dcc.cpp:2143
+#: ../src/commands/dcc.cpp:2145
 #, c-format
 msgid "%s: successfully sent file: %s"
 msgstr "%s: skickad fil: %s"
 
-#: ../src/commands/dcc.cpp:2147
+#: ../src/commands/dcc.cpp:2149
 #, c-format
 msgid "%s: file transfer incomplete: %s"
 msgstr "%s: filöverföringen ofullständig: %s"
 
-#: ../src/commands/ftp.cpp:442
+#: ../src/commands/ftp.cpp:467
 msgid "Invalid username"
 msgstr "Ogiltigt användarnamn"
 
-#: ../src/commands/ftp.cpp:444
+#: ../src/commands/ftp.cpp:469
 msgid "Too long password"
 msgstr "För långt lösenord"
 
-#: ../src/commands/ftp.cpp:446
+#: ../src/commands/ftp.cpp:471
 msgid "Invalid hostname"
 msgstr "Ogiltigt värdnamn"
 
-#: ../src/commands/ftp.cpp:448
+#: ../src/commands/ftp.cpp:473
 msgid "Invalid port number"
 msgstr "Ogiltigt portnummer"
 
-#: ../src/commands/ftp.cpp:451 ../src/network.cpp:370
+#: ../src/commands/ftp.cpp:476 ../src/network.cpp:371
 msgid "Unable to get a list of IP addresses"
 msgstr "Det gick inte att få en lista över IP adresser"
 
-#: ../src/commands/ftp.cpp:454 ../src/commands/ftp.cpp:1101
-#: ../src/network.cpp:191
+#: ../src/commands/ftp.cpp:479 ../src/commands/ftp.cpp:1128
+#: ../src/network.cpp:192
 msgid "Failed to establish a connection"
 msgstr "Det gick inte att upprätta en anslutning"
 
-#: ../src/commands/ftp.cpp:467 ../src/commands/ftp.cpp:510
-#: ../src/commands/ftp.cpp:1595 ../src/commands/ftp.cpp:2139
+#: ../src/commands/ftp.cpp:493 ../src/commands/ftp.cpp:537
+#: ../src/commands/ftp.cpp:1628 ../src/commands/ftp.cpp:2172
 msgid "Cannot send"
 msgstr "Kan inte skicka"
 
-#: ../src/commands/ftp.cpp:1089
+#: ../src/commands/ftp.cpp:1116
 msgid "Failed to create an endpoint for communication"
 msgstr "Det gick inte att skapa en slutpunkt för kommunikation"
 
-#: ../src/commands/ftp.cpp:1488
+#: ../src/commands/ftp.cpp:1518
 #, c-format
 msgid "%s: bytes sent mismatch bytes read"
 msgstr "%s: bytes skickade matchade inte bytes lästa"
 
-#: ../src/commands/ftp.cpp:1583 ../src/commands/ftp.cpp:2126
+#: ../src/commands/ftp.cpp:1616 ../src/commands/ftp.cpp:2159
 msgid "No control connection"
 msgstr "Ingen kontrollanslutning"
 
-#: ../src/commands/ftp.cpp:1586 ../src/commands/ftp.cpp:1612
-#: ../src/commands/ftp.cpp:2134
+#: ../src/commands/ftp.cpp:1619 ../src/commands/ftp.cpp:1645
+#: ../src/commands/ftp.cpp:2167
 msgid "Invalid network socket"
 msgstr "Ogiltig nätverkssocket"
 
-#: ../src/commands/ftp.cpp:1685 ../src/commands/ftp.cpp:1785
+#: ../src/commands/ftp.cpp:1718 ../src/commands/ftp.cpp:1818
 msgid "Blank file path"
 msgstr "Tom filsökväg"
 
-#: ../src/commands/ftp.cpp:2130
+#: ../src/commands/ftp.cpp:2163
 msgid "Already in passive mode"
 msgstr "Redan i passivt läge"
 
-#: ../src/commands/ftp.cpp:2154
+#: ../src/commands/ftp.cpp:2187
 msgid "Failed to enter passive mode"
 msgstr "Det gick inte att gå in i passivt läge"
 
@@ -306,41 +306,41 @@ msgstr "filen är för stor"
 msgid "bad filename"
 msgstr "dåligt filnamn"
 
-#: ../src/commands/log.cpp:397
+#: ../src/commands/log.cpp:403
 msgid "error opening file"
 msgstr "fel vid öppning av fil"
 
-#: ../src/commands/log.cpp:407
+#: ../src/commands/log.cpp:413
 msgid "error creating window"
 msgstr "fel vid skapande av fönster"
 
-#: ../src/commands/log.cpp:430
+#: ../src/commands/log.cpp:436
 #, c-format
 msgid "wrote %s"
 msgstr "skrev %s"
 
-#: ../src/commands/log.cpp:432
+#: ../src/commands/log.cpp:438
 #, c-format
 msgid "write incomplete (%s)"
 msgstr "skrivning ofullständig (%s)"
 
-#: ../src/commands/log.cpp:462 ../src/commands/log.cpp:469
+#: ../src/commands/log.cpp:468 ../src/commands/log.cpp:475
 #: ../src/commands/userhost.cpp:89
 #, c-format
 msgid "%s: too few arguments"
 msgstr "%s: för få argument"
 
-#: ../src/commands/log.cpp:477
+#: ../src/commands/log.cpp:483
 #, c-format
 msgid "%s: too many arguments"
 msgstr "%s: för många argument"
 
-#: ../src/commands/log.cpp:493
+#: ../src/commands/log.cpp:499
 #, c-format
 msgid "%s: invalid subcommand: %s"
 msgstr "%s: ogiltigt delkommando: %s"
 
-#: ../src/commands/log.cpp:497
+#: ../src/commands/log.cpp:503
 #, c-format
 msgid "%s: exception: %s"
 msgstr "%s: undantag: %s"
@@ -2064,112 +2064,112 @@ msgstr ""
 msgid "Can't resolve the home path!"
 msgstr "Kan inte lösa hemvägen!"
 
-#: ../src/network.cpp:199
+#: ../src/network.cpp:200
 msgid "Hostname checking failed!"
 msgstr "Värdnamnskontrollen misslyckades!"
 
-#: ../src/network.cpp:201
+#: ../src/network.cpp:202
 msgid "Hostname checking OK!"
 msgstr "Värdnamnskontrollen OK!"
 
-#: ../src/network.cpp:299
+#: ../src/network.cpp:300
 msgid "Connected!"
 msgstr "Ansluten!"
 
-#: ../src/network.cpp:373
+#: ../src/network.cpp:375
 msgid "Get a list of IP addresses completed"
 msgstr "Få en lista över IP adresser färdig"
 
-#: ../src/network.cpp:594
+#: ../src/network.cpp:612
 #, c-format
 msgid "Connecting to %s (%s)"
 msgstr "Ansluter till %s (%s)"
 
-#: ../src/network.cpp:1024
+#: ../src/network.cpp:1053
 msgid "Connection to IRC server lost"
 msgstr "Anslutningen till IRC servern förlorad"
 
-#: ../src/network.cpp:1026
+#: ../src/network.cpp:1055
 msgid "Disconnected"
 msgstr "Frånkopplad"
 
-#: ../src/readline.c:624
+#: ../src/readline.c:616
 msgid "--------------- Keys ---------------"
 msgstr "--------------- Tangenter ---------------"
 
-#: ../src/readline.c:626
+#: ../src/readline.c:618
 msgid "CTRL+a     Move to beginning of line"
 msgstr "CTRL+a     Flytta till början av raden"
 
-#: ../src/readline.c:627
+#: ../src/readline.c:619
 msgid "CTRL+e     Move to end of line"
 msgstr "CTRL+e     Flytta till slutet av raden"
 
-#: ../src/readline.c:628
+#: ../src/readline.c:620
 msgid "CTRL+b     Move cursor backward"
 msgstr "CTRL+b     Flytta markören bakåt"
 
-#: ../src/readline.c:629
+#: ../src/readline.c:621
 msgid "CTRL+f     Move cursor forward"
 msgstr "CTRL+f     Flytta markören framåt"
 
-#: ../src/readline.c:630
+#: ../src/readline.c:622
 msgid "CTRL+d     Delete"
 msgstr "CTRL+d     Ta bort"
 
-#: ../src/readline.c:631
+#: ../src/readline.c:623
 msgid "CTRL+g     Clear readline input"
 msgstr "CTRL+g     Töm inmatning"
 
-#: ../src/readline.c:632
+#: ../src/readline.c:624
 msgid "CTRL+l     Toggle logging on/off"
 msgstr "CTRL+l     Växla loggning på/av"
 
-#: ../src/readline.c:633
+#: ../src/readline.c:625
 msgid "CTRL+n     Next window"
 msgstr "CTRL+n     Nästa fönster"
 
-#: ../src/readline.c:634
+#: ../src/readline.c:626
 msgid "CTRL+p     Previous window"
 msgstr "CTRL+p     Föregående fönster"
 
-#: ../src/readline.c:635
+#: ../src/readline.c:627
 msgid "CTRL+w     List all windows"
 msgstr "CTRL+w     Lista alla fönster"
 
-#: ../src/readline.c:636
+#: ../src/readline.c:628
 msgid "PG UP      Scroll up"
 msgstr "PG UP      Skrolla upp"
 
-#: ../src/readline.c:637
+#: ../src/readline.c:629
 msgid "PG DOWN    Scroll down"
 msgstr "PG DOWN    Skrolla ned"
 
-#: ../src/readline.c:638
+#: ../src/readline.c:630
 msgid "Up arrow   History previous"
 msgstr "Up arrow   Föregående kommando"
 
-#: ../src/readline.c:639
+#: ../src/readline.c:631
 msgid "Down arrow History next"
 msgstr "Down arrow Nästa kommando"
 
-#: ../src/readline.c:640
+#: ../src/readline.c:632
 msgid "F2         Spell word"
 msgstr "F2         Stava ord"
 
-#: ../src/readline.c:641
+#: ../src/readline.c:633
 msgid "F3         Scroll nicklist up"
 msgstr "F3         Skrolla nicklistan upp"
 
-#: ../src/readline.c:642
+#: ../src/readline.c:634
 msgid "F4         Scroll nicklist down"
 msgstr "F4         Skrolla nicklistan ned"
 
-#: ../src/readline.c:643
+#: ../src/readline.c:635
 msgid "F11        Close window"
 msgstr "F11        Stäng fönster"
 
-#: ../src/readline.c:644
+#: ../src/readline.c:636
 msgid "F12        Close all private conversations"
 msgstr "F12        Stäng alla privata konversationer"
 
