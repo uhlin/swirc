@@ -302,8 +302,9 @@ dcc_get::get_file(void)
 	}
 
 	try {
-		static const int VALUE_HANDSHAKE_OK = 1;
-		struct sockaddr_in sin;
+		int			iout = 0;
+		static const int	VALUE_HANDSHAKE_OK = 1;
+		struct sockaddr_in	sin;
 
 		// XXX
 		this->set_lock(1);
@@ -316,7 +317,8 @@ dcc_get::get_file(void)
 		if (connect(this->sock, reinterpret_cast<struct sockaddr *>
 		    (&sin), sizeof sin) == SOCKET_ERROR)
 			throw std::runtime_error("Cannot connect");
-		else if (!SSL_set_fd(this->ssl, this->sock))
+		else if (!socket_to_int(this->sock, &iout) ||
+		    !SSL_set_fd(this->ssl, iout))
 			throw std::runtime_error("Set FD error");
 
 		SSL_set_connect_state(this->ssl);
