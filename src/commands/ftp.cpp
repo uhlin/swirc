@@ -113,6 +113,17 @@ static stringarray_t ftp_cmds = {
 static void delete_data_conn(void);
 static void print_one_rep(const int, CSTRING);
 
+static inline int
+get_maxfdp1(const SOCKET fd)
+{
+#if defined(UNIX)
+	return (fd + 1);
+#elif defined(WIN32)
+	UNUSED_PARAM(fd);
+	return -1;
+#endif
+}
+
 static bool
 recv_and_check_plain(struct network_recv_context *p_ctx, char *p_buf,
     size_t p_sz, CSTRING p_sep)
@@ -149,7 +160,6 @@ recv_and_check_tls(struct network_recv_context *p_ctx, char *p_buf,
 	    p_ctx->sock == INVALID_SOCKET)
 		return false;
 	else if (!SSL_pending(p_ssl)) {
-		const int	maxfdp1 = p_ctx->sock + 1;
 		fd_set		readset;
 		struct timeval	tv;
 
@@ -161,8 +171,8 @@ recv_and_check_tls(struct network_recv_context *p_ctx, char *p_buf,
 
 		errno = 0;
 
-		if (select(maxfdp1, &readset, nullptr, nullptr, &tv) ==
-		    SOCKET_ERROR) {
+		if (select(get_maxfdp1(p_ctx->sock), &readset,
+		    nullptr, nullptr, &tv) == SOCKET_ERROR) {
 			if (errno != EINTR)
 				err_log(errno, "%s: select", __func__);
 			return false;
@@ -1204,7 +1214,6 @@ recv_bytes_tls(struct network_recv_context *p_ctx, char *p_buf, size_t p_sz,
 	    p_ctx->sock == INVALID_SOCKET)
 		return 0;
 	else if (!SSL_pending(p_ssl)) {
-		const int	maxfdp1 = p_ctx->sock + 1;
 		fd_set		readset;
 		struct timeval	tv;
 
@@ -1216,8 +1225,8 @@ recv_bytes_tls(struct network_recv_context *p_ctx, char *p_buf, size_t p_sz,
 
 		errno = 0;
 
-		if (select(maxfdp1, &readset, nullptr, nullptr, &tv) ==
-		    SOCKET_ERROR)
+		if (select(get_maxfdp1(p_ctx->sock), &readset,
+		    nullptr, nullptr, &tv) == SOCKET_ERROR)
 			return (errno == EINTR ? 0 : -1);
 		else if (!FD_ISSET(p_ctx->sock, &readset))
 			return 0;
