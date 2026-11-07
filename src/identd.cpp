@@ -78,16 +78,6 @@ clean_up_socket(SOCKET &sock)
 	}
 }
 
-static inline int
-get_maxfdp1(void)
-{
-#if defined(UNIX)
-	return (identd::sock + 1);
-#elif defined(WIN32)
-	return -1;
-#endif
-}
-
 //lint -sem(get_servport, r_null)
 static char *
 get_servport(void)
@@ -321,8 +311,8 @@ identd::listen_on_port(const int port)
 		tv.tv_sec	= 3;
 		tv.tv_usec	= 111;
 
-		if (select(get_maxfdp1(), &readset, nullptr, nullptr, &tv) ==
-		    SOCKET_ERROR) {
+		if (select(net_get_maxfdp1(identd::sock), &readset,
+		    nullptr, nullptr, &tv) == SOCKET_ERROR) {
 			if (errno == EINTR)
 				continue;
 			break;
