@@ -117,10 +117,14 @@ static bool
 recv_and_check_plain(struct network_recv_context *p_ctx, char *p_buf,
     size_t p_sz, CSTRING p_sep)
 {
-	int bytes_received;
+	int	bytes_received;
+	int	iout = 0;
 
-	BZERO(p_buf, p_sz);
-	bytes_received = net_recv_plain(p_ctx, p_buf, p_sz - 1);
+	if (!size_to_int_v2(p_sz, &iout))
+		return false;
+
+	BZERO(p_buf, iout);
+	bytes_received = net_recv_plain(p_ctx, p_buf, iout - 1);
 
 	if (bytes_received <= 0)
 		return false;
@@ -138,6 +142,7 @@ recv_and_check_tls(struct network_recv_context *p_ctx, char *p_buf,
 	char	*bufptr;
 	int	 buflen;
 	int	 bytes_received;
+	int	 iout = 0;
 
 	if (p_ssl == nullptr ||
 	    conn_is_closed(p_ssl) ||
@@ -165,10 +170,13 @@ recv_and_check_tls(struct network_recv_context *p_ctx, char *p_buf,
 			return false;
 	}
 
-	BZERO(p_buf, p_sz);
+	if (!size_to_int_v2(p_sz, &iout))
+		return false;
+
+	BZERO(p_buf, iout);
 
 	bufptr = p_buf;
-	buflen = p_sz;
+	buflen = iout;
 	bytes_received = 0;
 
 	do {
@@ -1189,6 +1197,7 @@ recv_bytes_tls(struct network_recv_context *p_ctx, char *p_buf, size_t p_sz,
 	char	*bufptr;
 	int	 buflen;
 	int	 bytes_received;
+	int	 iout = 0;
 
 	if (p_ssl == nullptr ||
 	    conn_is_closed(p_ssl) ||
@@ -1214,10 +1223,13 @@ recv_bytes_tls(struct network_recv_context *p_ctx, char *p_buf, size_t p_sz,
 			return 0;
 	}
 
-	BZERO(p_buf, p_sz);
+	if (!size_to_int_v2(p_sz, &iout))
+		return -1;
+
+	BZERO(p_buf, iout);
 
 	bufptr = p_buf;
-	buflen = p_sz;
+	buflen = iout;
 	bytes_received = 0;
 
 	do {
