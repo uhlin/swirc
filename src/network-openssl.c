@@ -1,4 +1,4 @@
-/* Copyright (c) 2016-2025 Markus Uhlin <markus@nifty-networks.net>
+/* Copyright (c) 2016-2026 Markus Uhlin <markus@nifty-networks.net>
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software for any
@@ -199,6 +199,7 @@ net_ssl_begin(void)
 {
 	CSTRING			err_reason = ""; // NOLINT: dead store
 	PRINTTEXT_CONTEXT	ptext_ctx;
+	int			iout = 0;
 	static const int	VALUE_HANDSHAKE_OK = 1;
 	unsigned long int	err_code = 0;
 
@@ -216,7 +217,8 @@ net_ssl_begin(void)
 	    "EXTERNAL"))
 		load_x509();
 
-	if (!SSL_set_fd(ssl, g_socket)) {
+	if (!socket_to_int(g_socket, &iout) ||
+	    !SSL_set_fd(ssl, iout)) {
 		err_reason = "Unable to associate the global socket fd with "
 		    "the SSL object";
 		goto err;
