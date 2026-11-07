@@ -406,7 +406,6 @@ net_ssl_recv(struct network_recv_context *ctx, STRING recvbuf, int recvbuf_size)
 	    g_socket == INVALID_SOCKET)
 		return -1;
 	else if (!SSL_pending(ssl)) {
-		const int	maxfdp1 = ctx->sock + 1;
 		fd_set		readset;
 		struct timeval	tv;
 
@@ -418,7 +417,8 @@ net_ssl_recv(struct network_recv_context *ctx, STRING recvbuf, int recvbuf_size)
 
 		errno = 0;
 
-		if (select(maxfdp1, &readset, NULL, NULL, &tv) == SOCKET_ERROR)
+		if (select(net_get_maxfdp1(ctx->sock), &readset, NULL, NULL,
+		    &tv) == SOCKET_ERROR)
 			return (errno == EINTR ? 0 : -1);
 		else if (!FD_ISSET(ctx->sock, &readset))
 			return 0;
