@@ -88,8 +88,9 @@ get_servport(void)
 	len = sizeof ss;
 	memset(&ss, 0, len);
 
-	if (g_socket == INVALID_SOCKET || getsockname(g_socket, reinterpret_cast
-	    <struct sockaddr *>(&ss), &len) != 0)
+	if (g_socket == INVALID_SOCKET ||
+	    getsockname(g_socket, reinterpret_cast<struct sockaddr *>(&ss),
+	    &len) != 0)
 		return nullptr;
 	else if (ss.ss_family == AF_INET) {
 		struct sockaddr_in *sin;
@@ -322,8 +323,8 @@ identd::listen_on_port(const int port)
 			 */
 
 			continue;
-		} else if ((clisock = accept(identd::sock, reinterpret_cast
-		    <struct sockaddr *>(&cliaddr), &len)) < 0) {
+		} else if ((clisock = accept(identd::sock,
+		    reinterpret_cast<struct sockaddr *>(&cliaddr), &len)) < 0) {
 			(void) napms(222);
 			continue;
 		}
