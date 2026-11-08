@@ -1539,6 +1539,7 @@ void
 printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
     int *rep_count)
 {
+	bool		 max_lines_flagged = false;
 	char		*tmpbuf = nullptr;
 	const char	*tmpbuf_p = nullptr;
 	int		 insert_count = 0;
@@ -1546,6 +1547,7 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 	struct text_decoration_bools
 			 booleans; // calls constructor
 	wchar_t		*wc_buf = nullptr;
+	wchar_t		*wc_bufp = nullptr;
 
 	puts_mutex_init_doit();
 
@@ -1567,8 +1569,8 @@ printtext_puts(WINDOW *pwin, CSTRING buf, int indent, int max_lines,
 
 	replace_characters_with_spaces(wc_buf, L"\f\t\v");
 
-	wchar_t *wc_bufp = &wc_buf[0];
-	bool max_lines_flagged = false;
+	wc_bufp			= &wc_buf[0];
+	max_lines_flagged	= false;
 
 	while (*wc_bufp && !max_lines_flagged) {
 		wchar_t wc = *wc_bufp;
