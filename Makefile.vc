@@ -38,6 +38,10 @@ main: $(TGTS)
 	$(E) ^ ^ CXX^ ^ ^ ^ ^ $@
 	$(Q) $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -Fo$*.obj $< 1>>$(BUILD_LOG)
 
+!ifndef CA_VPK_DLL
+CA_VPK_DLL = nonexistent.dll
+!endif
+
 # XXX: Add the MINGW DLLs? (Hunspell)
 DIST_DEPS = swirc.exe\
 	"curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll"\
@@ -58,6 +62,9 @@ dist: $(DIST_DEPS) $(HTMLHELP_DIR)swirc.chm
 	mkdir $(DEST)\fi\LC_MESSAGES
 	mkdir $(DEST)\fr\LC_MESSAGES
 	mkdir $(DEST)\sv\LC_MESSAGES
+!	if exists($(CA_VPK_DLL))
+		copy $(CA_VPK_DLL) $(DEST)
+!	endif
 	copy "curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll" $(DEST)
 	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libcharset).dll" $(DEST)
 	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libiconv).dll" $(DEST)
@@ -87,8 +94,11 @@ SIGNTOOL_FLAGS = -f "C:\CERTS\SwircDevelopmentTeam.pfx"\
 	-tr "http://timestamp.digicert.com"\
 	-td $(ALG)\
 	-v
+!ifndef WXS_FILES
+WXS_FILES = Swirc.wxs
+!endif
 
-setupfile: dist Swirc.wxs
+setupfile: dist $(WXS_FILES)
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_libgcc)"
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_libstdcpp)"
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_libwinpthread)"
@@ -102,7 +112,10 @@ setupfile: dist Swirc.wxs
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_ssl)"
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\pdcurses.dll"
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\swirc.exe"
-	wix build -arch $(MSI_ARCH) -culture "en-us" -ext WixToolset.UI.wixext Swirc.wxs -out "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"
+!	if exists("$(DEST)\$(CA_VPK_DLL)")
+		signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(CA_VPK_DLL)"
+!	endif
+	wix build -arch $(MSI_ARCH) -culture "en-us" -ext WixToolset.UI.wixext $(WXS_FILES) -out "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"
 	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" \
 	    "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"
 
@@ -126,6 +139,9 @@ clean:
 	$(RM) pdcurses-$(PDCURSES_VERSION).cab
 	$(RM) swirc-locales-$(LOCALES_SNAP).cab
 	$(RM) swirc.res
+!	if exists($(CA_VPK_DLL))
+		$(RM) $(CA_VPK_DLL)
+!	endif
 !	if exists(cov-int)
 		rmdir /s /q cov-int
 !	endif
