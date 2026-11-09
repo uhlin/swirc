@@ -28,6 +28,6 @@ event_ping(struct irc_message_compo *compo)
 
 		printtext_context_init(&ctx, g_status_window, TYPE_SPEC_NONE,
 		    true);
-		printtext(&ctx, "PING? PONG!");
+		printtext(&ctx, "PING? PONG!");   /* Khaled Mardam-Bey stylee */
 	}
 }
