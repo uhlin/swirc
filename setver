@@ -13,7 +13,7 @@ source "bash/edit_vc_makefile.sh"
 source "bash/edit_void_template.sh"
 
 edit_changelog		"CHANGELOG.md"
-edit_dot_wxs		"Swirc.wxs"
+#edit_dot_wxs		"Swirc.wxs"
 edit_exe_manifest	"src/swirc.exe.manifest"
 edit_main_cpp		"src/main.cpp"
 edit_po_file		"po/de/swirc.po"
