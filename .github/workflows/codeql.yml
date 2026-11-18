@@ -32,6 +32,7 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
+        packs: advanced-security/cert-c-coding-standards-uncertified,advanced-security/cert-cpp-coding-standards-uncertified
         queries: security-extended,security-and-quality
 
     - run: |
