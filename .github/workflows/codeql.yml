@@ -34,7 +34,7 @@ jobs:
         languages: ${{ matrix.language }}
         packs: advanced-security/cert-c-coding-standards-uncertified
         queries: security-extended,security-and-quality
-        query-filters:
+        query-filters: |
           - exclude:
             id:
               - c/cert/cast-char-before-converting-to-larger-sizes
