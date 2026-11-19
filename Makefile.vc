@@ -55,39 +55,7 @@ DIST_DEPS = swirc.exe\
 	"pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll"\
 	"src\trusted_roots.pem"
 
-dist: $(DIST_DEPS) $(HTMLHELP_DIR)swirc.chm
-!	if exists($(DEST))
-		rmdir /s /q $(DEST)
-!	endif
-	mkdir $(DEST)
-	mkdir $(DEST)\de\LC_MESSAGES
-	mkdir $(DEST)\fi\LC_MESSAGES
-	mkdir $(DEST)\fr\LC_MESSAGES
-	mkdir $(DEST)\sv\LC_MESSAGES
-!	if exists($(CA_VPK_DLL))
-		copy $(CA_VPK_DLL) $(DEST)
-!	endif
-	copy "curl-$(CURL_VERSION)\$(MACHINE)\libcurl.dll" $(DEST)
-	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libcharset).dll" $(DEST)
-	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libiconv).dll" $(DEST)
-	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libidn).dll" $(DEST)
-	copy "gnu-bundle-$(GNU_BUNDLE_DATE)\$(MACHINE)\$(NAME_libintl).dll" $(DEST)
-	copy "hunspell-$(HUNSPELL_VERSION)\$(MACHINE)\$(NAME_libhunspell).dll" $(DEST)
-	copy "hunspell-$(HUNSPELL_VERSION)\$(MACHINE)\$(DLL_libgcc)" $(DEST)
-	copy "hunspell-$(HUNSPELL_VERSION)\$(MACHINE)\$(DLL_libstdcpp)" $(DEST)
-	copy "hunspell-$(HUNSPELL_VERSION)\$(MACHINE)\$(DLL_libwinpthread)" $(DEST)
-	copy "hunspell-en-us\en_US.aff" $(DEST)
-	copy "hunspell-en-us\en_US.dic" $(DEST)
-	copy "libressl-$(LIBRESSL_VERSION)\$(MACHINE)\$(DLL_crypto)" $(DEST)
-	copy "libressl-$(LIBRESSL_VERSION)\$(MACHINE)\$(DLL_ssl)" $(DEST)
-	copy "pdcurses-$(PDCURSES_VERSION)\$(MACHINE)\pdcurses.dll" $(DEST)
-	copy "src\trusted_roots.pem" $(DEST)
-	copy "swirc.exe" $(DEST)
-	copy $(HTMLHELP_DIR)swirc.chm $(DEST)
-	copy swirc-locales-$(LOCALES_SNAP)\de\$(LOCLOC) $(DEST)\de\LC_MESSAGES
-	copy swirc-locales-$(LOCALES_SNAP)\fi\$(LOCLOC) $(DEST)\fi\LC_MESSAGES
-	copy swirc-locales-$(LOCALES_SNAP)\fr\$(LOCLOC) $(DEST)\fr\LC_MESSAGES
-	copy swirc-locales-$(LOCALES_SNAP)\sv\$(LOCLOC) $(DEST)\sv\LC_MESSAGES
+!include maketargets/dist.mk
 
 ALG = SHA256
 MSI_ARCH = x64
@@ -100,26 +68,7 @@ SIGNTOOL_FLAGS = -f "C:\CERTS\SwircDevelopmentTeam.pfx"\
 WXS_FILES = Swirc.wxs
 !endif
 
-setupfile: dist $(WXS_FILES)
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_libgcc)"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_libstdcpp)"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_libwinpthread)"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(NAME_libcharset).dll"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(NAME_libhunspell).dll"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(NAME_libiconv).dll"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(NAME_libidn).dll"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(NAME_libintl).dll"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\libcurl.dll"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_crypto)"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(DLL_ssl)"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\pdcurses.dll"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\swirc.exe"
-!	if exists("$(DEST)\$(CA_VPK_DLL)")
-		signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" "$(DEST)\$(CA_VPK_DLL)"
-!	endif
-	wix build -arch $(MSI_ARCH) -culture "en-us" -ext WixToolset.UI.wixext $(WXS_FILES) -out "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"
-	signtool sign $(SIGNTOOL_FLAGS) -p "$(PASSWD)" \
-	    "Swirc-$(PRODUCT_VERSION)$(REVISION).msi"
+!include maketargets/setupfile.mk
 
 clean:
 	$(E) ^ ^ CLEAN
