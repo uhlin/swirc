@@ -32,14 +32,11 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-        config: |
-          query-filters:
-            - exclude:
-              id:
-                - c/cert/cast-char-before-converting-to-larger-sizes
-                - c/cert/free-memory-when-no-longer-needed-cert
         packs: advanced-security/cert-c-coding-standards-uncertified
-        queries: security-extended,security-and-quality
+        queries: |
+          security-extended,
+          security-and-quality,
+          ./.github/codeql/custom-cert-c.qls
 
     - run: |
         sudo apt-get update
