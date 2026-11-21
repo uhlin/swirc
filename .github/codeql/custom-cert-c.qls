@@ -1,8 +1,7 @@
 - description: Custom CERT C
 - queries: .
   from: advanced-security/cert-c-coding-standards-uncertified
-
 - exclude:
-  id:
-    - c/cert/cast-char-before-converting-to-larger-sizes
-    - c/cert/free-memory-when-no-longer-needed-cert
+    id:
+      - c/cert/cast-char-before-converting-to-larger-sizes
+      - c/cert/free-memory-when-no-longer-needed-cert
