@@ -32,11 +32,13 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-        packs: advanced-security/cert-c-coding-standards-uncertified
         queries: |
           security-extended,
           security-and-quality,
           ./.github/codeql/custom-cert-c.qls
+
+    - name: Download CERT C query pack
+      run: codeql pack download advanced-security/cert-c-coding-standards-uncertified
 
     - run: |
         sudo apt-get update
