@@ -33,7 +33,7 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-        queries: ./.github/codeql/custom-cert-c.qls
+        queries: security-extended,security-and-quality
 
     - name: Download CERT-C QL pack
       run: codeql pack download advanced-security/cert-c-coding-standards-uncertified
