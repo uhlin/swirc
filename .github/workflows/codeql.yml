@@ -35,9 +35,6 @@ jobs:
         languages: ${{ matrix.language }}
         queries: security-extended,security-and-quality
 
-    - name: Download CERT-C QL pack
-      run: codeql pack download advanced-security/cert-c-coding-standards-uncertified
-
     - run: |
         sudo apt-get update
         sudo apt-get install libcurl4-openssl-dev libhunspell-dev
