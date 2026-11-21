@@ -1,6 +1,6 @@
 - description: Custom CERT C
 - queries: .
-  from: advanced-security/cert-c-coding-standards-uncertified
+  from: advanced-security/cert-c-coding-standards
 - exclude:
     id:
       - c/cert/cast-char-before-converting-to-larger-sizes
