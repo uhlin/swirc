@@ -16,6 +16,7 @@ jobs:
     permissions:
       actions: read
       contents: read
+      packages: read
       security-events: write
 
     strategy:
@@ -32,9 +33,10 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-        queries: |
-          advanced-security/cert-c-coding-standards-uncertified
-          ./.github/codeql/custom-cert-c.qls
+        queries: ./.github/codeql/custom-cert-c.qls
+
+    - name: Download CERT-C QL pack
+      run: codeql pack download advanced-security/cert-c-coding-standards-uncertified
 
     - run: |
         sudo apt-get update
